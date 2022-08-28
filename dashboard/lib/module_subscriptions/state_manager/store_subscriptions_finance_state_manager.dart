@@ -36,8 +36,8 @@ class StoreSubscriptionsFinanceStateManager {
         }));
       } else {
         value as StoreSubscriptionsFinanceModel;
-        stateSubject
-            .add(StoreSubscriptionsFinanceStateLoaded(screenState, value.data));
+        stateSubject.add(StoreSubscriptionsFinanceStateLoaded(
+            screenState, value.data.currentAndFutureSubscriptions));
       }
     });
   }

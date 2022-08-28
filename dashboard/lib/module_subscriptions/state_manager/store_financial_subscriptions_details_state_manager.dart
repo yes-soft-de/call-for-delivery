@@ -38,8 +38,11 @@ class StoreFinancialSubscriptionsDuesDetailsStateManager {
             .add(StoreSubscriptionsFinanceDetailsStateLoaded(screenState));
       } else {
         value as StoreSubscriptionsFinanceModel;
-        screenState.model = value.data
-            .firstWhere((element) => element.id == screenState.model.id);
+        List<StoreSubscriptionsFinanceModel> models =
+            value.data.oldSubscriptions;
+        models.addAll(value.data.currentAndFutureSubscriptions);
+        screenState.model =
+            models.firstWhere((element) => element.id == screenState.model.id);
         _stateSubject
             .add(StoreSubscriptionsFinanceDetailsStateLoaded(screenState));
         screenState.refresh();

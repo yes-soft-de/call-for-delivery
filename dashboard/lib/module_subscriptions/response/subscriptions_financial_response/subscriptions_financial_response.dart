@@ -1,9 +1,9 @@
-import 'datum.dart';
+import 'package:c4d/module_subscriptions/response/subscriptions_financial_response/subscriptions_response.dart';
 
 class SubscriptionsFinancialResponse {
   String? statusCode;
   String? msg;
-  List<Datum>? data;
+  SubscriptionsResponse? data;
 
   SubscriptionsFinancialResponse({this.statusCode, this.msg, this.data});
 
@@ -11,15 +11,9 @@ class SubscriptionsFinancialResponse {
     return SubscriptionsFinancialResponse(
       statusCode: json['status_code'] as String?,
       msg: json['msg'] as String?,
-      data: (json['Data'] as List<dynamic>?)
-          ?.map((e) => Datum.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      data: json['Data'] != null
+          ? SubscriptionsResponse.fromJson(json['Data'])
+          : null,
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        'status_code': statusCode,
-        'msg': msg,
-        'Data': data?.map((e) => e.toJson()).toList(),
-      };
 }
