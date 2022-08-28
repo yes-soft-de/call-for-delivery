@@ -1,17 +1,19 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/model/captain_offer_model.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
-import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:list_tile_switch/list_tile_switch.dart';
 
 class CaptainOfferCard extends StatelessWidget {
   final CaptainsOffersModel model;
   final VoidCallback onEdit;
   final Function onEnable;
+  final bool justShown;
   CaptainOfferCard(
-      {required this.model, required this.onEdit, required this.onEnable});
+      {required this.model,
+      required this.onEdit,
+      required this.onEnable,
+      this.justShown = false});
 
   @override
   Widget build(BuildContext context) {
@@ -30,29 +32,32 @@ class CaptainOfferCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              CustomC4dAppBar.actionIcon(context,
-                  icon: Icons.edit,
-                  onTap: onEdit,
-                  padding: EdgeInsetsDirectional.only(start: 16, top: 8)),
-              Spacer(),
-              Padding(
-                padding: const EdgeInsetsDirectional.only(end: 16, top: 8),
-                child: Switch(
-                    activeColor: Colors.green,
-                    value: model.status == 'active',
-                    onChanged: (v) {
-                      if (v) {
-                        onEnable('active');
-                      } else {
-                        onEnable('inactive');
-                      }
-                    }),
-              ),
-            ],
+          Visibility(
+            visible: justShown == false,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                CustomC4dAppBar.actionIcon(context,
+                    icon: Icons.edit,
+                    onTap: onEdit,
+                    padding: EdgeInsetsDirectional.only(start: 16, top: 8)),
+                Spacer(),
+                Padding(
+                  padding: const EdgeInsetsDirectional.only(end: 16, top: 8),
+                  child: Switch(
+                      activeColor: Colors.green,
+                      value: model.status == 'active',
+                      onChanged: (v) {
+                        if (v) {
+                          onEnable('active');
+                        } else {
+                          onEnable('inactive');
+                        }
+                      }),
+                ),
+              ],
+            ),
           ),
           // package info
           Padding(
