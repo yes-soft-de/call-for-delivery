@@ -61,4 +61,17 @@ class SubscriptionsService {
     }
     return DataModel.empty();
   }
+
+  Future<DataModel> subscribeToCaptainOffer(
+      StoreSubscribeToPackageRequest request) async {
+    ActionResponse? response =
+        await _storeManager.subscribeToCaptainOffer(request);
+    if (response == null) {
+      return DataModel.withError(S.current.networkError);
+    } else if (response.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
 }

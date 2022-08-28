@@ -162,7 +162,7 @@ class InitSubscriptionsLoadedState extends States {
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),
                         child: Text(
-                          S.of(context).next,
+                          S.of(context).subscribe,
                           style: TextStyle(
                             color: Colors.white,
                           ),

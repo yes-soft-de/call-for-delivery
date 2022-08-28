@@ -18,4 +18,7 @@ class SubscriptionsManager {
   Future<ActionResponse?> subscribeToPackage(
           StoreSubscribeToPackageRequest request) async =>
       await _storesRepository.subscribeToPackage(request);
+  Future<ActionResponse?> subscribeToCaptainOffer(
+          StoreSubscribeToPackageRequest request) async =>
+      await _storesRepository.subscribeToCaptainOffer(request);
 }

@@ -57,4 +57,16 @@ class SubscriptionsRepository {
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
+
+  Future<ActionResponse?> subscribeToCaptainOffer(
+      StoreSubscribeToPackageRequest request) async {
+    var token = await _authService.getToken();
+    var response = await _apiClient.post(
+      Urls.SUBSCRIBE_TO_PACKAGE_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
 }
