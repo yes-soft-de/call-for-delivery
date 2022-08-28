@@ -46,7 +46,8 @@ class SubscriptionManagementStateLoaded extends States {
                     return BottomSheetRenewSubscription(
                       packageExtend: () {
                         Navigator.of(context).pop();
-                        // screenState.extendSubscriptions();
+                        screenState.stateManager
+                            .extendPackage(screenState, screenState.profileId);
                       },
                       renewNewPlan: () {
                         Navigator.of(context).pop();
@@ -56,7 +57,8 @@ class SubscriptionManagementStateLoaded extends States {
                       },
                       renewOldPlan: () {
                         Navigator.of(context).pop();
-                        //  screenState.renewSubscription(balance.packageID);
+                        screenState.stateManager
+                            .renewPackage(screenState, screenState.profileId);
                       },
                     );
                   });

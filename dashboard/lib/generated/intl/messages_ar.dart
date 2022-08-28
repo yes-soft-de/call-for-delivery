@@ -1036,6 +1036,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("جار حفظ الملف"),
         "subscribe": MessageLookupByLibrary.simpleMessage("اشترك"),
+        "subscribeToCaptainOffer":
+            MessageLookupByLibrary.simpleMessage("اشتراك بعرض كابتن"),
         "subscriptionActive":
             MessageLookupByLibrary.simpleMessage("الاشتراك فعال"),
         "subscriptionDate":

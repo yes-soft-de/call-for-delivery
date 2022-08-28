@@ -23,22 +23,22 @@ class SubscriptionsRepository {
     return SubscriptionsFinancialResponse.fromJson(response);
   }
 
-  Future<ActionResponse?> renewPackage(int packageId) async {
+  Future<ActionResponse?> renewPackage(int storeID) async {
     var token = await _authService.getToken();
     var response = await _apiClient.post(
       Urls.RENEW_SUBSCRIPTION_API,
-      {'packageID': '$packageId'},
+      {'storeProfileId': storeID},
       headers: {'Authorization': 'Bearer ' + '$token'},
     );
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
 
-  Future<ActionResponse?> extendSubscriptions() async {
+  Future<ActionResponse?> extendSubscriptions(int storeID) async {
     var token = await _authService.getToken();
     var response = await _apiClient.post(
       Urls.EXTEND_SUBSCRIPTION_API,
-      {},
+      {'storeProfileId': storeID},
       headers: {'Authorization': 'Bearer ' + '$token'},
     );
     if (response == null) return null;

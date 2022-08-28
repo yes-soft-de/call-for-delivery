@@ -43,9 +43,7 @@ class BottomSheetRenewSubscription extends StatelessWidget {
                   // renew new subscription
                   CustomTextButton(
                     label: S.current.renewNewPlan,
-                    onPressed: () {
-                     
-                    },
+                    onPressed: renewNewPlan,
                   ),
                   Divider(
                     indent: 16,
@@ -56,8 +54,11 @@ class BottomSheetRenewSubscription extends StatelessWidget {
                   // renew current subscription
                   CustomTextButton(
                     label: S.current.renewOldPlan,
-                    onPressed: () {
-                    },
+                    onPressed: renewOldPlan,
+                  ),
+                  CustomTextButton(
+                    label: S.current.subscribeToCaptainOffer,
+                    onPressed: () {},
                   ),
                 ],
               ),

@@ -27,8 +27,8 @@ class SubscriptionsService {
     return StoreSubscriptionsFinanceModel.withData(response);
   }
 
-  Future<DataModel> renewPackage(int packageId) async {
-    ActionResponse? response = await _storeManager.renewPackage(packageId);
+  Future<DataModel> renewPackage(int storeID) async {
+    ActionResponse? response = await _storeManager.renewPackage(storeID);
     if (response == null) {
       return DataModel.withError(S.current.networkError);
     } else if (response.statusCode != '201') {
@@ -38,8 +38,8 @@ class SubscriptionsService {
     return DataModel.empty();
   }
 
-  Future<DataModel> extendPackage() async {
-    ActionResponse? response = await _storeManager.extendPackage();
+  Future<DataModel> extendPackage(int storeID) async {
+    ActionResponse? response = await _storeManager.extendPackage(storeID);
     if (response == null) {
       return DataModel.withError(S.current.networkError);
     } else if (response.statusCode != '201') {

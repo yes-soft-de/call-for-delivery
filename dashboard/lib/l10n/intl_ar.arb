@@ -787,5 +787,6 @@
     "notImplementedYet": "لم يتم تفعيل هذه الميزة بعد",
     "expiredSubscriptionsFinanceHint": "هنا تجد قائمة بالاشتراكات المنتهية التي قام المتجر بالاشتراك فيها وتفاصيل عن النفقات التي يترتب عليها والدفعات التي تلقيها",
     "packageExtend": "تمديد اضطراري",
-    "packageExtendedSuccessfully": "تم التمديد بنجاح"
+    "packageExtendedSuccessfully": "تم التمديد بنجاح",
+    "subscribeToCaptainOffer":"اشتراك بعرض كابتن"
 }

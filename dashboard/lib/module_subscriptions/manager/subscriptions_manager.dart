@@ -10,8 +10,8 @@ class SubscriptionsManager {
   Future<SubscriptionsFinancialResponse?> getSubscriptionsFinance(
           int orderID) async =>
       await _storesRepository.getSubscriptionsFinance(orderID);
-  Future<ActionResponse?> renewPackage(int packageId) async =>
-      await _storesRepository.renewPackage(packageId);
-  Future<ActionResponse?> extendPackage() async =>
-      await _storesRepository.extendSubscriptions();
+  Future<ActionResponse?> renewPackage(int storeID) async =>
+      await _storesRepository.renewPackage(storeID);
+  Future<ActionResponse?> extendPackage(int storeID) async =>
+      await _storesRepository.extendSubscriptions(storeID);
 }

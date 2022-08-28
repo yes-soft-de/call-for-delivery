@@ -788,5 +788,6 @@
     "notImplementedYet": "Not implemented yet",
     "expiredSubscriptionsFinanceHint": "Here you find all your expired subscriptions financial information with included all payments ",
     "packageExtend": "Package extend",
-    "packageExtendedSuccessfully": "Package extended successfully"
+    "packageExtendedSuccessfully": "Package extended successfully",
+    "subscribeToCaptainOffer": "Subscribe to captain offer"
 }

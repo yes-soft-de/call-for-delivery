@@ -7939,6 +7939,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Subscribe to captain offer`
+  String get subscribeToCaptainOffer {
+    return Intl.message(
+      'Subscribe to captain offer',
+      name: 'subscribeToCaptainOffer',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
