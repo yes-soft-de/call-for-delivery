@@ -86,7 +86,12 @@ class AdminStoreSubscriptionService
                 $subscription['total'] = $this->getTotal($subscription['paymentsFromStore'], $subscription['packageCost'], $subscription['captainOffers'],(float)$subscription['packageExtraCost'], $totalExtraDistance);
             }
 
-            $response[] = $this->autoMapping->map("array", AdminStoreSubscriptionResponse::class, $subscription);
+            if (($subscription['isCurrent'] === 0) && ($subscription['isFuture'] === false) && (! $subscription['subscriptionDetailsId'])) {
+                $response['oldSubscriptions'][] = $this->autoMapping->map("array", AdminStoreSubscriptionResponse::class, $subscription);
+
+            } else {
+                $response['currentAndFutureSubscriptions'][] = $this->autoMapping->map("array", AdminStoreSubscriptionResponse::class, $subscription);
+            }
         }
 
         return $response;
