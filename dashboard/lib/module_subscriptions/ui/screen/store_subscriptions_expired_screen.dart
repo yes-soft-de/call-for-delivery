@@ -56,7 +56,8 @@ class StoreSubscriptionsExpiredFinanceScreenState
       }
     }
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context, title: S.current.accountBalance),
+      appBar:
+          CustomC4dAppBar.appBar(context, title: S.current.endedSubscriptions),
       body: _currentState?.getUI(context) ?? Container(),
     );
   }
