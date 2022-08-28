@@ -7,4 +7,6 @@ class SubscriptionsRoutes {
       '/expired_subscriptions_dues';
   static const CREATE_NEW_SUBSCRIPTION_SCREEN =
       '/create_new_subscription_screen';
+  static const CREATE_NEW_SUBSCRIPTION_TO_CAPTAIN_OFFER_SCREEN =
+      '/create_new_subscription_to_captain_offer_screen';
 }

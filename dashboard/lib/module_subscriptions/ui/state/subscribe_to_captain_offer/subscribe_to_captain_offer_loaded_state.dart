@@ -23,9 +23,10 @@ class SubscribeToCaptainOfferLoadedState extends States {
       appBarTitle = args;
     }
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context,
-          title: appBarTitle ?? S.current.storeAccountInit,
-          canGoBack: appBarTitle != null ? true : false),
+      appBar: CustomC4dAppBar.appBar(
+        context,
+        title: appBarTitle ?? S.current.captainOffers,
+      ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         child: Column(
@@ -42,7 +43,7 @@ class SubscribeToCaptainOfferLoadedState extends States {
               fade: true,
               milliseconds: 1000,
               child: SizedBox(
-                height: 425,
+                height: 225,
                 child: ListView(
                   physics: BouncingScrollPhysics(
                       parent: AlwaysScrollableScrollPhysics()),
@@ -99,28 +100,31 @@ class SubscribeToCaptainOfferLoadedState extends States {
       return [];
     }
     return packages.map((element) {
-      return GestureDetector(
-        onTap: () {
-          if (element.id == _selectedPackageId) {
-            _selectedPackageId = null;
-          } else {
-            _selectedPackageId = element.id;
-          }
-          screenState.refresh();
-        },
-        child: Container(
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: element.id == _selectedPackageId
-                  ? Theme.of(screenState.context).colorScheme.primary
-                  : null),
-          child: Padding(
-            padding: const EdgeInsets.all(4.0),
-            child: CaptainOfferCard(
-              model: element,
-              onEdit: () {},
-              onEnable: () {},
-              justShown: true,
+      return Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: GestureDetector(
+          onTap: () {
+            if (element.id == _selectedPackageId) {
+              _selectedPackageId = null;
+            } else {
+              _selectedPackageId = element.id;
+            }
+            screenState.refresh();
+          },
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: element.id == _selectedPackageId
+                    ? Theme.of(screenState.context).colorScheme.primary
+                    : null),
+            child: Padding(
+              padding: const EdgeInsets.all(4.0),
+              child: CaptainOfferCard(
+                model: element,
+                onEdit: () {},
+                onEnable: () {},
+                justShown: true,
+              ),
             ),
           ),
         ),

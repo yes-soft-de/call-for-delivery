@@ -7,11 +7,13 @@ class BottomSheetRenewSubscription extends StatelessWidget {
   final Function() packageExtend;
   final Function() renewNewPlan;
   final Function() renewOldPlan;
+  final Function() captainOffer;
   const BottomSheetRenewSubscription({
     Key? key,
     required this.packageExtend,
     required this.renewNewPlan,
     required this.renewOldPlan,
+    required this.captainOffer,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -64,7 +66,7 @@ class BottomSheetRenewSubscription extends StatelessWidget {
                   ),
                   CustomTextButton(
                     label: S.current.subscribeToCaptainOffer,
-                    onPressed: () {},
+                    onPressed: captainOffer,
                   ),
                 ],
               ),

@@ -60,6 +60,13 @@ class SubscriptionManagementStateLoaded extends States {
                         screenState.stateManager
                             .renewPackage(screenState, screenState.profileId);
                       },
+                      captainOffer: () {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pushNamed(
+                            SubscriptionsRoutes
+                                .CREATE_NEW_SUBSCRIPTION_TO_CAPTAIN_OFFER_SCREEN,
+                            arguments: screenState.profileId);
+                      },
                     );
                   });
             },
