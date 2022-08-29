@@ -791,5 +791,8 @@
     "packageExtendedSuccessfully": "Package extended successfully",
     "subscribeToCaptainOffer": "Subscribe to captain offer",
     "validation": "Validation",
-    "endedSubscriptions": "Ended subscriptions"
+    "endedSubscriptions": "Ended subscriptions",
+    "deleteAllFutureSubscriptions": "Are you sure about deleting all future subscriptions",
+    "futureSubscriptionsDeletedSuccessfully": "Future subscriptions deleted successfully",
+    "subscribedToOfferSuccessfully": "Subscribed to captain offer with a success"
 }

@@ -7969,6 +7969,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Are you sure about deleting all future subscriptions`
+  String get deleteAllFutureSubscriptions {
+    return Intl.message(
+      'Are you sure about deleting all future subscriptions',
+      name: 'deleteAllFutureSubscriptions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Future subscriptions deleted successfully`
+  String get futureSubscriptionsDeletedSuccessfully {
+    return Intl.message(
+      'Future subscriptions deleted successfully',
+      name: 'futureSubscriptionsDeletedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subscribed to captain offer with a success`
+  String get subscribedToOfferSuccessfully {
+    return Intl.message(
+      'Subscribed to captain offer with a success',
+      name: 'subscribedToOfferSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

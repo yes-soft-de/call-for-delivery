@@ -278,6 +278,8 @@ class Urls {
   /*-----------------------------subscription----------------------------*/
   static const String BASE_API_SUBSCRIPTION =
       DOMAIN + VERSION_ADMIN + '/subscription';
+  static const DELETE_SUBSCRIPTIONS_API =
+      BASE_API_SUBSCRIPTION + '/deleteallfuturesubscriptionsbyadmin';
   static const RENEW_SUBSCRIPTION_API =
       DOMAIN + '/v1/subscription/subscriptionbyadmin';
   static const EXTEND_SUBSCRIPTION_API =
