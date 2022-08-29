@@ -287,5 +287,5 @@ class Urls {
   static const SUBSCRIBE_TO_PACKAGE_API =
       BASE_API_SUBSCRIPTION + '/createsubscription';
   static const SUBSCRIBE_TO_CAPTAIN_OFFER_API =
-      '/v1/admin/subscriptioncaptainoffer/subscribe';
+     DOMAIN + '/v1/admin/subscriptioncaptainoffer/subscribe';
 }

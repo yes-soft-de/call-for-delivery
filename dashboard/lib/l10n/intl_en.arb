@@ -784,7 +784,7 @@
     "currentSubscriptions": "Current subscriptions",
     "createSubscription": "Create subscription",
     "editSubscriptions": "Edit subscription",
-    "deleteFutureSubscription": "Delete future subscription",
+    "deleteFutureSubscription": "Future subscription",
     "notImplementedYet": "Not implemented yet",
     "expiredSubscriptionsFinanceHint": "Here you find all your expired subscriptions financial information with included all payments ",
     "packageExtend": "Package extend",

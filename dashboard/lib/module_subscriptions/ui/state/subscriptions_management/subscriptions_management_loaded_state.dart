@@ -74,13 +74,6 @@ class SubscriptionManagementStateLoaded extends States {
             title: S.current.createSubscription,
           ),
           ControlWidget(
-            icon: Icons.edit,
-            onPressed: () {
-              Fluttertoast.showToast(msg: S.current.notImplementedYet);
-            },
-            title: S.current.editSubscriptions,
-          ),
-          ControlWidget(
             icon: Icons.delete_sweep_rounded,
             onPressed: () {
               showDialog(
@@ -97,7 +90,7 @@ class SubscriptionManagementStateLoaded extends States {
                   });
             },
             title: S.current.deleteFutureSubscription,
-            width: 200,
+           // width: 200,
           ),
         ],
       ),
