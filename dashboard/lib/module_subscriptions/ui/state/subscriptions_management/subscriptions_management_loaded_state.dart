@@ -4,6 +4,7 @@ import 'package:c4d/module_subscriptions/subscriptions_routes.dart';
 import 'package:c4d/module_subscriptions/ui/screen/subscriptions_managment_screen.dart';
 import 'package:c4d/module_subscriptions/ui/widget/bottom_sheet_sub_management/bottom_sheet_renew_sub.dart';
 import 'package:c4d/module_subscriptions/ui/widget/control_widget.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -82,7 +83,17 @@ class SubscriptionManagementStateLoaded extends States {
           ControlWidget(
             icon: Icons.delete_sweep_rounded,
             onPressed: () {
-              Fluttertoast.showToast(msg: S.current.notImplementedYet);
+              showDialog(
+                  context: context,
+                  builder: (ctx) {
+                    return CustomAlertDialog(
+                        onPressed: () {
+                          screenState.stateManager.deleteFutureSubscriptions(
+                              screenState, screenState.profileId);
+                        },
+                        content: S.current.deleteAllFutureSubscriptions,
+                        oneAction: false);
+                  });
             },
             title: S.current.deleteFutureSubscription,
             width: 200,

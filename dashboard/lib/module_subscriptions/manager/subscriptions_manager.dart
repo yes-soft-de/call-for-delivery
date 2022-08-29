@@ -14,6 +14,8 @@ class SubscriptionsManager {
       await _storesRepository.getSubscriptionsFinance(orderID);
   Future<ActionResponse?> renewPackage(int storeID) async =>
       await _storesRepository.renewPackage(storeID);
+  Future<ActionResponse?> deleteFutureSubscriptions(int storeID) async =>
+      await _storesRepository.deleteFutureSubscriptions(storeID);
   Future<ActionResponse?> extendPackage(int storeID) async =>
       await _storesRepository.extendSubscriptions(storeID);
   Future<ActionResponse?> subscribeToPackage(

@@ -9,7 +9,6 @@ import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_expired_s
 import 'package:c4d/module_subscriptions/ui/state/store_expired_finaincial_subscription_state/store_subscriptions_state.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
-import '../ui/state/subscriptions_finance/store_subscriptions_state.dart';
 
 @injectable
 class StoreSubscriptionsExpiredFinanceStateManager {

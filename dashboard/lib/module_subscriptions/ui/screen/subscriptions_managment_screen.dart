@@ -1,6 +1,6 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_subscriptions/state_manager/store_subscription_management.dart';
+import 'package:c4d/module_subscriptions/state_manager/store_subscription_management_state_manager.dart';
 import 'package:c4d/module_subscriptions/ui/state/subscriptions_management/subscriptions_management_loaded_state.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
