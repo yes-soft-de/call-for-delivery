@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\Admin\Subscription\AdminStoreSubscriptionConstant;
 use App\Entity\SubscriptionEntity;
 use App\Manager\Admin\StoreOwnerSubscription\AdminStoreSubscriptionManager;
+use App\Request\Admin\Subscription\CreateNewStoreSubscriptionWithSamePackageByAdminRequest;
 use App\Response\Admin\StoreOwnerSubscription\AdminStoreSubscriptionResponse;
 use App\Response\Admin\StoreOwnerSubscription\StoreFutureSubscriptionGetForAdminResponse;
 use App\Response\Subscription\RemainingOrdersResponse;
@@ -216,5 +217,14 @@ class AdminStoreSubscriptionService
     public function packageBalanceForAdminByStoreOwnerId(int $storeOwnerId): RemainingOrdersResponse|string
     {
         return $this->subscriptionService->packageBalance($storeOwnerId);
+    }
+
+    public function createNewSubscriptionForSamePackageByAdmin(CreateNewStoreSubscriptionWithSamePackageByAdminRequest $requestByAdmin): SubscriptionResponse|SubscriptionErrorResponse|string|int
+    {
+        $request = new SubscriptionCreateRequest();
+
+        $request->setNote($requestByAdmin->getNote());
+
+        return $this->subscriptionService->createNewSubscriptionForSamePackageByAdmin($request, $requestByAdmin->getStoreProfileId());
     }
 }

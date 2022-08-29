@@ -5,6 +5,7 @@ namespace App\Controller\Admin\StoreOwnerSubscription;
 use App\Controller\BaseController;
 use App\Request\Admin\Subscription\AdminCreateStoreSubscriptionRequest;
 use App\Request\Admin\Subscription\AdminExtraSubscriptionForDayRequest;
+use App\Request\Admin\Subscription\CreateNewStoreSubscriptionWithSamePackageByAdminRequest;
 use App\Service\Admin\StoreOwnerSubscription\AdminStoreSubscriptionService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -365,5 +366,98 @@ class AdminStoreSubscriptionController extends BaseController
         }
 
         return $this->response($result, self::DELETE);
+    }
+
+    /**
+     * admin: re-new current subscription by admin
+     * @Route("renewcurrentsubscriptionbyadmin", name="reNewCurrentSubscriptionByAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Subscription")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="re-new current subscription by admin request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="storeProfileId"),
+     *          @OA\Property(type="string", property="note")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns subscription",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *             @OA\Property(type="integer", property="id")
+     *      )
+     *    )
+     *  )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *          oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9157"),
+     *                          @OA\Property(type="string", property="msg", description="store owner profile not exist! Error.")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9302"),
+     *                          @OA\Property(type="string", property="msg", description="You do not have a subscription Error.")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9351"),
+     *                          @OA\Property(type="string", property="msg", description="package not exist Error.")
+     *                   )
+     *              }
+     *      )
+     *
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function createNewSubscriptionForSamePackageByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, CreateNewStoreSubscriptionWithSamePackageByAdminRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminStoreSubscriptionService->createNewSubscriptionForSamePackageByAdmin($request);
+
+        if ($result === StoreProfileConstant::STORE_NOT_FOUND) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::STORE_OWNER_PROFILE_NOT_EXIST);
+        }
+
+        if ($result === SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::SUBSCRIPTION_UNSUBSCRIBED);
+        }
+
+        if (isset($result->packageState)) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::PACKAGE_NOT_EXIST);
+        }
+
+        return $this->response($result, self::CREATE);
     }
 }
