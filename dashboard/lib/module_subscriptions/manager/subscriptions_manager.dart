@@ -1,5 +1,6 @@
 import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/module_subscriptions/repository/subscriptions_repository.dart';
+import 'package:c4d/module_subscriptions/request/store_captain_offer_request.dart';
 import 'package:c4d/module_subscriptions/request/store_subscribe_to_package.dart';
 import 'package:c4d/module_subscriptions/response/subscriptions_financial_response/subscriptions_financial_response.dart';
 import 'package:injectable/injectable.dart';
@@ -19,6 +20,6 @@ class SubscriptionsManager {
           StoreSubscribeToPackageRequest request) async =>
       await _storesRepository.subscribeToPackage(request);
   Future<ActionResponse?> subscribeToCaptainOffer(
-          StoreSubscribeToPackageRequest request) async =>
+          StoreSubscribeToCaptainOfferRequest request) async =>
       await _storesRepository.subscribeToCaptainOffer(request);
 }

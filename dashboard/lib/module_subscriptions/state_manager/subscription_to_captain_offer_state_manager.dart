@@ -7,6 +7,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/model/captain_offer_model.dart';
 import 'package:c4d/module_captain/service/captains_service.dart';
 import 'package:c4d/module_categories/model/packages_model.dart';
+import 'package:c4d/module_subscriptions/request/store_captain_offer_request.dart';
 import 'package:c4d/module_subscriptions/request/store_subscribe_to_package.dart';
 import 'package:c4d/module_subscriptions/service/subscriptions_service.dart';
 import 'package:c4d/module_subscriptions/ui/screen/subscription_to_captain_offer_screen.dart';
@@ -48,7 +49,7 @@ class SubscriptionToCaptainOfferStateManager {
   }
 
   void subscribePackage(CreateSubscriptionToCaptainOfferScreenState screenState,
-      StoreSubscribeToPackageRequest request) {
+      StoreSubscribeToCaptainOfferRequest request) {
     _stateSubject.add(LoadingState(screenState));
     _initAccountService.subscribeToCaptainOffer(request).then((value) {
       if (value.hasError) {

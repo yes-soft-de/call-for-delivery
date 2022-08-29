@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/model/captain_offer_model.dart';
 import 'package:c4d/module_captain/ui/widget/offer/offer_card.dart';
+import 'package:c4d/module_subscriptions/request/store_captain_offer_request.dart';
 import 'package:c4d/module_subscriptions/request/store_subscribe_to_package.dart';
 import 'package:c4d/module_subscriptions/ui/screen/subscription_to_captain_offer_screen.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -67,9 +68,9 @@ class SubscribeToCaptainOfferLoadedState extends States {
                       )),
                       onPressed: () {
                         screenState.subscribeToPackage(
-                          StoreSubscribeToPackageRequest(
-                              packageId: _selectedPackageId,
-                              storeOwnerProfileId: screenState.storeID),
+                          StoreSubscribeToCaptainOfferRequest(
+                              captainOffer: _selectedPackageId,
+                              storeOwner: screenState.storeID),
                         );
                       },
                       child: Padding(
