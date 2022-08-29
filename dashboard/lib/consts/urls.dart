@@ -284,4 +284,6 @@ class Urls {
       BASE_API_SUBSCRIPTION + '/extrasubscriptionforday';
   static const SUBSCRIBE_TO_PACKAGE_API =
       BASE_API_SUBSCRIPTION + '/createsubscription';
+  static const SUBSCRIBE_TO_CAPTAIN_OFFER_API =
+      '/v1/admin/subscriptioncaptainoffer/subscribe';
 }
