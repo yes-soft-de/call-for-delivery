@@ -35,7 +35,7 @@ class SubscriptionManagementStateLoaded extends States {
                   SubscriptionsRoutes.SUBSCRIPTIONS_EXPIRED_DUES_SCREEN,
                   arguments: screenState.profileId);
             },
-            title: S.current.expiredSubscriptions,
+            title: S.current.endedSubscriptions,
           ),
           ControlWidget(
             icon: Icons.create_new_folder_rounded,
@@ -88,6 +88,7 @@ class SubscriptionManagementStateLoaded extends States {
                   builder: (ctx) {
                     return CustomAlertDialog(
                         onPressed: () {
+                          Navigator.of(context).pop();
                           screenState.stateManager.deleteFutureSubscriptions(
                               screenState, screenState.profileId);
                         },

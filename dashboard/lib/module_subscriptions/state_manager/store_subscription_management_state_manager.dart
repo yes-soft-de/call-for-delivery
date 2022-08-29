@@ -75,7 +75,7 @@ class StoreSubscriptionManagementStateManager {
         _stateSubject.add(SubscriptionManagementStateLoaded(screenState));
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
-                message: S.current.packageExtendedSuccessfully)
+                message: S.current.futureSubscriptionsDeletedSuccessfully)
             .show(screenState.context);
       }
     });

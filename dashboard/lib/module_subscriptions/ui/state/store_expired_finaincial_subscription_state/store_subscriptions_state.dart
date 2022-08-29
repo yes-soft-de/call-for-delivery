@@ -25,148 +25,140 @@ class StoreSubscriptionsExpiredFinanceStateLoaded extends States {
   List<Widget> getDues() {
     var context = screenState.context;
     List<Widget> widgets = [];
-    for (StoreSubscriptionsFinanceModel element
-        in dues ?? <StoreSubscriptionsFinanceModel>[]) {
-      if (SubscriptionsStatusHelper.getStatusEnum(element.status) !=
-          BalanceStatus.EXPIRED) {
-        continue;
-      }
-      dues?.forEach((element) {
-        widgets.add(Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Material(
-            color: Colors.transparent,
-            child: InkWell(
-              borderRadius: BorderRadius.circular(25),
-              onTap: () {
-                StoresHiveHelper().setCurrentStoreID(screenState.storeID);
-                Navigator.of(context).pushNamed(
-                    SubscriptionsRoutes.SUBSCRIPTIONS_DUES_DETAILS_SCREEN,
-                    arguments: element);
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    color: Theme.of(context).scaffoldBackgroundColor,
-                    boxShadow: [
-                      BoxShadow(
-                          blurRadius: 5,
-                          spreadRadius: 0.5,
-                          offset: const Offset(-1, 0),
-                          color: Theme.of(context).backgroundColor),
-                    ]),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      // financial cycleDate
-                      Center(
-                          child: Text(
-                        element.packageName,
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      )),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Expanded(
-                                child: verticalBubble(
-                                    subtitle: element.startDate,
-                                    title: S.current.subscriptionDate)),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                width: 32,
-                                height: 2.5,
-                                color: Theme.of(context).backgroundColor,
-                              ),
-                            ),
-                            Expanded(
-                                child: verticalBubble(
-                                    title: S.current.expirationData,
-                                    subtitle: element.endDate)),
-                          ],
-                        ),
-                      ),
-                      // financial summery
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Expanded(
-                                child: verticalBubble(
-                                    title: S.current.requiredToPay,
-                                    subtitle: FixedNumber.getFixedNumber(
-                                            element.total.requiredToPay) +
-                                        ' ${S.current.sar}')),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                width: 32,
-                                height: 2.5,
-                                color: Theme.of(context).backgroundColor,
-                              ),
-                            ),
-                            Expanded(
-                                child: verticalBubble(
-                                    title: S.current.sumPayments,
-                                    subtitle: FixedNumber.getFixedNumber(
-                                            element.total.sumPayments) +
-                                        ' ${S.current.sar}')),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Expanded(
+    dues?.forEach((element) {
+      widgets.add(Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(25),
+            onTap: () {
+              StoresHiveHelper().setCurrentStoreID(screenState.storeID);
+              Navigator.of(context).pushNamed(
+                  SubscriptionsRoutes.SUBSCRIPTIONS_DUES_DETAILS_SCREEN,
+                  arguments: element);
+            },
+            child: Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  boxShadow: [
+                    BoxShadow(
+                        blurRadius: 5,
+                        spreadRadius: 0.5,
+                        offset: const Offset(-1, 0),
+                        color: Theme.of(context).backgroundColor),
+                  ]),
+              child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Column(
+                  children: [
+                    // financial cycleDate
+                    Center(
+                        child: Text(
+                      element.packageName,
+                      style: const TextStyle(fontWeight: FontWeight.bold),
+                    )),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Expanded(
                               child: verticalBubble(
-                                  title: S.current.leftToPay,
-                                  subtitle: FixedNumber.getFixedNumber(
-                                          element.total.total) +
-                                      ' ${S.current.sar}',
-                                  background: element.total.advancePayment ==
-                                          null
-                                      ? null
-                                      : (element.total.advancePayment == true
-                                          ? Colors.green
-                                          : Colors.red)),
+                                  subtitle: element.startDate,
+                                  title: S.current.subscriptionDate)),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: 32,
+                              height: 2.5,
+                              color: Theme.of(context).backgroundColor,
                             ),
-                            Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Container(
-                                width: 32,
-                                height: 2.5,
-                                color: Theme.of(context).backgroundColor,
-                              ),
-                            ),
-                            Expanded(
-                                child: verticalBubble(
-                              title: S.current.subscriptionStatus,
-                              subtitle:
-                                  SubscriptionsStatusHelper.getStatusMessage(
-                                      element.status),
-                              background:
-                                  SubscriptionsStatusHelper.getStatusColor(
-                                      element.status),
-                              subtitleText: true,
-                            )),
-                          ],
-                        ),
+                          ),
+                          Expanded(
+                              child: verticalBubble(
+                                  title: S.current.expirationData,
+                                  subtitle: element.endDate)),
+                        ],
                       ),
-                    ],
-                  ),
+                    ),
+                    // financial summery
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Expanded(
+                              child: verticalBubble(
+                                  title: S.current.requiredToPay,
+                                  subtitle: FixedNumber.getFixedNumber(
+                                          element.total.requiredToPay) +
+                                      ' ${S.current.sar}')),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: 32,
+                              height: 2.5,
+                              color: Theme.of(context).backgroundColor,
+                            ),
+                          ),
+                          Expanded(
+                              child: verticalBubble(
+                                  title: S.current.sumPayments,
+                                  subtitle: FixedNumber.getFixedNumber(
+                                          element.total.sumPayments) +
+                                      ' ${S.current.sar}')),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Expanded(
+                            child: verticalBubble(
+                                title: S.current.leftToPay,
+                                subtitle: FixedNumber.getFixedNumber(
+                                        element.total.total) +
+                                    ' ${S.current.sar}',
+                                background: element.total.advancePayment == null
+                                    ? null
+                                    : (element.total.advancePayment == true
+                                        ? Colors.green
+                                        : Colors.red)),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Container(
+                              width: 32,
+                              height: 2.5,
+                              color: Theme.of(context).backgroundColor,
+                            ),
+                          ),
+                          Expanded(
+                              child: verticalBubble(
+                            title: S.current.subscriptionStatus,
+                            subtitle:
+                                SubscriptionsStatusHelper.getStatusMessage(
+                                    element.status),
+                            background:
+                                SubscriptionsStatusHelper.getStatusColor(
+                                    element.status),
+                            subtitleText: true,
+                          )),
+                        ],
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ),
           ),
-        ));
-      });
-    }
+        ),
+      ));
+    });
     widgets.add(Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
