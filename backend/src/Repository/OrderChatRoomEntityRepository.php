@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Constant\Order\OrderStateConstant;
 use App\Entity\OrderChatRoomEntity;
 use App\Entity\OrderEntity;
+use App\Entity\OrderLogEntity;
 use App\Entity\RateEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\CaptainEntity;
@@ -89,12 +90,12 @@ class OrderChatRoomEntityRepository extends ServiceEntityRepository
 
     public function getOnGoingOrdersChatRoomsForStore(int $userId): array
     {
-        return $this->createQueryBuilder('orderChatRoomEntity')
+        $query = $this->createQueryBuilder('orderChatRoomEntity')
             ->select('identity(orderChatRoomEntity.orderId) as orderId')
             ->addSelect('orderChatRoomEntity.id', 'orderChatRoomEntity.usedAs', 'orderChatRoomEntity.createdAt', 'orderChatRoomEntity.roomId')
-            ->addSelect('captainEntity.id as captainId', 'captainEntity.captainName')
+            ->addSelect('captainEntity.id as captainId', 'captainEntity.captainName', 'captainEntity.captainId as captainUserId')
             ->addSelect('imageEntity.imagePath')
-            ->addSelect('avg(rateEntity.rating) as avgRating')
+            ->addSelect('orderEntity.state')
 
             ->leftJoin(
                 OrderEntity::class,
@@ -124,26 +125,98 @@ class OrderChatRoomEntityRepository extends ServiceEntityRepository
                 'imageEntity.itemId = captainEntity.id and imageEntity.usedAs = :usedAs and imageEntity.entityType = :entityType'
             )
 
-            ->leftJoin(
-                RateEntity::class,
-                'rateEntity',
-                Join::WITH,
-                'rateEntity.rated = captainEntity.captainId'
-            )
-
             ->andWhere('orderEntity.storeOwner = storeOwnerProfileEntity.id')
 
             ->andWhere('orderChatRoomEntity.usedAs = :orderChatRoomUsedAs')
             ->setParameter('orderChatRoomUsedAs', ChatRoomConstant::CAPTAIN_STORE)
 
-            ->andWhere('orderEntity.state IN (:ongoingState)')
-            ->setParameter('ongoingState', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)
+            ->andWhere('orderEntity.state != :cancelledStatus AND orderEntity.state != :pendingStatus')
+            ->setParameter('cancelledStatus', OrderStateConstant::ORDER_STATE_CANCEL)
+            ->setParameter('pendingStatus', OrderStateConstant::ORDER_STATE_PENDING)
 
             ->setParameter('userId', $userId)
             ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
-            ->setParameter('usedAs', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+            ->setParameter('usedAs', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE);
+
+            $tempQuery = $query->getQuery()->getResult();
+
+            // iterates the results, and if there is a delivered order, then check its deliver date
+            if (count($tempQuery) > 0) {
+                $response = [];
+
+                foreach ($tempQuery as $order) {
+
+                    if ($order['state'] === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                        $result = $this->checkIfDeliveredOrderLogCreatedAtBetweenSpecificDates($order['orderId']);
+
+                        if ($result === 1) {
+                            $order['avgRating'] = $this->getRatingAverageByCaptainId($order['captainUserId']);
+                            $response[] = $order;
+                        }
+
+                    } else {
+                        $order['avgRating'] = $this->getRatingAverageByCaptainId($order['captainUserId']);
+                        $response[] = $order;
+                    }
+                }
+
+                return $response;
+            }
+
+            return $tempQuery;
+    }
+
+    public function getRatingAverageByCaptainId(int $captainId): ?string
+    {
+        $query = $this->createQueryBuilder('orderChatRoomEntity')
+            ->select('avg(rateEntity.rating) as avgRating')
+
+            ->leftJoin(
+                RateEntity::class,
+                'rateEntity',
+                Join::WITH,
+                'rateEntity.rated = :captainId'
+            )
+
+            ->setParameter('captainId', $captainId)
 
             ->getQuery()
-            ->getResult();
+            ->getSingleColumnResult();
+
+        if (count($query) > 0) {
+            return $query[0];
+        }
+
+        return null;
+    }
+
+    public function checkIfDeliveredOrderLogCreatedAtBetweenSpecificDates(int $orderId): int
+    {
+        $query = $this->createQueryBuilder('orderChatRoomEntity')
+
+            ->leftJoin(
+                OrderLogEntity::class,
+                'orderLogEntity',
+                Join::WITH,
+                'orderLogEntity.orderId = orderChatRoomEntity.orderId'
+            )
+
+            ->andWhere('orderChatRoomEntity.orderId = :orderIdValue')
+            ->setParameter('orderIdValue', $orderId)
+
+            ->andWhere('orderLogEntity.state = :stateValue')
+            ->setParameter('stateValue', OrderStateConstant::ORDER_STATE_ARRAY_INT[OrderStateConstant::ORDER_STATE_DELIVERED])
+
+            ->andWhere('orderLogEntity.createdAt >= :specificDate')
+            ->setParameter('specificDate', new \DateTime('- 10 minutes'))
+
+            ->getQuery()
+            ->getOneOrNullResult();
+
+        if ($query) {
+            return 1;
+        }
+
+        return 0;
     }
 }
