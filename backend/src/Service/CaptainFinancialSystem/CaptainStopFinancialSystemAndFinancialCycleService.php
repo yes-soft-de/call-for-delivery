@@ -29,14 +29,14 @@ class CaptainStopFinancialSystemAndFinancialCycleService
         $this->notificationFirebaseService = $notificationFirebaseService;
         $this->captainFinancialDuesService = $captainFinancialDuesService;
     }
-    public function stopFinancialSystemAndFinancialCycle(int $uerId)
+    public function stopFinancialSystemAndFinancialCycle(int $userId)
     { 
         //get Latest Captain Financial Dues
-        $captainFinancialDues = $this->captainFinancialDuesManager->getLatestCaptainFinancialDuesByUserId($uerId);
+        $captainFinancialDues = $this->captainFinancialDuesManager->getLatestCaptainFinancialDuesByUserId($userId);
         if($captainFinancialDues) {
             if($captainFinancialDues->getState() === CaptainFinancialDues::FINANCIAL_STATE_ACTIVE) {
                 //calculating financial dues the final
-                $this->captainFinancialDuesService->captainFinancialDues($uerId);
+                $this->captainFinancialDuesService->captainFinancialDues($userId);
             }
             //End of the current financial cycle
             $captainFinancialDues->setState(CaptainFinancialDues::FINANCIAL_STATE_INACTIVE);
