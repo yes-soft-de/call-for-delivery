@@ -1,6 +1,4 @@
-import 'package:c4d/module_subscriptions/response/subscriptions_financial_response/subscriptions_response.dart';
 import 'package:intl/intl.dart';
-
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
@@ -10,7 +8,6 @@ import 'package:c4d/module_subscriptions/response/subscriptions_financial_respon
 import 'package:c4d/module_subscriptions/response/subscriptions_financial_response/subscriptions_financial_response.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
-
 import '../response/subscriptions_financial_response/datum.dart';
 
 class SubscriptionsModel{
