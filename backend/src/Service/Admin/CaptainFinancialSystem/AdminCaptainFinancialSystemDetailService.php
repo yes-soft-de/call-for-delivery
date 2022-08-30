@@ -21,7 +21,7 @@ use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailUp
 use DateTime;
 use App\Service\Admin\Order\AdminOrderService;
 
-class AdminCaptainFinancialSystemDetailService
+class AdminCaptainFinancialSystemDetailService implements AdminCaptainFinancialSystemDetailInterface
 {
     private AdminCaptainFinancialSystemDetailManager $adminCaptainFinancialSystemDetailManager;
     private CaptainPaymentService $captainPaymentService;
@@ -136,11 +136,22 @@ class AdminCaptainFinancialSystemDetailService
         return $this->autoMapping->map(CaptainFinancialSystemDetailEntity::class, AdminCaptainFinancialSystemDetailUpdateResponse::class, $result);
     }
 
-    //calculate orders that not belong to any financial dues
-    public function calculateOrdersThatNotBelongToAnyFinancialDues() 
+    /**
+     * This functions creates financial cycles for orders (created after 8/19/2022) which do not belong to any
+     * financial cycle
+     * This function is called by a command
+     */
+    public function calculateOrdersThatNotBelongToAnyFinancialDues(): void
     {
+       // Get orders which accepted by captains and their created date is above 8/19/2022
        $orders = $this->adminOrderService->getOrders();
 
-       $this->captainFinancialDuesService->calculateOrdersThatNotBelongToAnyFinancialDues($orders);     
+       if (count($orders) > 0) {
+           /**
+            * Check each order of the fetched ones, if it doesn't belong to any financial cycle, then create a one
+            * which contains the order/s that accepted by same captain
+            */
+           $this->captainFinancialDuesService->calculateOrdersThatNotBelongToAnyFinancialDues($orders);
+       }
     }
 }

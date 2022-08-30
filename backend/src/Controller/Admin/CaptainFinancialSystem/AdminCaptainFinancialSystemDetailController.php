@@ -223,16 +223,18 @@ class AdminCaptainFinancialSystemDetailController extends BaseController
 
         return $this->response($result, self::UPDATE);
     }
-    /**
-     * @Route("calculateordersthatnotbelongtoanyfinancialdues", name="calculateOrdersThatNotBelongToAnyFinancialDues", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN")
-     * @return JsonResponse
-     *
-     */
-    public function calculateOrdersThatNotBelongToAnyFinancialDues(): JsonResponse
-    {
-        $result = $this->adminCaptainFinancialSystemDetailService->calculateOrdersThatNotBelongToAnyFinancialDues();
 
-        return $this->response($result, self::FETCH);
-    }
+    // Following API replaced by command
+//    /**
+//     * @Route("calculateordersthatnotbelongtoanyfinancialdues", name="calculateOrdersThatNotBelongToAnyFinancialDues", methods={"GET"})
+//     * @IsGranted("ROLE_ADMIN")
+//     * @return JsonResponse
+//     *
+//     */
+//    public function calculateOrdersThatNotBelongToAnyFinancialDues(): JsonResponse
+//    {
+//        $result = $this->adminCaptainFinancialSystemDetailService->calculateOrdersThatNotBelongToAnyFinancialDues();
+//
+//        return $this->response($result, self::FETCH);
+//    }
 }
