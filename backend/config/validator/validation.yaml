@@ -754,3 +754,8 @@ App\Request\User\UserPasswordUpdateByLoggedInUserRequest:
             - NotBlank: ~
         password:
             - NotBlank: ~
+
+App\Request\Admin\Subscription\CreateNewStoreSubscriptionWithSamePackageByAdminRequest:
+    properties:
+        storeProfileId:
+            - NotBlank: ~
