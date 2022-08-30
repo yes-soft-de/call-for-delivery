@@ -1,6 +1,9 @@
 import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/module_subscriptions/repository/subscriptions_repository.dart';
+import 'package:c4d/module_subscriptions/request/delete_captain_offer_request.dart';
+import 'package:c4d/module_subscriptions/request/delete_subscription_request.dart';
 import 'package:c4d/module_subscriptions/request/store_captain_offer_request.dart';
+import 'package:c4d/module_subscriptions/request/store_edit_subscribe_to_package.dart';
 import 'package:c4d/module_subscriptions/request/store_subscribe_to_package.dart';
 import 'package:c4d/module_subscriptions/response/subscriptions_financial_response/subscriptions_financial_response.dart';
 import 'package:injectable/injectable.dart';
@@ -21,6 +24,15 @@ class SubscriptionsManager {
   Future<ActionResponse?> subscribeToPackage(
           StoreSubscribeToPackageRequest request) async =>
       await _storesRepository.subscribeToPackage(request);
+  Future<ActionResponse?> editSubscribeToPackage(
+          EditStoreSubscribeToPackageRequest request) async =>
+      await _storesRepository.editSubscribeToPackage(request);
+  Future<ActionResponse?> deleteCaptainOffer(
+          DeleteCaptainOfferSubscriptionsRequest request) async =>
+      await _storesRepository.deleteCaptainOffer(request);
+  Future<ActionResponse?> deleteSubscription(
+          DeleteSubscriptionsRequest request) async =>
+      await _storesRepository.deleteSubscription(request);
   Future<ActionResponse?> subscribeToCaptainOffer(
           StoreSubscribeToCaptainOfferRequest request) async =>
       await _storesRepository.subscribeToCaptainOffer(request);

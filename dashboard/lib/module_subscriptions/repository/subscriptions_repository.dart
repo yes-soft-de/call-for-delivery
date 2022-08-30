@@ -1,5 +1,8 @@
 import 'package:c4d/abstracts/response/action_response.dart';
+import 'package:c4d/module_subscriptions/request/delete_captain_offer_request.dart';
+import 'package:c4d/module_subscriptions/request/delete_subscription_request.dart';
 import 'package:c4d/module_subscriptions/request/store_captain_offer_request.dart';
+import 'package:c4d/module_subscriptions/request/store_edit_subscribe_to_package.dart';
 import 'package:c4d/module_subscriptions/request/store_subscribe_to_package.dart';
 import 'package:c4d/module_subscriptions/response/subscriptions_financial_response/subscriptions_financial_response.dart';
 import 'package:injectable/injectable.dart';
@@ -46,6 +49,30 @@ class SubscriptionsRepository {
     return ActionResponse.fromJson(response);
   }
 
+  Future<ActionResponse?> deleteCaptainOffer(
+      DeleteCaptainOfferSubscriptionsRequest request) async {
+    var token = await _authService.getToken();
+    var response = await _apiClient.post(
+      Urls.DELETE_SUBSCRIPTION_TO_CAPTAIN_OFFER_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> deleteSubscription(
+      DeleteSubscriptionsRequest request) async {
+    var token = await _authService.getToken();
+    var response = await _apiClient.post(
+      Urls.DELETE_SUBSCRIPTION_TO_PACKAGE_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
   Future<ActionResponse?> extendSubscriptions(int storeID) async {
     var token = await _authService.getToken();
     var response = await _apiClient.post(
@@ -62,6 +89,18 @@ class SubscriptionsRepository {
     var token = await _authService.getToken();
     var response = await _apiClient.post(
       Urls.SUBSCRIBE_TO_PACKAGE_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> editSubscribeToPackage(
+      EditStoreSubscribeToPackageRequest request) async {
+    var token = await _authService.getToken();
+    var response = await _apiClient.post(
+      Urls.EDIT_SUBSCRIBE_TO_PACKAGE_API,
       request.toJson(),
       headers: {'Authorization': 'Bearer ' + '$token'},
     );

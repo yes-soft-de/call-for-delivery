@@ -2,10 +2,13 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
 import 'package:c4d/module_stores/hive/store_hive_helper.dart';
 import 'package:c4d/module_subscriptions/model/store_subscriptions_financial.dart';
+import 'package:c4d/module_subscriptions/request/delete_captain_offer_request.dart';
+import 'package:c4d/module_subscriptions/request/delete_subscription_request.dart';
 import 'package:c4d/module_subscriptions/service/subscriptions_service.dart';
 import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_details_screen.dart';
 import 'package:c4d/module_subscriptions/ui/state/store_financial_subscriptions_details/store_financial_details_state.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -62,6 +65,50 @@ class StoreFinancialSubscriptionsDuesDetailsStateManager {
       } else {
         getIt<GlobalStateManager>().updateList();
         getCaptainPaymentsDetails(screenState);
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: S.current.paymentSuccessfully)
+            .show(screenState.context);
+      }
+    });
+  }
+
+  void deleteSubscriptions(
+      StoreSubscriptionsFinanceDetailsScreenState screenState,
+      DeleteSubscriptionsRequest request) {
+    _stateSubject.add(LoadingState(screenState));
+    _storesService.deleteSubscription(request).then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error.toString())
+            .show(screenState.context);
+        getCaptainPaymentsDetails(screenState);
+      } else {
+        getIt<GlobalStateManager>().updateList();
+        getCaptainPaymentsDetails(screenState);
+        Navigator.of(screenState.context).pop();
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: S.current.paymentSuccessfully)
+            .show(screenState.context);
+      }
+    });
+  }
+
+  void deleteCaptainOfferSubscription(
+      StoreSubscriptionsFinanceDetailsScreenState screenState,
+      DeleteCaptainOfferSubscriptionsRequest request) {
+    _stateSubject.add(LoadingState(screenState));
+    _storesService.deleteCaptainOffer(request).then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error.toString())
+            .show(screenState.context);
+        getCaptainPaymentsDetails(screenState);
+      } else {
+        getIt<GlobalStateManager>().updateList();
+        getCaptainPaymentsDetails(screenState);
+        Navigator.of(screenState.context).pop();
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.paymentSuccessfully)
