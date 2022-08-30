@@ -794,5 +794,10 @@
     "endedSubscriptions": "Ended subscriptions",
     "deleteAllFutureSubscriptions": "Are you sure about deleting all future subscriptions",
     "futureSubscriptionsDeletedSuccessfully": "Future subscriptions deleted successfully",
-    "subscribedToOfferSuccessfully": "Subscribed to captain offer with a success"
+    "subscribedToOfferSuccessfully": "Subscribed to captain offer with a success",
+    "areSureAboutDeleteThisSubscriptions": "Are sure about delete this subscriptions",
+    "areYouWantToDeleteAllPayments": "Are you want to delete all payments",
+    "areYouWantToDeleteCaptainOfferEvenIfUsed": "Are you want to delete captain offer event even if it used",
+    "deleteCaptainOfferSubscription": "Delete Captain Offer subscription",
+    "areSureAboutDeleteThisCaptainOfferSubscriptions": "Are you sure about deleting captain offer subscription"
 }

@@ -7890,10 +7890,10 @@ class S {
     );
   }
 
-  /// `Delete future subscription`
+  /// `Future subscription`
   String get deleteFutureSubscription {
     return Intl.message(
-      'Delete future subscription',
+      'Future subscription',
       name: 'deleteFutureSubscription',
       desc: '',
       args: [],
@@ -7995,6 +7995,56 @@ class S {
     return Intl.message(
       'Subscribed to captain offer with a success',
       name: 'subscribedToOfferSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are sure about delete this subscriptions`
+  String get areSureAboutDeleteThisSubscriptions {
+    return Intl.message(
+      'Are sure about delete this subscriptions',
+      name: 'areSureAboutDeleteThisSubscriptions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you want to delete all payments`
+  String get areYouWantToDeleteAllPayments {
+    return Intl.message(
+      'Are you want to delete all payments',
+      name: 'areYouWantToDeleteAllPayments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you want to delete captain offer event even if it used`
+  String get areYouWantToDeleteCaptainOfferEvenIfUsed {
+    return Intl.message(
+      'Are you want to delete captain offer event even if it used',
+      name: 'areYouWantToDeleteCaptainOfferEvenIfUsed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete Captain Offer subscription`
+  String get deleteCaptainOfferSubscription {
+    return Intl.message(
+      'Delete Captain Offer subscription',
+      name: 'deleteCaptainOfferSubscription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about deleting captain offer subscription`
+  String get areSureAboutDeleteThisCaptainOfferSubscriptions {
+    return Intl.message(
+      'Are you sure about deleting captain offer subscription',
+      name: 'areSureAboutDeleteThisCaptainOfferSubscriptions',
       desc: '',
       args: [],
     );
