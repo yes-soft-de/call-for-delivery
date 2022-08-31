@@ -97,9 +97,10 @@ class AdminStoreSubscriptionManager
     {
         return $this->subscribeRepository->findOneBy(['id'=>$id]);
     }
-    
-    public function getOrdersExceedGeographicalRangeBySubscriptionId(int $subscriptionId, float $packageGeographicalRange): ?array
-    {
-       return $this->subscribeRepository->getOrdersExceedGeographicalRangeBySubscriptionId($subscriptionId, $packageGeographicalRange);
-    }
+
+    // Following function had been commented out because it is not being used
+//    public function getOrdersExceedGeographicalRangeBySubscriptionId(int $subscriptionId, float $packageGeographicalRange): ?array
+//    {
+//       return $this->subscribeRepository->getOrdersExceedGeographicalRangeBySubscriptionId($subscriptionId, $packageGeographicalRange);
+//    }
 }

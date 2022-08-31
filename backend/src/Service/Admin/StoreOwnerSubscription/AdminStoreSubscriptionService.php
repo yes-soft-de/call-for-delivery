@@ -182,7 +182,7 @@ class AdminStoreSubscriptionService
             $subscription = $this->adminStoreSubscriptionManager->getSubscriptionEntityByIdForAdmin($request->getId());
 
             if ($subscription) {
-                $subscriptionDeleteResult = $this->storeSubscriptionEraserService->deleteStoreOwnerSubscription($subscription->getStoreOwner()->getStoreOwnerId());
+                $subscriptionDeleteResult = $this->storeSubscriptionEraserService->deleteCurrentStoreOwnerSubscriptionBySubscriptionId($subscription->getId());
 
                 if ($subscriptionDeleteResult === AdminStoreSubscriptionConstant::STORE_SUBSCRIPTIONS_DELETED_SUCCESSFULLY) {
                     return $this->autoMapping->map(SubscriptionEntity::class, AdminDeleteSubscriptionResponse::class, $subscription);
@@ -198,7 +198,7 @@ class AdminStoreSubscriptionService
             $subscription = $this->adminStoreSubscriptionManager->getSubscriptionEntityByIdForAdmin($request->getId());
 
             if ($subscription) {
-                $subscriptionDeleteResult = $this->storeSubscriptionEraserService->deleteStoreOwnerSubscription($subscription->getStoreOwner()->getStoreOwnerId());
+                $subscriptionDeleteResult = $this->storeSubscriptionEraserService->deleteCurrentStoreOwnerSubscriptionBySubscriptionId($subscription->getId());
 
                 if ($subscriptionDeleteResult === AdminStoreSubscriptionConstant::STORE_SUBSCRIPTIONS_DELETED_SUCCESSFULLY) {
                     return $this->autoMapping->map(SubscriptionEntity::class, AdminDeleteSubscriptionResponse::class, $subscription);

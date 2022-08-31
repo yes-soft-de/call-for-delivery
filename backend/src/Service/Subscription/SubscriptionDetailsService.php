@@ -45,4 +45,9 @@ class SubscriptionDetailsService
     {
         return $this->subscriptionDetailsManager->updateRemainingCars($id, $remainingCars);
     }
+
+    public function deleteSubscriptionDetailsBySubscriptionId(int $subscriptionId): ?SubscriptionDetailsEntity
+    {
+        return $this->subscriptionDetailsManager->deleteSubscriptionDetailsBySubscriptionId($subscriptionId);
+    }
 }

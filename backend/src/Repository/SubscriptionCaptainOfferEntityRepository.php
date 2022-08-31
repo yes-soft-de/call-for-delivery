@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Constant\Subscription\SubscriptionCaptainOffer;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionCaptainOfferEntity;
 use App\Entity\SubscriptionEntity;
@@ -61,5 +62,23 @@ class SubscriptionCaptainOfferEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getResult();
+    }
+
+    public function getCaptainOffersSubscriptionBySubscriptionId(int $subscriptionId): ?SubscriptionCaptainOfferEntity
+    {
+        return $this->createQueryBuilder('subscriptionCaptainOfferEntity')
+
+            ->leftJoin(
+                SubscriptionEntity::class,
+                'subscriptionEntity',
+                Join::WITH,
+                'subscriptionEntity.subscriptionCaptainOffer = subscriptionCaptainOfferEntity.id'
+            )
+
+            ->andWhere('subscriptionEntity.id = :subscriptionId')
+            ->setParameter('subscriptionId', $subscriptionId)
+
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }
