@@ -1,10 +1,13 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/model/order_without_distance_model.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/update_distance_request.dart';
 import 'package:c4d/module_orders/ui/screens/orders_without_distance_screen.dart';
+import 'package:c4d/module_orders/ui/widgets/geo_widget.dart';
 import 'package:c4d/module_orders/ui/widgets/orders_without_distance/order_without_distance_card.dart';
+import 'package:c4d/module_stores/response/order/orders_response/destination.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
@@ -45,11 +48,12 @@ class OrderWithoutDistanceLoadedState extends States {
               destinationUrl: element.destinationLink ?? '',
               onEdit: () {
                 var _kilometer = TextEditingController();
+                num? distance = null;
                 showDialog(
                     context: context,
                     builder: (ctx) {
+                      LatLng? coordinations;
                       return StatefulBuilder(builder: (context, setState) {
-                        print(screenState.manager);
                         return AlertDialog(
                           scrollable: true,
                           shape: RoundedRectangleBorder(
@@ -62,31 +66,65 @@ class OrderWithoutDistanceLoadedState extends States {
                                   title: Text(S.current.distance),
                                   subtitle: CustomFormField(
                                     onChanged: () {
+                                      var coord = _kilometer.text.split(',');
+                                      if (coord.length == 2) {
+                                        coordinations = LatLng(
+                                            double.tryParse(coord[0].trim()) ??
+                                                0,
+                                            double.tryParse(coord[1].trim()) ??
+                                                0);
+                                      }
                                       setState(() {});
                                     },
-                                    numbers: true,
                                     controller: _kilometer,
                                     hintText: S.current.ProvideDistanceInKm,
                                   ),
                                 ),
+                                Visibility(
+                                    visible: coordinations != null,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Container(
+                                        width: double.maxFinite,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(25),
+                                            color: Colors.amber),
+                                        child: Padding(
+                                            padding: const EdgeInsets.all(12.0),
+                                            child: GeoDistanceText(
+                                              destination:
+                                                  coordinations ?? LatLng(0, 0),
+                                              origin: element.branchLocation ??
+                                                  LatLng(0, 0),
+                                              destance: (d) {
+                                                distance =
+                                                    num.tryParse(d ?? '');
+                                                setState(() {});
+                                              },
+                                              storeID: -1,
+                                            )),
+                                      ),
+                                    )),
                               ],
                             ),
                           ),
                           actionsAlignment: MainAxisAlignment.center,
                           actions: [
                             ElevatedButton(
-                                onPressed: _kilometer.text.isEmpty ||
-                                        num.tryParse(_kilometer.text) == null
+                                onPressed: distance == null ||
+                                        coordinations == null
                                     ? null
                                     : () {
                                         Navigator.of(ctx).pop();
                                         screenState.updateDistance(
                                             UpdateDistanceRequest(
                                           id: element.id,
-                                          storeBranchToClientDistance:
-                                              num.tryParse(
-                                                      _kilometer.text.trim()) ??
-                                                  0,
+                                          storeBranchToClientDistance: distance,
+                                          destination: Destination(
+                                              lat: coordinations?.latitude,
+                                              lon: coordinations?.longitude,
+                                              link: element.destinationLink),
                                         ));
                                         _kilometer.clear();
                                       },

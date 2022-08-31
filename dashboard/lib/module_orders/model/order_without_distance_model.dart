@@ -35,6 +35,7 @@ class OrdersWithoutDistanceModel extends DataModel {
           branchName: element.branchName ?? S.current.unknown,
           createdDate: create,
           deliveryDate: delivery,
+          storeId: element.storeOrderDetailsId,
           id: element.id ?? -1,
           note: element.note ?? '',
           orderCost: element.orderCost ?? 0,

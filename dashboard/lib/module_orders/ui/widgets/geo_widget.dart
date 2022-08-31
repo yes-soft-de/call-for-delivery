@@ -45,11 +45,16 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
   Future<void> _setup() async {
     origin = widget.origin;
     destination = widget.destination;
-    var snap = await DeepLinksService.getGeoDistanceWithDeliveryCost(
-        GeoDistanceRequest(
+    var snap = widget.storeID == -1
+        ? await DeepLinksService.getGeoDistance(GeoDistanceRequest(
             origin: widget.origin,
             distance: widget.destination,
-            id: widget.storeID));
+          ))
+        : await DeepLinksService.getGeoDistanceWithDeliveryCost(
+            GeoDistanceRequest(
+                origin: widget.origin,
+                distance: widget.destination,
+                id: widget.storeID));
     if (snap.hasError || snap.isEmpty) {
       loading = false;
       distance = S.current.unknown;
@@ -84,7 +89,7 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
         style: TextStyle(color: Colors.white),
       ),
       child: Visibility(
-        visible: deliveryCost != null,
+        visible: deliveryCost != null && widget.storeID != -1,
         replacement: Text(
           S.current.distance + ' ' + (distance ?? '') + ' ${S.current.km}',
           style: TextStyle(color: Colors.white),

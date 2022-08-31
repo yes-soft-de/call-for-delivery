@@ -22,6 +22,7 @@ class OrderModel extends DataModel {
   int? isCashPaymentConfirmedByStore;
   int? paidToProvider;
   String? captainName;
+  int? storeId;
   OrderModel(
       {required this.branchName,
       required this.state,
@@ -36,7 +37,8 @@ class OrderModel extends DataModel {
       this.branchLocation,
       this.isCashPaymentConfirmedByStore,
       this.paidToProvider,
-      this.captainName});
+      this.captainName,
+      this.storeId});
   List<OrderModel> _orders = [];
   OrderModel.withData(OrdersResponse response) {
     var data = response.data;
@@ -56,6 +58,7 @@ class OrderModel extends DataModel {
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       //
       _orders.add(OrderModel(
+          storeId: element.storeOrderDetailsId,
           captainName: element.captainName,
           branchName: element.branchName ?? S.current.unknown,
           createdDate: create,
