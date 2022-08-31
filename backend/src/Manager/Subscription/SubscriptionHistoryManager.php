@@ -115,4 +115,20 @@ class SubscriptionHistoryManager
 
         return $subscriptionHistoryResult;
     }
+
+    public function deleteSubscriptionHistoryBySubscriptionId(int $subscriptionId): ?SubscriptionHistoryEntity
+    {
+        $subscriptionHistoryEntity = $this->subscribeHistoryRepository->findOneBy(['subscription'=>$subscriptionId]);
+
+        if (! $subscriptionHistoryEntity) {
+            return $subscriptionHistoryEntity;
+        }
+
+        $subscriptionHistoryEntity->setSubscription(null);
+
+        $this->entityManager->remove($subscriptionHistoryEntity);
+        $this->entityManager->flush();
+
+        return $subscriptionHistoryEntity;
+    }
 }

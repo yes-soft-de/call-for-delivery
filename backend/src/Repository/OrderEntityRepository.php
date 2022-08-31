@@ -2361,5 +2361,25 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getResult();
-    }  
+    }
+
+    // retrieve delivered cash orders which doesn't confirmed by store if cash payment was received or not
+    public function getNotConfirmedCashPaymentOrdersBeforeSpecificDate(DateTime $dateTime): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+
+            ->andWhere('orderEntity.state = :deliveredState')
+            ->setParameter('deliveredState', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+            ->andWhere('orderEntity.payment = :cashMethod')
+            ->setParameter('cashMethod', PaymentConstant::CASH_PAYMENT_METHOD_CONST)
+
+            ->andWhere('orderEntity.createdAt < :specificDate')
+            ->setParameter('specificDate', $dateTime)
+
+            ->andWhere('orderEntity.isCashPaymentConfirmedByStore IS NULL')
+
+            ->getQuery()
+            ->getResult();
+    }
 }

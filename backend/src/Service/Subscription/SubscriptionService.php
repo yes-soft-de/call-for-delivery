@@ -848,5 +848,10 @@ class SubscriptionService
 
         return $this->createSubscription($request);
     }
+
+    public function deleteStoreSubscriptionBySubscriptionId(int $subscriptionId): ?SubscriptionEntity
+    {
+        return $this->subscriptionManager->deleteStoreSubscriptionBySubscriptionId($subscriptionId);
+    }
 }
  
