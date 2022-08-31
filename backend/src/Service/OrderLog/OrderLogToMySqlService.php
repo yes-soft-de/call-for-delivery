@@ -39,7 +39,7 @@ class OrderLogToMySqlService
         $orderLogCreateRequest->setCreatedBy($createdBy);
         $orderLogCreateRequest->setCreatedByUserType($createdByUserType);
 
-        if ($storeOwnerBranch === null) {
+        if (! $storeOwnerBranch) {
             $orderLogCreateRequest->setStoreOwnerBranch($this->storeOrderDetailsService->getStoreBranchByOrderId($orderEntity->getId()));
 
         } else {
