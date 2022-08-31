@@ -26,10 +26,9 @@ class SuperAdminOrderManager
      *      state = delivered
      *      payment = cash
      */
-    public function updateIsCashPaymentConfirmedByStoreForSpecificOrdersByOrderCommand(): void
+    public function updateIsCashPaymentConfirmedByStoreForSpecificOrdersByOrderCommand(): array
     {
-        $ordersEntities = $this->orderEntityRepository->findBy(['state'=>OrderStateConstant::ORDER_STATE_DELIVERED,
-            'payment'=>PaymentConstant::CASH_PAYMENT_METHOD_CONST]);
+        $ordersEntities = $this->orderEntityRepository->getNotConfirmedCashPaymentOrdersBeforeSpecificDate( new \DateTime('2022-08-28'));
 
         if (count($ordersEntities) > 0) {
             foreach ($ordersEntities as $orderEntity) {
@@ -39,5 +38,7 @@ class SuperAdminOrderManager
                 $this->entityManager->flush();
             }
         }
+
+        return $ordersEntities;
     }
 }
