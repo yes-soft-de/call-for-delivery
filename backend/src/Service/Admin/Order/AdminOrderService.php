@@ -64,6 +64,7 @@ use App\Request\Admin\Order\FilterOrdersWhoseHasNotDistanceHasCalculatedRequest;
 use App\Request\Admin\Order\OrderStoreBranchToClientDistanceByAdminRequest;
 use App\Constant\GeoDistance\GeoDistanceResultConstant;
 use App\Constant\Order\OrderIsHideConstant;
+use App\Request\Admin\Order\OrderStoreBranchToClientDistanceAndDestinationByAdminRequest;
 
 class AdminOrderService
 {
@@ -899,5 +900,12 @@ class AdminOrderService
     public function getOrders()
     {
        return $this->adminOrderManager->getOrders();
-    }  
+    } 
+     
+    public function updateStoreBranchToClientDistanceAndDestinationByAdmin(OrderStoreBranchToClientDistanceAndDestinationByAdminRequest $request): OrderByIdGetForAdminResponse
+    {
+        $order = $this->adminOrderManager->updateStoreBranchToClientDistanceAndDestinationByAdmin($request);
+
+        return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
+    }
 }
