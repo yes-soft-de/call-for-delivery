@@ -96,4 +96,16 @@ class AdminStoreOrderDetailsManager
 
         return $this->imageManager->create($request);
     }
+    
+    public function updateDestination(int $orderId, array $destination): ?StoreOrderDetailsEntity
+    {
+        $storeOrderDetailsEntity = $this->storeOrderDetailsEntityRepository->findOneBy(["orderId"=>$orderId]);
+
+        if ($storeOrderDetailsEntity) {
+            $storeOrderDetailsEntity->setDestination($destination);
+            $this->entityManager->flush();
+        }
+
+        return $storeOrderDetailsEntity;
+    }
 }

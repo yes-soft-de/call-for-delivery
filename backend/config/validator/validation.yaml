@@ -759,3 +759,12 @@ App\Request\Admin\Subscription\CreateNewStoreSubscriptionWithSamePackageByAdminR
     properties:
         storeProfileId:
             - NotBlank: ~
+
+App\Request\Admin\Order\OrderStoreBranchToClientDistanceAndDestinationByAdminRequest:
+    properties:
+        orderId:
+            - NotBlank: ~
+        storeBranchToClientDistance:
+            - NotBlank: ~
+        destination:
+            - NotBlank: ~
