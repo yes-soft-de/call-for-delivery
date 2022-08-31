@@ -389,6 +389,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم حذف الفرع بنجاح"),
         "deleteCaptainOfferSubscription":
             MessageLookupByLibrary.simpleMessage("حذف الاشتراك بعرض الكابتن"),
+        "deleteCaptainOfferSubscriptionSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم حذف عروض الكابتن بنجاح"),
         "deleteFutureSubscription":
             MessageLookupByLibrary.simpleMessage("الاشتراكات المستقبلية"),
         "deleteSuccess":

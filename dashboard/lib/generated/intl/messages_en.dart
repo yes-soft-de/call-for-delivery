@@ -392,6 +392,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Branch deleted successfully"),
         "deleteCaptainOfferSubscription": MessageLookupByLibrary.simpleMessage(
             "Delete Captain Offer subscription"),
+        "deleteCaptainOfferSubscriptionSuccessfully":
+            MessageLookupByLibrary.simpleMessage(
+                "Delete captain offer subscription successfully"),
         "deleteFutureSubscription":
             MessageLookupByLibrary.simpleMessage("Future subscription"),
         "deleteSuccess": MessageLookupByLibrary.simpleMessage(

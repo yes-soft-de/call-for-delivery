@@ -8049,6 +8049,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Delete captain offer subscription successfully`
+  String get deleteCaptainOfferSubscriptionSuccessfully {
+    return Intl.message(
+      'Delete captain offer subscription successfully',
+      name: 'deleteCaptainOfferSubscriptionSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
