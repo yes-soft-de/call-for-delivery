@@ -58,4 +58,6 @@ final class CaptainFinancialSystem
     const TARGET_SUCCESS_AND_INCREASE_INT = 2;
   
     const TARGET_FAILED_INT = 3;
+
+    const OK_RESULT_CONST = 'ok';
 }

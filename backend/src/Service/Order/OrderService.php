@@ -143,8 +143,8 @@ class OrderService
         }
 
         $order = $this->orderManager->createOrder($request);
-        if ($order) {
 
+        if ($order) {
             $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
 
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS, $order->getId());
@@ -170,6 +170,9 @@ class OrderService
             } catch (\Exception $e) {
                 error_log($e);
             }
+
+            // check if receiver location is a valid one
+            $this->checkIfReceiverLocationIsValid($order->getId(), $request->getDestination());
         }
 
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
@@ -1477,5 +1480,21 @@ class OrderService
         }
 
         return $response;
+    }
+
+    public function checkIfReceiverLocationIsValid(int $orderId, array $destination): void
+    {
+        if (count($destination) > 0) {
+            if ((! $destination['lat']) || (! $destination['lon'])) {
+                // there is no lat or lon, so the location is not a valid one, send a firebase notification to admin
+                try {
+                    $this->notificationFirebaseService->notificationToAdmin($orderId,
+                        NotificationFirebaseConstant::NOT_VALID_RECEIVER_LOCATION_OF_ORDER_CONST);
+
+                } catch (\Exception $e) {
+                    error_log($e);
+                }
+            }
+        }
     }
 }

@@ -895,8 +895,9 @@ class AdminOrderService
 
         return $response;
     }
-    
-    public function getOrders()
+
+    // Get orders which accepted by captains and their created date is above 8/19/2022
+    public function getOrders(): array
     {
        return $this->adminOrderManager->getOrders();
     }  

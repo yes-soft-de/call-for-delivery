@@ -203,48 +203,63 @@ class CaptainFinancialDuesService
         return $this->captainFinancialDuesManager->getFinancialDuesByCaptainId($captainId);
     }
 
-
-    //START fix create financial dues
-    public function calculateOrdersThatNotBelongToAnyFinancialDues($orders)
-    { 
+    /**
+     * Check each order of the provided ones, if it doesn't belong to any financial cycle, then create a one
+     * which contains the order/s that accepted by same captain
+     */
+    public function calculateOrdersThatNotBelongToAnyFinancialDues(array $orders): string
+    {
+        // First, filter provided orders to get only the orders which does not belong to any financial cycle
         $ordersNotBelongsToFinancialDues = [];
-        foreach($orders as $order) {
+
+        foreach ($orders as $order) {
             $order['createdDate'] = $order['createdAt']->format('y-m-d 00:00:00'); 
             
             $financialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndOrderIdForFix($order['captainId'], $order['id'], $order['createdDate']);  
-            if(!$financialDues) {
+
+            if (! $financialDues) {
                 //Orders Not Belongs To Financial Dues
                 $ordersNotBelongsToFinancialDues[] = $order;
             }
         }
-        //test 1
+        // Just for testing, un-comment the following line in order to check if there are orders meeting the conditions
         // dd($ordersNotBelongsToFinancialDues);
 
-        
+        // Second, group orders according to captains
         $items = $this->makeOrdersIntoCaptainsGroups($ordersNotBelongsToFinancialDues);
-        foreach($items as $item) {
-            //get first order and last order for each captain
+
+        // Third, create financial cycle for each group of orders that belong to a unique captain
+        foreach ($items as $item) {
+            /**
+             * get first order and last order for each captain, in order to determine the start and the end dates of
+             * the financial cycle that will be created
+             */
             $first = $item[array_key_first($item)];
             $last = $item[array_key_last($item)];
 
             $this->createCaptainFinancialDuesByOptionalDates($first['captainId'], $first['createdAt'], $last['createdAt']);
         }
 
-        foreach($ordersNotBelongsToFinancialDues as $order) {
-          $captain = $this->captainFinancialDuesManager->getCaptainProfile($order['captainId'])->getCaptainId();
-          $ii = $this->updateCaptainFinancialDuesByOrderId($captain, $order['id'], $order['createdDate']);
+        // Finally, update the financial dues of the related captains
+        foreach ($ordersNotBelongsToFinancialDues as $order) {
+            $captain = $this->captainFinancialDuesManager->getCaptainProfile($order['captainId'])->getCaptainId();
+
+            $this->updateCaptainFinancialDuesByOrderId($captain, $order['id'], $order['createdDate']);
         }
 
-        return "ok";
+        return CaptainFinancialSystem::OK_RESULT_CONST;
     }
    
    //Grouping orders according to groups according to the captains
-   public function makeOrdersIntoCaptainsGroups($ordersNotBelongsToFinancialDues) {
+   public function makeOrdersIntoCaptainsGroups(array $ordersNotBelongsToFinancialDues): array
+   {
         $result = array();
+
         foreach ($ordersNotBelongsToFinancialDues as $key => $element) {
             $result[$element['captainId']][$key] = $element;
         }
-        return  $result;
+
+        return $result;
     }
 
     //create Captain Financial Dues by optional dates
@@ -256,8 +271,8 @@ class CaptainFinancialDuesService
         $request->setStatus(CaptainFinancialDues::FINANCIAL_DUES_UNPAID);
         $request->setAmountForStore(0);
         $request->setStatusAmountForStore(CaptainFinancialDues::FINANCIAL_DUES_UNPAID);
-        $request->setStartDate(new datetime($startDate->format('y-m-d')));
-        $request->setEndDate(new datetime($endDate->format('y-m-d')));
+        $request->setStartDate(new DateTime($startDate->format('y-m-d')));
+        $request->setEndDate(new DateTime($endDate->format('y-m-d')));
         $request->setCaptain($captainProfileId);
 
         return $this->captainFinancialDuesManager->createCaptainFinancialDuesByOptionalDates($request);
