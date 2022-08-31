@@ -33,7 +33,7 @@ class InitSubscriptionsLoadedState extends States {
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(
         context,
-        title: appBarTitle ?? S.current.storeAccountInit,
+        title: appBarTitle ?? S.current.createSubscription,
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),

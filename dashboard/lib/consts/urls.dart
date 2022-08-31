@@ -283,7 +283,7 @@ class Urls {
   static const DELETE_SUBSCRIPTIONS_API =
       BASE_API_SUBSCRIPTION + '/deleteallfuturesubscriptionsbyadmin';
   static const RENEW_SUBSCRIPTION_API =
-      DOMAIN + '/v1/subscription/renewcurrentsubscriptionbyadmin';
+      BASE_API_SUBSCRIPTION + '/renewcurrentsubscriptionbyadmin';
   static const EXTEND_SUBSCRIPTION_API =
       BASE_API_SUBSCRIPTION + '/extrasubscriptionforday';
   static const SUBSCRIBE_TO_PACKAGE_API =

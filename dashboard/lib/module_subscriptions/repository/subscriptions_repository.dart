@@ -30,7 +30,7 @@ class SubscriptionsRepository {
 
   Future<ActionResponse?> renewPackage(int storeID) async {
     var token = await _authService.getToken();
-    var response = await _apiClient.put(
+    var response = await _apiClient.post(
       Urls.RENEW_SUBSCRIPTION_API,
       {'storeProfileId': storeID},
       headers: {'Authorization': 'Bearer ' + '$token'},
@@ -52,9 +52,9 @@ class SubscriptionsRepository {
   Future<ActionResponse?> deleteCaptainOffer(
       DeleteCaptainOfferSubscriptionsRequest request) async {
     var token = await _authService.getToken();
-    var response = await _apiClient.post(
+    var response = await _apiClient.delete(
       Urls.DELETE_SUBSCRIPTION_TO_CAPTAIN_OFFER_API,
-      request.toJson(),
+      payLoad: request.toJson(),
       headers: {'Authorization': 'Bearer ' + '$token'},
     );
     if (response == null) return null;
@@ -99,7 +99,7 @@ class SubscriptionsRepository {
   Future<ActionResponse?> editSubscribeToPackage(
       EditStoreSubscribeToPackageRequest request) async {
     var token = await _authService.getToken();
-    var response = await _apiClient.post(
+    var response = await _apiClient.put(
       Urls.EDIT_SUBSCRIBE_TO_PACKAGE_API,
       request.toJson(),
       headers: {'Authorization': 'Bearer ' + '$token'},

@@ -8,7 +8,6 @@ import 'package:c4d/module_stores/hive/store_hive_helper.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_subscriptions/model/store_subscriptions_financial.dart';
 import 'package:c4d/module_subscriptions/request/delete_captain_offer_request.dart';
-import 'package:c4d/module_subscriptions/request/delete_subscription_request.dart';
 import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_details_screen.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -551,7 +550,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                     },
                     child: Text(
                       S.current.deleteCaptainOfferSubscription,
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.white, fontSize: 12),
                     )),
               ],
             )),

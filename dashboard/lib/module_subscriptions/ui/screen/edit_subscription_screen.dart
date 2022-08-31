@@ -3,8 +3,8 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_categories/model/package_categories_model.dart';
 import 'package:c4d/module_subscriptions/request/store_edit_subscribe_to_package.dart';
-import 'package:c4d/module_subscriptions/request/store_subscribe_to_package.dart';
 import 'package:c4d/module_subscriptions/state_manager/edit_subscription_state_manager.dart';
+import 'package:c4d/module_subscriptions/subscriptions_routes.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -35,7 +35,8 @@ class EditSubscriptionScreenState extends State<EditSubscriptionScreen> {
 
   void moveNext() {
     WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
-      Navigator.of(context).pop();
+      Navigator.of(context).popUntil((route) =>
+          route.settings.name == SubscriptionsRoutes.SUBSCRIPTIONS_MANAGEMENT);
       CustomFlushBarHelper.createSuccess(
               title: S.current.warnning, message: S.current.successRenew)
           .show(context);

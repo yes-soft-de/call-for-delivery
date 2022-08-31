@@ -108,11 +108,6 @@ class StoreFinancialSubscriptionsDuesDetailsStateManager {
       } else {
         getIt<GlobalStateManager>().updateList();
         getCaptainPaymentsDetails(screenState);
-        Navigator.of(screenState.context).pop();
-        CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.paymentSuccessfully)
-            .show(screenState.context);
       }
     });
   }

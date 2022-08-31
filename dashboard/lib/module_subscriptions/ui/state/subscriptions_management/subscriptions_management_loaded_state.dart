@@ -24,7 +24,7 @@ class SubscriptionManagementStateLoaded extends States {
             onPressed: () {
               Navigator.of(context).pushNamed(
                   SubscriptionsRoutes.SUBSCRIPTIONS_DUES_SCREEN,
-                  arguments: screenState.profileId);
+                  arguments: screenState.profileId!.id);
             },
             title: S.current.currentSubscriptions,
           ),
@@ -33,7 +33,7 @@ class SubscriptionManagementStateLoaded extends States {
             onPressed: () {
               Navigator.of(context).pushNamed(
                   SubscriptionsRoutes.SUBSCRIPTIONS_EXPIRED_DUES_SCREEN,
-                  arguments: screenState.profileId);
+                  arguments: screenState.profileId!.id);
             },
             title: S.current.endedSubscriptions,
           ),
@@ -47,26 +47,26 @@ class SubscriptionManagementStateLoaded extends States {
                     return BottomSheetRenewSubscription(
                       packageExtend: () {
                         Navigator.of(context).pop();
-                        screenState.stateManager
-                            .extendPackage(screenState, screenState.profileId);
+                        screenState.stateManager.extendPackage(
+                            screenState, screenState.profileId!.id);
                       },
                       renewNewPlan: () {
                         Navigator.of(context).pop();
                         Navigator.of(context).pushNamed(
                             SubscriptionsRoutes.CREATE_NEW_SUBSCRIPTION_SCREEN,
-                            arguments: screenState.profileId);
+                            arguments: screenState.profileId!.id);
                       },
                       renewOldPlan: () {
                         Navigator.of(context).pop();
-                        screenState.stateManager
-                            .renewPackage(screenState, screenState.profileId);
+                        screenState.stateManager.renewPackage(
+                            screenState, screenState.profileId!.id);
                       },
                       captainOffer: () {
                         Navigator.of(context).pop();
                         Navigator.of(context).pushNamed(
                             SubscriptionsRoutes
                                 .CREATE_NEW_SUBSCRIPTION_TO_CAPTAIN_OFFER_SCREEN,
-                            arguments: screenState.profileId);
+                            arguments: screenState.profileId?.storeId);
                       },
                     );
                   });
@@ -83,14 +83,14 @@ class SubscriptionManagementStateLoaded extends States {
                         onPressed: () {
                           Navigator.of(context).pop();
                           screenState.stateManager.deleteFutureSubscriptions(
-                              screenState, screenState.profileId);
+                              screenState, screenState.profileId!.id);
                         },
                         content: S.current.deleteAllFutureSubscriptions,
                         oneAction: false);
                   });
             },
             title: S.current.deleteFutureSubscription,
-           // width: 200,
+            // width: 200,
           ),
         ],
       ),

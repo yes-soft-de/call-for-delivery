@@ -108,7 +108,7 @@ class SubscriptionsService {
         await _storeManager.editSubscribeToPackage(request);
     if (response == null) {
       return DataModel.withError(S.current.networkError);
-    } else if (response.statusCode != '201') {
+    } else if (response.statusCode != '204') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
