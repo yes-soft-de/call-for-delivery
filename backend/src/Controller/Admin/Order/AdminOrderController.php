@@ -1404,11 +1404,12 @@ class AdminOrderController extends BaseController
      *      description="update storeBranchToClientDistance and destination by admin",
      *      @OA\JsonContent(
      *              @OA\Property(type="integer", property="orderId"),
-     *              @OA\Property(type="string", property="storeBranchToClientDistance"),
-     *              @OA\Property(type="string", property="destination"),
+     *              @OA\Property(type="number", property="storeBranchToClientDistance"),
+     *              @OA\Property(type="array", property="destination",
+     *                  @OA\Items(),
+     *              )
+     *          )
      *      )
-     * )
-     * 
      * @OA\Response(
      *      response=204,
      *      description="Returns the order info",
