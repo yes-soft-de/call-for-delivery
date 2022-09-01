@@ -118,7 +118,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
         Logger().info('Location enabled', '$value');
         Geolocator.getPositionStream(
             locationSettings: const LocationSettings(
-          distanceFilter: 25,
+          distanceFilter: 1000,
         )).listen((event) {
           currentLocation = LatLng(event.latitude, event.longitude);
           Logger().info('Location with us ',
@@ -296,7 +296,6 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
           return false;
         }
       }
-
       permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
@@ -304,11 +303,9 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
           return false;
         }
       }
-
       if (permission == LocationPermission.deniedForever) {
         return false;
       }
-
       return true;
     } catch (e) {
       return false;
