@@ -124,5 +124,5 @@ final class NotificationFirebaseConstant
     
     const CAPTAIN_ANSWER_DIFFERS_FROM_THAT_OF_STORE = 'يوجد اختلاف بتأكيد المتجر بالنسبة لتسديد مبلغ الطلب رقم';
 
-    const NOT_VALID_RECEIVER_LOCATION_OF_ORDER_CONST = 'لم يتم إدخال رابط موقع جغرافي صحيح من أجل الطلب ذو الرقم ';
+    const NOT_VALID_RECEIVER_LOCATION_OF_ORDER_CONST = 'لم يتم إدخال موقع تسليم مناسب من أجل الطلب ذو الرقم ';
 }
