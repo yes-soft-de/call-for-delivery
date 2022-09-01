@@ -123,6 +123,9 @@ dependencies:
   package_info_plus: ^1.4.2
   flutter_switch: ^0.3.2
   badges: ^2.0.3
+  google_maps_flutter: ^2.1.1
+  custom_info_window: ^1.0.1
+  custom_marker: ^1.0.0
 
 
 
