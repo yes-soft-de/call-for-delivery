@@ -2382,4 +2382,24 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    // retrieve delivered cash orders which had been answered by both store and captain before certain date
+    public function getCashPaymentAnsweredOrdersBeforeSpecificDate(): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+
+            ->andWhere('orderEntity.state = :deliveredState')
+            ->setParameter('deliveredState', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+            ->andWhere('orderEntity.payment = :cashMethod')
+            ->setParameter('cashMethod', PaymentConstant::CASH_PAYMENT_METHOD_CONST)
+
+//            ->andWhere('orderEntity.createdAt < :specificDate')
+//            ->setParameter('specificDate', $dateTime)
+
+            ->andWhere('orderEntity.isCashPaymentConfirmedByStore IS NOT NULL')
+
+            ->getQuery()
+            ->getResult();
+    }
 }
