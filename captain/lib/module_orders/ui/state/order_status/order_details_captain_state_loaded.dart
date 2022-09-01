@@ -366,6 +366,9 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                     subtitle: orderInfo.branchCoordinate != null &&
                             screenState.myLocation != null
                         ? GeoDistanceText(
+                            textStyle: TextStyle(
+                                color:
+                                    Theme.of(context).listTileTheme.textColor),
                             destance: (d) {},
                             destination: screenState.myLocation ?? LatLng(0, 0),
                             origin: orderInfo.branchCoordinate ?? LatLng(0, 0),
@@ -631,6 +634,10 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                                 visible: screenState.myLocation != null &&
                                     orderInfo.destinationCoordinate != null,
                                 child: GeoDistanceText(
+                                  textStyle: TextStyle(
+                                      color: Theme.of(context)
+                                          .listTileTheme
+                                          .textColor),
                                   leading: S.current.distance,
                                   destance: (dist) {},
                                   destination:
