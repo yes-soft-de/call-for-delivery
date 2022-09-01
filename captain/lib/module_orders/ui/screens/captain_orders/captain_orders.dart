@@ -13,11 +13,14 @@ import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:c4d/utils/logger/logger.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:c4d/module_navigation/menu.dart';
@@ -204,15 +207,24 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
                     ),
                   ],
                 ),
-                CustomC4dAppBar.actionIcon(context, onTap: () {
-                  Navigator.of(context)
-                      .pushNamed(MyNotificationsRoutes.MY_NOTIFICATIONS);
-                },
-                    icon: Icons.notifications_rounded,
-                    colorIcon: currentPage == 1
-                        ? null
-                        : StatusHelper.getOrderStatusColor(
-                            OrderStatusEnum.GOT_CAPTAIN)),
+                ValueListenableBuilder(
+                  builder: (context, box, _) {
+                    return CustomC4dAppBar.actionIcon(context,
+                        showBadge: NotificationsPrefHelper()
+                                .getNewLocalNotification() !=
+                            null, onTap: () {
+                      Navigator.of(context)
+                          .pushNamed(MyNotificationsRoutes.MY_NOTIFICATIONS);
+                    },
+                        icon: Icons.notifications_rounded,
+                        colorIcon: currentPage == 1
+                            ? null
+                            : StatusHelper.getOrderStatusColor(
+                                OrderStatusEnum.GOT_CAPTAIN));
+                  },
+                  valueListenable: Hive.box('Notifications').listenable(
+                      keys: [NotificationsPrefHelper().NEW_NOTIFICATION]),
+                ),
               ],
               title: S.of(context).home,
               icon: Icons.sort_rounded, onTap: () {

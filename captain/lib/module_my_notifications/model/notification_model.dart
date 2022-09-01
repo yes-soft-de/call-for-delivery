@@ -10,22 +10,24 @@ class NotificationModel extends DataModel {
   String body = S.current.orderDetails;
   String title = S.current.orderNumber;
   String date = '';
+  late DateTime dateTime;
   bool marked = false;
   late int id;
   OrderStatusEnum? orderStatus;
   int? captainID;
   List<NotificationModel> models = [];
-
-  NotificationModel({
-    required this.orderNumber,
-    required this.title,
-    required this.body,
-    required this.date,
-    required this.marked,
-    required this.id,
-    required this.captainID,
-    required this.orderStatus,
-  });
+  bool seen = true;
+  NotificationModel(
+      {required this.orderNumber,
+      required this.title,
+      required this.body,
+      required this.date,
+      required this.marked,
+      required this.id,
+      required this.captainID,
+      required this.orderStatus,
+      required this.dateTime,
+      required this.seen});
 
   NotificationModel.withData(MyNotificationResponse orders) {
     var data = orders.data;
@@ -49,6 +51,11 @@ class NotificationModel extends DataModel {
         id: element.id ?? -1,
         captainID: element.message?.captainID,
         orderStatus: StatusHelper.getStatusEnum(element.message?.orderStatus),
+        dateTime: DateTime.fromMillisecondsSinceEpoch(
+            (element.createdAt?.timestamp ??
+                    DateTime.now().millisecondsSinceEpoch) *
+                1000),
+        seen: true,
       ));
     });
   }

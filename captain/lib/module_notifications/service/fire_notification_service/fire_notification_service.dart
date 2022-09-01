@@ -75,6 +75,7 @@ class FireNotificationService {
         _notificationRepo.postToken(token);
         FirebaseMessaging.onMessage.listen((RemoteMessage message) {
           playSound();
+          NotificationsPrefHelper().setNewLocalNotification();
           _onNotificationReceived.add(message);
         });
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
@@ -109,6 +110,7 @@ class FireNotificationService {
 
   static Future<dynamic> backgroundMessageHandler(RemoteMessage message) async {
     await HiveSetUp.init();
+    NotificationsPrefHelper().setNewLocalNotification();
     Logger().info('Background Message Handler', 'onMessage: $message');
     _onNotificationReceived.add(message);
     await playSound();

@@ -4,6 +4,8 @@ import 'package:injectable/injectable.dart';
 @injectable
 class NotificationsPrefHelper {
   var box = Hive.box('Notifications');
+  // ignore: non_constant_identifier_names
+  final NEW_NOTIFICATION = 'new_notifications';
   void setNotificationPath(String ringtone) {
     box.put('Ringtone', ringtone);
   }
@@ -26,5 +28,19 @@ class NotificationsPrefHelper {
 
   bool getFarOrder() {
     return box.get('far_orders') ?? false;
+  }
+
+  void setNewLocalNotification() {
+    if (getNewLocalNotification() == null) {
+      box.put(NEW_NOTIFICATION, DateTime.now().toIso8601String());
+    }
+  }
+
+  String? getNewLocalNotification() {
+    return box.get(NEW_NOTIFICATION);
+  }
+
+  void clearNewLocalNotifications() {
+    box.delete(NEW_NOTIFICATION);
   }
 }
