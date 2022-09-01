@@ -172,7 +172,7 @@ class OrderService
             }
 
             // check if receiver location is a valid one
-            $this->checkIfReceiverLocationIsValid($order->getId(), $request->getDestination());
+            $this->checkIfReceiverLocationIsValid($order->getId(), $request->getDestination(), $order->getStoreBranchToClientDistance());
         }
 
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
@@ -1482,10 +1482,10 @@ class OrderService
         return $response;
     }
 
-    public function checkIfReceiverLocationIsValid(int $orderId, array $destination): void
+    public function checkIfReceiverLocationIsValid(int $orderId, array $destination, float $storeBranchToClientDistance): void
     {
         if (count($destination) > 0) {
-            if ((! $destination['lat']) || (! $destination['lon'])) {
+            if (((! $destination['lat']) || (! $destination['lon'])) && (! $storeBranchToClientDistance)) {
                 // there is no lat or lon, so the location is not a valid one, send a firebase notification to admin
                 try {
                     $this->notificationFirebaseService->notificationToAdmin($orderId,
