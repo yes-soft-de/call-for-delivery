@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Constant\ChatRoom\ChatRoomConstant;
 use App\Constant\Order\OrderDistanceConstant;
+use App\Constant\Order\OrderHasPayConflictAnswersConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Constant\Payment\PaymentConstant;
@@ -2310,9 +2311,13 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'storeOwnerProfileEntity.id = orderEntity.storeOwner'
             )
 
-            ->andWhere('orderEntity.isCashPaymentConfirmedByStore IS NOT NULL')
-            ->andWhere('orderEntity.paidToProvider IS NOT NULL')
-            ->andWhere('orderEntity.isCashPaymentConfirmedByStore != orderEntity.paidToProvider')
+//            ->andWhere('orderEntity.isCashPaymentConfirmedByStore IS NOT NULL')
+//            ->andWhere('orderEntity.paidToProvider IS NOT NULL')
+//            ->andWhere('orderEntity.isCashPaymentConfirmedByStore != orderEntity.paidToProvider')
+
+            ->andWhere('orderEntity.hasPayConflictAnswers = :orderHasPayConflictAnswers')
+            ->setParameter('orderHasPayConflictAnswers', OrderHasPayConflictAnswersConstant::ORDER_HAS_PAYMENT_CONFLICT_ANSWERS)
+
             ->andWhere('orderEntity.state = :state')
             ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
 
