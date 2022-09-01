@@ -20,6 +20,7 @@ import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/flat_bar.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/effect/scaling.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
@@ -1001,14 +1002,22 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                 },
                 payment: orderInfo.payment == 'cash',
                 callBack: (distance, payment) {
-                  var index = StatusHelper.getOrderStatusIndex(orderInfo.state);
-                  screenState.requestOrderProgress(UpdateOrderRequest(
-                      id: int.tryParse(screenState.orderId ?? '-1'),
-                      state: StatusHelper.getStatusString(
-                          OrderStatusEnum.values[index + 1]),
-                      distance: distance,
-                      paymentNote: noteController.text.trim(),
-                      orderCost: double.tryParse(payment ?? 'n')));
+                  if (payment != null || orderInfo.payment != 'cash') {
+                    var index =
+                        StatusHelper.getOrderStatusIndex(orderInfo.state);
+                    screenState.requestOrderProgress(UpdateOrderRequest(
+                        id: int.tryParse(screenState.orderId ?? '-1'),
+                        state: StatusHelper.getStatusString(
+                            OrderStatusEnum.values[index + 1]),
+                        distance: distance,
+                        paymentNote: noteController.text.trim(),
+                        orderCost: double.tryParse(payment ?? '')));
+                  } else {
+                    CustomFlushBarHelper.createError(
+                            title: S.current.warnning,
+                            message: S.current.pleaseProvidePaymentFromClient)
+                        .show(context);
+                  }
                 },
                 controller: screenState.distanceCalculator,
                 controller2: screenState.paymentController,
