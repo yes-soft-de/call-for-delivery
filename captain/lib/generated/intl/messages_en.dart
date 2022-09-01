@@ -799,6 +799,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please provide identity image"),
         "pleaseProvideMechImage": MessageLookupByLibrary.simpleMessage(
             "Please provide Mechanic image"),
+        "pleaseProvidePaymentFromClient": MessageLookupByLibrary.simpleMessage(
+            "Please provide cash you received from client"),
         "pleaseProvidePaymentMethode": MessageLookupByLibrary.simpleMessage(
             "Please choose payment method"),
         "pleaseProvideProfileImage": MessageLookupByLibrary.simpleMessage(
@@ -1144,6 +1146,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "youCannotAcceptAnotherOrderFromThisStore":
             MessageLookupByLibrary.simpleMessage(
                 "You cannot accept another order from this store , before you delivering orders belongs to this store after that try again"),
+        "youCannotChangeYourAnswer": MessageLookupByLibrary.simpleMessage(
+            "You cannot change your answer about giving cash to provider because you receive payment for this order from our company"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "You cannot choose plan right now , please try again"),
         "youHaveFinanceAccount": MessageLookupByLibrary.simpleMessage(

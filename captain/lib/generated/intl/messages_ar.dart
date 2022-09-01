@@ -792,6 +792,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "من فضلك قم بتزويدنا بالهوية الشخصية"),
         "pleaseProvideMechImage": MessageLookupByLibrary.simpleMessage(
             "من فضلك قم بتزويدنا بشهادة السير"),
+        "pleaseProvidePaymentFromClient": MessageLookupByLibrary.simpleMessage(
+            "من فضلك قم بتزويدنا بالمبلغ الذي استلمته من العميل"),
         "pleaseProvidePaymentMethode":
             MessageLookupByLibrary.simpleMessage("من فضلك اختر طريقة للدفع"),
         "pleaseProvideProfileImage": MessageLookupByLibrary.simpleMessage(
@@ -1140,6 +1142,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "youCannotAcceptAnotherOrderFromThisStore":
             MessageLookupByLibrary.simpleMessage(
                 "لايمكنك قبول هذا الطلب من هذا المتجر في الوقت الحالي ، الرجاء تسليم الطلبات المتعلقة بهذا المتجر ومن ثم إعادة المحاولة"),
+        "youCannotChangeYourAnswer": MessageLookupByLibrary.simpleMessage(
+            "لايمكنك تغيير جوابك بخصوص هذا الطلب لتلقي دفعة من قبل الشركة"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك اختيار خطة حاليا الرجاء المحاولة لاحقا"),
         "youHaveFinanceAccount": MessageLookupByLibrary.simpleMessage(

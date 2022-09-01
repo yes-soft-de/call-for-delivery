@@ -7409,6 +7409,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Please provide cash you received from client`
+  String get pleaseProvidePaymentFromClient {
+    return Intl.message(
+      'Please provide cash you received from client',
+      name: 'pleaseProvidePaymentFromClient',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You cannot change your answer about giving cash to provider because you receive payment for this order from our company`
+  String get youCannotChangeYourAnswer {
+    return Intl.message(
+      'You cannot change your answer about giving cash to provider because you receive payment for this order from our company',
+      name: 'youCannotChangeYourAnswer',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
