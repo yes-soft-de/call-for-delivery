@@ -28,6 +28,8 @@ class MyNotificationsLoadedState extends States {
         if (date.isBefore(element.dateTime) ||
             date.isAtSameMomentAs(element.dateTime)) {
           element.seen = false;
+          print(element.dateTime);
+          print(date);
         }
       });
       screenState.refresh();

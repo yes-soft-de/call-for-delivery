@@ -1,3 +1,6 @@
+import 'package:c4d/di/di_config.dart';
+import 'package:c4d/global_nav_key.dart';
+import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
 
@@ -33,6 +36,7 @@ class NotificationsPrefHelper {
   void setNewLocalNotification() {
     if (getNewLocalNotification() == null) {
       box.put(NEW_NOTIFICATION, DateTime.now().toIso8601String());
+      getIt<GlobalStateManager>().update();
     }
   }
 
