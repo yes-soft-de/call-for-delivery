@@ -59,6 +59,8 @@ class StatusCodeHelper {
         return S.current.orderCanceledYouCannotAccept;
       case '9200':
         return S.current.youCannotAcceptAnotherOrderFromThisStore;
+      case '9380':
+        return S.current.youCannotChangeYourAnswer;
       case '-1':
         return S.current.dataDecodeError;
       default:
