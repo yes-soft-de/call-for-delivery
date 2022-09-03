@@ -4,6 +4,7 @@ import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/module_orders/ui/widgets/geo_widget.dart';
+import 'package:c4d/module_orders/ui/widgets/order_map_preview.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
@@ -177,6 +178,21 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                   Navigator.of(context).pushNamed(
                       OrdersRoutes.SUB_ORDERS_SCREEN,
                       arguments: element.id);
+                } else {
+                  showModalBottomSheet(
+                      context: context,
+                      backgroundColor: Colors.transparent,
+                      builder: (ctx) {
+                        return Container(
+                          decoration: const BoxDecoration(
+                            borderRadius:
+                                BorderRadius.vertical(top: Radius.circular(25)),
+                          ),
+                          child: OrderMapPreview(
+                            order: element,
+                          ),
+                        );
+                      });
                 }
               },
               child: NearbyOrdersCard(
@@ -239,6 +255,16 @@ class CaptainOrdersListStateOrdersLoaded extends States {
               if (element.orderIsMain && element.subOrders.isNotEmpty) {
                 Navigator.of(context).pushNamed(OrdersRoutes.SUB_ORDERS_SCREEN,
                     arguments: element.id);
+              } else {
+                showDialog(
+                    context: context,
+                    builder: (ctx) {
+                      return Scaffold(
+                        body: OrderMapPreview(
+                          order: element,
+                        ),
+                      );
+                    });
               }
             },
             child: NearbyOrdersCard(

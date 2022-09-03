@@ -6,12 +6,14 @@ class MapWidget extends StatefulWidget {
   final Set<Marker> markers;
   final Function(LatLng)? onTap;
   final Function(CameraPosition)? onCameraMove;
+  final LatLng? currentLocation;
   const MapWidget(
       {Key? key,
       this.onMapCreated,
       this.onTap,
       this.onCameraMove,
-      this.markers = const <Marker>{}})
+      this.markers = const <Marker>{},
+      this.currentLocation})
       : super(key: key);
 
   @override
@@ -33,8 +35,10 @@ class _MapWidgetState extends State<MapWidget> {
           mapType: MapType.normal,
           onMapCreated: widget.onMapCreated,
           markers: widget.markers,
-          initialCameraPosition:
-              const CameraPosition(target: LatLng(36.747061, 36.1618916))),
+          initialCameraPosition: CameraPosition(
+              target: widget.currentLocation ??
+                  const LatLng(24.4713203, 39.7576433),
+              zoom: 15)),
     );
   }
 }

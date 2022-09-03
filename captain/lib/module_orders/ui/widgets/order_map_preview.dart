@@ -1,5 +1,8 @@
 import 'dart:async';
-import 'package:custom_marker/marker_icon.dart';
+import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_orders/model/order/order_model.dart';
+import 'package:c4d/module_orders/util/whatsapp_link_helper.dart';
+import 'package:custom_map_markers/custom_map_markers.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/module_theme/service/theme_service/theme_service.dart';
@@ -7,10 +10,13 @@ import 'package:c4d/utils/components/google_map_widget.dart';
 import 'package:c4d/utils/components/my_marker.dart';
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OrderMapPreview extends StatefulWidget {
-  OrderMapPreview({Key? key}) : super(key: key);
+  final OrderModel order;
+  const OrderMapPreview({Key? key, required this.order}) : super(key: key);
 
   @override
   State<OrderMapPreview> createState() => _OrderMapPreviewState();
@@ -19,7 +25,8 @@ class OrderMapPreview extends StatefulWidget {
 class _OrderMapPreviewState extends State<OrderMapPreview> {
   Completer<GoogleMapController> controller = Completer();
   late CustomInfoWindowController customInfoWindowController;
-  final GlobalKey globalKey = GlobalKey();
+  final GlobalKey branchKey = GlobalKey();
+  final GlobalKey clientKey = GlobalKey();
   Set<Marker> markers = {};
   @override
   void initState() {
@@ -33,60 +40,59 @@ class _OrderMapPreviewState extends State<OrderMapPreview> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        // Google Map
-        SizedBox(
-          height: double.maxFinite,
-          width: double.maxFinite,
-          child: Stack(
-            children: [
-              // marker
-              MyMarker(globalKey),
-              Positioned.fill(
-                child: MapWidget(
-                  markers: markers,
-                  onTap: (position) {
-                    customInfoWindowController.hideInfoWindow!();
-                  },
-                  onCameraMove: (position) {
-                    customInfoWindowController.onCameraMove!();
-                  },
-                  onMapCreated: (con) async {
-                    customInfoWindowController.googleMapController = con;
-                    await con.setMapStyle(
-                        getIt<ThemePreferencesHelper>().getStyleMode());
-                    controller.complete(con);
-                  },
-                ),
-              ),
-              CustomInfoWindow(
-                controller: customInfoWindowController,
-                height: 100,
-                width: 180,
-                offset: 50,
-              ),
-            ],
-          ),
+    LatLng? branch = LatLng(widget.order.location?.latitude ?? 0,
+        widget.order.location?.longitude ?? 0);
+    return CustomGoogleMapMarkerBuilder(
+      customMarkers: [
+        MarkerData(
+          marker: Marker(
+              markerId: const MarkerId('branch'),
+              position: LatLng(widget.order.location?.latitude ?? 0,
+                  widget.order.location?.longitude ?? 0),
+              onTap: () {
+                var url = WhatsAppLinkHelper.getMapsLink(
+                    widget.order.location?.latitude ?? 0,
+                    widget.order.location?.longitude ?? 0);
+                canLaunch(url).then((value) {
+                  if (value) {
+                    launch(url);
+                  } else {
+                    Fluttertoast.showToast(msg: S.current.invalidMapLink);
+                  }
+                });
+              }),
+          child: MyMarker(),
         ),
-        // Mentoring Panel
+        MarkerData(
+            marker: Marker(
+                markerId: const MarkerId('client'),
+                position: LatLng(widget.order.destination?.latitude ?? 0,
+                    widget.order.destination?.longitude ?? 0),
+                onTap: () {
+                  var url = widget.order.destinationLink ?? '';
+                  canLaunch(url).then((value) {
+                    if (value) {
+                      launch(url);
+                    } else {
+                      Fluttertoast.showToast(msg: S.current.invalidMapLink);
+                    }
+                  });
+                }),
+            child: const ClientMarker()),
       ],
+      builder: (context, Set<Marker>? markers) {
+        return MapWidget(
+          markers: markers ?? {},
+          onTap: (position) {},
+          currentLocation: branch,
+          onCameraMove: (position) {},
+          onMapCreated: (con) async {
+            await con
+                .setMapStyle(getIt<ThemePreferencesHelper>().getStyleMode());
+            controller.complete(con);
+          },
+        );
+      },
     );
   }
-
-  // Future<Set<Marker>> getMarkers(
-  //     List<CaptainsModel> captains, GlobalKey globalKey) async {
-  //   Set<Marker> markers = {};
-  //   for (var captain in captains) {
-  //     if (captain.currentLocation == null) {
-  //       continue;
-  //     }
-  //     markers.add(Marker(
-  //         markerId: MarkerId(captain.uid),
-  //         position: captain.currentLocation!,
-  //         icon: await MarkerIcon.widgetToIcon(globalKey),
-  //         onTap: () {}));
-  //   }
-  //   return markers;
-  // }
 }

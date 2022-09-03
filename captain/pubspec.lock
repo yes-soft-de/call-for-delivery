@@ -239,6 +239,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  custom_map_markers:
+    dependency: "direct main"
+    description:
+      name: custom_map_markers
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.0.2+1"
   custom_marker:
     dependency: "direct main"
     description:

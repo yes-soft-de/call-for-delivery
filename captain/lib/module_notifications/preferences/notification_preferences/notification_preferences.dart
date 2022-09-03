@@ -35,7 +35,11 @@ class NotificationsPrefHelper {
 
   void setNewLocalNotification() {
     if (getNewLocalNotification() == null) {
-      box.put(NEW_NOTIFICATION, DateTime.now().toIso8601String());
+      box.put(
+          NEW_NOTIFICATION,
+          DateTime.now()
+              .subtract(const Duration(minutes: 2))
+              .toIso8601String());
       getIt<GlobalStateManager>().update();
     }
   }

@@ -1,22 +1,101 @@
-import 'package:c4d/utils/images/images.dart';
+import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyMarker extends StatelessWidget {
   // declare a global key and get it trough Constructor
 
-  MyMarker(this.globalKeyMyWidget);
-  final GlobalKey globalKeyMyWidget;
+  MyMarker();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              shape: BoxShape.circle,
+              border: Border.all(
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  width: 6),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Icon(
+                Icons.store_rounded,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Theme.of(context).colorScheme.primary),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                S.current.branchLocation,
+                style: const TextStyle(color: Colors.white, fontSize: 12),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ClientMarker extends StatelessWidget {
+  // declare a global key and get it trough Constructor
+
+  const ClientMarker();
 
   @override
   Widget build(BuildContext context) {
     // wrap your widget with RepaintBoundary and
     // pass your global key to RepaintBoundary
-    return RepaintBoundary(
-        key: globalKeyMyWidget,
-        child: Image.asset(
-          ImageAsset.ARAB_LANGUAGE,
-          height: 125,
-          width: 125,
-        ));
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Column(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).scaffoldBackgroundColor,
+              shape: BoxShape.circle,
+              border: Border.all(
+                  color: Theme.of(context).colorScheme.primaryContainer,
+                  width: 6),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Icon(
+                Icons.store_rounded,
+                color: Theme.of(context).colorScheme.primary,
+              ),
+            ),
+          ),
+          const SizedBox(
+            height: 4,
+          ),
+          Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Theme.of(context).colorScheme.primary),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text(
+                S.current.destination,
+                style: const TextStyle(color: Colors.white, fontSize: 12),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
