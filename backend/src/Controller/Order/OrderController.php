@@ -441,6 +441,9 @@ class OrderController extends BaseController
      *                  @OA\Property(type="string", property="note"),
      *                  @OA\Property(type="string", property="state"),
      *                  @OA\Property(type="boolean", property="orderIsMain"),
+     *                  @OA\Property(type="object", property="sourceDestination"),
+     *                  @OA\Property(type="float", property="storeBranchToClientDistance"),
+     *                  @OA\Property(type="object", property="destination")
      *                  ),
      *            )
      *       )

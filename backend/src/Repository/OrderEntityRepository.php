@@ -278,6 +278,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->addSelect('orderChatRoomEntity.roomId', 'orderChatRoomEntity.usedAs')
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')
             ->addSelect('bidDetailsEntity as bidDetailsInfo')
+            ->addSelect('storeOrderDetails.destination')
            
             ->andWhere('orderEntity.state = :pending ')
 //            ->andWhere('orderEntity.orderType = :orderTypeNormal')
