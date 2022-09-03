@@ -1482,7 +1482,7 @@ class OrderService
         return $response;
     }
 
-    public function checkIfReceiverLocationIsValid(int $orderId, array $destination, float $storeBranchToClientDistance): void
+    public function checkIfReceiverLocationIsValid(int $orderId, array $destination, ?float $storeBranchToClientDistance): void
     {
         if (count($destination) > 0) {
             if (((! $destination['lat']) || (! $destination['lon'])) && (! $storeBranchToClientDistance)) {
