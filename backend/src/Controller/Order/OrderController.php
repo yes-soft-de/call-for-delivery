@@ -92,6 +92,7 @@ class OrderController extends BaseController
      *          @OA\Property(type="boolean", property="orderIsMain"),
      *          @OA\Property(type="string", property="filePdf"),
      *          @OA\Property(type="number", property="storeBranchToClientDistance"),
+     *          @OA\Property(type="number", property="deliveryCost")
      *      )
      * )
      *
@@ -1425,8 +1426,9 @@ class OrderController extends BaseController
      *          @OA\Property(type="string", property="detail"),
      *          @OA\Property(type="integer", property="branch"),
      *          @OA\Property(type="integer", property="primaryOrder"),
-      *         @OA\Property(type="string", property="filePdf"),
-      *         @OA\Property(type="number", property="storeBranchToClientDistance"),
+     *          @OA\Property(type="string", property="filePdf"),
+     *          @OA\Property(type="number", property="storeBranchToClientDistance"),
+     *          @OA\Property(type="number", property="deliveryCost")
      *      )
      * )
      *
@@ -1563,6 +1565,7 @@ class OrderController extends BaseController
      *          @OA\Property(type="string", property="detail"),
      *          @OA\Property(type="integer", property="branch"),
      *          @OA\Property(type="integer", property="cancel", description="1 for cancel"),
+     *          @OA\Property(type="number", property="deliveryCost")
      *      )
      * )
      *
@@ -1818,6 +1821,7 @@ class OrderController extends BaseController
      *          @OA\Property(type="string", property="images"),
      *          @OA\Property(type="string", property="recipientPhone"),
      *          @OA\Property(type="string", property="detail"),
+     *          @OA\Property(type="number", property="deliveryCost")
      *      )
      * )
      * 

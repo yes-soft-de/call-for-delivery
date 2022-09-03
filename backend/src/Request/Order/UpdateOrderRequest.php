@@ -32,6 +32,12 @@ class UpdateOrderRequest
     private float|null $storeBranchToClientDistance;
 
     /**
+     * Auto-calculated value depending on the distance which is being calculated by Google MAP API
+     * @var float|null
+     */
+    private $deliveryCost;
+
+    /**
      * Get the value of id
      */ 
     public function getId()

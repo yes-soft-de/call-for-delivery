@@ -108,6 +108,10 @@ class OrderEntity
     #[ORM\Column(type: 'integer', nullable: true)]
     private $hasPayConflictAnswers;
 
+    // Auto-calculated value depending on the distance which is being calculated by Google MAP API
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $deliveryCost;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
@@ -559,6 +563,18 @@ class OrderEntity
     public function setHasPayConflictAnswers(?int $hasPayConflictAnswers): self
     {
         $this->hasPayConflictAnswers = $hasPayConflictAnswers;
+
+        return $this;
+    }
+
+    public function getDeliveryCost(): ?float
+    {
+        return $this->deliveryCost;
+    }
+
+    public function setDeliveryCost(?float $deliveryCost): self
+    {
+        $this->deliveryCost = $deliveryCost;
 
         return $this;
     }
