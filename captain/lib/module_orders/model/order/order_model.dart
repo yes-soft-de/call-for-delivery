@@ -81,8 +81,9 @@ class OrderModel extends DataModel {
           storeBranchToClientDistance: element.storeBranchToClientDistance,
           storeName: element.storeOwnerName ?? S.current.unknown,
           destinationLink: element.destination?.link,
-          destination: element.destination != null
-              ? LatLng(element.destination?.lat, element.destination?.lon)
+          destination: element.destination?.lat != null
+              ? LatLng(
+                  element.destination?.lat ?? 0, element.destination?.lon ?? 0)
               : null));
     });
   }

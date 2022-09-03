@@ -1,6 +1,5 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class MyMarker extends StatelessWidget {
   // declare a global key and get it trough Constructor
@@ -22,7 +21,7 @@ class MyMarker extends StatelessWidget {
                   width: 6),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.all(4.0),
               child: Icon(
                 Icons.store_rounded,
                 color: Theme.of(context).colorScheme.primary,
@@ -37,10 +36,10 @@ class MyMarker extends StatelessWidget {
                 borderRadius: BorderRadius.circular(25),
                 color: Theme.of(context).colorScheme.primary),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(4.0),
               child: Text(
                 S.current.branchLocation,
-                style: const TextStyle(color: Colors.white, fontSize: 12),
+                style: const TextStyle(color: Colors.white, fontSize: 8),
               ),
             ),
           ),
@@ -72,9 +71,9 @@ class ClientMarker extends StatelessWidget {
                   width: 6),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(12.0),
+              padding: const EdgeInsets.all(4.0),
               child: Icon(
-                Icons.store_rounded,
+                Icons.location_history_rounded,
                 color: Theme.of(context).colorScheme.primary,
               ),
             ),
@@ -87,10 +86,10 @@ class ClientMarker extends StatelessWidget {
                 borderRadius: BorderRadius.circular(25),
                 color: Theme.of(context).colorScheme.primary),
             child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(4.0),
               child: Text(
-                S.current.destination,
-                style: const TextStyle(color: Colors.white, fontSize: 12),
+                S.current.receiptPoint,
+                style: const TextStyle(color: Colors.white, fontSize: 8),
               ),
             ),
           ),

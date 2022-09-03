@@ -256,15 +256,34 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                 Navigator.of(context).pushNamed(OrdersRoutes.SUB_ORDERS_SCREEN,
                     arguments: element.id);
               } else {
-                showDialog(
-                    context: context,
-                    builder: (ctx) {
-                      return Scaffold(
-                        body: OrderMapPreview(
-                          order: element,
+                screenState.drawerKey.currentState?.showBottomSheet((ctx) {
+                  return SizedBox(
+                    height: 450,
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(16.0),
+                          child: Container(
+                            width: 50,
+                            height: 6,
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(25),
+                                color: Theme.of(context).backgroundColor),
+                          ),
                         ),
-                      );
-                    });
+                        Expanded(
+                          child: OrderMapPreview(
+                            order: element,
+                          ),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+                    shape: const RoundedRectangleBorder(
+                        borderRadius:
+                            BorderRadius.vertical(top: Radius.circular(25))));
               }
             },
             child: NearbyOrdersCard(

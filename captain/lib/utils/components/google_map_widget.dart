@@ -7,13 +7,15 @@ class MapWidget extends StatefulWidget {
   final Function(LatLng)? onTap;
   final Function(CameraPosition)? onCameraMove;
   final LatLng? currentLocation;
+  final Set<Polyline>? ploylines;
   const MapWidget(
       {Key? key,
       this.onMapCreated,
       this.onTap,
       this.onCameraMove,
       this.markers = const <Marker>{},
-      this.currentLocation})
+      this.currentLocation,
+      this.ploylines})
       : super(key: key);
 
   @override
@@ -35,6 +37,7 @@ class _MapWidgetState extends State<MapWidget> {
           mapType: MapType.normal,
           onMapCreated: widget.onMapCreated,
           markers: widget.markers,
+          polylines: widget.ploylines ?? {},
           initialCameraPosition: CameraPosition(
               target: widget.currentLocation ??
                   const LatLng(24.4713203, 39.7576433),
