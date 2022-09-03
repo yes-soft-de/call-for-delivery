@@ -1438,7 +1438,7 @@ class AdminOrderController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $result = $this->adminOrderService->updateStoreBranchToClientDistanceAndDestinationByAdmin($request);
+        $result = $this->adminOrderService->updateStoreBranchToClientDistanceAndDestinationByAdmin($request, $this->getUserId());
 
         return $this->response($result, self::UPDATE);
     }

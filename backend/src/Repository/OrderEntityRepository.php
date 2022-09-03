@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Constant\ChatRoom\ChatRoomConstant;
 use App\Constant\Order\OrderDistanceConstant;
+use App\Constant\Order\OrderHasPayConflictAnswersConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Constant\Payment\PaymentConstant;
@@ -2310,9 +2311,13 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'storeOwnerProfileEntity.id = orderEntity.storeOwner'
             )
 
-            ->andWhere('orderEntity.isCashPaymentConfirmedByStore IS NOT NULL')
-            ->andWhere('orderEntity.paidToProvider IS NOT NULL')
-            ->andWhere('orderEntity.isCashPaymentConfirmedByStore != orderEntity.paidToProvider')
+//            ->andWhere('orderEntity.isCashPaymentConfirmedByStore IS NOT NULL')
+//            ->andWhere('orderEntity.paidToProvider IS NOT NULL')
+//            ->andWhere('orderEntity.isCashPaymentConfirmedByStore != orderEntity.paidToProvider')
+
+            ->andWhere('orderEntity.hasPayConflictAnswers = :orderHasPayConflictAnswers')
+            ->setParameter('orderHasPayConflictAnswers', OrderHasPayConflictAnswersConstant::ORDER_HAS_PAYMENT_CONFLICT_ANSWERS)
+
             ->andWhere('orderEntity.state = :state')
             ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
 
@@ -2378,6 +2383,26 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->setParameter('specificDate', $dateTime)
 
             ->andWhere('orderEntity.isCashPaymentConfirmedByStore IS NULL')
+
+            ->getQuery()
+            ->getResult();
+    }
+
+    // retrieve delivered cash orders which had been answered by both store and captain before certain date
+    public function getCashPaymentAnsweredOrdersBeforeSpecificDate(): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+
+            ->andWhere('orderEntity.state = :deliveredState')
+            ->setParameter('deliveredState', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+            ->andWhere('orderEntity.payment = :cashMethod')
+            ->setParameter('cashMethod', PaymentConstant::CASH_PAYMENT_METHOD_CONST)
+
+//            ->andWhere('orderEntity.createdAt < :specificDate')
+//            ->setParameter('specificDate', $dateTime)
+
+            ->andWhere('orderEntity.isCashPaymentConfirmedByStore IS NOT NULL')
 
             ->getQuery()
             ->getResult();

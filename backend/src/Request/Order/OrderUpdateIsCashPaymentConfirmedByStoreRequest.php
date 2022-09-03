@@ -27,4 +27,9 @@ class OrderUpdateIsCashPaymentConfirmedByStoreRequest
 
         return $this;
     }
+
+    public function getIsCashPaymentConfirmedByStore(): int
+    {
+        return $this->isCashPaymentConfirmedByStore;
+    }
 }

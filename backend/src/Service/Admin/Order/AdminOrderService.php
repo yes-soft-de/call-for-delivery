@@ -903,9 +903,18 @@ class AdminOrderService
        return $this->adminOrderManager->getOrders();
     } 
      
-    public function updateStoreBranchToClientDistanceAndDestinationByAdmin(OrderStoreBranchToClientDistanceAndDestinationByAdminRequest $request): OrderByIdGetForAdminResponse
+    public function updateStoreBranchToClientDistanceAndDestinationByAdmin(OrderStoreBranchToClientDistanceAndDestinationByAdminRequest $request,
+                                                                           int $userId): ?OrderByIdGetForAdminResponse
     {
         $order = $this->adminOrderManager->updateStoreBranchToClientDistanceAndDestinationByAdmin($request);
+
+        if (! $order) {
+            return $order;
+        }
+
+        // save log of the action on order
+        $this->orderLogToMySqlService->initializeCreateOrderLogRequest($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+            OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_AND_DESTINATION_BY_ADMIN_ACTION_CONST, null, null);
 
         return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
     }

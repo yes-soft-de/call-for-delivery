@@ -3,6 +3,7 @@
 namespace App\Manager\Order;
 
 use App\AutoMapping;
+use App\Constant\Order\OrderHasPayConflictAnswersConstant;
 use App\Constant\Order\OrderResultConstant;
 use App\Entity\OrderEntity;
 use App\Constant\Order\OrderStateConstant;
@@ -644,6 +645,15 @@ class OrderManager
         $orderEntity = $this->autoMapping->mapToObject(OrderUpdateIsCashPaymentConfirmedByStoreRequest::class, OrderEntity::class, $request, $orderEntity);
 
         $orderEntity->setIsCashPaymentConfirmedByStoreUpdateDate(new DateTime());
+
+        // according to the updated field, we gonna decide if there is a conflict between answers or not
+        if ($request->getIsCashPaymentConfirmedByStore() !== $orderEntity->getPaidToProvider()) {
+            $orderEntity->setHasPayConflictAnswers(OrderHasPayConflictAnswersConstant::ORDER_HAS_PAYMENT_CONFLICT_ANSWERS);
+
+        } else {
+            // store and captain answers are the same, no conflict is existed
+            $orderEntity->setHasPayConflictAnswers(OrderHasPayConflictAnswersConstant::ORDER_DOES_NOT_HAVE_PAYMENT_CONFLICT_ANSWERS);
+        }
 
         $this->entityManager->flush();
 

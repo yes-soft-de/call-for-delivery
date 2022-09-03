@@ -8,7 +8,7 @@ use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-class OrderCommand extends Command
+class OrderIsCashPaymentConfirmedByStoreUpdateCommand extends Command
 {
     protected static $defaultName = 'app:update-is-cash-payment-confirmed-by-store';
 
