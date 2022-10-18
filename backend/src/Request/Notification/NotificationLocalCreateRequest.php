@@ -11,6 +11,11 @@ class NotificationLocalCreateRequest
     private $message;
 
     /**
+     * @var int|null
+     */
+    private $appType;
+
+    /**
      * Get the value of title
      */ 
     public function getTitle()
@@ -68,5 +73,10 @@ class NotificationLocalCreateRequest
         $this->message = $message;
 
         return $this;
+    }
+
+    public function setAppType(?int $appType): void
+    {
+        $this->appType = $appType;
     }
 }

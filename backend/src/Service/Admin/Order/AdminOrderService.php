@@ -4,6 +4,7 @@ namespace App\Service\Admin\Order;
 
 use App\AutoMapping;
 use App\Constant\Notification\NotificationConstant;
+use App\Constant\Notification\NotificationTokenConstant;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
@@ -337,10 +338,11 @@ class AdminOrderService
 
                 // *** send notifications (local and firebase) *** //
                 $this->notificationLocalService->createNotificationLocal($orderResult->getStoreOwner()->getStoreOwnerId(), NotificationConstant::ORDER_RETURNED_PENDING_TITLE,
-                    NotificationConstant::ORDER_RETURNED_PENDING, $orderResult->getId());
+                    NotificationConstant::ORDER_RETURNED_PENDING, NotificationTokenConstant::APP_TYPE_STORE, $orderResult->getId());
 
                 $this->notificationLocalService->createNotificationLocal($captainUserId, NotificationConstant::ORDER_RETURNED_PENDING_TITLE,
-                    NotificationConstant::ORDER_UNASSIGNED_TO_CAPTAIN.$orderResult->getId(), $orderResult->getId());
+                    NotificationConstant::ORDER_UNASSIGNED_TO_CAPTAIN.$orderResult->getId(), NotificationTokenConstant::APP_TYPE_CAPTAIN,
+                    $orderResult->getId());
 
                 //create firebase notification to store
                 try {
@@ -482,7 +484,7 @@ class AdminOrderService
             $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
 
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS,
-                $order->getId());
+                NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
 
             $this->orderTimeLineService->createOrderLogsRequest($order);
 
@@ -604,7 +606,7 @@ class AdminOrderService
 
                 //create local notification to store
                 $this->notificationLocalService->createNotificationLocal($newUpdatedOrder->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
-                    NotificationConstant::CANCEL_ORDER_SUCCESS, $newUpdatedOrder->getId());
+                    NotificationConstant::CANCEL_ORDER_SUCCESS, NotificationTokenConstant::APP_TYPE_STORE, $newUpdatedOrder->getId());
 
                 //create firebase notification to store
                 try {
@@ -668,7 +670,8 @@ class AdminOrderService
                     if ($request->getState() === OrderStateConstant::ORDER_STATE_PENDING) {
                         // order returned to pending status, so create a local notification for the captain
                         $this->notificationLocalService->createNotificationLocal($orderResult[1], NotificationConstant::ORDER_RETURNED_PENDING_TITLE,
-                            NotificationConstant::ORDER_UNASSIGNED_TO_CAPTAIN.$orderResult[0]->getId(), $orderResult[0]->getId());
+                            NotificationConstant::ORDER_UNASSIGNED_TO_CAPTAIN.$orderResult[0]->getId(),
+                            NotificationTokenConstant::APP_TYPE_CAPTAIN, $orderResult[0]->getId());
                     }
                 }
                 // insert new order log
@@ -817,12 +820,14 @@ class AdminOrderService
 
             // notification to store
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(),
-                NotificationConstant::NEW_SUB_ORDER_TITLE, NotificationConstant::CREATE_SUB_ORDER_SUCCESS, $order->getId());
+                NotificationConstant::NEW_SUB_ORDER_TITLE, NotificationConstant::CREATE_SUB_ORDER_SUCCESS,
+                NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
 
             // notification to captain
             if ($primaryOrder->getCaptainId()) {
                 $this->notificationLocalService->createNotificationLocal($primaryOrder->getCaptainId()->getCaptainId(),
-                    NotificationConstant::NEW_SUB_ORDER_TITLE, NotificationConstant::ADD_SUB_ORDER, $request->getPrimaryOrder()->getId());
+                    NotificationConstant::NEW_SUB_ORDER_TITLE, NotificationConstant::ADD_SUB_ORDER,
+                    NotificationTokenConstant::APP_TYPE_STORE, $request->getPrimaryOrder()->getId());
             }
 
             $this->orderTimeLineService->createOrderLogsRequest($order);
