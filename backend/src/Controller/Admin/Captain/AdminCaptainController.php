@@ -147,23 +147,7 @@ class AdminCaptainController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="string", property="captainName"),
-     *              @OA\Property(type="object", property="location"),
-     *              @OA\Property(type="string", property="age"),
-     *              @OA\Property(type="string", property="car"),
-     *              @OA\Property(type="number", property="salary"),
-     *              @OA\Property(type="string", property="status"),
-     *              @OA\Property(type="number", property="bounce"),
-     *              @OA\Property(type="string", property="phone"),
-     *              @OA\Property(type="string", property="bankName"),
-     *              @OA\Property(type="string", property="bankAccountNumber"),
-     *              @OA\Property(type="string", property="stcPay"),
-     *              @OA\Property(type="string", property="images"),
-     *              @OA\Property(type="boolean", property="isOnline"),
-     *              @OA\Property(type="string", property="mechanicLicense"),
-     *              @OA\Property(type="string", property="identity"),
-     *              @OA\Property(type="string", property="roomId")
+     *              ref=@Model(type="App\Response\Admin\Captain\CaptainProfileGetForAdminResponse")
      *          )
      *      )
      * )
@@ -238,7 +222,8 @@ class AdminCaptainController extends BaseController
      *          @OA\Property(type="boolean", property="isOnline"),
      *          @OA\Property(type="string", property="mechanicLicense"),
      *          @OA\Property(type="string", property="drivingLicence"),
-     *          @OA\Property(type="string", property="identity")
+     *          @OA\Property(type="string", property="identity"),
+     *          @OA\Property(type="string", property="address")
      *      )
      * )
      *
@@ -249,24 +234,7 @@ class AdminCaptainController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="string", property="captainName"),
-     *              @OA\Property(type="object", property="location"),
-     *              @OA\Property(type="string", property="age"),
-     *              @OA\Property(type="string", property="car"),
-     *              @OA\Property(type="number", property="salary"),
-     *              @OA\Property(type="string", property="status"),
-     *              @OA\Property(type="number", property="bounce"),
-     *              @OA\Property(type="string", property="phone"),
-     *              @OA\Property(type="string", property="bankName"),
-     *              @OA\Property(type="string", property="bankAccountNumber"),
-     *              @OA\Property(type="string", property="stcPay"),
-     *              @OA\Property(type="string", property="images"),
-     *              @OA\Property(type="boolean", property="isOnline"),
-     *              @OA\Property(type="string", property="mechanicLicense"),
-     *              @OA\Property(type="string", property="identity"),
-     *              @OA\Property(type="string", property="drivingLicence"),
-     *              @OA\Property(type="string", property="roomId")
+     *              ref=@Model(type="App\Response\Admin\Captain\CaptainProfileGetForAdminResponse")
      *          )
      *      )
      * )

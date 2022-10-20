@@ -109,4 +109,9 @@ class CaptainProfileGetForAdminResponse
     public string $completeAccountStatus;
     
     public bool|null $captainStoppedFinancialCycle;
+
+    /**
+     * @var string|null
+     */
+    public $address;
 }

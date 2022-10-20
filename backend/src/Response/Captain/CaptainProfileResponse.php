@@ -41,4 +41,9 @@ class CaptainProfileResponse
     public null|string $roomId;
 
     public null|float $averageRating;
+
+    /**
+     * @var string|null
+     */
+    public $address;
 }
