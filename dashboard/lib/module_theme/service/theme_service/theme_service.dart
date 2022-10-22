@@ -68,6 +68,7 @@ class AppThemeDataService {
           fontFamily: 'Dubai',
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
+            backgroundColor: darkScheme.primary,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(25),
             ),
@@ -87,6 +88,13 @@ class AppThemeDataService {
         //    colorScheme: lightScheme,
         focusColor: PrimaryColor,
         primarySwatch: Colors.indigo,
+        elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+          backgroundColor: lightScheme.primary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+        )),
         cardColor: Color.fromRGBO(245, 245, 245, 1),
         backgroundColor: Color.fromRGBO(236, 239, 241, 1),
         textTheme: TextTheme(button: TextStyle(color: Colors.white)),
