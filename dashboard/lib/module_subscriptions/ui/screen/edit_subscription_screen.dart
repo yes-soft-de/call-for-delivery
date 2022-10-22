@@ -34,7 +34,7 @@ class EditSubscriptionScreenState extends State<EditSubscriptionScreen> {
   }
 
   void moveNext() {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Navigator.of(context).popUntil((route) =>
           route.settings.name == SubscriptionsRoutes.SUBSCRIPTIONS_MANAGEMENT);
       CustomFlushBarHelper.createSuccess(

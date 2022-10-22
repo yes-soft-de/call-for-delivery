@@ -31,9 +31,9 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   @override
   void initState() {
     currentState = LoadingState(this);
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       widget._stateManager.stateStream.listen((event) {
-        WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
           currentState = event;
           if (mounted) {
             setState(() {});

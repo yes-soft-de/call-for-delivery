@@ -49,7 +49,7 @@ class StoreSubscriptionsFinanceDetailsScreenState
   late StoreSubscriptionsFinanceModel model;
   bool flag = true;
   void moveBack() {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Navigator.of(context).pop();
       CustomFlushBarHelper.createSuccess(
               title: S.current.warnning,
