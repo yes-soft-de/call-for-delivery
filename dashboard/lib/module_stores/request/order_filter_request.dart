@@ -1,8 +1,8 @@
 class FilterOrderRequest {
   int? storeOwnerProfileId;
   String? state;
-  String? toDate;
-  String? fromDate;
+  DateTime? toDate;
+  DateTime? fromDate;
   num? maxKilo;
   num? maxKiloFromDistance;
   FilterOrderRequest(
@@ -25,11 +25,15 @@ class FilterOrderRequest {
     }
     if (toDate != null) {
       data['toDate'] =
-          DateTime.tryParse(this.toDate ?? '')?.toUtc().toIso8601String();
+          DateTime(this.toDate!.year, this.toDate!.month, this.toDate!.day, 0)
+              .toUtc()
+              .toIso8601String();
     }
     if (fromDate != null) {
-      data['fromDate'] =
-          DateTime.tryParse(this.fromDate ?? '')?.toUtc().toIso8601String();
+      data['fromDate'] = DateTime(
+              this.fromDate!.year, this.fromDate!.month, this.fromDate!.day, 0)
+          .toUtc()
+          .toIso8601String();
     }
 
     return data;
