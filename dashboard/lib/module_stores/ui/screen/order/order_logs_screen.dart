@@ -38,6 +38,8 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
 
   var today = DateTime.now();
   int? storeID = -1;
+  TextEditingController geoController = TextEditingController();
+  TextEditingController captainController = TextEditingController();
   @override
   void initState() {
     super.initState();

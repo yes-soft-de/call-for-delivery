@@ -1,5 +1,4 @@
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/model/order/order_model.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
@@ -21,8 +20,6 @@ class OrderLogsLoadedState extends States {
     return CustomListView.custom(children: getOrders());
   }
 
-  TextEditingController geoController = TextEditingController();
-  TextEditingController controller = TextEditingController();
   List<Widget> getOrders() {
     var context = screenState.context;
     List<Widget> widgets = [];
@@ -67,13 +64,16 @@ class OrderLogsLoadedState extends States {
                   hintStyle: TextStyle(fontSize: 10),
                   hintText: S.current.countKilometersTo +
                       '(${S.current.clientDistance})',
-                  controller: geoController,
+                  controller: screenState.geoController,
                   onChanged: () {
                     screenState.ordersFilter.maxKiloFromDistance =
-                        num.tryParse(geoController.text) ?? -1;
+                        num.tryParse(screenState.geoController.text) ?? -1;
                     screenState.getOrders(false);
                   },
                 ),
+              ),
+              SizedBox(
+                width: 16,
               ),
               Expanded(
                 child: CustomFormField(
@@ -81,10 +81,10 @@ class OrderLogsLoadedState extends States {
                   hintStyle: TextStyle(fontSize: 10),
                   hintText:
                       S.current.countKilometersTo + '(${S.current.captain})',
-                  controller: controller,
+                  controller: screenState.captainController,
                   onChanged: () {
                     screenState.ordersFilter.maxKilo =
-                        num.tryParse(controller.text) ?? -1;
+                        num.tryParse(screenState.captainController.text) ?? -1;
                     screenState.getOrders(false);
                   },
                 ),
