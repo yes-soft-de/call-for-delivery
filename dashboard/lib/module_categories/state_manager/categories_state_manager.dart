@@ -1,8 +1,10 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_categories/model/package_categories_model.dart';
+import 'package:c4d/module_categories/request/active_package_request.dart';
 import 'package:c4d/module_categories/request/package_category_request.dart';
 import 'package:c4d/module_categories/ui/state/categories/package_categories_loaded_state.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -87,6 +89,21 @@ class PackageCategoriesStateManager {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning, message: S.current.deleteSuccess)
             .show(screenState.context);
+      }
+    });
+  }
+
+  void enableCategories(
+      CategoriesScreenState screenState, ActivePackageRequest request) {
+    _categoriesService.enableCategory(request).then((value) {
+      if (value.hasError) {
+        getCategories(screenState);
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error ?? '')
+            .show(screenState.context);
+      } else {
+        getCategories(screenState);
+        Fluttertoast.showToast(msg: S.current.categoryUpdatedSuccessfully);
       }
     });
   }

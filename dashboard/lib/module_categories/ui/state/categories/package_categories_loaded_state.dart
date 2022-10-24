@@ -1,5 +1,6 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_categories/model/package_categories_model.dart';
+import 'package:c4d/module_categories/request/active_package_request.dart';
 import 'package:c4d/module_categories/ui/widget/category_card.dart';
 import 'package:c4d/module_categories/ui/widget/category_form.dart';
 import 'package:flutter/material.dart';
@@ -70,6 +71,7 @@ class CategoriesLoadedState extends States {
         CategoryCard(
           description: element.description ?? '',
           name: element.categoryName,
+          status: element.status,
           onEdit: () {
             showDialog(
                 context: context,
@@ -81,6 +83,12 @@ class CategoriesLoadedState extends States {
                     },
                   );
                 });
+          },
+          onActivate: (status) {
+            element.status = status;
+            screenState.refresh();
+            screenState.enableCategories(ActivePackageRequest(
+                id: element.id, status: status ? 1 : 0));
           },
         ),
       );

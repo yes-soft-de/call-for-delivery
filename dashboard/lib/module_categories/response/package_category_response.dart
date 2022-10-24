@@ -39,8 +39,10 @@ class Data {
     id = json['id'];
     categoryName = json['name'];
     description = json['description'];
+    status = json['status'];
   }
   int? id;
   String? categoryName;
   String? description;
+  int? status;
 }

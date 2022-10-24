@@ -6,13 +6,17 @@ import '../response/package_category_response.dart';
 class PackagesCategoryModel extends DataModel {
   String categoryName = '';
   String? description;
+  bool status = false;
 
   int id = -1;
 
   List<PackagesCategoryModel> _model = [];
 
   PackagesCategoryModel(
-      {required this.categoryName, required this.id, this.description});
+      {required this.categoryName,
+      required this.id,
+      this.description,
+      required this.status});
 
   PackagesCategoryModel.withData(List<Data> data) : super.withData() {
     _model = [];
@@ -21,6 +25,7 @@ class PackagesCategoryModel extends DataModel {
         id: element.id ?? -1,
         description: element.description,
         categoryName: element.categoryName ?? S.current.category,
+        status: element.status == 1,
       ));
     }
   }
