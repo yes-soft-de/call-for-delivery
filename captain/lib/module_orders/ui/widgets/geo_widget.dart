@@ -31,7 +31,7 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
   late LatLng destination;
   @override
   void initState() {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _setup().whenComplete(() {
         setState(() {});
       });
@@ -59,7 +59,7 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
   @override
   void didUpdateWidget(GeoDistanceText oldWidget) {
     if (origin != widget.origin || destination != widget.destination) {
-      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         _setup();
       });
     }

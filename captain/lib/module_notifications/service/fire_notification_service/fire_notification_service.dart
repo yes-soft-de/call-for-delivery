@@ -81,7 +81,7 @@ class FireNotificationService {
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
           NotificationModel notificationModel =
               NotificationModel.fromJson(message.data);
-          SchedulerBinding.instance?.addPostFrameCallback(
+          SchedulerBinding.instance.addPostFrameCallback(
             (_) {
               if (notificationModel.navigateRoute == ChatRoutes.chatRoute) {
                 Navigator.pushNamed(GlobalVariable.navState.currentContext!,

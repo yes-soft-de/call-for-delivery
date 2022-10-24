@@ -90,7 +90,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   }
 
   void requestAuthorization() {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Navigator.of(context).pushNamedAndRemoveUntil(
         AuthorizationRoutes.LOGIN_SCREEN,
         (r) => false,
@@ -103,7 +103,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   }
 
   void moveTo(String route, dynamic argument) {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Navigator.of(context).pushNamed(route, arguments: argument);
     });
   }
