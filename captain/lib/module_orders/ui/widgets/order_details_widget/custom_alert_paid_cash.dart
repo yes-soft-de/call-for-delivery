@@ -31,12 +31,12 @@ class CustomAlertDialogForCash extends StatelessWidget {
               onPressed: () {
                 onPressed(true);
               },
-              child: Text(S.current.yes)),
+              Widget: Text(S.current.yes)),
           TextButton(
               onPressed: () {
                 onPressed(false);
               },
-              child: Text(S.current.no)),
+              Widget: Text(S.current.no)),
         ],
       ),
     );

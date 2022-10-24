@@ -54,7 +54,7 @@ class LoginStateCodeSent extends LoginState {
                         password: getIt<AuthPrefsHelper>().getPassword()));
                   }
                 : null,
-            child: Text(
+            Widget: Text(
               S.of(context).resendCode,
               style: TextStyle(
                 color:

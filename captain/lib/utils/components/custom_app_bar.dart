@@ -37,7 +37,7 @@ class CustomC4dAppBar {
                 alignment: AlignmentDirectional.centerStart,
                 child: widget ??
                     InkWell(
-                      customBorder: const CircleBorder(),
+                      customBorder: CircleBorder(),
                       onTap: onTap ?? () => Navigator.of(context).pop(),
                       child: Container(
                         decoration: BoxDecoration(
@@ -91,7 +91,7 @@ class CustomC4dAppBar {
           position: const BadgePosition(top: -3, end: -2),
           showBadge: showBadge,
           child: InkWell(
-            customBorder: const CircleBorder(),
+            customBorder: CircleBorder(),
             onTap: onTap,
             child: Container(
               decoration: BoxDecoration(

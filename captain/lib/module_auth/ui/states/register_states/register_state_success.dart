@@ -16,9 +16,7 @@ class RegisterStateSuccess extends RegisterState {
             child: Image.asset('assets/images/logo.jpg'),
           ),
         ),
-        RaisedButton(
-          padding: EdgeInsets.all(8),
-          color: Theme.of(context).primaryColor,
+        ElevatedButton(
           onPressed: () {
             screen.moveToNext();
           },

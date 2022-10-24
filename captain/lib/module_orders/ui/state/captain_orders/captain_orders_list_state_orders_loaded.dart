@@ -281,9 +281,9 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                     ),
                   );
                 },
-                    shape: const RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.vertical(top: Radius.circular(25))));
+                    shape: RoundedRectangleBorder(
+                        borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(25))));
               }
             },
             child: NearbyOrdersCard(

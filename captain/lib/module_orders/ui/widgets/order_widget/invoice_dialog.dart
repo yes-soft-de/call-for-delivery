@@ -100,12 +100,12 @@ class _InvoiceDialogState extends State<InvoiceDialog> {
                     }
                   }
                 : null,
-            child: Text(S.current.save)),
+            Widget: Text(S.current.save)),
         TextButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text(S.current.cancel)),
+            Widget: Text(S.current.cancel)),
       ],
     );
   }

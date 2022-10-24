@@ -35,7 +35,7 @@ class _RemoveSubOrderDialogState extends State<RemoveSubOrderDialog> {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text(S.current.cancel)),
+            Widget: Text(S.current.cancel)),
         TextButton(
             onPressed: orderID != null
                 ? () {
@@ -43,7 +43,7 @@ class _RemoveSubOrderDialogState extends State<RemoveSubOrderDialog> {
                     widget.request(OrderNonSubRequest(orderID: orderID));
                   }
                 : null,
-            child: Text(S.current.confirm)),
+            Widget: Text(S.current.confirm)),
       ],
     );
   }

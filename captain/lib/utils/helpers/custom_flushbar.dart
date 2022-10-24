@@ -1,7 +1,6 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:c4d/utils/components/fixed_container.dart';
 
 class CustomFlushBarHelper {
   static Widget warningDialog({
@@ -20,7 +19,7 @@ class CustomFlushBarHelper {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text(S.current.cancel))
+            Widget: Text(S.current.cancel))
       ],
     );
   }

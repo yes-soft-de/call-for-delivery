@@ -260,7 +260,7 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
                                 color:
                                     Theme.of(context).scaffoldBackgroundColor,
                                 elevation: 3,
-                                shape: const CircleBorder(),
+                                shape: CircleBorder(),
                                 child: InkWell(
                                   onTap: () {
                                     down = false;
@@ -272,7 +272,7 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
                                     });
                                     setState(() {});
                                   },
-                                  customBorder: const CircleBorder(),
+                                  customBorder: CircleBorder(),
                                   child: const Padding(
                                     padding: EdgeInsets.all(8.0),
                                     child: Icon(

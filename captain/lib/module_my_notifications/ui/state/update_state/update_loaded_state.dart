@@ -194,7 +194,7 @@ class UpdatesLoadedState extends States {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          child: Text(S.current.cancel))
+                          Widget: Text(S.current.cancel))
                     ],
                   );
                 });
