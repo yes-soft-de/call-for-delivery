@@ -24,10 +24,10 @@ class FilterOrderRequest {
       data['kilometer'] = this.maxKilo;
     }
     if (toDate != null) {
-      data['toDate'] =
-          DateTime(this.toDate!.year, this.toDate!.month, this.toDate!.day, 0)
-              .toUtc()
-              .toIso8601String();
+      data['toDate'] = DateTime(
+              this.toDate!.year, this.toDate!.month, this.toDate!.day + 1, 0)
+          .toUtc()
+          .toIso8601String();
     }
     if (fromDate != null) {
       data['fromDate'] = DateTime(
