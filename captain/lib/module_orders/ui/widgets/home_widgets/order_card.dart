@@ -271,7 +271,7 @@ class NearbyOrdersCard extends StatelessWidget {
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
-                                    Widget: Text(S.current.close)),
+                                    child: Text(S.current.close)),
                               ],
                             );
                           });

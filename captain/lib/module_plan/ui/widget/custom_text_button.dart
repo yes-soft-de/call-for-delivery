@@ -17,7 +17,7 @@ class CustomTextButton extends StatelessWidget {
       child: TextButton(
           style: TextButton.styleFrom(shape: StadiumBorder()),
           onPressed: onPressed,
-          Widget: Text(
+          child: Text(
             label,
             style: isDark ? const TextStyle(color: Colors.white70) : null,
           )),

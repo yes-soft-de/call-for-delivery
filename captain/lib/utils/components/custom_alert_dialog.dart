@@ -36,7 +36,7 @@ class CustomAlertDialog extends StatelessWidget {
         actions: [
           TextButton(
               onPressed: onPressed,
-              Widget: Text(primaryButton ?? S.current.confirm)),
+              child: Text(primaryButton ?? S.current.confirm)),
           TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
@@ -44,7 +44,7 @@ class CustomAlertDialog extends StatelessWidget {
                   SystemNavigator.pop();
                 }
               },
-              Widget: Text(S.current.cancel)),
+              child: Text(S.current.cancel)),
         ],
       ),
     );

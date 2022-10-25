@@ -212,7 +212,7 @@ class MyNotificationsLoadedState extends States {
                           onPressed: () {
                             Navigator.of(context).pop();
                           },
-                          Widget: Text(S.current.cancel))
+                          child: Text(S.current.cancel))
                     ],
                   );
                 });
