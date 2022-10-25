@@ -488,7 +488,7 @@ class AdminOrderService
 
             // save log of the action on order
             $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
-                OrderLogActionTypeConstant::CREATE_ORDER_BY_ADMIN_ACTION_CONST, $branch, null);
+                OrderLogActionTypeConstant::CREATE_ORDER_BY_ADMIN_ACTION_CONST, $branch->getId(), null);
 
             //create firebase notification to store
             try{
