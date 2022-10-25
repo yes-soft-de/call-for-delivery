@@ -38,7 +38,7 @@ class MyMarker extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: Text(
-                S.current.branchLocation,
+                S.current.receiptPoint,
                 style: const TextStyle(color: Colors.white, fontSize: 8),
               ),
             ),
@@ -88,7 +88,7 @@ class ClientMarker extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(4.0),
               child: Text(
-                S.current.receiptPoint,
+                S.current.destinationPoint,
                 style: const TextStyle(color: Colors.white, fontSize: 8),
               ),
             ),

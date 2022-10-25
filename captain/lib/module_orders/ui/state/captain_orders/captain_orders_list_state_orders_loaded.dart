@@ -19,6 +19,7 @@ import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:bottom_sheet/bottom_sheet.dart';
 
 class CaptainOrdersListStateOrdersLoaded extends States {
   final DataModel myOrders;
@@ -144,18 +145,6 @@ class CaptainOrdersListStateOrdersLoaded extends States {
     }
     var ordersData = nearbyOrders as OrderModel;
     var uiList = <Widget>[];
-    // uiList.add(Padding(
-    //   padding: const EdgeInsets.all(8.0),
-    //   child: CustomFormField(
-    //       onChanged: (s) {
-    //         screenState.refresh();
-    //       },
-    //       numbers: true,
-    //       hintText: S.current.searchForOrder,
-    //       preIcon: const Icon(Icons.search_rounded),
-    //       controller: searchNearby),
-    // ));
-
     var data = screenState.currentLocation != null
         ? _sortOrder(ordersData.data)
         : ordersData.data;
@@ -179,20 +168,68 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                       OrdersRoutes.SUB_ORDERS_SCREEN,
                       arguments: element.id);
                 } else {
-                  showModalBottomSheet(
-                      context: context,
-                      backgroundColor: Colors.transparent,
-                      builder: (ctx) {
-                        return Container(
-                          decoration: const BoxDecoration(
-                            borderRadius:
-                                BorderRadius.vertical(top: Radius.circular(25)),
-                          ),
-                          child: OrderMapPreview(
-                            order: element,
-                          ),
+                  showFlexibleBottomSheet(
+                      barrierColor: Colors.transparent,
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(25))),
+                      builder: (BuildContext context,
+                          ScrollController scrollController,
+                          double bottomSheetOffset) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Container(
+                                width: 50,
+                                height: 6,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25),
+                                    color: Theme.of(context).backgroundColor),
+                              ),
+                            ),
+                            Expanded(
+                              child: OrderMapPreview(
+                                order: element,
+                              ),
+                            ),
+                            Row(
+                              children: [
+                                ElevatedButton.icon(
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    var index =
+                                        StatusHelper.getOrderStatusIndex(
+                                            element.state);
+                                    screenState.stateManager.updateOrder(
+                                        UpdateOrderRequest(
+                                          id: element.id,
+                                          state: StatusHelper.getStatusString(
+                                              OrderStatusEnum
+                                                  .values[index + 1]),
+                                        ),
+                                        screenState);
+                                  },
+                                  style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.green,
+                                      shape: const StadiumBorder()),
+                                  label: Text(
+                                    S.current.accept,
+                                    style: Theme.of(context).textTheme.button,
+                                  ),
+                                  icon: const Icon(
+                                    Icons.thumb_up_alt_rounded,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                              ],
+                            )
+                          ],
                         );
-                      });
+                      },
+                      context: context);
                 }
               },
               child: NearbyOrdersCard(
@@ -256,34 +293,66 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                 Navigator.of(context).pushNamed(OrdersRoutes.SUB_ORDERS_SCREEN,
                     arguments: element.id);
               } else {
-                screenState.drawerKey.currentState?.showBottomSheet((ctx) {
-                  return SizedBox(
-                    height: 450,
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Container(
-                            width: 50,
-                            height: 6,
-                            decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(25),
-                                color: Theme.of(context).backgroundColor),
-                          ),
-                        ),
-                        Expanded(
-                          child: OrderMapPreview(
-                            order: element,
-                          ),
-                        ),
-                      ],
-                    ),
-                  );
-                },
-                    shape: RoundedRectangleBorder(
+                showFlexibleBottomSheet(
+                    barrierColor: Colors.transparent,
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).scaffoldBackgroundColor,
                         borderRadius: const BorderRadius.vertical(
-                            top: Radius.circular(25))));
+                            top: Radius.circular(25))),
+                    builder: (BuildContext context,
+                        ScrollController scrollController,
+                        double bottomSheetOffset) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Container(
+                              width: 50,
+                              height: 6,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25),
+                                  color: Theme.of(context).backgroundColor),
+                            ),
+                          ),
+                          Expanded(
+                            child: OrderMapPreview(
+                              order: element,
+                            ),
+                          ),
+                          Row(
+                            children: [
+                              ElevatedButton.icon(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  var index = StatusHelper.getOrderStatusIndex(
+                                      element.state);
+                                  screenState.stateManager.updateOrder(
+                                      UpdateOrderRequest(
+                                        id: element.id,
+                                        state: StatusHelper.getStatusString(
+                                            OrderStatusEnum.values[index + 1]),
+                                      ),
+                                      screenState);
+                                },
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.green,
+                                    shape: const StadiumBorder()),
+                                label: Text(
+                                  S.current.accept,
+                                  style: Theme.of(context).textTheme.button,
+                                ),
+                                icon: const Icon(
+                                  Icons.thumb_up_alt_rounded,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      );
+                    },
+                    context: context);
               }
             },
             child: NearbyOrdersCard(
