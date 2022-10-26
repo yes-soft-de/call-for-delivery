@@ -15,7 +15,7 @@ class CopyMapLinkScreen extends StatefulWidget {
 class _CopyMapLinkScreenState extends State<CopyMapLinkScreen> {
   @override
   void initState() {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var argument =
           ModalRoute.of(context)?.settings.arguments as DeepLinksModel?;
       Clipboard.setData(ClipboardData(text: argument?.link.toString()));

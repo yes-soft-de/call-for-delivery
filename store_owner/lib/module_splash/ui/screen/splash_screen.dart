@@ -55,7 +55,7 @@ class _SplashScreenState extends State<SplashScreen> {
     if (Platform.isAndroid) {
       _createNewChannel();
     }
-    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       someChecks();
     });
     super.initState();

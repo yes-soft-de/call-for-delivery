@@ -76,7 +76,7 @@ class NewOrderStateManager {
   void showPrayerWarning() {
     PrayerDate.getWarningMessage().then((value) {
       if (value != null) {
-        WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
           showDialog(
               context: GlobalVariable.navState.currentContext!,
               builder: (ctc) {

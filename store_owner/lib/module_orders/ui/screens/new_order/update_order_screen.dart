@@ -75,7 +75,7 @@ class UpdateOrderScreenState extends State<UpdateOrderScreen>
   void initState() {
     super.initState();
     currentState = LoadingState(this);
-    WidgetsBinding.instance?.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     countryNumberController.text = '966';
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
       currentState = event;

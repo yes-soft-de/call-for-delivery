@@ -64,7 +64,7 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
   @override
   void initState() {
     currentState = LoadingState(this);
-    WidgetsBinding.instance?.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
 
     widget._stateManager.stateStream.listen((event) {
       currentState = event;

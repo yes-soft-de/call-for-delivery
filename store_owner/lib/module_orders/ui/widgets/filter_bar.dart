@@ -92,7 +92,7 @@ class _FilterBarState extends State<FilterBar> {
     borderRadius = widget.borderRadius;
     padding = widget.padding;
     firstUse = true;
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) async {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) async {
       try {
         if (firstUse) {
           _keys.forEach((element) {
