@@ -12,6 +12,7 @@ use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
+use App\Request\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminRequest;
 use App\Request\Admin\Order\RePendingAcceptedOrderByAdminRequest;
 use App\Request\Admin\Order\SubOrderCreateByAdminRequest;
 use App\Service\Admin\Order\AdminOrderService;
@@ -1442,6 +1443,57 @@ class AdminOrderController extends BaseController
         }
 
         $result = $this->adminOrderService->updateStoreBranchToClientDistanceAndDestinationByAdmin($request, $this->getUserId());
+
+        return $this->response($result, self::UPDATE);
+    }
+
+    /**
+     * admin: update specific orders if they have conflict answers or not
+     * @Route("updatehaspayconflictanswersbyadmin", name="updateHasPayConflictAnswersByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Update hasPayConflictAnswers of spceific orders",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns updated orders that accomodate with the filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminResponse")
+     *              )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function updateOrderHasPayConflictAnswersByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderHasPayConflictAnswersUpdateByAdminRequest::class, (object)$data);
+
+        $result = $this->adminOrderService->updateOrderHasPayConflictAnswersByAdmin($request);
 
         return $this->response($result, self::UPDATE);
     }

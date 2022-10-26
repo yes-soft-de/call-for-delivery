@@ -2,6 +2,7 @@
 
 namespace App\Manager\Admin\Order;
 
+use App\Constant\Order\OrderHasPayConflictAnswersConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Entity\OrderEntity;
@@ -10,6 +11,7 @@ use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
+use App\Request\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminRequest;
 use App\Request\Admin\Order\SubOrderCreateByAdminRequest;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -344,5 +346,31 @@ class AdminOrderManager
         $this->entityManager->flush();
         
         return $orderEntity;
+    }
+
+    public function updateOrderHasPayConflictAnswersByAdmin(OrderHasPayConflictAnswersUpdateByAdminRequest $request): array
+    {
+        $ordersArray = $this->orderEntityRepository->filterCashPaymentAnsweredOrdersForAdmin($request);
+
+        if (count($ordersArray) > 0) {
+            foreach ($ordersArray as $orderEntity) {
+                if (($orderEntity->getIsCashPaymentConfirmedByStore()) && ($orderEntity->getPaidToProvider())
+                    && ($orderEntity->getIsCashPaymentConfirmedByStore() != $orderEntity->getPaidToProvider())) {
+                    // there is conflict between the store's answer and the captain's answer, so update
+                    // hasPayConflictAnswers to the according value
+                    $orderEntity->setHasPayConflictAnswers(OrderHasPayConflictAnswersConstant::ORDER_HAS_PAYMENT_CONFLICT_ANSWERS);
+
+                } elseif (($orderEntity->getIsCashPaymentConfirmedByStore()) && ($orderEntity->getPaidToProvider())
+                    && ($orderEntity->getIsCashPaymentConfirmedByStore() === $orderEntity->getPaidToProvider())) {
+                    // the store's answer and the captain's answer are the same, so update hasPayConflictAnswers
+                    // to the according value
+                    $orderEntity->setHasPayConflictAnswers(OrderHasPayConflictAnswersConstant::ORDER_DOES_NOT_HAVE_PAYMENT_CONFLICT_ANSWERS);
+                }
+
+                $this->entityManager->flush();
+            }
+        }
+
+        return $ordersArray;
     }
 }

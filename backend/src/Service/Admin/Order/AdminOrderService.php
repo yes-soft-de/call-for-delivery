@@ -20,6 +20,7 @@ use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
+use App\Request\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminRequest;
 use App\Request\Admin\Order\RePendingAcceptedOrderByAdminRequest;
 use App\Request\Admin\Order\SubOrderCreateByAdminRequest;
 use App\Response\Admin\Order\BidDetailsGetForAdminResponse;
@@ -30,6 +31,7 @@ use App\Response\Admin\Order\OrderByIdGetForAdminResponse;
 use App\Response\Admin\Order\OrderCancelByAdminResponse;
 use App\Response\Admin\Order\OrderCreateByAdminResponse;
 use App\Response\Admin\Order\OrderGetForAdminResponse;
+use App\Response\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminResponse;
 use App\Response\Order\BidOrderByIdGetForAdminResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
 use App\Service\ChatRoom\OrderChatRoomService;
@@ -922,5 +924,21 @@ class AdminOrderService
             OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_AND_DESTINATION_BY_ADMIN_ACTION_CONST, null, null);
 
         return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
+    }
+
+    public function updateOrderHasPayConflictAnswersByAdmin(OrderHasPayConflictAnswersUpdateByAdminRequest $request): array
+    {
+        $response = [];
+
+        $ordersResult = $this->adminOrderManager->updateOrderHasPayConflictAnswersByAdmin($request);
+
+        if (count($ordersResult) > 0) {
+            foreach ($ordersResult as $orderEntity) {
+                $response[] = $this->autoMapping->map(OrderEntity::class, OrderHasPayConflictAnswersUpdateByAdminResponse::class,
+                    $orderEntity);
+            }
+        }
+
+        return $response;
     }
 }
