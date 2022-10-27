@@ -166,6 +166,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("قبل الكابتن الطلب"),
         "captainActivated":
             MessageLookupByLibrary.simpleMessage("تم تفعيل الكابتن بنجاح"),
+        "captainDistance":
+            MessageLookupByLibrary.simpleMessage("تقديرات الكابتن"),
         "captainFinance":
             MessageLookupByLibrary.simpleMessage("باقات عمل الكابتن"),
         "captainFinishedFillingOrderInformation":
@@ -534,6 +536,7 @@ class MessageLookup extends MessageLookupByLibrary {
                 "تم حذف الاشتراكات المستقبلية بنجاح"),
         "gallery": MessageLookupByLibrary.simpleMessage("المعرض"),
         "gender": MessageLookupByLibrary.simpleMessage("الجنس"),
+        "geoDistance": MessageLookupByLibrary.simpleMessage("الفضائية"),
         "geographicalRange":
             MessageLookupByLibrary.simpleMessage("نطاق الباقة الجغرافي"),
         "getDirection":

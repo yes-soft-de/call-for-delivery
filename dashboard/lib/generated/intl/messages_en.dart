@@ -168,6 +168,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain Accepted Order"),
         "captainActivated": MessageLookupByLibrary.simpleMessage(
             "Captain Activated Successfully"),
+        "captainDistance":
+            MessageLookupByLibrary.simpleMessage("Captain Distance"),
         "captainFinance":
             MessageLookupByLibrary.simpleMessage("Captain Finance"),
         "captainFinishedFillingOrderInformation":
@@ -540,6 +542,7 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Future subscriptions deleted successfully"),
         "gallery": MessageLookupByLibrary.simpleMessage("Gallery"),
         "gender": MessageLookupByLibrary.simpleMessage("Gender"),
+        "geoDistance": MessageLookupByLibrary.simpleMessage("Geo Distance"),
         "geographicalRange":
             MessageLookupByLibrary.simpleMessage("Geographical range"),
         "getDirection": MessageLookupByLibrary.simpleMessage("Get Direction"),

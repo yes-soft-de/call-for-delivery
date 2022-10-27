@@ -800,5 +800,7 @@
     "areYouWantToDeleteCaptainOfferEvenIfUsed": "Are you want to delete captain offer event even if it used",
     "deleteCaptainOfferSubscription": "Delete Captain Offer subscription",
     "areSureAboutDeleteThisCaptainOfferSubscriptions": "Are you sure about deleting captain offer subscription",
-    "deleteCaptainOfferSubscriptionSuccessfully": "Delete captain offer subscription successfully"
+    "deleteCaptainOfferSubscriptionSuccessfully": "Delete captain offer subscription successfully",
+    "captainDistance": "Captain Distance",
+    "geoDistance": "Geo Distance"
 }

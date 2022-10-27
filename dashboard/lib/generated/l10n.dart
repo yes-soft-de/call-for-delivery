@@ -8059,6 +8059,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Captain Distance`
+  String get captainDistance {
+    return Intl.message(
+      'Captain Distance',
+      name: 'captainDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Geo Distance`
+  String get geoDistance {
+    return Intl.message(
+      'Geo Distance',
+      name: 'geoDistance',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
