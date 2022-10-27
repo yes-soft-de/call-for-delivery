@@ -2401,8 +2401,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('orderEntity.payment = :cashMethod')
             ->setParameter('cashMethod', PaymentConstant::CASH_PAYMENT_METHOD_CONST)
 
-//            ->andWhere('orderEntity.createdAt < :specificDate')
-//            ->setParameter('specificDate', $dateTime)
+            ->andWhere('orderEntity.hasPayConflictAnswers IS NULL')
 
             ->andWhere('orderEntity.isCashPaymentConfirmedByStore IS NOT NULL')
 
