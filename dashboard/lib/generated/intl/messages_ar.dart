@@ -372,10 +372,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "defaultBranch":
             MessageLookupByLibrary.simpleMessage("الفرع الافتراضي"),
         "deleteAccount": MessageLookupByLibrary.simpleMessage("حذف الحساب"),
+        "deleteAllFutureSubscriptions": MessageLookupByLibrary.simpleMessage(
+            "هل أنت متأكد من رغبتك في حذف جميع الاشتراكات المستقبلية لهذا المتجر"),
         "deleteBranchSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الفرع بنجاح"),
         "deleteFutureSubscription":
-            MessageLookupByLibrary.simpleMessage("حذف الاشتراكات المستقبلية"),
+            MessageLookupByLibrary.simpleMessage("الاشتراكات المستقبلية"),
         "deleteSuccess":
             MessageLookupByLibrary.simpleMessage("تمت عملية حذف الطلب بنجاح"),
         "deliver": MessageLookupByLibrary.simpleMessage("وصل طلبات"),
@@ -512,6 +514,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "forgotPass":
             MessageLookupByLibrary.simpleMessage("هل نسيت كلمة المرور؟"),
         "fromWhatsapp": MessageLookupByLibrary.simpleMessage("من واتساب"),
+        "futureSubscriptionsDeletedSuccessfully":
+            MessageLookupByLibrary.simpleMessage(
+                "تم حذف الاشتراكات المستقبلية بنجاح"),
         "gallery": MessageLookupByLibrary.simpleMessage("المعرض"),
         "gender": MessageLookupByLibrary.simpleMessage("الجنس"),
         "geographicalRange":
@@ -1040,6 +1045,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "subscribe": MessageLookupByLibrary.simpleMessage("اشترك"),
         "subscribeToCaptainOffer":
             MessageLookupByLibrary.simpleMessage("اشتراك بعرض كابتن"),
+        "subscribedToOfferSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "تم الاشتراك بعرض كابتن بنجاح"),
         "subscriptionActive":
             MessageLookupByLibrary.simpleMessage("الاشتراك فعال"),
         "subscriptionDate":

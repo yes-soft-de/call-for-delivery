@@ -36,6 +36,16 @@ class SubscriptionsRepository {
     return ActionResponse.fromJson(response);
   }
 
+  Future<ActionResponse?> deleteFutureSubscriptions(int storeID) async {
+    var token = await _authService.getToken();
+    var response = await _apiClient.delete(
+      Urls.DELETE_SUBSCRIPTIONS_API + '/${storeID}',
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
   Future<ActionResponse?> extendSubscriptions(int storeID) async {
     var token = await _authService.getToken();
     var response = await _apiClient.post(

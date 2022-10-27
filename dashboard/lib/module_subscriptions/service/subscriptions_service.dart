@@ -40,6 +40,18 @@ class SubscriptionsService {
     return DataModel.empty();
   }
 
+  Future<DataModel> deleteFutureSubscriptions(int storeID) async {
+    ActionResponse? response =
+        await _storeManager.deleteFutureSubscriptions(storeID);
+    if (response == null) {
+      return DataModel.withError(S.current.networkError);
+    } else if (response.statusCode != '401') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+
   Future<DataModel> extendPackage(int storeID) async {
     ActionResponse? response = await _storeManager.extendPackage(storeID);
     if (response == null) {

@@ -375,6 +375,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "deadLine": MessageLookupByLibrary.simpleMessage("Dead Line"),
         "defaultBranch": MessageLookupByLibrary.simpleMessage("Default Branch"),
         "deleteAccount": MessageLookupByLibrary.simpleMessage("Delete Account"),
+        "deleteAllFutureSubscriptions": MessageLookupByLibrary.simpleMessage(
+            "Are you sure about deleting all future subscriptions"),
         "deleteBranchSuccess":
             MessageLookupByLibrary.simpleMessage("Branch deleted successfully"),
         "deleteFutureSubscription":
@@ -517,6 +519,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "Be the first one to send message"),
         "forgotPass": MessageLookupByLibrary.simpleMessage("Forgot password?"),
         "fromWhatsapp": MessageLookupByLibrary.simpleMessage("From WhatsApp"),
+        "futureSubscriptionsDeletedSuccessfully":
+            MessageLookupByLibrary.simpleMessage(
+                "Future subscriptions deleted successfully"),
         "gallery": MessageLookupByLibrary.simpleMessage("Gallery"),
         "gender": MessageLookupByLibrary.simpleMessage("Gender"),
         "geographicalRange":
@@ -1048,6 +1053,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "subscribe": MessageLookupByLibrary.simpleMessage("Subscribe"),
         "subscribeToCaptainOffer":
             MessageLookupByLibrary.simpleMessage("Subscribe to captain offer"),
+        "subscribedToOfferSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Subscribed to captain offer with a success"),
         "subscriptionActive": MessageLookupByLibrary.simpleMessage("Activated"),
         "subscriptionDate":
             MessageLookupByLibrary.simpleMessage("Subscription Date"),

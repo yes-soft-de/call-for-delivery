@@ -242,7 +242,7 @@ import '../module_subscriptions/state_manager/init_subscription_state_manager.da
     as _i137;
 import '../module_subscriptions/state_manager/store_financial_subscriptions_details_state_manager.dart'
     as _i156;
-import '../module_subscriptions/state_manager/store_subscription_management.dart'
+import '../module_subscriptions/state_manager/store_subscription_management_state_manager.dart'
     as _i158;
 import '../module_subscriptions/state_manager/store_subscriptions_expired_finance_state_manager.dart'
     as _i159;
