@@ -38,6 +38,7 @@ class AppThemeDataService {
           focusColor: PrimaryColor,
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
+            textStyle: TextStyle(color: Colors.white),
             backgroundColor: darkScheme.primary,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(25),
@@ -95,6 +96,7 @@ class AppThemeDataService {
         elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
           backgroundColor: lightScheme.primary,
+          textStyle: TextStyle(color: Colors.white),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25),
           ),
