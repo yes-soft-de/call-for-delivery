@@ -2,7 +2,9 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_categories/model/package_categories_model.dart';
 import 'package:c4d/module_categories/model/packages_model.dart';
+import 'package:c4d/module_subscriptions/request/store_edit_subscribe_to_package.dart';
 import 'package:c4d/module_subscriptions/request/store_subscribe_to_package.dart';
+import 'package:c4d/module_subscriptions/ui/screen/edit_subscription_screen.dart';
 import 'package:c4d/module_subscriptions/ui/screen/init_subscription_screen.dart';
 import 'package:c4d/module_subscriptions/ui/widget/package_card/package_card.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -12,11 +14,11 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
-class InitSubscriptionsLoadedState extends States {
+class EditSubscriptionsLoadedState extends States {
   List<PackagesModel> packages;
   List<PackagesCategoryModel> categories;
-  final CreateSubscriptionScreenState screenState;
-  InitSubscriptionsLoadedState(this.screenState, this.categories, this.packages)
+  final EditSubscriptionScreenState screenState;
+  EditSubscriptionsLoadedState(this.screenState, this.categories, this.packages)
       : super(screenState) {
     screenState.categories = categories;
   }
@@ -33,7 +35,7 @@ class InitSubscriptionsLoadedState extends States {
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(
         context,
-        title: appBarTitle ?? S.current.createSubscription,
+        title: appBarTitle ?? S.current.editSubscriptions,
       ),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
@@ -155,9 +157,9 @@ class InitSubscriptionsLoadedState extends States {
                       )),
                       onPressed: () {
                         screenState.subscribeToPackage(
-                          StoreSubscribeToPackageRequest(
+                          EditStoreSubscribeToPackageRequest(
                               packageId: _selectedPackageId,
-                              storeOwnerProfileId: screenState.storeID),
+                              id: screenState.storeID),
                         );
                       },
                       child: Padding(

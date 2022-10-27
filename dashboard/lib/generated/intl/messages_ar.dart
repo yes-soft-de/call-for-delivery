@@ -98,8 +98,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المبالغ المخصصة للمتاجر"),
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
+        "areSureAboutDeleteThisCaptainOfferSubscriptions":
+            MessageLookupByLibrary.simpleMessage(
+                "هل انت متأكد من رغبتك في حذف الاشتراك بعروض الكابتن"),
         "areSureAboutDeleteThisFinance": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد من عملية حذف هذه الخطة"),
+        "areSureAboutDeleteThisSubscriptions":
+            MessageLookupByLibrary.simpleMessage(
+                "هل أنت متأكد من رغبتك في حذف هذا الاشتراك"),
         "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد من رغبتك في حذف حسابك ، لن تتمكن من استخدام هذه البيانات في تسجيل الدخول بعد الآن"),
         "areYouSureAboutDeleteOrder": MessageLookupByLibrary.simpleMessage(
@@ -108,6 +114,11 @@ class MessageLookup extends MessageLookupByLibrary {
             "هل أنت متأكد من رغبتك بإعادة هذا الطلب لحالة الانتظار وإلغاء اسناد الكابتن"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد بإنك تريد حذف هذه الدفعة"),
+        "areYouWantToDeleteAllPayments": MessageLookupByLibrary.simpleMessage(
+            "هل تريد حذف جميع الدفعات ضمن هذا الاشتراك"),
+        "areYouWantToDeleteCaptainOfferEvenIfUsed":
+            MessageLookupByLibrary.simpleMessage(
+                "هل انت متأكد من رغبتك في حذف عرض الكابتن حتى لو كان مستخدم"),
         "assign": MessageLookupByLibrary.simpleMessage("إسناد"),
         "assignCaptain": MessageLookupByLibrary.simpleMessage("إسناد كابتن"),
         "assignCaptainHint": MessageLookupByLibrary.simpleMessage(
@@ -376,6 +387,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "هل أنت متأكد من رغبتك في حذف جميع الاشتراكات المستقبلية لهذا المتجر"),
         "deleteBranchSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الفرع بنجاح"),
+        "deleteCaptainOfferSubscription":
+            MessageLookupByLibrary.simpleMessage("حذف الاشتراك بعرض الكابتن"),
+        "deleteCaptainOfferSubscriptionSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم حذف عروض الكابتن بنجاح"),
         "deleteFutureSubscription":
             MessageLookupByLibrary.simpleMessage("الاشتراكات المستقبلية"),
         "deleteSuccess":

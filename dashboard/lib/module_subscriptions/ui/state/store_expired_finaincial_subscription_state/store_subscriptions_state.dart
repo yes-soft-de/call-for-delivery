@@ -25,6 +25,22 @@ class StoreSubscriptionsExpiredFinanceStateLoaded extends States {
   List<Widget> getDues() {
     var context = screenState.context;
     List<Widget> widgets = [];
+    widgets.add(Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(25),
+            color: Theme.of(context).colorScheme.primary),
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Text(
+            S.current.expiredSubscriptionsFinanceHint,
+            style: Theme.of(context).textTheme.button,
+          ),
+        ),
+      ),
+    ));
+
     dues?.forEach((element) {
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
@@ -159,21 +175,6 @@ class StoreSubscriptionsExpiredFinanceStateLoaded extends States {
         ),
       ));
     });
-    widgets.add(Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
-            color: Theme.of(context).colorScheme.primary),
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Text(
-            S.current.expiredSubscriptionsFinanceHint,
-            style: Theme.of(context).textTheme.button,
-          ),
-        ),
-      ),
-    ));
     return widgets;
   }
 

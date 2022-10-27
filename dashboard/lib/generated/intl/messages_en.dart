@@ -99,8 +99,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Amount for store"),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
         "apply": MessageLookupByLibrary.simpleMessage("APPLY"),
+        "areSureAboutDeleteThisCaptainOfferSubscriptions":
+            MessageLookupByLibrary.simpleMessage(
+                "Are you sure about deleting captain offer subscription"),
         "areSureAboutDeleteThisFinance": MessageLookupByLibrary.simpleMessage(
             "Are sure about deleting this captain finance plan"),
+        "areSureAboutDeleteThisSubscriptions":
+            MessageLookupByLibrary.simpleMessage(
+                "Are sure about delete this subscriptions"),
         "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
             "Are you sure about deleting your account , you won\'t be able to login with this credential any more"),
         "areYouSureAboutDeleteOrder": MessageLookupByLibrary.simpleMessage(
@@ -109,6 +115,11 @@ class MessageLookup extends MessageLookupByLibrary {
             "Are you sure about reset this order and remove it form captain"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete this payment"),
+        "areYouWantToDeleteAllPayments": MessageLookupByLibrary.simpleMessage(
+            "Are you want to delete all payments"),
+        "areYouWantToDeleteCaptainOfferEvenIfUsed":
+            MessageLookupByLibrary.simpleMessage(
+                "Are you want to delete captain offer event even if it used"),
         "assign": MessageLookupByLibrary.simpleMessage("Assign"),
         "assignCaptain": MessageLookupByLibrary.simpleMessage("Assign Captain"),
         "assignCaptainHint": MessageLookupByLibrary.simpleMessage(
@@ -379,8 +390,13 @@ class MessageLookup extends MessageLookupByLibrary {
             "Are you sure about deleting all future subscriptions"),
         "deleteBranchSuccess":
             MessageLookupByLibrary.simpleMessage("Branch deleted successfully"),
+        "deleteCaptainOfferSubscription": MessageLookupByLibrary.simpleMessage(
+            "Delete Captain Offer subscription"),
+        "deleteCaptainOfferSubscriptionSuccessfully":
+            MessageLookupByLibrary.simpleMessage(
+                "Delete captain offer subscription successfully"),
         "deleteFutureSubscription":
-            MessageLookupByLibrary.simpleMessage("Delete future subscription"),
+            MessageLookupByLibrary.simpleMessage("Future subscription"),
         "deleteSuccess": MessageLookupByLibrary.simpleMessage(
             "the order has been deleted successfully"),
         "deliver": MessageLookupByLibrary.simpleMessage("Deliver"),

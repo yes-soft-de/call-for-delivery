@@ -792,6 +792,12 @@
     "subscribeToCaptainOffer": "اشتراك بعرض كابتن",
     "validation": "صلاحية",
     "deleteAllFutureSubscriptions": "هل أنت متأكد من رغبتك في حذف جميع الاشتراكات المستقبلية لهذا المتجر",
-    "futureSubscriptionsDeletedSuccessfully":"تم حذف الاشتراكات المستقبلية بنجاح",
-    "subscribedToOfferSuccessfully":"تم الاشتراك بعرض كابتن بنجاح"
+    "futureSubscriptionsDeletedSuccessfully": "تم حذف الاشتراكات المستقبلية بنجاح",
+    "subscribedToOfferSuccessfully": "تم الاشتراك بعرض كابتن بنجاح",
+    "areSureAboutDeleteThisSubscriptions": "هل أنت متأكد من رغبتك في حذف هذا الاشتراك",
+    "areYouWantToDeleteAllPayments": "هل تريد حذف جميع الدفعات ضمن هذا الاشتراك",
+    "areYouWantToDeleteCaptainOfferEvenIfUsed": "هل انت متأكد من رغبتك في حذف عرض الكابتن حتى لو كان مستخدم",
+    "deleteCaptainOfferSubscription": "حذف الاشتراك بعرض الكابتن",
+    "areSureAboutDeleteThisCaptainOfferSubscriptions": "هل انت متأكد من رغبتك في حذف الاشتراك بعروض الكابتن",
+    "deleteCaptainOfferSubscriptionSuccessfully":"تم حذف عروض الكابتن بنجاح"
 }

@@ -3,14 +3,20 @@ import 'package:c4d/generated/l10n.dart';
 
 class CustomAlertDialog extends StatelessWidget {
   final VoidCallback? onPressed;
+  final VoidCallback? onPressed2;
   final String content;
   final String? title;
+  final String? actionTitle;
+  final String? actionTitle2;
   final bool oneAction;
   CustomAlertDialog(
       {required this.onPressed,
       required this.content,
       this.title,
-      required this.oneAction});
+      required this.oneAction,
+      this.onPressed2,
+      this.actionTitle,
+      this.actionTitle2});
 
   @override
   Widget build(BuildContext context) {
@@ -33,14 +39,17 @@ class CustomAlertDialog extends StatelessWidget {
         actions: [
           TextButton(
               onPressed: onPressed,
-              child: oneAction ? Text(S.current.ok) : Text(S.current.confirm)),
+              child: oneAction
+                  ? Text(S.current.ok)
+                  : Text(actionTitle ?? S.current.confirm)),
           oneAction
               ? Container()
               : TextButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: Text(S.current.cancel)),
+                  onPressed: onPressed2 ??
+                      () {
+                        Navigator.of(context).pop();
+                      },
+                  child: Text(actionTitle2 ?? S.current.cancel)),
         ],
       ),
     );

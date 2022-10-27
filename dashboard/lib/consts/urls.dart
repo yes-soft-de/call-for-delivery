@@ -278,14 +278,22 @@ class Urls {
   /*-----------------------------subscription----------------------------*/
   static const String BASE_API_SUBSCRIPTION =
       DOMAIN + VERSION_ADMIN + '/subscription';
+  static const String BASE_API_SUBSCRIPTION_CAPTAIN_OFFER =
+      DOMAIN + VERSION_ADMIN + '/subscriptioncaptainoffer';
   static const DELETE_SUBSCRIPTIONS_API =
       BASE_API_SUBSCRIPTION + '/deleteallfuturesubscriptionsbyadmin';
   static const RENEW_SUBSCRIPTION_API =
-      DOMAIN + '/v1/subscription/subscriptionbyadmin';
+      BASE_API_SUBSCRIPTION + '/renewcurrentsubscriptionbyadmin';
   static const EXTEND_SUBSCRIPTION_API =
       BASE_API_SUBSCRIPTION + '/extrasubscriptionforday';
   static const SUBSCRIBE_TO_PACKAGE_API =
       BASE_API_SUBSCRIPTION + '/createsubscription';
+  static const EDIT_SUBSCRIBE_TO_PACKAGE_API =
+      DOMAIN + '/v1/subscription/subscriptionbyadmin';
+  static const DELETE_SUBSCRIPTION_TO_PACKAGE_API =
+      BASE_API_SUBSCRIPTION + '/deletesubscriptionbyadmin';
   static const SUBSCRIBE_TO_CAPTAIN_OFFER_API =
-     DOMAIN + '/v1/admin/subscriptioncaptainoffer/subscribe';
+      BASE_API_SUBSCRIPTION_CAPTAIN_OFFER + '/subscribe';
+  static const DELETE_SUBSCRIPTION_TO_CAPTAIN_OFFER_API =
+      BASE_API_SUBSCRIPTION_CAPTAIN_OFFER + '/deletesubscription';
 }

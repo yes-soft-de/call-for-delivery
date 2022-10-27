@@ -216,7 +216,7 @@ class StoreProfileLoadedState extends States {
               onTapCard: () {
                 Navigator.of(context).pushNamed(
                     SubscriptionsRoutes.SUBSCRIPTIONS_MANAGEMENT,
-                    arguments: profile?.storeId ?? -1);
+                    arguments: profile ?? -1);
               }),
           cardTap(
               image: ImageAsset.BRANCH,

@@ -7,6 +7,7 @@ import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
 import 'package:c4d/module_stores/hive/store_hive_helper.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_subscriptions/model/store_subscriptions_financial.dart';
+import 'package:c4d/module_subscriptions/request/delete_captain_offer_request.dart';
 import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_details_screen.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -463,37 +464,96 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                         .toString() +
                     ' ${S.current.sar}')),
         Visibility(
-          visible: model.captainsOffer.isNotEmpty,
-          child: ElevatedButton(
-              style: ElevatedButton.styleFrom(
-                  shape: StadiumBorder(), primary: Colors.amber),
-              onPressed: () {
-                showDialog(
-                    context: context,
-                    builder: (ctx) {
-                      return AlertDialog(
-                        title: Text(S.current.captainOffers),
-                        scrollable: true,
-                        content: Container(
-                          child: Column(
-                            children: getCaptainOffers(model),
-                          ),
-                        ),
-                        actions: [
-                          TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text(S.current.cancel))
-                        ],
-                      );
-                    });
-              },
-              child: Text(
-                S.current.captainOffers,
-                style: TextStyle(color: Colors.white),
-              )),
-        ),
+            visible: model.captainsOffer.isNotEmpty,
+            child: Row(
+              children: [
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: StadiumBorder(), primary: Colors.amber),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (ctx) {
+                            return AlertDialog(
+                              title: Text(S.current.captainOffers),
+                              scrollable: true,
+                              content: Container(
+                                child: Column(
+                                  children: getCaptainOffers(model),
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text(S.current.cancel))
+                              ],
+                            );
+                          });
+                    },
+                    child: Text(
+                      S.current.captainOffers,
+                      style: TextStyle(color: Colors.white),
+                    )),
+                SizedBox(
+                  width: 8,
+                ),
+                ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        shape: StadiumBorder(), primary: Colors.red),
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          builder: (ctx) {
+                            return CustomAlertDialog(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  showDialog(
+                                      context: ctx,
+                                      builder: (c) {
+                                        return CustomAlertDialog(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            screenState.manager
+                                                .deleteCaptainOfferSubscription(
+                                                    screenState,
+                                                    DeleteCaptainOfferSubscriptionsRequest(
+                                                        storeSubscriptionId:
+                                                            model.id,
+                                                        deleteEvenItIsBeingUsed:
+                                                            1));
+                                          },
+                                          onPressed2: () {
+                                            Navigator.of(context).pop();
+                                            screenState.manager
+                                                .deleteCaptainOfferSubscription(
+                                                    screenState,
+                                                    DeleteCaptainOfferSubscriptionsRequest(
+                                                        storeSubscriptionId:
+                                                            model.id,
+                                                        deleteEvenItIsBeingUsed:
+                                                            0));
+                                          },
+                                          actionTitle2: S.current.no,
+                                          actionTitle: S.current.yes,
+                                          content: S.current
+                                              .areYouWantToDeleteCaptainOfferEvenIfUsed,
+                                          oneAction: false,
+                                        );
+                                      });
+                                },
+                                content: S.current
+                                    .areSureAboutDeleteThisCaptainOfferSubscriptions,
+                                oneAction: false);
+                          });
+                    },
+                    child: Text(
+                      S.current.deleteCaptainOfferSubscription,
+                      style: TextStyle(color: Colors.white, fontSize: 12),
+                    )),
+              ],
+            )),
 
         RowBubble(
             firstBubble: verticalBubble(title: S.current.sumPayments),
