@@ -926,16 +926,24 @@ class AdminOrderService
         return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
     }
 
-    public function updateOrderHasPayConflictAnswersByAdmin(OrderHasPayConflictAnswersUpdateByAdminRequest $request): array
+    /**
+     * this function resolves the orders which have conflicted answers about cash payment by updating the field
+     * hasPayConflictAnswers to 2 (which means there is no conflict between the store's answer and the captain answer
+     */
+    public function resolveOrderHasPayConflictAnswersByAdmin(OrderHasPayConflictAnswersUpdateByAdminRequest $request, int $userId): array
     {
         $response = [];
 
-        $ordersResult = $this->adminOrderManager->updateOrderHasPayConflictAnswersByAdmin($request);
+        $ordersResult = $this->adminOrderManager->resolveOrderHasPayConflictAnswersByAdmin($request);
 
         if (count($ordersResult) > 0) {
             foreach ($ordersResult as $orderEntity) {
                 $response[] = $this->autoMapping->map(OrderEntity::class, OrderHasPayConflictAnswersUpdateByAdminResponse::class,
                     $orderEntity);
+
+                // save log of the action on order
+                $this->orderLogService->createOrderLogMessage($orderEntity, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+                    OrderLogActionTypeConstant::ORDER_CONFLICTED_ANSWERS_RESOLVED_BY_ADMIN_CONST, null, null);
             }
         }
 

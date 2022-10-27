@@ -1448,8 +1448,8 @@ class AdminOrderController extends BaseController
     }
 
     /**
-     * admin: update specific orders if they have conflict answers or not
-     * @Route("updatehaspayconflictanswersbyadmin", name="updateHasPayConflictAnswersByAdmin", methods={"PUT"})
+     * admin: resolves the orders which have conflicted answers
+     * @Route("resolveconflictedanswersbyadmin", name="resolveConflictedAnswersForSpecificOrdersByAdmin", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
@@ -1487,13 +1487,13 @@ class AdminOrderController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function updateOrderHasPayConflictAnswersByAdmin(Request $request): JsonResponse
+    public function resolveOrderHasPayConflictAnswersByAdmin(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
         $request = $this->autoMapping->map(stdClass::class, OrderHasPayConflictAnswersUpdateByAdminRequest::class, (object)$data);
 
-        $result = $this->adminOrderService->updateOrderHasPayConflictAnswersByAdmin($request);
+        $result = $this->adminOrderService->resolveOrderHasPayConflictAnswersByAdmin($request, $this->getUserId());
 
         return $this->response($result, self::UPDATE);
     }

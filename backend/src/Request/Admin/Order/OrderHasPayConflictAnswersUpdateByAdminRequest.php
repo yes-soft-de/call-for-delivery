@@ -4,12 +4,6 @@ namespace App\Request\Admin\Order;
 
 class OrderHasPayConflictAnswersUpdateByAdminRequest
 {
-    // currently unavailable
-//    /**
-//     * @var int|null
-//     */
-//    private $hasPayConflictAnswers;
-
     /**
      * @var string|null
      */
@@ -19,11 +13,6 @@ class OrderHasPayConflictAnswersUpdateByAdminRequest
      * @var string|null
      */
     private $toDate;
-
-//    public function getHasPayConflictAnswers(): ?int
-//    {
-//        return $this->hasPayConflictAnswers;
-//    }
 
     public function getFromDate(): ?string
     {
