@@ -16,6 +16,7 @@ class OrderModel extends DataModel {
   late String branchName;
   String? storeName;
   late num kilometer;
+  late num storeBranchToClientDistance;
 
   OrderModel(
       {required this.branchName,
@@ -26,7 +27,8 @@ class OrderModel extends DataModel {
       required this.createdDate,
       required this.id,
       required this.storeName,
-      required this.kilometer});
+      required this.kilometer,
+      required this.storeBranchToClientDistance});
   List<OrderModel> _orders = [];
   OrderModel.withData(OrdersResponse response) {
     var data = response.data;
@@ -54,7 +56,9 @@ class OrderModel extends DataModel {
           orderCost: element.orderCost ?? 0,
           state: StatusHelper.getStatusEnum(element.state),
           storeName: '',
-          kilometer: element.kilometer ?? 0));
+          kilometer: element.kilometer ?? 0,
+          storeBranchToClientDistance:
+              element.storeBranchToClientDistance ?? 0));
     });
   }
   List<OrderModel> get data => _orders;

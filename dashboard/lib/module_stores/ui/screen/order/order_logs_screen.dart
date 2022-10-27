@@ -25,6 +25,7 @@ class OrderLogsScreen extends StatefulWidget {
 class OrderLogsScreenState extends State<OrderLogsScreen> {
   late States currentState;
   int currentIndex = 0;
+  bool geoKilo = false;
   void refresh() {
     if (mounted) {
       setState(() {});
@@ -39,7 +40,6 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
   var today = DateTime.now();
   int? storeID = -1;
   TextEditingController geoController = TextEditingController();
-  TextEditingController captainController = TextEditingController();
   @override
   void initState() {
     super.initState();
