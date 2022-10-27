@@ -54,10 +54,10 @@ class SuperAdminOrderManager
 
         if (count($ordersArray) > 0) {
             foreach ($ordersArray as $orderEntity) {
-//                if ($orderEntity->getCreatedAt() < new DateTime('2022-08-28')) {
-//                    $orderEntity->setHasPayConflictAnswers(OrderHasPayConflictAnswersConstant::ORDER_PAYMENT_CONFLICT_ANSWER_RESOLVED_BY_COMMAND);
-//
-//                } else {
+                if ($orderEntity->getCreatedAt() < new DateTime('2022-08-28')) {
+                    $orderEntity->setHasPayConflictAnswers(OrderHasPayConflictAnswersConstant::ORDER_PAYMENT_CONFLICT_ANSWER_RESOLVED_BY_COMMAND);
+
+                } else {
                     if (($orderEntity->getIsCashPaymentConfirmedByStore()) && ($orderEntity->getPaidToProvider())
                         && ($orderEntity->getIsCashPaymentConfirmedByStore() != $orderEntity->getPaidToProvider())) {
                         $orderEntity->setHasPayConflictAnswers(OrderHasPayConflictAnswersConstant::ORDER_HAS_PAYMENT_CONFLICT_ANSWERS);
@@ -68,7 +68,7 @@ class SuperAdminOrderManager
 
                         $orderEntity->setConflictedAnswersResolvedBy(OrderConflictedAnswersResolvedByConstant::CONFLICTED_ANSWERS_RESOLVED_BY_COMMAND_CONST);
                     }
-                //}
+                }
 
                 $this->entityManager->flush();
             }
