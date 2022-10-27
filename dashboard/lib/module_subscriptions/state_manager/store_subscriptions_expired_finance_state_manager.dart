@@ -37,8 +37,8 @@ class StoreSubscriptionsExpiredFinanceStateManager {
         }));
       } else {
         value as StoreSubscriptionsFinanceModel;
-        stateSubject
-            .add(StoreSubscriptionsExpiredFinanceStateLoaded(screenState, value.data));
+        stateSubject.add(StoreSubscriptionsExpiredFinanceStateLoaded(
+            screenState, value.data.oldSubscriptions));
       }
     });
   }

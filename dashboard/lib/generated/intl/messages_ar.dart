@@ -424,6 +424,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "لايوجد اشتراكات متوفرة ضمن هذا التصنيف"),
         "emptyStaff": MessageLookupByLibrary.simpleMessage("قائمة فارغة"),
         "endDate": MessageLookupByLibrary.simpleMessage("إلى تاريخ"),
+        "endedSubscriptions":
+            MessageLookupByLibrary.simpleMessage("الاشتراكات المنتهية"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("ادخل معلومات المنتج"),
         "errOc": MessageLookupByLibrary.simpleMessage("حصلت المشاكل التالية"),
@@ -769,6 +771,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "packageCategory":
             MessageLookupByLibrary.simpleMessage("تصنيفات الباقات"),
         "packageCost": MessageLookupByLibrary.simpleMessage("تكلفة الاشتراك"),
+        "packageExtend": MessageLookupByLibrary.simpleMessage("تمديد اضطراري"),
+        "packageExtendedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم التمديد بنجاح"),
         "packageInfo": MessageLookupByLibrary.simpleMessage("معلومات الباقة"),
         "packageName": MessageLookupByLibrary.simpleMessage("اسم الباقة"),
         "packageOrderCount":
@@ -1033,6 +1038,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("جار حفظ الملف"),
         "subscribe": MessageLookupByLibrary.simpleMessage("اشترك"),
+        "subscribeToCaptainOffer":
+            MessageLookupByLibrary.simpleMessage("اشتراك بعرض كابتن"),
         "subscriptionActive":
             MessageLookupByLibrary.simpleMessage("الاشتراك فعال"),
         "subscriptionDate":
@@ -1175,6 +1182,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "uploadingImagesPleaseWait":
             MessageLookupByLibrary.simpleMessage("يتم رفع الصورة"),
         "username": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
+        "validation": MessageLookupByLibrary.simpleMessage("صلاحية"),
         "views": MessageLookupByLibrary.simpleMessage("مشاهدة"),
         "waiting": MessageLookupByLibrary.simpleMessage("في الانتظار"),
         "waitingDescription":

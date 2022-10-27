@@ -427,6 +427,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "There is no packages in this category"),
         "emptyStaff": MessageLookupByLibrary.simpleMessage("Empty Stuff"),
         "endDate": MessageLookupByLibrary.simpleMessage("To date"),
+        "endedSubscriptions":
+            MessageLookupByLibrary.simpleMessage("Ended subscriptions"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("Enter product information"),
         "errOc":
@@ -774,6 +776,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "packageCategory":
             MessageLookupByLibrary.simpleMessage("Packages categories\'s"),
         "packageCost": MessageLookupByLibrary.simpleMessage("Package Cost"),
+        "packageExtend": MessageLookupByLibrary.simpleMessage("Package extend"),
+        "packageExtendedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Package extended successfully"),
         "packageInfo": MessageLookupByLibrary.simpleMessage("Package info"),
         "packageName": MessageLookupByLibrary.simpleMessage("Package name"),
         "packageOrderCount":
@@ -1041,6 +1046,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("Submitting Profile"),
         "subscribe": MessageLookupByLibrary.simpleMessage("Subscribe"),
+        "subscribeToCaptainOffer":
+            MessageLookupByLibrary.simpleMessage("Subscribe to captain offer"),
         "subscriptionActive": MessageLookupByLibrary.simpleMessage("Activated"),
         "subscriptionDate":
             MessageLookupByLibrary.simpleMessage("Subscription Date"),
@@ -1181,6 +1188,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "uploadingImagesPleaseWait": MessageLookupByLibrary.simpleMessage(
             "Uploading Image, Please Wait"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
+        "validation": MessageLookupByLibrary.simpleMessage("Validation"),
         "views": MessageLookupByLibrary.simpleMessage("views"),
         "waiting": MessageLookupByLibrary.simpleMessage("waiting"),
         "waitingDescription": MessageLookupByLibrary.simpleMessage(

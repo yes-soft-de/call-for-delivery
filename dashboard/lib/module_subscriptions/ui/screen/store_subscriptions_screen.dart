@@ -55,7 +55,8 @@ class StoreSubscriptionsFinanceScreenState
       }
     }
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context, title: S.current.accountBalance),
+      appBar: CustomC4dAppBar.appBar(context,
+          title: S.current.currentSubscriptions),
       body: _currentState?.getUI(context) ?? Container(),
     );
   }

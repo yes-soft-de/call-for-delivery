@@ -50,8 +50,7 @@ class OrdersModule extends YesModule {
       OrdersRoutes.CAPTAIN_ORDERS_SCREEN: (context) => orderCaptainLogsScreen,
       OrdersRoutes.ORDERS_ACTIONS_LOGS_SCREEN: (context) =>
           orderActionLogsScreen,
-      OrdersRoutes.ORDERS_RECEIVE_CASH: (context) =>
-          orderActionLogsScreen,
+      OrdersRoutes.ORDERS_RECEIVE_CASH: (context) => orderActionLogsScreen,
     };
   }
 }

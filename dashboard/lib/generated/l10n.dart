@@ -7919,6 +7919,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Package extend`
+  String get packageExtend {
+    return Intl.message(
+      'Package extend',
+      name: 'packageExtend',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Package extended successfully`
+  String get packageExtendedSuccessfully {
+    return Intl.message(
+      'Package extended successfully',
+      name: 'packageExtendedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subscribe to captain offer`
+  String get subscribeToCaptainOffer {
+    return Intl.message(
+      'Subscribe to captain offer',
+      name: 'subscribeToCaptainOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Validation`
+  String get validation {
+    return Intl.message(
+      'Validation',
+      name: 'validation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ended subscriptions`
+  String get endedSubscriptions {
+    return Intl.message(
+      'Ended subscriptions',
+      name: 'endedSubscriptions',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

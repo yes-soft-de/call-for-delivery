@@ -1,14 +1,15 @@
+import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_subscriptions/subscriptions_routes.dart';
-import 'package:c4d/module_subscriptions/ui/widget/control_widget.dart';
+import 'package:c4d/module_subscriptions/state_manager/store_subscription_management.dart';
+import 'package:c4d/module_subscriptions/ui/state/subscriptions_management/subscriptions_management_loaded_state.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
 class SubscriptionManagementScreen extends StatefulWidget {
-  SubscriptionManagementScreen();
+  final StoreSubscriptionManagementStateManager _stateManager;
+  SubscriptionManagementScreen(this._stateManager);
 
   @override
   State<SubscriptionManagementScreen> createState() =>
@@ -19,6 +20,21 @@ class SubscriptionManagementScreenState
     extends State<SubscriptionManagementScreen> {
   bool flagArgs = true;
   int profileId = -1;
+  States? currentState;
+  @override
+  void initState() {
+    currentState = SubscriptionManagementStateLoaded(this);
+    widget._stateManager.stateStream.listen((event) {
+      currentState = event;
+      if (this.mounted) {
+        setState(() {});
+      }
+    });
+    super.initState();
+  }
+
+  StoreSubscriptionManagementStateManager get stateManager =>
+      widget._stateManager;
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
@@ -29,54 +45,8 @@ class SubscriptionManagementScreenState
       }
     }
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context,
-          title: S.current.subscriptionManagement),
-      body: Wrap(
-        alignment: WrapAlignment.center,
-        spacing: 16,
-        children: [
-          ControlWidget(
-            icon: Icons.subscriptions_rounded,
-            onPressed: () {
-              Navigator.of(context).pushNamed(
-                  SubscriptionsRoutes.SUBSCRIPTIONS_DUES_SCREEN,
-                  arguments: profileId);
-            },
-            title: S.current.currentSubscriptions,
-          ),
-          ControlWidget(
-            icon: Icons.play_disabled_rounded,
-            onPressed: () {
-              Navigator.of(context).pushNamed(
-                  SubscriptionsRoutes.SUBSCRIPTIONS_EXPIRED_DUES_SCREEN,
-                  arguments: profileId);
-            },
-            title: S.current.expiredSubscriptions,
-          ),
-          ControlWidget(
-            icon: Icons.create_new_folder_rounded,
-            onPressed: () {
-              Fluttertoast.showToast(msg: S.current.notImplementedYet);
-            },
-            title: S.current.createSubscription,
-          ),
-          ControlWidget(
-            icon: Icons.edit,
-            onPressed: () {
-              Fluttertoast.showToast(msg: S.current.notImplementedYet);
-            },
-            title: S.current.editSubscriptions,
-          ),
-          ControlWidget(
-            icon: Icons.delete_sweep_rounded,
-            onPressed: () {
-              Fluttertoast.showToast(msg: S.current.notImplementedYet);
-            },
-            title: S.current.deleteFutureSubscription,
-            width: 200,
-          ),
-        ],
-      ),
-    );
+        appBar: CustomC4dAppBar.appBar(context,
+            title: S.current.subscriptionManagement),
+        body: currentState?.getUI(context));
   }
 }

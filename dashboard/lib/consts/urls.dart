@@ -275,4 +275,15 @@ class Urls {
   static const DELETE_ORDER = BASE_API_ORDER + '/ordercancelbyadmin';
   static const UNASSIGNED_ORDER_FROM_CAPTAIN =
       BASE_API_ORDER + '/rependingacceptedorder';
+  /*-----------------------------subscription----------------------------*/
+  static const String BASE_API_SUBSCRIPTION =
+      DOMAIN + VERSION_ADMIN + '/subscription';
+  static const RENEW_SUBSCRIPTION_API =
+      DOMAIN + '/v1/subscription/subscriptionbyadmin';
+  static const EXTEND_SUBSCRIPTION_API =
+      BASE_API_SUBSCRIPTION + '/extrasubscriptionforday';
+  static const SUBSCRIBE_TO_PACKAGE_API =
+      BASE_API_SUBSCRIPTION + '/createsubscription';
+  static const SUBSCRIBE_TO_CAPTAIN_OFFER_API =
+      '/v1/admin/subscriptioncaptainoffer/subscribe';
 }

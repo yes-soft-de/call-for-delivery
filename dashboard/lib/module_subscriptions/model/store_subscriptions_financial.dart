@@ -1,13 +1,27 @@
+import 'package:c4d/module_subscriptions/response/subscriptions_financial_response/subscriptions_response.dart';
+import 'package:intl/intl.dart';
+
+import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/response/orders_response/datum.dart';
 import 'package:c4d/module_subscriptions/response/subscriptions_financial_response/captain_offer.dart';
 import 'package:c4d/module_subscriptions/response/subscriptions_financial_response/payments_from_company.dart';
 import 'package:c4d/module_subscriptions/response/subscriptions_financial_response/subscriptions_financial_response.dart';
-import 'package:c4d/utils/helpers/order_status_helper.dart';
-import 'package:intl/intl.dart';
-import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
+import 'package:c4d/utils/helpers/order_status_helper.dart';
+
+import '../response/subscriptions_financial_response/datum.dart';
+
+class SubscriptionsModel{
+  late List<StoreSubscriptionsFinanceModel> oldSubscriptions;
+  late List<StoreSubscriptionsFinanceModel> currentAndFutureSubscriptions;
+  SubscriptionsModel({
+    required this.oldSubscriptions,
+    required this.currentAndFutureSubscriptions,
+  });
+  SubscriptionsModel.empty();
+}
 
 class StoreSubscriptionsFinanceModel extends DataModel {
   late int id;
@@ -27,7 +41,7 @@ class StoreSubscriptionsFinanceModel extends DataModel {
   late bool isFuture;
   late String packageNote;
   late List<OrderModel> ordersExceedGeographicalRange;
-  List<StoreSubscriptionsFinanceModel> _data = [];
+  SubscriptionsModel _data = SubscriptionsModel.empty();
   StoreSubscriptionsFinanceModel(
       {required this.id,
       required this.status,
@@ -48,39 +62,12 @@ class StoreSubscriptionsFinanceModel extends DataModel {
       required this.packageNote});
   StoreSubscriptionsFinanceModel.withData(
       SubscriptionsFinancialResponse response) {
-    var datum = response.data;
-    datum?.forEach((element) {
-      _data.add(StoreSubscriptionsFinanceModel(
-        endDate: DateFormat.yMd()
-            .format(DateHelper.convert(element.endDate?.timestamp)),
-        id: element.id ?? -1,
-        paymentsFromStore: getPayments(element.paymentsFromStore ?? []),
-        startDate: DateFormat.yMd()
-            .format(DateHelper.convert(element.startDate?.timestamp)),
-        status: element.status ?? '',
-        total: Total(
-            advancePayment: element.total?.advancePayment,
-            packageCost: element.total?.packageCost ?? 0,
-            sumPayments: element.total?.sumPayments ?? 0,
-            total: element.total?.total ?? 0,
-            captainOffer: element.total?.captainOfferPrice ?? 0,
-            requiredToPay: element.total?.requiredToPay ?? 0,
-            extraCost: element.total?.extraCost ?? 0,
-            totalDistanceExtra: element.total?.totalDistanceExtra ?? 0),
-        flag: element.flag,
-        note: element.note,
-        packageName: element.packageName ?? S.current.unknown,
-        captainsOffer: element.captainOffers ?? [],
-        packageCarCount: element.packageCarCount?.toInt() ?? 0,
-        packageOrderCount: element.packageOrderCount?.toInt() ?? 0,
-        remainingCars: element.remainingCars?.toInt() ?? 0,
-        remainingOrders: element.remainingOrders?.toInt() ?? 0,
-        isFuture: element.isFuture ?? false,
-        ordersExceedGeographicalRange:
-            _getOrders(element.ordersExceedGeographicalRange ?? []),
-        packageNote: element.packageNote ?? '',
-      ));
-    });
+    var old = response.data?.oldSubscription;
+    var current = response.data?.futureAndCurrentSubscription;
+    List<StoreSubscriptionsFinanceModel> olds = _getSubs(old);
+    List<StoreSubscriptionsFinanceModel> currents = _getSubs(current);
+    _data = SubscriptionsModel(
+        oldSubscriptions: olds, currentAndFutureSubscriptions: currents);
   }
   List<OrderModel> _getOrders(List<DatumOrder> o) {
     List<OrderModel> orders = [];
@@ -111,7 +98,43 @@ class StoreSubscriptionsFinanceModel extends DataModel {
     return orders;
   }
 
-  List<StoreSubscriptionsFinanceModel> get data => _data;
+  SubscriptionsModel get data => _data;
+  List<StoreSubscriptionsFinanceModel> _getSubs(List<Datum>? data) {
+    List<StoreSubscriptionsFinanceModel> finalData = [];
+    data?.forEach((element) {
+      finalData.add(StoreSubscriptionsFinanceModel(
+        endDate: DateFormat.yMd()
+            .format(DateHelper.convert(element.endDate?.timestamp)),
+        id: element.id ?? -1,
+        paymentsFromStore: getPayments(element.paymentsFromStore ?? []),
+        startDate: DateFormat.yMd()
+            .format(DateHelper.convert(element.startDate?.timestamp)),
+        status: element.status ?? '',
+        total: Total(
+            advancePayment: element.total?.advancePayment,
+            packageCost: element.total?.packageCost ?? 0,
+            sumPayments: element.total?.sumPayments ?? 0,
+            total: element.total?.total ?? 0,
+            captainOffer: element.total?.captainOfferPrice ?? 0,
+            requiredToPay: element.total?.requiredToPay ?? 0,
+            extraCost: element.total?.extraCost ?? 0,
+            totalDistanceExtra: element.total?.totalDistanceExtra ?? 0),
+        flag: element.flag,
+        note: element.note,
+        packageName: element.packageName ?? S.current.unknown,
+        captainsOffer: element.captainOffers ?? [],
+        packageCarCount: element.packageCarCount?.toInt() ?? 0,
+        packageOrderCount: element.packageOrderCount?.toInt() ?? 0,
+        remainingCars: element.remainingCars?.toInt() ?? 0,
+        remainingOrders: element.remainingOrders?.toInt() ?? 0,
+        isFuture: element.isFuture ?? false,
+        ordersExceedGeographicalRange:
+            _getOrders(element.ordersExceedGeographicalRange ?? []),
+        packageNote: element.packageNote ?? '',
+      ));
+    });
+    return finalData;
+  }
 
   List<PaymentModel> getPayments(List<PaymentsFromStore> p) {
     List<PaymentModel> payments = [];

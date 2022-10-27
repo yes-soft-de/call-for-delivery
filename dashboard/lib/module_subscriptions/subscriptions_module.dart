@@ -1,7 +1,9 @@
 import 'package:c4d/module_subscriptions/subscriptions_routes.dart';
+import 'package:c4d/module_subscriptions/ui/screen/init_subscription_screen.dart';
 import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_details_screen.dart';
 import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_expired_screen.dart';
 import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_screen.dart';
+import 'package:c4d/module_subscriptions/ui/screen/subscription_to_captain_offer_screen.dart';
 import 'package:c4d/module_subscriptions/ui/screen/subscriptions_managment_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -15,11 +17,16 @@ class SubscriptionsModule extends YesModule {
   final SubscriptionManagementScreen subscriptionManagementScreen;
   final StoreSubscriptionsExpiredFinanceScreen
       subscriptionsExpiredFinanceScreen;
+  final CreateSubscriptionScreen initSubscriptionScreen;
+  final CreateSubscriptionToCaptainOfferScreen
+      createSubscriptionToCaptainOfferScreen;
   SubscriptionsModule(
       this.storeSubscriptionsFinanceDetailsScreen,
       this.storeSubscriptionsFinanceScreen,
       this.subscriptionManagementScreen,
-      this.subscriptionsExpiredFinanceScreen) {
+      this.subscriptionsExpiredFinanceScreen,
+      this.initSubscriptionScreen,
+      this.createSubscriptionToCaptainOfferScreen) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
@@ -32,6 +39,10 @@ class SubscriptionsModule extends YesModule {
           subscriptionManagementScreen,
       SubscriptionsRoutes.SUBSCRIPTIONS_EXPIRED_DUES_SCREEN: (context) =>
           subscriptionsExpiredFinanceScreen,
+      SubscriptionsRoutes.CREATE_NEW_SUBSCRIPTION_SCREEN: (context) =>
+          initSubscriptionScreen,
+      SubscriptionsRoutes.CREATE_NEW_SUBSCRIPTION_TO_CAPTAIN_OFFER_SCREEN:
+          (context) => createSubscriptionToCaptainOfferScreen,
     };
   }
 }
