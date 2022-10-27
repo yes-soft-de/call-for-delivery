@@ -16,6 +16,9 @@ class SinglePackageCard extends StatelessWidget {
   final String expaired;
   final String city;
   final String status;
+  final String extraCost;
+  final int type;
+  final String geographicalRange;
   final Function enablePackage;
   final Function() edit;
 
@@ -29,7 +32,10 @@ class SinglePackageCard extends StatelessWidget {
       required this.city,
       required this.ordersCount,
       required this.cost,
-      required this.expaired});
+      required this.expaired,
+      required this.extraCost,
+      required this.type,
+      required this.geographicalRange});
 
   @override
   Widget build(BuildContext context) {
@@ -53,13 +59,28 @@ class SinglePackageCard extends StatelessWidget {
             children: [
               // package name
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                     child: Text(
                       packageName,
                       style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  Spacer(),
+                  Visibility(
+                    visible: type == 1,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Colors.green),
+                      child: Padding(
+                        padding: const EdgeInsets.all(4.0),
+                        child: Text(
+                          S.current.onOrderPackage,
+                          style: TextStyle(color: Colors.white, fontSize: 10),
+                        ),
+                      ),
                     ),
                   ),
                   Switch(
@@ -133,7 +154,7 @@ class SinglePackageCard extends StatelessWidget {
                             SizedBox(
                               width: 105,
                               child: Text(
-                                '${ordersCount} ' + S.of(context).ordermonth,
+                                '${ordersCount} ' + S.of(context).sOrder,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),
@@ -170,6 +191,35 @@ class SinglePackageCard extends StatelessWidget {
                                   : Text(
                                       '∞ ' + S.of(context).car,
                                     ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // geographical
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Flex(
+                          direction: Axis.horizontal,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: Theme.of(context).backgroundColor),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: FaIcon(Icons.roundabout_left_rounded,
+                                    color: Theme.of(context).disabledColor),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 16,
+                            ),
+                            SizedBox(
+                              width: 105,
+                              child:
+                                  Text(geographicalRange + ' ' + S.current.km),
                             ),
                           ],
                         ),
@@ -242,6 +292,36 @@ class SinglePackageCard extends StatelessWidget {
                             SizedBox(
                               child: Text(
                                 '${expaired} ' + S.current.day,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // extra cost
+                      Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Flex(
+                          direction: Axis.horizontal,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: Theme.of(context).backgroundColor),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(FontAwesomeIcons.dollarSign,
+                                    color: Theme.of(context).disabledColor),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 16,
+                            ),
+                            SizedBox(
+                              child: Text(
+                                '$extraCost ' + S.current.sar,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),

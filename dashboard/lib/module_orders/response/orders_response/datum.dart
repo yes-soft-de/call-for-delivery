@@ -1,5 +1,4 @@
 import 'package:c4d/module_orders/response/orders_response/sub_order_list/sub_order.dart';
-
 import 'created_at.dart';
 import 'delivery_date.dart';
 import 'destination.dart';
@@ -15,6 +14,7 @@ class DatumOrder {
   CreatedAt? createdAt;
   int? storeOrderDetailsId;
   Destination? destination;
+  Destination? location;
   String? recipientName;
   String? recipientPhone;
   String? detail;
@@ -23,7 +23,9 @@ class DatumOrder {
   String? storeOwnerName;
   bool? orderIsMain;
   List<SubOrder>? subOrders;
-
+  int? isCashPaymentConfirmedByStore;
+  int? paidToProvider;
+  String? captainName;
   DatumOrder(
       {this.id,
       this.state,
@@ -42,7 +44,11 @@ class DatumOrder {
       this.branchName,
       this.storeOwnerName,
       this.orderIsMain,
-      this.subOrders});
+      this.subOrders,
+      this.location,
+      this.isCashPaymentConfirmedByStore,
+      this.paidToProvider,
+      this.captainName});
 
   factory DatumOrder.fromJson(Map<String, dynamic> json) => DatumOrder(
         id: json['id'] as int?,
@@ -51,6 +57,10 @@ class DatumOrder {
         orderCost: json['orderCost'] as num?,
         orderType: json['orderType'] as int?,
         storeOwnerName: json['storeOwnerName'] as String?,
+        paidToProvider: json['paidToProvider'] as int?,
+        captainName: json['captainName'] as String?,
+        isCashPaymentConfirmedByStore:
+            json['isCashPaymentConfirmedByStore'] as int?,
         note: json['note'] as String?,
         deliveryDate: json['deliveryDate'] == null
             ? null
@@ -63,6 +73,9 @@ class DatumOrder {
         destination: json['destination'] == null
             ? null
             : Destination.fromJson(json['destination'] as Map<String, dynamic>),
+        location: json['location'] == null
+            ? null
+            : Destination.fromJson(json['location'] as Map<String, dynamic>),
         recipientName: json['recipientName'] as String?,
         recipientPhone: json['recipientPhone'] as String?,
         detail: json['detail'] as String?,

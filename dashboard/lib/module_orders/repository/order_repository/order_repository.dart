@@ -7,10 +7,12 @@ import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
+import 'package:c4d/module_orders/request/update_distance_request.dart';
 import 'package:c4d/module_orders/response/order_actionlogs_response/order_actionlogs_response.dart';
 import 'package:c4d/module_orders/response/order_captain_logs_response/order_captain_logs_response.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/order_pending_response/order_pending_response.dart';
+import 'package:c4d/module_orders/response/order_without_distance_response/order_captain_logs_response.dart';
 import 'package:c4d/module_orders/response/orders_cash_finances_for_captain_response/orders_cash_finances_for_captain_response.dart';
 import 'package:c4d/module_orders/response/orders_cash_finances_for_store_response/orders_cash_finances_for_store_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
@@ -40,6 +42,30 @@ class OrderRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
       Urls.FILTER_OWNER_ORDERS_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return OrdersResponse.fromJson(response);
+  }
+
+  Future<OrdersResponse?> getNotAnsweredOrderCash(
+      FilterOrderRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+      Urls.OWNER_CASH_ORDERS_NOT_ANSWERED_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return OrdersResponse.fromJson(response);
+  }
+
+  Future<OrdersResponse?> getConflictingAnswerOrderCash(
+      FilterOrderRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+      Urls.OWNER_CONFLICTING_ANSWERS_ORDERS_API,
       request.toJson(),
       headers: {'Authorization': 'Bearer ${token}'},
     );
@@ -162,5 +188,28 @@ class OrderRepository {
     );
     if (response == null) return null;
     return OrderActionLogsResponse.fromJson(response);
+  }
+
+  Future<OrdersWithoutDistanceResponse?> getOrdersWithoutDistance(
+      FilterOrderRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+      Urls.ORDERS_WITHOUT_DISTANCE_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return OrdersWithoutDistanceResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> updateDistance(UpdateDistanceRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+      Urls.UPDATE_DISTANCE_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
   }
 }

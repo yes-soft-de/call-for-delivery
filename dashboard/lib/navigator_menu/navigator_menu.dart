@@ -82,10 +82,17 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 icon: Icons.report,
                 children: [
                   customListTile(
+                      getIt<OrdersModule>().ordersWithoutDistanceScreen,
+                      S.current.orderWithoutDistance,
+                      Icons.edit_road_rounded,
+                      true),
+                  customListTile(
                       getIt<StoresModule>().captainNotArrivedScreen,
                       S.current.captainNotArrived,
                       Icons.storefront_rounded,
                       true),
+                  customListTile(getIt<OrdersModule>().ordersReceiveCashScreen,
+                      S.current.ordersCash, Icons.payments_rounded, true),
                 ],
                 page: widget.currentPage),
 

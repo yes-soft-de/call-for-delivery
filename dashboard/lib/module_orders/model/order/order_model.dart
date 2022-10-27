@@ -5,6 +5,7 @@ import 'package:c4d/module_orders/response/orders_response/orders_response.dart'
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:intl/intl.dart';
+import 'package:latlong2/latlong.dart';
 
 class OrderModel extends DataModel {
   late int id;
@@ -16,6 +17,11 @@ class OrderModel extends DataModel {
   late String branchName;
   late String? storeName;
   late bool? orderIsMain;
+  late LatLng? branchLocation;
+  late String? destinationLink;
+  int? isCashPaymentConfirmedByStore;
+  int? paidToProvider;
+  String? captainName;
   OrderModel(
       {required this.branchName,
       required this.state,
@@ -25,7 +31,12 @@ class OrderModel extends DataModel {
       required this.createdDate,
       required this.id,
       required this.storeName,
-      required this.orderIsMain});
+      required this.orderIsMain,
+      this.destinationLink,
+      this.branchLocation,
+      this.isCashPaymentConfirmedByStore,
+      this.paidToProvider,
+      this.captainName});
   List<OrderModel> _orders = [];
   OrderModel.withData(OrdersResponse response) {
     var data = response.data;
@@ -45,6 +56,7 @@ class OrderModel extends DataModel {
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       //
       _orders.add(OrderModel(
+          captainName: element.captainName,
           branchName: element.branchName ?? S.current.unknown,
           createdDate: create,
           deliveryDate: delivery,
@@ -53,7 +65,12 @@ class OrderModel extends DataModel {
           orderCost: element.orderCost ?? 0,
           state: StatusHelper.getStatusEnum(element.state),
           storeName: element.storeOwnerName,
-          orderIsMain: element.orderIsMain));
+          orderIsMain: element.orderIsMain,
+          paidToProvider: element.paidToProvider,
+          isCashPaymentConfirmedByStore: element.isCashPaymentConfirmedByStore,
+          branchLocation:
+              LatLng(element.location?.lat ?? 0, element.location?.lon ?? 0),
+          destinationLink: element.destination?.link));
     });
   }
   List<OrderModel> get data => _orders;

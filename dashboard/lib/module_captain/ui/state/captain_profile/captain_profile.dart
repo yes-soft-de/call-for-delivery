@@ -200,7 +200,8 @@ class CaptainProfileLoadedState extends States {
                                       request: model,
                                       updateProfile: (request) {
                                         Navigator.of(context).pop();
-                                        screenState.updateCaptainProfile(request);
+                                        screenState
+                                            .updateCaptainProfile(request);
                                       },
                                     ),
                                   );

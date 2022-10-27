@@ -7609,6 +7609,316 @@ class S {
       args: [],
     );
   }
+
+  /// `On order package`
+  String get onOrderPackage {
+    return Intl.message(
+      'On order package',
+      name: 'onOrderPackage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Geographical range`
+  String get geographicalRange {
+    return Intl.message(
+      'Geographical range',
+      name: 'geographicalRange',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra Cost`
+  String get extraCost {
+    return Intl.message(
+      'Extra Cost',
+      name: 'extraCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra cost for every kilometer over geographical range`
+  String get extraCostHint {
+    return Intl.message(
+      'Extra cost for every kilometer over geographical range',
+      name: 'extraCostHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delivery cost`
+  String get deliveryCost {
+    return Intl.message(
+      'Delivery cost',
+      name: 'deliveryCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra Distance`
+  String get extraDistance {
+    return Intl.message(
+      'Extra Distance',
+      name: 'extraDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra order delivery cost`
+  String get extraOrderDeliveryCost {
+    return Intl.message(
+      'Extra order delivery cost',
+      name: 'extraOrderDeliveryCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order delivery cost`
+  String get orderDeliveryCost {
+    return Intl.message(
+      'Order delivery cost',
+      name: 'orderDeliveryCost',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delivery cost details`
+  String get deliveryCostDetails {
+    return Intl.message(
+      'Delivery cost details',
+      name: 'deliveryCostDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order without distance`
+  String get orderWithoutDistance {
+    return Intl.message(
+      'Order without distance',
+      name: 'orderWithoutDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Branch location`
+  String get branchLocation {
+    return Intl.message(
+      'Branch location',
+      name: 'branchLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Client location`
+  String get clientLocation {
+    return Intl.message(
+      'Client location',
+      name: 'clientLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Distance updated successfully`
+  String get distanceUpdatedSuccessfully {
+    return Intl.message(
+      'Distance updated successfully',
+      name: 'distanceUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update distance`
+  String get updateDistance {
+    return Intl.message(
+      'Update distance',
+      name: 'updateDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Orders exceed geographical range`
+  String get ordersExceedGeographicalRange {
+    return Intl.message(
+      'Orders exceed geographical range',
+      name: 'ordersExceedGeographicalRange',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total extra distance`
+  String get totalExtraDistance {
+    return Intl.message(
+      'Total extra distance',
+      name: 'totalExtraDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain offer`
+  String get captainOffer {
+    return Intl.message(
+      'Captain offer',
+      name: 'captainOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Offer status`
+  String get offerStatus {
+    return Intl.message(
+      'Offer status',
+      name: 'offerStatus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Active Offer`
+  String get activeOffer {
+    return Intl.message(
+      'Active Offer',
+      name: 'activeOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inactive offer`
+  String get unActiveOffer {
+    return Intl.message(
+      'Inactive offer',
+      name: 'unActiveOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Client Distance`
+  String get clientDistance {
+    return Intl.message(
+      'Client Distance',
+      name: 'clientDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Conflicts answer`
+  String get ordersCashConflictsAnswer {
+    return Intl.message(
+      'Conflicts answer',
+      name: 'ordersCashConflictsAnswer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not answered by store`
+  String get ordersCashNotAnswered {
+    return Intl.message(
+      'Not answered by store',
+      name: 'ordersCashNotAnswered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Orders cash`
+  String get ordersCash {
+    return Intl.message(
+      'Orders cash',
+      name: 'ordersCash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subscription management`
+  String get subscriptionManagement {
+    return Intl.message(
+      'Subscription management',
+      name: 'subscriptionManagement',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Current subscriptions`
+  String get currentSubscriptions {
+    return Intl.message(
+      'Current subscriptions',
+      name: 'currentSubscriptions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Create subscription`
+  String get createSubscription {
+    return Intl.message(
+      'Create subscription',
+      name: 'createSubscription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit subscription`
+  String get editSubscriptions {
+    return Intl.message(
+      'Edit subscription',
+      name: 'editSubscriptions',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete future subscription`
+  String get deleteFutureSubscription {
+    return Intl.message(
+      'Delete future subscription',
+      name: 'deleteFutureSubscription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not implemented yet`
+  String get notImplementedYet {
+    return Intl.message(
+      'Not implemented yet',
+      name: 'notImplementedYet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Here you find all your expired subscriptions financial information with included all payments `
+  String get expiredSubscriptionsFinanceHint {
+    return Intl.message(
+      'Here you find all your expired subscriptions financial information with included all payments ',
+      name: 'expiredSubscriptionsFinanceHint',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

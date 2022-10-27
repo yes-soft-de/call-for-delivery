@@ -6,11 +6,13 @@ import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
+import 'package:c4d/module_orders/request/update_distance_request.dart';
 import 'package:c4d/module_orders/response/company_info_response/company_info_response.dart';
 import 'package:c4d/module_orders/response/order_actionlogs_response/order_actionlogs_response.dart';
 import 'package:c4d/module_orders/response/order_captain_logs_response/order_captain_logs_response.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/order_pending_response/order_pending_response.dart';
+import 'package:c4d/module_orders/response/order_without_distance_response/order_captain_logs_response.dart';
 import 'package:c4d/module_orders/response/orders_cash_finances_for_captain_response/orders_cash_finances_for_captain_response.dart';
 import 'package:c4d/module_orders/response/orders_cash_finances_for_store_response/orders_cash_finances_for_store_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
@@ -29,6 +31,13 @@ class OrdersManager {
 
   Future<OrdersResponse?> getMyOrdersFilter(FilterOrderRequest request) =>
       _repository.getMyOrdersFilter(request);
+
+  Future<OrdersResponse?> getConflictingAnswerOrderCash(
+          FilterOrderRequest request) =>
+      _repository.getConflictingAnswerOrderCash(request);
+
+  Future<OrdersResponse?> getNotAnsweredOrderCash(FilterOrderRequest request) =>
+      _repository.getNotAnsweredOrderCash(request);
   Future<OrderCaptainLogsResponse?> getCaptainOrdersFilter(
           FilterOrderRequest request) =>
       _repository.getCaptainOrdersFilter(request);
@@ -57,4 +66,9 @@ class OrdersManager {
       _repository.unAssignCaptain(orderId);
   Future<OrderActionLogsResponse?> getActionOrderLogs(int orderID) =>
       _repository.getActionOrderLogs(orderID);
+  Future<OrdersWithoutDistanceResponse?> getOrdersWithoutDistance(
+          FilterOrderRequest request) =>
+      _repository.getOrdersWithoutDistance(request);
+  Future<ActionResponse?> updateDistance(UpdateDistanceRequest request) =>
+      _repository.updateDistance(request);
 }

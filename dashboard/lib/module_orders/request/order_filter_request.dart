@@ -10,7 +10,9 @@ class FilterOrderRequest {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
-    data['state'] = this.state;
+    if (this.state != null) {
+      data['state'] = this.state;
+    }
     if (this.captainID != null) {
       data['captainId'] = this.captainID;
     }

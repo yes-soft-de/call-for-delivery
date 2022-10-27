@@ -1,7 +1,6 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/hive/util/argument_hive_helper.dart';
-import 'package:c4d/module_bid_order/bid_order_routes.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_stores/model/store_profile_model.dart';
@@ -9,6 +8,7 @@ import 'package:c4d/module_stores/request/active_store_request.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_stores/ui/screen/store_info_screen.dart';
 import 'package:c4d/module_stores/ui/widget/add_store_widget.dart';
+import 'package:c4d/module_subscriptions/subscriptions_routes.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/images/images.dart';
@@ -212,10 +212,10 @@ class StoreProfileLoadedState extends States {
               }),
           cardTap(
               image: ImageAsset.PAYMENT,
-              title: S.of(context).financeSubscriptions,
+              title: S.of(context).subscriptionManagement,
               onTapCard: () {
                 Navigator.of(context).pushNamed(
-                    StoresRoutes.SUBSCRIPTIONS_DUES_SCREEN,
+                    SubscriptionsRoutes.SUBSCRIPTIONS_MANAGEMENT,
                     arguments: profile?.id ?? -1);
               }),
           cardTap(

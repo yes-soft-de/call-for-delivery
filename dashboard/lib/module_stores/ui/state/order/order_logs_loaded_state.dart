@@ -21,16 +21,12 @@ class OrderLogsLoadedState extends States {
     return CustomListView.custom(children: getOrders());
   }
 
-  num maxKilo = -1;
+  TextEditingController geoController = TextEditingController();
   TextEditingController controller = TextEditingController();
   List<Widget> getOrders() {
     var context = screenState.context;
     List<Widget> widgets = [];
     for (var element in orders) {
-      if (maxKilo >= element.kilometer &&
-          element.state == OrderStatusEnum.FINISHED) {
-        continue;
-      }
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: Material(
@@ -63,14 +59,37 @@ class OrderLogsLoadedState extends States {
     if (screenState.currentIndex == 2) {
       widgets.insert(
           0,
-          CustomFormField(
-            numbers: true,
-            hintText: S.current.countKilometersTo,
-            controller: controller,
-            onChanged: () {
-              maxKilo = num.tryParse(controller.text) ?? -1;
-              screenState.refresh();
-            },
+          Row(
+            children: [
+              Expanded(
+                child: CustomFormField(
+                  numbers: true,
+                  hintStyle: TextStyle(fontSize: 10),
+                  hintText: S.current.countKilometersTo +
+                      '(${S.current.clientDistance})',
+                  controller: geoController,
+                  onChanged: () {
+                    screenState.ordersFilter.maxKiloFromDistance =
+                        num.tryParse(geoController.text) ?? -1;
+                    screenState.getOrders(false);
+                  },
+                ),
+              ),
+              Expanded(
+                child: CustomFormField(
+                  numbers: true,
+                  hintStyle: TextStyle(fontSize: 10),
+                  hintText:
+                      S.current.countKilometersTo + '(${S.current.captain})',
+                  controller: controller,
+                  onChanged: () {
+                    screenState.ordersFilter.maxKilo =
+                        num.tryParse(controller.text) ?? -1;
+                    screenState.getOrders(false);
+                  },
+                ),
+              ),
+            ],
           ));
       widgets.insert(
           1,

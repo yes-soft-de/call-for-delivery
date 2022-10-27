@@ -24,4 +24,19 @@ class DeepLinkRepository {
     if (response == null) return null;
     return GeoDistanceX.fromJson(response);
   }
+
+  Future<GeoDistanceX?> getDistanceWithDeliveryCost(
+      GeoDistanceRequest g) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(
+        Urls.GEO_DISTANCE_WITH_DELIVERY_COST +
+            '/${g.distance.latitude}' +
+            '/${g.distance.longitude}' +
+            '/${g.origin.latitude}' +
+            '/${g.origin.longitude}' +
+            '/${g.id}',
+        headers: {'Authorization': 'Bearer $token'});
+    if (response == null) return null;
+    return GeoDistanceX.fromJson(response);
+  }
 }

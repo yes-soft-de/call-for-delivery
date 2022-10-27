@@ -1,11 +1,10 @@
 import 'package:c4d/di/di_config.dart';
-import 'package:c4d/module_captain/hive/captain_hive_helper.dart';
 import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
 import 'package:c4d/module_stores/hive/store_hive_helper.dart';
-import 'package:c4d/module_stores/model/store_subscriptions_financial.dart';
-import 'package:c4d/module_stores/service/store_service.dart';
-import 'package:c4d/module_stores/ui/screen/store_subscriptions_details_screen.dart';
-import 'package:c4d/module_stores/ui/state/store_financial_subscriptions_details/store_financial_details_state.dart';
+import 'package:c4d/module_subscriptions/model/store_subscriptions_financial.dart';
+import 'package:c4d/module_subscriptions/service/subscriptions_service.dart';
+import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_details_screen.dart';
+import 'package:c4d/module_subscriptions/ui/state/store_financial_subscriptions_details/store_financial_details_state.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
@@ -18,7 +17,7 @@ import 'package:c4d/utils/helpers/custom_flushbar.dart';
 @injectable
 class StoreFinancialSubscriptionsDuesDetailsStateManager {
   final PaymentsService _paymentsService;
-  final StoresService _storesService;
+  final SubscriptionsService _storesService;
   final PublishSubject<States> _stateSubject = PublishSubject();
 
   Stream<States> get stateStream => _stateSubject.stream;

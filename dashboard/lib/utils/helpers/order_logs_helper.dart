@@ -30,7 +30,7 @@ class ActionTypeLogsHelper {
       case 13:
         return S.current.updatedOrder;
       case 14:
-        return S.current.captainFinishedFillingOrderInformation;
+        return S.current.UpdatedOrderState;
       case 15:
         return S.current.unlinkedSubOrderFromGroupedOrder;
       case 16:

@@ -1,10 +1,9 @@
-import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/hive/store_hive_helper.dart';
-import 'package:c4d/module_stores/model/store_subscriptions_financial.dart';
-import 'package:c4d/module_stores/stores_routes.dart';
-import 'package:c4d/module_stores/ui/screen/store_subscriptions_screen.dart';
+import 'package:c4d/module_subscriptions/model/store_subscriptions_financial.dart';
+import 'package:c4d/module_subscriptions/subscriptions_routes.dart';
+import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_screen.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/subscription_status_helper.dart';
@@ -48,7 +47,7 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
             onTap: () {
               StoresHiveHelper().setCurrentStoreID(screenState.storeID);
               Navigator.of(context).pushNamed(
-                  StoresRoutes.SUBSCRIPTIONS_DUES_DETAILS_SCREEN,
+                  SubscriptionsRoutes.SUBSCRIPTIONS_DUES_DETAILS_SCREEN,
                   arguments: element);
             },
             child: Container(

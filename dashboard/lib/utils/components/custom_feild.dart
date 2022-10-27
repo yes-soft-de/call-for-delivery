@@ -24,6 +24,7 @@ class CustomFormField extends StatefulWidget {
   final FormFieldValidator<String>? validatorFunction;
   final TextInputAction? keyAction;
   final int? maxLength;
+  final TextStyle? hintStyle;
   @override
   _CustomFormFieldState createState() => _CustomFormFieldState();
 
@@ -44,7 +45,8 @@ class CustomFormField extends StatefulWidget {
       this.onChanged,
       this.validatorFunction,
       this.keyAction,
-      this.maxLength});
+      this.maxLength,
+      this.hintStyle});
 }
 
 class _CustomFormFieldState extends State<CustomFormField> {
@@ -129,6 +131,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
                             }
                           : null,
                   decoration: InputDecoration(
+                    hintStyle: widget.hintStyle,
                     counterText: '',
                     border: InputBorder.none,
                     hintText: widget.hintText,

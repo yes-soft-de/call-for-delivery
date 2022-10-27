@@ -1,8 +1,8 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_stores/model/store_subscriptions_financial.dart';
-import 'package:c4d/module_stores/state_manager/store_financial_subscriptions_details_state_manager.dart';
-import 'package:c4d/module_stores/ui/state/store_financial_subscriptions_details/store_financial_details_state.dart';
+import 'package:c4d/module_subscriptions/model/store_subscriptions_financial.dart';
+import 'package:c4d/module_subscriptions/state_manager/store_financial_subscriptions_details_state_manager.dart';
+import 'package:c4d/module_subscriptions/ui/state/store_financial_subscriptions_details/store_financial_details_state.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
