@@ -5,7 +5,7 @@ namespace App\Constant\OrderLog;
 /**
  * // This class holds the constants which refers to the types of actions which may be applied to an order
  */
-class OrderLogActionTypeConstant
+final class OrderLogActionTypeConstant
 {
     const CREATE_ORDER_BY_STORE_ACTION_CONST = 1;
 
@@ -58,4 +58,6 @@ class OrderLogActionTypeConstant
     const UPDATE_IS_CASH_PAYMENT_CONFIRMED_BY_STORE_VIA_COMMAND = 25;
 
     const UPDATE_HAS_PAY_CONFLICT_ANSWERS_VIA_COMMAND = 26;
+
+    const ORDER_CONFLICTED_ANSWERS_RESOLVED_BY_ADMIN_CONST = 27;
 }
