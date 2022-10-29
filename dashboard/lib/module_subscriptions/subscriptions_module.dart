@@ -23,13 +23,14 @@ class SubscriptionsModule extends YesModule {
       createSubscriptionToCaptainOfferScreen;
   final EditSubscriptionScreen editSubscriptionScreen;
   SubscriptionsModule(
-      this.storeSubscriptionsFinanceDetailsScreen,
-      this.storeSubscriptionsFinanceScreen,
-      this.subscriptionManagementScreen,
-      this.subscriptionsExpiredFinanceScreen,
-      this.initSubscriptionScreen,
-      this.createSubscriptionToCaptainOfferScreen,
-      this.editSubscriptionScreen) {
+    this.storeSubscriptionsFinanceDetailsScreen,
+    this.storeSubscriptionsFinanceScreen,
+    this.subscriptionManagementScreen,
+    this.subscriptionsExpiredFinanceScreen,
+    this.initSubscriptionScreen,
+    this.createSubscriptionToCaptainOfferScreen,
+    this.editSubscriptionScreen,
+  ) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
@@ -44,8 +45,10 @@ class SubscriptionsModule extends YesModule {
           subscriptionsExpiredFinanceScreen,
       SubscriptionsRoutes.CREATE_NEW_SUBSCRIPTION_SCREEN: (context) =>
           initSubscriptionScreen,
-      SubscriptionsRoutes.EDIT_SUBSCRIPTION_SCREEN:
-          (context) => editSubscriptionScreen,
+      SubscriptionsRoutes.EDIT_SUBSCRIPTION_SCREEN: (context) =>
+          editSubscriptionScreen,
+      SubscriptionsRoutes.CREATE_NEW_SUBSCRIPTION_TO_CAPTAIN_OFFER_SCREEN:
+          (context) => createSubscriptionToCaptainOfferScreen,
     };
   }
 }

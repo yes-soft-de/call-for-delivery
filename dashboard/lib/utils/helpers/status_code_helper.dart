@@ -38,6 +38,8 @@ class StatusCodeHelper {
         return S.current.accountHasPaymentsRecord;
       case '9204':
         return S.current.expiredSubscriptions;
+      case '9200':
+        return S.current.youCannotAcceptAnotherOrderFromThisStore;
       case '-1':
         return S.current.dataDecodeError;
       default:

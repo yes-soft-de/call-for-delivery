@@ -20,6 +20,7 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
   }
 
   List<Widget> getDues() {
+    print('dsad');
     var context = screenState.context;
     List<Widget> widgets = [];
     widgets.add(Padding(
@@ -65,6 +66,18 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
+                    Visibility(
+                      visible: element.isCurrent,
+                      child: Align(
+                        alignment: AlignmentDirectional.topEnd,
+                        child: Container(
+                          width: 15,
+                          height: 15,
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle, color: Colors.green),
+                        ),
+                      ),
+                    ),
                     // financial cycleDate
                     Center(
                         child: Text(

@@ -357,6 +357,12 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
             secondBubble: verticalBubble(
                 title: model.isFuture ? S.current.yes : S.current.no,
                 background: model.isFuture ? Colors.green : Colors.grey)),
+        RowBubble(
+            firstBubble: verticalBubble(title: S.current.financeCountOrder),
+            secondBubble: verticalBubble(
+                title: model.packageType == 1 ? S.current.yes : S.current.no,
+                background:
+                    model.packageType == 1 ? Colors.green : Colors.grey)),
         Text(
           model.packageNote,
           style: TextStyle(color: Colors.white),
@@ -674,7 +680,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                 radius: 0,
                 subtitle: element.status == 'active'
                     ? S.current.activeOffer
-                    : S.current.inactive),
+                    : S.current.inactiveOffer),
             verticalBubble(
                 title: S.current.price,
                 radius: 0,

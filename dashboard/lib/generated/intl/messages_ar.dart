@@ -573,6 +573,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الموردين غير المفعلة"),
         "inactive": MessageLookupByLibrary.simpleMessage(
             "هذا المتجر غير مُفعل حتى الآن"),
+        "inactiveOffer":
+            MessageLookupByLibrary.simpleMessage("عرض منتهي الصلاحية"),
         "inactivePlan": MessageLookupByLibrary.simpleMessage("الخطة غير مفعلة"),
         "info": MessageLookupByLibrary.simpleMessage("حول الطلب"),
         "informSendCode": MessageLookupByLibrary.simpleMessage(
@@ -1242,6 +1244,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "youCanChangeCaptainFinancialPlan":
             MessageLookupByLibrary.simpleMessage(
                 "يمكنك تغيير خطة عمل الكابتن من هنا"),
+        "youCannotAcceptAnotherOrderFromThisStore":
+            MessageLookupByLibrary.simpleMessage(
+                "لايمكنك قبول هذا الطلب من هذا المتجر في الوقت الحالي ، الرجاء تسليم الطلبات المتعلقة بهذا المتجر ومن ثم إعادة المحاولة"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك اختيار خطة حاليا الرجاء المحاولة لاحقا"),
         "youCannotMakePaymentThereIsNoOrderCash":

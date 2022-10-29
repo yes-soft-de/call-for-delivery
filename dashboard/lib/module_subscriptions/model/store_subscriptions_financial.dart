@@ -10,7 +10,7 @@ import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import '../response/subscriptions_financial_response/datum.dart';
 
-class SubscriptionsModel{
+class SubscriptionsModel {
   late List<StoreSubscriptionsFinanceModel> oldSubscriptions;
   late List<StoreSubscriptionsFinanceModel> currentAndFutureSubscriptions;
   SubscriptionsModel({
@@ -38,25 +38,30 @@ class StoreSubscriptionsFinanceModel extends DataModel {
   late bool isFuture;
   late String packageNote;
   late List<OrderModel> ordersExceedGeographicalRange;
+  bool isCurrent = false;
+  late int packageType;
   SubscriptionsModel _data = SubscriptionsModel.empty();
-  StoreSubscriptionsFinanceModel(
-      {required this.id,
-      required this.status,
-      required this.packageName,
-      required this.flag,
-      required this.note,
-      required this.startDate,
-      required this.endDate,
-      required this.paymentsFromStore,
-      required this.total,
-      required this.captainsOffer,
-      required this.packageCarCount,
-      required this.packageOrderCount,
-      required this.remainingCars,
-      required this.remainingOrders,
-      required this.isFuture,
-      required this.ordersExceedGeographicalRange,
-      required this.packageNote});
+  StoreSubscriptionsFinanceModel({
+    required this.id,
+    required this.status,
+    required this.packageName,
+    required this.flag,
+    required this.note,
+    required this.startDate,
+    required this.endDate,
+    required this.paymentsFromStore,
+    required this.total,
+    required this.captainsOffer,
+    required this.packageCarCount,
+    required this.packageOrderCount,
+    required this.remainingCars,
+    required this.remainingOrders,
+    required this.isFuture,
+    required this.ordersExceedGeographicalRange,
+    required this.packageNote,
+    required this.isCurrent,
+    required this.packageType,
+  });
   StoreSubscriptionsFinanceModel.withData(
       SubscriptionsFinancialResponse response) {
     var old = response.data?.oldSubscription;
@@ -128,6 +133,8 @@ class StoreSubscriptionsFinanceModel extends DataModel {
         ordersExceedGeographicalRange:
             _getOrders(element.ordersExceedGeographicalRange ?? []),
         packageNote: element.packageNote ?? '',
+        isCurrent: element.isCurrent ?? false,
+        packageType: element.packageType ?? 0,
       ));
     });
     return finalData;

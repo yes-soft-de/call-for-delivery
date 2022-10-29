@@ -107,11 +107,14 @@ class StoreSubscriptionsFinanceDetailsScreenState
                           oneAction: false);
                     });
               }, icon: Icons.delete),
-              CustomC4dAppBar.actionIcon(context, onTap: () {
-                Navigator.of(context).pushNamed(
-                    SubscriptionsRoutes.EDIT_SUBSCRIPTION_SCREEN,
-                    arguments: model.id);
-              }, icon: Icons.edit)
+              Visibility(
+                visible: model.isCurrent,
+                child: CustomC4dAppBar.actionIcon(context, onTap: () {
+                  Navigator.of(context).pushNamed(
+                      SubscriptionsRoutes.EDIT_SUBSCRIPTION_SCREEN,
+                      arguments: model.id);
+                }, icon: Icons.edit),
+              )
             ]),
         body: currentState.getUI(context));
   }

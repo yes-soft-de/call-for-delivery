@@ -801,5 +801,9 @@
     "areSureAboutDeleteThisCaptainOfferSubscriptions": "هل انت متأكد من رغبتك في حذف الاشتراك بعروض الكابتن",
     "deleteCaptainOfferSubscriptionSuccessfully": "تم حذف عروض الكابتن بنجاح",
     "captainDistance": "تقديرات الكابتن",
-    "geoDistance": "الفضائية"
+    "geoDistance": "الفضائية",
+    "youCannotAcceptAnotherOrderFromThisStore": "لايمكنك قبول هذا الطلب من هذا المتجر في الوقت الحالي ، الرجاء تسليم الطلبات المتعلقة بهذا المتجر ومن ثم إعادة المحاولة",
+    "inactiveOffer":"عرض منتهي الصلاحية"
+    
+
 }

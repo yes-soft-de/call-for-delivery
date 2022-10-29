@@ -802,5 +802,7 @@
     "areSureAboutDeleteThisCaptainOfferSubscriptions": "Are you sure about deleting captain offer subscription",
     "deleteCaptainOfferSubscriptionSuccessfully": "Delete captain offer subscription successfully",
     "captainDistance": "Captain Distance",
-    "geoDistance": "Geo Distance"
+    "geoDistance": "Geo Distance",
+    "youCannotAcceptAnotherOrderFromThisStore": "You cannot accept another order from this store , before you delivering orders belongs to this store after that try again",
+    "inactiveOffer": "Inactive Offer"
 }

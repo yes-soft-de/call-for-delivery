@@ -24,6 +24,7 @@ class Datum {
   num? packageOrderCount;
   num? packageCarCount;
   bool? isFuture;
+  bool? isCurrent;
   Datum(
       {this.id,
       this.packageName,
@@ -42,7 +43,8 @@ class Datum {
       this.isFuture,
       this.ordersExceedGeographicalRange,
       this.packageNote,
-      this.packageType});
+      this.packageType,
+      this.isCurrent});
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json['id'] as int?,
@@ -54,6 +56,7 @@ class Datum {
         packageName: json['packageName'] as String?,
         packageNote: json['packageNote'] as String?,
         packageType: json['packageType'] as int?,
+        isCurrent: json['isCurrent'] as bool?,
         startDate: json['startDate'] == null
             ? null
             : StartDate.fromJson(json['startDate'] as Map<String, dynamic>),

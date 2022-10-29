@@ -581,6 +581,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("inActive Supplier"),
         "inactive": MessageLookupByLibrary.simpleMessage(
             "This store is not active yet"),
+        "inactiveOffer": MessageLookupByLibrary.simpleMessage("Inactive Offer"),
         "inactivePlan": MessageLookupByLibrary.simpleMessage("Inactive plan"),
         "info": MessageLookupByLibrary.simpleMessage("Info"),
         "informSendCode": MessageLookupByLibrary.simpleMessage(
@@ -1246,6 +1247,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "youCanChangeCaptainFinancialPlan":
             MessageLookupByLibrary.simpleMessage(
                 "You can change captain financial request here"),
+        "youCannotAcceptAnotherOrderFromThisStore":
+            MessageLookupByLibrary.simpleMessage(
+                "You cannot accept another order from this store , before you delivering orders belongs to this store after that try again"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "You cannot choose plan right now , please try again"),
         "youCannotMakePaymentThereIsNoOrderCash":
