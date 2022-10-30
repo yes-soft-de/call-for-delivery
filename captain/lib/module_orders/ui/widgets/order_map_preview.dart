@@ -78,25 +78,33 @@ class _OrderMapPreviewState extends State<OrderMapPreview> {
                     }
                   });
                 }),
-            child: const ClientMarker()),
+            child: Visibility(
+                replacement: const SizedBox(
+                  width: 15,
+                  height: 15,
+                ),
+                visible: widget.order.destination != null,
+                child: const ClientMarker())),
       ],
       builder: (context, Set<Marker>? markers) {
         return MapWidget(
-          ploylines: {
-            Polyline(
-              polylineId: const PolylineId('1'),
-              points: [
-                LatLng(widget.order.location?.latitude ?? 0,
-                    widget.order.location?.longitude ?? 0),
-                LatLng(widget.order.destination?.latitude ?? 0,
-                    widget.order.destination?.longitude ?? 0)
-              ],
-              color: Colors.green.withOpacity(0.65),
-              width: 5,
-              endCap: Cap.roundCap,
-              startCap: Cap.roundCap,
-            ),
-          },
+          ploylines: widget.order.destination != null
+              ? {
+                  Polyline(
+                    polylineId: const PolylineId('1'),
+                    points: [
+                      LatLng(widget.order.location?.latitude ?? 0,
+                          widget.order.location?.longitude ?? 0),
+                      LatLng(widget.order.destination?.latitude ?? 0,
+                          widget.order.destination?.longitude ?? 0)
+                    ],
+                    color: Colors.green.withOpacity(0.65),
+                    width: 5,
+                    endCap: Cap.roundCap,
+                    startCap: Cap.roundCap,
+                  ),
+                }
+              : {},
           markers: markers ?? {},
           onTap: (position) {},
           currentLocation: branch,

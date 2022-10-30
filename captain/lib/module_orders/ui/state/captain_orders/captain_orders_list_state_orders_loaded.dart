@@ -235,7 +235,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                                                 ),
                                               ),
                                               Container(
-                                                margin: EdgeInsets.all(8),
+                                                margin: const EdgeInsets.all(4),
                                                 width: 16,
                                                 height: 2.5,
                                                 decoration: BoxDecoration(
@@ -247,10 +247,13 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                                                 ),
                                               ),
                                               Text(
-                                                element.storeBranchToClientDistance
-                                                        .toString() +
-                                                    ' ' +
-                                                    S.current.km,
+                                                (element.storeBranchToClientDistance
+                                                            ?.toString() ??
+                                                        S.current.unknown) +
+                                                    (element.storeBranchToClientDistance ==
+                                                            null
+                                                        ? ''
+                                                        : ' ${S.current.km}'),
                                                 style: TextStyle(
                                                   fontWeight: FontWeight.bold,
                                                   color: Theme.of(context)
@@ -259,7 +262,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                                                 ),
                                               ),
                                               Container(
-                                                margin: EdgeInsets.all(8),
+                                                margin: const EdgeInsets.all(4),
                                                 width: 16,
                                                 height: 2.5,
                                                 decoration: BoxDecoration(
@@ -406,6 +409,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                     arguments: element.id);
               } else {
                 showFlexibleBottomSheet(
+                    bottomSheetColor: Colors.transparent,
                     barrierColor: Colors.transparent,
                     decoration: BoxDecoration(
                         color: Theme.of(context).scaffoldBackgroundColor,
@@ -471,7 +475,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                                               ),
                                             ),
                                             Container(
-                                              margin: EdgeInsets.all(8),
+                                              margin: EdgeInsets.all(4),
                                               width: 16,
                                               height: 2.5,
                                               decoration: BoxDecoration(
@@ -483,10 +487,14 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                                               ),
                                             ),
                                             Text(
-                                              element.storeBranchToClientDistance
-                                                      .toString() +
+                                              (element.storeBranchToClientDistance
+                                                          ?.toString() ??
+                                                      S.current.unknown) +
                                                   ' ' +
-                                                  S.current.km,
+                                                  (element.storeBranchToClientDistance ==
+                                                          null
+                                                      ? ''
+                                                      : S.current.km),
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 color: Theme.of(context)
@@ -495,7 +503,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                                               ),
                                             ),
                                             Container(
-                                              margin: EdgeInsets.all(8),
+                                              margin: EdgeInsets.all(4),
                                               width: 16,
                                               height: 2.5,
                                               decoration: BoxDecoration(
