@@ -191,41 +191,153 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                               ),
                             ),
                             Expanded(
-                              child: OrderMapPreview(
-                                order: element,
+                              child: Stack(
+                                children: [
+                                  OrderMapPreview(
+                                    order: element,
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                          color: Theme.of(context)
+                                              .scaffoldBackgroundColor
+                                              .withOpacity(0.95),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Theme.of(context)
+                                                      .scaffoldBackgroundColor,
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primaryContainer,
+                                                      width: 6),
+                                                ),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(4.0),
+                                                  child: Icon(
+                                                    Icons.store_rounded,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.all(8),
+                                                width: 16,
+                                                height: 2.5,
+                                                decoration: BoxDecoration(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primaryContainer,
+                                                  borderRadius:
+                                                      BorderRadius.circular(25),
+                                                ),
+                                              ),
+                                              Text(
+                                                element.storeBranchToClientDistance
+                                                        .toString() +
+                                                    ' ' +
+                                                    S.current.km,
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
+                                                ),
+                                              ),
+                                              Container(
+                                                margin: EdgeInsets.all(8),
+                                                width: 16,
+                                                height: 2.5,
+                                                decoration: BoxDecoration(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primaryContainer,
+                                                  borderRadius:
+                                                      BorderRadius.circular(25),
+                                                ),
+                                              ),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Theme.of(context)
+                                                      .scaffoldBackgroundColor,
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primaryContainer,
+                                                      width: 6),
+                                                ),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(4.0),
+                                                  child: Icon(
+                                                    Icons
+                                                        .location_history_rounded,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
+                                                  ),
+                                                ),
+                                              ),
+                                              Spacer(),
+                                              ElevatedButton.icon(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                  var index = StatusHelper
+                                                      .getOrderStatusIndex(
+                                                          element.state);
+                                                  screenState.stateManager
+                                                      .updateOrder(
+                                                          UpdateOrderRequest(
+                                                            id: element.id,
+                                                            state: StatusHelper
+                                                                .getStatusString(
+                                                                    OrderStatusEnum
+                                                                            .values[
+                                                                        index +
+                                                                            1]),
+                                                          ),
+                                                          screenState);
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        Colors.green,
+                                                    shape:
+                                                        const StadiumBorder()),
+                                                label: Text(
+                                                  S.current.accept,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .button,
+                                                ),
+                                                icon: const Icon(
+                                                  Icons.thumb_up_alt_rounded,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
                               ),
                             ),
-                            Row(
-                              children: [
-                                ElevatedButton.icon(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                    var index =
-                                        StatusHelper.getOrderStatusIndex(
-                                            element.state);
-                                    screenState.stateManager.updateOrder(
-                                        UpdateOrderRequest(
-                                          id: element.id,
-                                          state: StatusHelper.getStatusString(
-                                              OrderStatusEnum
-                                                  .values[index + 1]),
-                                        ),
-                                        screenState);
-                                  },
-                                  style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.green,
-                                      shape: const StadiumBorder()),
-                                  label: Text(
-                                    S.current.accept,
-                                    style: Theme.of(context).textTheme.button,
-                                  ),
-                                  icon: const Icon(
-                                    Icons.thumb_up_alt_rounded,
-                                    color: Colors.white,
-                                  ),
-                                ),
-                              ],
-                            )
                           ],
                         );
                       },
@@ -316,39 +428,150 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                             ),
                           ),
                           Expanded(
-                            child: OrderMapPreview(
-                              order: element,
+                            child: Stack(
+                              children: [
+                                OrderMapPreview(
+                                  order: element,
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(25),
+                                        color: Theme.of(context)
+                                            .scaffoldBackgroundColor
+                                            .withOpacity(0.95),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .scaffoldBackgroundColor,
+                                                shape: BoxShape.circle,
+                                                border: Border.all(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primaryContainer,
+                                                    width: 6),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: Icon(
+                                                  Icons.store_rounded,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              margin: EdgeInsets.all(8),
+                                              width: 16,
+                                              height: 2.5,
+                                              decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primaryContainer,
+                                                borderRadius:
+                                                    BorderRadius.circular(25),
+                                              ),
+                                            ),
+                                            Text(
+                                              element.storeBranchToClientDistance
+                                                      .toString() +
+                                                  ' ' +
+                                                  S.current.km,
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
+                                              ),
+                                            ),
+                                            Container(
+                                              margin: EdgeInsets.all(8),
+                                              width: 16,
+                                              height: 2.5,
+                                              decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primaryContainer,
+                                                borderRadius:
+                                                    BorderRadius.circular(25),
+                                              ),
+                                            ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .scaffoldBackgroundColor,
+                                                shape: BoxShape.circle,
+                                                border: Border.all(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primaryContainer,
+                                                    width: 6),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: Icon(
+                                                  Icons
+                                                      .location_history_rounded,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
+                                                ),
+                                              ),
+                                            ),
+                                            Spacer(),
+                                            ElevatedButton.icon(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                                var index = StatusHelper
+                                                    .getOrderStatusIndex(
+                                                        element.state);
+                                                screenState.stateManager
+                                                    .updateOrder(
+                                                        UpdateOrderRequest(
+                                                          id: element.id,
+                                                          state: StatusHelper
+                                                              .getStatusString(
+                                                                  OrderStatusEnum
+                                                                          .values[
+                                                                      index +
+                                                                          1]),
+                                                        ),
+                                                        screenState);
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors.green,
+                                                  shape: const StadiumBorder()),
+                                              label: Text(
+                                                S.current.accept,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .button,
+                                              ),
+                                              icon: const Icon(
+                                                Icons.thumb_up_alt_rounded,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
                             ),
                           ),
-                          Row(
-                            children: [
-                              ElevatedButton.icon(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  var index = StatusHelper.getOrderStatusIndex(
-                                      element.state);
-                                  screenState.stateManager.updateOrder(
-                                      UpdateOrderRequest(
-                                        id: element.id,
-                                        state: StatusHelper.getStatusString(
-                                            OrderStatusEnum.values[index + 1]),
-                                      ),
-                                      screenState);
-                                },
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.green,
-                                    shape: const StadiumBorder()),
-                                label: Text(
-                                  S.current.accept,
-                                  style: Theme.of(context).textTheme.button,
-                                ),
-                                icon: const Icon(
-                                  Icons.thumb_up_alt_rounded,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ],
-                          )
                         ],
                       );
                     },
