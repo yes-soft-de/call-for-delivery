@@ -63,7 +63,8 @@ class OrderWithoutDistanceLoadedState extends States {
                             child: Column(
                               children: [
                                 ListTile(
-                                  title: Text(S.current.distance),
+                                  title: Text(
+                                      S.current.provideClientCoordinations),
                                   subtitle: CustomFormField(
                                     onChanged: () {
                                       var coord = _kilometer.text.split(',');
@@ -77,7 +78,8 @@ class OrderWithoutDistanceLoadedState extends States {
                                       setState(() {});
                                     },
                                     controller: _kilometer,
-                                    hintText: S.current.ProvideDistanceInKm,
+                                    hintText: S
+                                        .current.provideClientCoordinationsHint,
                                   ),
                                 ),
                                 Visibility(

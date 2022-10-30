@@ -925,6 +925,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "profileFetchedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Profile Data Fetched Successfully"),
         "profit": MessageLookupByLibrary.simpleMessage("Profit"),
+        "provideClientCoordinations":
+            MessageLookupByLibrary.simpleMessage("Delivery location"),
+        "provideClientCoordinationsHint":
+            MessageLookupByLibrary.simpleMessage("12.934,13.4124"),
         "rateCaptain": MessageLookupByLibrary.simpleMessage("Rate Captain"),
         "rateCaptainMessage": MessageLookupByLibrary.simpleMessage(
             "Rate this captain upon your opinion"),
@@ -1249,7 +1253,7 @@ class MessageLookup extends MessageLookupByLibrary {
                 "You can change captain financial request here"),
         "youCannotAcceptAnotherOrderFromThisStore":
             MessageLookupByLibrary.simpleMessage(
-                "You cannot accept another order from this store , before you delivering orders belongs to this store after that try again"),
+                "Captain cannot accept another order from this store , Please wait to deliver orders belongs to this store after that try again"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "You cannot choose plan right now , please try again"),
         "youCannotMakePaymentThereIsNoOrderCash":

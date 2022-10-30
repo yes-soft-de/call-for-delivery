@@ -918,6 +918,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "profileFetchedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "تم جلب بياناتك الشخصية بنجاح"),
         "profit": MessageLookupByLibrary.simpleMessage("الأرباح"),
+        "provideClientCoordinations":
+            MessageLookupByLibrary.simpleMessage("إحداثيات موقع التسليم"),
+        "provideClientCoordinationsHint":
+            MessageLookupByLibrary.simpleMessage("12.934,13.4124"),
         "rateCaptain": MessageLookupByLibrary.simpleMessage("قييم الكابتن"),
         "rateCaptainMessage":
             MessageLookupByLibrary.simpleMessage("قم بتقييم الكابتن من فضلك"),
@@ -1246,7 +1250,7 @@ class MessageLookup extends MessageLookupByLibrary {
                 "يمكنك تغيير خطة عمل الكابتن من هنا"),
         "youCannotAcceptAnotherOrderFromThisStore":
             MessageLookupByLibrary.simpleMessage(
-                "لايمكنك قبول هذا الطلب من هذا المتجر في الوقت الحالي ، الرجاء تسليم الطلبات المتعلقة بهذا المتجر ومن ثم إعادة المحاولة"),
+                "لا يمكن للكابتن قبول الطلب من هذا المتجر في الوقت الحالي ، الرجاء انتظار تسليم الطلبات المتعلقة بهذا المتجر ومن ثم إعادة المحاولة"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك اختيار خطة حاليا الرجاء المحاولة لاحقا"),
         "youCannotMakePaymentThereIsNoOrderCash":

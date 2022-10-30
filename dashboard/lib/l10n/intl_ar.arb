@@ -802,8 +802,10 @@
     "deleteCaptainOfferSubscriptionSuccessfully": "تم حذف عروض الكابتن بنجاح",
     "captainDistance": "تقديرات الكابتن",
     "geoDistance": "الفضائية",
-    "youCannotAcceptAnotherOrderFromThisStore": "لايمكنك قبول هذا الطلب من هذا المتجر في الوقت الحالي ، الرجاء تسليم الطلبات المتعلقة بهذا المتجر ومن ثم إعادة المحاولة",
-    "inactiveOffer":"عرض منتهي الصلاحية"
-    
+    "youCannotAcceptAnotherOrderFromThisStore": "لا يمكن للكابتن قبول الطلب من هذا المتجر في الوقت الحالي ، الرجاء انتظار تسليم الطلبات المتعلقة بهذا المتجر ومن ثم إعادة المحاولة",
+    "inactiveOffer":"عرض منتهي الصلاحية",
+    "provideClientCoordinationsHint":"12.934,13.4124",
+    "provideClientCoordinations":"إحداثيات موقع التسليم"
+
 
 }

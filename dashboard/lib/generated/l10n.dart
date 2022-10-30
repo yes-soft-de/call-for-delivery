@@ -8080,10 +8080,10 @@ class S {
     );
   }
 
-  /// `You cannot accept another order from this store , before you delivering orders belongs to this store after that try again`
+  /// `Captain cannot accept another order from this store , Please wait to deliver orders belongs to this store after that try again`
   String get youCannotAcceptAnotherOrderFromThisStore {
     return Intl.message(
-      'You cannot accept another order from this store , before you delivering orders belongs to this store after that try again',
+      'Captain cannot accept another order from this store , Please wait to deliver orders belongs to this store after that try again',
       name: 'youCannotAcceptAnotherOrderFromThisStore',
       desc: '',
       args: [],
@@ -8095,6 +8095,26 @@ class S {
     return Intl.message(
       'Inactive Offer',
       name: 'inactiveOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `12.934,13.4124`
+  String get provideClientCoordinationsHint {
+    return Intl.message(
+      '12.934,13.4124',
+      name: 'provideClientCoordinationsHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delivery location`
+  String get provideClientCoordinations {
+    return Intl.message(
+      'Delivery location',
+      name: 'provideClientCoordinations',
       desc: '',
       args: [],
     );
