@@ -60,8 +60,13 @@ class CaptainFinancialSystemDateService
         $difference = $firstDate->diff($lastDate);
 
         $countDays = $difference?->d; 
+
         if($difference?->d === 0 && $difference?->h === 23 && $difference?->i === 59 && $difference?->s === 59) {
             $countDays += 1;
+        }
+        
+        if($difference?->d === 0 && $difference?->m === 1) {
+            $countDays = 30;
         }
 
         return $countDays;

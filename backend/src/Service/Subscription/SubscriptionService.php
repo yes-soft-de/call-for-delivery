@@ -660,21 +660,21 @@ class SubscriptionService
         return $balance;
     }
 
-    public function checkIfStoreSubscriptionsHavePayments(int $storeOwnerId): int
-    {
-        $storeSubscriptions = $this->subscriptionManager->getAllSubscriptionsEntitiesByStoreOwnerId($storeOwnerId);
-
-        if (! empty($storeSubscriptions)) {
-            foreach ($storeSubscriptions as $storeSubscription) {
-                if (! empty($storeSubscription->getStoreOwnerPaymentEntities()->toArray())) {
-                    // return can not delete subscriptions because payments related to it are exists
-                    return AdminStoreSubscriptionConstant::STORE_SUBSCRIPTION_HAS_PAYMENTS;
-                }
-            }
-        }
-
-        return AdminStoreSubscriptionConstant::STORE_SUBSCRIPTION_HAS_NOT_ANY_PAYMENTS;
-    }
+//    public function checkIfStoreSubscriptionsHavePayments(int $storeOwnerId): int
+//    {
+//        $storeSubscriptions = $this->subscriptionManager->getAllSubscriptionsEntitiesByStoreOwnerId($storeOwnerId);
+//
+//        if (! empty($storeSubscriptions)) {
+//            foreach ($storeSubscriptions as $storeSubscription) {
+//                if (! empty($storeSubscription->getStoreOwnerPaymentEntities()->toArray())) {
+//                    // return can not delete subscriptions because payments related to it are exists
+//                    return AdminStoreSubscriptionConstant::STORE_SUBSCRIPTION_HAS_PAYMENTS;
+//                }
+//            }
+//        }
+//
+//        return AdminStoreSubscriptionConstant::STORE_SUBSCRIPTION_HAS_NOT_ANY_PAYMENTS;
+//    }
 
     public function deleteStoreSubscriptionByStoreOwnerId(int $storeOwnerId): array
     {
@@ -826,6 +826,32 @@ class SubscriptionService
     public function getOrdersExceedGeographicalRangeBySubscriptionIdAndGeographicalRange(int $subscriptionId, float $packageGeographicalRange):array
     {
         return $this->subscriptionManager->getOrdersExceedGeographicalRangeBySubscriptionId($subscriptionId, $packageGeographicalRange);
+    }
+
+    public function createNewSubscriptionForSamePackageByAdmin(SubscriptionCreateRequest $request ,int $storeOwnerProfileId): SubscriptionResponse|SubscriptionErrorResponse|string|int
+    {
+        $store = $this->subscriptionManager->getStoreOwnerProfileByStoreOwnerProfileId($storeOwnerProfileId);
+
+        if (! $store) {
+            return StoreProfileConstant::STORE_NOT_FOUND;
+        }
+
+        $subscriptionCurrent = $this->subscriptionManager->getSubscriptionCurrentWithRelation($store->getStoreOwnerId());
+
+        if (! $subscriptionCurrent) {
+            return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
+        }
+
+        $request->setPackage($subscriptionCurrent['packageId']);
+
+        $request->setStoreOwner($store->getStoreOwnerId());
+
+        return $this->createSubscription($request);
+    }
+
+    public function deleteStoreSubscriptionBySubscriptionId(int $subscriptionId): ?SubscriptionEntity
+    {
+        return $this->subscriptionManager->deleteStoreSubscriptionBySubscriptionId($subscriptionId);
     }
 }
  

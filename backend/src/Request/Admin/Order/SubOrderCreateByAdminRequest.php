@@ -81,6 +81,12 @@ class SubOrderCreateByAdminRequest
      */
     private $storeBranchToClientDistance;
 
+    /**
+     * Auto-calculated value depending on the distance which is being calculated by Google MAP API
+     * @var float|null
+     */
+    private $deliveryCost;
+
     public function getStoreOwner(): int|StoreOwnerProfileEntity
     {
         return $this->storeOwner;

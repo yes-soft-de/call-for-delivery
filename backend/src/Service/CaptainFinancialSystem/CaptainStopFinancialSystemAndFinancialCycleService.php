@@ -11,6 +11,7 @@ use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Response\CaptainFinancialSystem\CaptainStopFinancialSystemAndFinancialCycleResponse;
 use App\Service\Notification\NotificationFirebaseService;
+use App\Service\CaptainFinancialSystem\CaptainFinancialDuesService;
 
 class CaptainStopFinancialSystemAndFinancialCycleService
 {
@@ -18,19 +19,25 @@ class CaptainStopFinancialSystemAndFinancialCycleService
     private CaptainFinancialDuesManager $captainFinancialDuesManager;
     private AutoMapping $autoMapping;
     private NotificationFirebaseService $notificationFirebaseService;
+    private CaptainFinancialDuesService $captainFinancialDuesService;
 
-    public function __construct(AutoMapping $autoMapping, CaptainFinancialSystemDetailManager $captainFinancialSystemDetailManager, CaptainFinancialDuesManager $captainFinancialDuesManager, NotificationFirebaseService $notificationFirebaseService)
+    public function __construct(AutoMapping $autoMapping, CaptainFinancialSystemDetailManager $captainFinancialSystemDetailManager, CaptainFinancialDuesManager $captainFinancialDuesManager, NotificationFirebaseService $notificationFirebaseService, CaptainFinancialDuesService $captainFinancialDuesService)
     {
         $this->captainFinancialSystemDetailManager = $captainFinancialSystemDetailManager;
         $this->captainFinancialDuesManager = $captainFinancialDuesManager;
         $this->autoMapping = $autoMapping;
         $this->notificationFirebaseService = $notificationFirebaseService;
+        $this->captainFinancialDuesService = $captainFinancialDuesService;
     }
-    public function stopFinancialSystemAndFinancialCycle(int $uerId)
+    public function stopFinancialSystemAndFinancialCycle(int $userId)
     { 
         //get Latest Captain Financial Dues
-        $captainFinancialDues = $this->captainFinancialDuesManager->getLatestCaptainFinancialDuesByUserId($uerId);
+        $captainFinancialDues = $this->captainFinancialDuesManager->getLatestCaptainFinancialDuesByUserId($userId);
         if($captainFinancialDues) {
+            if($captainFinancialDues->getState() === CaptainFinancialDues::FINANCIAL_STATE_ACTIVE) {
+                //calculating financial dues the final
+                $this->captainFinancialDuesService->captainFinancialDues($userId);
+            }
             //End of the current financial cycle
             $captainFinancialDues->setState(CaptainFinancialDues::FINANCIAL_STATE_INACTIVE);
             $endDate = new DateTime('now');

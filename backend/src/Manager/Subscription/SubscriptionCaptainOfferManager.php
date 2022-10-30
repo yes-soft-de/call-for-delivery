@@ -115,4 +115,24 @@ class SubscriptionCaptainOfferManager
 
         return $captainOfferSubscriptionEntity;
     }
+
+    public function deleteCaptainOffersSubscriptionBySubscriptionId(int $subscriptionId): ?SubscriptionCaptainOfferEntity
+    {
+        $captainOffersSubscription = $this->subscriptionCaptainOfferEntityRepository->getCaptainOffersSubscriptionBySubscriptionId($subscriptionId);
+
+        if (! $captainOffersSubscription) {
+            return $captainOffersSubscription;
+        }
+
+        if (! empty($captainOffersSubscription->getSubscriptionEntitie()->toArray())) {
+            foreach ($captainOffersSubscription->getSubscriptionEntitie()->toArray() as $item) {
+                $captainOffersSubscription->removeSubscriptionEntitie($item);
+            }
+        }
+
+        $this->entityManager->remove($captainOffersSubscription);
+        $this->entityManager->flush();
+
+        return $captainOffersSubscription;
+    }
 }

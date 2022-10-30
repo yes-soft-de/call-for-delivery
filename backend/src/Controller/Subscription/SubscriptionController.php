@@ -397,6 +397,35 @@ class SubscriptionController extends BaseController
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
+     *
+     * @OA\Tag(name="Subscription")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="update current subscription's package by admin request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id", description="current subscription id"),
+     *          @OA\Property(type="integer", property="package", description="package id")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns succeded updating message",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="string", property="Data", example="ok")
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
      */
     public function updateSubscription(Request $request): JsonResponse
     {

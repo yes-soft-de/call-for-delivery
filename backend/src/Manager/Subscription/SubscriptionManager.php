@@ -350,4 +350,18 @@ class SubscriptionManager
     {
        return $this->subscribeRepository->getCountOfConsumedOrders($subscriptionId);
     }
+
+    public function deleteStoreSubscriptionBySubscriptionId(int $subscriptionId): ?SubscriptionEntity
+    {
+        $subscriptionEntity = $this->subscribeRepository->findOneBy(['id'=>$subscriptionId]);
+
+        if (! $subscriptionEntity) {
+            return $subscriptionEntity;
+        }
+
+        $this->entityManager->remove($subscriptionEntity);
+        $this->entityManager->flush();
+
+        return $subscriptionEntity;
+    }
 }

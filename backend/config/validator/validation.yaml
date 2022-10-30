@@ -754,3 +754,17 @@ App\Request\User\UserPasswordUpdateByLoggedInUserRequest:
             - NotBlank: ~
         password:
             - NotBlank: ~
+
+App\Request\Admin\Subscription\CreateNewStoreSubscriptionWithSamePackageByAdminRequest:
+    properties:
+        storeProfileId:
+            - NotBlank: ~
+
+App\Request\Admin\Order\OrderStoreBranchToClientDistanceAndDestinationByAdminRequest:
+    properties:
+        orderId:
+            - NotBlank: ~
+        storeBranchToClientDistance:
+            - NotBlank: ~
+        destination:
+            - NotBlank: ~

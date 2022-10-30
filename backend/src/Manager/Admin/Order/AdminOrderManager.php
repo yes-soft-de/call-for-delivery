@@ -26,6 +26,7 @@ use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
 use App\Request\Admin\Order\FilterOrdersPaidOrNotPaidByAdminRequest;
 use App\Request\Admin\Order\FilterOrdersWhoseHasNotDistanceHasCalculatedRequest;
 use App\Request\Admin\Order\OrderStoreBranchToClientDistanceByAdminRequest;
+use App\Request\Admin\Order\OrderStoreBranchToClientDistanceAndDestinationByAdminRequest;
 
 class AdminOrderManager
 {
@@ -321,9 +322,27 @@ class AdminOrderManager
     {
         return $this->orderEntityRepository->filterDifferentAnsweredCashOrdersByAdmin($request);
     }
-    
-    public function getOrders()
+
+    // Get orders which accepted by captains and their created date is above 8/19/2022
+    public function getOrders(): array
     {
         return $this->orderEntityRepository->getOrders();
+    }
+    
+    public function updateStoreBranchToClientDistanceAndDestinationByAdmin(OrderStoreBranchToClientDistanceAndDestinationByAdminRequest $request): ?OrderEntity
+    {
+        $orderEntity = $this->orderEntityRepository->find($request->getOrderId());
+
+        if(! $orderEntity) {
+            return $orderEntity;
+        }
+
+        $orderEntity = $this->autoMapping->mapToObject(OrderStoreBranchToClientDistanceAndDestinationByAdminRequest::class, OrderEntity::class, $request, $orderEntity);
+      
+        $this->adminStoreOrderDetailsManager->updateDestination($request->getOrderId(), $request->getDestination());
+        
+        $this->entityManager->flush();
+        
+        return $orderEntity;
     }
 }

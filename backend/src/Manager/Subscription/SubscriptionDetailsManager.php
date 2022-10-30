@@ -170,4 +170,21 @@ class SubscriptionDetailsManager
     {
         return $this->subscribeDetailsRepository->getSubscriptionDetailsEntityByLastSubscriptionId($subscriptionId);
     }
+
+    public function deleteSubscriptionDetailsBySubscriptionId(int $subscriptionId): ?SubscriptionDetailsEntity
+    {
+        $subscriptionDetailsEntity = $this->subscribeDetailsRepository->findOneBy(['lastSubscription'=>$subscriptionId]);
+
+        if (! $subscriptionDetailsEntity) {
+            return $subscriptionDetailsEntity;
+        }
+
+        $subscriptionDetailsEntity->setLastSubscription(null);
+        $subscriptionDetailsEntity->setStoreOwner(new StoreOwnerProfileEntity());
+
+        $this->entityManager->remove($subscriptionDetailsEntity);
+        $this->entityManager->flush();
+
+        return $subscriptionDetailsEntity;
+    }
 }

@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\Admin\Subscription\AdminStoreSubscriptionConstant;
 use App\Entity\SubscriptionEntity;
 use App\Manager\Admin\StoreOwnerSubscription\AdminStoreSubscriptionManager;
+use App\Request\Admin\Subscription\CreateNewStoreSubscriptionWithSamePackageByAdminRequest;
 use App\Response\Admin\StoreOwnerSubscription\AdminStoreSubscriptionResponse;
 use App\Response\Admin\StoreOwnerSubscription\StoreFutureSubscriptionGetForAdminResponse;
 use App\Response\Subscription\RemainingOrdersResponse;
@@ -86,7 +87,12 @@ class AdminStoreSubscriptionService
                 $subscription['total'] = $this->getTotal($subscription['paymentsFromStore'], $subscription['packageCost'], $subscription['captainOffers'],(float)$subscription['packageExtraCost'], $totalExtraDistance);
             }
 
-            $response[] = $this->autoMapping->map("array", AdminStoreSubscriptionResponse::class, $subscription);
+            if (($subscription['isCurrent'] === 0) && ($subscription['isFuture'] === false) && (! $subscription['subscriptionDetailsId'])) {
+                $response['oldSubscriptions'][] = $this->autoMapping->map("array", AdminStoreSubscriptionResponse::class, $subscription);
+
+            } else {
+                $response['currentAndFutureSubscriptions'][] = $this->autoMapping->map("array", AdminStoreSubscriptionResponse::class, $subscription);
+            }
         }
 
         return $response;
@@ -176,7 +182,7 @@ class AdminStoreSubscriptionService
             $subscription = $this->adminStoreSubscriptionManager->getSubscriptionEntityByIdForAdmin($request->getId());
 
             if ($subscription) {
-                $subscriptionDeleteResult = $this->storeSubscriptionEraserService->deleteStoreOwnerSubscription($subscription->getStoreOwner()->getStoreOwnerId());
+                $subscriptionDeleteResult = $this->storeSubscriptionEraserService->deleteCurrentStoreOwnerSubscriptionBySubscriptionId($subscription->getId());
 
                 if ($subscriptionDeleteResult === AdminStoreSubscriptionConstant::STORE_SUBSCRIPTIONS_DELETED_SUCCESSFULLY) {
                     return $this->autoMapping->map(SubscriptionEntity::class, AdminDeleteSubscriptionResponse::class, $subscription);
@@ -192,7 +198,7 @@ class AdminStoreSubscriptionService
             $subscription = $this->adminStoreSubscriptionManager->getSubscriptionEntityByIdForAdmin($request->getId());
 
             if ($subscription) {
-                $subscriptionDeleteResult = $this->storeSubscriptionEraserService->deleteStoreOwnerSubscription($subscription->getStoreOwner()->getStoreOwnerId());
+                $subscriptionDeleteResult = $this->storeSubscriptionEraserService->deleteCurrentStoreOwnerSubscriptionBySubscriptionId($subscription->getId());
 
                 if ($subscriptionDeleteResult === AdminStoreSubscriptionConstant::STORE_SUBSCRIPTIONS_DELETED_SUCCESSFULLY) {
                     return $this->autoMapping->map(SubscriptionEntity::class, AdminDeleteSubscriptionResponse::class, $subscription);
@@ -211,5 +217,14 @@ class AdminStoreSubscriptionService
     public function packageBalanceForAdminByStoreOwnerId(int $storeOwnerId): RemainingOrdersResponse|string
     {
         return $this->subscriptionService->packageBalance($storeOwnerId);
+    }
+
+    public function createNewSubscriptionForSamePackageByAdmin(CreateNewStoreSubscriptionWithSamePackageByAdminRequest $requestByAdmin): SubscriptionResponse|SubscriptionErrorResponse|string|int
+    {
+        $request = new SubscriptionCreateRequest();
+
+        $request->setNote($requestByAdmin->getNote());
+
+        return $this->subscriptionService->createNewSubscriptionForSamePackageByAdmin($request, $requestByAdmin->getStoreProfileId());
     }
 }
