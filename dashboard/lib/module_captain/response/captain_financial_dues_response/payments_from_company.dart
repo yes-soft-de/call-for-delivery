@@ -2,7 +2,7 @@ import 'created_at.dart';
 
 class PaymentsFromCompany {
   int? id;
-  int? amount;
+  num? amount;
   CreatedAt? createdAt;
   String? note;
 
@@ -11,7 +11,7 @@ class PaymentsFromCompany {
   factory PaymentsFromCompany.fromJson(Map<String, dynamic> json) {
     return PaymentsFromCompany(
       id: json['id'] as int?,
-      amount: json['amount'] as int?,
+      amount: json['amount'] as num?,
       createdAt: json['createdAt'] == null
           ? null
           : CreatedAt.fromJson(json['createdAt'] as Map<String, dynamic>),

@@ -71,13 +71,7 @@ class OrderLogsLoadedState extends States {
                 S.current.countKilometersTo + '(${S.current.clientDistance})',
             controller: screenState.geoController,
             onChanged: () {
-              if (screenState.geoKilo) {
-                screenState.ordersFilter.maxKiloFromDistance =
-                    num.tryParse(screenState.geoController.text) ?? -1;
-              } else {
-                screenState.ordersFilter.maxKilo =
-                    num.tryParse(screenState.geoController.text) ?? -1;
-              }
+              changeDistanceIndicator();
               screenState.getOrders(false);
             },
           ),
@@ -98,8 +92,10 @@ class OrderLogsLoadedState extends States {
                     value: false,
                     groupValue: screenState.geoKilo,
                     onChanged: (value) {
-                      screenState.geoKilo = value as bool;
+                      screenState.geoKilo = false;
+                      changeDistanceIndicator();
                       screenState.refresh();
+                      screenState.getOrders(false);
                     },
                     activeColor: Theme.of(context).colorScheme.primary,
                   ),
@@ -116,8 +112,10 @@ class OrderLogsLoadedState extends States {
                     value: true,
                     groupValue: screenState.geoKilo,
                     onChanged: (value) {
-                      screenState.geoKilo = value as bool;
+                      screenState.geoKilo = true;
+                      changeDistanceIndicator();
                       screenState.refresh();
+                      screenState.getOrders(false);
                     },
                     activeColor: Theme.of(context).colorScheme.primary,
                   ),
@@ -140,5 +138,19 @@ class OrderLogsLoadedState extends States {
       height: 75,
     ));
     return widgets;
+  }
+
+  void changeDistanceIndicator() {
+    if (screenState.geoKilo) {
+      // screenState.ordersFilter.maxKilo = null;
+    } else {
+      //  screenState.ordersFilter.maxKiloFromDistance = null;
+    }
+    screenState.ordersFilter.maxKiloFromDistance =
+        num.tryParse(screenState.geoController.text) ?? -1;
+    screenState.ordersFilter.maxKilo =
+        num.tryParse(screenState.geoController.text) ?? -1;
+    screenState.ordersFilter.chosenDistanceIndicator =
+        screenState.geoKilo ? 1 : 0;
   }
 }

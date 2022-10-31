@@ -5,18 +5,22 @@ class FilterOrderRequest {
   DateTime? fromDate;
   num? maxKilo;
   num? maxKiloFromDistance;
-  FilterOrderRequest(
-      {this.fromDate,
-      this.maxKilo,
-      this.maxKiloFromDistance,
-      this.state,
-      this.toDate,
-      this.storeOwnerProfileId});
+  int? chosenDistanceIndicator;
+  FilterOrderRequest({
+    this.fromDate,
+    this.maxKilo,
+    this.maxKiloFromDistance,
+    this.state,
+    this.toDate,
+    this.storeOwnerProfileId,
+    this.chosenDistanceIndicator,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['state'] = this.state;
     data['storeOwnerProfileId'] = this.storeOwnerProfileId;
+    data['chosenDistanceIndicator'] = this.chosenDistanceIndicator ?? 0;
     if (this.maxKiloFromDistance != null) {
       data['storeBranchToClientDistance'] = this.maxKiloFromDistance;
     }
