@@ -4,6 +4,7 @@ namespace App\Service\Admin\Order;
 
 use App\AutoMapping;
 use App\Constant\Notification\NotificationConstant;
+use App\Constant\Notification\NotificationTokenConstant;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
@@ -19,6 +20,7 @@ use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
+use App\Request\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminRequest;
 use App\Request\Admin\Order\RePendingAcceptedOrderByAdminRequest;
 use App\Request\Admin\Order\SubOrderCreateByAdminRequest;
 use App\Response\Admin\Order\BidDetailsGetForAdminResponse;
@@ -29,6 +31,7 @@ use App\Response\Admin\Order\OrderByIdGetForAdminResponse;
 use App\Response\Admin\Order\OrderCancelByAdminResponse;
 use App\Response\Admin\Order\OrderCreateByAdminResponse;
 use App\Response\Admin\Order\OrderGetForAdminResponse;
+use App\Response\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminResponse;
 use App\Response\Order\BidOrderByIdGetForAdminResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
 use App\Service\ChatRoom\OrderChatRoomService;
@@ -337,10 +340,11 @@ class AdminOrderService
 
                 // *** send notifications (local and firebase) *** //
                 $this->notificationLocalService->createNotificationLocal($orderResult->getStoreOwner()->getStoreOwnerId(), NotificationConstant::ORDER_RETURNED_PENDING_TITLE,
-                    NotificationConstant::ORDER_RETURNED_PENDING, $orderResult->getId());
+                    NotificationConstant::ORDER_RETURNED_PENDING, NotificationTokenConstant::APP_TYPE_STORE, $orderResult->getId());
 
                 $this->notificationLocalService->createNotificationLocal($captainUserId, NotificationConstant::ORDER_RETURNED_PENDING_TITLE,
-                    NotificationConstant::ORDER_UNASSIGNED_TO_CAPTAIN.$orderResult->getId(), $orderResult->getId());
+                    NotificationConstant::ORDER_UNASSIGNED_TO_CAPTAIN.$orderResult->getId(), NotificationTokenConstant::APP_TYPE_CAPTAIN,
+                    $orderResult->getId());
 
                 //create firebase notification to store
                 try {
@@ -482,7 +486,7 @@ class AdminOrderService
             $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
 
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS,
-                $order->getId());
+                NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
 
             $this->orderTimeLineService->createOrderLogsRequest($order);
 
@@ -604,7 +608,7 @@ class AdminOrderService
 
                 //create local notification to store
                 $this->notificationLocalService->createNotificationLocal($newUpdatedOrder->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
-                    NotificationConstant::CANCEL_ORDER_SUCCESS, $newUpdatedOrder->getId());
+                    NotificationConstant::CANCEL_ORDER_SUCCESS, NotificationTokenConstant::APP_TYPE_STORE, $newUpdatedOrder->getId());
 
                 //create firebase notification to store
                 try {
@@ -668,7 +672,8 @@ class AdminOrderService
                     if ($request->getState() === OrderStateConstant::ORDER_STATE_PENDING) {
                         // order returned to pending status, so create a local notification for the captain
                         $this->notificationLocalService->createNotificationLocal($orderResult[1], NotificationConstant::ORDER_RETURNED_PENDING_TITLE,
-                            NotificationConstant::ORDER_UNASSIGNED_TO_CAPTAIN.$orderResult[0]->getId(), $orderResult[0]->getId());
+                            NotificationConstant::ORDER_UNASSIGNED_TO_CAPTAIN.$orderResult[0]->getId(),
+                            NotificationTokenConstant::APP_TYPE_CAPTAIN, $orderResult[0]->getId());
                     }
                 }
                 // insert new order log
@@ -817,12 +822,14 @@ class AdminOrderService
 
             // notification to store
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(),
-                NotificationConstant::NEW_SUB_ORDER_TITLE, NotificationConstant::CREATE_SUB_ORDER_SUCCESS, $order->getId());
+                NotificationConstant::NEW_SUB_ORDER_TITLE, NotificationConstant::CREATE_SUB_ORDER_SUCCESS,
+                NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
 
             // notification to captain
             if ($primaryOrder->getCaptainId()) {
                 $this->notificationLocalService->createNotificationLocal($primaryOrder->getCaptainId()->getCaptainId(),
-                    NotificationConstant::NEW_SUB_ORDER_TITLE, NotificationConstant::ADD_SUB_ORDER, $request->getPrimaryOrder()->getId());
+                    NotificationConstant::NEW_SUB_ORDER_TITLE, NotificationConstant::ADD_SUB_ORDER,
+                    NotificationTokenConstant::APP_TYPE_STORE, $request->getPrimaryOrder()->getId());
             }
 
             $this->orderTimeLineService->createOrderLogsRequest($order);
@@ -917,5 +924,29 @@ class AdminOrderService
             OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_AND_DESTINATION_BY_ADMIN_ACTION_CONST, null, null);
 
         return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
+    }
+
+    /**
+     * this function resolves the orders which have conflicted answers about cash payment by updating the field
+     * hasPayConflictAnswers to 2 (which means there is no conflict between the store's answer and the captain answer
+     */
+    public function resolveOrderHasPayConflictAnswersByAdmin(OrderHasPayConflictAnswersUpdateByAdminRequest $request, int $userId): array
+    {
+        $response = [];
+
+        $ordersResult = $this->adminOrderManager->resolveOrderHasPayConflictAnswersByAdmin($request);
+
+        if (count($ordersResult) > 0) {
+            foreach ($ordersResult as $orderEntity) {
+                $response[] = $this->autoMapping->map(OrderEntity::class, OrderHasPayConflictAnswersUpdateByAdminResponse::class,
+                    $orderEntity);
+
+                // save log of the action on order
+                $this->orderLogService->createOrderLogMessage($orderEntity, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+                    OrderLogActionTypeConstant::ORDER_CONFLICTED_ANSWERS_RESOLVED_BY_ADMIN_CONST, null, null);
+            }
+        }
+
+        return $response;
     }
 }

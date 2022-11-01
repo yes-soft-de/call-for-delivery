@@ -25,6 +25,9 @@ class NotificationLocalEntity
     #[ORM\Column(type: 'datetime')]
     private $createdAt;
 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $appType;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +77,18 @@ class NotificationLocalEntity
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getAppType(): ?int
+    {
+        return $this->appType;
+    }
+
+    public function setAppType(?int $appType): self
+    {
+        $this->appType = $appType;
 
         return $this;
     }

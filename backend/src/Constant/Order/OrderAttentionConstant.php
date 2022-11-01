@@ -2,7 +2,7 @@
 
 namespace App\Constant\Order;
 
-class OrderAttentionConstant
+final class OrderAttentionConstant
 {
     const ATTENTION = "Null";
 

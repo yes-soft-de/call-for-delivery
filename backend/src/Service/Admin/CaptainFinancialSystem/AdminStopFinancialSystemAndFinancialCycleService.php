@@ -3,6 +3,7 @@
 namespace App\Service\Admin\CaptainFinancialSystem;
 
 use App\AutoMapping;
+use App\Constant\Notification\NotificationTokenConstant;
 use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialDuesManager;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Response\CaptainFinancialSystem\CaptainStopFinancialSystemAndFinancialCycleResponse;
@@ -40,7 +41,8 @@ class AdminStopFinancialSystemAndFinancialCycleService
               error_log($e);
             }
             //create local notification to captain
-            $this->notificationLocalService->createNotificationLocal($captainFinancialDues?->getCaptain()->getCaptainId(), NotificationConstant::TITLE_OK, NotificationConstant::PLEASE_RECEIVE_DUES.' '.$request->getDate());
+            $this->notificationLocalService->createNotificationLocal($captainFinancialDues?->getCaptain()->getCaptainId(), NotificationConstant::TITLE_OK,
+                NotificationConstant::PLEASE_RECEIVE_DUES.' '.$request->getDate(), NotificationTokenConstant::APP_TYPE_CAPTAIN);
             return $this->autoMapping->map(CaptainFinancialDuesEntity::class, CaptainStopFinancialSystemAndFinancialCycleResponse::class, $captainFinancialDues);
         }
        

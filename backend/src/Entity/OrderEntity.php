@@ -112,6 +112,9 @@ class OrderEntity
     #[ORM\Column(type: 'float', nullable: true)]
     private $deliveryCost;
 
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $conflictedAnswersResolvedBy;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
@@ -575,6 +578,18 @@ class OrderEntity
     public function setDeliveryCost(?float $deliveryCost): self
     {
         $this->deliveryCost = $deliveryCost;
+
+        return $this;
+    }
+
+    public function getConflictedAnswersResolvedBy(): ?int
+    {
+        return $this->conflictedAnswersResolvedBy;
+    }
+
+    public function setConflictedAnswersResolvedBy(?int $conflictedAnswersResolvedBy): self
+    {
+        $this->conflictedAnswersResolvedBy = $conflictedAnswersResolvedBy;
 
         return $this;
     }

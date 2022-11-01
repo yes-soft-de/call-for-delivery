@@ -23,6 +23,7 @@ use App\Entity\SupplierCategoryEntity;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
+use App\Request\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminRequest;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\CashOrdersPaidOrNotFilterByStoreRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
@@ -2400,12 +2401,41 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('orderEntity.payment = :cashMethod')
             ->setParameter('cashMethod', PaymentConstant::CASH_PAYMENT_METHOD_CONST)
 
-//            ->andWhere('orderEntity.createdAt < :specificDate')
-//            ->setParameter('specificDate', $dateTime)
+            ->andWhere('orderEntity.hasPayConflictAnswers IS NULL')
 
             ->andWhere('orderEntity.isCashPaymentConfirmedByStore IS NOT NULL')
 
             ->getQuery()
             ->getResult();
+    }
+
+    public function filterCashPaymentAnsweredOrdersForAdmin(OrderHasPayConflictAnswersUpdateByAdminRequest $request): array
+    {
+        $query = $this->createQueryBuilder('orderEntity')
+
+            ->andWhere('orderEntity.state = :deliveredState')
+            ->setParameter('deliveredState', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+            ->andWhere('orderEntity.payment = :cashMethod')
+            ->setParameter('cashMethod', PaymentConstant::CASH_PAYMENT_METHOD_CONST)
+
+            ->andWhere('orderEntity.isCashPaymentConfirmedByStore IS NOT NULL')
+            ->andWhere('orderEntity.paidToProvider IS NOT NULL')
+
+            ->andWhere('orderEntity.hasPayConflictAnswers IS NULL')
+
+            ->orderBy('orderEntity.id', 'DESC');
+
+        if (($request->getFromDate()) && ($request->getFromDate() !== "")) {
+            $query->andWhere('orderEntity.createdAt >= :fromDate');
+            $query->setParameter('fromDate', $request->getFromDate());
+        }
+
+        if (($request->getToDate()) && ($request->getToDate() !== "")) {
+            $query->andWhere('orderEntity.createdAt <= :toDate');
+            $query->setParameter('toDate', $request->getToDate());
+        }
+
+        return $query->getQuery()->getResult();
     }
 }

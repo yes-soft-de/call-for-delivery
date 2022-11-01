@@ -33,7 +33,8 @@ class CaptainEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('captainEntity')
 
             ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.age', 'captainEntity.car', 'captainEntity.salary',
-                'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay', 'captainEntity.status')
+                'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay',
+                'captainEntity.status', 'captainEntity.address')
             ->addSelect('chatRoomEntity.roomId')
             ->addSelect('imageEntity.imagePath', 'imageEntity.usedAs')
            
@@ -98,7 +99,8 @@ class CaptainEntityRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('captainEntity')
             ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.age', 'captainEntity.car', 'captainEntity.salary',
-                'captainEntity.status', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay', 'captainEntity.completeAccountStatus')
+                'captainEntity.status', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay',
+                'captainEntity.completeAccountStatus', 'captainEntity.address')
             ->addSelect('userEntity.userId', 'userEntity.verificationStatus')
             ->addSelect('captainFinancialDuesEntity.captainStoppedFinancialCycle')
 
@@ -127,7 +129,7 @@ class CaptainEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('captainEntity')
             ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName', 'captainEntity.location', 'captainEntity.age', 'captainEntity.car', 'captainEntity.salary',
                 'captainEntity.salary', 'captainEntity.bounce', 'captainEntity.phone', 'captainEntity.isOnline', 'captainEntity.bankName', 'captainEntity.bankAccountNumber', 'captainEntity.stcPay',
-                'captainEntity.completeAccountStatus', 'captainEntity.status', 'chatRoomEntity.roomId')
+                'captainEntity.completeAccountStatus', 'captainEntity.status', 'captainEntity.address', 'chatRoomEntity.roomId')
             ->addSelect('imageEntity.imagePath', 'imageEntity.usedAs')
             ->addSelect('userEntity.userId', 'userEntity.verificationStatus')
 
