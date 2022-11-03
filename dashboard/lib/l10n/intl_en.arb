@@ -805,7 +805,13 @@
     "geoDistance": "Geo Distance",
     "youCannotAcceptAnotherOrderFromThisStore": "Captain cannot accept another order from this store , Please wait to deliver orders belongs to this store after that try again",
     "inactiveOffer": "Inactive Offer",
-    "provideClientCoordinationsHint":"12.934,13.4124",
-    "provideClientCoordinations":"Delivery location"
-
+    "provideClientCoordinationsHint": "12.934,13.4124",
+    "provideClientCoordinations": "Delivery location",
+    "yourNumberStartWithZero": "Phone number start with zero please remove it and try again",
+    "storeAnswerOrderCash": "Store answer confirm/denied receiving order cash from captain",
+    "newSubOrderCreatedByAdministration": "New subOrder created by administration",
+    "storeBranchToClientDistanceUpdated": "Store branch to client distance updated",
+    "storeBranchToClientDistanceAndDestinationUpdated": "Store branch to client distance and client location updated",
+    "cashPaymentConfirmed": "Cash payment confirmed",
+    "payConflictAnswersResolved": "Payment conflict answer resolved"
 }

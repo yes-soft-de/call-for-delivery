@@ -231,6 +231,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("جاري التحقق من السلة"),
         "cash": MessageLookupByLibrary.simpleMessage("نقدا"),
         "cashOrders": MessageLookupByLibrary.simpleMessage("الطلبات الكاش"),
+        "cashPaymentConfirmed": MessageLookupByLibrary.simpleMessage(
+            "تم حل التعارض بين إجابة المتجر وإجابة الكابتن من قبل الإدارة"),
         "categories": MessageLookupByLibrary.simpleMessage("التصنيفات"),
         "category": MessageLookupByLibrary.simpleMessage("تصنيف"),
         "categoryImage": MessageLookupByLibrary.simpleMessage("صورة التصنيف"),
@@ -665,6 +667,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("كلمة السر الجديدة"),
         "newSubOrderCreated":
             MessageLookupByLibrary.simpleMessage("إنشاء طلب فرعي جديد"),
+        "newSubOrderCreatedByAdministration":
+            MessageLookupByLibrary.simpleMessage(
+                "تم انشاء طلب فرعي تابع لطلب مجمع من قبل الادارة"),
         "next": MessageLookupByLibrary.simpleMessage("التالي"),
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("تاريخ الدفعة القادمة:"),
@@ -820,6 +825,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "passwordUpdatedSuccess":
             MessageLookupByLibrary.simpleMessage("تم تحديث كلمة المرور بنجاح"),
         "pay": MessageLookupByLibrary.simpleMessage("ادفع"),
+        "payConflictAnswersResolved": MessageLookupByLibrary.simpleMessage(
+            "تم حل التعارض بين الاجابات حول تسليم المبلغ النقدي من أجل الطلب"),
         "paySubscription": MessageLookupByLibrary.simpleMessage("دفع الاشتراك"),
         "paymentAmount": MessageLookupByLibrary.simpleMessage("قيمة الدفعة"),
         "paymentFailed": MessageLookupByLibrary.simpleMessage(
@@ -1038,8 +1045,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "store": MessageLookupByLibrary.simpleMessage("المتجر"),
         "storeAccountInit":
             MessageLookupByLibrary.simpleMessage("تهيئة الحساب"),
+        "storeAnswerOrderCash": MessageLookupByLibrary.simpleMessage(
+            "قام صاحب المتجر بتأكيد/نفي استلامه لمبلغ الطلب الكاش"),
         "storeAvailable": MessageLookupByLibrary.simpleMessage("المتجر متوفر"),
         "storeBalance": MessageLookupByLibrary.simpleMessage("حساب المتجر"),
+        "storeBranchToClientDistanceAndDestinationUpdated":
+            MessageLookupByLibrary.simpleMessage(
+                "تم تحديث موقع العميل و المسافة الفاصلة بين موقع العميل والفرع التجاري للمتجر من قبل الادارة"),
+        "storeBranchToClientDistanceUpdated": MessageLookupByLibrary.simpleMessage(
+            "تم تحديث المسافة الفاصلة بين موقع العميل والفرع التجاري للمتجر من قبل الادارة"),
         "storeCreatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إنشاء المتجر بنجاح"),
         "storeImage": MessageLookupByLibrary.simpleMessage("صورة المتجر"),
@@ -1262,6 +1276,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("يجب دفع حصرا"),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
             "قائمة طلباتك فارغة من فضلك اختر ما تريد طلبه"),
+        "yourNumberStartWithZero": MessageLookupByLibrary.simpleMessage(
+            "رقم الهاتف المدخل يبدأ بصفر الرجاء إدخال الرقم بدون الصفر"),
         "yourRequestSent":
             MessageLookupByLibrary.simpleMessage("تم إرسال طلبك"),
         "yourRequestToChangeCaptainPlanFailed":

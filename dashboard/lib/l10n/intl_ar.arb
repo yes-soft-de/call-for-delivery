@@ -803,9 +803,14 @@
     "captainDistance": "تقديرات الكابتن",
     "geoDistance": "الفضائية",
     "youCannotAcceptAnotherOrderFromThisStore": "لا يمكن للكابتن قبول الطلب من هذا المتجر في الوقت الحالي ، الرجاء انتظار تسليم الطلبات المتعلقة بهذا المتجر ومن ثم إعادة المحاولة",
-    "inactiveOffer":"عرض منتهي الصلاحية",
-    "provideClientCoordinationsHint":"12.934,13.4124",
-    "provideClientCoordinations":"إحداثيات موقع التسليم"
-
-
+    "inactiveOffer": "عرض منتهي الصلاحية",
+    "provideClientCoordinationsHint": "12.934,13.4124",
+    "provideClientCoordinations": "إحداثيات موقع التسليم",
+    "yourNumberStartWithZero": "رقم الهاتف المدخل يبدأ بصفر الرجاء إدخال الرقم بدون الصفر",
+    "storeAnswerOrderCash": "قام صاحب المتجر بتأكيد/نفي استلامه لمبلغ الطلب الكاش",
+    "newSubOrderCreatedByAdministration": "تم انشاء طلب فرعي تابع لطلب مجمع من قبل الادارة",
+    "storeBranchToClientDistanceUpdated": "تم تحديث المسافة الفاصلة بين موقع العميل والفرع التجاري للمتجر من قبل الادارة",
+    "storeBranchToClientDistanceAndDestinationUpdated": "تم تحديث موقع العميل و المسافة الفاصلة بين موقع العميل والفرع التجاري للمتجر من قبل الادارة",
+    "cashPaymentConfirmed": "تم حل التعارض بين إجابة المتجر وإجابة الكابتن من قبل الإدارة",
+    "payConflictAnswersResolved":"تم حل التعارض بين الاجابات حول تسليم المبلغ النقدي من أجل الطلب"
 }

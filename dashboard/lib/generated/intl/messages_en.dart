@@ -232,6 +232,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "cartValidation": MessageLookupByLibrary.simpleMessage("Checking Cart"),
         "cash": MessageLookupByLibrary.simpleMessage("Cash"),
         "cashOrders": MessageLookupByLibrary.simpleMessage("Cash order"),
+        "cashPaymentConfirmed":
+            MessageLookupByLibrary.simpleMessage("Cash payment confirmed"),
         "categories": MessageLookupByLibrary.simpleMessage("Categories"),
         "category": MessageLookupByLibrary.simpleMessage("category"),
         "categoryImage": MessageLookupByLibrary.simpleMessage("Category image"),
@@ -670,6 +672,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "newPassword": MessageLookupByLibrary.simpleMessage("New password"),
         "newSubOrderCreated":
             MessageLookupByLibrary.simpleMessage("New suborder created"),
+        "newSubOrderCreatedByAdministration":
+            MessageLookupByLibrary.simpleMessage(
+                "New subOrder created by administration"),
         "next": MessageLookupByLibrary.simpleMessage("Next"),
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("Next Payment Date:"),
@@ -825,6 +830,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "passwordUpdatedSuccess": MessageLookupByLibrary.simpleMessage(
             "Password updated successfully"),
         "pay": MessageLookupByLibrary.simpleMessage("Pay"),
+        "payConflictAnswersResolved": MessageLookupByLibrary.simpleMessage(
+            "Payment conflict answer resolved"),
         "paySubscription":
             MessageLookupByLibrary.simpleMessage("Pay Subscription"),
         "paymentAmount": MessageLookupByLibrary.simpleMessage("Payment amount"),
@@ -1047,9 +1054,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "store": MessageLookupByLibrary.simpleMessage("Store"),
         "storeAccountInit":
             MessageLookupByLibrary.simpleMessage("Setup Account"),
+        "storeAnswerOrderCash": MessageLookupByLibrary.simpleMessage(
+            "Store answer confirm/denied receiving order cash from captain"),
         "storeAvailable":
             MessageLookupByLibrary.simpleMessage("Store Availability"),
         "storeBalance": MessageLookupByLibrary.simpleMessage("Store Balance"),
+        "storeBranchToClientDistanceAndDestinationUpdated":
+            MessageLookupByLibrary.simpleMessage(
+                "Store branch to client distance and client location updated"),
+        "storeBranchToClientDistanceUpdated":
+            MessageLookupByLibrary.simpleMessage(
+                "Store branch to client distance updated"),
         "storeCreatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("Store Created Successfully"),
         "storeImage": MessageLookupByLibrary.simpleMessage("Store Image"),
@@ -1265,6 +1280,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Pay Exclusively"),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
             "Your cart is empty please choose items to add"),
+        "yourNumberStartWithZero": MessageLookupByLibrary.simpleMessage(
+            "Phone number start with zero please remove it and try again"),
         "yourRequestSent":
             MessageLookupByLibrary.simpleMessage("Your Request have been sent"),
         "yourRequestToChangeCaptainPlanFailed":

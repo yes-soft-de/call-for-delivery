@@ -225,20 +225,23 @@ class AccountBalanceStateLoaded extends States {
     List<Widget> widgets = [];
     orders.forEach((element) {
       widgets.add(
-        InkWell(
-            onTap: () {
-              Navigator.of(context).pushNamed(StoresRoutes.ORDER_STATUS_SCREEN,
-                  arguments: element.id);
-            },
-            child: OwnerOrderCard(
-              createdDate: element.createdDate,
-              deliveryDate: element.deliveryDate,
-              note: element.note,
-              orderCost: element.orderCost,
-              orderNumber: element.id.toString(),
-              orderStatus: StatusHelper.getOrderStatusMessages(element.state),
-              orderIsMain: element.orderIsMain ?? false,
-            )),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: InkWell(
+              onTap: () {
+                Navigator.of(context).pushNamed(StoresRoutes.ORDER_STATUS_SCREEN,
+                    arguments: element.id);
+              },
+              child: OwnerOrderCard(
+                createdDate: element.createdDate,
+                deliveryDate: element.deliveryDate,
+                note: element.note,
+                orderCost: element.orderCost,
+                orderNumber: element.id.toString(),
+                orderStatus: StatusHelper.getOrderStatusMessages(element.state),
+                orderIsMain: element.orderIsMain ?? false,
+              )),
+        ),
       );
     });
     return widgets;

@@ -8119,6 +8119,76 @@ class S {
       args: [],
     );
   }
+
+  /// `Phone number start with zero please remove it and try again`
+  String get yourNumberStartWithZero {
+    return Intl.message(
+      'Phone number start with zero please remove it and try again',
+      name: 'yourNumberStartWithZero',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store answer confirm/denied receiving order cash from captain`
+  String get storeAnswerOrderCash {
+    return Intl.message(
+      'Store answer confirm/denied receiving order cash from captain',
+      name: 'storeAnswerOrderCash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New subOrder created by administration`
+  String get newSubOrderCreatedByAdministration {
+    return Intl.message(
+      'New subOrder created by administration',
+      name: 'newSubOrderCreatedByAdministration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store branch to client distance updated`
+  String get storeBranchToClientDistanceUpdated {
+    return Intl.message(
+      'Store branch to client distance updated',
+      name: 'storeBranchToClientDistanceUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store branch to client distance and client location updated`
+  String get storeBranchToClientDistanceAndDestinationUpdated {
+    return Intl.message(
+      'Store branch to client distance and client location updated',
+      name: 'storeBranchToClientDistanceAndDestinationUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash payment confirmed`
+  String get cashPaymentConfirmed {
+    return Intl.message(
+      'Cash payment confirmed',
+      name: 'cashPaymentConfirmed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment conflict answer resolved`
+  String get payConflictAnswersResolved {
+    return Intl.message(
+      'Payment conflict answer resolved',
+      name: 'payConflictAnswersResolved',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
