@@ -154,7 +154,7 @@ class AdminOrderManager
     {
         $orderEntity = $this->orderEntityRepository->find($request->getId());
 
-        $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+        //$orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
 
         $orderEntity = $this->autoMapping->mapToObject(UpdateOrderByAdminRequest::class, OrderEntity::class, $request, $orderEntity);
         $orderEntity->setDeliveryDate($request->getDeliveryDate());

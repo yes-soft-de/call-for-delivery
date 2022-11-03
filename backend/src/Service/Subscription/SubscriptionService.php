@@ -853,5 +853,17 @@ class SubscriptionService
     {
         return $this->subscriptionManager->deleteStoreSubscriptionBySubscriptionId($subscriptionId);
     }
+
+    // This function only checks remaining cars without any updating operations
+    public function checkRemainingCarsOnlyByOrderId(int $orderId): string|int
+    {
+        $subscription = $this->subscriptionManager->getSubscriptionCurrentByOrderId($orderId);
+
+        if($subscription) {
+            return $subscription['remainingCars'];
+        }
+
+        return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
+    }
 }
  

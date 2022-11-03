@@ -591,9 +591,10 @@ class OrderManager
     {
         $orderEntity = $this->orderRepository->find($request->getId());
 
-        $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+        //$orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
 
         $orderEntity = $this->autoMapping->mapToObject(UpdateOrderRequest::class, OrderEntity::class, $request, $orderEntity);
+
         $orderEntity->setDeliveryDate($request->getDeliveryDate());
         
         $this->entityManager->flush();

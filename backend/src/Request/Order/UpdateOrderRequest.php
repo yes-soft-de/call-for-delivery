@@ -38,6 +38,11 @@ class UpdateOrderRequest
     private $deliveryCost;
 
     /**
+     * @var int|null
+     */
+    private $isHide;
+
+    /**
      * Get the value of id
      */ 
     public function getId()
@@ -255,5 +260,10 @@ class UpdateOrderRequest
         $this->branch = $branch;
 
         return $this;
+    }
+
+    public function setIsHide(?int $isHide): void
+    {
+        $this->isHide = $isHide;
     }
 }
