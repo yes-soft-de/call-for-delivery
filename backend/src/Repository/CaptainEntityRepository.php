@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Constant\Captain\CaptainConstant;
 use App\Entity\CaptainEntity;
 use App\Entity\ImageEntity;
+use App\Entity\OrderEntity;
 use App\Entity\UserEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -276,5 +277,100 @@ class CaptainEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByAdmin(): array
+    {
+        $captainsProfiles = $this->createQueryBuilder('captainEntity')
+            ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName')
+            ->addSelect('imageEntity.imagePath', 'imageEntity.usedAs')
+
+            ->where('captainEntity.status = :activeStatus')
+            ->setParameter('activeStatus', CaptainConstant::CAPTAIN_ACTIVE)
+
+            ->leftJoin(
+                ImageEntity::class,
+                'imageEntity',
+                Join::WITH,
+                'imageEntity.itemId = captainEntity.id and imageEntity.entityType = :entityType'
+            )
+
+            ->andWhere('imageEntity.usedAs = :captainProfileImage')
+            ->setParameter('captainProfileImage', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+
+            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE);
+
+        $tempQuery = $captainsProfiles->getQuery()->getResult();
+
+        if (count($tempQuery) > 0) {
+            $finalResponse = [];
+
+            foreach ($tempQuery as $key => $value) {
+                // get last active financial cycle
+                $financialCycle = $this->getLastActiveFinancialCycleByCaptainForAdmin($value['id']);
+
+                if (($financialCycle['startDate']) && ($financialCycle['endDate'])) {
+                    $finalResponse[$key] = $value;
+
+                    $ordersCountResult = $this->getCaptainDeliveredOrdersCountDuringFinancialCycleDateForAdmin($value['id'],
+                        $financialCycle['startDate'], $financialCycle['endDate']);
+
+                    if(count($ordersCountResult) > 0) {
+                        $finalResponse[$key]['ordersCount'] = $ordersCountResult[0];
+                    }
+                }
+            }
+
+            return $finalResponse;
+        }
+
+        return $tempQuery;
+    }
+
+    public function getLastActiveFinancialCycleByCaptainForAdmin(int $captainId): ?array
+    {
+        return $this->createQueryBuilder('captainEntity')
+            ->select('captainFinancialDuesEntity.startDate', 'captainFinancialDuesEntity.endDate')
+
+            ->andWhere('captainEntity.id = :captainProfileId')
+            ->setParameter('captainProfileId', $captainId)
+
+            ->leftJoin(
+                CaptainFinancialDuesEntity::class,
+                'captainFinancialDuesEntity',
+                Join::WITH,
+                "captainFinancialDuesEntity.captain = captainEntity.id AND captainFinancialDuesEntity.state = '1'"
+            )
+
+//            ->andWhere('captainFinancialDuesEntity.captainStoppedFinancialCycle != :stopped')
+//            ->setParameter('stopped', true)
+
+            ->orderBy('captainFinancialDuesEntity.id', 'DESC')
+            ->setMaxResults(1)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function getCaptainDeliveredOrdersCountDuringFinancialCycleDateForAdmin(int $captainId, \DateTime $startDate, \DateTime $endDate): array
+    {
+        $query =  $this->createQueryBuilder('captainEntity')
+            ->select('COUNT(orderEntity.id)')
+
+            ->andWhere('captainEntity.id = :captainProfileId')
+            ->setParameter('captainProfileId', $captainId)
+
+            ->leftJoin(
+                OrderEntity::class,
+                'orderEntity',
+                Join::WITH,
+                'orderEntity.captainId = captainEntity.id'
+            );
+
+            $query->andWhere('orderEntity.createdAt BETWEEN :fromDate AND :toDate');
+            $query->setParameter('fromDate', $startDate);
+            $query->setParameter('toDate', $endDate);
+
+            return $query->getQuery()->getSingleColumnResult();
     }
 }
