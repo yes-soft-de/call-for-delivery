@@ -813,5 +813,6 @@
     "storeBranchToClientDistanceUpdated": "Store branch to client distance updated",
     "storeBranchToClientDistanceAndDestinationUpdated": "Store branch to client distance and client location updated",
     "cashPaymentConfirmed": "Cash payment confirmed",
-    "payConflictAnswersResolved": "Payment conflict answer resolved"
+    "payConflictAnswersResolved": "Payment conflict answer resolved",
+    "admin": "Admin"
 }

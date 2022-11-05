@@ -91,6 +91,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addStore": MessageLookupByLibrary.simpleMessage("Add Stores"),
         "addWorkPackage": MessageLookupByLibrary.simpleMessage("Add work plan"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
+        "admin": MessageLookupByLibrary.simpleMessage("Admin"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "allOrdersCount": MessageLookupByLibrary.simpleMessage("Orders count"),

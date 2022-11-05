@@ -89,6 +89,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addWorkPackage":
             MessageLookupByLibrary.simpleMessage("إضافة باقة عمل"),
         "address": MessageLookupByLibrary.simpleMessage("الموقع"),
+        "admin": MessageLookupByLibrary.simpleMessage("المدير"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "all": MessageLookupByLibrary.simpleMessage("الكل"),
         "allOrdersCount": MessageLookupByLibrary.simpleMessage("عدد الطلبات"),
@@ -624,7 +625,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "makePayment": MessageLookupByLibrary.simpleMessage("تسجيل دفعة"),
         "male": MessageLookupByLibrary.simpleMessage("ذكر"),
         "manageBranch": MessageLookupByLibrary.simpleMessage("إدارة الأفرع"),
-        "me": MessageLookupByLibrary.simpleMessage("مهنتي"),
+        "me": MessageLookupByLibrary.simpleMessage("أنا"),
         "mechanichLicence": MessageLookupByLibrary.simpleMessage("رخصة السير"),
         "mediumMoreThan20EmployeesLessThan100":
             MessageLookupByLibrary.simpleMessage("21 - 100 موظف"),
@@ -714,7 +715,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderCashStatus":
             MessageLookupByLibrary.simpleMessage("سعر الطلبية للمتجر"),
         "orderCashWithCaptain":
-            MessageLookupByLibrary.simpleMessage("المبلغ مع الكابتن"),
+            MessageLookupByLibrary.simpleMessage("المبلغ المقبوض مع الكابتن"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "سعر الطلب شامل تكلفة التوصيل"),
         "orderCount": MessageLookupByLibrary.simpleMessage("عدد الطلبات"),

@@ -27,12 +27,13 @@ class ChatService {
     });
   }
 
-  void sendMessage(String chatRoomID, String msg, String username) async {
+  void sendMessage(
+      String chatRoomID, String msg, String username, bool isAdmin) async {
     ChatModel model = ChatModel(
-      msg: msg,
-      sender: username,
-      sentDate: DateTime.now().toString(),
-    );
+        msg: msg,
+        sender: username,
+        sentDate: DateTime.now().toString(),
+        isAdmin: isAdmin);
     _chatManager.sendMessage(chatRoomID, model);
   }
 

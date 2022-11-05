@@ -57,7 +57,7 @@
     "iSpeak": "اللغة المفضلة",
     "changeLanguage": "غير لغة",
     "andIAm": "من أنا",
-    "me": "مهنتي",
+    "me": "أنا",
     "weNeedYourImageAndYourDriverLicenceInOrder": "نحتاج صورتك الشخصية وصورة رخصة القيادة للتسجيل",
     "weNeedYourImageInOrderToSignUp": "نحتاج صورتك للتسجيل",
     "uploadAndSubmit": "رفع الصور وارسال الطلب",
@@ -653,7 +653,7 @@
     "youCannotMakePaymentThereIsNoOrderCash": "لايمكنك تسجيل دفعة لعدم وجود طلبات كاش تستحق الدفعات",
     "yourRequestToChangeCaptainPlanFailed": "طلبك لتعديل الخطة المالية للكابتن فشلت الرجاء المحاولة في وقت لاحق",
     "deliveryDate": "تاريخ التسليم",
-    "orderCashWithCaptain": "المبلغ مع الكابتن",
+    "orderCashWithCaptain": "المبلغ المقبوض مع الكابتن",
     "captainNote": "ملاحظات الكابتن",
     "youNeedToPayExclusively": "يجب دفع حصرا",
     "carUpdatedSuccessfully": "تم تحديث السيارة بنجاح",
@@ -812,5 +812,6 @@
     "storeBranchToClientDistanceUpdated": "تم تحديث المسافة الفاصلة بين موقع العميل والفرع التجاري للمتجر من قبل الادارة",
     "storeBranchToClientDistanceAndDestinationUpdated": "تم تحديث موقع العميل و المسافة الفاصلة بين موقع العميل والفرع التجاري للمتجر من قبل الادارة",
     "cashPaymentConfirmed": "تم حل التعارض بين إجابة المتجر وإجابة الكابتن من قبل الإدارة",
-    "payConflictAnswersResolved":"تم حل التعارض بين الاجابات حول تسليم المبلغ النقدي من أجل الطلب"
+    "payConflictAnswersResolved":"تم حل التعارض بين الاجابات حول تسليم المبلغ النقدي من أجل الطلب",
+    "admin":"المدير"
 }

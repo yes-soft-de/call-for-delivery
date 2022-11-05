@@ -1,4 +1,5 @@
 import 'package:c4d/consts/urls.dart';
+import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
@@ -12,13 +13,16 @@ class ChatBubbleWidget extends StatefulWidget {
   final String message;
   final DateTime sentDate;
   final bool me;
-
+  final bool isAdmin;
+  final String? username;
   ChatBubbleWidget({
     Key? key,
     required this.message,
     required this.sentDate,
     required this.me,
     this.showImage,
+    required this.isAdmin,
+    required this.username,
   });
 
   @override
@@ -34,7 +38,7 @@ class ChatBubbleWidgetState extends State<ChatBubbleWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: widget.me ? Alignment.centerLeft : Alignment.centerRight,
+      alignment: widget.me || widget.isAdmin ? Alignment.centerLeft : Alignment.centerRight,
       child: Padding(
           padding: EdgeInsets.all(8.0),
           child:
@@ -48,48 +52,64 @@ class ChatBubbleWidgetState extends State<ChatBubbleWidget> {
                   borderRadius: BorderRadius.all(Radius.circular(25)),
                   color: widget.me
                       ? Theme.of(context).primaryColor.withOpacity(0.25)
-                      : Theme.of(context).backgroundColor),
+                      : (widget.isAdmin
+                          ? Theme.of(context)
+                              .colorScheme
+                              // admin bubble color
+                              .primaryContainer
+                              
+                          : Theme.of(context).backgroundColor)),
               child: Padding(
-                padding: const EdgeInsets.all(18.0),
+                padding: EdgeInsets.all(12.0),
                 child: Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    textDirection: reg.hasMatch(widget.message)
-                        ? m.TextDirection.rtl
-                        : m.TextDirection.ltr,
-                    children: [
-                      widget.message.contains(Urls.IMAGES_ROOT)
-                          ? ClipRRect(
-                              borderRadius: BorderRadius.circular(10),
-                              child: CustomNetworkImage(
-                                background: widget.me
-                                    ? Theme.of(context)
-                                        .primaryColor
-                                        .withOpacity(0.25)
-                                    : null,
-                                imageSource: widget.message.replaceFirst(
-                                    'uploadimage', 'upload/image'),
-                                height: 250,
-                                width: 240,
+                    child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Visibility(
+                        visible: widget.isAdmin,
+                        child: Text(
+                          (widget.username ?? S.current.admin) + ' ● ' + (widget.me ? S.current.me : S.current.admin),
+                          style: TextStyle(color: Colors.deepPurple),
+                        )),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      textDirection: reg.hasMatch(widget.message)
+                          ? m.TextDirection.rtl
+                          : m.TextDirection.ltr,
+                      children: [
+                        widget.message.contains(Urls.IMAGES_ROOT)
+                            ? ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: CustomNetworkImage(
+                                  background: widget.me
+                                      ? Theme.of(context)
+                                          .primaryColor
+                                          .withOpacity(0.25)
+                                      : null,
+                                  imageSource: widget.message.replaceFirst(
+                                      'uploadimage', 'upload/image'),
+                                  height: 250,
+                                  width: 240,
+                                ),
+                              )
+                            : SelectableLinkify(
+                                onOpen: (link) async {
+                                  if (await canLaunch(link.url)) {
+                                    await launch(link.url);
+                                  } else {
+                                    Fluttertoast.showToast(msg: 'Invalid link');
+                                  }
+                                },
+                                text: '${widget.message}',
+                                textAlign: reg.hasMatch(widget.message)
+                                    ? TextAlign.right
+                                    : TextAlign.left,
+                                style: TextStyle(fontWeight: FontWeight.w400),
                               ),
-                            )
-                          : SelectableLinkify(
-                              onOpen: (link) async {
-                                if (await canLaunch(link.url)) {
-                                  await launch(link.url);
-                                } else {
-                                  Fluttertoast.showToast(msg: 'Invalid link');
-                                }
-                              },
-                              text: '${widget.message}',
-                              textAlign: reg.hasMatch(widget.message)
-                                  ? TextAlign.right
-                                  : TextAlign.left,
-                              style: TextStyle(fontWeight: FontWeight.w400),
-                            ),
-                    ],
-                  ),
-                ),
+                      ],
+                    ),
+                  ],
+                )),
               ),
             ),
             Padding(
