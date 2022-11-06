@@ -1175,6 +1175,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "unAssignOrder":
             MessageLookupByLibrary.simpleMessage("إلغاء اسناد طلب "),
         "unPaidOrder": MessageLookupByLibrary.simpleMessage("طلبات غير مدفوعة"),
+        "unableToDeletePaymentsExist": MessageLookupByLibrary.simpleMessage(
+            "يوجد دفعات تابعة للاشتراك المطلوب حذفه, ولذلك لا يمكن حذفه"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "لم يتم الموافقة على اشتراكك من قبل الإدارة يمكنك التواصل معنا للحصول على المزيد من التفاصيل"),
         "unavailable": MessageLookupByLibrary.simpleMessage("غير معروفة"),

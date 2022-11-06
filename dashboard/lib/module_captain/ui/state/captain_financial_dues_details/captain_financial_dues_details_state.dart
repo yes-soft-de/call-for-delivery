@@ -153,16 +153,16 @@ class CaptainFinancialDuesDetailsStateLoaded extends States {
               )),
         ),
         Column(
-          children: getPayments(),
+          children: getPayments(context),
         )
       ],
     );
   }
 
-  Widget CustomTile(IconData icon, String text, num? value,
+  Widget CustomTile(
+      BuildContext context, IconData icon, String text, num? value,
       {String? stringValue, bool? advancedValue, Color? backGround}) {
     bool currency = S.current.countOrdersDelivered != text;
-    var context = screenState.context;
     return Visibility(
       visible: value != null || stringValue != null,
       child: ScalingWidget(
@@ -206,20 +206,28 @@ class CaptainFinancialDuesDetailsStateLoaded extends States {
     return Flex(
       direction: Axis.vertical,
       children: [
-        CustomTile(
-            Icons.account_balance_rounded, S.current.profit, model.amount),
-        CustomTile(FontAwesomeIcons.store, S.current.amountForStore,
+        CustomTile(context, Icons.account_balance_rounded, S.current.profit,
+            model.amount),
+        CustomTile(context, FontAwesomeIcons.store, S.current.amountForStore,
             model.amountForStore),
-        CustomTile(FontAwesomeIcons.store, S.current.financeStoreStatus, null,
+        CustomTile(
+            context, FontAwesomeIcons.store, S.current.financeStoreStatus, null,
             stringValue: FinanceHelper.getStatusString(
                 model.statusAmountForStore.toInt()),
             backGround: FinanceHelper.getFinanceStatusColor(
                 model.statusAmountForStore.toInt())),
-        CustomTile(FontAwesomeIcons.coins, S.current.sumCaptainFinancialDues,
+        CustomTile(
+            context,
+            FontAwesomeIcons.coins,
+            S.current.sumCaptainFinancialDues,
             model.total.sumCaptainFinancialDues),
-        CustomTile(Icons.payments, S.current.sumPaymentsToCaptainFinance,
+        CustomTile(
+            context,
+            Icons.payments,
+            S.current.sumPaymentsToCaptainFinance,
             model.total.sumPaymentsToCaptain),
-        CustomTile(FontAwesomeIcons.circle, S.current.financeStatus, null,
+        CustomTile(
+            context, FontAwesomeIcons.circle, S.current.financeStatus, null,
             stringValue: FinanceHelper.getStatusString(model.status.toInt()),
             backGround:
                 FinanceHelper.getFinanceStatusColor(model.status.toInt())),
@@ -229,15 +237,14 @@ class CaptainFinancialDuesDetailsStateLoaded extends States {
             thickness: 2,
           ),
         ),
-        CustomTile(
-            FontAwesomeIcons.creditCard, S.current.total, model.total.total,
+        CustomTile(context, FontAwesomeIcons.creditCard, S.current.total,
+            model.total.total,
             advancedValue: model.total.advancePayment),
       ],
     );
   }
 
-  List<Widget> getPayments() {
-    var context = screenState.context;
+  List<Widget> getPayments(context) {
     List<Widget> widgets = [];
     model.paymentsFromCompany.forEach((element) {
       widgets.add(Padding(

@@ -17,11 +17,10 @@ class OrderLogsLoadedState extends States {
 
   @override
   Widget getUI(BuildContext context) {
-    return CustomListView.custom(children: getOrders());
+    return CustomListView.custom(children: getOrders(context));
   }
 
-  List<Widget> getOrders() {
-    var context = screenState.context;
+  List<Widget> getOrders(BuildContext context) {
     List<Widget> widgets = [];
     for (var element in orders) {
       widgets.add(Padding(

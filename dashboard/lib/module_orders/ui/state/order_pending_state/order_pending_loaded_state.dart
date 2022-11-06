@@ -26,17 +26,16 @@ class OrderPendingLoadedState extends States {
 
   @override
   Widget getUI(BuildContext context) {
-    return CustomListView.custom(children: getOrders());
+    return CustomListView.custom(children: getOrders(context));
   }
 
   List<List<OrderModel>> ordersIndex = [];
-  List<Widget> getOrders() {
+  List<Widget> getOrders(context) {
     List<int> countsOrder = [
       orders.pendingOrdersCount,
       orders.notDeliveredOrdersCount,
       orders.hiddenOrdersCount,
     ];
-    var context = screenState.context;
     List<Widget> widgets = [];
     widgets.add(Padding(
       padding: const EdgeInsets.all(8.0),

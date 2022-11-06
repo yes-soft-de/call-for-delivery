@@ -70,7 +70,7 @@ class StoreSubscriptionsFinanceDetailsScreenState
             title: S.current.financeSubscriptionDetails,
             actions: [
               Visibility(
-                visible: model.isCurrent || model.status == 'date finished',
+                visible: model.isCurrent || (model.status == 'active' || model.status == 'cars finished'),
                 child: CustomC4dAppBar.actionIcon(context, onTap: () {
                   showDialog(
                       context: context,

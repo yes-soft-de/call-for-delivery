@@ -819,5 +819,6 @@
     "distanceProvidedByCaptain": "Distance provided by captain",
     "storeBranchToClientDistance": "Distance from branch to client",
     "successRenewNewPlan": "Subscription with new plan was a success",
-    "subscriptionDeletedSuccessfully": "Subscription deleted successfully"
+    "subscriptionDeletedSuccessfully": "Subscription deleted successfully",
+    "unableToDeletePaymentsExist": "Unable to delete this subscription , It has a recorded payments"
 }

@@ -1183,6 +1183,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "unAssignOrder":
             MessageLookupByLibrary.simpleMessage("Un assign order"),
         "unPaidOrder": MessageLookupByLibrary.simpleMessage("Unpaid Order"),
+        "unableToDeletePaymentsExist": MessageLookupByLibrary.simpleMessage(
+            "Unable to delete this subscription , It has a recorded payments"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "Your request not accepted from administration you can contact us to get info"),
         "unavailable": MessageLookupByLibrary.simpleMessage("Unavailable"),

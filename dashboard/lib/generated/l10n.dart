@@ -8249,6 +8249,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Unable to delete this subscription , It has a recorded payments`
+  String get unableToDeletePaymentsExist {
+    return Intl.message(
+      'Unable to delete this subscription , It has a recorded payments',
+      name: 'unableToDeletePaymentsExist',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

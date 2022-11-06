@@ -16,11 +16,10 @@ class CaptainFinancialDuesStateLoaded extends States {
       : super(screenState);
   @override
   Widget getUI(BuildContext context) {
-    return CustomListView.custom(children: getDues());
+    return CustomListView.custom(children: getDues(context));
   }
 
-  List<Widget> getDues() {
-    var context = screenState.context;
+  List<Widget> getDues(context) {
     List<Widget> widgets = [];
     dues?.forEach((element) {
       widgets.add(Padding(
@@ -61,7 +60,7 @@ class CaptainFinancialDuesStateLoaded extends States {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Expanded(
-                              child: verticalBubble(
+                              child: verticalBubble(context,
                                   subtitle: element.startDate,
                                   title: S.current.cycleStart)),
                           Padding(
@@ -73,7 +72,7 @@ class CaptainFinancialDuesStateLoaded extends States {
                             ),
                           ),
                           Expanded(
-                              child: verticalBubble(
+                              child: verticalBubble(context,
                                   title: S.current.cycleEnd,
                                   subtitle: element.endDate)),
                         ],
@@ -86,7 +85,7 @@ class CaptainFinancialDuesStateLoaded extends States {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Expanded(
-                              child: verticalBubble(
+                              child: verticalBubble(context,
                                   title: S.current.sumCaptainFinancialDues,
                                   subtitle: FixedNumber.getFixedNumber(element
                                           .total.sumCaptainFinancialDues) +
@@ -100,7 +99,7 @@ class CaptainFinancialDuesStateLoaded extends States {
                             ),
                           ),
                           Expanded(
-                              child: verticalBubble(
+                              child: verticalBubble(context,
                                   title: S.current.sumPaymentsToCaptainFinance,
                                   subtitle: FixedNumber.getFixedNumber(
                                           element.total.sumPaymentsToCaptain) +
@@ -114,7 +113,7 @@ class CaptainFinancialDuesStateLoaded extends States {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Expanded(
-                            child: verticalBubble(
+                            child: verticalBubble(context,
                                 title: S.current.total,
                                 subtitle: FixedNumber.getFixedNumber(
                                         element.total.total) +
@@ -135,6 +134,7 @@ class CaptainFinancialDuesStateLoaded extends States {
                           ),
                           Expanded(
                               child: verticalBubble(
+                            context,
                             title: S.current.financeStatus,
                             subtitle: FinanceHelper.getStatusString(
                                 element.status.toInt()),
@@ -156,11 +156,10 @@ class CaptainFinancialDuesStateLoaded extends States {
     return widgets;
   }
 
-  Widget getVerticalTile(
+  Widget getVerticalTile(BuildContext context,
       {required String title,
       required String subtitle,
       Color? backgroundColor}) {
-    var context = screenState.context;
     return Column(
       children: [
         Text(title),
@@ -178,12 +177,11 @@ class CaptainFinancialDuesStateLoaded extends States {
     );
   }
 
-  Widget verticalBubble(
+  Widget verticalBubble(BuildContext context,
       {required String title,
       required String subtitle,
       Color? background,
       bool subtitleText = false}) {
-    var context = screenState.context;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),

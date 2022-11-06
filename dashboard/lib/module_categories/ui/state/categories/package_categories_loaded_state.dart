@@ -49,14 +49,13 @@ class CategoriesLoadedState extends States {
       child: Center(
         child: Container(
           constraints: BoxConstraints(maxWidth: 600),
-          child: CustomListView.custom(children: getCategories()),
+          child: CustomListView.custom(children: getCategories(context)),
         ),
       ),
     );
   }
 
-  List<Widget> getCategories() {
-    var context = screenState.context;
+  List<Widget> getCategories(context) {
     List<Widget> widgets = [];
     if (model == null) {
       return widgets;
@@ -87,8 +86,8 @@ class CategoriesLoadedState extends States {
           onActivate: (status) {
             element.status = status;
             screenState.refresh();
-            screenState.enableCategories(ActivePackageRequest(
-                id: element.id, status: status ? 1 : 0));
+            screenState.enableCategories(
+                ActivePackageRequest(id: element.id, status: status ? 1 : 0));
           },
         ),
       );

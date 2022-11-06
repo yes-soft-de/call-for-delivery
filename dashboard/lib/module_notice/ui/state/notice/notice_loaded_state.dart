@@ -48,14 +48,16 @@ class NoticeLoadedState extends States {
         child: Container(
           constraints: BoxConstraints(maxWidth: 600),
           child: CustomListView.custom(
-              children: getCategories(screenState.currentIndex)),
+              children: getCategories(
+            screenState.currentIndex,
+            context,
+          )),
         ),
       ),
     );
   }
 
-  List<Widget> getCategories(int currentIndex) {
-    var context = screenState.context;
+  List<Widget> getCategories(int currentIndex, context) {
     List<Widget> widgets = [];
     if (model == null) {
       return widgets;

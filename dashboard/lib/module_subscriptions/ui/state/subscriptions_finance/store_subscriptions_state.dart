@@ -16,12 +16,10 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
       : super(screenState);
   @override
   Widget getUI(BuildContext context) {
-    return CustomListView.custom(children: getDues());
+    return CustomListView.custom(children: getDues(context));
   }
 
-  List<Widget> getDues() {
-    print('dsad');
-    var context = screenState.context;
+  List<Widget> getDues(context) {
     List<Widget> widgets = [];
     widgets.add(Padding(
       padding: const EdgeInsets.all(8.0),
@@ -90,7 +88,7 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Expanded(
-                              child: verticalBubble(
+                              child: verticalBubble(context,
                                   subtitle: element.startDate,
                                   title: S.current.subscriptionDate)),
                           Padding(
@@ -102,7 +100,7 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
                             ),
                           ),
                           Expanded(
-                              child: verticalBubble(
+                              child: verticalBubble(context,
                                   title: S.current.expirationData,
                                   subtitle: element.endDate)),
                         ],
@@ -115,7 +113,7 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Expanded(
-                              child: verticalBubble(
+                              child: verticalBubble(context,
                                   title: S.current.requiredToPay,
                                   subtitle: FixedNumber.getFixedNumber(
                                           element.total.requiredToPay) +
@@ -129,7 +127,7 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
                             ),
                           ),
                           Expanded(
-                              child: verticalBubble(
+                              child: verticalBubble(context,
                                   title: S.current.sumPayments,
                                   subtitle: FixedNumber.getFixedNumber(
                                           element.total.sumPayments) +
@@ -143,7 +141,7 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Expanded(
-                            child: verticalBubble(
+                            child: verticalBubble(context,
                                 title: S.current.leftToPay,
                                 subtitle: FixedNumber.getFixedNumber(
                                         element.total.total) +
@@ -164,6 +162,7 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
                           ),
                           Expanded(
                               child: verticalBubble(
+                            context,
                             title: S.current.subscriptionStatus,
                             subtitle:
                                 SubscriptionsStatusHelper.getStatusMessage(
@@ -188,11 +187,10 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
     return widgets;
   }
 
-  Widget getVerticalTile(
+  Widget getVerticalTile(BuildContext context,
       {required String title,
       required String subtitle,
       Color? backgroundColor}) {
-    var context = screenState.context;
     return Column(
       children: [
         Text(title),
@@ -210,12 +208,11 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
     );
   }
 
-  Widget verticalBubble(
+  Widget verticalBubble(BuildContext context,
       {required String title,
       required String subtitle,
       Color? background,
       bool subtitleText = false}) {
-    var context = screenState.context;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),

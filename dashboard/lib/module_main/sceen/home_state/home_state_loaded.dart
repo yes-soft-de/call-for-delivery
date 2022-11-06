@@ -46,9 +46,9 @@ class HomeLoadedState extends States {
             alignment: WrapAlignment.center,
             direction: Axis.horizontal,
             children: [
-              widgetTile(model?.pendingOrdersCount.toString() ?? '',
+              widgetTile(context, model?.pendingOrdersCount.toString() ?? '',
                   S.current.pending),
-              widgetTile(model?.ongoingOrdersCount.toString() ?? '',
+              widgetTile(context, model?.ongoingOrdersCount.toString() ?? '',
                   S.current.countOngoingOrders),
               Padding(
                 padding: const EdgeInsets.only(right: 32, left: 32),
@@ -57,7 +57,7 @@ class HomeLoadedState extends States {
                   color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
                 ),
               ),
-              widgetTile(model?.allOrdersCount.toString() ?? '',
+              widgetTile(context, model?.allOrdersCount.toString() ?? '',
                   S.current.allOrdersCount),
               Padding(
                 padding: const EdgeInsets.only(right: 32, left: 32),
@@ -66,9 +66,12 @@ class HomeLoadedState extends States {
                   color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
                 ),
               ),
-              widgetTile(model?.todayDeliveredOrdersCount.toString() ?? '',
+              widgetTile(
+                  context,
+                  model?.todayDeliveredOrdersCount.toString() ?? '',
                   S.current.last24CountOrder),
               widgetTile(
+                  context,
                   model?.previousWeekDeliveredOrdersCount.toString() ?? '',
                   S.current.last7WeekOrders),
               Padding(
@@ -78,9 +81,9 @@ class HomeLoadedState extends States {
                   color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
                 ),
               ),
-              widgetTile(model?.inactiveStoresCount.toString() ?? '',
+              widgetTile(context, model?.inactiveStoresCount.toString() ?? '',
                   S.current.storesInActive),
-              widgetTile(model?.activeStoresCount.toString() ?? '',
+              widgetTile(context, model?.activeStoresCount.toString() ?? '',
                   S.current.storesActive),
               Padding(
                 padding: const EdgeInsets.only(right: 32, left: 32),
@@ -89,17 +92,16 @@ class HomeLoadedState extends States {
                   color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
                 ),
               ),
-              widgetTile(model?.inactiveCaptainsCount.toString() ?? '',
+              widgetTile(context, model?.inactiveCaptainsCount.toString() ?? '',
                   S.current.inActiveCaptains),
-              widgetTile(model?.activeCaptainsCount.toString() ?? '',
+              widgetTile(context, model?.activeCaptainsCount.toString() ?? '',
                   S.current.captains),
             ]),
       ),
     );
   }
 
-  Widget widgetTile(String count, String title) {
-    var context = screenState.context;
+  Widget widgetTile(BuildContext context, String count, String title) {
     return Container(
       width: !ScreenType.isDesktop(screenState.context)
           ? MediaQuery.of(screenState.context).size.width * 0.5

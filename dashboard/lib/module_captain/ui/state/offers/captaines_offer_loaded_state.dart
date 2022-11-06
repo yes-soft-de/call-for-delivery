@@ -55,7 +55,7 @@ class CaptainOffersLoadedState extends States {
                 GridView(
                     padding: EdgeInsets.all(4),
                     physics: NeverScrollableScrollPhysics(),
-                    children: getCategories(),
+                    children: getCategories(context),
                     shrinkWrap: true,
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         crossAxisCount: 2,
@@ -73,8 +73,7 @@ class CaptainOffersLoadedState extends States {
     );
   }
 
-  List<Widget> getCategories() {
-    var context = screenState.context;
+  List<Widget> getCategories(context) {
     List<Widget> widgets = [];
     if (model == null) {
       return widgets;
