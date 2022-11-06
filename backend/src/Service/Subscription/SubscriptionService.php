@@ -37,14 +37,18 @@ class SubscriptionService
     private SubscriptionCaptainOfferService $subscriptionCaptainOfferService;
     private StoreOwnerProfileService $storeOwnerProfileService;
     private StoreOwnerPaymentService $storeOwnerPaymentService;
+    private SubscriptionNotificationService $subscriptionNotificationService;
 
-    public function __construct(AutoMapping $autoMapping, SubscriptionManager $subscriptionManager, SubscriptionCaptainOfferService $subscriptionCaptainOfferService, StoreOwnerProfileService $storeOwnerProfileService, StoreOwnerPaymentService $storeOwnerPaymentService)
+    public function __construct(AutoMapping $autoMapping, SubscriptionManager $subscriptionManager, SubscriptionCaptainOfferService $subscriptionCaptainOfferService,
+                                StoreOwnerProfileService $storeOwnerProfileService, StoreOwnerPaymentService $storeOwnerPaymentService,
+                                SubscriptionNotificationService $subscriptionNotificationService)
     {
         $this->autoMapping = $autoMapping;
         $this->subscriptionManager = $subscriptionManager;
         $this->subscriptionCaptainOfferService = $subscriptionCaptainOfferService;
         $this->storeOwnerProfileService = $storeOwnerProfileService;
         $this->storeOwnerPaymentService = $storeOwnerPaymentService;
+        $this->subscriptionNotificationService = $subscriptionNotificationService;
     }
     
     public function createSubscription(SubscriptionCreateRequest $request): SubscriptionResponse|SubscriptionErrorResponse
@@ -290,24 +294,33 @@ class SubscriptionService
         if($subscription) {
             $countOrders = $this->getCountOngoingOrders($subscription['id']);
 
+            // save current remaining cars for sending notification to store or not
+            $currentRemainingCars = $subscription['remainingCars'];
+
            if($subscription['remainingCars'] >= 0 ) {
-           
-                $remainingCars =  $subscription['packageCarCount'] - $countOrders;
-                
-                //Is there subscription captain offer and active?
-                if($subscription['subscriptionCaptainOfferId'] && $subscription['subscriptionCaptainOfferCarStatus'] === SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_ACTIVE) {
-                   
-                    $remainingCars = $this->captainOfferExpired($subscription, $remainingCars);
-                }
 
-                $currentSubscription = $this->subscriptionManager->updateRemainingCars($subscription['id'], $remainingCars);
+               $remainingCars = $subscription['packageCarCount'] - $countOrders;
 
-                if($currentSubscription->getRemainingCars() <= 0 ) {
-                
-                    return SubscriptionConstant::CARS_FINISHED;
-                }
-            
-                return SubscriptionConstant::SUBSCRIPTION_OK;
+               //Is there subscription captain offer and active?
+               if ($subscription['subscriptionCaptainOfferId'] && $subscription['subscriptionCaptainOfferCarStatus'] === SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_ACTIVE) {
+
+                   $remainingCars = $this->captainOfferExpired($subscription, $remainingCars);
+               }
+
+               // save new remaining cars for sending notification to store or not
+               $newRemainingCars = $remainingCars;
+
+               $currentSubscription = $this->subscriptionManager->updateRemainingCars($subscription['id'], $remainingCars);
+
+               // Now check if we have to inform the store there is new available car/s or not
+               $this->checkRemainingCarsAndInformStore($currentRemainingCars, $newRemainingCars, $subscription);
+
+               if ($currentSubscription->getRemainingCars() <= 0) {
+
+                   return SubscriptionConstant::CARS_FINISHED;
+               }
+
+               return SubscriptionConstant::SUBSCRIPTION_OK;
            }
 
           return SubscriptionConstant::CARS_FINISHED;
@@ -864,6 +877,17 @@ class SubscriptionService
         }
 
         return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
+    }
+
+    public function checkRemainingCarsAndInformStore(int $currentRemainingCars, int $newRemainingCars, $subscription): void
+    {
+        $subscriptionEntity = $this->getSubscriptionEntityById($subscription['id']);
+
+        if ($subscriptionEntity) {
+            // Now check if we have to inform the store there is new available car/s or not
+            $this->subscriptionNotificationService->checkRemainingCarsAndInformStore($currentRemainingCars, $newRemainingCars,
+                $subscriptionEntity->getStoreOwner()->getStoreOwnerId());
+        }
     }
 }
  
