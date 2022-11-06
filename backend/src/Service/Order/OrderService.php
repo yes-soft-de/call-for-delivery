@@ -1376,7 +1376,7 @@ class OrderService
             //       }
             // }
 
-            // Check if there are any remaining cars
+            // Check if there are any remaining cars in order to hide or show order
             $request->setIsHide($order['isHide']);
 
             $checkRemainingCarsResult = $this->subscriptionService->checkRemainingCarsOnlyByOrderId($request->getId());
@@ -1384,6 +1384,9 @@ class OrderService
             if ($checkRemainingCarsResult !== SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED) {
                 if ($checkRemainingCarsResult <= 0) {
                     $request->setIsHide(OrderIsHideConstant::ORDER_HIDE_TEMPORARILY);
+
+                } else {
+                    $request->setIsHide(OrderIsHideConstant::ORDER_SHOW);
                 }
             }
 

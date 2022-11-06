@@ -422,7 +422,7 @@ class AdminOrderService
                 $request->setDeliveryDate((new DateTime('+ 3 minutes'))->format('Y-m-d H:i:s'));
             }
 
-            // Check if there are any remaining cars
+            // Check if there are any remaining cars in order to hide or show order
             $request->setIsHide($order['isHide']);
 
             $checkRemainingCarsResult = $this->subscriptionService->checkRemainingCarsOnlyByOrderId($request->getId());
@@ -430,6 +430,9 @@ class AdminOrderService
             if ($checkRemainingCarsResult !== SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED) {
                 if ($checkRemainingCarsResult <= 0) {
                     $request->setIsHide(OrderIsHideConstant::ORDER_HIDE_TEMPORARILY);
+
+                } else {
+                    $request->setIsHide(OrderIsHideConstant::ORDER_SHOW);
                 }
             }
 
