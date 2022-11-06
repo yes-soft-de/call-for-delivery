@@ -42,6 +42,11 @@ class UpdateOrderByAdminRequest
      * @var bool|null
      */
     private $orderIsMain;
+
+    /**
+     * @var int|null
+     */
+    private $isHide;
     
     /**
      * Get the value of id
@@ -261,5 +266,10 @@ class UpdateOrderByAdminRequest
         $this->branch = $branch;
 
         return $this;
+    }
+
+    public function setIsHide(?int $isHide): void
+    {
+        $this->isHide = $isHide;
     }
 }
