@@ -5,6 +5,7 @@ namespace App\Service\Main;
 use App\AutoMapping;
 use App\Constant\Main\BackendHealthStatusConstant;
 use App\Constant\Notification\NotificationConstant;
+use App\Constant\Notification\NotificationTokenConstant;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Entity\OrderEntity;
@@ -77,7 +78,8 @@ class MainService
             }
 
             $this->notificationLocalService->createNotificationLocalBySuperAdmin($orderResult->getStoreOwner()->getStoreOwnerId(), NotificationConstant::UPDATE_ORDER_TITLE,
-                NotificationConstant::UPDATE_ORDER_SUCCESS, $orderResult->getState(), $captainId, $orderResult->getId());
+                NotificationConstant::UPDATE_ORDER_SUCCESS, $orderResult->getState(), NotificationTokenConstant::APP_TYPE_STORE,
+                $captainId, $orderResult->getId());
 
             return $this->autoMapping->map(OrderEntity::class, OrderStateUpdateBySuperAdminResponse::class, $orderResult);
         }

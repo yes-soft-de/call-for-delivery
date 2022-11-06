@@ -3,6 +3,7 @@
 namespace App\Service\Notification;
 
 use App\AutoMapping;
+use App\Constant\Notification\NotificationTokenConstant;
 use App\Entity\NotificationLocalEntity;
 use App\Manager\Notification\NotificationLocalManager;
 use App\Request\Notification\NotificationLocalCreateRequest;
@@ -21,7 +22,7 @@ class NotificationLocalService
         $this->notificationLocalManager = $notificationLocalManager;
     }
 
-    public function createNotificationLocal(int $userId, string $title, string $text, int $orderId = null): NotificationLocalResponse
+    public function createNotificationLocal(int $userId, string $title, string $text, int $appType, int $orderId = null): NotificationLocalResponse
     {
         $request = new NotificationLocalCreateRequest();
 
@@ -33,13 +34,15 @@ class NotificationLocalService
         $request->setUserId($userId);
         $request->setTitle($title);
         $request->setMessage($message);
+        $request->setAppType($appType);
 
         $item = $this->notificationLocalManager->createNotificationLocal($request);
 
         return $this->autoMapping->map(NotificationLocalEntity::class, NotificationLocalResponse::class, $item);
     }
 
-    public function createPriceOfferNotificationLocal(int $userId, string $title, string $text, int $orderId, int $bidDetailsId, int $priceOfferId): NotificationLocalResponse
+    public function createPriceOfferNotificationLocal(int $userId, string $title, string $text, int $orderId, int $bidDetailsId,
+                                                      int $priceOfferId, int $appType): NotificationLocalResponse
     {
         $request = new NotificationLocalCreateRequest();
 
@@ -53,13 +56,15 @@ class NotificationLocalService
         $request->setUserId($userId);
         $request->setTitle($title);
         $request->setMessage($message);
+        $request->setAppType($appType);
 
         $item = $this->notificationLocalManager->createNotificationLocal($request);
 
         return $this->autoMapping->map(NotificationLocalEntity::class, NotificationLocalResponse::class, $item);
     }
 
-    public function createNotificationLocalBySuperAdmin(int $userId, string $title, string $text, string $orderState, int $captainUserId = null, int $orderId = null): NotificationLocalResponse
+    public function createNotificationLocalBySuperAdmin(int $userId, string $title, string $text, string $orderState,
+                                                        int $appType, int $captainUserId = null, int $orderId = null): NotificationLocalResponse
     {
         $request = new NotificationLocalCreateRequest();
 
@@ -73,6 +78,7 @@ class NotificationLocalService
         $request->setUserId($userId);
         $request->setTitle($title);
         $request->setMessage($message);
+        $request->setAppType($appType);
 
         $item = $this->notificationLocalManager->createNotificationLocal($request);
 
@@ -126,7 +132,9 @@ class NotificationLocalService
     }
     
     public function createNotificationLocalForOrderState(int $userId, string $title, string $state, int $orderId = null, string $userType, int $captainProfileId = null): NotificationLocalResponse
-    {       
+    {
+        $appType = 0;
+
         if ($userType === NotificationConstant::STORE) {
             $text = $this->getOrderStateForStore($state);
             $message = [
@@ -135,12 +143,16 @@ class NotificationLocalService
                 "captainUserId"=> $captainProfileId
             ];
 
+            $appType = NotificationTokenConstant::APP_TYPE_STORE;
+
         } elseif ($userType === NotificationConstant::CAPTAIN) {
             $text = $this->getOrderStateForCaptain($state);
             $message = [
                 "text" => $text,
                 "orderId"=> $orderId
             ];
+
+            $appType = NotificationTokenConstant::APP_TYPE_CAPTAIN;
 
         } elseif ($userType === NotificationConstant::SUPPLIER) {
             $text = $this->getOrderStateForSupplier($state);
@@ -149,22 +161,25 @@ class NotificationLocalService
                 "text" => $text,
                 "orderId"=> $orderId
             ];
+
+            $appType = NotificationTokenConstant::APP_TYPE_SUPPLIER;
         }
 
-        $request = $this->createNotificationLocalCreateRequest($userId, $title, $message);
+        $request = $this->createNotificationLocalCreateRequest($userId, $title, $message, $appType);
        
         $notificationLocal = $this->notificationLocalManager->createNotificationLocal($request);
 
         return $this->autoMapping->map(NotificationLocalEntity::class, NotificationLocalResponse::class, $notificationLocal);
     }
     
-    public function createNotificationLocalCreateRequest(int $userId, string $title, array $message): NotificationLocalCreateRequest
+    public function createNotificationLocalCreateRequest(int $userId, string $title, array $message, int $appType): NotificationLocalCreateRequest
     {
         $request = new NotificationLocalCreateRequest();
 
         $request->setUserId($userId);
         $request->setTitle($title);
         $request->setMessage($message);
+        $request->setAppType($appType);
         
         return $request;
     }

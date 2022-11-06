@@ -5,6 +5,7 @@ namespace App\Service\PriceOffer;
 use App\AutoMapping;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Notification\NotificationFirebaseConstant;
+use App\Constant\Notification\NotificationTokenConstant;
 use App\Constant\PriceOffer\PriceOfferStatusConstant;
 use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\PriceOfferEntity;
@@ -124,8 +125,9 @@ class PriceOfferService
     public function createPriceOfferNotificationLocal(PriceOfferEntity $priceOfferEntity)
     {
         $this->notificationLocalService->createPriceOfferNotificationLocal($priceOfferEntity->getBidDetails()->getOrderId()->getStoreOwner()->getStoreOwnerId(),
-            NotificationConstant::NEW_PRICE_OFFER, NotificationConstant::NEW_PRICE_OFFER_ADDED, $priceOfferEntity->getBidDetails()->getOrderId()->getId(),
-            $priceOfferEntity->getBidDetails()->getId(), $priceOfferEntity->getId());
+            NotificationConstant::NEW_PRICE_OFFER, NotificationConstant::NEW_PRICE_OFFER_ADDED,
+            $priceOfferEntity->getBidDetails()->getOrderId()->getId(), $priceOfferEntity->getBidDetails()->getId(),
+            $priceOfferEntity->getId(), NotificationTokenConstant::APP_TYPE_SUPPLIER);
     }
 
     // handle the notification about price offer status which will be sent to the supplier
@@ -165,18 +167,24 @@ class PriceOfferService
             foreach ($priceOfferEntity->getBidDetails()->getPriceOfferEntities()->toArray() as $priceOffer) {
                 if ($priceOffer->getId() !== $priceOfferEntity->getId()) {
                     // this is not the accepted price offer, so send a 'refused' notification
-                    $this->notificationLocalService->createPriceOfferNotificationLocal($priceOffer->getSupplierProfile()->getUser()->getId(), NotificationConstant::PRICE_OFFER_STATUS_UPDATE,
-                        NotificationConstant::PRICE_OFFER_STATUS_REFUSED, $priceOffer->getBidDetails()->getOrderId()->getId(), $priceOffer->getBidDetails()->getId(), $priceOffer->getId());
+                    $this->notificationLocalService->createPriceOfferNotificationLocal($priceOffer->getSupplierProfile()->getUser()->getId(),
+                        NotificationConstant::PRICE_OFFER_STATUS_UPDATE, NotificationConstant::PRICE_OFFER_STATUS_REFUSED,
+                        $priceOffer->getBidDetails()->getOrderId()->getId(), $priceOffer->getBidDetails()->getId(),
+                        $priceOffer->getId(), NotificationTokenConstant::APP_TYPE_SUPPLIER);
 
                 } else {
-                    $this->notificationLocalService->createPriceOfferNotificationLocal($priceOffer->getSupplierProfile()->getUser()->getId(), NotificationConstant::PRICE_OFFER_STATUS_UPDATE,
-                        NotificationConstant::PRICE_OFFER_STATUS_ACCEPTED, $priceOffer->getBidDetails()->getOrderId()->getId(), $priceOffer->getBidDetails()->getId(), $priceOffer->getId());
+                    $this->notificationLocalService->createPriceOfferNotificationLocal($priceOffer->getSupplierProfile()->getUser()->getId(),
+                        NotificationConstant::PRICE_OFFER_STATUS_UPDATE, NotificationConstant::PRICE_OFFER_STATUS_ACCEPTED,
+                        $priceOffer->getBidDetails()->getOrderId()->getId(), $priceOffer->getBidDetails()->getId(),
+                        $priceOffer->getId(), NotificationTokenConstant::APP_TYPE_SUPPLIER);
                 }
             }
 
         } elseif ($priceOfferEntity->getPriceOfferStatus() === PriceOfferStatusConstant::PRICE_OFFER_REFUSED_STATUS) {
-            $this->notificationLocalService->createPriceOfferNotificationLocal($priceOfferEntity->getSupplierProfile()->getUser()->getId(), NotificationConstant::PRICE_OFFER_STATUS_UPDATE,
-                NotificationConstant::PRICE_OFFER_STATUS_REFUSED, $priceOfferEntity->getBidDetails()->getOrderId()->getId(), $priceOfferEntity->getBidDetails()->getId(), $priceOfferEntity->getId());
+            $this->notificationLocalService->createPriceOfferNotificationLocal($priceOfferEntity->getSupplierProfile()->getUser()->getId(),
+                NotificationConstant::PRICE_OFFER_STATUS_UPDATE, NotificationConstant::PRICE_OFFER_STATUS_REFUSED,
+                $priceOfferEntity->getBidDetails()->getOrderId()->getId(), $priceOfferEntity->getBidDetails()->getId(),
+                $priceOfferEntity->getId(), NotificationTokenConstant::APP_TYPE_SUPPLIER);
         }
     }
 }

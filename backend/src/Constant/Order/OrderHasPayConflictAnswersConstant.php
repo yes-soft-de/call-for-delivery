@@ -2,7 +2,7 @@
 
 namespace App\Constant\Order;
 
-class OrderHasPayConflictAnswersConstant
+final class OrderHasPayConflictAnswersConstant
 {
     /**
      * Following constants are for the field hasPayConflictAnswers of an order

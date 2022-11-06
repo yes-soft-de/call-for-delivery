@@ -3,6 +3,7 @@
 namespace App\Manager\SuperAdmin\Order;
 
 use App\Constant\Order\OrderAmountCashConstant;
+use App\Constant\Order\OrderConflictedAnswersResolvedByConstant;
 use App\Constant\Order\OrderHasPayConflictAnswersConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Payment\PaymentConstant;
@@ -64,6 +65,8 @@ class SuperAdminOrderManager
                     } elseif (($orderEntity->getIsCashPaymentConfirmedByStore()) && ($orderEntity->getPaidToProvider())
                         && ($orderEntity->getIsCashPaymentConfirmedByStore() === $orderEntity->getPaidToProvider())) {
                         $orderEntity->setHasPayConflictAnswers(OrderHasPayConflictAnswersConstant::ORDER_DOES_NOT_HAVE_PAYMENT_CONFLICT_ANSWERS);
+
+                        $orderEntity->setConflictedAnswersResolvedBy(OrderConflictedAnswersResolvedByConstant::CONFLICTED_ANSWERS_RESOLVED_BY_COMMAND_CONST);
                     }
                 }
 

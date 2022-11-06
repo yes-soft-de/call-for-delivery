@@ -4,6 +4,7 @@ namespace App\Service\Order;
 
 use App\AutoMapping;
 use App\Constant\Eraser\EraserResultConstant;
+use App\Constant\Notification\NotificationTokenConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Constant\OrderLog\OrderLogActionTypeConstant;
 use App\Constant\OrderLog\OrderLogCreatedByUserTypeConstant;
@@ -150,7 +151,8 @@ class OrderService
         if ($order) {
             $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
 
-            $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE, NotificationConstant::CREATE_ORDER_SUCCESS, $order->getId());
+            $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE,
+                NotificationConstant::CREATE_ORDER_SUCCESS, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
 
             $this->orderTimeLineService->createOrderLogsRequest($order);
 
@@ -193,7 +195,8 @@ class OrderService
 
         if ($orderAndBidDetailsEntities[0]) {
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_BID_ORDER_TITLE,
-                NotificationConstant::CREATE_BID_ORDER_SUCCESS, $orderAndBidDetailsEntities[0]->getId());
+                NotificationConstant::CREATE_BID_ORDER_SUCCESS, NotificationTokenConstant::APP_TYPE_STORE,
+                $orderAndBidDetailsEntities[0]->getId());
 
             $this->orderTimeLineService->createOrderLogsRequest($orderAndBidDetailsEntities[0]);
             //create firebase notification to store
@@ -699,7 +702,8 @@ class OrderService
 
             if ($halfHourLaterTime < $nowDate) {
                 //create local notification to store
-                $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE, NotificationConstant::CANCEL_ORDER_ERROR_TIME, $order->getId());
+                $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
+                    NotificationConstant::CANCEL_ORDER_ERROR_TIME, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
 
                 //create firebase notification to store
                 try {
@@ -714,7 +718,8 @@ class OrderService
             } elseif ($order->getState() != OrderStateConstant::ORDER_STATE_PENDING) {
 
                 //create local notification to store
-                $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE, NotificationConstant::CANCEL_ORDER_ERROR_ACCEPTED, $order->getId());
+                $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
+                    NotificationConstant::CANCEL_ORDER_ERROR_ACCEPTED, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
 
                 //create firebase notification to store
                 try {
@@ -739,7 +744,8 @@ class OrderService
                     OrderLogActionTypeConstant::CANCEL_ORDER_BY_STORE_ACTION_CONST, null, null);
 
                 //create local notification to store
-                $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE, NotificationConstant::CANCEL_ORDER_SUCCESS, $order->getId());
+                $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
+                    NotificationConstant::CANCEL_ORDER_SUCCESS, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
 
                 //create firebase notification to store
                 try {
@@ -1066,10 +1072,12 @@ class OrderService
 
             $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
             //notification to store
-            $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_SUB_ORDER_TITLE, NotificationConstant::CREATE_SUB_ORDER_SUCCESS, $order->getId());
+            $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_SUB_ORDER_TITLE,
+                NotificationConstant::CREATE_SUB_ORDER_SUCCESS, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
             if ($primaryOrder->getCaptainId()) {
                 //notification to captain
-                $this->notificationLocalService->createNotificationLocal($primaryOrder->getCaptainId()->getCaptainId(), NotificationConstant::NEW_SUB_ORDER_TITLE, NotificationConstant::ADD_SUB_ORDER, $request->getPrimaryOrder()->getId());
+                $this->notificationLocalService->createNotificationLocal($primaryOrder->getCaptainId()->getCaptainId(), NotificationConstant::NEW_SUB_ORDER_TITLE,
+                    NotificationConstant::ADD_SUB_ORDER, NotificationTokenConstant::APP_TYPE_CAPTAIN, $request->getPrimaryOrder()->getId());
             }
 
             $this->orderTimeLineService->createOrderLogsRequest($order);
@@ -1110,13 +1118,17 @@ class OrderService
             OrderLogActionTypeConstant::UN_LINK_SUB_ORDER_BY_CAPTAIN_ACTION_CONST, null, null);
 
         //notification to store
-        $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NON_SUB_ORDER_TITLE, NotificationConstant::NON_SUB_ORDER_BY_CAPTAIN, $order->getId());
+        $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NON_SUB_ORDER_TITLE,
+            NotificationConstant::NON_SUB_ORDER_BY_CAPTAIN, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
+
         if ($isHide === OrderIsHideConstant::ORDER_HIDE_TEMPORARILY) {
-            $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::SUB_ORDER_ATTENTION, NotificationConstant::SUB_ORDER_HIDE_TEMPORARILY, $order->getId());
+            $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::SUB_ORDER_ATTENTION,
+                NotificationConstant::SUB_ORDER_HIDE_TEMPORARILY, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
         }
 
         //notification to captain
-        $this->notificationLocalService->createNotificationLocal($userId, NotificationConstant::NON_SUB_ORDER_TITLE, NotificationConstant::NON_SUB_ORDER, $order->getId());
+        $this->notificationLocalService->createNotificationLocal($userId, NotificationConstant::NON_SUB_ORDER_TITLE, NotificationConstant::NON_SUB_ORDER,
+            NotificationTokenConstant::APP_TYPE_CAPTAIN, $order->getId());
 
         try {
             // create firebase notification to store
@@ -1161,7 +1173,8 @@ class OrderService
                     null, null);
 
                 //notification to store
-                $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::SUB_ORDER_ATTENTION, NotificationConstant::SUB_ORDER_SHOW, $order->getId());
+                $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::SUB_ORDER_ATTENTION,
+                    NotificationConstant::SUB_ORDER_SHOW, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
                 try {
                     // create firebase notification to store
                     $this->notificationFirebaseService->notificationSubOrderForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), NotificationFirebaseConstant::SUB_ORDER_SHOW);
@@ -1189,7 +1202,8 @@ class OrderService
                         OrderLogActionTypeConstant::CANCEL_ORDER_BY_STORE_ACTION_CONST, null, null);
 
                     //create local notification to store
-                    $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE, NotificationConstant::CANCEL_ORDER_SUCCESS, $order->getId());
+                    $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
+                        NotificationConstant::CANCEL_ORDER_SUCCESS, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
 
                     //create firebase notification to store
                     try {
@@ -1231,7 +1245,8 @@ class OrderService
                 $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
                     OrderLogActionTypeConstant::RECYCLE_ORDER_BY_STORE_ACTION_CONST, null, null);
 
-                $this->notificationLocalService->createNotificationLocal($orderEntity->getStoreOwner()->getStoreOwnerId(), NotificationConstant::RECYCLING_ORDER_TITLE, NotificationConstant::RECYCLING_ORDER_SUCCESS, $order->getId());
+                $this->notificationLocalService->createNotificationLocal($orderEntity->getStoreOwner()->getStoreOwnerId(), NotificationConstant::RECYCLING_ORDER_TITLE,
+                    NotificationConstant::RECYCLING_ORDER_SUCCESS, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
 
                 //create firebase notification to store
 //                  try{
@@ -1275,10 +1290,12 @@ class OrderService
             OrderLogActionTypeConstant::UN_LINK_SUB_ORDER_BY_STORE_ACTION_CONST, null, null);
 
         //notification to store
-        $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NON_SUB_ORDER_TITLE, NotificationConstant::NON_SUB_ORDER, $order->getId());
+        $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NON_SUB_ORDER_TITLE,
+            NotificationConstant::NON_SUB_ORDER, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
 
         if ($isHide === OrderIsHideConstant::ORDER_HIDE_TEMPORARILY) {
-            $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::SUB_ORDER_ATTENTION, NotificationConstant::SUB_ORDER_HIDE_TEMPORARILY, $order->getId());
+            $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::SUB_ORDER_ATTENTION,
+                NotificationConstant::SUB_ORDER_HIDE_TEMPORARILY, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
         }
 
         if ($isHide = OrderIsHideConstant::ORDER_SHOW) {
@@ -1359,7 +1376,21 @@ class OrderService
             //       }
             // }
 
-            $order = $this->orderManager->orderUpdate($request, $order);
+            // Check if there are any remaining cars in order to hide or show order
+            $request->setIsHide($order['isHide']);
+
+            $checkRemainingCarsResult = $this->subscriptionService->checkRemainingCarsOnlyByOrderId($request->getId());
+
+            if ($checkRemainingCarsResult !== SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED) {
+                if ($checkRemainingCarsResult <= 0) {
+                    $request->setIsHide(OrderIsHideConstant::ORDER_HIDE_TEMPORARILY);
+
+                } else {
+                    $request->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+                }
+            }
+
+            $order = $this->orderManager->orderUpdate($request);
 
             if ($order) {
 

@@ -280,6 +280,7 @@ class CaptainManager
         $profile['stcPay'] = $items[0]['stcPay'];
         $profile['roomId'] = $items[0]['roomId'];
         $profile['status'] = $items[0]['status'];
+        $profile['address'] = $items[0]['address'];
 
         if (array_key_exists("completeAccountStatus", $items[0])) {
             $profile['completeAccountStatus'] = $items[0]['completeAccountStatus'];

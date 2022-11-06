@@ -66,6 +66,11 @@ class CaptainProfileUpdateRequest
      */
     private $drivingLicence;
 
+    /**
+     * @var string|null
+     */
+    private $address;
+
     public function getImage(): string
     {
         return $this->image;
