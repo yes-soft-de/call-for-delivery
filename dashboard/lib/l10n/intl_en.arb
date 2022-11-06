@@ -138,6 +138,7 @@
     "captainStartedDelivery": "Captain Started Delivery",
     "captainGotCash": "Captain Got Cash",
     "orderIsFinished": "Order is finished",
+    "ordersFinished": "Orders Finished",
     "orderIsCreated": "Order is created",
     "activityLog": "Activity Log",
     "saveSuccess": "Save Success",
@@ -784,7 +785,7 @@
     "currentSubscriptions": "Current subscriptions",
     "createSubscription": "Create subscription",
     "editSubscriptions": "Edit subscription",
-    "deleteFutureSubscription": "Future subscription",
+    "deleteFutureSubscription": "Delete future subscription",
     "notImplementedYet": "Not implemented yet",
     "expiredSubscriptionsFinanceHint": "Here you find all your expired subscriptions financial information with included all payments ",
     "packageExtend": "Package extend",
@@ -814,5 +815,9 @@
     "storeBranchToClientDistanceAndDestinationUpdated": "Store branch to client distance and client location updated",
     "cashPaymentConfirmed": "Cash payment confirmed",
     "payConflictAnswersResolved": "Payment conflict answer resolved",
-    "admin": "Admin"
+    "admin": "Admin",
+    "distanceProvidedByCaptain": "Distance provided by captain",
+    "storeBranchToClientDistance": "Distance from branch to client",
+    "successRenewNewPlan": "Subscription with new plan was a success",
+    "subscriptionDeletedSuccessfully": "Subscription deleted successfully"
 }

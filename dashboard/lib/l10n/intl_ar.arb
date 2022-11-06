@@ -138,6 +138,7 @@
     "captainStartedDelivery": "بدأ الكابتن التوصيل",
     "captainGotCash": "حصل الكابتن على الكاش",
     "orderIsFinished": "تم انهاء الطلب",
+    "ordersFinished": "تم انتهاء الطلبات",
     "orderIsCreated": "تم الانشاء",
     "activityLog": "سجل الاستخدام",
     "saveSuccess": "تم بنجاح",
@@ -784,7 +785,7 @@
     "endedSubscriptions": "الاشتراكات المنتهية",
     "createSubscription": "إنشاء اشتراك",
     "editSubscriptions": "تعديل الاشتراك",
-    "deleteFutureSubscription": "الاشتراكات المستقبلية",
+    "deleteFutureSubscription": " حذف الاشتراكات المستقبلية",
     "notImplementedYet": "لم يتم تفعيل هذه الميزة بعد",
     "expiredSubscriptionsFinanceHint": "هنا تجد قائمة بالاشتراكات المنتهية التي قام المتجر بالاشتراك فيها وتفاصيل عن النفقات التي يترتب عليها والدفعات التي تلقيها",
     "packageExtend": "تمديد اضطراري",
@@ -813,5 +814,10 @@
     "storeBranchToClientDistanceAndDestinationUpdated": "تم تحديث موقع العميل و المسافة الفاصلة بين موقع العميل والفرع التجاري للمتجر من قبل الادارة",
     "cashPaymentConfirmed": "تم حل التعارض بين إجابة المتجر وإجابة الكابتن من قبل الإدارة",
     "payConflictAnswersResolved":"تم حل التعارض بين الاجابات حول تسليم المبلغ النقدي من أجل الطلب",
-    "admin":"المدير"
+    "admin":"المدير",
+    "distanceProvidedByCaptain":"المسافة التي ادخلها الكابتن",
+    "storeBranchToClientDistance":"المسافة بين الاستلام والتسليم",
+    "successRenewNewPlan":"تم الاشتراك بباقة جديدة بنجاح",
+    "subscriptionDeletedSuccessfully":"تم حذف الاشتراك بنجاح"
+    
 }

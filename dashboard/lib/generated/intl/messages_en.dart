@@ -401,7 +401,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "Delete captain offer subscription successfully"),
         "deleteFutureSubscription":
-            MessageLookupByLibrary.simpleMessage("Future subscription"),
+            MessageLookupByLibrary.simpleMessage("Delete future subscription"),
         "deleteSuccess": MessageLookupByLibrary.simpleMessage(
             "the order has been deleted successfully"),
         "deliver": MessageLookupByLibrary.simpleMessage("Deliver"),
@@ -427,6 +427,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "directSupport": MessageLookupByLibrary.simpleMessage("Direct Support"),
         "discount": MessageLookupByLibrary.simpleMessage("Discount"),
         "distance": MessageLookupByLibrary.simpleMessage("Distance"),
+        "distanceProvidedByCaptain": MessageLookupByLibrary.simpleMessage(
+            "Distance provided by captain"),
         "distanceUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Distance updated successfully"),
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
@@ -789,6 +791,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Not answered by store"),
         "ordersExceedGeographicalRange": MessageLookupByLibrary.simpleMessage(
             "Orders exceed geographical range"),
+        "ordersFinished":
+            MessageLookupByLibrary.simpleMessage("Orders Finished"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("Orders / Month"),
         "ourBankAccountNumber":
             MessageLookupByLibrary.simpleMessage("Our Bank Account Number"),
@@ -1060,6 +1064,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeAvailable":
             MessageLookupByLibrary.simpleMessage("Store Availability"),
         "storeBalance": MessageLookupByLibrary.simpleMessage("Store Balance"),
+        "storeBranchToClientDistance": MessageLookupByLibrary.simpleMessage(
+            "Distance from branch to client"),
         "storeBranchToClientDistanceAndDestinationUpdated":
             MessageLookupByLibrary.simpleMessage(
                 "Store branch to client distance and client location updated"),
@@ -1098,6 +1104,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "subscriptionActive": MessageLookupByLibrary.simpleMessage("Activated"),
         "subscriptionDate":
             MessageLookupByLibrary.simpleMessage("Subscription Date"),
+        "subscriptionDeletedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Subscription deleted successfully"),
         "subscriptionInactive":
             MessageLookupByLibrary.simpleMessage("Subscription Inactive"),
         "subscriptionManagement":
@@ -1112,6 +1120,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Order created successfully"),
         "successRenew": MessageLookupByLibrary.simpleMessage(
             "Your subscription has been renewed"),
+        "successRenewNewPlan": MessageLookupByLibrary.simpleMessage(
+            "Subscription with new plan was a success"),
         "sum": MessageLookupByLibrary.simpleMessage("total"),
         "sumAmountStorOwnerDues":
             MessageLookupByLibrary.simpleMessage("Store Dues"),

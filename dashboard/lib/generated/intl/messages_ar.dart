@@ -397,7 +397,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deleteCaptainOfferSubscriptionSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم حذف عروض الكابتن بنجاح"),
         "deleteFutureSubscription":
-            MessageLookupByLibrary.simpleMessage("الاشتراكات المستقبلية"),
+            MessageLookupByLibrary.simpleMessage(" حذف الاشتراكات المستقبلية"),
         "deleteSuccess":
             MessageLookupByLibrary.simpleMessage("تمت عملية حذف الطلب بنجاح"),
         "deliver": MessageLookupByLibrary.simpleMessage("وصل طلبات"),
@@ -423,6 +423,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "directSupport": MessageLookupByLibrary.simpleMessage("دعم مباشر"),
         "discount": MessageLookupByLibrary.simpleMessage("الخصم"),
         "distance": MessageLookupByLibrary.simpleMessage("المسافة"),
+        "distanceProvidedByCaptain":
+            MessageLookupByLibrary.simpleMessage("المسافة التي ادخلها الكابتن"),
         "distanceUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث المسافة بنجاح"),
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
@@ -784,6 +786,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("طلبات دون جواب المتجر"),
         "ordersExceedGeographicalRange": MessageLookupByLibrary.simpleMessage(
             "الطلبات التي تجاوزت النطاق الجغرافي للباقة"),
+        "ordersFinished":
+            MessageLookupByLibrary.simpleMessage("تم انتهاء الطلبات"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("طلب / الشهر"),
         "ourBankAccountNumber":
             MessageLookupByLibrary.simpleMessage("رقم حسابنا"),
@@ -1050,6 +1054,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "قام صاحب المتجر بتأكيد/نفي استلامه لمبلغ الطلب الكاش"),
         "storeAvailable": MessageLookupByLibrary.simpleMessage("المتجر متوفر"),
         "storeBalance": MessageLookupByLibrary.simpleMessage("حساب المتجر"),
+        "storeBranchToClientDistance": MessageLookupByLibrary.simpleMessage(
+            "المسافة بين الاستلام والتسليم"),
         "storeBranchToClientDistanceAndDestinationUpdated":
             MessageLookupByLibrary.simpleMessage(
                 "تم تحديث موقع العميل و المسافة الفاصلة بين موقع العميل والفرع التجاري للمتجر من قبل الادارة"),
@@ -1090,6 +1096,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الاشتراك فعال"),
         "subscriptionDate":
             MessageLookupByLibrary.simpleMessage("تاريخ الاشتراك"),
+        "subscriptionDeletedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم حذف الاشتراك بنجاح"),
         "subscriptionInactive":
             MessageLookupByLibrary.simpleMessage("الاشتراك غير مفعل"),
         "subscriptionManagement":
@@ -1104,6 +1112,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم إنشاء الطلب بنجاح"),
         "successRenew":
             MessageLookupByLibrary.simpleMessage("تم تجديد الباقة بنجاح"),
+        "successRenewNewPlan": MessageLookupByLibrary.simpleMessage(
+            "تم الاشتراك بباقة جديدة بنجاح"),
         "sum": MessageLookupByLibrary.simpleMessage("المجموع"),
         "sumAmountStorOwnerDues":
             MessageLookupByLibrary.simpleMessage("مستحقات المتجر"),

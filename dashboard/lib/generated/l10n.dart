@@ -1430,6 +1430,16 @@ class S {
     );
   }
 
+  /// `Orders Finished`
+  String get ordersFinished {
+    return Intl.message(
+      'Orders Finished',
+      name: 'ordersFinished',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Order is created`
   String get orderIsCreated {
     return Intl.message(
@@ -7890,10 +7900,10 @@ class S {
     );
   }
 
-  /// `Future subscription`
+  /// `Delete future subscription`
   String get deleteFutureSubscription {
     return Intl.message(
-      'Future subscription',
+      'Delete future subscription',
       name: 'deleteFutureSubscription',
       desc: '',
       args: [],
@@ -8195,6 +8205,46 @@ class S {
     return Intl.message(
       'Admin',
       name: 'admin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Distance provided by captain`
+  String get distanceProvidedByCaptain {
+    return Intl.message(
+      'Distance provided by captain',
+      name: 'distanceProvidedByCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Distance from branch to client`
+  String get storeBranchToClientDistance {
+    return Intl.message(
+      'Distance from branch to client',
+      name: 'storeBranchToClientDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subscription with new plan was a success`
+  String get successRenewNewPlan {
+    return Intl.message(
+      'Subscription with new plan was a success',
+      name: 'successRenewNewPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subscription deleted successfully`
+  String get subscriptionDeletedSuccessfully {
+    return Intl.message(
+      'Subscription deleted successfully',
+      name: 'subscriptionDeletedSuccessfully',
       desc: '',
       args: [],
     );
