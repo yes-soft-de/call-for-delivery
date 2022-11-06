@@ -6,14 +6,18 @@ class ControlWidget extends StatelessWidget {
   final bool? active;
   final Function() onPressed;
   final double? width;
-  const ControlWidget(
-      {Key? key,
-      required this.title,
-      required this.icon,
-      this.active,
-      required this.onPressed,
-      this.width = null})
-      : super(key: key);
+  final Color? color;
+  final double? subtitleFontSize;
+  const ControlWidget({
+    Key? key,
+    required this.title,
+    required this.icon,
+    this.active,
+    required this.onPressed,
+    this.width = null,
+    this.color,
+    this.subtitleFontSize,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -42,12 +46,17 @@ class ControlWidget extends StatelessWidget {
               children: [
                 Icon(
                   icon,
-                  color: Theme.of(context).colorScheme.primary,
+                  color: color ?? Theme.of(context).colorScheme.primary,
                   size: 35,
                 ),
                 Visibility(
                   visible: active != null,
-                  replacement: Text(title),
+                  replacement: Text(
+                    title,
+                    style: TextStyle(
+                      fontSize: subtitleFontSize,
+                    ),
+                  ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

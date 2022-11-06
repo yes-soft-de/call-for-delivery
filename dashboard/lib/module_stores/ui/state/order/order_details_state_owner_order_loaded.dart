@@ -669,11 +669,35 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                         ),
                         ListTile(
                           leading: Icon(FontAwesomeIcons.locationArrow),
-                          title: Text(S.current.ProvideDistanceInKm),
+                          title: Text(S.current.distanceProvidedByCaptain),
                           subtitle: Text(FixedNumber.getFixedNumber(
                                   orderInfo.kilometer ?? 0) +
                               ' ${S.current.km}'),
                         ),
+                        Visibility(
+                            visible:
+                                orderInfo.storeBranchToClientDistance != null,
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                      left: 16.0, right: 16.0),
+                                  child: DottedLine(
+                                      dashColor:
+                                          Theme.of(context).disabledColor,
+                                      lineThickness: 2.5,
+                                      dashRadius: 25),
+                                ),
+                                ListTile(
+                                  leading: Icon(FontAwesomeIcons.satellite),
+                                  title: Text(
+                                      S.current.storeBranchToClientDistance),
+                                  subtitle: Text(
+                                      orderInfo.storeBranchToClientDistance! +
+                                          ' ${S.current.km}'),
+                                ),
+                              ],
+                            )),
                       ],
                     )),
                 Visibility(

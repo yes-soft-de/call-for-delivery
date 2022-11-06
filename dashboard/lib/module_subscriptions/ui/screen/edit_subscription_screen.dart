@@ -24,6 +24,7 @@ class EditSubscriptionScreen extends StatefulWidget {
 class EditSubscriptionScreenState extends State<EditSubscriptionScreen> {
   late StreamSubscription _streamSubscription;
   States? currentState;
+  String? selectedCategories;
   List<PackagesCategoryModel> categories = [];
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late bool canPop;

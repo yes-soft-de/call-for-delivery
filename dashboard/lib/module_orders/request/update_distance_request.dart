@@ -13,7 +13,7 @@ class UpdateDistanceRequest {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['storeBranchToClientDistance'] = storeBranchToClientDistance;
-    data['orderId'] = id;
+    data['id'] = id;
     data['destination'] = destination;
     return data;
   }

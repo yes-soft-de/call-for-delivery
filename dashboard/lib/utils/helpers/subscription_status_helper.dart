@@ -12,7 +12,7 @@ class SubscriptionsStatusHelper {
       case 'cars finished':
         return S.current.outOfCars;
       case 'order finished':
-        return S.current.orderIsFinished;
+        return S.current.ordersFinished;
       case 'date finished':
         return S.current.expiredSubscriptions;
       case 'unsubscribed':
