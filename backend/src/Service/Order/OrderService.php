@@ -1376,7 +1376,21 @@ class OrderService
             //       }
             // }
 
-            $order = $this->orderManager->orderUpdate($request, $order);
+            // Check if there are any remaining cars in order to hide or show order
+            $request->setIsHide($order['isHide']);
+
+            $checkRemainingCarsResult = $this->subscriptionService->checkRemainingCarsOnlyByOrderId($request->getId());
+
+            if ($checkRemainingCarsResult !== SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED) {
+                if ($checkRemainingCarsResult <= 0) {
+                    $request->setIsHide(OrderIsHideConstant::ORDER_HIDE_TEMPORARILY);
+
+                } else {
+                    $request->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+                }
+            }
+
+            $order = $this->orderManager->orderUpdate($request);
 
             if ($order) {
 
