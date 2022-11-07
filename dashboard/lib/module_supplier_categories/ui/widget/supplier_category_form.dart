@@ -98,8 +98,8 @@ class _CategoryFormState extends State<SupplierCategoryForm> {
                     ),
                     InkWell(
                       onTap: () {
-                        ImagePicker.platform
-                            .getImage(
+                        ImagePicker()
+                            .pickImage(
                           source: ImageSource.gallery,
                           imageQuality: 70,
                         )
