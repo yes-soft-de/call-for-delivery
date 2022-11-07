@@ -99,7 +99,7 @@ class OrderWithoutDistanceLoadedState extends States {
                                                   coordinations ?? LatLng(0, 0),
                                               origin: element.branchLocation ??
                                                   LatLng(0, 0),
-                                              destance: (d) {
+                                              destance: (d, cost) {
                                                 distance =
                                                     num.tryParse(d ?? '');
                                                 setState(() {});

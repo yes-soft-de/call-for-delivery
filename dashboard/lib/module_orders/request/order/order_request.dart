@@ -15,23 +15,26 @@ class CreateOrderRequest {
   int? id;
   String? distance;
   String? pdf;
-  CreateOrderRequest(
-      {this.id,
-      this.storeId,
-      this.fromBranch,
-      this.note,
-      this.payment,
-      this.recipientName,
-      this.recipientPhone,
-      this.date,
-      this.destination,
-      this.orderCost,
-      this.image,
-      this.detail,
-      this.orderID,
-      this.orderIsMain,
-      this.distance,
-      this.pdf});
+  num? deliveryCost;
+  CreateOrderRequest({
+    this.id,
+    this.storeId,
+    this.fromBranch,
+    this.note,
+    this.payment,
+    this.recipientName,
+    this.recipientPhone,
+    this.date,
+    this.destination,
+    this.orderCost,
+    this.image,
+    this.detail,
+    this.orderID,
+    this.orderIsMain,
+    this.distance,
+    this.pdf,
+    required this.deliveryCost,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -44,6 +47,9 @@ class CreateOrderRequest {
     data['branch'] = this.fromBranch;
     if (this.destination != null) {
       data['destination'] = this.destination?.toJson();
+    }
+    if (this.deliveryCost != null) {
+      data['deliveryCost'] = this.deliveryCost;
     }
     if (this.note != null && this.note?.isNotEmpty == true) {
       data['note'] = this.note;

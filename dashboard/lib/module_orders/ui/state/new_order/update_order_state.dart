@@ -89,6 +89,7 @@ class UpdateOrderLoaded extends States {
   bool orderIsMain = false;
   String? image;
   String? distance;
+  String? deliveryCost;
   PdfModel? pdfModel;
 
   @override
@@ -263,8 +264,9 @@ class UpdateOrderLoaded extends States {
                               destination:
                                   screenState.customerLocation ?? LatLng(0, 0),
                               origin: activeBranch?.location ?? LatLng(0, 0),
-                              destance: (d) {
+                              destance: (d, cost) {
                                 distance = d;
+                                deliveryCost = cost;
                               },
                               storeID: orderInfo.storeID,
                             )),
@@ -820,35 +822,10 @@ class UpdateOrderLoaded extends States {
             .show(screenState.context);
       }
       screenState.addNewOrder(CreateOrderRequest(
-          id: orderInfo.id,
-          orderIsMain: orderIsMain,
-          fromBranch: screenState.branch,
-          pdf: pdfModel?.getPdfRequest(),
-          recipientName: screenState.receiptNameController.text.trim(),
-          recipientPhone: screenState.countryNumberController.text.trim() +
-              screenState.phoneNumberController.text.trim(),
-          destination: GeoJson(
-              link: screenState.toController.text.trim(),
-              lat: screenState.customerLocation?.latitude,
-              lon: screenState.customerLocation?.longitude),
-          note: screenState.orderDetailsController.text.trim(),
-          detail: screenState.orderDetailsController.text.trim(),
-          orderCost: num.parse(screenState.priceController.text.trim()),
-          image: value,
-          date: orderDate == null
-              ? DateTime.now().toUtc().toIso8601String()
-              : orderDate?.toUtc().toIso8601String(),
-          payment: screenState.payments));
-    });
-  }
-
-  // function create order without upload image
-  void createOrderWithoutImage() {
-    screenState.addNewOrder(CreateOrderRequest(
         id: orderInfo.id,
         orderIsMain: orderIsMain,
-        pdf: pdfModel?.getPdfRequest(),
         fromBranch: screenState.branch,
+        pdf: pdfModel?.getPdfRequest(),
         recipientName: screenState.receiptNameController.text.trim(),
         recipientPhone: screenState.countryNumberController.text.trim() +
             screenState.phoneNumberController.text.trim(),
@@ -858,12 +835,41 @@ class UpdateOrderLoaded extends States {
             lon: screenState.customerLocation?.longitude),
         note: screenState.orderDetailsController.text.trim(),
         detail: screenState.orderDetailsController.text.trim(),
-        orderCost: num.tryParse(screenState.priceController.text.trim()),
-        image: imagePath ?? null,
+        orderCost: num.parse(screenState.priceController.text.trim()),
+        image: value,
         date: orderDate == null
             ? DateTime.now().toUtc().toIso8601String()
             : orderDate?.toUtc().toIso8601String(),
-        payment: screenState.payments));
+        payment: screenState.payments,
+        deliveryCost: num.tryParse(deliveryCost.toString()),
+      ));
+    });
+  }
+
+  // function create order without upload image
+  void createOrderWithoutImage() {
+    screenState.addNewOrder(CreateOrderRequest(
+      id: orderInfo.id,
+      orderIsMain: orderIsMain,
+      pdf: pdfModel?.getPdfRequest(),
+      fromBranch: screenState.branch,
+      recipientName: screenState.receiptNameController.text.trim(),
+      recipientPhone: screenState.countryNumberController.text.trim() +
+          screenState.phoneNumberController.text.trim(),
+      destination: GeoJson(
+          link: screenState.toController.text.trim(),
+          lat: screenState.customerLocation?.latitude,
+          lon: screenState.customerLocation?.longitude),
+      note: screenState.orderDetailsController.text.trim(),
+      detail: screenState.orderDetailsController.text.trim(),
+      orderCost: num.tryParse(screenState.priceController.text.trim()),
+      image: imagePath ?? null,
+      date: orderDate == null
+          ? DateTime.now().toUtc().toIso8601String()
+          : orderDate?.toUtc().toIso8601String(),
+      payment: screenState.payments,
+      deliveryCost: num.tryParse(deliveryCost.toString()),
+    ));
   }
 
   void createOrder() {

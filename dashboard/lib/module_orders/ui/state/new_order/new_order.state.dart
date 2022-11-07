@@ -52,6 +52,7 @@ class NewOrderStateBranchesLoaded extends States {
   int orderType = 1;
   bool orderIsMain = false;
   String? distance;
+  String? deliveryCost;
   PdfModel? pdfModel;
   @override
   Widget getUI(context) {
@@ -284,8 +285,9 @@ class NewOrderStateBranchesLoaded extends States {
                               destination:
                                   screenState.customerLocation ?? LatLng(0, 0),
                               origin: activeBranch?.location ?? LatLng(0, 0),
-                              destance: (d) {
+                              destance: (d, cost) {
                                 distance = d;
+                                deliveryCost = cost;
                               },
                               storeID: screenState.storeID ?? -1,
                             )),
@@ -762,7 +764,8 @@ class NewOrderStateBranchesLoaded extends States {
           date: orderDate == null
               ? DateTime.now().toUtc().toIso8601String()
               : orderDate?.toUtc().toIso8601String(),
-          payment: screenState.payments));
+          payment: screenState.payments,
+          deliveryCost: num.tryParse(deliveryCost.toString())));
     });
   }
 
@@ -788,7 +791,8 @@ class NewOrderStateBranchesLoaded extends States {
         date: orderDate == null
             ? DateTime.now().toUtc().toIso8601String()
             : orderDate?.toUtc().toIso8601String(),
-        payment: screenState.payments));
+        payment: screenState.payments,
+        deliveryCost: num.tryParse(deliveryCost.toString())));
   }
 
   void createOrder() {
