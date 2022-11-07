@@ -3,6 +3,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_notice/ui/widget/filter_bar.dart';
 import 'package:c4d/module_stores/request/order_filter_request.dart';
+import 'package:c4d/utils/components/custom_feild.dart';
 import '../../../state_manager/order/order_logs_state_manager.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -83,7 +84,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
           ),
           // filter date
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -230,6 +231,68 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
             selectedContent: Theme.of(context).textTheme.button!.color!,
             unselectedContent: Theme.of(context).textTheme.headline6!.color!,
           ),
+          // kilo filter
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
+                child: CustomFormField(
+                  numbers: true,
+                  hintText: S.current.countKilometersTo +
+                      '(${S.current.clientDistance})',
+                  controller: geoController,
+                  onChanged: () {
+                    changeDistanceIndicator();
+                    getOrders(false);
+                  },
+                ),
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: ListTile(
+                      minLeadingWidth: 0,
+                      title: Text(
+                        S.of(context).captainDistance,
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      leading: Radio(
+                        value: false,
+                        groupValue: geoKilo,
+                        onChanged: (value) {
+                          geoKilo = false;
+                          changeDistanceIndicator();
+                          refresh();
+                          getOrders(false);
+                        },
+                        activeColor: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: ListTile(
+                      minLeadingWidth: 0,
+                      title: Text(
+                        S.current.geoDistance,
+                        style: TextStyle(fontSize: 14),
+                      ),
+                      leading: Radio(
+                        value: true,
+                        groupValue: geoKilo,
+                        onChanged: (value) {
+                          geoKilo = true;
+                          changeDistanceIndicator();
+                          refresh();
+                          getOrders(false);
+                        },
+                        activeColor: Theme.of(context).colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ],
+          ),
           SizedBox(
             height: 16,
           ),
@@ -237,5 +300,11 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
         ],
       ),
     );
+  }
+
+  void changeDistanceIndicator() {
+    ordersFilter.maxKiloFromDistance = num.tryParse(geoController.text) ?? -1;
+    ordersFilter.maxKilo = num.tryParse(geoController.text) ?? -1;
+    ordersFilter.chosenDistanceIndicator = geoKilo ? 1 : 0;
   }
 }

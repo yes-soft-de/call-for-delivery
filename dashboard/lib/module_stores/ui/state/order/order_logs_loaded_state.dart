@@ -61,69 +61,6 @@ class OrderLogsLoadedState extends States {
     }
     if (screenState.currentIndex == 2) {
       widgets.insert(
-        0,
-        Padding(
-          padding: const EdgeInsets.only(left: 8, right: 8),
-          child: CustomFormField(
-            numbers: true,
-            hintText:
-                S.current.countKilometersTo + '(${S.current.clientDistance})',
-            controller: screenState.geoController,
-            onChanged: () {
-              changeDistanceIndicator();
-              screenState.getOrders(false);
-            },
-          ),
-        ),
-      );
-      widgets.insert(
-          1,
-          Row(
-            children: [
-              Expanded(
-                child: ListTile(
-                  minLeadingWidth: 0,
-                  title: Text(
-                    S.of(context).captainDistance,
-                    style: TextStyle(fontSize: 14),
-                  ),
-                  leading: Radio(
-                    value: false,
-                    groupValue: screenState.geoKilo,
-                    onChanged: (value) {
-                      screenState.geoKilo = false;
-                      changeDistanceIndicator();
-                      screenState.refresh();
-                      screenState.getOrders(false);
-                    },
-                    activeColor: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: ListTile(
-                  minLeadingWidth: 0,
-                  title: Text(
-                    S.current.geoDistance,
-                    style: TextStyle(fontSize: 14),
-                  ),
-                  leading: Radio(
-                    value: true,
-                    groupValue: screenState.geoKilo,
-                    onChanged: (value) {
-                      screenState.geoKilo = true;
-                      changeDistanceIndicator();
-                      screenState.refresh();
-                      screenState.getOrders(false);
-                    },
-                    activeColor: Theme.of(context).colorScheme.primary,
-                  ),
-                ),
-              ),
-            ],
-          ));
-
-      widgets.insert(
           2,
           Center(
               child: Text(
@@ -139,17 +76,4 @@ class OrderLogsLoadedState extends States {
     return widgets;
   }
 
-  void changeDistanceIndicator() {
-    if (screenState.geoKilo) {
-      // screenState.ordersFilter.maxKilo = null;
-    } else {
-      //  screenState.ordersFilter.maxKiloFromDistance = null;
-    }
-    screenState.ordersFilter.maxKiloFromDistance =
-        num.tryParse(screenState.geoController.text) ?? -1;
-    screenState.ordersFilter.maxKilo =
-        num.tryParse(screenState.geoController.text) ?? -1;
-    screenState.ordersFilter.chosenDistanceIndicator =
-        screenState.geoKilo ? 1 : 0;
-  }
 }
