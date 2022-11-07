@@ -38,7 +38,9 @@ class ChatBubbleWidgetState extends State<ChatBubbleWidget> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: widget.me || widget.isAdmin ? Alignment.centerLeft : Alignment.centerRight,
+      alignment: widget.me || widget.isAdmin
+          ? Alignment.centerLeft
+          : Alignment.centerRight,
       child: Padding(
           padding: EdgeInsets.all(8.0),
           child:
@@ -57,7 +59,6 @@ class ChatBubbleWidgetState extends State<ChatBubbleWidget> {
                               .colorScheme
                               // admin bubble color
                               .primaryContainer
-                              
                           : Theme.of(context).backgroundColor)),
               child: Padding(
                 padding: EdgeInsets.all(12.0),
@@ -68,7 +69,9 @@ class ChatBubbleWidgetState extends State<ChatBubbleWidget> {
                     Visibility(
                         visible: widget.isAdmin,
                         child: Text(
-                          (widget.username ?? S.current.admin) + ' ● ' + (widget.me ? S.current.me : S.current.admin),
+                          (widget.username ?? S.current.admin) +
+                              ' ● ' +
+                              (widget.me ? S.current.me : S.current.admin),
                           style: TextStyle(color: Colors.deepPurple),
                         )),
                     Column(

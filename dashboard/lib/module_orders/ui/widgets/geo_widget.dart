@@ -11,16 +11,15 @@ import 'package:latlong2/latlong.dart';
 class GeoDistanceText extends StatefulWidget {
   LatLng origin;
   LatLng destination;
-  Function(String?,String?) destance;
+  Function(String?, String?) destance;
   int storeID;
-  GeoDistanceText(
-      {Key? key,
-      required this.destination,
-      required this.origin,
-      required this.destance,
-      required this.storeID,
-      })
-      : super(key: key);
+  GeoDistanceText({
+    Key? key,
+    required this.destination,
+    required this.origin,
+    required this.destance,
+    required this.storeID,
+  }) : super(key: key);
 
   @override
   State<GeoDistanceText> createState() => _GeoDistanceTextState();
@@ -66,7 +65,7 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
       deliveryCost = FixedNumber.getFixedNumber(
           (snap as GeoDistanceModel).costDeliveryOrder?.total ?? 0);
       deliveryCostDetails = (snap as GeoDistanceModel).costDeliveryOrder;
-      widget.destance(distance,deliveryCost);
+      widget.destance(distance, deliveryCost);
       setState(() {});
     }
   }

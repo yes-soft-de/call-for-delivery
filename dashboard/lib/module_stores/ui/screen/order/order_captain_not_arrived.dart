@@ -166,8 +166,8 @@ class OrderCaptainNotArrivedScreenState
                               .then((value) {
                             if (value != null) {
                               ordersFilter.toDate = DateTime(
-                                        value.year, value.month, value.day, 24)
-                                    .toIso8601String();
+                                      value.year, value.month, value.day, 24)
+                                  .toIso8601String();
                               setState(() {});
                               getOrders();
                             }

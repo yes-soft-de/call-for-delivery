@@ -194,7 +194,7 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
               height: 200,
               child: InkWell(
                 onTap: () {
-                 ImagePicker()
+                  ImagePicker()
                       .pickImage(source: ImageSource.gallery, imageQuality: 70)
                       .then((value) async {
                     if (value != null) {
@@ -238,7 +238,7 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
               height: 200,
               child: InkWell(
                 onTap: () {
-                 ImagePicker()
+                  ImagePicker()
                       .pickImage(source: ImageSource.gallery, imageQuality: 70)
                       .then((value) async {
                     if (value != null) {

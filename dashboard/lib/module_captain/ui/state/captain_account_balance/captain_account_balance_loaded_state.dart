@@ -229,7 +229,8 @@ class AccountBalanceStateLoaded extends States {
           padding: const EdgeInsets.all(12.0),
           child: InkWell(
               onTap: () {
-                Navigator.of(context).pushNamed(StoresRoutes.ORDER_STATUS_SCREEN,
+                Navigator.of(context).pushNamed(
+                    StoresRoutes.ORDER_STATUS_SCREEN,
                     arguments: element.id);
               },
               child: OwnerOrderCard(

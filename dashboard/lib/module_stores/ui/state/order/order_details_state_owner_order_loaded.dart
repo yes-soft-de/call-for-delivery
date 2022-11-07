@@ -693,7 +693,8 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                                   title: Text(
                                       S.current.storeBranchToClientDistance),
                                   subtitle: Text(
-                                      (orderInfo.storeBranchToClientDistance ?? '') +
+                                      (orderInfo.storeBranchToClientDistance ??
+                                              '') +
                                           ' ${S.current.km}'),
                                 ),
                               ],

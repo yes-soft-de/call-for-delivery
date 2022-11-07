@@ -75,5 +75,4 @@ class OrderLogsLoadedState extends States {
     ));
     return widgets;
   }
-
 }

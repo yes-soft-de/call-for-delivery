@@ -243,7 +243,7 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                         child: InkWell(
                           onTap: () {
                             ImagePicker()
-                      .pickImage(
+                                .pickImage(
                                     source: ImageSource.gallery,
                                     imageQuality: 70)
                                 .then((value) async {

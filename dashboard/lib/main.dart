@@ -92,28 +92,6 @@ void main() async {
 
 @injectable
 class MyApp extends StatefulWidget {
-  final AppThemeDataService _themeDataService;
-  final LocalizationService _localizationService;
-  final FireNotificationService _fireNotificationService;
-  final LocalNotificationService _localNotificationService;
-  final SplashModule _splashModule;
-  final AuthorizationModule _authorizationModule;
-  final SettingsModule _settingsModule;
-  final ChatModule _chatModule;
-  final MainModule _mainModule;
-  final StoresModule _storesModule;
-  final CategoriesModule _categoriesModule;
-  final CompanyModule _companyModule;
-  final BranchesModule _branchesModule;
-  final NoticeModule _noticeModule;
-  final CaptainsModule _captainsModule;
-  final PaymentsModule _paymentsModule;
-  final SupplierCategoriesModule _supplierCategoriesModule;
-  final SupplierModule _supplierModule;
-  final CarsModule _carsModule;
-  final BidOrderModule _bidOrderModule;
-  final OrdersModule _ordersModule;
-  final SubscriptionsModule _subscriptionsModule;
   MyApp(
       this._themeDataService,
       this._localizationService,
@@ -138,6 +116,29 @@ class MyApp extends StatefulWidget {
       this._ordersModule,
       this._subscriptionsModule);
 
+  final AuthorizationModule _authorizationModule;
+  final BidOrderModule _bidOrderModule;
+  final BranchesModule _branchesModule;
+  final CaptainsModule _captainsModule;
+  final CarsModule _carsModule;
+  final CategoriesModule _categoriesModule;
+  final ChatModule _chatModule;
+  final CompanyModule _companyModule;
+  final FireNotificationService _fireNotificationService;
+  final LocalNotificationService _localNotificationService;
+  final LocalizationService _localizationService;
+  final MainModule _mainModule;
+  final NoticeModule _noticeModule;
+  final OrdersModule _ordersModule;
+  final PaymentsModule _paymentsModule;
+  final SettingsModule _settingsModule;
+  final SplashModule _splashModule;
+  final StoresModule _storesModule;
+  final SubscriptionsModule _subscriptionsModule;
+  final SupplierCategoriesModule _supplierCategoriesModule;
+  final SupplierModule _supplierModule;
+  final AppThemeDataService _themeDataService;
+
   @override
   State<StatefulWidget> createState() => _MyAppState();
 }
@@ -146,9 +147,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   static FirebaseAnalytics analytics = FirebaseAnalytics();
   static FirebaseAnalyticsObserver observer =
       FirebaseAnalyticsObserver(analytics: analytics);
-  late String lang;
+
   late ThemeData activeTheme;
   bool authorized = false;
+  late String lang;
 
   @override
   void initState() {
@@ -194,11 +196,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     });
   }
 
-  @override
-  Widget build(BuildContext context) {
-    return getConfiguredApp(YesModule.RoutesMap);
-  }
-
   Widget getConfiguredApp(
     Map<String, WidgetBuilder> fullRoutesList,
   ) {
@@ -224,5 +221,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
         initialRoute: SplashRoutes.SPLASH_SCREEN,
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return getConfiguredApp(YesModule.RoutesMap);
   }
 }

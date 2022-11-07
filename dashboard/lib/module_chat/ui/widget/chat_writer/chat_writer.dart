@@ -139,8 +139,8 @@ class _ChatWriterWidget extends State<ChatWriterWidget> {
                         elevation: 0,
                         visualDensity: VisualDensity.compact),
                     onPressed: () {
-                     ImagePicker()
-                      .pickImage(
+                      ImagePicker()
+                          .pickImage(
                               source: ImageSource.camera, imageQuality: 70)
                           .then((value) {
                         if (value != null) {
@@ -167,7 +167,7 @@ class _ChatWriterWidget extends State<ChatWriterWidget> {
                         visualDensity: VisualDensity.compact),
                     onPressed: () {
                       ImagePicker()
-                      .pickImage(
+                          .pickImage(
                               source: ImageSource.gallery, imageQuality: 70)
                           .then((value) {
                         if (value != null) {

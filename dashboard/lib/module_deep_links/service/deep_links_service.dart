@@ -10,6 +10,7 @@ import 'package:c4d/utils/helpers/status_code_helper.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart';
 import 'package:uni_links/uni_links.dart';
+
 class DeepLinksService {
   static Future<DeepLinksModel?> checkForGeoLink() async {
     var uri = await getInitialUri();
