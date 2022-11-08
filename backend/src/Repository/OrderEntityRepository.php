@@ -2203,23 +2203,24 @@ class OrderEntityRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
-    
-    public function checkWhetherCaptainReceivedOrderForSpecificStoreForAdmin(int $captainProfileId, int $storeId): ?OrderEntity
-    {
-        return $this->createQueryBuilder('orderEntity')
-            ->andWhere('orderEntity.state IN (:statesArray)')
-            ->setParameter('statesArray', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)
 
-            ->andWhere('orderEntity.captainId = :captainId')
-            ->setParameter('captainId', $captainProfileId)
-
-            ->andWhere('orderEntity.storeOwner = :storeId')
-            ->setParameter('storeId', $storeId)
-
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
+    /** Following function check if captain has ongoing orders from specific store **/
+//    public function checkWhetherCaptainReceivedOrderForSpecificStoreForAdmin(int $captainProfileId, int $storeId): ?OrderEntity
+//    {
+//        return $this->createQueryBuilder('orderEntity')
+//            ->andWhere('orderEntity.state IN (:statesArray)')
+//            ->setParameter('statesArray', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)
+//
+//            ->andWhere('orderEntity.captainId = :captainId')
+//            ->setParameter('captainId', $captainProfileId)
+//
+//            ->andWhere('orderEntity.storeOwner = :storeId')
+//            ->setParameter('storeId', $storeId)
+//
+//            ->setMaxResults(1)
+//            ->getQuery()
+//            ->getOneOrNullResult();
+//    }
 
     // filter Cash Orders which are not being answered by the store (paid or not paid) (for store)
     public function filterCashOrdersPaidOrNotByStore(CashOrdersPaidOrNotFilterByStoreRequest $request): array

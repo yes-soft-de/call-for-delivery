@@ -542,10 +542,10 @@ class AdminOrderService
             }
 
             // Check whether the captain has received an order for a specific store
-            $checkCaptainReceivedOrder = $this->checkWhetherCaptainReceivedOrderForSpecificStore($request->getId(), $orderEntity->getStoreOwner()->getId(), $orderEntity->getPrimaryOrder()?->getId());
-            if ($checkCaptainReceivedOrder === OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT) {
-                return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT_FOR_ADMIN;
-            }
+            // $checkCaptainReceivedOrder = $this->checkWhetherCaptainReceivedOrderForSpecificStore($request->getId(), $orderEntity->getStoreOwner()->getId(), $orderEntity->getPrimaryOrder()?->getId());
+            // if ($checkCaptainReceivedOrder === OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT) {
+            //    return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT_FOR_ADMIN;
+            // }
 
             //Check availability of cars for the store
             $checkRemainingCars = $this->subscriptionService->checkRemainingCarsByOrderId($request->getOrderId());
@@ -883,26 +883,27 @@ class AdminOrderService
         return $response;
     }
 
-    public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainProfileId, int $storeId, int|null $primaryOrderId): int
-    {
-        $orderEntity = $this->adminOrderManager->checkWhetherCaptainReceivedOrderForSpecificStore($captainProfileId, $storeId);
-       
-        if ($orderEntity) {
-            //if the order not main
-            if ($orderEntity->getOrderIsMain() !== true) {
-                return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT;
-            }
-            //if the order main and (request order) related
-            if ($primaryOrderId === $orderEntity->getId()) {
-
-                return OrderResultConstant::CAPTAIN_NOT_RECEIVED_ORDER_FOR_THIS_STORE_INT;
-            }
-            //if the order main and (request order) not related
-            return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT;
-        }
-
-        return OrderResultConstant::CAPTAIN_NOT_RECEIVED_ORDER_FOR_THIS_STORE_INT;
-    } 
+    /** Following function check if captain has ongoing orders from specific store **/
+//    public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainProfileId, int $storeId, int|null $primaryOrderId): int
+//    {
+//        $orderEntity = $this->adminOrderManager->checkWhetherCaptainReceivedOrderForSpecificStore($captainProfileId, $storeId);
+//
+//        if ($orderEntity) {
+//            //if the order not main
+//            if ($orderEntity->getOrderIsMain() !== true) {
+//                return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT;
+//            }
+//            //if the order main and (request order) related
+//            if ($primaryOrderId === $orderEntity->getId()) {
+//
+//                return OrderResultConstant::CAPTAIN_NOT_RECEIVED_ORDER_FOR_THIS_STORE_INT;
+//            }
+//            //if the order main and (request order) not related
+//            return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT;
+//        }
+//
+//        return OrderResultConstant::CAPTAIN_NOT_RECEIVED_ORDER_FOR_THIS_STORE_INT;
+//    }
 
     // filter cash orders which have different answers for cash payment
     public function filterDifferentAnsweredCashOrdersByAdmin(FilterDifferentlyAnsweredCashOrdersByAdminRequest $request): array

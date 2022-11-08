@@ -315,10 +315,11 @@ class AdminOrderManager
         return $this->orderEntityRepository->filterOrdersNotAnsweredByTheStore($request);
     }
 
-    public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainProfileId, int $storeId): ?OrderEntity
-    {
-        return $this->orderEntityRepository->checkWhetherCaptainReceivedOrderForSpecificStoreForAdmin($captainProfileId, $storeId);
-    }
+    /** Following function check if captain has ongoing orders from specific store **/
+//    public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainProfileId, int $storeId): ?OrderEntity
+//    {
+//        return $this->orderEntityRepository->checkWhetherCaptainReceivedOrderForSpecificStoreForAdmin($captainProfileId, $storeId);
+//    }
 
     // filter cash orders which have different answers for cash payment
     public function filterDifferentAnsweredCashOrdersByAdmin(FilterDifferentlyAnsweredCashOrdersByAdminRequest $request): array
