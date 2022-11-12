@@ -71,6 +71,7 @@ class StoreSubscriptionsFinanceDetailsScreenState
             actions: [
               Visibility(
                 visible: model.isCurrent ||
+                    model.isFuture ||
                     (model.status == 'active' ||
                         model.status == 'cars finished'),
                 child: CustomC4dAppBar.actionIcon(context, onTap: () {

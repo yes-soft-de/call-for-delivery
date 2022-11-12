@@ -97,6 +97,8 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                         ),
                       ),
                       CustomFormField(
+                        numbers: true,
+                        phone: true,
                         controller: _phoneController,
                         hintText: S.current.phoneNumber,
                       ),

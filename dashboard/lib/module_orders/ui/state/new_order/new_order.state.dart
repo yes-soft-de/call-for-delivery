@@ -255,6 +255,7 @@ class NewOrderStateBranchesLoaded extends States {
                 ListTile(
                   title: LabelText(S.of(context).destinationAddress),
                   subtitle: CustomFormField(
+                    validator: false,
                     contentPadding: EdgeInsets.only(left: 16, right: 16),
                     hintText: S.of(context).locationOfCustomer,
                     onTap: () {},
@@ -753,10 +754,12 @@ class NewOrderStateBranchesLoaded extends States {
           recipientName: screenState.receiptNameController.text.trim(),
           recipientPhone: screenState.countryNumberController.text.trim() +
               screenState.phoneNumberController.text.trim(),
-          destination: GeoJson(
-              link: screenState.toController.text.trim(),
-              lat: screenState.customerLocation?.latitude,
-              lon: screenState.customerLocation?.longitude),
+          destination: screenState.toController.text.isEmpty
+              ? null
+              : GeoJson(
+                  link: screenState.toController.text.trim(),
+                  lat: screenState.customerLocation?.latitude,
+                  lon: screenState.customerLocation?.longitude),
           note: screenState.orderDetailsController.text.trim(),
           detail: screenState.orderDetailsController.text.trim(),
           orderCost: num.parse(screenState.priceController.text.trim()),
@@ -780,10 +783,12 @@ class NewOrderStateBranchesLoaded extends States {
         recipientName: screenState.receiptNameController.text.trim(),
         recipientPhone: screenState.countryNumberController.text.trim() +
             screenState.phoneNumberController.text.trim(),
-        destination: GeoJson(
-            link: screenState.toController.text.trim(),
-            lat: screenState.customerLocation?.latitude,
-            lon: screenState.customerLocation?.longitude),
+        destination: screenState.toController.text.isEmpty
+            ? null
+            : GeoJson(
+                link: screenState.toController.text.trim(),
+                lat: screenState.customerLocation?.latitude,
+                lon: screenState.customerLocation?.longitude),
         note: screenState.orderDetailsController.text.trim(),
         detail: screenState.orderDetailsController.text.trim(),
         orderCost: num.tryParse(screenState.priceController.text.trim()),

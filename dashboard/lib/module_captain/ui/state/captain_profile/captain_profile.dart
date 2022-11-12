@@ -22,8 +22,6 @@ import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
-import 'package:c4d/utils/components/stacked_form.dart';
-import 'package:c4d/utils/global/screen_type.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
 
