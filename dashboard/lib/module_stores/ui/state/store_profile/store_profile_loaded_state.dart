@@ -2,6 +2,8 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/hive/util/argument_hive_helper.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
+import 'package:c4d/module_chat/chat_routes.dart';
+import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_stores/model/store_profile_model.dart';
 import 'package:c4d/module_stores/request/active_store_request.dart';
@@ -180,25 +182,25 @@ class StoreProfileLoadedState extends States {
               screenState.refresh();
             }),
       ),
-      SizedBox(
-        height: 5,
-      ),
       Container(
           color: Colors.grey.shade200,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
-              Text(S.of(context).storeProfitMargin),
-              Row(
-                children: [
-                  Text(profile?.profitMargin.toString() ?? '0'),
-                  Text(' ' + S.current.sar),
-                ],
-              )
-            ],
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(S.of(context).storeProfitMargin),
+                Row(
+                  children: [
+                    Text(profile?.profitMargin.toString() ?? '0'),
+                    Text(' ' + S.current.sar),
+                  ],
+                )
+              ],
+            ),
           )),
       Wrap(
-        spacing: 30,
+        spacing: 8,
         alignment: WrapAlignment.center,
         direction: Axis.horizontal,
         children: [
@@ -226,13 +228,16 @@ class StoreProfileLoadedState extends States {
                     BranchesRoutes.BRANCHES_LIST_SCREEN,
                     arguments: profile?.id ?? -1);
               }),
-          // cardTap(
-          //     image: ImageAsset.PAYMENT,
-          //     title: S.of(context).payments,
-          //     onTapCard: () {
-          //       Navigator.of(context).pushNamed(StoresRoutes.STORE_BALANCE,
-          //           arguments: profile?.id ?? -1);
-          //     }),
+          cardTap(
+              image: ImageAsset.CHAT,
+              title: S.of(context).chatRoom,
+              onTapCard: () {
+                Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
+                    arguments: ChatArgument(
+                        roomID: profile?.roomId ?? '',
+                        userID: profile?.storeId,
+                        userType: ''));
+              }),
           cardTap(
               image: ImageAsset.PAYMENT,
               title: S.of(context).cashOrders,
@@ -364,7 +369,7 @@ class StoreProfileLoadedState extends States {
       child: Padding(
         padding: const EdgeInsets.all(5.0),
         child: SizedBox(
-          width: 175,
+          width: 165,
           child: Card(
             elevation: 5,
             shape:
@@ -378,7 +383,7 @@ class StoreProfileLoadedState extends States {
                   Image.asset(
                     image,
                     height: 100,
-                    width: 130,
+                    width: 100,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),

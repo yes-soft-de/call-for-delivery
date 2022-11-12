@@ -17,6 +17,7 @@ class ImageAsset {
 
   static const BID_ORDER = ROOT + 'bid-order.png';
   static const BRANCH = ROOT + 'branch.png';
+  static const CHAT = ROOT + 'live-chat.png';
   static const EDIT_PROFILE = ROOT + 'edit-profile.png';
   static const PAYMENT = ROOT + 'payment.png';
   static const ORDERS = ROOT + 'store-orders.png';

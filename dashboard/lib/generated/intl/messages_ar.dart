@@ -1149,6 +1149,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
         "thereIsNoBranches":
             MessageLookupByLibrary.simpleMessage("لا يوجد أفرع متاحة"),
+        "thereIsNoValidSubscription":
+            MessageLookupByLibrary.simpleMessage("لا يوجد اشتراك صالح للمتجر"),
         "thisErrorHappened":
             MessageLookupByLibrary.simpleMessage("حصلت المشكلة التالية"),
         "thisMightTakeAWhilePleaseWait": MessageLookupByLibrary.simpleMessage(

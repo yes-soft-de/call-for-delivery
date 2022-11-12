@@ -7,6 +7,7 @@ class ChatArgument {
 
   ChatArgument(
       {required this.roomID,
+      /// the type of user you talking to
       required this.userType,
       this.support = false,
       this.userID,

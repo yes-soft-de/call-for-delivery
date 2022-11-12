@@ -8259,6 +8259,16 @@ class S {
       args: [],
     );
   }
+
+  /// `There is no valid subscription`
+  String get thereIsNoValidSubscription {
+    return Intl.message(
+      'There is no valid subscription',
+      name: 'thereIsNoValidSubscription',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

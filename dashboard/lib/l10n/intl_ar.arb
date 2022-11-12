@@ -819,6 +819,7 @@
     "storeBranchToClientDistance":"المسافة بين الاستلام والتسليم",
     "successRenewNewPlan":"تم الاشتراك بباقة جديدة بنجاح",
     "subscriptionDeletedSuccessfully":"تم حذف الاشتراك بنجاح",
-    "unableToDeletePaymentsExist":"يوجد دفعات تابعة للاشتراك المطلوب حذفه, ولذلك لا يمكن حذفه"
+    "unableToDeletePaymentsExist":"يوجد دفعات تابعة للاشتراك المطلوب حذفه, ولذلك لا يمكن حذفه",
+    "thereIsNoValidSubscription":"لا يوجد اشتراك صالح للمتجر"
     
 }
