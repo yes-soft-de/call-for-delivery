@@ -61,10 +61,10 @@ class OrderLogsLoadedState extends States {
     }
     if (screenState.currentIndex == 2) {
       widgets.insert(
-          2,
+          0,
           Center(
               child: Text(
-            (widgets.length - 1).toString() + ' ' + S.current.sOrder,
+            (widgets.length).toString() + ' ' + S.current.sOrder,
             style: TextStyle(
               fontSize: 17,
             ),
