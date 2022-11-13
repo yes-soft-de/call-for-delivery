@@ -5,11 +5,13 @@ namespace App\Service\Admin\Report;
 use App\AutoMapping;
 use App\Constant\Captain\CaptainConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Response\Admin\Report\CaptainsRatingsForAdminGetResponse;
 use App\Response\Admin\Report\StatisticsForAdminGetResponse;
 use App\Service\Admin\Captain\AdminCaptainService;
 use App\Service\Admin\Order\AdminOrderService;
 use App\Service\Admin\StoreOwner\AdminStoreOwnerService;
 use App\Service\DateFactory\DateFactoryService;
+use App\Service\FileUpload\UploadFileHelperService;
 use DateTime;
 
 class ReportService
@@ -19,15 +21,17 @@ class ReportService
     private AdminOrderService $adminOrderService;
     private AdminCaptainService $adminCaptainService;
     private DateFactoryService $dateFactoryService;
+    private UploadFileHelperService $uploadFileHelperService;
 
     public function __construct(AutoMapping $autoMapping, AdminStoreOwnerService $adminStoreOwnerService, AdminOrderService $adminOrderService, AdminCaptainService $adminCaptainService,
-                                DateFactoryService $dateFactoryService)
+                                DateFactoryService $dateFactoryService, UploadFileHelperService $uploadFileHelperService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminStoreOwnerService = $adminStoreOwnerService;
         $this->adminOrderService = $adminOrderService;
         $this->adminCaptainService = $adminCaptainService;
         $this->dateFactoryService = $dateFactoryService;
+        $this->uploadFileHelperService = $uploadFileHelperService;
     }
 
     public function getStatisticsForAdmin(): StatisticsForAdminGetResponse
@@ -91,5 +95,24 @@ class ReportService
         $response["data"]["captains"]["count"]["lastThreeActive"] = $this->adminCaptainService->getLastThreeActiveCaptainsProfilesForAdmin();
 
         return $response;
+    }
+
+    public function getCaptainsRatingsForAdmin(): array
+    {
+        $captainsRatings = $this->adminCaptainService->getCaptainsRatingsForAdmin();
+
+        if (count($captainsRatings) > 0) {
+            $response = [];
+
+            foreach ($captainsRatings as $key => $value) {
+                $response[$key] = $this->autoMapping->map('array', CaptainsRatingsForAdminGetResponse::class, $value);
+
+                $response[$key]->image = $this->uploadFileHelperService->getImageParams($value['imagePath']);
+            }
+
+            return $response;
+        }
+
+        return $captainsRatings;
     }
 }

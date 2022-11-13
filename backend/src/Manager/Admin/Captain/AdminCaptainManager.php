@@ -172,4 +172,9 @@ class AdminCaptainManager
 
         return $profile;
     }
+
+    public function getCaptainsRatingsForAdmin(): array
+    {
+        return $this->captainEntityRepository->getCaptainsRatingsForAdmin();
+    }
 }
