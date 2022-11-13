@@ -6,6 +6,7 @@ use App\Constant\Captain\CaptainConstant;
 use App\Entity\CaptainEntity;
 use App\Entity\ImageEntity;
 use App\Entity\OrderEntity;
+use App\Entity\RateEntity;
 use App\Entity\UserEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -372,5 +373,36 @@ class CaptainEntityRepository extends ServiceEntityRepository
             $query->setParameter('toDate', $endDate);
 
             return $query->getQuery()->getSingleColumnResult();
+    }
+
+    public function getCaptainsRatingsForAdmin(): array
+    {
+        return $this->createQueryBuilder('captainEntity')
+            ->select('captainEntity.id', 'captainEntity.captainName', 'AVG(rateEntity.rating) as avgRating')
+            ->addSelect('imageEntity.imagePath', 'imageEntity.usedAs')
+
+            ->leftJoin(
+                ImageEntity::class,
+                'imageEntity',
+                Join::WITH,
+                'imageEntity.itemId = captainEntity.id and imageEntity.entityType = :entityType'
+            )
+
+            ->andWhere('imageEntity.usedAs = :captainProfileImage')
+            ->setParameter('captainProfileImage', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+
+            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
+
+            ->join(
+                RateEntity::class,
+                'rateEntity',
+                Join::WITH,
+                'rateEntity.rated = captainEntity.captainId'
+            )
+
+            ->groupBy('captainEntity.id')
+
+            ->getQuery()
+            ->getResult();
     }
 }
