@@ -51,6 +51,11 @@ class OrderFilterByAdminRequest
     private $customizedTimezone;
 
     /**
+     * @var int|null
+     */
+    private $orderId;
+
+    /**
      * @return string|null
      */
     public function getState(): ?string
@@ -111,5 +116,10 @@ class OrderFilterByAdminRequest
     public function getCustomizedTimezone(): ?string
     {
         return $this->customizedTimezone;
+    }
+
+    public function getOrderId(): ?int
+    {
+        return $this->orderId;
     }
 }
