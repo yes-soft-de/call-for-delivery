@@ -99,20 +99,18 @@ class ReportService
 
     public function getCaptainsRatingsForAdmin(): array
     {
+        $response = [];
+
         $captainsRatings = $this->adminCaptainService->getCaptainsRatingsForAdmin();
 
         if (count($captainsRatings) > 0) {
-            $response = [];
-
             foreach ($captainsRatings as $key => $value) {
                 $response[$key] = $this->autoMapping->map('array', CaptainsRatingsForAdminGetResponse::class, $value);
 
                 $response[$key]->image = $this->uploadFileHelperService->getImageParams($value['imagePath']);
             }
-
-            return $response;
         }
 
-        return $captainsRatings;
+        return $response;
     }
 }
