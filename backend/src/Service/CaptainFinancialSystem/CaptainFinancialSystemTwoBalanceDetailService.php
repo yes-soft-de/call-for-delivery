@@ -226,3 +226,12 @@ class CaptainFinancialSystemTwoBalanceDetailService
         }
    }
 }
+
+/**
+ *  1. Calculation are for sure for the orders which belong the financial cycle that start from specific date and ends
+ * on specific date.
+ *  2. Salary = Salary + Month Compensation (e.g. 1500 + 400)
+ *  3. If orders < 150 : (1900 / 150) * completed orders
+ *     If orders = 150 : 1900
+ *     If orders > 150 : 1900 + (over orders * 25)
+ */

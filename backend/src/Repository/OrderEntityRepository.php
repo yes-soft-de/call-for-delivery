@@ -475,6 +475,11 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->orderBy('orderEntity.id', 'DESC');
 
+        if ($request->getOrderId()) {
+            $query->andWhere('orderEntity.id = :orderId');
+            $query->setParameter('orderId', $request->getOrderId());
+        }
+
         if ($request->getStoreOwnerProfileId()) {
             $query->andWhere('orderEntity.storeOwner = :storeOwner');
             $query->setParameter('storeOwner', $request->getStoreOwnerProfileId());

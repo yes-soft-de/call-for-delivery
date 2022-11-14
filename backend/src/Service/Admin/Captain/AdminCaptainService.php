@@ -252,4 +252,9 @@ class AdminCaptainService
     {
         $captainsResult = $this->adminCaptainManager->getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByAdmin();
     }
+
+    public function getCaptainsRatingsForAdmin(): array
+    {
+        return $this->adminCaptainManager->getCaptainsRatingsForAdmin();
+    }
 }
