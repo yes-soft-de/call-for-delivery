@@ -1360,8 +1360,8 @@ class OrderService
         }
 
         $order = $this->orderManager->getOrderByIdWithStoreOrderDetail($request->getId());
-        if ($order) {
 
+        if ($order) {
             // if( $order['state'] === OrderStateConstant::ORDER_STATE_IN_STORE) {
             //   if( $request->getBranch() !== $order['storeOwnerBranchId']) {
 
@@ -1376,7 +1376,7 @@ class OrderService
             //       }
             // }
 
-            // Check if there are any remaining cars in order to hide or show order
+            // *** Check if there are any remaining cars in order to hide or show order ***
             $request->setIsHide($order['isHide']);
 
             $checkRemainingCarsResult = $this->subscriptionService->checkRemainingCarsOnlyByOrderId($request->getId());
@@ -1388,7 +1388,13 @@ class OrderService
                 } else {
                     $request->setIsHide(OrderIsHideConstant::ORDER_SHOW);
                 }
+
+                // But if the order is a sub order, then we have to hide it in all circumstances
+                if ($order['primaryOrderId']) {
+                    $request->setIsHide(OrderIsHideConstant::ORDER_HIDE);
+                }
             }
+            // *** End check ***
 
             $order = $this->orderManager->orderUpdate($request);
 
