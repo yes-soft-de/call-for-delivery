@@ -400,8 +400,8 @@ class AdminOrderService
     public function orderUpdateByAdmin(UpdateOrderByAdminRequest $request, int $userId): string|null|OrderByIdGetForAdminResponse
     {
         $order = $this->adminOrderManager->getOrderByIdWithStoreOrderDetailForAdmin($request->getId());
-        if($order) {
 
+        if($order) {
             // if( $order['state'] === OrderStateConstant::ORDER_STATE_IN_STORE) {
             //   if( $request->getBranch() !== $order['storeOwnerBranchId']) {
 
@@ -434,7 +434,13 @@ class AdminOrderService
                 } else {
                     $request->setIsHide(OrderIsHideConstant::ORDER_SHOW);
                 }
+
+                // But if the order is a sub order, then we have to hide it in all circumstances
+                if ($order['primaryOrderId']) {
+                    $request->setIsHide(OrderIsHideConstant::ORDER_HIDE);
+                }
             }
+            // *** End check ***
 
             $order = $this->adminOrderManager->orderUpdateByAdmin($request);
 
