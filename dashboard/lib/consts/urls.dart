@@ -286,6 +286,7 @@ class Urls {
   static const UNASSIGNED_ORDER_FROM_CAPTAIN =
       BASE_API_ORDER + '/rependingacceptedorder';
   static const ORDER_NONSUB_API_LINK = DOMAIN + '/v1/order/ordernonsubbyowner';
+  static const NEW_ORDER_API_LINK = DOMAIN + '/v1/order/createsuborder';
 
   /*-----------------------------subscription----------------------------*/
   static const String BASE_API_SUBSCRIPTION =

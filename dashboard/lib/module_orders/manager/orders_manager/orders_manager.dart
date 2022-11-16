@@ -71,4 +71,6 @@ class OrdersManager {
       _repository.getOrdersWithoutDistance(request);
   Future<ActionResponse?> updateDistance(UpdateDistanceRequest request) =>
       _repository.updateDistance(request);
+  Future<ActionResponse?> addNewOrderLink(CreateOrderRequest orderRequest) =>
+      _repository.addNewOrderLink(orderRequest);
 }

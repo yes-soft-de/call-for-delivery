@@ -239,4 +239,14 @@ class OrdersService {
     }
     return DataModel.empty();
   }
+
+  Future<DataModel> addNewOrderLink(CreateOrderRequest request) async {
+    ActionResponse? response = await _ordersManager.addNewOrderLink(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
 }
