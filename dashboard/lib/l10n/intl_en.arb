@@ -821,6 +821,11 @@
     "successRenewNewPlan": "Subscription with new plan was a success",
     "subscriptionDeletedSuccessfully": "Subscription deleted successfully",
     "unableToDeletePaymentsExist": "Unable to delete this subscription , It has a recorded payments",
-    "thereIsNoValidSubscription":"There is no valid subscription"
-
+    "thereIsNoValidSubscription": "There is no valid subscription",
+    "orderRemovedSuccessfully": "Order Removed Successfully",
+    "newOrderLink": "New sub order",
+    "areYouSureAboutCreatingSubOrder": "Are you sure about creating new sub order , you can split later if needed",
+    "unlinkSubOrders": "Unlink suborders",
+    "primaryOrder": "Primary order",
+    "suborder": "Suborder"
 }

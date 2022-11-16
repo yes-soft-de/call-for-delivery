@@ -813,13 +813,18 @@
     "storeBranchToClientDistanceUpdated": "تم تحديث المسافة الفاصلة بين موقع العميل والفرع التجاري للمتجر من قبل الادارة",
     "storeBranchToClientDistanceAndDestinationUpdated": "تم تحديث موقع العميل و المسافة الفاصلة بين موقع العميل والفرع التجاري للمتجر من قبل الادارة",
     "cashPaymentConfirmed": "تم حل التعارض بين إجابة المتجر وإجابة الكابتن من قبل الإدارة",
-    "payConflictAnswersResolved":"تم حل التعارض بين الاجابات حول تسليم المبلغ النقدي من أجل الطلب",
-    "admin":"المدير",
-    "distanceProvidedByCaptain":"المسافة التي ادخلها الكابتن",
-    "storeBranchToClientDistance":"المسافة بين الاستلام والتسليم",
-    "successRenewNewPlan":"تم الاشتراك بباقة جديدة بنجاح",
-    "subscriptionDeletedSuccessfully":"تم حذف الاشتراك بنجاح",
-    "unableToDeletePaymentsExist":"يوجد دفعات تابعة للاشتراك المطلوب حذفه, ولذلك لا يمكن حذفه",
-    "thereIsNoValidSubscription":"لا يوجد اشتراك صالح للمتجر"
-    
+    "payConflictAnswersResolved": "تم حل التعارض بين الاجابات حول تسليم المبلغ النقدي من أجل الطلب",
+    "admin": "المدير",
+    "distanceProvidedByCaptain": "المسافة التي ادخلها الكابتن",
+    "storeBranchToClientDistance": "المسافة بين الاستلام والتسليم",
+    "successRenewNewPlan": "تم الاشتراك بباقة جديدة بنجاح",
+    "subscriptionDeletedSuccessfully": "تم حذف الاشتراك بنجاح",
+    "unableToDeletePaymentsExist": "يوجد دفعات تابعة للاشتراك المطلوب حذفه, ولذلك لا يمكن حذفه",
+    "thereIsNoValidSubscription": "لا يوجد اشتراك صالح للمتجر",
+    "orderRemovedSuccessfully": "تم فك الارتباط بنجاح",
+    "newOrderLink": "إنشاء طلب فرعي",
+    "areYouSureAboutCreatingSubOrder": "هل أنت متأكد من رغبتك في إنشاء طلب فرعي ، بإمكانك فك ارتباطه لاحقا كطلب مستقل",
+    "unlinkSubOrders": "فك ارتباط الطلبات الفرعية",
+    "primaryOrder": "طلب أساسي",
+    "suborder": "طلب فرعي"
 }

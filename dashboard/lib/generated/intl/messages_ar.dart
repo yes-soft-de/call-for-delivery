@@ -109,6 +109,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "هل أنت متأكد من رغبتك في حذف هذا الاشتراك"),
         "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد من رغبتك في حذف حسابك ، لن تتمكن من استخدام هذه البيانات في تسجيل الدخول بعد الآن"),
+        "areYouSureAboutCreatingSubOrder": MessageLookupByLibrary.simpleMessage(
+            "هل أنت متأكد من رغبتك في إنشاء طلب فرعي ، بإمكانك فك ارتباطه لاحقا كطلب مستقل"),
         "areYouSureAboutDeleteOrder": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من رغبتك في حذف هذا الطلب ؟"),
         "areYouSureAboutRependingOrder": MessageLookupByLibrary.simpleMessage(
@@ -666,6 +668,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "هناك مشكلة بالاتصال بالشبكة الرجاء إعادة المحاولة لاحقا"),
         "newName": MessageLookupByLibrary.simpleMessage("اسم جديد"),
         "newOrder": MessageLookupByLibrary.simpleMessage("طلب جديد"),
+        "newOrderLink": MessageLookupByLibrary.simpleMessage("إنشاء طلب فرعي"),
         "newPassword":
             MessageLookupByLibrary.simpleMessage("كلمة السر الجديدة"),
         "newSubOrderCreated":
@@ -759,6 +762,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderPrice": MessageLookupByLibrary.simpleMessage("سعر الطلب"),
         "orderRecycled":
             MessageLookupByLibrary.simpleMessage("تم إعادة نشر طلب "),
+        "orderRemovedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم فك الارتباط بنجاح"),
         "orderStatus": MessageLookupByLibrary.simpleMessage("حالة الطلب"),
         "orderStatusDescription": MessageLookupByLibrary.simpleMessage(
             "يمكنك التعرف على حالة الطلب من خلال النافذة الحالية"),
@@ -916,6 +921,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("اللغة المفضلة"),
         "pressHere": MessageLookupByLibrary.simpleMessage("اضغط هنا"),
         "price": MessageLookupByLibrary.simpleMessage("السعر"),
+        "primaryOrder": MessageLookupByLibrary.simpleMessage("طلب أساسي"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("شروط الخصوصية"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("طلب خاص"),
         "product": MessageLookupByLibrary.simpleMessage("منتج"),
@@ -1087,6 +1093,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "submit": MessageLookupByLibrary.simpleMessage("إرسال"),
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("جار حفظ الملف"),
+        "suborder": MessageLookupByLibrary.simpleMessage("طلب فرعي"),
         "subscribe": MessageLookupByLibrary.simpleMessage("اشترك"),
         "subscribeToCaptainOffer":
             MessageLookupByLibrary.simpleMessage("اشتراك بعرض كابتن"),
@@ -1187,6 +1194,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "unknownAction": MessageLookupByLibrary.simpleMessage("حدث غير معروف"),
         "unknownNumberOfCar":
             MessageLookupByLibrary.simpleMessage("عدد السيارات غير محدود"),
+        "unlinkSubOrders":
+            MessageLookupByLibrary.simpleMessage("فك ارتباط الطلبات الفرعية"),
         "unlinkedSubOrder":
             MessageLookupByLibrary.simpleMessage("فك ارتباط وليس اخفاء"),
         "unlinkedSubOrderFromGroupedOrder":

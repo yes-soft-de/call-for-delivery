@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
@@ -647,7 +646,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
               orderCost: element.orderCost,
               orderNumber: element.id.toString(),
               orderStatus: StatusHelper.getOrderStatusMessages(element.state),
-              orderIsMain: element.orderIsMain ?? false,
+              orderIsMain: element.orderIsMain,
             )),
       );
     });

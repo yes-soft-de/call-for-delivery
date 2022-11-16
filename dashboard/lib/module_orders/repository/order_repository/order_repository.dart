@@ -6,6 +6,7 @@ import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
+import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/update_distance_request.dart';
 import 'package:c4d/module_orders/response/order_actionlogs_response/order_actionlogs_response.dart';
@@ -210,6 +211,20 @@ class OrderRepository {
       headers: {'Authorization': 'Bearer ${token}'},
     );
     if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> removeOrderSub(
+      OrderNonSubRequest orderRequest) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+      Urls.ORDER_NONSUB_API_LINK + '/${orderRequest.orderID}',
+      {},
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+
+    if (response == null) return null;
+
     return ActionResponse.fromJson(response);
   }
 }

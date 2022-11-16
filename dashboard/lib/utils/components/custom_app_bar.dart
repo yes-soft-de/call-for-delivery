@@ -73,12 +73,15 @@ class CustomC4dAppBar {
     );
   }
 
-  static Widget actionIcon(context,
-      {required Function() onTap,
-      Color? buttonBackground,
-      required IconData icon,
-      Color? colorIcon,
-      EdgeInsetsGeometry? padding}) {
+  static Widget actionIcon(
+    context, {
+    required Function() onTap,
+    Color? buttonBackground,
+    required IconData icon,
+    Color? colorIcon,
+    EdgeInsetsGeometry? padding,
+    String? message,
+  }) {
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
     return Padding(
       padding: padding ?? const EdgeInsets.all(8.0),

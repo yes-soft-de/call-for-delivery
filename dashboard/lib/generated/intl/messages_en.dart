@@ -110,6 +110,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Are sure about delete this subscriptions"),
         "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
             "Are you sure about deleting your account , you won\'t be able to login with this credential any more"),
+        "areYouSureAboutCreatingSubOrder": MessageLookupByLibrary.simpleMessage(
+            "Are you sure about creating new sub order , you can split later if needed"),
         "areYouSureAboutDeleteOrder": MessageLookupByLibrary.simpleMessage(
             "Are sure about deleting this order ? "),
         "areYouSureAboutRependingOrder": MessageLookupByLibrary.simpleMessage(
@@ -672,6 +674,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "There is problem with your connection , please try again"),
         "newName": MessageLookupByLibrary.simpleMessage("New name"),
         "newOrder": MessageLookupByLibrary.simpleMessage("New Order"),
+        "newOrderLink": MessageLookupByLibrary.simpleMessage("New sub order"),
         "newPassword": MessageLookupByLibrary.simpleMessage("New password"),
         "newSubOrderCreated":
             MessageLookupByLibrary.simpleMessage("New suborder created"),
@@ -764,6 +767,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Order number not found!!"),
         "orderPrice": MessageLookupByLibrary.simpleMessage("order price"),
         "orderRecycled": MessageLookupByLibrary.simpleMessage("Order recycled"),
+        "orderRemovedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Order Removed Successfully"),
         "orderStatus": MessageLookupByLibrary.simpleMessage("order status"),
         "orderStatusDescription": MessageLookupByLibrary.simpleMessage(
             "You can know your order status in this interface"),
@@ -922,6 +927,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Preferred Language"),
         "pressHere": MessageLookupByLibrary.simpleMessage("Press here"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
+        "primaryOrder": MessageLookupByLibrary.simpleMessage("Primary order"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("Private Order"),
         "product": MessageLookupByLibrary.simpleMessage("product"),
@@ -1096,6 +1102,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "submit": MessageLookupByLibrary.simpleMessage("Submit"),
         "submittingProfile":
             MessageLookupByLibrary.simpleMessage("Submitting Profile"),
+        "suborder": MessageLookupByLibrary.simpleMessage("Suborder"),
         "subscribe": MessageLookupByLibrary.simpleMessage("Subscribe"),
         "subscribeToCaptainOffer":
             MessageLookupByLibrary.simpleMessage("Subscribe to captain offer"),
@@ -1195,6 +1202,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "unknownAction": MessageLookupByLibrary.simpleMessage("Unknown action"),
         "unknownNumberOfCar":
             MessageLookupByLibrary.simpleMessage("The number of cars unknown"),
+        "unlinkSubOrders":
+            MessageLookupByLibrary.simpleMessage("Unlink suborders"),
         "unlinkedSubOrder":
             MessageLookupByLibrary.simpleMessage("Unlinked suborder"),
         "unlinkedSubOrderFromGroupedOrder":

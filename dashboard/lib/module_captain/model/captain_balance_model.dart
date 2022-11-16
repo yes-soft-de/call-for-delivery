@@ -135,7 +135,8 @@ class CaptainAccountBalanceModel extends DataModel {
           orderCost: element.orderCost ?? 0,
           state: StatusHelper.getStatusEnum(element.state),
           storeName: element.storeOwnerName,
-          orderIsMain: element.orderIsMain));
+          orderIsMain: element.orderIsMain ?? false,
+          subOrders: []));
     });
     return orders;
   }

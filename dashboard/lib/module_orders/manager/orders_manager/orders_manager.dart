@@ -1,13 +1,12 @@
 import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/module_orders/repository/order_repository/order_repository.dart';
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
-import 'package:c4d/module_orders/request/confirm_captain_location_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
+import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/update_distance_request.dart';
-import 'package:c4d/module_orders/response/company_info_response/company_info_response.dart';
 import 'package:c4d/module_orders/response/order_actionlogs_response/order_actionlogs_response.dart';
 import 'package:c4d/module_orders/response/order_captain_logs_response/order_captain_logs_response.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
@@ -28,7 +27,8 @@ class OrdersManager {
 
   Future<OrderDetailsResponse?> getOrderDetails(int orderId) =>
       _repository.getOrderDetails(orderId);
-
+  Future<ActionResponse?> removeOrderSub(OrderNonSubRequest orderRequest) =>
+      _repository.removeOrderSub(orderRequest);
   Future<OrdersResponse?> getMyOrdersFilter(FilterOrderRequest request) =>
       _repository.getMyOrdersFilter(request);
 

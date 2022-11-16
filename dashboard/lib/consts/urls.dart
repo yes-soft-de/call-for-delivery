@@ -285,6 +285,8 @@ class Urls {
   static const DELETE_ORDER = BASE_API_ORDER + '/ordercancelbyadmin';
   static const UNASSIGNED_ORDER_FROM_CAPTAIN =
       BASE_API_ORDER + '/rependingacceptedorder';
+  static const ORDER_NONSUB_API_LINK = DOMAIN + '/v1/order/ordernonsubbyowner';
+
   /*-----------------------------subscription----------------------------*/
   static const String BASE_API_SUBSCRIPTION =
       DOMAIN + VERSION_ADMIN + '/subscription';

@@ -1,3 +1,4 @@
+import 'package:c4d/module_orders/response/orders_response/sub_order_list/sub_order.dart';
 import 'package:intl/intl.dart';
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -87,15 +88,48 @@ class StoreSubscriptionsFinanceModel extends DataModel {
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       //
       orders.add(OrderModel(
+        branchName: element.branchName ?? S.current.unknown,
+        id: element.id ?? -1,
+        createdDate: create,
+        deliveryDate: delivery,
+        note: element.note ?? '',
+        orderCost: element.orderCost ?? 0,
+        state: StatusHelper.getStatusEnum(element.state),
+        storeName: element.storeOwnerName,
+        orderIsMain: element.orderIsMain ?? false,
+        subOrders: _getSubOrders(element.subOrders ?? []),
+      ));
+    });
+    return orders;
+  }
+
+  List<OrderModel> _getSubOrders(List<SubOrder> suborder) {
+    List<OrderModel> orders = [];
+    suborder.forEach((element) {
+      var create = DateFormat.jm()
+              .format(DateHelper.convert(element.createdAt?.timestamp)) +
+          ' 📅 ' +
+          DateFormat.Md()
+              .format(DateHelper.convert(element.createdAt?.timestamp));
+      var delivery = DateFormat.jm()
+              .format(DateHelper.convert(element.deliveryDate?.timestamp)) +
+          ' 📅 ' +
+          DateFormat.Md()
+              .format(DateHelper.convert(element.deliveryDate?.timestamp));
+      orders.add(
+        OrderModel(
           branchName: element.branchName ?? S.current.unknown,
-          id: element.id ?? -1,
           createdDate: create,
           deliveryDate: delivery,
+          id: element.id ?? -1,
           note: element.note ?? '',
           orderCost: element.orderCost ?? 0,
+          orderIsMain: false,
+          subOrders: [],
           state: StatusHelper.getStatusEnum(element.state),
           storeName: element.storeOwnerName,
-          orderIsMain: element.orderIsMain));
+        ),
+      );
     });
     return orders;
   }

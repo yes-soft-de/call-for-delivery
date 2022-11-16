@@ -8269,6 +8269,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Order Removed Successfully`
+  String get orderRemovedSuccessfully {
+    return Intl.message(
+      'Order Removed Successfully',
+      name: 'orderRemovedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New sub order`
+  String get newOrderLink {
+    return Intl.message(
+      'New sub order',
+      name: 'newOrderLink',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about creating new sub order , you can split later if needed`
+  String get areYouSureAboutCreatingSubOrder {
+    return Intl.message(
+      'Are you sure about creating new sub order , you can split later if needed',
+      name: 'areYouSureAboutCreatingSubOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unlink suborders`
+  String get unlinkSubOrders {
+    return Intl.message(
+      'Unlink suborders',
+      name: 'unlinkSubOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Primary order`
+  String get primaryOrder {
+    return Intl.message(
+      'Primary order',
+      name: 'primaryOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Suborder`
+  String get suborder {
+    return Intl.message(
+      'Suborder',
+      name: 'suborder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
