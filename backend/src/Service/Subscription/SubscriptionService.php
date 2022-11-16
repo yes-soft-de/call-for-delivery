@@ -122,7 +122,10 @@ class SubscriptionService
 
               $subscription['endDate'] =  new \DateTime($subscription['startDate']->format('Y-m-d h:i:s') . '1 day');
            }
-           
+
+           // get the sum of unpaid cash orders
+           $subscription['unPaidCashOrdersSum'] = $this->getUnPaidCashOrdersSumBySubscriptionId($subscription['id']);
+
            return $this->autoMapping->map("array", RemainingOrdersResponse::class, $subscription);
        }
 
@@ -888,6 +891,18 @@ class SubscriptionService
             $this->subscriptionNotificationService->checkRemainingCarsAndInformStore($currentRemainingCars, $newRemainingCars,
                 $subscriptionEntity->getStoreOwner()->getStoreOwnerId());
         }
+    }
+
+    // Get sum of unpaid cash orders
+    public function getUnPaidCashOrdersSumBySubscriptionId(int $subscriptionId): float
+    {
+        $unPaidCashOrdersSum = $this->subscriptionManager->getUnPaidCashOrdersSumBySubscriptionId($subscriptionId);
+
+        if (count($unPaidCashOrdersSum)) {
+            return $unPaidCashOrdersSum[0];
+        }
+
+        return (float) 0;
     }
 }
  
