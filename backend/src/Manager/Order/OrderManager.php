@@ -477,18 +477,19 @@ class OrderManager
 
         return $orderEntity;
     }
-    
-    public function isHideShow()
-    {
-        $orders = $this->orderRepository->findAll();
-        foreach($orders as  $order) {
-            $order->setIsHide(OrderIsHideConstant::ORDER_SHOW);
-        }
-        
-        $this->entityManager->flush();
 
-        return $order;
-    }
+    // This function update isHide for all orders to 2 (Show order value)
+//    public function isHideShow()
+//    {
+//        $orders = $this->orderRepository->findAll();
+//        foreach($orders as  $order) {
+//            $order->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+//        }
+//
+//        $this->entityManager->flush();
+//
+//        return $order;
+//    }
     
     public function getOrderTemporarilyHidden(): array
     {

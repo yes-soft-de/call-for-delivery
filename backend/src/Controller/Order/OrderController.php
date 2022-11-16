@@ -1490,7 +1490,7 @@ class OrderController extends BaseController
      * captain: Order Non Sub.
      * @Route("ordernonsub/{subOderId}", name="orderNonSub", methods={"PUT"})
      * @IsGranted("ROLE_CAPTAIN")
-     * @param Request $request
+     * @param int $subOderId
      * @return JsonResponse
      *
      * @OA\Tag(name="Order")
@@ -1513,7 +1513,7 @@ class OrderController extends BaseController
      *              )
      *       )
      * )
-     * 
+     *
      * @Security(name="Bearer")
      */
     public function orderNonSub(int $subOderId): JsonResponse
@@ -1523,19 +1523,19 @@ class OrderController extends BaseController
         return $this->response($response, self::UPDATE);
     }
 
-    /**
-     * TODO for remove after used
-     * admin:update isHide to show for all orders .
-     * @Route("updateishideshow", name="isHideShow", methods={"PUT"})
-     * @IsGranted("ROLE_ADMIN")
-     *
-     */
-    public function isHideShow(): JsonResponse
-    {
-        $response = $this->orderService->isHideShow();
-
-        return $this->response($response, self::UPDATE);
-    }
+//    /**
+//     * TODO for remove after used
+//     * admin:update isHide to show for all orders .
+//     * @Route("updateishideshow", name="isHideShow", methods={"PUT"})
+//     * @IsGranted("ROLE_ADMIN")
+//     *
+//     */
+//    public function isHideShow(): JsonResponse
+//    {
+//        $response = $this->orderService->isHideShow();
+//
+//        return $this->response($response, self::UPDATE);
+//    }
 
     /**
      * store:Recycling or cancel the order
