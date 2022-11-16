@@ -364,4 +364,10 @@ class SubscriptionManager
 
         return $subscriptionEntity;
     }
+
+    // Get sum of unpaid cash orders
+    public function getUnPaidCashOrdersSumBySubscriptionId(int $subscriptionId): array
+    {
+        return $this->subscribeRepository->getUnPaidCashOrdersSumBySubscriptionId($subscriptionId);
+    }
 }

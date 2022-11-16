@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 // use App\Constant\Order\OrderStateConstant;
+use App\Constant\Order\OrderAmountCashConstant;
+use App\Constant\Order\OrderTypeConstant;
 use App\Entity\SubscriptionEntity;
 use App\Entity\SubscriptionDetailsEntity;
 use App\Entity\PackageEntity;
@@ -363,5 +365,38 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleScalarResult();
             // ->getOneOrNullResult();
+    }
+
+    // Get sum of unpaid cash orders
+    public function getUnPaidCashOrdersSumBySubscriptionId(int $subscriptionId): array
+    {
+        return $this->createQueryBuilder('subscription')
+            ->select('SUM(orderEntity.captainOrderCost)')
+
+            ->andWhere('subscription.id = :id')
+            ->setParameter('id', $subscriptionId)
+
+            ->join(
+                OrderEntity::class,
+                'orderEntity',
+                Join::WITH,
+                'orderEntity.storeOwner = subscription.storeOwner'
+            )
+
+            // Orders made within the subscription dates only
+            ->andWhere('orderEntity.createdAt BETWEEN subscription.startDate AND subscription.endDate')
+
+            ->andWhere('orderEntity.state = :delivered')
+            ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+            ->andWhere('orderEntity.payment = :cashPayment')
+            ->setParameter('cashPayment', OrderTypeConstant::ORDER_PAYMENT_CASH)
+
+            // check when store does not confirm that the payment was made for the cash order
+            ->andWhere('orderEntity.isCashPaymentConfirmedByStore = :notConfirmed')
+            ->setParameter('notConfirmed', OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO)
+
+            ->getQuery()
+            ->getSingleColumnResult();
     }
 }
