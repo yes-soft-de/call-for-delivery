@@ -393,8 +393,9 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->setParameter('cashPayment', OrderTypeConstant::ORDER_PAYMENT_CASH)
 
             // check when store does not confirm that the payment was made for the cash order
-            ->andWhere('orderEntity.isCashPaymentConfirmedByStore = :notConfirmed')
+            ->andWhere('orderEntity.isCashPaymentConfirmedByStore = :notConfirmed OR orderEntity.paidToProvider = :notPaid')
             ->setParameter('notConfirmed', OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO)
+            ->setParameter('notPaid', OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO)
 
             ->getQuery()
             ->getSingleColumnResult();
