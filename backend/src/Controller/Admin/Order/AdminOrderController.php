@@ -1450,7 +1450,8 @@ class AdminOrderController extends BaseController
     }
 
     /**
-     * admin: resolves the orders which have conflicted answers
+     * admin: resolves the order/s which has/have conflicted answers
+     *
      * @Route("resolveconflictedanswersbyadmin", name="resolveConflictedAnswersForSpecificOrdersByAdmin", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
@@ -1469,7 +1470,10 @@ class AdminOrderController extends BaseController
      *      description="Update hasPayConflictAnswers of spceific orders",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="fromDate"),
-     *          @OA\Property(type="string", property="toDate")
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="integer", property="orderId"),
+     *          @OA\Property(type="integer", property="correctAnswer", required={"true"},
+     *                          example="3: captains answer is correct. 4: store's answer is correct")
      *      )
      * )
      *
