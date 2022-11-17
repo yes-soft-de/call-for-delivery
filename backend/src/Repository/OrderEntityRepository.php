@@ -2456,6 +2456,11 @@ class OrderEntityRepository extends ServiceEntityRepository
             $query->setParameter('toDate', $request->getToDate());
         }
 
+        if ($request->getOrderId()) {
+            $query->andWhere('orderEntity.id = :orderId');
+            $query->setParameter('orderId', $request->getOrderId());
+        }
+
         return $query->getQuery()->getResult();
     }
 

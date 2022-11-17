@@ -948,8 +948,11 @@ class AdminOrderService
     }
 
     /**
-     * this function resolves the orders which have conflicted answers about cash payment by updating the field
-     * hasPayConflictAnswers to 2 (which means there is no conflict between the store's answer and the captain answer
+     * This function resolves a conflict answers (between captain and store about cash payment) for one order or multi orders.
+     * Resolving the conflict is done by deciding the correct answer + updating the contrast one + mark that the conflict
+     * is being resolved, and that's done via the API.
+     *
+     * Note: hasPayConflictAnswers to 2 (which means there is no conflict between the store's answer and the captain answer
      */
     public function resolveOrderHasPayConflictAnswersByAdmin(OrderHasPayConflictAnswersUpdateByAdminRequest $request, int $userId): array
     {

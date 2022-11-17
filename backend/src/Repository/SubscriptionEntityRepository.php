@@ -371,7 +371,7 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
     public function getUnPaidCashOrdersSumBySubscriptionId(int $subscriptionId): array
     {
         return $this->createQueryBuilder('subscription')
-            ->select('SUM(orderEntity.captainOrderCost)')
+            ->select('SUM(orderEntity.orderCost)')
 
             ->andWhere('subscription.id = :id')
             ->setParameter('id', $subscriptionId)
@@ -393,8 +393,10 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->setParameter('cashPayment', OrderTypeConstant::ORDER_PAYMENT_CASH)
 
             // check when store does not confirm that the payment was made for the cash order
-            ->andWhere('orderEntity.isCashPaymentConfirmedByStore = :notConfirmed')
+            ->andWhere('(orderEntity.isCashPaymentConfirmedByStore IS NULL AND orderEntity.paidToProvider = :notPaid) OR '.
+                '(orderEntity.isCashPaymentConfirmedByStore = :notConfirmed AND orderEntity.paidToProvider = :notPaid)')
             ->setParameter('notConfirmed', OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO)
+            ->setParameter('notPaid', OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO)
 
             ->getQuery()
             ->getSingleColumnResult();
