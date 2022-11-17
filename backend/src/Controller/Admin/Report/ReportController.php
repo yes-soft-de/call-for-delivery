@@ -157,4 +157,40 @@ class ReportController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+
+    /**
+     * admin: Get captains ratings for admin.
+     * @Route("captainsratings", name="getCaptainsRatingsForAdmin", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Report")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns captains names and images and avg ratings for each one",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Admin\Report\CaptainsRatingsForAdminGetResponse")
+     *       )
+     *    )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getCaptainsRatingsForAdmin(): JsonResponse
+    {
+        $result = $this->reportService->getCaptainsRatingsForAdmin();
+
+        return $this->response($result, self::FETCH);
+    }
 }

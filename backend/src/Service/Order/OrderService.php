@@ -1145,12 +1145,13 @@ class OrderService
         return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
     }
 
-    public function isHideShow()
-    {
-        $order = $this->orderManager->isHideShow();
-
-        return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
-    }
+    // This function update isHide for all orders to 2 (Show order value)
+//    public function isHideShow()
+//    {
+//        $order = $this->orderManager->isHideShow();
+//
+//        return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
+//    }
 
     //Show the sub-order for captains if a car is available
     //Show Temporarily hidden orders
@@ -1360,8 +1361,8 @@ class OrderService
         }
 
         $order = $this->orderManager->getOrderByIdWithStoreOrderDetail($request->getId());
-        if ($order) {
 
+        if ($order) {
             // if( $order['state'] === OrderStateConstant::ORDER_STATE_IN_STORE) {
             //   if( $request->getBranch() !== $order['storeOwnerBranchId']) {
 
@@ -1376,7 +1377,7 @@ class OrderService
             //       }
             // }
 
-            // Check if there are any remaining cars in order to hide or show order
+            // *** Check if there are any remaining cars in order to hide or show order ***
             $request->setIsHide($order['isHide']);
 
             $checkRemainingCarsResult = $this->subscriptionService->checkRemainingCarsOnlyByOrderId($request->getId());
@@ -1388,7 +1389,13 @@ class OrderService
                 } else {
                     $request->setIsHide(OrderIsHideConstant::ORDER_SHOW);
                 }
+
+                // But if the order is a sub order, then we have to hide it in all circumstances
+                if ($order['primaryOrderId']) {
+                    $request->setIsHide(OrderIsHideConstant::ORDER_HIDE);
+                }
             }
+            // *** End check ***
 
             $order = $this->orderManager->orderUpdate($request);
 

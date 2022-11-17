@@ -43,6 +43,11 @@ class UpdateOrderRequest
     private $isHide;
 
     /**
+     * @var bool|null
+     */
+    private $orderIsMain;
+
+    /**
      * Get the value of id
      */ 
     public function getId()

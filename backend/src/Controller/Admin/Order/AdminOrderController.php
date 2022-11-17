@@ -83,7 +83,9 @@ class AdminOrderController extends BaseController
      *          @OA\Property(type="integer", property="chosenDistanceIndicator", description="1 refers to use Kilometer,
      *              2 refers to use storeBranchToClientDistance"),
      *          @OA\Property(type="number", property="kilometer", description="if there is value, send it as float, not string"),
-     *          @OA\Property(type="number", property="storeBranchToClientDistance")
+     *          @OA\Property(type="number", property="storeBranchToClientDistance"),
+     *          @OA\Property(type="string", property="customizedTimezone", example="Asia/Riyadh"),
+     *          @OA\Property(type="integer", property="orderId")
      *      )
      * )
      *
@@ -730,9 +732,9 @@ class AdminOrderController extends BaseController
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_PROFILE_NOT_EXIST);
         }
 
-        if ($response === OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT_FOR_ADMIN) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE);
-        }
+        // if ($response === OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT_FOR_ADMIN) {
+        //     return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE);
+        // }
 
         return $this->response($response, self::UPDATE);
     }
@@ -1448,7 +1450,8 @@ class AdminOrderController extends BaseController
     }
 
     /**
-     * admin: resolves the orders which have conflicted answers
+     * admin: resolves the order/s which has/have conflicted answers
+     *
      * @Route("resolveconflictedanswersbyadmin", name="resolveConflictedAnswersForSpecificOrdersByAdmin", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
@@ -1467,7 +1470,10 @@ class AdminOrderController extends BaseController
      *      description="Update hasPayConflictAnswers of spceific orders",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="fromDate"),
-     *          @OA\Property(type="string", property="toDate")
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="integer", property="orderId"),
+     *          @OA\Property(type="integer", property="correctAnswer", required={"true"},
+     *                          example="3: captains answer is correct. 4: store's answer is correct")
      *      )
      * )
      *

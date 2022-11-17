@@ -475,6 +475,11 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->orderBy('orderEntity.id', 'DESC');
 
+        if ($request->getOrderId()) {
+            $query->andWhere('orderEntity.id = :orderId');
+            $query->setParameter('orderId', $request->getOrderId());
+        }
+
         if ($request->getStoreOwnerProfileId()) {
             $query->andWhere('orderEntity.storeOwner = :storeOwner');
             $query->setParameter('storeOwner', $request->getStoreOwnerProfileId());
@@ -490,22 +495,6 @@ class OrderEntityRepository extends ServiceEntityRepository
             $query->setParameter('statesArray', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY);
         }
 
-        if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
-            $query->andWhere('orderEntity.createdAt >= :createdAt');
-            $query->setParameter('createdAt', new DateTime($request->getFromDate()));
-
-        } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-            $query->andWhere('orderEntity.createdAt <= :createdAt');
-            $query->setParameter('createdAt', new DateTime($request->getToDate()));
-
-        } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-            $query->andWhere('orderEntity.createdAt >= :fromDate');
-            $query->setParameter('fromDate', new DateTime($request->getFromDate()));
-
-            $query->andWhere('orderEntity.createdAt <= :toDate');
-            $query->setParameter('toDate', new DateTime($request->getToDate()));
-        }
-
         if ($request->getChosenDistanceIndicator() === OrderDistanceConstant::KILOMETER_DISTANCE_CONST) {
             if (($request->getKilometer()) && ($request->getKilometer() !== "")) {
                 $query->andWhere('orderEntity.kilometer = :kilometerValue');
@@ -518,6 +507,29 @@ class OrderEntityRepository extends ServiceEntityRepository
                 $query->setParameter('storeBranchToClientDistanceValue', $request->getStoreBranchToClientDistance());
             }
         }
+
+        if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
+         || ($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")
+         || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $tempQuery = $query->getQuery()->getResult();
+
+            return $this->filterOrdersByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
+
+            //$query->andWhere('orderEntity.createdAt >= :createdAt');
+            //$query->setParameter('createdAt', new DateTime($request->getFromDate()));
+
+        }
+//        elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+//            $query->andWhere('orderEntity.createdAt <= :createdAt');
+//            $query->setParameter('createdAt', new DateTime($request->getToDate()));
+//
+//        } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+//            $query->andWhere('orderEntity.createdAt >= :fromDate');
+//            $query->setParameter('fromDate', new DateTime($request->getFromDate()));
+//
+//            $query->andWhere('orderEntity.createdAt <= :toDate');
+//            $query->setParameter('toDate', new DateTime($request->getToDate()));
+//        }
 
         return $query->getQuery()->getResult();
     }
@@ -1492,7 +1504,8 @@ class OrderEntityRepository extends ServiceEntityRepository
        return $this->createQueryBuilder('orderEntity')
            ->select('IDENTITY (orderEntity.captainId) as captainUserId')
            ->addSelect('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.noteCaptainOrderCost',
-            'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.isCaptainArrived', 'orderEntity.dateCaptainArrived', 'orderEntity.captainOrderCost', 'orderEntity.paidToProvider', 'orderEntity.isHide', 'orderEntity.orderIsMain')
+            'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.isCaptainArrived', 'orderEntity.dateCaptainArrived', 'orderEntity.captainOrderCost',
+               'orderEntity.paidToProvider', 'orderEntity.isHide', 'orderEntity.orderIsMain', 'primaryOrderEntity.id as primaryOrderId')
            ->addSelect('storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
             'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail')
            ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName', 'storeOwnerBranch.branchPhone')
@@ -1505,7 +1518,13 @@ class OrderEntityRepository extends ServiceEntityRepository
            ->leftJoin(OrderChatRoomEntity::class, 'orderChatRoomEntity', Join::WITH, 'orderChatRoomEntity.orderId = orderEntity.id and orderChatRoomEntity.captain = orderEntity.captainId')
            ->leftJoin(ImageEntity::class, 'imageEntity', Join::WITH, 'imageEntity.id = storeOrderDetails.images')
            ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.id = orderEntity.captainId')
-           
+
+           ->leftJoin(
+               OrderEntity::class,
+               'primaryOrderEntity',
+               Join::WITH,
+               'primaryOrderEntity.id = orderEntity.primaryOrder'
+           )
            ->andWhere('orderEntity.id = :id')
 
            ->setParameter('id', $id)
@@ -2196,23 +2215,24 @@ class OrderEntityRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
-    
-    public function checkWhetherCaptainReceivedOrderForSpecificStoreForAdmin(int $captainProfileId, int $storeId): ?OrderEntity
-    {
-        return $this->createQueryBuilder('orderEntity')
-            ->andWhere('orderEntity.state IN (:statesArray)')
-            ->setParameter('statesArray', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)
 
-            ->andWhere('orderEntity.captainId = :captainId')
-            ->setParameter('captainId', $captainProfileId)
-
-            ->andWhere('orderEntity.storeOwner = :storeId')
-            ->setParameter('storeId', $storeId)
-
-            ->setMaxResults(1)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
+    /** Following function check if captain has ongoing orders from specific store **/
+//    public function checkWhetherCaptainReceivedOrderForSpecificStoreForAdmin(int $captainProfileId, int $storeId): ?OrderEntity
+//    {
+//        return $this->createQueryBuilder('orderEntity')
+//            ->andWhere('orderEntity.state IN (:statesArray)')
+//            ->setParameter('statesArray', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)
+//
+//            ->andWhere('orderEntity.captainId = :captainId')
+//            ->setParameter('captainId', $captainProfileId)
+//
+//            ->andWhere('orderEntity.storeOwner = :storeId')
+//            ->setParameter('storeId', $storeId)
+//
+//            ->setMaxResults(1)
+//            ->getQuery()
+//            ->getOneOrNullResult();
+//    }
 
     // filter Cash Orders which are not being answered by the store (paid or not paid) (for store)
     public function filterCashOrdersPaidOrNotByStore(CashOrdersPaidOrNotFilterByStoreRequest $request): array
@@ -2436,6 +2456,47 @@ class OrderEntityRepository extends ServiceEntityRepository
             $query->setParameter('toDate', $request->getToDate());
         }
 
+        if ($request->getOrderId()) {
+            $query->andWhere('orderEntity.id = :orderId');
+            $query->setParameter('orderId', $request->getOrderId());
+        }
+
         return $query->getQuery()->getResult();
+    }
+
+    public function filterOrdersByDates(array $tempOrders, ?string $fromDate, ?string $toDate, ?string $timeZone): array
+    {
+        $filteredOrders = [];
+
+        if (count($tempOrders) > 0) {
+            if (($fromDate != null || $fromDate != "") && ($toDate === null || $toDate === "")) {
+                foreach ($tempOrders as $key => $value) {
+                    if ($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) >=
+                        new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) {
+                        $filteredOrders[$key] = $value;
+                    }
+                }
+
+            } elseif (($fromDate === null || $fromDate === "") && ($toDate != null || $toDate != "")) {
+                foreach ($tempOrders as $key => $value) {
+                    if ($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) <=
+                        new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59'))) {
+                        $filteredOrders[$key] = $value;
+                    }
+                }
+
+            } elseif (($fromDate != null || $fromDate != "") && ($toDate != null || $toDate != "")) {
+                foreach ($tempOrders as $key => $value) {
+                    if (($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) >=
+                        new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) &&
+                        ($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) <=
+                            new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59')))) {
+                        $filteredOrders[$key] = $value;
+                    }
+                }
+            }
+        }
+
+        return $filteredOrders;
     }
 }

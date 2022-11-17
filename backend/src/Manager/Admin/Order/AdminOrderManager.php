@@ -315,10 +315,11 @@ class AdminOrderManager
         return $this->orderEntityRepository->filterOrdersNotAnsweredByTheStore($request);
     }
 
-    public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainProfileId, int $storeId): ?OrderEntity
-    {
-        return $this->orderEntityRepository->checkWhetherCaptainReceivedOrderForSpecificStoreForAdmin($captainProfileId, $storeId);
-    }
+    /** Following function check if captain has ongoing orders from specific store **/
+//    public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainProfileId, int $storeId): ?OrderEntity
+//    {
+//        return $this->orderEntityRepository->checkWhetherCaptainReceivedOrderForSpecificStoreForAdmin($captainProfileId, $storeId);
+//    }
 
     // filter cash orders which have different answers for cash payment
     public function filterDifferentAnsweredCashOrdersByAdmin(FilterDifferentlyAnsweredCashOrdersByAdminRequest $request): array
@@ -350,8 +351,11 @@ class AdminOrderManager
     }
 
     /**
-     * this function resolves the orders which have conflicted answers about cash payment by updating the field
-     * hasPayConflictAnswers to 2 (which means there is no conflict between the store's answer and the captain answer
+     * This function resolves a conflict answers (between captain and store about cash payment) for one order or multi orders.
+     * Resolving the conflict is done by deciding the correct answer + updating the contrast one + mark that the conflict
+     * is being resolved, and that's done via the API.
+     *
+     * Note: hasPayConflictAnswers to 2 (which means there is no conflict between the store's answer and the captain answer
      */
     public function resolveOrderHasPayConflictAnswersByAdmin(OrderHasPayConflictAnswersUpdateByAdminRequest $request): array
     {
@@ -359,6 +363,20 @@ class AdminOrderManager
 
         if (count($ordersArray) > 0) {
             foreach ($ordersArray as $orderEntity) {
+                if ($request->getCorrectAnswer()) {
+                    // admin decided that there is a correct answer
+                    if ($request->getCorrectAnswer() === OrderConflictedAnswersResolvedByConstant::CAPTAIN_ANSWER_IS_CORRECT_CONST) {
+                        // captain answer is the correct one. Update store's answer to it.
+                        $orderEntity->setIsCashPaymentConfirmedByStore($orderEntity->getPaidToProvider());
+                        $orderEntity->setIsCashPaymentConfirmedByStoreUpdateDate(new DateTime('now'));
+
+                    } elseif ($request->getCorrectAnswer() === OrderConflictedAnswersResolvedByConstant::STORE_ANSWER_IS_CORRECT_CONST) {
+                        // store's answer is the correct, update captain's answer to it.
+                        $orderEntity->setPaidToProvider($orderEntity->getIsCashPaymentConfirmedByStore());
+                    }
+                }
+
+                // Now, check that the conflict had being resolved, and by the API
                 $orderEntity->setHasPayConflictAnswers(OrderHasPayConflictAnswersConstant::ORDER_DOES_NOT_HAVE_PAYMENT_CONFLICT_ANSWERS);
 
                 $orderEntity->setConflictedAnswersResolvedBy(OrderConflictedAnswersResolvedByConstant::CONFLICTED_ANSWERS_RESOLVED_BY_ADMIN_CONST);
