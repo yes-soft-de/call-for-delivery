@@ -26,35 +26,43 @@ class DatumOrder {
   int? isCashPaymentConfirmedByStore;
   int? paidToProvider;
   String? captainName;
-  DatumOrder(
-      {this.id,
-      this.state,
-      this.payment,
-      this.orderCost,
-      this.orderType,
-      this.note,
-      this.deliveryDate,
-      this.createdAt,
-      this.storeOrderDetailsId,
-      this.destination,
-      this.recipientName,
-      this.recipientPhone,
-      this.detail,
-      this.storeOwnerBranchId,
-      this.branchName,
-      this.storeOwnerName,
-      this.orderIsMain,
-      this.subOrders,
-      this.location,
-      this.isCashPaymentConfirmedByStore,
-      this.paidToProvider,
-      this.captainName});
+  num? kilometer;
+  num? storeBranchToClientDistance;
+  DatumOrder({
+    this.id,
+    this.state,
+    this.payment,
+    this.orderCost,
+    this.orderType,
+    this.note,
+    this.deliveryDate,
+    this.createdAt,
+    this.storeOrderDetailsId,
+    this.destination,
+    this.recipientName,
+    this.recipientPhone,
+    this.detail,
+    this.storeOwnerBranchId,
+    this.branchName,
+    this.storeOwnerName,
+    this.orderIsMain,
+    this.subOrders,
+    this.location,
+    this.isCashPaymentConfirmedByStore,
+    this.paidToProvider,
+    this.captainName,
+    this.kilometer,
+    this.storeBranchToClientDistance,
+  });
 
   factory DatumOrder.fromJson(Map<String, dynamic> json) => DatumOrder(
         id: json['id'] as int?,
         state: json['state'] as String?,
         payment: json['payment'] as String?,
         orderCost: json['orderCost'] as num?,
+        kilometer: json['kilometer'] as num?,
+        storeBranchToClientDistance:
+            json['storeBranchToClientDistance'] as num?,
         orderType: json['orderType'] as int?,
         storeOwnerName: json['storeOwnerName'] as String?,
         paidToProvider: json['paidToProvider'] as int?,

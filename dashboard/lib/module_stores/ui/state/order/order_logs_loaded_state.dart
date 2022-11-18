@@ -1,14 +1,15 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_stores/model/order/order_model.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_stores/ui/screen/order/order_logs_screen.dart';
 import 'package:c4d/module_stores/ui/widget/orders/owner_order_card.dart';
-import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../module_orders/model/order/order_model.dart';
 
 class OrderLogsLoadedState extends States {
   OrderLogsScreenState screenState;
@@ -30,9 +31,15 @@ class OrderLogsLoadedState extends States {
           child: InkWell(
             borderRadius: BorderRadius.circular(25),
             onTap: () {
-              Navigator.of(screenState.context).pushNamed(
-                  StoresRoutes.ORDER_STATUS_SCREEN,
-                  arguments: element.id);
+              if (element.orderIsMain) {
+                Navigator.of(screenState.context).pushNamed(
+                    OrdersRoutes.SUB_ORDERS_SCREEN,
+                    arguments: element.id);
+              } else {
+                Navigator.of(screenState.context).pushNamed(
+                    StoresRoutes.ORDER_STATUS_SCREEN,
+                    arguments: element.id);
+              }
             },
             child: OwnerOrderCard(
               kilometer: element.kilometer > 0

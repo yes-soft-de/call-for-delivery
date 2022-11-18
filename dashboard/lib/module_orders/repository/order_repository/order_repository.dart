@@ -32,7 +32,7 @@ class OrderRepository {
   Future<OrderDetailsResponse?> getOrderDetails(int orderId) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(
-      'Urls.ORDER_STATUS_API' + '$orderId',
+      Urls.GET_ORDERS_DETAILS + '$orderId',
       headers: {'Authorization': 'Bearer $token'},
     );
     if (response == null) return null;

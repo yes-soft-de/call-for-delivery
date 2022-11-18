@@ -188,6 +188,8 @@ class OrderDetailsModel extends DataModel {
         state: StatusHelper.getStatusEnum(element.state),
         storeName: element.storeOwnerName,
         subOrders: [],
+        kilometer: 0,
+        storeBranchToClientDistance: 0,
       ));
     });
     return orders;

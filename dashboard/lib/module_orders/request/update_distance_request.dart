@@ -1,5 +1,4 @@
-import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_stores/response/order/orders_response/destination.dart';
+import 'package:c4d/module_orders/response/orders_response/destination.dart';
 
 class UpdateDistanceRequest {
   num? storeBranchToClientDistance;

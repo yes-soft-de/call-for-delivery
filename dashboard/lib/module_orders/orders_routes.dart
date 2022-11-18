@@ -11,6 +11,8 @@ class OrdersRoutes {
   static const ORDERS_WITHOUT_DISTANCE_SCREEN =
       '/orders_without_distance_screen';
   static const NEW_SUB_ORDER_SCREEN = '/new_sub_order_screen';
+  static const SUB_ORDERS_SCREEN = '/sub_order_screen';
+
 
   // ORDER CASH
   static const ORDER_CASH_CAPTAINS = '/order_cash_captains';

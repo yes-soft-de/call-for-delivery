@@ -28,6 +28,8 @@ class OrderModel extends DataModel {
   int? storeId;
   String? branchID;
   List<OrderModel> subOrders = [];
+  late num kilometer;
+  late num storeBranchToClientDistance;
   OrderModel({
     required this.branchName,
     required this.state,
@@ -48,6 +50,8 @@ class OrderModel extends DataModel {
     this.created,
     this.delivery,
     required this.subOrders,
+    required this.kilometer,
+    required this.storeBranchToClientDistance,
   });
   List<OrderModel> _orders = [];
   OrderModel.withData(OrdersResponse response) {
@@ -88,6 +92,8 @@ class OrderModel extends DataModel {
         created: DateHelper.convert(element.createdAt?.timestamp),
         delivery: DateHelper.convert(element.deliveryDate?.timestamp),
         subOrders: _getOrders(element.subOrders ?? []),
+        kilometer: element.kilometer ?? 0,
+        storeBranchToClientDistance: element.storeBranchToClientDistance ?? 0,
       ));
     });
   }
@@ -116,6 +122,8 @@ class OrderModel extends DataModel {
         subOrders: [],
         state: StatusHelper.getStatusEnum(element.state),
         storeName: element.storeOwnerName,
+        kilometer: 0,
+        storeBranchToClientDistance: 0,
       ));
     });
     return orders;

@@ -1,12 +1,12 @@
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
+import 'package:c4d/module_orders/manager/orders_manager/orders_manager.dart';
+import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_stores/model/order/order_captain_not_arrived.dart';
-import 'package:c4d/module_stores/model/order/order_model.dart';
 import 'package:c4d/module_stores/model/store_need_support.dart';
 import 'package:c4d/module_stores/request/active_store_request.dart';
 import 'package:c4d/module_stores/request/captain_not_arrived_request.dart';
 import 'package:c4d/module_stores/request/order_filter_request.dart';
 import 'package:c4d/module_stores/response/order/order_captain_not_arrived/orders_not_arrived_response.dart';
-import 'package:c4d/module_stores/response/order/orders_response/orders_response.dart';
 import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
@@ -22,14 +22,16 @@ import 'package:c4d/module_stores/response/store_profile_response.dart';
 import 'package:c4d/module_stores/response/stores_response.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
 
+import '../../module_orders/model/order/order_model.dart';
 import '../../module_orders/model/order_details_model.dart';
-import '../../module_orders/response/order_details_response/order_details_response.dart';
+import '../../module_orders/response/orders_response/orders_response.dart';
 
 @injectable
 class StoresService {
   final StoreManager _storeManager;
+  final OrdersManager _ordersManager;
 
-  StoresService(this._storeManager);
+  StoresService(this._storeManager, this._ordersManager);
 
   Future<DataModel> getStores() async {
     StoresResponse? _storesResponse = await _storeManager.getStores();

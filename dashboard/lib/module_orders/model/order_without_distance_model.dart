@@ -45,7 +45,9 @@ class OrdersWithoutDistanceModel extends DataModel {
           orderIsMain: element.orderIsMain ?? false,
           branchLocation: LatLng(element.location?.lat, element.location?.lon),
           destinationLink: element.destination?.link,
-          subOrders: _getOrders(element.subOrders ?? [])));
+          subOrders: _getOrders(element.subOrders ?? []),
+          kilometer: 0,
+          storeBranchToClientDistance: 0));
     });
     _orders = OrdersWithoutDistanceModel(orders: orders);
   }
@@ -73,6 +75,8 @@ class OrdersWithoutDistanceModel extends DataModel {
         state: StatusHelper.getStatusEnum(element.state),
         storeName: element.storeOwnerName,
         subOrders: [],
+        kilometer: 0,
+        storeBranchToClientDistance: 0,
       ));
     });
     return orders;

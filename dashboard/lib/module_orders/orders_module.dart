@@ -10,6 +10,7 @@ import 'package:c4d/module_orders/ui/screens/order_pending_screen.dart';
 import 'package:c4d/module_orders/ui/screens/orders_captain_screen.dart';
 import 'package:c4d/module_orders/ui/screens/orders_receive_cash_screen.dart';
 import 'package:c4d/module_orders/ui/screens/orders_without_distance_screen.dart';
+import 'package:c4d/module_orders/ui/screens/sub_orders_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -25,17 +26,20 @@ class OrdersModule extends YesModule {
   final OrderActionLogsScreen orderActionLogsScreen;
   final OrdersWithoutDistanceScreen ordersWithoutDistanceScreen;
   final OrdersReceiveCashScreen ordersReceiveCashScreen;
+  final SubOrdersScreen subOrdersScreen;
   OrdersModule(
-      this._logsScreen,
-      this._cashCaptain,
-      this._cashStore,
-      this.updateOrderScreen,
-      this.pendingScreen,
-      this.newOrderScreen,
-      this.orderCaptainLogsScreen,
-      this.orderActionLogsScreen,
-      this.ordersWithoutDistanceScreen,
-      this.ordersReceiveCashScreen) {
+    this._logsScreen,
+    this._cashCaptain,
+    this._cashStore,
+    this.updateOrderScreen,
+    this.pendingScreen,
+    this.newOrderScreen,
+    this.orderCaptainLogsScreen,
+    this.orderActionLogsScreen,
+    this.ordersWithoutDistanceScreen,
+    this.ordersReceiveCashScreen,
+    this.subOrdersScreen,
+  ) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
 
@@ -51,6 +55,7 @@ class OrdersModule extends YesModule {
       OrdersRoutes.ORDERS_ACTIONS_LOGS_SCREEN: (context) =>
           orderActionLogsScreen,
       OrdersRoutes.ORDERS_RECEIVE_CASH: (context) => orderActionLogsScreen,
+      OrdersRoutes.SUB_ORDERS_SCREEN: (context) => subOrdersScreen,
     };
   }
 }

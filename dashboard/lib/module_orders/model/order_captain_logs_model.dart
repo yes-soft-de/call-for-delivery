@@ -46,6 +46,8 @@ class OrderCaptainLogsModel extends DataModel {
         storeName: element.storeOwnerName,
         orderIsMain: element.orderIsMain ?? false,
         subOrders: _getOrders(element.subOrders ?? []),
+        kilometer: 0,
+        storeBranchToClientDistance: 0,
       ));
     });
     _orders = OrderCaptainLogsModel(
@@ -78,6 +80,8 @@ class OrderCaptainLogsModel extends DataModel {
         subOrders: [],
         state: StatusHelper.getStatusEnum(element.state),
         storeName: element.storeOwnerName,
+        kilometer: 0,
+        storeBranchToClientDistance: 0,
       ));
     });
     return orders;

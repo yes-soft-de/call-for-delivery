@@ -54,16 +54,19 @@ class PendingOrder extends DataModel {
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       //
       ordersModels.add(OrderModel(
-          branchName: element.branchName ?? '',
-          state: StatusHelper.getStatusEnum(element.state),
-          orderCost: element.orderCost ?? 0,
-          note: element.note ?? '',
-          deliveryDate: delivery,
-          createdDate: create,
-          id: element.id ?? -1,
-          storeName: element.storeOwnerName ?? S.current.unknown,
-          orderIsMain: element.orderIsMain ?? false,
-          subOrders: _getPendingOrders(element.subOrders ?? [])));
+        branchName: element.branchName ?? '',
+        state: StatusHelper.getStatusEnum(element.state),
+        orderCost: element.orderCost ?? 0,
+        note: element.note ?? '',
+        deliveryDate: delivery,
+        createdDate: create,
+        id: element.id ?? -1,
+        storeName: element.storeOwnerName ?? S.current.unknown,
+        orderIsMain: element.orderIsMain ?? false,
+        subOrders: _getPendingOrders(element.subOrders ?? []),
+        kilometer: 0,
+        storeBranchToClientDistance: 0,
+      ));
     });
 
     return ordersModels;
@@ -83,16 +86,19 @@ class PendingOrder extends DataModel {
           DateFormat.Md()
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       orders.add(OrderModel(
-          branchName: element.branchName ?? S.current.unknown,
-          createdDate: create,
-          deliveryDate: delivery,
-          id: element.id ?? -1,
-          note: element.note ?? '',
-          orderCost: element.orderCost ?? 0,
-          orderIsMain: false,
-          state: StatusHelper.getStatusEnum(element.state),
-          storeName: element.storeOwnerName,
-          subOrders: []));
+        branchName: element.branchName ?? S.current.unknown,
+        createdDate: create,
+        deliveryDate: delivery,
+        id: element.id ?? -1,
+        note: element.note ?? '',
+        orderCost: element.orderCost ?? 0,
+        orderIsMain: false,
+        state: StatusHelper.getStatusEnum(element.state),
+        storeName: element.storeOwnerName,
+        subOrders: [],
+        kilometer: 0,
+        storeBranchToClientDistance: 0,
+      ));
     });
     return orders;
   }
