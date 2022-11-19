@@ -49,6 +49,7 @@ class SubOrdersStateManager {
         OrderModel primaryOrder = OrderModel(
           storeName: order.storeName,
           branchName: order.branchName,
+          storeId: order.storeID,
           state: order.state,
           orderCost: order.orderCost,
           branchID: order.branchID,
@@ -60,8 +61,8 @@ class SubOrdersStateManager {
               ' 📅 ' +
               DateFormat.Md().format(order.deliveryDate),
           id: order.id,
-          orderIsMain: order.orderIsMain,
-          subOrders: order.subOrders,
+          orderIsMain: true,
+          subOrders: [],
           created: null,
           delivery: null,
           kilometer: 0,

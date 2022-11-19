@@ -757,7 +757,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       get<_i146.OrderActionLogsScreen>(),
       get<_i90.OrdersWithoutDistanceScreen>(),
       get<_i155.OrdersReceiveCashScreen>(),
-      get<_i104.SubOrdersScreen>()));
+      get<_i104.SubOrdersScreen>(),
+      get<_i143.NewOrderLinkScreen>()));
   gh.factory<_i204.PaymentsModule>(() => _i204.PaymentsModule(
       get<_i180.CaptainFinanceByCountOrderScreen>(),
       get<_i181.CaptainFinanceByHoursScreen>(),

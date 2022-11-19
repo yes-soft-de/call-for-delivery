@@ -632,6 +632,7 @@ class NewOrderLinkStateLoaded extends States {
             .show(screenState.context);
       }
       screenState.addNewOrder(CreateOrderRequest(
+        storeId: screenState.storeID,
         orderID: screenState.orderId,
         pdf: pdfModel?.getPdfRequest(),
         fromBranch: screenState.branch,
@@ -659,6 +660,7 @@ class NewOrderLinkStateLoaded extends States {
   // function create order without upload image
   void createOrderWithoutImage() {
     screenState.addNewOrder(CreateOrderRequest(
+        storeId: screenState.storeID,
         orderID: screenState.orderId,
         fromBranch: screenState.branch,
         pdf: pdfModel?.getPdfRequest(),

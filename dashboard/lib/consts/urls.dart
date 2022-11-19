@@ -2,15 +2,15 @@
 // Production Domain ===> 'http://46.101.100.62';
 class Urls {
   static List<String> admins = [
-    // '551111111',
-    // '551111112',
-    // '551111113',
-    // '552222223',
-    // '552222224',
-    // '552222225',
+    '551111111',
+    '551111112',
+    '551111113',
+    '552222223',
+    '552222224',
+    '552222225',
   ];
   /*--------BASES-------------------*/
-  static const String DOMAIN = 'http://46.101.100.62';
+  static const String DOMAIN = 'http://134.209.241.49';
   static const String BASE_API = DOMAIN + '';
   static const String VERSION = '/v1';
   static const GEO_DISTANCE = DOMAIN + '/v1/geodistance/geodistance';
@@ -285,8 +285,8 @@ class Urls {
   static const DELETE_ORDER = BASE_API_ORDER + '/ordercancelbyadmin';
   static const UNASSIGNED_ORDER_FROM_CAPTAIN =
       BASE_API_ORDER + '/rependingacceptedorder';
-  static const ORDER_NONSUB_API_LINK = DOMAIN + '/v1/order/';
-  static const NEW_ORDER_API_LINK = DOMAIN + '/v1/order/createsuborderbyadmin';
+  static const ORDER_NONSUB_API_LINK = BASE_API_ORDER + '/v1/order/';
+  static const NEW_ORDER_API_LINK = BASE_API_ORDER + '/createsuborderbyadmin';
 
   /*-----------------------------subscription----------------------------*/
   static const String BASE_API_SUBSCRIPTION =

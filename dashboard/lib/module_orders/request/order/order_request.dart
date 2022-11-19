@@ -71,7 +71,7 @@ class CreateOrderRequest {
       data['detail'] = this.detail;
     }
     if (this.orderID != null) {
-      data[''] = this.orderID;
+      data['primaryOrder'] = this.orderID;
     }
     if (distance != null) {
       data['storeBranchToClientDistance'] =
