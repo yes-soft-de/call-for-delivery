@@ -5,7 +5,7 @@ namespace App\Response\Admin\Order;
 use DateTime;
 use OpenApi\Annotations as OA;
 
-class OrderByIdGetForAdminResponse
+class OrderUpdateByAdminResponse
 {
     public int $id;
 
@@ -125,10 +125,10 @@ class OrderByIdGetForAdminResponse
     public float|null $storeBranchToClientDistance;
 
     /**
-     * @OA\Property(type="array", property="subOrder",
+     * @OA\Property(type="array", property="subOrders",
      *     @OA\Items(type="object"))
      */
-    public $subOrder;
+    public $subOrders;
 
     /**
      * @var int|null
