@@ -32,6 +32,9 @@ use App\Response\Admin\Order\OrderCancelByAdminResponse;
 use App\Response\Admin\Order\OrderCreateByAdminResponse;
 use App\Response\Admin\Order\OrderGetForAdminResponse;
 use App\Response\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminResponse;
+use App\Response\Admin\Order\OrderStateUpdateByAdminResponse;
+use App\Response\Admin\Order\OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse;
+use App\Response\Admin\Order\OrderUpdateByAdminResponse;
 use App\Response\Order\BidOrderByIdGetForAdminResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
 use App\Service\ChatRoom\OrderChatRoomService;
@@ -161,7 +164,7 @@ class AdminOrderService
                 $order['captain'] = $this->captainService->getCaptainInfoForAdmin($order['captainUserId']);
             }
 
-            $order['subOrders'] = $this->adminOrderManager->getSubOrdersByPrimaryOrderIdForAdmin($order['id']);
+            $order['subOrder'] = $this->adminOrderManager->getSubOrdersByPrimaryOrderIdForAdmin($order['id']);
         }
 
         return $this->autoMapping->map("array", OrderByIdGetForAdminResponse::class, $order);
@@ -306,7 +309,7 @@ class AdminOrderService
     }
 
     // This function for returning order which being accepted by captain to pending status under certain circumstances
-    public function rePendingAcceptedOrderByAdmin(RePendingAcceptedOrderByAdminRequest $request, int $userId): string|null|OrderByIdGetForAdminResponse
+    public function rePendingAcceptedOrderByAdmin(RePendingAcceptedOrderByAdminRequest $request, int $userId): string|null|OrderStateUpdateByAdminResponse
     {
         // First, check order status if we can return it to pending
         $orderEntity = $this->adminOrderManager->getOrderByIdForAdmin($request->getOrderId());
@@ -364,7 +367,7 @@ class AdminOrderService
                     error_log($e);
                 }
 
-                return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $orderResult);
+                return $this->autoMapping->map(OrderEntity::class, OrderStateUpdateByAdminResponse::class, $orderResult);
             }
 
             return OrderResultConstant::ORDER_RETURNING_TO_PENDING_HAS_PROBLEM;
@@ -397,7 +400,7 @@ class AdminOrderService
        return $this->autoMapping->map(OrderEntity::class, OrderUpdateToHiddenResponse::class, $orderEntity);
     }  
 
-    public function orderUpdateByAdmin(UpdateOrderByAdminRequest $request, int $userId): string|null|OrderByIdGetForAdminResponse
+    public function orderUpdateByAdmin(UpdateOrderByAdminRequest $request, int $userId): string|null|OrderUpdateByAdminResponse
     {
         $order = $this->adminOrderManager->getOrderByIdWithStoreOrderDetailForAdmin($request->getId());
 
@@ -460,7 +463,7 @@ class AdminOrderService
             }
         }
       
-        return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
+        return $this->autoMapping->map(OrderEntity::class, OrderUpdateByAdminResponse::class, $order);
       }
 
     public function createOrderByAdmin(OrderCreateByAdminRequest $request, int $userId): string|CanCreateOrderResponse|OrderCreateByAdminResponse
@@ -650,7 +653,7 @@ class AdminOrderService
         return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
     }
 
-    public function updateOrderStateByAdmin(OrderStateUpdateByAdminRequest $request, int $userId): int|OrderByIdGetForAdminResponse|null
+    public function updateOrderStateByAdmin(OrderStateUpdateByAdminRequest $request, int $userId): int|OrderStateUpdateByAdminResponse|null
     {
         $orderResult = $this->adminOrderManager->updateOrderStateByAdmin($request);
 
@@ -705,7 +708,7 @@ class AdminOrderService
             }
         }
 
-        return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $orderResult[0]);
+        return $this->autoMapping->map(OrderEntity::class, OrderStateUpdateByAdminResponse::class, $orderResult[0]);
       }
       
     public function filterCaptainOrdersByAdmin(OrderCaptainFilterByAdminRequest $request): array
@@ -774,7 +777,7 @@ class AdminOrderService
         return $this->adminOrderManager->filterOrders($request);  
     }
      
-    public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request, int $userId): OrderByIdGetForAdminResponse
+    public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request, int $userId): OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse
     {
         $order = $this->adminOrderManager->updateStoreBranchToClientDistanceByAdmin($request);
 
@@ -788,7 +791,7 @@ class AdminOrderService
                 OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_BY_ADMIN_ACTION_CONST, null, null);
         }
 
-        return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
+        return $this->autoMapping->map(OrderEntity::class, OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse::class, $order);
     }
 
     public function createSubOrderByAdmin(SubOrderCreateByAdminRequest $request, int $userId): string|OrderCreateByAdminResponse
@@ -932,7 +935,7 @@ class AdminOrderService
     } 
      
     public function updateStoreBranchToClientDistanceAndDestinationByAdmin(OrderStoreBranchToClientDistanceAndDestinationByAdminRequest $request,
-                                                                           int $userId): ?OrderByIdGetForAdminResponse
+                                                                           int $userId): ?OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse
     {
         $order = $this->adminOrderManager->updateStoreBranchToClientDistanceAndDestinationByAdmin($request);
 
@@ -944,7 +947,7 @@ class AdminOrderService
         $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
             OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_AND_DESTINATION_BY_ADMIN_ACTION_CONST, null, null);
 
-        return $this->autoMapping->map(OrderEntity::class, OrderByIdGetForAdminResponse::class, $order);
+        return $this->autoMapping->map(OrderEntity::class, OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse::class, $order);
     }
 
     /**
