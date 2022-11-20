@@ -62,7 +62,7 @@ class SubOrdersStateManager {
               DateFormat.Md().format(order.deliveryDate),
           id: order.id,
           orderIsMain: true,
-          subOrders: [],
+          subOrders: order.subOrders,
           created: null,
           delivery: null,
           kilometer: 0,
