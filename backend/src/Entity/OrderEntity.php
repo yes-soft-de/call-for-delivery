@@ -115,6 +115,10 @@ class OrderEntity
     #[ORM\Column(type: 'integer', nullable: true)]
     private $conflictedAnswersResolvedBy;
 
+    // store isHide value before hide order for updating it
+    #[ORM\Column(type: 'integer', options: ["default" => 2])]
+    private $previousVisibility;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
@@ -590,6 +594,18 @@ class OrderEntity
     public function setConflictedAnswersResolvedBy(?int $conflictedAnswersResolvedBy): self
     {
         $this->conflictedAnswersResolvedBy = $conflictedAnswersResolvedBy;
+
+        return $this;
+    }
+
+    public function getPreviousVisibility(): int
+    {
+        return $this->previousVisibility;
+    }
+
+    public function setPreviousVisibility(int $previousVisibility): self
+    {
+        $this->previousVisibility = $previousVisibility;
 
         return $this;
     }

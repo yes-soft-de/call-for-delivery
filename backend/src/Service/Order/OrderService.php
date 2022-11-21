@@ -1378,23 +1378,23 @@ class OrderService
             // }
 
             // *** Check if there are any remaining cars in order to hide or show order ***
-            $request->setIsHide($order['isHide']);
+            //$request->setIsHide($order['isHide']);
 
-            $checkRemainingCarsResult = $this->subscriptionService->checkRemainingCarsOnlyByOrderId($request->getId());
+            //$checkRemainingCarsResult = $this->subscriptionService->checkRemainingCarsOnlyByOrderId($request->getId());
 
-            if ($checkRemainingCarsResult !== SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED) {
-                if ($checkRemainingCarsResult <= 0) {
-                    $request->setIsHide(OrderIsHideConstant::ORDER_HIDE_TEMPORARILY);
-
-                } else {
-                    $request->setIsHide(OrderIsHideConstant::ORDER_SHOW);
-                }
-
-                // But if the order is a sub order, then we have to hide it in all circumstances
-                if ($order['primaryOrderId']) {
-                    $request->setIsHide(OrderIsHideConstant::ORDER_HIDE);
-                }
-            }
+//            if ($checkRemainingCarsResult !== SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED) {
+//                if ($checkRemainingCarsResult <= 0) {
+//                    $request->setIsHide(OrderIsHideConstant::ORDER_HIDE_TEMPORARILY);
+//
+//                } else {
+//                    $request->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+//                }
+//
+//                // But if the order is a sub order, then we have to hide it in all circumstances
+//                if ($order['primaryOrderId']) {
+//                    $request->setIsHide(OrderIsHideConstant::ORDER_HIDE);
+//                }
+//            }
             // *** End check ***
 
             $order = $this->orderManager->orderUpdate($request);
