@@ -73,6 +73,7 @@ class OrderManager
        $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
        $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_NORMAL);
     //    $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+        $orderEntity->setPreviousVisibility($request->getIsHide());
 
        $this->entityManager->persist($orderEntity);
        $this->entityManager->flush();
@@ -93,6 +94,7 @@ class OrderManager
         $orderEntity->setState(OrderStateConstant::ORDER_STATE_INITIALIZED);
         $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_BID);
         $orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+        $orderEntity->setPreviousVisibility($orderEntity->getIsHide());
         $orderEntity->setOrderIsMain(true);
 
         $this->entityManager->persist($orderEntity);
@@ -445,6 +447,7 @@ class OrderManager
        $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
        $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_NORMAL);
        $orderEntity->setIsHide(OrderIsHideConstant::ORDER_HIDE);
+        $orderEntity->setPreviousVisibility($orderEntity->getIsHide());
 
        $this->entityManager->persist($orderEntity);
        $this->entityManager->flush();
@@ -596,6 +599,9 @@ class OrderManager
 
         $orderEntity = $this->autoMapping->mapToObject(UpdateOrderRequest::class, OrderEntity::class, $request, $orderEntity);
 
+        // update order visibility to match last state in which it was before hiding the order
+        $orderEntity->setIsHide($orderEntity->getPreviousVisibility());
+
         $orderEntity->setDeliveryDate($request->getDeliveryDate());
         
         $this->entityManager->flush();
@@ -608,10 +614,14 @@ class OrderManager
     public function updateOrderToHiddenForStore(int $id): OrderEntity|string
     {
         $orderEntity = $this->orderRepository->find($id);
+
         if(! $orderEntity) {
             return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
         }
 
+        // save current visibility
+        $orderEntity->setPreviousVisibility($orderEntity->getIsHide());
+        // update visibility
         $orderEntity->setIsHide(OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE);
 
         $this->entityManager->flush();
