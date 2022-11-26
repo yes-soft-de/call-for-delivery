@@ -8370,11 +8370,21 @@ class S {
     );
   }
 
-  /// `Order log `
+  /// `Order log`
   String get storeOrderLog {
     return Intl.message(
-      'Order log ',
+      'Order log',
       name: 'storeOrderLog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain Ratings`
+  String get captainsRating {
+    return Intl.message(
+      'Captain Ratings',
+      name: 'captainsRating',
       desc: '',
       args: [],
     );

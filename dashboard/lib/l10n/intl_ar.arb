@@ -831,5 +831,6 @@
     "storeAnswer": "جواب المتجر",
     "captainAnswer": "جواب الكابتن",
     "areSureAboutResolveThisOrder": "هل انت متأكد في رغبتك في حل تعارض هذا الطلب",
-    "storeOrderLog":"سجل طلبات"
+    "storeOrderLog":"سجل طلبات",
+    "captainsRating":"تقييمات الكابتن"
 }

@@ -222,6 +222,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Captain updated successfully"),
         "captains": MessageLookupByLibrary.simpleMessage("Captains"),
         "captainsOffer": MessageLookupByLibrary.simpleMessage("Captains offer"),
+        "captainsRating":
+            MessageLookupByLibrary.simpleMessage("Captain Ratings"),
         "car": MessageLookupByLibrary.simpleMessage("Car"),
         "carCount": MessageLookupByLibrary.simpleMessage("Car count"),
         "carModel": MessageLookupByLibrary.simpleMessage("Car Model"),
@@ -1089,7 +1091,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeImage": MessageLookupByLibrary.simpleMessage("Store Image"),
         "storeInfo": MessageLookupByLibrary.simpleMessage("Store Info"),
         "storeName": MessageLookupByLibrary.simpleMessage("Store Name"),
-        "storeOrderLog": MessageLookupByLibrary.simpleMessage("Order log "),
+        "storeOrderLog": MessageLookupByLibrary.simpleMessage("Order log"),
         "storeOrders": MessageLookupByLibrary.simpleMessage("Store orders"),
         "storeOwner": MessageLookupByLibrary.simpleMessage("Store Owner"),
         "storePayments": MessageLookupByLibrary.simpleMessage("Store payments"),

@@ -832,5 +832,6 @@
     "storeAnswer": "Store Answer",
     "captainAnswer": "Captain Answer",
     "areSureAboutResolveThisOrder": "Are sure about resolving this order finance conflict",
-    "storeOrderLog":"Order log"
+    "storeOrderLog": "Order log",
+    "captainsRating": "Captain Ratings"
 }

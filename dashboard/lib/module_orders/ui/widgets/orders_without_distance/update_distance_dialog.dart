@@ -73,7 +73,8 @@ class _UpdateDistanceDialogState extends State<UpdateDistanceDialog> {
                               destination: coordinations ?? LatLng(0, 0),
                               origin: widget.branchLocation,
                               destance: (d, cost) {
-                                distance = num.tryParse(d?.replaceAll(',', '') ?? '');
+                                distance =
+                                    num.tryParse(d?.replaceAll(',', '') ?? '');
                                 setState(() {});
                               },
                               storeID: -1,

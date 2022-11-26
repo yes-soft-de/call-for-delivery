@@ -220,6 +220,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تحديث الكابتن بنجاح"),
         "captains": MessageLookupByLibrary.simpleMessage("الكباتن"),
         "captainsOffer": MessageLookupByLibrary.simpleMessage("عروض الكباتن"),
+        "captainsRating":
+            MessageLookupByLibrary.simpleMessage("تقييمات الكابتن"),
         "car": MessageLookupByLibrary.simpleMessage("سيارة "),
         "carCount": MessageLookupByLibrary.simpleMessage("عدد السيارات"),
         "carModel": MessageLookupByLibrary.simpleMessage("نوع السيارة"),
@@ -1078,7 +1080,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeImage": MessageLookupByLibrary.simpleMessage("صورة المتجر"),
         "storeInfo": MessageLookupByLibrary.simpleMessage("معلومات المتجر"),
         "storeName": MessageLookupByLibrary.simpleMessage("اسم المحل التجاري"),
-        "storeOrderLog": MessageLookupByLibrary.simpleMessage(" سجل طلبات"),
+        "storeOrderLog": MessageLookupByLibrary.simpleMessage("سجل طلبات"),
         "storeOrders": MessageLookupByLibrary.simpleMessage("طلبات المتجر"),
         "storeOwner": MessageLookupByLibrary.simpleMessage("محل تجاري"),
         "storePayments":

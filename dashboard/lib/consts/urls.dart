@@ -125,8 +125,8 @@ class Urls {
   static const UPDATE_STORE_INFO =
       BASE_API_STORE + '/storeowner/updatestoreownerprofilebyadmin';
   static const UPDATE_ORDER_API = BASE_API_ORDER + '/orderupdatebyadmin';
-  static const UPDATE_DISTANCE_API =
-      BASE_API_ORDER + '/updatestorebranchtoclientdistanceanddestinationbyadmin';
+  static const UPDATE_DISTANCE_API = BASE_API_ORDER +
+      '/updatestorebranchtoclientdistanceanddestinationbyadmin';
   static const UPDATE_ORDER_STATUS_API =
       BASE_API_ORDER + '/orderstateupdatebyadmin';
   static const HIDE_ORDER_API = BASE_API_ORDER + '/updateordertohidden';
@@ -252,6 +252,9 @@ class Urls {
       BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainfinancialsystemdetailupdate';
   static const GET_CAPTAIN_FINANCE_DUES =
       BASE_CAPTAIN_ACCOUNT_BALANCE_DUES + '/captainfinancialduesforadmin';
+  static const GET_CAPTAIN_RATING_REPORT =
+      BASE_API + VERSION_ADMIN + '/report/captainsratings';
+
   /*-----------------Supplier--Categories---------------*/
   static const GET_SUPPLIER_CATEGORIES =
       BASE_API_SUPPLIER_CATE + '/suppliercategories';
@@ -287,7 +290,8 @@ class Urls {
       BASE_API_ORDER + '/rependingacceptedorder';
   static const ORDER_NONSUB_API_LINK = BASE_API_ORDER + '/v1/order/';
   static const NEW_ORDER_API_LINK = BASE_API_ORDER + '/createsuborderbyadmin';
-  static const RESOLVE_CONFLICTS_ORDER = BASE_API_ORDER + '/resolveconflictedanswersbyadmin';
+  static const RESOLVE_CONFLICTS_ORDER =
+      BASE_API_ORDER + '/resolveconflictedanswersbyadmin';
 
   /*-----------------------------subscription----------------------------*/
   static const String BASE_API_SUBSCRIPTION =
