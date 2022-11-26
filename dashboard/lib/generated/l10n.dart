@@ -8329,6 +8329,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Order conflicted Successfully`
+  String get orderConflictedSuccessfully {
+    return Intl.message(
+      'Order conflicted Successfully',
+      name: 'orderConflictedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store Answer`
+  String get storeAnswer {
+    return Intl.message(
+      'Store Answer',
+      name: 'storeAnswer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain Answer`
+  String get captainAnswer {
+    return Intl.message(
+      'Captain Answer',
+      name: 'captainAnswer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are sure about resolving this order finance conflict`
+  String get areSureAboutResolveThisOrder {
+    return Intl.message(
+      'Are sure about resolving this order finance conflict',
+      name: 'areSureAboutResolveThisOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order log `
+  String get storeOrderLog {
+    return Intl.message(
+      'Order log ',
+      name: 'storeOrderLog',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

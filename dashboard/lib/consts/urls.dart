@@ -126,7 +126,7 @@ class Urls {
       BASE_API_STORE + '/storeowner/updatestoreownerprofilebyadmin';
   static const UPDATE_ORDER_API = BASE_API_ORDER + '/orderupdatebyadmin';
   static const UPDATE_DISTANCE_API =
-      BASE_API_ORDER + '/updatestorebranchtoclientdistancebyadmin';
+      BASE_API_ORDER + '/updatestorebranchtoclientdistanceanddestinationbyadmin';
   static const UPDATE_ORDER_STATUS_API =
       BASE_API_ORDER + '/orderstateupdatebyadmin';
   static const HIDE_ORDER_API = BASE_API_ORDER + '/updateordertohidden';
@@ -287,6 +287,7 @@ class Urls {
       BASE_API_ORDER + '/rependingacceptedorder';
   static const ORDER_NONSUB_API_LINK = BASE_API_ORDER + '/v1/order/';
   static const NEW_ORDER_API_LINK = BASE_API_ORDER + '/createsuborderbyadmin';
+  static const RESOLVE_CONFLICTS_ORDER = BASE_API_ORDER + '/resolveconflictedanswersbyadmin';
 
   /*-----------------------------subscription----------------------------*/
   static const String BASE_API_SUBSCRIPTION =

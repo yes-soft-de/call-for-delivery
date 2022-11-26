@@ -826,5 +826,10 @@
     "areYouSureAboutCreatingSubOrder": "هل أنت متأكد من رغبتك في إنشاء طلب فرعي ، بإمكانك فك ارتباطه لاحقا كطلب مستقل",
     "unlinkSubOrders": "فك ارتباط الطلبات الفرعية",
     "primaryOrder": "طلب أساسي",
-    "suborder": "طلب فرعي"
+    "suborder": "طلب فرعي",
+    "orderConflictedSuccessfully": "تم حل التعارض بنجاح",
+    "storeAnswer": "جواب المتجر",
+    "captainAnswer": "جواب الكابتن",
+    "areSureAboutResolveThisOrder": "هل انت متأكد في رغبتك في حل تعارض هذا الطلب",
+    "storeOrderLog":"سجل طلبات"
 }

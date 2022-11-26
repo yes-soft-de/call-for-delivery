@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_notice/ui/widget/filter_bar.dart';
+import 'package:c4d/module_stores/model/store_profile_model.dart';
 import 'package:c4d/module_stores/request/order_filter_request.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import '../../../state_manager/order/order_logs_state_manager.dart';
@@ -58,12 +59,14 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
     widget._stateManager.getOrdersFilters(this, ordersFilter, loading);
   }
 
+  StoreProfileModel? store;
   @override
   Widget build(BuildContext context) {
     if (storeID == -1) {
       var arg = ModalRoute.of(context)?.settings.arguments;
-      if (arg != null && arg is int) {
-        storeID = arg;
+      if (arg != null && arg is StoreProfileModel) {
+        store = arg;
+        storeID = arg.id;
         ordersFilter = FilterOrderRequest(
             storeOwnerProfileId: storeID,
             state: 'pending',
@@ -75,7 +78,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(
         context,
-        title: S.current.orderLog,
+        title: S.current.storeOrderLog + ' ' + (store?.storeOwnerName ?? ''),
       ),
       body: Column(
         children: [

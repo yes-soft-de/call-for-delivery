@@ -210,7 +210,7 @@ class StoreProfileLoadedState extends States {
               onTapCard: () {
                 Navigator.pushNamed(
                     screenState.context, StoresRoutes.LOGS_ORDERS_SCREEN,
-                    arguments: profile?.id);
+                    arguments: profile);
               }),
           cardTap(
               image: ImageAsset.PAYMENT,

@@ -109,6 +109,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "هل أنت متأكد من رغبتك في حذف هذا الاشتراك"),
         "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد من رغبتك في حذف حسابك ، لن تتمكن من استخدام هذه البيانات في تسجيل الدخول بعد الآن"),
+        "areSureAboutResolveThisOrder": MessageLookupByLibrary.simpleMessage(
+            "هل انت متأكد في رغبتك في حل تعارض هذا الطلب"),
         "areYouSureAboutCreatingSubOrder": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من رغبتك في إنشاء طلب فرعي ، بإمكانك فك ارتباطه لاحقا كطلب مستقل"),
         "areYouSureAboutDeleteOrder": MessageLookupByLibrary.simpleMessage(
@@ -169,6 +171,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("قبل الكابتن الطلب"),
         "captainActivated":
             MessageLookupByLibrary.simpleMessage("تم تفعيل الكابتن بنجاح"),
+        "captainAnswer": MessageLookupByLibrary.simpleMessage("جواب الكابتن"),
         "captainDistance":
             MessageLookupByLibrary.simpleMessage("تقديرات الكابتن"),
         "captainFinance":
@@ -721,6 +724,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("سعر الطلبية للمتجر"),
         "orderCashWithCaptain":
             MessageLookupByLibrary.simpleMessage("المبلغ المقبوض مع الكابتن"),
+        "orderConflictedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم حل التعارض بنجاح"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "سعر الطلب شامل تكلفة التوصيل"),
         "orderCount": MessageLookupByLibrary.simpleMessage("عدد الطلبات"),
@@ -1056,6 +1061,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "store": MessageLookupByLibrary.simpleMessage("المتجر"),
         "storeAccountInit":
             MessageLookupByLibrary.simpleMessage("تهيئة الحساب"),
+        "storeAnswer": MessageLookupByLibrary.simpleMessage("جواب المتجر"),
         "storeAnswerOrderCash": MessageLookupByLibrary.simpleMessage(
             "قام صاحب المتجر بتأكيد/نفي استلامه لمبلغ الطلب الكاش"),
         "storeAvailable": MessageLookupByLibrary.simpleMessage("المتجر متوفر"),
@@ -1072,6 +1078,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeImage": MessageLookupByLibrary.simpleMessage("صورة المتجر"),
         "storeInfo": MessageLookupByLibrary.simpleMessage("معلومات المتجر"),
         "storeName": MessageLookupByLibrary.simpleMessage("اسم المحل التجاري"),
+        "storeOrderLog": MessageLookupByLibrary.simpleMessage(" سجل طلبات"),
         "storeOrders": MessageLookupByLibrary.simpleMessage("طلبات المتجر"),
         "storeOwner": MessageLookupByLibrary.simpleMessage("محل تجاري"),
         "storePayments":

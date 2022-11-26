@@ -827,5 +827,10 @@
     "areYouSureAboutCreatingSubOrder": "Are you sure about creating new sub order , you can split later if needed",
     "unlinkSubOrders": "Unlink suborders",
     "primaryOrder": "Primary order",
-    "suborder": "Suborder"
+    "suborder": "Suborder",
+    "orderConflictedSuccessfully": "Order conflicted Successfully",
+    "storeAnswer": "Store Answer",
+    "captainAnswer": "Captain Answer",
+    "areSureAboutResolveThisOrder": "Are sure about resolving this order finance conflict",
+    "storeOrderLog":"Order log"
 }

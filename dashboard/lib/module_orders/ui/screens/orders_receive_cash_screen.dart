@@ -41,6 +41,7 @@ class OrdersReceiveCashScreenState extends State<OrdersReceiveCashScreen> {
   }
 
   var today = DateTime.now();
+  OrdersReceiveCashStateManager get manager => widget._stateManager;
   @override
   void initState() {
     super.initState();

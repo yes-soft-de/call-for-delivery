@@ -110,6 +110,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Are sure about delete this subscriptions"),
         "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
             "Are you sure about deleting your account , you won\'t be able to login with this credential any more"),
+        "areSureAboutResolveThisOrder": MessageLookupByLibrary.simpleMessage(
+            "Are sure about resolving this order finance conflict"),
         "areYouSureAboutCreatingSubOrder": MessageLookupByLibrary.simpleMessage(
             "Are you sure about creating new sub order , you can split later if needed"),
         "areYouSureAboutDeleteOrder": MessageLookupByLibrary.simpleMessage(
@@ -171,6 +173,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain Accepted Order"),
         "captainActivated": MessageLookupByLibrary.simpleMessage(
             "Captain Activated Successfully"),
+        "captainAnswer": MessageLookupByLibrary.simpleMessage("Captain Answer"),
         "captainDistance":
             MessageLookupByLibrary.simpleMessage("Captain Distance"),
         "captainFinance":
@@ -725,6 +728,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Order cost to store"),
         "orderCashWithCaptain":
             MessageLookupByLibrary.simpleMessage("Cash With Captain"),
+        "orderConflictedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Order conflicted Successfully"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "Order cost contains delivery tax"),
         "orderCount": MessageLookupByLibrary.simpleMessage("Order count"),
@@ -1065,6 +1070,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "store": MessageLookupByLibrary.simpleMessage("Store"),
         "storeAccountInit":
             MessageLookupByLibrary.simpleMessage("Setup Account"),
+        "storeAnswer": MessageLookupByLibrary.simpleMessage("Store Answer"),
         "storeAnswerOrderCash": MessageLookupByLibrary.simpleMessage(
             "Store answer confirm/denied receiving order cash from captain"),
         "storeAvailable":
@@ -1083,6 +1089,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeImage": MessageLookupByLibrary.simpleMessage("Store Image"),
         "storeInfo": MessageLookupByLibrary.simpleMessage("Store Info"),
         "storeName": MessageLookupByLibrary.simpleMessage("Store Name"),
+        "storeOrderLog": MessageLookupByLibrary.simpleMessage("Order log "),
         "storeOrders": MessageLookupByLibrary.simpleMessage("Store orders"),
         "storeOwner": MessageLookupByLibrary.simpleMessage("Store Owner"),
         "storePayments": MessageLookupByLibrary.simpleMessage("Store payments"),

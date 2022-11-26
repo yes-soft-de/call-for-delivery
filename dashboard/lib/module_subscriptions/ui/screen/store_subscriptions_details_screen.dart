@@ -70,10 +70,7 @@ class StoreSubscriptionsFinanceDetailsScreenState
             title: S.current.financeSubscriptionDetails,
             actions: [
               Visibility(
-                visible: model.isCurrent ||
-                    model.isFuture ||
-                    (model.status == 'active' ||
-                        model.status == 'cars finished'),
+                visible: model.isCurrent || model.isFuture,
                 child: CustomC4dAppBar.actionIcon(context, onTap: () {
                   showDialog(
                       context: context,
@@ -116,7 +113,10 @@ class StoreSubscriptionsFinanceDetailsScreenState
                 }, icon: Icons.delete),
               ),
               Visibility(
-                visible: model.isCurrent,
+                visible: model.isCurrent ||
+                    model.isFuture ||
+                    (model.status == 'active' ||
+                        model.status == 'cars finished'),
                 child: CustomC4dAppBar.actionIcon(context, onTap: () {
                   Navigator.of(context).pushNamed(
                       SubscriptionsRoutes.EDIT_SUBSCRIPTION_SCREEN,

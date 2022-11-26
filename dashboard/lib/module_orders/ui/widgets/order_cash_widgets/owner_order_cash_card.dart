@@ -86,32 +86,34 @@ class OrderCashCard extends StatelessWidget {
               children: [
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(
-                      primary: Colors.green, shape: StadiumBorder()),
+                    backgroundColor: Theme.of(context).colorScheme.primary,
+                    shape: StadiumBorder(),
+                  ),
                   onPressed: () {
-                    answer(1);
+                    answer(3);
                   },
                   label: Text(
-                    S.current.financePaid,
+                    S.current.captainAnswer,
                     style: TextStyle(color: Colors.white),
                   ),
                   icon: Icon(
-                    Icons.thumb_up_alt_rounded,
+                    Icons.delivery_dining_rounded,
                     color: Colors.white,
                   ),
                 ),
                 Spacer(),
                 ElevatedButton.icon(
                     icon: Icon(
-                      Icons.thumb_down_alt_rounded,
+                      Icons.store_rounded,
                       color: Colors.white,
                     ),
                     style: ElevatedButton.styleFrom(
-                        primary: Colors.red, shape: StadiumBorder()),
+                        backgroundColor: Colors.red, shape: StadiumBorder()),
                     onPressed: () {
                       answer(2);
                     },
                     label: Text(
-                      S.current.financeUnPaid,
+                      S.current.storeAnswer,
                       style: TextStyle(color: Colors.white),
                     ))
               ],
