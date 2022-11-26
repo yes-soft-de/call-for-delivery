@@ -44,6 +44,8 @@ class StatusCodeHelper {
         return S.current.unableToDeletePaymentsExist;
       case '9302':
         return S.current.thereIsNoValidSubscription;
+      case '9453':
+        return S.current.cannotSubscribeToCaptainOffer;
       case '-1':
         return S.current.dataDecodeError;
       default:

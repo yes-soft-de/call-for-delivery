@@ -833,5 +833,6 @@
     "captainAnswer": "Captain Answer",
     "areSureAboutResolveThisOrder": "Are sure about resolving this order finance conflict",
     "storeOrderLog": "Order log",
-    "captainsRating": "Captain Ratings"
+    "captainsRating": "Captain Ratings",
+    "cannotSubscribeToCaptainOffer": "You cannot subscribe with captain offer because store out of subscriptions"
 }

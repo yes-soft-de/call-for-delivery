@@ -832,5 +832,6 @@
     "captainAnswer": "جواب الكابتن",
     "areSureAboutResolveThisOrder": "هل انت متأكد في رغبتك في حل تعارض هذا الطلب",
     "storeOrderLog":"سجل طلبات",
-    "captainsRating":"تقييمات الكابتن"
+    "captainsRating":"تقييمات الكابتن",
+    "cannotSubscribeToCaptainOffer":"لا يمكن الاشتراك بعرض الكابتن لأن المتجر لايمتلك اشتراك صالح"
 }

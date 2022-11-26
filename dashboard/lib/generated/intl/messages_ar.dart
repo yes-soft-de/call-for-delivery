@@ -164,6 +164,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancelled2": MessageLookupByLibrary.simpleMessage("ملغاة"),
         "cancelledHint": MessageLookupByLibrary.simpleMessage(
             "الطلب تم إلغاءه من جهة العميل"),
+        "cannotSubscribeToCaptainOffer": MessageLookupByLibrary.simpleMessage(
+            "لا يمكن الاشتراك بعرض الكابتن لأن المتجر لايمتلك اشتراك صالح"),
         "captain": MessageLookupByLibrary.simpleMessage("كابتن"),
         "captainAcceptOrderDescription":
             MessageLookupByLibrary.simpleMessage("الكابتن في طريقه إلى المتجر"),

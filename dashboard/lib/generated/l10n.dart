@@ -8389,6 +8389,16 @@ class S {
       args: [],
     );
   }
+
+  /// `You cannot subscribe with captain offer because store out of subscriptions`
+  String get cannotSubscribeToCaptainOffer {
+    return Intl.message(
+      'You cannot subscribe with captain offer because store out of subscriptions',
+      name: 'cannotSubscribeToCaptainOffer',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
