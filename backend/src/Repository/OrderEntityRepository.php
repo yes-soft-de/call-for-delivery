@@ -2442,7 +2442,9 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('orderEntity.isCashPaymentConfirmedByStore IS NOT NULL')
             ->andWhere('orderEntity.paidToProvider IS NOT NULL')
 
-            ->andWhere('orderEntity.hasPayConflictAnswers IS NULL')
+            ->andWhere('orderEntity.hasPayConflictAnswers IS NOT NULL')
+            ->andWhere('orderEntity.hasPayConflictAnswers = :conflictExist')
+            ->setParameter('conflictExist', OrderHasPayConflictAnswersConstant::ORDER_HAS_PAYMENT_CONFLICT_ANSWERS)
 
             ->orderBy('orderEntity.id', 'DESC');
 
