@@ -4,13 +4,11 @@ namespace App\Service\CaptainFinancialSystem\CaptainFinancialSystemTwo;
 
 use App\AutoMapping;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
-use App\Constant\GeoDistance\GeoDistanceResultConstant;
-use App\Constant\Order\OrderTypeConstant;
 use App\Manager\CaptainFinancialSystem\CaptainFinancialSystemTwo\CaptainFinancialSystemTwoOrderManager;
 use App\Response\CaptainFinancialSystem\CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse;
 
-// This service responsible for handling calculating the dues of a captain subscribed with
-// the second financial system (According to count of orders)
+// This service responsible for preparing the details of a specific captain financial dues for captain him/her self
+// Note: Financial dues according to the second financial system (count of orders)
 
 class CaptainFinancialSystemTwoGetBalanceDetailsService
 {
@@ -44,22 +42,16 @@ class CaptainFinancialSystemTwoGetBalanceDetailsService
 
         $response['sumPayments'] = $sumPayments;
 
-        $response['countOrdersWithoutDistance'] = 0;
-
-        // Get thr details of delivered orders by specific captain and between two dates
-        $detailsOrders = $this->captainFinancialSystemTwoOrderManager->getDetailOrdersByCaptainIdOnSpecificDate($captainId,
+        // Get count of orders without distance which delivered by the captain and during specific dates
+        $result = $this->captainFinancialSystemTwoOrderManager->getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate($captainId,
             $datesArray['fromDate'], $datesArray['toDate']);
 
-        foreach ($detailsOrders as $orderDetail) {
-            // Get orders which are without distance
-            if ($orderDetail['storeBranchToClientDistance'] === null || $orderDetail['storeBranchToClientDistance'] === (float)GeoDistanceResultConstant::ZERO_DISTANCE_CONST ) {
-                $response['countOrdersWithoutDistance'] += 1;
-            }
+        if (count($result) > 0) {
+            $response['countOrdersWithoutDistance'] = $result[0];
+
+        } else {
+            $response['countOrdersWithoutDistance'] = 0;
         }
-
-        // Get the sum amount of the dues of unpaid cash orders that the captain delivers during specific time
-        $response['amountForStore'] = $this->captainFinancialSystemTwoGetStoreAmountService->getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime($captainId,
-            $datesArray['fromDate'], $datesArray['toDate']);
 
         // Check if captain accomplish the target of the financial system, or not, or beyond
         $checkTarget = $this->checkAchievedFinancialSystemTarget($financialSystemDetail['countOrdersInMonth'],
@@ -105,7 +97,7 @@ class CaptainFinancialSystemTwoGetBalanceDetailsService
             $financialSystemDetail['salary'], $financialSystemDetail['monthCompensation'], $response['countOrdersCompleted'],
             $financialSystemDetail['countOrdersInMonth'], $financialSystemDetail['bounceMaxCountOrdersInMonth']);
 
-        $total = $response['financialDues'] - $sumPayments;
+        $total = round(($response['financialDues'] - $sumPayments), 2);
 
         $response['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
 
@@ -118,21 +110,10 @@ class CaptainFinancialSystemTwoGetBalanceDetailsService
         return $this->autoMapping->map('array', CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse::class, $response);
     }
 
-    // CORE FUNCTION OF CALCULATING THE DUES OF THE CAPTAIN
+    // To prepare the financial details for the captain
     public function calculateCaptainDues(int $captainId, array $financialSystemDetail, array $datesArray): array
     {
         $response = $this->initializeNecessaryFieldsForDuesCalculation($captainId, $datesArray);
-
-        // Get thr details of delivered orders by specific captain and between two dates
-        $detailsOrders = $this->captainFinancialSystemTwoOrderManager->getDetailOrdersByCaptainIdOnSpecificDate($captainId,
-            $datesArray['fromDate'], $datesArray['toDate']);
-
-        foreach ($detailsOrders as $orderDetail) {
-            if ($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH &&
-                $orderDetail['paidToProvider'] === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
-                $response['amountForStore'] += $orderDetail['captainOrderCost'];
-            }
-        }
 
         // Check if the captain achieve the target of the financial system
         $checkTarget = $this->checkAchievedFinancialSystemTarget($financialSystemDetail['countOrdersInMonth'],
@@ -201,16 +182,30 @@ class CaptainFinancialSystemTwoGetBalanceDetailsService
         $overdueOrdersResult = $this->captainFinancialSystemTwoOrderManager->getOverdueDeliveredOrdersByCaptainIdAndBetweenTwoDates($captainId,
             $datesArray['fromDate'], $datesArray['toDate']);
 
-        $response['countOrdersMaxFromNineteen'] = $overdueOrdersResult[0];
+        if (count($overdueOrdersResult) > 0) {
+            $response['countOrdersMaxFromNineteen'] = $overdueOrdersResult[0];
+
+        } else {
+            $response['countOrdersMaxFromNineteen'] = 0;
+        }
 
         // Get the count of delivered orders by specific captain and between two dates
         $ordersCountResult = $this->captainFinancialSystemTwoOrderManager->getDeliveredOrdersCountByCaptainIdAndBetweenTwoDates($captainId,
             $datesArray['fromDate'], $datesArray['toDate']);
 
-        $response['countOrdersCompleted'] = $ordersCountResult[0];
+        if (count($ordersCountResult) > 0) {
+            $response['countOrdersCompleted'] = $ordersCountResult[0];
+
+        } else {
+            $response['countOrdersCompleted'] = 0;
+        }
 
         // Each order overdue 19 Kilometer will be counted as two orders
         $response['countOrdersCompleted'] += $response['countOrdersMaxFromNineteen'];
+
+        // Get the sum amount of the dues of unpaid cash orders that the captain delivers during specific time
+        $response['amountForStore'] = $this->captainFinancialSystemTwoGetStoreAmountService->getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime($captainId,
+            $datesArray['fromDate'], $datesArray['toDate']);
 
         return $response;
     }

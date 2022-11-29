@@ -9,6 +9,8 @@ use App\Constant\Order\OrderTypeConstant;
 use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemTwoBalanceDetailManager;
 use App\Constant\GeoDistance\GeoDistanceResultConstant;
 
+// ******** Replaced by AdminCaptainFinancialSystemTwoGetBalanceDetailsService *********
+
 class AdminCaptainFinancialSystemTwoBalanceDetailService
 {
     private AdminCaptainFinancialSystemTwoBalanceDetailManager $adminCaptainFinancialSystemTwoBalanceDetailManager;

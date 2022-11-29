@@ -4,6 +4,7 @@ namespace App\Service\Admin\CaptainFinancialSystem;
 
 use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailManager;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
+use App\Service\Admin\CaptainFinancialSystem\CaptainFinancialSystemTwo\AdminCaptainFinancialSystemTwoGetBalanceDetailsService;
 use App\Service\CaptainPayment\CaptainPaymentService;
 use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse;
 use App\Entity\CaptainFinancialSystemDetailEntity;
@@ -29,12 +30,13 @@ class AdminCaptainFinancialSystemDetailService implements AdminCaptainFinancialS
     private CaptainFinancialSystemDateService $captainFinancialSystemDateService;
     private CaptainFinancialDuesService $captainFinancialDuesService;
     private AdminOrderService $adminOrderService;
+    private AdminCaptainFinancialSystemTwoGetBalanceDetailsService $adminCaptainFinancialSystemTwoGetBalanceDetailsService;
 
     public function __construct(CaptainPaymentService $captainPaymentService, AdminCaptainFinancialSystemOneBalanceDetailService $adminCaptainFinancialSystemOneBalanceDetailService,
                                 AdminCaptainFinancialSystemDetailManager $adminCaptainFinancialSystemDetailManager, AdminCaptainFinancialSystemTwoBalanceDetailService $adminCaptainFinancialSystemTwoBalanceDetailService,
                                 AutoMapping $autoMapping, AdminCaptainFinancialSystemThreeBalanceDetailService $adminCaptainFinancialSystemThreeBalanceDetailService,
                                 AdminCaptainFinancialSystemAccordingOnOrderService $adminCaptainFinancialSystemAccordingOnOrderService, CaptainFinancialSystemDateService $captainFinancialSystemDateService,
-                                CaptainFinancialDuesService $captainFinancialDuesService, AdminOrderService $adminOrderService)
+                                CaptainFinancialDuesService $captainFinancialDuesService, AdminOrderService $adminOrderService, AdminCaptainFinancialSystemTwoGetBalanceDetailsService $adminCaptainFinancialSystemTwoGetBalanceDetailsService)
     {
         $this->captainPaymentService = $captainPaymentService;
         $this->adminCaptainFinancialSystemOneBalanceDetailService = $adminCaptainFinancialSystemOneBalanceDetailService;
@@ -46,7 +48,7 @@ class AdminCaptainFinancialSystemDetailService implements AdminCaptainFinancialS
         $this->captainFinancialSystemDateService = $captainFinancialSystemDateService;
         $this->captainFinancialDuesService = $captainFinancialDuesService;
         $this->adminOrderService = $adminOrderService;
-
+        $this->adminCaptainFinancialSystemTwoGetBalanceDetailsService = $adminCaptainFinancialSystemTwoGetBalanceDetailsService;
     }
 
     public function getBalanceDetailForAdmin(int $captainId): AdminCaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse|string|AdminCaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse|array 
@@ -91,7 +93,8 @@ class AdminCaptainFinancialSystemDetailService implements AdminCaptainFinancialS
                 // **** End of Habib's code ****
 
                 // **** Rami's code ****
-                
+                return $this->adminCaptainFinancialSystemTwoGetBalanceDetailsService->getBalanceDetailsForAdmin($captainId, $financialSystemDetail,
+                    $sumPayments, $date);
                 // **** End of Rami's code ****
             }
         }

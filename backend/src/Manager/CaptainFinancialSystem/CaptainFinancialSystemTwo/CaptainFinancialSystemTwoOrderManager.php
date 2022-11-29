@@ -18,13 +18,19 @@ class CaptainFinancialSystemTwoOrderManager
         return $this->orderEntityRepository->getDeliveredOrdersByCountCaptainIdAndBetweenTwoDates($captainId, $fromDate, $toDate);
     }
 
-    public function getDetailOrdersByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): array
-    {
-        return $this->orderEntityRepository->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
-    }
-
     public function getOverdueDeliveredOrdersByCaptainIdAndBetweenTwoDates(int $captainId, string $fromDate, string $toDate): array
     {
         return $this->orderEntityRepository->getOverdueDeliveredOrdersByCaptainIdAndBetweenTwoDates($captainId, $fromDate, $toDate);
+    }
+
+    // Get count of orders without distance and delivered by specific captain during specific time
+    public function getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): array
+    {
+        return $this->orderEntityRepository->getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
+    }
+
+    public function getOrdersByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): array
+    {
+        return $this->orderEntityRepository->getOrdersByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
     }
 }

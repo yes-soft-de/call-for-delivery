@@ -3,20 +3,25 @@
 namespace App\Service\Admin\CaptainFinancialSystem\CaptainFinancialSystemTwo;
 
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
-use App\Constant\GeoDistance\GeoDistanceResultConstant;
-use App\Constant\Order\OrderTypeConstant;
-use App\Manager\Admin\CaptainFinancialSystem\CaptainFinancialSystemTwo\AdminCaptainFinancialSystemTwoOrderManager;
+use App\Manager\CaptainFinancialSystem\CaptainFinancialSystemTwo\CaptainFinancialSystemTwoOrderManager;
+use App\Service\CaptainFinancialSystem\CaptainFinancialSystemTwo\CaptainFinancialSystemTwoCalculationService;
+use App\Service\CaptainFinancialSystem\CaptainFinancialSystemTwo\CaptainFinancialSystemTwoGetStoreAmountService;
 
-// This service responsible for handling calculating the dues of a captain subscribed with
-// the second financial system (According to count of orders)
+// This service responsible for preparing the details of a specific captain financial dues for admin
+// Note: Financial dues according to the second financial system (count of orders)
 
-class AdminCaptainFinancialSystemTwoCalculationService
+class AdminCaptainFinancialSystemTwoGetBalanceDetailsService
 {
-    private AdminCaptainFinancialSystemTwoOrderManager $adminCaptainFinancialSystemTwoOrderManager;
+    private CaptainFinancialSystemTwoOrderManager $captainFinancialSystemTwoOrderManager;
+    private CaptainFinancialSystemTwoCalculationService $captainFinancialSystemTwoCalculationService;
+    private CaptainFinancialSystemTwoGetStoreAmountService $captainFinancialSystemTwoGetStoreAmountService;
 
-    public function __construct(AdminCaptainFinancialSystemTwoOrderManager $adminCaptainFinancialSystemTwoOrderManager)
+    public function __construct(CaptainFinancialSystemTwoOrderManager $captainFinancialSystemTwoOrderManager, CaptainFinancialSystemTwoCalculationService $captainFinancialSystemTwoCalculationService,
+                                CaptainFinancialSystemTwoGetStoreAmountService $captainFinancialSystemTwoGetStoreAmountService)
     {
-        $this->adminCaptainFinancialSystemTwoOrderManager = $adminCaptainFinancialSystemTwoOrderManager;
+        $this->captainFinancialSystemTwoOrderManager = $captainFinancialSystemTwoOrderManager;
+        $this->captainFinancialSystemTwoCalculationService = $captainFinancialSystemTwoCalculationService;
+        $this->captainFinancialSystemTwoGetStoreAmountService = $captainFinancialSystemTwoGetStoreAmountService;
     }
 
     public function getBalanceDetailsForAdmin(int $captainId, array $financialSystemDetail, float $sumPayments, array $datesArray): array
@@ -27,21 +32,6 @@ class AdminCaptainFinancialSystemTwoCalculationService
         // Initialize some fields in the response before doing the required calculations
         $balanceDetailsResponse = $this->initializeNecessaryFieldsForDuesCalculation($captainId, $datesArray, $sumPayments);
 
-        // Get thr details of delivered orders by specific captain and between two dates in order to calculate some values
-        $detailsOrders = $this->adminCaptainFinancialSystemTwoOrderManager->getDetailOrdersByCaptainIdOnSpecificDateForAdmin($captainId,
-            $datesArray['fromDate'], $datesArray['toDate']);
-
-        foreach ($detailsOrders as $orderDetail) {
-            // Get the number of orders that does not have a distance
-            if ($orderDetail['storeBranchToClientDistance'] === null || $orderDetail['storeBranchToClientDistance'] === (float)GeoDistanceResultConstant::ZERO_DISTANCE_CONST ) {
-                $balanceDetailsResponse['countOrdersWithoutDistance'] += 1;
-            }
-
-            if ($orderDetail['payment'] === OrderTypeConstant::ORDER_PAYMENT_CASH && $orderDetail['paidToProvider'] === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO ) {
-                $balanceDetailsResponse['amountForStore'] += $orderDetail['captainOrderCost'];
-            }
-        }
-
         // Check if captain accomplish the target, or not, or beyond it
         $checkTarget = $this->checkAchievedFinancialSystemTarget($financialSystemDetail['countOrdersInMonth'], $balanceDetailsResponse['countOrdersCompleted']);
 
@@ -51,10 +41,6 @@ class AdminCaptainFinancialSystemTwoCalculationService
             $balanceDetailsResponse['monthCompensation'] = $financialSystemDetail['monthCompensation'];
 
             $balanceDetailsResponse['monthTargetSuccess'] = CaptainFinancialSystem::TARGET_SUCCESS;
-
-            $balanceDetailsResponse['financialDues'] = $balanceDetailsResponse['salary'] + $balanceDetailsResponse['monthCompensation'];
-
-            $total = $sumPayments - $balanceDetailsResponse['financialDues'];
 
         } elseif ($checkTarget === CaptainFinancialSystem::TARGET_SUCCESS_AND_INCREASE_INT) {
             $balanceDetailsResponse['salary'] = $financialSystemDetail['salary'];
@@ -67,19 +53,18 @@ class AdminCaptainFinancialSystemTwoCalculationService
 
             $balanceDetailsResponse['monthTargetSuccess'] = CaptainFinancialSystem::TARGET_SUCCESS_AND_INCREASE;
 
-            $balanceDetailsResponse['financialDues'] = round($balanceDetailsResponse['salary'] + $balanceDetailsResponse['monthCompensation'] + $balanceDetailsResponse['bounce'], 2);
-
-            $total = $sumPayments - round($balanceDetailsResponse['financialDues'], 2);
-
         } elseif ($checkTarget === CaptainFinancialSystem::TARGET_FAILED_INT) {
             $balanceDetailsResponse['salary'] = $financialSystemDetail['salary'];
 
             $balanceDetailsResponse['monthTargetSuccess'] = CaptainFinancialSystem::TARGET_FAILED;
-
-            $balanceDetailsResponse['financialDues'] = $balanceDetailsResponse['countOrdersCompleted'] * CaptainFinancialSystem::TARGET_FAILED_SALARY;
-
-            $total = round($sumPayments - $balanceDetailsResponse['financialDues'], 2);
         }
+
+        // Call the function responsible for the core calculation of the financial dues
+        $balanceDetailsResponse['financialDues'] = $this->captainFinancialSystemTwoCalculationService->calculateFinancialDues($checkTarget,
+            $financialSystemDetail['salary'], $financialSystemDetail['monthCompensation'], $balanceDetailsResponse['countOrdersCompleted'],
+            $financialSystemDetail['countOrdersInMonth'], $financialSystemDetail['bounceMaxCountOrdersInMonth']);
+
+        $total = round(($sumPayments - $balanceDetailsResponse['financialDues']), 2);
 
         $balanceDetailsResponse['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
 
@@ -118,18 +103,29 @@ class AdminCaptainFinancialSystemTwoCalculationService
         $response['bounce'] = 0.0;
         $response['financialDues'] = 0.0;
         $response['total'] = 0.0;
+        $response['orders'] = $this->captainFinancialSystemTwoOrderManager->getOrdersByCaptainIdOnSpecificDate($captainId, $datesArray['fromDate'], $datesArray['toDate']);
 
         // Get the count of delivered orders by specific captain and between two dates
-        $ordersCountResult = $this->adminCaptainFinancialSystemTwoOrderManager->getDeliveredOrdersCountByCaptainIdAndBetweenTwoDatesForAdmin($captainId,
+        $ordersCountResult = $this->captainFinancialSystemTwoOrderManager->getDeliveredOrdersCountByCaptainIdAndBetweenTwoDates($captainId,
             $datesArray['fromDate'], $datesArray['toDate']);
 
-        $response['countOrdersCompleted'] = $ordersCountResult[0];
+        if (count($ordersCountResult) > 0) {
+            $response['countOrdersCompleted'] = $ordersCountResult[0];
+
+        } else {
+            $response['countOrdersCompleted'] = 0;
+        }
 
         // Get delivered orders of the captain between two dates and which overdue the 19 Kilometer
-        $overdueOrdersResult = $this->adminCaptainFinancialSystemTwoOrderManager->getOverdueDeliveredOrdersByCaptainIdAndBetweenTwoDatesForAdmin($captainId,
+        $overdueOrdersResult = $this->captainFinancialSystemTwoOrderManager->getOverdueDeliveredOrdersByCaptainIdAndBetweenTwoDates($captainId,
             $datesArray['fromDate'], $datesArray['toDate']);
 
-        $response['countOrdersMaxFromNineteen'] = $overdueOrdersResult[0];
+        if (count($overdueOrdersResult) > 0) {
+            $response['countOrdersMaxFromNineteen'] = (int) $overdueOrdersResult[0];
+
+        } else {
+            $response['countOrdersMaxFromNineteen'] = 0;
+        }
 
         $response['countOrdersCompleted'] += $response['countOrdersMaxFromNineteen'];
 
@@ -140,9 +136,20 @@ class AdminCaptainFinancialSystemTwoCalculationService
 
         $response['sumPayments'] = $sumPayments;
 
-        $response['amountForStore'] = 0.0;
-        $response['countOrdersMaxFromNineteen'] = 0;
-        $response['countOrdersWithoutDistance'] = 0;
+        // Get count of orders without distance which delivered by the captain and during specific dates
+        $result = $this->captainFinancialSystemTwoOrderManager->getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate($captainId,
+            $datesArray['fromDate'], $datesArray['toDate']);
+
+        if (count($result) > 0) {
+            $response['countOrdersWithoutDistance'] = $result[0];
+
+        } else {
+            $response['countOrdersWithoutDistance'] = 0;
+        }
+
+        // Get the total amount for store from unpaid cash orders which delivered by the captain during specific dates
+        $response['amountForStore'] = (int) $this->captainFinancialSystemTwoGetStoreAmountService->getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime($captainId,
+            $datesArray['fromDate'], $datesArray['toDate']);
 
         return $response;
     }

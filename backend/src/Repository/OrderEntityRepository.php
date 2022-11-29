@@ -2374,4 +2374,30 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleColumnResult();
     }
+
+    // Get count of orders without distance and delivered by specific captain during specific time
+    public function getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+
+            ->select('COUNT(orderEntity.id)')
+
+            ->where('orderEntity.state = :state')
+            ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+            ->andWhere('orderEntity.captainId = :captainId')
+            ->setParameter('captainId', $captainId)
+
+            ->andWhere('orderEntity.createdAt >= :fromDate')
+            ->setParameter('fromDate', $fromDate)
+
+            ->andWhere('orderEntity.createdAt <= :toDate')
+            ->setParameter('toDate', $toDate)
+
+            ->andWhere('orderEntity.storeBranchToClientDistance IS NULL OR orderEntity.storeBranchToClientDistance = :zeroValue')
+            ->setParameter('zeroValue', 0)
+
+            ->getQuery()
+            ->getSingleColumnResult();
+    }
 }

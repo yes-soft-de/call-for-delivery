@@ -138,7 +138,7 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
                 'orderEntity.id = storeOwnerDuesFromCashOrdersEntity.orderId'
             )
 
-            ->where('orderEntity.state = :state')
+            ->andWhere('orderEntity.state = :state')
             ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
 
             ->andWhere('orderEntity.captainId = :captainId')
