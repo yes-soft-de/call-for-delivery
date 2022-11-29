@@ -20,7 +20,7 @@ class CaptainsRatingStateManager {
   void getCaptains(CaptainsRatingScreenState screenState) {
     _captainsScreenState = screenState;
     _stateSubject.add(LoadingState(screenState));
-    _captainsService.getCaptains().then((value) {
+    _captainsService.getCaptainRating().then((value) {
       if (value.hasError) {
         _stateSubject.add(
             CaptainsRatingLoadedState(screenState, null, error: value.error));

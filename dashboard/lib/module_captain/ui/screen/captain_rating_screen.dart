@@ -1,3 +1,4 @@
+import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_captain/state_manager/captain_rating_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class CaptainsRatingScreenState extends State<CaptainsRatingScreen> {
   @override
   void initState() {
     currentState = LoadingState(this);
+    stateManager.getCaptains(this);
     widget._stateManager.stateStream.listen((event) {
       currentState = event;
       refresh();
@@ -39,10 +41,10 @@ class CaptainsRatingScreenState extends State<CaptainsRatingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(
-        context,
-        title: S.current.captainsRating,
-      ),
+      appBar: CustomC4dAppBar.appBar(context,
+          title: S.current.captainsRating, icon: Icons.menu, onTap: () {
+        GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
+      }),
       body: currentState.getUI(context),
     );
   }

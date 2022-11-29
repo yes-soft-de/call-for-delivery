@@ -93,6 +93,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       true),
                   customListTile(getIt<OrdersModule>().ordersReceiveCashScreen,
                       S.current.ordersCash, Icons.payments_rounded, true),
+                  customListTile(getIt<CaptainsModule>().captainsRatingsScreen,
+                      S.current.captainsRating, Icons.star_rounded, true),
                 ],
                 page: widget.currentPage),
 

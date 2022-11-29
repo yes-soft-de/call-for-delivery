@@ -246,7 +246,7 @@ class OrdersService {
     ActionResponse? response =
         await _ordersManager.resolveOrderConflicts(request);
     if (response == null) return DataModel.withError(S.current.networkError);
-    if (response.statusCode != '200') {
+    if (response.statusCode != '204') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
