@@ -410,7 +410,7 @@ class AdminOrderManager
 
         $orderEntity = $this->autoMapping->mapToObject(OrderUpdateIsCashPaymentConfirmedByStoreByAdminRequest::class, OrderEntity::class, $request, $orderEntity);
 
-        $orderEntity->setIsCashPaymentConfirmedByStoreUpdateDate(new DateTime());
+        $orderEntity->setIsCashPaymentConfirmedByStoreUpdateDate(new DateTime('now'));
 
         // according to the updated field, we gonna decide if there is a conflict between answers or not
         if ($request->getIsCashPaymentConfirmedByStore() !== $orderEntity->getPaidToProvider()) {
