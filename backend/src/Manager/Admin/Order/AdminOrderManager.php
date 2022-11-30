@@ -30,6 +30,7 @@ use App\Request\Admin\Order\FilterOrdersPaidOrNotPaidByAdminRequest;
 use App\Request\Admin\Order\FilterOrdersWhoseHasNotDistanceHasCalculatedRequest;
 use App\Request\Admin\Order\OrderStoreBranchToClientDistanceByAdminRequest;
 use App\Request\Admin\Order\OrderStoreBranchToClientDistanceAndDestinationByAdminRequest;
+use App\Request\Admin\Order\OrderUpdateIsCashPaymentConfirmedByStoreByAdminRequest;
 
 class AdminOrderManager
 {
@@ -396,5 +397,32 @@ class AdminOrderManager
         }
 
         return $ordersArray;
+    }
+
+    // Update isCashPaymentConfirmedByStore by admin
+    public function updateIsCashPaymentConfirmedByStoreByAdmin(OrderUpdateIsCashPaymentConfirmedByStoreByAdminRequest $request): ?OrderEntity
+    {
+        $orderEntity = $this->orderEntityRepository->find($request->getId());
+
+        if (! $orderEntity) {
+            return $orderEntity;
+        }
+
+        $orderEntity = $this->autoMapping->mapToObject(OrderUpdateIsCashPaymentConfirmedByStoreByAdminRequest::class, OrderEntity::class, $request, $orderEntity);
+
+        $orderEntity->setIsCashPaymentConfirmedByStoreUpdateDate(new DateTime());
+
+        // according to the updated field, we gonna decide if there is a conflict between answers or not
+        if ($request->getIsCashPaymentConfirmedByStore() !== $orderEntity->getPaidToProvider()) {
+            $orderEntity->setHasPayConflictAnswers(OrderHasPayConflictAnswersConstant::ORDER_HAS_PAYMENT_CONFLICT_ANSWERS);
+
+        } else {
+            // store and captain answers are the same, no conflict is existed
+            $orderEntity->setHasPayConflictAnswers(OrderHasPayConflictAnswersConstant::ORDER_DOES_NOT_HAVE_PAYMENT_CONFLICT_ANSWERS);
+        }
+
+        $this->entityManager->flush();
+
+        return $orderEntity;
     }
 }
