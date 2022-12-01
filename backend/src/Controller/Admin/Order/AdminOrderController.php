@@ -39,6 +39,7 @@ use App\Request\Admin\Subscription\AdminCalculateCostDeliveryOrderRequest;
 use App\Request\Admin\Order\FilterOrdersWhoseHasNotDistanceHasCalculatedRequest;
 use App\Request\Admin\Order\OrderStoreBranchToClientDistanceByAdminRequest;
 use App\Request\Admin\Order\OrderStoreBranchToClientDistanceAndDestinationByAdminRequest;
+use App\Request\Admin\Order\OrderUpdateIsCashPaymentConfirmedByStoreByAdminRequest;
 
 /**
  * @Route("v1/admin/order/")
@@ -1502,5 +1503,62 @@ class AdminOrderController extends BaseController
         $result = $this->adminOrderService->resolveOrderHasPayConflictAnswersByAdmin($request, $this->getUserId());
 
         return $this->response($result, self::UPDATE);
+    }
+
+    /**
+     * admin: admin confirmation, on behalf of store, whether payment has been made by the captain or not.
+     * @Route("confirmcashpaymentbystorebyadmin", name="updateIsCashPaymentConfirmedByStoreByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody (
+     *        description="Update isCashPaymentConfirmedByStore of an order by admin request",
+     *        @OA\JsonContent(
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="integer", property="isCashPaymentConfirmedByStore")
+     *         )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Return isCashPaymentConfirmedByStore new value.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Admin\Order\OrderUpdateIsCashPaymentConfirmedByStoreForAdminResponse")
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function updateIsCashPaymentConfirmedByStoreByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderUpdateIsCashPaymentConfirmedByStoreByAdminRequest::class, (object) $data);
+            
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $response = $this->adminOrderService->updateIsCashPaymentConfirmedByStoreByAdmin($request, $this->getUserId());
+
+        return $this->response($response, self::UPDATE);
     }
 }

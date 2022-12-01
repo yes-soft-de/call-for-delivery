@@ -71,6 +71,8 @@ use App\Request\Admin\Order\OrderStoreBranchToClientDistanceByAdminRequest;
 use App\Constant\GeoDistance\GeoDistanceResultConstant;
 use App\Constant\Order\OrderIsHideConstant;
 use App\Request\Admin\Order\OrderStoreBranchToClientDistanceAndDestinationByAdminRequest;
+use App\Request\Admin\Order\OrderUpdateIsCashPaymentConfirmedByStoreByAdminRequest;
+use App\Response\Admin\Order\OrderUpdateIsCashPaymentConfirmedByStoreForAdminResponse;
 
 class AdminOrderService
 {
@@ -975,5 +977,30 @@ class AdminOrderService
         }
 
         return $response;
+    }
+
+    // Update isCashPaymentConfirmedByStore by admin
+    public function updateIsCashPaymentConfirmedByStoreByAdmin(OrderUpdateIsCashPaymentConfirmedByStoreByAdminRequest $request, int $userId): ?OrderUpdateIsCashPaymentConfirmedByStoreForAdminResponse
+    {
+        $order = $this->adminOrderManager->updateIsCashPaymentConfirmedByStoreByAdmin($request);
+
+        if ($order) {
+            // create order log in order time line
+            $this->orderTimeLineService->createOrderLogsRequest($order);
+
+            // save log of the action on order
+            $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+                OrderLogActionTypeConstant::CONFIRM_CAPTAIN_PAID_TO_PROVIDER_BY_STORE_VIA_DASHBOARD_CONST, null, null);
+
+            // send firebase notification to admin if the captain’s answer differs from that of the store, regarding the field (paidToProvider and isCashPaymentConfirmedByStore)
+            if ($order->getIsCashPaymentConfirmedByStore() !== $order->getPaidToProvider()) {
+
+                $this->notificationFirebaseService->notificationToAdmin($order->getId(), NotificationFirebaseConstant::CAPTAIN_ANSWER_DIFFERS_FROM_THAT_OF_STORE);
+            }
+
+            return $this->autoMapping->map(OrderEntity::class, OrderUpdateIsCashPaymentConfirmedByStoreForAdminResponse::class, $order);
+        }
+
+        return $order;
     }
 }
