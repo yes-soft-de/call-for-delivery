@@ -121,8 +121,8 @@ class ReportService
 
         $captainsResult = $this->adminCaptainService->getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByAdmin();
 
-        // Sort the resulted array dscending according to orders count key
-        $sortedCaptainsResult = $this->sortArrayDscendingBySpecificKey($captainsResult);
+        // Sort the resulted array descending according to orders count key
+        $sortedCaptainsResult = $this->sortArrayDescendingBySpecificKey($captainsResult);
 
         if (count($sortedCaptainsResult) > 0) {
             foreach ($sortedCaptainsResult as $captainInfo) {
@@ -135,7 +135,7 @@ class ReportService
         return $response;
     }
 
-    public function sortArrayDscendingBySpecificKey(array $inputArray): array
+    public function sortArrayDescendingBySpecificKey(array $inputArray): array
     {
         usort($inputArray, function($itemOne, $itemTwo) {
             if((int) $itemOne['ordersCount'] === (int)$itemTwo['ordersCount']) {
