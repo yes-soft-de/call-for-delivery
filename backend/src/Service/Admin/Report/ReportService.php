@@ -5,6 +5,7 @@ namespace App\Service\Admin\Report;
 use App\AutoMapping;
 use App\Constant\Captain\CaptainConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Request\Admin\Report\CaptainWithDeliveredOrdersDuringSpecificTimeFilterByAdminRequest;
 use App\Response\Admin\Report\ActiveCaptainWithOrdersCountInLastFinancialCycleGetForAdminResponse;
 use App\Response\Admin\Report\CaptainsRatingsForAdminGetResponse;
 use App\Response\Admin\Report\StatisticsForAdminGetResponse;
@@ -128,6 +129,35 @@ class ReportService
                 $response[] = $this->autoMapping->map('array', ActiveCaptainWithOrdersCountInLastFinancialCycleGetForAdminResponse::class, $captainInfo);
             }
         }
+
+        return $response;
+    }
+
+    public function sortArrayDescendingBySpecificKey(array $inputArray): array
+    {
+        usort($inputArray, function($itemOne, $itemTwo) {
+            if((int) $itemOne['ordersCount'] === (int)$itemTwo['ordersCount']) {
+                return 0;
+
+            } elseif ((int) $itemOne['ordersCount'] < (int)$itemTwo['ordersCount']) {
+                return 1;
+
+            } elseif ((int) $itemOne['ordersCount'] > (int)$itemTwo['ordersCount']) {
+                return -1;
+            }
+        });
+
+        return $inputArray;
+    }
+
+    ///TODO to be continued when deciding the use-case
+    public function getCaptainsWhoDeliveredOrdersDuringSpecificTime(CaptainWithDeliveredOrdersDuringSpecificTimeFilterByAdminRequest $request): array
+    {
+        $response = [];
+
+        $captainsWithOrders = $this->adminCaptainService->getCaptainsWhoDeliveredOrdersDuringSpecificTime($request);
+
+        $sortedCaptainsWithOrders = $this->sortArrayDescendingBySpecificKey($captainsWithOrders);
 
         return $response;
     }
