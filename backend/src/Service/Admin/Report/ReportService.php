@@ -121,8 +121,11 @@ class ReportService
 
         $captainsResult = $this->adminCaptainService->getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByAdmin();
 
-        if (count($captainsResult) > 0) {
-            foreach ($captainsResult as $captainInfo) {
+        // Sort the resulted array dscending according to orders count key
+        $sortedCaptainsResult = $this->sortArrayDscendingBySpecificKey($captainsResult);
+
+        if (count($sortedCaptainsResult) > 0) {
+            foreach ($sortedCaptainsResult as $captainInfo) {
                 $captainInfo['image'] = $this->uploadFileHelperService->getImageParams($captainInfo['imagePath']);
 
                 $response[] = $this->autoMapping->map('array', ActiveCaptainWithOrdersCountInLastFinancialCycleGetForAdminResponse::class, $captainInfo);
@@ -130,5 +133,22 @@ class ReportService
         }
 
         return $response;
+    }
+
+    public function sortArrayDscendingBySpecificKey(array $inputArray): array
+    {
+        usort($inputArray, function($itemOne, $itemTwo) {
+            if((int) $itemOne['ordersCount'] === (int)$itemTwo['ordersCount']) {
+                return 0;
+
+            } elseif ((int) $itemOne['ordersCount'] < (int)$itemTwo['ordersCount']) {
+                return 1;
+
+            } elseif ((int) $itemOne['ordersCount'] > (int)$itemTwo['ordersCount']) {
+                return -1;
+            }
+        });
+
+        return $inputArray;
     }
 }
