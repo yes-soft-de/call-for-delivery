@@ -7,6 +7,7 @@ import 'package:c4d/module_captain/request/enable_offer.dart';
 import 'package:c4d/module_captain/request/update_captain_request.dart';
 import 'package:c4d/module_captain/response/capatin_offer_response.dart';
 import 'package:c4d/module_captain/response/captain_account_balance_response/captain_account_balance_response.dart';
+import 'package:c4d/module_captain/response/captain_activity_response/captain_activity_response.dart';
 import 'package:c4d/module_captain/response/captain_financial_dues_response/captain_financial_dues_response.dart';
 import 'package:c4d/module_captain/response/captain_need_support_response/captain_need_support_response.dart';
 import 'package:c4d/module_captain/response/captain_order_control_response/captain_order_control_response.dart';
@@ -68,4 +69,6 @@ class CaptainsManager {
       _repository.deleteCaptain(captainID);
   Future<CaptainRatingResponse?> getCaptainRating() =>
       _repository.getCaptainRating();
+  Future<CaptainActivityResponse?> getCaptainActivity() =>
+      _repository.getCaptainActivity();
 }

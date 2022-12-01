@@ -1,5 +1,6 @@
 import 'package:c4d/module_captain/captains_routes.dart';
 import 'package:c4d/module_captain/ui/screen/captain_account_balance_screen.dart';
+import 'package:c4d/module_captain/ui/screen/captain_activity_model.dart';
 import 'package:c4d/module_captain/ui/screen/captain_financial_details_screen.dart';
 import 'package:c4d/module_captain/ui/screen/captain_financial_dues_screen.dart';
 import 'package:c4d/module_captain/ui/screen/captain_needs_support_screen.dart';
@@ -28,6 +29,7 @@ class CaptainsModule extends YesModule {
   final PlanScreen planScreen;
   final CaptainAssignOrderScreen captainAssignOrderScreen;
   final CaptainsRatingScreen captainsRatingsScreen;
+  final CaptainsActivityScreen captainsActivityScreen;
   CaptainsModule(
     this.captainOffersScreen,
     this.inActiveCaptains,
@@ -40,6 +42,7 @@ class CaptainsModule extends YesModule {
     this.planScreen,
     this.captainAssignOrderScreen,
     this.captainsRatingsScreen,
+    this.captainsActivityScreen,
   ) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
@@ -56,7 +59,8 @@ class CaptainsModule extends YesModule {
           captainFinancialDuesDetailsScreen,
       CaptainsRoutes.CAPTAIN_PLAN: (context) => planScreen,
       CaptainsRoutes.ASSIGN_TO_CAPTAIN: (context) => captainAssignOrderScreen,
-      CaptainsRoutes.CAPTAIN_RATING: (context) => captainsRatingsScreen
+      CaptainsRoutes.CAPTAIN_RATING: (context) => captainsRatingsScreen,
+      CaptainsRoutes.CAPTAIN_ACTIVITY: (context) => captainsActivityScreen,
     };
   }
 }

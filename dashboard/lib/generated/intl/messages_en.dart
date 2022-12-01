@@ -175,6 +175,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain Accepted Order"),
         "captainActivated": MessageLookupByLibrary.simpleMessage(
             "Captain Activated Successfully"),
+        "captainActivity":
+            MessageLookupByLibrary.simpleMessage("Captain Activity"),
         "captainAnswer": MessageLookupByLibrary.simpleMessage("Captain Answer"),
         "captainDistance":
             MessageLookupByLibrary.simpleMessage("Captain Distance"),

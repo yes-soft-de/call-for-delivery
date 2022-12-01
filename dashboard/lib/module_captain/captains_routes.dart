@@ -10,5 +10,5 @@ class CaptainsRoutes {
   static const CAPTAIN_PLAN = '/captain_plan';
   static const ASSIGN_TO_CAPTAIN = '/assign_to_captain';
   static const CAPTAIN_RATING = '/captain_ratings';
-  
+  static const CAPTAIN_ACTIVITY = '/captain_activity';
 }

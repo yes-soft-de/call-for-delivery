@@ -173,6 +173,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("قبل الكابتن الطلب"),
         "captainActivated":
             MessageLookupByLibrary.simpleMessage("تم تفعيل الكابتن بنجاح"),
+        "captainActivity": MessageLookupByLibrary.simpleMessage("نشاط الكباتن"),
         "captainAnswer": MessageLookupByLibrary.simpleMessage("جواب الكابتن"),
         "captainDistance":
             MessageLookupByLibrary.simpleMessage("تقديرات الكابتن"),
