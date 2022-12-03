@@ -247,10 +247,9 @@ class AdminCaptainService
         return $captainsProfiles;
     }
 
-    ///TODO to be continued later when agree on the use-case
-    public function getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByAdmin()
+    public function getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByAdmin(): array
     {
-        $captainsResult = $this->adminCaptainManager->getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByAdmin();
+        return $this->adminCaptainManager->getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByAdmin();
     }
 
     public function getCaptainsRatingsForAdmin(): array

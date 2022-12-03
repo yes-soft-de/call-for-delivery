@@ -5,6 +5,7 @@ namespace App\Service\Admin\Report;
 use App\AutoMapping;
 use App\Constant\Captain\CaptainConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Response\Admin\Report\ActiveCaptainWithOrdersCountInLastFinancialCycleGetForAdminResponse;
 use App\Response\Admin\Report\CaptainsRatingsForAdminGetResponse;
 use App\Response\Admin\Report\StatisticsForAdminGetResponse;
 use App\Service\Admin\Captain\AdminCaptainService;
@@ -112,5 +113,42 @@ class ReportService
         }
 
         return $response;
+    }
+
+    public function getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByAdmin(): array
+    {
+        $response = [];
+
+        $captainsResult = $this->adminCaptainService->getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByAdmin();
+
+        // Sort the resulted array descending according to orders count key
+        $sortedCaptainsResult = $this->sortArrayDescendingBySpecificKey($captainsResult);
+
+        if (count($sortedCaptainsResult) > 0) {
+            foreach ($sortedCaptainsResult as $captainInfo) {
+                $captainInfo['image'] = $this->uploadFileHelperService->getImageParams($captainInfo['imagePath']);
+
+                $response[] = $this->autoMapping->map('array', ActiveCaptainWithOrdersCountInLastFinancialCycleGetForAdminResponse::class, $captainInfo);
+            }
+        }
+
+        return $response;
+    }
+
+    public function sortArrayDescendingBySpecificKey(array $inputArray): array
+    {
+        usort($inputArray, function($itemOne, $itemTwo) {
+            if((int) $itemOne['ordersCount'] === (int)$itemTwo['ordersCount']) {
+                return 0;
+
+            } elseif ((int) $itemOne['ordersCount'] < (int)$itemTwo['ordersCount']) {
+                return 1;
+
+            } elseif ((int) $itemOne['ordersCount'] > (int)$itemTwo['ordersCount']) {
+                return -1;
+            }
+        });
+
+        return $inputArray;
     }
 }

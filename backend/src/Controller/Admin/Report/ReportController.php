@@ -193,4 +193,40 @@ class ReportController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+
+    /**
+     * admin: Get active captains with delivered (during last financial cycle) orders count for admin
+     * @Route("activecaptainswithorderscountforadmin", name="getActiveCaptainsWithOrdersCountForAdmin", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Report")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns active captains with orders count",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Admin\Report\ActiveCaptainWithOrdersCountInLastFinancialCycleGetForAdminResponse")
+     *       )
+     *    )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByAdmin(): JsonResponse
+    {
+        $result = $this->reportService->getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByAdmin();
+
+        return $this->response($result, self::FETCH);
+    }
 }

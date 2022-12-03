@@ -318,6 +318,9 @@ class CaptainEntityRepository extends ServiceEntityRepository
 
                     if(count($ordersCountResult) > 0) {
                         $finalResponse[$key]['ordersCount'] = $ordersCountResult[0];
+
+                    } else {
+                        $finalResponse[$key]['ordersCount'] = (string) 0;
                     }
                 }
             }
