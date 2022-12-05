@@ -9,6 +9,8 @@ use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\Order\OrderTypeConstant;
 use App\Constant\GeoDistance\GeoDistanceResultConstant;
 
+// **** Whole service replaced by CaptainFinancialSystemTwoCalculationService ****
+
 class CaptainFinancialSystemTwoBalanceDetailService
 {
     private CaptainFinancialSystemTwoBalanceDetailManager $captainFinancialSystemTwoBalanceDetailManager;
