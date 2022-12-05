@@ -104,8 +104,13 @@ class ReportService
 
         $captainsRatings = $this->adminCaptainService->getCaptainsRatingsForAdmin();
 
-        if (count($captainsRatings) > 0) {
-            foreach ($captainsRatings as $key => $value) {
+        // Sort the resulted array descending according to orders count key
+        $sortedCaptainsResult = $this->sortArrayDescendingBySpecificKey($captainsRatings, 'avgRating');
+
+        if (count($sortedCaptainsResult) > 0) {
+            foreach ($sortedCaptainsResult as $key => $value) {
+                $value['avgRating'] = round($value['avgRating'], 2);
+
                 $response[$key] = $this->autoMapping->map('array', CaptainsRatingsForAdminGetResponse::class, $value);
 
                 $response[$key]->image = $this->uploadFileHelperService->getImageParams($value['imagePath']);
@@ -122,7 +127,7 @@ class ReportService
         $captainsResult = $this->adminCaptainService->getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByAdmin();
 
         // Sort the resulted array descending according to orders count key
-        $sortedCaptainsResult = $this->sortArrayDescendingBySpecificKey($captainsResult);
+        $sortedCaptainsResult = $this->sortArrayDescendingBySpecificKey($captainsResult, 'ordersCount');
 
         if (count($sortedCaptainsResult) > 0) {
             foreach ($sortedCaptainsResult as $captainInfo) {
@@ -135,16 +140,17 @@ class ReportService
         return $response;
     }
 
-    public function sortArrayDescendingBySpecificKey(array $inputArray): array
+    // Sort an array descending according on the value of specific key
+    public function sortArrayDescendingBySpecificKey(array $inputArray, string $keyName): array
     {
-        usort($inputArray, function($itemOne, $itemTwo) {
-            if((int) $itemOne['ordersCount'] === (int)$itemTwo['ordersCount']) {
+        usort($inputArray, function($itemOne, $itemTwo) use ($keyName) {
+            if((int) $itemOne[$keyName] === (int)$itemTwo[$keyName]) {
                 return 0;
 
-            } elseif ((int) $itemOne['ordersCount'] < (int)$itemTwo['ordersCount']) {
+            } elseif ((int) $itemOne[$keyName] < (int)$itemTwo[$keyName]) {
                 return 1;
 
-            } elseif ((int) $itemOne['ordersCount'] > (int)$itemTwo['ordersCount']) {
+            } elseif ((int) $itemOne[$keyName] > (int)$itemTwo[$keyName]) {
                 return -1;
             }
         });
