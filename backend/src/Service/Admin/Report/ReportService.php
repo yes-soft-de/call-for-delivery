@@ -5,8 +5,10 @@ namespace App\Service\Admin\Report;
 use App\AutoMapping;
 use App\Constant\Captain\CaptainConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Request\Admin\Report\CaptainWithDeliveredOrdersDuringSpecificTimeFilterByAdminRequest;
 use App\Response\Admin\Report\ActiveCaptainWithOrdersCountInLastFinancialCycleGetForAdminResponse;
 use App\Response\Admin\Report\CaptainsRatingsForAdminGetResponse;
+use App\Response\Admin\Report\CaptainsWithDeliveredOrdersCountFilterByAdminResponse;
 use App\Response\Admin\Report\StatisticsForAdminGetResponse;
 use App\Service\Admin\Captain\AdminCaptainService;
 use App\Service\Admin\Order\AdminOrderService;
@@ -156,5 +158,24 @@ class ReportService
         });
 
         return $inputArray;
+    }
+
+    public function getCaptainsWhoDeliveredOrdersDuringSpecificTime(CaptainWithDeliveredOrdersDuringSpecificTimeFilterByAdminRequest $request): array
+    {
+        $response = [];
+
+        $captainsWithOrders = $this->adminCaptainService->getCaptainsWhoDeliveredOrdersDuringSpecificTime($request);
+
+        $sortedCaptainsWithOrders = $this->sortArrayDescendingBySpecificKey($captainsWithOrders, 'ordersCount');
+
+        if (count($sortedCaptainsWithOrders) > 0) {
+            foreach ($sortedCaptainsWithOrders as $captainInfo) {
+                $captainInfo['image'] = $this->uploadFileHelperService->getImageParams($captainInfo['imagePath']);
+
+                $response[] = $this->autoMapping->map('array', CaptainsWithDeliveredOrdersCountFilterByAdminResponse::class, $captainInfo);
+            }
+        }
+
+        return $response;
     }
 }

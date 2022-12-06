@@ -12,6 +12,7 @@ use App\Manager\Admin\Captain\AdminCaptainManager;
 use App\Request\Admin\Captain\CaptainProfileStatusUpdateByAdminRequest;
 use App\Request\Admin\Captain\CaptainProfileUpdateByAdminRequest;
 use App\Request\Admin\Captain\DeleteCaptainAccountAndProfileByAdminRequest;
+use App\Request\Admin\Report\CaptainWithDeliveredOrdersDuringSpecificTimeFilterByAdminRequest;
 use App\Request\Image\ImageCreateRequest;
 use App\Request\Image\ImageUpdateRequest;
 use App\Response\Admin\Captain\CaptainProfileGetForAdminResponse;
@@ -255,5 +256,10 @@ class AdminCaptainService
     public function getCaptainsRatingsForAdmin(): array
     {
         return $this->adminCaptainManager->getCaptainsRatingsForAdmin();
+    }
+
+    public function getCaptainsWhoDeliveredOrdersDuringSpecificTime(CaptainWithDeliveredOrdersDuringSpecificTimeFilterByAdminRequest $request): array
+    {
+        return $this->adminCaptainManager->getCaptainsWhoDeliveredOrdersDuringSpecificTime($request);
     }
 }

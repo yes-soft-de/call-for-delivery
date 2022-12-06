@@ -10,6 +10,7 @@ use App\Entity\CaptainEntity;
 use App\Repository\CaptainEntityRepository;
 use App\Request\Admin\Captain\CaptainProfileStatusUpdateByAdminRequest;
 use App\Request\Admin\Captain\CaptainProfileUpdateByAdminRequest;
+use App\Request\Admin\Report\CaptainWithDeliveredOrdersDuringSpecificTimeFilterByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AdminCaptainManager
@@ -176,5 +177,10 @@ class AdminCaptainManager
     public function getCaptainsRatingsForAdmin(): array
     {
         return $this->captainEntityRepository->getCaptainsRatingsForAdmin();
+    }
+
+    public function getCaptainsWhoDeliveredOrdersDuringSpecificTime(CaptainWithDeliveredOrdersDuringSpecificTimeFilterByAdminRequest $request): array
+    {
+        return $this->captainEntityRepository->getCaptainsWhoDeliveredOrdersDuringSpecificTime($request);
     }
 }

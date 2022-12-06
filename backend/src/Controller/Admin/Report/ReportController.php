@@ -2,11 +2,15 @@
 
 namespace App\Controller\Admin\Report;
 
+use App\AutoMapping;
 use App\Controller\BaseController;
+use App\Request\Admin\Report\CaptainWithDeliveredOrdersDuringSpecificTimeFilterByAdminRequest;
 use App\Service\Admin\Report\ReportService;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -17,11 +21,13 @@ use OpenApi\Annotations as OA;
  */
 class ReportController extends BaseController
 {
+    private AutoMapping $autoMapping;
     private ReportService $reportService;
 
-    public function __construct(SerializerInterface $serializer, ReportService $reportService)
+    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ReportService $reportService)
     {
         parent::__construct($serializer);
+        $this->autoMapping = $autoMapping;
         $this->reportService = $reportService;
     }
 
@@ -226,6 +232,57 @@ class ReportController extends BaseController
     public function getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByAdmin(): JsonResponse
     {
         $result = $this->reportService->getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByAdmin();
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * admin: filter captains who delivered orders between specific dates by admin
+     * @Route("filtercaptainsdeliveredordersbyadmin", name="filterCaptainsWithTheirDeliveredOrdersByAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Report")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Post a request with filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="state"),
+     *          @OA\Property(type="string", property="fromDate")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns captains with delivered orders that accomodate with the filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Admin\Report\CaptainsWithDeliveredOrdersCountFilterByAdminResponse")
+     *              )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterCaptainsWhoDeliveredOrdersDuringSpecificTime(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, CaptainWithDeliveredOrdersDuringSpecificTimeFilterByAdminRequest::class, (object)$data);
+
+        $result = $this->reportService->getCaptainsWhoDeliveredOrdersDuringSpecificTime($request);
 
         return $this->response($result, self::FETCH);
     }
