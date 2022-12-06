@@ -273,7 +273,6 @@ class SubscriptionController extends BaseController
      * store: Create Subscription For One Day.
      * @Route("extrasubscriptionforday", name="CreateSubscriptionForOneDay", methods={"POST"})
      * @IsGranted("ROLE_OWNER")
-     * @param Request $request
      * @return JsonResponse
      *
      * @OA\Tag(name="Subscription")
@@ -302,19 +301,19 @@ class SubscriptionController extends BaseController
      * )
      *
      * or
-     * 
+     *
      * @OA\Response(
      *      response="default",
      *      description="Returns new subscription",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code", description="9303 or 9304 or 9305"),
      *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data", 
-     *            @OA\Property(type="string", property="state"), 
+     *          @OA\Property(type="object", property="Data",
+     *            @OA\Property(type="string", property="state"),
      *      )
      *   )
      * )
-     * 
+     *
      * @Security(name="Bearer")
      */
     public function subscriptionForOneDay(): JsonResponse
