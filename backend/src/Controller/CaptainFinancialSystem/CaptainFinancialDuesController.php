@@ -35,7 +35,6 @@ class CaptainFinancialDuesController extends BaseController
      * captain: get Captain Financial Dues.
      * @Route("captainfinancialdues", name="getCaptainFinancialDues", methods={"GET"})
      * @IsGranted("ROLE_CAPTAIN")
-     * @param Request $request
      * @return JsonResponse
      *
      * @OA\Tag(name="Captain Financial Dues")
@@ -57,8 +56,8 @@ class CaptainFinancialDuesController extends BaseController
      *             ref=@Model(type="App\Response\CaptainFinancialSystem\CaptainFinancialDuesResponse")
      *      )
      *    )
-     *  ) 
-     * 
+     *  )
+     *
      * @Security(name="Bearer")
      */
     public function getCaptainFinancialDues(): JsonResponse
