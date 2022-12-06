@@ -4,6 +4,7 @@ namespace App\Service\Subscription;
 
 use App\AutoMapping;
 use App\Constant\Admin\Subscription\AdminStoreSubscriptionConstant;
+use App\Constant\Notification\SubscriptionFirebaseNotificationConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionEntity;
@@ -19,6 +20,7 @@ use App\Response\Subscription\SubscriptionErrorResponse;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Constant\Subscription\SubscriptionCaptainOffer;
 use App\Constant\Package\PackageConstant;
+use App\Service\Notification\SubscriptionFirebaseNotificationService;
 use App\Service\Subscription\SubscriptionCaptainOfferService;
 use App\Service\StoreOwner\StoreOwnerProfileService;
 use App\Service\StoreOwnerPayment\StoreOwnerPaymentService;
@@ -38,10 +40,11 @@ class SubscriptionService
     private StoreOwnerProfileService $storeOwnerProfileService;
     private StoreOwnerPaymentService $storeOwnerPaymentService;
     private SubscriptionNotificationService $subscriptionNotificationService;
+    private SubscriptionFirebaseNotificationService $subscriptionFirebaseNotificationService;
 
     public function __construct(AutoMapping $autoMapping, SubscriptionManager $subscriptionManager, SubscriptionCaptainOfferService $subscriptionCaptainOfferService,
                                 StoreOwnerProfileService $storeOwnerProfileService, StoreOwnerPaymentService $storeOwnerPaymentService,
-                                SubscriptionNotificationService $subscriptionNotificationService)
+                                SubscriptionNotificationService $subscriptionNotificationService, SubscriptionFirebaseNotificationService $subscriptionFirebaseNotificationService)
     {
         $this->autoMapping = $autoMapping;
         $this->subscriptionManager = $subscriptionManager;
@@ -49,6 +52,7 @@ class SubscriptionService
         $this->storeOwnerProfileService = $storeOwnerProfileService;
         $this->storeOwnerPaymentService = $storeOwnerPaymentService;
         $this->subscriptionNotificationService = $subscriptionNotificationService;
+        $this->subscriptionFirebaseNotificationService = $subscriptionFirebaseNotificationService;
     }
     
     public function createSubscription(SubscriptionCreateRequest $request): SubscriptionResponse|SubscriptionErrorResponse
@@ -84,6 +88,10 @@ class SubscriptionService
 
         if($subscription) {
             $this->checkWhetherThereIsActiveCaptainsOfferAndUpdateSubscription($request->getStoreOwner()->getId());
+
+            // Send firebase notification to admin
+            $this->sendFirebaseNotificationToAdmin(SubscriptionFirebaseNotificationConstant::STORE_CREATE_NEW_SUBSCRIPTION_CONST,
+                $subscription->getStoreOwner()->getStoreOwnerName(), null);
         
             return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
         }
@@ -401,7 +409,15 @@ class SubscriptionService
 
                     if($subscriptionCurrent['status'] !== "active" && $subscriptionCurrent['status'] !== "inactive") {
                         
-                        return $this->createSubscriptionForOneDay($subscriptionCurrent, $storeOwnerId);
+                        $result = $this->createSubscriptionForOneDay($subscriptionCurrent, $storeOwnerId);
+
+                        // Send firebase notification to admin
+                        if ($result) {
+                            $this->sendFirebaseNotificationToAdmin(SubscriptionFirebaseNotificationConstant::STORE_CREATE_NEW_SUBSCRIPTION_FOR_ONE_DAY_CONST,
+                                null, $storeOwnerId);
+                        }
+
+                        return $result;
                     }
 
                     $subscription['state'] = SubscriptionConstant::YOU_HAVE_SUBSCRIBED;
@@ -903,6 +919,21 @@ class SubscriptionService
         }
 
         return (float) 0;
+    }
+
+    // Send firebase notification to each admin about the action that being made on subscription by a store
+    public function sendFirebaseNotificationToAdmin(string $subscriptionActionDescription, string $storeName = null, int $storeOwnerUserId = null)
+    {
+        if ((! $storeName) && ($storeOwnerUserId)) {
+            // Get store owner name before sending the notification
+            $storeOwnerEntity = $this->storeOwnerProfileService->getStoreByUserId($storeOwnerUserId);
+
+            if ($storeOwnerEntity) {
+                $storeName = $storeOwnerEntity->getStoreOwnerName();
+            }
+        }
+
+        $this->subscriptionFirebaseNotificationService->sendFirebaseNotificationToAdmin($subscriptionActionDescription, $storeName);
     }
 }
  

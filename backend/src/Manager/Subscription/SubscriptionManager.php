@@ -300,7 +300,7 @@ class SubscriptionManager
       
        $this->subscriptionHistoryManager->updateSubscriptionHistoryByAdmin($subscriptionEntity->getId());            
 
-       return "ok";
+       return SubscriptionConstant::SUBSCRIPTION_OK;
     }
 
     public function getStoreOwnerProfileByStoreOwnerProfileId(int $storeOwnerProfileId): ?StoreOwnerProfileEntity
