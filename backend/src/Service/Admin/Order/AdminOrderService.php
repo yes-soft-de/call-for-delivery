@@ -1138,6 +1138,11 @@ class AdminOrderService
             return $order;
         }
 
+        // Re-calculate the financial dues of the captain who has the order (if exists)
+        if ($order->getCaptainId()?->getCaptainId()) {
+            $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
+        }
+
         // save log of the action on order
         $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
             OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_VIA_ADDING_DISTANCE_BY_ADMIN_ACTION_CONST,
@@ -1154,6 +1159,11 @@ class AdminOrderService
 
         if (! $order) {
             return $order;
+        }
+
+        // Re-calculate the financial dues of the captain who has the order (if exists)
+        if ($order->getCaptainId()?->getCaptainId()) {
+            $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
         }
 
         // save log of the action on order
