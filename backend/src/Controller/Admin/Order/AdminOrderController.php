@@ -15,6 +15,7 @@ use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminRequest;
 use App\Request\Admin\Order\OrderStoreBranchToClientDistanceAdditionByAdminRequest;
+use App\Request\Admin\Order\OrderStoreBranchToClientDistanceUpdateByAddAdditionalDistanceByAdminRequest;
 use App\Request\Admin\Order\RePendingAcceptedOrderByAdminRequest;
 use App\Request\Admin\Order\SubOrderCreateByAdminRequest;
 use App\Service\Admin\Order\AdminOrderService;
@@ -1653,6 +1654,63 @@ class AdminOrderController extends BaseController
         } elseif ($result === GeoDistanceResultConstant::DESTINATION_COULD_NOT_BE_CALCULATED) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_CAN_NOT_CALCULATE_DISTANCE);
         }
+
+        return $this->response($result, self::UPDATE);
+    }
+
+    /**
+     * Admin: update storeBranchToClientDistance via adding additional distance to it directly.
+     * @Route("additionaldistancetostorebranchtoclientdistancebyadmin", name="updateStoreBranchToClientDistanceViaAdditionalDistanceByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="update storeBranchToClientDistance and destination by admin",
+     *      @OA\JsonContent(
+     *              @OA\Property(type="integer", property="orderId"),
+     *              @OA\Property(type="number", property="additionalDistance")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns the order info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Admin\Order\OrderStoreBranchToClientDistanceUpdateByAdminResponse")
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function addAdditionalDistanceToStoreBranchToClientDistanceByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(\stdClass::class, OrderStoreBranchToClientDistanceUpdateByAddAdditionalDistanceByAdminRequest::class, (object) $data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminOrderService->addAdditionalDistanceToStoreBranchToClientDistanceByAdmin($request, $this->getUserId());
 
         return $this->response($result, self::UPDATE);
     }

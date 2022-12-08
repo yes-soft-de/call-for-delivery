@@ -8,44 +8,23 @@ class OrderStoreBranchToClientDistanceByAdminRequest
 
     private float $storeBranchToClientDistance;
 
-
-    /**
-     * Get the value of id
-     */ 
-    public function getId()
+    public function getId(): int
     {
         return $this->id;
     }
 
-    /**
-     * Set the value of id
-     *
-     * @return  self
-     */ 
-    public function setId($id)
+    public function setId(int $id): void
     {
         $this->id = $id;
-
-        return $this;
     }
 
-    /**
-     * Get the value of storeBranchToClientDistance
-     */ 
-    public function getStoreBranchToClientDistance()
+    public function getStoreBranchToClientDistance(): float
     {
         return $this->storeBranchToClientDistance;
     }
 
-    /**
-     * Set the value of storeBranchToClientDistance
-     *
-     * @return  self
-     */ 
-    public function setStoreBranchToClientDistance($storeBranchToClientDistance)
+    public function setStoreBranchToClientDistance(float $storeBranchToClientDistance): void
     {
         $this->storeBranchToClientDistance = $storeBranchToClientDistance;
-
-        return $this;
     }
 }
