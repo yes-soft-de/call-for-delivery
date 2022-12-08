@@ -323,12 +323,17 @@ class AdminOrderService
     }
 
     // This function for returning order which being accepted by captain to pending status under certain circumstances
-    public function rePendingAcceptedOrderByAdmin(RePendingAcceptedOrderByAdminRequest $request, int $userId): string|null|OrderStateUpdateByAdminResponse
+    public function rePendingAcceptedOrderByAdmin(RePendingAcceptedOrderByAdminRequest $request, int $userId): string|null|OrderStateUpdateByAdminResponse|int
     {
         // First, check order status if we can return it to pending
         $orderEntity = $this->adminOrderManager->getOrderByIdForAdmin($request->getOrderId());
 
         if ($orderEntity !== null) {
+            // Before doing anything, check if order is hidden - for any reason - or not
+            if (($orderEntity->getIsHide() === OrderIsHideConstant::ORDER_HIDE_TEMPORARILY) || ($orderEntity->getIsHide() === OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)) {
+                return OrderResultConstant::ORDER_IS_HIDDEN_CONST;
+            }
+
             // we need captain id for deleting related order chat room + create local notification for the captain
             $captainId = $orderEntity->getCaptainId()->getId();
 
@@ -558,7 +563,13 @@ class AdminOrderService
     public function assignOrderToCaptain(OrderAssignToCaptainByAdminRequest $request, int $userId): null|OrderUpdateToHiddenResponse|int
     {
         $orderEntity = $this->adminOrderManager->getOrderById($request->getOrderId());
+
         if ($orderEntity) {
+            // Before doing anything, check if order is hidden - for any reason - or not
+            if (($orderEntity->getIsHide() === OrderIsHideConstant::ORDER_HIDE_TEMPORARILY) || ($orderEntity->getIsHide() === OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)) {
+                return OrderResultConstant::ORDER_IS_HIDDEN_CONST;
+            }
+
             //Check the order if it is pending
             if($orderEntity->getState() !==  OrderStateConstant::ORDER_STATE_PENDING) {
                 return OrderStateConstant::ORDER_STATE_PENDING_INT;
@@ -669,6 +680,13 @@ class AdminOrderService
 
     public function updateOrderStateByAdmin(OrderStateUpdateByAdminRequest $request, int $userId): int|OrderStateUpdateByAdminResponse|null
     {
+        // Check order visibility before updating its status
+        $visibility = $this->getOrderIsHideByOrderId($request->getId());
+
+        if (($visibility === OrderIsHideConstant::ORDER_HIDE_TEMPORARILY) || ($visibility === OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)) {
+            return OrderResultConstant::ORDER_IS_HIDDEN_CONST;
+        }
+
         $orderResult = $this->adminOrderManager->updateOrderStateByAdmin($request);
 
         if (! $orderResult) {
@@ -1144,5 +1162,16 @@ class AdminOrderService
             null, null);
 
         return $this->autoMapping->map(OrderEntity::class, OrderStoreBranchToClientDistanceUpdateByAdminResponse::class, $order);
+    }
+
+    public function getOrderIsHideByOrderId(int $orderId): int|string
+    {
+        $arrayResult = $this->adminOrderManager->getOrderIsHideByOrderId($orderId);
+
+        if (count($arrayResult) > 0) {
+            return (int) $arrayResult[0];
+        }
+
+        return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
     }
 }

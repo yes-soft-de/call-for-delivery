@@ -389,6 +389,29 @@ class AdminOrderController extends BaseController
      *   )
      * )
      *
+     * or
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *          oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9207"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9214"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9218"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   )
+     *              }
+     *      )
+     * )
+     *
      * @Security(name="Bearer")
      */
     public function rePendingAcceptedOrderByAdmin(Request $request): JsonResponse
@@ -413,6 +436,10 @@ class AdminOrderController extends BaseController
 
         if ($result === OrderResultConstant::ORDER_RETURNING_TO_PENDING_HAS_PROBLEM) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_IN_RETURNING_ORDER_TO_PENDING_STATUS);
+        }
+
+        if ($result === OrderResultConstant::ORDER_IS_HIDDEN_CONST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_HIDE);
         }
 
         return $this->response($result, self::UPDATE);
@@ -698,13 +725,29 @@ class AdminOrderController extends BaseController
      * or
      *
      * @OA\Response(
-     *      response="default",
-     *      description="Return erorr.",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9306 OR 9207 OR 9101"),
-     *          @OA\Property(type="string", property="msg", description="The cars remaining is finished Error. OR error OR captain profile not exist!"),
-     *      )
-     * )
+      *      response=200,
+      *      description="Return error.",
+      *      @OA\JsonContent(
+      *          oneOf={
+      *                   @OA\Schema(type="object",
+      *                          @OA\Property(type="string", property="status_code", description="9207"),
+      *                          @OA\Property(type="string", property="msg")
+      *                   ),
+      *                   @OA\Schema(type="object",
+      *                          @OA\Property(type="string", property="status_code", description="9306"),
+      *                          @OA\Property(type="string", property="msg")
+      *                   ),
+      *                   @OA\Schema(type="object",
+      *                          @OA\Property(type="string", property="status_code", description="9101"),
+      *                          @OA\Property(type="string", property="msg")
+      *                   ),
+      *                   @OA\Schema(type="object",
+      *                          @OA\Property(type="string", property="status_code", description="9218"),
+      *                          @OA\Property(type="string", property="msg")
+      *                   )
+      *              }
+      *      )
+      * )
      * 
      * @Security(name="Bearer")
      */
@@ -734,6 +777,10 @@ class AdminOrderController extends BaseController
 
         if ($response === CaptainConstant::CAPTAIN_NOT_FOUND) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_PROFILE_NOT_EXIST);
+        }
+
+        if ($response === OrderResultConstant::ORDER_IS_HIDDEN_CONST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_HIDE);
         }
 
         // if ($response === OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT_FOR_ADMIN) {
@@ -867,12 +914,21 @@ class AdminOrderController extends BaseController
      * or
      *
      * @OA\Response(
-     *      response="default",
-     *      description="Returns the error msg",
+     *      response=200,
+     *      description="Return error according to situation.",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", example="9219"),
-     *          @OA\Property(type="string", property="msg")
-     *   )
+     *          oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9219"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9218"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   )
+     *              }
+     *      )
+     *
      * )
      * 
      * @Security(name="Bearer") 
@@ -895,6 +951,10 @@ class AdminOrderController extends BaseController
 
         if ($result === OrderResultConstant::ORDER_IS_BEING_DELIVERED) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_ALREADY_DELIVERED);
+        }
+
+        if ($result === OrderResultConstant::ORDER_IS_HIDDEN_CONST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_HIDE);
         }
 
         return $this->response($result, self::UPDATE);
@@ -1624,7 +1684,6 @@ class AdminOrderController extends BaseController
      *                   )
      *              }
      *      )
-     *
      * )
      *
      * @Security(name="Bearer")
