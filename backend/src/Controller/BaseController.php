@@ -46,7 +46,6 @@ class BaseController extends AbstractController
     const ERROR_ORDER_ALREADY_DELIVERED = ["order is already delivered", "9219"];
     const CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE = ["previous order from same store still ongoing", "9200"];
     const ERROR_ORDER_CREATE_DATE_BIGGER_DELIVERY_DATE = ["create date is greater than delivery date", "9222"];
-
     //error related
     const ERROR_RELATED= ["error related","9251"];
     // error users
@@ -70,7 +69,6 @@ class BaseController extends AbstractController
     const ERROR_SYSTEM_FINANCIAL_INACTIVE = ["error system financial inactive", "9105"];
     const ERROR_NOT_ORDER_CASH = ["error not orders cash", "9106"];
     const ERROR_CAPTAIN_ONLINE_FALSE = ["captain not online", "9107"];
-
     //error store
     const ERROR_STORE_INACTIVE = ["error store inactive","9151"];
     const INCORRECT_ENTERED_DATA = ["incorrect entered date!", "9152"];
@@ -113,7 +111,6 @@ class BaseController extends AbstractController
     const VERIFICATION_CODE_WAS_NOT_CREATED = ["supplier category does not created", "9411"];
     // supplier category
     const SUPPLIER_CATEGORY_NOT_EXIST = ["supplier category does not exist", "9550"];
-
     const NOTFOUND=["Not found", "404"];
     //payments
     const PAYMENT_NOT_EXIST = ["payment not exist!", "9501"];
@@ -128,7 +125,6 @@ class BaseController extends AbstractController
     const NOT_UPDATE_FINANCIAL_SYSTEM_ACTIVE = ["not update because financial System is active", "9603"];
     // announcement
     const ANNOUNCEMENT_NOT_EXIST = ["announcement does not exist", "9440"];
-
     // erase
     const DELETION_USER_PASSWORD_INCORRECT = ["deletion user password is not correct", "9350"];
     const CAN_NOT_DELETE_USER_HAS_ORDERS = ["user has orders, we can not delete him/her", "9351"];
@@ -136,18 +132,15 @@ class BaseController extends AbstractController
     const CAN_NOT_DELETE_USER_HAS_PAYMENTS = ["user has payments, we can not delete him/her", "9353"];
     const CAN_NOT_DELETE_USER_HAS_PAYMENTS_TO_COMPANY = ["user has payments to company, we can not delete him/her", "9354"];
     const CAN_NOT_DELETE_USER_HAS_CASH_ORDER_PAYMENTS = ["user has cash orders payments, we can not delete him/her", "9355"];
-
     // renew database
     const RENEW_DATABASE_PASSWORD_INCORRECT = ["renew database password is not correct", "9360"];
     const RENEW_DATABASE_PASSWORD_FIELD_MISSING = ["password field is not exist", "9361"];
-
     // geo distance
     const ERROR_BAD_REQUEST = ["bad request", "9370"];
     const ERROR_CAN_NOT_DECODING_CONTENT = ["content can not be decoded", "9371"];
-
+    const ERROR_CAN_NOT_CALCULATE_DISTANCE = ["distance can not be calculated", "9372"];
     //
     const CAPTAIN_NOT_ALLOWED_TO_EDIT_ORDER_PAID_FLAG = ["You can not edit, because you paid the admin", "9380"];
-
     // captain offer subscription
     const SUBSCRIBE_CAPTAIN_OFFER_INACTIVE = ["inactive captain offer subscription", "9376"];
     const CAPTAIN_OFFER_SUBSCRIPTION_EXPIRED = ["expired captain offer subscription", "9377"];

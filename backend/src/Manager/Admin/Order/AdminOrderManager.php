@@ -425,4 +425,38 @@ class AdminOrderManager
 
         return $orderEntity;
     }
+
+    public function getOrderTypeAndDestinationFromStoreOrderDetailsByOrderIdForAdmin(int $orderId): ?array
+    {
+        return $this->orderEntityRepository->getOrderTypeAndDestinationFromStoreOrderDetailsByOrderIdForAdmin($orderId);
+    }
+
+    public function updateNormalOrderDestinationViaOrderIdAndDestinationArrayByAdmin(int $orderId, array $newDestination): ?OrderEntity
+    {
+        $orderEntity = $this->orderEntityRepository->find($orderId);
+
+        if(! $orderEntity) {
+            return $orderEntity;
+        }
+
+        $this->adminStoreOrderDetailsManager->updateDestination($orderId, $newDestination);
+
+        return $orderEntity;
+    }
+
+    // Add distance to the existing one (in storeBranchToClientDistance field)
+    public function updateOrderStoreBranchToClientDistanceViaAddingNewDistanceByAdmin(int $orderId, float $distance): ?OrderEntity
+    {
+        $orderEntity = $this->orderEntityRepository->find($orderId);
+
+        if(! $orderEntity) {
+            return $orderEntity;
+        }
+
+        $orderEntity->setStoreBranchToClientDistance($orderEntity->getStoreBranchToClientDistance() + $distance);
+
+        $this->entityManager->flush();
+
+        return $orderEntity;
+    }
 }

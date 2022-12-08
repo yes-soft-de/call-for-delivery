@@ -2402,4 +2402,23 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleColumnResult();
     }
+
+    public function getOrderTypeAndDestinationFromStoreOrderDetailsByOrderIdForAdmin(int $orderId): ?array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id ', 'orderEntity.orderType')
+            ->addSelect('storeOrderDetails.destination')
+
+            ->leftJoin(
+                StoreOrderDetailsEntity::class,
+                'storeOrderDetails',
+                Join::WITH,
+                'orderEntity.id = storeOrderDetails.orderId')
+
+            ->andWhere('orderEntity.id = :id')
+            ->setParameter('id', $orderId)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

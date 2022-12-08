@@ -3,6 +3,7 @@
 namespace App\Controller\Admin\Order;
 
 use App\AutoMapping;
+use App\Constant\GeoDistance\GeoDistanceResultConstant;
 use App\Constant\Main\MainErrorConstant;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
@@ -13,6 +14,7 @@ use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminRequest;
+use App\Request\Admin\Order\OrderStoreBranchToClientDistanceAdditionByAdminRequest;
 use App\Request\Admin\Order\RePendingAcceptedOrderByAdminRequest;
 use App\Request\Admin\Order\SubOrderCreateByAdminRequest;
 use App\Service\Admin\Order\AdminOrderService;
@@ -1560,5 +1562,98 @@ class AdminOrderController extends BaseController
         $response = $this->adminOrderService->updateIsCashPaymentConfirmedByStoreByAdmin($request, $this->getUserId());
 
         return $this->response($response, self::UPDATE);
+    }
+
+    /**
+     * Admin: update storeBranchToClientDistance via adding distance to it by new location.
+     * @Route("addstorebranchtoclientdistanceviadestinationbyadmin", name="updateStoreBranchToClientDistanceAndDestinationViaLocationByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="update storeBranchToClientDistance and destination by admin",
+     *      @OA\JsonContent(
+     *              @OA\Property(type="integer", property="orderId"),
+     *              @OA\Property(type="array", property="destination",
+     *                  @OA\Items()
+     *              )
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns the order info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Admin\Order\OrderDestinationUpdateByAdminResponse")
+     *      )
+     *   )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *          oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9213"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9205"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9372"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   )
+     *              }
+     *      )
+     *
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function addDistanceToStoreBranchToClientDistanceViaLocationByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(\stdClass::class, OrderStoreBranchToClientDistanceAdditionByAdminRequest::class, (object) $data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminOrderService->addDistanceToStoreBranchToClientDistanceViaLocationByAdmin($request, $this->getUserId());
+
+        if ($result === OrderResultConstant::ORDER_TYPE_BID) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_WRONG_ORDER_TYPE);
+
+        } elseif ($result === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_NOT_FOUND);
+
+        } elseif ($result === GeoDistanceResultConstant::DESTINATION_COULD_NOT_BE_CALCULATED) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_CAN_NOT_CALCULATE_DISTANCE);
+        }
+
+        return $this->response($result, self::UPDATE);
     }
 }

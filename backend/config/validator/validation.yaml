@@ -768,3 +768,10 @@ App\Request\Admin\Order\OrderStoreBranchToClientDistanceAndDestinationByAdminReq
             - NotBlank: ~
         destination:
             - NotBlank: ~
+
+App\Request\Admin\Order\OrderStoreBranchToClientDistanceAdditionByAdminRequest:
+    properties:
+        orderId:
+            - NotBlank: ~
+        destination:
+            - NotBlank: ~

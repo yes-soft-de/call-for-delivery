@@ -21,6 +21,7 @@ use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminRequest;
+use App\Request\Admin\Order\OrderStoreBranchToClientDistanceAdditionByAdminRequest;
 use App\Request\Admin\Order\RePendingAcceptedOrderByAdminRequest;
 use App\Request\Admin\Order\SubOrderCreateByAdminRequest;
 use App\Response\Admin\Order\BidDetailsGetForAdminResponse;
@@ -30,15 +31,18 @@ use App\Response\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminResponse;
 use App\Response\Admin\Order\OrderByIdGetForAdminResponse;
 use App\Response\Admin\Order\OrderCancelByAdminResponse;
 use App\Response\Admin\Order\OrderCreateByAdminResponse;
+use App\Response\Admin\Order\OrderDestinationUpdateByAdminResponse;
 use App\Response\Admin\Order\OrderGetForAdminResponse;
 use App\Response\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminResponse;
 use App\Response\Admin\Order\OrderStateUpdateByAdminResponse;
 use App\Response\Admin\Order\OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse;
 use App\Response\Admin\Order\OrderUpdateByAdminResponse;
+use App\Response\GeoDistance\GeoDistanceInfoGetResponse;
 use App\Response\Order\BidOrderByIdGetForAdminResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
 use App\Service\ChatRoom\OrderChatRoomService;
 use App\Service\FileUpload\UploadFileHelperService;
+use App\Service\GeoDistance\GeoDistanceService;
 use App\Service\Notification\NotificationFirebaseService;
 use App\Service\Notification\NotificationLocalService;
 use App\Service\Order\StoreOrderDetailsService;
@@ -73,10 +77,12 @@ use App\Constant\Order\OrderIsHideConstant;
 use App\Request\Admin\Order\OrderStoreBranchToClientDistanceAndDestinationByAdminRequest;
 use App\Request\Admin\Order\OrderUpdateIsCashPaymentConfirmedByStoreByAdminRequest;
 use App\Response\Admin\Order\OrderUpdateIsCashPaymentConfirmedByStoreForAdminResponse;
+use Doctrine\ORM\EntityManagerInterface;
 
 class AdminOrderService
 {
     private AutoMapping $autoMapping;
+    private EntityManagerInterface $entityManager;
     private AdminOrderManager $adminOrderManager;
     private UploadFileHelperService $uploadFileHelperService;
     private OrderTimeLineService $orderTimeLineService;
@@ -94,14 +100,17 @@ class AdminOrderService
     private CaptainService $captainService;
     private OrderLogService $orderLogService;
     private AdminStoreSubscriptionService $adminStoreSubscriptionService;
+    private GeoDistanceService $geoDistanceService;
 
-    public function __construct(AutoMapping $autoMapping, AdminOrderManager $adminStoreOwnerManager, UploadFileHelperService $uploadFileHelperService, OrderTimeLineService $orderTimeLineService,
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, AdminOrderManager $adminStoreOwnerManager, UploadFileHelperService $uploadFileHelperService, OrderTimeLineService $orderTimeLineService,
                                 OrderService $orderService, OrderChatRoomService $orderChatRoomService, StoreOrderDetailsService $storeOrderDetailsService, NotificationFirebaseService $notificationFirebaseService,
                                 NotificationLocalService $notificationLocalService, StoreOwnerProfileService $storeOwnerProfileService, SubscriptionService $subscriptionService,
                                 StoreOwnerBranchService $storeOwnerBranchService, CaptainFinancialDuesService $captainFinancialDuesService, CaptainAmountFromOrderCashService $captainAmountFromOrderCashService,
-                                StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService, CaptainService $captainService, OrderLogService $orderLogService, AdminStoreSubscriptionService $adminStoreSubscriptionService)
+                                StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService, CaptainService $captainService,
+                                OrderLogService $orderLogService, AdminStoreSubscriptionService $adminStoreSubscriptionService, GeoDistanceService $geoDistanceService)
     {
         $this->autoMapping = $autoMapping;
+        $this->entityManager = $entityManager;
         $this->adminOrderManager = $adminStoreOwnerManager;
         $this->uploadFileHelperService = $uploadFileHelperService;
         $this->orderTimeLineService = $orderTimeLineService;
@@ -119,6 +128,7 @@ class AdminOrderService
         $this->captainService = $captainService;
         $this->orderLogService = $orderLogService;
         $this->adminStoreSubscriptionService = $adminStoreSubscriptionService;
+        $this->geoDistanceService = $geoDistanceService;
     }
 
     public function getCountOrderOngoingForAdmin(): int
@@ -1002,5 +1012,116 @@ class AdminOrderService
         }
 
         return $order;
+    }
+
+    public function addDistanceToStoreBranchToClientDistanceViaLocationByAdmin(OrderStoreBranchToClientDistanceAdditionByAdminRequest $request, int $userId)
+    {
+        // 1. Calculate the new distance by the new destination
+        $currentDestination = $this->getCurrentDestinationByOrderIdForAdmin($request->getOrderId());
+
+        if (($currentDestination !== OrderResultConstant::ORDER_TYPE_BID) &&
+            ($currentDestination !== OrderResultConstant::ORDER_NOT_FOUND_RESULT)) {
+            $distance = $this->getDistanceBetweenTwoLocations($currentDestination, $request->getDestination());
+
+            if ($distance === GeoDistanceResultConstant::DESTINATION_COULD_NOT_BE_CALCULATED) {
+                return GeoDistanceResultConstant::DESTINATION_COULD_NOT_BE_CALCULATED;
+            }
+
+            // start transaction commit ...
+            $this->entityManager->getConnection()->beginTransaction();
+
+            try {
+                // 2. Update the destination
+                $orderResult = $this->updateNormalOrderDestinationViaOrderIdAndDestinationArrayByAdmin($request->getOrderId(), $request->getDestination(),
+                    $userId);
+
+                if ($orderResult) {
+                    // 3. Add the new distance to the existing one
+                    $this->updateOrderStoreBranchToClientDistanceViaAddingNewDistanceByAdmin($request->getOrderId(), $distance, $userId);
+
+                    $this->entityManager->getConnection()->commit();
+
+                    return $orderResult;
+                }
+
+            } catch (\Exception $e) {
+                $this->entityManager->getConnection()->rollBack();
+                throw $e;
+            }
+        }
+
+        return $currentDestination;
+    }
+
+    // Get ONLY the order type and destination (from StoreOrderDetails exclusively) for admin
+    public function getOrderTypeAndDestinationFromStoreOrderDetailsByOrderIdForAdmin(int $orderId): ?array
+    {
+        return $this->adminOrderManager->getOrderTypeAndDestinationFromStoreOrderDetailsByOrderIdForAdmin($orderId);
+    }
+
+    // Get client destination of an order by order id for admin
+    public function getCurrentDestinationByOrderIdForAdmin(int $orderId): array|string
+    {
+        // In order to get destination of an order, we have to know its type, either normal or bid order
+        $order = $this->getOrderTypeAndDestinationFromStoreOrderDetailsByOrderIdForAdmin($orderId);
+
+        if ($order) {
+            if ($order['orderType'] === OrderTypeConstant::ORDER_TYPE_NORMAL) {
+                return $order['destination'];
+            }
+
+            return OrderResultConstant::ORDER_TYPE_BID;
+        }
+
+        return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+    }
+
+    // Get the distance between two locations of type array for admin
+    public function getDistanceBetweenTwoLocations(array $fromLocation, array $toLocation): float|int
+    {
+        $result = $this->geoDistanceService->getGeoDistanceBetweenTwoLocations($fromLocation['lat'], $fromLocation['lon'],
+            $toLocation['lat'], $toLocation['lon']);
+
+        if (($result === GeoDistanceResultConstant::BAD_REQUEST_CONST) ||
+            ($result === GeoDistanceResultConstant::CONTENT_CAN_NOT_BE_DECODED)) {
+            return GeoDistanceResultConstant::DESTINATION_COULD_NOT_BE_CALCULATED;
+        }
+
+        // get the distance value from the resulted response
+        return (float) $result->distance;
+    }
+
+    // Update the destination of normal order (normal order only because bid order has different approach)
+    public function updateNormalOrderDestinationViaOrderIdAndDestinationArrayByAdmin(int $orderId, array $newDestination, int $userId): ?OrderDestinationUpdateByAdminResponse
+    {
+        $order = $this->adminOrderManager->updateNormalOrderDestinationViaOrderIdAndDestinationArrayByAdmin($orderId, $newDestination);
+
+        if (! $order) {
+            return $order;
+        }
+
+        // save log of the action on order
+        $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+            OrderLogActionTypeConstant::UPDATE_ORDER_DESTINATION_BY_ADMIN_ACTION_CONST,
+            null, null);
+
+        return $this->autoMapping->map(OrderEntity::class, OrderDestinationUpdateByAdminResponse::class, $order);
+    }
+
+    // Add distance to the existing one (in storeBranchToClientDistance field)
+    public function updateOrderStoreBranchToClientDistanceViaAddingNewDistanceByAdmin(int $orderId, float $distance, int $userId): ?OrderDestinationUpdateByAdminResponse
+    {
+        $order = $this->adminOrderManager->updateOrderStoreBranchToClientDistanceViaAddingNewDistanceByAdmin($orderId, $distance);
+
+        if (! $order) {
+            return $order;
+        }
+
+        // save log of the action on order
+        $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+            OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_VIA_ADDING_DISTANCE_BY_ADMIN_ACTION_CONST,
+            null, null);
+
+        return $this->autoMapping->map(OrderEntity::class, OrderDestinationUpdateByAdminResponse::class, $order);
     }
 }
