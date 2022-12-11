@@ -22,6 +22,7 @@ use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminRequest;
 use App\Request\Admin\Order\OrderStoreBranchToClientDistanceAdditionByAdminRequest;
+use App\Request\Admin\Order\OrderStoreBranchToClientDistanceUpdateByAddAdditionalDistanceByAdminRequest;
 use App\Request\Admin\Order\RePendingAcceptedOrderByAdminRequest;
 use App\Request\Admin\Order\SubOrderCreateByAdminRequest;
 use App\Response\Admin\Order\BidDetailsGetForAdminResponse;
@@ -35,6 +36,7 @@ use App\Response\Admin\Order\OrderDestinationUpdateByAdminResponse;
 use App\Response\Admin\Order\OrderGetForAdminResponse;
 use App\Response\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminResponse;
 use App\Response\Admin\Order\OrderStateUpdateByAdminResponse;
+use App\Response\Admin\Order\OrderStoreBranchToClientDistanceUpdateByAdminResponse;
 use App\Response\Admin\Order\OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse;
 use App\Response\Admin\Order\OrderUpdateByAdminResponse;
 use App\Response\GeoDistance\GeoDistanceInfoGetResponse;
@@ -321,12 +323,17 @@ class AdminOrderService
     }
 
     // This function for returning order which being accepted by captain to pending status under certain circumstances
-    public function rePendingAcceptedOrderByAdmin(RePendingAcceptedOrderByAdminRequest $request, int $userId): string|null|OrderStateUpdateByAdminResponse
+    public function rePendingAcceptedOrderByAdmin(RePendingAcceptedOrderByAdminRequest $request, int $userId): string|null|OrderStateUpdateByAdminResponse|int
     {
         // First, check order status if we can return it to pending
         $orderEntity = $this->adminOrderManager->getOrderByIdForAdmin($request->getOrderId());
 
         if ($orderEntity !== null) {
+            // Before doing anything, check if order is hidden - for any reason - or not
+            if (($orderEntity->getIsHide() === OrderIsHideConstant::ORDER_HIDE_TEMPORARILY) || ($orderEntity->getIsHide() === OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)) {
+                return OrderResultConstant::ORDER_IS_HIDDEN_CONST;
+            }
+
             // we need captain id for deleting related order chat room + create local notification for the captain
             $captainId = $orderEntity->getCaptainId()->getId();
 
@@ -556,7 +563,13 @@ class AdminOrderService
     public function assignOrderToCaptain(OrderAssignToCaptainByAdminRequest $request, int $userId): null|OrderUpdateToHiddenResponse|int
     {
         $orderEntity = $this->adminOrderManager->getOrderById($request->getOrderId());
+
         if ($orderEntity) {
+            // Before doing anything, check if order is hidden - for any reason - or not
+            if (($orderEntity->getIsHide() === OrderIsHideConstant::ORDER_HIDE_TEMPORARILY) || ($orderEntity->getIsHide() === OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)) {
+                return OrderResultConstant::ORDER_IS_HIDDEN_CONST;
+            }
+
             //Check the order if it is pending
             if($orderEntity->getState() !==  OrderStateConstant::ORDER_STATE_PENDING) {
                 return OrderStateConstant::ORDER_STATE_PENDING_INT;
@@ -667,6 +680,13 @@ class AdminOrderService
 
     public function updateOrderStateByAdmin(OrderStateUpdateByAdminRequest $request, int $userId): int|OrderStateUpdateByAdminResponse|null
     {
+        // Check order visibility before updating its status
+        $visibility = $this->getOrderIsHideByOrderId($request->getId());
+
+        if (($visibility === OrderIsHideConstant::ORDER_HIDE_TEMPORARILY) || ($visibility === OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)) {
+            return OrderResultConstant::ORDER_IS_HIDDEN_CONST;
+        }
+
         $orderResult = $this->adminOrderManager->updateOrderStateByAdmin($request);
 
         if (! $orderResult) {
@@ -1014,6 +1034,7 @@ class AdminOrderService
         return $order;
     }
 
+    // Add additional distance to storeBranchToClientDistance via new destination by admin
     public function addDistanceToStoreBranchToClientDistanceViaLocationByAdmin(OrderStoreBranchToClientDistanceAdditionByAdminRequest $request, int $userId)
     {
         // 1. Calculate the new distance by the new destination
@@ -1117,11 +1138,50 @@ class AdminOrderService
             return $order;
         }
 
+        // Re-calculate the financial dues of the captain who has the order (if exists)
+        if ($order->getCaptainId()?->getCaptainId()) {
+            $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
+        }
+
         // save log of the action on order
         $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
             OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_VIA_ADDING_DISTANCE_BY_ADMIN_ACTION_CONST,
             null, null);
 
         return $this->autoMapping->map(OrderEntity::class, OrderDestinationUpdateByAdminResponse::class, $order);
+    }
+
+    // Just add additional distance to storeBranchToClientDistance via new destination by admin
+    public function addAdditionalDistanceToStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceUpdateByAddAdditionalDistanceByAdminRequest $request, int $userId): ?OrderStoreBranchToClientDistanceUpdateByAdminResponse
+    {
+        $order = $this->adminOrderManager->updateOrderStoreBranchToClientDistanceViaAddingNewDistanceByAdmin($request->getOrderId(),
+            $request->getAdditionalDistance());
+
+        if (! $order) {
+            return $order;
+        }
+
+        // Re-calculate the financial dues of the captain who has the order (if exists)
+        if ($order->getCaptainId()?->getCaptainId()) {
+            $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
+        }
+
+        // save log of the action on order
+        $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+            OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_VIA_ADD_ADDITIONAL_DISTANCE_BY_ADMIN_ACTION_CONST,
+            null, null);
+
+        return $this->autoMapping->map(OrderEntity::class, OrderStoreBranchToClientDistanceUpdateByAdminResponse::class, $order);
+    }
+
+    public function getOrderIsHideByOrderId(int $orderId): int|string
+    {
+        $arrayResult = $this->adminOrderManager->getOrderIsHideByOrderId($orderId);
+
+        if (count($arrayResult) > 0) {
+            return (int) $arrayResult[0];
+        }
+
+        return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
     }
 }

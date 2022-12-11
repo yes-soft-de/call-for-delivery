@@ -459,4 +459,9 @@ class AdminOrderManager
 
         return $orderEntity;
     }
+
+    public function getOrderIsHideByOrderId(int $orderId): array
+    {
+        return $this->orderEntityRepository->getOrderIsHideByOrderId($orderId);
+    }
 }

@@ -2421,4 +2421,16 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
+
+    public function getOrderIsHideByOrderId(int $orderId): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.isHide')
+
+            ->where('orderEntity.id = :orderId')
+            ->setParameter('orderId', $orderId)
+
+            ->getQuery()
+            ->getSingleColumnResult();
+    }
 }
