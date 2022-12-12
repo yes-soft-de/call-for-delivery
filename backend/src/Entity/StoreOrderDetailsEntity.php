@@ -39,6 +39,9 @@ class StoreOrderDetailsEntity
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $filePdf;
 
+    #[ORM\Column(type: 'integer', options: ["default" => 1])]
+    private $differentReceiverDestination;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -136,6 +139,18 @@ class StoreOrderDetailsEntity
     public function setFilePdf(?string $filePdf): self
     {
         $this->filePdf = $filePdf;
+
+        return $this;
+    }
+
+    public function getDifferentReceiverDestination(): ?int
+    {
+        return $this->differentReceiverDestination;
+    }
+
+    public function setDifferentReceiverDestination(int $differentReceiverDestination): self
+    {
+        $this->differentReceiverDestination = $differentReceiverDestination;
 
         return $this;
     }

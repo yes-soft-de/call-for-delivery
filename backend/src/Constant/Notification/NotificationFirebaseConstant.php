@@ -32,6 +32,8 @@ final class NotificationFirebaseConstant
 
     const ORDER_IS_BEING_HIDDEN = "تم إخفاء الطلب ";
 
+    const ORDER_DESTINATION_ADDITION_BY_ADMIN_MESSAGE_CONST = "تم إضافة مسافة من قبل الإدارة على المسافة المحتسبة تلقائيا للطلب رقم";
+
     //for captain
     const STATE_ON_WAY_PICK_ORDER_CAPTAIN = "لقد قبلت الطلب ";
 

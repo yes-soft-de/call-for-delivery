@@ -158,7 +158,8 @@ class OrderService
 
             // save log of the action on order
             $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
-                OrderLogActionTypeConstant::CREATE_ORDER_BY_STORE_ACTION_CONST, null, null);
+                OrderLogActionTypeConstant::CREATE_ORDER_BY_STORE_ACTION_CONST, [], null,
+                null);
             //create firebase notification to store
             try {
                 $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
@@ -576,7 +577,8 @@ class OrderService
 
             // save log of the action on order
             $this->orderLogService->createOrderLogMessage($order, $request->getCaptainId()->getCaptainId(), OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST,
-                OrderLogActionTypeConstant::UPDATE_ORDER_STATE_BY_CAPTAIN_ACTION_CONST, null, null);
+                OrderLogActionTypeConstant::UPDATE_ORDER_STATE_BY_CAPTAIN_ACTION_CONST, [], null,
+                null);
 
             //create Notification Local for store
             $this->notificationLocalService->createNotificationLocalForOrderState($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::STORE, $order->getCaptainId()->getId());
@@ -675,7 +677,8 @@ class OrderService
 
             // save log of the action on order
             $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
-                OrderLogActionTypeConstant::CONFIRM_CAPTAIN_ARRIVAL_BY_STORE_ACTION_CONST, null, null);
+                OrderLogActionTypeConstant::CONFIRM_CAPTAIN_ARRIVAL_BY_STORE_ACTION_CONST, [], null,
+                null);
 
             // send firebase notification to admin if isCaptainArrived = false
             if ($order->getIsCaptainArrived() === false) {
@@ -741,7 +744,8 @@ class OrderService
 
                 // save log of the action on order
                 $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
-                    OrderLogActionTypeConstant::CANCEL_ORDER_BY_STORE_ACTION_CONST, null, null);
+                    OrderLogActionTypeConstant::CANCEL_ORDER_BY_STORE_ACTION_CONST, [], null,
+                    null);
 
                 //create local notification to store
                 $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
@@ -990,7 +994,8 @@ class OrderService
 
                     // save log of the action on order
                     $this->orderLogService->createOrderLogMessage($order, $userId, $userType,
-                        OrderLogActionTypeConstant::HIDE_ORDER_EXCEEDED_DELIVERY_TIME_ACTION_CONST, null, null);
+                        OrderLogActionTypeConstant::HIDE_ORDER_EXCEEDED_DELIVERY_TIME_ACTION_CONST, [], null,
+                        null);
 
                     //create firebase notification to store
                     try {
@@ -1036,7 +1041,8 @@ class OrderService
 
         // save log of the action on order
         $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST,
-            OrderLogActionTypeConstant::UPDATE_PAID_TO_PROVIDER_BY_CAPTAIN_ACTION_CONST, null, null);
+            OrderLogActionTypeConstant::UPDATE_PAID_TO_PROVIDER_BY_CAPTAIN_ACTION_CONST, [], null,
+            null);
 
         return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
     }
@@ -1084,7 +1090,8 @@ class OrderService
 
             // save log of the action on order
             $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
-                OrderLogActionTypeConstant::CREATE_SUB_ORDER_BY_STORE_ACTION_CONST, null, null);
+                OrderLogActionTypeConstant::CREATE_SUB_ORDER_BY_STORE_ACTION_CONST, [], null,
+                null);
 
             try {
                 // create firebase notification to store
@@ -1115,7 +1122,8 @@ class OrderService
 
         // save log of the action on order
         $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST,
-            OrderLogActionTypeConstant::UN_LINK_SUB_ORDER_BY_CAPTAIN_ACTION_CONST, null, null);
+            OrderLogActionTypeConstant::UN_LINK_SUB_ORDER_BY_CAPTAIN_ACTION_CONST, [], null,
+            null);
 
         //notification to store
         $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NON_SUB_ORDER_TITLE,
@@ -1171,7 +1179,7 @@ class OrderService
 
                 // save log of the action on order
                 $this->orderLogService->createOrderLogMessage($order, $userId, $userType, OrderLogActionTypeConstant::SHOW_SUB_ORDER_IF_CAR_AVAILABLE_ACTION_CONST,
-                    null, null);
+                    [], null, null);
 
                 //notification to store
                 $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::SUB_ORDER_ATTENTION,
@@ -1200,7 +1208,8 @@ class OrderService
 
                     // save log of the action on order
                     $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
-                        OrderLogActionTypeConstant::CANCEL_ORDER_BY_STORE_ACTION_CONST, null, null);
+                        OrderLogActionTypeConstant::CANCEL_ORDER_BY_STORE_ACTION_CONST, [], null,
+                        null);
 
                     //create local notification to store
                     $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
@@ -1244,7 +1253,8 @@ class OrderService
 
                 // save log of the action on order
                 $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
-                    OrderLogActionTypeConstant::RECYCLE_ORDER_BY_STORE_ACTION_CONST, null, null);
+                    OrderLogActionTypeConstant::RECYCLE_ORDER_BY_STORE_ACTION_CONST, [], null,
+                    null);
 
                 $this->notificationLocalService->createNotificationLocal($orderEntity->getStoreOwner()->getStoreOwnerId(), NotificationConstant::RECYCLING_ORDER_TITLE,
                     NotificationConstant::RECYCLING_ORDER_SUCCESS, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
@@ -1288,7 +1298,8 @@ class OrderService
 
         // save log of the action on order
         $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
-            OrderLogActionTypeConstant::UN_LINK_SUB_ORDER_BY_STORE_ACTION_CONST, null, null);
+            OrderLogActionTypeConstant::UN_LINK_SUB_ORDER_BY_STORE_ACTION_CONST, [], null,
+            null);
 
         //notification to store
         $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NON_SUB_ORDER_TITLE,
@@ -1403,7 +1414,8 @@ class OrderService
 
                 // save log of the action on order
                 $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
-                    OrderLogActionTypeConstant::UPDATE_ORDER_BY_STORE_ACTION_CONST, null, null);
+                    OrderLogActionTypeConstant::UPDATE_ORDER_BY_STORE_ACTION_CONST, [], null,
+                    null);
 
                 if ($order->getCaptainId()) {
                     // create firebase notification to captain
@@ -1428,7 +1440,8 @@ class OrderService
 
         // save log of the action on order
         $this->orderLogService->createOrderLogMessage($orderEntity, $orderEntity->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
-            OrderLogActionTypeConstant::HIDE_ORDER_WHILE_UPDATING_BY_STORE_ACTION_CONST, null, null);
+            OrderLogActionTypeConstant::HIDE_ORDER_WHILE_UPDATING_BY_STORE_ACTION_CONST, [], null,
+            null);
 
         return $this->autoMapping->map(OrderEntity::class, OrderUpdateToHiddenResponse::class, $orderEntity);
     }
@@ -1486,7 +1499,8 @@ class OrderService
 
             // save log of the action on order
             $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
-                OrderLogActionTypeConstant::CONFIRM_CAPTAIN_PAID_TO_PROVIDER_BY_STORE_ACTION_CONST, null, null);
+                OrderLogActionTypeConstant::CONFIRM_CAPTAIN_PAID_TO_PROVIDER_BY_STORE_ACTION_CONST, [], null,
+                null);
 
             // send firebase notification to admin if the captain’s answer differs from that of the store, regarding the field (paidToProvider and isCashPaymentConfirmedByStore)
             if ($order->getIsCashPaymentConfirmedByStore() !== $order->getPaidToProvider()) {

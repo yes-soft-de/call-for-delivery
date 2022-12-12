@@ -8,6 +8,11 @@ class OrderStoreBranchToClientDistanceUpdateByAddAdditionalDistanceByAdminReques
 
     private float $additionalDistance;
 
+    /**
+     * @var string|null
+     */
+    private $storeBranchToClientDistanceAdditionExplanation;
+
     public function getOrderId(): int
     {
         return $this->orderId;
@@ -16,5 +21,10 @@ class OrderStoreBranchToClientDistanceUpdateByAddAdditionalDistanceByAdminReques
     public function getAdditionalDistance(): float
     {
         return $this->additionalDistance;
+    }
+
+    public function getStoreBranchToClientDistanceAdditionExplanation(): ?string
+    {
+        return $this->storeBranchToClientDistanceAdditionExplanation;
     }
 }

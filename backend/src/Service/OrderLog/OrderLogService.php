@@ -16,9 +16,9 @@ class OrderLogService
     }
 
     public function createOrderLogMessage(OrderEntity $orderId, int $createdBy, int $createdByUserType, int $action,
-                                          int|null $storeOwnerBranchId, int|null $supplierProfileId)
+                                          array $details, int|null $storeOwnerBranchId, int|null $supplierProfileId)
     {
         $this->eventBus->dispatch(OrderLogCreateMessage::create($orderId->getId(), $action, $createdBy, $createdByUserType,
-            $storeOwnerBranchId, $orderId->getStoreOwner()->getId(), $supplierProfileId));
+            $storeOwnerBranchId, $details, $orderId->getStoreOwner()->getId(), $supplierProfileId));
     }
 }
