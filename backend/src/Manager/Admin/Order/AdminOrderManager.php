@@ -13,6 +13,7 @@ use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminRequest;
+use App\Request\Admin\Order\OrderStoreBranchToClientDistanceAdditionByAdminRequest;
 use App\Request\Admin\Order\SubOrderCreateByAdminRequest;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -439,13 +440,13 @@ class AdminOrderManager
             return $orderEntity;
         }
 
-        $this->adminStoreOrderDetailsManager->updateDestination($orderId, $newDestination);
+        $this->adminStoreOrderDetailsManager->updateDestinationByAddition($orderId, $newDestination);
 
         return $orderEntity;
     }
 
     // Add distance to the existing one (in storeBranchToClientDistance field)
-    public function updateOrderStoreBranchToClientDistanceViaAddingNewDistanceByAdmin(int $orderId, float $distance): ?OrderEntity
+    public function updateOrderStoreBranchToClientDistanceViaAddingNewDistanceByAdmin(int $orderId, float $distance, string $storeBranchToClientDistanceAdditionExplanation): ?OrderEntity
     {
         $orderEntity = $this->orderEntityRepository->find($orderId);
 
@@ -454,6 +455,7 @@ class AdminOrderManager
         }
 
         $orderEntity->setStoreBranchToClientDistance($orderEntity->getStoreBranchToClientDistance() + $distance);
+        $orderEntity->setStoreBranchToClientDistanceAdditionExplanation($storeBranchToClientDistanceAdditionExplanation);
 
         $this->entityManager->flush();
 

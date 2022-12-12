@@ -58,6 +58,7 @@ class CreateOrderLogMessagesHandler implements MessageSubscriberInterface
         }
 
         $this->orderLogToMySqlService->initializeCreateOrderLogRequest($orderEntity, $orderLogCreateMessage->getCreatedBy(),
-            $orderLogCreateMessage->getCreatedByUserType(), $orderLogCreateMessage->getAction(), $storeBranchEntity, $supplierProfileEntity);
+            $orderLogCreateMessage->getCreatedByUserType(), $orderLogCreateMessage->getAction(), $orderLogCreateMessage->getDetails(),
+            $storeBranchEntity, $supplierProfileEntity);
     }
 }

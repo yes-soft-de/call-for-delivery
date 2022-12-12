@@ -1646,8 +1646,12 @@ class AdminOrderController extends BaseController
      *      @OA\JsonContent(
      *              @OA\Property(type="integer", property="orderId"),
      *              @OA\Property(type="array", property="destination",
-     *                  @OA\Items()
-     *              )
+     *                  @OA\Items(
+     *                      @OA\Property(type="number", property="lat"),
+     *                      @OA\Property(type="number", property="lon")
+     *                  )
+     *              ),
+     *              @OA\Property(type="string", property="storeBranchToClientDistanceAdditionExplanation")
      *      )
      * )
      *
@@ -1737,7 +1741,8 @@ class AdminOrderController extends BaseController
      *      description="update storeBranchToClientDistance and destination by admin",
      *      @OA\JsonContent(
      *              @OA\Property(type="integer", property="orderId"),
-     *              @OA\Property(type="number", property="additionalDistance")
+     *              @OA\Property(type="number", property="additionalDistance"),
+     *              @OA\Property(type="string", property="storeBranchToClientDistanceAdditionExplanation")
      *      )
      * )
      *

@@ -3,11 +3,13 @@
 namespace App\Manager\Admin\Order;
 
 use App\AutoMapping;
+use App\Constant\Order\OrderDestinationConstant;
 use App\Entity\OrderEntity;
 use App\Entity\ImageEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Repository\StoreOrderDetailsEntityRepository;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
+use App\Request\Admin\Order\OrderStoreBranchToClientDistanceAdditionByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\Admin\StoreOwnerBranch\AdminStoreOwnerBranchManager;
 use App\Manager\Image\ImageManager;
@@ -103,6 +105,21 @@ class AdminStoreOrderDetailsManager
 
         if ($storeOrderDetailsEntity) {
             $storeOrderDetailsEntity->setDestination($destination);
+            $this->entityManager->flush();
+        }
+
+        return $storeOrderDetailsEntity;
+    }
+
+    public function updateDestinationByAddition(int $orderId, array $destination): ?StoreOrderDetailsEntity
+    {
+        $storeOrderDetailsEntity = $this->storeOrderDetailsEntityRepository->findOneBy(["orderId"=>$orderId]);
+
+        if ($storeOrderDetailsEntity) {
+            $storeOrderDetailsEntity->setDestination($destination);
+            // set that the receiver location is different, and had been updated by the admin
+            $storeOrderDetailsEntity->setDifferentReceiverDestination(OrderDestinationConstant::ORDER_DESTINATION_IS_DIFFERENT_AND_UPDATED_BY_ADMIN_CONST);
+
             $this->entityManager->flush();
         }
 

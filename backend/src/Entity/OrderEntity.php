@@ -119,6 +119,9 @@ class OrderEntity
     #[ORM\Column(type: 'integer', options: ["default" => 2])]
     private $previousVisibility;
 
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $storeBranchToClientDistanceAdditionExplanation;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
@@ -606,6 +609,18 @@ class OrderEntity
     public function setPreviousVisibility(int $previousVisibility): self
     {
         $this->previousVisibility = $previousVisibility;
+
+        return $this;
+    }
+
+    public function getStoreBranchToClientDistanceAdditionExplanation(): ?string
+    {
+        return $this->storeBranchToClientDistanceAdditionExplanation;
+    }
+
+    public function setStoreBranchToClientDistanceAdditionExplanation(?string $storeBranchToClientDistanceAdditionExplanation): self
+    {
+        $this->storeBranchToClientDistanceAdditionExplanation = $storeBranchToClientDistanceAdditionExplanation;
 
         return $this;
     }

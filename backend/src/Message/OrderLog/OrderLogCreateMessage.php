@@ -27,8 +27,13 @@ class OrderLogCreateMessage
      */
     private $supplierProfile;
 
+    /**
+     * @var array
+     */
+    private $details;
+
     public static function create(int $orderId, int $action, int $createdBy, int $createdByUserType, ?int $storeOwnerBranch,
-                                  ?int $storeOwnerProfile, ?int $supplierProfile): self
+                                  array $details, ?int $storeOwnerProfile, ?int $supplierProfile): self
     {
         $orderLogCreateMessage = new OrderLogCreateMessage();
 
@@ -39,6 +44,7 @@ class OrderLogCreateMessage
         $orderLogCreateMessage->storeOwnerBranch = $storeOwnerBranch;
         $orderLogCreateMessage->storeOwnerProfile = $storeOwnerProfile;
         $orderLogCreateMessage->supplierProfile = $supplierProfile;
+        $orderLogCreateMessage->details = $details;
 
         return $orderLogCreateMessage;
     }
@@ -76,5 +82,10 @@ class OrderLogCreateMessage
     public function getSupplierProfile(): ?int
     {
         return $this->supplierProfile;
+    }
+
+    public function getDetails(): array
+    {
+        return $this->details;
     }
 }

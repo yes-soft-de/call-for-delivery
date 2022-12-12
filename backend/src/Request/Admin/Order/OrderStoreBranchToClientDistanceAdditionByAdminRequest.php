@@ -8,6 +8,11 @@ class OrderStoreBranchToClientDistanceAdditionByAdminRequest
 
     private array $destination;
 
+    /**
+     * @var string|null
+     */
+    private $storeBranchToClientDistanceAdditionExplanation;
+
     public function getOrderId(): int
     {
         return $this->orderId;
@@ -26,5 +31,10 @@ class OrderStoreBranchToClientDistanceAdditionByAdminRequest
     public function setDestination(array $destination): void
     {
         $this->destination = $destination;
+    }
+
+    public function getStoreBranchToClientDistanceAdditionExplanation(): ?string
+    {
+        return $this->storeBranchToClientDistanceAdditionExplanation;
     }
 }
