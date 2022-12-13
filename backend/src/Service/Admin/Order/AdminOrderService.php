@@ -5,6 +5,7 @@ namespace App\Service\Admin\Order;
 use App\AutoMapping;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Notification\NotificationTokenConstant;
+use App\Constant\Order\OrderIsCancelConstant;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
@@ -21,6 +22,7 @@ use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminRequest;
+use App\Request\Admin\Order\OrderRecycleOrCancelByAdminRequest;
 use App\Request\Admin\Order\OrderStoreBranchToClientDistanceAdditionByAdminRequest;
 use App\Request\Admin\Order\OrderStoreBranchToClientDistanceUpdateByAddAdditionalDistanceByAdminRequest;
 use App\Request\Admin\Order\RePendingAcceptedOrderByAdminRequest;
@@ -35,6 +37,7 @@ use App\Response\Admin\Order\OrderCreateByAdminResponse;
 use App\Response\Admin\Order\OrderDestinationUpdateByAdminResponse;
 use App\Response\Admin\Order\OrderGetForAdminResponse;
 use App\Response\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminResponse;
+use App\Response\Admin\Order\OrderRecycleByAdminResponse;
 use App\Response\Admin\Order\OrderStateUpdateByAdminResponse;
 use App\Response\Admin\Order\OrderStoreBranchToClientDistanceUpdateByAdminResponse;
 use App\Response\Admin\Order\OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse;
@@ -1225,5 +1228,106 @@ class AdminOrderService
     public function sendFirebaseNotificationToUserByAdmin(int $userId, int $orderId, string $text)
     {
         $this->notificationFirebaseService->notificationToUser($userId, $orderId, $text);
+    }
+
+    public function recycleOrCancelOrderByAdmin(OrderRecycleOrCancelByAdminRequest $request, int $userId): string|OrderRecycleByAdminResponse|CanCreateOrderResponse
+    {
+        $orderEntity = $this->adminOrderManager->getOrderByOrderIdAndHideStateForAdmin($request->getId(), OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE);
+
+        if ($orderEntity) {
+            // First, check if it requires to cancel the order
+            if ($request->getCancel() === OrderIsCancelConstant::ORDER_CANCEL) {
+                // update order state
+                $updatedOrder = $this->adminOrderManager->updateOrderStatusToCancelled($orderEntity);
+
+                if ($updatedOrder) {
+                    // create record in order timeline for the action
+                    $this->orderTimeLineService->createOrderLogsRequest($updatedOrder);
+
+                    // save log of the action on order
+                    $this->orderLogService->createOrderLogMessage($updatedOrder, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+                        OrderLogActionTypeConstant::CANCEL_ORDER_BY_ADMIN_ACTION_CONST, [], null,
+                        null);
+
+                    //create local notification to store
+                    $this->createLocalNotificationForStore($updatedOrder->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
+                        NotificationConstant::CANCEL_ORDER_SUCCESS, $updatedOrder->getId());
+
+                    // create firebase notification to store
+                    $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($updatedOrder->getStoreOwner()->getStoreOwnerId(),
+                        $updatedOrder->getId(), NotificationConstant::CANCEL_ORDER_SUCCESS, NotificationConstant::STORE);
+                }
+
+                return $this->autoMapping->map(OrderEntity::class, OrderRecycleByAdminResponse::class, $updatedOrder);
+            }
+
+            // Isn't required to cancel the order, instead recycle it
+            if (new DateTime($request->getDeliveryDate()) < new DateTime('now')) {
+                // we set the delivery date equals to current datetime + 3 minutes just for affording the late in persisting the order
+                // to the database if it is happened
+                $request->setDeliveryDate((new DateTime('+ 3 minutes'))->format('Y-m-d H:i:s'));
+            }
+
+            // check store subscription
+            $canCreateOrder = $this->subscriptionService->canCreateOrder($orderEntity->getStoreOwner()->getStoreOwnerId());
+
+            if ($canCreateOrder->canCreateOrder === SubscriptionConstant::CAN_NOT_CREATE_ORDER) {
+                return $canCreateOrder;
+            }
+
+            // update isHide for showing the order
+            $request->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+
+            // check if cars available or not
+            if ($canCreateOrder->subscriptionStatus === SubscriptionConstant::CARS_FINISHED) {
+                $request->setIsHide(OrderIsHideConstant::ORDER_HIDE_TEMPORARILY);
+            }
+
+            $order = $this->adminOrderManager->recyclingOrderByAdmin($orderEntity, $request);
+
+            if ($order) {
+                // after order had been recycled, update remaining orders of the subscription of the store
+                $this->subscriptionService->updateRemainingOrders($orderEntity->getStoreOwner()->getStoreOwnerId(),
+                    SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
+
+                // save log of the action on order
+                $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+                    OrderLogActionTypeConstant::RECYCLE_ORDER_BY_ADMIN_ACTION_CONST, [], null, null);
+
+                $this->notificationLocalService->createNotificationLocal($orderEntity->getStoreOwner()->getStoreOwnerId(), NotificationConstant::RECYCLING_ORDER_TITLE,
+                    NotificationConstant::RECYCLING_ORDER_SUCCESS, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
+
+                // create firebase notification to store
+                $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($order->getStoreOwner()->getStoreOwnerId(),
+                    $order->getId(), $order->getState(), NotificationConstant::STORE);
+
+                // create firebase notification to captains
+                $this->sendFirebaseNotificationToAllCaptainsByAdmin($order->getId());
+            }
+
+            return $this->autoMapping->map(OrderEntity::class, OrderRecycleByAdminResponse::class, $order);
+        }
+
+        return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+    }
+
+    public function sendFirebaseNotificationAboutOrderStateForUserByAdmin(int $userId, int $orderId, string $orderState, string $userType)
+    {
+        try {
+            $this->notificationFirebaseService->notificationOrderStateForUser($userId, $orderId, $orderState, $userType);
+
+        } catch (\Exception $exception) {
+            error_log($exception);
+        }
+    }
+
+    public function sendFirebaseNotificationToAllCaptainsByAdmin(int $orderId)
+    {
+        try {
+            $this->notificationFirebaseService->notificationToCaptains($orderId);
+
+        } catch (\Exception $exception) {
+            error_log($exception);
+        }
     }
 }

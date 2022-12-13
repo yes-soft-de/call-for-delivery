@@ -1425,6 +1425,9 @@ class OrderService
                         error_log($e);
                     }
                 }
+
+                // send firebase notification to admin
+                $this->sendFirebaseNotificationToAdminAboutOrder($order->getId(), NotificationFirebaseConstant::ORDER_UPDATE_BY_STORE);
             }
         }
 
@@ -1550,6 +1553,16 @@ class OrderService
                     error_log($e);
                 }
             }
+        }
+    }
+
+    public function sendFirebaseNotificationToAdminAboutOrder(int $orderId, string $text)
+    {
+        try {
+            $this->notificationFirebaseService->notificationToAdmin($orderId, $text);
+
+        } catch (\Exception $exception) {
+            error_log($exception);
         }
     }
 }

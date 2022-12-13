@@ -82,9 +82,9 @@ final class NotificationConstant
     const ORDER_UNASSIGNED_TO_CAPTAIN = "بناء على طلب الإدارة, تم إلغاء إسناد الطلب الموافق للرقم التالي إليك: ";
     
     //sub order    
-    const RECYCLING_ORDER_TITLE = "تدوير الطلب";
+    const RECYCLING_ORDER_TITLE = "إعادة تدوير الطلب";
 
-    const RECYCLING_ORDER_SUCCESS = "تم إعادة تدوير الطلب بنجاح و أصبح ظاهرا للكباتن";
+    const RECYCLING_ORDER_SUCCESS = "تم إعادة تدوير الطلب بنجاح وأصبح ظاهرا للكباتن";
    
     const ADD_SUB_ORDER = "تم إضافة طلب فرعي إلى الطلب";
 

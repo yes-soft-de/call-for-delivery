@@ -782,3 +782,10 @@ App\Request\Admin\Order\OrderStoreBranchToClientDistanceUpdateByAddAdditionalDis
             - NotBlank: ~
         additionalDistance:
             - NotBlank: ~
+
+App\Request\Admin\Order\OrderRecycleOrCancelByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        cancel:
+            - NotBlank: ~
