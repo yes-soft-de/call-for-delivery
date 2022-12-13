@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Constant\Order\OrderDestinationConstant;
 use App\Repository\StoreOrderDetailsEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -40,7 +41,7 @@ class StoreOrderDetailsEntity
     private $filePdf;
 
     #[ORM\Column(type: 'integer', options: ["default" => 1])]
-    private $differentReceiverDestination;
+    private $differentReceiverDestination = OrderDestinationConstant::ORDER_DESTINATION_IS_NOT_DIFFERENT_CONST;
 
     public function getId(): ?int
     {
