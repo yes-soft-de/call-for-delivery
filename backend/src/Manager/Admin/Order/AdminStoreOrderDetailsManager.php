@@ -9,6 +9,7 @@ use App\Entity\ImageEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Repository\StoreOrderDetailsEntityRepository;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
+use App\Request\Admin\Order\OrderRecycleOrCancelByAdminRequest;
 use App\Request\Admin\Order\OrderStoreBranchToClientDistanceAdditionByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\Admin\StoreOwnerBranch\AdminStoreOwnerBranchManager;
@@ -120,6 +121,35 @@ class AdminStoreOrderDetailsManager
             // set that the receiver location is different, and had been updated by the admin
             $storeOrderDetailsEntity->setDifferentReceiverDestination(OrderDestinationConstant::ORDER_DESTINATION_IS_DIFFERENT_AND_UPDATED_BY_ADMIN_CONST);
 
+            $this->entityManager->flush();
+        }
+
+        return $storeOrderDetailsEntity;
+    }
+
+    public function updateStoreOrderDetailsAfterRecyclingByAdmin(OrderEntity $orderEntity, OrderRecycleOrCancelByAdminRequest $request): ?StoreOrderDetailsEntity
+    {
+        $storeOrderDetailsEntity = $this->storeOrderDetailsEntityRepository->findOneBy(["orderId"=>$orderEntity->getId()]);
+
+        if ($storeOrderDetailsEntity) {
+            $request->setId($storeOrderDetailsEntity->getId());
+
+            $branch = $this->adminStoreOwnerBranchManager->getBranchById($request->getBranch());
+
+            if ($branch) {
+                $request->setBranch($branch);
+            }
+
+            if ($request->getImages()) {
+                $imageEntity = $this->createImageOrUpdate($request->getImages(), $orderEntity->getId());
+
+                $request->setImages($imageEntity);
+            }
+
+            $storeOrderDetailsEntity = $this->autoMapping->mapToObject(OrderRecycleOrCancelByAdminRequest::class, StoreOrderDetailsEntity::class,
+                $request, $storeOrderDetailsEntity);
+
+            $this->entityManager->persist($storeOrderDetailsEntity);
             $this->entityManager->flush();
         }
 

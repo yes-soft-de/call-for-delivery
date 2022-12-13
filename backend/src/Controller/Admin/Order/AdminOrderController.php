@@ -14,6 +14,7 @@ use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminRequest;
+use App\Request\Admin\Order\OrderRecycleOrCancelByAdminRequest;
 use App\Request\Admin\Order\OrderStoreBranchToClientDistanceAdditionByAdminRequest;
 use App\Request\Admin\Order\OrderStoreBranchToClientDistanceUpdateByAddAdditionalDistanceByAdminRequest;
 use App\Request\Admin\Order\RePendingAcceptedOrderByAdminRequest;
@@ -1775,6 +1776,92 @@ class AdminOrderController extends BaseController
         }
 
         $result = $this->adminOrderService->addAdditionalDistanceToStoreBranchToClientDistanceByAdmin($request, $this->getUserId());
+
+        return $this->response($result, self::UPDATE);
+    }
+
+    /**
+     * admin: Recycling or cancel the order by admin
+     * @Route("recyclingorcancelorderbyadmin", name="recyclingOrCancelOrderByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="recycling Or Cancel Order",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="string", property="payment"),
+     *          @OA\Property(type="number", property="orderCost"),
+     *          @OA\Property(type="string", property="note"),
+     *          @OA\Property(type="string", property="deliveryDate"),
+     *          @OA\Property(type="object", property="destination"),
+     *          @OA\Property(type="string", property="recipientName"),
+     *          @OA\Property(type="string", property="images"),
+     *          @OA\Property(type="string", property="recipientPhone"),
+     *          @OA\Property(type="string", property="detail"),
+     *          @OA\Property(type="integer", property="branch"),
+     *          @OA\Property(type="integer", property="cancel", description="1 for cancel"),
+     *          @OA\Property(type="number", property="deliveryCost")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns order",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *               ref=@Model(type="App\Response\Admin\Order\OrderRecycleByAdminResponse")
+     *      )
+     *   )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="200",
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9204"),
+     *              @OA\Property(type="string", property="msg"),
+     *              @OA\Property(type="object", property="Data",
+     *                  ref=@Model(type="App\Response\Subscription\CanCreateOrderResponse"),
+     *        )
+     *     )
+     *  )
+     *
+     * @Security(name="Bearer")
+     */
+    public function recycleOrCancelOrderByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderRecycleOrCancelByAdminRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminOrderService->recycleOrCancelOrderByAdmin($request, $this->getUserId());
+
+        if (isset($result->canCreateOrder)) {
+            return $this->response($result, self::ERROR_ORDER_CAN_NOT_CREATE);
+        }
 
         return $this->response($result, self::UPDATE);
     }

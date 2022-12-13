@@ -13,7 +13,7 @@ use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminRequest;
-use App\Request\Admin\Order\OrderStoreBranchToClientDistanceAdditionByAdminRequest;
+use App\Request\Admin\Order\OrderRecycleOrCancelByAdminRequest;
 use App\Request\Admin\Order\SubOrderCreateByAdminRequest;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
@@ -21,7 +21,6 @@ use App\Constant\Order\OrderIsHideConstant;
 use App\Constant\Order\OrderResultConstant;
 use App\Request\Admin\Order\UpdateOrderByAdminRequest;
 use App\AutoMapping;
-use App\Manager\Admin\Order\AdminStoreOrderDetailsManager;
 use App\Request\Admin\Order\OrderAssignToCaptainByAdminRequest;
 use App\Manager\Admin\Captain\AdminCaptainManager;
 use App\Request\Admin\Order\OrderStateUpdateByAdminRequest;
@@ -465,5 +464,25 @@ class AdminOrderManager
     public function getOrderIsHideByOrderId(int $orderId): array
     {
         return $this->orderEntityRepository->getOrderIsHideByOrderId($orderId);
+    }
+
+    public function getOrderByOrderIdAndHideStateForAdmin(int $orderId, int $isHide): ?OrderEntity
+    {
+        return $this->orderEntityRepository->findOneBy(["id" => $orderId, "isHide" => $isHide]);
+    }
+
+    public function recyclingOrderByAdmin(OrderEntity $orderEntity, OrderRecycleOrCancelByAdminRequest $request): OrderEntity
+    {
+        $orderEntity = $this->autoMapping->mapToObject(OrderRecycleOrCancelByAdminRequest::class, OrderEntity::class,
+            $request, $orderEntity);
+
+        $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
+        $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
+
+        $this->entityManager->flush();
+
+        $this->adminStoreOrderDetailsManager->updateStoreOrderDetailsAfterRecyclingByAdmin($orderEntity, $request);
+
+        return $orderEntity;
     }
 }
