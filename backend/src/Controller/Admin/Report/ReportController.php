@@ -286,4 +286,40 @@ class ReportController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+
+    /**
+     * admin: Get top active stores depending on delivered orders during current month
+     * @Route("topactivestoresforadmin", name="getTopActiveStoresWithOrdersCountForAdmin", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Report")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns active captains with orders count",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Admin\Report\TopOrdersStoresForCurrentMonthByAdminGetResponse")
+     *       )
+     *    )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getTopOrdersStoresDuringCurrentMonthByAdmin(): JsonResponse
+    {
+        $result = $this->reportService->getTopOrdersStoresDuringCurrentMonthByAdmin();
+
+        return $this->response($result, self::FETCH);
+    }
 }
