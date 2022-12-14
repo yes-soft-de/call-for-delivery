@@ -34,6 +34,7 @@ use App\Response\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminResponse;
 use App\Response\Admin\Order\OrderByIdGetForAdminResponse;
 use App\Response\Admin\Order\OrderCancelByAdminResponse;
 use App\Response\Admin\Order\OrderCreateByAdminResponse;
+use App\Response\Admin\Order\OrderCurrentFinancialCycleByCaptainProfileIdForAdminGetResponse;
 use App\Response\Admin\Order\OrderDestinationUpdateByAdminResponse;
 use App\Response\Admin\Order\OrderGetForAdminResponse;
 use App\Response\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminResponse;
@@ -1329,5 +1330,21 @@ class AdminOrderService
         } catch (\Exception $exception) {
             error_log($exception);
         }
+    }
+
+    // Get delivered orders during current active financial cycle of a captain by admin
+    public function getOrdersByCaptainProfileIdAndCaptainFinancialCycle(int $captainProfileId): array
+    {
+        $response = [];
+
+        $orders = $this->adminOrderManager->getOrdersByCaptainProfileIdAndCaptainFinancialCycle($captainProfileId);
+
+        if (count($orders) > 0) {
+            foreach ($orders as $order) {
+                $response[] = $this->autoMapping->map('array', OrderCurrentFinancialCycleByCaptainProfileIdForAdminGetResponse::class, $order);
+            }
+        }
+
+        return $response;
     }
 }

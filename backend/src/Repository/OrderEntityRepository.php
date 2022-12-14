@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\ChatRoom\ChatRoomConstant;
 use App\Constant\Order\OrderDistanceConstant;
@@ -11,6 +12,7 @@ use App\Constant\Order\OrderTypeConstant;
 use App\Constant\Payment\PaymentConstant;
 use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\BidDetailsEntity;
+use App\Entity\CaptainFinancialDuesEntity;
 use App\Entity\OrderEntity;
 use App\Entity\CaptainEntity;
 use App\Entity\OrderTimeLineEntity;
@@ -2432,5 +2434,50 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getSingleColumnResult();
+    }
+
+    // Get delivered orders during current active financial cycle of a captain by admin
+    public function getOrdersByCaptainProfileIdAndCaptainFinancialCycle(int $captainProfileId): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate',
+                'orderEntity.captainOrderCost', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.orderIsMain', 'storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination',
+                'storeOrderDetails.recipientName', 'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location',
+                'storeOwnerBranch.name as branchName')
+
+            ->leftJoin(
+                StoreOrderDetailsEntity::class,
+                'storeOrderDetails',
+                Join::WITH,
+                'orderEntity.id = storeOrderDetails.orderId')
+
+            ->leftJoin(
+                StoreOwnerBranchEntity::class,
+                'storeOwnerBranch',
+                Join::WITH,
+                'storeOrderDetails.branch = storeOwnerBranch.id')
+
+            ->leftJoin(
+                CaptainFinancialDuesEntity::class,
+                'captainFinancialDuesEntity',
+                Join::WITH,
+                'captainFinancialDuesEntity.captain = :captainProfileId'
+            )
+
+            ->andWhere('captainFinancialDuesEntity.state = :activeState')
+            ->setParameter('activeState', CaptainFinancialDues::FINANCIAL_STATE_ACTIVE)
+
+            ->andWhere('orderEntity.captainId = :captainProfileId')
+            ->setParameter('captainProfileId', $captainProfileId)
+
+            ->andWhere('orderEntity.state = :state')
+            ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+            ->andWhere('orderEntity.createdAt BETWEEN captainFinancialDuesEntity.startDate AND captainFinancialDuesEntity.endDate')
+
+            ->orderBy('orderEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
     }
 }

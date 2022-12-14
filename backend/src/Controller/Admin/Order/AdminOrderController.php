@@ -1865,4 +1865,43 @@ class AdminOrderController extends BaseController
 
         return $this->response($result, self::UPDATE);
     }
+
+    /**
+     * admin: get delivered orders during current active financial cycle by captain profile id
+     * @Route("fetchorderscurrentfinancialcycleforadmin/{captainProfileId}", name="fetchOrdersOfCurrentFinancialCycleByCaptainProfileIdForAdmin", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param int $captainProfileId
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns orders that accomodate with the filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Admin\Order\OrderCurrentFinancialCycleByCaptainProfileIdForAdminGetResponse")
+     *              )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getOrdersByCaptainProfileIdAndCaptainFinancialCycle(int $captainProfileId): JsonResponse
+    {
+        $result = $this->adminOrderService->getOrdersByCaptainProfileIdAndCaptainFinancialCycle($captainProfileId);
+
+        return $this->response($result, self::FETCH);
+    }
 }
