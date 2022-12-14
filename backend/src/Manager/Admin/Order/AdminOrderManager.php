@@ -485,4 +485,10 @@ class AdminOrderManager
 
         return $orderEntity;
     }
+
+    // Get delivered orders during current active financial cycle of a captain by admin
+    public function getOrdersByCaptainProfileIdAndCaptainFinancialCycle(int $captainProfileId): array
+    {
+        return $this->orderEntityRepository->getOrdersByCaptainProfileIdAndCaptainFinancialCycle($captainProfileId);
+    }
 }
