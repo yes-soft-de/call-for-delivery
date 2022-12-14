@@ -10,6 +10,7 @@ use App\Response\Admin\Report\ActiveCaptainWithOrdersCountInLastFinancialCycleGe
 use App\Response\Admin\Report\CaptainsRatingsForAdminGetResponse;
 use App\Response\Admin\Report\CaptainsWithDeliveredOrdersCountFilterByAdminResponse;
 use App\Response\Admin\Report\StatisticsForAdminGetResponse;
+use App\Response\Admin\Report\TopOrdersStoresForCurrentMonthByAdminGetResponse;
 use App\Service\Admin\Captain\AdminCaptainService;
 use App\Service\Admin\Order\AdminOrderService;
 use App\Service\Admin\StoreOwner\AdminStoreOwnerService;
@@ -177,5 +178,54 @@ class ReportService
         }
 
         return $response;
+    }
+
+    public function getTopOrdersStoresDuringCurrentMonthByAdmin(): array
+    {
+        $response = [];
+
+        $storesWithOrders = $this->adminStoreOwnerService->getActiveStoresWithOrdersDuringCurrentMonthForAdmin();
+
+        if (count($storesWithOrders) > 0) {
+            $sortedStores = $this->sortArrayDescendingBySpecificKey($storesWithOrders, "ordersCount");
+
+            foreach ($sortedStores as $value) {
+                $value['image'] = $this->uploadFileHelperService->getImageParams($value['images']);
+
+                $value['storeBranchName'] = $this->getTopBranchOfOrders($value['orders']);
+
+                $response[] = $this->autoMapping->map('array', TopOrdersStoresForCurrentMonthByAdminGetResponse::class, $value);
+            }
+        }
+
+        return $response;
+    }
+
+    public function getTopBranchOfOrders(array $inputArray): string|int
+    {
+        if (count($inputArray) === 0) {
+            return 0;
+        }
+
+        $topFrequentedValueArray = $this->getTopFrequentedElement($inputArray);
+
+        foreach ($inputArray as $item) {
+            if ($item['branchId'] === $topFrequentedValueArray[0]) {
+                return $item['branchName'];
+            }
+        }
+
+        return 0;
+    }
+
+    public function getTopFrequentedElement(array $inputArray): array
+    {
+        // Get array of specific value frequencies
+        $valueFrequenciesArray = array_count_values(array_map(function($item) {
+            return $item['branchId'];
+        }, $inputArray));
+
+        // return top frequented value
+        return array_keys($valueFrequenciesArray, max($valueFrequenciesArray));
     }
 }

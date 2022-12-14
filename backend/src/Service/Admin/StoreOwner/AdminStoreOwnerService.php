@@ -122,4 +122,9 @@ class AdminStoreOwnerService
     {
         return $this->adminStoreOwnerManager->getStoreOwnerProfileEntityByStoreOwnerId($storeOwnerId);
     }
+
+    public function getActiveStoresWithOrdersDuringCurrentMonthForAdmin(): array
+    {
+        return $this->adminStoreOwnerManager->getActiveStoresWithOrdersDuringCurrentMonthForAdmin();
+    }
 }

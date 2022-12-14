@@ -87,4 +87,9 @@ class AdminStoreOwnerManager
     {
         return $this->storeOwnerProfileEntityRepository->findOneBy(['storeOwnerId'=>$storeOwnerId]);
     }
+
+    public function getActiveStoresWithOrdersDuringCurrentMonthForAdmin(): array
+    {
+        return $this->storeOwnerProfileEntityRepository->getActiveStoresWithOrdersDuringCurrentMonthForAdmin();
+    }
 }
