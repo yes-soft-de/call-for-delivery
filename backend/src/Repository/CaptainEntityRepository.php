@@ -518,4 +518,126 @@ class CaptainEntityRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getSingleColumnResult();
     }
+
+    // FOR DEBUG ISSUES
+    public function getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester(?string $customizedTimezone): array
+    {
+        $captainsProfiles = $this->createQueryBuilder('captainEntity')
+            ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName')
+            ->addSelect('imageEntity.imagePath', 'imageEntity.usedAs')
+
+            ->where('captainEntity.status = :activeStatus')
+            ->setParameter('activeStatus', CaptainConstant::CAPTAIN_ACTIVE)
+
+            ->leftJoin(
+                ImageEntity::class,
+                'imageEntity',
+                Join::WITH,
+                'imageEntity.itemId = captainEntity.id and imageEntity.entityType = :entityType'
+            )
+
+            ->andWhere('imageEntity.usedAs = :captainProfileImage')
+            ->setParameter('captainProfileImage', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+
+            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE);
+
+        $tempQuery = $captainsProfiles->getQuery()->getResult();
+
+        if (count($tempQuery) > 0) {
+            $finalResponse = [];
+
+            foreach ($tempQuery as $key => $value) {
+                // get last active financial cycle
+                $financialCycle = $this->getLastActiveFinancialCycleByCaptainForAdmin($value['id']);
+
+                if (($financialCycle['startDate']) && ($financialCycle['endDate'])) {
+                    $finalResponse[$key] = $value;
+
+                    $ordersCountResult = $this->getCaptainDeliveredOrdersCountDuringSpecificDateForTester($value['id'],
+                        $financialCycle['startDate'], $financialCycle['endDate'], $customizedTimezone);
+
+                    if(count($ordersCountResult) > 0) {
+                        $finalResponse[$key]['ordersCount'] = $ordersCountResult[0];
+
+                    } else {
+                        $finalResponse[$key]['ordersCount'] = (string) 0;
+                    }
+                }
+            }
+
+            return $finalResponse;
+        }
+
+        return $tempQuery;
+    }
+
+    public function getCaptainDeliveredOrdersCountDuringSpecificDateForTester(int $captainId, \DateTime $startDate, \DateTime $endDate, ?string $timeZone): array
+    {
+        $query = $this->createQueryBuilder('captainEntity')
+            ->select('orderEntity.id', 'orderEntity.createdAt')
+
+            ->andWhere('captainEntity.id = :captainProfileId')
+            ->setParameter('captainProfileId', $captainId)
+
+            ->leftJoin(
+                OrderEntity::class,
+                'orderEntity',
+                Join::WITH,
+                'orderEntity.captainId = captainEntity.id'
+            );
+
+        $query->andWhere('orderEntity.state = :delivered');
+        $query->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED);
+
+        $tempOrders = $query->getQuery()->getResult();
+
+        if (count($tempOrders) > 0) {
+            $filteredOrders = $this->filterOrdersByDates($tempOrders, $startDate->format('Y-m-d'),
+                $endDate->format('Y-m-d'), $timeZone);
+
+            if (count($filteredOrders) > 0) {
+                return [count($filteredOrders)];
+            }
+
+            return $filteredOrders;
+        }
+
+        return $tempOrders;
+    }
+
+    public function filterOrdersByDates(array $tempOrders, ?string $fromDate, ?string $toDate, ?string $timeZone): array
+    {
+        $filteredOrders = [];
+
+        if (count($tempOrders) > 0) {
+            if (($fromDate != null || $fromDate != "") && ($toDate === null || $toDate === "")) {
+                foreach ($tempOrders as $key => $value) {
+                    if ($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) >=
+                        new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) {
+                        $filteredOrders[$key] = $value;
+                    }
+                }
+
+            } elseif (($fromDate === null || $fromDate === "") && ($toDate != null || $toDate != "")) {
+                foreach ($tempOrders as $key => $value) {
+                    if ($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) <=
+                        new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59'))) {
+                        $filteredOrders[$key] = $value;
+                    }
+                }
+
+            } elseif (($fromDate != null || $fromDate != "") && ($toDate != null || $toDate != "")) {
+                foreach ($tempOrders as $key => $value) {
+                    if (($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) >=
+                            new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) &&
+                        ($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) <=
+                            new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59')))) {
+                        $filteredOrders[$key] = $value;
+                    }
+                }
+            }
+        }
+
+        return $filteredOrders;
+    }
 }
