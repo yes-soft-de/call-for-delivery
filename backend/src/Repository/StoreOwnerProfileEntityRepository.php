@@ -10,6 +10,7 @@ use App\Entity\StoreOrderDetailsEntity;
 use App\Entity\StoreOwnerBranchEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\UserEntity;
+use App\Request\Admin\Report\StoresAndOrdersCountDuringSpecificTimeFilterByAdminRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
@@ -261,5 +262,123 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getResult();
+    }
+
+    // Get top stores according on delivered orders during specific time
+    public function filterTopStoresAccordingOnOrdersByAdmin(StoresAndOrdersCountDuringSpecificTimeFilterByAdminRequest $request): array
+    {
+        $stores = $this->createQueryBuilder('storeOwnerProfileEntity')
+            ->select('storeOwnerProfileEntity.id', 'storeOwnerProfileEntity.storeOwnerName', 'storeOwnerProfileEntity.images')
+
+            ->andWhere('storeOwnerProfileEntity.status = :activeStore')
+            ->setParameter('activeStore', StoreProfileConstant::STORE_OWNER_PROFILE_ACTIVE_STATUS)
+
+            ->orderBy('storeOwnerProfileEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
+
+        if (count($stores) > 0) {
+            $finalResponse = [];
+
+            foreach ($stores as $key => $value) {
+                $finalResponse[$key] = $value;
+
+                // Get delivered orders count of the captain
+                $ordersCountResult = $this->getStoreDeliveredOrdersCountByOptionalDatesForAdmin($value['id'],
+                    $request->getFromDate(), $request->getToDate());
+
+                if(count($ordersCountResult) > 0) {
+                    $finalResponse[$key]['ordersCount'] = $ordersCountResult[0];
+
+                } else {
+                    $finalResponse[$key]['ordersCount'] = (string) 0;
+                }
+                // ------------------------------------------------
+                // Get the count of orders which delivered today
+                $todayOrdersCountResult = $this->getStoreDeliveredOrdersCountDuringSpecificDateForAdmin($value['id'],
+                    new \DateTime('today midnight'), new \DateTime('tomorrow midnight'));
+
+                if(count($todayOrdersCountResult) > 0) {
+                    $finalResponse[$key]['todayOrdersCount'] = $todayOrdersCountResult[0];
+
+                } else {
+                    $finalResponse[$key]['todayOrdersCount'] = (string) 0;
+                }
+                // ------------------------------------------------
+                // Get the count of orders which delivered last 24 hours
+                $lastTwentyFourHoursOrdersCountResult = $this->getStoreDeliveredOrdersCountDuringSpecificDateForAdmin($value['id'],
+                    new \DateTime('-24 hour'), new \DateTime('now'));
+
+                if(count($lastTwentyFourHoursOrdersCountResult) > 0) {
+                    $finalResponse[$key]['lastTwentyFourOrdersCount'] = $lastTwentyFourHoursOrdersCountResult[0];
+
+                } else {
+                    $finalResponse[$key]['lastTwentyFourOrdersCount'] = (string) 0;
+                }
+                // ------------------------------------------------
+            }
+
+            return $finalResponse;
+        }
+
+        return $stores;
+    }
+
+    public function getStoreDeliveredOrdersCountDuringSpecificDateForAdmin(int $storeProfileId, \DateTime $startDate, \DateTime $endDate): array
+    {
+        return $this->createQueryBuilder('storeOwnerProfileEntity')
+            ->select('COUNT(orderEntity.id)')
+
+            ->andWhere('storeOwnerProfileEntity.id = :storeProfileId')
+            ->setParameter('storeProfileId', $storeProfileId)
+
+            ->leftJoin(
+                OrderEntity::class,
+                'orderEntity',
+                Join::WITH,
+                'orderEntity.storeOwner = storeOwnerProfileEntity.id'
+            )
+
+            ->andWhere('orderEntity.state = :delivered')
+            ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+            ->andWhere('orderEntity.createdAt >= :fromDate AND orderEntity.createdAt <= :toDate')
+            ->setParameter('fromDate', $startDate)
+            ->setParameter('toDate', $endDate)
+
+            ->getQuery()
+            ->getSingleColumnResult();
+    }
+
+    public function getStoreDeliveredOrdersCountByOptionalDatesForAdmin(int $storeProfileId, ?string $startDate, ?string $endDate): array
+    {
+        $query = $this->createQueryBuilder('storeOwnerProfileEntity')
+            ->select('COUNT(orderEntity.id)')
+
+            ->andWhere('storeOwnerProfileEntity.id = :storeProfileId')
+            ->setParameter('storeProfileId', $storeProfileId)
+
+            ->leftJoin(
+                OrderEntity::class,
+                'orderEntity',
+                Join::WITH,
+                'orderEntity.storeOwner = storeOwnerProfileEntity.id'
+            )
+
+            ->andWhere('orderEntity.state = :delivered')
+            ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED);
+
+        if (($startDate) && ($startDate !== "")) {
+            $query->andWhere('orderEntity.createdAt >= :fromDate')
+                ->setParameter('fromDate', $startDate);
+        }
+
+        if (($endDate) && ($endDate !== "")) {
+            $query->andWhere('orderEntity.createdAt <= :toDate')
+                ->setParameter('toDate', $endDate);
+        }
+
+        return $query->getQuery()->getSingleColumnResult();
     }
 }

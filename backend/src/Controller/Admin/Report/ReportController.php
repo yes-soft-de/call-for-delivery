@@ -5,6 +5,7 @@ namespace App\Controller\Admin\Report;
 use App\AutoMapping;
 use App\Controller\BaseController;
 use App\Request\Admin\Report\CaptainWithDeliveredOrdersDuringSpecificTimeFilterByAdminRequest;
+use App\Request\Admin\Report\StoresAndOrdersCountDuringSpecificTimeFilterByAdminRequest;
 use App\Service\Admin\Report\ReportService;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -319,6 +320,57 @@ class ReportController extends BaseController
     public function getTopOrdersStoresDuringCurrentMonthByAdmin(): JsonResponse
     {
         $result = $this->reportService->getTopOrdersStoresDuringCurrentMonthByAdmin();
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * admin: filter stores who delivered orders between specific dates by admin
+     * @Route("filterstoresdeliveredordersbyadmin", name="filterStoresWithTheirDeliveredOrdersByAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Report")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Post a request with filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="state"),
+     *          @OA\Property(type="string", property="fromDate")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns stores with delivered orders that accomodate with the filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Admin\Report\StoresWithOrdersCountDuringSpecificTimeFilterByAdminResponse")
+     *              )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterTopStoresAccordingOnOrdersByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, StoresAndOrdersCountDuringSpecificTimeFilterByAdminRequest::class, (object)$data);
+
+        $result = $this->reportService->filterTopStoresAccordingOnOrdersByAdmin($request);
 
         return $this->response($result, self::FETCH);
     }
