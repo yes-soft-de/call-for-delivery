@@ -738,11 +738,51 @@ class OrderController extends BaseController
      * or
      *
      * @OA\Response(
-     *      response="default",
-     *      description="Return erorr.",
+     *      response=200,
+     *      description="Return error.",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9306 OR 9100 OR 9107 OR 9105 OR 9207 OR 9215 OR 9218 OR 9220"),
-     *          @OA\Property(type="string", property="msg", description="The cars remaining is finished Error."),
+     *          oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9220"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9100"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9107"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9105"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9306"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9207"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9215"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9218"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9200"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9223"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   )
+     *              }
      *      )
      * )
      * 
@@ -767,22 +807,18 @@ class OrderController extends BaseController
         $response = $this->orderService->orderUpdateStateByCaptain($request);
 
         if ($response === CaptainConstant::CAPTAIN_PROFILE_NOT_COMPLETED) {
-
             return $this->response(MainErrorConstant::ERROR_MSG, self::PROFILE_NOT_COMPLETED);
         }
 
         if ($response === CaptainConstant::CAPTAIN_INACTIVE) {
-           
            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_CAPTAIN_INACTIVE);
         }
  
         if ($response === CaptainConstant::ERROR_CAPTAIN_ONLINE_FALSE) {
-             
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_CAPTAIN_ONLINE_FALSE);
         }
  
         if ($response === CaptainFinancialSystem::FINANCIAL_SYSTEM_INACTIVE) {
-             
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_SYSTEM_FINANCIAL_INACTIVE);
         }
 
@@ -804,6 +840,10 @@ class OrderController extends BaseController
 
         if ($response === OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE);
+        }
+
+        if ($response === OrderResultConstant::ORDER_UPDATE_STATE_NOT_ALLOWED_DUE_TO_SHORT_TIME_CONST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_UPDATE_STATE_BY_CAPTAIN_BEFORE_TIME);
         }
       
         return $this->response($response, self::UPDATE);

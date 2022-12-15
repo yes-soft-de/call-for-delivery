@@ -8,6 +8,7 @@ use App\Constant\Notification\NotificationTokenConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Constant\OrderLog\OrderLogActionTypeConstant;
 use App\Constant\OrderLog\OrderLogCreatedByUserTypeConstant;
+use App\Constant\OrderLog\OrderLogResultConstant;
 use App\Constant\PriceOffer\PriceOfferStatusConstant;
 use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\BidDetailsEntity;
@@ -38,6 +39,8 @@ use App\Response\Order\OrderUpdateIsCaptainPaidToProviderResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Subscription\SubscriptionConstant;
+use App\Service\DateFactory\DateFactoryService;
+use App\Service\OrderLog\OrderLogGetService;
 use App\Service\OrderLog\OrderLogService;
 use App\Service\OrderLog\OrderLogToMySqlService;
 use App\Service\Subscription\SubscriptionService;
@@ -98,11 +101,15 @@ class OrderService
     private StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService;
     private BidOrderFinancialService $bidOrderFinancialService;
     private OrderLogService $orderLogService;
+    private OrderLogGetService $orderLogGetService;
+    private DateFactoryService $dateFactoryService;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService,
-                                CaptainService $captainService, OrderChatRoomService $orderChatRoomService, OrderTimeLineService $orderTimeLineService, NotificationFirebaseService $notificationFirebaseService,
-                                CaptainFinancialDuesService $captainFinancialDuesService, CaptainAmountFromOrderCashService $captainAmountFromOrderCashService, StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService,
-                                BidOrderFinancialService $bidOrderFinancialService, OrderLogService $orderLogService)
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService,
+                                UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService,
+                                OrderTimeLineService $orderTimeLineService, NotificationFirebaseService $notificationFirebaseService, CaptainFinancialDuesService $captainFinancialDuesService,
+                                CaptainAmountFromOrderCashService $captainAmountFromOrderCashService, StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService,
+                                BidOrderFinancialService $bidOrderFinancialService, OrderLogService $orderLogService, OrderLogGetService $orderLogGetService,
+                                DateFactoryService $dateFactoryService)
     {
         $this->autoMapping = $autoMapping;
         $this->orderManager = $orderManager;
@@ -118,6 +125,8 @@ class OrderService
         $this->storeOwnerDuesFromCashOrdersService = $storeOwnerDuesFromCashOrdersService;
         $this->bidOrderFinancialService = $bidOrderFinancialService;
         $this->orderLogService = $orderLogService;
+        $this->orderLogGetService = $orderLogGetService;
+        $this->dateFactoryService = $dateFactoryService;
     }
 
     /**
@@ -514,6 +523,16 @@ class OrderService
         if ($captainFinancialSystemStatus->status === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_INACTIVE) {
             return CaptainFinancialSystem::FINANCIAL_SYSTEM_INACTIVE;
         }
+
+        // Check if captain try to update order state before specific time (except 'on way to pick order' state)
+        if (in_array($request->getState(), OrderStateConstant::ORDER_STATE_ONGOING_TILL_DELIVERED_ARRAY)) {
+            $result = $this->checkIfNormalOrderStateUpdateBeforeSpecificTimeForCaptain($request->getId());
+
+            if ($result === true) {
+                return OrderResultConstant::ORDER_UPDATE_STATE_NOT_ALLOWED_DUE_TO_SHORT_TIME_CONST;
+            }
+        }
+
         if ($request->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
 
             //not show orders for captain because not online
@@ -1564,5 +1583,40 @@ class OrderService
         } catch (\Exception $exception) {
             error_log($exception);
         }
+    }
+
+    public function getOrderLogCreatedAtByOrderIdAndTypeAndActionAndCreatedByUserType(int $orderId, int $orderType, int $actions, int $createdByUserType): \DateTimeInterface|int
+    {
+        return $this->orderLogGetService->getLastStateCreatedAtOrderLogByOrderIdAndTypeAndActionAndCreatedByUserType($orderId,
+            $orderType, $actions, $createdByUserType);
+    }
+
+    public function checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanThreeMinutes(\DateTimeInterface $oldDate, DateTime $newDate): bool
+    {
+        return $this->dateFactoryService->checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanThreeMinutes($oldDate, $newDate);
+    }
+
+    public function checkIfNormalOrderStateUpdateBeforeSpecificTimeForCaptain(int $orderId): bool|int
+    {
+        // Get the creation time of the record of last order state
+        $createdAtResult = $this->getOrderLogCreatedAtByOrderIdAndTypeAndActionAndCreatedByUserType($orderId, OrderTypeConstant::ORDER_TYPE_NORMAL,
+            OrderLogActionTypeConstant::UPDATE_ORDER_STATE_BY_CAPTAIN_ACTION_CONST, OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST);
+
+        if ($createdAtResult === OrderLogResultConstant::ORDER_LOG_NOT_EXIST_CONST) {
+            return OrderLogResultConstant::ORDER_LOG_NOT_EXIST_CONST;
+        }
+
+        // Check date
+        $overdueTime = $this->checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanThreeMinutes($createdAtResult, new DateTime('now'));
+
+        if ($overdueTime === true) {
+            // 1. Send firebase notification to admin
+            $this->sendFirebaseNotificationToAdminAboutOrder($orderId, NotificationFirebaseConstant::ORDER_UPDATE_STATE_BEFORE_TIME_BY_CAPTAIN_COST);
+
+            // 2. Stop the rested flow, and return an appropriate result
+            return true;
+        }
+
+        return false;
     }
 }
