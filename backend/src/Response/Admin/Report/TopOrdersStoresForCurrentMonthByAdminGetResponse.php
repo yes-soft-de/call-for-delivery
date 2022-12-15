@@ -6,6 +6,9 @@ use OpenApi\Annotations as OA;
 
 class TopOrdersStoresForCurrentMonthByAdminGetResponse
 {
+    // Store Owner profile id
+    public int $id;
+
     public string $storeOwnerName;
 
     /**
