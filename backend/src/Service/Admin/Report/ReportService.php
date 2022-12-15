@@ -6,10 +6,12 @@ use App\AutoMapping;
 use App\Constant\Captain\CaptainConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Request\Admin\Report\CaptainWithDeliveredOrdersDuringSpecificTimeFilterByAdminRequest;
+use App\Request\Admin\Report\StoresAndOrdersCountDuringSpecificTimeFilterByAdminRequest;
 use App\Response\Admin\Report\ActiveCaptainWithOrdersCountInLastFinancialCycleGetForAdminResponse;
 use App\Response\Admin\Report\CaptainsRatingsForAdminGetResponse;
 use App\Response\Admin\Report\CaptainsWithDeliveredOrdersCountFilterByAdminResponse;
 use App\Response\Admin\Report\StatisticsForAdminGetResponse;
+use App\Response\Admin\Report\StoresWithOrdersCountDuringSpecificTimeFilterByAdminResponse;
 use App\Response\Admin\Report\TopOrdersStoresForCurrentMonthByAdminGetResponse;
 use App\Service\Admin\Captain\AdminCaptainService;
 use App\Service\Admin\Order\AdminOrderService;
@@ -180,6 +182,7 @@ class ReportService
         return $response;
     }
 
+    // Get top stores according on delivered orders during current month
     public function getTopOrdersStoresDuringCurrentMonthByAdmin(): array
     {
         $response = [];
@@ -187,6 +190,7 @@ class ReportService
         $storesWithOrders = $this->adminStoreOwnerService->getActiveStoresWithOrdersDuringCurrentMonthForAdmin();
 
         if (count($storesWithOrders) > 0) {
+            // Sort the results descending according to the orders count
             $sortedStores = $this->sortArrayDescendingBySpecificKey($storesWithOrders, "ordersCount");
 
             foreach ($sortedStores as $value) {
@@ -227,5 +231,43 @@ class ReportService
 
         // return top frequented value
         return array_keys($valueFrequenciesArray, max($valueFrequenciesArray));
+    }
+
+    // Get top stores according on delivered orders during specific time
+    public function filterTopStoresAccordingOnOrdersByAdmin(StoresAndOrdersCountDuringSpecificTimeFilterByAdminRequest $request): array
+    {
+        $response = [];
+
+        $storesWithOrders = $this->adminStoreOwnerService->filterTopStoresAccordingOnOrdersByAdmin($request);
+
+        if (count($storesWithOrders) > 0) {
+            // Sort the results descending according to the orders count
+            $sortedStoresWithOrders = $this->sortArrayDescendingBySpecificKey($storesWithOrders, 'ordersCount');
+
+            foreach ($sortedStoresWithOrders as $storeInfo) {//dd($storeInfo);
+                $storeInfo['image'] = $this->uploadFileHelperService->getImageParams($storeInfo['images']);
+
+                $response[] = $this->autoMapping->map('array', StoresWithOrdersCountDuringSpecificTimeFilterByAdminResponse::class, $storeInfo);
+            }
+        }
+
+        return $response;
+    }
+
+    public function getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester(?string $customizedTimezone): array
+    {
+        $response = [];
+
+        $captainsResult = $this->adminCaptainService->getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester($customizedTimezone);
+
+        if (count($captainsResult) > 0) {
+            foreach ($captainsResult as $captainInfo) {
+                $captainInfo['image'] = $this->uploadFileHelperService->getImageParams($captainInfo['imagePath']);
+
+                $response[] = $this->autoMapping->map('array', ActiveCaptainWithOrdersCountInLastFinancialCycleGetForAdminResponse::class, $captainInfo);
+            }
+        }
+
+        return $response;
     }
 }

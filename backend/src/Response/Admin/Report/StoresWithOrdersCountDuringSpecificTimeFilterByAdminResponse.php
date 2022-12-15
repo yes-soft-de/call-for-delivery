@@ -4,7 +4,7 @@ namespace App\Response\Admin\Report;
 
 use OpenApi\Annotations as OA;
 
-class TopOrdersStoresForCurrentMonthByAdminGetResponse
+class StoresWithOrdersCountDuringSpecificTimeFilterByAdminResponse
 {
     // Store Owner profile id
     public int $id;
@@ -19,5 +19,9 @@ class TopOrdersStoresForCurrentMonthByAdminGetResponse
 
     public string $storeBranchName;
 
-    public int $ordersCount;
+    public string $ordersCount;
+
+    public string $todayOrdersCount;
+
+    public string $lastTwentyFourOrdersCount;
 }

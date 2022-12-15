@@ -183,4 +183,10 @@ class AdminCaptainManager
     {
         return $this->captainEntityRepository->getCaptainsWhoDeliveredOrdersDuringSpecificTime($request);
     }
+
+    // FOR DEBUG ISSUES
+    public function getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester(?string $customizedTimezone): array
+    {
+        return $this->captainEntityRepository->getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester($customizedTimezone);
+    }
 }
