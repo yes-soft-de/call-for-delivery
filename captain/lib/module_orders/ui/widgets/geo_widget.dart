@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 
 class GeoDistanceText extends StatefulWidget {
-  LatLng origin;
-  LatLng destination;
-  Function(String?) destance;
-  TextStyle? textStyle;
-  String? leading;
-  GeoDistanceText(
+  final LatLng origin;
+  final LatLng destination;
+  final Function(String?) destance;
+  final TextStyle? textStyle;
+  final String? leading;
+  const GeoDistanceText(
       {Key? key,
       required this.destination,
       required this.origin,
@@ -27,21 +27,15 @@ class GeoDistanceText extends StatefulWidget {
 class _GeoDistanceTextState extends State<GeoDistanceText> {
   bool loading = true;
   String? distance = '';
-  late LatLng origin;
-  late LatLng destination;
   @override
   void initState() {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _setup().whenComplete(() {
-        setState(() {});
-      });
+      _setup();
     });
     super.initState();
   }
 
   Future<void> _setup() async {
-    origin = widget.origin;
-    destination = widget.destination;
     var snap = await DeepLinksService.getGeoDistance(GeoDistanceRequest(
         origin: widget.origin, distance: widget.destination));
     if (snap.hasError || snap.isEmpty) {
@@ -58,7 +52,8 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
 
   @override
   void didUpdateWidget(GeoDistanceText oldWidget) {
-    if (origin != widget.origin || destination != widget.destination) {
+    if (oldWidget.origin != widget.origin ||
+        oldWidget.destination != widget.destination) {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         _setup();
       });
