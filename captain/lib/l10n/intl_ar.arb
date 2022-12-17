@@ -739,5 +739,7 @@
     "activeOrderNotification": "فعل التنبيهات",
     "yourNumberStartWithZero": "الرقم المدخل يبدأ بصفر الرجاء إدخال الرقم بدون الصفر",
     "pleaseProvidePaymentFromClient": "من فضلك قم بتزويدنا بالمبلغ الذي استلمته من العميل",
-    "youCannotChangeYourAnswer":"لايمكنك تغيير جوابك بخصوص هذا الطلب لتلقي دفعة من قبل الشركة"
+    "youCannotChangeYourAnswer":"لايمكنك تغيير جوابك بخصوص هذا الطلب لتلقي دفعة من قبل الشركة",
+    "credentialsBagHint": "هنا تجد محفظة سريعة للوصول لبيانات دخولك المحفوظة مسبقا "
+    
 }

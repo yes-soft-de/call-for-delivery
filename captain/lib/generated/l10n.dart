@@ -7429,6 +7429,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Here you can find saved credentials `
+  String get credentialsBagHint {
+    return Intl.message(
+      'Here you can find saved credentials ',
+      name: 'credentialsBagHint',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
