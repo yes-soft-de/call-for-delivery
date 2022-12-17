@@ -68,9 +68,15 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
     canRequestLocation().then((value) async {
       if (value) {
         Logger().info('Location enabled', '$value');
+        Geolocator.getCurrentPosition().then((event) {
+          myLocation = LatLng(event.latitude, event.longitude);
+          Logger().info(
+              'Location with us for the first time', myLocation?.toJson().toString() ?? 'null');
+          setState(() {});
+        });
         Geolocator.getPositionStream(
             locationSettings: const LocationSettings(
-          distanceFilter: 0,
+          distanceFilter: 100,
         )).listen((event) {
           myLocation = LatLng(event.latitude, event.longitude);
           Logger().info(
