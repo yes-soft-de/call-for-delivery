@@ -100,6 +100,8 @@ class AppThemeDataService {
         elevatedButtonTheme: ElevatedButtonThemeData(
             style: ElevatedButton.styleFrom(
           backgroundColor: lightScheme.primary,
+          foregroundColor: Colors.white,
+          textStyle: const TextStyle(color: Colors.white),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25),
           ),

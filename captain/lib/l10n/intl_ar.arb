@@ -326,6 +326,7 @@
     "uploadProfileSuccess": "تم تعديل البيانات الشخصية بنجاح",
     "uploadImageSuccess": "تم رفع الصورة بنجاح",
     "address": "الموقع",
+    "addresses": "العنوان",
     "errorDownloadingImage": "لم نستطع تحميل الصورة",
     "launch": "شغل تطبيقنا",
     "lanchDescribtion": "إذا لديك غرض لتوصيله لمكان بعيد عنك لاتقلق افتح تطبيقنا",

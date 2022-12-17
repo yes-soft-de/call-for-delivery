@@ -16,6 +16,7 @@ class ProfileRequest {
   String? mechanicLicense;
   String? identity;
   bool? canGoBack;
+  String? address;
   ProfileRequest.empty();
 
   ProfileRequest(
@@ -33,12 +34,15 @@ class ProfileRequest {
       this.isOnline = true,
       this.identity,
       this.mechanicLicense,
-      required this.canGoBack});
+      required this.canGoBack,
+      required this.address,
+      });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
 
     data['name'] = this.name;
+    data['address'] = this.address;
     data['userName'] = this.name;
     data['phone'] = this.phone;
     if (this.image != null) {
@@ -103,7 +107,8 @@ class ProfileRequest {
       'phone': phone,
       'stcPay': stcPay,
       'bankAccountNumber': bankAccountNumber,
-      'bankName': bankName
+      'bankName': bankName,
+      'address':address
     };
   }
 

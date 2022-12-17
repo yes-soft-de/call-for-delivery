@@ -70,6 +70,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addWorkPackage":
             MessageLookupByLibrary.simpleMessage("إضافة باقة عمل"),
         "address": MessageLookupByLibrary.simpleMessage("الموقع"),
+        "addresses": MessageLookupByLibrary.simpleMessage("العنوان"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "all": MessageLookupByLibrary.simpleMessage("الكل"),
         "allCity": MessageLookupByLibrary.simpleMessage("جميع المدن"),

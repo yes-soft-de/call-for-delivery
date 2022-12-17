@@ -104,6 +104,7 @@ class EditProfileStateManager {
             identity: value.identity,
             isOnline: value.isOnline,
             canGoBack: false,
+            address: value.address
           ),
         ));
         if (updated) {

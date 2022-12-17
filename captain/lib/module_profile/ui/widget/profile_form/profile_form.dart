@@ -38,7 +38,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
   final _bankAccountNumberController = TextEditingController();
   final _bankNameController = TextEditingController();
   final _ageController = TextEditingController();
-
+  final _addressController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String imageAvatar = '';
   String? captainState;
@@ -146,7 +146,8 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                     stcPay: _stcPayController.text,
                     bankNumber: _bankAccountNumberController.text,
                     bankName: _bankNameController.text,
-                    isOnline: captainState == 'active' ? true : false);
+                    isOnline: captainState == 'active' ? true : false,
+                    address: _addressController.text);
                 if (S.current.identity == imageType) {
                   profile?.identity = value.path;
                   widget.onImageUpload(profile!, 'identity', value.path);
@@ -221,7 +222,8 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 mechanicLicense: widget.profileRequest?.mechanicLicense,
                 drivingLicence: widget.profileRequest?.drivingLicence,
                 identity: widget.profileRequest?.identity,
-                isOnline: captainState == 'active' ? true : false);
+                isOnline: captainState == 'active' ? true : false,
+                address: _addressController.text);
             widget.onProfileSaved(profile);
           } else {
             CustomFlushBarHelper.createError(
@@ -254,7 +256,8 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                               widget.profileRequest?.mechanicLicense,
                           drivingLicence: widget.profileRequest?.drivingLicence,
                           identity: widget.profileRequest?.identity,
-                          isOnline: captainState == 'active' ? true : false);
+                          isOnline: captainState == 'active' ? true : false,
+                          address: _addressController.text);
                       widget.onImageUpload(profile!, null, null);
                     }
                   });
@@ -389,6 +392,16 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                   ),
                 ),
               ],
+            ),
+            titleField(S.of(context).addresses),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+              child: CustomFormField(
+                controller: _addressController,
+                hintText: S.current.addresses,
+                preIcon: const Icon(Icons.location_on),
+                numbers: true,
+              ),
             ),
             titleField(S.of(context).age),
             Padding(
