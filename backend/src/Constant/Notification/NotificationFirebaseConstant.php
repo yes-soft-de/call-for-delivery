@@ -130,5 +130,5 @@ final class NotificationFirebaseConstant
 
     const NEW_CAR_AVAILABLE_NOTIFICATION_TO_STORE_CONST = "يوجد سيارة متوفرة من جديد";
 
-    const ORDER_UPDATE_STATE_BEFORE_TIME_BY_CAPTAIN_COST = "قام الكابتن بمحاولة تحديث حالة الطلب ذو الرقم التالي قبل مرور الوقت المحدد";
+    const ORDER_UPDATE_STATE_BEFORE_TIME_BY_CAPTAIN_COST = "قام الكابتن بمحاولة تحديث حالة الطلب ذو الرقم التالي قبل مرور الوقت المحدد ";
 }
