@@ -8,6 +8,7 @@ use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\Image\ImageUseAsConstant;
 use App\Entity\CaptainEntity;
 use App\Repository\CaptainEntityRepository;
+use App\Request\Admin\Account\CompleteAccountStatusUpdateByAdminRequest;
 use App\Request\Admin\Captain\CaptainProfileStatusUpdateByAdminRequest;
 use App\Request\Admin\Captain\CaptainProfileUpdateByAdminRequest;
 use App\Request\Admin\Report\CaptainWithDeliveredOrdersDuringSpecificTimeFilterByAdminRequest;
@@ -188,5 +189,36 @@ class AdminCaptainManager
     public function getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester(?string $customizedTimezone): array
     {
         return $this->captainEntityRepository->getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester($customizedTimezone);
+    }
+
+    public function updateCaptainProfileCompleteAccountStatusByAdmin(CompleteAccountStatusUpdateByAdminRequest $request): CaptainEntity|string
+    {
+        if (! $this->checkCompleteAccountStatusValidity($request->getCompleteAccountStatus())) {
+            return CaptainConstant::WRONG_COMPLETE_ACCOUNT_STATUS;
+
+        } else {
+            $captainProfile = $this->captainEntityRepository->findOneBy(['id' => $request->getProfileId()]);
+
+            if (! $captainProfile) {
+                return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
+            }
+
+            $captainProfile = $this->autoMapping->mapToObject(CompleteAccountStatusUpdateByAdminRequest::class, CaptainEntity::class, $request, $captainProfile);
+
+            $this->entityManager->flush();
+
+            return $captainProfile;
+        }
+    }
+
+    public function checkCompleteAccountStatusValidity(string $completeAccountStatus): bool
+    {
+        if ($completeAccountStatus !== CaptainConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED &&
+            $completeAccountStatus !== CaptainConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED &&
+            $completeAccountStatus !== CaptainConstant::COMPLETE_ACCOUNT_STATUS_SYSTEM_FINANCIAL_SELECTED) {
+            return false;
+        }
+
+        return true;
     }
 }
