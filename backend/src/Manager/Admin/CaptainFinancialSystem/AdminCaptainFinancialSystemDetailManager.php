@@ -7,6 +7,7 @@ use App\Manager\Captain\CaptainManager;
 use App\Entity\CaptainFinancialSystemDetailEntity;
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailUpdateRequest;
 use App\AutoMapping;
+use App\Request\Admin\CaptainFinancialSystem\CaptainFinancialSystemDetailCreateByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailUpdateByAdminRequest;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
@@ -16,6 +17,7 @@ class AdminCaptainFinancialSystemDetailManager
     private CaptainFinancialSystemDetailEntityRepository $captainFinancialSystemDetailEntityRepository;
     private AutoMapping $autoMapping;
     private EntityManagerInterface $entityManager;
+    private CaptainManager $captainManager;
 
     public function __construct(CaptainFinancialSystemDetailEntityRepository $captainFinancialSystemDetailEntityRepository, CaptainManager $captainManager, AutoMapping $autoMapping, EntityManagerInterface $entityManager,)
     {
@@ -60,6 +62,25 @@ class AdminCaptainFinancialSystemDetailManager
    
         $captainFinancialSystemDetailEntity = $this->autoMapping->mapToObject(AdminCaptainFinancialSystemDetailUpdateByAdminRequest::class, CaptainFinancialSystemDetailEntity::class, $request,  $captainFinancialSystemDetailEntity);
 
+        $this->entityManager->flush();
+
+        return $captainFinancialSystemDetailEntity;
+    }
+
+    public function createCaptainFinancialSystemDetailByAdmin(CaptainFinancialSystemDetailCreateByAdminRequest $request): CaptainFinancialSystemDetailEntity|string
+    {
+        $captainFinancialSystemDetailEntity = $this->captainFinancialSystemDetailEntityRepository->findOneBy(["captain" => $request->getCaptain()]);
+
+        if ($captainFinancialSystemDetailEntity) {
+            return CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_CAN_NOT_CHOSE;
+        }
+
+        $captainFinancialSystemDetailEntity = $this->autoMapping->map(CaptainFinancialSystemDetailCreateByAdminRequest::class,
+            CaptainFinancialSystemDetailEntity::class, $request);
+
+        $captainFinancialSystemDetailEntity->setStatus(CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_INACTIVE);
+
+        $this->entityManager->persist($captainFinancialSystemDetailEntity);
         $this->entityManager->flush();
 
         return $captainFinancialSystemDetailEntity;

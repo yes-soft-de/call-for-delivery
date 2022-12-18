@@ -9,6 +9,7 @@ use App\Constant\Image\ImageUseAsConstant;
 use App\Entity\CaptainEntity;
 use App\Entity\ImageEntity;
 use App\Manager\Admin\Captain\AdminCaptainManager;
+use App\Request\Admin\Account\CompleteAccountStatusUpdateByAdminRequest;
 use App\Request\Admin\Captain\CaptainProfileStatusUpdateByAdminRequest;
 use App\Request\Admin\Captain\CaptainProfileUpdateByAdminRequest;
 use App\Request\Admin\Captain\DeleteCaptainAccountAndProfileByAdminRequest;
@@ -17,10 +18,10 @@ use App\Request\Image\ImageCreateRequest;
 use App\Request\Image\ImageUpdateRequest;
 use App\Response\Admin\Captain\CaptainProfileGetForAdminResponse;
 use App\Response\Admin\Captain\DeleteCaptainAccountAndProfileByAdminResponse;
+use App\Service\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailGetService;
 use App\Service\Eraser\CaptainEraserService;
 use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\Image\ImageService;
-use App\Service\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailService;
 use App\Response\Admin\Captain\ReadyCaptainsAndCountOfTheirCurrentOrdersResponse;
 use App\Service\Admin\Order\AdminOrderService;
 
@@ -30,20 +31,22 @@ class AdminCaptainService
     private AdminCaptainManager $adminCaptainManager;
     private UploadFileHelperService $uploadFileHelperService;
     private ImageService $imageService;
-    private AdminCaptainFinancialSystemDetailService $adminCaptainFinancialSystemDetailService;
+    // private AdminCaptainFinancialSystemDetailService $adminCaptainFinancialSystemDetailService;
     private AdminOrderService $adminOrderService;
     private CaptainEraserService $captainEraserService;
+    private AdminCaptainFinancialSystemDetailGetService $adminCaptainFinancialSystemDetailGetService;
 
     public function __construct(AutoMapping $autoMapping, AdminCaptainManager $adminCaptainManager, UploadFileHelperService $uploadFileHelperService, ImageService $imageService,
-                                AdminCaptainFinancialSystemDetailService $adminCaptainFinancialSystemDetailService, AdminOrderService $adminOrderService, CaptainEraserService $captainEraserService)
+                                AdminCaptainFinancialSystemDetailGetService $adminCaptainFinancialSystemDetailGetService, AdminOrderService $adminOrderService, CaptainEraserService $captainEraserService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminCaptainManager = $adminCaptainManager;
         $this->uploadFileHelperService = $uploadFileHelperService;
         $this->imageService = $imageService;
-        $this->adminCaptainFinancialSystemDetailService = $adminCaptainFinancialSystemDetailService;
+        // $this->adminCaptainFinancialSystemDetailService = $adminCaptainFinancialSystemDetailService;
         $this->adminOrderService = $adminOrderService;
         $this->captainEraserService = $captainEraserService;
+        $this->adminCaptainFinancialSystemDetailGetService = $adminCaptainFinancialSystemDetailGetService;
     }
 
     public function getCaptainsProfilesByStatusForAdmin(string $captainProfileStatus): array
@@ -92,7 +95,8 @@ class AdminCaptainService
                 $captainProfile['location'] = null;
             }
 
-            $captainProfile['financialCaptainSystemDetails'] = $this->adminCaptainFinancialSystemDetailService->getLatestFinancialCaptainSystemDetails($captainProfileId);
+            // $captainProfile['financialCaptainSystemDetails'] = $this->adminCaptainFinancialSystemDetailService->getLatestFinancialCaptainSystemDetails($captainProfileId);
+            $captainProfile['financialCaptainSystemDetails'] = $this->adminCaptainFinancialSystemDetailGetService->getLatestFinancialCaptainSystemDetails($captainProfileId);
         }
         
         return $this->autoMapping->map('array', CaptainProfileGetForAdminResponse::class, $captainProfile);
@@ -267,5 +271,15 @@ class AdminCaptainService
     public function getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester(?string $customizedTimezone): array
     {
         return $this->adminCaptainManager->getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester($customizedTimezone);
+    }
+
+    public function getCaptainProfileEntityByIdForAdmin(int $captainProfileId): ?CaptainEntity
+    {
+        return $this->adminCaptainManager->getCaptainProfileById($captainProfileId);
+    }
+
+    public function updateCaptainProfileCompleteAccountStatusByAdmin(CompleteAccountStatusUpdateByAdminRequest $request): CaptainEntity|string
+    {
+        return $this->adminCaptainManager->updateCaptainProfileCompleteAccountStatusByAdmin($request);
     }
 }

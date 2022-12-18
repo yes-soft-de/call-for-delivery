@@ -789,3 +789,12 @@ App\Request\Admin\Order\OrderRecycleOrCancelByAdminRequest:
             - NotBlank: ~
         cancel:
             - NotBlank: ~
+
+App\Request\Admin\CaptainFinancialSystem\CaptainFinancialSystemDetailCreateByAdminRequest:
+    properties:
+        captainFinancialSystemType:
+            - NotBlank: ~
+        captainFinancialSystemId:
+            - NotBlank: ~
+        captain:
+            - NotBlank: ~
