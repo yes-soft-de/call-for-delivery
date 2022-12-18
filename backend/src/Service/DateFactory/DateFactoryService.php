@@ -81,4 +81,27 @@ class DateFactoryService
 
         return date_modify($dateTime, '+'.$days. 'days');
     }
+
+    public function checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanThreeMinutes(DateTimeInterface $oldDateInterface, DateTime $newDate): bool
+    {
+        $oldDate = DateTime::createFromInterface($oldDateInterface);
+
+        $interval = date_diff($oldDate, $newDate);
+
+        $different_days = $interval->format('%d');
+
+        if ($different_days == 0) {
+            $different_hours = $interval->format('%h');
+
+            if ($different_hours <= 1) {
+                $different_minutes = $interval->format('%i');
+
+                if ($different_minutes < 3) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
 }
