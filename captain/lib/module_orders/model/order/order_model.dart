@@ -76,7 +76,10 @@ class OrderModel extends DataModel {
           distance: 0,
           paymentMethod: element.payment ?? 'cash',
           isHide: element.isHide ?? -1,
-          orderIsMain: element.orderIsMain ?? false,
+          orderIsMain: (element.orderIsMain ?? false) ||
+                  _getOrders(element.suborder ?? []).isNotEmpty
+              ? true
+              : false,
           subOrders: _getOrders(element.suborder ?? []),
           storeBranchToClientDistance: element.storeBranchToClientDistance,
           storeName: element.storeOwnerName ?? S.current.unknown,
