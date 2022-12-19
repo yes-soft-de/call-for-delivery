@@ -1022,7 +1022,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                             OrderStatusEnum.values[index + 1]),
                         distance: distance,
                         paymentNote: noteController.text.trim(),
-                        orderCost: double.tryParse(payment ?? '')));
+                        orderCost: double.tryParse(payment ?? '')),orderInfo.payment == 'cash');
                   } else {
                     CustomFlushBarHelper.createError(
                             title: S.current.warnning,
@@ -1059,7 +1059,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
               id: int.tryParse(screenState.orderId ?? '-1'),
               state: StatusHelper.getStatusString(
                   OrderStatusEnum.values[index + 1]),
-            ));
+            ),orderInfo.payment == 'cash');
           },
           title: OrderProgressionHelper.getNextStageHelper(
             orderInfo.state,
