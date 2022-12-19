@@ -781,6 +781,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please fill the field"),
         "pleaseCompleteTheForm":
             MessageLookupByLibrary.simpleMessage("Please Complete the Form"),
+        "pleaseConfirmPayingToProvider": MessageLookupByLibrary.simpleMessage(
+            "Please confirm paying order cost to provider"),
         "pleaseCorrectProvidedDistance": MessageLookupByLibrary.simpleMessage(
             "Please correct provided distance"),
         "pleaseDownloadmandob_moshtarayat_captain":
@@ -797,6 +799,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please login to continue"),
         "pleaseLoginToMakeOrder": MessageLookupByLibrary.simpleMessage(
             "Please login to resuming order sending"),
+        "pleaseProvideCashReceivedFromClient":
+            MessageLookupByLibrary.simpleMessage(
+                "Please provide cash you received from client"),
+        "pleaseProvideDistance": MessageLookupByLibrary.simpleMessage(
+            "Please provide distance you take to deliver this order"),
         "pleaseProvideDrivingImage": MessageLookupByLibrary.simpleMessage(
             "Please provide driving license image"),
         "pleaseProvideIdentityImage": MessageLookupByLibrary.simpleMessage(
@@ -1086,6 +1093,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Your order has been updated"),
         "updateOrders": MessageLookupByLibrary.simpleMessage("Orders Details"),
         "updateProfile": MessageLookupByLibrary.simpleMessage("update profile"),
+        "updateStatusForTimeLimitation": MessageLookupByLibrary.simpleMessage(
+            "You cannot update order status before pass update time limit"),
         "updateYourData": MessageLookupByLibrary.simpleMessage("Update Data"),
         "uploadAndSubmit":
             MessageLookupByLibrary.simpleMessage("Upload and submit"),

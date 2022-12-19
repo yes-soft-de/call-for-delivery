@@ -739,5 +739,10 @@
     "pleaseProvidePaymentFromClient": "Please provide cash you received from client",
     "youCannotChangeYourAnswer":"You cannot change your answer about giving cash to provider because you receive payment for this order from our company",
     "credentialsBagHint": "Here you can find saved credentials ",
-    "addresses":"Address"
+    "addresses":"Address",
+    "updateStatusForTimeLimitation":"You cannot update order status before pass update time limit",
+    "pleaseConfirmPayingToProvider":"Please confirm paying order cost to provider",
+    "pleaseProvideDistance":"Please provide distance you take to deliver this order",
+    "pleaseProvideCashReceivedFromClient":"Please provide cash you received from client"
+    
 }

@@ -774,6 +774,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("من فضلك أملئ الحقل"),
         "pleaseCompleteTheForm":
             MessageLookupByLibrary.simpleMessage("الرجاء أكمال الفورم"),
+        "pleaseConfirmPayingToProvider": MessageLookupByLibrary.simpleMessage(
+            "الرجاء التأكيد حول دفع تكلفة للطلب للمتجر"),
         "pleaseCorrectProvidedDistance": MessageLookupByLibrary.simpleMessage(
             "من فضلك قم بتصحيح المسافة المدخلة"),
         "pleaseDownloadmandob_moshtarayat_captain":
@@ -790,6 +792,11 @@ class MessageLookup extends MessageLookupByLibrary {
             "من فضلك قم بتسجيل الدخول للمتابعة"),
         "pleaseLoginToMakeOrder": MessageLookupByLibrary.simpleMessage(
             "من فضلك قم بتسجيل الدخول لاستكمال طلبك"),
+        "pleaseProvideCashReceivedFromClient":
+            MessageLookupByLibrary.simpleMessage(
+                "الرجاء تزويدنا بالمبلغ المقبوض من العميل"),
+        "pleaseProvideDistance": MessageLookupByLibrary.simpleMessage(
+            "الرجاء تزويدنا بالمسافة المقطوعة"),
         "pleaseProvideDrivingImage": MessageLookupByLibrary.simpleMessage(
             "من فضلك قم بتزويدنا بشهادة القيادة"),
         "pleaseProvideIdentityImage": MessageLookupByLibrary.simpleMessage(
@@ -1078,6 +1085,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateOrders": MessageLookupByLibrary.simpleMessage("تعديل الطلبات"),
         "updateProfile":
             MessageLookupByLibrary.simpleMessage("تحديث الملف الشخصي"),
+        "updateStatusForTimeLimitation": MessageLookupByLibrary.simpleMessage(
+            "لايمكنك تعديل حالة الطلب بشكل متكرر قبل انقضاء الحد الزمني"),
         "updateYourData":
             MessageLookupByLibrary.simpleMessage("تحديث البيانات"),
         "uploadAndSubmit":

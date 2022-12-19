@@ -7449,6 +7449,46 @@ class S {
       args: [],
     );
   }
+
+  /// `You cannot update order status before pass update time limit`
+  String get updateStatusForTimeLimitation {
+    return Intl.message(
+      'You cannot update order status before pass update time limit',
+      name: 'updateStatusForTimeLimitation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please confirm paying order cost to provider`
+  String get pleaseConfirmPayingToProvider {
+    return Intl.message(
+      'Please confirm paying order cost to provider',
+      name: 'pleaseConfirmPayingToProvider',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please provide distance you take to deliver this order`
+  String get pleaseProvideDistance {
+    return Intl.message(
+      'Please provide distance you take to deliver this order',
+      name: 'pleaseProvideDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please provide cash you received from client`
+  String get pleaseProvideCashReceivedFromClient {
+    return Intl.message(
+      'Please provide cash you received from client',
+      name: 'pleaseProvideCashReceivedFromClient',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
