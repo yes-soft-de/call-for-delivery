@@ -400,7 +400,6 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 controller: _addressController,
                 hintText: S.current.addresses,
                 preIcon: const Icon(Icons.location_on),
-                numbers: true,
               ),
             ),
             titleField(S.of(context).age),
