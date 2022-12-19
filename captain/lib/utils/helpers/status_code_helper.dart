@@ -61,6 +61,8 @@ class StatusCodeHelper {
         return S.current.youCannotAcceptAnotherOrderFromThisStore;
       case '9380':
         return S.current.youCannotChangeYourAnswer;
+      case '9223':
+        return S.current.updateStatusForTimeLimitation;
       case '-1':
         return S.current.dataDecodeError;
       default:
