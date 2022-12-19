@@ -13,11 +13,14 @@ import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:c4d/utils/logger/logger.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:c4d/module_navigation/menu.dart';
@@ -87,7 +90,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   }
 
   void requestAuthorization() {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Navigator.of(context).pushNamedAndRemoveUntil(
         AuthorizationRoutes.LOGIN_SCREEN,
         (r) => false,
@@ -100,7 +103,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   }
 
   void moveTo(String route, dynamic argument) {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Navigator.of(context).pushNamed(route, arguments: argument);
     });
   }
@@ -115,7 +118,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
         Logger().info('Location enabled', '$value');
         Geolocator.getPositionStream(
             locationSettings: const LocationSettings(
-          distanceFilter: 25,
+          distanceFilter: 1000,
         )).listen((event) {
           currentLocation = LatLng(event.latitude, event.longitude);
           Logger().info('Location with us ',
@@ -204,15 +207,24 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
                     ),
                   ],
                 ),
-                CustomC4dAppBar.actionIcon(context, onTap: () {
-                  Navigator.of(context)
-                      .pushNamed(MyNotificationsRoutes.MY_NOTIFICATIONS);
-                },
-                    icon: Icons.notifications_rounded,
-                    colorIcon: currentPage == 1
-                        ? null
-                        : StatusHelper.getOrderStatusColor(
-                            OrderStatusEnum.GOT_CAPTAIN)),
+                ValueListenableBuilder(
+                  builder: (context, box, _) {
+                    return CustomC4dAppBar.actionIcon(context,
+                        showBadge: NotificationsPrefHelper()
+                                .getNewLocalNotification() !=
+                            null, onTap: () {
+                      Navigator.of(context)
+                          .pushNamed(MyNotificationsRoutes.MY_NOTIFICATIONS);
+                    },
+                        icon: Icons.notifications_rounded,
+                        colorIcon: currentPage == 1
+                            ? null
+                            : StatusHelper.getOrderStatusColor(
+                                OrderStatusEnum.GOT_CAPTAIN));
+                  },
+                  valueListenable: Hive.box('Notifications').listenable(
+                      keys: [NotificationsPrefHelper().NEW_NOTIFICATION]),
+                ),
               ],
               title: S.of(context).home,
               icon: Icons.sort_rounded, onTap: () {
@@ -284,7 +296,6 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
           return false;
         }
       }
-
       permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
@@ -292,11 +303,9 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
           return false;
         }
       }
-
       if (permission == LocationPermission.deniedForever) {
         return false;
       }
-
       return true;
     } catch (e) {
       return false;

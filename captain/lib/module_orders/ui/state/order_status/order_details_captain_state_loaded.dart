@@ -17,16 +17,15 @@ import 'package:c4d/module_orders/ui/widgets/order_widget/custom_step.dart';
 import 'package:c4d/module_orders/utils/icon_helper/order_progression_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
-import 'package:c4d/utils/components/flat_bar.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/effect/scaling.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -40,6 +39,9 @@ class OrderDetailsCaptainOrderLoadedState extends States {
   OrderDetailsCaptainOrderLoadedState(this.screenState, this.orderInfo,
       {String? message})
       : super(screenState) {
+    if (orderInfo.state != OrderStatusEnum.FINISHED) {
+      screenState.justOpen = false;
+    }
     if (message != null) {
       try {
         FireStoreHelper().backgroundThread(message);
@@ -366,6 +368,9 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                     subtitle: orderInfo.branchCoordinate != null &&
                             screenState.myLocation != null
                         ? GeoDistanceText(
+                            textStyle: TextStyle(
+                                color:
+                                    Theme.of(context).listTileTheme.textColor),
                             destance: (d) {},
                             destination: screenState.myLocation ?? LatLng(0, 0),
                             origin: orderInfo.branchCoordinate ?? LatLng(0, 0),
@@ -527,127 +532,141 @@ class OrderDetailsCaptainOrderLoadedState extends States {
           ),
         ),
         // customers
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
-            decoration: decoration,
-            child: Column(
-              children: [
-                ListTile(
-                  leading: const Icon(
-                    Icons.account_box,
-                  ),
-                  title: Text(S.current.recipientName),
-                  subtitle: Text(orderInfo.customerName),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: DottedLine(
-                      dashColor: Theme.of(context).disabledColor,
-                      lineThickness: 2.5,
-                      dashRadius: 25),
-                ),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(25),
-                    onTap: () {
-                      var url = 'tel:+${orderInfo.customerPhone}';
-                      canLaunch(url).then((value) {
-                        if (value) {
-                          launch(url);
-                        }
-                      });
-                    },
-                    child: ListTile(
-                      leading: const Icon(Icons.phone),
-                      title: Text(S.current.recipientPhoneNumber),
-                      subtitle: Text(orderInfo.customerPhone),
-                      trailing: const Icon(Icons.arrow_forward),
+        Visibility(
+          visible: (screenState.justOpen == true &&
+                  orderInfo.state == OrderStatusEnum.FINISHED)
+              ? false
+              : true,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              decoration: decoration,
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: const Icon(
+                      Icons.account_box,
                     ),
+                    title: Text(S.current.recipientName),
+                    subtitle: Text(orderInfo.customerName),
                   ),
-                ),
-                Visibility(
-                  visible: StatusHelper.getOrderStatusIndex(orderInfo.state) >=
-                      StatusHelper.getOrderStatusIndex(
-                          OrderStatusEnum.DELIVERING),
-                  child: Padding(
+                  Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                     child: DottedLine(
                         dashColor: Theme.of(context).disabledColor,
                         lineThickness: 2.5,
                         dashRadius: 25),
                   ),
-                ),
-                Visibility(
-                  visible: StatusHelper.getOrderStatusIndex(orderInfo.state) >=
-                      StatusHelper.getOrderStatusIndex(
-                          OrderStatusEnum.DELIVERING),
-                  child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(25),
-                        onTap: () {
-                          String url = '';
-                          if (orderInfo.destinationCoordinate != null) {
-                            url = LauncherLinkHelper.getMapsLink(
-                                orderInfo.destinationCoordinate?.latitude ?? 0,
-                                orderInfo.destinationCoordinate?.longitude ??
-                                    0);
-                          } else if (orderInfo.destinationLink != null) {
-                            url = orderInfo.destinationLink ?? '';
+                  Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(25),
+                      onTap: () {
+                        var url = 'tel:+${orderInfo.customerPhone}';
+                        canLaunch(url).then((value) {
+                          if (value) {
+                            launch(url);
                           }
-                          canLaunch(url).then((value) {
-                            if (value) {
-                              launch(url);
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: S.current.invalidMapLink);
+                        });
+                      },
+                      child: ListTile(
+                        leading: const Icon(Icons.phone),
+                        title: Text(S.current.recipientPhoneNumber),
+                        subtitle: Text(orderInfo.customerPhone),
+                        trailing: const Icon(Icons.arrow_forward),
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible:
+                        StatusHelper.getOrderStatusIndex(orderInfo.state) >=
+                            StatusHelper.getOrderStatusIndex(
+                                OrderStatusEnum.DELIVERING),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                      child: DottedLine(
+                          dashColor: Theme.of(context).disabledColor,
+                          lineThickness: 2.5,
+                          dashRadius: 25),
+                    ),
+                  ),
+                  Visibility(
+                    visible:
+                        StatusHelper.getOrderStatusIndex(orderInfo.state) >=
+                            StatusHelper.getOrderStatusIndex(
+                                OrderStatusEnum.DELIVERING),
+                    child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(25),
+                          onTap: () {
+                            String url = '';
+                            if (orderInfo.destinationCoordinate != null) {
+                              url = LauncherLinkHelper.getMapsLink(
+                                  orderInfo.destinationCoordinate?.latitude ??
+                                      0,
+                                  orderInfo.destinationCoordinate?.longitude ??
+                                      0);
+                            } else if (orderInfo.destinationLink != null) {
+                              url = orderInfo.destinationLink ?? '';
                             }
-                          });
-                        },
-                        child: ListTile(
-                          leading: const Icon(Icons.location_pin),
-                          title: Text(S.current.locationOfCustomer),
-                          subtitle: Visibility(
-                            visible: StatusHelper.getOrderStatusIndex(
-                                    orderInfo.state) >
-                                StatusHelper.getOrderStatusIndex(
-                                    OrderStatusEnum.IN_STORE),
-                            replacement: Visibility(
-                              visible:
-                                  orderInfo.storeBranchToClientDistance != null,
-                              replacement: Text(S.current.distance +
-                                  ' ' +
-                                  S.current.destinationUnavailable),
-                              child: Text(S.current.distance +
-                                  ' ' +
-                                  orderInfo.storeBranchToClientDistance
-                                      .toString() +
-                                  ' ' +
-                                  S.current.km),
-                            ),
-                            child: Visibility(
-                                visible: screenState.myLocation != null &&
-                                    orderInfo.destinationCoordinate != null,
-                                child: GeoDistanceText(
-                                  leading: S.current.distance,
-                                  destance: (dist) {},
-                                  destination:
-                                      orderInfo.destinationCoordinate ??
-                                          LatLng(0, 0),
-                                  origin:
-                                      screenState.myLocation ?? LatLng(0, 0),
-                                ),
+                            canLaunch(url).then((value) {
+                              if (value) {
+                                launch(url);
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: S.current.invalidMapLink);
+                              }
+                            });
+                          },
+                          child: ListTile(
+                            leading: const Icon(Icons.location_pin),
+                            title: Text(S.current.locationOfCustomer),
+                            subtitle: Visibility(
+                              visible: StatusHelper.getOrderStatusIndex(
+                                      orderInfo.state) >
+                                  StatusHelper.getOrderStatusIndex(
+                                      OrderStatusEnum.IN_STORE),
+                              replacement: Visibility(
+                                visible:
+                                    orderInfo.storeBranchToClientDistance !=
+                                        null,
                                 replacement: Text(S.current.distance +
                                     ' ' +
-                                    S.current.destinationUnavailable)),
+                                    S.current.destinationUnavailable),
+                                child: Text(S.current.distance +
+                                    ' ' +
+                                    orderInfo.storeBranchToClientDistance
+                                        .toString() +
+                                    ' ' +
+                                    S.current.km),
+                              ),
+                              child: Visibility(
+                                  visible: screenState.myLocation != null &&
+                                      orderInfo.destinationCoordinate != null,
+                                  child: GeoDistanceText(
+                                    textStyle: TextStyle(
+                                        color: Theme.of(context)
+                                            .listTileTheme
+                                            .textColor),
+                                    leading: S.current.distance,
+                                    destance: (dist) {},
+                                    destination:
+                                        orderInfo.destinationCoordinate ??
+                                            LatLng(0, 0),
+                                    origin:
+                                        screenState.myLocation ?? LatLng(0, 0),
+                                  ),
+                                  replacement: Text(S.current.distance +
+                                      ' ' +
+                                      S.current.destinationUnavailable)),
+                            ),
+                            trailing: const Icon(Icons.arrow_forward),
                           ),
-                          trailing: const Icon(Icons.arrow_forward),
-                        ),
-                      )),
-                )
-              ],
+                        )),
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -994,14 +1013,22 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                 },
                 payment: orderInfo.payment == 'cash',
                 callBack: (distance, payment) {
-                  var index = StatusHelper.getOrderStatusIndex(orderInfo.state);
-                  screenState.requestOrderProgress(UpdateOrderRequest(
-                      id: int.tryParse(screenState.orderId ?? '-1'),
-                      state: StatusHelper.getStatusString(
-                          OrderStatusEnum.values[index + 1]),
-                      distance: distance,
-                      paymentNote: noteController.text.trim(),
-                      orderCost: double.tryParse(payment ?? 'n')));
+                  if (payment != null || orderInfo.payment != 'cash') {
+                    var index =
+                        StatusHelper.getOrderStatusIndex(orderInfo.state);
+                    screenState.requestOrderProgress(UpdateOrderRequest(
+                        id: int.tryParse(screenState.orderId ?? '-1'),
+                        state: StatusHelper.getStatusString(
+                            OrderStatusEnum.values[index + 1]),
+                        distance: distance,
+                        paymentNote: noteController.text.trim(),
+                        orderCost: double.tryParse(payment ?? '')),orderInfo.payment == 'cash');
+                  } else {
+                    CustomFlushBarHelper.createError(
+                            title: S.current.warnning,
+                            message: S.current.pleaseProvidePaymentFromClient)
+                        .show(context);
+                  }
                 },
                 controller: screenState.distanceCalculator,
                 controller2: screenState.paymentController,
@@ -1032,7 +1059,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
               id: int.tryParse(screenState.orderId ?? '-1'),
               state: StatusHelper.getStatusString(
                   OrderStatusEnum.values[index + 1]),
-            ));
+            ),orderInfo.payment == 'cash');
           },
           title: OrderProgressionHelper.getNextStageHelper(
             orderInfo.state,

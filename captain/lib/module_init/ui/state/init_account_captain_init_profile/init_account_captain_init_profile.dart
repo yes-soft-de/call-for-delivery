@@ -72,8 +72,8 @@ class InitAccountCaptainInitProfile extends States {
                               ),
                               child: Stack(
                                 children: [
-                                  const Positioned.fill(
-                                      child: Icon(Icons.person,
+                                  Positioned.fill(
+                                      child: const Icon(Icons.person,
                                           size: 45, color: Colors.white)),
                                   _getCaptainImageFG(),
                                 ],
@@ -114,7 +114,7 @@ class InitAccountCaptainInitProfile extends States {
                           color: Theme.of(context).backgroundColor,
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(8.0),
+                          padding: const EdgeInsets.all(8.0),
                           child: Icon(
                             Icons.phone,
                             color: Theme.of(context).disabledColor,
@@ -215,7 +215,7 @@ class InitAccountCaptainInitProfile extends States {
                       child: Text(
                         S.of(context).driverLicence +
                             ' (${S.current.optional}) ',
-                        style: TextStyle(fontWeight: FontWeight.w600),
+                        style: const TextStyle(fontWeight: FontWeight.w600),
                         textAlign: TextAlign.start,
                       ),
                     ),
@@ -235,7 +235,7 @@ class InitAccountCaptainInitProfile extends States {
                       child: Text(
                         S.of(context).mechanichLicence +
                             ' (${S.current.optional}) ',
-                        style: TextStyle(fontWeight: FontWeight.w600),
+                        style: const TextStyle(fontWeight: FontWeight.w600),
                         textAlign: TextAlign.start,
                       ),
                     ),

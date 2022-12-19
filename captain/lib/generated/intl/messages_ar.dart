@@ -8,6 +8,7 @@
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
 // ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -69,6 +70,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addWorkPackage":
             MessageLookupByLibrary.simpleMessage("إضافة باقة عمل"),
         "address": MessageLookupByLibrary.simpleMessage("الموقع"),
+        "addresses": MessageLookupByLibrary.simpleMessage("العنوان"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "all": MessageLookupByLibrary.simpleMessage("الكل"),
         "allCity": MessageLookupByLibrary.simpleMessage("جميع المدن"),
@@ -310,6 +312,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "createNewReport": MessageLookupByLibrary.simpleMessage("دعم سريع"),
         "created": MessageLookupByLibrary.simpleMessage("تم الانشاء"),
         "createdDate": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
+        "credentialsBagHint": MessageLookupByLibrary.simpleMessage(
+            "هنا تجد محفظة سريعة للوصول لبيانات دخولك المحفوظة مسبقا "),
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("الرصيد الحالي:"),
         "currentFinancialDuesCycle":
@@ -770,6 +774,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("من فضلك أملئ الحقل"),
         "pleaseCompleteTheForm":
             MessageLookupByLibrary.simpleMessage("الرجاء أكمال الفورم"),
+        "pleaseConfirmPayingToProvider": MessageLookupByLibrary.simpleMessage(
+            "الرجاء التأكيد حول دفع تكلفة للطلب للمتجر"),
         "pleaseCorrectProvidedDistance": MessageLookupByLibrary.simpleMessage(
             "من فضلك قم بتصحيح المسافة المدخلة"),
         "pleaseDownloadmandob_moshtarayat_captain":
@@ -786,12 +792,19 @@ class MessageLookup extends MessageLookupByLibrary {
             "من فضلك قم بتسجيل الدخول للمتابعة"),
         "pleaseLoginToMakeOrder": MessageLookupByLibrary.simpleMessage(
             "من فضلك قم بتسجيل الدخول لاستكمال طلبك"),
+        "pleaseProvideCashReceivedFromClient":
+            MessageLookupByLibrary.simpleMessage(
+                "الرجاء تزويدنا بالمبلغ المقبوض من العميل"),
+        "pleaseProvideDistance": MessageLookupByLibrary.simpleMessage(
+            "الرجاء تزويدنا بالمسافة المقطوعة"),
         "pleaseProvideDrivingImage": MessageLookupByLibrary.simpleMessage(
             "من فضلك قم بتزويدنا بشهادة القيادة"),
         "pleaseProvideIdentityImage": MessageLookupByLibrary.simpleMessage(
             "من فضلك قم بتزويدنا بالهوية الشخصية"),
         "pleaseProvideMechImage": MessageLookupByLibrary.simpleMessage(
             "من فضلك قم بتزويدنا بشهادة السير"),
+        "pleaseProvidePaymentFromClient": MessageLookupByLibrary.simpleMessage(
+            "من فضلك قم بتزويدنا بالمبلغ الذي استلمته من العميل"),
         "pleaseProvidePaymentMethode":
             MessageLookupByLibrary.simpleMessage("من فضلك اختر طريقة للدفع"),
         "pleaseProvideProfileImage": MessageLookupByLibrary.simpleMessage(
@@ -1072,6 +1085,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateOrders": MessageLookupByLibrary.simpleMessage("تعديل الطلبات"),
         "updateProfile":
             MessageLookupByLibrary.simpleMessage("تحديث الملف الشخصي"),
+        "updateStatusForTimeLimitation": MessageLookupByLibrary.simpleMessage(
+            "لايمكنك تعديل حالة الطلب بشكل متكرر قبل انقضاء الحد الزمني"),
         "updateYourData":
             MessageLookupByLibrary.simpleMessage("تحديث البيانات"),
         "uploadAndSubmit":
@@ -1140,6 +1155,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "youCannotAcceptAnotherOrderFromThisStore":
             MessageLookupByLibrary.simpleMessage(
                 "لايمكنك قبول هذا الطلب من هذا المتجر في الوقت الحالي ، الرجاء تسليم الطلبات المتعلقة بهذا المتجر ومن ثم إعادة المحاولة"),
+        "youCannotChangeYourAnswer": MessageLookupByLibrary.simpleMessage(
+            "لايمكنك تغيير جوابك بخصوص هذا الطلب لتلقي دفعة من قبل الشركة"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك اختيار خطة حاليا الرجاء المحاولة لاحقا"),
         "youHaveFinanceAccount": MessageLookupByLibrary.simpleMessage(

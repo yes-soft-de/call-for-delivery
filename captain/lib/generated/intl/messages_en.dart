@@ -8,6 +8,7 @@
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
 // ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -69,6 +70,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addProducts": MessageLookupByLibrary.simpleMessage("Add Products"),
         "addWorkPackage": MessageLookupByLibrary.simpleMessage("Add work plan"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
+        "addresses": MessageLookupByLibrary.simpleMessage("Address"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "allCity": MessageLookupByLibrary.simpleMessage("All city"),
@@ -316,6 +318,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Create new Report"),
         "created": MessageLookupByLibrary.simpleMessage("Created"),
         "createdDate": MessageLookupByLibrary.simpleMessage("Created date"),
+        "credentialsBagHint": MessageLookupByLibrary.simpleMessage(
+            "Here you can find saved credentials "),
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("Current Balance:"),
         "currentFinancialDuesCycle":
@@ -777,6 +781,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please fill the field"),
         "pleaseCompleteTheForm":
             MessageLookupByLibrary.simpleMessage("Please Complete the Form"),
+        "pleaseConfirmPayingToProvider": MessageLookupByLibrary.simpleMessage(
+            "Please confirm paying order cost to provider"),
         "pleaseCorrectProvidedDistance": MessageLookupByLibrary.simpleMessage(
             "Please correct provided distance"),
         "pleaseDownloadmandob_moshtarayat_captain":
@@ -793,12 +799,19 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please login to continue"),
         "pleaseLoginToMakeOrder": MessageLookupByLibrary.simpleMessage(
             "Please login to resuming order sending"),
+        "pleaseProvideCashReceivedFromClient":
+            MessageLookupByLibrary.simpleMessage(
+                "Please provide cash you received from client"),
+        "pleaseProvideDistance": MessageLookupByLibrary.simpleMessage(
+            "Please provide distance you take to deliver this order"),
         "pleaseProvideDrivingImage": MessageLookupByLibrary.simpleMessage(
             "Please provide driving license image"),
         "pleaseProvideIdentityImage": MessageLookupByLibrary.simpleMessage(
             "Please provide identity image"),
         "pleaseProvideMechImage": MessageLookupByLibrary.simpleMessage(
             "Please provide Mechanic image"),
+        "pleaseProvidePaymentFromClient": MessageLookupByLibrary.simpleMessage(
+            "Please provide cash you received from client"),
         "pleaseProvidePaymentMethode": MessageLookupByLibrary.simpleMessage(
             "Please choose payment method"),
         "pleaseProvideProfileImage": MessageLookupByLibrary.simpleMessage(
@@ -1080,6 +1093,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Your order has been updated"),
         "updateOrders": MessageLookupByLibrary.simpleMessage("Orders Details"),
         "updateProfile": MessageLookupByLibrary.simpleMessage("update profile"),
+        "updateStatusForTimeLimitation": MessageLookupByLibrary.simpleMessage(
+            "You cannot update order status before pass update time limit"),
         "updateYourData": MessageLookupByLibrary.simpleMessage("Update Data"),
         "uploadAndSubmit":
             MessageLookupByLibrary.simpleMessage("Upload and submit"),
@@ -1144,6 +1159,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "youCannotAcceptAnotherOrderFromThisStore":
             MessageLookupByLibrary.simpleMessage(
                 "You cannot accept another order from this store , before you delivering orders belongs to this store after that try again"),
+        "youCannotChangeYourAnswer": MessageLookupByLibrary.simpleMessage(
+            "You cannot change your answer about giving cash to provider because you receive payment for this order from our company"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "You cannot choose plan right now , please try again"),
         "youHaveFinanceAccount": MessageLookupByLibrary.simpleMessage(

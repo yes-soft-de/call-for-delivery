@@ -53,7 +53,7 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
     chatScrollController = AutoScrollController(
       axis: Axis.vertical,
     );
-    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       receive_message = await rootBundle
           .load('assets/sounds/receive_message.mp3')
           .then((ByteData soundData) {
@@ -131,13 +131,13 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
         setState(() {});
       }
     });
-    WidgetsBinding.instance?.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance?.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     pool.release();
     streamSubscription.cancel();
     super.dispose();
@@ -260,7 +260,7 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
                                 color:
                                     Theme.of(context).scaffoldBackgroundColor,
                                 elevation: 3,
-                                shape: const CircleBorder(),
+                                shape: CircleBorder(),
                                 child: InkWell(
                                   onTap: () {
                                     down = false;
@@ -272,7 +272,7 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
                                     });
                                     setState(() {});
                                   },
-                                  customBorder: const CircleBorder(),
+                                  customBorder: CircleBorder(),
                                   child: const Padding(
                                     padding: EdgeInsets.all(8.0),
                                     child: Icon(

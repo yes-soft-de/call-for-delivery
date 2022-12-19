@@ -19,7 +19,7 @@ class CustomTextButton extends StatelessWidget {
           onPressed: onPressed,
           child: Text(
             label,
-            style: isDark ? TextStyle(color: Colors.white70) : null,
+            style: isDark ? const TextStyle(color: Colors.white70) : null,
           )),
     );
   }

@@ -17,7 +17,7 @@ class AppThemeDataService {
   AppThemeDataService(this._preferencesHelper);
 
   static Color get PrimaryColor {
-    return Color.fromRGBO(33, 32, 156, 1);
+    return const Color.fromRGBO(33, 32, 156, 1);
   }
 
   ThemeData getActiveTheme() {
@@ -73,6 +73,7 @@ class AppThemeDataService {
           fontFamily: 'Dubai',
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
+            backgroundColor: darkScheme.primary,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(25),
             ),
@@ -92,11 +93,20 @@ class AppThemeDataService {
         //    colorScheme: lightScheme,
         focusColor: PrimaryColor,
         primarySwatch: Colors.indigo,
-        cardColor: Color.fromRGBO(245, 245, 245, 1),
-        backgroundColor: Color.fromRGBO(236, 239, 241, 1),
-        textTheme: TextTheme(button: TextStyle(color: Colors.white)),
+        cardColor: const Color.fromRGBO(245, 245, 245, 1),
+        backgroundColor: const Color.fromRGBO(236, 239, 241, 1),
+        textTheme: const TextTheme(button: TextStyle(color: Colors.white)),
         fontFamily: 'Dubai',
-        timePickerTheme: TimePickerThemeData(
+        elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+          backgroundColor: lightScheme.primary,
+          foregroundColor: Colors.white,
+          textStyle: const TextStyle(color: Colors.white),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+        )),
+        timePickerTheme: const TimePickerThemeData(
           dialBackgroundColor: Color.fromRGBO(235, 235, 235, 1),
           dayPeriodBorderSide:
               BorderSide(color: Color.fromRGBO(235, 235, 235, 1)),

@@ -12,15 +12,15 @@ class InitAccountCaptainStateSuccess extends States {
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        Padding(
-          padding: const EdgeInsets.all(8.0),
+        const Padding(
+          padding: EdgeInsets.all(8.0),
           child: Icon(Icons.check),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(S.of(context).accountCreated),
         ),
-        RaisedButton(
+        ElevatedButton(
           onPressed: () {
             // Navigator.of(context).pushNamedAndRemoveUntil(
             //     OrdersRoutes.CAPTAIN_ORDERS_SCREEN, (route) => false);

@@ -101,18 +101,18 @@ class _SettingsScreenState extends State<SettingsScreen> {
                               Icons.arrow_drop_down_rounded,
                             ),
                           ),
-                          items: const [
+                          items: [
                             DropdownMenuItem(
-                              child: Text(
+                              child: const Text(
                                 'العربية',
                                 style: TextStyle(),
                               ),
                               value: 'ar',
                             ),
                             DropdownMenuItem(
-                              child: Text(
+                              child: const Text(
                                 'English',
-                                style: TextStyle(),
+                                style:  TextStyle(),
                               ),
                               value: 'en',
                             ),

@@ -17,6 +17,8 @@ class OrderModel extends DataModel {
   late String createdDate;
   late String branchName;
   LatLng? location;
+  LatLng? destination;
+  String? destinationLink;
   late num distance;
   late String paymentMethod;
   late List<OrderModel> subOrders;
@@ -39,7 +41,9 @@ class OrderModel extends DataModel {
       required this.orderIsMain,
       required this.isHide,
       required this.storeBranchToClientDistance,
-      required this.storeName});
+      required this.storeName,
+      this.destination,
+      this.destinationLink});
   List<OrderModel> _orders = [];
   OrderModel.withData(OrdersResponse response) {
     var data = response.data;
@@ -72,10 +76,18 @@ class OrderModel extends DataModel {
           distance: 0,
           paymentMethod: element.payment ?? 'cash',
           isHide: element.isHide ?? -1,
-          orderIsMain: element.orderIsMain ?? false,
+          orderIsMain: (element.orderIsMain ?? false) ||
+                  _getOrders(element.suborder ?? []).isNotEmpty
+              ? true
+              : false,
           subOrders: _getOrders(element.suborder ?? []),
           storeBranchToClientDistance: element.storeBranchToClientDistance,
-          storeName: element.storeOwnerName ?? S.current.unknown));
+          storeName: element.storeOwnerName ?? S.current.unknown,
+          destinationLink: element.destination?.link,
+          destination: element.destination?.lat != null
+              ? LatLng(
+                  element.destination?.lat ?? 0, element.destination?.lon ?? 0)
+              : null));
     });
   }
   List<OrderModel> _getOrders(List<SubOrder> suborder) {

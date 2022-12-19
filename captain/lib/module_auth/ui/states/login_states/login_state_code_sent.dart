@@ -5,6 +5,7 @@ import 'package:c4d/module_auth/request/register_request/verfy_code_request.dart
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_auth/ui/screen/login_screen/login_screen.dart';
 import 'package:c4d/module_auth/ui/states/login_states/login_state.dart';
+import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 
 class LoginStateCodeSent extends LoginState {
@@ -28,7 +29,7 @@ class LoginStateCodeSent extends LoginState {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           MediaQuery.of(context).viewInsets.bottom == 0
-              ? Image.asset('assets/images/logo.jpg')
+              ? Image.asset(ImageAsset.LOGO)
               : Container(),
           Padding(
             padding: const EdgeInsets.all(16.0),

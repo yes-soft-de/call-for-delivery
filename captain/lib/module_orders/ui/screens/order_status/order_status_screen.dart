@@ -8,7 +8,6 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/custom_alert_paid_cash.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
-import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/text_reader.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
@@ -17,7 +16,6 @@ import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/request/order_invoice_request.dart';
 import 'package:c4d/module_orders/state_manager/order_status/order_status.state_manager.dart';
-import 'package:isolate_handler/isolate_handler.dart';
 
 @injectable
 class OrderStatusScreen extends StatefulWidget {
@@ -40,6 +38,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
   StreamSubscription? globalStateSub;
   late TextEditingController distanceCalculator;
   late TextEditingController paymentController;
+  bool justOpen = true;
   @override
   void dispose() {
     stateSub?.cancel();
@@ -56,6 +55,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
     currentState = LoadingState(this);
     distanceCalculator = TextEditingController();
     paymentController = TextEditingController();
+
     stateSub = widget.stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
@@ -68,9 +68,15 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
     canRequestLocation().then((value) async {
       if (value) {
         Logger().info('Location enabled', '$value');
+        Geolocator.getCurrentPosition().then((event) {
+          myLocation = LatLng(event.latitude, event.longitude);
+          Logger().info('Location with us for the first time',
+              myLocation?.toJson().toString() ?? 'null');
+          setState(() {});
+        });
         Geolocator.getPositionStream(
             locationSettings: const LocationSettings(
-          distanceFilter: 0,
+          distanceFilter: 100,
         )).listen((event) {
           myLocation = LatLng(event.latitude, event.longitude);
           Logger().info(
@@ -105,8 +111,17 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
     }
   }
 
-  void requestOrderProgress(UpdateOrderRequest request) {
-    showDialog(
+  void requestOrderProgress(UpdateOrderRequest request,bool orderCash) {
+    if (request.paid == null ||
+        request.distance == null ||
+        (request.orderCost ?? 0) <= 0 && orderCash) {
+      showDialog(context: context, builder: (ctx) {
+        return CustomAlertDialog(onPressed: (){
+          Navigator.of(context).pop();
+        }, content: request.paid == null ? S.current.pleaseConfirmPayingToProvider : request.distance == null ? S.current.pleaseProvideDistance : S.current.pleaseProvideCashReceivedFromClient);
+      });
+    } else {
+  showDialog(
         context: context,
         routeSettings: const RouteSettings(name: '/accepting_order'),
         builder: (_) {
@@ -133,6 +148,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
               },
               content: S.of(context).confirmUpdateOrderStatus);
         });
+    }
   }
 
   void getOrderDetails(var orderId) {

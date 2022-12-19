@@ -4,6 +4,7 @@ import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/module_orders/ui/widgets/geo_widget.dart';
+import 'package:c4d/module_orders/ui/widgets/order_map_preview.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
@@ -18,6 +19,7 @@ import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:bottom_sheet/bottom_sheet.dart';
 
 class CaptainOrdersListStateOrdersLoaded extends States {
   final DataModel myOrders;
@@ -143,18 +145,6 @@ class CaptainOrdersListStateOrdersLoaded extends States {
     }
     var ordersData = nearbyOrders as OrderModel;
     var uiList = <Widget>[];
-    // uiList.add(Padding(
-    //   padding: const EdgeInsets.all(8.0),
-    //   child: CustomFormField(
-    //       onChanged: (s) {
-    //         screenState.refresh();
-    //       },
-    //       numbers: true,
-    //       hintText: S.current.searchForOrder,
-    //       preIcon: const Icon(Icons.search_rounded),
-    //       controller: searchNearby),
-    // ));
-
     var data = screenState.currentLocation != null
         ? _sortOrder(ordersData.data)
         : ordersData.data;
@@ -177,6 +167,184 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                   Navigator.of(context).pushNamed(
                       OrdersRoutes.SUB_ORDERS_SCREEN,
                       arguments: element.id);
+                } else {
+                  showFlexibleBottomSheet(
+                      barrierColor: Colors.transparent,
+                      decoration: BoxDecoration(
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          borderRadius: const BorderRadius.vertical(
+                              top: Radius.circular(25))),
+                      builder: (BuildContext context,
+                          ScrollController scrollController,
+                          double bottomSheetOffset) {
+                        return Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Container(
+                                width: 50,
+                                height: 6,
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(25),
+                                    color: Theme.of(context).backgroundColor),
+                              ),
+                            ),
+                            Expanded(
+                              child: Stack(
+                                children: [
+                                  OrderMapPreview(
+                                    order: element,
+                                  ),
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(16.0),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(25),
+                                          color: Theme.of(context)
+                                              .scaffoldBackgroundColor
+                                              .withOpacity(0.95),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: Row(
+                                            children: [
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Theme.of(context)
+                                                      .scaffoldBackgroundColor,
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primaryContainer,
+                                                      width: 6),
+                                                ),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(4.0),
+                                                  child: Icon(
+                                                    Icons.store_rounded,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
+                                                  ),
+                                                ),
+                                              ),
+                                              Container(
+                                                margin: const EdgeInsets.all(4),
+                                                width: 16,
+                                                height: 2.5,
+                                                decoration: BoxDecoration(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primaryContainer,
+                                                  borderRadius:
+                                                      BorderRadius.circular(25),
+                                                ),
+                                              ),
+                                              Text(
+                                                (element.storeBranchToClientDistance
+                                                            ?.toString() ??
+                                                        S.current.unknown) +
+                                                    (element.storeBranchToClientDistance ==
+                                                            null
+                                                        ? ''
+                                                        : ' ${S.current.km}'),
+                                                style: TextStyle(
+                                                  fontWeight: FontWeight.bold,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
+                                                ),
+                                              ),
+                                              Container(
+                                                margin: const EdgeInsets.all(4),
+                                                width: 16,
+                                                height: 2.5,
+                                                decoration: BoxDecoration(
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primaryContainer,
+                                                  borderRadius:
+                                                      BorderRadius.circular(25),
+                                                ),
+                                              ),
+                                              Container(
+                                                decoration: BoxDecoration(
+                                                  color: Theme.of(context)
+                                                      .scaffoldBackgroundColor,
+                                                  shape: BoxShape.circle,
+                                                  border: Border.all(
+                                                      color: Theme.of(context)
+                                                          .colorScheme
+                                                          .primaryContainer,
+                                                      width: 6),
+                                                ),
+                                                child: Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(4.0),
+                                                  child: Icon(
+                                                    Icons
+                                                        .location_history_rounded,
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primary,
+                                                  ),
+                                                ),
+                                              ),
+                                              Spacer(),
+                                              ElevatedButton.icon(
+                                                onPressed: () {
+                                                  Navigator.of(context).pop();
+                                                  var index = StatusHelper
+                                                      .getOrderStatusIndex(
+                                                          element.state);
+                                                  screenState.stateManager
+                                                      .updateOrder(
+                                                          UpdateOrderRequest(
+                                                            id: element.id,
+                                                            state: StatusHelper
+                                                                .getStatusString(
+                                                                    OrderStatusEnum
+                                                                            .values[
+                                                                        index +
+                                                                            1]),
+                                                          ),
+                                                          screenState);
+                                                },
+                                                style: ElevatedButton.styleFrom(
+                                                    backgroundColor:
+                                                        Colors.green,
+                                                    shape:
+                                                        const StadiumBorder()),
+                                                label: Text(
+                                                  S.current.accept,
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .button,
+                                                ),
+                                                icon: const Icon(
+                                                  Icons.thumb_up_alt_rounded,
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ],
+                        );
+                      },
+                      context: context);
                 }
               },
               child: NearbyOrdersCard(
@@ -239,6 +407,183 @@ class CaptainOrdersListStateOrdersLoaded extends States {
               if (element.orderIsMain && element.subOrders.isNotEmpty) {
                 Navigator.of(context).pushNamed(OrdersRoutes.SUB_ORDERS_SCREEN,
                     arguments: element.id);
+              } else {
+                showFlexibleBottomSheet(
+                    bottomSheetColor: Colors.transparent,
+                    barrierColor: Colors.transparent,
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        borderRadius: const BorderRadius.vertical(
+                            top: Radius.circular(25))),
+                    builder: (BuildContext context,
+                        ScrollController scrollController,
+                        double bottomSheetOffset) {
+                      return Column(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Container(
+                              width: 50,
+                              height: 6,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(25),
+                                  color: Theme.of(context).backgroundColor),
+                            ),
+                          ),
+                          Expanded(
+                            child: Stack(
+                              children: [
+                                OrderMapPreview(
+                                  order: element,
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomCenter,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(25),
+                                        color: Theme.of(context)
+                                            .scaffoldBackgroundColor
+                                            .withOpacity(0.95),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: Row(
+                                          children: [
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .scaffoldBackgroundColor,
+                                                shape: BoxShape.circle,
+                                                border: Border.all(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primaryContainer,
+                                                    width: 6),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: Icon(
+                                                  Icons.store_rounded,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
+                                                ),
+                                              ),
+                                            ),
+                                            Container(
+                                              margin: EdgeInsets.all(4),
+                                              width: 16,
+                                              height: 2.5,
+                                              decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primaryContainer,
+                                                borderRadius:
+                                                    BorderRadius.circular(25),
+                                              ),
+                                            ),
+                                            Text(
+                                              (element.storeBranchToClientDistance
+                                                          ?.toString() ??
+                                                      S.current.unknown) +
+                                                  ' ' +
+                                                  (element.storeBranchToClientDistance ==
+                                                          null
+                                                      ? ''
+                                                      : S.current.km),
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary,
+                                              ),
+                                            ),
+                                            Container(
+                                              margin: EdgeInsets.all(4),
+                                              width: 16,
+                                              height: 2.5,
+                                              decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primaryContainer,
+                                                borderRadius:
+                                                    BorderRadius.circular(25),
+                                              ),
+                                            ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Theme.of(context)
+                                                    .scaffoldBackgroundColor,
+                                                shape: BoxShape.circle,
+                                                border: Border.all(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primaryContainer,
+                                                    width: 6),
+                                              ),
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(4.0),
+                                                child: Icon(
+                                                  Icons
+                                                      .location_history_rounded,
+                                                  color: Theme.of(context)
+                                                      .colorScheme
+                                                      .primary,
+                                                ),
+                                              ),
+                                            ),
+                                            Spacer(),
+                                            ElevatedButton.icon(
+                                              onPressed: () {
+                                                Navigator.of(context).pop();
+                                                var index = StatusHelper
+                                                    .getOrderStatusIndex(
+                                                        element.state);
+                                                screenState.stateManager
+                                                    .updateOrder(
+                                                        UpdateOrderRequest(
+                                                          id: element.id,
+                                                          state: StatusHelper
+                                                              .getStatusString(
+                                                                  OrderStatusEnum
+                                                                          .values[
+                                                                      index +
+                                                                          1]),
+                                                        ),
+                                                        screenState);
+                                              },
+                                              style: ElevatedButton.styleFrom(
+                                                  backgroundColor: Colors.green,
+                                                  shape: const StadiumBorder()),
+                                              label: Text(
+                                                S.current.accept,
+                                                style: Theme.of(context)
+                                                    .textTheme
+                                                    .button,
+                                              ),
+                                              icon: const Icon(
+                                                Icons.thumb_up_alt_rounded,
+                                                color: Colors.white,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
+                      );
+                    },
+                    context: context);
               }
             },
             child: NearbyOrdersCard(

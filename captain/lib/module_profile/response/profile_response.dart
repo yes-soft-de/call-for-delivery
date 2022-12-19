@@ -58,37 +58,39 @@ class ProfileResponseModel {
   Images? mechanicLicense;
   Images? identity;
   num? rate;
-
-  ProfileResponseModel(
-      {this.id,
-      this.captainID,
-      this.captainName,
-      this.location,
-      this.age,
-      this.car,
-      this.drivingLicence,
-      this.drivingLicenceURL,
-      this.salary,
-      this.status,
-      this.countOrdersDeliverd,
-      this.rating,
-      this.state,
-      this.bounce,
-      this.totalBounce,
-      this.roomID,
-      this.image,
-      this.imageURL,
-      this.baseURL,
-      this.phone,
-      this.isOnline,
-      this.bankName,
-      this.bankAccountNumber,
-      this.stcPay,
-      this.vacationStatus,
-      this.newMessageStatus,
-      this.mechanicLicense,
-      this.identity,
-      this.rate});
+  String? address;
+  ProfileResponseModel({
+    this.id,
+    this.captainID,
+    this.captainName,
+    this.location,
+    this.age,
+    this.car,
+    this.drivingLicence,
+    this.drivingLicenceURL,
+    this.salary,
+    this.status,
+    this.countOrdersDeliverd,
+    this.rating,
+    this.state,
+    this.bounce,
+    this.totalBounce,
+    this.roomID,
+    this.image,
+    this.imageURL,
+    this.baseURL,
+    this.phone,
+    this.isOnline,
+    this.bankName,
+    this.bankAccountNumber,
+    this.stcPay,
+    this.vacationStatus,
+    this.newMessageStatus,
+    this.mechanicLicense,
+    this.identity,
+    this.rate,
+    this.address,
+  });
 
   ProfileResponseModel.fromJson(dynamic json) {
     id = json['id'];
@@ -125,6 +127,7 @@ class ProfileResponseModel {
     vacationStatus = json['vacationStatus'];
     newMessageStatus = json['newMessageStatus'];
     rate = json['averageRating'];
+    address = json['address'];
     mechanicLicense = json['mechanicLicense'] != null
         ? Images.fromJson(json['mechanicLicense'])
         : null;
@@ -144,6 +147,7 @@ class ProfileResponseModel {
     map['drivingLicenceURL'] = drivingLicenceURL;
     map['salary'] = salary;
     map['status'] = status;
+    map['address'] = address;
     if (countOrdersDeliverd != null) {
       map['countOrdersDeliverd'] =
           countOrdersDeliverd?.map((v) => v.toJson()).toList();

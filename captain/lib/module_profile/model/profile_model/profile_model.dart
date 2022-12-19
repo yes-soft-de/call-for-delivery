@@ -16,6 +16,7 @@ class ProfileModel {
   bool? isOnline;
   num? averageRating;
   String? roomID;
+  String? address;
   ProfileModel(
       {this.image,
       this.name,
@@ -30,7 +31,9 @@ class ProfileModel {
       this.age,
       this.isOnline,
       this.averageRating,
-      this.roomID});
+      this.roomID,
+      required this.address,
+      });
 
   String? _error;
   bool _empty = false;
@@ -54,7 +57,7 @@ class ProfileModel {
         identity: data.identity?.imageUrl,
         isOnline: data.isOnline,
         averageRating: num.tryParse(FixedNumber.getFixedNumber(data.rate ?? 0)),
-        roomID: data.roomID);
+        roomID: data.roomID, address: data.address);
   }
   bool get hasError => _error != null;
   bool get empty => _empty;

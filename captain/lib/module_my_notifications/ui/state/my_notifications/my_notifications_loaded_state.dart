@@ -1,9 +1,10 @@
+import 'package:badges/badges.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
+import 'package:c4d/module_notifications/preferences/notification_preferences/notification_preferences.dart';
 import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
-import 'package:c4d/utils/components/rating_form.dart';
 import 'package:c4d/utils/effect/scaling.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -18,7 +19,22 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 class MyNotificationsLoadedState extends States {
   MyNotificationsScreenState screenState;
   List<NotificationModel> model;
-  MyNotificationsLoadedState(this.screenState, this.model) : super(screenState);
+  MyNotificationsLoadedState(this.screenState, this.model)
+      : super(screenState) {
+    DateTime? date = DateTime.tryParse(
+        NotificationsPrefHelper().getNewLocalNotification() ?? '');
+    if (date != null) {
+      model.forEach((element) {
+        if (date.isBefore(element.dateTime) ||
+            date.isAtSameMomentAs(element.dateTime)) {
+          element.seen = false;
+          print(element.dateTime);
+          print(date);
+        }
+      });
+      screenState.refresh();
+    }
+  }
   bool markAll = false;
   bool sorted = false;
   String listTile = S.current.sortByEarlier;
@@ -295,15 +311,19 @@ class MyNotificationsLoadedState extends States {
             ),
             child: Row(
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(12),
-                      color: Theme.of(context).backgroundColor),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Icon(
-                      Icons.notifications,
-                      color: Theme.of(context).disabledColor,
+                Badge(
+                  showBadge: element.seen ? false : true,
+                  position: BadgePosition(top: -2, end: -3),
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        color: Theme.of(context).backgroundColor),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Icon(
+                        Icons.notifications,
+                        color: Theme.of(context).disabledColor,
+                      ),
                     ),
                   ),
                 ),
@@ -349,6 +369,7 @@ class MyNotificationsLoadedState extends States {
         ),
       ));
     });
+    NotificationsPrefHelper().clearNewLocalNotifications();
     return children;
   }
 

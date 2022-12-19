@@ -326,6 +326,7 @@
     "uploadProfileSuccess": "تم تعديل البيانات الشخصية بنجاح",
     "uploadImageSuccess": "تم رفع الصورة بنجاح",
     "address": "الموقع",
+    "addresses": "العنوان",
     "errorDownloadingImage": "لم نستطع تحميل الصورة",
     "launch": "شغل تطبيقنا",
     "lanchDescribtion": "إذا لديك غرض لتوصيله لمكان بعيد عنك لاتقلق افتح تطبيقنا",
@@ -737,5 +738,13 @@
     "orderNotifications": "التنبيهات",
     "activateOrderNotification": "فعل التنبهات وابدأ باستقبال الطلبات",
     "activeOrderNotification": "فعل التنبيهات",
-    "yourNumberStartWithZero": "الرقم المدخل يبدأ بصفر الرجاء إدخال الرقم بدون الصفر"
+    "yourNumberStartWithZero": "الرقم المدخل يبدأ بصفر الرجاء إدخال الرقم بدون الصفر",
+    "pleaseProvidePaymentFromClient": "من فضلك قم بتزويدنا بالمبلغ الذي استلمته من العميل",
+    "youCannotChangeYourAnswer":"لايمكنك تغيير جوابك بخصوص هذا الطلب لتلقي دفعة من قبل الشركة",
+    "credentialsBagHint": "هنا تجد محفظة سريعة للوصول لبيانات دخولك المحفوظة مسبقا ",
+    "updateStatusForTimeLimitation":"لايمكنك تعديل حالة الطلب بشكل متكرر قبل انقضاء الحد الزمني",
+    "pleaseConfirmPayingToProvider":"الرجاء التأكيد حول دفع تكلفة للطلب للمتجر",
+    "pleaseProvideDistance":"الرجاء تزويدنا بالمسافة المقطوعة",
+    "pleaseProvideCashReceivedFromClient":"الرجاء تزويدنا بالمبلغ المقبوض من العميل"
+    
 }

@@ -76,7 +76,8 @@ class ProfileStateDirtyProfile extends ProfileState {
                 mechanicLicense: profile.mechanicLicense,
                 identity: profile.identity,
                 isOnline: profile.isOnline,
-                canGoBack: request.canGoBack);
+                canGoBack: request.canGoBack,
+                address: profile.address);
             screenState.saveProfile(profileRequest);
           },
           onImageUpload: (profile, type, image) {
@@ -93,7 +94,8 @@ class ProfileStateDirtyProfile extends ProfileState {
                 mechanicLicense: profile.mechanicLicense,
                 identity: profile.identity,
                 isOnline: profile.isOnline,
-                canGoBack: request.canGoBack);
+                canGoBack: request.canGoBack,
+                address: profile.address);
             screenState.uploadImage(profileRequest, type, image);
           },
         ),

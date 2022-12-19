@@ -1,6 +1,7 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/ui/screen/login_screen/login_screen.dart';
 import 'package:c4d/module_auth/ui/states/login_states/login_state.dart';
+import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 
 class LoginStateSuccess extends LoginState {
@@ -13,11 +14,8 @@ class LoginStateSuccess extends LoginState {
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Image.asset('assets/images/logo.jpg'),
-        RaisedButton(
-          color: Theme.of(context).primaryColor,
-          textColor: Colors.white,
-          padding: EdgeInsets.all(16),
+        Image.asset(ImageAsset.LOGO),
+        ElevatedButton(
           onPressed: () {
             //screen.moveToNext(inited);
           },
