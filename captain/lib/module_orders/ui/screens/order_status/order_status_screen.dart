@@ -40,6 +40,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
   StreamSubscription? globalStateSub;
   late TextEditingController distanceCalculator;
   late TextEditingController paymentController;
+  bool justOpen = true;
   @override
   void dispose() {
     stateSub?.cancel();

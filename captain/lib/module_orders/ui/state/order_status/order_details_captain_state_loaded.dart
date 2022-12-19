@@ -39,6 +39,9 @@ class OrderDetailsCaptainOrderLoadedState extends States {
   OrderDetailsCaptainOrderLoadedState(this.screenState, this.orderInfo,
       {String? message})
       : super(screenState) {
+    if (orderInfo.state != OrderStatusEnum.FINISHED) {
+      screenState.justOpen = false;
+    }
     if (message != null) {
       try {
         FireStoreHelper().backgroundThread(message);
@@ -529,131 +532,141 @@ class OrderDetailsCaptainOrderLoadedState extends States {
           ),
         ),
         // customers
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
-            decoration: decoration,
-            child: Column(
-              children: [
-                ListTile(
-                  leading: const Icon(
-                    Icons.account_box,
-                  ),
-                  title: Text(S.current.recipientName),
-                  subtitle: Text(orderInfo.customerName),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: DottedLine(
-                      dashColor: Theme.of(context).disabledColor,
-                      lineThickness: 2.5,
-                      dashRadius: 25),
-                ),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(25),
-                    onTap: () {
-                      var url = 'tel:+${orderInfo.customerPhone}';
-                      canLaunch(url).then((value) {
-                        if (value) {
-                          launch(url);
-                        }
-                      });
-                    },
-                    child: ListTile(
-                      leading: const Icon(Icons.phone),
-                      title: Text(S.current.recipientPhoneNumber),
-                      subtitle: Text(orderInfo.customerPhone),
-                      trailing: const Icon(Icons.arrow_forward),
+        Visibility(
+          visible: (screenState.justOpen == true &&
+                  orderInfo.state == OrderStatusEnum.FINISHED)
+              ? false
+              : true,
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              decoration: decoration,
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: const Icon(
+                      Icons.account_box,
                     ),
+                    title: Text(S.current.recipientName),
+                    subtitle: Text(orderInfo.customerName),
                   ),
-                ),
-                Visibility(
-                  visible: StatusHelper.getOrderStatusIndex(orderInfo.state) >=
-                      StatusHelper.getOrderStatusIndex(
-                          OrderStatusEnum.DELIVERING),
-                  child: Padding(
+                  Padding(
                     padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                     child: DottedLine(
                         dashColor: Theme.of(context).disabledColor,
                         lineThickness: 2.5,
                         dashRadius: 25),
                   ),
-                ),
-                Visibility(
-                  visible: StatusHelper.getOrderStatusIndex(orderInfo.state) >=
-                      StatusHelper.getOrderStatusIndex(
-                          OrderStatusEnum.DELIVERING),
-                  child: Material(
-                      color: Colors.transparent,
-                      child: InkWell(
-                        borderRadius: BorderRadius.circular(25),
-                        onTap: () {
-                          String url = '';
-                          if (orderInfo.destinationCoordinate != null) {
-                            url = LauncherLinkHelper.getMapsLink(
-                                orderInfo.destinationCoordinate?.latitude ?? 0,
-                                orderInfo.destinationCoordinate?.longitude ??
-                                    0);
-                          } else if (orderInfo.destinationLink != null) {
-                            url = orderInfo.destinationLink ?? '';
+                  Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(25),
+                      onTap: () {
+                        var url = 'tel:+${orderInfo.customerPhone}';
+                        canLaunch(url).then((value) {
+                          if (value) {
+                            launch(url);
                           }
-                          canLaunch(url).then((value) {
-                            if (value) {
-                              launch(url);
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: S.current.invalidMapLink);
+                        });
+                      },
+                      child: ListTile(
+                        leading: const Icon(Icons.phone),
+                        title: Text(S.current.recipientPhoneNumber),
+                        subtitle: Text(orderInfo.customerPhone),
+                        trailing: const Icon(Icons.arrow_forward),
+                      ),
+                    ),
+                  ),
+                  Visibility(
+                    visible:
+                        StatusHelper.getOrderStatusIndex(orderInfo.state) >=
+                            StatusHelper.getOrderStatusIndex(
+                                OrderStatusEnum.DELIVERING),
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                      child: DottedLine(
+                          dashColor: Theme.of(context).disabledColor,
+                          lineThickness: 2.5,
+                          dashRadius: 25),
+                    ),
+                  ),
+                  Visibility(
+                    visible:
+                        StatusHelper.getOrderStatusIndex(orderInfo.state) >=
+                            StatusHelper.getOrderStatusIndex(
+                                OrderStatusEnum.DELIVERING),
+                    child: Material(
+                        color: Colors.transparent,
+                        child: InkWell(
+                          borderRadius: BorderRadius.circular(25),
+                          onTap: () {
+                            String url = '';
+                            if (orderInfo.destinationCoordinate != null) {
+                              url = LauncherLinkHelper.getMapsLink(
+                                  orderInfo.destinationCoordinate?.latitude ??
+                                      0,
+                                  orderInfo.destinationCoordinate?.longitude ??
+                                      0);
+                            } else if (orderInfo.destinationLink != null) {
+                              url = orderInfo.destinationLink ?? '';
                             }
-                          });
-                        },
-                        child: ListTile(
-                          leading: const Icon(Icons.location_pin),
-                          title: Text(S.current.locationOfCustomer),
-                          subtitle: Visibility(
-                            visible: StatusHelper.getOrderStatusIndex(
-                                    orderInfo.state) >
-                                StatusHelper.getOrderStatusIndex(
-                                    OrderStatusEnum.IN_STORE),
-                            replacement: Visibility(
-                              visible:
-                                  orderInfo.storeBranchToClientDistance != null,
-                              replacement: Text(S.current.distance +
-                                  ' ' +
-                                  S.current.destinationUnavailable),
-                              child: Text(S.current.distance +
-                                  ' ' +
-                                  orderInfo.storeBranchToClientDistance
-                                      .toString() +
-                                  ' ' +
-                                  S.current.km),
-                            ),
-                            child: Visibility(
-                                visible: screenState.myLocation != null &&
-                                    orderInfo.destinationCoordinate != null,
-                                child: GeoDistanceText(
-                                  textStyle: TextStyle(
-                                      color: Theme.of(context)
-                                          .listTileTheme
-                                          .textColor),
-                                  leading: S.current.distance,
-                                  destance: (dist) {},
-                                  destination:
-                                      orderInfo.destinationCoordinate ??
-                                          LatLng(0, 0),
-                                  origin:
-                                      screenState.myLocation ?? LatLng(0, 0),
-                                ),
+                            canLaunch(url).then((value) {
+                              if (value) {
+                                launch(url);
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: S.current.invalidMapLink);
+                              }
+                            });
+                          },
+                          child: ListTile(
+                            leading: const Icon(Icons.location_pin),
+                            title: Text(S.current.locationOfCustomer),
+                            subtitle: Visibility(
+                              visible: StatusHelper.getOrderStatusIndex(
+                                      orderInfo.state) >
+                                  StatusHelper.getOrderStatusIndex(
+                                      OrderStatusEnum.IN_STORE),
+                              replacement: Visibility(
+                                visible:
+                                    orderInfo.storeBranchToClientDistance !=
+                                        null,
                                 replacement: Text(S.current.distance +
                                     ' ' +
-                                    S.current.destinationUnavailable)),
+                                    S.current.destinationUnavailable),
+                                child: Text(S.current.distance +
+                                    ' ' +
+                                    orderInfo.storeBranchToClientDistance
+                                        .toString() +
+                                    ' ' +
+                                    S.current.km),
+                              ),
+                              child: Visibility(
+                                  visible: screenState.myLocation != null &&
+                                      orderInfo.destinationCoordinate != null,
+                                  child: GeoDistanceText(
+                                    textStyle: TextStyle(
+                                        color: Theme.of(context)
+                                            .listTileTheme
+                                            .textColor),
+                                    leading: S.current.distance,
+                                    destance: (dist) {},
+                                    destination:
+                                        orderInfo.destinationCoordinate ??
+                                            LatLng(0, 0),
+                                    origin:
+                                        screenState.myLocation ?? LatLng(0, 0),
+                                  ),
+                                  replacement: Text(S.current.distance +
+                                      ' ' +
+                                      S.current.destinationUnavailable)),
+                            ),
+                            trailing: const Icon(Icons.arrow_forward),
                           ),
-                          trailing: const Icon(Icons.arrow_forward),
-                        ),
-                      )),
-                )
-              ],
+                        )),
+                  )
+                ],
+              ),
             ),
           ),
         ),
