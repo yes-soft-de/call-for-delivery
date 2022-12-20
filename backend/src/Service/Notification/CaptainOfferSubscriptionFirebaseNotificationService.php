@@ -10,9 +10,7 @@ use Kreait\Firebase\Messaging\ApnsConfig;
 use Kreait\Firebase\Messaging\CloudMessage;
 use Kreait\Firebase\Messaging\Notification;
 
-// This service specialized for sending firebase notification about each action related to store subscription
-
-class SubscriptionFirebaseNotificationService
+class CaptainOfferSubscriptionFirebaseNotificationService
 {
     private Messaging $messaging;
     private NotificationTokensService $notificationTokensService;
@@ -23,7 +21,7 @@ class SubscriptionFirebaseNotificationService
         $this->notificationTokensService = $notificationTokensService;
     }
 
-    // Send firebase notification to each admin about the subscription of the store
+    // Send firebase notification to each admin about the subscription of the captain offer
     public function sendFirebaseNotificationToAdmin(string $notificationDescription, string $storeName): array
     {
         $devicesToken = [];

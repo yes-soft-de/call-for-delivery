@@ -330,6 +330,12 @@ class SubscriptionService
 
                $currentSubscription = $this->subscriptionManager->updateRemainingCars($subscription['id'], $remainingCars);
 
+               // Check remaining cars if it has a negative, and inform admin if it is
+               if ($currentSubscription) {
+                   $this->checkRemainingCarsOfStoreSubscriptionAndInformAdmin($currentSubscription->getRemainingCars(),
+                       $currentSubscription->getStoreOwner()->getStoreOwnerName());
+               }
+
                // Now check if we have to inform the store there is new available car/s or not
                $this->checkRemainingCarsAndInformStore($currentRemainingCars, $newRemainingCars, $subscription);
 
@@ -562,7 +568,23 @@ class SubscriptionService
       $captainOfferId = $this->subscriptionManager->checkWhetherThereIsActiveCaptainsOffer($storeOwnerId);
 
       if($captainOfferId) {
-        return $this->subscriptionManager->updateSubscriptionCaptainOfferId($captainOfferId->getSubscriptionCaptainOffer());
+        $arrayResult = $this->subscriptionManager->updateSubscriptionCaptainOfferId($captainOfferId->getSubscriptionCaptainOffer());
+
+        if ($arrayResult === SubscriptionConstant::ERROR) {
+            return SubscriptionConstant::ERROR;
+
+        } else {
+            // the result is of type array
+            $subscriptionDetailsEntity = $arrayResult[1];
+
+            // Check if remaining cars has negative value, and inform the admin if it is
+            if ($subscriptionDetailsEntity) {
+                $this->checkRemainingCarsOfStoreSubscriptionAndInformAdmin($subscriptionDetailsEntity->getRemainingCars(),
+                    $subscriptionDetailsEntity->getStoreOwner()->getStoreOwnerName());
+            }
+
+            return $arrayResult[0];
+        }
       }
        
       return SubscriptionCaptainOffer::YOU_DO_NOT_HAVE_SUBSCRIBED_CAPTAIN_OFFER; 
@@ -929,14 +951,14 @@ class SubscriptionService
     }
 
     // Send firebase notification to each admin about the action that being made on subscription by a store
-    public function sendFirebaseNotificationToAdmin(string $subscriptionActionDescription, string $storeName = null, int $storeOwnerUserId = null)
+    public function sendFirebaseNotificationToAdmin(string $notificationDescription, string $storeName = null, int $storeOwnerUserId = null)
     {
         if ((! $storeName) && ($storeOwnerUserId)) {
             // Get store owner name before sending the notification
             $storeName = $this->getStoreNameByStoreOwnerUserId($storeOwnerUserId);
         }
 
-        $this->subscriptionFirebaseNotificationService->sendFirebaseNotificationToAdmin($subscriptionActionDescription, $storeName);
+        $this->subscriptionFirebaseNotificationService->sendFirebaseNotificationToAdmin($notificationDescription, $storeName);
     }
 
     public function getStoreOwnerProfileByStoreOwnerUserId(int $storeOwnerUserId): ?StoreOwnerProfileEntity
@@ -962,6 +984,16 @@ class SubscriptionService
             // Notify admin by firebase notification
             $this->sendFirebaseNotificationToAdmin(SubscriptionFirebaseNotificationConstant::STORE_SUBSCRIPTION_REMAINING_ORDER_NEGATIVE_VALUE_CONST,
                 null, $storeOwnerUserId);
+        }
+    }
+
+    // Check if remaining orders of a store subscription has negative value, and send firebase notification to admin if it is
+    public function checkRemainingCarsOfStoreSubscriptionAndInformAdmin(int $remainingCars, string $storeOwnerName)
+    {
+        if ($remainingCars < 0) {
+            // Notify admin by firebase notification
+            $this->sendFirebaseNotificationToAdmin(SubscriptionFirebaseNotificationConstant::STORE_SUBSCRIPTION_REMAINING_CARS_NEGATIVE_VALUE_CONST,
+                $storeOwnerName, null);
         }
     }
 }
