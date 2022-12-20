@@ -1016,13 +1016,15 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                   if (payment != null || orderInfo.payment != 'cash') {
                     var index =
                         StatusHelper.getOrderStatusIndex(orderInfo.state);
-                    screenState.requestOrderProgress(UpdateOrderRequest(
-                        id: int.tryParse(screenState.orderId ?? '-1'),
-                        state: StatusHelper.getStatusString(
-                            OrderStatusEnum.values[index + 1]),
-                        distance: distance,
-                        paymentNote: noteController.text.trim(),
-                        orderCost: double.tryParse(payment ?? '')),orderInfo.payment == 'cash');
+                    screenState.requestOrderProgress(
+                        UpdateOrderRequest(
+                            id: int.tryParse(screenState.orderId ?? '-1'),
+                            state: StatusHelper.getStatusString(
+                                OrderStatusEnum.values[index + 1]),
+                            distance: distance,
+                            paymentNote: noteController.text.trim(),
+                            orderCost: double.tryParse(payment ?? '')),
+                        orderInfo);
                   } else {
                     CustomFlushBarHelper.createError(
                             title: S.current.warnning,
@@ -1055,11 +1057,13 @@ class OrderDetailsCaptainOrderLoadedState extends States {
               orderInfo.state, context),
           onTap: () {
             var index = StatusHelper.getOrderStatusIndex(orderInfo.state);
-            screenState.requestOrderProgress(UpdateOrderRequest(
-              id: int.tryParse(screenState.orderId ?? '-1'),
-              state: StatusHelper.getStatusString(
-                  OrderStatusEnum.values[index + 1]),
-            ),orderInfo.payment == 'cash');
+            screenState.requestOrderProgress(
+                UpdateOrderRequest(
+                  id: int.tryParse(screenState.orderId ?? '-1'),
+                  state: StatusHelper.getStatusString(
+                      OrderStatusEnum.values[index + 1]),
+                ),
+                orderInfo);
           },
           title: OrderProgressionHelper.getNextStageHelper(
             orderInfo.state,

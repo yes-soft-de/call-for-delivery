@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:c4d/consts/order_status.dart';
+import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/utils/logger/logger.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart' as loc;
@@ -111,10 +113,10 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
     }
   }
 
-  void requestOrderProgress(UpdateOrderRequest request,bool orderCash) {
-    if (request.paid == null ||
+  void requestOrderProgress(UpdateOrderRequest request,OrderDetailsModel orderInfo) {
+    if (orderInfo.state == OrderStatusEnum.DELIVERING && (request.paid == null ||
         request.distance == null ||
-        (request.orderCost ?? 0) <= 0 && orderCash) {
+        (request.orderCost ?? 0) <= 0 && orderInfo.payment == 'cash')) {
       showDialog(context: context, builder: (ctx) {
         return CustomAlertDialog(onPressed: (){
           Navigator.of(context).pop();
