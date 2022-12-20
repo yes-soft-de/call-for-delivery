@@ -253,7 +253,7 @@ class SubscriptionService
 
                 // send firebase notification to admin if new value of the remaining orders less than zero
                 if ($storeDetailsEntity !== SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND) {
-                    $this->chekRemainingOrdersOfStoreSubscriptionAndInformAdmin($storeDetailsEntity->getRemainingOrders(),
+                    $this->checkRemainingOrdersOfStoreSubscriptionAndInformAdmin($storeDetailsEntity->getRemainingOrders(),
                         $storeOwnerId);
                 }
 
@@ -978,7 +978,7 @@ class SubscriptionService
     }
 
     // Check if remaining orders of a store subscription has negative value, and send firebase notification to admin if it is
-    public function chekRemainingOrdersOfStoreSubscriptionAndInformAdmin(int $remainingOrders, int $storeOwnerUserId)
+    public function checkRemainingOrdersOfStoreSubscriptionAndInformAdmin(int $remainingOrders, int $storeOwnerUserId)
     {
         if ($remainingOrders < 0) {
             // Notify admin by firebase notification
