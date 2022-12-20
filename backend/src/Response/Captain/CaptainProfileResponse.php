@@ -46,4 +46,14 @@ class CaptainProfileResponse
      * @var string|null
      */
     public $address;
+
+    /**
+     * @var string|null
+     */
+    public $avenue;
+
+    /**
+     * @var string|null
+     */
+    public $city;
 }

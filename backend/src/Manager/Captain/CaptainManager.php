@@ -227,6 +227,8 @@ class CaptainManager
         $profile['roomId'] = $items[0]['roomId'];
         $profile['status'] = $items[0]['status'];
         $profile['address'] = $items[0]['address'];
+        $profile['avenue'] = $items[0]['avenue'];
+        $profile['city'] = $items[0]['city'];
 
         if (array_key_exists("completeAccountStatus", $items[0])) {
             $profile['completeAccountStatus'] = $items[0]['completeAccountStatus'];
@@ -357,6 +359,14 @@ class CaptainManager
         if ($request->getStcPay() === "")
         {
             $request->setStcPay(null);
+        }
+
+        if (! $request->getAvenue()) {
+            $request->setAvenue(CaptainConstant::CAPTAIN_PROFILE_AVENUE_DEFAULT_CONST);
+        }
+
+        if (! $request->getCity()) {
+            $request->setAvenue(CaptainConstant::CAPTAIN_PROFILE_CITY_DEFAULT_CONST);
         }
 
         return $request;

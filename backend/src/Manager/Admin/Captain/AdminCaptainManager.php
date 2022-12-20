@@ -67,6 +67,14 @@ class AdminCaptainManager
             return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
         }
 
+        if (! $request->getAvenue()) {
+            $request->setAvenue($captainProfileEntity->getAvenue());
+        }
+
+        if (! $request->getCity()) {
+            $request->setCity($captainProfileEntity->getCity());
+        }
+
         $captainProfileEntity = $this->autoMapping->mapToObject(CaptainProfileUpdateByAdminRequest::class, CaptainEntity::class,
             $request, $captainProfileEntity);
 
@@ -124,6 +132,8 @@ class AdminCaptainManager
         $profile['roomId'] = $items[0]['roomId'];
         $profile['status'] = $items[0]['status'];
         $profile['address'] = $items[0]['address'];
+        $profile['avenue'] = $items[0]['avenue'];
+        $profile['city'] = $items[0]['city'];
 
         if (array_key_exists("completeAccountStatus", $items[0])) {
             $profile['completeAccountStatus'] = $items[0]['completeAccountStatus'];

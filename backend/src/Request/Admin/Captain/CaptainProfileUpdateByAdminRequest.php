@@ -77,6 +77,16 @@ class CaptainProfileUpdateByAdminRequest
      */
     private $address;
 
+    /**
+     * @var string|null
+     */
+    private $avenue;
+
+    /**
+     * @var string|null
+     */
+    private $city;
+
     public function getId(): int
     {
         return $this->id;
@@ -112,5 +122,25 @@ class CaptainProfileUpdateByAdminRequest
     public function getDrivingLicence(): ?string
     {
         return $this->drivingLicence;
+    }
+
+    public function getAvenue(): ?string
+    {
+        return $this->avenue;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setAvenue(string $avenue): void
+    {
+        $this->avenue = $avenue;
+    }
+
+    public function setCity(string $city): void
+    {
+        $this->city = $city;
     }
 }
