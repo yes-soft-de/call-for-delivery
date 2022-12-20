@@ -20,19 +20,20 @@ class OrderModel extends DataModel {
   late List<OrderModel> orders;
   late num isHide;
   int? branchID;
-  OrderModel(
-      {required this.branchName,
-      required this.state,
-      required this.orderCost,
-      required this.note,
-      required this.deliveryDate,
-      required this.createdDate,
-      required this.id,
-      required this.orderType,
-      required this.orderIsMain,
-      required this.orders,
-      required this.isHide,
-      this.branchID});
+  OrderModel({
+    required this.branchName,
+    required this.state,
+    required this.orderCost,
+    required this.note,
+    required this.deliveryDate,
+    required this.createdDate,
+    required this.id,
+    required this.orderType,
+    required this.orderIsMain,
+    required this.orders,
+    required this.isHide,
+    this.branchID,
+  });
   List<OrderModel> _orders = [];
   OrderModel.withData(OrdersResponse response) {
     var data = response.data;

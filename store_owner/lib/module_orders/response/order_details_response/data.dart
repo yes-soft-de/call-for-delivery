@@ -81,60 +81,62 @@ class Data {
       this.isCashPaymentConfirmedByStore});
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-      id: json['id'] as int?,
-      isCashPaymentConfirmedByStore:
-          json['isCashPaymentConfirmedByStore'] as int?,
-      state: json['state'] as String?,
-      storeBranchToClientDistance: json['storeBranchToClientDistance'] != null
-          ? FixedNumber.getFixedNumber(json['storeBranchToClientDistance'])
-          : null,
-      payment: json['payment'] as String?,
-      orderCost: json['orderCost'] as num?,
-      orderType: json['orderType'] as int?,
-      note: json['note'] as String?,
-      captainName: json['captainName'] as String?,
-      captainPhone: json['captainPhone'] as String?,
-      paidToProvider: json['paidToProvider'] as num?,
-      kilometer: json['kilometer'] as num?,
-      deliveryDate: json['deliveryDate'] == null
-          ? null
-          : DeliveryDate.fromJson(json['deliveryDate'] as Map<String, dynamic>),
-      captainDetails: json['captain'] == null
-          ? null
-          : Captain.fromJson(json['captain'] as Map<String, dynamic>),
-      createdAt: json['createdAt'] == null
-          ? null
-          : CreatedAt.fromJson(json['createdAt'] as Map<String, dynamic>),
-      storeOrderDetailsId: json['storeOrderDetailsId'] as int?,
-      destination: json['destination'] == null
-          ? null
-          : Destination.fromJson(json['destination'] as Map<String, dynamic>),
-      image: json['images'] == null
-          ? null
-          : Images.fromJson(json['images'] as Map<String, dynamic>),
-      pdf: json['filePdf'] == null
-          ? null
-          : FilePdfResponse.fromJson(json['filePdf'] as Map<String, dynamic>),
-      recipientName: json['recipientName'] as String?,
-      recipientPhone: json['recipientPhone'] as String?,
-      detail: json['detail'] as String?,
-      storeOwnerBranchId: json['storeOwnerBranchId'] as int?,
-      branchName: json['branchName'] as String?,
-      roomId: json['roomId'] as String?,
-      captainId: json['captainUserId']?.toString(),
-      branchPhone: json['branchPhone']?.toString(),
-      isCaptainArrived: json['isCaptainArrived'] as bool?,
-      orderIsMain: json['orderIsMain'] as bool?,
-      dateCaptainArrived: json['dateCaptainArrived'] == null
-          ? null
-          : CreatedAt.fromJson(
-              json['dateCaptainArrived'] as Map<String, dynamic>),
-      attention: json['attention'] as String?,
-      captainOrderCost: json['captainOrderCost'] as num?,
-      orderLogs: OrderLogsResponse.fromJson(json),
-      subOrders: (json['subOrder'] as List<dynamic>?)
-          ?.map((e) => SubOrder.fromJson(e as Map<String, dynamic>))
-          .toList());
+        id: json['id'] as int?,
+        isCashPaymentConfirmedByStore:
+            json['isCashPaymentConfirmedByStore'] as int?,
+        state: json['state'] as String?,
+        storeBranchToClientDistance: json['storeBranchToClientDistance'] != null
+            ? FixedNumber.getFixedNumber(json['storeBranchToClientDistance'])
+            : null,
+        payment: json['payment'] as String?,
+        orderCost: json['orderCost'] as num?,
+        orderType: json['orderType'] as int?,
+        note: json['note'] as String?,
+        captainName: json['captainName'] as String?,
+        captainPhone: json['captainPhone'] as String?,
+        paidToProvider: json['paidToProvider'] as num?,
+        kilometer: json['kilometer'] as num?,
+        deliveryDate: json['deliveryDate'] == null
+            ? null
+            : DeliveryDate.fromJson(
+                json['deliveryDate'] as Map<String, dynamic>),
+        captainDetails: json['captain'] == null
+            ? null
+            : Captain.fromJson(json['captain'] as Map<String, dynamic>),
+        createdAt: json['createdAt'] == null
+            ? null
+            : CreatedAt.fromJson(json['createdAt'] as Map<String, dynamic>),
+        storeOrderDetailsId: json['storeOrderDetailsId'] as int?,
+        destination: json['destination'] == null
+            ? null
+            : Destination.fromJson(json['destination'] as Map<String, dynamic>),
+        image: json['images'] == null
+            ? null
+            : Images.fromJson(json['images'] as Map<String, dynamic>),
+        pdf: json['filePdf'] == null
+            ? null
+            : FilePdfResponse.fromJson(json['filePdf'] as Map<String, dynamic>),
+        recipientName: json['recipientName'] as String?,
+        recipientPhone: json['recipientPhone'] as String?,
+        detail: json['detail'] as String?,
+        storeOwnerBranchId: json['storeOwnerBranchId'] as int?,
+        branchName: json['branchName'] as String?,
+        roomId: json['roomId'] as String?,
+        captainId: json['captainUserId']?.toString(),
+        branchPhone: json['branchPhone']?.toString(),
+        isCaptainArrived: json['isCaptainArrived'] as bool?,
+        orderIsMain: json['orderIsMain'] as bool?,
+        dateCaptainArrived: json['dateCaptainArrived'] == null
+            ? null
+            : CreatedAt.fromJson(
+                json['dateCaptainArrived'] as Map<String, dynamic>),
+        attention: json['attention'] as String?,
+        captainOrderCost: json['captainOrderCost'] as num?,
+        orderLogs: OrderLogsResponse.fromJson(json),
+        subOrders: (json['subOrder'] as List<dynamic>?)
+            ?.map((e) => SubOrder.fromJson(e as Map<String, dynamic>))
+            .toList(),
+      );
 
   Map<String, dynamic> toJson() => {
         'id': id,
