@@ -3,6 +3,7 @@
 namespace App\Manager\Subscription;
 
 use App\AutoMapping;
+use App\Constant\Subscription\SubscriptionDetailsConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionDetailsEntity;
 use App\Entity\SubscriptionEntity;
@@ -73,13 +74,18 @@ class SubscriptionDetailsManager
         return $subscriptionDetailsEntity;
     }
 
-    public function updateRemainingOrders($id, $orderRemaining): ?array
+    public function updateRemainingOrders($id, $orderRemaining): SubscriptionDetailsEntity|int
     {   
         $subscriptionDetailsEntity = $this->subscribeDetailsRepository->findOneBy(["lastSubscription" => $id]);
 
+        if (! $subscriptionDetailsEntity) {
+            return SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND;
+        }
+
         $subscriptionDetailsEntity->setRemainingOrders($orderRemaining);
 
-        $subscriptionDetailsEntity = $this->autoMapping->map(SubscriptionRemainingOrdersUpdateRequest::class, SubscriptionDetailsEntity::class, $subscriptionDetailsEntity);
+        // Following line commented by Rami because it makes no sense
+        //$subscriptionDetailsEntity = $this->autoMapping->map(SubscriptionRemainingOrdersUpdateRequest::class, SubscriptionDetailsEntity::class, $subscriptionDetailsEntity);
        
         $this->entityManager->flush();
  

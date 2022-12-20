@@ -83,7 +83,7 @@ class SubscriptionManager
         return $this->subscriptionDetailsManager->getSubscriptionCurrent($storeOwner);
     }
 
-    public function updateRemainingOrders(int $id, int $remainingOrders): ?array
+    public function updateRemainingOrders(int $id, int $remainingOrders): SubscriptionDetailsEntity|int
     {
        return $this->subscriptionDetailsManager->updateRemainingOrders($id, $remainingOrders);
     }

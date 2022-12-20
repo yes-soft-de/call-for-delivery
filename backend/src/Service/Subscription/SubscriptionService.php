@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\Admin\Subscription\AdminStoreSubscriptionConstant;
 use App\Constant\Notification\SubscriptionFirebaseNotificationConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Constant\Subscription\SubscriptionDetailsConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionEntity;
 use App\Manager\Subscription\SubscriptionManager;
@@ -248,8 +249,14 @@ class SubscriptionService
                    $remainingOrders = $subscriptionCurrent->getRemainingOrders() + 1 ;
                 } 
 
-                $this->subscriptionManager->updateRemainingOrders($subscriptionCurrent->getLastSubscription()->getId(), $remainingOrders);
-               
+                $storeDetailsEntity = $this->subscriptionManager->updateRemainingOrders($subscriptionCurrent->getLastSubscription()->getId(), $remainingOrders);
+
+                // send firebase notification to admin if new value of the remaining orders less than zero
+                if ($storeDetailsEntity !== SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND) {
+                    $this->chekRemainingOrdersOfStoreSubscriptionAndInformAdmin($storeDetailsEntity->getRemainingOrders(),
+                        $storeOwnerId);
+                }
+
                 return SubscriptionConstant::SUBSCRIPTION_OK;
             }
         }
@@ -926,14 +933,36 @@ class SubscriptionService
     {
         if ((! $storeName) && ($storeOwnerUserId)) {
             // Get store owner name before sending the notification
-            $storeOwnerEntity = $this->storeOwnerProfileService->getStoreByUserId($storeOwnerUserId);
-
-            if ($storeOwnerEntity) {
-                $storeName = $storeOwnerEntity->getStoreOwnerName();
-            }
+            $storeName = $this->getStoreNameByStoreOwnerUserId($storeOwnerUserId);
         }
 
         $this->subscriptionFirebaseNotificationService->sendFirebaseNotificationToAdmin($subscriptionActionDescription, $storeName);
+    }
+
+    public function getStoreOwnerProfileByStoreOwnerUserId(int $storeOwnerUserId): ?StoreOwnerProfileEntity
+    {
+        return $this->storeOwnerProfileService->getStoreByUserId($storeOwnerUserId);
+    }
+
+    public function getStoreNameByStoreOwnerUserId(int $storeOwnerUserId): ?string
+    {
+        $storeOwnerEntity = $this->getStoreOwnerProfileByStoreOwnerUserId($storeOwnerUserId);
+
+        if ($storeOwnerEntity) {
+            return $storeOwnerEntity->getStoreOwnerName();
+        }
+
+        return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
+    }
+
+    // Check if remaining orders of a store subscription has negative value, and send firebase notification to admin if it is
+    public function chekRemainingOrdersOfStoreSubscriptionAndInformAdmin(int $remainingOrders, int $storeOwnerUserId)
+    {
+        if ($remainingOrders < 0) {
+            // Notify admin by firebase notification
+            $this->sendFirebaseNotificationToAdmin(SubscriptionFirebaseNotificationConstant::STORE_SUBSCRIPTION_REMAINING_ORDER_NEGATIVE_VALUE_CONST,
+                null, $storeOwnerUserId);
+        }
     }
 }
  
