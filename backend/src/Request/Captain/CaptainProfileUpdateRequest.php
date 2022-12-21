@@ -71,6 +71,11 @@ class CaptainProfileUpdateRequest
      */
     private $address;
 
+    /**
+     * @var string|null
+     */
+    private $city;
+
     public function getImage(): string
     {
         return $this->image;
@@ -239,5 +244,15 @@ class CaptainProfileUpdateRequest
     public function setStcPay(?string $stcPay): void
     {
         $this->stcPay = $stcPay;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): void
+    {
+        $this->city = $city;
     }
 }
