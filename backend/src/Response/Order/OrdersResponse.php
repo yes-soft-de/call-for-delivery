@@ -73,4 +73,9 @@ class OrdersResponse
     public int|null $isCashPaymentConfirmedByStore;
 
     public object|null $isCashPaymentConfirmedByStoreUpdateDate;
+
+    /**
+     * @var int|null
+     */
+    public $primaryOrderId;
 }

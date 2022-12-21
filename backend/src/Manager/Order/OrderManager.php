@@ -116,10 +116,6 @@ class OrderManager
        return  $this->orderRepository->getStoreOrders($storeOwner->getId());     
     }
 
-    /**
-     * @param $id
-     * @return array|null
-     */
     public function getSpecificOrderForStore(int $id): ?array
     {      
        return  $this->orderRepository->getSpecificOrderForStore($id); 
