@@ -60,7 +60,7 @@ class SubscriptionFirebaseNotificationService
                 ]
             ]);
 
-            $msgContent = $notificationDescription.$storeName;dd($msgContent);
+            $msgContent = $notificationDescription.$storeName;
 
             $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msgContent))
                 ->withHighestPossiblePriority();
