@@ -127,7 +127,6 @@ class CaptainController extends BaseController
      *          @OA\Property(type="string", property="mechanicLicense"),
      *          @OA\Property(type="string", property="identity"),
      *          @OA\Property(type="string", property="address"),
-     *          @OA\Property(type="string", property="avenue"),
      *          @OA\Property(type="string", property="city")
      *      )
      * )
@@ -215,7 +214,6 @@ class CaptainController extends BaseController
      *              @OA\Property(type="object", property="drivingLicence"),
      *              @OA\Property(type="object", property="identity"),
      *              @OA\Property(type="string", property="address"),
-     *              @OA\Property(type="object", property="avenue"),
      *              @OA\Property(type="string", property="city")
      *         )
      *      )

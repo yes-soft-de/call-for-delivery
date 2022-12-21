@@ -74,11 +74,6 @@ class CaptainProfileUpdateRequest
     /**
      * @var string|null
      */
-    private $avenue;
-
-    /**
-     * @var string|null
-     */
     private $city;
 
     public function getImage(): string
@@ -249,16 +244,6 @@ class CaptainProfileUpdateRequest
     public function setStcPay(?string $stcPay): void
     {
         $this->stcPay = $stcPay;
-    }
-
-    public function getAvenue(): ?string
-    {
-        return $this->avenue;
-    }
-
-    public function setAvenue(string $avenue): void
-    {
-        $this->avenue = $avenue;
     }
 
     public function getCity(): ?string

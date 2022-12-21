@@ -227,7 +227,6 @@ class CaptainManager
         $profile['roomId'] = $items[0]['roomId'];
         $profile['status'] = $items[0]['status'];
         $profile['address'] = $items[0]['address'];
-        $profile['avenue'] = $items[0]['avenue'];
         $profile['city'] = $items[0]['city'];
 
         if (array_key_exists("completeAccountStatus", $items[0])) {
@@ -333,40 +332,27 @@ class CaptainManager
         return $captainProfileEntity;
     }
 
-    public function getReadyCaptainsAndCountOfTheirCurrentOrders(): array
-    {
-        return $this->captainEntityRepository->getReadyCaptainsAndCountOfTheirCurrentOrders();
-    }
-
     // this function just replace empty strings with null
     public function handleEmptyStringInCaptainProfileUpdateRequest(CaptainProfileUpdateRequest $request): CaptainProfileUpdateRequest
     {
-        if ($request->getCar() === "")
-        {
+        if ($request->getCar() === "") {
             $request->setCar(null);
         }
 
-        if ($request->getBankAccountNumber() === "")
-        {
+        if ($request->getBankAccountNumber() === "") {
             $request->setBankAccountNumber(null);
         }
 
-        if ($request->getBankName() === "")
-        {
+        if ($request->getBankName() === "") {
             $request->setBankName(null);
         }
 
-        if ($request->getStcPay() === "")
-        {
+        if ($request->getStcPay() === "") {
             $request->setStcPay(null);
         }
 
-        if (! $request->getAvenue()) {
-            $request->setAvenue(CaptainConstant::CAPTAIN_PROFILE_AVENUE_DEFAULT_CONST);
-        }
-
         if (! $request->getCity()) {
-            $request->setAvenue(CaptainConstant::CAPTAIN_PROFILE_CITY_DEFAULT_CONST);
+            $request->setCity(CaptainConstant::CAPTAIN_PROFILE_CITY_DEFAULT_CONST);
         }
 
         return $request;

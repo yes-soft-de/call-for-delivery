@@ -98,9 +98,6 @@ class CaptainEntity
     private $address;
 
     #[ORM\Column(type: 'string', length: 255, options: ["default" => ""])]
-    private $avenue = CaptainConstant::CAPTAIN_PROFILE_AVENUE_DEFAULT_CONST;
-
-    #[ORM\Column(type: 'string', length: 255, options: ["default" => ""])]
     private $city = CaptainConstant::CAPTAIN_PROFILE_CITY_DEFAULT_CONST;
 
     public function __construct()
@@ -591,18 +588,6 @@ class CaptainEntity
     public function setAddress(?string $address): self
     {
         $this->address = $address;
-
-        return $this;
-    }
-
-    public function getAvenue(): ?string
-    {
-        return $this->avenue;
-    }
-
-    public function setAvenue(string $avenue): self
-    {
-        $this->avenue = $avenue;
 
         return $this;
     }
