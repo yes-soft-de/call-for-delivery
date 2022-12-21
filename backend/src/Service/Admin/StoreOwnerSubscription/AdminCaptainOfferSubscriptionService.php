@@ -4,6 +4,7 @@ namespace App\Service\Admin\StoreOwnerSubscription;
 
 use App\AutoMapping;
 use App\Constant\CaptainOfferConstant\CaptainOfferConstant;
+use App\Constant\Notification\SubscriptionFirebaseNotificationConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\Subscription\SubscriptionCaptainOffer;
 use App\Constant\Subscription\SubscriptionConstant;
@@ -18,6 +19,7 @@ use App\Response\Admin\StoreOwnerSubscription\SubscriptionStateGetForAdminRespon
 use App\Service\Admin\CaptainOffer\AdminCaptainOfferService;
 use App\Service\Admin\StoreOwner\AdminStoreOwnerService;
 use App\Service\Eraser\Subscription\CaptainOfferSubscriptionEraserService;
+use App\Service\Notification\CaptainOfferSubscriptionFirebaseNotificationService;
 
 class AdminCaptainOfferSubscriptionService
 {
@@ -25,15 +27,18 @@ class AdminCaptainOfferSubscriptionService
     private AdminStoreOwnerService $adminStoreOwnerService;
     private AdminCaptainOfferService $adminCaptainOfferService;
     private CaptainOfferSubscriptionEraserService $captainOfferSubscriptionEraserService;
+    private CaptainOfferSubscriptionFirebaseNotificationService $captainOfferSubscriptionFirebaseNotificationService;
     private AdminCaptainOfferSubscriptionManager $adminCaptainOfferSubscriptionManager;
 
     public function __construct(AutoMapping $autoMapping, AdminStoreOwnerService $adminStoreOwnerService, AdminCaptainOfferService $adminCaptainOfferService,
-                                CaptainOfferSubscriptionEraserService $captainOfferSubscriptionEraserService, AdminCaptainOfferSubscriptionManager $adminCaptainOfferSubscriptionManager)
+                                CaptainOfferSubscriptionEraserService $captainOfferSubscriptionEraserService, AdminCaptainOfferSubscriptionManager $adminCaptainOfferSubscriptionManager,
+                                CaptainOfferSubscriptionFirebaseNotificationService $captainOfferSubscriptionFirebaseNotificationService)
     {
         $this->autoMapping = $autoMapping;
         $this->adminStoreOwnerService = $adminStoreOwnerService;
         $this->adminCaptainOfferService = $adminCaptainOfferService;
         $this->captainOfferSubscriptionEraserService = $captainOfferSubscriptionEraserService;
+        $this->captainOfferSubscriptionFirebaseNotificationService = $captainOfferSubscriptionFirebaseNotificationService;
         $this->adminCaptainOfferSubscriptionManager = $adminCaptainOfferSubscriptionManager;
     }
 
@@ -67,9 +72,19 @@ class AdminCaptainOfferSubscriptionService
         }
 
         // while we here, we can now create the required subscription
-        $captainOffer = $this->adminCaptainOfferSubscriptionManager->createCaptainOfferSubscriptionByAdmin($request);
+        $arrayResult = $this->adminCaptainOfferSubscriptionManager->createCaptainOfferSubscriptionByAdmin($request);
 
-        return $this->autoMapping->map(SubscriptionCaptainOfferEntity::class, AdminCaptainOfferSubscriptionCreateResponse::class, $captainOffer);
+        // Check if remaining cars had negative value, and inform admin if it has
+        if ($arrayResult[1] !== SubscriptionConstant::ERROR) {
+            $subscriptionDetailsResult = $arrayResult[1][1];
+
+            if ($subscriptionDetailsResult) {
+                $this->checkRemainingCarsOfStoreSubscriptionAndInformAdmin($subscriptionDetailsResult->getRemainingCars(),
+                    $subscriptionDetailsResult->getStoreOwner()->getStoreOwnerName());
+            }
+        }
+
+        return $this->autoMapping->map(SubscriptionCaptainOfferEntity::class, AdminCaptainOfferSubscriptionCreateResponse::class, $arrayResult[0]);
     }
 
     public function isThereSubscription(StoreOwnerProfileEntity $storeOwnerProfileId): SubscriptionStateGetForAdminResponse
@@ -95,5 +110,20 @@ class AdminCaptainOfferSubscriptionService
     public function deleteCaptainOfferSubscriptionByAdmin(CaptainOfferSubscriptionDeleteByAdminRequest $request): string|int|CaptainOfferSubscriptionDeleteByAdminResponse
     {
         return $this->captainOfferSubscriptionEraserService->deleteCaptainOfferSubscriptionByAdmin($request);
+    }
+
+    public function sendFirebaseNotificationToAdmin(string $notificationDescription, string $storeOwnerName): array
+    {
+        return $this->captainOfferSubscriptionFirebaseNotificationService->sendFirebaseNotificationToAdmin($notificationDescription,
+            $storeOwnerName);
+    }
+
+    public function checkRemainingCarsOfStoreSubscriptionAndInformAdmin(int $remainingCars, string $storeOwnerName)
+    {
+        if ($remainingCars < 0) {
+            // Notify admin by firebase notification
+            $this->sendFirebaseNotificationToAdmin(SubscriptionFirebaseNotificationConstant::STORE_SUBSCRIPTION_REMAINING_CARS_NEGATIVE_VALUE_CONST,
+                $storeOwnerName);
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Service\DateFactory;
 
+use App\Constant\Order\OrderUpdateStateConstant;
 use DateTime;
 use DateTimeInterface;
 
@@ -96,7 +97,7 @@ class DateFactoryService
             if ($different_hours <= 1) {
                 $different_minutes = $interval->format('%i');
 
-                if ($different_minutes < 3) {
+                if ($different_minutes < OrderUpdateStateConstant::ORDER_STATE_UPDATE_AFTER_TIME_CONST) {
                     return true;
                 }
             }
