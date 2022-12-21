@@ -272,7 +272,8 @@ class OrderController extends BaseController
      *                          @OA\Property(type="string", property="imageURL"),
      *                          @OA\Property(type="string", property="image"),
      *                          @OA\Property(type="string", property="baseURL"),
-     *                      ),
+     *                  ),
+     *                  @OA\Property(type="integer", property="primaryOrderId")
      *              ),
      *          )
      *       )

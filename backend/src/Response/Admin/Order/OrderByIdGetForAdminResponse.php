@@ -139,4 +139,9 @@ class OrderByIdGetForAdminResponse
      * @var DateTime|null
      */
     public $isCashPaymentConfirmedByStoreUpdateDate;
+
+    /**
+     * @var int|null
+     */
+    public $primaryOrderId;
 }

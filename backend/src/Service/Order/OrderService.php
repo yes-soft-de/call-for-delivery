@@ -256,10 +256,6 @@ class OrderService
         return $response;
     }
 
-    /**
-     * @param $id
-     * @return OrdersResponse
-     */
     public function getSpecificOrderForStore(int $id): ?OrdersResponse
     {
         $order = $this->orderManager->getSpecificOrderForStore($id);
