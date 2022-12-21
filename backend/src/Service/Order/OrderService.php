@@ -526,7 +526,7 @@ class OrderService
 
         // Check if captain try to update order state before specific time (except 'on way to pick order' state)
         if (in_array($request->getState(), OrderStateConstant::ORDER_STATE_ONGOING_TILL_DELIVERED_ARRAY)) {
-            $result = $this->checkIfNormalOrderStateUpdateBeforeSpecificTimeForCaptain($request->getId());
+            $result = $this->checkIfNormalOrderStateUpdateBeforeSpecificTimeForCaptain($request->getId(), $request->getCaptainId());
 
             if ($result === true) {
                 return OrderResultConstant::ORDER_UPDATE_STATE_NOT_ALLOWED_DUE_TO_SHORT_TIME_CONST;
@@ -1596,7 +1596,7 @@ class OrderService
         return $this->dateFactoryService->checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanThreeMinutes($oldDate, $newDate);
     }
 
-    public function checkIfNormalOrderStateUpdateBeforeSpecificTimeForCaptain(int $orderId): bool|int
+    public function checkIfNormalOrderStateUpdateBeforeSpecificTimeForCaptain(int $orderId, int $captainUserId): bool|int
     {
         // Get the creation time of the record of last order state
         $createdAtResult = $this->getOrderLogCreatedAtByOrderIdAndTypeAndActionAndCreatedByUserType($orderId, OrderTypeConstant::ORDER_TYPE_NORMAL,
@@ -1611,12 +1611,30 @@ class OrderService
 
         if ($overdueTime === true) {
             // 1. Send firebase notification to admin
-            $this->sendFirebaseNotificationToAdminAboutOrder($orderId, NotificationFirebaseConstant::ORDER_UPDATE_STATE_BEFORE_TIME_BY_CAPTAIN_COST);
+            $this->sendFirebaseNotificationToAdminAboutOrderAndCaptain($orderId,
+                NotificationFirebaseConstant::THE_CAPTAIN.
+                $this->getCaptainNameByCaptainUserId($captainUserId).
+                NotificationFirebaseConstant::ORDER_UPDATE_STATE_BEFORE_TIME_BY_CAPTAIN_COST);
 
             // 2. Stop the rested flow, and return an appropriate result
             return true;
         }
 
         return false;
+    }
+
+    public function sendFirebaseNotificationToAdminAboutOrderAndCaptain(int $orderId, string $text)
+    {
+        try {
+            $this->notificationFirebaseService->notificationToAdmin($orderId, $text);
+
+        } catch (\Exception $exception) {
+            error_log($exception);
+        }
+    }
+
+    public function getCaptainNameByCaptainUserId(int $captainUserId): string
+    {
+        return $this->captainService->getCaptainNameByCaptainUserId($captainUserId);
     }
 }
