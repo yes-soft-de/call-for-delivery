@@ -607,7 +607,7 @@ class UpdateOrderLoaded extends States {
                 ),
                 // suborder check
                 Visibility(
-                  visible: true,
+                  visible: orderInfo.subOrder == false,
                   child: Padding(
                     padding: const EdgeInsets.only(left: 8, right: 8, top: 16),
                     child: Container(
