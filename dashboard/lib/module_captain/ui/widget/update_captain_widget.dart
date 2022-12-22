@@ -59,8 +59,8 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
               height: 200,
               child: InkWell(
                 onTap: () {
-                  ImagePicker.platform
-                      .getImage(source: ImageSource.gallery, imageQuality: 70)
+                  ImagePicker()
+                      .pickImage(source: ImageSource.gallery, imageQuality: 70)
                       .then((value) async {
                     if (value != null) {
                       imageBytes = await value.readAsBytes();
@@ -194,8 +194,8 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
               height: 200,
               child: InkWell(
                 onTap: () {
-                  ImagePicker.platform
-                      .getImage(source: ImageSource.gallery, imageQuality: 70)
+                  ImagePicker()
+                      .pickImage(source: ImageSource.gallery, imageQuality: 70)
                       .then((value) async {
                     if (value != null) {
                       imageBytesDriving = await value.readAsBytes();
@@ -238,8 +238,8 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
               height: 200,
               child: InkWell(
                 onTap: () {
-                  ImagePicker.platform
-                      .getImage(source: ImageSource.gallery, imageQuality: 70)
+                  ImagePicker()
+                      .pickImage(source: ImageSource.gallery, imageQuality: 70)
                       .then((value) async {
                     if (value != null) {
                       imageBytesMechanich = await value.readAsBytes();
@@ -282,8 +282,8 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
               height: 200,
               child: InkWell(
                 onTap: () {
-                  ImagePicker.platform
-                      .getImage(source: ImageSource.gallery, imageQuality: 70)
+                  ImagePicker()
+                      .pickImage(source: ImageSource.gallery, imageQuality: 70)
                       .then((value) async {
                     if (value != null) {
                       imageBytesIdentity = await value.readAsBytes();

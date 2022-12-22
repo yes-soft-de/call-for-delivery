@@ -26,17 +26,16 @@ class OrderPendingLoadedState extends States {
 
   @override
   Widget getUI(BuildContext context) {
-    return CustomListView.custom(children: getOrders());
+    return CustomListView.custom(children: getOrders(context));
   }
 
   List<List<OrderModel>> ordersIndex = [];
-  List<Widget> getOrders() {
+  List<Widget> getOrders(context) {
     List<int> countsOrder = [
       orders.pendingOrdersCount,
       orders.notDeliveredOrdersCount,
       orders.hiddenOrdersCount,
     ];
-    var context = screenState.context;
     List<Widget> widgets = [];
     widgets.add(Padding(
       padding: const EdgeInsets.all(8.0),
@@ -100,9 +99,15 @@ class OrderPendingLoadedState extends States {
           child: InkWell(
             borderRadius: BorderRadius.circular(25),
             onTap: () {
-              Navigator.of(screenState.context).pushNamed(
-                  OrdersRoutes.ORDER_STATUS_SCREEN,
-                  arguments: element.id);
+              if (element.orderIsMain) {
+                Navigator.of(screenState.context).pushNamed(
+                    OrdersRoutes.SUB_ORDERS_SCREEN,
+                    arguments: element.id);
+              } else {
+                Navigator.of(screenState.context).pushNamed(
+                    OrdersRoutes.ORDER_STATUS_SCREEN,
+                    arguments: element.id);
+              }
             },
             child: OwnerOrderCard(
               orderNumber: element.id.toString(),
@@ -111,7 +116,10 @@ class OrderPendingLoadedState extends States {
               deliveryDate: element.deliveryDate,
               orderCost: element.orderCost,
               note: element.note,
-              orderIsMain: element.orderIsMain ?? false,
+              orderIsMain: element.orderIsMain,
+              background: screenState.currentIndex == 0
+                  ? (element.orderIsMain ? Colors.red[700] : null)
+                  : StatusHelper.getOrderStatusColor(element.state),
             ),
           ),
         ),

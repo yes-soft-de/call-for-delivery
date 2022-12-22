@@ -15,6 +15,8 @@ import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
+import 'package:c4d/module_orders/request/order_non_sub_request.dart';
+import 'package:c4d/module_orders/request/resolve_conflects_order_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/update_distance_request.dart';
 import 'package:c4d/module_orders/response/order_actionlogs_response/order_actionlogs_response.dart';
@@ -214,5 +216,50 @@ class OrdersService {
     }
     if (response.data == null) return DataModel.empty();
     return OrdersWithoutDistanceModel.withData(response);
+  }
+
+  Future<DataModel> getOrderDetails(int orderId) async {
+    OrderDetailsResponse? response =
+        await _ordersManager.getOrderDetails(orderId);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    var location = await DeepLinksService.defaultLocation();
+    return OrderDetailsModel.withData(response, location);
+  }
+
+  Future<DataModel> removeOrderSub(OrderNonSubRequest request) async {
+    ActionResponse? response = await _ordersManager.removeOrderSub(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> resolveOrderConflicts(
+      ResolveConflictsOrderRequest request) async {
+    ActionResponse? response =
+        await _ordersManager.resolveOrderConflicts(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> addNewOrderLink(CreateOrderRequest request) async {
+    ActionResponse? response = await _ordersManager.addNewOrderLink(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
   }
 }

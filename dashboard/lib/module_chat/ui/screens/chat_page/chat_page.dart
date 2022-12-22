@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:c4d/consts/urls.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
@@ -53,7 +54,7 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
     chatScrollController = AutoScrollController(
       axis: Axis.vertical,
     );
-    WidgetsBinding.instance?.addPostFrameCallback((_) async {
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
       receive_message = await rootBundle
           .load('assets/sounds/receive_message.mp3')
           .then((ByteData soundData) {
@@ -131,13 +132,13 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
         setState(() {});
       }
     });
-    WidgetsBinding.instance?.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     super.initState();
   }
 
   @override
   void dispose() {
-    WidgetsBinding.instance?.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     pool.release();
     streamSubscription.cancel();
     super.dispose();
@@ -237,8 +238,14 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
                           }
                         },
                         onMessageSend: (msg) {
-                          widget._chatStateManager.sendMessage(chatRoomId, msg,
-                              widget._authService.username, args);
+                          widget._chatStateManager.sendMessage(
+                            chatRoomId,
+                            msg,
+                            widget._authService.username,
+                            // is this message send by admin
+                            true,
+                            args,
+                          );
                         },
                         uploadService: widget._uploadService,
                       ),
@@ -301,7 +308,6 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
     bool newMessages =
         lastSeenIndex != null ? (lastSeenIndex! < chatList.length) : false;
     chatList.forEach((element) {
-      print(element.msg);
       newMessagesList.add(AutoScrollTag(
         controller: chatScrollController,
         key: ValueKey(element.sentDate),
@@ -310,6 +316,9 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
           message: element.msg ?? '',
           me: element.sender == username ? true : false,
           sentDate: element.sentDate,
+          isAdmin:
+              element.isAdmin ?? Urls.admins.contains(element.sender ?? ''),
+          username: element.sender,
         ),
       ));
       index++;

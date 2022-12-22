@@ -11,15 +11,15 @@ import 'package:latlong2/latlong.dart';
 class GeoDistanceText extends StatefulWidget {
   LatLng origin;
   LatLng destination;
-  Function(String?) destance;
+  Function(String?, String?) destance;
   int storeID;
-  GeoDistanceText(
-      {Key? key,
-      required this.destination,
-      required this.origin,
-      required this.destance,
-      required this.storeID})
-      : super(key: key);
+  GeoDistanceText({
+    Key? key,
+    required this.destination,
+    required this.origin,
+    required this.destance,
+    required this.storeID,
+  }) : super(key: key);
 
   @override
   State<GeoDistanceText> createState() => _GeoDistanceTextState();
@@ -34,7 +34,7 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
   late LatLng destination;
   @override
   void initState() {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       _setup().whenComplete(() {
         setState(() {});
       });
@@ -45,11 +45,16 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
   Future<void> _setup() async {
     origin = widget.origin;
     destination = widget.destination;
-    var snap = await DeepLinksService.getGeoDistanceWithDeliveryCost(
-        GeoDistanceRequest(
+    var snap = widget.storeID == -1
+        ? await DeepLinksService.getGeoDistance(GeoDistanceRequest(
             origin: widget.origin,
             distance: widget.destination,
-            id: widget.storeID));
+          ))
+        : await DeepLinksService.getGeoDistanceWithDeliveryCost(
+            GeoDistanceRequest(
+                origin: widget.origin,
+                distance: widget.destination,
+                id: widget.storeID));
     if (snap.hasError || snap.isEmpty) {
       loading = false;
       distance = S.current.unknown;
@@ -60,7 +65,7 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
       deliveryCost = FixedNumber.getFixedNumber(
           (snap as GeoDistanceModel).costDeliveryOrder?.total ?? 0);
       deliveryCostDetails = (snap as GeoDistanceModel).costDeliveryOrder;
-      widget.destance(distance);
+      widget.destance(distance, deliveryCost);
       setState(() {});
     }
   }
@@ -68,7 +73,7 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
   @override
   void didUpdateWidget(GeoDistanceText oldWidget) {
     if (origin != widget.origin || destination != widget.destination) {
-      WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         _setup();
       });
     }
@@ -84,7 +89,7 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
         style: TextStyle(color: Colors.white),
       ),
       child: Visibility(
-        visible: deliveryCost != null,
+        visible: deliveryCost != null && widget.storeID != -1,
         replacement: Text(
           S.current.distance + ' ' + (distance ?? '') + ' ${S.current.km}',
           style: TextStyle(color: Colors.white),

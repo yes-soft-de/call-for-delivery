@@ -20,41 +20,46 @@ class StoreProfileModel extends DataModel {
   String? status;
   num profitMargin = 0;
   late int storeId;
+  String? roomId;
 
   StoreProfileModel? _models;
 
-  StoreProfileModel(
-      {required this.id,
-      required this.storeOwnerName,
-      required this.phone,
-      required this.image,
-      this.closingTime,
-      this.openingTime,
-      required this.bankName,
-      required this.bankNumber,
-      this.employeeCount,
-      this.city,
-      this.status,
-      required this.profitMargin,
-      this.imageUrl,
-      required this.storeId});
+  StoreProfileModel({
+    required this.id,
+    required this.storeOwnerName,
+    required this.phone,
+    required this.image,
+    this.closingTime,
+    this.openingTime,
+    required this.bankName,
+    required this.bankNumber,
+    this.employeeCount,
+    this.city,
+    this.status,
+    required this.profitMargin,
+    this.imageUrl,
+    required this.storeId,
+    required this.roomId,
+  });
 
   StoreProfileModel.withData(Data data) : super.withData() {
     _models = StoreProfileModel(
-        id: data.id ?? -1,
-        storeOwnerName: data.storeOwnerName ?? S.current.store,
-        image: data.image?.image,
-        imageUrl: data.image?.imageURL ?? ImageAsset.PLACEHOLDER,
-        phone: data.phone ?? '',
-        openingTime: DateHelper.convert(data.openingTime?.timestamp),
-        closingTime: DateHelper.convert(data.closingTime?.timestamp),
-        bankName: data.bankName ?? '',
-        bankNumber: data.bankAccountNumber ?? '',
-        employeeCount: data.employeeCount,
-        city: data.city,
-        status: data.status,
-        profitMargin: data.profitMargin ?? 0,
-        storeId: int.tryParse(data.storeId.toString()) ?? -1);
+      id: data.id ?? -1,
+      storeOwnerName: data.storeOwnerName ?? S.current.store,
+      image: data.image?.image,
+      imageUrl: data.image?.imageURL ?? ImageAsset.PLACEHOLDER,
+      phone: data.phone ?? '',
+      openingTime: DateHelper.convert(data.openingTime?.timestamp),
+      closingTime: DateHelper.convert(data.closingTime?.timestamp),
+      bankName: data.bankName ?? '',
+      bankNumber: data.bankAccountNumber ?? '',
+      employeeCount: data.employeeCount,
+      city: data.city,
+      status: data.status,
+      profitMargin: data.profitMargin ?? 0,
+      storeId: int.tryParse(data.storeId.toString()) ?? -1,
+      roomId: data.roomId,
+    );
   }
 
   StoreProfileModel get data {

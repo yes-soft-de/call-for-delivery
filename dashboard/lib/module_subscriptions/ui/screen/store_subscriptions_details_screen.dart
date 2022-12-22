@@ -49,7 +49,7 @@ class StoreSubscriptionsFinanceDetailsScreenState
   late StoreSubscriptionsFinanceModel model;
   bool flag = true;
   void moveBack() {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Navigator.of(context).pop();
       CustomFlushBarHelper.createSuccess(
               title: S.current.warnning,
@@ -69,49 +69,60 @@ class StoreSubscriptionsFinanceDetailsScreenState
         appBar: CustomC4dAppBar.appBar(context,
             title: S.current.financeSubscriptionDetails,
             actions: [
-              CustomC4dAppBar.actionIcon(context, onTap: () {
-                showDialog(
-                    context: context,
-                    builder: (ctx) {
-                      return CustomAlertDialog(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                            showDialog(
-                                context: ctx,
-                                builder: (c) {
-                                  return CustomAlertDialog(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      widget._manager.deleteSubscriptions(
-                                          this,
-                                          DeleteSubscriptionsRequest(
-                                              id: model.id, deletePayment: 1));
-                                    },
-                                    onPressed2: () {
-                                      Navigator.of(context).pop();
-                                      widget._manager.deleteSubscriptions(
-                                          this,
-                                          DeleteSubscriptionsRequest(
-                                              id: model.id, deletePayment: 0));
-                                    },
-                                    actionTitle2: S.current.no,
-                                    actionTitle: S.current.yes,
-                                    content:
-                                        S.current.areYouWantToDeleteAllPayments,
-                                    oneAction: false,
-                                  );
-                                });
-                          },
-                          content:
-                              S.current.areSureAboutDeleteThisSubscriptions,
-                          oneAction: false);
-                    });
-              }, icon: Icons.delete),
-              CustomC4dAppBar.actionIcon(context, onTap: () {
-                Navigator.of(context).pushNamed(
-                    SubscriptionsRoutes.EDIT_SUBSCRIPTION_SCREEN,
-                    arguments: model.id);
-              }, icon: Icons.edit)
+              Visibility(
+                visible: model.isCurrent || model.isFuture,
+                child: CustomC4dAppBar.actionIcon(context, onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (ctx) {
+                        return CustomAlertDialog(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                              showDialog(
+                                  context: ctx,
+                                  builder: (c) {
+                                    return CustomAlertDialog(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        widget._manager.deleteSubscriptions(
+                                            this,
+                                            DeleteSubscriptionsRequest(
+                                                id: model.id,
+                                                deletePayment: 1));
+                                      },
+                                      onPressed2: () {
+                                        Navigator.of(context).pop();
+                                        widget._manager.deleteSubscriptions(
+                                            this,
+                                            DeleteSubscriptionsRequest(
+                                                id: model.id,
+                                                deletePayment: 0));
+                                      },
+                                      actionTitle2: S.current.no,
+                                      actionTitle: S.current.yes,
+                                      content: S.current
+                                          .areYouWantToDeleteAllPayments,
+                                      oneAction: false,
+                                    );
+                                  });
+                            },
+                            content:
+                                S.current.areSureAboutDeleteThisSubscriptions,
+                            oneAction: false);
+                      });
+                }, icon: Icons.delete),
+              ),
+              Visibility(
+                visible: model.isCurrent ||
+                    model.isFuture ||
+                    (model.status == 'active' ||
+                        model.status == 'cars finished'),
+                child: CustomC4dAppBar.actionIcon(context, onTap: () {
+                  Navigator.of(context).pushNamed(
+                      SubscriptionsRoutes.EDIT_SUBSCRIPTION_SCREEN,
+                      arguments: model.id);
+                }, icon: Icons.edit),
+              )
             ]),
         body: currentState.getUI(context));
   }

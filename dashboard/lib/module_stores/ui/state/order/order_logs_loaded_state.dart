@@ -1,15 +1,15 @@
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_stores/model/order/order_model.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_stores/ui/screen/order/order_logs_screen.dart';
 import 'package:c4d/module_stores/ui/widget/orders/owner_order_card.dart';
-import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
+
+import '../../../../module_orders/model/order/order_model.dart';
 
 class OrderLogsLoadedState extends States {
   OrderLogsScreenState screenState;
@@ -18,13 +18,10 @@ class OrderLogsLoadedState extends States {
 
   @override
   Widget getUI(BuildContext context) {
-    return CustomListView.custom(children: getOrders());
+    return CustomListView.custom(children: getOrders(context));
   }
 
-  TextEditingController geoController = TextEditingController();
-  TextEditingController controller = TextEditingController();
-  List<Widget> getOrders() {
-    var context = screenState.context;
+  List<Widget> getOrders(BuildContext context) {
     List<Widget> widgets = [];
     for (var element in orders) {
       widgets.add(Padding(
@@ -34,9 +31,15 @@ class OrderLogsLoadedState extends States {
           child: InkWell(
             borderRadius: BorderRadius.circular(25),
             onTap: () {
-              Navigator.of(screenState.context).pushNamed(
-                  StoresRoutes.ORDER_STATUS_SCREEN,
-                  arguments: element.id);
+              if (element.orderIsMain) {
+                Navigator.of(screenState.context).pushNamed(
+                    OrdersRoutes.SUB_ORDERS_SCREEN,
+                    arguments: element.id);
+              } else {
+                Navigator.of(screenState.context).pushNamed(
+                    StoresRoutes.ORDER_STATUS_SCREEN,
+                    arguments: element.id);
+              }
             },
             child: OwnerOrderCard(
               kilometer: element.kilometer > 0
@@ -44,6 +47,13 @@ class OrderLogsLoadedState extends States {
                       ' ' +
                       S.current.km
                   : null,
+              storeBranchToClientDistance:
+                  element.storeBranchToClientDistance > 0
+                      ? FixedNumber.getFixedNumber(
+                              element.storeBranchToClientDistance) +
+                          ' ' +
+                          S.current.km
+                      : null,
               orderNumber: element.id.toString(),
               orderStatus: StatusHelper.getOrderStatusMessages(element.state),
               createdDate: element.createdDate,
@@ -59,43 +69,9 @@ class OrderLogsLoadedState extends States {
     if (screenState.currentIndex == 2) {
       widgets.insert(
           0,
-          Row(
-            children: [
-              Expanded(
-                child: CustomFormField(
-                  numbers: true,
-                  hintStyle: TextStyle(fontSize: 10),
-                  hintText: S.current.countKilometersTo +
-                      '(${S.current.clientDistance})',
-                  controller: geoController,
-                  onChanged: () {
-                    screenState.ordersFilter.maxKiloFromDistance =
-                        num.tryParse(geoController.text) ?? -1;
-                    screenState.getOrders(false);
-                  },
-                ),
-              ),
-              Expanded(
-                child: CustomFormField(
-                  numbers: true,
-                  hintStyle: TextStyle(fontSize: 10),
-                  hintText:
-                      S.current.countKilometersTo + '(${S.current.captain})',
-                  controller: controller,
-                  onChanged: () {
-                    screenState.ordersFilter.maxKilo =
-                        num.tryParse(controller.text) ?? -1;
-                    screenState.getOrders(false);
-                  },
-                ),
-              ),
-            ],
-          ));
-      widgets.insert(
-          1,
           Center(
               child: Text(
-            (widgets.length - 1).toString() + ' ' + S.current.sOrder,
+            (widgets.length).toString() + ' ' + S.current.sOrder,
             style: TextStyle(
               fontSize: 17,
             ),

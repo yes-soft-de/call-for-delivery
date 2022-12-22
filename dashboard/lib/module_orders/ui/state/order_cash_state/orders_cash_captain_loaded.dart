@@ -110,13 +110,13 @@ class OrdersCashCaptainLoadedState extends States {
 
       //
       Column(
-        children: screenState.currentIndex == 0 ? getOrders() : getPayments(),
+        children:
+            screenState.currentIndex == 0 ? getOrders(context) : getPayments(),
       )
     ]);
   }
 
-  List<Widget> getOrders() {
-    var context = screenState.context;
+  List<Widget> getOrders(context) {
     List<Widget> widgets = [];
     model.orders.forEach((element) {
       widgets.add(Padding(

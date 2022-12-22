@@ -25,9 +25,9 @@ class OrderActionLogsScreenState extends State<OrderActionLogsScreen> {
   @override
   void initState() {
     currentState = LoadingState(this);
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       widget._stateManager.stateStream.listen((event) {
-        WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
           currentState = event;
           if (mounted) {
             setState(() {});

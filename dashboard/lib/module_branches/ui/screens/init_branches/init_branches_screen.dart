@@ -33,7 +33,7 @@ class InitBranchesScreenState extends State<InitBranchesScreen> {
   void initState() {
     customInfoWindowController = CustomInfoWindowController();
     currentState = InitAccountStateSelectBranch(this);
-    SchedulerBinding.instance?.addPostFrameCallback((Duration duration) async {
+    SchedulerBinding.instance.addPostFrameCallback((Duration duration) async {
       await Future.delayed(Duration(seconds: 5)).whenComplete(() {
         FeatureDiscovery.discoverFeatures(
           context,

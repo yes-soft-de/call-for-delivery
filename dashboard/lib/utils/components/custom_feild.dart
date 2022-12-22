@@ -5,6 +5,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_localization/service/localization_service/localization_service.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:c4d/utils/global/screen_type.dart';
+import 'package:the_country_number/the_country_number.dart';
 
 class CustomFormField extends StatefulWidget {
   final double height;
@@ -124,6 +125,10 @@ class _CustomFormFieldState extends State<CustomFormField> {
                                   widget.phone) {
                                 clean = false;
                                 return S.of(context).phoneNumbertooShort;
+                              } else if (widget.numbers &&
+                                  widget.phone &&
+                                  startWithZero(value)) {
+                                return S.current.yourNumberStartWithZero;
                               } else {
                                 clean = true;
                                 return null;
@@ -149,6 +154,16 @@ class _CustomFormFieldState extends State<CustomFormField> {
             ],
           )),
     );
+  }
+
+  bool startWithZero(String phone) {
+    String countryCode = '';
+    String phoneNumber = '';
+    final sNumber =
+        TheCountryNumber().parseNumber(internationalNumber: '+' + phone);
+    countryCode = sNumber.dialCode.substring(1);
+    phoneNumber = sNumber.number;
+    return phoneNumber[0] == '0';
   }
 }
 

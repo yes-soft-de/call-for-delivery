@@ -1,6 +1,14 @@
 // Developing Domain ===> 'http://134.209.241.49';
 // Production Domain ===> 'http://46.101.100.62';
 class Urls {
+  static List<String> admins = [
+    // '551111111',
+    // '551111112',
+    // '551111113',
+    // '552222223',
+    // '552222224',
+    // '552222225',
+  ];
   /*--------BASES-------------------*/
   static const String DOMAIN = 'http://134.209.241.49';
   static const String BASE_API = DOMAIN + '';
@@ -117,8 +125,8 @@ class Urls {
   static const UPDATE_STORE_INFO =
       BASE_API_STORE + '/storeowner/updatestoreownerprofilebyadmin';
   static const UPDATE_ORDER_API = BASE_API_ORDER + '/orderupdatebyadmin';
-  static const UPDATE_DISTANCE_API =
-      BASE_API_ORDER + '/updatestorebranchtoclientdistancebyadmin';
+  static const UPDATE_DISTANCE_API = BASE_API_ORDER +
+      '/updatestorebranchtoclientdistanceanddestinationbyadmin';
   static const UPDATE_ORDER_STATUS_API =
       BASE_API_ORDER + '/orderstateupdatebyadmin';
   static const HIDE_ORDER_API = BASE_API_ORDER + '/updateordertohidden';
@@ -147,6 +155,8 @@ class Urls {
   /*------------------Package Category's ----------------*/
   static const GET_PACKAGE_CATEGORY = BASE_API_CATEGORY + '/categories';
   static const CREATE_PACKAGE_CATEGORY = BASE_API_CATEGORY + '/packagecategory';
+  static const ACTIVE_PACKAGE_CATEGORIES =
+      BASE_API_CATEGORY + '/packagecategorystatus';
 
   /*-----------------------Package--------------------------------*/
   static const GET_PACKAGE_BY_CATEGORY =
@@ -242,6 +252,11 @@ class Urls {
       BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainfinancialsystemdetailupdate';
   static const GET_CAPTAIN_FINANCE_DUES =
       BASE_CAPTAIN_ACCOUNT_BALANCE_DUES + '/captainfinancialduesforadmin';
+  static const GET_CAPTAIN_RATING_REPORT =
+      BASE_API + VERSION_ADMIN + '/report/captainsratings';
+  static const GET_CAPTAIN_ACTIVITY_REPORT = BASE_API +
+      VERSION_ADMIN +
+      '/report/activecaptainswithorderscountforadmin';
   /*-----------------Supplier--Categories---------------*/
   static const GET_SUPPLIER_CATEGORIES =
       BASE_API_SUPPLIER_CATE + '/suppliercategories';
@@ -275,6 +290,11 @@ class Urls {
   static const DELETE_ORDER = BASE_API_ORDER + '/ordercancelbyadmin';
   static const UNASSIGNED_ORDER_FROM_CAPTAIN =
       BASE_API_ORDER + '/rependingacceptedorder';
+  static const ORDER_NONSUB_API_LINK = BASE_API_ORDER + '/v1/order/';
+  static const NEW_ORDER_API_LINK = BASE_API_ORDER + '/createsuborderbyadmin';
+  static const RESOLVE_CONFLICTS_ORDER =
+      BASE_API_ORDER + '/resolveconflictedanswersbyadmin';
+
   /*-----------------------------subscription----------------------------*/
   static const String BASE_API_SUBSCRIPTION =
       DOMAIN + VERSION_ADMIN + '/subscription';

@@ -98,8 +98,8 @@ class _AddProductsFormState extends State<AddProductsForm> {
                     SizedBox(height: 32),
                     InkWell(
                       onTap: () {
-                        ImagePicker.platform
-                            .getImage(
+                        ImagePicker()
+                            .pickImage(
                                 source: ImageSource.gallery, imageQuality: 70)
                             .then((value) {
                           if (value != null) {
@@ -213,8 +213,8 @@ class _UpdateProductsFormState extends State<UpdateProductsForm> {
                     SizedBox(height: 32),
                     InkWell(
                       onTap: () {
-                        ImagePicker.platform
-                            .getImage(
+                        ImagePicker()
+                            .pickImage(
                                 source: ImageSource.gallery, imageQuality: 70)
                             .then((value) {
                           if (value != null) {

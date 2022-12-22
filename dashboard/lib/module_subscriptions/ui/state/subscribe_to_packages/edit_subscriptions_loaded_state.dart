@@ -24,7 +24,6 @@ class EditSubscriptionsLoadedState extends States {
   }
   int? _selectedPackageId;
   String? _selectedCity;
-  String? _selectedCategories;
   String? appBarTitle;
   @override
   Widget getUI(BuildContext context) {
@@ -60,16 +59,17 @@ class EditSubscriptionsLoadedState extends States {
                   padding: const EdgeInsets.only(left: 16.0, right: 16),
                   child: DropdownButtonHideUnderline(
                     child: DropdownButton(
-                        value: _selectedCategories,
+                        value: screenState.selectedCategories,
                         items: _getCatagories(),
                         hint: Text(S.current.chooseCategory),
                         onChanged: (String? value) {
                           _selectedCity = null;
                           _selectedPackageId = null;
                           // call for packages
-                          _selectedCategories = value;
-                          screenState.getPackages(
-                              int.tryParse(_selectedCategories ?? '') ?? -1);
+                          screenState.selectedCategories = value;
+                          screenState.getPackages(int.tryParse(
+                                  screenState.selectedCategories ?? '') ??
+                              -1);
                           screenState.refresh();
                         }),
                   ),
@@ -78,7 +78,8 @@ class EditSubscriptionsLoadedState extends States {
             ),
             // there is no packages available in this category
             Visibility(
-                visible: packages.isEmpty && _selectedCategories != null,
+                visible:
+                    packages.isEmpty && screenState.selectedCategories != null,
                 child: Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Column(

@@ -41,12 +41,11 @@ class CaptainFinanceByHoursLoadedState extends States {
           });
     }
     return FixedContainer(
-        child: CustomListView.custom(children: getFinancesWidgets()));
+        child: CustomListView.custom(children: getFinancesWidgets(context)));
   }
 
-  List<Widget> getFinancesWidgets() {
+  List<Widget> getFinancesWidgets(context) {
     List<Widget> widgets = [];
-    var context = screenState.context;
     model?.forEach((element) {
       widgets.add(Padding(
           padding: const EdgeInsets.all(8.0),
@@ -70,13 +69,15 @@ class CaptainFinanceByHoursLoadedState extends States {
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
-                        horizontalsTile(S.current.countHours,
+                        horizontalsTile(context, S.current.countHours,
                             FixedNumber.getFixedNumber(element.countHours)),
                         horizontalsTile(
+                            context,
                             S.current.salary,
                             FixedNumber.getFixedNumber(element.salary) +
                                 ' ${S.current.sar}'),
                         horizontalsTile(
+                            context,
                             S.current.compensationForEveryOrder,
                             FixedNumber.getFixedNumber(
                                     element.compensationForEveryOrder) +
@@ -181,8 +182,7 @@ class CaptainFinanceByHoursLoadedState extends States {
     return widgets;
   }
 
-  Widget horizontalsTile(String title, String subtitle) {
-    var context = screenState.context;
+  Widget horizontalsTile(BuildContext context, String title, String subtitle) {
     return Padding(
       padding: const EdgeInsets.all(16.0).copyWith(bottom: 8.0, top: 0),
       child: Row(

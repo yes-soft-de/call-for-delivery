@@ -1,22 +1,32 @@
+import 'dart:io';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:intl/intl.dart';
+
 class FilterOrderRequest {
   int? storeOwnerProfileId;
   String? state;
-  String? toDate;
-  String? fromDate;
+  DateTime? toDate;
+  DateTime? fromDate;
   num? maxKilo;
   num? maxKiloFromDistance;
-  FilterOrderRequest(
-      {this.fromDate,
-      this.maxKilo,
-      this.maxKiloFromDistance,
-      this.state,
-      this.toDate,
-      this.storeOwnerProfileId});
+  int? chosenDistanceIndicator;
+  FilterOrderRequest({
+    this.fromDate,
+    this.maxKilo,
+    this.maxKiloFromDistance,
+    this.state,
+    this.toDate,
+    this.storeOwnerProfileId,
+    this.chosenDistanceIndicator,
+  });
 
-  Map<String, dynamic> toJson() {
+  Future<Map<String, dynamic>> toJson() async {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['state'] = this.state;
     data['storeOwnerProfileId'] = this.storeOwnerProfileId;
+    if (this.chosenDistanceIndicator != null) {
+      data['chosenDistanceIndicator'] = this.chosenDistanceIndicator ?? 0;
+    }
     if (this.maxKiloFromDistance != null) {
       data['storeBranchToClientDistance'] = this.maxKiloFromDistance;
     }
@@ -24,14 +34,15 @@ class FilterOrderRequest {
       data['kilometer'] = this.maxKilo;
     }
     if (toDate != null) {
-      data['toDate'] =
-          DateTime.tryParse(this.toDate ?? '')?.toUtc().toIso8601String();
+      data['toDate'] = DateFormat('yyyy-MM-dd', 'en').format(toDate!);
     }
     if (fromDate != null) {
-      data['fromDate'] =
-          DateTime.tryParse(this.fromDate ?? '')?.toUtc().toIso8601String();
+      data['fromDate'] = DateFormat('yyyy-MM-dd', 'en').format(fromDate!);
     }
-
+    if (Platform.isAndroid || Platform.isIOS) {
+      data['customizedTimezone'] =
+          await FlutterNativeTimezone.getLocalTimezone();
+    }
     return data;
   }
 }

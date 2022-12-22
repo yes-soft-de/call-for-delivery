@@ -126,6 +126,8 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
                                 return widget.halfField
                                     ? S.current.InvalidInput
                                     : S.current.pleaseEnterValidPhoneNumber;
+                              } else if (widget.phone && value[0] == '0') {
+                                return S.current.yourNumberStartWithZero;
                               } else if (widget.numbers &&
                                   RegExp(r'[0-9٠-٩]')
                                           .allMatches(value)

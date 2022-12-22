@@ -63,6 +63,20 @@ class CategoriesService {
     return DataModel.empty();
   }
 
+  Future<DataModel> enableCategory(ActivePackageRequest request) async {
+    ActionResponse? actionResponse =
+        await _categoriesManager.enableCategory(request);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
+
   Future<DataModel> updatePackage(PackageRequest request) async {
     ActionResponse? actionResponse =
         await _categoriesManager.updatePackage(request);

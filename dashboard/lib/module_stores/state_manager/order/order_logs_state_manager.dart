@@ -4,7 +4,7 @@ import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_stores/model/order/order_model.dart';
+import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_stores/request/order_filter_request.dart';
 import 'package:c4d/module_stores/service/store_service.dart';
 import '../../ui/state/order/order_logs_loaded_state.dart';

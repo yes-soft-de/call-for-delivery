@@ -127,15 +127,19 @@ class CaptainAccountBalanceModel extends DataModel {
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       //
       orders.add(OrderModel(
-          branchName: element.branchName ?? S.current.unknown,
-          id: element.id ?? -1,
-          createdDate: create,
-          deliveryDate: delivery,
-          note: element.note ?? '',
-          orderCost: element.orderCost ?? 0,
-          state: StatusHelper.getStatusEnum(element.state),
-          storeName: element.storeOwnerName,
-          orderIsMain: element.orderIsMain));
+        branchName: element.branchName ?? S.current.unknown,
+        id: element.id ?? -1,
+        createdDate: create,
+        deliveryDate: delivery,
+        note: element.note ?? '',
+        orderCost: element.orderCost ?? 0,
+        state: StatusHelper.getStatusEnum(element.state),
+        storeName: element.storeOwnerName,
+        orderIsMain: element.orderIsMain ?? false,
+        subOrders: [],
+        kilometer: 0,
+        storeBranchToClientDistance: 0,
+      ));
     });
     return orders;
   }

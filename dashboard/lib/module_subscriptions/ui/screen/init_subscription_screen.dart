@@ -36,10 +36,10 @@ class CreateSubscriptionScreenState extends State<CreateSubscriptionScreen> {
   }
 
   void moveNext() {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Navigator.of(context).pop();
       CustomFlushBarHelper.createSuccess(
-              title: S.current.warnning, message: S.current.successRenew)
+              title: S.current.warnning, message: S.current.successRenewNewPlan)
           .show(context);
     });
   }

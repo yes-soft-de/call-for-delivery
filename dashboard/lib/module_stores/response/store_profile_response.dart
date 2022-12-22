@@ -34,26 +34,30 @@ class Data {
   String? bankAccountNumber;
   num? profitMargin;
   String? storeId;
+  String? roomId;
 
-  Data(
-      {this.id,
-      this.storeOwnerName,
-      this.image,
-      this.phone,
-      this.closingTime,
-      this.openingTime,
-      this.status,
-      this.city,
-      this.bankAccountNumber,
-      this.bankName,
-      this.employeeCount,
-      this.profitMargin,
-      this.storeId});
+  Data({
+    this.id,
+    this.storeOwnerName,
+    this.image,
+    this.phone,
+    this.closingTime,
+    this.openingTime,
+    this.status,
+    this.city,
+    this.bankAccountNumber,
+    this.bankName,
+    this.employeeCount,
+    this.profitMargin,
+    this.storeId,
+    this.roomId,
+  });
 
   Data.fromJson(dynamic json) {
     id = json['id'];
     storeId = json['storeOwnerId'];
     storeOwnerName = json['storeOwnerName'];
+    roomId = json['roomId'];
     image = json['images'] != null ? ImageUrl.fromJson(json['images']) : null;
     phone = json['phone'];
     closingTime =

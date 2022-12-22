@@ -3,6 +3,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/response/order_pending_response/order_pending_response.dart';
 import 'package:c4d/module_orders/response/orders_response/datum.dart';
+import 'package:c4d/module_orders/response/orders_response/sub_order_list/sub_order.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:intl/intl.dart';
@@ -53,18 +54,53 @@ class PendingOrder extends DataModel {
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       //
       ordersModels.add(OrderModel(
-          branchName: element.branchName ?? '',
-          state: StatusHelper.getStatusEnum(element.state),
-          orderCost: element.orderCost ?? 0,
-          note: element.note ?? '',
-          deliveryDate: delivery,
-          createdDate: create,
-          id: element.id ?? -1,
-          storeName: element.storeOwnerName ?? S.current.unknown,
-          orderIsMain: element.orderIsMain));
+        branchName: element.branchName ?? '',
+        state: StatusHelper.getStatusEnum(element.state),
+        orderCost: element.orderCost ?? 0,
+        note: element.note ?? '',
+        deliveryDate: delivery,
+        createdDate: create,
+        id: element.id ?? -1,
+        storeName: element.storeOwnerName ?? S.current.unknown,
+        orderIsMain: element.orderIsMain ?? false,
+        subOrders: _getPendingOrders(element.subOrders ?? []),
+        kilometer: 0,
+        storeBranchToClientDistance: 0,
+      ));
     });
 
     return ordersModels;
+  }
+
+  List<OrderModel> _getPendingOrders(List<SubOrder> suborder) {
+    List<OrderModel> orders = [];
+    suborder.forEach((element) {
+      var create = DateFormat.jm()
+              .format(DateHelper.convert(element.createdAt?.timestamp)) +
+          ' 📅 ' +
+          DateFormat.Md()
+              .format(DateHelper.convert(element.createdAt?.timestamp));
+      var delivery = DateFormat.jm()
+              .format(DateHelper.convert(element.deliveryDate?.timestamp)) +
+          ' 📅 ' +
+          DateFormat.Md()
+              .format(DateHelper.convert(element.deliveryDate?.timestamp));
+      orders.add(OrderModel(
+        branchName: element.branchName ?? S.current.unknown,
+        createdDate: create,
+        deliveryDate: delivery,
+        id: element.id ?? -1,
+        note: element.note ?? '',
+        orderCost: element.orderCost ?? 0,
+        orderIsMain: false,
+        state: StatusHelper.getStatusEnum(element.state),
+        storeName: element.storeOwnerName,
+        subOrders: [],
+        kilometer: 0,
+        storeBranchToClientDistance: 0,
+      ));
+    });
+    return orders;
   }
 
   PendingOrder get data => _data;

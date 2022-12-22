@@ -10,6 +10,7 @@ class OwnerOrderCard extends StatelessWidget {
   final String orderCost;
   final String note;
   final String? kilometer;
+  final String? storeBranchToClientDistance;
   OwnerOrderCard(
       {required this.orderNumber,
       required this.orderStatus,
@@ -17,6 +18,7 @@ class OwnerOrderCard extends StatelessWidget {
       required this.deliveryDate,
       required this.orderCost,
       required this.note,
+      this.storeBranchToClientDistance,
       this.kilometer});
 
   @override
@@ -49,6 +51,22 @@ class OwnerOrderCard extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(
                         kilometer.toString(),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible: storeBranchToClientDistance != null,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: Colors.orange,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        storeBranchToClientDistance.toString(),
                         style: TextStyle(color: Colors.white),
                       ),
                     ),

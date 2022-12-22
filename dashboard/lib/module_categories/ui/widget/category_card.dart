@@ -6,8 +6,14 @@ class CategoryCard extends StatelessWidget {
   final String name;
   final String description;
   final VoidCallback onEdit;
+  final bool status;
+  final Function(bool) onActivate;
   CategoryCard(
-      {required this.name, required this.description, required this.onEdit});
+      {required this.name,
+      required this.description,
+      required this.onEdit,
+      required this.onActivate,
+      this.status = false});
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +62,14 @@ class CategoryCard extends StatelessWidget {
                 ),
                 Spacer(
                   flex: 1,
+                ),
+                Switch(
+                    value: status,
+                    onChanged: (active) {
+                      onActivate(active);
+                    }),
+                SizedBox(
+                  width: 8,
                 ),
                 InkWell(
                   customBorder: CircleBorder(),

@@ -89,7 +89,7 @@ class StoreFinancialSubscriptionsDuesDetailsStateManager {
         Navigator.of(screenState.context).pop();
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
-                message: S.current.paymentSuccessfully)
+                message: S.current.subscriptionDeletedSuccessfully)
             .show(screenState.context);
       }
     });

@@ -14,24 +14,24 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SupplierCategoryForm extends StatefulWidget {
+  SupplierCategoryForm({required this.onSave, this.request});
+
   final Function(SupplierCategoryRequest) onSave;
   final SupplierCategoryModel? request;
+
   @override
   _CategoryFormState createState() => _CategoryFormState();
-
-  SupplierCategoryForm({required this.onSave, this.request});
 }
 
 class _CategoryFormState extends State<SupplierCategoryForm> {
-  final GlobalKey<FormState> _key = GlobalKey<FormState>();
-
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _decController = TextEditingController();
-
   int? id;
   String? imagePath;
   String? imageSource;
   bool status = true;
+
+  final TextEditingController _decController = TextEditingController();
+  final GlobalKey<FormState> _key = GlobalKey<FormState>();
+  final TextEditingController _nameController = TextEditingController();
 
   @override
   void initState() {
@@ -98,8 +98,8 @@ class _CategoryFormState extends State<SupplierCategoryForm> {
                     ),
                     InkWell(
                       onTap: () {
-                        ImagePicker.platform
-                            .getImage(
+                        ImagePicker()
+                            .pickImage(
                           source: ImageSource.gallery,
                           imageQuality: 70,
                         )

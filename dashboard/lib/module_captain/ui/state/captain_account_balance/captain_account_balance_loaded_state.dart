@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/model/captain_balance_model.dart';
@@ -196,7 +198,10 @@ class AccountBalanceStateLoaded extends States {
               },
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: Text(S.current.orders),
+                child: Text(
+                  S.current.orders,
+                  style: Theme.of(context).textTheme.button,
+                ),
               ),
             )),
         CustomTile(FontAwesomeIcons.store, S.current.amountForStore,
@@ -220,20 +225,24 @@ class AccountBalanceStateLoaded extends States {
     List<Widget> widgets = [];
     orders.forEach((element) {
       widgets.add(
-        InkWell(
-            onTap: () {
-              Navigator.of(context).pushNamed(StoresRoutes.ORDER_STATUS_SCREEN,
-                  arguments: element.id);
-            },
-            child: OwnerOrderCard(
-              createdDate: element.createdDate,
-              deliveryDate: element.deliveryDate,
-              note: element.note,
-              orderCost: element.orderCost,
-              orderNumber: element.id.toString(),
-              orderStatus: StatusHelper.getOrderStatusMessages(element.state),
-              orderIsMain: element.orderIsMain ?? false,
-            )),
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: InkWell(
+              onTap: () {
+                Navigator.of(context).pushNamed(
+                    StoresRoutes.ORDER_STATUS_SCREEN,
+                    arguments: element.id);
+              },
+              child: OwnerOrderCard(
+                createdDate: element.createdDate,
+                deliveryDate: element.deliveryDate,
+                note: element.note,
+                orderCost: element.orderCost,
+                orderNumber: element.id.toString(),
+                orderStatus: StatusHelper.getOrderStatusMessages(element.state),
+                orderIsMain: element.orderIsMain,
+              )),
+        ),
       );
     });
     return widgets;

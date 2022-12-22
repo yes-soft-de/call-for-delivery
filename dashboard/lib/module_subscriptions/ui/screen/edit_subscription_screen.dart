@@ -24,6 +24,7 @@ class EditSubscriptionScreen extends StatefulWidget {
 class EditSubscriptionScreenState extends State<EditSubscriptionScreen> {
   late StreamSubscription _streamSubscription;
   States? currentState;
+  String? selectedCategories;
   List<PackagesCategoryModel> categories = [];
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late bool canPop;
@@ -34,7 +35,7 @@ class EditSubscriptionScreenState extends State<EditSubscriptionScreen> {
   }
 
   void moveNext() {
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Navigator.of(context).popUntil((route) =>
           route.settings.name == SubscriptionsRoutes.SUBSCRIPTIONS_MANAGEMENT);
       CustomFlushBarHelper.createSuccess(

@@ -1,5 +1,6 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/module_categories/request/active_package_request.dart';
 import 'package:c4d/module_categories/request/package_category_request.dart';
 import 'package:c4d/module_categories/ui/widget/category_form.dart';
 import 'package:flutter/material.dart';
@@ -50,6 +51,10 @@ class CategoriesScreenState extends State<CategoriesScreen> {
 
   void deleteCategories(String id) {
     widget._stateManager.deleteCategories(this, id);
+  }
+
+  void enableCategories(ActivePackageRequest request) {
+    widget._stateManager.enableCategories(this, request);
   }
 
   void refresh() {

@@ -2,8 +2,8 @@ import 'package:c4d/generated/l10n.dart';
 
 class FilterOrderRequest {
   String? state;
-  String? toDate;
-  String? fromDate;
+  DateTime? toDate;
+  DateTime? fromDate;
   String? captainID;
   String? payment;
   FilterOrderRequest({this.fromDate, this.state, this.toDate, this.captainID});
@@ -17,12 +17,15 @@ class FilterOrderRequest {
       data['captainId'] = this.captainID;
     }
     if (toDate != null) {
-      data['toDate'] =
-          DateTime.tryParse(this.toDate ?? '')?.toUtc().toIso8601String();
+      data['toDate'] = DateTime(
+              this.toDate!.year, this.toDate!.month, this.toDate!.day + 1, 0)
+          .toIso8601String();
     }
     if (fromDate != null) {
-      data['fromDate'] =
-          DateTime.tryParse(this.fromDate ?? '')?.toUtc().toIso8601String();
+      data['fromDate'] = DateTime(
+              this.fromDate!.year, this.fromDate!.month, this.fromDate!.day, 0)
+          .toUtc()
+          .toIso8601String();
     }
     if (payment != null) {
       data['payment'] = this.payment == S.current.card

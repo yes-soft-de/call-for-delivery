@@ -49,14 +49,13 @@ class SupplierCategoriesLoadedState extends States {
       child: Center(
         child: Container(
           constraints: BoxConstraints(maxWidth: 600),
-          child: CustomListView.custom(children: getCategories()),
+          child: CustomListView.custom(children: getCategories(context)),
         ),
       ),
     );
   }
 
-  List<Widget> getCategories() {
-    var context = screenState.context;
+  List<Widget> getCategories(context) {
     List<Widget> widgets = [];
     if (model == null) {
       return widgets;

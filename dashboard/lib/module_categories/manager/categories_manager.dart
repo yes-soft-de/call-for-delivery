@@ -21,6 +21,8 @@ class CategoriesManager {
 
   Future<ActionResponse?> updateCategory(PackageCategoryRequest request) =>
       _categoriesRepository.updateCategory(request);
+  Future<ActionResponse?> enableCategory(ActivePackageRequest request) =>
+      _categoriesRepository.enableCategory(request);
 
   Future<ActionResponse?> updatePackage(PackageRequest request) =>
       _categoriesRepository.updatePackage(request);

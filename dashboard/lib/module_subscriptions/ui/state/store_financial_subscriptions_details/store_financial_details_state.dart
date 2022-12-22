@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
@@ -82,7 +81,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                           ])),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: getDetails(),
+                        child: getDetails(context),
                       ),
                     ),
                   ),
@@ -188,16 +187,16 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
               )),
         ),
         Column(
-          children: getPayments(),
+          children: getPayments(context),
         )
       ],
     );
   }
 
-  Widget CustomTile(IconData icon, String text, num? value,
+  Widget CustomTile(
+      BuildContext context, IconData icon, String text, num? value,
       {String? stringValue, bool? advancedValue, Color? backGround}) {
     bool currency = S.current.countOrdersDelivered != text;
-    var context = screenState.context;
     return Visibility(
       visible: value != null || stringValue != null,
       child: ScalingWidget(
@@ -237,8 +236,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
     );
   }
 
-  List<Widget> getPayments() {
-    var context = screenState.context;
+  List<Widget> getPayments(context) {
     List<Widget> widgets = [];
     model.paymentsFromStore.forEach((element) {
       widgets.add(Padding(
@@ -322,8 +320,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
     return widgets;
   }
 
-  Widget getDetails() {
-    var context = screenState.context;
+  Widget getDetails(context) {
     return Column(
       children: [
         Text(
@@ -341,22 +338,31 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
             dashRadius: 25,
           ),
         ),
-        RowBubble(
-            firstBubble: verticalBubble(
+        RowBubble(context,
+            firstBubble: verticalBubble(context,
                 subtitle: model.startDate, title: S.current.subscriptionDate),
-            secondBubble: verticalBubble(
+            secondBubble: verticalBubble(context,
                 subtitle: model.endDate, title: S.current.expirationData)),
-        RowBubble(
-            firstBubble: verticalBubble(title: S.current.subscriptionStatus),
-            secondBubble: verticalBubble(
+        RowBubble(context,
+            firstBubble:
+                verticalBubble(context, title: S.current.subscriptionStatus),
+            secondBubble: verticalBubble(context,
                 title: SubscriptionsStatusHelper.getStatusMessage(model.status),
                 background:
                     SubscriptionsStatusHelper.getStatusColor(model.status))),
-        RowBubble(
-            firstBubble: verticalBubble(title: S.current.isFutureSubscriptions),
-            secondBubble: verticalBubble(
+        RowBubble(context,
+            firstBubble:
+                verticalBubble(context, title: S.current.isFutureSubscriptions),
+            secondBubble: verticalBubble(context,
                 title: model.isFuture ? S.current.yes : S.current.no,
                 background: model.isFuture ? Colors.green : Colors.grey)),
+        RowBubble(context,
+            firstBubble:
+                verticalBubble(context, title: S.current.financeCountOrder),
+            secondBubble: verticalBubble(context,
+                title: model.packageType == 1 ? S.current.yes : S.current.no,
+                background:
+                    model.packageType == 1 ? Colors.green : Colors.grey)),
         Text(
           model.packageNote,
           style: TextStyle(color: Colors.white),
@@ -369,30 +375,41 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
           endIndent: 32,
         ),
         // here is the details
-        RowBubble(
-            firstBubble: verticalBubble(title: S.current.packageOrderCount),
-            secondBubble: verticalBubble(title: '${model.packageOrderCount}')),
-        RowBubble(
-            firstBubble:
-                verticalBubble(title: S.current.packageOrderRemainingOrders),
-            secondBubble:
-                verticalBubble(title: model.remainingOrders.toString())),
-        RowBubble(
-            firstBubble: verticalBubble(title: S.current.packageCaptainsCount),
-            secondBubble: verticalBubble(title: '${model.packageCarCount}')),
-        RowBubble(
-            firstBubble:
-                verticalBubble(title: S.current.packageRemainingCaptains),
-            secondBubble:
-                verticalBubble(title: model.remainingCars.toString())),
+        Visibility(
+          visible: model.isFuture == false || model.isCurrent,
+          child: Column(
+            children: [
+              RowBubble(context,
+                  firstBubble: verticalBubble(context,
+                      title: S.current.packageOrderCount),
+                  secondBubble: verticalBubble(context,
+                      title: '${model.packageOrderCount}')),
+              RowBubble(context,
+                  firstBubble: verticalBubble(context,
+                      title: S.current.packageOrderRemainingOrders),
+                  secondBubble: verticalBubble(context,
+                      title: model.remainingOrders.toString())),
+              RowBubble(context,
+                  firstBubble: verticalBubble(context,
+                      title: S.current.packageCaptainsCount),
+                  secondBubble: verticalBubble(context,
+                      title: '${model.packageCarCount}')),
+              RowBubble(context,
+                  firstBubble: verticalBubble(context,
+                      title: S.current.packageRemainingCaptains),
+                  secondBubble: verticalBubble(context,
+                      title: model.remainingCars.toString())),
+            ],
+          ),
+        ),
         Visibility(
           visible: model.ordersExceedGeographicalRange.isNotEmpty,
           child: Column(
             children: [
-              RowBubble(
-                  firstBubble: verticalBubble(
+              RowBubble(context,
+                  firstBubble: verticalBubble(context,
                       title: S.current.ordersExceedGeographicalRange),
-                  secondBubble: verticalBubble(
+                  secondBubble: verticalBubble(context,
                       title: model.ordersExceedGeographicalRange.length
                               .toString() +
                           ' ' +
@@ -438,28 +455,30 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
           indent: 32,
           endIndent: 32,
         ),
-        RowBubble(
-            firstBubble: verticalBubble(title: S.current.totalExtraDistance),
-            secondBubble: verticalBubble(
+        RowBubble(context,
+            firstBubble:
+                verticalBubble(context, title: S.current.totalExtraDistance),
+            secondBubble: verticalBubble(context,
                 title:
                     FixedNumber.getFixedNumber(model.total.totalDistanceExtra)
                             .toString() +
                         ' ${S.current.sar}')),
-        RowBubble(
-            firstBubble: verticalBubble(title: S.current.extraCost),
-            secondBubble: verticalBubble(
+        RowBubble(context,
+            firstBubble: verticalBubble(context, title: S.current.extraCost),
+            secondBubble: verticalBubble(context,
                 title: FixedNumber.getFixedNumber(model.total.extraCost)
                         .toString() +
                     ' ${S.current.sar}')),
-        RowBubble(
-            firstBubble: verticalBubble(title: S.current.packageCost),
-            secondBubble: verticalBubble(
+        RowBubble(context,
+            firstBubble: verticalBubble(context, title: S.current.packageCost),
+            secondBubble: verticalBubble(context,
                 title: FixedNumber.getFixedNumber(model.total.packageCost)
                         .toString() +
                     ' ${S.current.sar}')),
-        RowBubble(
-            firstBubble: verticalBubble(title: S.current.captainsOffer),
-            secondBubble: verticalBubble(
+        RowBubble(context,
+            firstBubble:
+                verticalBubble(context, title: S.current.captainsOffer),
+            secondBubble: verticalBubble(context,
                 title: FixedNumber.getFixedNumber(model.total.captainOffer)
                         .toString() +
                     ' ${S.current.sar}')),
@@ -479,7 +498,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                               scrollable: true,
                               content: Container(
                                 child: Column(
-                                  children: getCaptainOffers(model),
+                                  children: getCaptainOffers(context, model),
                                 ),
                               ),
                               actions: [
@@ -555,14 +574,15 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
               ],
             )),
 
-        RowBubble(
-            firstBubble: verticalBubble(title: S.current.sumPayments),
-            secondBubble: verticalBubble(
+        RowBubble(context,
+            firstBubble: verticalBubble(context, title: S.current.sumPayments),
+            secondBubble: verticalBubble(context,
                 title:
                     model.total.sumPayments.toString() + ' ${S.current.sar}')),
-        RowBubble(
-            firstBubble: verticalBubble(title: S.current.requiredToPay),
-            secondBubble: verticalBubble(
+        RowBubble(context,
+            firstBubble:
+                verticalBubble(context, title: S.current.requiredToPay),
+            secondBubble: verticalBubble(context,
                 title: FixedNumber.getFixedNumber(model.total.requiredToPay)
                         .toString() +
                     ' ${S.current.sar}')),
@@ -577,7 +597,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
         ),
         Container(
           constraints: BoxConstraints(minWidth: 125, maxWidth: 150),
-          child: verticalBubble(
+          child: verticalBubble(context,
               subtitle: model.total.total.toString() + ' ${S.current.sar}',
               title: S.current.leftToPay,
               background: model.total.advancePayment == false
@@ -588,9 +608,8 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
     );
   }
 
-  Widget RowBubble(
+  Widget RowBubble(BuildContext context,
       {required Widget firstBubble, required Widget secondBubble}) {
-    var context = screenState.context;
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
@@ -627,15 +646,15 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
               orderCost: element.orderCost,
               orderNumber: element.id.toString(),
               orderStatus: StatusHelper.getOrderStatusMessages(element.state),
-              orderIsMain: element.orderIsMain ?? false,
+              orderIsMain: element.orderIsMain,
             )),
       );
     });
     return widgets;
   }
 
-  List<Widget> getCaptainOffers(StoreSubscriptionsFinanceModel model) {
-    var context = screenState.context;
+  List<Widget> getCaptainOffers(
+      BuildContext context, StoreSubscriptionsFinanceModel model) {
     List<Widget> widgets = [];
     model.captainsOffer.forEach((element) {
       var date = DateFormat.yMEd()
@@ -655,27 +674,30 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
         child: Column(
           children: [
             verticalBubble(
+              context,
               title: S.current.captainOffer,
               subtitle: element.carCount.toString() + ' ' + S.current.captain,
               radius: 0,
             ),
             verticalBubble(
+              context,
               title: S.current.createDate,
               subtitle: date,
               radius: 0,
             ),
             verticalBubble(
+              context,
               title: S.current.expirationData,
               subtitle: endDate,
               radius: 0,
             ),
-            verticalBubble(
+            verticalBubble(context,
                 title: S.current.offerStatus,
                 radius: 0,
                 subtitle: element.status == 'active'
                     ? S.current.activeOffer
-                    : S.current.inactive),
-            verticalBubble(
+                    : S.current.inactiveOffer),
+            verticalBubble(context,
                 title: S.current.price,
                 radius: 0,
                 subtitle: FixedNumber.getFixedNumber(element.price ?? 0) +
@@ -688,13 +710,12 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
     return widgets;
   }
 
-  Widget verticalBubble(
+  Widget verticalBubble(BuildContext context,
       {required String title,
       String? subtitle,
       Color? background,
       bool subtitleText = false,
       double radius = 25}) {
-    var context = screenState.context;
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(radius),

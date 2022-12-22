@@ -1,3 +1,4 @@
+import 'package:c4d/module_orders/response/orders_response/sub_order_list/sub_order.dart';
 import 'package:intl/intl.dart';
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -10,7 +11,7 @@ import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import '../response/subscriptions_financial_response/datum.dart';
 
-class SubscriptionsModel{
+class SubscriptionsModel {
   late List<StoreSubscriptionsFinanceModel> oldSubscriptions;
   late List<StoreSubscriptionsFinanceModel> currentAndFutureSubscriptions;
   SubscriptionsModel({
@@ -38,25 +39,30 @@ class StoreSubscriptionsFinanceModel extends DataModel {
   late bool isFuture;
   late String packageNote;
   late List<OrderModel> ordersExceedGeographicalRange;
+  bool isCurrent = false;
+  late int packageType;
   SubscriptionsModel _data = SubscriptionsModel.empty();
-  StoreSubscriptionsFinanceModel(
-      {required this.id,
-      required this.status,
-      required this.packageName,
-      required this.flag,
-      required this.note,
-      required this.startDate,
-      required this.endDate,
-      required this.paymentsFromStore,
-      required this.total,
-      required this.captainsOffer,
-      required this.packageCarCount,
-      required this.packageOrderCount,
-      required this.remainingCars,
-      required this.remainingOrders,
-      required this.isFuture,
-      required this.ordersExceedGeographicalRange,
-      required this.packageNote});
+  StoreSubscriptionsFinanceModel({
+    required this.id,
+    required this.status,
+    required this.packageName,
+    required this.flag,
+    required this.note,
+    required this.startDate,
+    required this.endDate,
+    required this.paymentsFromStore,
+    required this.total,
+    required this.captainsOffer,
+    required this.packageCarCount,
+    required this.packageOrderCount,
+    required this.remainingCars,
+    required this.remainingOrders,
+    required this.isFuture,
+    required this.ordersExceedGeographicalRange,
+    required this.packageNote,
+    required this.isCurrent,
+    required this.packageType,
+  });
   StoreSubscriptionsFinanceModel.withData(
       SubscriptionsFinancialResponse response) {
     var old = response.data?.oldSubscription;
@@ -82,15 +88,52 @@ class StoreSubscriptionsFinanceModel extends DataModel {
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       //
       orders.add(OrderModel(
+        branchName: element.branchName ?? S.current.unknown,
+        id: element.id ?? -1,
+        createdDate: create,
+        deliveryDate: delivery,
+        note: element.note ?? '',
+        orderCost: element.orderCost ?? 0,
+        state: StatusHelper.getStatusEnum(element.state),
+        storeName: element.storeOwnerName,
+        orderIsMain: element.orderIsMain ?? false,
+        subOrders: _getSubOrders(element.subOrders ?? []),
+        kilometer: 0,
+        storeBranchToClientDistance: 0,
+      ));
+    });
+    return orders;
+  }
+
+  List<OrderModel> _getSubOrders(List<SubOrder> suborder) {
+    List<OrderModel> orders = [];
+    suborder.forEach((element) {
+      var create = DateFormat.jm()
+              .format(DateHelper.convert(element.createdAt?.timestamp)) +
+          ' 📅 ' +
+          DateFormat.Md()
+              .format(DateHelper.convert(element.createdAt?.timestamp));
+      var delivery = DateFormat.jm()
+              .format(DateHelper.convert(element.deliveryDate?.timestamp)) +
+          ' 📅 ' +
+          DateFormat.Md()
+              .format(DateHelper.convert(element.deliveryDate?.timestamp));
+      orders.add(
+        OrderModel(
           branchName: element.branchName ?? S.current.unknown,
-          id: element.id ?? -1,
           createdDate: create,
           deliveryDate: delivery,
+          id: element.id ?? -1,
           note: element.note ?? '',
           orderCost: element.orderCost ?? 0,
+          orderIsMain: false,
+          subOrders: [],
           state: StatusHelper.getStatusEnum(element.state),
           storeName: element.storeOwnerName,
-          orderIsMain: element.orderIsMain));
+          kilometer: 0,
+          storeBranchToClientDistance: 0,
+        ),
+      );
     });
     return orders;
   }
@@ -128,6 +171,8 @@ class StoreSubscriptionsFinanceModel extends DataModel {
         ordersExceedGeographicalRange:
             _getOrders(element.ordersExceedGeographicalRange ?? []),
         packageNote: element.packageNote ?? '',
+        isCurrent: element.isCurrent ?? false,
+        packageType: element.packageType ?? 0,
       ));
     });
     return finalData;

@@ -41,8 +41,13 @@ class ChatStateManager {
   }
 
   void sendMessage(String chatRoomID, String chat, String username,
-      ChatArgument chatArgument) {
-    _chatService.sendMessage(chatRoomID, chat, username);
+      bool isAdmin, ChatArgument chatArgument) {
+    _chatService.sendMessage(
+      chatRoomID,
+      chat,
+      username,
+      isAdmin,
+    );
     _chatService.sendNotification(chatArgument);
   }
 

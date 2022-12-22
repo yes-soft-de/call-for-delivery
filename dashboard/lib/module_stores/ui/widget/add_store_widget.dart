@@ -97,6 +97,8 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                         ),
                       ),
                       CustomFormField(
+                        numbers: true,
+                        phone: true,
                         controller: _phoneController,
                         hintText: S.current.phoneNumber,
                       ),
@@ -242,8 +244,8 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                         height: 200,
                         child: InkWell(
                           onTap: () {
-                            ImagePicker.platform
-                                .getImage(
+                            ImagePicker()
+                                .pickImage(
                                     source: ImageSource.gallery,
                                     imageQuality: 70)
                                 .then((value) async {

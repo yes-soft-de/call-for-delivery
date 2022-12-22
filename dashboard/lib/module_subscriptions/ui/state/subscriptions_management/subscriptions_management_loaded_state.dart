@@ -7,7 +7,6 @@ import 'package:c4d/module_subscriptions/ui/widget/control_widget.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class SubscriptionManagementStateLoaded extends States {
   final SubscriptionManagementScreenState screenState;
@@ -75,6 +74,7 @@ class SubscriptionManagementStateLoaded extends States {
           ),
           ControlWidget(
             icon: Icons.delete_sweep_rounded,
+            color: Theme.of(context).colorScheme.error,
             onPressed: () {
               showDialog(
                   context: context,
@@ -90,6 +90,7 @@ class SubscriptionManagementStateLoaded extends States {
                   });
             },
             title: S.current.deleteFutureSubscription,
+            subtitleFontSize: 12,
             // width: 200,
           ),
         ],

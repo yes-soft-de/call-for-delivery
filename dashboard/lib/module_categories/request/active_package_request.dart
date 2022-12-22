@@ -1,6 +1,6 @@
 class ActivePackageRequest {
   int id;
-  String status;
+  dynamic status;
 
   ActivePackageRequest({
     required this.id,

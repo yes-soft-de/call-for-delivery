@@ -7,7 +7,6 @@ import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_categories/response/package_category_response.dart';
-import 'package:c4d/module_localization/service/localization_service/localization_service.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
 
 @injectable
@@ -49,6 +48,15 @@ class CategoriesRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
         Urls.CREATE_PACKAGE_CATEGORY, request.toJson(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> enableCategory(ActivePackageRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+        Urls.ACTIVE_PACKAGE_CATEGORIES, request.toJson(),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ActionResponse.fromJson(response);

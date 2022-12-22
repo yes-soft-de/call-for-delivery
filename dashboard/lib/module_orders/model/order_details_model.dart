@@ -1,12 +1,13 @@
+import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/response/order_details_response/captain.dart';
 import 'package:c4d/module_orders/response/order_logs_response/data.dart';
+import 'package:c4d/module_orders/response/orders_response/sub_order_list/sub_order.dart';
 import 'package:c4d/module_upload/model/pdf_model.dart';
 import 'package:intl/intl.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
@@ -20,6 +21,7 @@ class OrderDetailsModel extends DataModel {
   late String? destinationLink;
   late String deliveryDateString;
   late DateTime deliveryDate;
+  late DateTime createdAt;
   late String createdDate;
   late String note;
   late num orderCost;
@@ -35,6 +37,7 @@ class OrderDetailsModel extends DataModel {
   int? branchId;
   String? imagePath;
   late bool orderIsMain;
+  List<OrderModel> subOrders = [];
 
   /// this field to know if we can remove order
   bool canRemove = false;
@@ -49,42 +52,47 @@ class OrderDetailsModel extends DataModel {
   PdfModel? pdf;
   Captain? captain;
   String? storeBranchToClientDistance;
-  OrderDetailsModel(
-      {required this.id,
-      required this.branchName,
-      required this.customerName,
-      required this.customerPhone,
-      required this.destinationCoordinate,
-      required this.destinationLink,
-      required this.deliveryDateString,
-      required this.createdDate,
-      required this.note,
-      required this.orderCost,
-      required this.payment,
-      required this.state,
-      required this.roomID,
-      required this.canRemove,
-      required this.deliveryDate,
-      required this.image,
-      required this.captainID,
-      required this.distance,
-      required this.isCaptainArrived,
-      required this.branchPhone,
-      required this.attention,
-      required this.captainOrderCost,
-      required this.orderLogs,
-      required this.kilometer,
-      required this.paidToProvider,
-      required this.branchId,
-      required this.imagePath,
-      required this.orderIsMain,
-      required this.captainName,
-      required this.storeName,
-      required this.storeID,
-      required this.noteCaptainOrderCost,
-      required this.pdf,
-      required this.captain,
-      required this.storeBranchToClientDistance});
+  String? branchID;
+  OrderDetailsModel({
+    required this.id,
+    required this.branchName,
+    required this.customerName,
+    required this.customerPhone,
+    required this.destinationCoordinate,
+    required this.destinationLink,
+    required this.deliveryDateString,
+    required this.createdDate,
+    required this.note,
+    required this.orderCost,
+    required this.payment,
+    required this.state,
+    required this.roomID,
+    required this.canRemove,
+    required this.deliveryDate,
+    required this.image,
+    required this.captainID,
+    required this.distance,
+    required this.isCaptainArrived,
+    required this.branchPhone,
+    required this.attention,
+    required this.captainOrderCost,
+    required this.orderLogs,
+    required this.kilometer,
+    required this.paidToProvider,
+    required this.branchId,
+    required this.imagePath,
+    required this.orderIsMain,
+    required this.captainName,
+    required this.storeName,
+    required this.storeID,
+    required this.noteCaptainOrderCost,
+    required this.pdf,
+    required this.captain,
+    required this.storeBranchToClientDistance,
+    required this.branchID,
+    required this.createdAt,
+    required this.subOrders,
+  });
 
   late OrderDetailsModel _orders;
 
@@ -105,53 +113,88 @@ class OrderDetailsModel extends DataModel {
             .format(DateHelper.convert(element?.deliveryDate?.timestamp));
     //
     _orders = OrderDetailsModel(
-        image: element?.image?.image,
-        canRemove: false,
-        isCaptainArrived: element?.isCaptainArrived,
-        branchPhone: element?.branchPhone,
-        branchName: element?.branchName ?? S.current.unknown,
-        createdDate: create,
-        customerName: element?.recipientName ?? S.current.unknown,
-        customerPhone: element?.recipientPhone ?? '',
-        deliveryDateString: delivery,
-        deliveryDate: DateHelper.convert(element?.deliveryDate?.timestamp),
-        destinationCoordinate: element?.destination?.lat != null &&
-                element?.destination?.lon != null
-            ? LatLng(element?.destination?.lat?.toDouble() ?? 0,
-                element?.destination?.lon?.toDouble() ?? 0)
-            : null,
-        destinationLink: element?.destination?.link,
-        note: element?.note ?? '',
-        orderCost: element?.orderCost ?? 0,
-        payment: element?.payment ?? 'cash',
-        roomID: element?.roomId,
-        state: StatusHelper.getStatusEnum(element?.state),
-        id: element?.id ?? -1,
-        captainID: int.tryParse(element?.captainId ?? '-1') ?? -1,
-        distance: null,
-        attention: element?.attention,
-        captainOrderCost: element?.captainOrderCost,
-        orderLogs: _getOrderLogs(element?.orderLogs),
-        kilometer: element?.kilometer,
-        paidToProvider: element?.paidToProvider,
-        branchId: element?.storeOwnerBranchId,
-        imagePath: element?.image?.imageUrl,
-        orderIsMain: element?.orderIsMain ?? false,
-        captainName: element?.captainName,
-        storeName: element?.storeName ?? S.current.unknown,
-        storeID: element?.storeId ?? -1,
-        noteCaptainOrderCost: element?.noteCaptainOrderCost,
-        pdf: element?.pdf != null
-            ? PdfModel(
-                pdfOnServerPath: element?.pdf?.fileUrl,
-                pdfPreview: element?.pdf?.file,
-                pdfBaseUrl: element?.pdf?.baseUrl)
-            : null,
-        captain: element?.captain,
-        storeBranchToClientDistance: element?.storeBranchToClientDistance);
+      image: element?.image?.image,
+      canRemove: false,
+      isCaptainArrived: element?.isCaptainArrived,
+      branchPhone: element?.branchPhone,
+      branchName: element?.branchName ?? S.current.unknown,
+      createdDate: create,
+      customerName: element?.recipientName ?? S.current.unknown,
+      customerPhone: element?.recipientPhone ?? '',
+      deliveryDateString: delivery,
+      deliveryDate: DateHelper.convert(element?.deliveryDate?.timestamp),
+      destinationCoordinate:
+          element?.destination?.lat != null && element?.destination?.lon != null
+              ? LatLng(element?.destination?.lat?.toDouble() ?? 0,
+                  element?.destination?.lon?.toDouble() ?? 0)
+              : null,
+      destinationLink: element?.destination?.link,
+      note: element?.note ?? '',
+      orderCost: element?.orderCost ?? 0,
+      payment: element?.payment ?? 'cash',
+      roomID: element?.roomId,
+      state: StatusHelper.getStatusEnum(element?.state),
+      id: element?.id ?? -1,
+      captainID: int.tryParse(element?.captainId ?? '-1') ?? -1,
+      distance: null,
+      attention: element?.attention,
+      captainOrderCost: element?.captainOrderCost,
+      orderLogs: _getOrderLogs(element?.orderLogs),
+      kilometer: element?.kilometer,
+      paidToProvider: element?.paidToProvider,
+      branchId: element?.storeOwnerBranchId,
+      imagePath: element?.image?.imageUrl,
+      orderIsMain: element?.orderIsMain ?? false,
+      captainName: element?.captainName,
+      storeName: element?.storeName ?? S.current.unknown,
+      storeID: element?.storeId ?? -1,
+      noteCaptainOrderCost: element?.noteCaptainOrderCost,
+      pdf: element?.pdf != null
+          ? PdfModel(
+              pdfOnServerPath: element?.pdf?.fileUrl,
+              pdfPreview: element?.pdf?.file,
+              pdfBaseUrl: element?.pdf?.baseUrl)
+          : null,
+      captain: element?.captain,
+      storeBranchToClientDistance: element?.storeBranchToClientDistance,
+      branchID: element?.storeOwnerBranchId?.toString(),
+      createdAt: DateHelper.convert(element?.createdAt?.timestamp),
+      subOrders: _getOrders(element?.subOrders ?? []),
+    );
     _orders.canRemove = _canRemove(_orders.state);
     _orders.distance = _distance(_orders, location);
   }
+  List<OrderModel> _getOrders(List<SubOrder> suborder) {
+    List<OrderModel> orders = [];
+    suborder.forEach((element) {
+      var create = DateFormat.jm()
+              .format(DateHelper.convert(element.createdAt?.timestamp)) +
+          ' 📅 ' +
+          DateFormat.Md()
+              .format(DateHelper.convert(element.createdAt?.timestamp));
+      var delivery = DateFormat.jm()
+              .format(DateHelper.convert(element.deliveryDate?.timestamp)) +
+          ' 📅 ' +
+          DateFormat.Md()
+              .format(DateHelper.convert(element.deliveryDate?.timestamp));
+      orders.add(OrderModel(
+        branchName: element.branchName ?? S.current.unknown,
+        createdDate: create,
+        deliveryDate: delivery,
+        id: element.id ?? -1,
+        note: element.note ?? '',
+        orderCost: element.orderCost ?? 0,
+        orderIsMain: false,
+        state: StatusHelper.getStatusEnum(element.state),
+        storeName: element.storeOwnerName,
+        subOrders: [],
+        kilometer: 0,
+        storeBranchToClientDistance: 0,
+      ));
+    });
+    return orders;
+  }
+
   OrderTimeLine? _getOrderLogs(OrderLogsResponse? orderLogs) {
     if (orderLogs == null) {
       return null;

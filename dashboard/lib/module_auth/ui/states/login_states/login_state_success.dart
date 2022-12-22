@@ -14,10 +14,10 @@ class LoginStateSuccess extends LoginState {
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Image.asset('assets/images/logo.jpg'),
-        RaisedButton(
-          color: Theme.of(context).primaryColor,
-          textColor: Colors.white,
-          padding: EdgeInsets.all(16),
+        ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Theme.of(context).primaryColor,
+          ),
           onPressed: () {
             //screen.moveToNext(inited);
           },

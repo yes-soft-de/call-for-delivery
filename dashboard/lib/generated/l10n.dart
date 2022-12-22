@@ -1430,6 +1430,16 @@ class S {
     );
   }
 
+  /// `Orders Finished`
+  String get ordersFinished {
+    return Intl.message(
+      'Orders Finished',
+      name: 'ordersFinished',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Order is created`
   String get orderIsCreated {
     return Intl.message(
@@ -7890,10 +7900,10 @@ class S {
     );
   }
 
-  /// `Future subscription`
+  /// `Delete future subscription`
   String get deleteFutureSubscription {
     return Intl.message(
-      'Future subscription',
+      'Delete future subscription',
       name: 'deleteFutureSubscription',
       desc: '',
       args: [],
@@ -8055,6 +8065,346 @@ class S {
     return Intl.message(
       'Delete captain offer subscription successfully',
       name: 'deleteCaptainOfferSubscriptionSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain Distance`
+  String get captainDistance {
+    return Intl.message(
+      'Captain Distance',
+      name: 'captainDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Geo Distance`
+  String get geoDistance {
+    return Intl.message(
+      'Geo Distance',
+      name: 'geoDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain cannot accept another order from this store , Please wait to deliver orders belongs to this store after that try again`
+  String get youCannotAcceptAnotherOrderFromThisStore {
+    return Intl.message(
+      'Captain cannot accept another order from this store , Please wait to deliver orders belongs to this store after that try again',
+      name: 'youCannotAcceptAnotherOrderFromThisStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Inactive Offer`
+  String get inactiveOffer {
+    return Intl.message(
+      'Inactive Offer',
+      name: 'inactiveOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `12.934,13.4124`
+  String get provideClientCoordinationsHint {
+    return Intl.message(
+      '12.934,13.4124',
+      name: 'provideClientCoordinationsHint',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delivery location`
+  String get provideClientCoordinations {
+    return Intl.message(
+      'Delivery location',
+      name: 'provideClientCoordinations',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Phone number start with zero please remove it and try again`
+  String get yourNumberStartWithZero {
+    return Intl.message(
+      'Phone number start with zero please remove it and try again',
+      name: 'yourNumberStartWithZero',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store answer confirm/denied receiving order cash from captain`
+  String get storeAnswerOrderCash {
+    return Intl.message(
+      'Store answer confirm/denied receiving order cash from captain',
+      name: 'storeAnswerOrderCash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New subOrder created by administration`
+  String get newSubOrderCreatedByAdministration {
+    return Intl.message(
+      'New subOrder created by administration',
+      name: 'newSubOrderCreatedByAdministration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store branch to client distance updated`
+  String get storeBranchToClientDistanceUpdated {
+    return Intl.message(
+      'Store branch to client distance updated',
+      name: 'storeBranchToClientDistanceUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store branch to client distance and client location updated`
+  String get storeBranchToClientDistanceAndDestinationUpdated {
+    return Intl.message(
+      'Store branch to client distance and client location updated',
+      name: 'storeBranchToClientDistanceAndDestinationUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash payment confirmed`
+  String get cashPaymentConfirmed {
+    return Intl.message(
+      'Cash payment confirmed',
+      name: 'cashPaymentConfirmed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment conflict answer resolved`
+  String get payConflictAnswersResolved {
+    return Intl.message(
+      'Payment conflict answer resolved',
+      name: 'payConflictAnswersResolved',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Admin`
+  String get admin {
+    return Intl.message(
+      'Admin',
+      name: 'admin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Distance provided by captain`
+  String get distanceProvidedByCaptain {
+    return Intl.message(
+      'Distance provided by captain',
+      name: 'distanceProvidedByCaptain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Distance from branch to client`
+  String get storeBranchToClientDistance {
+    return Intl.message(
+      'Distance from branch to client',
+      name: 'storeBranchToClientDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subscription with new plan was a success`
+  String get successRenewNewPlan {
+    return Intl.message(
+      'Subscription with new plan was a success',
+      name: 'successRenewNewPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subscription deleted successfully`
+  String get subscriptionDeletedSuccessfully {
+    return Intl.message(
+      'Subscription deleted successfully',
+      name: 'subscriptionDeletedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unable to delete this subscription , It has a recorded payments`
+  String get unableToDeletePaymentsExist {
+    return Intl.message(
+      'Unable to delete this subscription , It has a recorded payments',
+      name: 'unableToDeletePaymentsExist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There is no valid subscription`
+  String get thereIsNoValidSubscription {
+    return Intl.message(
+      'There is no valid subscription',
+      name: 'thereIsNoValidSubscription',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order Removed Successfully`
+  String get orderRemovedSuccessfully {
+    return Intl.message(
+      'Order Removed Successfully',
+      name: 'orderRemovedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `New sub order`
+  String get newOrderLink {
+    return Intl.message(
+      'New sub order',
+      name: 'newOrderLink',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about creating new sub order , you can split later if needed`
+  String get areYouSureAboutCreatingSubOrder {
+    return Intl.message(
+      'Are you sure about creating new sub order , you can split later if needed',
+      name: 'areYouSureAboutCreatingSubOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unlink suborders`
+  String get unlinkSubOrders {
+    return Intl.message(
+      'Unlink suborders',
+      name: 'unlinkSubOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Primary order`
+  String get primaryOrder {
+    return Intl.message(
+      'Primary order',
+      name: 'primaryOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Suborder`
+  String get suborder {
+    return Intl.message(
+      'Suborder',
+      name: 'suborder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order conflicted Successfully`
+  String get orderConflictedSuccessfully {
+    return Intl.message(
+      'Order conflicted Successfully',
+      name: 'orderConflictedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store Answer`
+  String get storeAnswer {
+    return Intl.message(
+      'Store Answer',
+      name: 'storeAnswer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain Answer`
+  String get captainAnswer {
+    return Intl.message(
+      'Captain Answer',
+      name: 'captainAnswer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are sure about resolving this order finance conflict`
+  String get areSureAboutResolveThisOrder {
+    return Intl.message(
+      'Are sure about resolving this order finance conflict',
+      name: 'areSureAboutResolveThisOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order log`
+  String get storeOrderLog {
+    return Intl.message(
+      'Order log',
+      name: 'storeOrderLog',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain Ratings`
+  String get captainsRating {
+    return Intl.message(
+      'Captain Ratings',
+      name: 'captainsRating',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You cannot subscribe with captain offer because store out of subscriptions`
+  String get cannotSubscribeToCaptainOffer {
+    return Intl.message(
+      'You cannot subscribe with captain offer because store out of subscriptions',
+      name: 'cannotSubscribeToCaptainOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain Activity`
+  String get captainActivity {
+    return Intl.message(
+      'Captain Activity',
+      name: 'captainActivity',
       desc: '',
       args: [],
     );

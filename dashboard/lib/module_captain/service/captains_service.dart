@@ -1,8 +1,10 @@
 import 'package:c4d/module_captain/manager/captains_manager.dart';
+import 'package:c4d/module_captain/model/captain_activity_model.dart';
 import 'package:c4d/module_captain/model/captain_balance_model.dart';
 import 'package:c4d/module_captain/model/captain_financial_dues.dart';
 import 'package:c4d/module_captain/model/captain_need_support.dart';
 import 'package:c4d/module_captain/model/captain_offer_model.dart';
+import 'package:c4d/module_captain/model/captain_rating_model.dart';
 import 'package:c4d/module_captain/model/captains_order_model.dart';
 import 'package:c4d/module_captain/model/inActiveModel.dart';
 import 'package:c4d/module_captain/model/porfile_model.dart';
@@ -14,10 +16,12 @@ import 'package:c4d/module_captain/request/enable_offer.dart';
 import 'package:c4d/module_captain/request/update_captain_request.dart';
 import 'package:c4d/module_captain/response/capatin_offer_response.dart';
 import 'package:c4d/module_captain/response/captain_account_balance_response/captain_account_balance_response.dart';
+import 'package:c4d/module_captain/response/captain_activity_response/captain_activity_response.dart';
 import 'package:c4d/module_captain/response/captain_financial_dues_response/captain_financial_dues_response.dart';
 import 'package:c4d/module_captain/response/captain_need_support_response/captain_need_support_response.dart';
 import 'package:c4d/module_captain/response/captain_order_control_response/captain_order_control_response.dart';
 import 'package:c4d/module_captain/response/captain_profile_response.dart';
+import 'package:c4d/module_captain/response/captain_rating_response/captain_rating_response.dart';
 import 'package:c4d/module_captain/response/in_active_captain_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
@@ -245,5 +249,36 @@ class CaptainsService {
       return DataModel.empty();
     }
     return CaptainFinancialDuesModel.withData(actionResponse);
+  }
+
+  Future<DataModel> getCaptainRating() async {
+    CaptainRatingResponse? actionResponse = await _manager.getCaptainRating();
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    if (actionResponse.data == null) {
+      return DataModel.empty();
+    }
+    return CaptainRatingModel.withData(actionResponse);
+  }
+
+  Future<DataModel> getCaptainActivity() async {
+    CaptainActivityResponse? actionResponse =
+        await _manager.getCaptainActivity();
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    if (actionResponse.data == null) {
+      return DataModel.empty();
+    }
+    return CaptainActivityModel.withData(actionResponse);
   }
 }

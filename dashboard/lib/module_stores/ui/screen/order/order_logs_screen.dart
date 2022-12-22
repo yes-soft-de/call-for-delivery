@@ -2,7 +2,9 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_notice/ui/widget/filter_bar.dart';
+import 'package:c4d/module_stores/model/store_profile_model.dart';
 import 'package:c4d/module_stores/request/order_filter_request.dart';
+import 'package:c4d/utils/components/custom_feild.dart';
 import '../../../state_manager/order/order_logs_state_manager.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -25,6 +27,7 @@ class OrderLogsScreen extends StatefulWidget {
 class OrderLogsScreenState extends State<OrderLogsScreen> {
   late States currentState;
   int currentIndex = 0;
+  bool geoKilo = false;
   void refresh() {
     if (mounted) {
       setState(() {});
@@ -38,6 +41,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
 
   var today = DateTime.now();
   int? storeID = -1;
+  TextEditingController geoController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -55,25 +59,26 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
     widget._stateManager.getOrdersFilters(this, ordersFilter, loading);
   }
 
+  StoreProfileModel? store;
   @override
   Widget build(BuildContext context) {
     if (storeID == -1) {
       var arg = ModalRoute.of(context)?.settings.arguments;
-      if (arg != null && arg is int) {
-        storeID = arg;
+      if (arg != null && arg is StoreProfileModel) {
+        store = arg;
+        storeID = arg.id;
         ordersFilter = FilterOrderRequest(
             storeOwnerProfileId: storeID,
             state: 'pending',
-            fromDate: DateTime(today.year, today.month, today.day, 0)
-                .toIso8601String(),
-            toDate: DateTime.now().toIso8601String());
+            fromDate: DateTime(today.year, today.month, today.day, 0),
+            toDate: DateTime.now());
         widget._stateManager.getOrdersFilters(this, ordersFilter);
       }
     }
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(
         context,
-        title: S.current.orderLog,
+        title: S.current.storeOrderLog + ' ' + (store?.storeOwnerName ?? ''),
       ),
       body: Column(
         children: [
@@ -82,7 +87,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
           ),
           // filter date
           Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -117,7 +122,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                                   lastDate: DateTime.now())
                               .then((value) {
                             if (value != null) {
-                              ordersFilter.fromDate = value.toIso8601String();
+                              ordersFilter.fromDate = value;
                               setState(() {});
                               getOrders();
                             }
@@ -125,9 +130,8 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                         },
                         title: Text(S.current.firstDate),
                         subtitle: Text(ordersFilter.fromDate != null
-                            ? DateFormat('yyyy/M/d').format(DateTime.parse(
-                                ordersFilter.fromDate ??
-                                    DateTime.now().toIso8601String()))
+                            ? DateFormat('yyyy/M/d')
+                                .format(ordersFilter.fromDate ?? DateTime.now())
                             : '0000/00/00'),
                       ),
                     ),
@@ -171,14 +175,11 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                                   lastDate: DateTime.now())
                               .then((value) {
                             if (value != null) {
-                              var currentTime = TimeOfDay.now();
                               ordersFilter.toDate = DateTime(
-                                      value.year,
-                                      value.month,
-                                      value.day,
-                                      currentTime.hour,
-                                      currentTime.minute)
-                                  .toIso8601String();
+                                value.year,
+                                value.month,
+                                value.day,
+                              );
                               setState(() {});
                               getOrders();
                             }
@@ -186,9 +187,8 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                         },
                         title: Text(S.current.endDate),
                         subtitle: Text(ordersFilter.toDate != null
-                            ? DateFormat('yyyy/M/d').format(DateTime.parse(
-                                ordersFilter.toDate ??
-                                    DateTime.now().toIso8601String()))
+                            ? DateFormat('yyyy/M/d')
+                                .format(ordersFilter.toDate ?? DateTime.now())
                             : '0000/00/00'),
                       ),
                     ),
@@ -234,6 +234,71 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
             selectedContent: Theme.of(context).textTheme.button!.color!,
             unselectedContent: Theme.of(context).textTheme.headline6!.color!,
           ),
+          // kilo filter
+          Visibility(
+            visible: currentIndex == 2,
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
+                  child: CustomFormField(
+                    numbers: true,
+                    hintText: S.current.countKilometersTo +
+                        '(${S.current.clientDistance})',
+                    controller: geoController,
+                    onChanged: () {
+                      changeDistanceIndicator();
+                      getOrders(false);
+                    },
+                  ),
+                ),
+                Row(
+                  children: [
+                    Expanded(
+                      child: ListTile(
+                        minLeadingWidth: 0,
+                        title: Text(
+                          S.of(context).captainDistance,
+                          style: TextStyle(fontSize: 14),
+                        ),
+                        leading: Radio(
+                          value: false,
+                          groupValue: geoKilo,
+                          onChanged: (value) {
+                            geoKilo = false;
+                            changeDistanceIndicator();
+                            refresh();
+                            getOrders(false);
+                          },
+                          activeColor: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                    ),
+                    Expanded(
+                      child: ListTile(
+                        minLeadingWidth: 0,
+                        title: Text(
+                          S.current.geoDistance,
+                          style: TextStyle(fontSize: 14),
+                        ),
+                        leading: Radio(
+                          value: true,
+                          groupValue: geoKilo,
+                          onChanged: (value) {
+                            geoKilo = true;
+                            changeDistanceIndicator();
+                            refresh();
+                            getOrders(false);
+                          },
+                          activeColor: Theme.of(context).colorScheme.primary,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
           SizedBox(
             height: 16,
           ),
@@ -241,5 +306,11 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
         ],
       ),
     );
+  }
+
+  void changeDistanceIndicator() {
+    ordersFilter.maxKiloFromDistance = num.tryParse(geoController.text) ?? -1;
+    ordersFilter.maxKilo = num.tryParse(geoController.text) ?? -1;
+    ordersFilter.chosenDistanceIndicator = geoKilo ? 2 : 1;
   }
 }
