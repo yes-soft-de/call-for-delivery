@@ -14,7 +14,6 @@ import 'package:c4d/module_orders/ui/screens/new_order/update_order_screen.dart'
 import 'package:c4d/module_orders/ui/widgets/custom_step.dart';
 import 'package:c4d/module_orders/ui/widgets/geo_widget.dart';
 import 'package:c4d/module_orders/ui/widgets/label_text.dart';
-import 'package:c4d/module_profile/response/create_branch_response.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/module_upload/model/pdf_model.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
@@ -93,6 +92,7 @@ class UpdateOrderLoaded extends States {
   String? image;
   String? distance;
   PdfModel? pdfModel;
+  num? deliveryCost;
   @override
   Widget getUI(BuildContext context) {
     var decoration = BoxDecoration(
@@ -278,8 +278,9 @@ class UpdateOrderLoaded extends States {
                               destination:
                                   screenState.customerLocation ?? LatLng(0, 0),
                               origin: activeBranch?.location ?? LatLng(0, 0),
-                              destance: (d) {
+                              destance: (d, cost) {
                                 distance = d;
+                                deliveryCost = cost;
                               },
                             )),
                       ),
@@ -605,28 +606,31 @@ class UpdateOrderLoaded extends States {
                   ),
                 ),
                 // suborder check
-                Padding(
-                  padding: const EdgeInsets.only(left: 8, right: 8, top: 16),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        color: Theme.of(context).backgroundColor),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: CheckboxListTile(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25)),
-                          secondary: Icon(FontAwesomeIcons.boxes),
-                          value: orderIsMain,
-                          title: Text(S.current.thisOrderCanBeLinked),
-                          onChanged: (check) {
-                            if (check == true) {
-                              orderIsMain = true;
-                            } else {
-                              orderIsMain = false;
-                            }
-                            screenState.refresh();
-                          }),
+                Visibility(
+                  visible: true,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8, right: 8, top: 16),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Theme.of(context).backgroundColor),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: CheckboxListTile(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25)),
+                            secondary: Icon(FontAwesomeIcons.boxes),
+                            value: orderIsMain,
+                            title: Text(S.current.thisOrderCanBeLinked),
+                            onChanged: (check) {
+                              if (check == true) {
+                                orderIsMain = true;
+                              } else {
+                                orderIsMain = false;
+                              }
+                              screenState.refresh();
+                            }),
+                      ),
                     ),
                   ),
                 ),
@@ -853,30 +857,6 @@ class UpdateOrderLoaded extends States {
             .show(screenState.context);
       }
       screenState.addNewOrder(CreateOrderRequest(
-          order: orderInfo.id,
-          pdf: pdfModel?.getPdfRequest(),
-          distance: distance,
-          orderIsMain: orderIsMain,
-          fromBranch: screenState.branch,
-          recipientName: screenState.receiptNameController.text.trim(),
-          recipientPhone: screenState.countryNumberController.text.trim() +
-              screenState.phoneNumberController.text.trim(),
-          destination: GeoJson(
-              link: screenState.toController.text.trim(),
-              lat: screenState.customerLocation?.latitude,
-              lon: screenState.customerLocation?.longitude),
-          note: screenState.orderDetailsController.text.trim(),
-          detail: screenState.orderDetailsController.text.trim(),
-          orderCost: num.tryParse(screenState.priceController.text.trim()),
-          image: value,
-          date: orderDate.toUtc().toIso8601String(),
-          payment: screenState.payments));
-    });
-  }
-
-  // function create order without upload image
-  void createOrderWithoutImage() {
-    screenState.addNewOrder(CreateOrderRequest(
         order: orderInfo.id,
         pdf: pdfModel?.getPdfRequest(),
         distance: distance,
@@ -892,9 +872,37 @@ class UpdateOrderLoaded extends States {
         note: screenState.orderDetailsController.text.trim(),
         detail: screenState.orderDetailsController.text.trim(),
         orderCost: num.tryParse(screenState.priceController.text.trim()),
-        image: imagePath ?? null,
+        image: value,
         date: orderDate.toUtc().toIso8601String(),
-        payment: screenState.payments));
+        payment: screenState.payments,
+        deliveryCost: deliveryCost,
+      ));
+    });
+  }
+
+  // function create order without upload image
+  void createOrderWithoutImage() {
+    screenState.addNewOrder(CreateOrderRequest(
+      order: orderInfo.id,
+      pdf: pdfModel?.getPdfRequest(),
+      distance: distance,
+      orderIsMain: orderIsMain,
+      fromBranch: screenState.branch,
+      recipientName: screenState.receiptNameController.text.trim(),
+      recipientPhone: screenState.countryNumberController.text.trim() +
+          screenState.phoneNumberController.text.trim(),
+      destination: GeoJson(
+          link: screenState.toController.text.trim(),
+          lat: screenState.customerLocation?.latitude,
+          lon: screenState.customerLocation?.longitude),
+      note: screenState.orderDetailsController.text.trim(),
+      detail: screenState.orderDetailsController.text.trim(),
+      orderCost: num.tryParse(screenState.priceController.text.trim()),
+      image: imagePath ?? null,
+      date: orderDate.toUtc().toIso8601String(),
+      payment: screenState.payments,
+      deliveryCost: deliveryCost,
+    ));
   }
 
   void createOrder() {

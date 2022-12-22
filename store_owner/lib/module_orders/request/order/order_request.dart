@@ -16,24 +16,27 @@ class CreateOrderRequest {
   int? order;
   String? pdf;
   String? distance;
-  CreateOrderRequest(
-      {this.fromBranch,
-      this.note,
-      this.payment,
-      this.recipientName,
-      this.recipientPhone,
-      this.date,
-      this.destination,
-      this.orderCost,
-      this.image,
-      this.detail,
-      this.orderID,
-      this.orderType,
-      this.orderIsMain,
-      this.order,
-      this.cancel,
-      this.pdf,
-      this.distance});
+  num? deliveryCost;
+  CreateOrderRequest({
+    this.fromBranch,
+    this.note,
+    this.payment,
+    this.recipientName,
+    this.recipientPhone,
+    this.date,
+    this.destination,
+    this.orderCost,
+    this.image,
+    this.detail,
+    this.orderID,
+    this.orderType,
+    this.orderIsMain,
+    this.order,
+    this.cancel,
+    this.pdf,
+    this.distance,
+    required this.deliveryCost,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -80,6 +83,10 @@ class CreateOrderRequest {
     if (distance != null) {
       data['storeBranchToClientDistance'] =
           double.tryParse(this.distance!.replaceAll(',', ''));
+    }
+    if (deliveryCost != null) {
+      data['deliveryCost'] = this.deliveryCost;
+
     }
     return data;
   }

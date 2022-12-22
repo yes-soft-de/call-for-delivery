@@ -50,6 +50,7 @@ class NewOrderLinkStateLoaded extends States {
   String? imagePath;
   PdfModel? pdfModel;
   String? distance;
+  num? deliveryCost;
   @override
   Widget getUI(context) {
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
@@ -201,8 +202,9 @@ class NewOrderLinkStateLoaded extends States {
                               destination:
                                   screenState.customerLocation ?? LatLng(0, 0),
                               origin: activeBranch?.location ?? LatLng(0, 0),
-                              destance: (d) {
+                              destance: (d, cost) {
                                 distance = d;
+                                deliveryCost = cost;
                               },
                             )),
                       ),
@@ -653,34 +655,9 @@ class NewOrderLinkStateLoaded extends States {
             .show(screenState.context);
       }
       screenState.addNewOrder(CreateOrderRequest(
-          orderID: screenState.orderId,
-          pdf: pdfModel?.getPdfRequest(),
-          fromBranch: screenState.branch,
-          distance: distance,
-          recipientName: screenState.receiptNameController.text.trim(),
-          recipientPhone: screenState.countryNumberController.text.trim() +
-              screenState.phoneNumberController.text.trim(),
-          destination: GeoJson(
-              link: screenState.toController.text.trim(),
-              lat: screenState.customerLocation?.latitude,
-              lon: screenState.customerLocation?.longitude),
-          note: screenState.orderDetailsController.text.trim(),
-          detail: screenState.orderDetailsController.text.trim(),
-          orderCost: num.tryParse(screenState.priceController.text.trim()),
-          image: value,
-          date: orderDate == null
-              ? DateTime.now().toUtc().toIso8601String()
-              : orderDate?.toUtc().toIso8601String(),
-          payment: screenState.payments));
-    });
-  }
-
-  // function create order without upload image
-  void createOrderWithoutImage() {
-    screenState.addNewOrder(CreateOrderRequest(
         orderID: screenState.orderId,
-        fromBranch: screenState.branch,
         pdf: pdfModel?.getPdfRequest(),
+        fromBranch: screenState.branch,
         distance: distance,
         recipientName: screenState.receiptNameController.text.trim(),
         recipientPhone: screenState.countryNumberController.text.trim() +
@@ -692,11 +669,40 @@ class NewOrderLinkStateLoaded extends States {
         note: screenState.orderDetailsController.text.trim(),
         detail: screenState.orderDetailsController.text.trim(),
         orderCost: num.tryParse(screenState.priceController.text.trim()),
-        image: null,
+        image: value,
         date: orderDate == null
             ? DateTime.now().toUtc().toIso8601String()
             : orderDate?.toUtc().toIso8601String(),
-        payment: screenState.payments));
+        payment: screenState.payments,
+        deliveryCost: deliveryCost,
+      ));
+    });
+  }
+
+  // function create order without upload image
+  void createOrderWithoutImage() {
+    screenState.addNewOrder(CreateOrderRequest(
+      orderID: screenState.orderId,
+      fromBranch: screenState.branch,
+      pdf: pdfModel?.getPdfRequest(),
+      distance: distance,
+      recipientName: screenState.receiptNameController.text.trim(),
+      recipientPhone: screenState.countryNumberController.text.trim() +
+          screenState.phoneNumberController.text.trim(),
+      destination: GeoJson(
+          link: screenState.toController.text.trim(),
+          lat: screenState.customerLocation?.latitude,
+          lon: screenState.customerLocation?.longitude),
+      note: screenState.orderDetailsController.text.trim(),
+      detail: screenState.orderDetailsController.text.trim(),
+      orderCost: num.tryParse(screenState.priceController.text.trim()),
+      image: null,
+      date: orderDate == null
+          ? DateTime.now().toUtc().toIso8601String()
+          : orderDate?.toUtc().toIso8601String(),
+      payment: screenState.payments,
+      deliveryCost: deliveryCost,
+    ));
   }
 
   void createOrder() {

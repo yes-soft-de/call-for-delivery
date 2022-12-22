@@ -11,7 +11,7 @@ import 'package:latlong2/latlong.dart';
 class GeoDistanceText extends StatefulWidget {
   LatLng origin;
   LatLng destination;
-  Function(String?) destance;
+  Function(String?, num?) destance;
   GeoDistanceText({
     Key? key,
     required this.destination,
@@ -56,9 +56,10 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
       loading = false;
       distance = (snap as GeoDistanceModel).distance;
       deliveryCost = FixedNumber.getFixedNumber(
-          (snap as GeoDistanceModel).costDeliveryOrder?.total ?? 0);
-      deliveryCostDetails = (snap as GeoDistanceModel).costDeliveryOrder;
-      widget.destance(distance);
+          (snap).costDeliveryOrder?.total ?? 0);
+      deliveryCostDetails = (snap).costDeliveryOrder;
+      widget.destance(
+          distance, (snap).costDeliveryOrder?.total);
       setState(() {});
     }
   }
@@ -211,5 +212,4 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
       ),
     );
   }
-
 }
