@@ -162,7 +162,7 @@ class CaptainService
 
     public function getCaptainNameByCaptainUserId(int $captainUserId): string
     {
-        $captainProfile = $this->captainManager->getCaptainProfileById($captainUserId);
+        $captainProfile = $this->captainManager->getCaptainProfileByUserId($captainUserId);
 
         if ($captainProfile) {
             return $captainProfile->getCaptainName();
