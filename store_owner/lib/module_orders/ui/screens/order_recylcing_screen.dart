@@ -64,7 +64,7 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
   @override
   void initState() {
     currentState = LoadingState(this);
-    WidgetsBinding.instance?.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
 
     widget._stateManager.stateStream.listen((event) {
       currentState = event;
@@ -146,7 +146,7 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
                           onPressed: () {
                             Navigator.of(context).pop();
                             CreateOrderRequest request =
-                                CreateOrderRequest(order: orderId, cancel: 1);
+                                CreateOrderRequest(order: orderId, cancel: 1, deliveryCost: null);
                             if (currentState is OrderRecyclingLoaded) {
                               var orderInfo =
                                   (currentState as OrderRecyclingLoaded)
@@ -154,7 +154,7 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
                               request = CreateOrderRequest(
                                   order: orderId,
                                   fromBranch: orderInfo.branchID,
-                                  cancel: 1);
+                                  cancel: 1, deliveryCost: null);
                             }
                             manager.recycle(this, request);
                           },

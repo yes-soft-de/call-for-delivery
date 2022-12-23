@@ -146,12 +146,10 @@ class UpdateBranchStateLoaded extends States {
                         width: double.maxFinite,
                         height: 55,
                         child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25),
-                            ),
+                          child: Text(
+                            S.current.saveBranch,
+                            style: Theme.of(context).textTheme.button,
                           ),
-                          child: Text(S.of(context).saveBranch),
                           onPressed: branchLocation == null
                               ? null
                               : () {

@@ -6800,56 +6800,6 @@ class S {
     );
   }
 
-  /// `قد يستغرق قبول هذا الطلب 25 دقيقه نظرا لقرب وقت صلاة العشاء`
-  String get ishaMessage {
-    return Intl.message(
-      'قد يستغرق قبول هذا الطلب 25 دقيقه نظرا لقرب وقت صلاة العشاء',
-      name: 'ishaMessage',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `قد يستغرق قبول هذا الطلب 15 دقيقه نظرا لقرب وقت صلاة المغرب`
-  String get maghribMessage {
-    return Intl.message(
-      'قد يستغرق قبول هذا الطلب 15 دقيقه نظرا لقرب وقت صلاة المغرب',
-      name: 'maghribMessage',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `قد يستغرق قبول هذا الطلب 20 دقيقه نظرا لقرب وقت صلاة العصر`
-  String get asrMessage {
-    return Intl.message(
-      'قد يستغرق قبول هذا الطلب 20 دقيقه نظرا لقرب وقت صلاة العصر',
-      name: 'asrMessage',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `قد يستغرق قبول هذا الطلب 25 دقيقه نظرا لقرب وقت صلاة الفجر`
-  String get fajrMessage {
-    return Intl.message(
-      'قد يستغرق قبول هذا الطلب 25 دقيقه نظرا لقرب وقت صلاة الفجر',
-      name: 'fajrMessage',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `قد يستغرق قبول هذا الطلب 20 دقيقه نظرا لقرب وقت صلاة الظهر`
-  String get dhahrMessage {
-    return Intl.message(
-      'قد يستغرق قبول هذا الطلب 20 دقيقه نظرا لقرب وقت صلاة الظهر',
-      name: 'dhahrMessage',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Confirm receive order cash`
   String get confirmOrderCash {
     return Intl.message(
@@ -6935,6 +6885,16 @@ class S {
     return Intl.message(
       'Ongoing chat rooms',
       name: 'onGoingOrderChatRooms',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `This order may take some extra time to be delivered due prayer period`
+  String get prayerMessage {
+    return Intl.message(
+      'This order may take some extra time to be delivered due prayer period',
+      name: 'prayerMessage',
       desc: '',
       args: [],
     );

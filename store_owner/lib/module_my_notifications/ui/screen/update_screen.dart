@@ -44,7 +44,7 @@ class UpdateScreenState extends State<UpdateScreen> {
   @override
   void initState() {
     currentState = LoadingState(this);
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       widget._stateManager.getUpdates(this);
     });
     widget._stateManager.stateStream.listen((event) {

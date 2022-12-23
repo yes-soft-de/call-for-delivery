@@ -62,8 +62,7 @@ class AboutStateRequestBooking extends AboutState {
             ),
           ),
         ),
-        RaisedButton(
-          color: Theme.of(context).primaryColor,
+        ElevatedButton(
           onPressed: () {
             if (_formKey.currentState?.validate() == true) {
               // screenState.createAppointment(_nameController.text, _phoneController.text);

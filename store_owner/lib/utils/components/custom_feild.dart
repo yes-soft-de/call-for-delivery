@@ -88,6 +88,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
                   inputFormatters: widget.numbers
                       ? <TextInputFormatter>[
                           FilteringTextInputFormatter.allow(RegExp('[0-9.]')),
+                          FilteringTextInputFormatter.deny(RegExp('[٠-٩]')),
                         ]
                       : [],
                   onChanged: (v) {

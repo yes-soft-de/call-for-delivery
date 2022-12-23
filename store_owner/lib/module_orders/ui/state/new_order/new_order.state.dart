@@ -59,6 +59,7 @@ class NewOrderStateBranchesLoaded extends States {
   bool orderIsMain = false;
   PdfModel? pdfModel;
   String? distance;
+  num? deliveryCost;
   @override
   Widget getUI(context) {
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
@@ -242,8 +243,9 @@ class NewOrderStateBranchesLoaded extends States {
                               destination:
                                   screenState.customerLocation ?? LatLng(0, 0),
                               origin: activeBranch?.location ?? LatLng(0, 0),
-                              destance: (d) {
+                              destance: (d, cost) {
                                 distance = d;
+                                deliveryCost = cost;
                               },
                             )),
                       ),
@@ -737,7 +739,8 @@ class NewOrderStateBranchesLoaded extends States {
           date: orderDate == null
               ? DateTime.now().toUtc().toIso8601String()
               : orderDate?.toUtc().toIso8601String(),
-          payment: screenState.payments));
+          payment: screenState.payments,
+          deliveryCost: deliveryCost));
     });
   }
 
@@ -763,7 +766,8 @@ class NewOrderStateBranchesLoaded extends States {
         date: orderDate == null
             ? DateTime.now().toUtc().toIso8601String()
             : orderDate?.toUtc().toIso8601String(),
-        payment: screenState.payments));
+        payment: screenState.payments,
+        deliveryCost: deliveryCost));
   }
 
   void createOrder() {

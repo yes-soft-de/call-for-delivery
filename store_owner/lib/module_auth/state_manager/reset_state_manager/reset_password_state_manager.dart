@@ -27,7 +27,7 @@ class ResetPasswordStateManager {
                 title: S.current.warnning, message: value.error ?? '')
             .show(_forgotScreenState.context);
       } else {
-        WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+        WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
           CustomFlushBarHelper.createSuccess(
                   title: S.current.warnning,
                   message: S.current.passwordUpdatedSuccess)

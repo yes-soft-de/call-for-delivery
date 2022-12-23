@@ -1,6 +1,5 @@
 import 'package:c4d/module_theme/map_style.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
@@ -37,8 +36,16 @@ class AppThemeDataService {
           useMaterial3: true,
           primarySwatch: Colors.indigo,
           focusColor: PrimaryColor,
+          elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+            textStyle: TextStyle(color: Colors.white),
+            backgroundColor: darkScheme.primary,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(25),
+            ),
+          )),
           textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(primary: Colors.white70)),
+              style: TextButton.styleFrom(foregroundColor: Colors.white70)),
           checkboxTheme: CheckboxThemeData(
             checkColor:
                 MaterialStateProperty.resolveWith((Set<MaterialState> states) {
@@ -67,12 +74,6 @@ class AppThemeDataService {
           ),
           cardColor: Colors.grey[150],
           fontFamily: 'Dubai',
-          elevatedButtonTheme: ElevatedButtonThemeData(
-              style: ElevatedButton.styleFrom(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(25),
-            ),
-          )),
           textTheme: TextTheme(
             button: TextStyle(
               color: Colors.white,
@@ -92,6 +93,15 @@ class AppThemeDataService {
         backgroundColor: Color.fromRGBO(236, 239, 241, 1),
         textTheme: TextTheme(button: TextStyle(color: Colors.white)),
         fontFamily: 'Dubai',
+        elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+          backgroundColor: lightScheme.primary,
+          foregroundColor: Colors.white,
+          textStyle: const TextStyle(color: Colors.white),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(25),
+          ),
+        )),
         timePickerTheme: TimePickerThemeData(
           dialBackgroundColor: Color.fromRGBO(235, 235, 235, 1),
           dayPeriodBorderSide:

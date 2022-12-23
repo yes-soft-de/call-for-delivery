@@ -49,7 +49,7 @@ class OngoingOrderChatScreenState extends State<OngoingOrderChatScreen> {
   @override
   void initState() {
     currentState = LoadingState(this);
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       widget._stateManager.getRooms(this);
     });
     widget._stateManager.stateStream.listen((event) {

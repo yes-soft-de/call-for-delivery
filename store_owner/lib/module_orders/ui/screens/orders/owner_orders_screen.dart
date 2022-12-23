@@ -68,7 +68,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
 
   void addOrderViaDeepLink(LatLng location) {
     _currentState = LoadingState(this);
-    WidgetsBinding.instance?.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Navigator.of(context)
           .pushNamed(OrdersRoutes.NEW_ORDER_SCREEN, arguments: location);
     });
@@ -104,7 +104,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     _currentState = LoadingState(this);
     getInitData();
     widget._stateManager.watcher(this, true);
-    WidgetsBinding.instance?.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
       _currentState = event;
       if (mounted) {

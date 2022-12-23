@@ -2,6 +2,7 @@ import 'package:c4d/utils/effect/op_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/effect/hidder.dart';
+import 'package:flutter/services.dart';
 
 class CustomLoginFormField extends StatefulWidget {
   final double? height;
@@ -125,18 +126,14 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
                                 clean = false;
                                 return S.current.passwordNotMatch;
                               } else if (widget.phone &&
-                                  RegExp(r'[0-9٠-٩]')
-                                          .allMatches(value)
-                                          .length !=
+                                  RegExp(r'[0-9]').allMatches(value).length !=
                                       value.length) {
                                 clean = false;
                                 return widget.halfField
                                     ? S.current.InvalidInput
                                     : S.current.pleaseEnterValidPhoneNumber;
                               } else if (widget.numbers &&
-                                  RegExp(r'[0-9٠-٩]')
-                                          .allMatches(value)
-                                          .length !=
+                                  RegExp(r'[0-9]').allMatches(value).length !=
                                       value.length) {
                                 clean = false;
                                 return widget.halfField
@@ -164,6 +161,15 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
                       maxLength: widget.phone | widget.numbers
                           ? (widget.maxLength ?? 9)
                           : null,
+                      inputFormatters: widget.numbers || widget.phone
+                          ? <TextInputFormatter>[
+                              FilteringTextInputFormatter.allow(
+                                  RegExp('[0-9]')),
+                              FilteringTextInputFormatter.deny(RegExp('[٠-٩]')),
+                            ]
+                          : [
+                              FilteringTextInputFormatter.deny(RegExp('[٠-٩]')),
+                            ],
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         counterText: '',

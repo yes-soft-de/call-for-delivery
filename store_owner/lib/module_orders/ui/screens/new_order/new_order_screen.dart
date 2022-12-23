@@ -75,7 +75,7 @@ class NewOrderScreenState extends State<NewOrderScreen>
   void initState() {
     super.initState();
     currentState = LoadingState(this);
-    WidgetsBinding.instance?.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
     countryNumberController.text = '966';
     widget._stateManager.getBranches(this);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {

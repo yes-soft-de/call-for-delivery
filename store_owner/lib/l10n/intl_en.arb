@@ -675,11 +675,6 @@
     "packageTypeRegular": "Regular",
     "confirmingIfReceiveOrderCost": "Please confirm if you receive order cost from captain please answer with yes or no",
     "yourNumberStartWithZero": "Your number start with zero please remove it and try again",
-    "ishaMessage": "قد يستغرق قبول هذا الطلب 25 دقيقه نظرا لقرب وقت صلاة العشاء",
-    "maghribMessage": "قد يستغرق قبول هذا الطلب 15 دقيقه نظرا لقرب وقت صلاة المغرب",
-    "asrMessage": "قد يستغرق قبول هذا الطلب 20 دقيقه نظرا لقرب وقت صلاة العصر",
-    "fajrMessage": "قد يستغرق قبول هذا الطلب 25 دقيقه نظرا لقرب وقت صلاة الفجر",
-    "dhahrMessage": "قد يستغرق قبول هذا الطلب 20 دقيقه نظرا لقرب وقت صلاة الظهر",
     "confirmOrderCash": "Confirm receive order cash",
     "rememberMe": "Remember me",
     "codeSendToYou": "Code sent to your device",
@@ -688,6 +683,6 @@
     "credentialsBagHint": "Here you can find saved credentials ",
     "chatRoomOrder": "Chat room order",
     "changePassword": "Change password",
-    "onGoingOrderChatRooms":"Ongoing chat rooms"
-
+    "onGoingOrderChatRooms": "Ongoing chat rooms",
+    "prayerMessage": "This order may take some extra time to be delivered due prayer period"
 }

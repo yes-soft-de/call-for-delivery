@@ -8,7 +8,6 @@ import 'package:latlong2/latlong.dart';
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
@@ -52,6 +51,7 @@ class OrderDetailsModel extends DataModel {
   late String? captainName;
   late String? captainPhone;
   int? isCashPaymentConfirmedByStore;
+  bool subOrder = false;
   OrderDetailsModel(
       {required this.id,
       required this.branchName,
@@ -88,7 +88,9 @@ class OrderDetailsModel extends DataModel {
       required this.captainRating,
       this.pdf,
       this.storeBranchToClientDistance,
-      this.isCashPaymentConfirmedByStore});
+      this.isCashPaymentConfirmedByStore,
+      required this.subOrder,
+      });
 
   late OrderDetailsModel _orders;
 
@@ -154,7 +156,7 @@ class OrderDetailsModel extends DataModel {
               pdfBaseUrl: element?.pdf?.baseUrl)
           : null,
       captainRating:
-          FixedNumber.getFixedNumber(element?.captainDetails?.rating ?? 0),
+          FixedNumber.getFixedNumber(element?.captainDetails?.rating ?? 0), subOrder: element?.primaryOrder != null,
     );
   }
   OrderTimeLine? _getOrderLogs(OrderLogsResponse? orderLogs) {
