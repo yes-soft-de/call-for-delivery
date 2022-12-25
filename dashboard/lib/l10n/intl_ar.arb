@@ -836,5 +836,8 @@
     "cannotSubscribeToCaptainOffer":"لا يمكن الاشتراك بعرض الكابتن لأن المتجر لايمتلك اشتراك صالح",
     "captainActivity":"نشاط الكباتن",
     "updatedOrderStatusByAdministration":"تم تحديث حالة الطلب من قبل الادارة",
-    "payConflictAnswersResolvedByAdministration":"تم حل التعارض بين المتجر والكابتن عن طريق الإدارة"
+    "payConflictAnswersResolvedByAdministration":"تم حل التعارض بين المتجر والكابتن عن طريق الإدارة",
+    "updateStoreAnswerSuccessfully":"تم تحديث جواب المتجر بنجاح",
+    "receivedCash":"تم الاستلام",
+    "notReceivedCash":"لم يتم الاستلام"
 }

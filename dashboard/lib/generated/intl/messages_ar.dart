@@ -698,6 +698,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("حساب غير مكتمل"),
         "notImplementedYet":
             MessageLookupByLibrary.simpleMessage("لم يتم تفعيل هذه الميزة بعد"),
+        "notReceivedCash":
+            MessageLookupByLibrary.simpleMessage("لم يتم الاستلام"),
         "notSubscription": MessageLookupByLibrary.simpleMessage(
             "لم تشترك بباقة بعد الرجاء الاشتراك من الإعدادات"),
         "notVerified":
@@ -969,6 +971,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الرجاء تزويدنا بسبب الابلاغ"),
         "reasonOfTheReport":
             MessageLookupByLibrary.simpleMessage("سبب طلب الدعم"),
+        "receivedCash": MessageLookupByLibrary.simpleMessage("تم الاستلام"),
         "recipientName": MessageLookupByLibrary.simpleMessage("اسم المستلم"),
         "recipientPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم هاتف المستلم"),
@@ -1245,6 +1248,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "updatePersonalInformation":
             MessageLookupByLibrary.simpleMessage("تعديل البيانات الشخصية"),
         "updateStore": MessageLookupByLibrary.simpleMessage("تعديل المتجر"),
+        "updateStoreAnswerSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تحديث جواب المتجر بنجاح"),
         "updateYourData":
             MessageLookupByLibrary.simpleMessage("تحديث البيانات"),
         "updatedBy":

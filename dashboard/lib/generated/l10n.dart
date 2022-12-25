@@ -8429,6 +8429,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Update store answer for cash order`
+  String get updateStoreAnswerSuccessfully {
+    return Intl.message(
+      'Update store answer for cash order',
+      name: 'updateStoreAnswerSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash Received`
+  String get receivedCash {
+    return Intl.message(
+      'Cash Received',
+      name: 'receivedCash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash not Received`
+  String get notReceivedCash {
+    return Intl.message(
+      'Cash not Received',
+      name: 'notReceivedCash',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

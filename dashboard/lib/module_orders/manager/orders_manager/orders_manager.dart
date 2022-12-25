@@ -6,6 +6,7 @@ import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/request/resolve_conflects_order_request.dart';
+import 'package:c4d/module_orders/request/store_answer_cash_order_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/update_distance_request.dart';
 import 'package:c4d/module_orders/response/order_actionlogs_response/order_actionlogs_response.dart';
@@ -77,4 +78,7 @@ class OrdersManager {
   Future<ActionResponse?> resolveOrderConflicts(
           ResolveConflictsOrderRequest request) =>
       _repository.resolveOrderConflicts(request);
+  Future<ActionResponse?> updateAnswerOrderCashForStore(
+          StoreAnswerForOrderCashRequest request) =>
+      _repository.updateAnswerOrderCashForStore(request);
 }

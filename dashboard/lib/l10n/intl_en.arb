@@ -836,9 +836,9 @@
     "captainsRating": "Captain Ratings",
     "cannotSubscribeToCaptainOffer": "You cannot subscribe with captain offer because store out of subscriptions",
     "captainActivity": "Captain Activity",
-    "updatedOrderStatusByAdministration":"Updated order status by administration",
-    "payConflictAnswersResolvedByAdministration":"Conflicted answers resolved by administration"
-
-
-
+    "updatedOrderStatusByAdministration": "Updated order status by administration",
+    "payConflictAnswersResolvedByAdministration": "Conflicted answers resolved by administration",
+    "updateStoreAnswerSuccessfully": "Update store answer for cash order",
+    "receivedCash": "Cash Received",
+    "notReceivedCash": "Cash not Received"
 }
