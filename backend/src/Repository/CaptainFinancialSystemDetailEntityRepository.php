@@ -145,4 +145,59 @@ class CaptainFinancialSystemDetailEntityRepository extends ServiceEntityReposito
             ->getQuery()
             ->getResult();
     }
+
+    public function getLastCaptainFinancialSystemDetailByCaptainUserId(int $captainUserId): array
+    {
+        $query = $this->createQueryBuilder('captainFinancialSystemDetailEntity');
+
+            $query->select('captainFinancialSystemDetailEntity.id', 'captainFinancialSystemDetailEntity.createdAt',
+                'captainFinancialSystemDetailEntity.updatedAt', 'captainFinancialSystemDetailEntity.captainFinancialSystemType',
+                'captainFinancialSystemDetailEntity.status')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = captainFinancialSystemDetailEntity.captain'
+            )
+
+            ->andWhere('captainEntity.captainId = :captainUserId')
+            ->setParameter('captainUserId', $captainUserId)
+
+            ->orderBy('captainFinancialSystemDetailEntity.id', 'DESC')
+
+            ->setMaxResults(1);
+
+        $tempQuery = $query->getQuery()->getOneOrNullResult();
+
+        if ($tempQuery) {
+            if ($tempQuery['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
+                $query->addSelect('systemOne.countHours', 'systemOne.compensationForEveryOrder', 'systemOne.salary');
+
+                $query->leftJoin(
+                    CaptainFinancialSystemAccordingToCountOfHoursEntity::class,
+                    'systemOne',
+                    Join::WITH,
+                    'systemOne.id = captainFinancialSystemDetailEntity.captainFinancialSystemId'
+                );
+
+                return $query->getQuery()->getOneOrNullResult();
+
+            } elseif ($tempQuery['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
+                $query->addSelect('systemTwo.countOrdersInMonth', 'systemTwo.salary', 'systemTwo.monthCompensation',
+                    'systemTwo.bounceMaxCountOrdersInMonth', 'systemTwo.bounceMinCountOrdersInMonth');
+
+                $query->leftJoin(
+                    CaptainFinancialSystemAccordingToCountOfOrdersEntity::class,
+                    'systemTwo',
+                    Join::WITH,
+                    'systemTwo.id = captainFinancialSystemDetailEntity.captainFinancialSystemId'
+                );
+
+                return $query->getQuery()->getOneOrNullResult();
+            }
+        }
+
+        return $query->getQuery()->getOneOrNullResult();
+    }
 }

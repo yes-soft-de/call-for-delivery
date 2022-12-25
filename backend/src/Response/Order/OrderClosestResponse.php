@@ -50,4 +50,7 @@ class OrderClosestResponse
      * @var object|null
      */
     public $destination;
+
+    // Expected order financial value if the captain accept it
+    public float $expectedOrderValue;
 }

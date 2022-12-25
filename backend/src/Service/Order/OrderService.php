@@ -39,6 +39,7 @@ use App\Response\Order\OrderUpdateIsCaptainPaidToProviderResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Subscription\SubscriptionConstant;
+use App\Service\CaptainOrderFinancialService\OrderFinancialValueGetService;
 use App\Service\DateFactory\DateFactoryService;
 use App\Service\OrderLog\OrderLogGetService;
 use App\Service\OrderLog\OrderLogService;
@@ -103,13 +104,14 @@ class OrderService
     private OrderLogService $orderLogService;
     private OrderLogGetService $orderLogGetService;
     private DateFactoryService $dateFactoryService;
+    private OrderFinancialValueGetService $orderFinancialValueGetService;
 
     public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService,
                                 UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService,
                                 OrderTimeLineService $orderTimeLineService, NotificationFirebaseService $notificationFirebaseService, CaptainFinancialDuesService $captainFinancialDuesService,
                                 CaptainAmountFromOrderCashService $captainAmountFromOrderCashService, StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService,
                                 BidOrderFinancialService $bidOrderFinancialService, OrderLogService $orderLogService, OrderLogGetService $orderLogGetService,
-                                DateFactoryService $dateFactoryService)
+                                DateFactoryService $dateFactoryService, OrderFinancialValueGetService $orderFinancialValueGetService)
     {
         $this->autoMapping = $autoMapping;
         $this->orderManager = $orderManager;
@@ -127,6 +129,7 @@ class OrderService
         $this->orderLogService = $orderLogService;
         $this->orderLogGetService = $orderLogGetService;
         $this->dateFactoryService = $dateFactoryService;
+        $this->orderFinancialValueGetService = $orderFinancialValueGetService;
     }
 
     /**
@@ -358,8 +361,10 @@ class OrderService
         $orders = $this->orderManager->closestOrders($userId, $date);
 
         foreach ($orders as $key => $value) {
-
             $value['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderId($value['id']);
+
+            // Get the financial value that the order will add to the financial dues of the captain if he/she accept the order
+            $value['expectedOrderValue'] = $this->getSingleOrderFinancialValueByCaptainUserId($userId, $value['storeBranchToClientDistance']);
 
             if ($value['roomId']) {
                 $value['roomId'] = $value['roomId']->toBase32();
@@ -1632,5 +1637,22 @@ class OrderService
     public function getCaptainNameByCaptainUserId(int $captainUserId): string
     {
         return $this->captainService->getCaptainNameByCaptainUserId($captainUserId);
+    }
+
+    public function getCaptainProfileIdByCaptainUserId(int $captainUserId): int|string
+    {
+        return $this->captainService->getCaptainProfileIdByCaptainUserId($captainUserId);
+    }
+
+    // Get the financial value that the order will add to the financial dues of the captain if he/she accept the order
+    public function getSingleOrderFinancialValueByCaptainUserId(int $captainUserId, float $orderDistance): float
+    {
+        $captainProfileId = $this->getCaptainProfileIdByCaptainUserId($captainUserId);
+
+        if ($captainProfileId === CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST) {
+            return 0.0;
+        }
+
+        return $this->orderFinancialValueGetService->getSingleOrderFinancialValueByCaptainUserId($captainProfileId, $captainUserId, $orderDistance);
     }
 }

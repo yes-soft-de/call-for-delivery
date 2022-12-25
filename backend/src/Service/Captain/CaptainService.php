@@ -170,4 +170,15 @@ class CaptainService
 
         return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
     }
+
+    public function getCaptainProfileIdByCaptainUserId(int $userId): int|string
+    {
+        $captainProfile = $this->captainManager->getCaptainProfileByUserId($userId);
+
+        if (! $captainProfile) {
+            return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
+        }
+
+        return $captainProfile->getId();
+    }
 }
