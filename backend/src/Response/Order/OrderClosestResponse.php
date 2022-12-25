@@ -52,5 +52,5 @@ class OrderClosestResponse
     public $destination;
 
     // Expected order financial value if the captain accept it
-    public float $expectedOrderValue;
+    public float $captainProfit;
 }

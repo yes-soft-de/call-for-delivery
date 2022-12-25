@@ -364,7 +364,7 @@ class OrderService
             $value['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderId($value['id']);
 
             // Get the financial value that the order will add to the financial dues of the captain if he/she accept the order
-            $value['expectedOrderValue'] = $this->getSingleOrderFinancialValueByCaptainUserId($userId, $value['storeBranchToClientDistance']);
+            $value['captainProfit'] = $this->getSingleOrderFinancialValueByCaptainUserId($userId, $value['storeBranchToClientDistance']);
 
             if ($value['roomId']) {
                 $value['roomId'] = $value['roomId']->toBase32();
@@ -1645,7 +1645,7 @@ class OrderService
     }
 
     // Get the financial value that the order will add to the financial dues of the captain if he/she accept the order
-    public function getSingleOrderFinancialValueByCaptainUserId(int $captainUserId, float $orderDistance): float
+    public function getSingleOrderFinancialValueByCaptainUserId(int $captainUserId, float $orderDistance = null): float
     {
         $captainProfileId = $this->getCaptainProfileIdByCaptainUserId($captainUserId);
 

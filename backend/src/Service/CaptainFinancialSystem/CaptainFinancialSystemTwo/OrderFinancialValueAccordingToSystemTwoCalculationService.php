@@ -37,9 +37,13 @@ class OrderFinancialValueAccordingToSystemTwoCalculationService
     //                  order value = (10 * (month compensation / orders in month)) * 2
     //              If target achieved currently
     //                  order value = (25 * (month compensation / orders in month)) * 2
-    public function getOrderFinancialValueAccordingToCountOfOrders(int $captainProfileId, int $captainUserId, float $orderDistance, int $countOrdersInMonth, float $monthCompensation): float
+    public function getOrderFinancialValueAccordingToCountOfOrders(int $captainProfileId, int $captainUserId, int $countOrdersInMonth, float $monthCompensation, float $orderDistance = null): float
     {
         // Captain financial system is the second one
+        if (! $orderDistance) {
+            $orderDistance = 0;
+        }
+
         $dates = $this->getLatestCaptainFinancialDuesStartAndEndDates($captainProfileId);
 
         $ordersCount = $this->getDeliveredOrdersCountByCaptainIdAndBetweenTwoDates($captainProfileId, $dates['fromDate'], $dates['toDate']);

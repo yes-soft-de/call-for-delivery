@@ -17,7 +17,7 @@ class OrderFinancialValueGetService
         $this->orderFinancialValueAccordingToSystemTwoCalculationService = $orderFinancialValueAccordingToSystemTwoCalculationService;
     }
 
-    public function getSingleOrderFinancialValueByCaptainUserId(int $captainProfileId, int $captainUserId, float $orderDistance): float
+    public function getSingleOrderFinancialValueByCaptainUserId(int $captainProfileId, int $captainUserId, float $orderDistance = null): float
     {
         // First, get the captain financial system type and id
         $captainFinancialSystemDetails = $this->captainFinancialSystemDetailGetService->getLastCaptainFinancialSystemDetailByCaptainUserId($captainUserId);
@@ -30,8 +30,8 @@ class OrderFinancialValueGetService
 
             } elseif ($captainFinancialSystemDetails['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
                 // Captain financial system is the second one
-                return $this->getOrderFinancialValueAccordingToCountOfOrders($captainProfileId, $captainUserId, $orderDistance, $captainFinancialSystemDetails['countOrdersInMonth'],
-                    $captainFinancialSystemDetails['monthCompensation']);
+                return $this->getOrderFinancialValueAccordingToCountOfOrders($captainProfileId, $captainUserId, $captainFinancialSystemDetails['countOrdersInMonth'],
+                    $captainFinancialSystemDetails['monthCompensation'], $orderDistance);
 
             } elseif ($captainFinancialSystemDetails['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_THREE) {
                 // Captain financial system is the third one
@@ -42,9 +42,9 @@ class OrderFinancialValueGetService
         return 0.0;
     }
 
-    public function getOrderFinancialValueAccordingToCountOfOrders(int $captainProfileId, int $captainUserId, float $orderDistance, int $countOrdersInMonth, float $monthCompensation): float
+    public function getOrderFinancialValueAccordingToCountOfOrders(int $captainProfileId, int $captainUserId, int $countOrdersInMonth, float $monthCompensation, float $orderDistance = null): float
     {
         return $this->orderFinancialValueAccordingToSystemTwoCalculationService->getOrderFinancialValueAccordingToCountOfOrders($captainProfileId, $captainUserId,
-            $orderDistance, $countOrdersInMonth, $monthCompensation);
+            $countOrdersInMonth, $monthCompensation, $orderDistance);
     }
 }
