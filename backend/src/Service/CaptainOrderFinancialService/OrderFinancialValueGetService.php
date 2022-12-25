@@ -31,7 +31,8 @@ class OrderFinancialValueGetService
             } elseif ($captainFinancialSystemDetails['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
                 // Captain financial system is the second one
                 return $this->getOrderFinancialValueAccordingToCountOfOrders($captainProfileId, $captainUserId, $captainFinancialSystemDetails['countOrdersInMonth'],
-                    $captainFinancialSystemDetails['monthCompensation'], $orderDistance);
+                    $captainFinancialSystemDetails['monthCompensation'], $captainFinancialSystemDetails['bounceMinCountOrdersInMonth'],
+                    $captainFinancialSystemDetails['bounceMaxCountOrdersInMonth'], $orderDistance);
 
             } elseif ($captainFinancialSystemDetails['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_THREE) {
                 // Captain financial system is the third one
@@ -42,9 +43,11 @@ class OrderFinancialValueGetService
         return 0.0;
     }
 
-    public function getOrderFinancialValueAccordingToCountOfOrders(int $captainProfileId, int $captainUserId, int $countOrdersInMonth, float $monthCompensation, float $orderDistance = null): float
+    public function getOrderFinancialValueAccordingToCountOfOrders(int $captainProfileId, int $captainUserId, int $countOrdersInMonth,
+                                                                   float $monthCompensation, float $bounceMinCountOrdersInMonth,
+                                                                   float $bounceMaxCountOrdersInMonth, float $orderDistance = null): float
     {
         return $this->orderFinancialValueAccordingToSystemTwoCalculationService->getOrderFinancialValueAccordingToCountOfOrders($captainProfileId, $captainUserId,
-            $countOrdersInMonth, $monthCompensation, $orderDistance);
+            $countOrdersInMonth, $monthCompensation, $bounceMinCountOrdersInMonth, $bounceMaxCountOrdersInMonth, $orderDistance);
     }
 }
