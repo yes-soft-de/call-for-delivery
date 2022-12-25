@@ -853,6 +853,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "pay": MessageLookupByLibrary.simpleMessage("Pay"),
         "payConflictAnswersResolved": MessageLookupByLibrary.simpleMessage(
             "Payment conflict answer resolved"),
+        "payConflictAnswersResolvedByAdministration":
+            MessageLookupByLibrary.simpleMessage(
+                "Conflicted answers resolved by administration"),
         "paySubscription":
             MessageLookupByLibrary.simpleMessage("Pay Subscription"),
         "paymentAmount": MessageLookupByLibrary.simpleMessage("Payment amount"),
@@ -1256,6 +1259,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateYourData": MessageLookupByLibrary.simpleMessage("Update Data"),
         "updatedBy": MessageLookupByLibrary.simpleMessage("Updated by"),
         "updatedOrder": MessageLookupByLibrary.simpleMessage("Updated order"),
+        "updatedOrderStatusByAdministration":
+            MessageLookupByLibrary.simpleMessage(
+                "Updated order status by administration"),
         "uploadAndSubmit":
             MessageLookupByLibrary.simpleMessage("Upload and submit"),
         "uploadImageIfyouHave":

@@ -26,28 +26,33 @@ class ProfileModel extends DataModel {
   bool? verificationStatus;
   late int captainId;
   late String roomId;
-  ProfileModel(
-      {required this.id,
-      this.image,
-      this.name,
-      this.phone,
-      this.stcPay,
-      this.bankNumber,
-      this.bankName,
-      this.drivingLicence,
-      this.car,
-      this.identity,
-      this.mechanicLicense,
-      this.age,
-      this.isOnline,
-      this.status,
-      this.bounce,
-      this.salary,
-      this.createDate,
-      this.captainFinance,
-      this.verificationStatus,
-      required this.captainId,
-      required this.roomId});
+  String? city;
+  String? address;
+  ProfileModel({
+    required this.id,
+    this.image,
+    this.name,
+    this.phone,
+    this.stcPay,
+    this.bankNumber,
+    this.bankName,
+    this.drivingLicence,
+    this.car,
+    this.identity,
+    this.mechanicLicense,
+    this.age,
+    this.isOnline,
+    this.status,
+    this.bounce,
+    this.salary,
+    this.createDate,
+    this.captainFinance,
+    this.verificationStatus,
+    required this.captainId,
+    required this.roomId,
+    this.address,
+    this.city,
+  });
 
   ProfileModel? _models;
 

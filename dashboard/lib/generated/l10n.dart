@@ -8409,6 +8409,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Updated order status by administration`
+  String get updatedOrderStatusByAdministration {
+    return Intl.message(
+      'Updated order status by administration',
+      name: 'updatedOrderStatusByAdministration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Conflicted answers resolved by administration`
+  String get payConflictAnswersResolvedByAdministration {
+    return Intl.message(
+      'Conflicted answers resolved by administration',
+      name: 'payConflictAnswersResolvedByAdministration',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

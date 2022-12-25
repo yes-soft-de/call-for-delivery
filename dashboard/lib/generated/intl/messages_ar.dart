@@ -88,7 +88,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addStore": MessageLookupByLibrary.simpleMessage("أضف متجر"),
         "addWorkPackage":
             MessageLookupByLibrary.simpleMessage("إضافة باقة عمل"),
-        "address": MessageLookupByLibrary.simpleMessage("الموقع"),
+        "address": MessageLookupByLibrary.simpleMessage("العنوان"),
         "admin": MessageLookupByLibrary.simpleMessage("المدير"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "all": MessageLookupByLibrary.simpleMessage("الكل"),
@@ -847,6 +847,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "pay": MessageLookupByLibrary.simpleMessage("ادفع"),
         "payConflictAnswersResolved": MessageLookupByLibrary.simpleMessage(
             "تم حل التعارض بين الاجابات حول تسليم المبلغ النقدي من أجل الطلب"),
+        "payConflictAnswersResolvedByAdministration":
+            MessageLookupByLibrary.simpleMessage(
+                "تم حل التعارض بين المتجر والكابتن عن طريق الإدارة"),
         "paySubscription": MessageLookupByLibrary.simpleMessage("دفع الاشتراك"),
         "paymentAmount": MessageLookupByLibrary.simpleMessage("قيمة الدفعة"),
         "paymentFailed": MessageLookupByLibrary.simpleMessage(
@@ -1248,6 +1251,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تعديل الحالة من قبل"),
         "updatedOrder":
             MessageLookupByLibrary.simpleMessage("تم تحديث معلومات طلب"),
+        "updatedOrderStatusByAdministration":
+            MessageLookupByLibrary.simpleMessage(
+                "تم تحديث حالة الطلب من قبل الادارة"),
         "uploadAndSubmit":
             MessageLookupByLibrary.simpleMessage("رفع الصور وارسال الطلب"),
         "uploadImageIfyouHave":
