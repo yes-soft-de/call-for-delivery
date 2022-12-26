@@ -840,5 +840,7 @@
     "payConflictAnswersResolvedByAdministration": "Conflicted answers resolved by administration",
     "updateStoreAnswerSuccessfully": "Update store answer for cash order",
     "receivedCash": "Cash Received",
-    "notReceivedCash": "Cash not Received"
+    "notReceivedCash": "Cash not Received",
+    "areSureAboutAnsweringBehalfStore":"Are sure about answering behalf store"
+
 }

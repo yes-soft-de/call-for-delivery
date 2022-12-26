@@ -99,6 +99,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المبالغ المخصصة للمتاجر"),
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
+        "areSureAboutAnsweringBehalfStore":
+            MessageLookupByLibrary.simpleMessage(
+                "هل انت متأكد من إجابتك عن المتجر"),
         "areSureAboutDeleteThisCaptainOfferSubscriptions":
             MessageLookupByLibrary.simpleMessage(
                 "هل انت متأكد من رغبتك في حذف الاشتراك بعروض الكابتن"),

@@ -100,6 +100,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Amount for store"),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
         "apply": MessageLookupByLibrary.simpleMessage("APPLY"),
+        "areSureAboutAnsweringBehalfStore":
+            MessageLookupByLibrary.simpleMessage(
+                "Are sure about answering behalf store"),
         "areSureAboutDeleteThisCaptainOfferSubscriptions":
             MessageLookupByLibrary.simpleMessage(
                 "Are you sure about deleting captain offer subscription"),

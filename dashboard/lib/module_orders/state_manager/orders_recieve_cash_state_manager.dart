@@ -130,7 +130,7 @@ class OrdersReceiveCashStateManager {
                   }
                 });
               },
-              content: S.current.areSureAboutResolveThisOrder,
+              content: S.current.areSureAboutAnsweringBehalfStore,
               oneAction: false);
         });
   }

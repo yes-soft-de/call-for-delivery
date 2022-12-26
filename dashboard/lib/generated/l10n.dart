@@ -8459,6 +8459,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Are sure about answering behalf store`
+  String get areSureAboutAnsweringBehalfStore {
+    return Intl.message(
+      'Are sure about answering behalf store',
+      name: 'areSureAboutAnsweringBehalfStore',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
