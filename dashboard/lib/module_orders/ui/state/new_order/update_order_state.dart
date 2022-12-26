@@ -45,6 +45,7 @@ class UpdateOrderLoaded extends States {
     screenState.orderDetailsController.text = orderInfo.note;
     screenState.noteController.text = orderInfo.note;
     screenState.receiptNameController.text = orderInfo.customerName;
+    distance = orderInfo.storeBranchToClientDistance;
     var number = orderInfo.customerPhone;
     if (number == S.current.unknown) number = '';
     if (number.isNotEmpty || number != '') {
@@ -595,28 +596,31 @@ class UpdateOrderLoaded extends States {
                   ),
                 ),
                 // suborder check
-                Padding(
-                  padding: const EdgeInsets.only(left: 8, right: 8, top: 16),
-                  child: Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        color: Theme.of(context).backgroundColor),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: CheckboxListTile(
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(25)),
-                          secondary: Icon(FontAwesomeIcons.boxes),
-                          value: orderIsMain,
-                          title: Text(S.current.thisOrderCanBeLinked),
-                          onChanged: (check) {
-                            if (check == true) {
-                              orderIsMain = true;
-                            } else {
-                              orderIsMain = false;
-                            }
-                            screenState.refresh();
-                          }),
+                Visibility(
+                  visible: orderInfo.primaryOrderId == null,
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8, right: 8, top: 16),
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Theme.of(context).backgroundColor),
+                      child: Material(
+                        color: Colors.transparent,
+                        child: CheckboxListTile(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25)),
+                            secondary: Icon(FontAwesomeIcons.boxes),
+                            value: orderIsMain,
+                            title: Text(S.current.thisOrderCanBeLinked),
+                            onChanged: (check) {
+                              if (check == true) {
+                                orderIsMain = true;
+                              } else {
+                                orderIsMain = false;
+                              }
+                              screenState.refresh();
+                            }),
+                      ),
                     ),
                   ),
                 ),
