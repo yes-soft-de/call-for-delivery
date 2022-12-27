@@ -42,6 +42,10 @@ class SearchForOrderScreenState extends State<SearchForOrderScreen> {
     super.initState();
     currentState = LoadingState(this);
     ordersFilter = FilterOrderRequest();
+    searchForOrderController.addListener(() {
+      ordersFilter.orderId = searchForOrderController.text;
+      widget._stateManager.getOrdersFilters(this, ordersFilter);
+    });
     widget._stateManager.getOrdersFilters(this, ordersFilter);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
       currentState = event;
