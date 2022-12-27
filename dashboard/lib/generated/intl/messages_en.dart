@@ -224,6 +224,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain total category"),
         "captainUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Captain updated successfully"),
+        "captainratingDetails":
+            MessageLookupByLibrary.simpleMessage("Captain Rataings Details"),
         "captains": MessageLookupByLibrary.simpleMessage("Captains"),
         "captainsOffer": MessageLookupByLibrary.simpleMessage("Captains offer"),
         "captainsRating":
@@ -694,6 +696,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("Next Payment Date:"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
+        "noComment": MessageLookupByLibrary.simpleMessage("No comments"),
         "noImage": MessageLookupByLibrary.simpleMessage("No Image"),
         "notAccepted": MessageLookupByLibrary.simpleMessage("not accepted"),
         "notAllowedCaptainInStore": MessageLookupByLibrary.simpleMessage(
@@ -716,6 +719,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "notice": MessageLookupByLibrary.simpleMessage("Updates"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
         "now": MessageLookupByLibrary.simpleMessage("Now"),
+        "numberofRatings":
+            MessageLookupByLibrary.simpleMessage("Number of rates"),
         "offerLog": MessageLookupByLibrary.simpleMessage("Offer log"),
         "offerStatus": MessageLookupByLibrary.simpleMessage("Offer status"),
         "ok": MessageLookupByLibrary.simpleMessage("OK"),

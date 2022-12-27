@@ -8,6 +8,7 @@ import 'package:c4d/module_captain/ui/screen/captain_profile_screen.dart';
 import 'package:c4d/module_captain/ui/screen/captain_rating_screen.dart';
 import 'package:c4d/module_captain/ui/screen/captains_assign_order_screen.dart';
 import 'package:c4d/module_captain/ui/screen/captains_list_screen.dart';
+import 'package:c4d/module_captain/ui/screen/captin_rating_details_state.dart';
 import 'package:c4d/module_captain/ui/screen/change_captain_plan_screen.dart';
 import 'package:c4d/module_captain/ui/screen/in_active_captains_screen.dart';
 import 'package:flutter/material.dart';
@@ -29,6 +30,7 @@ class CaptainsModule extends YesModule {
   final PlanScreen planScreen;
   final CaptainAssignOrderScreen captainAssignOrderScreen;
   final CaptainsRatingScreen captainsRatingsScreen;
+  final CaptinRatingDetailsScreen captainsRatingsDetailsScreen;
   final CaptainsActivityScreen captainsActivityScreen;
   CaptainsModule(
     this.captainOffersScreen,
@@ -42,6 +44,7 @@ class CaptainsModule extends YesModule {
     this.planScreen,
     this.captainAssignOrderScreen,
     this.captainsRatingsScreen,
+    this.captainsRatingsDetailsScreen,
     this.captainsActivityScreen,
   ) {
     YesModule.RoutesMap.addAll(getRoutes());
@@ -60,6 +63,8 @@ class CaptainsModule extends YesModule {
       CaptainsRoutes.CAPTAIN_PLAN: (context) => planScreen,
       CaptainsRoutes.ASSIGN_TO_CAPTAIN: (context) => captainAssignOrderScreen,
       CaptainsRoutes.CAPTAIN_RATING: (context) => captainsRatingsScreen,
+      CaptainsRoutes.CAPTAIN_RATING_DETAILS: (context) =>
+          captainsRatingsDetailsScreen,
       CaptainsRoutes.CAPTAIN_ACTIVITY: (context) => captainsActivityScreen,
     };
   }

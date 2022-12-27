@@ -54,7 +54,7 @@ class CaptinRatingDetailsLoadedState extends States {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     Text(
-                      S.current.numberofratings,
+                      S.current.numberofRatings,
                       style: TextStyle(color: Colors.white),
                     ),
                     Text(
@@ -126,7 +126,7 @@ class ItemRatingWidget extends StatelessWidget {
           ),
           CustomListTile(
             title: captainRatingDetailsModel.comment == ''
-                ? S.current.nocomment
+                ? S.current.noComment
                 : captainRatingDetailsModel.comment,
             subTitle: '',
             iconData: Icons.comment,

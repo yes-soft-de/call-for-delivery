@@ -254,9 +254,13 @@ class Urls {
       BASE_CAPTAIN_ACCOUNT_BALANCE_DUES + '/captainfinancialduesforadmin';
   static const GET_CAPTAIN_RATING_REPORT =
       BASE_API + VERSION_ADMIN + '/report/captainsratings';
+  static const GET_CAPTAIN_RATING_DETAILS =
+      DOMAIN + VERSION_ADMIN + '/rate/captainratingsforadmin';
   static const GET_CAPTAIN_ACTIVITY_REPORT = BASE_API +
       VERSION_ADMIN +
       '/report/activecaptainswithorderscountforadmin';
+  static const RATING_CAPTAIN =
+      DOMAIN + VERSION_ADMIN + '/rate/captainratingsforadmin';
   /*-----------------Supplier--Categories---------------*/
   static const GET_SUPPLIER_CATEGORIES =
       BASE_API_SUPPLIER_CATE + '/suppliercategories';

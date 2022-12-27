@@ -8409,6 +8409,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Captain Rataings Details`
+  String get captainratingDetails {
+    return Intl.message(
+      'Captain Rataings Details',
+      name: 'captainratingDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Number of rates`
+  String get numberofRatings {
+    return Intl.message(
+      'Number of rates',
+      name: 'numberofRatings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No comments`
+  String get noComment {
+    return Intl.message(
+      'No comments',
+      name: 'noComment',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

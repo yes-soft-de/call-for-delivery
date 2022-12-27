@@ -71,6 +71,8 @@ import '../module_captain/state_manager/captain_profile_state_manager.dart'
     as _i128;
 import '../module_captain/state_manager/captain_rating_state_manager.dart'
     as _i131;
+import '../module_captain/state_manager/captin_rating_details_state_manager.dart'
+    as _i1331;
 import '../module_captain/state_manager/in_active_captains_state_manager.dart'
     as _i74;
 import '../module_captain/state_manager/plan_screen_state_manager.dart' as _i96;
@@ -111,6 +113,7 @@ import '../module_company/repository/company_repository.dart' as _i30;
 import '../module_company/service/company_service.dart' as _i68;
 import '../module_company/state_manager/company_financial_state_manager.dart'
     as _i136;
+import '../module_captain/ui/screen/captin_rating_details_state.dart' as _i1980;
 import '../module_company/state_manager/company_profile_state_manager.dart'
     as _i137;
 import '../module_company/ui/screen/company_finance_screen.dart' as _i194;
@@ -586,6 +589,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       _i130.CaptainsNeedsSupportStateManager(get<_i57.CaptainsService>()));
   gh.factory<_i131.CaptainsRatingStateManager>(
       () => _i131.CaptainsRatingStateManager(get<_i57.CaptainsService>()));
+  gh.factory<_i1331.CaptinRatingDetailsStateManager>(() =>
+      _i1331.CaptinRatingDetailsStateManager(get<_i57.CaptainsService>()));
   gh.factory<_i132.CaptainsScreen>(
       () => _i132.CaptainsScreen(get<_i58.CaptainsStateManager>()));
   gh.factory<_i133.CarsScreen>(
@@ -726,6 +731,9 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
           get<_i130.CaptainsNeedsSupportStateManager>()));
   gh.factory<_i190.CaptainsRatingScreen>(() =>
       _i190.CaptainsRatingScreen(get<_i131.CaptainsRatingStateManager>()));
+  gh.factory<_i1980.CaptinRatingDetailsScreen>(() =>
+      _i1980.CaptinRatingDetailsScreen(
+          get<_i1331.CaptinRatingDetailsStateManager>()));
   gh.factory<_i191.CarsModule>(() => _i191.CarsModule(get<_i133.CarsScreen>()));
   gh.factory<_i192.CategoriesModule>(() => _i192.CategoriesModule(
       get<_i134.CategoriesScreen>(), get<_i158.PackagesScreen>()));
@@ -815,7 +823,8 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       get<_i180.BranchesListScreen>(),
       get<_i219.UpdateBranchScreen>(),
       get<_i200.InitBranchesScreen>()));
-  gh.factory<_i221.CaptainsModule>(() => _i221.CaptainsModule(
+  gh.factory<_i221.CaptainsModule>(
+    () => _i221.CaptainsModule(
       get<_i127.CaptainOffersScreen>(),
       get<_i140.InActiveCaptainsScreen>(),
       get<_i132.CaptainsScreen>(),
@@ -827,7 +836,10 @@ _i1.GetIt $initGetIt(_i1.GetIt get,
       get<_i160.PlanScreen>(),
       get<_i181.CaptainAssignOrderScreen>(),
       get<_i190.CaptainsRatingScreen>(),
-      get<_i188.CaptainsActivityScreen>()));
+      get<_i1980.CaptinRatingDetailsScreen>(),
+      get<_i188.CaptainsActivityScreen>(),
+    ),
+  );
   gh.factory<_i222.CompanyModule>(() => _i222.CompanyModule(
       get<_i195.CompanyProfileScreen>(), get<_i194.CompanyFinanceScreen>()));
   gh.factory<_i223.StoresModule>(() => _i223.StoresModule(

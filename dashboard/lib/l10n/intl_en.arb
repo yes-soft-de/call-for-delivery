@@ -835,5 +835,8 @@
     "storeOrderLog": "Order log",
     "captainsRating": "Captain Ratings",
     "cannotSubscribeToCaptainOffer": "You cannot subscribe with captain offer because store out of subscriptions",
-    "captainActivity": "Captain Activity"
+    "captainActivity": "Captain Activity",
+    "captainratingDetails":"Captain Rataings Details",
+    "numberofRatings":"Number of rates",
+    "noComment":"No comments"
 }

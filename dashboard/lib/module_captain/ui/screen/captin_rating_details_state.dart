@@ -62,7 +62,7 @@ class CaptinRatingDetailsScreenState extends State<CaptinRatingDetailsScreen> {
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(
         context,
-        title: S.current.captainratingdetails,
+        title: S.current.captainratingDetails,
       ),
       body: currentState.getUI(context),
     );
