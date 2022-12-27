@@ -25,4 +25,6 @@ class CaptainBalanceManager {
       _packageBalanceRepository.getCaptainAccountBalance();
   Future<CaptainFinancialDuesResponse?> getCaptainFinancialDues() =>
       _packageBalanceRepository.getCaptainFinancialDues();
+  Future<ActionResponse?> stopFinanceRequest() =>
+      _packageBalanceRepository.stopFinanceRequest();
 }

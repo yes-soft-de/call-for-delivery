@@ -745,6 +745,9 @@
     "updateStatusForTimeLimitation":"لايمكنك تعديل حالة الطلب بشكل متكرر قبل انقضاء الحد الزمني",
     "pleaseConfirmPayingToProvider":"الرجاء التأكيد حول دفع تكلفة للطلب للمتجر",
     "pleaseProvideDistance":"الرجاء تزويدنا بالمسافة المقطوعة",
-    "pleaseProvideCashReceivedFromClient":"الرجاء تزويدنا بالمبلغ المقبوض من العميل"
+    "pleaseProvideCashReceivedFromClient":"الرجاء تزويدنا بالمبلغ المقبوض من العميل",
+    "yourCurrentPlanStoppedSuccessfully":"تم إيقاف خطتك المالية بنجاح",
+    "stopPlan":"إيقاف الخطة",
+    "areSureAboutStoppingPlan":"هل أنت متأكد من رغبتك في إيقاف خطة عملك الحالية"
     
 }

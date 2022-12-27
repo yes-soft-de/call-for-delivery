@@ -87,6 +87,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
         "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد من رغبتك في حذف حسابك ، لن تتمكن من استخدام هذه البيانات في تسجيل الدخول بعد الآن"),
+        "areSureAboutStoppingPlan": MessageLookupByLibrary.simpleMessage(
+            "هل أنت متأكد من رغبتك في إيقاف خطة عملك الحالية"),
         "areYouSureAboutDeleteSelectedNotifications":
             MessageLookupByLibrary.simpleMessage(
                 "هل أنت متأكد في رغبتك في حذف الإشعارات التي تم تحديدها"),
@@ -983,6 +985,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "statusCodeUnauthorized": MessageLookupByLibrary.simpleMessage(
             "أنت غير مخول بالقيام بهذا الطلب"),
         "stcPayCode": MessageLookupByLibrary.simpleMessage("رقم حساب STC PAY"),
+        "stopPlan": MessageLookupByLibrary.simpleMessage("إيقاف الخطة"),
         "store": MessageLookupByLibrary.simpleMessage("المتجر"),
         "storeAccountInit":
             MessageLookupByLibrary.simpleMessage("تهيئة الحساب"),
@@ -1168,6 +1171,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "youReached": MessageLookupByLibrary.simpleMessage("لقد تجاوزت"),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
             "قائمة طلباتك فارغة من فضلك اختر ما تريد طلبه"),
+        "yourCurrentPlanStoppedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم إيقاف خطتك المالية بنجاح"),
         "yourNumberStartWithZero": MessageLookupByLibrary.simpleMessage(
             "الرقم المدخل يبدأ بصفر الرجاء إدخال الرقم بدون الصفر"),
         "yourRequestSent": MessageLookupByLibrary.simpleMessage("تم إرسال طلبك")

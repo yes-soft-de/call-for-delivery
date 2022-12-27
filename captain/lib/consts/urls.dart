@@ -226,6 +226,8 @@ class Urls {
       '/v1/captainfinancialsystemaccordingntocountoforders/captainfinancialsystemaccordingtocountoforders';
   static const CREATE_CAPTAIN_FINANCE =
       DOMAIN + '/v1/captainfinancialsystemdetail/captainfinancialsystemdetail';
+  static const STOP_FINANCE_CAPTAIN =
+      DOMAIN + '/v1/captainfinancialdues/stopfinancialcycle';
   static const GET_CAPTAIN_ACCOUNT_BALANCE =
       DOMAIN + '/v1/captainfinancialsystemdetail/captainbalancedetail';
   static const GET_CAPTAIN_FINANCIAL_DUES =

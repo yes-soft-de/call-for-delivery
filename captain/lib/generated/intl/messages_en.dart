@@ -87,6 +87,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "apply": MessageLookupByLibrary.simpleMessage("APPLY"),
         "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
             "Are you sure about deleting your account , you won\'t be able to login with this credential any more"),
+        "areSureAboutStoppingPlan": MessageLookupByLibrary.simpleMessage(
+            "Are you sure about stopping your current plan"),
         "areYouSureAboutDeleteSelectedNotifications":
             MessageLookupByLibrary.simpleMessage(
                 "Are you sure about deleting selected notifications"),
@@ -991,6 +993,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "statusCodeUnauthorized":
             MessageLookupByLibrary.simpleMessage("Unauthorized"),
         "stcPayCode": MessageLookupByLibrary.simpleMessage("STC Pay Code"),
+        "stopPlan": MessageLookupByLibrary.simpleMessage("Stop Plan"),
         "store": MessageLookupByLibrary.simpleMessage("Store"),
         "storeAccountInit":
             MessageLookupByLibrary.simpleMessage("Setup Account"),
@@ -1172,6 +1175,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "youReached": MessageLookupByLibrary.simpleMessage("You have reached "),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
             "Your cart is empty please choose items to add"),
+        "yourCurrentPlanStoppedSuccessfully":
+            MessageLookupByLibrary.simpleMessage(
+                "Your current plan stopped successfully"),
         "yourNumberStartWithZero": MessageLookupByLibrary.simpleMessage(
             "Your number start with zero please remove it and try again"),
         "yourRequestSent":

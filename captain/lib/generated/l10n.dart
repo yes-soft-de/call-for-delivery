@@ -7489,6 +7489,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Your current plan stopped successfully`
+  String get yourCurrentPlanStoppedSuccessfully {
+    return Intl.message(
+      'Your current plan stopped successfully',
+      name: 'yourCurrentPlanStoppedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stop Plan`
+  String get stopPlan {
+    return Intl.message(
+      'Stop Plan',
+      name: 'stopPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about stopping your current plan`
+  String get areSureAboutStoppingPlan {
+    return Intl.message(
+      'Are you sure about stopping your current plan',
+      name: 'areSureAboutStoppingPlan',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

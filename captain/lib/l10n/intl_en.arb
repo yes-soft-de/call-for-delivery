@@ -743,6 +743,11 @@
     "updateStatusForTimeLimitation":"You cannot update order status before pass update time limit",
     "pleaseConfirmPayingToProvider":"Please confirm paying order cost to provider",
     "pleaseProvideDistance":"Please provide distance you take to deliver this order",
-    "pleaseProvideCashReceivedFromClient":"Please provide cash you received from client"
+    "pleaseProvideCashReceivedFromClient":"Please provide cash you received from client",
+    "yourCurrentPlanStoppedSuccessfully":"Your current plan stopped successfully",
+    "stopPlan":"Stop Plan",
+    "areSureAboutStoppingPlan":"Are you sure about stopping your current plan"
+
+
     
 }

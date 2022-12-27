@@ -6,6 +6,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_plan/model/captain_balance_model.dart';
 import 'package:c4d/module_plan/ui/screen/account_balance_screen.dart';
 import 'package:c4d/module_plan/ui/state/account_balance/account_balance_loaded_state.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/module_plan/service/plan_service.dart';
@@ -35,6 +36,24 @@ class AccountBalanceStateManager {
       } else {
         value as CaptainAccountBalanceModel;
         stateSubject.add(AccountBalanceStateLoaded(screenState, value.data));
+      }
+    });
+  }
+
+  void stopeCurrentAccountPlan(AccountBalanceScreenState screenState) {
+    stateSubject.add(LoadingState(screenState));
+    _planService.stopCaptainFinancialDues().then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning, message: value.error ?? '')
+            .show(screenState.context);
+        getAccountBalance(screenState);
+      } else {
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: S.current.yourCurrentPlanStoppedSuccessfully)
+            .show(screenState.context);
+        getAccountBalance(screenState);
       }
     });
   }
