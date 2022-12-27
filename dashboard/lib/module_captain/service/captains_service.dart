@@ -4,7 +4,6 @@ import 'package:c4d/module_captain/model/captain_balance_model.dart';
 import 'package:c4d/module_captain/model/captain_financial_dues.dart';
 import 'package:c4d/module_captain/model/captain_need_support.dart';
 import 'package:c4d/module_captain/model/captain_offer_model.dart';
-import 'package:c4d/module_captain/model/captain_rating_model.dart';
 import 'package:c4d/module_captain/model/captains_order_model.dart';
 import 'package:c4d/module_captain/model/inActiveModel.dart';
 import 'package:c4d/module_captain/model/porfile_model.dart';
@@ -28,6 +27,10 @@ import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
+
+import '../model/captain_rating_model.dart';
+import '../model/captin_rating_details_model.dart';
+import '../response/captain_rating_response/captin_rating_details_response.dart';
 
 @injectable
 class CaptainsService {
@@ -264,6 +267,24 @@ class CaptainsService {
       return DataModel.empty();
     }
     return CaptainRatingModel.withData(actionResponse);
+  }
+
+  //Details Rating
+  Future<DataModel> getCaptainRatingDetails(int captinID) async {
+    CaptinRatingDetailsResponse? actionResponse =
+        await _manager.getCaptainRatingDetails(captinID);
+    // print('=========${actionResponse?.data ?? null}==============');
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    if (actionResponse.data == null) {
+      return DataModel.empty();
+    }
+    return CaptainRatingDetailsModel.withData(actionResponse);
   }
 
   Future<DataModel> getCaptainActivity() async {

@@ -17,6 +17,8 @@ import 'package:c4d/module_captain/response/in_active_captain_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 
+import '../response/captain_rating_response/captin_rating_details_response.dart';
+
 @injectable
 class CaptainsManager {
   final CaptainsRepository _repository;
@@ -69,6 +71,8 @@ class CaptainsManager {
       _repository.deleteCaptain(captainID);
   Future<CaptainRatingResponse?> getCaptainRating() =>
       _repository.getCaptainRating();
+  Future<CaptinRatingDetailsResponse?> getCaptainRatingDetails(int captinID) =>
+      _repository.getCaptainRatingDetails(captinID);
   Future<CaptainActivityResponse?> getCaptainActivity() =>
       _repository.getCaptainActivity();
 }
