@@ -97,20 +97,15 @@ class ItemRatingWidget extends StatelessWidget {
       child: Column(
         children: [
           CustomListTile(
-            // title: S.current.storeOwner,
             title: captainRatingDetailsModel.storeOwnerName,
             subTitle: '',
-            // subTitle: captainRatingDetailsModel.storeOwnerName,
             iconData: Icons.store,
           ),
           CustomListTile(
             title: S.current.rateCaptain,
             subTitle: '',
-            // subTitle: captainRatingDetailsModel.rating.toString(),
             iconData: Icons.star,
             leading: Container(
-              // height: 50,
-              // color: Colors.red,
               child: RatingBarIndicator(
                 rating: captainRatingDetailsModel.rating.toDouble(),
                 itemBuilder: (context, index) => Icon(
