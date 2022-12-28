@@ -6,10 +6,20 @@ class FilterOrderRequest {
   DateTime? fromDate;
   String? captainID;
   String? payment;
-  FilterOrderRequest({this.fromDate, this.state, this.toDate, this.captainID});
+  String? orderId;
+  FilterOrderRequest({
+    this.fromDate,
+    this.state,
+    this.toDate,
+    this.captainID,
+    this.orderId,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
+    if (this.orderId != null) {
+      data['orderId'] = this.orderId;
+    }
     if (this.state != null) {
       data['state'] = this.state;
     }

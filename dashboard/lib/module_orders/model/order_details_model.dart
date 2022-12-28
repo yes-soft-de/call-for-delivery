@@ -53,6 +53,7 @@ class OrderDetailsModel extends DataModel {
   Captain? captain;
   String? storeBranchToClientDistance;
   String? branchID;
+  int? primaryOrderId;
   OrderDetailsModel({
     required this.id,
     required this.branchName,
@@ -92,6 +93,7 @@ class OrderDetailsModel extends DataModel {
     required this.branchID,
     required this.createdAt,
     required this.subOrders,
+    required this.primaryOrderId,
   });
 
   late OrderDetailsModel _orders;
@@ -160,6 +162,7 @@ class OrderDetailsModel extends DataModel {
       branchID: element?.storeOwnerBranchId?.toString(),
       createdAt: DateHelper.convert(element?.createdAt?.timestamp),
       subOrders: _getOrders(element?.subOrders ?? []),
+      primaryOrderId: element?.primaryOrderId,
     );
     _orders.canRemove = _canRemove(_orders.state);
     _orders.distance = _distance(_orders, location);

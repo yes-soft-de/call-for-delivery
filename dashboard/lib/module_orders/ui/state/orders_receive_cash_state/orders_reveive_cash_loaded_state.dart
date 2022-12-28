@@ -3,6 +3,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/resolve_conflects_order_request.dart';
+import 'package:c4d/module_orders/request/store_answer_cash_order_request.dart';
 import 'package:c4d/module_orders/ui/screens/orders_receive_cash_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/order_cash_widgets/order_cash_conflicting_card.dart';
 import 'package:c4d/module_orders/ui/widgets/order_cash_widgets/owner_order_cash_card.dart';
@@ -41,7 +42,15 @@ class OrdersReceiveCashLoadedState extends States {
                 createdDate: element.createdDate,
                 deliveryDate: element.deliveryDate,
                 orderCost: element.orderCost,
-                answer: (answer) {},
+                answer: (answer) {
+                  screenState.manager.storeAnswerCashOrder(
+                      screenState,
+                      screenState.ordersFilter,
+                      StoreAnswerForOrderCashRequest(
+                        id: element.id,
+                        isCashPaymentConfirmedByStore: answer,
+                      ));
+                },
               ),
             ),
           ),

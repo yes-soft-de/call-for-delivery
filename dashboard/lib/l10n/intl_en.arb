@@ -839,4 +839,10 @@
     "captainratingDetails":"Captain Rataings Details",
     "numberofRatings":"Number of rates",
     "noComment":"No comments"
+    "updatedOrderStatusByAdministration": "Updated order status by administration",
+    "payConflictAnswersResolvedByAdministration": "Conflicted answers resolved by administration",
+    "updateStoreAnswerSuccessfully": "Update store answer for cash order",
+    "receivedCash": "Cash Received",
+    "notReceivedCash": "Cash not Received",
+    "areSureAboutAnsweringBehalfStore":"Are sure about answering behalf store"
 }

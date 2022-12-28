@@ -151,6 +151,16 @@ class CaptainProfileLoadedState extends States {
                                 title: S.of(context).car,
                                 subTitle: model?.car,
                                 iconData: Icons.local_taxi_rounded),
+                          // city
+                            CustomListTile(
+                                title: S.of(context).city,
+                                subTitle: model?.city,
+                                iconData: Icons.location_city_rounded),
+                          // address
+                            CustomListTile(
+                                title: S.of(context).address,
+                                subTitle: model?.address,
+                                iconData: Icons.location_history),
                           ],
                         ),
                       ),

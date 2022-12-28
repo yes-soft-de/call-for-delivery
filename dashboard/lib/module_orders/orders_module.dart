@@ -11,6 +11,7 @@ import 'package:c4d/module_orders/ui/screens/order_pending_screen.dart';
 import 'package:c4d/module_orders/ui/screens/orders_captain_screen.dart';
 import 'package:c4d/module_orders/ui/screens/orders_receive_cash_screen.dart';
 import 'package:c4d/module_orders/ui/screens/orders_without_distance_screen.dart';
+import 'package:c4d/module_orders/ui/screens/search_for_order_screen.dart';
 import 'package:c4d/module_orders/ui/screens/sub_orders_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -29,6 +30,7 @@ class OrdersModule extends YesModule {
   final OrdersReceiveCashScreen ordersReceiveCashScreen;
   final SubOrdersScreen subOrdersScreen;
   final NewOrderLinkScreen addNewOrderLinkScreen;
+  final SearchForOrderScreen searchForOrderScreen;
   OrdersModule(
     this._logsScreen,
     this._cashCaptain,
@@ -42,6 +44,7 @@ class OrdersModule extends YesModule {
     this.ordersReceiveCashScreen,
     this.subOrdersScreen,
     this.addNewOrderLinkScreen,
+    this.searchForOrderScreen,
   ) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
@@ -60,6 +63,7 @@ class OrdersModule extends YesModule {
       OrdersRoutes.ORDERS_RECEIVE_CASH: (context) => orderActionLogsScreen,
       OrdersRoutes.SUB_ORDERS_SCREEN: (context) => subOrdersScreen,
       OrdersRoutes.NEW_SUB_ORDER_SCREEN: (context) => addNewOrderLinkScreen,
+      OrdersRoutes.SEARCH_FOR_ORDERS_SCREEN:(context) => searchForOrderScreen
     };
   }
 }
