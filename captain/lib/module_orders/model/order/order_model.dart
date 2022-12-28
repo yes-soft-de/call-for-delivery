@@ -26,24 +26,27 @@ class OrderModel extends DataModel {
   late int isHide;
   late num? storeBranchToClientDistance;
   late String storeName;
-  OrderModel(
-      {required this.branchName,
-      required this.state,
-      required this.orderCost,
-      required this.note,
-      required this.deliveryDate,
-      required this.createdDate,
-      required this.id,
-      required this.location,
-      required this.distance,
-      required this.paymentMethod,
-      required this.subOrders,
-      required this.orderIsMain,
-      required this.isHide,
-      required this.storeBranchToClientDistance,
-      required this.storeName,
-      this.destination,
-      this.destinationLink});
+  num? captainProfit;
+  OrderModel({
+    required this.branchName,
+    required this.state,
+    required this.orderCost,
+    required this.note,
+    required this.deliveryDate,
+    required this.createdDate,
+    required this.id,
+    required this.location,
+    required this.distance,
+    required this.paymentMethod,
+    required this.subOrders,
+    required this.orderIsMain,
+    required this.isHide,
+    required this.storeBranchToClientDistance,
+    required this.storeName,
+    this.destination,
+    this.destinationLink,
+    required this.captainProfit,
+  });
   List<OrderModel> _orders = [];
   OrderModel.withData(OrdersResponse response) {
     var data = response.data;
@@ -87,7 +90,8 @@ class OrderModel extends DataModel {
           destination: element.destination?.lat != null
               ? LatLng(
                   element.destination?.lat ?? 0, element.destination?.lon ?? 0)
-              : null));
+              : null,
+          captainProfit: element.captainProfit ?? 0));
     });
   }
   List<OrderModel> _getOrders(List<SubOrder> suborder) {
@@ -119,7 +123,8 @@ class OrderModel extends DataModel {
               element.location?.longitude?.toDouble() ?? 0),
           paymentMethod: element.payment ?? 'cash',
           storeBranchToClientDistance: element.storeBranchToClientDistance,
-          storeName: element.storeOwnerName ?? S.current.unknown));
+          storeName: element.storeOwnerName ?? S.current.unknown,
+          captainProfit: element.captainProfit ?? 0));
     });
     return orders;
   }

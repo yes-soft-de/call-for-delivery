@@ -390,6 +390,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                 ),
                 credit: element.paymentMethod != 'cash',
                 storeName: element.storeName,
+                captainProfit: element.captainProfit ?? 0,
               ),
             ),
           ),
@@ -627,6 +628,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                     ),
                     screenState);
               },
+              captainProfit: element.captainProfit ?? 0,
             ),
           ),
         ),

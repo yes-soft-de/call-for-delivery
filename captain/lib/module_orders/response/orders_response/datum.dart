@@ -26,28 +26,31 @@ class Datum {
   List<SubOrder>? suborder;
   num? storeBranchToClientDistance;
   String? storeOwnerName;
-  Datum(
-      {this.id,
-      this.state,
-      this.payment,
-      this.orderCost,
-      this.orderType,
-      this.note,
-      this.deliveryDate,
-      this.createdAt,
-      this.storeOrderDetailsId,
-      this.destination,
-      this.recipientName,
-      this.recipientPhone,
-      this.detail,
-      this.storeOwnerBranchId,
-      this.branchName,
-      this.location,
-      this.isHide,
-      this.orderIsMain,
-      this.suborder,
-      this.storeBranchToClientDistance,
-      this.storeOwnerName});
+  num? captainProfit;
+  Datum({
+    this.id,
+    this.state,
+    this.payment,
+    this.orderCost,
+    this.orderType,
+    this.note,
+    this.deliveryDate,
+    this.createdAt,
+    this.storeOrderDetailsId,
+    this.destination,
+    this.recipientName,
+    this.recipientPhone,
+    this.detail,
+    this.storeOwnerBranchId,
+    this.branchName,
+    this.location,
+    this.isHide,
+    this.orderIsMain,
+    this.suborder,
+    this.storeBranchToClientDistance,
+    this.storeOwnerName,
+    this.captainProfit,
+  });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
       id: json['id'] as int?,
@@ -58,6 +61,7 @@ class Datum {
       storeBranchToClientDistance: json['storeBranchToClientDistance'] as num?,
       orderType: json['orderType'] as int?,
       note: json['note'] as String?,
+      captainProfit: json['captainProfit'] as num?,
       deliveryDate: json['deliveryDate'] == null
           ? null
           : DeliveryDate.fromJson(json['deliveryDate'] as Map<String, dynamic>),
