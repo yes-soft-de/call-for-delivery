@@ -27,7 +27,7 @@ class OrderFinancialValueAccordingToSystemThreeCalculationService
     //      Check if order belong to it (according to distance) and if it is, then get its value
     //      Get the delivered orders count in this category kilometers range:
     //          Check if the count meet the required one for getting a bonus after delivering the order
-    public function getOrderFinancialValueAccordingOnOrders(int $captainProfileId, float $orderDistance = null)
+    public function getOrderFinancialValueAccordingOnOrders(int $captainProfileId, float $orderDistance = null): float
     {
         $thirdFinancialSystemCategories = $this->captainFinancialSystemThreeGetService->getAllActiveCaptainFinancialSystemAccordingOnOrder();
 
