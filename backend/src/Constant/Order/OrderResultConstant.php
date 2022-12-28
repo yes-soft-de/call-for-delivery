@@ -43,4 +43,8 @@ final class OrderResultConstant
     const CREATE_DATE_IS_GREATER_THAN_DELIVERY_DATE = "create time is greater than delivery time";
 
     const CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT_FOR_ADMIN = 2;
+
+    const ORDER_IS_HIDDEN_CONST = 21;
+
+    const ORDER_UPDATE_STATE_NOT_ALLOWED_DUE_TO_SHORT_TIME_CONST = 22;
 }

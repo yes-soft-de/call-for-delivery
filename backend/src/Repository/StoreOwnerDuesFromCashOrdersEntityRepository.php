@@ -2,6 +2,9 @@
 
 namespace App\Repository;
 
+use App\Constant\Order\OrderStateConstant;
+use App\Constant\Order\OrderTypeConstant;
+use App\Entity\OrderEntity;
 use App\Entity\StoreOwnerDuesFromCashOrdersEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -117,5 +120,37 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
 
             ->getQuery()
             ->getResult();
+    }
+
+    // Get the dues of unpaid cash orders (for group of orders)
+    public function getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime(int $captainId, string $fromDate, string $toDate): array
+    {
+        return $this->createQueryBuilder('storeOwnerDuesFromCashOrdersEntity')
+            ->select('SUM(storeOwnerDuesFromCashOrdersEntity.amount)')
+
+            ->andWhere('storeOwnerDuesFromCashOrdersEntity.flag = :notPaid')
+            ->setParameter('notPaid', OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO)
+
+            ->leftJoin(
+                OrderEntity::class,
+                'orderEntity',
+                Join::WITH,
+                'orderEntity.id = storeOwnerDuesFromCashOrdersEntity.orderId'
+            )
+
+            ->andWhere('orderEntity.state = :state')
+            ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+            ->andWhere('orderEntity.captainId = :captainId')
+            ->setParameter('captainId', $captainId)
+
+            ->andWhere('orderEntity.createdAt >= :fromDate')
+            ->setParameter('fromDate', $fromDate)
+
+            ->andWhere('orderEntity.createdAt <= :toDate')
+            ->setParameter('toDate', $toDate)
+
+            ->getQuery()
+            ->getSingleColumnResult();
     }
 }

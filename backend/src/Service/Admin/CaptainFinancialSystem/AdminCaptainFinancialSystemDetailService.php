@@ -2,18 +2,21 @@
 
 namespace App\Service\Admin\CaptainFinancialSystem;
 
+use App\Constant\Captain\CaptainConstant;
+use App\Entity\CaptainEntity;
 use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailManager;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
+use App\Request\Admin\Account\CompleteAccountStatusUpdateByAdminRequest;
+use App\Request\Admin\CaptainFinancialSystem\CaptainFinancialSystemDetailCreateByAdminRequest;
+use App\Response\Admin\CaptainFinancialSystem\CaptainFinancialSystemDetailCreateByAdminResponse;
+use App\Service\Admin\Captain\AdminCaptainService;
+use App\Service\Admin\CaptainFinancialSystem\CaptainFinancialSystemTwo\AdminCaptainFinancialSystemTwoGetBalanceDetailsService;
 use App\Service\CaptainPayment\CaptainPaymentService;
-use App\Service\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemOneBalanceDetailService;
 use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse;
-use App\Service\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemTwoBalanceDetailService;
 use App\Entity\CaptainFinancialSystemDetailEntity;
 use App\Request\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailUpdateRequest;
 use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailUpdateResponse;
 use App\AutoMapping;
-use App\Service\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemThreeBalanceDetailService;
-use App\Service\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingOnOrderService;
 use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse;
 use App\Service\CaptainFinancialSystemDate\CaptainFinancialSystemDateService;
 use  App\Service\CaptainFinancialSystem\CaptainFinancialDuesService;
@@ -33,8 +36,15 @@ class AdminCaptainFinancialSystemDetailService implements AdminCaptainFinancialS
     private CaptainFinancialSystemDateService $captainFinancialSystemDateService;
     private CaptainFinancialDuesService $captainFinancialDuesService;
     private AdminOrderService $adminOrderService;
+    private AdminCaptainFinancialSystemTwoGetBalanceDetailsService $adminCaptainFinancialSystemTwoGetBalanceDetailsService;
+    private AdminCaptainService $adminCaptainService;
 
-    public function __construct(CaptainPaymentService $captainPaymentService, AdminCaptainFinancialSystemOneBalanceDetailService $adminCaptainFinancialSystemOneBalanceDetailService, AdminCaptainFinancialSystemDetailManager $adminCaptainFinancialSystemDetailManager, AdminCaptainFinancialSystemTwoBalanceDetailService $adminCaptainFinancialSystemTwoBalanceDetailService, AutoMapping $autoMapping, AdminCaptainFinancialSystemThreeBalanceDetailService $adminCaptainFinancialSystemThreeBalanceDetailService, AdminCaptainFinancialSystemAccordingOnOrderService $adminCaptainFinancialSystemAccordingOnOrderService, CaptainFinancialSystemDateService $captainFinancialSystemDateService, CaptainFinancialDuesService $captainFinancialDuesService, AdminOrderService $adminOrderService)
+    public function __construct(CaptainPaymentService $captainPaymentService, AdminCaptainFinancialSystemOneBalanceDetailService $adminCaptainFinancialSystemOneBalanceDetailService,
+                                AdminCaptainFinancialSystemDetailManager $adminCaptainFinancialSystemDetailManager, AdminCaptainFinancialSystemTwoBalanceDetailService $adminCaptainFinancialSystemTwoBalanceDetailService,
+                                AutoMapping $autoMapping, AdminCaptainFinancialSystemThreeBalanceDetailService $adminCaptainFinancialSystemThreeBalanceDetailService,
+                                AdminCaptainFinancialSystemAccordingOnOrderService $adminCaptainFinancialSystemAccordingOnOrderService, CaptainFinancialSystemDateService $captainFinancialSystemDateService,
+                                CaptainFinancialDuesService $captainFinancialDuesService, AdminOrderService $adminOrderService, AdminCaptainFinancialSystemTwoGetBalanceDetailsService $adminCaptainFinancialSystemTwoGetBalanceDetailsService,
+                                AdminCaptainService $adminCaptainService)
     {
         $this->captainPaymentService = $captainPaymentService;
         $this->adminCaptainFinancialSystemOneBalanceDetailService = $adminCaptainFinancialSystemOneBalanceDetailService;
@@ -46,7 +56,8 @@ class AdminCaptainFinancialSystemDetailService implements AdminCaptainFinancialS
         $this->captainFinancialSystemDateService = $captainFinancialSystemDateService;
         $this->captainFinancialDuesService = $captainFinancialDuesService;
         $this->adminOrderService = $adminOrderService;
-
+        $this->adminCaptainFinancialSystemTwoGetBalanceDetailsService = $adminCaptainFinancialSystemTwoGetBalanceDetailsService;
+        $this->adminCaptainService = $adminCaptainService;
     }
 
     public function getBalanceDetailForAdmin(int $captainId): AdminCaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse|string|AdminCaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse|array 
@@ -86,7 +97,14 @@ class AdminCaptainFinancialSystemDetailService implements AdminCaptainFinancialS
             } 
             
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
-                return $this->adminCaptainFinancialSystemTwoBalanceDetailService->adminGetBalanceDetailWithSystemTwo($financialSystemDetail, $captainId, $sumPayments, $date, $countWorkdays);
+                // **** Habib's code ****
+                // return $this->adminCaptainFinancialSystemTwoBalanceDetailService->adminGetBalanceDetailWithSystemTwo($financialSystemDetail, $captainId, $sumPayments, $date, $countWorkdays);
+                // **** End of Habib's code ****
+
+                // **** Rami's code ****
+                return $this->adminCaptainFinancialSystemTwoGetBalanceDetailsService->getBalanceDetailsForAdmin($captainId, $financialSystemDetail,
+                    $sumPayments, $date);
+                // **** End of Rami's code ****
             }
         }
 
@@ -153,5 +171,45 @@ class AdminCaptainFinancialSystemDetailService implements AdminCaptainFinancialS
             */
            $this->captainFinancialDuesService->calculateOrdersThatNotBelongToAnyFinancialDues($orders);
        }
+    }
+
+    public function createCaptainFinancialSystemDetailByAdmin(CaptainFinancialSystemDetailCreateByAdminRequest $request): CaptainFinancialSystemDetailCreateByAdminResponse|string
+    {
+        // First, get captain profile entity
+        $captainProfile = $this->getCaptainProfileByIdForAdmin($request->getCaptain());
+
+        if (! $captainProfile) {
+            return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
+        }
+
+        $request->setCaptain($captainProfile);
+
+        // Second, create the captain financial system detail
+        $captainFinancialSystemDetailEntity = $this->adminCaptainFinancialSystemDetailManager->createCaptainFinancialSystemDetailByAdmin($request);
+
+        if ($captainFinancialSystemDetailEntity === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_CAN_NOT_CHOSE) {
+            return CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_CAN_NOT_CHOSE;
+        }
+
+        // Third, update complete account status if appropriate
+        $this->updateCaptainProfileCompleteAccountStatusByAdmin($captainFinancialSystemDetailEntity->getId(),
+            CaptainConstant::COMPLETE_ACCOUNT_STATUS_SYSTEM_FINANCIAL_SELECTED);
+
+        return $this->autoMapping->map(CaptainFinancialSystemDetailEntity::class, CaptainFinancialSystemDetailCreateByAdminResponse::class, $captainFinancialSystemDetailEntity);
+    }
+
+    public function getCaptainProfileByIdForAdmin(int $captainProfileId): ?CaptainEntity
+    {
+        return $this->adminCaptainService->getCaptainProfileEntityByIdForAdmin($captainProfileId);
+    }
+
+    public function updateCaptainProfileCompleteAccountStatusByAdmin(int $captainProfileId, string $completeAccountStatus): CaptainEntity|string
+    {
+        $completeAccountStatusUpdateRequest = new CompleteAccountStatusUpdateByAdminRequest();
+
+        $completeAccountStatusUpdateRequest->setProfileId($captainProfileId);
+        $completeAccountStatusUpdateRequest->setCompleteAccountStatus($completeAccountStatus);
+
+        return $this->adminCaptainService->updateCaptainProfileCompleteAccountStatusByAdmin($completeAccountStatusUpdateRequest);
     }
 }

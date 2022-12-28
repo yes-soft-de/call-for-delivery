@@ -69,6 +69,9 @@ class OrderLogEntity
     #[ORM\Column(type: 'integer', nullable: true)]
     private $isCashPaymentConfirmedByStore;
 
+    #[ORM\Column(type: 'array')]
+    private $details = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -274,6 +277,18 @@ class OrderLogEntity
     public function setIsCashPaymentConfirmedByStore(?int $isCashPaymentConfirmedByStore): self
     {
         $this->isCashPaymentConfirmedByStore = $isCashPaymentConfirmedByStore;
+
+        return $this;
+    }
+
+    public function getDetails(): ?array
+    {
+        return $this->details;
+    }
+
+    public function setDetails(array $details): self
+    {
+        $this->details = $details;
 
         return $this;
     }

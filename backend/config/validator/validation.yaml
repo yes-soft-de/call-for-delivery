@@ -768,3 +768,33 @@ App\Request\Admin\Order\OrderStoreBranchToClientDistanceAndDestinationByAdminReq
             - NotBlank: ~
         destination:
             - NotBlank: ~
+
+App\Request\Admin\Order\OrderStoreBranchToClientDistanceAdditionByAdminRequest:
+    properties:
+        orderId:
+            - NotBlank: ~
+        destination:
+            - NotBlank: ~
+
+App\Request\Admin\Order\OrderStoreBranchToClientDistanceUpdateByAddAdditionalDistanceByAdminRequest:
+    properties:
+        orderId:
+            - NotBlank: ~
+        additionalDistance:
+            - NotBlank: ~
+
+App\Request\Admin\Order\OrderRecycleOrCancelByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        cancel:
+            - NotBlank: ~
+
+App\Request\Admin\CaptainFinancialSystem\CaptainFinancialSystemDetailCreateByAdminRequest:
+    properties:
+        captainFinancialSystemType:
+            - NotBlank: ~
+        captainFinancialSystemId:
+            - NotBlank: ~
+        captain:
+            - NotBlank: ~

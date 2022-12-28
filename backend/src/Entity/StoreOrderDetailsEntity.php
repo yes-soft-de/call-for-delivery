@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Constant\Order\OrderDestinationConstant;
 use App\Repository\StoreOrderDetailsEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -38,6 +39,9 @@ class StoreOrderDetailsEntity
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $filePdf;
+
+    #[ORM\Column(type: 'integer', options: ["default" => 1])]
+    private $differentReceiverDestination = OrderDestinationConstant::ORDER_DESTINATION_IS_NOT_DIFFERENT_CONST;
 
     public function getId(): ?int
     {
@@ -136,6 +140,18 @@ class StoreOrderDetailsEntity
     public function setFilePdf(?string $filePdf): self
     {
         $this->filePdf = $filePdf;
+
+        return $this;
+    }
+
+    public function getDifferentReceiverDestination(): ?int
+    {
+        return $this->differentReceiverDestination;
+    }
+
+    public function setDifferentReceiverDestination(int $differentReceiverDestination): self
+    {
+        $this->differentReceiverDestination = $differentReceiverDestination;
 
         return $this;
     }

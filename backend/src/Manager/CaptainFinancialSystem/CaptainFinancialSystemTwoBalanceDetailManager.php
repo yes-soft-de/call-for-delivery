@@ -4,6 +4,8 @@ namespace App\Manager\CaptainFinancialSystem;
 
 use App\Manager\Order\OrderManager;
 
+// **** Replaced by CaptainFinancialSystemTwoOrderManager ****
+
 class CaptainFinancialSystemTwoBalanceDetailManager
 {
     private OrderManager $orderManager;

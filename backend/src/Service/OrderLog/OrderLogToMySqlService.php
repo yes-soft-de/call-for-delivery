@@ -28,7 +28,7 @@ class OrderLogToMySqlService
     }
 
     public function initializeCreateOrderLogRequest(OrderEntity $orderEntity, int $createdBy, int $createdByUserType, int $action,
-                                                    StoreOwnerBranchEntity|int|null $storeOwnerBranch, SupplierProfileEntity|int|null $supplierProfile)
+                                                    array $details, StoreOwnerBranchEntity|int|null $storeOwnerBranch, SupplierProfileEntity|int|null $supplierProfile)
     {
         $orderLogCreateRequest = new OrderLogCreateRequest();
 
@@ -55,6 +55,7 @@ class OrderLogToMySqlService
         $orderLogCreateRequest->setPrimaryOrder($orderEntity->getPrimaryOrder());
         $orderLogCreateRequest->setPaidToProvider($orderEntity->getPaidToProvider());
         $orderLogCreateRequest->setIsCashPaymentConfirmedByStore($orderEntity->getIsCashPaymentConfirmedByStore());
+        $orderLogCreateRequest->setDetails($details);
 
         $this->createNewOrderLog($orderLogCreateRequest);
     }

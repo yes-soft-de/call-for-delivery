@@ -2,11 +2,17 @@
 
 namespace App\Controller\Admin\Report;
 
+use App\AutoMapping;
+use App\Constant\Main\MainErrorConstant;
 use App\Controller\BaseController;
+use App\Request\Admin\Report\CaptainWithDeliveredOrdersDuringSpecificTimeFilterByAdminRequest;
+use App\Request\Admin\Report\StoresAndOrdersCountDuringSpecificTimeFilterByAdminRequest;
 use App\Service\Admin\Report\ReportService;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -17,11 +23,13 @@ use OpenApi\Annotations as OA;
  */
 class ReportController extends BaseController
 {
+    private AutoMapping $autoMapping;
     private ReportService $reportService;
 
-    public function __construct(SerializerInterface $serializer, ReportService $reportService)
+    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ReportService $reportService)
     {
         parent::__construct($serializer);
+        $this->autoMapping = $autoMapping;
         $this->reportService = $reportService;
     }
 
@@ -228,5 +236,174 @@ class ReportController extends BaseController
         $result = $this->reportService->getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByAdmin();
 
         return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * admin: filter captains who delivered orders between specific dates by admin
+     * @Route("filtercaptainsdeliveredordersbyadmin", name="filterCaptainsWithTheirDeliveredOrdersByAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Report")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Post a request with filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="state"),
+     *          @OA\Property(type="string", property="fromDate")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns captains with delivered orders that accomodate with the filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Admin\Report\CaptainsWithDeliveredOrdersCountFilterByAdminResponse")
+     *              )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterCaptainsWhoDeliveredOrdersDuringSpecificTime(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, CaptainWithDeliveredOrdersDuringSpecificTimeFilterByAdminRequest::class, (object)$data);
+
+        $result = $this->reportService->getCaptainsWhoDeliveredOrdersDuringSpecificTime($request);
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * admin: Get top active stores depending on delivered orders during current month
+     * @Route("topactivestoresforadmin", name="getTopActiveStoresWithOrdersCountForAdmin", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Report")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns active captains with orders count",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Admin\Report\TopOrdersStoresForCurrentMonthByAdminGetResponse")
+     *       )
+     *    )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getTopOrdersStoresDuringCurrentMonthByAdmin(): JsonResponse
+    {
+        $result = $this->reportService->getTopOrdersStoresDuringCurrentMonthByAdmin();
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * admin: filter stores who delivered orders between specific dates by admin
+     * @Route("filterstoresdeliveredordersbyadmin", name="filterStoresWithTheirDeliveredOrdersByAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Report")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Post a request with filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="state"),
+     *          @OA\Property(type="string", property="fromDate")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns stores with delivered orders that accomodate with the filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Admin\Report\StoresWithOrdersCountDuringSpecificTimeFilterByAdminResponse")
+     *              )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterTopStoresAccordingOnOrdersByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, StoresAndOrdersCountDuringSpecificTimeFilterByAdminRequest::class, (object)$data);
+
+        $result = $this->reportService->filterTopStoresAccordingOnOrdersByAdmin($request);
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * DEBUGGER: Get active captains with delivered (during last financial cycle) orders count for admin
+     * @Route("activecaptainswithorderscountfortester", name="getActiveCaptainsWithOrdersCountForTester", methods={"POST"})
+     * @IsGranted("ROLE_SUPER_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Report")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        if ($data !== null && $data !== false) {
+            $result = $this->reportService->getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester($data['customizedTimezone']);
+
+            return $this->response($result, self::FETCH);
+        }
+
+        return $this->response(MainErrorConstant::ERROR_MSG, self::FETCH);
     }
 }

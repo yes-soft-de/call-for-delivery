@@ -18,6 +18,7 @@ class SubscriptionCaptainOfferManager
     private EntityManagerInterface $entityManager;
     private CaptainOfferManager $captainOfferManager;
     private SubscriptionManager $subscriptionManager;
+    private StoreOwnerProfileManager $storeOwnerProfileManager;
     private SubscriptionCaptainOfferEntityRepository $subscriptionCaptainOfferEntityRepository;
 
     public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, CaptainOfferManager $captainOfferManager, StoreOwnerProfileManager $storeOwnerProfileManager, SubscriptionManager $subscriptionManager, SubscriptionCaptainOfferEntityRepository $subscriptionCaptainOfferEntityRepository)
@@ -30,7 +31,7 @@ class SubscriptionCaptainOfferManager
         $this->subscriptionCaptainOfferEntityRepository = $subscriptionCaptainOfferEntityRepository;
     }
 
-    public function createSubscriptionCaptainOffer(SubscriptionCaptainOfferCreateRequest $request): SubscriptionCaptainOfferEntity
+    public function createSubscriptionCaptainOffer(SubscriptionCaptainOfferCreateRequest $request): array
     {
         $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($request->getStoreOwner());
         $request->setStoreOwner($storeOwner);
@@ -48,9 +49,9 @@ class SubscriptionCaptainOfferManager
         $this->entityManager->persist($subscriptionCaptainOfferEntity);
         $this->entityManager->flush();
 
-        $this->subscriptionManager->updateSubscriptionCaptainOfferId($subscriptionCaptainOfferEntity, true);
+        $arrayResult = $this->subscriptionManager->updateSubscriptionCaptainOfferId($subscriptionCaptainOfferEntity, true);
        
-        return $subscriptionCaptainOfferEntity;
+        return [$subscriptionCaptainOfferEntity, $arrayResult];
     }
 
     public function updateState(int $id, string $status): SubscriptionCaptainOfferEntity

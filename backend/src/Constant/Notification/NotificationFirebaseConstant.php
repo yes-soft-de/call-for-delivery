@@ -32,6 +32,8 @@ final class NotificationFirebaseConstant
 
     const ORDER_IS_BEING_HIDDEN = "تم إخفاء الطلب ";
 
+    const ORDER_DESTINATION_ADDITION_BY_ADMIN_MESSAGE_CONST = "تم إضافة مسافة من قبل الإدارة على المسافة المحتسبة تلقائيا للطلب رقم";
+
     //for captain
     const STATE_ON_WAY_PICK_ORDER_CAPTAIN = "لقد قبلت الطلب ";
 
@@ -114,7 +116,7 @@ final class NotificationFirebaseConstant
 
     const SCHEDULED_NOTIFICATION = 'إشعار مجدول - ';
   
-    const THE_CAPTAIN = 'الكابتن';
+    const THE_CAPTAIN = 'الكابتن ';
 
     const CAPTAIN_STOPE_FINANCIAL_CYCLE = 'أوقف دورته المالية';
 
@@ -127,4 +129,6 @@ final class NotificationFirebaseConstant
     const NOT_VALID_RECEIVER_LOCATION_OF_ORDER_CONST = 'خطأ في موقع التسليم (اللوكيشن) للطلب رقم ';
 
     const NEW_CAR_AVAILABLE_NOTIFICATION_TO_STORE_CONST = "يوجد سيارة متوفرة من جديد";
+
+    const ORDER_UPDATE_STATE_BEFORE_TIME_BY_CAPTAIN_COST = " قام بمحاولة تحديث حالة الطلب ذو الرقم التالي قبل مرور الوقت المحدد ";
 }

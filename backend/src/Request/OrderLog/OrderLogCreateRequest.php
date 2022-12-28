@@ -66,10 +66,14 @@ class OrderLogCreateRequest
      */
     private $primaryOrder;
 
-    
     private null|int $paidToProvider;
    
     private null|int $isCashPaymentConfirmedByStore;
+
+    /**
+     * @var array
+     */
+    private $details;
 
     public function getOrderId(): int|OrderEntity
     {
@@ -181,5 +185,15 @@ class OrderLogCreateRequest
         $this->isCashPaymentConfirmedByStore = $isCashPaymentConfirmedByStore;
 
         return $this;
+    }
+
+    public function getDetails(): array
+    {
+        return $this->details;
+    }
+
+    public function setDetails(array $details): void
+    {
+        $this->details = $details;
     }
 }

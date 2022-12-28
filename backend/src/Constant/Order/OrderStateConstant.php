@@ -39,4 +39,6 @@ final class OrderStateConstant
         self::ORDER_STATE_DELIVERED => 6,
         self::ORDER_STATE_CANCEL => 7
     ];
+
+    const ORDER_STATE_ONGOING_TILL_DELIVERED_ARRAY = ["in store", "picked", "ongoing", "delivered"];
 }

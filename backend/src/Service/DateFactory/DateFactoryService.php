@@ -2,6 +2,7 @@
 
 namespace App\Service\DateFactory;
 
+use App\Constant\Order\OrderUpdateStateConstant;
 use DateTime;
 use DateTimeInterface;
 
@@ -80,5 +81,28 @@ class DateFactoryService
         $dateTime = DateTime::createFromInterface($dateTimeInterface);
 
         return date_modify($dateTime, '+'.$days. 'days');
+    }
+
+    public function checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanThreeMinutes(DateTimeInterface $oldDateInterface, DateTime $newDate): bool
+    {
+        $oldDate = DateTime::createFromInterface($oldDateInterface);
+
+        $interval = date_diff($oldDate, $newDate);
+
+        $different_days = $interval->format('%d');
+
+        if ($different_days == 0) {
+            $different_hours = $interval->format('%h');
+
+            if ($different_hours <= 1) {
+                $different_minutes = $interval->format('%i');
+
+                if ($different_minutes < OrderUpdateStateConstant::ORDER_STATE_UPDATE_AFTER_TIME_CONST) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
     }
 }

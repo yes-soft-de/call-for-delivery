@@ -4,7 +4,9 @@ namespace App\Service\Subscription;
 
 use App\AutoMapping;
 use App\Constant\Admin\Subscription\AdminStoreSubscriptionConstant;
+use App\Constant\Notification\SubscriptionFirebaseNotificationConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Constant\Subscription\SubscriptionDetailsConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionEntity;
 use App\Manager\Subscription\SubscriptionManager;
@@ -19,6 +21,7 @@ use App\Response\Subscription\SubscriptionErrorResponse;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Constant\Subscription\SubscriptionCaptainOffer;
 use App\Constant\Package\PackageConstant;
+use App\Service\Notification\SubscriptionFirebaseNotificationService;
 use App\Service\Subscription\SubscriptionCaptainOfferService;
 use App\Service\StoreOwner\StoreOwnerProfileService;
 use App\Service\StoreOwnerPayment\StoreOwnerPaymentService;
@@ -38,10 +41,11 @@ class SubscriptionService
     private StoreOwnerProfileService $storeOwnerProfileService;
     private StoreOwnerPaymentService $storeOwnerPaymentService;
     private SubscriptionNotificationService $subscriptionNotificationService;
+    private SubscriptionFirebaseNotificationService $subscriptionFirebaseNotificationService;
 
     public function __construct(AutoMapping $autoMapping, SubscriptionManager $subscriptionManager, SubscriptionCaptainOfferService $subscriptionCaptainOfferService,
                                 StoreOwnerProfileService $storeOwnerProfileService, StoreOwnerPaymentService $storeOwnerPaymentService,
-                                SubscriptionNotificationService $subscriptionNotificationService)
+                                SubscriptionNotificationService $subscriptionNotificationService, SubscriptionFirebaseNotificationService $subscriptionFirebaseNotificationService)
     {
         $this->autoMapping = $autoMapping;
         $this->subscriptionManager = $subscriptionManager;
@@ -49,6 +53,7 @@ class SubscriptionService
         $this->storeOwnerProfileService = $storeOwnerProfileService;
         $this->storeOwnerPaymentService = $storeOwnerPaymentService;
         $this->subscriptionNotificationService = $subscriptionNotificationService;
+        $this->subscriptionFirebaseNotificationService = $subscriptionFirebaseNotificationService;
     }
     
     public function createSubscription(SubscriptionCreateRequest $request): SubscriptionResponse|SubscriptionErrorResponse
@@ -84,6 +89,10 @@ class SubscriptionService
 
         if($subscription) {
             $this->checkWhetherThereIsActiveCaptainsOfferAndUpdateSubscription($request->getStoreOwner()->getId());
+
+            // Send firebase notification to admin
+            $this->sendFirebaseNotificationToAdmin(SubscriptionFirebaseNotificationConstant::STORE_CREATE_NEW_SUBSCRIPTION_CONST,
+                $subscription->getStoreOwner()->getStoreOwnerName(), null);
         
             return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
         }
@@ -240,8 +249,14 @@ class SubscriptionService
                    $remainingOrders = $subscriptionCurrent->getRemainingOrders() + 1 ;
                 } 
 
-                $this->subscriptionManager->updateRemainingOrders($subscriptionCurrent->getLastSubscription()->getId(), $remainingOrders);
-               
+                $storeDetailsEntity = $this->subscriptionManager->updateRemainingOrders($subscriptionCurrent->getLastSubscription()->getId(), $remainingOrders);
+
+                // send firebase notification to admin if new value of the remaining orders less than zero
+                if ($storeDetailsEntity !== SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND) {
+                    $this->checkRemainingOrdersOfStoreSubscriptionAndInformAdmin($storeDetailsEntity->getRemainingOrders(),
+                        $storeOwnerId);
+                }
+
                 return SubscriptionConstant::SUBSCRIPTION_OK;
             }
         }
@@ -314,6 +329,12 @@ class SubscriptionService
                $newRemainingCars = $remainingCars;
 
                $currentSubscription = $this->subscriptionManager->updateRemainingCars($subscription['id'], $remainingCars);
+
+               // Check remaining cars if it has a negative, and inform admin if it is
+               if ($currentSubscription) {
+                   $this->checkRemainingCarsOfStoreSubscriptionAndInformAdmin($currentSubscription->getRemainingCars(),
+                       $currentSubscription->getStoreOwner()->getStoreOwnerName());
+               }
 
                // Now check if we have to inform the store there is new available car/s or not
                $this->checkRemainingCarsAndInformStore($currentRemainingCars, $newRemainingCars, $subscription);
@@ -401,7 +422,15 @@ class SubscriptionService
 
                     if($subscriptionCurrent['status'] !== "active" && $subscriptionCurrent['status'] !== "inactive") {
                         
-                        return $this->createSubscriptionForOneDay($subscriptionCurrent, $storeOwnerId);
+                        $result = $this->createSubscriptionForOneDay($subscriptionCurrent, $storeOwnerId);
+
+                        // Send firebase notification to admin
+                        if ($result) {
+                            $this->sendFirebaseNotificationToAdmin(SubscriptionFirebaseNotificationConstant::STORE_CREATE_NEW_SUBSCRIPTION_FOR_ONE_DAY_CONST,
+                                null, $storeOwnerId);
+                        }
+
+                        return $result;
                     }
 
                     $subscription['state'] = SubscriptionConstant::YOU_HAVE_SUBSCRIBED;
@@ -539,7 +568,23 @@ class SubscriptionService
       $captainOfferId = $this->subscriptionManager->checkWhetherThereIsActiveCaptainsOffer($storeOwnerId);
 
       if($captainOfferId) {
-        return $this->subscriptionManager->updateSubscriptionCaptainOfferId($captainOfferId->getSubscriptionCaptainOffer());
+        $arrayResult = $this->subscriptionManager->updateSubscriptionCaptainOfferId($captainOfferId->getSubscriptionCaptainOffer());
+
+        if ($arrayResult === SubscriptionConstant::ERROR) {
+            return SubscriptionConstant::ERROR;
+
+        } else {
+            // the result is of type array
+            $subscriptionDetailsEntity = $arrayResult[1];
+
+            // Check if remaining cars has negative value, and inform the admin if it is
+            if ($subscriptionDetailsEntity) {
+                $this->checkRemainingCarsOfStoreSubscriptionAndInformAdmin($subscriptionDetailsEntity->getRemainingCars(),
+                    $subscriptionDetailsEntity->getStoreOwner()->getStoreOwnerName());
+            }
+
+            return $arrayResult[0];
+        }
       }
        
       return SubscriptionCaptainOffer::YOU_DO_NOT_HAVE_SUBSCRIBED_CAPTAIN_OFFER; 
@@ -903,6 +948,53 @@ class SubscriptionService
         }
 
         return (float) 0;
+    }
+
+    // Send firebase notification to each admin about the action that being made on subscription by a store
+    public function sendFirebaseNotificationToAdmin(string $notificationDescription, string $storeName = null, int $storeOwnerUserId = null)
+    {
+        if ((! $storeName) && ($storeOwnerUserId)) {
+            // Get store owner name before sending the notification
+            $storeName = $this->getStoreNameByStoreOwnerUserId($storeOwnerUserId);
+        }
+
+        $this->subscriptionFirebaseNotificationService->sendFirebaseNotificationToAdmin($notificationDescription, $storeName);
+    }
+
+    public function getStoreOwnerProfileByStoreOwnerUserId(int $storeOwnerUserId): ?StoreOwnerProfileEntity
+    {
+        return $this->storeOwnerProfileService->getStoreByUserId($storeOwnerUserId);
+    }
+
+    public function getStoreNameByStoreOwnerUserId(int $storeOwnerUserId): ?string
+    {
+        $storeOwnerEntity = $this->getStoreOwnerProfileByStoreOwnerUserId($storeOwnerUserId);
+
+        if ($storeOwnerEntity) {
+            return $storeOwnerEntity->getStoreOwnerName();
+        }
+
+        return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
+    }
+
+    // Check if remaining orders of a store subscription has negative value, and send firebase notification to admin if it is
+    public function checkRemainingOrdersOfStoreSubscriptionAndInformAdmin(int $remainingOrders, int $storeOwnerUserId)
+    {
+        if ($remainingOrders < 0) {
+            // Notify admin by firebase notification
+            $this->sendFirebaseNotificationToAdmin(SubscriptionFirebaseNotificationConstant::STORE_SUBSCRIPTION_REMAINING_ORDER_NEGATIVE_VALUE_CONST,
+                null, $storeOwnerUserId);
+        }
+    }
+
+    // Check if remaining orders of a store subscription has negative value, and send firebase notification to admin if it is
+    public function checkRemainingCarsOfStoreSubscriptionAndInformAdmin(int $remainingCars, string $storeOwnerName)
+    {
+        if ($remainingCars < 0) {
+            // Notify admin by firebase notification
+            $this->sendFirebaseNotificationToAdmin(SubscriptionFirebaseNotificationConstant::STORE_SUBSCRIPTION_REMAINING_CARS_NEGATIVE_VALUE_CONST,
+                $storeOwnerName, null);
+        }
     }
 }
  

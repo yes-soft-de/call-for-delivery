@@ -51,7 +51,12 @@ final class NotificationConstant
     const CANCEL_ORDER_ERROR_ACCEPTED = "لا يمكن حذف الطلب, الكابتن استلم الطلب.";
 
     const APP_TYPE_ALL = "all";
-//for captain
+
+    const ORDER_DESTINATION_DIFFERENT_TITLE_CONST = "اختلاف في موقع المستلم";
+
+    const ORDER_DESTINATION_ADDITION_BY_ADMIN_MESSAGE_CONST = "تم إضافة مسافة من قبل الإدارة على المسافة المحتسبة تلقائيا من أجل الطلب رقم ";
+
+    //for captain
     const STATE_ON_WAY_PICK_ORDER_CAPTAIN = "لقد قبلت الطلب ";
 
     const STATE_IN_STORE_CAPTAIN = "أنت في المتجر";
@@ -77,9 +82,9 @@ final class NotificationConstant
     const ORDER_UNASSIGNED_TO_CAPTAIN = "بناء على طلب الإدارة, تم إلغاء إسناد الطلب الموافق للرقم التالي إليك: ";
     
     //sub order    
-    const RECYCLING_ORDER_TITLE = "تدوير الطلب";
+    const RECYCLING_ORDER_TITLE = "إعادة تدوير الطلب";
 
-    const RECYCLING_ORDER_SUCCESS = "تم إعادة تدوير الطلب بنجاح و أصبح ظاهرا للكباتن";
+    const RECYCLING_ORDER_SUCCESS = "تم إعادة تدوير الطلب بنجاح وأصبح ظاهرا للكباتن";
    
     const ADD_SUB_ORDER = "تم إضافة طلب فرعي إلى الطلب";
 

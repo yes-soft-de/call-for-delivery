@@ -3,6 +3,7 @@
 namespace App\Manager\Subscription;
 
 use App\AutoMapping;
+use App\Constant\Subscription\SubscriptionDetailsConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionEntity;
 use App\Entity\SubscriptionDetailsEntity;
@@ -83,7 +84,7 @@ class SubscriptionManager
         return $this->subscriptionDetailsManager->getSubscriptionCurrent($storeOwner);
     }
 
-    public function updateRemainingOrders(int $id, int $remainingOrders): ?array
+    public function updateRemainingOrders(int $id, int $remainingOrders): SubscriptionDetailsEntity|int
     {
        return $this->subscriptionDetailsManager->updateRemainingOrders($id, $remainingOrders);
     }
@@ -195,7 +196,7 @@ class SubscriptionManager
         return $this->subscriptionDetailsManager->updateRemainingCars($id, $remainingCars);
     }
 
-    public function updateSubscriptionCaptainOfferId(SubscriptionCaptainOfferEntity $subscriptionCaptainOfferEntity, $captainOfferFirstTime = false): string
+    public function updateSubscriptionCaptainOfferId(SubscriptionCaptainOfferEntity $subscriptionCaptainOfferEntity, $captainOfferFirstTime = false): string|array
     { 
         //TODO shortcut two queries in one query
         $subscribeCurrent = $this->subscriptionDetailsManager->getSubscriptionCurrent($subscriptionCaptainOfferEntity->getStoreOwner()->getId());
@@ -203,7 +204,6 @@ class SubscriptionManager
         $subscribeEntity = $this->subscribeRepository->find($subscribeCurrent->getLastSubscription()->getId());
 
         if (! $subscribeEntity) {
-
             return SubscriptionConstant::ERROR;
         }
 
@@ -213,9 +213,14 @@ class SubscriptionManager
         $this->entityManager->flush();
        
         $remainingCars = $subscribeCurrent->getRemainingCars() + $subscriptionCaptainOfferEntity->getCarCount();
-        $this->updateRemainingCars($subscribeCurrent->getLastSubscription()->getId(), $remainingCars);
-    
-        return SubscriptionConstant::UPDATE_STATE;
+
+        $subscriptionDetailsResult = $this->updateRemainingCars($subscribeCurrent->getLastSubscription()->getId(), $remainingCars);
+
+        if ($subscriptionDetailsResult) {
+            return [SubscriptionConstant::UPDATE_STATE, $subscriptionDetailsResult];
+        }
+
+        return [SubscriptionConstant::UPDATE_STATE, SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND];
     }
     
     public function getStoreOwnerProfileByStoreOwnerId(int $storeOwnerId): ?StoreOwnerProfileEntity
@@ -300,7 +305,7 @@ class SubscriptionManager
       
        $this->subscriptionHistoryManager->updateSubscriptionHistoryByAdmin($subscriptionEntity->getId());            
 
-       return "ok";
+       return SubscriptionConstant::SUBSCRIPTION_OK;
     }
 
     public function getStoreOwnerProfileByStoreOwnerProfileId(int $storeOwnerProfileId): ?StoreOwnerProfileEntity

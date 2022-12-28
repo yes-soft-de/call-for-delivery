@@ -35,4 +35,10 @@ class OrderLogManager
     {
         return $this->orderLogEntityRepository->getOrderLogsByOrderIdForAdmin($orderId);
     }
+
+    public function getOrderLogByOrderIdAndTypeAndActionAndCreatedUserType(int $orderId, int $orderType, int $actions, int $createdByUserType): ?OrderLogEntity
+    {
+        return $this->orderLogEntityRepository->findOneBy(['orderId'=>$orderId, 'type'=>$orderType, 'action'=>$actions,
+            'createdByUserType'=>$createdByUserType], ['id'=>'DESC']);
+    }
 }

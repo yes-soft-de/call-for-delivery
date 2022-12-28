@@ -3,6 +3,7 @@
 namespace App\Controller\Admin\Order;
 
 use App\AutoMapping;
+use App\Constant\GeoDistance\GeoDistanceResultConstant;
 use App\Constant\Main\MainErrorConstant;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
@@ -13,6 +14,9 @@ use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminRequest;
+use App\Request\Admin\Order\OrderRecycleOrCancelByAdminRequest;
+use App\Request\Admin\Order\OrderStoreBranchToClientDistanceAdditionByAdminRequest;
+use App\Request\Admin\Order\OrderStoreBranchToClientDistanceUpdateByAddAdditionalDistanceByAdminRequest;
 use App\Request\Admin\Order\RePendingAcceptedOrderByAdminRequest;
 use App\Request\Admin\Order\SubOrderCreateByAdminRequest;
 use App\Service\Admin\Order\AdminOrderService;
@@ -386,6 +390,29 @@ class AdminOrderController extends BaseController
      *   )
      * )
      *
+     * or
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *          oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9207"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9214"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9218"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   )
+     *              }
+     *      )
+     * )
+     *
      * @Security(name="Bearer")
      */
     public function rePendingAcceptedOrderByAdmin(Request $request): JsonResponse
@@ -410,6 +437,10 @@ class AdminOrderController extends BaseController
 
         if ($result === OrderResultConstant::ORDER_RETURNING_TO_PENDING_HAS_PROBLEM) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_IN_RETURNING_ORDER_TO_PENDING_STATUS);
+        }
+
+        if ($result === OrderResultConstant::ORDER_IS_HIDDEN_CONST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_HIDE);
         }
 
         return $this->response($result, self::UPDATE);
@@ -695,13 +726,29 @@ class AdminOrderController extends BaseController
      * or
      *
      * @OA\Response(
-     *      response="default",
-     *      description="Return erorr.",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9306 OR 9207 OR 9101"),
-     *          @OA\Property(type="string", property="msg", description="The cars remaining is finished Error. OR error OR captain profile not exist!"),
-     *      )
-     * )
+      *      response=200,
+      *      description="Return error.",
+      *      @OA\JsonContent(
+      *          oneOf={
+      *                   @OA\Schema(type="object",
+      *                          @OA\Property(type="string", property="status_code", description="9207"),
+      *                          @OA\Property(type="string", property="msg")
+      *                   ),
+      *                   @OA\Schema(type="object",
+      *                          @OA\Property(type="string", property="status_code", description="9306"),
+      *                          @OA\Property(type="string", property="msg")
+      *                   ),
+      *                   @OA\Schema(type="object",
+      *                          @OA\Property(type="string", property="status_code", description="9101"),
+      *                          @OA\Property(type="string", property="msg")
+      *                   ),
+      *                   @OA\Schema(type="object",
+      *                          @OA\Property(type="string", property="status_code", description="9218"),
+      *                          @OA\Property(type="string", property="msg")
+      *                   )
+      *              }
+      *      )
+      * )
      * 
      * @Security(name="Bearer")
      */
@@ -731,6 +778,10 @@ class AdminOrderController extends BaseController
 
         if ($response === CaptainConstant::CAPTAIN_NOT_FOUND) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_PROFILE_NOT_EXIST);
+        }
+
+        if ($response === OrderResultConstant::ORDER_IS_HIDDEN_CONST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_HIDE);
         }
 
         // if ($response === OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT_FOR_ADMIN) {
@@ -864,12 +915,21 @@ class AdminOrderController extends BaseController
      * or
      *
      * @OA\Response(
-     *      response="default",
-     *      description="Returns the error msg",
+     *      response=200,
+     *      description="Return error according to situation.",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", example="9219"),
-     *          @OA\Property(type="string", property="msg")
-     *   )
+     *          oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9219"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9218"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   )
+     *              }
+     *      )
+     *
      * )
      * 
      * @Security(name="Bearer") 
@@ -892,6 +952,10 @@ class AdminOrderController extends BaseController
 
         if ($result === OrderResultConstant::ORDER_IS_BEING_DELIVERED) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_ALREADY_DELIVERED);
+        }
+
+        if ($result === OrderResultConstant::ORDER_IS_HIDDEN_CONST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_HIDE);
         }
 
         return $this->response($result, self::UPDATE);
@@ -1560,5 +1624,284 @@ class AdminOrderController extends BaseController
         $response = $this->adminOrderService->updateIsCashPaymentConfirmedByStoreByAdmin($request, $this->getUserId());
 
         return $this->response($response, self::UPDATE);
+    }
+
+    /**
+     * Admin: update storeBranchToClientDistance via adding distance to it by new location.
+     * @Route("addstorebranchtoclientdistanceviadestinationbyadmin", name="updateStoreBranchToClientDistanceAndDestinationViaLocationByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="update storeBranchToClientDistance and destination by admin",
+     *      @OA\JsonContent(
+     *              @OA\Property(type="integer", property="orderId"),
+     *              @OA\Property(type="array", property="destination",
+     *                  @OA\Items(
+     *                      @OA\Property(type="number", property="lat"),
+     *                      @OA\Property(type="number", property="lon")
+     *                  )
+     *              ),
+     *              @OA\Property(type="string", property="storeBranchToClientDistanceAdditionExplanation")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns the order info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Admin\Order\OrderDestinationUpdateByAdminResponse")
+     *      )
+     *   )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *          oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9213"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9205"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9372"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   )
+     *              }
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function addDistanceToStoreBranchToClientDistanceViaLocationByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(\stdClass::class, OrderStoreBranchToClientDistanceAdditionByAdminRequest::class, (object) $data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminOrderService->addDistanceToStoreBranchToClientDistanceViaLocationByAdmin($request, $this->getUserId());
+
+        if ($result === OrderResultConstant::ORDER_TYPE_BID) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_WRONG_ORDER_TYPE);
+
+        } elseif ($result === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_NOT_FOUND);
+
+        } elseif ($result === GeoDistanceResultConstant::DESTINATION_COULD_NOT_BE_CALCULATED) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_CAN_NOT_CALCULATE_DISTANCE);
+        }
+
+        return $this->response($result, self::UPDATE);
+    }
+
+    /**
+     * Admin: update storeBranchToClientDistance via adding additional distance to it directly.
+     * @Route("additionaldistancetostorebranchtoclientdistancebyadmin", name="updateStoreBranchToClientDistanceViaAdditionalDistanceByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="update storeBranchToClientDistance and destination by admin",
+     *      @OA\JsonContent(
+     *              @OA\Property(type="integer", property="orderId"),
+     *              @OA\Property(type="number", property="additionalDistance"),
+     *              @OA\Property(type="string", property="storeBranchToClientDistanceAdditionExplanation")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns the order info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Admin\Order\OrderStoreBranchToClientDistanceUpdateByAdminResponse")
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function addAdditionalDistanceToStoreBranchToClientDistanceByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(\stdClass::class, OrderStoreBranchToClientDistanceUpdateByAddAdditionalDistanceByAdminRequest::class, (object) $data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminOrderService->addAdditionalDistanceToStoreBranchToClientDistanceByAdmin($request, $this->getUserId());
+
+        return $this->response($result, self::UPDATE);
+    }
+
+    /**
+     * admin: Recycling or cancel the order by admin
+     * @Route("recyclingorcancelorderbyadmin", name="recyclingOrCancelOrderByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="recycling Or Cancel Order",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="string", property="payment"),
+     *          @OA\Property(type="number", property="orderCost"),
+     *          @OA\Property(type="string", property="note"),
+     *          @OA\Property(type="string", property="deliveryDate"),
+     *          @OA\Property(type="object", property="destination"),
+     *          @OA\Property(type="string", property="recipientName"),
+     *          @OA\Property(type="string", property="images"),
+     *          @OA\Property(type="string", property="recipientPhone"),
+     *          @OA\Property(type="string", property="detail"),
+     *          @OA\Property(type="integer", property="branch"),
+     *          @OA\Property(type="integer", property="cancel", description="1 for cancel"),
+     *          @OA\Property(type="number", property="deliveryCost")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns order",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *               ref=@Model(type="App\Response\Admin\Order\OrderRecycleByAdminResponse")
+     *      )
+     *   )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="200",
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", description="9204"),
+     *              @OA\Property(type="string", property="msg"),
+     *              @OA\Property(type="object", property="Data",
+     *                  ref=@Model(type="App\Response\Subscription\CanCreateOrderResponse"),
+     *        )
+     *     )
+     *  )
+     *
+     * @Security(name="Bearer")
+     */
+    public function recycleOrCancelOrderByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderRecycleOrCancelByAdminRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminOrderService->recycleOrCancelOrderByAdmin($request, $this->getUserId());
+
+        if (isset($result->canCreateOrder)) {
+            return $this->response($result, self::ERROR_ORDER_CAN_NOT_CREATE);
+        }
+
+        return $this->response($result, self::UPDATE);
+    }
+
+    /**
+     * admin: get delivered orders during current active financial cycle by captain profile id
+     * @Route("fetchorderscurrentfinancialcycleforadmin/{captainProfileId}", name="fetchOrdersOfCurrentFinancialCycleByCaptainProfileIdForAdmin", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param int $captainProfileId
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns orders that accomodate with the filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Admin\Order\OrderCurrentFinancialCycleByCaptainProfileIdForAdminGetResponse")
+     *              )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getOrdersByCaptainProfileIdAndCaptainFinancialCycle(int $captainProfileId): JsonResponse
+    {
+        $result = $this->adminOrderService->getOrdersByCaptainProfileIdAndCaptainFinancialCycle($captainProfileId);
+
+        return $this->response($result, self::FETCH);
     }
 }

@@ -8,8 +8,10 @@ use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\Image\ImageUseAsConstant;
 use App\Entity\CaptainEntity;
 use App\Repository\CaptainEntityRepository;
+use App\Request\Admin\Account\CompleteAccountStatusUpdateByAdminRequest;
 use App\Request\Admin\Captain\CaptainProfileStatusUpdateByAdminRequest;
 use App\Request\Admin\Captain\CaptainProfileUpdateByAdminRequest;
+use App\Request\Admin\Report\CaptainWithDeliveredOrdersDuringSpecificTimeFilterByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AdminCaptainManager
@@ -63,6 +65,10 @@ class AdminCaptainManager
 
         if (! $captainProfileEntity) {
             return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
+        }
+
+        if (! $request->getCity()) {
+            $request->setCity($captainProfileEntity->getCity());
         }
 
         $captainProfileEntity = $this->autoMapping->mapToObject(CaptainProfileUpdateByAdminRequest::class, CaptainEntity::class,
@@ -122,6 +128,7 @@ class AdminCaptainManager
         $profile['roomId'] = $items[0]['roomId'];
         $profile['status'] = $items[0]['status'];
         $profile['address'] = $items[0]['address'];
+        $profile['city'] = $items[0]['city'];
 
         if (array_key_exists("completeAccountStatus", $items[0])) {
             $profile['completeAccountStatus'] = $items[0]['completeAccountStatus'];
@@ -176,5 +183,47 @@ class AdminCaptainManager
     public function getCaptainsRatingsForAdmin(): array
     {
         return $this->captainEntityRepository->getCaptainsRatingsForAdmin();
+    }
+
+    public function getCaptainsWhoDeliveredOrdersDuringSpecificTime(CaptainWithDeliveredOrdersDuringSpecificTimeFilterByAdminRequest $request): array
+    {
+        return $this->captainEntityRepository->getCaptainsWhoDeliveredOrdersDuringSpecificTime($request);
+    }
+
+    // FOR DEBUG ISSUES
+    public function getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester(?string $customizedTimezone): array
+    {
+        return $this->captainEntityRepository->getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester($customizedTimezone);
+    }
+
+    public function updateCaptainProfileCompleteAccountStatusByAdmin(CompleteAccountStatusUpdateByAdminRequest $request): CaptainEntity|string
+    {
+        if (! $this->checkCompleteAccountStatusValidity($request->getCompleteAccountStatus())) {
+            return CaptainConstant::WRONG_COMPLETE_ACCOUNT_STATUS;
+
+        } else {
+            $captainProfile = $this->captainEntityRepository->findOneBy(['id' => $request->getProfileId()]);
+
+            if (! $captainProfile) {
+                return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
+            }
+
+            $captainProfile = $this->autoMapping->mapToObject(CompleteAccountStatusUpdateByAdminRequest::class, CaptainEntity::class, $request, $captainProfile);
+
+            $this->entityManager->flush();
+
+            return $captainProfile;
+        }
+    }
+
+    public function checkCompleteAccountStatusValidity(string $completeAccountStatus): bool
+    {
+        if ($completeAccountStatus !== CaptainConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED &&
+            $completeAccountStatus !== CaptainConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED &&
+            $completeAccountStatus !== CaptainConstant::COMPLETE_ACCOUNT_STATUS_SYSTEM_FINANCIAL_SELECTED) {
+            return false;
+        }
+
+        return true;
     }
 }

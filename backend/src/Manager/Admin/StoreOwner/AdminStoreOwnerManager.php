@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Repository\StoreOwnerProfileEntityRepository;
+use App\Request\Admin\Report\StoresAndOrdersCountDuringSpecificTimeFilterByAdminRequest;
 use App\Request\Admin\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest;
 use App\Request\Admin\StoreOwner\StoreOwnerProfileUpdateByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
@@ -86,5 +87,16 @@ class AdminStoreOwnerManager
     public function getStoreOwnerProfileEntityByStoreOwnerId(int $storeOwnerId): ?StoreOwnerProfileEntity
     {
         return $this->storeOwnerProfileEntityRepository->findOneBy(['storeOwnerId'=>$storeOwnerId]);
+    }
+
+    public function getActiveStoresWithOrdersDuringCurrentMonthForAdmin(): array
+    {
+        return $this->storeOwnerProfileEntityRepository->getActiveStoresWithOrdersDuringCurrentMonthForAdmin();
+    }
+
+    // Get top stores according on delivered orders during specific time
+    public function filterTopStoresAccordingOnOrdersByAdmin(StoresAndOrdersCountDuringSpecificTimeFilterByAdminRequest $request): array
+    {
+        return $this->storeOwnerProfileEntityRepository->filterTopStoresAccordingOnOrdersByAdmin($request);
     }
 }

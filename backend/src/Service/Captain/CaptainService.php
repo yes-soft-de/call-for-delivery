@@ -3,6 +3,7 @@
 namespace App\Service\Captain;
 
 use App\AutoMapping;
+use App\Constant\Captain\CaptainConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Entity\CaptainEntity;
 use App\Request\Account\CompleteAccountStatusUpdateRequest;
@@ -157,5 +158,27 @@ class CaptainService
         }
 
         return $captainResult;
+    }
+
+    public function getCaptainNameByCaptainUserId(int $captainUserId): string
+    {
+        $captainProfile = $this->captainManager->getCaptainProfileByUserId($captainUserId);
+
+        if ($captainProfile) {
+            return $captainProfile->getCaptainName();
+        }
+
+        return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
+    }
+
+    public function getCaptainProfileIdByCaptainUserId(int $userId): int|string
+    {
+        $captainProfile = $this->captainManager->getCaptainProfileByUserId($userId);
+
+        if (! $captainProfile) {
+            return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
+        }
+
+        return $captainProfile->getId();
     }
 }

@@ -29,7 +29,7 @@ class AdminCaptainOfferSubscriptionManager
         $this->subscriptionCaptainOfferEntityRepository = $subscriptionCaptainOfferEntityRepository;
     }
 
-    public function createCaptainOfferSubscriptionByAdmin(AdminCaptainOfferSubscriptionCreateRequest $request): SubscriptionCaptainOfferEntity
+    public function createCaptainOfferSubscriptionByAdmin(AdminCaptainOfferSubscriptionCreateRequest $request): array
     {
         $subscriptionCaptainOfferEntity = $this->autoMapping->map(AdminCaptainOfferSubscriptionCreateRequest::class, SubscriptionCaptainOfferEntity::class, $request);
 
@@ -41,9 +41,9 @@ class AdminCaptainOfferSubscriptionManager
         $this->entityManager->persist($subscriptionCaptainOfferEntity);
         $this->entityManager->flush();
 
-        $this->subscriptionManager->updateSubscriptionCaptainOfferId($subscriptionCaptainOfferEntity, true);
+        $arrayResult = $this->subscriptionManager->updateSubscriptionCaptainOfferId($subscriptionCaptainOfferEntity, true);
 
-        return $subscriptionCaptainOfferEntity;
+        return [$subscriptionCaptainOfferEntity, $arrayResult];
     }
 
     public function isThereSubscription(StoreOwnerProfileEntity $storeOwnerId): ?array

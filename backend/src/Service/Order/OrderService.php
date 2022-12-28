@@ -8,6 +8,7 @@ use App\Constant\Notification\NotificationTokenConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Constant\OrderLog\OrderLogActionTypeConstant;
 use App\Constant\OrderLog\OrderLogCreatedByUserTypeConstant;
+use App\Constant\OrderLog\OrderLogResultConstant;
 use App\Constant\PriceOffer\PriceOfferStatusConstant;
 use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\BidDetailsEntity;
@@ -38,6 +39,9 @@ use App\Response\Order\OrderUpdateIsCaptainPaidToProviderResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Subscription\SubscriptionConstant;
+use App\Service\CaptainOrderFinancialService\OrderFinancialValueGetService;
+use App\Service\DateFactory\DateFactoryService;
+use App\Service\OrderLog\OrderLogGetService;
 use App\Service\OrderLog\OrderLogService;
 use App\Service\OrderLog\OrderLogToMySqlService;
 use App\Service\Subscription\SubscriptionService;
@@ -98,11 +102,16 @@ class OrderService
     private StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService;
     private BidOrderFinancialService $bidOrderFinancialService;
     private OrderLogService $orderLogService;
+    private OrderLogGetService $orderLogGetService;
+    private DateFactoryService $dateFactoryService;
+    private OrderFinancialValueGetService $orderFinancialValueGetService;
 
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService, UploadFileHelperService $uploadFileHelperService,
-                                CaptainService $captainService, OrderChatRoomService $orderChatRoomService, OrderTimeLineService $orderTimeLineService, NotificationFirebaseService $notificationFirebaseService,
-                                CaptainFinancialDuesService $captainFinancialDuesService, CaptainAmountFromOrderCashService $captainAmountFromOrderCashService, StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService,
-                                BidOrderFinancialService $bidOrderFinancialService, OrderLogService $orderLogService)
+    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService,
+                                UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService,
+                                OrderTimeLineService $orderTimeLineService, NotificationFirebaseService $notificationFirebaseService, CaptainFinancialDuesService $captainFinancialDuesService,
+                                CaptainAmountFromOrderCashService $captainAmountFromOrderCashService, StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService,
+                                BidOrderFinancialService $bidOrderFinancialService, OrderLogService $orderLogService, OrderLogGetService $orderLogGetService,
+                                DateFactoryService $dateFactoryService, OrderFinancialValueGetService $orderFinancialValueGetService)
     {
         $this->autoMapping = $autoMapping;
         $this->orderManager = $orderManager;
@@ -118,6 +127,9 @@ class OrderService
         $this->storeOwnerDuesFromCashOrdersService = $storeOwnerDuesFromCashOrdersService;
         $this->bidOrderFinancialService = $bidOrderFinancialService;
         $this->orderLogService = $orderLogService;
+        $this->orderLogGetService = $orderLogGetService;
+        $this->dateFactoryService = $dateFactoryService;
+        $this->orderFinancialValueGetService = $orderFinancialValueGetService;
     }
 
     /**
@@ -158,7 +170,8 @@ class OrderService
 
             // save log of the action on order
             $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
-                OrderLogActionTypeConstant::CREATE_ORDER_BY_STORE_ACTION_CONST, null, null);
+                OrderLogActionTypeConstant::CREATE_ORDER_BY_STORE_ACTION_CONST, [], null,
+                null);
             //create firebase notification to store
             try {
                 $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
@@ -246,10 +259,6 @@ class OrderService
         return $response;
     }
 
-    /**
-     * @param $id
-     * @return OrdersResponse
-     */
     public function getSpecificOrderForStore(int $id): ?OrdersResponse
     {
         $order = $this->orderManager->getSpecificOrderForStore($id);
@@ -352,8 +361,10 @@ class OrderService
         $orders = $this->orderManager->closestOrders($userId, $date);
 
         foreach ($orders as $key => $value) {
-
             $value['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderId($value['id']);
+
+            // Get the financial value that the order will add to the financial dues of the captain if he/she accept the order
+            $value['captainProfit'] = $this->getSingleOrderFinancialValueByCaptainUserId($userId, $value['storeBranchToClientDistance']);
 
             if ($value['roomId']) {
                 $value['roomId'] = $value['roomId']->toBase32();
@@ -513,6 +524,16 @@ class OrderService
         if ($captainFinancialSystemStatus->status === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_INACTIVE) {
             return CaptainFinancialSystem::FINANCIAL_SYSTEM_INACTIVE;
         }
+
+        // Check if captain try to update order state before specific time (except 'on way to pick order' state)
+        if (in_array($request->getState(), OrderStateConstant::ORDER_STATE_ONGOING_TILL_DELIVERED_ARRAY)) {
+            $result = $this->checkIfNormalOrderStateUpdateBeforeSpecificTimeForCaptain($request->getId(), $request->getCaptainId());
+
+            if ($result === true) {
+                return OrderResultConstant::ORDER_UPDATE_STATE_NOT_ALLOWED_DUE_TO_SHORT_TIME_CONST;
+            }
+        }
+
         if ($request->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
 
             //not show orders for captain because not online
@@ -576,7 +597,8 @@ class OrderService
 
             // save log of the action on order
             $this->orderLogService->createOrderLogMessage($order, $request->getCaptainId()->getCaptainId(), OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST,
-                OrderLogActionTypeConstant::UPDATE_ORDER_STATE_BY_CAPTAIN_ACTION_CONST, null, null);
+                OrderLogActionTypeConstant::UPDATE_ORDER_STATE_BY_CAPTAIN_ACTION_CONST, [], null,
+                null);
 
             //create Notification Local for store
             $this->notificationLocalService->createNotificationLocalForOrderState($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::STORE, $order->getCaptainId()->getId());
@@ -675,7 +697,8 @@ class OrderService
 
             // save log of the action on order
             $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
-                OrderLogActionTypeConstant::CONFIRM_CAPTAIN_ARRIVAL_BY_STORE_ACTION_CONST, null, null);
+                OrderLogActionTypeConstant::CONFIRM_CAPTAIN_ARRIVAL_BY_STORE_ACTION_CONST, [], null,
+                null);
 
             // send firebase notification to admin if isCaptainArrived = false
             if ($order->getIsCaptainArrived() === false) {
@@ -741,7 +764,8 @@ class OrderService
 
                 // save log of the action on order
                 $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
-                    OrderLogActionTypeConstant::CANCEL_ORDER_BY_STORE_ACTION_CONST, null, null);
+                    OrderLogActionTypeConstant::CANCEL_ORDER_BY_STORE_ACTION_CONST, [], null,
+                    null);
 
                 //create local notification to store
                 $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
@@ -990,7 +1014,8 @@ class OrderService
 
                     // save log of the action on order
                     $this->orderLogService->createOrderLogMessage($order, $userId, $userType,
-                        OrderLogActionTypeConstant::HIDE_ORDER_EXCEEDED_DELIVERY_TIME_ACTION_CONST, null, null);
+                        OrderLogActionTypeConstant::HIDE_ORDER_EXCEEDED_DELIVERY_TIME_ACTION_CONST, [], null,
+                        null);
 
                     //create firebase notification to store
                     try {
@@ -1036,7 +1061,8 @@ class OrderService
 
         // save log of the action on order
         $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST,
-            OrderLogActionTypeConstant::UPDATE_PAID_TO_PROVIDER_BY_CAPTAIN_ACTION_CONST, null, null);
+            OrderLogActionTypeConstant::UPDATE_PAID_TO_PROVIDER_BY_CAPTAIN_ACTION_CONST, [], null,
+            null);
 
         return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
     }
@@ -1084,7 +1110,8 @@ class OrderService
 
             // save log of the action on order
             $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
-                OrderLogActionTypeConstant::CREATE_SUB_ORDER_BY_STORE_ACTION_CONST, null, null);
+                OrderLogActionTypeConstant::CREATE_SUB_ORDER_BY_STORE_ACTION_CONST, [], null,
+                null);
 
             try {
                 // create firebase notification to store
@@ -1115,7 +1142,8 @@ class OrderService
 
         // save log of the action on order
         $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST,
-            OrderLogActionTypeConstant::UN_LINK_SUB_ORDER_BY_CAPTAIN_ACTION_CONST, null, null);
+            OrderLogActionTypeConstant::UN_LINK_SUB_ORDER_BY_CAPTAIN_ACTION_CONST, [], null,
+            null);
 
         //notification to store
         $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NON_SUB_ORDER_TITLE,
@@ -1171,7 +1199,7 @@ class OrderService
 
                 // save log of the action on order
                 $this->orderLogService->createOrderLogMessage($order, $userId, $userType, OrderLogActionTypeConstant::SHOW_SUB_ORDER_IF_CAR_AVAILABLE_ACTION_CONST,
-                    null, null);
+                    [], null, null);
 
                 //notification to store
                 $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::SUB_ORDER_ATTENTION,
@@ -1200,7 +1228,8 @@ class OrderService
 
                     // save log of the action on order
                     $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
-                        OrderLogActionTypeConstant::CANCEL_ORDER_BY_STORE_ACTION_CONST, null, null);
+                        OrderLogActionTypeConstant::CANCEL_ORDER_BY_STORE_ACTION_CONST, [], null,
+                        null);
 
                     //create local notification to store
                     $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
@@ -1244,7 +1273,8 @@ class OrderService
 
                 // save log of the action on order
                 $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
-                    OrderLogActionTypeConstant::RECYCLE_ORDER_BY_STORE_ACTION_CONST, null, null);
+                    OrderLogActionTypeConstant::RECYCLE_ORDER_BY_STORE_ACTION_CONST, [], null,
+                    null);
 
                 $this->notificationLocalService->createNotificationLocal($orderEntity->getStoreOwner()->getStoreOwnerId(), NotificationConstant::RECYCLING_ORDER_TITLE,
                     NotificationConstant::RECYCLING_ORDER_SUCCESS, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
@@ -1288,7 +1318,8 @@ class OrderService
 
         // save log of the action on order
         $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
-            OrderLogActionTypeConstant::UN_LINK_SUB_ORDER_BY_STORE_ACTION_CONST, null, null);
+            OrderLogActionTypeConstant::UN_LINK_SUB_ORDER_BY_STORE_ACTION_CONST, [], null,
+            null);
 
         //notification to store
         $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NON_SUB_ORDER_TITLE,
@@ -1403,7 +1434,8 @@ class OrderService
 
                 // save log of the action on order
                 $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
-                    OrderLogActionTypeConstant::UPDATE_ORDER_BY_STORE_ACTION_CONST, null, null);
+                    OrderLogActionTypeConstant::UPDATE_ORDER_BY_STORE_ACTION_CONST, [], null,
+                    null);
 
                 if ($order->getCaptainId()) {
                     // create firebase notification to captain
@@ -1413,6 +1445,9 @@ class OrderService
                         error_log($e);
                     }
                 }
+
+                // send firebase notification to admin
+                $this->sendFirebaseNotificationToAdminAboutOrder($order->getId(), NotificationFirebaseConstant::ORDER_UPDATE_BY_STORE);
             }
         }
 
@@ -1428,7 +1463,8 @@ class OrderService
 
         // save log of the action on order
         $this->orderLogService->createOrderLogMessage($orderEntity, $orderEntity->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
-            OrderLogActionTypeConstant::HIDE_ORDER_WHILE_UPDATING_BY_STORE_ACTION_CONST, null, null);
+            OrderLogActionTypeConstant::HIDE_ORDER_WHILE_UPDATING_BY_STORE_ACTION_CONST, [], null,
+            null);
 
         return $this->autoMapping->map(OrderEntity::class, OrderUpdateToHiddenResponse::class, $orderEntity);
     }
@@ -1486,7 +1522,8 @@ class OrderService
 
             // save log of the action on order
             $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
-                OrderLogActionTypeConstant::CONFIRM_CAPTAIN_PAID_TO_PROVIDER_BY_STORE_ACTION_CONST, null, null);
+                OrderLogActionTypeConstant::CONFIRM_CAPTAIN_PAID_TO_PROVIDER_BY_STORE_ACTION_CONST, [], null,
+                null);
 
             // send firebase notification to admin if the captain’s answer differs from that of the store, regarding the field (paidToProvider and isCashPaymentConfirmedByStore)
             if ($order->getIsCashPaymentConfirmedByStore() !== $order->getPaidToProvider()) {
@@ -1537,5 +1574,85 @@ class OrderService
                 }
             }
         }
+    }
+
+    public function sendFirebaseNotificationToAdminAboutOrder(int $orderId, string $text)
+    {
+        try {
+            $this->notificationFirebaseService->notificationToAdmin($orderId, $text);
+
+        } catch (\Exception $exception) {
+            error_log($exception);
+        }
+    }
+
+    public function getOrderLogCreatedAtByOrderIdAndTypeAndActionAndCreatedByUserType(int $orderId, int $orderType, int $actions, int $createdByUserType): \DateTimeInterface|int
+    {
+        return $this->orderLogGetService->getLastStateCreatedAtOrderLogByOrderIdAndTypeAndActionAndCreatedByUserType($orderId,
+            $orderType, $actions, $createdByUserType);
+    }
+
+    public function checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanThreeMinutes(\DateTimeInterface $oldDate, DateTime $newDate): bool
+    {
+        return $this->dateFactoryService->checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanThreeMinutes($oldDate, $newDate);
+    }
+
+    public function checkIfNormalOrderStateUpdateBeforeSpecificTimeForCaptain(int $orderId, int $captainUserId): bool|int
+    {
+        // Get the creation time of the record of last order state
+        $createdAtResult = $this->getOrderLogCreatedAtByOrderIdAndTypeAndActionAndCreatedByUserType($orderId, OrderTypeConstant::ORDER_TYPE_NORMAL,
+            OrderLogActionTypeConstant::UPDATE_ORDER_STATE_BY_CAPTAIN_ACTION_CONST, OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST);
+
+        if ($createdAtResult === OrderLogResultConstant::ORDER_LOG_NOT_EXIST_CONST) {
+            return OrderLogResultConstant::ORDER_LOG_NOT_EXIST_CONST;
+        }
+
+        // Check date
+        $overdueTime = $this->checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanThreeMinutes($createdAtResult, new DateTime('now'));
+
+        if ($overdueTime === true) {
+            // 1. Send firebase notification to admin
+            $this->sendFirebaseNotificationToAdminAboutOrderAndCaptain($orderId,
+                NotificationFirebaseConstant::THE_CAPTAIN.
+                $this->getCaptainNameByCaptainUserId($captainUserId).
+                NotificationFirebaseConstant::ORDER_UPDATE_STATE_BEFORE_TIME_BY_CAPTAIN_COST);
+
+            // 2. Stop the rested flow, and return an appropriate result
+            return true;
+        }
+
+        return false;
+    }
+
+    public function sendFirebaseNotificationToAdminAboutOrderAndCaptain(int $orderId, string $text)
+    {
+        try {
+            $this->notificationFirebaseService->notificationToAdmin($orderId, $text);
+
+        } catch (\Exception $exception) {
+            error_log($exception);
+        }
+    }
+
+    public function getCaptainNameByCaptainUserId(int $captainUserId): string
+    {
+        return $this->captainService->getCaptainNameByCaptainUserId($captainUserId);
+    }
+
+    public function getCaptainProfileIdByCaptainUserId(int $captainUserId): int|string
+    {
+        return $this->captainService->getCaptainProfileIdByCaptainUserId($captainUserId);
+    }
+
+    // Get the financial value that the order will add to the financial dues of the captain if he/she accept the order
+    public function getSingleOrderFinancialValueByCaptainUserId(int $captainUserId, float $orderDistance = null): float
+    {
+        $captainProfileId = $this->getCaptainProfileIdByCaptainUserId($captainUserId);
+
+        if ($captainProfileId === CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST) {
+            return 0.0;
+        }
+
+        return $this->orderFinancialValueGetService->getSingleOrderFinancialValueByCaptainUserId($captainProfileId, $captainUserId, $orderDistance);
     }
 }

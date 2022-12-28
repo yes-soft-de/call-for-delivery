@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use App\Constant\Captain\CaptainConstant;
 use App\Repository\CaptainEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -95,6 +96,9 @@ class CaptainEntity
 
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $address;
+
+    #[ORM\Column(type: 'string', length: 255, options: ["default" => ""])]
+    private $city = CaptainConstant::CAPTAIN_PROFILE_CITY_DEFAULT_CONST;
 
     public function __construct()
     {
@@ -584,6 +588,18 @@ class CaptainEntity
     public function setAddress(?string $address): self
     {
         $this->address = $address;
+
+        return $this;
+    }
+
+    public function getCity(): ?string
+    {
+        return $this->city;
+    }
+
+    public function setCity(string $city): self
+    {
+        $this->city = $city;
 
         return $this;
     }

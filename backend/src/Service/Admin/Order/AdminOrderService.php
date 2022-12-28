@@ -5,6 +5,7 @@ namespace App\Service\Admin\Order;
 use App\AutoMapping;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Notification\NotificationTokenConstant;
+use App\Constant\Order\OrderIsCancelConstant;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
@@ -21,6 +22,9 @@ use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminRequest;
+use App\Request\Admin\Order\OrderRecycleOrCancelByAdminRequest;
+use App\Request\Admin\Order\OrderStoreBranchToClientDistanceAdditionByAdminRequest;
+use App\Request\Admin\Order\OrderStoreBranchToClientDistanceUpdateByAddAdditionalDistanceByAdminRequest;
 use App\Request\Admin\Order\RePendingAcceptedOrderByAdminRequest;
 use App\Request\Admin\Order\SubOrderCreateByAdminRequest;
 use App\Response\Admin\Order\BidDetailsGetForAdminResponse;
@@ -30,15 +34,21 @@ use App\Response\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminResponse;
 use App\Response\Admin\Order\OrderByIdGetForAdminResponse;
 use App\Response\Admin\Order\OrderCancelByAdminResponse;
 use App\Response\Admin\Order\OrderCreateByAdminResponse;
+use App\Response\Admin\Order\OrderCurrentFinancialCycleByCaptainProfileIdForAdminGetResponse;
+use App\Response\Admin\Order\OrderDestinationUpdateByAdminResponse;
 use App\Response\Admin\Order\OrderGetForAdminResponse;
 use App\Response\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminResponse;
+use App\Response\Admin\Order\OrderRecycleByAdminResponse;
 use App\Response\Admin\Order\OrderStateUpdateByAdminResponse;
+use App\Response\Admin\Order\OrderStoreBranchToClientDistanceUpdateByAdminResponse;
 use App\Response\Admin\Order\OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse;
 use App\Response\Admin\Order\OrderUpdateByAdminResponse;
+use App\Response\GeoDistance\GeoDistanceInfoGetResponse;
 use App\Response\Order\BidOrderByIdGetForAdminResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
 use App\Service\ChatRoom\OrderChatRoomService;
 use App\Service\FileUpload\UploadFileHelperService;
+use App\Service\GeoDistance\GeoDistanceService;
 use App\Service\Notification\NotificationFirebaseService;
 use App\Service\Notification\NotificationLocalService;
 use App\Service\Order\StoreOrderDetailsService;
@@ -73,10 +83,12 @@ use App\Constant\Order\OrderIsHideConstant;
 use App\Request\Admin\Order\OrderStoreBranchToClientDistanceAndDestinationByAdminRequest;
 use App\Request\Admin\Order\OrderUpdateIsCashPaymentConfirmedByStoreByAdminRequest;
 use App\Response\Admin\Order\OrderUpdateIsCashPaymentConfirmedByStoreForAdminResponse;
+use Doctrine\ORM\EntityManagerInterface;
 
 class AdminOrderService
 {
     private AutoMapping $autoMapping;
+    private EntityManagerInterface $entityManager;
     private AdminOrderManager $adminOrderManager;
     private UploadFileHelperService $uploadFileHelperService;
     private OrderTimeLineService $orderTimeLineService;
@@ -94,14 +106,17 @@ class AdminOrderService
     private CaptainService $captainService;
     private OrderLogService $orderLogService;
     private AdminStoreSubscriptionService $adminStoreSubscriptionService;
+    private GeoDistanceService $geoDistanceService;
 
-    public function __construct(AutoMapping $autoMapping, AdminOrderManager $adminStoreOwnerManager, UploadFileHelperService $uploadFileHelperService, OrderTimeLineService $orderTimeLineService,
+    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, AdminOrderManager $adminStoreOwnerManager, UploadFileHelperService $uploadFileHelperService, OrderTimeLineService $orderTimeLineService,
                                 OrderService $orderService, OrderChatRoomService $orderChatRoomService, StoreOrderDetailsService $storeOrderDetailsService, NotificationFirebaseService $notificationFirebaseService,
                                 NotificationLocalService $notificationLocalService, StoreOwnerProfileService $storeOwnerProfileService, SubscriptionService $subscriptionService,
                                 StoreOwnerBranchService $storeOwnerBranchService, CaptainFinancialDuesService $captainFinancialDuesService, CaptainAmountFromOrderCashService $captainAmountFromOrderCashService,
-                                StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService, CaptainService $captainService, OrderLogService $orderLogService, AdminStoreSubscriptionService $adminStoreSubscriptionService)
+                                StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService, CaptainService $captainService,
+                                OrderLogService $orderLogService, AdminStoreSubscriptionService $adminStoreSubscriptionService, GeoDistanceService $geoDistanceService)
     {
         $this->autoMapping = $autoMapping;
+        $this->entityManager = $entityManager;
         $this->adminOrderManager = $adminStoreOwnerManager;
         $this->uploadFileHelperService = $uploadFileHelperService;
         $this->orderTimeLineService = $orderTimeLineService;
@@ -119,6 +134,7 @@ class AdminOrderService
         $this->captainService = $captainService;
         $this->orderLogService = $orderLogService;
         $this->adminStoreSubscriptionService = $adminStoreSubscriptionService;
+        $this->geoDistanceService = $geoDistanceService;
     }
 
     public function getCountOrderOngoingForAdmin(): int
@@ -311,12 +327,17 @@ class AdminOrderService
     }
 
     // This function for returning order which being accepted by captain to pending status under certain circumstances
-    public function rePendingAcceptedOrderByAdmin(RePendingAcceptedOrderByAdminRequest $request, int $userId): string|null|OrderStateUpdateByAdminResponse
+    public function rePendingAcceptedOrderByAdmin(RePendingAcceptedOrderByAdminRequest $request, int $userId): string|null|OrderStateUpdateByAdminResponse|int
     {
         // First, check order status if we can return it to pending
         $orderEntity = $this->adminOrderManager->getOrderByIdForAdmin($request->getOrderId());
 
         if ($orderEntity !== null) {
+            // Before doing anything, check if order is hidden - for any reason - or not
+            if (($orderEntity->getIsHide() === OrderIsHideConstant::ORDER_HIDE_TEMPORARILY) || ($orderEntity->getIsHide() === OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)) {
+                return OrderResultConstant::ORDER_IS_HIDDEN_CONST;
+            }
+
             // we need captain id for deleting related order chat room + create local notification for the captain
             $captainId = $orderEntity->getCaptainId()->getId();
 
@@ -341,7 +362,8 @@ class AdminOrderService
 
                 // save log of the action on order
                 $this->orderLogService->createOrderLogMessage($orderResult, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
-                    OrderLogActionTypeConstant::UN_ASSIGN_ORDER_TO_CAPTAIN_BY_ADMIN_ACTION_CONST, null, null);
+                    OrderLogActionTypeConstant::UN_ASSIGN_ORDER_TO_CAPTAIN_BY_ADMIN_ACTION_CONST, [], null,
+                    null);
 
                 // *** send notifications (local and firebase) *** //
                 $this->notificationLocalService->createNotificationLocal($orderResult->getStoreOwner()->getStoreOwnerId(), NotificationConstant::ORDER_RETURNED_PENDING_TITLE,
@@ -397,7 +419,8 @@ class AdminOrderService
 
         // save log of the action on order
         $this->orderLogService->createOrderLogMessage($orderEntity, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
-            OrderLogActionTypeConstant::HIDE_ORDER_WHILE_UPDATING_BY_ADMIN_ACTION_CONST, null, null);
+            OrderLogActionTypeConstant::HIDE_ORDER_WHILE_UPDATING_BY_ADMIN_ACTION_CONST, [], null,
+            null);
 
        return $this->autoMapping->map(OrderEntity::class, OrderUpdateToHiddenResponse::class, $orderEntity);
     }  
@@ -452,7 +475,8 @@ class AdminOrderService
             if ($order) {
                 // save log of the action on order
                 $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
-                    OrderLogActionTypeConstant::UPDATE_ORDER_BY_ADMIN_ACTION_CONST, null, null);
+                    OrderLogActionTypeConstant::UPDATE_ORDER_BY_ADMIN_ACTION_CONST, [], null,
+                    null);
 
                 if ($order->getCaptainId()) {
                     // create firebase notification to captain
@@ -517,7 +541,8 @@ class AdminOrderService
 
             // save log of the action on order
             $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
-                OrderLogActionTypeConstant::CREATE_ORDER_BY_ADMIN_ACTION_CONST, $branch->getId(), null);
+                OrderLogActionTypeConstant::CREATE_ORDER_BY_ADMIN_ACTION_CONST, [], $branch->getId(),
+                null);
 
             //create firebase notification to store
             try{
@@ -546,7 +571,13 @@ class AdminOrderService
     public function assignOrderToCaptain(OrderAssignToCaptainByAdminRequest $request, int $userId): null|OrderUpdateToHiddenResponse|int
     {
         $orderEntity = $this->adminOrderManager->getOrderById($request->getOrderId());
+
         if ($orderEntity) {
+            // Before doing anything, check if order is hidden - for any reason - or not
+            if (($orderEntity->getIsHide() === OrderIsHideConstant::ORDER_HIDE_TEMPORARILY) || ($orderEntity->getIsHide() === OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)) {
+                return OrderResultConstant::ORDER_IS_HIDDEN_CONST;
+            }
+
             //Check the order if it is pending
             if($orderEntity->getState() !==  OrderStateConstant::ORDER_STATE_PENDING) {
                 return OrderStateConstant::ORDER_STATE_PENDING_INT;
@@ -584,7 +615,8 @@ class AdminOrderService
 
                 // save log of the action on order
                 $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
-                    OrderLogActionTypeConstant::ASSIGN_ORDER_TO_CAPTAIN_BY_ADMIN_ACTION_CONST, null, null);
+                    OrderLogActionTypeConstant::ASSIGN_ORDER_TO_CAPTAIN_BY_ADMIN_ACTION_CONST, [], null ,
+                    null);
 
                 //create firebase notification to store
                 try{
@@ -629,7 +661,8 @@ class AdminOrderService
 
                 // save log of the action on order
                 $this->orderLogService->createOrderLogMessage($newUpdatedOrder, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
-                    OrderLogActionTypeConstant::CANCEL_ORDER_BY_ADMIN_ACTION_CONST, null, null);
+                    OrderLogActionTypeConstant::CANCEL_ORDER_BY_ADMIN_ACTION_CONST, [], null,
+                    null);
 
                 //create local notification to store
                 $this->notificationLocalService->createNotificationLocal($newUpdatedOrder->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
@@ -657,6 +690,13 @@ class AdminOrderService
 
     public function updateOrderStateByAdmin(OrderStateUpdateByAdminRequest $request, int $userId): int|OrderStateUpdateByAdminResponse|null
     {
+        // Check order visibility before updating its status
+        $visibility = $this->getOrderIsHideByOrderId($request->getId());
+
+        if (($visibility === OrderIsHideConstant::ORDER_HIDE_TEMPORARILY) || ($visibility === OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)) {
+            return OrderResultConstant::ORDER_IS_HIDDEN_CONST;
+        }
+
         $orderResult = $this->adminOrderManager->updateOrderStateByAdmin($request);
 
         if (! $orderResult) {
@@ -706,7 +746,8 @@ class AdminOrderService
 
                 // save log of the action on order
                 $this->orderLogService->createOrderLogMessage($orderResult[0], $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
-                    OrderLogActionTypeConstant::UPDATE_ORDER_STATE_BY_ADMIN_ACTION_CONST, null, null);
+                    OrderLogActionTypeConstant::UPDATE_ORDER_STATE_BY_ADMIN_ACTION_CONST, [], null,
+                    null);
             }
         }
 
@@ -790,7 +831,8 @@ class AdminOrderService
 
             // save log of the action on order
             $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
-                OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_BY_ADMIN_ACTION_CONST, null, null);
+                OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_BY_ADMIN_ACTION_CONST, [], null,
+                null);
         }
 
         return $this->autoMapping->map(OrderEntity::class, OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse::class, $order);
@@ -861,7 +903,8 @@ class AdminOrderService
 
             // save log of the action on order
             $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
-                OrderLogActionTypeConstant::CREATE_SUB_ORDER_BY_ADMIN_ACTION_CONST, null, null);
+                OrderLogActionTypeConstant::CREATE_SUB_ORDER_BY_ADMIN_ACTION_CONST, [], null,
+                null);
 
             try {
                 // create firebase notification to store
@@ -947,7 +990,8 @@ class AdminOrderService
 
         // save log of the action on order
         $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
-            OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_AND_DESTINATION_BY_ADMIN_ACTION_CONST, null, null);
+            OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_AND_DESTINATION_BY_ADMIN_ACTION_CONST, [], null,
+            null);
 
         return $this->autoMapping->map(OrderEntity::class, OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse::class, $order);
     }
@@ -972,7 +1016,8 @@ class AdminOrderService
 
                 // save log of the action on order
                 $this->orderLogService->createOrderLogMessage($orderEntity, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
-                    OrderLogActionTypeConstant::ORDER_CONFLICTED_ANSWERS_RESOLVED_BY_ADMIN_CONST, null, null);
+                    OrderLogActionTypeConstant::ORDER_CONFLICTED_ANSWERS_RESOLVED_BY_ADMIN_CONST, [], null,
+                    null);
             }
         }
 
@@ -990,7 +1035,8 @@ class AdminOrderService
 
             // save log of the action on order
             $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
-                OrderLogActionTypeConstant::CONFIRM_CAPTAIN_PAID_TO_PROVIDER_BY_STORE_VIA_DASHBOARD_CONST, null, null);
+                OrderLogActionTypeConstant::CONFIRM_CAPTAIN_PAID_TO_PROVIDER_BY_STORE_VIA_DASHBOARD_CONST, [], null,
+                null);
 
             // send firebase notification to admin if the captain’s answer differs from that of the store, regarding the field (paidToProvider and isCashPaymentConfirmedByStore)
             if ($order->getIsCashPaymentConfirmedByStore() !== $order->getPaidToProvider()) {
@@ -1002,5 +1048,303 @@ class AdminOrderService
         }
 
         return $order;
+    }
+
+    // Add additional distance to storeBranchToClientDistance via new destination by admin
+    public function addDistanceToStoreBranchToClientDistanceViaLocationByAdmin(OrderStoreBranchToClientDistanceAdditionByAdminRequest $request, int $userId)
+    {
+        // 1. Calculate the new distance by the new destination
+        $currentDestination = $this->getCurrentDestinationByOrderIdForAdmin($request->getOrderId());
+
+        if (($currentDestination !== OrderResultConstant::ORDER_TYPE_BID) &&
+            ($currentDestination !== OrderResultConstant::ORDER_NOT_FOUND_RESULT)) {
+            $distance = $this->getDistanceBetweenTwoLocations($currentDestination, $request->getDestination());
+
+            if ($distance === GeoDistanceResultConstant::DESTINATION_COULD_NOT_BE_CALCULATED) {
+                return GeoDistanceResultConstant::DESTINATION_COULD_NOT_BE_CALCULATED;
+            }
+
+            // start transaction commit ...
+            $this->entityManager->getConnection()->beginTransaction();
+
+            try {
+                // 2. Update the destination
+                $orderResult = $this->updateNormalOrderDestinationViaOrderIdAndDestinationArrayByAdmin($request->getOrderId(),
+                    $currentDestination, $request->getDestination(), $userId);
+
+                if ($orderResult) {
+                    // 3. Add the new distance to the existing one
+                    $orderEntity = $this->updateOrderStoreBranchToClientDistanceViaAddingNewDistanceByAdmin($request->getOrderId(),
+                        $distance, $userId, $request->getStoreBranchToClientDistanceAdditionExplanation());
+
+                    if ($orderEntity) {
+                        $this->entityManager->getConnection()->commit();
+
+                        ///TODO move following two calls to the function which responsible for add distance by captain (When ready)
+                        // Send local notification to the store
+                        $this->createLocalNotificationForStore($orderEntity->getStoreOwner()->getStoreOwnerId(), NotificationConstant::ORDER_DESTINATION_DIFFERENT_TITLE_CONST,
+                            NotificationConstant::ORDER_DESTINATION_ADDITION_BY_ADMIN_MESSAGE_CONST.$orderEntity->getId(), $orderEntity->getId());
+                        // Send firebase notification to the store
+                        $this->sendFirebaseNotificationToUserByAdmin($orderEntity->getStoreOwner()->getStoreOwnerId(), $orderEntity->getId(),
+                            NotificationFirebaseConstant::ORDER_DESTINATION_ADDITION_BY_ADMIN_MESSAGE_CONST);
+                    }
+
+                    return $orderResult;
+                }
+
+            } catch (\Exception $e) {
+                $this->entityManager->getConnection()->rollBack();
+                throw $e;
+            }
+        }
+
+        return $currentDestination;
+    }
+
+    // Get ONLY the order type and destination (from StoreOrderDetails exclusively) for admin
+    public function getOrderTypeAndDestinationFromStoreOrderDetailsByOrderIdForAdmin(int $orderId): ?array
+    {
+        return $this->adminOrderManager->getOrderTypeAndDestinationFromStoreOrderDetailsByOrderIdForAdmin($orderId);
+    }
+
+    // Get client destination of an order by order id for admin
+    public function getCurrentDestinationByOrderIdForAdmin(int $orderId): array|string
+    {
+        // In order to get destination of an order, we have to know its type, either normal or bid order
+        $order = $this->getOrderTypeAndDestinationFromStoreOrderDetailsByOrderIdForAdmin($orderId);
+
+        if ($order) {
+            if ($order['orderType'] === OrderTypeConstant::ORDER_TYPE_NORMAL) {
+                return $order['destination'];
+            }
+
+            return OrderResultConstant::ORDER_TYPE_BID;
+        }
+
+        return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+    }
+
+    // Get the distance between two locations of type array for admin
+    public function getDistanceBetweenTwoLocations(array $fromLocation, array $toLocation): float|int
+    {
+        $result = $this->geoDistanceService->getGeoDistanceBetweenTwoLocations($fromLocation['lat'], $fromLocation['lon'],
+            $toLocation['lat'], $toLocation['lon']);
+
+        if (($result === GeoDistanceResultConstant::BAD_REQUEST_CONST) ||
+            ($result === GeoDistanceResultConstant::CONTENT_CAN_NOT_BE_DECODED)) {
+            return GeoDistanceResultConstant::DESTINATION_COULD_NOT_BE_CALCULATED;
+        }
+
+        // get the distance value from the resulted response
+        return (float) $result->distance;
+    }
+
+    // Update the destination of normal order (normal order only because bid order has different approach)
+    public function updateNormalOrderDestinationViaOrderIdAndDestinationArrayByAdmin(int $orderId, array $currentDestination, array $newDestination, int $userId): ?OrderDestinationUpdateByAdminResponse
+    {
+        $order = $this->adminOrderManager->updateNormalOrderDestinationViaOrderIdAndDestinationArrayByAdmin($orderId, $newDestination);
+
+        if (! $order) {
+            return $order;
+        }
+
+        // save log of the action on order
+        $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+            OrderLogActionTypeConstant::UPDATE_ORDER_DESTINATION_BY_ADMIN_ACTION_CONST, ['oldReceiverDestination' => $currentDestination], null,
+            null);
+
+        return $this->autoMapping->map(OrderEntity::class, OrderDestinationUpdateByAdminResponse::class, $order);
+    }
+
+    // Add distance to the existing one (in storeBranchToClientDistance field)
+    public function updateOrderStoreBranchToClientDistanceViaAddingNewDistanceByAdmin(int $orderId, float $distance, int $userId, string $storeBranchToClientDistanceAdditionExplanation): ?OrderEntity
+    {
+        $order = $this->adminOrderManager->updateOrderStoreBranchToClientDistanceViaAddingNewDistanceByAdmin($orderId, $distance, $storeBranchToClientDistanceAdditionExplanation);
+
+        if (! $order) {
+            return $order;
+        }
+
+        // Re-calculate the financial dues of the captain who has the order (if exists)
+        if ($order->getCaptainId()?->getCaptainId()) {
+            $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
+        }
+
+        // save log of the action on order
+        $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+            OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_VIA_ADDING_DISTANCE_BY_ADMIN_ACTION_CONST,
+            [], null, null);
+
+        //return $this->autoMapping->map(OrderEntity::class, OrderDestinationUpdateByAdminResponse::class, $order);
+        return $order;
+    }
+
+    // Just add additional distance to storeBranchToClientDistance via new destination by admin
+    public function addAdditionalDistanceToStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceUpdateByAddAdditionalDistanceByAdminRequest $request, int $userId): ?OrderStoreBranchToClientDistanceUpdateByAdminResponse
+    {
+        $order = $this->adminOrderManager->updateOrderStoreBranchToClientDistanceViaAddingNewDistanceByAdmin($request->getOrderId(),
+            $request->getAdditionalDistance(), $request->getStoreBranchToClientDistanceAdditionExplanation());
+
+        if (! $order) {
+            return $order;
+        }
+
+        // Re-calculate the financial dues of the captain who has the order (if exists)
+        if ($order->getCaptainId()?->getCaptainId()) {
+            $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
+        }
+
+        // save log of the action on order
+        $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+            OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_VIA_ADD_ADDITIONAL_DISTANCE_BY_ADMIN_ACTION_CONST,
+            [], null, null);
+
+        ///TODO move following two calls to the function which responsible for add distance by captain (When ready)
+        // Send local notification to the store
+        $this->createLocalNotificationForStore($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::ORDER_DESTINATION_DIFFERENT_TITLE_CONST,
+            NotificationConstant::ORDER_DESTINATION_ADDITION_BY_ADMIN_MESSAGE_CONST.$order->getId(), $order->getId());
+        // Send firebase notification to the store
+        $this->sendFirebaseNotificationToUserByAdmin($order->getStoreOwner()->getStoreOwnerId(), $order->getId(),
+            NotificationFirebaseConstant::ORDER_DESTINATION_ADDITION_BY_ADMIN_MESSAGE_CONST);
+
+        return $this->autoMapping->map(OrderEntity::class, OrderStoreBranchToClientDistanceUpdateByAdminResponse::class, $order);
+    }
+
+    public function getOrderIsHideByOrderId(int $orderId): int|string
+    {
+        $arrayResult = $this->adminOrderManager->getOrderIsHideByOrderId($orderId);
+
+        if (count($arrayResult) > 0) {
+            return (int) $arrayResult[0];
+        }
+
+        return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+    }
+
+    public function createLocalNotificationForStore(int $storeOwnerUserId, string $title, string $text, int $orderId)
+    {
+        $this->notificationLocalService->createNotificationLocal($storeOwnerUserId, $title, $text, NotificationTokenConstant::APP_TYPE_STORE, $orderId);
+    }
+
+    public function sendFirebaseNotificationToUserByAdmin(int $userId, int $orderId, string $text)
+    {
+        $this->notificationFirebaseService->notificationToUser($userId, $orderId, $text);
+    }
+
+    public function recycleOrCancelOrderByAdmin(OrderRecycleOrCancelByAdminRequest $request, int $userId): string|OrderRecycleByAdminResponse|CanCreateOrderResponse
+    {
+        $orderEntity = $this->adminOrderManager->getOrderByOrderIdAndHideStateForAdmin($request->getId(), OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE);
+
+        if ($orderEntity) {
+            // First, check if it requires to cancel the order
+            if ($request->getCancel() === OrderIsCancelConstant::ORDER_CANCEL) {
+                // update order state
+                $updatedOrder = $this->adminOrderManager->updateOrderStatusToCancelled($orderEntity);
+
+                if ($updatedOrder) {
+                    // create record in order timeline for the action
+                    $this->orderTimeLineService->createOrderLogsRequest($updatedOrder);
+
+                    // save log of the action on order
+                    $this->orderLogService->createOrderLogMessage($updatedOrder, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+                        OrderLogActionTypeConstant::CANCEL_ORDER_BY_ADMIN_ACTION_CONST, [], null,
+                        null);
+
+                    //create local notification to store
+                    $this->createLocalNotificationForStore($updatedOrder->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
+                        NotificationConstant::CANCEL_ORDER_SUCCESS, $updatedOrder->getId());
+
+                    // create firebase notification to store
+                    $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($updatedOrder->getStoreOwner()->getStoreOwnerId(),
+                        $updatedOrder->getId(), NotificationConstant::CANCEL_ORDER_SUCCESS, NotificationConstant::STORE);
+                }
+
+                return $this->autoMapping->map(OrderEntity::class, OrderRecycleByAdminResponse::class, $updatedOrder);
+            }
+
+            // Isn't required to cancel the order, instead recycle it
+            if (new DateTime($request->getDeliveryDate()) < new DateTime('now')) {
+                // we set the delivery date equals to current datetime + 3 minutes just for affording the late in persisting the order
+                // to the database if it is happened
+                $request->setDeliveryDate((new DateTime('+ 3 minutes'))->format('Y-m-d H:i:s'));
+            }
+
+            // check store subscription
+            $canCreateOrder = $this->subscriptionService->canCreateOrder($orderEntity->getStoreOwner()->getStoreOwnerId());
+
+            if ($canCreateOrder->canCreateOrder === SubscriptionConstant::CAN_NOT_CREATE_ORDER) {
+                return $canCreateOrder;
+            }
+
+            // update isHide for showing the order
+            $request->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+
+            // check if cars available or not
+            if ($canCreateOrder->subscriptionStatus === SubscriptionConstant::CARS_FINISHED) {
+                $request->setIsHide(OrderIsHideConstant::ORDER_HIDE_TEMPORARILY);
+            }
+
+            $order = $this->adminOrderManager->recyclingOrderByAdmin($orderEntity, $request);
+
+            if ($order) {
+                // after order had been recycled, update remaining orders of the subscription of the store
+                $this->subscriptionService->updateRemainingOrders($orderEntity->getStoreOwner()->getStoreOwnerId(),
+                    SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
+
+                // save log of the action on order
+                $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+                    OrderLogActionTypeConstant::RECYCLE_ORDER_BY_ADMIN_ACTION_CONST, [], null, null);
+
+                $this->notificationLocalService->createNotificationLocal($orderEntity->getStoreOwner()->getStoreOwnerId(), NotificationConstant::RECYCLING_ORDER_TITLE,
+                    NotificationConstant::RECYCLING_ORDER_SUCCESS, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
+
+                // create firebase notification to store
+                $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($order->getStoreOwner()->getStoreOwnerId(),
+                    $order->getId(), $order->getState(), NotificationConstant::STORE);
+
+                // create firebase notification to captains
+                $this->sendFirebaseNotificationToAllCaptainsByAdmin($order->getId());
+            }
+
+            return $this->autoMapping->map(OrderEntity::class, OrderRecycleByAdminResponse::class, $order);
+        }
+
+        return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+    }
+
+    public function sendFirebaseNotificationAboutOrderStateForUserByAdmin(int $userId, int $orderId, string $orderState, string $userType)
+    {
+        try {
+            $this->notificationFirebaseService->notificationOrderStateForUser($userId, $orderId, $orderState, $userType);
+
+        } catch (\Exception $exception) {
+            error_log($exception);
+        }
+    }
+
+    public function sendFirebaseNotificationToAllCaptainsByAdmin(int $orderId)
+    {
+        try {
+            $this->notificationFirebaseService->notificationToCaptains($orderId);
+
+        } catch (\Exception $exception) {
+            error_log($exception);
+        }
+    }
+
+    // Get delivered orders during current active financial cycle of a captain by admin
+    public function getOrdersByCaptainProfileIdAndCaptainFinancialCycle(int $captainProfileId): array
+    {
+        $response = [];
+
+        $orders = $this->adminOrderManager->getOrdersByCaptainProfileIdAndCaptainFinancialCycle($captainProfileId);
+
+        if (count($orders) > 0) {
+            foreach ($orders as $order) {
+                $response[] = $this->autoMapping->map('array', OrderCurrentFinancialCycleByCaptainProfileIdForAdminGetResponse::class, $order);
+            }
+        }
+
+        return $response;
     }
 }
