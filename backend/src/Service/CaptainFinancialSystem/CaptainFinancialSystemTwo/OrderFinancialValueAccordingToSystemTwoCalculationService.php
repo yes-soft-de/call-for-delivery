@@ -37,9 +37,7 @@ class OrderFinancialValueAccordingToSystemTwoCalculationService
     //                  order value = (10 * (month compensation / orders in month)) * 2
     //              If target achieved currently
     //                  order value = (25 * (month compensation / orders in month)) * 2
-    public function getOrderFinancialValueAccordingToCountOfOrders(int $captainProfileId, int $captainUserId, int $countOrdersInMonth,
-                                                                   float $monthCompensation, float $bounceMinCountOrdersInMonth,
-                                                                   float $bounceMaxCountOrdersInMonth, float $orderDistance = null): float
+    public function getOrderFinancialValueAccordingToCountOfOrders(int $captainProfileId, array $captainFinancialSystemDetails, float $orderDistance = null): float
     {
         // Captain financial system is the second one
         if (! $orderDistance) {
@@ -50,33 +48,45 @@ class OrderFinancialValueAccordingToSystemTwoCalculationService
 
         $ordersCount = $this->getDeliveredOrdersCountByCaptainIdAndBetweenTwoDates($captainProfileId, $dates['fromDate'], $dates['toDate']);
 
-        $target = $this->checkTarget($countOrdersInMonth, $ordersCount);
+        $target = $this->checkTarget($captainFinancialSystemDetails['countOrdersInMonth'], $ordersCount);
 
         // Check order distance to consider it as a single or double order
         if ($orderDistance <= CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER) {
             // Get the captain target
             if ($target === CaptainFinancialSystem::TARGET_FAILED_INT) {
                 // Target not achieved currently
-                // order value = bounceMinCountOrdersInMonth * (month compensation / orders in month)
-                return round($bounceMinCountOrdersInMonth * ($monthCompensation / (float) $countOrdersInMonth), 2);
+                // order value = bounceMinCountOrdersInMonth * (month compensation / orders in month) >>> Rami's Equation
+                // order value = (salary + monthCompensation) / countOrdersInMonth
+                return round(
+                    (($captainFinancialSystemDetails['salary'] + $captainFinancialSystemDetails['monthCompensation']) /
+                        (float) $captainFinancialSystemDetails['countOrdersInMonth']),
+                    2);
 
             } elseif (($target === CaptainFinancialSystem::TARGET_SUCCESS_INT) || ($target === CaptainFinancialSystem::TARGET_SUCCESS_AND_INCREASE_INT)) {
                 // Target achieved currently
-                // order value = bounceMaxCountOrdersInMonth * (month compensation / orders in month)
-                return round($bounceMaxCountOrdersInMonth * ($monthCompensation / (float) $countOrdersInMonth), 2);
+                // order value = bounceMaxCountOrdersInMonth * (month compensation / orders in month) >>> Rami's Equation
+                // order value = (salary + monthCompensation) / countOrdersInMonth
+                return round(
+                    (($captainFinancialSystemDetails['salary'] + $captainFinancialSystemDetails['monthCompensation']) /
+                        (float) $captainFinancialSystemDetails['countOrdersInMonth']),
+                    2);
             }
 
         } elseif ($orderDistance > CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER) {
             // Get the captain target
             if ($target === CaptainFinancialSystem::TARGET_FAILED_INT) {
                 // Target not achieved currently
-                // order value = (bounceMinCountOrdersInMonth * (month compensation / orders in month)) * 2
-                return round(($bounceMinCountOrdersInMonth * ($monthCompensation / (float) $countOrdersInMonth)) * 2.0, 2);
+                // order value = (bounceMinCountOrdersInMonth * (month compensation / orders in month)) * 2 >>> Rami's Equation
+                // order value = ((salary + monthCompensation) / countOrdersInMonth) * 2
+                return round(((($captainFinancialSystemDetails['salary'] + $captainFinancialSystemDetails['monthCompensation']) /
+                        (float) $captainFinancialSystemDetails['countOrdersInMonth'])) * 2.0, 2);
 
             } elseif (($target === CaptainFinancialSystem::TARGET_SUCCESS_INT) || ($target === CaptainFinancialSystem::TARGET_SUCCESS_AND_INCREASE_INT)) {
                 // Target achieved currently
-                // order value = (bounceMaxCountOrdersInMonth * (month compensation / orders in month)) * 2
-                return round(($bounceMaxCountOrdersInMonth * ($monthCompensation / (float) $countOrdersInMonth)) * 2.0, 2);
+                // order value = (bounceMaxCountOrdersInMonth * (month compensation / orders in month)) * 2 >>> Rami's Equation
+                // order value = ((salary + monthCompensation) / countOrdersInMonth) * 2
+                return round(((($captainFinancialSystemDetails['salary'] + $captainFinancialSystemDetails['monthCompensation']) /
+                        (float) $captainFinancialSystemDetails['countOrdersInMonth'])) * 2.0, 2);
             }
         }
 
