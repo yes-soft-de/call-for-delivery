@@ -17,6 +17,7 @@ import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/request/resolve_conflects_order_request.dart';
+import 'package:c4d/module_orders/request/store_answer_cash_order_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/update_distance_request.dart';
 import 'package:c4d/module_orders/response/order_actionlogs_response/order_actionlogs_response.dart';
@@ -245,6 +246,18 @@ class OrdersService {
       ResolveConflictsOrderRequest request) async {
     ActionResponse? response =
         await _ordersManager.resolveOrderConflicts(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> updateAnswerOrderCashForStore(
+      StoreAnswerForOrderCashRequest request) async {
+    ActionResponse? response =
+        await _ordersManager.updateAnswerOrderCashForStore(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
       return DataModel.withError(

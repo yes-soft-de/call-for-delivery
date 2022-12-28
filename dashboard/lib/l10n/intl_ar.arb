@@ -331,7 +331,7 @@
     "profileFetchedSuccessfully": "تم جلب بياناتك الشخصية بنجاح",
     "uploadProfileSuccess": "تم تعديل البيانات الشخصية بنجاح",
     "uploadImageSuccess": "تم رفع الصورة بنجاح",
-    "address": "الموقع",
+    "address": "العنوان",
     "errorDownloadingImage": "لم نستطع تحميل الصورة",
     "lastSeenMessage": "رسائل جديدة",
     "firstSendMessage": "كن أول من يرسل رسالة",
@@ -834,5 +834,11 @@
     "storeOrderLog":"سجل طلبات",
     "captainsRating":"تقييمات الكابتن",
     "cannotSubscribeToCaptainOffer":"لا يمكن الاشتراك بعرض الكابتن لأن المتجر لايمتلك اشتراك صالح",
-    "captainActivity":"نشاط الكباتن"
+    "captainActivity":"نشاط الكباتن",
+    "updatedOrderStatusByAdministration":"تم تحديث حالة الطلب من قبل الادارة",
+    "payConflictAnswersResolvedByAdministration":"تم حل التعارض بين المتجر والكابتن عن طريق الإدارة",
+    "updateStoreAnswerSuccessfully":"تم تحديث جواب المتجر بنجاح",
+    "receivedCash":"تم الاستلام",
+    "notReceivedCash":"لم يتم الاستلام",
+    "areSureAboutAnsweringBehalfStore":"هل انت متأكد من إجابتك عن المتجر"
 }

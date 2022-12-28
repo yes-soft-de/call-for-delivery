@@ -8409,6 +8409,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Updated order status by administration`
+  String get updatedOrderStatusByAdministration {
+    return Intl.message(
+      'Updated order status by administration',
+      name: 'updatedOrderStatusByAdministration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Conflicted answers resolved by administration`
+  String get payConflictAnswersResolvedByAdministration {
+    return Intl.message(
+      'Conflicted answers resolved by administration',
+      name: 'payConflictAnswersResolvedByAdministration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update store answer for cash order`
+  String get updateStoreAnswerSuccessfully {
+    return Intl.message(
+      'Update store answer for cash order',
+      name: 'updateStoreAnswerSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash Received`
+  String get receivedCash {
+    return Intl.message(
+      'Cash Received',
+      name: 'receivedCash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash not Received`
+  String get notReceivedCash {
+    return Intl.message(
+      'Cash not Received',
+      name: 'notReceivedCash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are sure about answering behalf store`
+  String get areSureAboutAnsweringBehalfStore {
+    return Intl.message(
+      'Are sure about answering behalf store',
+      name: 'areSureAboutAnsweringBehalfStore',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -17,24 +17,29 @@ class UpdateCaptainRequest {
   num? salary;
   num? bounce;
   String? drivingLicence;
+  String? city;
+  String? address;
 
-  UpdateCaptainRequest(
-      {required this.id,
-      this.captainName,
-      this.location,
-      this.age,
-      this.car,
-      this.phone,
-      this.bankName,
-      this.bankAccountNumber,
-      this.stcPay,
-      this.images,
-      this.mechanicLicense,
-      this.identity,
-      this.isOnline,
-      this.salary,
-      this.bounce,
-      this.drivingLicence});
+  UpdateCaptainRequest({
+    required this.id,
+    this.captainName,
+    this.location,
+    this.age,
+    this.car,
+    this.phone,
+    this.bankName,
+    this.bankAccountNumber,
+    this.stcPay,
+    this.images,
+    this.mechanicLicense,
+    this.identity,
+    this.isOnline,
+    this.salary,
+    this.bounce,
+    this.drivingLicence,
+    this.address,
+    this.city,
+  });
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
@@ -53,6 +58,8 @@ class UpdateCaptainRequest {
     map['isOnline'] = isOnline;
     map['salary'] = salary;
     map['bounce'] = bounce;
+    map['city'] = city;
+    map['address'] = address;
     if (location != null) {
       map['location'] = location?.toJson();
     }

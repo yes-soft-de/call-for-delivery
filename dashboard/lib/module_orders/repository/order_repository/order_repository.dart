@@ -8,6 +8,7 @@ import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/request/resolve_conflects_order_request.dart';
+import 'package:c4d/module_orders/request/store_answer_cash_order_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/update_distance_request.dart';
 import 'package:c4d/module_orders/response/order_actionlogs_response/order_actionlogs_response.dart';
@@ -248,6 +249,20 @@ class OrderRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
       Urls.RESOLVE_CONFLICTS_ORDER,
+      await request.toJson(),
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+
+    if (response == null) return null;
+
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> updateAnswerOrderCashForStore(
+      StoreAnswerForOrderCashRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+      Urls.UPDATE_STORE_ANSWER_ORDER,
       await request.toJson(),
       headers: {'Authorization': 'Bearer ' + '$token'},
     );

@@ -1,3 +1,4 @@
+import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -25,7 +26,12 @@ class HomeScreenState extends State<HomeScreen> {
       appBar: CustomC4dAppBar.appBar(context,
           title: S.of(context).home, icon: Icons.menu, onTap: () {
         GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
-      }),
+      }, actions: [
+        CustomC4dAppBar.actionIcon(context, onTap: () {
+          Navigator.of(context)
+              .pushNamed(OrdersRoutes.SEARCH_FOR_ORDERS_SCREEN);
+        }, icon: Icons.search)
+      ]),
       body: Stack(
         children: [
           SizedBox(

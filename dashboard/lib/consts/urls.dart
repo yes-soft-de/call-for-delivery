@@ -294,6 +294,8 @@ class Urls {
   static const NEW_ORDER_API_LINK = BASE_API_ORDER + '/createsuborderbyadmin';
   static const RESOLVE_CONFLICTS_ORDER =
       BASE_API_ORDER + '/resolveconflictedanswersbyadmin';
+  static const UPDATE_STORE_ANSWER_ORDER =
+      BASE_API_ORDER + '/confirmcashpaymentbystorebyadmin';
 
   /*-----------------------------subscription----------------------------*/
   static const String BASE_API_SUBSCRIPTION =
