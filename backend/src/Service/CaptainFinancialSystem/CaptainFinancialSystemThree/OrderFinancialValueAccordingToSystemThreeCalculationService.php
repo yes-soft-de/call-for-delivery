@@ -53,8 +53,10 @@ class OrderFinancialValueAccordingToSystemThreeCalculationService
                         $ordersCount = $this->getCountOrdersByFinancialSystemThreeDuringCurrentAndActiveFinancialCycle($captainProfileId,
                             $thirdFinancialSystemCategory->getCountKilometersFrom(), $thirdFinancialSystemCategory->getCountKilometersTo());
 
-                        if (($ordersCount + 1) >= $thirdFinancialSystemCategory->getBounceCountOrdersInMonth()) {
-                            $captainProfit += $thirdFinancialSystemCategory->getBounce();
+                        if ($ordersCount) {
+                            if (($ordersCount['countOrder'] + 1) >= $thirdFinancialSystemCategory->getBounceCountOrdersInMonth()) {
+                                $captainProfit += $thirdFinancialSystemCategory->getBounce();
+                            }
                         }
                     }
                 }
