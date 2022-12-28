@@ -8409,32 +8409,60 @@ class S {
       args: [],
     );
   }
-
-  /// `Captain Rataings Details`
-  String get captainratingDetails {
+  /// `Updated order status by administration`
+  String get updatedOrderStatusByAdministration {
     return Intl.message(
-      'Captain Rataings Details',
-      name: 'captainratingDetails',
+      'Updated order status by administration',
+      name: 'updatedOrderStatusByAdministration',
       desc: '',
       args: [],
     );
   }
 
-  /// `Number of rates`
-  String get numberofRatings {
+  /// `Conflicted answers resolved by administration`
+  String get payConflictAnswersResolvedByAdministration {
     return Intl.message(
-      'Number of rates',
-      name: 'numberofRatings',
+      'Conflicted answers resolved by administration',
+      name: 'payConflictAnswersResolvedByAdministration',
+      desc: '',
+      args: [],
+    );
+  }
+  /// `Update store answer for cash order`
+  String get updateStoreAnswerSuccessfully {
+    return Intl.message(
+      'Update store answer for cash order',
+      name: 'updateStoreAnswerSuccessfully',
       desc: '',
       args: [],
     );
   }
 
-  /// `No comments`
-  String get noComment {
+  /// `Cash Received`
+  String get receivedCash {
     return Intl.message(
-      'No comments',
-      name: 'noComment',
+      'Cash Received',
+      name: 'receivedCash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cash not Received`
+  String get notReceivedCash {
+    return Intl.message(
+      'Cash not Received',
+      name: 'notReceivedCash',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are sure about answering behalf store`
+  String get areSureAboutAnsweringBehalfStore {
+    return Intl.message(
+      'Are sure about answering behalf store',
+      name: 'areSureAboutAnsweringBehalfStore',
       desc: '',
       args: [],
     );

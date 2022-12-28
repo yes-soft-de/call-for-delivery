@@ -100,6 +100,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Amount for store"),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
         "apply": MessageLookupByLibrary.simpleMessage("APPLY"),
+        "areSureAboutAnsweringBehalfStore":
+            MessageLookupByLibrary.simpleMessage(
+                "Are sure about answering behalf store"),
         "areSureAboutDeleteThisCaptainOfferSubscriptions":
             MessageLookupByLibrary.simpleMessage(
                 "Are you sure about deleting captain offer subscription"),
@@ -707,6 +710,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Not completed account"),
         "notImplementedYet":
             MessageLookupByLibrary.simpleMessage("Not implemented yet"),
+        "notReceivedCash":
+            MessageLookupByLibrary.simpleMessage("Cash not Received"),
         "notSubscription": MessageLookupByLibrary.simpleMessage(
             "You dont have a subscription yet"),
         "notVerified": MessageLookupByLibrary.simpleMessage(
@@ -858,6 +863,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "pay": MessageLookupByLibrary.simpleMessage("Pay"),
         "payConflictAnswersResolved": MessageLookupByLibrary.simpleMessage(
             "Payment conflict answer resolved"),
+        "payConflictAnswersResolvedByAdministration":
+            MessageLookupByLibrary.simpleMessage(
+                "Conflicted answers resolved by administration"),
         "paySubscription":
             MessageLookupByLibrary.simpleMessage("Pay Subscription"),
         "paymentAmount": MessageLookupByLibrary.simpleMessage("Payment amount"),
@@ -979,6 +987,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Reason is Required"),
         "reasonOfTheReport":
             MessageLookupByLibrary.simpleMessage("Reason of the report"),
+        "receivedCash": MessageLookupByLibrary.simpleMessage("Cash Received"),
         "recipientName": MessageLookupByLibrary.simpleMessage("Recipient Name"),
         "recipientPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Recipient Phone Number"),
@@ -1258,9 +1267,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "updatePersonalInformation":
             MessageLookupByLibrary.simpleMessage("Update profile"),
         "updateStore": MessageLookupByLibrary.simpleMessage("Update store"),
+        "updateStoreAnswerSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "Update store answer for cash order"),
         "updateYourData": MessageLookupByLibrary.simpleMessage("Update Data"),
         "updatedBy": MessageLookupByLibrary.simpleMessage("Updated by"),
         "updatedOrder": MessageLookupByLibrary.simpleMessage("Updated order"),
+        "updatedOrderStatusByAdministration":
+            MessageLookupByLibrary.simpleMessage(
+                "Updated order status by administration"),
         "uploadAndSubmit":
             MessageLookupByLibrary.simpleMessage("Upload and submit"),
         "uploadImageIfyouHave":

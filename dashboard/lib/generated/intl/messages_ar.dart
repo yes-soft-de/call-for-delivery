@@ -88,7 +88,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addStore": MessageLookupByLibrary.simpleMessage("أضف متجر"),
         "addWorkPackage":
             MessageLookupByLibrary.simpleMessage("إضافة باقة عمل"),
-        "address": MessageLookupByLibrary.simpleMessage("الموقع"),
+        "address": MessageLookupByLibrary.simpleMessage("العنوان"),
         "admin": MessageLookupByLibrary.simpleMessage("المدير"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "all": MessageLookupByLibrary.simpleMessage("الكل"),
@@ -99,6 +99,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المبالغ المخصصة للمتاجر"),
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
+        "areSureAboutAnsweringBehalfStore":
+            MessageLookupByLibrary.simpleMessage(
+                "هل انت متأكد من إجابتك عن المتجر"),
         "areSureAboutDeleteThisCaptainOfferSubscriptions":
             MessageLookupByLibrary.simpleMessage(
                 "هل انت متأكد من رغبتك في حذف الاشتراك بعروض الكابتن"),
@@ -701,6 +704,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("حساب غير مكتمل"),
         "notImplementedYet":
             MessageLookupByLibrary.simpleMessage("لم يتم تفعيل هذه الميزة بعد"),
+        "notReceivedCash":
+            MessageLookupByLibrary.simpleMessage("لم يتم الاستلام"),
         "notSubscription": MessageLookupByLibrary.simpleMessage(
             "لم تشترك بباقة بعد الرجاء الاشتراك من الإعدادات"),
         "notVerified":
@@ -852,6 +857,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "pay": MessageLookupByLibrary.simpleMessage("ادفع"),
         "payConflictAnswersResolved": MessageLookupByLibrary.simpleMessage(
             "تم حل التعارض بين الاجابات حول تسليم المبلغ النقدي من أجل الطلب"),
+        "payConflictAnswersResolvedByAdministration":
+            MessageLookupByLibrary.simpleMessage(
+                "تم حل التعارض بين المتجر والكابتن عن طريق الإدارة"),
         "paySubscription": MessageLookupByLibrary.simpleMessage("دفع الاشتراك"),
         "paymentAmount": MessageLookupByLibrary.simpleMessage("قيمة الدفعة"),
         "paymentFailed": MessageLookupByLibrary.simpleMessage(
@@ -971,6 +979,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الرجاء تزويدنا بسبب الابلاغ"),
         "reasonOfTheReport":
             MessageLookupByLibrary.simpleMessage("سبب طلب الدعم"),
+        "receivedCash": MessageLookupByLibrary.simpleMessage("تم الاستلام"),
         "recipientName": MessageLookupByLibrary.simpleMessage("اسم المستلم"),
         "recipientPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم هاتف المستلم"),
@@ -1247,12 +1256,17 @@ class MessageLookup extends MessageLookupByLibrary {
         "updatePersonalInformation":
             MessageLookupByLibrary.simpleMessage("تعديل البيانات الشخصية"),
         "updateStore": MessageLookupByLibrary.simpleMessage("تعديل المتجر"),
+        "updateStoreAnswerSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تحديث جواب المتجر بنجاح"),
         "updateYourData":
             MessageLookupByLibrary.simpleMessage("تحديث البيانات"),
         "updatedBy":
             MessageLookupByLibrary.simpleMessage("تم تعديل الحالة من قبل"),
         "updatedOrder":
             MessageLookupByLibrary.simpleMessage("تم تحديث معلومات طلب"),
+        "updatedOrderStatusByAdministration":
+            MessageLookupByLibrary.simpleMessage(
+                "تم تحديث حالة الطلب من قبل الادارة"),
         "uploadAndSubmit":
             MessageLookupByLibrary.simpleMessage("رفع الصور وارسال الطلب"),
         "uploadImageIfyouHave":

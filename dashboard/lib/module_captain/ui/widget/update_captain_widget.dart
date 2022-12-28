@@ -26,6 +26,8 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
   TextEditingController _nameController = TextEditingController();
   TextEditingController _ageController = TextEditingController();
   TextEditingController _carController = TextEditingController();
+  TextEditingController _cityController = TextEditingController();
+  TextEditingController _addressController = TextEditingController();
   TextEditingController _salaryController = TextEditingController();
   TextEditingController _bounceController = TextEditingController();
   TextEditingController _phoneController = TextEditingController();
@@ -150,6 +152,34 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
               hintText: S.current.phoneNumber,
               numbers: true,
               phone: true,
+            ),
+            // city
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 12.0, bottom: 8, right: 12, top: 16.0),
+              child: Text(
+                S.current.city,
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.start,
+              ),
+            ),
+            CustomFormField(
+              controller: _cityController,
+              hintText: S.current.city,
+            ),
+            // address
+            Padding(
+              padding: const EdgeInsets.only(
+                  left: 12.0, bottom: 8, right: 12, top: 16.0),
+              child: Text(
+                S.current.address,
+                style: TextStyle(fontWeight: FontWeight.bold),
+                textAlign: TextAlign.start,
+              ),
+            ),
+            CustomFormField(
+              controller: _addressController,
+              hintText: S.current.address,
             ),
             //Bankname
             Padding(
@@ -348,12 +378,14 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
   @override
   void initState() {
     _salaryController.text = widget.request!.salary.toString();
-    _nameController.text = widget.request!.name ?? '';
-    _ageController.text = widget.request!.age.toString();
-    _carController.text = widget.request!.car ?? '';
-    _phoneController.text = widget.request!.phone ?? '';
-    _bankNameController.text = widget.request!.bankName ?? '';
-    _bankAccountNumberController.text = widget.request!.bankNumber ?? '';
+    _nameController.text = widget.request?.name ?? '';
+    _ageController.text = widget.request?.age?.toString() ?? '';
+    _carController.text = widget.request?.car ?? '';
+    _addressController.text = widget.request?.address ?? '';
+    _cityController.text = widget.request?.city ?? '';
+    _phoneController.text = widget.request?.phone ?? '';
+    _bankNameController.text = widget.request?.bankName ?? '';
+    _bankAccountNumberController.text = widget.request?.bankNumber ?? '';
 
     // network image
     networkImageIdentity = widget.request?.identity;

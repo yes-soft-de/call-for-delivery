@@ -79,7 +79,7 @@ class OrderCashCard extends StatelessWidget {
           ),
         ),
         Visibility(
-          visible: false,
+          visible: true,
           child: Padding(
             padding: const EdgeInsets.only(right: 12.0, left: 12.0),
             child: Row(
@@ -90,10 +90,10 @@ class OrderCashCard extends StatelessWidget {
                     shape: StadiumBorder(),
                   ),
                   onPressed: () {
-                    answer(3);
+                    answer(1);
                   },
                   label: Text(
-                    S.current.captainAnswer,
+                    S.current.receivedCash,
                     style: TextStyle(color: Colors.white),
                   ),
                   icon: Icon(
@@ -104,16 +104,16 @@ class OrderCashCard extends StatelessWidget {
                 Spacer(),
                 ElevatedButton.icon(
                     icon: Icon(
-                      Icons.store_rounded,
+                      Icons.thumb_down,
                       color: Colors.white,
                     ),
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.red, shape: StadiumBorder()),
                     onPressed: () {
-                      answer(2);
+                      answer(0);
                     },
                     label: Text(
-                      S.current.storeAnswer,
+                      S.current.notReceivedCash,
                       style: TextStyle(color: Colors.white),
                     ))
               ],

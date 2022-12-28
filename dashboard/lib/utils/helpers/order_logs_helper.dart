@@ -42,7 +42,7 @@ class ActionTypeLogsHelper {
       case 19:
         return S.current.orderedCanceled;
       case 20:
-        return S.current.UpdatedOrderState;
+        return S.current.updatedOrderStatusByAdministration;
       case 21:
         return S.current.storeAnswerOrderCash;
       case 22:
@@ -56,7 +56,7 @@ class ActionTypeLogsHelper {
       case 26:
         return S.current.payConflictAnswersResolved;
       case 27:
-        return S.current.cashPaymentConfirmed + ' 27';
+        return S.current.payConflictAnswersResolvedByAdministration;
       default:
         return S.current.unknownAction + ' !${orderLog}';
     }
