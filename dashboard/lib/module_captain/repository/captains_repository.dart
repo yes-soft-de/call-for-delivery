@@ -174,13 +174,6 @@ class CaptainsRepository {
     return CaptainFinancialDuesResponse.fromJson(response);
   }
 
-  // Future<CaptainRatingResponse?> getCaptainRating() async {
-  //   var token = await _authService.getToken();
-  //   dynamic response = await _apiClient.get(Urls.GET_CAPTAIN_RATING_REPORT,
-  //       headers: {'Authorization': 'Bearer ' + token.toString()});
-  //   if (response == null) return null;
-  //   return CaptainRatingResponse.fromJson(response);
-  // }
   Future<CaptainRatingResponse?> getCaptainRating() async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(Urls.GET_CAPTAIN_RATING_REPORT,

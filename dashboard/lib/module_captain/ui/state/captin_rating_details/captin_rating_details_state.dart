@@ -1,13 +1,12 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 import '../../../../generated/l10n.dart';
 import '../../../../utils/components/empty_screen.dart';
 import '../../../../utils/components/error_screen.dart';
 import '../../../model/captin_rating_details_model.dart';
 import '../../screen/captin_rating_details_state.dart';
-import '../../widget/captain_profile/custom_captain_profile_tile.dart';
+import '../../widget/captain_rating_detail_widget.dart';
 
 class CaptinRatingDetailsLoadedState extends States {
   final CaptinRatingDetailsScreenState screenState;
@@ -70,62 +69,13 @@ class CaptinRatingDetailsLoadedState extends States {
               itemCount: model!.length,
               itemBuilder: (context, index) {
                 return ItemRatingWidget(
-                  captainRatingDetailsModel: model![index],
+                  storeOwnerName: model![index].storeOwnerName,
+                  comment: model![index].comment,
+                  rate: model![index].rating,
                 );
               },
             ),
           )
-        ],
-      ),
-    );
-  }
-}
-
-class ItemRatingWidget extends StatelessWidget {
-  final CaptainRatingDetailsModel captainRatingDetailsModel;
-  const ItemRatingWidget({Key? key, required this.captainRatingDetailsModel})
-      : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      margin: EdgeInsets.symmetric(vertical: 12),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
-        color: Theme.of(context).colorScheme.primary,
-      ),
-      child: Column(
-        children: [
-          CustomListTile(
-            title: captainRatingDetailsModel.storeOwnerName,
-            subTitle: '',
-            iconData: Icons.store,
-          ),
-          CustomListTile(
-            title: S.current.rateCaptain,
-            subTitle: '',
-            iconData: Icons.star,
-            leading: Container(
-              child: RatingBarIndicator(
-                rating: captainRatingDetailsModel.rating.toDouble(),
-                itemBuilder: (context, index) => Icon(
-                  Icons.star,
-                  color: Colors.amber,
-                  size: 20,
-                ),
-                itemCount: 5,
-                itemSize: 20.0,
-                direction: Axis.horizontal,
-              ),
-            ),
-          ),
-          CustomListTile(
-            title: captainRatingDetailsModel.comment == ''
-                ? S.current.noComment
-                : captainRatingDetailsModel.comment,
-            subTitle: '',
-            iconData: Icons.comment,
-          ),
         ],
       ),
     );

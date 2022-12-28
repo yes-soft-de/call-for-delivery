@@ -27,9 +27,6 @@ class CaptainRatingCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(50),
         onTap: () {
-          // Navigator.of(context)
-          //     .pushNamed(CaptainsRoutes.CAPTAIN_PROFILE, arguments: id);
-          print('==============${captainName}========');
           Navigator.of(context)
               .pushNamed(CaptainsRoutes.CAPTAIN_RATING_DETAILS, arguments: id);
         },

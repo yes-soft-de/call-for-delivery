@@ -4,10 +4,8 @@ import 'package:flutter/material.dart';
 
 import '../../../abstracts/states/loading_state.dart';
 import '../../../abstracts/states/state.dart';
-import '../../../di/di_config.dart';
 import '../../../generated/l10n.dart';
 import '../../../utils/components/custom_app_bar.dart';
-import '../../../utils/global/global_state_manager.dart';
 import '../../state_manager/captin_rating_details_state_manager.dart';
 
 class CaptinRatingDetailsScreen extends StatefulWidget {
@@ -29,9 +27,6 @@ class CaptinRatingDetailsScreenState extends State<CaptinRatingDetailsScreen> {
     widget._stateManager.stateStream.listen((event) {
       currentState = event;
       refresh();
-    });
-    global = getIt<GlobalStateManager>().stateStream.listen((event) {
-      getCaptainRating();
     });
     super.initState();
   }
