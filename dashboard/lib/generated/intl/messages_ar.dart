@@ -964,6 +964,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "provideClientCoordinationsHint":
             MessageLookupByLibrary.simpleMessage("12.934,13.4124"),
         "rateCaptain": MessageLookupByLibrary.simpleMessage("قييم الكابتن"),
+        "rateCaptainDetails":
+            MessageLookupByLibrary.simpleMessage("تقييم الكابتن"),
         "rateCaptainMessage":
             MessageLookupByLibrary.simpleMessage("قم بتقييم الكابتن من فضلك"),
         "rateProduct": MessageLookupByLibrary.simpleMessage("تقييم منتج"),

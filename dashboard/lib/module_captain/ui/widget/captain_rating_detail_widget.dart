@@ -30,7 +30,7 @@ class ItemRatingWidget extends StatelessWidget {
             iconData: Icons.store,
           ),
           CustomListTileRating(
-            title: S.current.rateCaptain,
+            title: S.current.rateCaptainDetails,
             subTitle: '',
             iconData: Icons.star,
             leading: Container(

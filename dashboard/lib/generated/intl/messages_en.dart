@@ -972,6 +972,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "provideClientCoordinationsHint":
             MessageLookupByLibrary.simpleMessage("12.934,13.4124"),
         "rateCaptain": MessageLookupByLibrary.simpleMessage("Rate Captain"),
+        "rateCaptainDetails":
+            MessageLookupByLibrary.simpleMessage("Rate Captain"),
         "rateCaptainMessage": MessageLookupByLibrary.simpleMessage(
             "Rate this captain upon your opinion"),
         "rateProduct": MessageLookupByLibrary.simpleMessage("Rate Product"),
