@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\NotificationLocalEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: NotificationLocalEntityRepository::class)]
 class NotificationLocalEntity
@@ -22,6 +23,7 @@ class NotificationLocalEntity
     #[ORM\Column(type: 'integer', nullable: true)]
     private $userId;
 
+    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'datetime')]
     private $createdAt;
 

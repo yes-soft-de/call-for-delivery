@@ -271,4 +271,18 @@ class UserEntityRepository extends ServiceEntityRepository implements PasswordUp
             ->getQuery()
             ->getSingleScalarResult();
     }
+
+    public function getUsersIDsByRoleForAdmin(string $userRole): array
+    {
+        return $this->createQueryBuilder('userEntity')
+            ->select('userEntity.id')
+
+            ->andWhere('userEntity.roles LIKE :userRole')
+            ->setParameter('userRole', '%"'.$userRole.'"%')
+
+            ->orderBy('userEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
+    }
 }
