@@ -18,6 +18,10 @@ class OrderUpdateByCaptainRequest
 
     private int|null $paidToProvider;
 
+    /**
+     * @var float|null
+     */
+    private $captainToStoreBranchDistance;
 
     /**
      * Get the value of id
@@ -137,5 +141,10 @@ class OrderUpdateByCaptainRequest
         $this->paidToProvider = $paidToProvider;
 
         return $this;
+    }
+
+    public function getCaptainToStoreBranchDistance(): ?float
+    {
+        return $this->captainToStoreBranchDistance;
     }
 }

@@ -43,6 +43,9 @@ class StoreOrderDetailsEntity
     #[ORM\Column(type: 'integer', options: ["default" => 1])]
     private $differentReceiverDestination = OrderDestinationConstant::ORDER_DESTINATION_IS_NOT_DIFFERENT_CONST;
 
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $captainToStoreBranchDistance;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -152,6 +155,18 @@ class StoreOrderDetailsEntity
     public function setDifferentReceiverDestination(int $differentReceiverDestination): self
     {
         $this->differentReceiverDestination = $differentReceiverDestination;
+
+        return $this;
+    }
+
+    public function getCaptainToStoreBranchDistance(): ?float
+    {
+        return $this->captainToStoreBranchDistance;
+    }
+
+    public function setCaptainToStoreBranchDistance(?float $captainToStoreBranchDistance): self
+    {
+        $this->captainToStoreBranchDistance = $captainToStoreBranchDistance;
 
         return $this;
     }

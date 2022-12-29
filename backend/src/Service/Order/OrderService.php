@@ -13,6 +13,7 @@ use App\Constant\PriceOffer\PriceOfferStatusConstant;
 use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\OrderEntity;
+use App\Entity\StoreOrderDetailsEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Manager\Order\OrderManager;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
@@ -105,13 +106,14 @@ class OrderService
     private OrderLogGetService $orderLogGetService;
     private DateFactoryService $dateFactoryService;
     private OrderFinancialValueGetService $orderFinancialValueGetService;
+    private StoreOrderDetailsService $storeOrderDetailsService;
 
     public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService,
                                 UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService,
                                 OrderTimeLineService $orderTimeLineService, NotificationFirebaseService $notificationFirebaseService, CaptainFinancialDuesService $captainFinancialDuesService,
                                 CaptainAmountFromOrderCashService $captainAmountFromOrderCashService, StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService,
                                 BidOrderFinancialService $bidOrderFinancialService, OrderLogService $orderLogService, OrderLogGetService $orderLogGetService,
-                                DateFactoryService $dateFactoryService, OrderFinancialValueGetService $orderFinancialValueGetService)
+                                DateFactoryService $dateFactoryService, OrderFinancialValueGetService $orderFinancialValueGetService, StoreOrderDetailsService $storeOrderDetailsService)
     {
         $this->autoMapping = $autoMapping;
         $this->orderManager = $orderManager;
@@ -130,6 +132,7 @@ class OrderService
         $this->orderLogGetService = $orderLogGetService;
         $this->dateFactoryService = $dateFactoryService;
         $this->orderFinancialValueGetService = $orderFinancialValueGetService;
+        $this->storeOrderDetailsService = $storeOrderDetailsService;
     }
 
     /**
@@ -571,6 +574,7 @@ class OrderService
         }
 
         $order = $this->orderManager->orderUpdateStateByCaptain($request);
+
         if ($order) {
             if ($order->getState() === OrderStateConstant::ORDER_STATE_CANCEL) {
                 return OrderStateConstant::ORDER_STATE_CANCEL;
@@ -582,6 +586,8 @@ class OrderService
 
             if ($order->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
                 $this->createOrderChatRoomOrUpdateCurrent($order);
+                // update the distance between the captain and the branch of the store
+                $this->updateCaptainToStoreBranchDistanceByOrderId($order->getId(), $request->getCaptainToStoreBranchDistance());
             }
 
             if ($order->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
@@ -1654,5 +1660,10 @@ class OrderService
         }
 
         return $this->orderFinancialValueGetService->getSingleOrderFinancialValueByCaptainUserId($captainProfileId, $captainUserId, $orderDistance);
+    }
+
+    public function updateCaptainToStoreBranchDistanceByOrderId(int $orderId, float $captainToStoreBranchDistance): int|StoreOrderDetailsEntity
+    {
+        return $this->storeOrderDetailsService->updateCaptainToStoreBranchDistanceByOrderId($orderId, $captainToStoreBranchDistance);
     }
 }
