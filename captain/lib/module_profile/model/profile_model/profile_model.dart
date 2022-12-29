@@ -17,23 +17,25 @@ class ProfileModel {
   num? averageRating;
   String? roomID;
   String? address;
-  ProfileModel(
-      {this.image,
-      this.name,
-      this.phone,
-      this.stcPay,
-      this.bankNumber,
-      this.bankName,
-      this.drivingLicence,
-      this.car,
-      this.identity,
-      this.mechanicLicense,
-      this.age,
-      this.isOnline,
-      this.averageRating,
-      this.roomID,
-      required this.address,
-      });
+  String? city;
+  ProfileModel({
+    this.image,
+    this.name,
+    this.phone,
+    this.stcPay,
+    this.bankNumber,
+    this.bankName,
+    this.drivingLicence,
+    this.car,
+    this.identity,
+    this.mechanicLicense,
+    this.age,
+    this.isOnline,
+    this.averageRating,
+    this.roomID,
+    required this.address,
+    required this.city,
+  });
 
   String? _error;
   bool _empty = false;
@@ -44,20 +46,23 @@ class ProfileModel {
   }
   ProfileModel.withData(ProfileResponseModel data) {
     _models = ProfileModel(
-        image: data.image?.imageUrl,
-        name: data.captainName,
-        phone: data.phone,
-        stcPay: data.stcPay,
-        bankName: data.bankName,
-        bankNumber: data.bankAccountNumber,
-        car: data.car,
-        age: data.age?.toString() ?? '',
-        mechanicLicense: data.mechanicLicense?.imageUrl,
-        drivingLicence: data.drivingLicence?.imageUrl,
-        identity: data.identity?.imageUrl,
-        isOnline: data.isOnline,
-        averageRating: num.tryParse(FixedNumber.getFixedNumber(data.rate ?? 0)),
-        roomID: data.roomID, address: data.address);
+      image: data.image?.imageUrl,
+      name: data.captainName,
+      phone: data.phone,
+      stcPay: data.stcPay,
+      bankName: data.bankName,
+      bankNumber: data.bankAccountNumber,
+      car: data.car,
+      age: data.age?.toString() ?? '',
+      mechanicLicense: data.mechanicLicense?.imageUrl,
+      drivingLicence: data.drivingLicence?.imageUrl,
+      identity: data.identity?.imageUrl,
+      isOnline: data.isOnline,
+      averageRating: num.tryParse(FixedNumber.getFixedNumber(data.rate ?? 0)),
+      roomID: data.roomID,
+      address: data.address,
+      city: data.city,
+    );
   }
   bool get hasError => _error != null;
   bool get empty => _empty;

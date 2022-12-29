@@ -44,7 +44,7 @@ class AccountBalanceStateManager {
     stateSubject.add(LoadingState(screenState));
     _planService.stopCaptainFinancialDues().then((value) {
       if (value.hasError) {
-        CustomFlushBarHelper.createSuccess(
+        CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
             .show(screenState.context);
         getAccountBalance(screenState);

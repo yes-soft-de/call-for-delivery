@@ -59,6 +59,7 @@ class ProfileResponseModel {
   Images? identity;
   num? rate;
   String? address;
+  String? city;
   ProfileResponseModel({
     this.id,
     this.captainID,
@@ -90,6 +91,7 @@ class ProfileResponseModel {
     this.identity,
     this.rate,
     this.address,
+    this.city,
   });
 
   ProfileResponseModel.fromJson(dynamic json) {
@@ -128,6 +130,7 @@ class ProfileResponseModel {
     newMessageStatus = json['newMessageStatus'];
     rate = json['averageRating'];
     address = json['address'];
+    city = json['city'];
     mechanicLicense = json['mechanicLicense'] != null
         ? Images.fromJson(json['mechanicLicense'])
         : null;
@@ -171,6 +174,7 @@ class ProfileResponseModel {
     map['newMessageStatus'] = newMessageStatus;
     map['mechanicLicense'] = mechanicLicense;
     map['identity'] = identity;
+    map['city'] = city;
     return map;
   }
 }

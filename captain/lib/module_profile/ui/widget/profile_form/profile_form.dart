@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'dart:io';
-
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_profile/request/profile/profile_request.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
@@ -39,6 +37,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
   final _bankNameController = TextEditingController();
   final _ageController = TextEditingController();
   final _addressController = TextEditingController();
+  final _cityController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String imageAvatar = '';
   String? captainState;
@@ -97,7 +96,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 color: Theme.of(context).primaryColor),
             child: const Padding(
               padding: EdgeInsets.all(8.0),
-              child: const Icon(
+              child: Icon(
                 Icons.add_a_photo_rounded,
                 color: Colors.white,
               ),
@@ -135,19 +134,21 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 .then((value) {
               if (value != null) {
                 profile = ProfileModel(
-                    image: request.image,
-                    drivingLicence: request.drivingLicence,
-                    mechanicLicense: request.mechanicLicense,
-                    identity: request.identity,
-                    car: _carController.text,
-                    age: _ageController.text,
-                    name: _nameController.text,
-                    phone: _phoneController.text,
-                    stcPay: _stcPayController.text,
-                    bankNumber: _bankAccountNumberController.text,
-                    bankName: _bankNameController.text,
-                    isOnline: captainState == 'active' ? true : false,
-                    address: _addressController.text);
+                  image: request.image,
+                  drivingLicence: request.drivingLicence,
+                  mechanicLicense: request.mechanicLicense,
+                  identity: request.identity,
+                  car: _carController.text,
+                  age: _ageController.text,
+                  name: _nameController.text,
+                  phone: _phoneController.text,
+                  stcPay: _stcPayController.text,
+                  bankNumber: _bankAccountNumberController.text,
+                  bankName: _bankNameController.text,
+                  isOnline: captainState == 'active' ? true : false,
+                  address: _addressController.text,
+                  city: _cityController.text,
+                );
                 if (S.current.identity == imageType) {
                   profile?.identity = value.path;
                   widget.onImageUpload(profile!, 'identity', value.path);
@@ -211,19 +212,21 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 .show(context);
           } else if (_formKey.currentState!.validate()) {
             var profile = ProfileModel(
-                image: widget.profileRequest?.image,
-                name: _nameController.text,
-                phone: _countryCodeController.text + _phoneController.text,
-                stcPay: _stcPayController.text,
-                bankName: _bankNameController.text,
-                bankNumber: _bankAccountNumberController.text,
-                car: _carController.text,
-                age: _ageController.text,
-                mechanicLicense: widget.profileRequest?.mechanicLicense,
-                drivingLicence: widget.profileRequest?.drivingLicence,
-                identity: widget.profileRequest?.identity,
-                isOnline: captainState == 'active' ? true : false,
-                address: _addressController.text);
+              image: widget.profileRequest?.image,
+              name: _nameController.text,
+              phone: _countryCodeController.text + _phoneController.text,
+              stcPay: _stcPayController.text,
+              bankName: _bankNameController.text,
+              bankNumber: _bankAccountNumberController.text,
+              car: _carController.text,
+              age: _ageController.text,
+              mechanicLicense: widget.profileRequest?.mechanicLicense,
+              drivingLicence: widget.profileRequest?.drivingLicence,
+              identity: widget.profileRequest?.identity,
+              isOnline: captainState == 'active' ? true : false,
+              address: _addressController.text,
+              city: _cityController.text,
+            );
             widget.onProfileSaved(profile);
           } else {
             CustomFlushBarHelper.createError(
@@ -244,20 +247,21 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                       .then((value) {
                     if (value != null) {
                       profile = ProfileModel(
-                          image: value.path,
-                          name: _nameController.text,
-                          phone: _phoneController.text,
-                          stcPay: _stcPayController.text,
-                          bankName: _bankNameController.text,
-                          bankNumber: _bankAccountNumberController.text,
-                          car: _carController.text,
-                          age: _ageController.text,
-                          mechanicLicense:
-                              widget.profileRequest?.mechanicLicense,
-                          drivingLicence: widget.profileRequest?.drivingLicence,
-                          identity: widget.profileRequest?.identity,
-                          isOnline: captainState == 'active' ? true : false,
-                          address: _addressController.text);
+                        image: value.path,
+                        name: _nameController.text,
+                        phone: _phoneController.text,
+                        stcPay: _stcPayController.text,
+                        bankName: _bankNameController.text,
+                        bankNumber: _bankAccountNumberController.text,
+                        car: _carController.text,
+                        age: _ageController.text,
+                        mechanicLicense: widget.profileRequest?.mechanicLicense,
+                        drivingLicence: widget.profileRequest?.drivingLicence,
+                        identity: widget.profileRequest?.identity,
+                        isOnline: captainState == 'active' ? true : false,
+                        address: _addressController.text,
+                        city: _cityController.text,
+                      );
                       widget.onImageUpload(profile!, null, null);
                     }
                   });
@@ -315,7 +319,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                                   color: Theme.of(context).primaryColor),
                               child: const Padding(
                                 padding: EdgeInsets.all(8.0),
-                                child: const Icon(
+                                child: Icon(
                                   Icons.add_a_photo_rounded,
                                   color: Colors.white,
                                 ),
@@ -400,6 +404,15 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 controller: _addressController,
                 hintText: S.current.addresses,
                 preIcon: const Icon(Icons.location_on),
+              ),
+            ),
+            titleField(S.of(context).addresses),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+              child: CustomFormField(
+                controller: _cityController,
+                hintText: S.current.city,
+                preIcon: const Icon(Icons.location_city),
               ),
             ),
             titleField(S.of(context).age),
