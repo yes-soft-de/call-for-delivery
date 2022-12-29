@@ -677,7 +677,7 @@ class OrderService
         $response = $this->autoMapping->map(OrderEntity::class, OrderUpdateCaptainOrderCostResponse::class, $order);
 
         if ($order) {
-            $response->attention = OrderAttentionConstant::ATTENTION;
+            $response->attention = OrderAttentionConstant::ATTENTION_VALUE_MATCH;
 
             if ($order->getOrderCost() !== $order->getCaptainOrderCost()) {
                 $response->attention = OrderAttentionConstant::ATTENTION_VALUE_NOT_MATCH;
