@@ -70,6 +70,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "addWorkPackage":
             MessageLookupByLibrary.simpleMessage("إضافة باقة عمل"),
         "address": MessageLookupByLibrary.simpleMessage("الموقع"),
+        "addressIsMissing":
+            MessageLookupByLibrary.simpleMessage("زودنا بعنوانك"),
         "addresses": MessageLookupByLibrary.simpleMessage("العنوان"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "all": MessageLookupByLibrary.simpleMessage("الكل"),
@@ -238,6 +240,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "chooseYourState": MessageLookupByLibrary.simpleMessage("اختر حالتك"),
         "city": MessageLookupByLibrary.simpleMessage("المدينة"),
         "cityHint": MessageLookupByLibrary.simpleMessage("جدة"),
+        "cityIsMissing": MessageLookupByLibrary.simpleMessage("زودنا بمدينتك"),
         "close": MessageLookupByLibrary.simpleMessage("إغلاق"),
         "closingTime": MessageLookupByLibrary.simpleMessage("وقت الإغلاق"),
         "codeNumber": MessageLookupByLibrary.simpleMessage("رمز التحقق"),

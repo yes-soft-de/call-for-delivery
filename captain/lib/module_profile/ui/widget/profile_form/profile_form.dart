@@ -62,7 +62,8 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
         } catch (e) {}
         setState(() {});
       }
-
+      _cityController.text = widget.profileRequest?.city ?? '';
+      _addressController.text = widget.profileRequest?.address ?? '';
       _stcPayController.text = widget.profileRequest?.stcPay ?? '';
       _bankAccountNumberController.text =
           widget.profileRequest?.bankAccountNumber ?? '';

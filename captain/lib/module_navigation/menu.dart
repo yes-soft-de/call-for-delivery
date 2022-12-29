@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
@@ -97,6 +98,20 @@ class MenuScreen extends StatelessWidget {
               Container(
                 height: 32,
               ),
+              Visibility(
+                visible: profileModel.address?.isEmpty == true ||
+                    profileModel.city?.isEmpty == true,
+                child: Flushbar(
+                  backgroundColor: Colors.amber,
+                  icon: const Icon(
+                    Icons.info,
+                    color: Colors.white,
+                  ),
+                  message: profileModel.address?.isEmpty == true
+                      ? S.current.addressIsMissing
+                      : S.current.cityIsMissing,
+                ),
+              ),
               ListTile(
                 onTap: () {
                   Navigator.of(context)
@@ -104,6 +119,14 @@ class MenuScreen extends StatelessWidget {
                 },
                 leading: const Icon(Icons.account_circle_rounded),
                 title: Text(S.of(context).profile),
+                trailing: Visibility(
+                  visible: profileModel.address?.isEmpty == true ||
+                      profileModel.city?.isEmpty == true,
+                  child: const Icon(
+                    Icons.info,
+                    color: Colors.amber,
+                  ),
+                ),
               ),
               ListTileSwitch(
                   value: profileModel.isOnline ?? false,

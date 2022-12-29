@@ -148,6 +148,11 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
     });
     _profileSubscription = widget._stateManager.profileStream.listen((event) {
       _currentProfile = event;
+      if (_currentProfile != null) {
+        somethingMissingInProfileData =
+            _currentProfile?.address?.isNotEmpty == false ||
+                _currentProfile?.city?.isNotEmpty == false;
+      }
       if (mounted) {
         setState(() {});
       }
@@ -165,6 +170,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
     }
   }
 
+  bool somethingMissingInProfileData = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -176,6 +182,8 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
         backdropColor: Theme.of(context).backgroundColor,
         child: Scaffold(
           appBar: CustomC4dAppBar.appBar(context,
+              showBadge: somethingMissingInProfileData,
+              colorBadge: Colors.amber,
               colorIcon: currentState is ErrorState
                   ? Theme.of(context).colorScheme.error
                   : (currentPage == 1

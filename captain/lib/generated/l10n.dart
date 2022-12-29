@@ -7519,6 +7519,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Address is missing `
+  String get addressIsMissing {
+    return Intl.message(
+      'Address is missing ',
+      name: 'addressIsMissing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `City is missing `
+  String get cityIsMissing {
+    return Intl.message(
+      'City is missing ',
+      name: 'cityIsMissing',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
