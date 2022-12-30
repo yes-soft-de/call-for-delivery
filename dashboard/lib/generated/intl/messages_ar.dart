@@ -224,6 +224,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المستحقات ضمن هذه الفئة"),
         "captainUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث الكابتن بنجاح"),
+        "captainratingDetails":
+            MessageLookupByLibrary.simpleMessage("تفاصيل الكابتن"),
         "captains": MessageLookupByLibrary.simpleMessage("الكباتن"),
         "captainsOffer": MessageLookupByLibrary.simpleMessage("عروض الكباتن"),
         "captainsRating":
@@ -691,6 +693,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("تاريخ الدفعة القادمة:"),
         "no": MessageLookupByLibrary.simpleMessage("كلا"),
+        "noComment": MessageLookupByLibrary.simpleMessage("لا تعليق"),
         "noImage": MessageLookupByLibrary.simpleMessage("لا يوجد صورة"),
         "notAccepted": MessageLookupByLibrary.simpleMessage("غير مسلمة"),
         "notAllowedCaptainInStore": MessageLookupByLibrary.simpleMessage(
@@ -715,6 +718,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "notice": MessageLookupByLibrary.simpleMessage("التحديثات"),
         "notifications": MessageLookupByLibrary.simpleMessage("الاشعارات"),
         "now": MessageLookupByLibrary.simpleMessage("الآن"),
+        "numberofRatings":
+            MessageLookupByLibrary.simpleMessage("عدد التقييمات"),
         "offerLog": MessageLookupByLibrary.simpleMessage("سجل العروض"),
         "offerStatus": MessageLookupByLibrary.simpleMessage("حالة العرض"),
         "ok": MessageLookupByLibrary.simpleMessage("حسناً"),
@@ -959,6 +964,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "provideClientCoordinationsHint":
             MessageLookupByLibrary.simpleMessage("12.934,13.4124"),
         "rateCaptain": MessageLookupByLibrary.simpleMessage("قييم الكابتن"),
+        "rateCaptainDetails":
+            MessageLookupByLibrary.simpleMessage("تقييم الكابتن"),
         "rateCaptainMessage":
             MessageLookupByLibrary.simpleMessage("قم بتقييم الكابتن من فضلك"),
         "rateProduct": MessageLookupByLibrary.simpleMessage("تقييم منتج"),

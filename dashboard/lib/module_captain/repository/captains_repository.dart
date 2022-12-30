@@ -11,13 +11,15 @@ import 'package:c4d/module_captain/response/captain_financial_dues_response/capt
 import 'package:c4d/module_captain/response/captain_need_support_response/captain_need_support_response.dart';
 import 'package:c4d/module_captain/response/captain_order_control_response/captain_order_control_response.dart';
 import 'package:c4d/module_captain/response/captain_profile_response.dart';
-import 'package:c4d/module_captain/response/captain_rating_response/captain_rating_response.dart';
 import 'package:c4d/module_captain/response/in_active_captain_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
+
+import '../response/captain_rating_response/captain_rating_response.dart';
+import '../response/captain_rating_response/captin_rating_details_response.dart';
 
 @injectable
 class CaptainsRepository {
@@ -178,6 +180,16 @@ class CaptainsRepository {
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return CaptainRatingResponse.fromJson(response);
+  }
+
+  Future<CaptinRatingDetailsResponse?> getCaptainRatingDetails(
+      int captinID) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(
+        Urls.GET_CAPTAIN_RATING_DETAILS + '/$captinID',
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return CaptinRatingDetailsResponse.fromJson(response);
   }
 
   Future<CaptainActivityResponse?> getCaptainActivity() async {

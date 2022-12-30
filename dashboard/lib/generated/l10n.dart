@@ -8410,6 +8410,36 @@ class S {
     );
   }
 
+  /// `Captain Rataings Details`
+  String get captainratingDetails {
+    return Intl.message(
+      'Captain Rataings Details',
+      name: 'captainratingDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Number of rates`
+  String get numberofRatings {
+    return Intl.message(
+      'Number of rates',
+      name: 'numberofRatings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `No comments`
+  String get noComment {
+    return Intl.message(
+      'No comments',
+      name: 'noComment',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Updated order status by administration`
   String get updatedOrderStatusByAdministration {
     return Intl.message(
@@ -8465,6 +8495,16 @@ class S {
     return Intl.message(
       'Are sure about answering behalf store',
       name: 'areSureAboutAnsweringBehalfStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Rate Captain`
+  String get rateCaptainDetails {
+    return Intl.message(
+      'Rate Captain',
+      name: 'rateCaptainDetails',
       desc: '',
       args: [],
     );
