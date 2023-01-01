@@ -1,7 +1,8 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/material.dart';
-import 'package:c4d/module_captain/captains_routes.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
+
+import '../../captains_routes.dart';
 
 class CaptainActivityCard extends StatelessWidget {
   final int id;
@@ -28,8 +29,11 @@ class CaptainActivityCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(50),
         onTap: () {
-          Navigator.of(context)
-              .pushNamed(CaptainsRoutes.CAPTAIN_PROFILE, arguments: id);
+          // Navigator.of(context)
+          //     .pushNamed(CaptainsRoutes.CAPTAIN_PROFILE, arguments: id);
+          Navigator.of(context).pushNamed(
+              CaptainsRoutes.CAPTAIN_ACTIVITY_DETAILS,
+              arguments: [id, captainName]);
         },
         child: Container(
           decoration: BoxDecoration(
@@ -74,7 +78,7 @@ class CaptainActivityCard extends StatelessWidget {
                     child: Padding(
                       padding: const EdgeInsets.symmetric(vertical: 8),
                       child: Text(
-                        orderCount + ' ' +S.current.sOrder,
+                        orderCount + ' ' + S.current.sOrder,
                         style: TextStyle(
                           color: Colors.white,
                         ),

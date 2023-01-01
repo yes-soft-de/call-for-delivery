@@ -28,8 +28,10 @@ import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
 
+import '../model/captain_activity_details_model.dart';
 import '../model/captain_rating_model.dart';
 import '../model/captin_rating_details_model.dart';
+import '../response/captain_activity_response/captain_activity_details_response.dart';
 import '../response/captain_rating_response/captin_rating_details_response.dart';
 
 @injectable
@@ -301,5 +303,21 @@ class CaptainsService {
       return DataModel.empty();
     }
     return CaptainActivityModel.withData(actionResponse);
+  }
+
+  Future<DataModel> getCaptainActivityDetails(int captainID) async {
+    CaptainActivityDetailsResponse? actionResponse =
+        await _manager.getCaptainActivityDetails(captainID);
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    if (actionResponse.data == null) {
+      return DataModel.empty();
+    }
+    return CaptainActivityDetailsModel.withData(actionResponse);
   }
 }

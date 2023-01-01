@@ -224,6 +224,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المستحقات ضمن هذه الفئة"),
         "captainUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث الكابتن بنجاح"),
+        "captainractivityDetails":
+            MessageLookupByLibrary.simpleMessage("نشاط الكابتن"),
         "captainratingDetails":
             MessageLookupByLibrary.simpleMessage("تفاصيل الكابتن"),
         "captains": MessageLookupByLibrary.simpleMessage("الكباتن"),

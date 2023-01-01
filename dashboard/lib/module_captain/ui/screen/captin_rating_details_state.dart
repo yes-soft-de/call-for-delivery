@@ -1,6 +1,5 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
 
 import '../../../abstracts/states/loading_state.dart';
 import '../../../abstracts/states/state.dart';
@@ -8,6 +7,7 @@ import '../../../generated/l10n.dart';
 import '../../../utils/components/custom_app_bar.dart';
 import '../../state_manager/captin_rating_details_state_manager.dart';
 
+@injectable
 class CaptinRatingDetailsScreen extends StatefulWidget {
   final CaptinRatingDetailsStateManager _stateManager;
 
@@ -20,7 +20,7 @@ class CaptinRatingDetailsScreen extends StatefulWidget {
 
 class CaptinRatingDetailsScreenState extends State<CaptinRatingDetailsScreen> {
   late States currentState;
-  StreamSubscription? global;
+  // StreamSubscription? global;
   @override
   void initState() {
     currentState = LoadingState(this);
@@ -57,7 +57,7 @@ class CaptinRatingDetailsScreenState extends State<CaptinRatingDetailsScreen> {
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(
         context,
-        title: S.current.captainratingDetails,
+        title: S.current.captainractivityDetails,
       ),
       body: currentState.getUI(context),
     );
