@@ -1,4 +1,5 @@
 import 'package:c4d/module_captain/request/assign_order_to_captain_request.dart';
+import 'package:c4d/module_captain/request/captain_activities_filter_request.dart';
 import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/request/captain_offer_request.dart';
 import 'package:c4d/module_captain/request/enable_captain.dart';
@@ -195,6 +196,16 @@ class CaptainsRepository {
   Future<CaptainActivityResponse?> getCaptainActivity() async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(Urls.GET_CAPTAIN_ACTIVITY_REPORT,
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return CaptainActivityResponse.fromJson(response);
+  }
+
+  Future<CaptainActivityResponse?> getCaptainActivityWithFilter(
+      CaptainActivityFilterRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+        Urls.GET_CAPTAIN_ACTIVITY_FILTER_REPORT, request.toJson(),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return CaptainActivityResponse.fromJson(response);

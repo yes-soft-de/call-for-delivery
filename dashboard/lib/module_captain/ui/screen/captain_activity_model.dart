@@ -1,4 +1,5 @@
 import 'package:c4d/global_nav_key.dart';
+import 'package:c4d/module_captain/request/captain_activities_filter_request.dart';
 import 'package:c4d/module_captain/state_manager/captain_activity_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,7 @@ class CaptainsActivityScreen extends StatefulWidget {
 
 class CaptainsActivityScreenState extends State<CaptainsActivityScreen> {
   late States currentState;
+  CaptainActivityFilterRequest? filter;
   @override
   void initState() {
     currentState = LoadingState(this);
@@ -27,6 +29,7 @@ class CaptainsActivityScreenState extends State<CaptainsActivityScreen> {
       currentState = event;
       refresh();
     });
+    filter = CaptainActivityFilterRequest();
     super.initState();
   }
 

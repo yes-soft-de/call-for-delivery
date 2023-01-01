@@ -844,5 +844,6 @@
     "updateStoreAnswerSuccessfully":"تم تحديث جواب المتجر بنجاح",
     "receivedCash":"تم الاستلام",
     "notReceivedCash":"لم يتم الاستلام",
-    "areSureAboutAnsweringBehalfStore":"هل انت متأكد من إجابتك عن المتجر"
+    "areSureAboutAnsweringBehalfStore":"هل انت متأكد من إجابتك عن المتجر",
+    "chooseFromDate":"من تاريخ"
 }

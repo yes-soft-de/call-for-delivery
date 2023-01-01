@@ -845,5 +845,7 @@
     "receivedCash": "Cash Received",
     "notReceivedCash": "Cash not Received",
     "areSureAboutAnsweringBehalfStore":"Are sure about answering behalf store",
-    "rateCaptainDetails": "Rate Captain"
+    "rateCaptainDetails": "Rate Captain",
+    "chooseFromDate":"Choose from date"
+
 }
