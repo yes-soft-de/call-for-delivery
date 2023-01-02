@@ -25,6 +25,11 @@ class OrderFilterRequest
     private $openToPriceOffer;
 
     /**
+     * @var null|string
+     */
+    private $customizedTimezone;
+
+    /**
      * @return string|null
      */
     public function getState(): ?string
@@ -54,5 +59,10 @@ class OrderFilterRequest
     public function getOpenToPriceOffer(): ?bool
     {
         return $this->openToPriceOffer;
+    }
+
+    public function getCustomizedTimezone(): ?string
+    {
+        return $this->customizedTimezone;
     }
 }

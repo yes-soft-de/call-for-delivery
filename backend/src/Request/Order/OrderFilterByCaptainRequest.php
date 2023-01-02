@@ -25,6 +25,11 @@ class OrderFilterByCaptainRequest
     private $captainId;
 
     /**
+     * @var null|string
+     */
+    private $customizedTimezone;
+
+    /**
      * @return string|null
      */
     public function getState(): ?string
@@ -62,5 +67,10 @@ class OrderFilterByCaptainRequest
     public function setCaptainId(?int $captainId): void
     {
         $this->captainId = $captainId;
+    }
+
+    public function getCustomizedTimezone(): ?string
+    {
+        return $this->customizedTimezone;
     }
 }
