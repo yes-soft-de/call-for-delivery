@@ -1198,6 +1198,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
             MessageLookupByLibrary.simpleMessage(
                 "للمزيد من المعلومات خذ موعدا بترك رقم هاتفك، وسيتم التواصل معك"),
+        "today": MessageLookupByLibrary.simpleMessage("اليوم"),
         "took": MessageLookupByLibrary.simpleMessage("استغرق"),
         "total": MessageLookupByLibrary.simpleMessage("الإجمالي"),
         "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
@@ -1317,6 +1318,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "السعر غير شامل القيمة المضافة"),
         "workTime": MessageLookupByLibrary.simpleMessage("أوقات العمل"),
         "yes": MessageLookupByLibrary.simpleMessage("نعم"),
+        "yesterday": MessageLookupByLibrary.simpleMessage("البارحة"),
         "youCanChangeCaptainFinancialPlan":
             MessageLookupByLibrary.simpleMessage(
                 "يمكنك تغيير خطة عمل الكابتن من هنا"),

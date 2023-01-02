@@ -845,5 +845,7 @@
     "receivedCash":"تم الاستلام",
     "notReceivedCash":"لم يتم الاستلام",
     "areSureAboutAnsweringBehalfStore":"هل انت متأكد من إجابتك عن المتجر",
-    "chooseFromDate":"من تاريخ"
+    "chooseFromDate":"من تاريخ",
+    "today":"اليوم",
+    "yesterday":"البارحة"
 }

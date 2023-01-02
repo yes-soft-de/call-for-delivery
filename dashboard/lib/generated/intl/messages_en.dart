@@ -1208,6 +1208,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
             MessageLookupByLibrary.simpleMessage(
                 "To find out more, please leave your phone.\nand we will contact you personally"),
+        "today": MessageLookupByLibrary.simpleMessage("Today"),
         "took": MessageLookupByLibrary.simpleMessage("Took"),
         "total": MessageLookupByLibrary.simpleMessage("Total"),
         "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
@@ -1323,6 +1324,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "withoutTax": MessageLookupByLibrary.simpleMessage("Without vat fee"),
         "workTime": MessageLookupByLibrary.simpleMessage("Store Shift"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
+        "yesterday": MessageLookupByLibrary.simpleMessage("Yesterday"),
         "youCanChangeCaptainFinancialPlan":
             MessageLookupByLibrary.simpleMessage(
                 "You can change captain financial request here"),

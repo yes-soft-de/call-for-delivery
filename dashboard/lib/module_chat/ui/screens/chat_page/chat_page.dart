@@ -1,8 +1,11 @@
 import 'dart:async';
+import 'dart:collection';
 import 'package:c4d/consts/urls.dart';
+import 'package:c4d/module_chat/ui/widget/chat_bubble/chat_list_filterd.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
+import 'package:intl/intl.dart';
 import 'package:lottie/lottie.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -20,6 +23,7 @@ import 'package:c4d/module_chat/ui/widget/chat_bubble/chat_bubble.dart';
 import 'package:c4d/module_chat/ui/widget/chat_writer/chat_writer.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/effect/scaling.dart';
+import 'package:collection/collection.dart';
 
 @injectable
 class ChatPage extends StatefulWidget {
@@ -37,7 +41,7 @@ class ChatPage extends StatefulWidget {
 class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
   late List<ChatModel> _chatMessagesList;
   int currentState = ChatStateManager.STATUS_CODE_INIT;
-  List<AutoScrollTag> chatsMessagesWidgets = [];
+  List<Widget> chatsMessagesWidgets = [];
   late String chatRoomId;
   bool down = false;
   late AutoScrollController chatScrollController;
@@ -301,34 +305,50 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
   }
 
   Future<void> buildMessagesList(List<ChatModel> chatList) async {
-    List<AutoScrollTag> newMessagesList = [];
+    List<Widget> newMessagesList = [];
     String username = widget._authService.username;
     int index = 0;
     lastSeenIndex = widget._chatHiveHelper.getChatIndex(chatRoomId, username);
     bool newMessages =
         lastSeenIndex != null ? (lastSeenIndex! < chatList.length) : false;
-    chatList.forEach((element) {
-      newMessagesList.add(AutoScrollTag(
+    Map<String, List<ChatModel>> messages = groupBy(chatList,
+        (ChatModel message) => DateFormat('d MMM y').format(message.sentDate));
+    Map<String, List<ChatModel>> sortedRequests =
+        SplayTreeMap<String, List<ChatModel>>.from(
+            messages, (a, b) => a.compareTo(b) > 1 ? 1 : -1);
+    int startingPoint = 0;
+    for (int i = 0; i < messages.length; i++) {
+      newMessagesList.add(SubListChatWidget(
+        date: sortedRequests.keys.elementAt(i),
+        messages: sortedRequests.values.elementAt(i),
+        username: username,
         controller: chatScrollController,
-        key: ValueKey(element.sentDate),
-        index: index,
-        child: ChatBubbleWidget(
-          message: element.msg ?? '',
-          me: element.sender == username ? true : false,
-          sentDate: element.sentDate,
-          isAdmin:
-              element.isAdmin ?? Urls.admins.contains(element.sender ?? ''),
-          username: element.sender,
-        ),
+        index: startingPoint,
       ));
-      index++;
-      if (index == lastSeenIndex && newMessages) {
-        index++;
-      }
-    });
-    if (newMessages && lastSeenIndex != null) {
-      newMessagesList.insert(lastSeenIndex!, lastSeen(lastSeenIndex!));
+      startingPoint += sortedRequests.values.elementAt(i).length;
     }
+    // chatList.forEach((element) {
+    //   // newMessagesList.add(AutoScrollTag(
+    //   //   controller: chatScrollController,
+    //   //   key: ValueKey(element.sentDate),
+    //   //   index: index,
+    //   //   child: ChatBubbleWidget(
+    //   //     message: element.msg ?? '',
+    //   //     me: element.sender == username ? true : false,
+    //   //     sentDate: element.sentDate,
+    //   //     isAdmin:
+    //   //         element.isAdmin ?? Urls.admins.contains(element.sender ?? ''),
+    //   //     username: element.sender,
+    //   //   ),
+    //   // ));
+    //   index++;
+    //   if (index == lastSeenIndex && newMessages) {
+    //     index++;
+    //   }
+    // });
+    // if (newMessages && lastSeenIndex != null) {
+    //   newMessagesList.insert(lastSeenIndex!, lastSeen(lastSeenIndex!));
+    // }
     chatsMessagesWidgets = newMessagesList;
     return;
   }
