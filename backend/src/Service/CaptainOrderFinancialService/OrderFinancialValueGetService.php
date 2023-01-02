@@ -4,6 +4,7 @@ namespace App\Service\CaptainOrderFinancialService;
 
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Service\CaptainFinancialSystem\CaptainFinancialSystemDetail\CaptainFinancialSystemDetailGetService;
+use App\Service\CaptainFinancialSystem\CaptainFinancialSystemOne\OrderFinancialValueAccordingToSystemOneCalculationService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialSystemThree\OrderFinancialValueAccordingToSystemThreeCalculationService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialSystemTwo\OrderFinancialValueAccordingToSystemTwoCalculationService;
 
@@ -12,13 +13,15 @@ class OrderFinancialValueGetService
     private CaptainFinancialSystemDetailGetService $captainFinancialSystemDetailGetService;
     private OrderFinancialValueAccordingToSystemTwoCalculationService $orderFinancialValueAccordingToSystemTwoCalculationService;
     private OrderFinancialValueAccordingToSystemThreeCalculationService $orderFinancialValueAccordingToSystemThreeCalculationService;
+    private OrderFinancialValueAccordingToSystemOneCalculationService $orderFinancialValueAccordingToSystemOneCalculationService;
 
     public function __construct(CaptainFinancialSystemDetailGetService $captainFinancialSystemDetailGetService, OrderFinancialValueAccordingToSystemTwoCalculationService $orderFinancialValueAccordingToSystemTwoCalculationService,
-                                OrderFinancialValueAccordingToSystemThreeCalculationService $orderFinancialValueAccordingToSystemThreeCalculationService)
+                                OrderFinancialValueAccordingToSystemThreeCalculationService $orderFinancialValueAccordingToSystemThreeCalculationService, OrderFinancialValueAccordingToSystemOneCalculationService $orderFinancialValueAccordingToSystemOneCalculationService)
     {
         $this->captainFinancialSystemDetailGetService = $captainFinancialSystemDetailGetService;
         $this->orderFinancialValueAccordingToSystemTwoCalculationService = $orderFinancialValueAccordingToSystemTwoCalculationService;
         $this->orderFinancialValueAccordingToSystemThreeCalculationService = $orderFinancialValueAccordingToSystemThreeCalculationService;
+        $this->orderFinancialValueAccordingToSystemOneCalculationService = $orderFinancialValueAccordingToSystemOneCalculationService;
     }
 
     public function getSingleOrderFinancialValueByCaptainUserId(int $captainProfileId, int $captainUserId, float $orderDistance = null): float
@@ -30,7 +33,7 @@ class OrderFinancialValueGetService
             // Depending on financial system type and id, calculate the expected financial value of the order
             if ($captainFinancialSystemDetails['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
                 // Captain financial system is the third one
-                ////TODO TO BE CONTINUED
+                return $this->getOrderFinancialValueAccordingOnCountOfHours($captainFinancialSystemDetails['compensationForEveryOrder'], $orderDistance);
 
             } elseif ($captainFinancialSystemDetails['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
                 // Captain financial system is the second one
@@ -55,6 +58,12 @@ class OrderFinancialValueGetService
     public function getOrderFinancialValueAccordingOnOrders(int $captainProfileId, float $orderDistance = null): float
     {
         return $this->orderFinancialValueAccordingToSystemThreeCalculationService->getOrderFinancialValueAccordingOnOrders($captainProfileId,
+            $orderDistance);
+    }
+
+    public function getOrderFinancialValueAccordingOnCountOfHours(float $compensationForEveryOrder, float $orderDistance = null): float
+    {
+        return $this->orderFinancialValueAccordingToSystemOneCalculationService->getOrderFinancialValueAccordingOnCountOfHours($compensationForEveryOrder,
             $orderDistance);
     }
 }
