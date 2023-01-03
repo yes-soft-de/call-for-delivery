@@ -749,7 +749,9 @@
     "yourCurrentPlanStoppedSuccessfully":"تم إيقاف خطتك المالية بنجاح",
     "stopPlan":"إيقاف الخطة",
     "areSureAboutStoppingPlan":"هل أنت متأكد من رغبتك في إيقاف خطة عملك الحالية",
-    "addressIsMissing":"زودنا بعنوانك",
-    "cityIsMissing":"زودنا بمدينتك"
+    "addressIsMissing":"زودنا بالحي الذي تسكن فيه",
+    "cityIsMissing":"زودنا بمدينتك",
+    "neighborhood":"الحي",
+    "jaddah":"جدة"
     
 }

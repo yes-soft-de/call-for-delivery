@@ -71,7 +71,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("إضافة باقة عمل"),
         "address": MessageLookupByLibrary.simpleMessage("الموقع"),
         "addressIsMissing":
-            MessageLookupByLibrary.simpleMessage("زودنا بعنوانك"),
+            MessageLookupByLibrary.simpleMessage("زودنا بالحي الذي تسكن فيه"),
         "addresses": MessageLookupByLibrary.simpleMessage("العنوان"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "all": MessageLookupByLibrary.simpleMessage("الكل"),
@@ -523,6 +523,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "isBilledForCompany":
             MessageLookupByLibrary.simpleMessage("الفاتورة على حساب الشركة"),
         "item": MessageLookupByLibrary.simpleMessage("عنصر"),
+        "jaddah": MessageLookupByLibrary.simpleMessage("جدة"),
         "kiloBonus": MessageLookupByLibrary.simpleMessage("اجور التوصيل"),
         "kilometerBonus":
             MessageLookupByLibrary.simpleMessage("تعويض المسافات المقطوعة"),
@@ -596,6 +597,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "nearbyOrders": MessageLookupByLibrary.simpleMessage("الطلبات الجديدة"),
         "nearbyStore":
             MessageLookupByLibrary.simpleMessage("المتاجر القريبة إليك"),
+        "neighborhood": MessageLookupByLibrary.simpleMessage("الحي"),
         "netProfit": MessageLookupByLibrary.simpleMessage("الأرباح"),
         "netProfite": MessageLookupByLibrary.simpleMessage("مجموع الأرباح"),
         "networkError": MessageLookupByLibrary.simpleMessage(

@@ -71,7 +71,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addWorkPackage": MessageLookupByLibrary.simpleMessage("Add work plan"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
         "addressIsMissing":
-            MessageLookupByLibrary.simpleMessage("Address is missing "),
+            MessageLookupByLibrary.simpleMessage("neighborhood is missing "),
         "addresses": MessageLookupByLibrary.simpleMessage("Address"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
@@ -534,6 +534,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "isBilledForCompany":
             MessageLookupByLibrary.simpleMessage("Is billed on company"),
         "item": MessageLookupByLibrary.simpleMessage("Item"),
+        "jaddah": MessageLookupByLibrary.simpleMessage("Jaddah"),
         "kiloBonus": MessageLookupByLibrary.simpleMessage("Fuel Bonus"),
         "kilometerBonus":
             MessageLookupByLibrary.simpleMessage("Kilometer Bonus"),
@@ -607,6 +608,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("National Address"),
         "nearbyOrders": MessageLookupByLibrary.simpleMessage("Nearby Orders"),
         "nearbyStore": MessageLookupByLibrary.simpleMessage("Nearby Store"),
+        "neighborhood": MessageLookupByLibrary.simpleMessage("Neighborhood"),
         "netProfit": MessageLookupByLibrary.simpleMessage("Profit"),
         "netProfite": MessageLookupByLibrary.simpleMessage("General Profite"),
         "networkError": MessageLookupByLibrary.simpleMessage(

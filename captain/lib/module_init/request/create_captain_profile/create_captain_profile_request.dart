@@ -11,15 +11,20 @@ class CreateCaptainProfileRequest {
   String? stcPay;
   bool? isOnline;
   String? phone;
+  String? city;
+  String? address;
 
-  CreateCaptainProfileRequest(
-      {this.image,
-      this.drivingLicence,
-      this.age,
-      this.car,
-      this.name,
-      this.identity,
-      this.mechanicLicence});
+  CreateCaptainProfileRequest({
+    this.image,
+    this.drivingLicence,
+    this.age,
+    this.car,
+    this.name,
+    this.identity,
+    this.mechanicLicence,
+    this.address,
+    this.city,
+  });
 
   Uri? mechanic;
   Uri? captainImage;
@@ -38,6 +43,8 @@ class CreateCaptainProfileRequest {
     this.bankAccountNumber,
     this.phone,
     this.stcPay,
+    this.address,
+    this.city,
   });
 
   Map<String, dynamic> toJSON() {
@@ -53,7 +60,9 @@ class CreateCaptainProfileRequest {
       'phone': phone,
       'stcPay': stcPay,
       'bankAccountNumber': bankAccountNumber,
-      'bankName': bankName
+      'bankName': bankName,
+      'city': city,
+      'address': address
     };
     if (data['age'] == null) {
       data.remove('age');

@@ -747,6 +747,9 @@
     "yourCurrentPlanStoppedSuccessfully": "Your current plan stopped successfully",
     "stopPlan": "Stop Plan",
     "areSureAboutStoppingPlan": "Are you sure about stopping your current plan",
-    "addressIsMissing": "Address is missing ",
-    "cityIsMissing": "City is missing "
+    "addressIsMissing": "neighborhood is missing ",
+    "cityIsMissing": "City is missing ",
+    "neighborhood": "Neighborhood",
+    "jaddah":"Jaddah"
+
 }

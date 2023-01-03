@@ -93,6 +93,21 @@ class InitAccountCaptainInitProfile extends States {
                   hint: S.current.eg + ' : ' + S.current.nameHint,
                   title: S.current.captainName,
                 ),
+                // city
+                InitField(
+                  controller: screen.cityController,
+                  icon: Icons.location_city_rounded,
+                  hint: S.current.eg + ' : ' + S.current.jaddah,
+                  title: S.current.city,
+                ),
+                // address
+                InitField(
+                  controller: screen.addressController,
+                  icon: Icons.location_on,
+                  hint: S.current.eg + ' : ' + S.current.neighborhood,
+                  title: S.current.neighborhood,
+                ),
+
                 // phone
                 Padding(
                   padding: const EdgeInsets.only(left: 80, right: 80, top: 32),
@@ -301,6 +316,8 @@ class InitAccountCaptainInitProfile extends States {
                                 idImage: identity,
                                 phone: screen.countryCodeController.text +
                                     screen.phoneController.text,
+                                city: screen.cityController.text.trim(),
+                                address: screen.addressController.text.trim(),
                                 bankAccountNumber:
                                     screen.bankAccountNumberController.text,
                                 bankName: screen.bankNameController.text,

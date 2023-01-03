@@ -7520,10 +7520,10 @@ class S {
     );
   }
 
-  /// `Address is missing `
+  /// `neighborhood is missing `
   String get addressIsMissing {
     return Intl.message(
-      'Address is missing ',
+      'neighborhood is missing ',
       name: 'addressIsMissing',
       desc: '',
       args: [],
@@ -7535,6 +7535,26 @@ class S {
     return Intl.message(
       'City is missing ',
       name: 'cityIsMissing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Neighborhood`
+  String get neighborhood {
+    return Intl.message(
+      'Neighborhood',
+      name: 'neighborhood',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Jaddah`
+  String get jaddah {
+    return Intl.message(
+      'Jaddah',
+      name: 'jaddah',
       desc: '',
       args: [],
     );
