@@ -1193,6 +1193,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "taxNumber": MessageLookupByLibrary.simpleMessage("Tax Number"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Terms of Service"),
+        "theOrderHidden": MessageLookupByLibrary.simpleMessage(
+            "This order cannot be assigned to this captain because the request is hidden"),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
             "There is no branches available"),
         "thereIsNoValidSubscription": MessageLookupByLibrary.simpleMessage(

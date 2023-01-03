@@ -1184,6 +1184,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "taxNumber": MessageLookupByLibrary.simpleMessage("الرقم الضريبي"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
+        "theOrderHidden": MessageLookupByLibrary.simpleMessage(
+            "لا يمكن اسناد هذا الطلب لهذا الكابتن , لأن الطلب مخفي"),
         "thereIsNoBranches":
             MessageLookupByLibrary.simpleMessage("لا يوجد أفرع متاحة"),
         "thereIsNoValidSubscription":

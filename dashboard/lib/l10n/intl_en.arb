@@ -846,5 +846,6 @@
     "notReceivedCash": "Cash not Received",
     "areSureAboutAnsweringBehalfStore":"Are sure about answering behalf store",
     "rateCaptainDetails": "Rate Captain",
-    "captainractivityDetails":"Captain Activity"
+    "captainractivityDetails":"Captain Activity",
+    "theOrderHidden":"This order cannot be assigned to this captain because the request is hidden"
 }

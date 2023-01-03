@@ -40,6 +40,8 @@ class StatusCodeHelper {
         return S.current.expiredSubscriptions;
       case '9200':
         return S.current.youCannotAcceptAnotherOrderFromThisStore;
+      case '9218':
+        return S.current.theOrderHidden;
       case '9307':
         return S.current.unableToDeletePaymentsExist;
       case '9302':

@@ -8519,6 +8519,16 @@ class S {
       args: [],
     );
   }
+
+  /// `This order cannot be assigned to this captain because the request is hidden`
+  String get theOrderHidden {
+    return Intl.message(
+      'This order cannot be assigned to this captain because the request is hidden',
+      name: 'theOrderHidden',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
