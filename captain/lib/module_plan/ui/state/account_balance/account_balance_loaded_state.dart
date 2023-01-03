@@ -56,24 +56,28 @@ class AccountBalanceStateLoaded extends States {
                     ),
                   ),
                   balanceDetails(context),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red,
-                      ),
-                      onPressed: () {
-                        showDialog(
-                            context: context,
-                            builder: (ctx) {
-                              return CustomAlertDialog(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                    screenState.manager
-                                        .stopeCurrentAccountPlan(screenState);
-                                  },
-                                  content: S.current.areSureAboutStoppingPlan);
-                            });
-                      },
-                      child: Text(S.current.stopPlan)),
+                  Visibility(
+                    visible: false,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                        ),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (ctx) {
+                                return CustomAlertDialog(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      screenState.manager
+                                          .stopeCurrentAccountPlan(screenState);
+                                    },
+                                    content:
+                                        S.current.areSureAboutStoppingPlan);
+                              });
+                        },
+                        child: Text(S.current.stopPlan)),
+                  ),
                 ],
               ),
             ),
