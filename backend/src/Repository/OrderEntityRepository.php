@@ -164,28 +164,23 @@ class OrderEntityRepository extends ServiceEntityRepository
             $query->setParameter('orderState', $request->getState());
 
         } elseif ($request->getState() === OrderStateConstant::ORDER_STATE_ONGOING) {
-            //$response = [];
+            $response = [];
 
             $orders = $query->getQuery()->getResult();
 
             if ($orders) {
                 foreach ($orders as $order) {
-                    if (in_array($order['state'], OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)) {
-                        //$response[] = $order;
-                        $query->andWhere('orderEntity.id = :orderId');
-                        $query->setParameter('orderId', $order['id']);
-
-                    } elseif ($order['state'] === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                    if ($order['state'] === OrderStateConstant::ORDER_STATE_DELIVERED) {
                         if (! empty($this->checkIfMainOrderHasUnDeliveredSubOrders($order['id']))) {
-                            //$response[] = $order;
-                            $query->andWhere('orderEntity.id = :orderId');
-                            $query->setParameter('orderId', $order['id']);
+                            $response[] = $order['id'];
                         }
                     }
                 }
             }
 
-            //return $response;
+            $query->andWhere('orderEntity.state IN (:ongoingStates) OR orderEntity.id IN (:ordersIdArray)');
+            $query->setParameter('ongoingStates', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY);
+            $query->setParameter('ordersIdArray', $response);
         }
 
         if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
@@ -625,28 +620,23 @@ class OrderEntityRepository extends ServiceEntityRepository
             $query->setParameter('state', $request->getState());
 
         } elseif ($request->getState() === OrderStateConstant::ORDER_STATE_ONGOING) {
-            //$response = [];
+            $response = [];
 
             $orders = $query->getQuery()->getResult();
 
             if ($orders) {
                 foreach ($orders as $order) {
-                    if (in_array($order['state'], OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)) {
-                        //$response[] = $order;
-                        $query->andWhere('orderEntity.id = :orderId');
-                        $query->setParameter('orderId', $order['id']);
-
-                    } elseif ($order['state'] === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                    if ($order['state'] === OrderStateConstant::ORDER_STATE_DELIVERED) {
                         if (! empty($this->checkIfMainOrderHasUnDeliveredSubOrders($order['id']))) {
-                            //$response[] = $order;
-                            $query->andWhere('orderEntity.id = :orderId');
-                            $query->setParameter('orderId', $order['id']);
+                            $response[] = $order['id'];
                         }
                     }
                 }
             }
 
-            //return $response;
+            $query->andWhere('orderEntity.state IN (:ongoingStates) OR orderEntity.id IN (:ordersIdArray)');
+            $query->setParameter('ongoingStates', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY);
+            $query->setParameter('ordersIdArray', $response);
         }
 
         if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
