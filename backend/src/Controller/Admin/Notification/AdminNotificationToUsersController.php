@@ -186,7 +186,7 @@ class AdminNotificationToUsersController extends BaseController
      * admin: delete Admin Notification
      * @Route("adminnotification/{id}", name="deleteAdminNotification", methods={"DELETE"})
      * @IsGranted("ROLE_ADMIN")
-     * @param Request $request
+     * @param $id
      * @return JsonResponse
      *
      * @OA\Tag(name="Admin Notification")
@@ -215,7 +215,7 @@ class AdminNotificationToUsersController extends BaseController
      * )
      *
      * or
-     * 
+     *
      * @OA\Response(
      *      response="default",
      *      description="Returns notification",
@@ -283,11 +283,12 @@ class AdminNotificationToUsersController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
-    
+
     /**
      * admin: get notification by id.
      * @Route("adminnotification/{id}", name="getNotificationByIdForAdmin", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
+     * @param $id
      * @return JsonResponse
      *
      * @OA\Tag(name="Admin Notification")

@@ -3,6 +3,7 @@
 namespace App\Manager\Order;
 
 use App\AutoMapping;
+use App\Constant\StoreOrderDetails\StoreOrderDetailsConstant;
 use App\Entity\OrderEntity;
 use App\Entity\ImageEntity;
 use App\Entity\StoreOrderDetailsEntity;
@@ -131,6 +132,21 @@ class StoreOrderDetailsManager
 
             $this->entityManager->flush();
         }
+
+        return $storeOrderDetailsEntity;
+    }
+
+    public function updateCaptainToStoreBranchDistanceByOrderId(int $orderId, float $captainToStoreBranchDistance): int|StoreOrderDetailsEntity
+    {
+        $storeOrderDetailsEntity = $this->storeOrderDetailsEntityRepository->findOneBy(['orderId' => $orderId]);
+
+        if (! $storeOrderDetailsEntity) {
+            return StoreOrderDetailsConstant::STORE_ORDER_DETAILS_NOT_FOUND;
+        }
+
+        $storeOrderDetailsEntity->setCaptainToStoreBranchDistance($captainToStoreBranchDistance);
+
+        $this->entityManager->flush();
 
         return $storeOrderDetailsEntity;
     }
