@@ -23,6 +23,6 @@ class OrderFinancialValueAccordingToSystemOneCalculationService
             }
         }
 
-        return $compensationForEveryOrder;
+        return 0.0;
     }
 }

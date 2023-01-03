@@ -310,7 +310,8 @@ class OrderController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="state"),
      *          @OA\Property(type="string", property="fromDate"),
-     *          @OA\Property(type="string", property="toDate")
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="string", property="customizedTimezone", example="Asia/Riyadh")
      *      )
      * )
      *
@@ -717,6 +718,7 @@ class OrderController extends BaseController
      *              @OA\Property(type="number", property="captainOrderCost"),
      *              @OA\Property(type="string", property="noteCaptainOrderCost"),
      *              @OA\Property(type="integer", property="paidToProvider"),
+     *              @OA\Property(type="number", property="captainToStoreBranchDistance")
      *         ),
      *      ),
      *
@@ -872,7 +874,8 @@ class OrderController extends BaseController
      *        @OA\JsonContent(
      *              @OA\Property(type="string", property="state"),
      *              @OA\Property(type="string", property="fromDate"),
-     *              @OA\Property(type="string", property="toDate")
+     *              @OA\Property(type="string", property="toDate"),
+     *              @OA\Property(type="string", property="customizedTimezone", example="Asia/Riyadh")
      *         )
      * )
      *

@@ -32,4 +32,11 @@ class CaptainFinancialDuesResponse
      *     @OA\Items(type="object"))
      */
     public array $total;
+
+    public int $state;
+
+    /**
+     * @var bool|null
+     */
+    public $captainStoppedFinancialCycle;
 }

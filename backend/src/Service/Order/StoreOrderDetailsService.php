@@ -2,6 +2,7 @@
 
 namespace App\Service\Order;
 
+use App\Entity\StoreOrderDetailsEntity;
 use App\Entity\StoreOwnerBranchEntity;
 use App\Manager\Order\StoreOrderDetailsManager;
 
@@ -23,5 +24,10 @@ class StoreOrderDetailsService
         }
 
         return $storeOrderDetails;
+    }
+
+    public function updateCaptainToStoreBranchDistanceByOrderId(int $orderId, float $captainToStoreBranchDistance): int|StoreOrderDetailsEntity
+    {
+        return $this->storeOrderDetailsManager->updateCaptainToStoreBranchDistanceByOrderId($orderId, $captainToStoreBranchDistance);
     }
 }

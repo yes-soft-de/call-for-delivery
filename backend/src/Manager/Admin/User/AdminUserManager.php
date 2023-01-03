@@ -39,4 +39,9 @@ class AdminUserManager
 
         return $userEntity;
     }
+
+    public function getUsersIDsByRoleForAdmin(string $userRole): array
+    {
+        return $this->userEntityRepository->getUsersIDsByRoleForAdmin($userRole);
+    }
 }

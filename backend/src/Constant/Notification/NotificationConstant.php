@@ -125,5 +125,9 @@ final class NotificationConstant
     const PRICE_OFFER_STATUS_ACCEPTED = "تم قبول عرض السعر من قبل المتجر";
 
     const PRICE_OFFER_STATUS_REFUSED = "تم رفض عرض السعر من قبل المتجر";
+
+    const NEW_NOTIFICATION_BY_ADMIN = "تحديث جديد من قبل الإدارة";
+
+    const NEW_NOTIFICATION_TEXT_BY_ADMIN = "تم إرسال تحديث جديد من قبل الإدارة";
 }
 

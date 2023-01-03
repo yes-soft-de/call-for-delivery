@@ -11,31 +11,47 @@ use App\Response\Admin\Notification\AdminNotificationToUsersResponse;
 use App\Response\Admin\Notification\AdminNotificationsResponse;
 use App\Response\Admin\Notification\AdminNotificationToUsersNotFoundResponse;
 use App\Constant\Notification\NotificationConstant;
+use App\Service\Admin\Notification\Local\AdminNotificationLocalService;
 use App\Service\Notification\NotificationFirebaseService;
 use App\Constant\Notification\NotificationFirebaseConstant;
 
 class AdminNotificationToUsersService
 {
-    private $autoMapping;
-    private $adminNotificationToUsersManager;
-    private $notificationFirebaseService;
+    private AutoMapping $autoMapping;
+    private NotificationFirebaseService $notificationFirebaseService;
+    private AdminNotificationLocalService $adminNotificationLocalService;
+    private AdminNotificationToUsersManager $adminNotificationToUsersManager;
 
-    public function __construct(AutoMapping $autoMapping, AdminNotificationToUsersManager $adminNotificationToUsersManager, NotificationFirebaseService $notificationFirebaseService)
+    public function __construct(AutoMapping $autoMapping, NotificationFirebaseService $notificationFirebaseService, AdminNotificationLocalService $adminNotificationLocalService,
+                                AdminNotificationToUsersManager $adminNotificationToUsersManager)
     {
         $this->autoMapping = $autoMapping;
-        $this->adminNotificationToUsersManager = $adminNotificationToUsersManager;
         $this->notificationFirebaseService = $notificationFirebaseService;
+        $this->adminNotificationLocalService = $adminNotificationLocalService;
+        $this->adminNotificationToUsersManager = $adminNotificationToUsersManager;
     }
 
     public function createAdminNotificationToUsers(AdminNotificationCreateRequest $request): AdminNotificationToUsersResponse
     {
         $notification = $this->adminNotificationToUsersManager->createAdminNotificationToUsers($request);
-       
-        try {
-            $this->notificationFirebaseService->notificationToAppsFromAdmin($request->getAppType(), NotificationFirebaseConstant::NOTIFICATION_FROM_ADMIN);
-        }
-        catch (\Exception $e) {
-            error_log($e);
+
+        if ($notification) {
+            // create local notification for captains if notifications send to them
+            if ($request->getAppType() === NotificationConstant::APP_TYPE_CAPTAIN || $request->getAppType() === NotificationConstant::APP_TYPE_ALL) {
+                $this->createLocalNotificationForAllCaptainsByAdmin(
+                    NotificationConstant::NEW_NOTIFICATION_BY_ADMIN,
+                    [
+                        "text" => NotificationConstant::NEW_NOTIFICATION_TEXT_BY_ADMIN
+                    ]
+                );
+            }
+
+            // send firebase notification to app from admin
+            try {
+                $this->notificationFirebaseService->notificationToAppsFromAdmin($request->getAppType(), NotificationFirebaseConstant::NOTIFICATION_FROM_ADMIN);
+            } catch (\Exception $e) {
+                error_log($e);
+            }
         }
         
         return $this->autoMapping->map(AdminNotificationToUsersEntity::class, AdminNotificationToUsersResponse::class, $notification);
@@ -85,5 +101,10 @@ class AdminNotificationToUsersService
         $notification = $this->adminNotificationToUsersManager->getNotificationByIdForAdmin($id);
      
         return $this->autoMapping->map(AdminNotificationToUsersEntity::class, AdminNotificationsResponse::class, $notification);
+    }
+
+    public function createLocalNotificationForAllCaptainsByAdmin(string $title, array $message): array|string
+    {
+        return $this->adminNotificationLocalService->initializeAndCreateLocalNotificationForAllCaptainsByAdmin($title, $message);
     }
 }
