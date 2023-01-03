@@ -129,7 +129,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             subTitle: widget.request.phone,
                             iconData: Icons.phone),
                         customListTile(
-                            title: S.of(context).addresses,
+                            title: S.of(context).neighborhood,
                             subTitle: widget.request.address,
                             iconData: Icons.location_on),
                         customListTile(

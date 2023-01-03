@@ -398,16 +398,16 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 ),
               ],
             ),
-            titleField(S.of(context).addresses),
+            titleField(S.of(context).neighborhood),
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
               child: CustomFormField(
                 controller: _addressController,
-                hintText: S.current.addresses,
+                hintText: S.current.neighborhood,
                 preIcon: const Icon(Icons.location_on),
               ),
             ),
-            titleField(S.of(context).addresses),
+            titleField(S.of(context).city),
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
               child: CustomFormField(
