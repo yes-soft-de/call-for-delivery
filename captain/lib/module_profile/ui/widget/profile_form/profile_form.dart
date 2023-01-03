@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart';
 import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -398,22 +399,34 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 ),
               ],
             ),
-            titleField(S.of(context).neighborhood),
-            Padding(
-              padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-              child: CustomFormField(
-                controller: _addressController,
-                hintText: S.current.neighborhood,
-                preIcon: const Icon(Icons.location_on),
-              ),
-            ),
             titleField(S.of(context).city),
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-              child: CustomFormField(
-                controller: _cityController,
-                hintText: S.current.city,
-                preIcon: const Icon(Icons.location_city),
+              child: Badge(
+                showBadge: _cityController.text.isEmpty,
+                badgeColor: Colors.amber,
+                position: BadgePosition.topEnd(top: -6, end: -6),
+                child: CustomFormField(
+                  controller: _cityController,
+                  hintText: S.current.city,
+                  preIcon: const Icon(
+                    Icons.location_city,
+                  ),
+                ),
+              ),
+            ),
+            titleField(S.of(context).neighborhood),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+              child: Badge(
+                showBadge: _addressController.text.isEmpty,
+                badgeColor: Colors.amber,
+                position: BadgePosition.topEnd(top: -6, end: -6),
+                child: CustomFormField(
+                  controller: _addressController,
+                  hintText: S.current.neighborhood,
+                  preIcon: const Icon(Icons.location_on),
+                ),
               ),
             ),
             titleField(S.of(context).age),
