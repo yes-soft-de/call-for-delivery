@@ -41,7 +41,7 @@ class OrderFinancialValueAccordingToSystemTwoCalculationService
     {
         // Captain financial system is the second one
         if (! $orderDistance) {
-            $orderDistance = 0;
+            return 0.0;
         }
 
         $dates = $this->getLatestCaptainFinancialDuesStartAndEndDates($captainProfileId);

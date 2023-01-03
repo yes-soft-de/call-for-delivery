@@ -159,45 +159,41 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->orderBy('orderEntity.id', 'DESC');
 
-        if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
-            $query->andWhere('orderEntity.createdAt >= :createdAt');
-            $query->setParameter('createdAt', new DateTime($request->getFromDate()));
-
-        } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-            $query->andWhere('orderEntity.createdAt <= :createdAt');
-            $query->setParameter('createdAt', new DateTime($request->getToDate()));
-
-        } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-            $query->andWhere('orderEntity.createdAt >= :fromDate');
-            $query->setParameter('fromDate', new DateTime($request->getFromDate()));
-
-            $query->andWhere('orderEntity.createdAt <= :toDate');
-            $query->setParameter('toDate', new DateTime($request->getToDate()));
-        }
-
         if ($request->getState() !== null && $request->getState() !== "" && $request->getState() !== OrderStateConstant::ORDER_STATE_ONGOING) {
             $query->andWhere('orderEntity.state = :orderState');
             $query->setParameter('orderState', $request->getState());
 
         } elseif ($request->getState() === OrderStateConstant::ORDER_STATE_ONGOING) {
-            $response = [];
+            //$response = [];
 
             $orders = $query->getQuery()->getResult();
 
             if ($orders) {
                 foreach ($orders as $order) {
                     if (in_array($order['state'], OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)) {
-                        $response[] = $order;
+                        //$response[] = $order;
+                        $query->andWhere('orderEntity.id = :orderId');
+                        $query->setParameter('orderId', $order['id']);
 
                     } elseif ($order['state'] === OrderStateConstant::ORDER_STATE_DELIVERED) {
                         if (! empty($this->checkIfMainOrderHasUnDeliveredSubOrders($order['id']))) {
-                            $response[] = $order;
+                            //$response[] = $order;
+                            $query->andWhere('orderEntity.id = :orderId');
+                            $query->setParameter('orderId', $order['id']);
                         }
                     }
                 }
             }
 
-            return $response;
+            //return $response;
+        }
+
+        if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
+            || ($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")
+            || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $tempQuery = $query->getQuery()->getResult();
+
+            return $this->filterOrdersByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
         }
 
         return $query->getQuery()->getResult();
@@ -624,45 +620,41 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->orderBy('orderEntity.id', 'DESC');
 
-        if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
-            $query->andWhere('orderEntity.createdAt >= :createdAt');
-            $query->setParameter('createdAt', $request->getFromDate());
-
-        } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-            $query->andWhere('orderEntity.createdAt <= :createdAt');
-            $query->setParameter('createdAt', ($request->getToDate()));
-
-        } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-            $query->andWhere('orderEntity.createdAt >= :fromDate');
-            $query->setParameter('fromDate', $request->getFromDate());
-
-            $query->andWhere('orderEntity.createdAt <= :toDate');
-            $query->setParameter('toDate', ($request->getToDate()));
-        }
-
         if ($request->getState() != null && $request->getState() != "" && $request->getState() != OrderStateConstant::ORDER_STATE_ONGOING) {
             $query->andWhere('orderEntity.state = :state');
             $query->setParameter('state', $request->getState());
 
         } elseif ($request->getState() === OrderStateConstant::ORDER_STATE_ONGOING) {
-            $response = [];
+            //$response = [];
 
             $orders = $query->getQuery()->getResult();
 
             if ($orders) {
                 foreach ($orders as $order) {
                     if (in_array($order['state'], OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)) {
-                        $response[] = $order;
+                        //$response[] = $order;
+                        $query->andWhere('orderEntity.id = :orderId');
+                        $query->setParameter('orderId', $order['id']);
 
                     } elseif ($order['state'] === OrderStateConstant::ORDER_STATE_DELIVERED) {
                         if (! empty($this->checkIfMainOrderHasUnDeliveredSubOrders($order['id']))) {
-                            $response[] = $order;
+                            //$response[] = $order;
+                            $query->andWhere('orderEntity.id = :orderId');
+                            $query->setParameter('orderId', $order['id']);
                         }
                     }
                 }
             }
 
-            return $response;
+            //return $response;
+        }
+
+        if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
+            || ($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")
+            || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $tempQuery = $query->getQuery()->getResult();
+
+            return $this->filterOrdersByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
         }
 
         return $query->getQuery()->getResult();

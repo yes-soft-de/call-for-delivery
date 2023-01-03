@@ -310,7 +310,8 @@ class OrderController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="state"),
      *          @OA\Property(type="string", property="fromDate"),
-     *          @OA\Property(type="string", property="toDate")
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="string", property="customizedTimezone", example="Asia/Riyadh")
      *      )
      * )
      *
@@ -873,7 +874,8 @@ class OrderController extends BaseController
      *        @OA\JsonContent(
      *              @OA\Property(type="string", property="state"),
      *              @OA\Property(type="string", property="fromDate"),
-     *              @OA\Property(type="string", property="toDate")
+     *              @OA\Property(type="string", property="toDate"),
+     *              @OA\Property(type="string", property="customizedTimezone", example="Asia/Riyadh")
      *         )
      * )
      *

@@ -55,7 +55,8 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('captainFinancialDuesEntity')
 
-            ->select('captainFinancialDuesEntity.id, captainFinancialDuesEntity.status, captainFinancialDuesEntity.amount, captainFinancialDuesEntity.startDate, captainFinancialDuesEntity.endDate, captainFinancialDuesEntity.amountForStore, captainFinancialDuesEntity.statusAmountForStore')
+            ->select('captainFinancialDuesEntity.id', 'captainFinancialDuesEntity.status', 'captainFinancialDuesEntity.amount', 'captainFinancialDuesEntity.startDate', 'captainFinancialDuesEntity.endDate',
+            'captainFinancialDuesEntity.amountForStore', 'captainFinancialDuesEntity.statusAmountForStore', 'captainFinancialDuesEntity.state', 'captainFinancialDuesEntity.captainStoppedFinancialCycle')
             ->addSelect('captainEntity.id as captainId, captainEntity.captainName')
             
             ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.captainId = :userId')
