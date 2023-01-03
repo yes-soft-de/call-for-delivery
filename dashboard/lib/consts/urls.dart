@@ -261,6 +261,9 @@ class Urls {
       '/report/activecaptainswithorderscountforadmin';
   static const RATING_CAPTAIN =
       DOMAIN + VERSION_ADMIN + '/rate/captainratingsforadmin';
+  static const GET_CAPTAIN_ACTIVITY_DETAILS = DOMAIN +
+      VERSION_ADMIN +
+      '/order/fetchorderscurrentfinancialcycleforadmin';
   /*-----------------Supplier--Categories---------------*/
   static const GET_SUPPLIER_CATEGORIES =
       BASE_API_SUPPLIER_CATE + '/suppliercategories';

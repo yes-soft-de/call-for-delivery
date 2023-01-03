@@ -8509,6 +8509,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Captain Activity`
+  String get captainractivityDetails {
+    return Intl.message(
+      'Captain Activity',
+      name: 'captainractivityDetails',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
