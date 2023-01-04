@@ -15,6 +15,11 @@ class FilterOrdersWhoseHasNotDistanceHasCalculatedRequest
     private $toDate;
 
     /**
+     * @var null|string
+     */
+    private $customizedTimezone;
+
+    /**
      * @return string|null
      */
     public function getFromDate(): ?string
@@ -28,5 +33,10 @@ class FilterOrdersWhoseHasNotDistanceHasCalculatedRequest
     public function getToDate(): ?string
     {
         return $this->toDate;
+    }
+
+    public function getCustomizedTimezone(): ?string
+    {
+        return $this->customizedTimezone;
     }
 }

@@ -31,6 +31,11 @@ class OrderCaptainFilterByAdminRequest
     private $state;
 
     /**
+     * @var null|string
+     */
+    private $customizedTimezone;
+
+    /**
      * @return string|null
      */
     public function getFromDate(): ?string
@@ -64,5 +69,10 @@ class OrderCaptainFilterByAdminRequest
     public function getState(): ?string
     {
         return $this->state;
+    }
+
+    public function getCustomizedTimezone(): ?string
+    {
+        return $this->customizedTimezone;
     }
 }
