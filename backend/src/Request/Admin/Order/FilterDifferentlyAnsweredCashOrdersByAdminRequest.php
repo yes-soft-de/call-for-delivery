@@ -19,6 +19,11 @@ class FilterDifferentlyAnsweredCashOrdersByAdminRequest
      */
     private $storeProfileId;
 
+    /**
+     * @var null|string
+     */
+    private $customizedTimezone;
+
     public function getFromDate(): ?string
     {
         return $this->fromDate;
@@ -32,5 +37,10 @@ class FilterDifferentlyAnsweredCashOrdersByAdminRequest
     public function getStoreProfileId(): int|string|null
     {
         return $this->storeProfileId;
+    }
+
+    public function getCustomizedTimezone(): ?string
+    {
+        return $this->customizedTimezone;
     }
 }

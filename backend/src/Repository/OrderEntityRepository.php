@@ -692,25 +692,17 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('orderLogEntity.isCaptainArrived = :captainArrived')
             ->setParameter('captainArrived', 0)
 
-            ->orderBy('orderEntity.id', 'DESC');
+            ->orderBy('orderEntity.id', 'DESC')
 
-        if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
-            $query->andWhere('orderEntity.createdAt >= :createdAt');
-            $query->setParameter('createdAt', $request->getFromDate());
+            ->groupBy('orderEntity.id');
 
-        } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-            $query->andWhere('orderEntity.createdAt <= :createdAt');
-            $query->setParameter('createdAt', ($request->getToDate()));
+        if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
+            || ($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")
+            || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $tempQuery = $query->getQuery()->getResult();
 
-        } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-            $query->andWhere('orderEntity.createdAt >= :fromDate');
-            $query->setParameter('fromDate', $request->getFromDate());
-
-            $query->andWhere('orderEntity.createdAt <= :toDate');
-            $query->setParameter('toDate', ($request->getToDate()));
+            return $this->filterOrdersByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
         }
-
-        $query->groupBy('orderEntity.id');
 
         return $query->getQuery()->getResult();
     }
@@ -1693,32 +1685,41 @@ class OrderEntityRepository extends ServiceEntityRepository
             $query->setParameter('statesArray', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY);
         }
 
-        if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
-            $query->andWhere('orderEntity.deliveryDate >= :deliveryDate');
-            $query->setParameter('deliveryDate', new DateTime($request->getFromDate()));
-
-        } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-            $query->andWhere('orderEntity.deliveryDate <= :deliveryDate');
-            $query->setParameter('deliveryDate', new DateTime($request->getToDate()));
-
-        } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-            $query->andWhere('orderEntity.deliveryDate >= :fromDate');
-            $query->setParameter('fromDate', new DateTime($request->getFromDate()));
-
-            $query->andWhere('orderEntity.deliveryDate <= :toDate');
-            $query->setParameter('toDate', new DateTime($request->getToDate()));
-
-        } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() === null || $request->getToDate() === "")) {
-            $query->andWhere('orderEntity.deliveryDate >= :fromDate');
-            $query->setParameter('fromDate', (new DateTime('now'))->setTime(00, 00, 00));
-
-            $query->andWhere('orderEntity.deliveryDate <= :toDate');
-            $query->setParameter('toDate', (new DateTime('now'))->setTime(23, 59, 59));
-        }
-
         if ($request->getPayment() === PaymentConstant::CASH_PAYMENT_METHOD_CONST || $request->getPayment() === PaymentConstant::CARD_PAYMENT_METHOD_CONST) {
             $query->andWhere('orderEntity.payment = :paymentMethod');
             $query->setParameter('paymentMethod', $request->getPayment());
+        }
+
+        if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
+            || ($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")
+            || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $tempQuery = $query->getQuery()->getResult();
+
+            return $this->filterOrdersByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
+
+        } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() === null || $request->getToDate() === "")) {
+            // Get the orders which delivery date is during today
+            $tempResult = $query->getQuery()->getResult();
+
+            if (count($tempResult) > 0) {
+                // For storing the id of the order which meet the condition
+                $acceptedOrdersIdsArray = [];
+
+                $timeZone = $request->getCustomizedTimezone();
+
+                foreach ($tempResult as $order) {
+                    if (($order['deliveryDate']->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) >=
+                        new \DateTime((new \DateTime('now'))->format('Y-m-d 00:00:00'))) &&
+                        ($order['deliveryDate']->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) <=
+                            new \DateTime((new \DateTime('now'))->format('Y-m-d 23:59:59'))))
+                    {
+                        $acceptedOrdersIdsArray[] = $order['id'];
+                    }
+                }
+
+                $query->andWhere('orderEntity.id IN (:acceptedOrdersIds)');
+                $query->setParameter('acceptedOrdersIds', $acceptedOrdersIdsArray);
+            }
         }
 
         return $query->getQuery()->getResult();
@@ -1803,25 +1804,17 @@ class OrderEntityRepository extends ServiceEntityRepository
              ->andWhere('orderEntity.payment = :payment')
              ->setParameter('payment', OrderTypeConstant::ORDER_PAYMENT_CASH)
  
-             ->orderBy('orderEntity.id', 'DESC');
- 
-         if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
-             $query->andWhere('orderEntity.createdAt >= :createdAt');
-             $query->setParameter('createdAt', $request->getFromDate());
- 
-         } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-             $query->andWhere('orderEntity.createdAt <= :createdAt');
-             $query->setParameter('createdAt', ($request->getToDate()));
- 
-         } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-             $query->andWhere('orderEntity.createdAt >= :fromDate');
-             $query->setParameter('fromDate', $request->getFromDate());
- 
-             $query->andWhere('orderEntity.createdAt <= :toDate');
-             $query->setParameter('toDate', ($request->getToDate()));
+             ->orderBy('orderEntity.id', 'DESC')
+
+             ->groupBy('orderEntity.id');
+
+         if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
+             || ($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")
+             || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+             $tempQuery = $query->getQuery()->getResult();
+
+             return $this->filterOrdersByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
          }
- 
-         $query->groupBy('orderEntity.id');
  
          return $query->getQuery()->getResult();
      }
@@ -1893,25 +1886,17 @@ class OrderEntityRepository extends ServiceEntityRepository
              ->andWhere('orderEntity.storeBranchToClientDistance is NULL or orderEntity.storeBranchToClientDistance = :zero')
              ->setParameter('zero', GeoDistanceResultConstant::ZERO_DISTANCE_CONST)
  
-             ->orderBy('orderEntity.id', 'DESC');
- 
-         if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
-             $query->andWhere('orderEntity.createdAt >= :createdAt');
-             $query->setParameter('createdAt', $request->getFromDate());
- 
-         } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-             $query->andWhere('orderEntity.createdAt <= :createdAt');
-             $query->setParameter('createdAt', ($request->getToDate()));
- 
-         } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-             $query->andWhere('orderEntity.createdAt >= :fromDate');
-             $query->setParameter('fromDate', $request->getFromDate());
- 
-             $query->andWhere('orderEntity.createdAt <= :toDate');
-             $query->setParameter('toDate', ($request->getToDate()));
+             ->orderBy('orderEntity.id', 'DESC')
+
+             ->groupBy('orderEntity.id');
+
+         if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
+             || ($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")
+             || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+             $tempQuery = $query->getQuery()->getResult();
+
+             return $this->filterOrdersByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
          }
- 
-         $query->groupBy('orderEntity.id');
  
          return $query->getQuery()->getResult();
      }
@@ -1952,25 +1937,17 @@ class OrderEntityRepository extends ServiceEntityRepository
              ->andWhere('orderEntity.storeBranchToClientDistance is NOT NULL or orderEntity.storeBranchToClientDistance != :zero')
              ->setParameter('zero', GeoDistanceResultConstant::ZERO_DISTANCE_CONST)
             
-             ->orderBy('orderEntity.id', 'DESC');
- 
-         if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
-             $query->andWhere('orderEntity.createdAt >= :createdAt');
-             $query->setParameter('createdAt', $request->getFromDate());
- 
-         } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-             $query->andWhere('orderEntity.createdAt <= :createdAt');
-             $query->setParameter('createdAt', ($request->getToDate()));
- 
-         } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-             $query->andWhere('orderEntity.createdAt >= :fromDate');
-             $query->setParameter('fromDate', $request->getFromDate());
- 
-             $query->andWhere('orderEntity.createdAt <= :toDate');
-             $query->setParameter('toDate', ($request->getToDate()));
+             ->orderBy('orderEntity.id', 'DESC')
+
+             ->groupBy('orderEntity.id');
+
+         if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
+             || ($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")
+             || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+             $tempQuery = $query->getQuery()->getResult();
+
+             return $this->filterOrdersByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
          }
- 
-         $query->groupBy('orderEntity.id');
  
          return $query->getQuery()->getResult();
      }
@@ -2015,29 +1992,22 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('orderEntity.payment = :payment')
             ->setParameter('payment', OrderTypeConstant::ORDER_PAYMENT_CASH)
 
-            ->orderBy('orderEntity.id', 'DESC');
+            ->orderBy('orderEntity.id', 'DESC')
+
+            ->groupBy('orderEntity.id');
+
         if ($request->getStoreId() != null || $request->getStoreId() != "") {
             $query->andWhere('orderEntity.storeOwner = :storeOwner');
             $query->setParameter('storeOwner', $request->getStoreId());
         }
 
-        if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
-            $query->andWhere('orderEntity.createdAt >= :createdAt');
-            $query->setParameter('createdAt', $request->getFromDate());
+        if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
+            || ($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")
+            || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $tempQuery = $query->getQuery()->getResult();
 
-        } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-            $query->andWhere('orderEntity.createdAt <= :createdAt');
-            $query->setParameter('createdAt', ($request->getToDate()));
-
-        } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-            $query->andWhere('orderEntity.createdAt >= :fromDate');
-            $query->setParameter('fromDate', $request->getFromDate());
-
-            $query->andWhere('orderEntity.createdAt <= :toDate');
-            $query->setParameter('toDate', ($request->getToDate()));
+            return $this->filterOrdersByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
         }
-
-        $query->groupBy('orderEntity.id');
 
         return $query->getQuery()->getResult();
     }
@@ -2103,25 +2073,17 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('storeOwnerProfileEntity.storeOwnerId = :storeOwnerUserId')
             ->setParameter('storeOwnerUserId', $request->getStoreOwnerUserId())
 
-            ->orderBy('orderEntity.id', 'DESC');
+            ->orderBy('orderEntity.id', 'DESC')
 
-        if (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === "")) {
-            $query->andWhere('orderEntity.createdAt >= :createdAt');
-            $query->setParameter('createdAt', $request->getFromDate());
+            ->groupBy('orderEntity.id');
 
-        } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-            $query->andWhere('orderEntity.createdAt <= :createdAt');
-            $query->setParameter('createdAt', ($request->getToDate()));
+        if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
+            || ($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")
+            || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $tempQuery = $query->getQuery()->getResult();
 
-        } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-            $query->andWhere('orderEntity.createdAt >= :fromDate');
-            $query->setParameter('fromDate', $request->getFromDate());
-
-            $query->andWhere('orderEntity.createdAt <= :toDate');
-            $query->setParameter('toDate', ($request->getToDate()));
+            return $this->filterOrdersByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
         }
-
-        $query->groupBy('orderEntity.id');
 
         return $query->getQuery()->getResult();
     }  
@@ -2172,30 +2134,22 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('orderEntity.payment = :payment')
             ->setParameter('payment', OrderTypeConstant::ORDER_PAYMENT_CASH)
 
-            ->orderBy('orderEntity.id', 'DESC');
+            ->orderBy('orderEntity.id', 'DESC')
+
+            ->groupBy('orderEntity.id');
 
         if ($request->getStoreProfileId() !== null && $request->getStoreProfileId() !== "") {
             $query->andWhere('orderEntity.storeOwner = :storeOwner');
             $query->setParameter('storeOwner', $request->getStoreProfileId());
         }
 
-        if (($request->getFromDate() !== null && $request->getFromDate() !== "") && ($request->getToDate() === null || $request->getToDate() === "")) {
-            $query->andWhere('orderEntity.createdAt >= :createdAt');
-            $query->setParameter('createdAt', $request->getFromDate());
+        if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
+            || ($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")
+            || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $tempQuery = $query->getQuery()->getResult();
 
-        } elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() !== null && $request->getToDate() !== "")) {
-            $query->andWhere('orderEntity.createdAt <= :createdAt');
-            $query->setParameter('createdAt', ($request->getToDate()));
-
-        } elseif (($request->getFromDate() !== null || $request->getFromDate() !== "") && ($request->getToDate() !== null && $request->getToDate() !== "")) {
-            $query->andWhere('orderEntity.createdAt >= :fromDate');
-            $query->setParameter('fromDate', $request->getFromDate());
-
-            $query->andWhere('orderEntity.createdAt <= :toDate');
-            $query->setParameter('toDate', ($request->getToDate()));
+            return $this->filterOrdersByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
         }
-
-        $query->groupBy('orderEntity.id');
 
         return $query->getQuery()->getResult();
     }
