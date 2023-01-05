@@ -84,4 +84,14 @@ class CaptainFinancialSystemDateService
 
         return $countDays;
     }
+
+    //get start and end dates of today in string format
+    public function getStartAndEndDatesOfTodayInStringFormat(): array
+    {
+        $date = new datetime('now');
+        $fromDate = $date->format('Y-m-d 00:00:00');
+        $toDate = $date->format('Y-m-d 23:59:59');
+
+        return ["fromDate" =>  $fromDate, "toDate" =>  $toDate];
+    }
 }
