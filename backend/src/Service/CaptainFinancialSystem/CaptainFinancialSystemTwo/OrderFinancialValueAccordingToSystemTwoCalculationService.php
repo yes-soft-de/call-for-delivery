@@ -148,7 +148,7 @@ class OrderFinancialValueAccordingToSystemTwoCalculationService
             return ["fromDate" => $captainFinancialDues['startDate']->format('Y-m-d 00:00:00'), "toDate" => $captainFinancialDues['endDate']->format('y-m-d 23:59:59')];
 
         } else {
-            return $this->captainFinancialSystemDateService->getFromDateAndToDate();
+            return $this->captainFinancialSystemDateService->getStartAndEndDatesOfTodayInStringFormat();
         }
     }
 }

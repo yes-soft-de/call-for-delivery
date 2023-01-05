@@ -178,7 +178,8 @@ class AdminOrderController extends BaseController
      *      description="Post a request with filtering orders options",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="fromDate"),
-     *          @OA\Property(type="string", property="toDate")
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="string", property="customizedTimezone", example="Asia/Riyadh")
      *      )
      * )
      *
@@ -984,7 +985,8 @@ class AdminOrderController extends BaseController
      *          @OA\Property(type="string", property="toDate"),
      *          @OA\Property(type="integer", property="captainId", description="the id of captain profile"),
      *          @OA\Property(type="string", property="state"),
-     *          @OA\Property(type="string", property="payment")
+     *          @OA\Property(type="string", property="payment"),
+     *          @OA\Property(type="string", property="customizedTimezone", example="Asia/Riyadh")
      *      )
      * )
      *
@@ -1039,7 +1041,8 @@ class AdminOrderController extends BaseController
      *      description="Post a request with filtering orders options",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="fromDate"),
-     *          @OA\Property(type="string", property="toDate")
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="string", property="customizedTimezone", example="Asia/Riyadh")
      *      )
      * )
      *
@@ -1150,7 +1153,8 @@ class AdminOrderController extends BaseController
      *      description="Post a request with filtering orders options",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="fromDate"),
-     *          @OA\Property(type="string", property="toDate")
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="string", property="customizedTimezone", example="Asia/Riyadh")
      *      )
      * )
      *
@@ -1372,7 +1376,8 @@ class AdminOrderController extends BaseController
      *      description="Post a request with filtering orders options",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="fromDate"),
-     *          @OA\Property(type="string", property="toDate")
+     *          @OA\Property(type="string", property="toDate"),
+      *         @OA\Property(type="string", property="customizedTimezone", example="Asia/Riyadh")
      *      )
      * )
      *
@@ -1424,7 +1429,8 @@ class AdminOrderController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="fromDate"),
      *          @OA\Property(type="string", property="toDate"),
-     *          @OA\Property(type="integer", property="storeProfileId")
+     *          @OA\Property(type="integer", property="storeProfileId"),
+     *          @OA\Property(type="string", property="customizedTimezone", example="Asia/Riyadh")
      *      )
      * )
      *

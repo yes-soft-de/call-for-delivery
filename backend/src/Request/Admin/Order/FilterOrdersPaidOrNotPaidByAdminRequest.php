@@ -20,6 +20,11 @@ class FilterOrdersPaidOrNotPaidByAdminRequest
     private $storeId;
 
     /**
+     * @var null|string
+     */
+    private $customizedTimezone;
+
+    /**
      * @return string|null
      */
     public function getFromDate(): ?string
@@ -57,5 +62,10 @@ class FilterOrdersPaidOrNotPaidByAdminRequest
         $this->storeId = $storeId;
 
         return $this;
+    }
+
+    public function getCustomizedTimezone(): ?string
+    {
+        return $this->customizedTimezone;
     }
 }

@@ -17,6 +17,11 @@ class CashOrdersPaidOrNotFilterByStoreRequest
     // user id of the store owner
     private int $storeOwnerUserId;
 
+    /**
+     * @var null|string
+     */
+    private $customizedTimezone;
+
     public function getFromDate(): ?string
     {
         return $this->fromDate;
@@ -35,5 +40,10 @@ class CashOrdersPaidOrNotFilterByStoreRequest
     public function setStoreOwnerUserId(int $storeOwnerUserId): void
     {
         $this->storeOwnerUserId = $storeOwnerUserId;
+    }
+
+    public function getCustomizedTimezone(): ?string
+    {
+        return $this->customizedTimezone;
     }
 }

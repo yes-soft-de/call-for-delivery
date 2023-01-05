@@ -814,11 +814,12 @@ class AdminOrderService
     {
         return $this->adminOrderManager->filterOrdersWhoseHasNotDistanceHasCalculated($request);  
     }
-   
-    public function filterOrders(FilterOrdersWhoseHasNotDistanceHasCalculatedRequest $request): array
-    {
-        return $this->adminOrderManager->filterOrders($request);  
-    }
+
+    // Following function commented out because it isn't used anywhere
+//    public function filterOrders(FilterOrdersWhoseHasNotDistanceHasCalculatedRequest $request): array
+//    {
+//        return $this->adminOrderManager->filterOrders($request);
+//    }
      
     public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request, int $userId): OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse
     {
