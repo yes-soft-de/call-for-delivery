@@ -26,7 +26,7 @@ class StoreOrderDetailsService
         return $storeOrderDetails;
     }
 
-    public function updateCaptainToStoreBranchDistanceByOrderId(int $orderId, float $captainToStoreBranchDistance): int|StoreOrderDetailsEntity
+    public function updateCaptainToStoreBranchDistanceByOrderId(int $orderId, float $captainToStoreBranchDistance = null): int|StoreOrderDetailsEntity
     {
         return $this->storeOrderDetailsManager->updateCaptainToStoreBranchDistanceByOrderId($orderId, $captainToStoreBranchDistance);
     }
