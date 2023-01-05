@@ -1662,7 +1662,7 @@ class OrderService
         return $this->orderFinancialValueGetService->getSingleOrderFinancialValueByCaptainUserId($captainProfileId, $captainUserId, $orderDistance);
     }
 
-    public function updateCaptainToStoreBranchDistanceByOrderId(int $orderId, float $captainToStoreBranchDistance): int|StoreOrderDetailsEntity
+    public function updateCaptainToStoreBranchDistanceByOrderId(int $orderId, float $captainToStoreBranchDistance = null): int|StoreOrderDetailsEntity
     {
         return $this->storeOrderDetailsService->updateCaptainToStoreBranchDistanceByOrderId($orderId, $captainToStoreBranchDistance);
     }

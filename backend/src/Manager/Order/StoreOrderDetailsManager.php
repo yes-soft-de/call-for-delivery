@@ -136,8 +136,12 @@ class StoreOrderDetailsManager
         return $storeOrderDetailsEntity;
     }
 
-    public function updateCaptainToStoreBranchDistanceByOrderId(int $orderId, float $captainToStoreBranchDistance): int|StoreOrderDetailsEntity
+    public function updateCaptainToStoreBranchDistanceByOrderId(int $orderId, float $captainToStoreBranchDistance = null): int|StoreOrderDetailsEntity
     {
+        if (! $captainToStoreBranchDistance) {
+            return StoreOrderDetailsConstant::CAPTAIN_TO_STORE_BRANCH_DISTANCE_IS_NULL;
+        }
+
         $storeOrderDetailsEntity = $this->storeOrderDetailsEntityRepository->findOneBy(['orderId' => $orderId]);
 
         if (! $storeOrderDetailsEntity) {
