@@ -1,3 +1,4 @@
+import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
 import '../../abstracts/states/loading_state.dart';
@@ -7,6 +8,7 @@ import '../service/captains_service.dart';
 import '../ui/screen/captin_rating_details_state.dart';
 import '../ui/state/captin_rating_details/captin_rating_details_state.dart';
 
+@injectable
 class CaptinRatingDetailsStateManager {
   final CaptainsService _captainsService;
   final PublishSubject<States> _stateSubject = PublishSubject();

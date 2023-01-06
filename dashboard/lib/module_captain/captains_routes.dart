@@ -12,4 +12,5 @@ class CaptainsRoutes {
   static const CAPTAIN_RATING = '/captain_ratings';
   static const CAPTAIN_RATING_DETAILS = '/captain_ratings_details';
   static const CAPTAIN_ACTIVITY = '/captain_activity';
+  static const CAPTAIN_ACTIVITY_DETAILS = '/captain_activity_details';
 }

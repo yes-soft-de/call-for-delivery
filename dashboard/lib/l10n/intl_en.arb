@@ -844,9 +844,10 @@
     "updateStoreAnswerSuccessfully": "Update store answer for cash order",
     "receivedCash": "Cash Received",
     "notReceivedCash": "Cash not Received",
-    "areSureAboutAnsweringBehalfStore": "Are sure about answering behalf store",
-    "rateCaptainDetails": "Rate Captain",
     "chooseFromDate": "Choose from date",
     "yesterday": "Yesterday",
-    "today": "Today"
+    "today": "Today",
+    "areSureAboutAnsweringBehalfStore":"Are sure about answering behalf store",
+    "rateCaptainDetails": "Rate Captain",
+    "captainractivityDetails":"Captain Activity"
 }

@@ -19,6 +19,7 @@ import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
 
+import '../response/captain_activity_response/captain_activity_details_response.dart';
 import '../response/captain_rating_response/captain_rating_response.dart';
 import '../response/captain_rating_response/captin_rating_details_response.dart';
 
@@ -209,5 +210,15 @@ class CaptainsRepository {
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return CaptainActivityResponse.fromJson(response);
+  }
+
+  Future<CaptainActivityDetailsResponse?> getCaptainActivityDetails(
+      int captainID) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(
+        Urls.GET_CAPTAIN_ACTIVITY_DETAILS + '/$captainID',
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return CaptainActivityDetailsResponse.fromJson(response);
   }
 }

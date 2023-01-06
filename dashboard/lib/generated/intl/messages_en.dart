@@ -227,6 +227,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain total category"),
         "captainUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Captain updated successfully"),
+        "captainractivityDetails":
+            MessageLookupByLibrary.simpleMessage("Captain Activity"),
         "captainratingDetails":
             MessageLookupByLibrary.simpleMessage("Captain Rataings Details"),
         "captains": MessageLookupByLibrary.simpleMessage("Captains"),

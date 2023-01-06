@@ -8509,36 +8509,6 @@ class S {
       args: [],
     );
   }
-
-  /// `Choose from date`
-  String get chooseFromDate {
-    return Intl.message(
-      'Choose from date',
-      name: 'chooseFromDate',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Yesterday`
-  String get yesterday {
-    return Intl.message(
-      'Yesterday',
-      name: 'yesterday',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Today`
-  String get today {
-    return Intl.message(
-      'Today',
-      name: 'today',
-      desc: '',
-      args: [],
-    );
-  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
