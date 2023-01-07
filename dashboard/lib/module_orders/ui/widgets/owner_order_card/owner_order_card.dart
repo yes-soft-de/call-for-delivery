@@ -30,49 +30,79 @@ class OwnerOrderCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var color = background ?? Theme.of(context).colorScheme.primary;
-    return Container(
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
-          gradient: LinearGradient(colors: [
-            color.withOpacity(0.85),
-            color.withOpacity(0.85),
-            color.withOpacity(0.9),
-            color.withOpacity(0.93),
-            color.withOpacity(0.95),
-            color,
-          ])),
-      child: Padding(
-        padding: const EdgeInsets.all(12.0),
-        child: Column(
-          children: [
-            Visibility(
-              visible: orderIsMain || primaryTitle != null,
-              child: Row(
-                children: [
-                  Icon(
-                    FontAwesomeIcons.tag,
-                    color: Colors.amber,
-                  ),
-                  SizedBox(
-                    width: 8,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(25),
-                        color: Colors.amber),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        primaryTitle ?? S.current.groupOrder,
-                        style: TextStyle(
-                            fontSize: 10,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(25),
+              gradient: LinearGradient(colors: [
+                color.withOpacity(0.85),
+                color.withOpacity(0.85),
+                color.withOpacity(0.9),
+                color.withOpacity(0.93),
+                color.withOpacity(0.95),
+                color,
+              ])),
+          child: Padding(
+            padding: const EdgeInsets.all(12.0),
+            child: Column(
+              children: [
+                Visibility(
+                  visible: orderIsMain || primaryTitle != null,
+                  child: Row(
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.tag,
+                        color: Colors.amber,
                       ),
-                    ),
+                      SizedBox(
+                        width: 8,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.amber),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            primaryTitle ?? S.current.groupOrder,
+                            style: TextStyle(
+                                fontSize: 10,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ),
+                      ),
+                      Spacer(),
+                      Visibility(
+                        visible: note != null,
+                        child: InfoButtonOrder(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text(S.current.note),
+                                    content: Container(child: Text(note ?? '')),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    actionsAlignment: MainAxisAlignment.center,
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text(S.current.close)),
+                                    ],
+                                  );
+                                });
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                  Spacer(),
-                  Visibility(
+                  replacement: Visibility(
                     visible: note != null,
                     child: InfoButtonOrder(
                       onTap: () {
@@ -98,78 +128,79 @@ class OwnerOrderCard extends StatelessWidget {
                       },
                     ),
                   ),
-                ],
-              ),
-              replacement: Visibility(
-                visible: note != null,
-                child: InfoButtonOrder(
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text(S.current.note),
-                            content: Container(child: Text(note ?? '')),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(10),
-                            ),
-                            actionsAlignment: MainAxisAlignment.center,
-                            actions: [
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text(S.current.close)),
-                            ],
-                          );
-                        });
-                  },
                 ),
-              ),
-            ),
 
-            // order number & order status
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                verticalTile(context,
-                    title: S.current.orderNumber, subtitle: orderNumber),
-                verticalTile(context,
-                    title: S.current.orderStatus, subtitle: orderStatus),
+                // order number & order status
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    verticalTile(context,
+                        title: S.current.orderNumber, subtitle: orderNumber),
+                    verticalTile(context,
+                        title: S.current.orderStatus, subtitle: orderStatus),
+                  ],
+                ),
+                // divider
+                divider(context),
+                // order date & create date
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    verticalTile(context,
+                        title: S.current.deliverDate, subtitle: deliveryDate),
+                    verticalTile(context,
+                        title: S.current.createdDate, subtitle: createdDate),
+                  ],
+                ),
+                // divider
+                divider(context),
+                // order cost
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    verticalTile(context,
+                        title: S.current.cost,
+                        subtitle: FixedNumber.getFixedNumber(orderCost) +
+                            ' ' +
+                            S.current.sar),
+                    Icon(
+                      icon ?? Icons.arrow_circle_left_outlined,
+                      color: Theme.of(context).textTheme.button?.color,
+                    )
+                  ],
+                ),
               ],
             ),
-            // divider
-            divider(context),
-            // order date & create date
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                verticalTile(context,
-                    title: S.current.deliverDate, subtitle: deliveryDate),
-                verticalTile(context,
-                    title: S.current.createdDate, subtitle: createdDate),
-              ],
-            ),
-            // divider
-            divider(context),
-            // order cost
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                verticalTile(context,
-                    title: S.current.cost,
-                    subtitle: FixedNumber.getFixedNumber(orderCost) +
-                        ' ' +
-                        S.current.sar),
-                Icon(
-                  icon ?? Icons.arrow_circle_left_outlined,
-                  color: Theme.of(context).textTheme.button?.color,
-                )
-              ],
-            ),
-          ],
+          ),
         ),
-      ),
+        // orderStatus == S.current.waiting
+        //     ? Padding(
+        //         padding: const EdgeInsets.all(12.0),
+        //         child: RecycleOrderButton(
+        //           onTap: () {
+        //             showDialog(
+        //                 context: context,
+        //                 builder: (ctx) {
+        //                   return CustomAlertDialog(
+        //                       onPressed: () {
+        //                         Navigator.of(context).pop();
+        //                         // Navigator.of(context).pushNamedAndRemoveUntil(
+        //                         //     OrdersRoutes.UPDATE_ORDERS_SCREEN,
+        //                         //     (route) => false,
+        //                         //     arguments: s.orderInfo);
+        //                       },
+        //                       content: S.current.updateOrderWarning,
+        //                       oneAction: false);
+        //                 });
+        //           },
+        //           backgroundColor: Colors.green,
+        //           icon: FontAwesomeIcons.recycle,
+        //           title: 'Recycle Order',
+        //           short: true,
+        //         ),
+        //       )
+        //     : SizedBox()
+      ],
     );
   }
 

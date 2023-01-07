@@ -54,6 +54,7 @@ class PendingOrder extends DataModel {
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       //
       ordersModels.add(OrderModel(
+        storeId: element.storeOrderDetailsId ?? 0,
         branchName: element.branchName ?? '',
         state: StatusHelper.getStatusEnum(element.state),
         orderCost: element.orderCost ?? 0,

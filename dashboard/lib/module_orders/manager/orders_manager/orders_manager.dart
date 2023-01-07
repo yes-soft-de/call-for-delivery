@@ -81,4 +81,6 @@ class OrdersManager {
   Future<ActionResponse?> updateAnswerOrderCashForStore(
           StoreAnswerForOrderCashRequest request) =>
       _repository.updateAnswerOrderCashForStore(request);
+  Future<ActionResponse?> recycleOrderStatus(UpdateOrderRequest request) =>
+      _repository.recycleOrderStatus(request);
 }

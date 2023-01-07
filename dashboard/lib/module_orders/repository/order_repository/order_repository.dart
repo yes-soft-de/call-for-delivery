@@ -155,6 +155,17 @@ class OrderRepository {
     return ActionResponse.fromJson(response);
   }
 
+  Future<ActionResponse?> recycleOrderStatus(UpdateOrderRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+      Urls.RECYCLE_ORDER_STATUS_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
   Future<ActionResponse?> hideOrder(int id) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
