@@ -67,25 +67,29 @@ class CaptainsActivityLoadedState extends States {
     if (model != null) {
       widgets.insert(
           0,
-          Row(
-            children: [
-              Padding(
-                padding: EdgeInsets.only(left: 18.0, right: 18.0, bottom: 16),
-                child: CustomDeliverySearch(
-                  hintText: S.current.searchForCaptain,
-                  onChanged: (s) {
-                    if (s == '' || s.isEmpty) {
-                      search = null;
-                      screenState.refresh();
-                    } else {
-                      search = s;
-                      screenState.refresh();
-                    }
-                  },
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: CustomDeliverySearch(
+                    hintText: S.current.searchForCaptain,
+                    onChanged: (s) {
+                      if (s == '' || s.isEmpty) {
+                        search = null;
+                        screenState.refresh();
+                      } else {
+                        search = s;
+                        screenState.refresh();
+                      }
+                    },
+                  ),
                 ),
-              ),
-              Expanded(
-                child: Container(
+                SizedBox(
+                  width: 8,
+                ),
+                Container(
+                  width: 125,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
                     color: Theme.of(context).backgroundColor,
@@ -121,16 +125,15 @@ class CaptainsActivityLoadedState extends States {
                           }
                         });
                       },
-                      title: Text(S.current.firstDate),
-                      subtitle: Text(screenState.filter?.fromDate != null
+                      title: Text(screenState.filter?.fromDate != null
                           ? DateFormat('yyyy/M/d').format(
                               screenState.filter?.fromDate ?? DateTime.now())
                           : S.current.chooseFromDate),
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ));
     }
 

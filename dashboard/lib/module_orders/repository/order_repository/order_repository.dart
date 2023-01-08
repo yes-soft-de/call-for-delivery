@@ -45,7 +45,7 @@ class OrderRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
       Urls.FILTER_OWNER_ORDERS_API,
-      request.toJson(),
+      await request.toJson(),
       headers: {'Authorization': 'Bearer ${token}'},
     );
     if (response == null) return null;
@@ -57,7 +57,7 @@ class OrderRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
       Urls.OWNER_CASH_ORDERS_NOT_ANSWERED_API,
-      request.toJson(),
+      await request.toJson(),
       headers: {'Authorization': 'Bearer ${token}'},
     );
     if (response == null) return null;
@@ -69,7 +69,7 @@ class OrderRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
       Urls.OWNER_CONFLICTING_ANSWERS_ORDERS_API,
-      request.toJson(),
+      await request.toJson(),
       headers: {'Authorization': 'Bearer ${token}'},
     );
     if (response == null) return null;
@@ -81,7 +81,7 @@ class OrderRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
       Urls.FILTER_CAPTAIN_ORDERS_API,
-      request.toJson(),
+      await request.toJson(),
       headers: {'Authorization': 'Bearer ${token}'},
     );
     if (response == null) return null;
@@ -198,7 +198,7 @@ class OrderRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
       Urls.ORDERS_WITHOUT_DISTANCE_API,
-      request.toJson(),
+      await request.toJson(),
       headers: {'Authorization': 'Bearer ${token}'},
     );
     if (response == null) return null;
