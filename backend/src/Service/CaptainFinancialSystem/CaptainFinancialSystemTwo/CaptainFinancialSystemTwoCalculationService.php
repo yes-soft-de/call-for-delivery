@@ -28,8 +28,8 @@ class CaptainFinancialSystemTwoCalculationService
             $financialDues = $salary + $monthCompensation + (($countOrdersCompleted - $countOrdersInMonth) * $bounceMaxCountOrdersInMonth);
 
         } elseif ($targetStatus === CaptainFinancialSystem::TARGET_FAILED_INT) {
-            // Captain will get 1900/150 * completed orders = 12.86 * completed orders
-            $financialDues = $countOrdersCompleted * CaptainFinancialSystem::TARGET_FAILED_SALARY;
+            // Captain will get 1900/150 * completed orders = 12.67 * completed orders
+            $financialDues = $countOrdersCompleted * (($salary + $monthCompensation) / (float) $countOrdersInMonth);
         }
 
         return round($financialDues, 2);
