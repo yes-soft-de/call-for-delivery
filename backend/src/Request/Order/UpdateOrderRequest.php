@@ -271,4 +271,14 @@ class UpdateOrderRequest
     {
         $this->isHide = $isHide;
     }
+
+    public function getDeliveryCost(): ?float
+    {
+        return $this->deliveryCost;
+    }
+
+    public function setDeliveryCost(?float $deliveryCost): void
+    {
+        $this->deliveryCost = $deliveryCost;
+    }
 }
