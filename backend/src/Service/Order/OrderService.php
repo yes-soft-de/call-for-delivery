@@ -719,13 +719,13 @@ class OrderService
     {
         $order = $this->orderManager->getOrderById($id);
 
-        // if order of type bid, then use another api in order to cancel it
-        if ($order->getOrderType() === OrderTypeConstant::ORDER_TYPE_BID) {
-            return OrderResultConstant::ORDER_TYPE_BID;
-        }
-
         if ($order) {
-            $halfHourLaterTime = date_modify($order->getCreatedAt(), '+30 minutes');
+            // if order of type bid, then use another api in order to cancel it
+            if ($order->getOrderType() === OrderTypeConstant::ORDER_TYPE_BID) {
+                return OrderResultConstant::ORDER_TYPE_BID;
+            }
+
+            $halfHourLaterTime = date_modify(DateTime::createFromInterface($order->getCreatedAt()), '+30 minutes');
 
             $nowDate = new DateTime('now');
 
@@ -741,9 +741,12 @@ class OrderService
                     error_log($e);
                 }
 
-                $order->statusError = OrderResultConstant::ORDER_NOT_REMOVE_TIME;
+                $response = $this->autoMapping->map(OrderEntity::class, OrderCancelResponse::class, $order);
 
-                return $this->autoMapping->map(OrderEntity::class, OrderCancelResponse::class, $order);
+                $response->statusError = OrderResultConstant::ORDER_NOT_REMOVE_TIME;
+
+                return $response;
+
             } elseif ($order->getState() != OrderStateConstant::ORDER_STATE_PENDING) {
 
                 //create local notification to store
@@ -757,15 +760,16 @@ class OrderService
                     error_log($e);
                 }
 
-                $order->statusError = OrderResultConstant::ORDER_NOT_REMOVE_CAPTAIN_RECEIVED;
+                $response = $this->autoMapping->map(OrderEntity::class, OrderCancelResponse::class, $order);
 
-                return $this->autoMapping->map(OrderEntity::class, OrderCancelResponse::class, $order);
+                $response->statusError = OrderResultConstant::ORDER_NOT_REMOVE_CAPTAIN_RECEIVED;
+
+                return $response;
             }
 
             $order = $this->orderManager->orderCancel($order);
 
             if ($order) {
-
                 $this->orderTimeLineService->createOrderLogsRequest($order);
 
                 // save log of the action on order
