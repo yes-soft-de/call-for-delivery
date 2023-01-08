@@ -591,18 +591,24 @@ class OrderManager
     {
         $orderEntity = $this->orderRepository->find($request->getId());
 
-        //$orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
+        if ($orderEntity) {
+            //$orderEntity->setIsHide(OrderIsHideConstant::ORDER_SHOW);
 
-        $orderEntity = $this->autoMapping->mapToObject(UpdateOrderRequest::class, OrderEntity::class, $request, $orderEntity);
+            if (! $request->getDeliveryCost()) {
+                $request->setDeliveryCost($orderEntity->getDeliveryCost());
+            }
 
-        // update order visibility to match last state in which it was before hiding the order
-        $orderEntity->setIsHide($orderEntity->getPreviousVisibility());
+            $orderEntity = $this->autoMapping->mapToObject(UpdateOrderRequest::class, OrderEntity::class, $request, $orderEntity);
 
-        $orderEntity->setDeliveryDate($request->getDeliveryDate());
-        
-        $this->entityManager->flush();
+            // update order visibility to match last state in which it was before hiding the order
+            $orderEntity->setIsHide($orderEntity->getPreviousVisibility());
 
-        $this->storeOrderDetailsManager->updateOrderDetailByStore($orderEntity, $request);
+            $orderEntity->setDeliveryDate($request->getDeliveryDate());
+
+            $this->entityManager->flush();
+
+            $this->storeOrderDetailsManager->updateOrderDetailByStore($orderEntity, $request);
+        }
         
         return $orderEntity;
     }
