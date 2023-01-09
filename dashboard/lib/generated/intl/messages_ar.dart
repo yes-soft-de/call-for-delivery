@@ -327,6 +327,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "هل انت متأكد من رغبتك في إنشاء طلب جديد"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر الجديدة"),
+        "confirmRecycleOrder":
+            MessageLookupByLibrary.simpleMessage("تأكيدإعادة نشر طلب "),
         "confirmUpdateOrder": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد من تعديلات الطلب الحالي"),
         "confirmed": MessageLookupByLibrary.simpleMessage("مُأكد"),
@@ -784,6 +786,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderPrice": MessageLookupByLibrary.simpleMessage("سعر الطلب"),
         "orderRecycled":
             MessageLookupByLibrary.simpleMessage("تم إعادة نشر طلب "),
+        "orderRecycledSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم اعادة الطلب"),
         "orderRemovedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم فك الارتباط بنجاح"),
         "orderStatus": MessageLookupByLibrary.simpleMessage("حالة الطلب"),

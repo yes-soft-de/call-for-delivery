@@ -8529,6 +8529,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Order updated successfully`
+  String get orderRecycledSuccessfully {
+    return Intl.message(
+      'Order updated successfully',
+      name: 'orderRecycledSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm recycle order `
+  String get confirmRecycleOrder {
+    return Intl.message(
+      'Confirm recycle order ',
+      name: 'confirmRecycleOrder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

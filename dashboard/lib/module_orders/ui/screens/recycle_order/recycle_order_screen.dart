@@ -5,6 +5,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_branches/model/branches/branches_model.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
+import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/state_manager/recycle_order/recycle_order_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/phone_number_detection.dart';
@@ -32,9 +33,9 @@ class RecycleOrderScreenState extends State<RecycleOrderScreen>
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   StreamSubscription? _stateSubscription;
 
-  // void addNewOrder(CreateOrderRequest request) {
-  //   widget._stateManager.updateOrder(this, request);
-  // }
+  void addNewOrder(CreateOrderRequest request) {
+    widget._stateManager.recycleOrder(this, request);
+  }
 
   void refresh() {
     setState(() {});
@@ -142,9 +143,9 @@ class RecycleOrderScreenState extends State<RecycleOrderScreen>
         if (hideFlag) {
           hideFlag = false;
           // getIt<OrdersService>().hideOrder(orderInfo.id).ignore();
-          // widget._stateManager.getBranches(this, orderInfo.storeID);
           orderId = args;
           widget._stateManager.getOrderbyId(this, orderId);
+          // widget._stateManager.getBranches(this, orderInfo.storeID);
         }
       }
     }

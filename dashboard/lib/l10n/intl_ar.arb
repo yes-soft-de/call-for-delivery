@@ -846,5 +846,7 @@
     "notReceivedCash":"لم يتم الاستلام",
     "areSureAboutAnsweringBehalfStore":"هل انت متأكد من إجابتك عن المتجر",
     "captainractivityDetails":"نشاط الكابتن",
-    "theOrderHidden":"لا يمكن اسناد هذا الطلب لهذا الكابتن , لأن الطلب مخفي"
+    "theOrderHidden":"لا يمكن اسناد هذا الطلب لهذا الكابتن , لأن الطلب مخفي",
+    "orderRecycledSuccessfully":"تم اعادة الطلب",
+    "confirmRecycleOrder": "تأكيدإعادة نشر طلب "
 }

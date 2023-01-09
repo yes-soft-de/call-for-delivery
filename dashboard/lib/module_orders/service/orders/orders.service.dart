@@ -166,8 +166,8 @@ class OrdersService {
     return DataModel.empty();
   }
 
-  Future<DataModel> recycleOrderStatus(UpdateOrderRequest request) async {
-    ActionResponse? response = await _ordersManager.recycleOrderStatus(request);
+  Future<DataModel> recycleOrder(CreateOrderRequest request) async {
+    ActionResponse? response = await _ordersManager.recycleOrder(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
       return DataModel.withError(

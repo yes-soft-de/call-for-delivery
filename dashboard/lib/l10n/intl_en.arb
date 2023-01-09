@@ -847,5 +847,8 @@
     "areSureAboutAnsweringBehalfStore":"Are sure about answering behalf store",
     "rateCaptainDetails": "Rate Captain",
     "captainractivityDetails":"Captain Activity",
-    "theOrderHidden":"This order cannot be assigned to this captain because the request is hidden"
+    "theOrderHidden":"This order cannot be assigned to this captain because the request is hidden",
+    "orderRecycledSuccessfully":"Order updated successfully",
+    "confirmRecycleOrder": "Confirm recycle order "
+
 }

@@ -11,7 +11,7 @@ import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/ui/screens/recycle_order/recycle_order_screen.dart';
-import 'package:c4d/module_orders/ui/state/recycle_order/recycle_order_state2.dart';
+import 'package:c4d/module_orders/ui/state/recycle_order/recycle_order_state.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
@@ -41,6 +41,7 @@ class RecycleOrderStateManager {
         value as OrderDetailsModel;
         screenState.orderInfo = value.data;
         _stateSubject.add(RecycleOrderLoaded2(screenState, [], value.data));
+        getBranches(screenState, value.data.storeID);
       }
     });
   }
@@ -67,10 +68,10 @@ class RecycleOrderStateManager {
     });
   }
 
-  void updateOrder(
+  void recycleOrder(
       RecycleOrderScreenState screenState, CreateOrderRequest request) {
     _stateSubject.add(LoadingState(screenState));
-    _ordersService.updateOrder(request).then((value) {
+    _ordersService.recycleOrder(request).then((value) {
       if (value.hasError) {
         getIt<GlobalStateManager>().updateList();
         Navigator.of(screenState.context)
@@ -84,7 +85,7 @@ class RecycleOrderStateManager {
             .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
-                message: S.current.orderUpdatedSuccessfully)
+                message: S.current.orderRecycledSuccessfully)
             .show(screenState.context);
         FireStoreHelper().backgroundThread('Trigger');
       }

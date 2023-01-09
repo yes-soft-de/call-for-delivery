@@ -332,6 +332,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Are you sure about creating new order"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("Confirm new password"),
+        "confirmRecycleOrder":
+            MessageLookupByLibrary.simpleMessage("Confirm recycle order "),
         "confirmUpdateOrder":
             MessageLookupByLibrary.simpleMessage("Confirm update order"),
         "confirmed": MessageLookupByLibrary.simpleMessage("Confirmed"),
@@ -790,6 +792,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Order number not found!!"),
         "orderPrice": MessageLookupByLibrary.simpleMessage("order price"),
         "orderRecycled": MessageLookupByLibrary.simpleMessage("Order recycled"),
+        "orderRecycledSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Order updated successfully"),
         "orderRemovedSuccessfully":
             MessageLookupByLibrary.simpleMessage("Order Removed Successfully"),
         "orderStatus": MessageLookupByLibrary.simpleMessage("order status"),
