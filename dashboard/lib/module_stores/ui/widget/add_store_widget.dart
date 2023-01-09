@@ -247,7 +247,7 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                             ImagePicker()
                                 .pickImage(
                                     source: ImageSource.gallery,
-                                    imageQuality: 70)
+                                    imageQuality: 100)
                                 .then((value) async {
                               if (value != null) {
                                 imageBytes = await value.readAsBytes();

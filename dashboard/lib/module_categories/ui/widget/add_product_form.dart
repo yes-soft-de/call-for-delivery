@@ -100,7 +100,7 @@ class _AddProductsFormState extends State<AddProductsForm> {
                       onTap: () {
                         ImagePicker()
                             .pickImage(
-                                source: ImageSource.gallery, imageQuality: 70)
+                                source: ImageSource.gallery, imageQuality: 100)
                             .then((value) {
                           if (value != null) {
                             imagePath = value.path;
@@ -215,7 +215,7 @@ class _UpdateProductsFormState extends State<UpdateProductsForm> {
                       onTap: () {
                         ImagePicker()
                             .pickImage(
-                                source: ImageSource.gallery, imageQuality: 70)
+                                source: ImageSource.gallery, imageQuality: 100)
                             .then((value) {
                           if (value != null) {
                             imagePath = value.path;

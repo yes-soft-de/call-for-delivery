@@ -141,7 +141,7 @@ class _ChatWriterWidget extends State<ChatWriterWidget> {
                     onPressed: () {
                       ImagePicker()
                           .pickImage(
-                              source: ImageSource.camera, imageQuality: 70)
+                              source: ImageSource.camera, imageQuality: 100)
                           .then((value) {
                         if (value != null) {
                           imageFile = File(value.path);
@@ -168,7 +168,7 @@ class _ChatWriterWidget extends State<ChatWriterWidget> {
                     onPressed: () {
                       ImagePicker()
                           .pickImage(
-                              source: ImageSource.gallery, imageQuality: 70)
+                              source: ImageSource.gallery, imageQuality: 100)
                           .then((value) {
                         if (value != null) {
                           imageFile = File(value.path);

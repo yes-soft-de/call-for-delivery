@@ -62,7 +62,7 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
               child: InkWell(
                 onTap: () {
                   ImagePicker()
-                      .pickImage(source: ImageSource.gallery, imageQuality: 70)
+                      .pickImage(source: ImageSource.gallery, imageQuality: 100)
                       .then((value) async {
                     if (value != null) {
                       imageBytes = await value.readAsBytes();
@@ -225,7 +225,7 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
               child: InkWell(
                 onTap: () {
                   ImagePicker()
-                      .pickImage(source: ImageSource.gallery, imageQuality: 70)
+                      .pickImage(source: ImageSource.gallery, imageQuality: 100)
                       .then((value) async {
                     if (value != null) {
                       imageBytesDriving = await value.readAsBytes();
@@ -269,7 +269,7 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
               child: InkWell(
                 onTap: () {
                   ImagePicker()
-                      .pickImage(source: ImageSource.gallery, imageQuality: 70)
+                      .pickImage(source: ImageSource.gallery, imageQuality: 100)
                       .then((value) async {
                     if (value != null) {
                       imageBytesMechanich = await value.readAsBytes();
@@ -313,7 +313,7 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
               child: InkWell(
                 onTap: () {
                   ImagePicker()
-                      .pickImage(source: ImageSource.gallery, imageQuality: 70)
+                      .pickImage(source: ImageSource.gallery, imageQuality: 100)
                       .then((value) async {
                     if (value != null) {
                       imageBytesIdentity = await value.readAsBytes();
