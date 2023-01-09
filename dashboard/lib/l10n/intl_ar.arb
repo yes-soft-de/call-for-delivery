@@ -850,5 +850,9 @@
     "orderRecycledSuccessfully":"تم اعادة الطلب",
     "confirmRecycleOrder": "تأكيدإعادة نشر طلب ",
     "recycleOrderWarning":"هل انت متأكد من اعادة نشر الطلب",
-     "recycleOrder":"اعادة نشر الطلب"
+     "recycleOrder":"اعادة نشر الطلب",
+    "chooseFromDate":"من تاريخ",
+    "today":"اليوم",
+    "yesterday":"البارحة",
+    "captainractivityDetails":"نشاط الكابتن"
 }

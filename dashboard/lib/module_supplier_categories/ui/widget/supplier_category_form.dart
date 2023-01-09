@@ -101,7 +101,7 @@ class _CategoryFormState extends State<SupplierCategoryForm> {
                         ImagePicker()
                             .pickImage(
                           source: ImageSource.gallery,
-                          imageQuality: 70,
+                          imageQuality: 100,
                         )
                             .then((value) {
                           if (value != null) {
