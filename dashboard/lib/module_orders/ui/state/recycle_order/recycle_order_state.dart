@@ -2,14 +2,15 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/di/di_config.dart';
+import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:c4d/module_branches/model/branches/branches_model.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
-import 'package:c4d/module_orders/ui/screens/new_order/update_order_screen.dart';
-import 'package:c4d/module_orders/ui/widgets/custom_step.dart';
+import 'package:c4d/module_orders/ui/screens/recycle_order/recycle_order_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/geo_widget.dart';
 import 'package:c4d/module_orders/ui/widgets/label_text.dart';
+import 'package:c4d/module_stores/ui/widget/orders/custom_step.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/module_upload/model/pdf_model.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
@@ -18,22 +19,21 @@ import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/stacked_form.dart';
 import 'package:c4d/utils/effect/checked.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:the_country_number/the_country_number.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
-class UpdateOrderLoaded extends States {
+class RecycleOrderLoaded2 extends States {
   List<BranchesModel> branches;
   OrderDetailsModel orderInfo;
-  final UpdateOrderScreenState screenState;
-  UpdateOrderLoaded(
+  final RecycleOrderScreenState screenState;
+  RecycleOrderLoaded2(
     this.screenState,
     this.branches,
     this.orderInfo,
@@ -43,6 +43,7 @@ class UpdateOrderLoaded extends States {
     screenState.receiptNameController.text = orderInfo.customerName;
     distance = orderInfo.storeBranchToClientDistance;
     var number = orderInfo.customerPhone;
+    branches = screenState.branches;
     if (number == S.current.unknown) number = '';
     if (number.isNotEmpty || number != '') {
       final sNumber =
@@ -68,8 +69,11 @@ class UpdateOrderLoaded extends States {
         pdfBaseUrl: orderInfo.pdf?.pdfBaseUrl,
         pdfPreview: orderInfo.pdf?.pdfPreview,
         pdfOnServerPath: orderInfo.pdf?.pdfOnServerPath);
-    activeBranch =
-        branches.firstWhere((element) => element.id == screenState.branch);
+    try {
+      activeBranch =
+          branches.firstWhere((element) => element.id == screenState.branch);
+    } catch (e) {}
+
     screenState.refresh();
   }
   final List<String> _paymentMethods = ['online', 'cash'];
@@ -88,7 +92,6 @@ class UpdateOrderLoaded extends States {
   String? distance;
   String? deliveryCost;
   PdfModel? pdfModel;
-
   @override
   Widget getUI(BuildContext context) {
     var decoration = BoxDecoration(
@@ -153,13 +156,16 @@ class UpdateOrderLoaded extends States {
                               onChanged: (v) {
                                 v as BranchesModel;
                                 screenState.branch = v.id;
-                                activeBranch = branches.firstWhere((element) =>
-                                    element.id == screenState.branch);
+                                try {
+                                  activeBranch = branches.firstWhere(
+                                      (element) =>
+                                          element.id == screenState.branch);
+                                } catch (e) {}
+
                                 screenState.refresh();
                               },
                               selectedItem: screenState.branch != null
-                                  ? branches.firstWhere((element) =>
-                                      element.id == screenState.branch)
+                                  ? activeBranch
                                   : null), // stores
                         ),
                       ),
@@ -241,7 +247,8 @@ class UpdateOrderLoaded extends States {
                       splashRadius: 18,
                       color: Theme.of(context).colorScheme.primary,
                       icon: Icon(Icons.paste_rounded),
-                      onPressed: getClipBoardData,
+                      // onPressed: getClipBoardData,
+                      onPressed: () {},
                     ),
                   ),
                 ),
@@ -683,7 +690,7 @@ class UpdateOrderLoaded extends States {
             ),
           ),
         ),
-        label: S.current.update,
+        label: S.current.orderRecycled,
         onTap: () {
           if (_formKey.currentState?.validate() == true &&
               screenState.branch != null &&
@@ -695,8 +702,9 @@ class UpdateOrderLoaded extends States {
                     onPressed: () {
                       Navigator.of(context).pop();
                       createOrder();
+                      // print('object');
                     },
-                    content: S.current.confirmUpdateOrder,
+                    content: S.current.confirmRecycleOrder,
                     oneAction: false,
                   );
                 });
@@ -823,25 +831,24 @@ class UpdateOrderLoaded extends States {
       }
       screenState.addNewOrder(CreateOrderRequest(
         id: orderInfo.id,
-        orderIsMain: orderIsMain,
-        fromBranch: screenState.branch,
-        pdf: pdfModel?.getPdfRequest(),
-        recipientName: screenState.receiptNameController.text.trim(),
-        recipientPhone: screenState.countryNumberController.text.trim() +
-            screenState.phoneNumberController.text.trim(),
+        payment: screenState.payments,
+        orderCost: num.parse(screenState.priceController.text.trim()),
+        note: screenState.orderDetailsController.text.trim(),
+        date: orderDate == null
+            ? DateTime.now().toUtc().toIso8601String()
+            : orderDate?.toUtc().toIso8601String(),
         destination: GeoJson(
             link: screenState.toController.text.trim(),
             lat: screenState.customerLocation?.latitude,
             lon: screenState.customerLocation?.longitude),
-        note: screenState.orderDetailsController.text.trim(),
-        detail: screenState.orderDetailsController.text.trim(),
-        orderCost: num.parse(screenState.priceController.text.trim()),
+        recipientName: screenState.receiptNameController.text.trim(),
         image: value,
-        date: orderDate == null
-            ? DateTime.now().toUtc().toIso8601String()
-            : orderDate?.toUtc().toIso8601String(),
-        payment: screenState.payments,
+        recipientPhone: screenState.countryNumberController.text.trim() +
+            screenState.phoneNumberController.text.trim(),
+        detail: screenState.orderDetailsController.text.trim(),
+        fromBranch: screenState.branch,
         deliveryCost: num.tryParse(deliveryCost.toString()),
+        cancel: 0,
       ));
     });
   }
@@ -850,25 +857,24 @@ class UpdateOrderLoaded extends States {
   void createOrderWithoutImage() {
     screenState.addNewOrder(CreateOrderRequest(
       id: orderInfo.id,
-      orderIsMain: orderIsMain,
-      pdf: pdfModel?.getPdfRequest(),
-      fromBranch: screenState.branch,
-      recipientName: screenState.receiptNameController.text.trim(),
-      recipientPhone: screenState.countryNumberController.text.trim() +
-          screenState.phoneNumberController.text.trim(),
+      payment: screenState.payments,
+      orderCost: num.parse(screenState.priceController.text.trim()),
+      note: screenState.orderDetailsController.text.trim(),
+      date: orderDate == null
+          ? DateTime.now().toUtc().toIso8601String()
+          : orderDate?.toUtc().toIso8601String(),
       destination: GeoJson(
           link: screenState.toController.text.trim(),
           lat: screenState.customerLocation?.latitude,
           lon: screenState.customerLocation?.longitude),
-      note: screenState.orderDetailsController.text.trim(),
-      detail: screenState.orderDetailsController.text.trim(),
-      orderCost: num.tryParse(screenState.priceController.text.trim()),
+      recipientName: screenState.receiptNameController.text.trim(),
       image: imagePath ?? null,
-      date: orderDate == null
-          ? DateTime.now().toUtc().toIso8601String()
-          : orderDate?.toUtc().toIso8601String(),
-      payment: screenState.payments,
+      recipientPhone: screenState.countryNumberController.text.trim() +
+          screenState.phoneNumberController.text.trim(),
+      detail: screenState.orderDetailsController.text.trim(),
+      fromBranch: screenState.branch,
       deliveryCost: num.tryParse(deliveryCost.toString()),
+      cancel: 0,
     ));
   }
 

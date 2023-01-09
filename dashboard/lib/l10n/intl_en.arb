@@ -849,5 +849,11 @@
     "today": "Today",
     "areSureAboutAnsweringBehalfStore":"Are sure about answering behalf store",
     "rateCaptainDetails": "Rate Captain",
-    "captainractivityDetails":"Captain Activity"
+    "captainractivityDetails":"Captain Activity",
+    "theOrderHidden":"This order cannot be assigned to this captain because the request is hidden",
+    "orderRecycledSuccessfully":"Order updated successfully",
+    "confirmRecycleOrder": "Confirm recycle order ",
+    "recycleOrderWarning":"Are you sure ?\n you will recycle this order",
+    "recycleOrder":"Recycle Order"
+
 }

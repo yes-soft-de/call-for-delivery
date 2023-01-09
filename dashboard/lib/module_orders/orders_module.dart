@@ -16,6 +16,8 @@ import 'package:c4d/module_orders/ui/screens/sub_orders_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
+import 'ui/screens/recycle_order/recycle_order_screen.dart';
+
 @injectable
 class OrdersModule extends YesModule {
   final OrderLogsScreen _logsScreen;
@@ -31,21 +33,22 @@ class OrdersModule extends YesModule {
   final SubOrdersScreen subOrdersScreen;
   final NewOrderLinkScreen addNewOrderLinkScreen;
   final SearchForOrderScreen searchForOrderScreen;
+  final RecycleOrderScreen recycleOrdersScreen;
   OrdersModule(
-    this._logsScreen,
-    this._cashCaptain,
-    this._cashStore,
-    this.updateOrderScreen,
-    this.pendingScreen,
-    this.newOrderScreen,
-    this.orderCaptainLogsScreen,
-    this.orderActionLogsScreen,
-    this.ordersWithoutDistanceScreen,
-    this.ordersReceiveCashScreen,
-    this.subOrdersScreen,
-    this.addNewOrderLinkScreen,
-    this.searchForOrderScreen,
-  ) {
+      this._logsScreen,
+      this._cashCaptain,
+      this._cashStore,
+      this.updateOrderScreen,
+      this.pendingScreen,
+      this.newOrderScreen,
+      this.orderCaptainLogsScreen,
+      this.orderActionLogsScreen,
+      this.ordersWithoutDistanceScreen,
+      this.ordersReceiveCashScreen,
+      this.subOrdersScreen,
+      this.addNewOrderLinkScreen,
+      this.searchForOrderScreen,
+      this.recycleOrdersScreen) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
 
@@ -63,7 +66,8 @@ class OrdersModule extends YesModule {
       OrdersRoutes.ORDERS_RECEIVE_CASH: (context) => orderActionLogsScreen,
       OrdersRoutes.SUB_ORDERS_SCREEN: (context) => subOrdersScreen,
       OrdersRoutes.NEW_SUB_ORDER_SCREEN: (context) => addNewOrderLinkScreen,
-      OrdersRoutes.SEARCH_FOR_ORDERS_SCREEN:(context) => searchForOrderScreen
+      OrdersRoutes.SEARCH_FOR_ORDERS_SCREEN: (context) => searchForOrderScreen,
+      OrdersRoutes.RECYCLE_ORDERS_SCREEN: (context) => recycleOrdersScreen
     };
   }
 }

@@ -54,11 +54,11 @@ class CaptinRatingDetailsLoadedState extends States {
                   children: [
                     Text(
                       S.current.numberofRatings,
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                     Text(
                       model!.length.toString(),
-                      style: TextStyle(color: Colors.white),
+                      style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                   ],
                 )),
@@ -70,6 +70,7 @@ class CaptinRatingDetailsLoadedState extends States {
               itemBuilder: (context, index) {
                 return ItemRatingWidget(
                   storeOwnerName: model![index].storeOwnerName,
+                  // comment: model![index].comment,
                   comment: model![index].comment,
                   rate: model![index].rating,
                 );

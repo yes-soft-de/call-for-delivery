@@ -6,6 +6,8 @@ import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/screens/order_pending_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
 import 'package:c4d/module_orders/ui/widgets/owner_order_card/owner_order_card.dart';
+import 'package:c4d/module_orders/ui/widgets/recycle_widgets/recycle_button_widget.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:c4d/utils/images/images.dart';
@@ -96,31 +98,68 @@ class OrderPendingLoadedState extends States {
         padding: const EdgeInsets.all(8.0),
         child: Material(
           color: Colors.transparent,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(25),
-            onTap: () {
-              if (element.orderIsMain) {
-                Navigator.of(screenState.context).pushNamed(
-                    OrdersRoutes.SUB_ORDERS_SCREEN,
-                    arguments: element.id);
-              } else {
-                Navigator.of(screenState.context).pushNamed(
-                    OrdersRoutes.ORDER_STATUS_SCREEN,
-                    arguments: element.id);
-              }
-            },
-            child: OwnerOrderCard(
-              orderNumber: element.id.toString(),
-              orderStatus: StatusHelper.getOrderStatusMessages(element.state),
-              createdDate: element.createdDate,
-              deliveryDate: element.deliveryDate,
-              orderCost: element.orderCost,
-              note: element.note,
-              orderIsMain: element.orderIsMain,
-              background: screenState.currentIndex == 0
-                  ? (element.orderIsMain ? Colors.red[700] : null)
-                  : StatusHelper.getOrderStatusColor(element.state),
-            ),
+          child: Column(
+            children: [
+              InkWell(
+                borderRadius: BorderRadius.circular(25),
+                onTap: () {
+                  if (element.orderIsMain) {
+                    Navigator.of(screenState.context).pushNamed(
+                        OrdersRoutes.SUB_ORDERS_SCREEN,
+                        arguments: element.id);
+                  } else {
+                    Navigator.of(screenState.context).pushNamed(
+                        OrdersRoutes.ORDER_STATUS_SCREEN,
+                        arguments: element.id);
+                  }
+                },
+                child: OwnerOrderCard(
+                  orderNumber: element.id.toString(),
+                  orderStatus:
+                      StatusHelper.getOrderStatusMessages(element.state),
+                  createdDate: element.createdDate,
+                  deliveryDate: element.deliveryDate,
+                  orderCost: element.orderCost,
+                  note: element.note,
+                  orderIsMain: element.orderIsMain,
+                  background: screenState.currentIndex == 0
+                      ? (element.orderIsMain ? Colors.red[700] : null)
+                      : StatusHelper.getOrderStatusColor(element.state),
+                ),
+              ),
+              screenState.currentIndex == 2
+                  ? Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Container(
+                        child: RecycleOrderButton(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (ctx) {
+                                  return CustomAlertDialog(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        Navigator.of(context)
+                                            .pushNamedAndRemoveUntil(
+                                          OrdersRoutes.RECYCLE_ORDERS_SCREEN,
+                                          (route) => false,
+                                          arguments: element.id,
+                                          // element.storeId
+                                        );
+                                      },
+                                      content: S.current.recycleOrderWarning,
+                                      oneAction: false);
+                                });
+                          },
+                          backgroundColor: Colors.green,
+                          icon: FontAwesomeIcons.recycle,
+                          title: S.current.recycleOrder,
+                          short: true,
+                        ),
+                      ),
+                    )
+                  : SizedBox()
+            ],
           ),
         ),
       ));

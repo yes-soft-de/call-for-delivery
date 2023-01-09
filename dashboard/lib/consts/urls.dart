@@ -129,6 +129,8 @@ class Urls {
       '/updatestorebranchtoclientdistanceanddestinationbyadmin';
   static const UPDATE_ORDER_STATUS_API =
       BASE_API_ORDER + '/orderstateupdatebyadmin';
+  static const RECYCLE_ORDER_STATUS_API =
+      BASE_API_ORDER + '/recyclingorcancelorderbyadmin';
   static const HIDE_ORDER_API = BASE_API_ORDER + '/updateordertohidden';
 
   static const FILTER_OWNER_ORDERS_API =

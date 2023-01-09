@@ -72,7 +72,6 @@ class OrderModel extends DataModel {
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       //
       _orders.add(OrderModel(
-        storeId: element.storeOrderDetailsId,
         captainName: element.captainName,
         branchName: element.branchName ?? S.current.unknown,
         createdDate: create,

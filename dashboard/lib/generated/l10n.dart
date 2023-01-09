@@ -8549,6 +8549,56 @@ class S {
       args: [],
     );
   }
+
+  /// `This order cannot be assigned to this captain because the request is hidden`
+  String get theOrderHidden {
+    return Intl.message(
+      'This order cannot be assigned to this captain because the request is hidden',
+      name: 'theOrderHidden',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order updated successfully`
+  String get orderRecycledSuccessfully {
+    return Intl.message(
+      'Order updated successfully',
+      name: 'orderRecycledSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Confirm recycle order `
+  String get confirmRecycleOrder {
+    return Intl.message(
+      'Confirm recycle order ',
+      name: 'confirmRecycleOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure ?\n you will recycle this order`
+  String get recycleOrderWarning {
+    return Intl.message(
+      'Are you sure ?\n you will recycle this order',
+      name: 'recycleOrderWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recycle Order`
+  String get recycleOrder {
+    return Intl.message(
+      'Recycle Order',
+      name: 'recycleOrder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

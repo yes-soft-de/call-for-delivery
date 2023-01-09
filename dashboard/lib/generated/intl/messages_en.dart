@@ -334,6 +334,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Are you sure about creating new order"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("Confirm new password"),
+        "confirmRecycleOrder":
+            MessageLookupByLibrary.simpleMessage("Confirm recycle order "),
         "confirmUpdateOrder":
             MessageLookupByLibrary.simpleMessage("Confirm update order"),
         "confirmed": MessageLookupByLibrary.simpleMessage("Confirmed"),
@@ -792,6 +794,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Order number not found!!"),
         "orderPrice": MessageLookupByLibrary.simpleMessage("order price"),
         "orderRecycled": MessageLookupByLibrary.simpleMessage("Order recycled"),
+        "orderRecycledSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Order updated successfully"),
         "orderRemovedSuccessfully":
             MessageLookupByLibrary.simpleMessage("Order Removed Successfully"),
         "orderStatus": MessageLookupByLibrary.simpleMessage("order status"),
@@ -998,6 +1002,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "recipientPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Recipient Phone Number"),
         "recordNumber": MessageLookupByLibrary.simpleMessage("Record Number"),
+        "recycleOrder": MessageLookupByLibrary.simpleMessage("Recycle Order"),
+        "recycleOrderWarning": MessageLookupByLibrary.simpleMessage(
+            "Are you sure ?\n you will recycle this order"),
         "refresh": MessageLookupByLibrary.simpleMessage("refresh"),
         "refuse": MessageLookupByLibrary.simpleMessage("Refuse"),
         "register": MessageLookupByLibrary.simpleMessage("Register"),
@@ -1195,6 +1202,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "taxNumber": MessageLookupByLibrary.simpleMessage("Tax Number"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Terms of Service"),
+        "theOrderHidden": MessageLookupByLibrary.simpleMessage(
+            "This order cannot be assigned to this captain because the request is hidden"),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
             "There is no branches available"),
         "thereIsNoValidSubscription": MessageLookupByLibrary.simpleMessage(

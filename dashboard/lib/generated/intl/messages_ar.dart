@@ -328,6 +328,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "هل انت متأكد من رغبتك في إنشاء طلب جديد"),
         "confirmNewPass":
             MessageLookupByLibrary.simpleMessage("تأكيد كلمة السر الجديدة"),
+        "confirmRecycleOrder":
+            MessageLookupByLibrary.simpleMessage("تأكيدإعادة نشر طلب "),
         "confirmUpdateOrder": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد من تعديلات الطلب الحالي"),
         "confirmed": MessageLookupByLibrary.simpleMessage("مُأكد"),
@@ -785,6 +787,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderPrice": MessageLookupByLibrary.simpleMessage("سعر الطلب"),
         "orderRecycled":
             MessageLookupByLibrary.simpleMessage("تم إعادة نشر طلب "),
+        "orderRecycledSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم اعادة الطلب"),
         "orderRemovedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم فك الارتباط بنجاح"),
         "orderStatus": MessageLookupByLibrary.simpleMessage("حالة الطلب"),
@@ -989,6 +993,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "recipientPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم هاتف المستلم"),
         "recordNumber": MessageLookupByLibrary.simpleMessage("رقم السجل"),
+        "recycleOrder": MessageLookupByLibrary.simpleMessage("اعادة نشر الطلب"),
+        "recycleOrderWarning": MessageLookupByLibrary.simpleMessage(
+            "هل انت متأكد من اعادة نشر الطلب"),
         "refresh": MessageLookupByLibrary.simpleMessage("تحديث"),
         "refuse": MessageLookupByLibrary.simpleMessage("رفض"),
         "register": MessageLookupByLibrary.simpleMessage("انشاء حساب جديد"),
@@ -1185,6 +1192,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "taxNumber": MessageLookupByLibrary.simpleMessage("الرقم الضريبي"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
+        "theOrderHidden": MessageLookupByLibrary.simpleMessage(
+            "لا يمكن اسناد هذا الطلب لهذا الكابتن , لأن الطلب مخفي"),
         "thereIsNoBranches":
             MessageLookupByLibrary.simpleMessage("لا يوجد أفرع متاحة"),
         "thereIsNoValidSubscription":

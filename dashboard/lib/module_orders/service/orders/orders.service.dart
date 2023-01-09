@@ -166,6 +166,16 @@ class OrdersService {
     return DataModel.empty();
   }
 
+  Future<DataModel> recycleOrder(CreateOrderRequest request) async {
+    ActionResponse? response = await _ordersManager.recycleOrder(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+
   Future<DataModel> updateDistance(UpdateDistanceRequest request) async {
     ActionResponse? response = await _ordersManager.updateDistance(request);
     if (response == null) return DataModel.withError(S.current.networkError);
