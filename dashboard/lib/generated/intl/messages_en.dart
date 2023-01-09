@@ -1000,6 +1000,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "recipientPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Recipient Phone Number"),
         "recordNumber": MessageLookupByLibrary.simpleMessage("Record Number"),
+        "recycleOrder": MessageLookupByLibrary.simpleMessage("Recycle Order"),
+        "recycleOrderWarning": MessageLookupByLibrary.simpleMessage(
+            "Are you sure ?\n you will recycle this order"),
         "refresh": MessageLookupByLibrary.simpleMessage("refresh"),
         "refuse": MessageLookupByLibrary.simpleMessage("Refuse"),
         "register": MessageLookupByLibrary.simpleMessage("Register"),

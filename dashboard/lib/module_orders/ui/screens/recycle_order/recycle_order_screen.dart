@@ -138,14 +138,11 @@ class RecycleOrderScreenState extends State<RecycleOrderScreen>
     var args = ModalRoute.of(context)?.settings.arguments;
     if (args != null) {
       if (args is int) {
-        // orderInfo = args;
         orderId = args;
         if (hideFlag) {
           hideFlag = false;
-          // getIt<OrdersService>().hideOrder(orderInfo.id).ignore();
           orderId = args;
           widget._stateManager.getOrderbyId(this, orderId);
-          // widget._stateManager.getBranches(this, orderInfo.storeID);
         }
       }
     }

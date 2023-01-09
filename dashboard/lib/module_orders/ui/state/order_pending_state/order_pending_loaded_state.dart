@@ -127,34 +127,35 @@ class OrderPendingLoadedState extends States {
                       : StatusHelper.getOrderStatusColor(element.state),
                 ),
               ),
-              StatusHelper.getOrderStatusMessages(element.state) ==
-                      S.current.waiting
+              screenState.currentIndex == 2
                   ? Padding(
                       padding: const EdgeInsets.all(12.0),
-                      child: RecycleOrderButton(
-                        onTap: () {
-                          showDialog(
-                              context: context,
-                              builder: (ctx) {
-                                return CustomAlertDialog(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      Navigator.of(context)
-                                          .pushNamedAndRemoveUntil(
-                                        OrdersRoutes.RECYCLE_ORDERS_SCREEN,
-                                        (route) => false,
-                                        arguments: element.id,
-                                        // element.storeId
-                                      );
-                                    },
-                                    content: S.current.updateOrderWarning,
-                                    oneAction: false);
-                              });
-                        },
-                        backgroundColor: Colors.green,
-                        icon: FontAwesomeIcons.recycle,
-                        title: 'Recycle Order',
-                        short: true,
+                      child: Container(
+                        child: RecycleOrderButton(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (ctx) {
+                                  return CustomAlertDialog(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        Navigator.of(context)
+                                            .pushNamedAndRemoveUntil(
+                                          OrdersRoutes.RECYCLE_ORDERS_SCREEN,
+                                          (route) => false,
+                                          arguments: element.id,
+                                          // element.storeId
+                                        );
+                                      },
+                                      content: S.current.recycleOrderWarning,
+                                      oneAction: false);
+                                });
+                          },
+                          backgroundColor: Colors.green,
+                          icon: FontAwesomeIcons.recycle,
+                          title: S.current.recycleOrder,
+                          short: true,
+                        ),
                       ),
                     )
                   : SizedBox()

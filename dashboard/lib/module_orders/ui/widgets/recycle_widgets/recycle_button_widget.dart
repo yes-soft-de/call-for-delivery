@@ -21,46 +21,49 @@ class RecycleOrderButton extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 16.0, right: 16.0),
       child: Container(
-        decoration: BoxDecoration(
-          boxShadow: [
-            BoxShadow(
-                color: backgroundColor.withOpacity(0.5),
-                spreadRadius: 1,
-                blurRadius: 10,
-                offset: const Offset(-0.2, 0)),
-          ],
-          gradient: LinearGradient(
-            colors: [
-              backgroundColor.withOpacity(0.85),
-              backgroundColor.withOpacity(0.85),
-              backgroundColor.withOpacity(0.9),
-              backgroundColor.withOpacity(0.93),
-              backgroundColor.withOpacity(0.95),
-              backgroundColor,
-            ],
-          ),
-          borderRadius: BorderRadius.circular(25),
-        ),
-        child: Material(
-          color: Colors.transparent,
-          child: ListTile(
-            minLeadingWidth: short ? 8 : null,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
-            onTap: onTap,
-            leading: Icon(
-              icon,
-              color: Theme.of(context).textTheme.button?.color,
+          height: 30,
+          decoration: BoxDecoration(
+            // boxShadow: [
+            //   BoxShadow(
+            //       color: backgroundColor.withOpacity(0.5),
+            //       spreadRadius: 1,
+            //       blurRadius: 10,
+            //       offset: const Offset(-0.2, 0)),
+            // ],
+            gradient: LinearGradient(
+              colors: [
+                backgroundColor.withOpacity(0.85),
+                backgroundColor.withOpacity(0.85),
+                backgroundColor.withOpacity(0.9),
+                backgroundColor.withOpacity(0.93),
+                backgroundColor.withOpacity(0.95),
+                backgroundColor,
+              ],
             ),
-            title: Text(title),
-            textColor: Theme.of(context).textTheme.button?.color,
-            trailing: onTap != null && !short
-                ? Icon(Icons.arrow_forward_rounded,
-                    color: Theme.of(context).textTheme.button?.color)
-                : null,
+            borderRadius: BorderRadius.circular(25),
           ),
-        ),
-      ),
+          child: ElevatedButton(
+              style: ButtonStyle(
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.transparent)),
+              onPressed: onTap,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(
+                    icon,
+                    color: Theme.of(context).textTheme.button?.color,
+                  ),
+                  SizedBox(
+                    width: 10,
+                  ),
+                  Text(
+                    title,
+                    style: TextStyle(
+                        color: Theme.of(context).textTheme.button?.color),
+                  ),
+                ],
+              ))),
     );
   }
 }

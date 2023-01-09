@@ -992,6 +992,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "recipientPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم هاتف المستلم"),
         "recordNumber": MessageLookupByLibrary.simpleMessage("رقم السجل"),
+        "recycleOrder": MessageLookupByLibrary.simpleMessage("اعادة نشر الطلب"),
+        "recycleOrderWarning": MessageLookupByLibrary.simpleMessage(
+            "هل انت متأكد من اعادة نشر الطلب"),
         "refresh": MessageLookupByLibrary.simpleMessage("تحديث"),
         "refuse": MessageLookupByLibrary.simpleMessage("رفض"),
         "register": MessageLookupByLibrary.simpleMessage("انشاء حساب جديد"),

@@ -848,5 +848,7 @@
     "captainractivityDetails":"نشاط الكابتن",
     "theOrderHidden":"لا يمكن اسناد هذا الطلب لهذا الكابتن , لأن الطلب مخفي",
     "orderRecycledSuccessfully":"تم اعادة الطلب",
-    "confirmRecycleOrder": "تأكيدإعادة نشر طلب "
+    "confirmRecycleOrder": "تأكيدإعادة نشر طلب ",
+    "recycleOrderWarning":"هل انت متأكد من اعادة نشر الطلب",
+     "recycleOrder":"اعادة نشر الطلب"
 }

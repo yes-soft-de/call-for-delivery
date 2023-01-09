@@ -831,25 +831,24 @@ class RecycleOrderLoaded2 extends States {
       }
       screenState.addNewOrder(CreateOrderRequest(
         id: orderInfo.id,
-        orderIsMain: orderIsMain,
-        fromBranch: screenState.branch,
-        pdf: pdfModel?.getPdfRequest(),
-        recipientName: screenState.receiptNameController.text.trim(),
-        recipientPhone: screenState.countryNumberController.text.trim() +
-            screenState.phoneNumberController.text.trim(),
+        payment: screenState.payments,
+        orderCost: num.parse(screenState.priceController.text.trim()),
+        note: screenState.orderDetailsController.text.trim(),
+        date: orderDate == null
+            ? DateTime.now().toUtc().toIso8601String()
+            : orderDate?.toUtc().toIso8601String(),
         destination: GeoJson(
             link: screenState.toController.text.trim(),
             lat: screenState.customerLocation?.latitude,
             lon: screenState.customerLocation?.longitude),
-        note: screenState.orderDetailsController.text.trim(),
-        detail: screenState.orderDetailsController.text.trim(),
-        orderCost: num.parse(screenState.priceController.text.trim()),
+        recipientName: screenState.receiptNameController.text.trim(),
         image: value,
-        date: orderDate == null
-            ? DateTime.now().toUtc().toIso8601String()
-            : orderDate?.toUtc().toIso8601String(),
-        payment: screenState.payments,
+        recipientPhone: screenState.countryNumberController.text.trim() +
+            screenState.phoneNumberController.text.trim(),
+        detail: screenState.orderDetailsController.text.trim(),
+        fromBranch: screenState.branch,
         deliveryCost: num.tryParse(deliveryCost.toString()),
+        cancel: 0,
       ));
     });
   }
@@ -858,25 +857,24 @@ class RecycleOrderLoaded2 extends States {
   void createOrderWithoutImage() {
     screenState.addNewOrder(CreateOrderRequest(
       id: orderInfo.id,
-      orderIsMain: orderIsMain,
-      pdf: pdfModel?.getPdfRequest(),
-      fromBranch: screenState.branch,
-      recipientName: screenState.receiptNameController.text.trim(),
-      recipientPhone: screenState.countryNumberController.text.trim() +
-          screenState.phoneNumberController.text.trim(),
+      payment: screenState.payments,
+      orderCost: num.parse(screenState.priceController.text.trim()),
+      note: screenState.orderDetailsController.text.trim(),
+      date: orderDate == null
+          ? DateTime.now().toUtc().toIso8601String()
+          : orderDate?.toUtc().toIso8601String(),
       destination: GeoJson(
           link: screenState.toController.text.trim(),
           lat: screenState.customerLocation?.latitude,
           lon: screenState.customerLocation?.longitude),
-      note: screenState.orderDetailsController.text.trim(),
-      detail: screenState.orderDetailsController.text.trim(),
-      orderCost: num.tryParse(screenState.priceController.text.trim()),
+      recipientName: screenState.receiptNameController.text.trim(),
       image: imagePath ?? null,
-      date: orderDate == null
-          ? DateTime.now().toUtc().toIso8601String()
-          : orderDate?.toUtc().toIso8601String(),
-      payment: screenState.payments,
+      recipientPhone: screenState.countryNumberController.text.trim() +
+          screenState.phoneNumberController.text.trim(),
+      detail: screenState.orderDetailsController.text.trim(),
+      fromBranch: screenState.branch,
       deliveryCost: num.tryParse(deliveryCost.toString()),
+      cancel: 0,
     ));
   }
 

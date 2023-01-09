@@ -8549,6 +8549,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Are you sure ?\n you will recycle this order`
+  String get recycleOrderWarning {
+    return Intl.message(
+      'Are you sure ?\n you will recycle this order',
+      name: 'recycleOrderWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recycle Order`
+  String get recycleOrder {
+    return Intl.message(
+      'Recycle Order',
+      name: 'recycleOrder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
