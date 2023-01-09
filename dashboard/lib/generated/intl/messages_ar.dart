@@ -273,6 +273,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "chooseCategory": MessageLookupByLibrary.simpleMessage("أختر تصنيف"),
         "chooseDestinationPoint":
             MessageLookupByLibrary.simpleMessage("اختر موقع التسليم"),
+        "chooseFromDate": MessageLookupByLibrary.simpleMessage("من تاريخ"),
         "chooseLocation": MessageLookupByLibrary.simpleMessage("اختر موقع"),
         "choosePaymentMethod":
             MessageLookupByLibrary.simpleMessage("اختر طريقة الدفع"),
@@ -1199,6 +1200,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
             MessageLookupByLibrary.simpleMessage(
                 "للمزيد من المعلومات خذ موعدا بترك رقم هاتفك، وسيتم التواصل معك"),
+        "today": MessageLookupByLibrary.simpleMessage("اليوم"),
         "took": MessageLookupByLibrary.simpleMessage("استغرق"),
         "total": MessageLookupByLibrary.simpleMessage("الإجمالي"),
         "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
@@ -1318,6 +1320,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "السعر غير شامل القيمة المضافة"),
         "workTime": MessageLookupByLibrary.simpleMessage("أوقات العمل"),
         "yes": MessageLookupByLibrary.simpleMessage("نعم"),
+        "yesterday": MessageLookupByLibrary.simpleMessage("البارحة"),
         "youCanChangeCaptainFinancialPlan":
             MessageLookupByLibrary.simpleMessage(
                 "يمكنك تغيير خطة عمل الكابتن من هنا"),

@@ -1,5 +1,6 @@
 import 'package:c4d/module_captain/repository/captains_repository.dart';
 import 'package:c4d/module_captain/request/assign_order_to_captain_request.dart';
+import 'package:c4d/module_captain/request/captain_activities_filter_request.dart';
 import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/request/captain_offer_request.dart';
 import 'package:c4d/module_captain/request/enable_captain.dart';
@@ -76,6 +77,9 @@ class CaptainsManager {
       _repository.getCaptainRatingDetails(captinID);
   Future<CaptainActivityResponse?> getCaptainActivity() =>
       _repository.getCaptainActivity();
+  Future<CaptainActivityResponse?> getCaptainActivityWithFilter(
+          CaptainActivityFilterRequest request) =>
+      _repository.getCaptainActivityWithFilter(request);
   Future<CaptainActivityDetailsResponse?> getCaptainActivityDetails(
           int captainID) =>
       _repository.getCaptainActivityDetails(captainID);

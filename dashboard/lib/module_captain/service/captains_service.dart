@@ -8,6 +8,7 @@ import 'package:c4d/module_captain/model/captains_order_model.dart';
 import 'package:c4d/module_captain/model/inActiveModel.dart';
 import 'package:c4d/module_captain/model/porfile_model.dart';
 import 'package:c4d/module_captain/request/assign_order_to_captain_request.dart';
+import 'package:c4d/module_captain/request/captain_activities_filter_request.dart';
 import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/request/captain_offer_request.dart';
 import 'package:c4d/module_captain/request/enable_captain.dart';
@@ -301,6 +302,20 @@ class CaptainsService {
     }
     if (actionResponse.data == null) {
       return DataModel.empty();
+    }
+    return CaptainActivityModel.withData(actionResponse);
+  }
+
+  Future<DataModel> getCaptainFilterActivity(
+      CaptainActivityFilterRequest request) async {
+    CaptainActivityResponse? actionResponse =
+        await _manager.getCaptainActivityWithFilter(request);
+      if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
     return CaptainActivityModel.withData(actionResponse);
   }
