@@ -55,9 +55,8 @@ class OrdersCashStoreScreenState extends State<OrdersCashStoreScreen> {
     currentState = LoadingState(this);
     ordersFilter = StoreCashFinanceRequest(
         storeId: ArgumentHiveHelper().getCurrentStoreID(),
-        fromDate:
-            DateTime(today.year, today.month, today.day, 0).toIso8601String(),
-        toDate: DateTime.now().toIso8601String());
+        fromDate: DateTime(today.year, today.month, today.day, 0),
+        toDate: DateTime.now());
     widget._stateManager.getOrdersFilters(this, ordersFilter);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
       currentState = event;
@@ -102,9 +101,8 @@ class OrdersCashStoreScreenState extends State<OrdersCashStoreScreen> {
                 context,
                 onTap: () {
                   ordersFilter.fromDate =
-                      DateTime(today.year, today.month, today.day, 0)
-                          .toIso8601String();
-                  ordersFilter.toDate = DateTime.now().toIso8601String();
+                      DateTime(today.year, today.month, today.day, 0);
+                  ordersFilter.toDate = DateTime.now();
                   currentIndex = 0;
                   getOrders();
                 },
@@ -163,7 +161,7 @@ class OrdersCashStoreScreenState extends State<OrdersCashStoreScreen> {
                                     lastDate: DateTime.now())
                                 .then((value) {
                               if (value != null) {
-                                ordersFilter.fromDate = value.toIso8601String();
+                                ordersFilter.fromDate = value;
                                 setState(() {});
                                 getOrders();
                               }
@@ -175,9 +173,8 @@ class OrdersCashStoreScreenState extends State<OrdersCashStoreScreen> {
                           ),
                           subtitle: Text(
                             ordersFilter.fromDate != null
-                                ? DateFormat('yyyy/M/d').format(DateTime.parse(
-                                    ordersFilter.fromDate ??
-                                        DateTime.now().toIso8601String()))
+                                ? DateFormat('yyyy/M/d').format(
+                                    ordersFilter.fromDate ?? DateTime.now())
                                 : '0000/00/00',
                             style: TextStyle(color: Colors.white),
                           ),
@@ -233,7 +230,7 @@ class OrdersCashStoreScreenState extends State<OrdersCashStoreScreen> {
                                     lastDate: DateTime.now())
                                 .then((value) {
                               if (value != null) {
-                                ordersFilter.toDate = value.toIso8601String();
+                                ordersFilter.toDate = value;
                                 setState(() {});
                                 getOrders();
                               }
@@ -247,9 +244,8 @@ class OrdersCashStoreScreenState extends State<OrdersCashStoreScreen> {
                           ),
                           subtitle: Text(
                             ordersFilter.toDate != null
-                                ? DateFormat('yyyy/M/d').format(DateTime.parse(
-                                    ordersFilter.toDate ??
-                                        DateTime.now().toIso8601String()))
+                                ? DateFormat('yyyy/M/d').format(
+                                    ordersFilter.toDate ?? DateTime.now())
                                 : '0000/00/00',
                             style: TextStyle(
                               color: Colors.white,
@@ -333,8 +329,10 @@ class OrdersCashStoreScreenState extends State<OrdersCashStoreScreen> {
                                         widget._stateManager.payForStore(
                                             this,
                                             CreateStorePaymentsRequest(
-                                              fromDate: ordersFilter.fromDate,
-                                              toDate: ordersFilter.toDate,
+                                              fromDate: ordersFilter.fromDate
+                                                  ?.toIso8601String(),
+                                              toDate: ordersFilter.toDate
+                                                  ?.toIso8601String(),
                                               storeId: StoresHiveHelper()
                                                   .getCurrentStoreID(),
                                               amount: num.tryParse(

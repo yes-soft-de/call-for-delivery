@@ -1,22 +1,27 @@
+import 'dart:io';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+import 'package:intl/intl.dart';
+
 class StoreCashFinanceRequest {
   String? storeId;
-  String? toDate;
-  String? fromDate;
+  DateTime? toDate;
+  DateTime? fromDate;
   StoreCashFinanceRequest({this.fromDate, this.storeId, this.toDate});
 
-  Map<String, dynamic> toJson() {
+  Future<Map<String, dynamic>> toJson() async {
     final Map<String, dynamic> data = <String, dynamic>{};
 
     data['storeId'] = this.storeId;
     if (toDate != null) {
-      data['toDate'] =
-          DateTime.tryParse(this.toDate ?? '')?.toUtc().toIso8601String();
+      data['toDate'] = DateFormat('yyyy-MM-dd', 'en').format(toDate!);
     }
     if (fromDate != null) {
-      data['fromDate'] =
-          DateTime.tryParse(this.fromDate ?? '')?.toUtc().toIso8601String();
+      data['fromDate'] = DateFormat('yyyy-MM-dd', 'en').format(fromDate!);
     }
-
+    if (Platform.isAndroid || Platform.isIOS) {
+      data['customizedTimezone'] =
+          await FlutterNativeTimezone.getLocalTimezone();
+    }
     return data;
   }
 }
