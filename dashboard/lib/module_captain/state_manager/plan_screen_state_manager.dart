@@ -129,4 +129,26 @@ class PlanScreenStateManager {
       }
     });
   }
+
+  void financeCreate(
+      PlanScreenState screenState, CaptainFinanceRequest request) {
+    stateSubject.add(LoadingState(screenState));
+    _paymentsService.financeCreate(request).then((value) {
+      if (value.hasError) {
+        screenState.selectedPlan = null;
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error ?? '')
+            .show(screenState.context);
+        stateSubject.add(InitCaptainPlanLoadedState(
+          screenState,
+          financeByHours: null,
+          financeByOrder: null,
+          financeByOrderCount: null,
+        ));
+      } else {
+        getIt<GlobalStateManager>().updateList();
+        Navigator.of(screenState.context).pop();
+      }
+    });
+  }
 }

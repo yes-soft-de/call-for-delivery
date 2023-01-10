@@ -1,5 +1,6 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_captain/model/porfile_model.dart';
 import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/ui/screen/change_captain_plan_screen.dart';
 import 'package:c4d/module_captain/ui/widget/captain_plans/by_hours_widget.dart';
@@ -37,11 +38,13 @@ class InitCaptainPlanLoadedState extends States {
     S.current.financeCountOrder
   ];
   int captainID = -1;
+  OrderCountsSystemDetails? details;
   @override
   Widget getUI(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
-    if (args != null && args is int) {
-      captainID = args;
+    if (args != null && args is OrderCountsSystemDetails) {
+      captainID = args.id ?? -1;
+      details = args;
     }
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(
@@ -184,13 +187,23 @@ class InitCaptainPlanLoadedState extends States {
                       onPressed: () {
                         int index =
                             packages.indexOf(screenState.selectedPlan!) + 1;
-                        screenState.manager.financeRequest(
-                            screenState,
-                            CaptainFinanceRequest(
-                                id: captainID,
-                                status: null,
-                                planId: index == 3 ? 0 : _selectedPlanId,
-                                planType: index));
+                        if (details?.status != null) {
+                          screenState.manager.financeRequest(
+                              screenState,
+                              CaptainFinanceRequest(
+                                  id: captainID,
+                                  status: null,
+                                  planId: index == 3 ? 0 : _selectedPlanId,
+                                  planType: index));
+                        } else {
+                          screenState.manager.financeCreate(
+                              screenState,
+                              CaptainFinanceRequest(
+                                  captain: captainID,
+                                  status: null,
+                                  planId: index == 3 ? 0 : _selectedPlanId,
+                                  planType: index));
+                        }
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(12.0),

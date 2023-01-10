@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/captains_routes.dart';
@@ -8,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class CaptainFinanceInfo extends StatefulWidget {
-  final OrderCountsSystemDetails details;
+  OrderCountsSystemDetails details;
   final Function(bool) requestStatus;
   final int captainID;
   CaptainFinanceInfo(
@@ -31,26 +33,32 @@ class _CaptainFinanceInfoState extends State<CaptainFinanceInfo> {
           child: SingleChildScrollView(
             child: Column(
               children: [
-                Visibility(
-                  visible: widget.details.status == false,
-                  child: Flushbar(
-                    icon: Icon(
-                      FontAwesomeIcons.info,
-                      color: Colors.white,
-                    ),
-                    mainButton: IconButton(
-                      onPressed: () {
-                        Navigator.of(context).pop();
+                Flushbar(
+                  icon: Icon(
+                    FontAwesomeIcons.info,
+                    color: Colors.white,
+                  ),
+                  mainButton: IconButton(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      if (widget.details.id == null) {
+                        widget.details.id = widget.captainID;
                         Navigator.of(context).pushNamed(
                             CaptainsRoutes.CAPTAIN_PLAN,
-                            arguments: widget.details.id);
-                      },
-                      icon: Icon(Icons.change_circle_rounded),
-                      color: Colors.white,
-                    ),
-                    backgroundColor: Theme.of(context).colorScheme.primary,
-                    message: S.current.youCanChangeCaptainFinancialPlan,
+                            arguments: widget.details);
+                      } else {
+                        Navigator.of(context).pushNamed(
+                            CaptainsRoutes.CAPTAIN_PLAN,
+                            arguments: widget.details);
+                      }
+                    },
+                    icon: Icon(Icons.change_circle_rounded),
+                    color: Colors.white,
                   ),
+                  backgroundColor: Theme.of(context).colorScheme.primary,
+                  message: widget.details.status == false
+                      ? S.current.youCanChangeCaptainFinancialPlan
+                      : S.current.youCanChooseCaptainPlan,
                 ),
                 CustomTile(
                     FontAwesomeIcons.calendar, S.current.createDate, null,
