@@ -68,6 +68,9 @@ class PaymentsManager {
   /* CHANGE CAPTAIN FINANCE PLAN */
   Future<ActionResponse?> financeRequest(CaptainFinanceRequest request) =>
       _paymentsRepository.financeRequest(request);
+  /* CREATE CAPTAIN FINANCE PLAN */
+  Future<ActionResponse?> financeCreate(CaptainFinanceRequest request) =>
+      _paymentsRepository.financeCreate(request);
   /* ---------------------------------- CAPTAIN PAYMENTS --------------------------------------- */
   Future<CaptainPaymentsResponse?> getAccountBalance(int captainId) async =>
       _paymentsRepository.getCaptainAccountBalance(captainId);

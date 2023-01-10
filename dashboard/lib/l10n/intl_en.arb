@@ -854,6 +854,8 @@
     "orderRecycledSuccessfully":"Order updated successfully",
     "confirmRecycleOrder": "Confirm recycle order ",
     "recycleOrderWarning":"Are you sure ?\n you will recycle this order",
-    "recycleOrder":"Recycle Order"
+    "recycleOrder":"Recycle Order",
+    "youCanChooseCaptainPlan":"You can choose captain plan"
+
 
 }

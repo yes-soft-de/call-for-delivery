@@ -1333,6 +1333,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "youCanChangeCaptainFinancialPlan":
             MessageLookupByLibrary.simpleMessage(
                 "يمكنك تغيير خطة عمل الكابتن من هنا"),
+        "youCanChooseCaptainPlan": MessageLookupByLibrary.simpleMessage(
+            "بإمكانك اختيار خطة عمل لكابتن"),
         "youCannotAcceptAnotherOrderFromThisStore":
             MessageLookupByLibrary.simpleMessage(
                 "لا يمكن للكابتن قبول الطلب من هذا المتجر في الوقت الحالي ، الرجاء انتظار تسليم الطلبات المتعلقة بهذا المتجر ومن ثم إعادة المحاولة"),

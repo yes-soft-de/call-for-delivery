@@ -120,7 +120,7 @@ class StoresRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
       Urls.FILTER_CAPTAIN_NOT_ARRIVED,
-      request.toJson(),
+      await request.toJson(),
       headers: {'Authorization': 'Bearer ${token}'},
     );
     if (response == null) return null;

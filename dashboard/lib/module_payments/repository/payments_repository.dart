@@ -244,4 +244,13 @@ class PaymentsRepository {
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
+
+  Future<ActionResponse?> financeCreate(CaptainFinanceRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+        Urls.CREATE_CAPTAIN_FINANCE_PLAN, request.toJson(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
 }

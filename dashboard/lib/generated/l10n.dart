@@ -8599,6 +8599,16 @@ class S {
       args: [],
     );
   }
+
+  /// `You can choose captain plan`
+  String get youCanChooseCaptainPlan {
+    return Intl.message(
+      'You can choose captain plan',
+      name: 'youCanChooseCaptainPlan',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

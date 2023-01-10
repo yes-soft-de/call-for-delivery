@@ -1339,6 +1339,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "youCanChangeCaptainFinancialPlan":
             MessageLookupByLibrary.simpleMessage(
                 "You can change captain financial request here"),
+        "youCanChooseCaptainPlan":
+            MessageLookupByLibrary.simpleMessage("You can choose captain plan"),
         "youCannotAcceptAnotherOrderFromThisStore":
             MessageLookupByLibrary.simpleMessage(
                 "Captain cannot accept another order from this store , Please wait to deliver orders belongs to this store after that try again"),

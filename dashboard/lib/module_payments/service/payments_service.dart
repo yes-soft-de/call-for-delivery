@@ -365,4 +365,18 @@ class PaymentsService {
     }
     return DataModel.empty();
   }
+
+  /* CREATE CAPTAIN PLAN */
+  Future<DataModel> financeCreate(CaptainFinanceRequest request) async {
+    ActionResponse? actionResponse =
+        await _paymentsManager.financeCreate(request);
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
 }

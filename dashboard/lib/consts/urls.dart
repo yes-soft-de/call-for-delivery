@@ -252,6 +252,8 @@ class Urls {
       BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainfinancialsystemdetailstatus';
   static const CHANGE_CAPTAIN_FINANCE_PLAN =
       BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainfinancialsystemdetailupdate';
+  static const CREATE_CAPTAIN_FINANCE_PLAN =
+      BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainfinancialsystemdetailbyadmin';
   static const GET_CAPTAIN_FINANCE_DUES =
       BASE_CAPTAIN_ACCOUNT_BALANCE_DUES + '/captainfinancialduesforadmin';
   static const GET_CAPTAIN_RATING_REPORT =
@@ -261,9 +263,8 @@ class Urls {
   static const GET_CAPTAIN_ACTIVITY_REPORT = BASE_API +
       VERSION_ADMIN +
       '/report/activecaptainswithorderscountforadmin';
-  static const GET_CAPTAIN_ACTIVITY_FILTER_REPORT = BASE_API +
-      VERSION_ADMIN +
-      '/report/filtercaptainsdeliveredordersbyadmin';
+  static const GET_CAPTAIN_ACTIVITY_FILTER_REPORT =
+      BASE_API + VERSION_ADMIN + '/report/filtercaptainsdeliveredordersbyadmin';
   static const RATING_CAPTAIN =
       DOMAIN + VERSION_ADMIN + '/rate/captainratingsforadmin';
   static const GET_CAPTAIN_ACTIVITY_DETAILS = DOMAIN +
