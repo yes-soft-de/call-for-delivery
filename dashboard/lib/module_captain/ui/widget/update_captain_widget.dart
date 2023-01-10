@@ -62,7 +62,7 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
               child: InkWell(
                 onTap: () {
                   ImagePicker()
-                      .pickImage(source: ImageSource.gallery, imageQuality: 100)
+                      .pickImage(source: ImageSource.gallery, imageQuality: 70)
                       .then((value) async {
                     if (value != null) {
                       imageBytes = await value.readAsBytes();
