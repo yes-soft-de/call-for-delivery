@@ -1221,6 +1221,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "To find out more, please leave your phone.\nand we will contact you personally"),
         "today": MessageLookupByLibrary.simpleMessage("Today"),
         "took": MessageLookupByLibrary.simpleMessage("Took"),
+        "topstoreActivity":
+            MessageLookupByLibrary.simpleMessage("Top store activity"),
         "total": MessageLookupByLibrary.simpleMessage("Total"),
         "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
             "The total cost without delivery cost"),

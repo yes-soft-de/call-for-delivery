@@ -1211,6 +1211,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "للمزيد من المعلومات خذ موعدا بترك رقم هاتفك، وسيتم التواصل معك"),
         "today": MessageLookupByLibrary.simpleMessage("اليوم"),
         "took": MessageLookupByLibrary.simpleMessage("استغرق"),
+        "topstoreActivity":
+            MessageLookupByLibrary.simpleMessage("اكثر المتاجر نشاطاً"),
         "total": MessageLookupByLibrary.simpleMessage("الإجمالي"),
         "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
             "تكلفة الفاتورة المستحقة بدون تكلفة التوصيل"),

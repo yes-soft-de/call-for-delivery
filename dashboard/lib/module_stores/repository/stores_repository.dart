@@ -4,6 +4,7 @@ import 'package:c4d/module_stores/request/captain_not_arrived_request.dart';
 import 'package:c4d/module_stores/request/order_filter_request.dart';
 import 'package:c4d/module_stores/response/order/order_captain_not_arrived/orders_not_arrived_response.dart';
 import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
+import 'package:c4d/module_stores/response/top_active_store.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
@@ -135,5 +136,15 @@ class StoresRepository {
     );
     if (response == null) return null;
     return OrderDetailsResponse.fromJson(response);
+  }
+
+  Future<TopActiveStoreResponse?> getTopStoreActive() async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(
+      Urls.TOP_ACTIVATE_STORE,
+      headers: {'Authorization': 'Bearer $token'},
+    );
+    if (response == null) return null;
+    return TopActiveStoreResponse.fromJson(response);
   }
 }

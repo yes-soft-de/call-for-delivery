@@ -8599,6 +8599,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Top store activity`
+  String get topstoreActivity {
+    return Intl.message(
+      'Top store activity',
+      name: 'topstoreActivity',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

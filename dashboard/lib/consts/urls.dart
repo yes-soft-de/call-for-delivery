@@ -120,6 +120,8 @@ class Urls {
       BASE_API_STORE + '/storeowner/storeownerprofilebyidforadmin/';
   static const ACTIVATE_STORE =
       BASE_API_STORE + '/storeowner/storeownerprofilestatusbyadmin';
+  static const TOP_ACTIVATE_STORE =
+      BASE_API_STORE + '/report/topactivestoresforadmin';
   static const DELETE_STORE =
       BASE_API_STORE + '/storeowner/deletestoreownerprofilebyadmin';
   static const UPDATE_STORE_INFO =
@@ -261,9 +263,8 @@ class Urls {
   static const GET_CAPTAIN_ACTIVITY_REPORT = BASE_API +
       VERSION_ADMIN +
       '/report/activecaptainswithorderscountforadmin';
-  static const GET_CAPTAIN_ACTIVITY_FILTER_REPORT = BASE_API +
-      VERSION_ADMIN +
-      '/report/filtercaptainsdeliveredordersbyadmin';
+  static const GET_CAPTAIN_ACTIVITY_FILTER_REPORT =
+      BASE_API + VERSION_ADMIN + '/report/filtercaptainsdeliveredordersbyadmin';
   static const RATING_CAPTAIN =
       DOMAIN + VERSION_ADMIN + '/rate/captainratingsforadmin';
   static const GET_CAPTAIN_ACTIVITY_DETAILS = DOMAIN +
