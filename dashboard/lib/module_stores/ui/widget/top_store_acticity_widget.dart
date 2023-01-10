@@ -34,7 +34,8 @@ class TopStoreActivityWidget extends StatelessWidget {
           ),
           subtitle: Text(
             topActiveStoreModel.storeBranchName!,
-            style: TextStyle(color: Colors.grey, fontWeight: FontWeight.w500),
+            style: TextStyle(
+                color: Colors.grey.shade400, fontWeight: FontWeight.w500),
           ),
           // shape:
           //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
