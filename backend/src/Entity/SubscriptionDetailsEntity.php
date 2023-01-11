@@ -22,6 +22,7 @@ class SubscriptionDetailsEntity
     #[ORM\Column(type: 'integer', length: 100)]
     private $remainingTime;
 
+    // Ex: active - date finished - cars finished - order finished.
     #[ORM\Column(type: 'string', length: 100, nullable: true)]
     private $status;
 
@@ -32,6 +33,7 @@ class SubscriptionDetailsEntity
     #[ORM\OneToOne(targetEntity: SubscriptionEntity::class, cascade: ['persist', 'remove'])]
     private $lastSubscription;
 
+    // Has extra time (The extra time is just one day)
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $hasExtra;
 

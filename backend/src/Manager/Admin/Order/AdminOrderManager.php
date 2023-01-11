@@ -233,6 +233,47 @@ class AdminOrderManager
 
         return $orderEntity;
     }
+
+    public function updateOngoingOrderToCancelled(OrderEntity $orderEntity): array
+    {
+        $orderEntity->setState(OrderStateConstant::ORDER_STATE_CANCEL);
+
+        // save captain user id for later use
+        $captainUserId = $orderEntity->getCaptainId()->getCaptainId();
+
+        $orderEntity->setDateCaptainArrived(null);
+        $orderEntity->setIsCaptainArrived(false);
+
+        $orderEntity->setCaptainId(null);
+
+        $this->entityManager->flush();
+
+        return [$orderEntity, $captainUserId];
+    }
+
+    public function updateDeliveredOrderToCancelled(OrderEntity $orderEntity): array
+    {
+        $orderEntity->setState(OrderStateConstant::ORDER_STATE_CANCEL);
+
+        // save captain user id for later use
+        $captainUserId = $orderEntity->getCaptainId()->getCaptainId();
+
+        $orderEntity->setDateCaptainArrived(null);
+        $orderEntity->setIsCaptainArrived(false);
+        $orderEntity->setNoteCaptainOrderCost(null);
+        $orderEntity->setCaptainOrderCost(null);
+        $orderEntity->setPaidToProvider(null);
+        $orderEntity->setHasPayConflictAnswers(null);
+        $orderEntity->setConflictedAnswersResolvedBy(null);
+        $orderEntity->setIsCashPaymentConfirmedByStore(null);
+        $orderEntity->setIsCashPaymentConfirmedByStoreUpdateDate(null);
+
+        $orderEntity->setCaptainId(null);
+
+        $this->entityManager->flush();
+
+        return [$orderEntity, $captainUserId];
+    }
     
     public function updateOrderStateByAdmin(OrderStateUpdateByAdminRequest $request): int|array|null
     {
