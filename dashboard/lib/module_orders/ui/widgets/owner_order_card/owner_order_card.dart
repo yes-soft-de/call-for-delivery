@@ -147,9 +147,12 @@ class OwnerOrderCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     verticalTile(context,
-                        title: S.current.deliverDate, subtitle: deliveryDate),
+                        title: S.current.captain, subtitle: deliveryDate),
                     verticalTile(context,
-                        title: S.current.createdDate, subtitle: createdDate),
+                        title: S.current.createdDate,
+                        // subtitle: Moment.fromDate(DateTime.parse(createdDate))
+                        subtitle: createdDate
+                            ),
                   ],
                 ),
                 // divider

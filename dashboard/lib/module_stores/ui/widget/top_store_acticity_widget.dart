@@ -37,8 +37,6 @@ class TopStoreActivityWidget extends StatelessWidget {
             style: TextStyle(
                 color: Colors.grey.shade400, fontWeight: FontWeight.w500),
           ),
-          // shape:
-          //     RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
           trailing: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Container(

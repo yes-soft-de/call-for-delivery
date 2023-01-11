@@ -32,14 +32,18 @@ class DataActiveStore {
   String? storeOwnerName;
   Image? image;
   String? storeBranchName;
-  int? ordersCount;
+  dynamic? ordersCount;
+  String? todayOrdersCount;
+  String? lastTwentyFourOrdersCount;
 
   DataActiveStore(
       {this.id,
       this.storeOwnerName,
       this.image,
       this.storeBranchName,
-      this.ordersCount});
+      this.ordersCount,
+      this.todayOrdersCount,
+      this.lastTwentyFourOrdersCount});
 
   DataActiveStore.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -47,6 +51,8 @@ class DataActiveStore {
     image = json['image'] != null ? new Image.fromJson(json['image']) : null;
     storeBranchName = json['storeBranchName'];
     ordersCount = json['ordersCount'];
+    todayOrdersCount = json['todayOrdersCount'];
+    lastTwentyFourOrdersCount = json['lastTwentyFourOrdersCount'];
   }
 
   Map<String, dynamic> toJson() {
@@ -58,6 +64,8 @@ class DataActiveStore {
     }
     data['storeBranchName'] = this.storeBranchName;
     data['ordersCount'] = this.ordersCount;
+    data['todayOrdersCount'] = this.todayOrdersCount;
+    data['lastTwentyFourOrdersCount'] = this.lastTwentyFourOrdersCount;
     return data;
   }
 }

@@ -118,7 +118,7 @@ class OrderPendingLoadedState extends States {
                   orderStatus:
                       StatusHelper.getOrderStatusMessages(element.state),
                   createdDate: element.createdDate,
-                  deliveryDate: element.deliveryDate,
+                  deliveryDate: element.captainName ?? 'no captain',
                   orderCost: element.orderCost,
                   note: element.note,
                   orderIsMain: element.orderIsMain,
