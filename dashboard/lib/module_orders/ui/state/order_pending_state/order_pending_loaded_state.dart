@@ -14,6 +14,7 @@ import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:simple_moment/simple_moment.dart';
 
 class OrderPendingLoadedState extends States {
   OrderPendingScreenState screenState;
@@ -25,7 +26,7 @@ class OrderPendingLoadedState extends States {
       orders.hiddenOrders,
     ];
   }
-
+  var moment = Moment.now();
   @override
   Widget getUI(BuildContext context) {
     return CustomListView.custom(children: getOrders(context));
@@ -117,7 +118,10 @@ class OrderPendingLoadedState extends States {
                   orderNumber: element.id.toString(),
                   orderStatus:
                       StatusHelper.getOrderStatusMessages(element.state),
-                  createdDate: element.createdDate,
+                  createdDate:
+                      moment.date.difference(element.created!).inHours <= 12
+                          ? moment.from(element.created!)
+                          : element.createdDate,
                   deliveryDate: element.captainName ?? 'no captain',
                   orderCost: element.orderCost,
                   note: element.note,
