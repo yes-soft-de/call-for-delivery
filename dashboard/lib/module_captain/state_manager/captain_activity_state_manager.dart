@@ -39,7 +39,6 @@ class CaptainsActivityStateManager {
   void getCaptainsFilter(CaptainsActivityScreenState screenState,
       CaptainActivityFilterRequest request) {
     _captainsScreenState = screenState;
-    _stateSubject.add(LoadingState(screenState));
     _captainsService.getCaptainFilterActivity(request).then((value) {
       if (value.hasError) {
         _stateSubject.add(

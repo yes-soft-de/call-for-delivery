@@ -8,7 +8,8 @@ class CaptainActivityModel extends DataModel {
   late String captainName;
   late String ordersCount;
   late String image;
-
+  String? last24CountOrder;
+  String? todayCountOrder;
   List<CaptainActivityModel> _data = [];
   CaptainActivityModel({
     required this.captainID,
@@ -16,6 +17,8 @@ class CaptainActivityModel extends DataModel {
     required this.captainName,
     required this.ordersCount,
     required this.image,
+    required this.last24CountOrder,
+    required this.todayCountOrder,
   });
   CaptainActivityModel.withData(CaptainActivityResponse response) {
     var datum = response.data;
@@ -26,6 +29,8 @@ class CaptainActivityModel extends DataModel {
         image: element.image?.image ?? '',
         ordersCount: element.ordersCount ?? '0',
         captainID: element.captainId ?? -1,
+        last24CountOrder: element.lastTwentyFourOrdersCount,
+        todayCountOrder: element.todayOrdersCount,
       ));
     });
   }

@@ -61,6 +61,8 @@ class CaptainsActivityLoadedState extends States {
         captainName: element.captainName,
         image: element.image,
         orderCount: element.ordersCount,
+        last24CountOrder: element.last24CountOrder,
+        todayCountOrder: element.todayCountOrder,
       ));
     }
 
@@ -69,67 +71,130 @@ class CaptainsActivityLoadedState extends States {
           0,
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-            child: Row(
+            child: Column(
               children: [
-                Expanded(
-                  child: CustomDeliverySearch(
-                    hintText: S.current.searchForCaptain,
-                    onChanged: (s) {
-                      if (s == '' || s.isEmpty) {
-                        search = null;
-                        screenState.refresh();
-                      } else {
-                        search = s;
-                        screenState.refresh();
-                      }
-                    },
-                  ),
+                CustomDeliverySearch(
+                  hintText: S.current.searchForCaptain,
+                  onChanged: (s) {
+                    if (s == '' || s.isEmpty) {
+                      search = null;
+                      screenState.refresh();
+                    } else {
+                      search = s;
+                      screenState.refresh();
+                    }
+                  },
                 ),
                 SizedBox(
-                  width: 8,
+                  height: 8,
                 ),
-                Container(
-                  width: 125,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    color: Theme.of(context).backgroundColor,
-                  ),
-                  child: Material(
-                    color: Colors.transparent,
-                    child: ListTile(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(25)),
-                      onTap: () {
-                        showDatePicker(
-                                context: context,
-                                builder: (context, widget) {
-                                  bool isDark = getIt<ThemePreferencesHelper>()
-                                      .isDarkMode();
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Theme.of(context).backgroundColor,
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: ListTile(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25)),
+                              onTap: () {
+                                showDatePicker(
+                                        context: context,
+                                        builder: (context, widget) {
+                                          bool isDark =
+                                              getIt<ThemePreferencesHelper>()
+                                                  .isDarkMode();
 
-                                  if (isDark == false)
-                                    return widget ?? SizedBox();
-                                  return Theme(
-                                      data: ThemeData.dark().copyWith(
-                                          primaryColor: Colors.indigo),
-                                      child: widget ?? SizedBox());
-                                },
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(2021),
-                                lastDate: DateTime.now())
-                            .then((value) {
-                          if (value != null) {
-                            screenState.filter?.fromDate = value;
-                            screenState.refresh();
-                            screenState.stateManager.getCaptainsFilter(
-                                screenState, screenState.filter!);
-                          }
-                        });
-                      },
-                      title: Text(screenState.filter?.fromDate != null
-                          ? DateFormat('yyyy/M/d').format(
-                              screenState.filter?.fromDate ?? DateTime.now())
-                          : S.current.chooseFromDate),
-                    ),
+                                          if (isDark == false)
+                                            return widget ?? SizedBox();
+                                          return Theme(
+                                              data: ThemeData.dark().copyWith(
+                                                  primaryColor: Colors.indigo),
+                                              child: widget ?? SizedBox());
+                                        },
+                                        initialDate: DateTime.now(),
+                                        firstDate: DateTime(2021),
+                                        lastDate: DateTime.now())
+                                    .then((value) {
+                                  if (value != null) {
+                                    screenState.filter.fromDate = value;
+                                    screenState.stateManager.getCaptainsFilter(
+                                        screenState, screenState.filter);
+                                  }
+                                });
+                              },
+                              title: Text(S.current.firstDate),
+                              subtitle: Text(screenState.filter.fromDate != null
+                                  ? DateFormat('yyyy/M/d').format(
+                                      screenState.filter.fromDate ??
+                                          DateTime.now())
+                                  : '0000/00/00'),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          width: 32,
+                          height: 2.5,
+                          color: Theme.of(context).backgroundColor,
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Theme.of(context).backgroundColor,
+                          ),
+                          child: Material(
+                            color: Colors.transparent,
+                            child: ListTile(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25)),
+                              onTap: () {
+                                showDatePicker(
+                                        context: context,
+                                        initialDate: DateTime.now(),
+                                        builder: (context, widget) {
+                                          bool isDark =
+                                              getIt<ThemePreferencesHelper>()
+                                                  .isDarkMode();
+                                          if (isDark == false)
+                                            return widget ?? SizedBox();
+                                          return Theme(
+                                              data: ThemeData.dark().copyWith(
+                                                  primaryColor: Colors.indigo),
+                                              child: widget ?? SizedBox());
+                                        },
+                                        firstDate: DateTime(2021),
+                                        lastDate: DateTime.now())
+                                    .then((value) {
+                                  if (value != null) {
+                                    screenState.filter.toDate = value;
+                                    screenState.stateManager.getCaptainsFilter(
+                                        screenState, screenState.filter);
+                                  }
+                                });
+                              },
+                              title: Text(S.current.endDate),
+                              subtitle: Text(screenState.filter.toDate != null
+                                  ? DateFormat('yyyy/M/d').format(
+                                      screenState.filter.toDate ??
+                                          DateTime.now())
+                                  : '0000/00/00'),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
