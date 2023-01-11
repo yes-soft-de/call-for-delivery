@@ -163,7 +163,7 @@ class GeoDistanceService
         $request = new AdminCalculateCostDeliveryOrderRequest();
         
         $request->setStoreOwnerProfileId($storeOwnerProfileId);
-        $request->setStoreBranchToClientDistance($distance);
+        $request->setStoreBranchToClientDistance((float) $distance);
 
         return $this->subscriptionService->calculateCostDeliveryOrderForAdmin($request);
     }
