@@ -10,8 +10,8 @@ class TopActiveStoreModel extends DataModel {
   String? imageUrl;
   String? storeBranchName = '';
   dynamic? ordersCount;
-  String? todayOrdersCount = '';
-  String? lastTwentyFourOrdersCount = '';
+  String? todayOrdersCount;
+  String? lastTwentyFourOrdersCount;
   List<TopActiveStoreModel> _models = [];
 
   TopActiveStoreModel(
@@ -34,8 +34,8 @@ class TopActiveStoreModel extends DataModel {
           imageUrl: element.image?.imageURL ?? ImageAsset.PLACEHOLDER,
           ordersCount: element.ordersCount ?? 0,
           storeBranchName: element.storeBranchName ?? S.current.store,
-          todayOrdersCount: element.todayOrdersCount ?? '0',
-          lastTwentyFourOrdersCount: element.lastTwentyFourOrdersCount ?? '0'));
+          todayOrdersCount: element.todayOrdersCount,
+          lastTwentyFourOrdersCount: element.lastTwentyFourOrdersCount));
     }
   }
   List<TopActiveStoreModel> get data => _models;
