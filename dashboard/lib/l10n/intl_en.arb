@@ -813,7 +813,7 @@
     "newSubOrderCreatedByAdministration": "New subOrder created by administration",
     "storeBranchToClientDistanceUpdated": "Store branch to client distance updated",
     "storeBranchToClientDistanceAndDestinationUpdated": "Store branch to client distance and client location updated",
-    "cashPaymentConfirmed": "Cash payment confirmed",
+    "cashPaymentConfirmed": "Receipt of the cash amount was confirmed using the command",
     "payConflictAnswersResolved": "Payment conflict answer resolved",
     "admin": "Admin",
     "distanceProvidedByCaptain": "Distance provided by captain",
@@ -855,6 +855,12 @@
     "confirmRecycleOrder": "Confirm recycle order ",
     "recycleOrderWarning":"Are you sure ?\n you will recycle this order",
     "recycleOrder":"Recycle Order",
-    "topstoreActivity":"Top store activity"
+    "topstoreActivity":"Top store activity",
+    "destinationUpdate":"The recipient location field has been updated by the administration",
+    "recycleOrderDone":"The request has been recycled by the administration",
+    "storeBranchToClientDistanceDirectly":"A distance was added to the calculated distance automatically, directly by the administration",
+    "storeBranchToClientDistance":"A distance was added to the calculated distance automatically using the coordinates of the new location by the administration",
+    "isCashPaymentConfirmedByStore":"Receipt of the cash amount has been confirmed/denied by the administration on behalf of the store"
+
 
 }
