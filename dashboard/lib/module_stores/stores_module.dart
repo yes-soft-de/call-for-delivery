@@ -1,4 +1,5 @@
 import 'package:c4d/module_stores/ui/screen/order/order_time_line_screen.dart';
+import 'package:c4d/module_stores/ui/screen/top_active_store_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/module/yes_module.dart';
@@ -18,6 +19,7 @@ class StoresModule extends YesModule {
   final StoresScreen storesScreen;
   final StoreInfoScreen _storeInfoScreen;
   final StoresInActiveScreen storesInActiveScreen;
+  final TopActiveStoreScreen topActiveStoreScreen;
   final StoreBalanceScreen storeBalanceScreen;
   final StoresNeedsSupportScreen supportScreen;
   final OrderDetailsScreen _orderStatus;
@@ -35,6 +37,7 @@ class StoresModule extends YesModule {
     this._logsScreen,
     this.captainNotArrivedScreen,
     this.orderTimeLineScreen,
+    this.topActiveStoreScreen,
   ) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
@@ -49,6 +52,7 @@ class StoresModule extends YesModule {
       StoresRoutes.LOGS_ORDERS_SCREEN: (context) => _logsScreen,
       StoresRoutes.ORDER_TIMELINE_SCREEN: (context) => orderTimeLineScreen,
       StoresRoutes.ORDER_CAPTAIN_SCREEN: (context) => captainNotArrivedScreen,
+      StoresRoutes.TOP_STORE_ACTIVE: (context) => topActiveStoreScreen,
     };
   }
 }

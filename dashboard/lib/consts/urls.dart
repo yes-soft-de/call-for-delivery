@@ -120,6 +120,10 @@ class Urls {
       BASE_API_STORE + '/storeowner/storeownerprofilebyidforadmin/';
   static const ACTIVATE_STORE =
       BASE_API_STORE + '/storeowner/storeownerprofilestatusbyadmin';
+  static const TOP_ACTIVATE_STORE =
+      BASE_API_STORE + '/report/topactivestoresforadmin';
+  static const FILTER_STORE_ACTIVITY =
+      BASE_API_STORE + '/report/filterstoresdeliveredordersbyadmin';
   static const DELETE_STORE =
       BASE_API_STORE + '/storeowner/deletestoreownerprofilebyadmin';
   static const UPDATE_STORE_INFO =

@@ -75,6 +75,8 @@ class ProfileModel extends DataModel {
         status: data.status,
         salary: data.salary,
         bounce: data.bounce,
+        city: data.city,
+        address: data.address,
         createDate: DateFormat.jm()
                 .format(DateHelper.convert(data.createDate?.timestamp)) +
             '   ' +

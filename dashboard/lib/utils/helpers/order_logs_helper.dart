@@ -57,6 +57,16 @@ class ActionTypeLogsHelper {
         return S.current.payConflictAnswersResolved;
       case 27:
         return S.current.payConflictAnswersResolvedByAdministration;
+      case 28:
+        return S.current.isCashPaymentConfirmedByStore;
+      case 29:
+        return S.current.destinationUpdate;
+      case 30:
+        return S.current.storeBranchToClientDistance;
+      case 31:
+        return S.current.storeBranchToClientDistanceDirectly;
+      case 32:
+        return S.current.recycleOrderDone;
       default:
         return S.current.unknownAction + ' !${orderLog}';
     }

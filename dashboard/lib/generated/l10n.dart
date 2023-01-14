@@ -8220,10 +8220,10 @@ class S {
     );
   }
 
-  /// `Distance from branch to client`
+  /// `A distance was added to the calculated distance automatically using the coordinates of the new location by the administration`
   String get storeBranchToClientDistance {
     return Intl.message(
-      'Distance from branch to client',
+      'A distance was added to the calculated distance automatically using the coordinates of the new location by the administration',
       name: 'storeBranchToClientDistance',
       desc: '',
       args: [],
@@ -8595,6 +8595,56 @@ class S {
     return Intl.message(
       'Recycle Order',
       name: 'recycleOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Top store activity`
+  String get topstoreActivity {
+    return Intl.message(
+      'Top store activity',
+      name: 'topstoreActivity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The recipient location field has been updated by the administration`
+  String get destinationUpdate {
+    return Intl.message(
+      'The recipient location field has been updated by the administration',
+      name: 'destinationUpdate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The request has been recycled by the administration`
+  String get recycleOrderDone {
+    return Intl.message(
+      'The request has been recycled by the administration',
+      name: 'recycleOrderDone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A distance was added to the calculated distance automatically, directly by the administration`
+  String get storeBranchToClientDistanceDirectly {
+    return Intl.message(
+      'A distance was added to the calculated distance automatically, directly by the administration',
+      name: 'storeBranchToClientDistanceDirectly',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Receipt of the cash amount has been confirmed/denied by the administration on behalf of the store`
+  String get isCashPaymentConfirmedByStore {
+    return Intl.message(
+      'Receipt of the cash amount has been confirmed/denied by the administration on behalf of the store',
+      name: 'isCashPaymentConfirmedByStore',
       desc: '',
       args: [],
     );

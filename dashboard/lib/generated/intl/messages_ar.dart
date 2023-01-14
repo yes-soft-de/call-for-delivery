@@ -439,6 +439,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("التوصيل إلى"),
         "destinationAddressHint":
             MessageLookupByLibrary.simpleMessage("اكتب عنوان وجهة الطلب"),
+        "destinationUpdate": MessageLookupByLibrary.simpleMessage(
+            "تم تحديث حقل موقع المستلم من قبل الإدارة"),
         "details": MessageLookupByLibrary.simpleMessage("تفاصيل"),
         "directSupport": MessageLookupByLibrary.simpleMessage("دعم مباشر"),
         "discount": MessageLookupByLibrary.simpleMessage("الخصم"),
@@ -615,6 +617,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "invalidNumber": MessageLookupByLibrary.simpleMessage("الرقم غير صالح"),
         "invoiceCost": MessageLookupByLibrary.simpleMessage("تكلفة الفاتورة"),
         "invoiceImage": MessageLookupByLibrary.simpleMessage("صورة الفاتورة"),
+        "isCashPaymentConfirmedByStore": MessageLookupByLibrary.simpleMessage(
+            "تم تأكيد/نفي استلام المبلغ النقدي من قبل الادارة نيابة عن المتجر"),
         "isFutureSubscriptions":
             MessageLookupByLibrary.simpleMessage("اشتراك مستقبلي"),
         "item": MessageLookupByLibrary.simpleMessage("عنصر"),
@@ -994,6 +998,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("رقم هاتف المستلم"),
         "recordNumber": MessageLookupByLibrary.simpleMessage("رقم السجل"),
         "recycleOrder": MessageLookupByLibrary.simpleMessage("اعادة نشر الطلب"),
+        "recycleOrderDone": MessageLookupByLibrary.simpleMessage(
+            "تم إعادة تدوير الطلب من قبل الإدارة"),
         "recycleOrderWarning": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد من اعادة نشر الطلب"),
         "refresh": MessageLookupByLibrary.simpleMessage("تحديث"),
@@ -1102,6 +1108,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeBranchToClientDistanceAndDestinationUpdated":
             MessageLookupByLibrary.simpleMessage(
                 "تم تحديث موقع العميل و المسافة الفاصلة بين موقع العميل والفرع التجاري للمتجر من قبل الادارة"),
+        "storeBranchToClientDistanceDirectly": MessageLookupByLibrary.simpleMessage(
+            "تم إضافة مسافة على المسافة المحتسبة تلقائيا بشكل مباشر من قبل الإدارة"),
         "storeBranchToClientDistanceUpdated": MessageLookupByLibrary.simpleMessage(
             "تم تحديث المسافة الفاصلة بين موقع العميل والفرع التجاري للمتجر من قبل الادارة"),
         "storeCreatedSuccessfully":
@@ -1211,6 +1219,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "للمزيد من المعلومات خذ موعدا بترك رقم هاتفك، وسيتم التواصل معك"),
         "today": MessageLookupByLibrary.simpleMessage("اليوم"),
         "took": MessageLookupByLibrary.simpleMessage("استغرق"),
+        "topstoreActivity":
+            MessageLookupByLibrary.simpleMessage("اكثر المتاجر نشاطاً"),
         "total": MessageLookupByLibrary.simpleMessage("الإجمالي"),
         "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
             "تكلفة الفاتورة المستحقة بدون تكلفة التوصيل"),

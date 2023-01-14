@@ -445,6 +445,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Destination Address"),
         "destinationAddressHint": MessageLookupByLibrary.simpleMessage(
             "Please place your destination address"),
+        "destinationUpdate": MessageLookupByLibrary.simpleMessage(
+            "The recipient location field has been updated by the administration"),
         "details": MessageLookupByLibrary.simpleMessage("Details"),
         "directSupport": MessageLookupByLibrary.simpleMessage("Direct Support"),
         "discount": MessageLookupByLibrary.simpleMessage("Discount"),
@@ -624,6 +626,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "invalidNumber": MessageLookupByLibrary.simpleMessage("Invalid number"),
         "invoiceCost": MessageLookupByLibrary.simpleMessage("Invoice Cost"),
         "invoiceImage": MessageLookupByLibrary.simpleMessage("Invoice Image"),
+        "isCashPaymentConfirmedByStore": MessageLookupByLibrary.simpleMessage(
+            "Receipt of the cash amount has been confirmed/denied by the administration on behalf of the store"),
         "isFutureSubscriptions":
             MessageLookupByLibrary.simpleMessage("Is Future Subscriptions"),
         "item": MessageLookupByLibrary.simpleMessage("Item"),
@@ -1003,6 +1007,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Recipient Phone Number"),
         "recordNumber": MessageLookupByLibrary.simpleMessage("Record Number"),
         "recycleOrder": MessageLookupByLibrary.simpleMessage("Recycle Order"),
+        "recycleOrderDone": MessageLookupByLibrary.simpleMessage(
+            "The request has been recycled by the administration"),
         "recycleOrderWarning": MessageLookupByLibrary.simpleMessage(
             "Are you sure ?\n you will recycle this order"),
         "refresh": MessageLookupByLibrary.simpleMessage("refresh"),
@@ -1110,10 +1116,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Store Availability"),
         "storeBalance": MessageLookupByLibrary.simpleMessage("Store Balance"),
         "storeBranchToClientDistance": MessageLookupByLibrary.simpleMessage(
-            "Distance from branch to client"),
+            "A distance was added to the calculated distance automatically using the coordinates of the new location by the administration"),
         "storeBranchToClientDistanceAndDestinationUpdated":
             MessageLookupByLibrary.simpleMessage(
                 "Store branch to client distance and client location updated"),
+        "storeBranchToClientDistanceDirectly": MessageLookupByLibrary.simpleMessage(
+            "A distance was added to the calculated distance automatically, directly by the administration"),
         "storeBranchToClientDistanceUpdated":
             MessageLookupByLibrary.simpleMessage(
                 "Store branch to client distance updated"),
@@ -1221,6 +1229,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "To find out more, please leave your phone.\nand we will contact you personally"),
         "today": MessageLookupByLibrary.simpleMessage("Today"),
         "took": MessageLookupByLibrary.simpleMessage("Took"),
+        "topstoreActivity":
+            MessageLookupByLibrary.simpleMessage("Top store activity"),
         "total": MessageLookupByLibrary.simpleMessage("Total"),
         "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
             "The total cost without delivery cost"),
