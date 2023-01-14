@@ -70,7 +70,7 @@ class CaptinRatingDetailsLoadedState extends States {
               itemBuilder: (context, index) {
                 return ItemRatingWidget(
                   storeOwnerName: model![index].storeOwnerName,
-                  // comment: model![index].comment,
+                  orderId: model![index].orderID,
                   comment: model![index].comment,
                   rate: model![index].rating,
                 );

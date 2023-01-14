@@ -360,6 +360,8 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
               bounce: double.tryParse(_bounceController.text) ?? 0,
               captainName: _nameController.text,
               car: _carController.text,
+              city: _cityController.text,
+              address: _addressController.text,
               identity: imagePathIdentity,
               images: imagePath,
               drivingLicence: imagePathDriving,

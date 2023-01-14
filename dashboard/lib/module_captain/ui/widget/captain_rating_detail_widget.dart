@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import '../../../generated/l10n.dart';
 
 class ItemRatingWidget extends StatelessWidget {
   final String storeOwnerName;
+  final int orderId;
   final int rate;
   final String comment;
   const ItemRatingWidget({
@@ -12,6 +14,7 @@ class ItemRatingWidget extends StatelessWidget {
     required this.storeOwnerName,
     required this.rate,
     required this.comment,
+    required this.orderId,
   }) : super(key: key);
 
   @override
@@ -24,6 +27,11 @@ class ItemRatingWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
+          CustomListTileRating(
+            title: S.current.orderNumber,
+            subTitle: orderId.toString(),
+            iconData: FontAwesomeIcons.paperclip,
+          ),
           CustomListTileRating(
             title: storeOwnerName,
             subTitle: '',

@@ -813,7 +813,7 @@
     "newSubOrderCreatedByAdministration": "تم انشاء طلب فرعي تابع لطلب مجمع من قبل الادارة",
     "storeBranchToClientDistanceUpdated": "تم تحديث المسافة الفاصلة بين موقع العميل والفرع التجاري للمتجر من قبل الادارة",
     "storeBranchToClientDistanceAndDestinationUpdated": "تم تحديث موقع العميل و المسافة الفاصلة بين موقع العميل والفرع التجاري للمتجر من قبل الادارة",
-    "cashPaymentConfirmed": "تم حل التعارض بين إجابة المتجر وإجابة الكابتن من قبل الإدارة",
+    "cashPaymentConfirmed": "تم تأكيد استلام المبلغ النقدي باستخدام الكوماند",
     "payConflictAnswersResolved": "تم حل التعارض بين الاجابات حول تسليم المبلغ النقدي من أجل الطلب",
     "admin": "المدير",
     "distanceProvidedByCaptain": "المسافة التي ادخلها الكابتن",
@@ -854,5 +854,11 @@
     "chooseFromDate":"من تاريخ",
     "today":"اليوم",
     "yesterday":"البارحة",
-    "captainractivityDetails":"نشاط الكابتن"
+    "captainractivityDetails":"نشاط الكابتن",
+    "topstoreActivity":"اكثر المتاجر نشاطاً",
+    "destinationUpdate":"تم تحديث حقل موقع المستلم من قبل الإدارة",
+    "recycleOrderDone":"تم إعادة تدوير الطلب من قبل الإدارة",
+    "storeBranchToClientDistanceDirectly":"تم إضافة مسافة على المسافة المحتسبة تلقائيا بشكل مباشر من قبل الإدارة",
+    "storeBranchToClientDistance ":"تم إضافة مسافة على المسافة المحتسبة تلقائيا باستخدام احداثيات الموقع الجديد من قبل الإدارة",
+    "isCashPaymentConfirmedByStore":"تم تأكيد/نفي استلام المبلغ النقدي من قبل الادارة نيابة عن المتجر"
 }

@@ -55,6 +55,8 @@ class Data {
   CreateDate? createDate;
   FinancialSystemCaptainDetails? financialSystemCaptainDetails;
   int? verificationStatus;
+  String? city;
+  String? address;
   Data(
       {this.id,
       this.captainID,
@@ -79,7 +81,8 @@ class Data {
       this.identity,
       this.createDate,
       this.financialSystemCaptainDetails,
-      this.verificationStatus});
+      this.verificationStatus,
+      this.address});
 
   Data.fromJson(dynamic json) {
     id = json['id'];
@@ -97,11 +100,14 @@ class Data {
     status = json['status'];
     rating = json['rating'];
     bounce = json['bounce'];
+
     roomID = json['roomId'];
     image = json['images'] != null ? ImageUrl.fromJson(json['images']) : null;
     phone = json['phone'];
     isOnline = json['isOnline'];
     bankName = json['bankName'];
+    city = json['city'];
+    address = json['address'];
     bankAccountNumber = json['bankAccountNumber'];
     stcPay = json['stcPay'];
     vacationStatus = json['vacationStatus'];
@@ -110,6 +116,7 @@ class Data {
             ? FinancialSystemCaptainDetails.fromJson(
                 json['financialCaptainSystemDetails'])
             : null;
+
     mechanicLicense = json['mechanicLicense'] != null
         ? ImageUrl.fromJson(json['mechanicLicense'])
         : null;

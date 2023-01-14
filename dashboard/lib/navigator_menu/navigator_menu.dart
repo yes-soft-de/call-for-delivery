@@ -100,6 +100,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.captainActivity,
                       Icons.show_chart_rounded,
                       true),
+                  customListTile(getIt<StoresModule>().topActiveStoreScreen,
+                      S.current.topstoreActivity, FontAwesomeIcons.store, true),
                 ],
                 page: widget.currentPage),
 
