@@ -110,7 +110,7 @@ class OrderCashCard extends StatelessWidget {
                     style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.red, shape: StadiumBorder()),
                     onPressed: () {
-                      answer(0);
+                      answer(2);
                     },
                     label: Text(
                       S.current.notReceivedCash,

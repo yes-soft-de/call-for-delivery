@@ -54,8 +54,7 @@ class OrderCaptainNotArrivedScreenState
 
   late FilterOrderCaptainNotArrivedRequest ordersFilter = ordersFilter =
       FilterOrderCaptainNotArrivedRequest(
-          fromDate: DateTime(today.year, today.month, today.day, 0),
-          toDate: DateTime.now());
+          fromDate: DateTime.now(), toDate: DateTime.now());
 
   Future<void> getOrders([bool loading = true]) async {
     widget._stateManager.getOrdersFilters(this, ordersFilter, loading);
@@ -163,8 +162,7 @@ class OrderCaptainNotArrivedScreenState
                                   lastDate: DateTime.now())
                               .then((value) {
                             if (value != null) {
-                              ordersFilter.toDate = DateTime(
-                                  value.year, value.month, value.day, 24);
+                              ordersFilter.toDate = value;
                               setState(() {});
                               getOrders();
                             }
