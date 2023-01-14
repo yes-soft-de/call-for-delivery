@@ -257,8 +257,8 @@ class ReportController extends BaseController
      * @OA\RequestBody(
      *      description="Post a request with filtering options",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="state"),
-     *          @OA\Property(type="string", property="fromDate")
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate")
      *      )
      * )
      *

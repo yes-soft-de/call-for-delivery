@@ -192,7 +192,7 @@ class AdminCaptainFinancialSystemDetailService implements AdminCaptainFinancialS
         }
 
         // Third, update complete account status if appropriate
-        $this->updateCaptainProfileCompleteAccountStatusByAdmin($captainFinancialSystemDetailEntity->getId(),
+        $this->updateCaptainProfileCompleteAccountStatusByAdmin($captainProfile->getId(),
             CaptainConstant::COMPLETE_ACCOUNT_STATUS_SYSTEM_FINANCIAL_SELECTED);
 
         return $this->autoMapping->map(CaptainFinancialSystemDetailEntity::class, CaptainFinancialSystemDetailCreateByAdminResponse::class, $captainFinancialSystemDetailEntity);
