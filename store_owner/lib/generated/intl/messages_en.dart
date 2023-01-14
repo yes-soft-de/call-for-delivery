@@ -759,6 +759,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "profileUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Profile has been updated successfully"),
         "profitMargin": MessageLookupByLibrary.simpleMessage("Profit Margin"),
+        "quickFillUp": MessageLookupByLibrary.simpleMessage("Quick fillUp"),
         "rateCaptain": MessageLookupByLibrary.simpleMessage("Rate Captain"),
         "rateCaptainMessage": MessageLookupByLibrary.simpleMessage(
             "Rate this captain upon your opinion"),

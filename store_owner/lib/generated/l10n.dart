@@ -6899,6 +6899,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Quick fillUp`
+  String get quickFillUp {
+    return Intl.message(
+      'Quick fillUp',
+      name: 'quickFillUp',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

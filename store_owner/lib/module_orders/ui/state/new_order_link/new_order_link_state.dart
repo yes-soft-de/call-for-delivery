@@ -66,6 +66,16 @@ class NewOrderLinkStateLoaded extends States {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                Center(
+                  child: ElevatedButton.icon(
+                    onPressed: () {
+                      screenState.quickFillUp();
+                    },
+                    label: Text(S.current.quickFillUp),
+                    icon: Icon(Icons.quickreply_rounded),
+                  ),
+                ),
+
                 // branches
                 Column(
                   children: [

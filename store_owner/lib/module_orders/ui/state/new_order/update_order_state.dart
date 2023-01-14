@@ -73,8 +73,12 @@ class UpdateOrderLoaded extends States {
         pdfBaseUrl: orderInfo.pdf?.pdfBaseUrl,
         pdfPreview: orderInfo.pdf?.pdfPreview,
         pdfOnServerPath: orderInfo.pdf?.pdfOnServerPath);
-    activeBranch =
-        branches.firstWhere((element) => element.id == orderInfo.branchID);
+    try {
+      activeBranch =
+          branches.firstWhere((element) => element.id == orderInfo.branchID);
+    } catch (e) {
+      
+    }
     screenState.refresh();
   }
   final List<String> _paymentMethods = ['online', 'cash'];

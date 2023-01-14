@@ -1,7 +1,7 @@
 class Location {
   String? countryCode;
-  int? latitude;
-  int? longitude;
+  num? latitude;
+  num? longitude;
   String? comments;
 
   Location({
@@ -13,8 +13,8 @@ class Location {
 
   factory Location.fromJson(Map<String, dynamic> json) => Location(
         countryCode: json['country_code'] as String?,
-        latitude: json['latitude'] as int?,
-        longitude: json['longitude'] as int?,
+        latitude: json['latitude'] as num?,
+        longitude: json['longitude'] as num?,
         comments: json['comments'] as String?,
       );
 

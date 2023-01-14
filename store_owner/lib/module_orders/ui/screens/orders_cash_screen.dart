@@ -5,7 +5,6 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/state_manager/orders_cash_state_manager.dart';
-import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -82,9 +81,8 @@ class OrdersCashScreenState extends State<OrdersCashScreen> {
             actions: [
               CustomC4dAppBar.actionIcon(context, onTap: () {
                 ordersFilter.fromDate =
-                    DateTime(today.year, today.month, today.day, 0)
-                        .toIso8601String();
-                ordersFilter.toDate = DateTime.now().toIso8601String();
+                    DateTime(today.year, today.month, today.day, 0);
+                ordersFilter.toDate = DateTime.now();
                 currentIndex = 0;
                 getOrders();
               }, icon: Icons.restart_alt_rounded)
@@ -131,7 +129,7 @@ class OrdersCashScreenState extends State<OrdersCashScreen> {
                                     lastDate: DateTime.now())
                                 .then((value) {
                               if (value != null) {
-                                ordersFilter.fromDate = value.toIso8601String();
+                                ordersFilter.fromDate = value;
                                 setState(() {});
                                 getOrders();
                               }
@@ -139,9 +137,8 @@ class OrdersCashScreenState extends State<OrdersCashScreen> {
                           },
                           title: Text(S.current.firstDate),
                           subtitle: Text(ordersFilter.fromDate != null
-                              ? DateFormat('yyyy/M/d').format(DateTime.parse(
-                                  ordersFilter.fromDate ??
-                                      DateTime.now().toIso8601String()))
+                              ? DateFormat('yyyy/M/d').format(
+                                  ordersFilter.fromDate ?? DateTime.now())
                               : '0000/00/00'),
                         ),
                       ),
@@ -185,7 +182,7 @@ class OrdersCashScreenState extends State<OrdersCashScreen> {
                                     lastDate: DateTime.now())
                                 .then((value) {
                               if (value != null) {
-                                ordersFilter.toDate = value.toIso8601String();
+                                ordersFilter.toDate = value;
                                 setState(() {});
                                 getOrders();
                               }
@@ -193,9 +190,8 @@ class OrdersCashScreenState extends State<OrdersCashScreen> {
                           },
                           title: Text(S.current.endDate),
                           subtitle: Text(ordersFilter.toDate != null
-                              ? DateFormat('yyyy/M/d').format(DateTime.parse(
-                                  ordersFilter.toDate ??
-                                      DateTime.now().toIso8601String()))
+                              ? DateFormat('yyyy/M/d')
+                                  .format(ordersFilter.toDate ?? DateTime.now())
                               : '0000/00/00'),
                         ),
                       ),
