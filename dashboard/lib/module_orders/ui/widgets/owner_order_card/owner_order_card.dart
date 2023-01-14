@@ -151,8 +151,7 @@ class OwnerOrderCard extends StatelessWidget {
                     verticalTile(context,
                         title: S.current.createdDate,
                         // subtitle: Moment.fromDate(DateTime.parse(createdDate))
-                        subtitle: createdDate
-                            ),
+                        subtitle: createdDate),
                   ],
                 ),
                 // divider
@@ -176,33 +175,6 @@ class OwnerOrderCard extends StatelessWidget {
             ),
           ),
         ),
-        // orderStatus == S.current.waiting
-        //     ? Padding(
-        //         padding: const EdgeInsets.all(12.0),
-        //         child: RecycleOrderButton(
-        //           onTap: () {
-        //             showDialog(
-        //                 context: context,
-        //                 builder: (ctx) {
-        //                   return CustomAlertDialog(
-        //                       onPressed: () {
-        //                         Navigator.of(context).pop();
-        //                         // Navigator.of(context).pushNamedAndRemoveUntil(
-        //                         //     OrdersRoutes.UPDATE_ORDERS_SCREEN,
-        //                         //     (route) => false,
-        //                         //     arguments: s.orderInfo);
-        //                       },
-        //                       content: S.current.updateOrderWarning,
-        //                       oneAction: false);
-        //                 });
-        //           },
-        //           backgroundColor: Colors.green,
-        //           icon: FontAwesomeIcons.recycle,
-        //           title: 'Recycle Order',
-        //           short: true,
-        //         ),
-        //       )
-        //     : SizedBox()
       ],
     );
   }
