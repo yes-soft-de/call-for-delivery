@@ -251,8 +251,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "cartValidation": MessageLookupByLibrary.simpleMessage("Checking Cart"),
         "cash": MessageLookupByLibrary.simpleMessage("Cash"),
         "cashOrders": MessageLookupByLibrary.simpleMessage("Cash order"),
-        "cashPaymentConfirmed":
-            MessageLookupByLibrary.simpleMessage("Cash payment confirmed"),
+        "cashPaymentConfirmed": MessageLookupByLibrary.simpleMessage(
+            "Receipt of the cash amount was confirmed using the command"),
         "categories": MessageLookupByLibrary.simpleMessage("Categories"),
         "category": MessageLookupByLibrary.simpleMessage("category"),
         "categoryImage": MessageLookupByLibrary.simpleMessage("Category image"),
@@ -1116,6 +1116,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Store Availability"),
         "storeBalance": MessageLookupByLibrary.simpleMessage("Store Balance"),
         "storeBranchToClientDistance": MessageLookupByLibrary.simpleMessage(
+            "Distance from branch to client"),
+        "storeBranchToClientDistance2": MessageLookupByLibrary.simpleMessage(
             "A distance was added to the calculated distance automatically using the coordinates of the new location by the administration"),
         "storeBranchToClientDistanceAndDestinationUpdated":
             MessageLookupByLibrary.simpleMessage(

@@ -250,7 +250,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cash": MessageLookupByLibrary.simpleMessage("نقدا"),
         "cashOrders": MessageLookupByLibrary.simpleMessage("الطلبات الكاش"),
         "cashPaymentConfirmed": MessageLookupByLibrary.simpleMessage(
-            "تم حل التعارض بين إجابة المتجر وإجابة الكابتن من قبل الإدارة"),
+            "تم تأكيد استلام المبلغ النقدي باستخدام الكوماند"),
         "categories": MessageLookupByLibrary.simpleMessage("التصنيفات"),
         "category": MessageLookupByLibrary.simpleMessage("تصنيف"),
         "categoryImage": MessageLookupByLibrary.simpleMessage("صورة التصنيف"),
