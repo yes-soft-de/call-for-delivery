@@ -8180,10 +8180,10 @@ class S {
     );
   }
 
-  /// `Cash payment confirmed`
+  /// `Receipt of the cash amount was confirmed using the command`
   String get cashPaymentConfirmed {
     return Intl.message(
-      'Cash payment confirmed',
+      'Receipt of the cash amount was confirmed using the command',
       name: 'cashPaymentConfirmed',
       desc: '',
       args: [],
@@ -8645,6 +8645,16 @@ class S {
     return Intl.message(
       'Receipt of the cash amount has been confirmed/denied by the administration on behalf of the store',
       name: 'isCashPaymentConfirmedByStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `copied succesfuly`
+  String get copied {
+    return Intl.message(
+      'copied succesfuly',
+      name: 'copied',
       desc: '',
       args: [],
     );

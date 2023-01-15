@@ -251,8 +251,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "cartValidation": MessageLookupByLibrary.simpleMessage("Checking Cart"),
         "cash": MessageLookupByLibrary.simpleMessage("Cash"),
         "cashOrders": MessageLookupByLibrary.simpleMessage("Cash order"),
-        "cashPaymentConfirmed":
-            MessageLookupByLibrary.simpleMessage("Cash payment confirmed"),
+        "cashPaymentConfirmed": MessageLookupByLibrary.simpleMessage(
+            "Receipt of the cash amount was confirmed using the command"),
         "categories": MessageLookupByLibrary.simpleMessage("Categories"),
         "category": MessageLookupByLibrary.simpleMessage("category"),
         "categoryImage": MessageLookupByLibrary.simpleMessage("Category image"),
@@ -344,6 +344,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "contactInfo": MessageLookupByLibrary.simpleMessage("Contact info"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
+        "copied": MessageLookupByLibrary.simpleMessage("copied succesfuly"),
         "cost": MessageLookupByLibrary.simpleMessage("cost"),
         "countCaptains": MessageLookupByLibrary.simpleMessage("Captains Count"),
         "countClients": MessageLookupByLibrary.simpleMessage("Clients Count"),

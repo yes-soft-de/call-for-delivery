@@ -250,7 +250,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "cash": MessageLookupByLibrary.simpleMessage("نقدا"),
         "cashOrders": MessageLookupByLibrary.simpleMessage("الطلبات الكاش"),
         "cashPaymentConfirmed": MessageLookupByLibrary.simpleMessage(
-            "تم حل التعارض بين إجابة المتجر وإجابة الكابتن من قبل الإدارة"),
+            "تم تأكيد استلام المبلغ النقدي باستخدام الكوماند"),
         "categories": MessageLookupByLibrary.simpleMessage("التصنيفات"),
         "category": MessageLookupByLibrary.simpleMessage("تصنيف"),
         "categoryImage": MessageLookupByLibrary.simpleMessage("صورة التصنيف"),
@@ -338,6 +338,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "contactInfo": MessageLookupByLibrary.simpleMessage("معلومات الإتصال"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف للتواصل"),
+        "copied": MessageLookupByLibrary.simpleMessage("تم نسخه بنجاح"),
         "cost": MessageLookupByLibrary.simpleMessage("التكلفة"),
         "countCaptains": MessageLookupByLibrary.simpleMessage("عدد الكباتن"),
         "countClients": MessageLookupByLibrary.simpleMessage("عدد العملاء"),
