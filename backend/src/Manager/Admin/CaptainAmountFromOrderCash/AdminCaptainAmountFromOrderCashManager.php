@@ -3,6 +3,7 @@
 namespace App\Manager\Admin\CaptainAmountFromOrderCash;
 
 use App\AutoMapping;
+use App\Constant\CaptainAmountFromCashOrder\CaptainAmountFromCashOrderConstant;
 use App\Entity\CaptainAmountFromOrderCashEntity;
 use App\Entity\CaptainEntity;
 use App\Repository\CaptainAmountFromOrderCashEntityRepository;
@@ -61,5 +62,25 @@ class AdminCaptainAmountFromOrderCashManager
     public function getCaptainAmountFromOrderCashBySpecificDateOnUnpaidCondition(string $fromDate, string $toDate, int $captainId): ?array
     {      
       return $this->captainAmountFromOrderCashEntityRepository->getCaptainAmountFromOrderCashBySpecificDateOnUnpaidCondition($captainId, $fromDate, $toDate);
+    }
+
+    public function deleteCaptainAmountFromCashOrderByCaptainProfileIdAndOrderId(int $captainProfileId, int $orderId): array|int
+    {
+        $captainAmountsFromCashOrder = $this->captainAmountFromOrderCashEntityRepository->findBy(['captain' => $captainProfileId,
+            'orderId' => $orderId]);
+
+        if (count($captainAmountsFromCashOrder) === 0) {
+            return CaptainAmountFromCashOrderConstant::CAPTAIN_AMOUNT_FROM_CASH_ORDER_NOT_EXIST;
+        }
+
+        foreach ($captainAmountsFromCashOrder as $amountFromCashOrder) {
+            $amountFromCashOrder->setCaptainPaymentToCompany(null);
+
+            $this->entityManager->remove($amountFromCashOrder);
+
+            $this->entityManager->flush();
+        }
+
+        return $captainAmountsFromCashOrder;
     }
 }

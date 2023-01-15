@@ -68,4 +68,9 @@ class AdminCaptainAmountFromOrderCashService
 
         return $item;
     }
+
+    public function deleteCaptainAmountFromCashOrderByCaptainProfileIdAndOrderId(int $captainProfileId, int $orderId): array|int
+    {
+        return $this->adminCaptainAmountFromOrderCashManager->deleteCaptainAmountFromCashOrderByCaptainProfileIdAndOrderId($captainProfileId, $orderId);
+    }
 }

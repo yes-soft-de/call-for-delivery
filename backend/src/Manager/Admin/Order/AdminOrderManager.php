@@ -267,7 +267,6 @@ class AdminOrderManager
         $orderEntity->setConflictedAnswersResolvedBy(null);
         $orderEntity->setIsCashPaymentConfirmedByStore(null);
         $orderEntity->setIsCashPaymentConfirmedByStoreUpdateDate(null);
-
         $orderEntity->setCaptainId(null);
 
         $this->entityManager->flush();
