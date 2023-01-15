@@ -244,8 +244,10 @@ class ReportService
             // Sort the results descending according to the orders count
             $sortedStoresWithOrders = $this->sortArrayDescendingBySpecificKey($storesWithOrders, 'ordersCount');
 
-            foreach ($sortedStoresWithOrders as $storeInfo) {//dd($storeInfo);
+            foreach ($sortedStoresWithOrders as $storeInfo) {
                 $storeInfo['image'] = $this->uploadFileHelperService->getImageParams($storeInfo['images']);
+                // Select top branch
+                $storeInfo['storeBranchName'] = $this->getTopBranchOfOrders($storeInfo['orders']);
 
                 $response[] = $this->autoMapping->map('array', StoresWithOrdersCountDuringSpecificTimeFilterByAdminResponse::class, $storeInfo);
             }

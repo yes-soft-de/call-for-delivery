@@ -44,4 +44,9 @@ class OrderPendingResponse
     public bool|null $orderIsMain;
 
     public int $isHide;
+
+    /**
+     * @var string|null
+     */
+    public $captainName;
 }
