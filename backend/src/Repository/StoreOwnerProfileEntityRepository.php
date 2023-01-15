@@ -285,11 +285,11 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
                 $finalResponse[$key] = $value;
 
                 // Get delivered orders count of the captain
-                $ordersCountResult = $this->getStoreDeliveredOrdersCountByOptionalDatesForAdmin($value['id'],
+                $finalResponse[$key]['orders'] = $this->getStoreDeliveredOrdersCountByOptionalDatesForAdmin($value['id'],
                     $request->getFromDate(), $request->getToDate());
 
-                if(count($ordersCountResult) > 0) {
-                    $finalResponse[$key]['ordersCount'] = $ordersCountResult[0];
+                if(count($finalResponse[$key]['orders']) > 0) {
+                    $finalResponse[$key]['ordersCount'] = count($finalResponse[$key]['orders']);
 
                 } else {
                     $finalResponse[$key]['ordersCount'] = (string) 0;
@@ -354,7 +354,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
     public function getStoreDeliveredOrdersCountByOptionalDatesForAdmin(int $storeProfileId, ?string $startDate, ?string $endDate): array
     {
         $query = $this->createQueryBuilder('storeOwnerProfileEntity')
-            ->select('COUNT(orderEntity.id)')
+            ->select('orderEntity.id as orderId', 'storeOwnerBranchEntity.id as branchId', 'storeOwnerBranchEntity.name as branchName')
 
             ->andWhere('storeOwnerProfileEntity.id = :storeProfileId')
             ->setParameter('storeProfileId', $storeProfileId)
@@ -364,6 +364,20 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
                 'orderEntity',
                 Join::WITH,
                 'orderEntity.storeOwner = storeOwnerProfileEntity.id'
+            )
+
+            ->leftJoin(
+                StoreOrderDetailsEntity::class,
+                'storeOrderDetailsEntity',
+                Join::WITH,
+                'storeOrderDetailsEntity.orderId = orderEntity.id'
+            )
+
+            ->leftJoin(
+                StoreOwnerBranchEntity::class,
+                'storeOwnerBranchEntity',
+                Join::WITH,
+                'storeOwnerBranchEntity.id = storeOrderDetailsEntity.branch'
             )
 
             ->andWhere('orderEntity.state = :delivered')
@@ -379,6 +393,6 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
                 ->setParameter('toDate', $endDate);
         }
 
-        return $query->getQuery()->getSingleColumnResult();
+        return $query->getQuery()->getResult();
     }
 }
