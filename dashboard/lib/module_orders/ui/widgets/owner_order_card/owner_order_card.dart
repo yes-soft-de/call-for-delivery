@@ -15,6 +15,7 @@ class OwnerOrderCard extends StatelessWidget {
   final bool orderIsMain;
   final String? primaryTitle;
   final IconData? icon;
+  final bool? isDelivered;
   OwnerOrderCard(
       {required this.orderNumber,
       required this.orderStatus,
@@ -25,7 +26,8 @@ class OwnerOrderCard extends StatelessWidget {
       this.background,
       this.primaryTitle,
       required this.orderIsMain,
-      this.icon});
+      this.icon,
+      this.isDelivered});
 
   @override
   Widget build(BuildContext context) {
@@ -147,11 +149,12 @@ class OwnerOrderCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     verticalTile(context,
-                        title: S.current.captain, subtitle: deliveryDate),
+                        title: isDelivered ?? false
+                            ? S.current.captain
+                            : S.current.deliverDate,
+                        subtitle: deliveryDate),
                     verticalTile(context,
-                        title: S.current.createdDate,
-                        // subtitle: Moment.fromDate(DateTime.parse(createdDate))
-                        subtitle: createdDate),
+                        title: S.current.createdDate, subtitle: createdDate),
                   ],
                 ),
                 // divider
