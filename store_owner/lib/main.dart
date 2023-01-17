@@ -42,6 +42,7 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:lehttp_overrides/lehttp_overrides.dart';
+import 'package:new_version_plus/new_version_plus.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -127,6 +128,27 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   late String lang;
   late ThemeData activeTheme;
   bool authorized = false;
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    checkForUpdates(context);
+  }
+
+  Future<void> checkForUpdates(context) async {
+    final newVersion = NewVersionPlus();
+    final VersionStatus? status = await newVersion.getVersionStatus();
+    if (status?.canUpdate == true) {
+      newVersion.showUpdateDialog(
+        context: context,
+        versionStatus: status!,
+        dialogTitle: S.current.newVersion,
+        dialogText: S.current.newVersionHint
+            .replaceAll('^', status.localVersion)
+            .replaceAll('&', status.storeVersion),
+        updateButtonText: S.current.update,
+        dismissButtonText: S.current.later,
+      );
+    }
+  }
 
   @override
   void initState() {
@@ -170,6 +192,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       activeTheme = event;
       setState(() {});
     });
+    checkForUpdates(context);
   }
 
   @override
