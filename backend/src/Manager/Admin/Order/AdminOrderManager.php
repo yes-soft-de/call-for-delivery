@@ -228,6 +228,8 @@ class AdminOrderManager
     public function updateOrderStatusToCancelled(OrderEntity $orderEntity): OrderEntity
     {
         $orderEntity->setState(OrderStateConstant::ORDER_STATE_CANCEL);
+        // if order belongs to an aggregated one, then unlink them
+        $orderEntity->setPrimaryOrder(null);
 
         $this->entityManager->flush();
 
@@ -243,7 +245,8 @@ class AdminOrderManager
 
         $orderEntity->setDateCaptainArrived(null);
         $orderEntity->setIsCaptainArrived(false);
-
+        // if order belongs to an aggregated one, then unlink them
+        $orderEntity->setPrimaryOrder(null);
         $orderEntity->setCaptainId(null);
 
         $this->entityManager->flush();
@@ -255,8 +258,8 @@ class AdminOrderManager
     {
         $orderEntity->setState(OrderStateConstant::ORDER_STATE_CANCEL);
 
-        // save captain user id for later use
-        $captainUserId = $orderEntity->getCaptainId()->getCaptainId();
+        // save captain profile entity for later use
+        $captainEntity = $orderEntity->getCaptainId();
 
         $orderEntity->setDateCaptainArrived(null);
         $orderEntity->setIsCaptainArrived(false);
@@ -268,10 +271,12 @@ class AdminOrderManager
         $orderEntity->setIsCashPaymentConfirmedByStore(null);
         $orderEntity->setIsCashPaymentConfirmedByStoreUpdateDate(null);
         $orderEntity->setCaptainId(null);
+        // if order belongs to an aggregated one, then unlink them
+        $orderEntity->setPrimaryOrder(null);
 
         $this->entityManager->flush();
 
-        return [$orderEntity, $captainUserId];
+        return [$orderEntity, $captainEntity];
     }
     
     public function updateOrderStateByAdmin(OrderStateUpdateByAdminRequest $request): int|array|null

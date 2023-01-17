@@ -3,9 +3,11 @@
 namespace App\Manager\Admin\StoreOwnerPayment;
 
 use App\AutoMapping;
+use App\Constant\StoreOwnerPayment\StoreOwnerPaymentFromCompany\StoreOwnerPaymentFromCompanyConstant;
 use App\Entity\StoreOwnerPaymentFromCompanyEntity;
 use App\Repository\StoreOwnerPaymentFromCompanyEntityRepository;
 use App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentFromCompanyForOrderCashCreateRequest;
+use App\Request\Admin\StoreOwnerPayment\StoreOwnerPaymentFromCompanyUpdateAmountByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
 use App\Constant\StoreOwner\StoreProfileConstant;
@@ -85,5 +87,25 @@ class AdminStoreOwnerPaymentFromCompanyManager
     public function getSumPaymentsFromCompanyInSpecificDate(int $storeId, string $fromDate, string $toDate): ?array
     {
         return $this->storeOwnerPaymentFromCompanyEntityRepository->getSumPaymentsFromCompanyInSpecificDate($storeId, $fromDate, $toDate);
+    }
+
+    public function updateStoreOwnerPaymentFromCompanyBySpecificAmount(StoreOwnerPaymentFromCompanyUpdateAmountByAdminRequest $request): int|StoreOwnerPaymentFromCompanyEntity
+    {
+        $storeOwnerPaymentFromCompanyEntity = $this->storeOwnerPaymentFromCompanyEntityRepository->findOneBy(['id' => $request->getId()]);
+
+        if (! $storeOwnerPaymentFromCompanyEntity) {
+            return StoreOwnerPaymentFromCompanyConstant::STORE_OWNER_PAYMENT_FROM_COMPANY_NOT_EXIST_CONST;
+        }
+
+        if ($request->getOperationType() === OrderAmountCashConstant::AMOUNT_ADDITION_TYPE_OPERATION_CONST) {
+            $storeOwnerPaymentFromCompanyEntity->setAmount($storeOwnerPaymentFromCompanyEntity->getAmount() + $request->getCashAmount());
+
+        } elseif ($request->getOperationType() === OrderAmountCashConstant::AMOUNT_SUBTRACTION_TYPE_OPERATION_CONST) {
+            $storeOwnerPaymentFromCompanyEntity->setAmount($storeOwnerPaymentFromCompanyEntity->getAmount() - $request->getCashAmount());
+        }
+
+        $this->entityManager->flush();
+
+        return $storeOwnerPaymentFromCompanyEntity;
     }
 }

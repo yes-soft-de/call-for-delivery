@@ -857,19 +857,20 @@ class AdminOrderController extends BaseController
 
         if ($response === OrderResultConstant::ORDER_TYPE_BID) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_WRONG_ORDER_TYPE);
-        }
 
-        // if ($response === OrderResultConstant::ORDER_ALREADY_IS_BEING_ACCEPTED) {
-           // return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_REMOVE_CAPTAIN_RECEIVE);
-        // }
-
-        if ($response === OrderResultConstant::ORDER_UPDATE_PROBLEM) {
+        } elseif ($response === OrderResultConstant::ORDER_UPDATE_PROBLEM) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_UPDATE);
+
+        } elseif ($response === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_NOT_FOUND);
+
+        } elseif ($response === OrderResultConstant::ORDER_ALREADY_BEING_CANCELLED) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CANCEL);
         }
 
-        if ($response === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_NOT_FOUND);
-        }
+        // elseif ($response === OrderResultConstant::ORDER_ALREADY_IS_BEING_ACCEPTED) {
+        // return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_REMOVE_CAPTAIN_RECEIVE);
+        // }
 
         return $this->response($response, self::UPDATE);
     }

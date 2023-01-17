@@ -2,10 +2,7 @@
 
 namespace App\Service\Admin\StoreOwnerSubscription;
 
-use App\Constant\Subscription\SubscriptionConstant;
-use App\Constant\Subscription\SubscriptionDetailsConstant;
 use App\Entity\SubscriptionDetailsEntity;
-use App\Entity\SubscriptionEntity;
 use App\Manager\Admin\StoreOwnerSubscription\AdminSubscriptionDetailsManager;
 
 class AdminStoreSubscriptionDetailsService
@@ -23,31 +20,16 @@ class AdminStoreSubscriptionDetailsService
     }
 
     // Note: factor is the parameter that we want to subtract/add from/to remaining cars field
-    public function updateRemainingCarsOfStoreSubscriptionBySubscriptionDetailsId($subscriptionDetails, string $operationType, int $factor): SubscriptionDetailsEntity|int
+    public function updateRemainingCarsOfStoreSubscriptionBySubscriptionDetailsId(int $subscriptionDetailsId, string $operationType, int $factor): SubscriptionDetailsEntity|int
     {
-        $subscriptionDetailsResult = $this->adminSubscriptionDetailsManager->updateRemainingCarsOfStoreSubscriptionBySubscriptionDetailsId($subscriptionDetails,
+        return $this->adminSubscriptionDetailsManager->updateRemainingCarsOfStoreSubscriptionBySubscriptionDetailsId($subscriptionDetailsId,
             $operationType, $factor);
-
-        return $subscriptionDetailsResult;
     }
 
     // Note: factor is the parameter that we want to subtract/add from/to remaining cars field
-    public function updateRemainingOrdersOfStoreSubscriptionBySubscriptionDetailsId($subscriptionDetails, string $operationType, int $factor): SubscriptionDetailsEntity|int
+    public function updateRemainingOrdersOfStoreSubscriptionBySubscriptionDetailsId(int $subscriptionDetailsId, string $operationType, int $factor): SubscriptionDetailsEntity|int
     {
-        $subscriptionDetailsResult = $this->adminSubscriptionDetailsManager->updateRemainingOrdersOfStoreSubscriptionBySubscriptionDetailsId($subscriptionDetails,
+        return $this->adminSubscriptionDetailsManager->updateRemainingOrdersOfStoreSubscriptionBySubscriptionDetailsId($subscriptionDetailsId,
             $operationType, $factor);
-
-        return $subscriptionDetailsResult;
     }
-
-//    public function getCurrentSubscriptionByStoreOwnerProfileIdForAdmin(int $storeOwnerProfileId): SubscriptionEntity|int|null
-//    {
-//        $subscriptionDetails = $this->getSubscriptionDetailsByStoreOwnerProfileIdForAdmin($storeOwnerProfileId);
-//
-//        if (! $subscriptionDetails) {
-//            return SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND;
-//        }
-//
-//        return $subscriptionDetails->getLastSubscription();
-//    }
 }

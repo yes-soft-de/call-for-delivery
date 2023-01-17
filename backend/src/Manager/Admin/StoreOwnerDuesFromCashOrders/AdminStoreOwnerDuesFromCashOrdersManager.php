@@ -3,6 +3,7 @@
 namespace App\Manager\Admin\StoreOwnerDuesFromCashOrders;
 
 use App\Repository\StoreOwnerDuesFromCashOrdersEntityRepository;
+use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrderDeleteByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersFilterGetRequest;
 use App\Entity\StoreOwnerProfileEntity;
@@ -56,5 +57,35 @@ class AdminStoreOwnerDuesFromCashOrdersManager
     public function getStoreAmountFromOrderCashBySpecificDateOnUnpaidCondition(string $fromDate, string $toDate, int $storeId): ?array
     {      
       return $this->storeOwnerDuesFromCashOrdersEntityRepository->getStoreOwnerDuesFromCashOrders($storeId, $fromDate, $toDate);
+    }
+
+    public function deleteStoreOwnerDuesFromCashOrderByAdmin(StoreOwnerDuesFromCashOrderDeleteByAdminRequest $request): array|int
+    {
+        $storeDuesFromCashOrder = $this->storeOwnerDuesFromCashOrdersEntityRepository->findOneBy(['store' => $request->getStoreOwnerProfileId(),
+            'orderId' => $request->getOrderId()]);
+
+        if (! $storeDuesFromCashOrder) {
+            return OrderAmountCashConstant::STORE_DUES_FROM_CASH_ORDER_NOT_EXIST_CONST;
+        }
+
+        $payment = $storeDuesFromCashOrder->getStoreOwnerPaymentFromCompany();
+//        $storeDuesFromCashOrder->getStoreOwnerPaymentFromCompany()->removeStoreOwnerDuesFromCashOrdersEntity($storeDuesFromCashOrder);
+//        $this->entityManager->flush();
+//
+        $storeDuesFromCashOrder->setStoreOwnerPaymentFromCompany(null);
+        $this->entityManager->flush();
+
+//        if ($payment) {
+//            $payment->removeStoreOwnerDuesFromCashOrdersEntity($storeDuesFromCashOrder);
+//            $this->entityManager->flush();
+//
+//            $storeDuesFromCashOrder->setStoreOwnerPaymentFromCompany(null);
+//            $this->entityManager->flush();
+//        }
+
+        $this->entityManager->remove($storeDuesFromCashOrder);
+        $this->entityManager->flush();
+
+        return [$storeDuesFromCashOrder, $payment];
     }
 }

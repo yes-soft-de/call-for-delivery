@@ -9,6 +9,9 @@ use App\Entity\SubscriptionEntity;
 use App\Manager\Subscription\SubscriptionManager;
 use DateTime;
 
+/**
+ * This service responsible for maintaining the store subscription, and it will be continued later
+ */
 class StoreSubscriptionHandleService
 {
     private SubscriptionManager $subscriptionManager;

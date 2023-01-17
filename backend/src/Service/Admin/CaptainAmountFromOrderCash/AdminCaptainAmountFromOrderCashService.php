@@ -4,6 +4,7 @@ namespace App\Service\Admin\CaptainAmountFromOrderCash;
 
 use App\AutoMapping;
 use App\Manager\Admin\CaptainAmountFromOrderCash\AdminCaptainAmountFromOrderCashManager;
+use App\Request\Admin\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashDeleteByAdminRequest;
 use App\Request\Admin\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashFilterGetRequest;
 use App\Response\Admin\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashResponse;
 use App\Service\Admin\CaptainPayment\AdminCaptainPaymentToCompanyService;
@@ -69,8 +70,8 @@ class AdminCaptainAmountFromOrderCashService
         return $item;
     }
 
-    public function deleteCaptainAmountFromCashOrderByCaptainProfileIdAndOrderId(int $captainProfileId, int $orderId): array|int
+    public function deleteCaptainAmountFromCashOrderByCaptainProfileIdAndOrderId(CaptainAmountFromOrderCashDeleteByAdminRequest $request): array|int
     {
-        return $this->adminCaptainAmountFromOrderCashManager->deleteCaptainAmountFromCashOrderByCaptainProfileIdAndOrderId($captainProfileId, $orderId);
+        return $this->adminCaptainAmountFromOrderCashManager->deleteCaptainAmountFromCashOrderByCaptainProfileIdAndOrderId($request);
     }
 }

@@ -64,6 +64,8 @@ class AdminSubscriptionDetailsManager
             );
         }
 
+        $this->entityManager->flush();
+
         return $subscriptionDetailsEntity;
     }
 
@@ -85,6 +87,8 @@ class AdminSubscriptionDetailsManager
                 $subscriptionDetailsEntity->getRemainingOrders() - $factor
             );
         }
+
+        $this->entityManager->flush();
 
         return $subscriptionDetailsEntity;
     }

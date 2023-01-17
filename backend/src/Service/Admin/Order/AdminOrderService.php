@@ -11,12 +11,14 @@ use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Constant\OrderLog\OrderLogActionTypeConstant;
 use App\Constant\OrderLog\OrderLogCreatedByUserTypeConstant;
+use App\Constant\Payment\PaymentConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\StoreOwnerBranch\StoreOwnerBranch;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Entity\OrderEntity;
+use App\Entity\SubscriptionDetailsEntity;
 use App\Manager\Admin\Order\AdminOrderManager;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
@@ -48,6 +50,8 @@ use App\Response\Order\BidOrderByIdGetForAdminResponse;
 use App\Response\OrderTimeLine\OrderLogsResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
 use App\Service\Admin\CaptainCashOrder\AdminCaptainCashOrderService;
+use App\Service\Admin\ChatRoom\OrderChatRoom\AdminOrderChatRoomService;
+use App\Service\Admin\StoreCashOrder\AdminStoreCashOrderService;
 use App\Service\ChatRoom\OrderChatRoomService;
 use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\GeoDistance\GeoDistanceService;
@@ -111,7 +115,9 @@ class AdminOrderService
         private OrderLogService $orderLogService,
         private AdminStoreSubscriptionService $adminStoreSubscriptionService,
         private GeoDistanceService $geoDistanceService,
-        private AdminCaptainCashOrderService $adminCaptainCashOrderService
+        private AdminCaptainCashOrderService $adminCaptainCashOrderService,
+        private AdminStoreCashOrderService $adminStoreCashOrderService,
+        private AdminOrderChatRoomService $adminOrderChatRoomService
     )
     {
     }
@@ -674,7 +680,7 @@ class AdminOrderService
     /**
      * This function currently cancel NORMAL order exclusively (not a bid order)
      */
-    public function cancelOrderByAdmin(int $id, int $userId): string|OrderCancelByAdminResponse
+    public function cancelOrderByAdmin(int $id, int $userId): string|OrderCancelByAdminResponse|int
     {
         $orderEntity = $this->adminOrderManager->getOrderByIdForAdmin($id);
 
@@ -693,15 +699,25 @@ class AdminOrderService
 
             if ($arrayResult) {
                 // 2. Update store subscription (remaining orders).
-                $this->updateRemainingOrdersOfStoreSubscriptionByAdmin($arrayResult[0]->getStoreOwner()->getStoreOwnerId(),
+                $this->updateRemainingOrdersOfStoreSubscriptionByAdmin($arrayResult[0]->getStoreOwner()->getId(),
                     $arrayResult[0]->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_ADDITION, 1);
 
-                // 4. Update cash payments - if necessary - of the store
+                // 3. Delete the chat room of the order
+                $this->deleteChatRoomByOrderId($arrayResult[0]->getId());
 
-                // 5. Update cash payments - if necessary - of the captain
+                // 4. Delete cash dues and update payments - if exist/s - of the store
+                $this->deleteStoreDuesFromCashOrderAndUpdatePaymentByStoreOwnerProfileIdAndOrderId($arrayResult[0]->getStoreOwner()->getId(),
+                    $arrayResult[0]->getId(), $arrayResult[0]->getPayment());
+
+                // 5. Delete cash amount and update payments - if exist/s - of the captain
+                // note: here we pass the order id and creation date just for updating the exact financial cycle that the order
+                // belongs to
+                $this->deleteCaptainAmountFromCashOrderAndUpdatePaymentByCaptainProfileIdAndOrderId($arrayResult[1]->getId(),
+                    $arrayResult[0]->getId(), $arrayResult[0]->getPayment());
 
                 // 3. Update captain financial dues (re-calculate them actually)
-                $this->createOrUpdateCaptainFinancialDues($arrayResult[1]);
+                $this->createOrUpdateCaptainFinancialDues($arrayResult[1]->getCaptainId(), $arrayResult[0]->getId(),
+                    $arrayResult[0]->getCreatedAt());
 
                 // 6. Create log
                 $this->createOrderLogViaOrderEntity($arrayResult[0]);
@@ -713,7 +729,7 @@ class AdminOrderService
                 $this->createLocalNotificationForStore($arrayResult[0]->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
                     NotificationConstant::CANCEL_ORDER_SUCCESS, $arrayResult[0]->getId());
                 // local notification to captain
-                $this->createLocalNotificationForCaptain($arrayResult[1], NotificationConstant::CANCEL_ORDER_TITLE,
+                $this->createLocalNotificationForCaptain($arrayResult[1]->getCaptainId(), NotificationConstant::CANCEL_ORDER_TITLE,
                     NotificationConstant::CANCEL_ORDER_SUCCESS, $arrayResult[0]->getId());
 
                 // firebase notification to store
@@ -721,9 +737,13 @@ class AdminOrderService
                     $arrayResult[0]->getId(), $arrayResult[0]->getState(), NotificationConstant::STORE);
 
                 // firebase notification to captain
-                $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($arrayResult[1], $arrayResult[0]->getId(),
+                $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($arrayResult[1]->getCaptainId(), $arrayResult[0]->getId(),
                     $arrayResult[0]->getState(), NotificationConstant::STORE);
+
+                return $this->autoMapping->map(OrderEntity::class, OrderCancelByAdminResponse::class, $arrayResult[0]);
             }
+
+            return OrderResultConstant::ORDER_UPDATE_PROBLEM;
 
         } elseif ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_PENDING) {
             // 1. Update order state
@@ -731,7 +751,7 @@ class AdminOrderService
 
             // 2. Update store subscription (remaining orders), if order relate
             if ($newUpdatedOrder) {
-                $this->updateRemainingOrdersOfStoreSubscriptionByAdmin($newUpdatedOrder->getStoreOwner()->getStoreOwnerId(), $newUpdatedOrder->getCreatedAt(),
+                $this->updateRemainingOrdersOfStoreSubscriptionByAdmin($newUpdatedOrder->getStoreOwner()->getId(), $newUpdatedOrder->getCreatedAt(),
                     SubscriptionConstant::OPERATION_TYPE_ADDITION, 1);
 
                 // 3. Create log
@@ -747,26 +767,33 @@ class AdminOrderService
                 // firebase notification to store
                 $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($newUpdatedOrder->getStoreOwner()->getStoreOwnerId(), $newUpdatedOrder->getId(), $newUpdatedOrder->getState(),
                     NotificationConstant::STORE);
+
+                return $this->autoMapping->map(OrderEntity::class, OrderCancelByAdminResponse::class, $newUpdatedOrder);
             }
+
+            return OrderResultConstant::ORDER_UPDATE_PROBLEM;
 
         } elseif (in_array($orderEntity->getState(), OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)) {
             // 1. Update order state and other info
             $arrayResult = $this->adminOrderManager->updateOngoingOrderToCancelled($orderEntity);
 
             if ($arrayResult[0]) {
-                // 2. Update store subscription (remaining orders + remaining cars), if order relate
-                $this->updateRemainingOrdersOfStoreSubscriptionByAdmin($arrayResult[0]->getStoreOwner()->getStoreOwnerId(), $arrayResult[0]->getCreatedAt(),
+                // 2. Delete the chat room of the order
+                $this->deleteChatRoomByOrderId($arrayResult[0]->getId());
+
+                // 3. Update store subscription (remaining orders + remaining cars), if order relate
+                $this->updateRemainingOrdersOfStoreSubscriptionByAdmin($arrayResult[0]->getStoreOwner()->getId(), $arrayResult[0]->getCreatedAt(),
                     SubscriptionConstant::OPERATION_TYPE_ADDITION, 1);
 
                 $this->updateRemainingCarsOfStoreSubscriptionByAdmin($arrayResult[0]->getStoreOwner()->getId(), $arrayResult[0]->getCreatedAt(),
                     SubscriptionConstant::OPERATION_TYPE_ADDITION, 1);
 
-                // 3. Create log
+                // 4. Create log
                 $this->createOrderLogViaOrderEntity($arrayResult[0]);
 
                 $this->createOrderLogMessageViaOrderEntityAndByAdmin($arrayResult[0], $userId);
 
-                // 4. Send notifications
+                // 5. Send notifications
                 // local notification to store
                 $this->createLocalNotificationForStore($arrayResult[0]->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
                     NotificationConstant::CANCEL_ORDER_SUCCESS, $arrayResult[0]->getId());
@@ -781,7 +808,11 @@ class AdminOrderService
                 // firebase notification to captain
                 $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($arrayResult[1], $arrayResult[0]->getId(), $arrayResult[0]->getState(),
                     NotificationConstant::STORE);
+
+                return $this->autoMapping->map(OrderEntity::class, OrderCancelByAdminResponse::class, $arrayResult[0]);
             }
+
+            return OrderResultConstant::ORDER_UPDATE_PROBLEM;
 
         } else {
             // Order is already being cancelled
@@ -1461,14 +1492,14 @@ class AdminOrderService
     }
 
     // Note: factor is the parameter that we want to subtract/add from/to remaining cars field
-    public function updateRemainingOrdersOfStoreSubscriptionByAdmin(int $storeOwnerProfileId, DateTimeInterface $orderCreationDate, string $operationType, int $factor): int
+    public function updateRemainingOrdersOfStoreSubscriptionByAdmin(int $storeOwnerProfileId, DateTimeInterface $orderCreationDate, string $operationType, int $factor): SubscriptionDetailsEntity|int
     {
         return $this->adminStoreSubscriptionService->handleUpdatingRemainingOrdersOfStoreSubscriptionByAdmin($storeOwnerProfileId,
             $orderCreationDate, $operationType, $factor);
     }
 
     // Note: factor is the parameter that we want to subtract/add from/to remaining cars field
-    public function updateRemainingCarsOfStoreSubscriptionByAdmin(int $storeOwnerProfileId, DateTimeInterface $orderCreationDate, string $operationType, int $factor): int
+    public function updateRemainingCarsOfStoreSubscriptionByAdmin(int $storeOwnerProfileId, DateTimeInterface $orderCreationDate, string $operationType, int $factor): SubscriptionDetailsEntity|int
     {
         return $this->adminStoreSubscriptionService->handleUpdatingRemainingCarsOfStoreSubscriptionByAdmin($storeOwnerProfileId,
             $orderCreationDate, $operationType, $factor);
@@ -1495,10 +1526,29 @@ class AdminOrderService
     }
 
     /**
-     * Deletes all related records to a specific cash order of a captain
+     * Deletes all related records to a specific cash order of a captain and update related payment
      */
-    public function deleteCaptainAmountFromCashOrderAndPaymentByCaptainProfileIdAndOrderId(int $captainProfileId, int $orderId)
+    public function deleteCaptainAmountFromCashOrderAndUpdatePaymentByCaptainProfileIdAndOrderId(int $captainProfileId, int $orderId, string $orderPayment): void
     {
-        return $this->adminCaptainCashOrderService->deleteCaptainAmountFromCashOrderAndPaymentByCaptainProfileIdAndOrderId($captainProfileId, $orderId);
+        if ($orderPayment === PaymentConstant::CASH_PAYMENT_METHOD_CONST) {
+            // Delete captain amount from the CASH order only
+            $this->adminCaptainCashOrderService->deleteCaptainAmountFromCashOrderAndUpdatePaymentByCaptainProfileIdAndOrderId($captainProfileId, $orderId);
+        }
+    }
+
+    /**
+     * Deletes all related records to a specific cash order of a store and update related payment
+     */
+    public function deleteStoreDuesFromCashOrderAndUpdatePaymentByStoreOwnerProfileIdAndOrderId(int $storeOwnerProfileId, int $orderId, string $orderPayment): void
+    {
+        if ($orderPayment === PaymentConstant::CASH_PAYMENT_METHOD_CONST) {
+            // Delete store owner dues from the CASH order only
+            $this->adminStoreCashOrderService->deleteStoreDuesFromCashOrderAndUpdatePaymentByStoreOwnerProfileIdAndOrderId($storeOwnerProfileId, $orderId);
+        }
+    }
+
+    public function deleteChatRoomByOrderId(int $orderId): void
+    {
+        $this->adminOrderChatRoomService->deleteChatRoomByOrderId($orderId);
     }
 }

@@ -91,4 +91,6 @@ final class SubscriptionConstant
     const SUBSCRIBE_NOT_CURRENT_BOOLEAN = 0;
 
     const OLD_STORE_SUBSCRIPTION = 30;
+
+    const WRONG_SUBSCRIPTION_UPDATE_OPERATION_CONST = 134;
 }
