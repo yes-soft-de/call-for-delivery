@@ -19,10 +19,13 @@ class CaptainPaymentToCompanyManager
         return $this->captainPaymentToCompanyEntityRepository->getCaptainPaymentsFilter($request);
     }
 
-    public function getSumPaymentsToCompany(int $captainId): ?array
-    {
-        return $this->captainPaymentToCompanyEntityRepository->getSumPayments($captainId);
-    }
+    /**
+     * Function commented out because it isn't being used anywhere
+     */
+    //public function getSumPaymentsToCompany(int $captainId): ?array
+    //{
+    //    return $this->captainPaymentToCompanyEntityRepository->getSumPayments($captainId);
+    //}
 
     public function getPaymentToCompanyByCaptainId(int $captainId): array
     {

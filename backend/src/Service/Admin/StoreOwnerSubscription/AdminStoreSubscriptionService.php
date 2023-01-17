@@ -4,6 +4,9 @@ namespace App\Service\Admin\StoreOwnerSubscription;
 
 use App\AutoMapping;
 use App\Constant\Admin\Subscription\AdminStoreSubscriptionConstant;
+use App\Constant\Order\OrderResultConstant;
+use App\Constant\Subscription\SubscriptionDetailsConstant;
+use App\Entity\SubscriptionDetailsEntity;
 use App\Entity\SubscriptionEntity;
 use App\Manager\Admin\StoreOwnerSubscription\AdminStoreSubscriptionManager;
 use App\Request\Admin\Subscription\CreateNewStoreSubscriptionWithSamePackageByAdminRequest;
@@ -12,6 +15,7 @@ use App\Response\Admin\StoreOwnerSubscription\StoreFutureSubscriptionGetForAdmin
 use App\Response\Subscription\RemainingOrdersResponse;
 use App\Service\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
+use App\Service\DateFactory\DateFactoryService;
 use App\Service\Eraser\Subscription\StoreSubscriptionEraserService;
 use App\Service\Subscription\SubscriptionService;
 use App\Constant\Payment\PaymentConstant;
@@ -27,23 +31,21 @@ use App\Response\Admin\StoreOwnerSubscription\AdminDeleteSubscriptionResponse;
 use App\Request\Admin\Subscription\AdminCalculateCostDeliveryOrderRequest;
 use App\Response\Subscription\CalculateCostDeliveryOrderResponse;
 use App\Constant\Package\PackageConstant;
+use DateTime;
+use DateTimeInterface;
 
 class AdminStoreSubscriptionService
 {
-    private AutoMapping $autoMapping;
-    private AdminStoreSubscriptionManager $adminStoreSubscriptionManager;
-    private AdminStoreOwnerPaymentService $adminStoreOwnerPaymentService;
-    private SubscriptionService $subscriptionService;
-    private StoreSubscriptionEraserService $storeSubscriptionEraserService;
-
-    public function __construct(AutoMapping $autoMapping, AdminStoreSubscriptionManager $adminStoreSubscriptionManager, AdminStoreOwnerPaymentService $adminStoreOwnerPaymentService,
-                                SubscriptionService $subscriptionService, StoreSubscriptionEraserService $storeSubscriptionEraserService)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private AdminStoreSubscriptionManager $adminStoreSubscriptionManager,
+        private AdminStoreOwnerPaymentService $adminStoreOwnerPaymentService,
+        private SubscriptionService $subscriptionService,
+        private StoreSubscriptionEraserService $storeSubscriptionEraserService,
+        private AdminStoreSubscriptionDetailsService $adminStoreSubscriptionDetailsService,
+        private AdminStoreSubscriptionCheckService $adminStoreSubscriptionCheckService
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->adminStoreSubscriptionManager = $adminStoreSubscriptionManager;
-        $this->adminStoreOwnerPaymentService = $adminStoreOwnerPaymentService;
-        $this->subscriptionService = $subscriptionService;
-        $this->storeSubscriptionEraserService = $storeSubscriptionEraserService;
     }
 
     public function getSubscriptionsWithPaymentsSpecificStore(int $storeId): array
@@ -227,4 +229,126 @@ class AdminStoreSubscriptionService
 
         return $this->subscriptionService->createNewSubscriptionForSamePackageByAdmin($request, $requestByAdmin->getStoreProfileId());
     }
+
+    public function getSubscriptionDetailsByStoreOwnerProfileIdForAdmin(int $storeOwnerProfileId): ?SubscriptionDetailsEntity
+    {
+        return $this->adminStoreSubscriptionDetailsService->getSubscriptionDetailsByStoreOwnerProfileIdForAdmin($storeOwnerProfileId);
+    }
+
+    public function handleUpdatingRemainingOrdersOfStoreSubscriptionByAdmin(int $storeOwnerProfileId, DateTimeInterface $orderCreationDate, string $operationType, int $factor): SubscriptionDetailsEntity|int
+    {
+        // In order to update the store subscription, firstly, we have to check if order belong to the subscription being updated
+        // Get current subscription
+        $currentSubscriptionDetails = $this->getSubscriptionDetailsByStoreOwnerProfileIdForAdmin($storeOwnerProfileId);
+
+        if (! $currentSubscriptionDetails) {
+            return SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND;
+        }
+
+        // Check if order belong to the current subscription
+        if (! $this->adminStoreSubscriptionCheckService->checkIfOrderBelongToStoreSubscriptionByOrderCreationDateAndSubscriptionValidationDate($orderCreationDate,
+            $currentSubscriptionDetails->getLastSubscription()->getStartDate(), $currentSubscriptionDetails->getLastSubscription()->getEndDate())) {
+            return OrderResultConstant::ORDER_DOES_NOT_BELONG_TO_SUBSCRIPTION;
+        }
+
+        // Check if we can update the remaining orders of the current subscription
+        $updateOrderResult = $this->adminStoreSubscriptionCheckService->checkIfUpdateRemainingOrdersAllowed(
+            $operationType,
+            $currentSubscriptionDetails->getRemainingOrders(),
+            $factor,
+            $currentSubscriptionDetails->getLastSubscription()->getPackage()->getOrderCount());
+
+        if ((! $updateOrderResult) || ($updateOrderResult === SubscriptionConstant::WRONG_SUBSCRIPTION_UPDATE_OPERATION_CONST)) {
+            ////TODO Also, we can send firebase notification to admin in order to inform about reaching negative value
+            return SubscriptionDetailsConstant::REMAINING_ORDERS_CAN_NOT_BE_UPDATED;
+        }
+
+        // Now we can update the remaining orders
+        $result = $this->updateRemainingOrdersOfStoreSubscriptionBySubscriptionDetailsId($currentSubscriptionDetails->getId(),
+            $operationType, $factor);
+
+        if ($result === SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND) {
+            return SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND;
+        }
+
+        // After applying the updating process, check the subscription status (ex: if remaining cars are finished)
+        //$this->checkSubscriptionValidation();
+        return $result;
+    }
+
+    // Responsible for handling the updating remaining cars field of a specific store subscription
+    // The handling includes check if we can update the field and calling the related updating function, if it is allowed
+    // Note: factor is the parameter that we want to subtract/add from/to remaining cars field
+    public function handleUpdatingRemainingCarsOfStoreSubscriptionByAdmin(int $storeOwnerProfileId, DateTimeInterface $orderCreationDate, string $operationType, int $factor): SubscriptionDetailsEntity|int
+    {
+        // In order to update the store subscription, firstly, we have to check if order belong to the subscription being updated
+        // Get current subscription
+        $currentSubscriptionDetails = $this->getSubscriptionDetailsByStoreOwnerProfileIdForAdmin($storeOwnerProfileId);
+
+        if (! $currentSubscriptionDetails) {
+            return SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND;
+        }
+
+        // Check if order belong to the current subscription
+        if (! $this->adminStoreSubscriptionCheckService->checkIfOrderBelongToStoreSubscriptionByOrderCreationDateAndSubscriptionValidationDate($orderCreationDate,
+            $currentSubscriptionDetails->getLastSubscription()->getStartDate(), $currentSubscriptionDetails->getLastSubscription()->getEndDate())) {
+            return OrderResultConstant::ORDER_DOES_NOT_BELONG_TO_SUBSCRIPTION;
+        }
+
+        // Check if we can update the remaining cars of the current subscription
+        $updateCarResult = $this->adminStoreSubscriptionCheckService->checkIfUpdateRemainingCarsAllowed(
+            $operationType,
+            $currentSubscriptionDetails->getRemainingCars(),
+            $factor,
+            $currentSubscriptionDetails->getLastSubscription()->getPackage()->getCarCount());
+
+        if ((! $updateCarResult) || ($updateCarResult === SubscriptionConstant::WRONG_SUBSCRIPTION_UPDATE_OPERATION_CONST)) {
+            return SubscriptionDetailsConstant::REMAINING_CARS_CAN_NOT_BE_UPDATED;
+        }
+
+        // Now we can update the remaining cars
+        $result = $this->updateRemainingCarsOfStoreSubscriptionBySubscriptionDetailsId($currentSubscriptionDetails->getId(),
+            $operationType, $factor);
+
+        if ($result === SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND) {
+            return SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND;
+        }
+
+        // After applying the updating process, check the subscription status (ex: if remaining cars are finished)
+        //$this->checkSubscriptionValidation();
+        return $result;
+    }
+
+    private function updateRemainingOrdersOfStoreSubscriptionBySubscriptionDetailsId(int $subscriptionDetailsId, string $operationType, int $factor): SubscriptionDetailsEntity|int
+    {
+        $subscriptionDetailsResult = $this->adminStoreSubscriptionDetailsService->updateRemainingOrdersOfStoreSubscriptionBySubscriptionDetailsId($subscriptionDetailsId,
+            $operationType, $factor);
+
+        if ($subscriptionDetailsResult === SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND) {
+            return SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND;
+        }
+
+        return $subscriptionDetailsResult;
+    }
+
+    public function updateRemainingCarsOfStoreSubscriptionBySubscriptionDetailsId(int $subscriptionDetailsId, string $operationType, int $factor)
+    {
+        $subscriptionDetailsResult = $this->adminStoreSubscriptionDetailsService->updateRemainingCarsOfStoreSubscriptionBySubscriptionDetailsId($subscriptionDetailsId,
+            $operationType, $factor);
+
+        if ($subscriptionDetailsResult === SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND) {
+            return SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND;
+        }
+
+        return $subscriptionDetailsResult;
+    }
+
+    /**
+     * ////TODO to be continued
+     * Will call StoreSubscriptionHandleService in order to check and update store subscription
+     */
+    //public function checkSubscriptionValidation()
+    //{
+    //
+    //}
 }

@@ -4,6 +4,7 @@ namespace App\Service\Admin\CaptainAmountFromOrderCash;
 
 use App\AutoMapping;
 use App\Manager\Admin\CaptainAmountFromOrderCash\AdminCaptainAmountFromOrderCashManager;
+use App\Request\Admin\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashDeleteByAdminRequest;
 use App\Request\Admin\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashFilterGetRequest;
 use App\Response\Admin\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashResponse;
 use App\Service\Admin\CaptainPayment\AdminCaptainPaymentToCompanyService;
@@ -67,5 +68,10 @@ class AdminCaptainAmountFromOrderCashService
         $item['total'] = abs($total);
 
         return $item;
+    }
+
+    public function deleteCaptainAmountFromCashOrderByCaptainProfileIdAndOrderId(CaptainAmountFromOrderCashDeleteByAdminRequest $request): array|int
+    {
+        return $this->adminCaptainAmountFromOrderCashManager->deleteCaptainAmountFromCashOrderByCaptainProfileIdAndOrderId($request);
     }
 }

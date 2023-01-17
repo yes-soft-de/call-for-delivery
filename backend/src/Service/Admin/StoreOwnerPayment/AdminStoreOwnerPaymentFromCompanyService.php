@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Entity\StoreOwnerPaymentFromCompanyEntity;
 use App\Manager\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentFromCompanyManager;
 use App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentFromCompanyForOrderCashCreateRequest;
+use App\Request\Admin\StoreOwnerPayment\StoreOwnerPaymentFromCompanyUpdateAmountByAdminRequest;
 use App\Response\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentCreateResponse;
 use App\Response\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentFromCompanyResponse;
 use App\Constant\StoreOwner\StoreProfileConstant;
@@ -68,5 +69,10 @@ class AdminStoreOwnerPaymentFromCompanyService
     public function getSumPaymentsFromCompanyInSpecificDate(int $storeId, string $fromDate, string $toDate): array
     {
         return $this->adminStoreOwnerPaymentFromCompanyManager->getSumPaymentsFromCompanyInSpecificDate($storeId, $fromDate, $toDate);
+    }
+
+    public function updateStoreOwnerPaymentFromCompanyBySpecificAmount(StoreOwnerPaymentFromCompanyUpdateAmountByAdminRequest $request): int|StoreOwnerPaymentFromCompanyEntity
+    {
+        return $this->adminStoreOwnerPaymentFromCompanyManager->updateStoreOwnerPaymentFromCompanyBySpecificAmount($request);
     }
 }

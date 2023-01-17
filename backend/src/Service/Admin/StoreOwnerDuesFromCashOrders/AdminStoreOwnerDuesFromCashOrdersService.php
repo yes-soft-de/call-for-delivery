@@ -4,6 +4,7 @@ namespace App\Service\Admin\StoreOwnerDuesFromCashOrders;
 
 use App\AutoMapping;
 use App\Manager\Admin\StoreOwnerDuesFromCashOrders\AdminStoreOwnerDuesFromCashOrdersManager;
+use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrderDeleteByAdminRequest;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersFilterGetRequest;
 use App\Response\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersResponse;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
@@ -69,5 +70,10 @@ class AdminStoreOwnerDuesFromCashOrdersService
         $item['total'] = abs($total);
 
         return $item;
+    }
+
+    public function deleteStoreOwnerDuesFromCashOrderByAdmin(StoreOwnerDuesFromCashOrderDeleteByAdminRequest $request): int|array
+    {
+        return $this->adminStoreOwnerDuesFromCashOrdersManager->deleteStoreOwnerDuesFromCashOrderByAdmin($request);
     }
 }

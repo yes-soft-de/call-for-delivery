@@ -47,6 +47,7 @@ class BaseController extends AbstractController
     const CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE = ["previous order from same store still ongoing", "9200"];
     const ERROR_ORDER_CREATE_DATE_BIGGER_DELIVERY_DATE = ["create date is greater than delivery date", "9222"];
     const ERROR_ORDER_UPDATE_STATE_BY_CAPTAIN_BEFORE_TIME = ["update order state by captain before time", "9223"];
+    const ERROR_ORDER_CANCEL_NOT_ALLOWED_DUE_TO_WRONG_API = ["wrong api for cancelling order by admin", "9224"];
     //error related
     const ERROR_RELATED= ["error related","9251"];
     // error users

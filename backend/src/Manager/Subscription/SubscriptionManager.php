@@ -375,4 +375,9 @@ class SubscriptionManager
     {
         return $this->subscribeRepository->getUnPaidCashOrdersSumBySubscriptionId($subscriptionId);
     }
+
+    public function getFutureSubscriptionByStoreOwnerProfileId(int $storeOwnerProfileId): array
+    {
+        return $this->subscribeRepository->findBy(['storeOwner' => $storeOwnerProfileId, 'isFuture' => 1], ['id' => 'ASC'], 1);
+    }
 }

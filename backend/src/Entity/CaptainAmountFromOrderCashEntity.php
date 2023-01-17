@@ -19,7 +19,7 @@ class CaptainAmountFromOrderCashEntity
     #[ORM\JoinColumn(nullable: false)]
     private $captain;
 
-    #[ORM\OneToOne(targetEntity: OrderEntity::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: OrderEntity::class, cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private $orderId;
 
