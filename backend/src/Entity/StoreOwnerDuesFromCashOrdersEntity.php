@@ -18,7 +18,7 @@ class StoreOwnerDuesFromCashOrdersEntity
     #[ORM\JoinColumn(nullable: false)]
     private $store;
 
-    #[ORM\OneToOne(targetEntity: OrderEntity::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(targetEntity: OrderEntity::class, cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private $orderId;
 
