@@ -69,19 +69,8 @@ class AdminStoreOwnerDuesFromCashOrdersManager
         }
 
         $payment = $storeDuesFromCashOrder->getStoreOwnerPaymentFromCompany();
-//        $storeDuesFromCashOrder->getStoreOwnerPaymentFromCompany()->removeStoreOwnerDuesFromCashOrdersEntity($storeDuesFromCashOrder);
-//        $this->entityManager->flush();
-//
-        $storeDuesFromCashOrder->setStoreOwnerPaymentFromCompany(null);
-        $this->entityManager->flush();
 
-//        if ($payment) {
-//            $payment->removeStoreOwnerDuesFromCashOrdersEntity($storeDuesFromCashOrder);
-//            $this->entityManager->flush();
-//
-//            $storeDuesFromCashOrder->setStoreOwnerPaymentFromCompany(null);
-//            $this->entityManager->flush();
-//        }
+        $storeDuesFromCashOrder->setStoreOwnerPaymentFromCompany(null);
 
         $this->entityManager->remove($storeDuesFromCashOrder);
         $this->entityManager->flush();

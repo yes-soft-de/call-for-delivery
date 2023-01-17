@@ -72,7 +72,7 @@ class AdminStoreOwnerDuesFromCashOrdersService
         return $item;
     }
 
-    public function deleteStoreOwnerDuesFromCashOrderByAdmin(StoreOwnerDuesFromCashOrderDeleteByAdminRequest $request): array|int
+    public function deleteStoreOwnerDuesFromCashOrderByAdmin(StoreOwnerDuesFromCashOrderDeleteByAdminRequest $request): int|array
     {
         return $this->adminStoreOwnerDuesFromCashOrdersManager->deleteStoreOwnerDuesFromCashOrderByAdmin($request);
     }

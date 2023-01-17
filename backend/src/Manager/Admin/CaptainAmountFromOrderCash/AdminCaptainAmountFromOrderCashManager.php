@@ -67,14 +67,8 @@ class AdminCaptainAmountFromOrderCashManager
         }
 
         $payment = $captainAmountsFromCashOrder->getCaptainPaymentToCompany();
-        $captainAmountsFromCashOrder->getCaptainPaymentToCompany()->removeCaptainAmountFromOrderCashEntity($captainAmountsFromCashOrder);
 
         $captainAmountsFromCashOrder->setCaptainPaymentToCompany(null);
-        $this->entityManager->flush();
-
-//        if ($payment) {
-//            $payment->removeCaptainAmountFromOrderCashEntity($captainAmountsFromCashOrder);
-//        }
 
         $this->entityManager->remove($captainAmountsFromCashOrder);
         $this->entityManager->flush();

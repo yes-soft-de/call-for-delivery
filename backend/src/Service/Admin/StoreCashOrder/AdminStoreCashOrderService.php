@@ -18,16 +18,16 @@ class AdminStoreCashOrderService
     {
     }
 
-    public function deleteStoreDuesFromCashOrderAndUpdatePaymentByStoreOwnerProfileIdAndOrderId(int $storeOwnerProfileId, int $orderId): int|StoreOwnerPaymentFromCompanyEntity
+    public function deleteStoreDuesFromCashOrderAndUpdatePaymentByStoreOwnerProfileIdAndOrderId(int $storeOwnerProfileId, int $orderId): array|int
     {
-        $deleteCashOrdersAmountResult = $this->deleteStoreOwnerDuesFromCashOrderByCaptainProfileIdAndOrderId($storeOwnerProfileId, $orderId);dd($deleteCashOrdersAmountResult);
+        $deleteCashOrdersAmountResult = $this->deleteStoreOwnerDuesFromCashOrderByCaptainProfileIdAndOrderId($storeOwnerProfileId, $orderId);
 
         if ($deleteCashOrdersAmountResult === OrderAmountCashConstant::CAPTAIN_AMOUNT_FROM_CASH_ORDER_NOT_EXIST_CONST) {
             return OrderAmountCashConstant::CAPTAIN_AMOUNT_FROM_CASH_ORDER_NOT_EXIST_CONST;
         }
 
         if ($deleteCashOrdersAmountResult[1]) {
-            $this->updateStorePaymentFromCompanyBySpecificAmount($deleteCashOrdersAmountResult[1], $deleteCashOrdersAmountResult[0]->getAmount(),
+            $this->updateStorePaymentFromCompanyBySpecificAmount($deleteCashOrdersAmountResult[1], $deleteCashOrdersAmountResult[0]->getStoreAmount(),
                 OrderAmountCashConstant::AMOUNT_SUBTRACTION_TYPE_OPERATION_CONST);
         }
 
