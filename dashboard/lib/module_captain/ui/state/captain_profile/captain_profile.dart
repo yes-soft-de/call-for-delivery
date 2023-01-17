@@ -22,6 +22,8 @@ import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
 
@@ -122,26 +124,33 @@ class CaptainProfileLoadedState extends States {
                                 title: S.of(context).age,
                                 subTitle: model?.age?.toString(),
                                 iconData: Icons.calendar_today_rounded),
-                            CustomListTile(
-                              title: S.of(context).phoneNumber,
-                              subTitle: model?.phone,
-                              iconData: Icons.phone,
-                              leading: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(25),
-                                    color: model?.verificationStatus == true
-                                        ? Colors.green
-                                        : Colors.orange,
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Text(
-                                      model?.verificationStatus == true
-                                          ? S.current.accountVerified
-                                          : S.current.accountUnVerified,
-                                      style: TextStyle(color: Colors.white),
+                            InkWell(
+                              onTap: () {
+                                Clipboard.setData(
+                                    ClipboardData(text: model?.phone));
+                                Fluttertoast.showToast(msg: S.current.copied);
+                              },
+                              child: CustomListTile(
+                                title: S.of(context).phoneNumber,
+                                subTitle: model?.phone,
+                                iconData: Icons.phone,
+                                leading: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(25),
+                                      color: model?.verificationStatus == true
+                                          ? Colors.green
+                                          : Colors.orange,
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        model?.verificationStatus == true
+                                            ? S.current.accountVerified
+                                            : S.current.accountUnVerified,
+                                        style: TextStyle(color: Colors.white),
+                                      ),
                                     ),
                                   ),
                                 ),

@@ -1,11 +1,8 @@
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_categories/ui/widget/info_button.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:dotted_line/dotted_line.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:list_tile_switch/list_tile_switch.dart';
 
 class SinglePackageCard extends StatelessWidget {
   final String packageName;
@@ -218,8 +215,10 @@ class SinglePackageCard extends StatelessWidget {
                             ),
                             SizedBox(
                               width: 105,
-                              child:
-                                  Text(geographicalRange + ' ' + S.current.km),
+                              child: geographicalRange.isNotEmpty &&
+                                      geographicalRange != '0'
+                                  ? Text(geographicalRange + ' ' + S.current.km)
+                                  : SizedBox(),
                             ),
                           ],
                         ),
@@ -319,12 +318,13 @@ class SinglePackageCard extends StatelessWidget {
                             SizedBox(
                               width: 16,
                             ),
-                            SizedBox(
-                              child: Text(
-                                '$extraCost ' + S.current.sar,
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ),
+                            extraCost != '0' && extraCost.isNotEmpty
+                                ? SizedBox(
+                                    child: Text(
+                                    '$extraCost ' + S.current.sar,
+                                    overflow: TextOverflow.ellipsis,
+                                  ))
+                                : SizedBox(),
                           ],
                         ),
                       ),

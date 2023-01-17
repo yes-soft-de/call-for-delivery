@@ -20,6 +20,8 @@ import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
+import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
 
@@ -87,9 +89,19 @@ class StoreProfileLoadedState extends States {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 20),
                           ),
-                          Text(
-                            profile?.phone ?? '',
-                            style: TextStyle(fontWeight: FontWeight.bold),
+                          InkWell(
+                            onTap: () {
+                              profile?.phone != null ||
+                                      profile!.phone.isNotEmpty
+                                  ? Clipboard.setData(
+                                      ClipboardData(text: profile?.phone))
+                                  : null;
+                              Fluttertoast.showToast(msg: S.current.copied);
+                            },
+                            child: Text(
+                              profile?.phone ?? '',
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -322,7 +334,7 @@ class StoreProfileLoadedState extends States {
                       width: double.maxFinite,
                       child: ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            primary: Colors.white,
+                            backgroundColor: Colors.white,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(25))),
                         onPressed: () {

@@ -8669,6 +8669,16 @@ class S {
       args: [],
     );
   }
+
+  /// `copied succesfuly`
+  String get copied {
+    return Intl.message(
+      'copied succesfuly',
+      name: 'copied',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

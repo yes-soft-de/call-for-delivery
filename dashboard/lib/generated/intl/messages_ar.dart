@@ -338,6 +338,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "contactInfo": MessageLookupByLibrary.simpleMessage("معلومات الإتصال"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف للتواصل"),
+        "copied": MessageLookupByLibrary.simpleMessage("تم نسخه بنجاح"),
         "cost": MessageLookupByLibrary.simpleMessage("التكلفة"),
         "countCaptains": MessageLookupByLibrary.simpleMessage("عدد الكباتن"),
         "countClients": MessageLookupByLibrary.simpleMessage("عدد العملاء"),
