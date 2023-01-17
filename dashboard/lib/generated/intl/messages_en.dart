@@ -344,7 +344,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "contactInfo": MessageLookupByLibrary.simpleMessage("Contact info"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
-        "copied": MessageLookupByLibrary.simpleMessage("copied succesfuly"),
+        "copied": MessageLookupByLibrary.simpleMessage("copied successfully"),
         "cost": MessageLookupByLibrary.simpleMessage("cost"),
         "countCaptains": MessageLookupByLibrary.simpleMessage("Captains Count"),
         "countClients": MessageLookupByLibrary.simpleMessage("Clients Count"),

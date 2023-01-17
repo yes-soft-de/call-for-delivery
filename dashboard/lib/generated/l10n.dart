@@ -8670,10 +8670,10 @@ class S {
     );
   }
 
-  /// `copied succesfuly`
+  /// `copied successfully`
   String get copied {
     return Intl.message(
-      'copied succesfuly',
+      'copied successfully',
       name: 'copied',
       desc: '',
       args: [],
