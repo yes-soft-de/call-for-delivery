@@ -20,7 +20,7 @@ class CaptainsActivityScreen extends StatefulWidget {
 
 class CaptainsActivityScreenState extends State<CaptainsActivityScreen> {
   late States currentState;
-  CaptainActivityFilterRequest? filter;
+  late CaptainActivityFilterRequest filter;
   @override
   void initState() {
     currentState = LoadingState(this);

@@ -262,8 +262,12 @@ class UpdateOrderLoaded extends States {
                                   screenState.customerLocation ?? LatLng(0, 0),
                               origin: activeBranch?.location ?? LatLng(0, 0),
                               destance: (d, cost) {
-                                distance = d;
-                                deliveryCost = cost;
+                                if (d != null) {
+                                  distance = d;
+                                }
+                                if (cost != null) {
+                                  deliveryCost = cost;
+                                }
                               },
                               storeID: orderInfo.storeID,
                             )),
@@ -822,6 +826,7 @@ class UpdateOrderLoaded extends States {
             .show(screenState.context);
       }
       screenState.addNewOrder(CreateOrderRequest(
+        distance: distance,
         id: orderInfo.id,
         orderIsMain: orderIsMain,
         fromBranch: screenState.branch,
@@ -851,6 +856,7 @@ class UpdateOrderLoaded extends States {
     screenState.addNewOrder(CreateOrderRequest(
       id: orderInfo.id,
       orderIsMain: orderIsMain,
+      distance: distance,
       pdf: pdfModel?.getPdfRequest(),
       fromBranch: screenState.branch,
       recipientName: screenState.receiptNameController.text.trim(),

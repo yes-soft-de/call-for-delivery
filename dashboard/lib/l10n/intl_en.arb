@@ -855,11 +855,12 @@
     "confirmRecycleOrder": "Confirm recycle order ",
     "recycleOrderWarning":"Are you sure ?\n you will recycle this order",
     "recycleOrder":"Recycle Order",
+    "youCanChooseCaptainPlan":"You can choose captain plan",
     "topstoreActivity":"Top store activity",
     "destinationUpdate":"The recipient location field has been updated by the administration",
     "recycleOrderDone":"The request has been recycled by the administration",
     "storeBranchToClientDistanceDirectly":"A distance was added to the calculated distance automatically, directly by the administration",
-    "storeBranchToClientDistance":"A distance was added to the calculated distance automatically using the coordinates of the new location by the administration",
+    "storeBranchToClientDistance2":"A distance was added to the calculated distance automatically using the coordinates of the new location by the administration",
     "isCashPaymentConfirmedByStore":"Receipt of the cash amount has been confirmed/denied by the administration on behalf of the store",
     "copied":"copied successfully"
 

@@ -54,9 +54,7 @@ class OrderCaptainNotArrivedScreenState
 
   late FilterOrderCaptainNotArrivedRequest ordersFilter = ordersFilter =
       FilterOrderCaptainNotArrivedRequest(
-          fromDate:
-              DateTime(today.year, today.month, today.day, 0).toIso8601String(),
-          toDate: DateTime.now().toIso8601String());
+          fromDate: DateTime.now(), toDate: DateTime.now());
 
   Future<void> getOrders([bool loading = true]) async {
     widget._stateManager.getOrdersFilters(this, ordersFilter, loading);
@@ -111,7 +109,7 @@ class OrderCaptainNotArrivedScreenState
                                   lastDate: DateTime.now())
                               .then((value) {
                             if (value != null) {
-                              ordersFilter.fromDate = value.toIso8601String();
+                              ordersFilter.fromDate = value;
                               setState(() {});
                               getOrders();
                             }
@@ -119,9 +117,8 @@ class OrderCaptainNotArrivedScreenState
                         },
                         title: Text(S.current.firstDate),
                         subtitle: Text(ordersFilter.fromDate != null
-                            ? DateFormat('yyyy/M/d').format(DateTime.parse(
-                                ordersFilter.fromDate ??
-                                    DateTime.now().toIso8601String()))
+                            ? DateFormat('yyyy/M/d')
+                                .format(ordersFilter.fromDate ?? DateTime.now())
                             : '0000/00/00'),
                       ),
                     ),
@@ -165,9 +162,7 @@ class OrderCaptainNotArrivedScreenState
                                   lastDate: DateTime.now())
                               .then((value) {
                             if (value != null) {
-                              ordersFilter.toDate = DateTime(
-                                      value.year, value.month, value.day, 24)
-                                  .toIso8601String();
+                              ordersFilter.toDate = value;
                               setState(() {});
                               getOrders();
                             }
@@ -175,9 +170,8 @@ class OrderCaptainNotArrivedScreenState
                         },
                         title: Text(S.current.endDate),
                         subtitle: Text(ordersFilter.toDate != null
-                            ? DateFormat('yyyy/M/d').format(DateTime.parse(
-                                ordersFilter.toDate ??
-                                    DateTime.now().toIso8601String()))
+                            ? DateFormat('yyyy/M/d')
+                                .format(ordersFilter.toDate ?? DateTime.now())
                             : '0000/00/00'),
                       ),
                     ),

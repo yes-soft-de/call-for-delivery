@@ -6,13 +6,16 @@ class Datum {
   String? captainName;
   Image? image;
   String? ordersCount;
-
+  String? todayOrdersCount;
+  String? lastTwentyFourOrdersCount;
   Datum({
     this.id,
     this.captainId,
     this.captainName,
     this.image,
     this.ordersCount,
+    this.lastTwentyFourOrdersCount,
+    this.todayOrdersCount,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -23,6 +26,8 @@ class Datum {
             ? null
             : Image.fromJson(json['image'] as Map<String, dynamic>),
         ordersCount: json['ordersCount'] as String?,
+        lastTwentyFourOrdersCount: json['lastTwentyFourOrdersCount'] as String?,
+        todayOrdersCount: json['todayOrdersCount'] as String?,
       );
 
   Map<String, dynamic> toJson() => {
@@ -31,5 +36,7 @@ class Datum {
         'captainName': captainName,
         'image': image?.toJson(),
         'ordersCount': ordersCount,
+        'todayOrdersCount': todayOrdersCount,
+        'lastTwentyFourOrdersCount': lastTwentyFourOrdersCount
       };
 }

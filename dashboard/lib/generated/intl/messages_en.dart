@@ -344,7 +344,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "contactInfo": MessageLookupByLibrary.simpleMessage("Contact info"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
-        "copied": MessageLookupByLibrary.simpleMessage("copied succesfuly"),
+        "copied": MessageLookupByLibrary.simpleMessage("copied successfully"),
         "cost": MessageLookupByLibrary.simpleMessage("cost"),
         "countCaptains": MessageLookupByLibrary.simpleMessage("Captains Count"),
         "countClients": MessageLookupByLibrary.simpleMessage("Clients Count"),
@@ -1117,6 +1117,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Store Availability"),
         "storeBalance": MessageLookupByLibrary.simpleMessage("Store Balance"),
         "storeBranchToClientDistance": MessageLookupByLibrary.simpleMessage(
+            "Distance from branch to client"),
+        "storeBranchToClientDistance2": MessageLookupByLibrary.simpleMessage(
             "A distance was added to the calculated distance automatically using the coordinates of the new location by the administration"),
         "storeBranchToClientDistanceAndDestinationUpdated":
             MessageLookupByLibrary.simpleMessage(
@@ -1350,6 +1352,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "youCanChangeCaptainFinancialPlan":
             MessageLookupByLibrary.simpleMessage(
                 "You can change captain financial request here"),
+        "youCanChooseCaptainPlan":
+            MessageLookupByLibrary.simpleMessage("You can choose captain plan"),
         "youCannotAcceptAnotherOrderFromThisStore":
             MessageLookupByLibrary.simpleMessage(
                 "Captain cannot accept another order from this store , Please wait to deliver orders belongs to this store after that try again"),

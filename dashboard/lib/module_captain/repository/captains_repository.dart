@@ -206,7 +206,7 @@ class CaptainsRepository {
       CaptainActivityFilterRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
-        Urls.GET_CAPTAIN_ACTIVITY_FILTER_REPORT, request.toJson(),
+        Urls.GET_CAPTAIN_ACTIVITY_FILTER_REPORT, await request.toJson(),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return CaptainActivityResponse.fromJson(response);

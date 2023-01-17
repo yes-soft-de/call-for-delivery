@@ -8220,10 +8220,10 @@ class S {
     );
   }
 
-  /// `A distance was added to the calculated distance automatically using the coordinates of the new location by the administration`
+  /// `Distance from branch to client`
   String get storeBranchToClientDistance {
     return Intl.message(
-      'A distance was added to the calculated distance automatically using the coordinates of the new location by the administration',
+      'Distance from branch to client',
       name: 'storeBranchToClientDistance',
       desc: '',
       args: [],
@@ -8600,6 +8600,16 @@ class S {
     );
   }
 
+  /// `You can choose captain plan`
+  String get youCanChooseCaptainPlan {
+    return Intl.message(
+      'You can choose captain plan',
+      name: 'youCanChooseCaptainPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Top store activity`
   String get topstoreActivity {
     return Intl.message(
@@ -8640,6 +8650,16 @@ class S {
     );
   }
 
+  /// `A distance was added to the calculated distance automatically using the coordinates of the new location by the administration`
+  String get storeBranchToClientDistance2 {
+    return Intl.message(
+      'A distance was added to the calculated distance automatically using the coordinates of the new location by the administration',
+      name: 'storeBranchToClientDistance2',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Receipt of the cash amount has been confirmed/denied by the administration on behalf of the store`
   String get isCashPaymentConfirmedByStore {
     return Intl.message(
@@ -8650,10 +8670,10 @@ class S {
     );
   }
 
-  /// `copied succesfuly`
+  /// `copied successfully`
   String get copied {
     return Intl.message(
-      'copied succesfuly',
+      'copied successfully',
       name: 'copied',
       desc: '',
       args: [],

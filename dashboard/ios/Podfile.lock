@@ -517,6 +517,9 @@ PODS:
   - fluttertoast (0.0.2):
     - Flutter
     - Toast
+  - FMDB (2.7.5):
+    - FMDB/standard (= 2.7.5)
+  - FMDB/standard (2.7.5)
   - google_maps_flutter (0.0.1):
     - Flutter
     - GoogleMaps
@@ -619,6 +622,9 @@ PODS:
     - Flutter
   - soundpool (0.0.1):
     - Flutter
+  - sqflite (0.0.2):
+    - Flutter
+    - FMDB (>= 2.7.5)
   - SwiftyGif (5.4.3)
   - Toast (4.0.0)
   - uni_links (0.0.1):
@@ -652,6 +658,7 @@ DEPENDENCIES:
   - share (from `.symlinks/plugins/share/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - soundpool (from `.symlinks/plugins/soundpool/ios`)
+  - sqflite (from `.symlinks/plugins/sqflite/ios`)
   - uni_links (from `.symlinks/plugins/uni_links/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
@@ -673,6 +680,7 @@ SPEC REPOS:
     - FirebaseMessaging
     - FirebasePerformance
     - FirebaseRemoteConfig
+    - FMDB
     - GoogleAppMeasurement
     - GoogleDataTransport
     - GoogleMaps
@@ -733,6 +741,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_ios/ios"
   soundpool:
     :path: ".symlinks/plugins/soundpool/ios"
+  sqflite:
+    :path: ".symlinks/plugins/sqflite/ios"
   uni_links:
     :path: ".symlinks/plugins/uni_links/ios"
   url_launcher_ios:
@@ -770,6 +780,7 @@ SPEC CHECKSUMS:
   flutter_local_notifications: 0c0b1ae97e741e1521e4c1629a459d04b9aec743
   flutter_native_timezone: 5f05b2de06c9776b4cc70e1839f03de178394d22
   fluttertoast: 6122fa75143e992b1d3470f61000f591a798cc58
+  FMDB: 2ce00b547f966261cd18927a3ddb07cb6f3db82a
   google_maps_flutter: fe98b02bbb6717c7297c7747b84c4ead2bc5fc3b
   GoogleAppMeasurement: aa3cb422fab2b05d2efac543a5720d1a85b9dea5
   GoogleDataTransport: 1c8145da7117bd68bbbed00cf304edb6a24de00f
@@ -789,6 +800,7 @@ SPEC CHECKSUMS:
   share: 0b2c3e82132f5888bccca3351c504d0003b3b410
   shared_preferences_ios: aef470a42dc4675a1cdd50e3158b42e3d1232b32
   soundpool: c7f4422ca206e77f8900ed3c4ee6a6ff5a0e38a9
+  sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
   SwiftyGif: 6c3eafd0ce693cad58bb63d2b2fb9bacb8552780
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   uni_links: d97da20c7701486ba192624d99bffaaffcfc298a

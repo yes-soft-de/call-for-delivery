@@ -141,7 +141,7 @@ class Data {
             ? FixedNumber.getFixedNumber(json['storeBranchToClientDistance'])
             : null,
         orderLogs: OrderLogsResponse.fromJson(json),
-        subOrders: (json['subOrders'] as List<dynamic>?)
+        subOrders: (json['subOrder'] as List<dynamic>?)
             ?.map((e) => SubOrder.fromJson(e as Map<String, dynamic>))
             .toList(),
       );

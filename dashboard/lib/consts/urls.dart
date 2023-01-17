@@ -256,6 +256,8 @@ class Urls {
       BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainfinancialsystemdetailstatus';
   static const CHANGE_CAPTAIN_FINANCE_PLAN =
       BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainfinancialsystemdetailupdate';
+  static const CREATE_CAPTAIN_FINANCE_PLAN =
+      BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainfinancialsystemdetailbyadmin';
   static const GET_CAPTAIN_FINANCE_DUES =
       BASE_CAPTAIN_ACCOUNT_BALANCE_DUES + '/captainfinancialduesforadmin';
   static const GET_CAPTAIN_RATING_REPORT =

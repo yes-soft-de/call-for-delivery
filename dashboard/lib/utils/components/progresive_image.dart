@@ -1,8 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
-import 'package:progressive_image/progressive_image.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/utils/images/images.dart';
+import 'package:progressive_image/progressive_image.dart';
 
 class CustomNetworkImage extends StatelessWidget {
   final double height;
@@ -103,7 +104,9 @@ class CustomNetworkImage extends StatelessWidget {
                   ),
                   backgroundColor: Colors.black,
                   body: PinchZoom(
-                    child: Image.network(image),
+                    child: CachedNetworkImage(
+                      imageUrl: image,
+                    ),
                     resetDuration: const Duration(milliseconds: 150),
                     onZoomStart: () {},
                     onZoomEnd: () {},
@@ -111,10 +114,10 @@ class CustomNetworkImage extends StatelessWidget {
                 );
               });
         },
-        child: ProgressiveImage.custom(
+        child: CachedNetworkImage(
           height: height,
           width: width,
-          placeholderBuilder: (context) {
+          placeholder: (context, url) {
             return Container(
               width: width,
               height: height,
@@ -147,9 +150,10 @@ class CustomNetworkImage extends StatelessWidget {
               ),
             );
           },
-          fadeDuration: Duration(milliseconds: 750),
-          thumbnail: NetworkImage(image),
-          image: NetworkImage(image),
+          filterQuality: FilterQuality.medium,
+          fadeInDuration: Duration(milliseconds: 750),
+          fadeOutDuration: Duration(milliseconds: 750),
+          imageUrl: image,
           fit: BoxFit.cover,
         ),
       );
