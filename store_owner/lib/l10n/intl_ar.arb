@@ -684,5 +684,6 @@
     "credentialsBagHint": "هنا تجد محفظة سريعة للوصول لبيانات دخولك المحفوظة مسبقا ",
     "chatRoomOrder":"غرفة محادثة الطلب",
     "changePassword":"تعديل كلمة المرور",
-    "onGoingOrderChatRooms":"محادثات الطلبات الجارية"
+    "onGoingOrderChatRooms":"محادثات الطلبات الجارية",
+    "quickFillUp":"الملئ السريع"
 }

@@ -12,6 +12,7 @@ import 'package:c4d/utils/helpers/phone_number_detection.dart';
 import 'package:c4d/utils/helpers/prayer_dates.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 
@@ -93,6 +94,37 @@ class NewOrderScreenState extends State<NewOrderScreen>
     });
   }
 
+  void quickFillUp() async {
+    ClipboardData? clip = await Clipboard.getData(Clipboard.kTextPlain);
+    String data = clip?.text.toString() ?? '';
+    var fields = data.split(';');
+    if (fields.isEmpty) {
+      Fluttertoast.showToast(msg: S.current.InvalidInput);
+    }
+    for (var e in fields) {
+      var map = e.split(':');
+      var key = map[0];
+      var value = map[1];
+      switch (key) {
+        case 'clientNumber':
+          phoneNumberController.text =
+              PhoneNumberDetection.getPhoneNumber(value);
+          break;
+        case 'clientName':
+          receiptNameController.text = value;
+          break;
+        case 'details':
+          orderDetailsController.text = value;
+          break;
+        case 'clientLocationStr':
+          toController.text = value + map[2];
+          break;
+        case 'payment':
+          payments = value.toString() == '1' ? 'cash' : 'credit';
+          break;
+      }
+    }
+  }
 
   void locationParsing() {
     if (toController.text.isNotEmpty && toController.text != '') {

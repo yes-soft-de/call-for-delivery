@@ -684,5 +684,6 @@
     "chatRoomOrder": "Chat room order",
     "changePassword": "Change password",
     "onGoingOrderChatRooms": "Ongoing chat rooms",
-    "prayerMessage": "This order may take some extra time to be delivered due prayer period"
+    "prayerMessage": "This order may take some extra time to be delivered due prayer period",
+    "quickFillUp": "Quick fillUp"
 }
