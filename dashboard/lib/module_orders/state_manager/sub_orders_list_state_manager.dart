@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -46,7 +47,7 @@ class SubOrdersStateManager {
       } else {
         value as OrderDetailsModel;
         var order = value.data;
-        OrderModel primaryOrder = OrderModel(
+      OrderModel primaryOrder = OrderModel(
           storeName: order.storeName,
           branchName: order.branchName,
           storeId: order.storeID,
