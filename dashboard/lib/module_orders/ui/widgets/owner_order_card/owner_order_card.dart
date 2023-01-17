@@ -15,6 +15,7 @@ class OwnerOrderCard extends StatelessWidget {
   final bool orderIsMain;
   final String? primaryTitle;
   final IconData? icon;
+  final bool? isDelivered;
   OwnerOrderCard(
       {required this.orderNumber,
       required this.orderStatus,
@@ -25,7 +26,8 @@ class OwnerOrderCard extends StatelessWidget {
       this.background,
       this.primaryTitle,
       required this.orderIsMain,
-      this.icon});
+      this.icon,
+      this.isDelivered});
 
   @override
   Widget build(BuildContext context) {
@@ -147,12 +149,12 @@ class OwnerOrderCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     verticalTile(context,
-                        title: S.current.captain, subtitle: deliveryDate),
+                        title: isDelivered ?? false
+                            ? S.current.captain
+                            : S.current.deliverDate,
+                        subtitle: deliveryDate),
                     verticalTile(context,
-                        title: S.current.createdDate,
-                        // subtitle: Moment.fromDate(DateTime.parse(createdDate))
-                        subtitle: createdDate
-                            ),
+                        title: S.current.createdDate, subtitle: createdDate),
                   ],
                 ),
                 // divider
@@ -176,33 +178,6 @@ class OwnerOrderCard extends StatelessWidget {
             ),
           ),
         ),
-        // orderStatus == S.current.waiting
-        //     ? Padding(
-        //         padding: const EdgeInsets.all(12.0),
-        //         child: RecycleOrderButton(
-        //           onTap: () {
-        //             showDialog(
-        //                 context: context,
-        //                 builder: (ctx) {
-        //                   return CustomAlertDialog(
-        //                       onPressed: () {
-        //                         Navigator.of(context).pop();
-        //                         // Navigator.of(context).pushNamedAndRemoveUntil(
-        //                         //     OrdersRoutes.UPDATE_ORDERS_SCREEN,
-        //                         //     (route) => false,
-        //                         //     arguments: s.orderInfo);
-        //                       },
-        //                       content: S.current.updateOrderWarning,
-        //                       oneAction: false);
-        //                 });
-        //           },
-        //           backgroundColor: Colors.green,
-        //           icon: FontAwesomeIcons.recycle,
-        //           title: 'Recycle Order',
-        //           short: true,
-        //         ),
-        //       )
-        //     : SizedBox()
       ],
     );
   }

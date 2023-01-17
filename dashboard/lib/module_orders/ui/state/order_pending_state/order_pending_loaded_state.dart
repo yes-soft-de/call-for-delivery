@@ -115,6 +115,7 @@ class OrderPendingLoadedState extends States {
                   }
                 },
                 child: OwnerOrderCard(
+                  isDelivered: screenState.currentIndex == 1,
                   orderNumber: element.id.toString(),
                   orderStatus:
                       StatusHelper.getOrderStatusMessages(element.state),
@@ -122,7 +123,9 @@ class OrderPendingLoadedState extends States {
                       moment.date.difference(element.created!).inHours <= 12
                           ? moment.from(element.created!)
                           : element.createdDate,
-                  deliveryDate: element.captainName ?? 'no captain',
+                  deliveryDate: screenState.currentIndex == 1
+                      ? element.captainName ?? S.current.unknown
+                      : element.deliveryDate,
                   orderCost: element.orderCost,
                   note: element.note,
                   orderIsMain: element.orderIsMain,

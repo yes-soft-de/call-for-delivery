@@ -8,6 +8,7 @@ import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_subscriptions/model/store_subscriptions_financial.dart';
 import 'package:c4d/module_subscriptions/request/delete_captain_offer_request.dart';
 import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_details_screen.dart';
+import 'package:c4d/module_subscriptions/ui/widget/item_payment_widget.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
@@ -186,9 +187,76 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                 ),
               )),
         ),
-        Column(
-          children: getPayments(context),
-        )
+        // Column(
+        //   children: getPayments(context),
+        // )
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: ElevatedButton(
+              style: ElevatedButton.styleFrom(shape: StadiumBorder()),
+              onPressed: () {
+                showGeneralDialog(
+                  context: context,
+                  pageBuilder: (context, animation, secondaryAnimation) =>
+                      Scaffold(
+                          appBar: CustomC4dAppBar.appBar(
+                            context,
+                            title: S.current.storePayments,
+                          ),
+                          backgroundColor: Colors.white.withOpacity(0.5),
+                          body: Column(
+                            children: [
+                              Expanded(
+                                child: ListView.builder(
+                                    shrinkWrap: true,
+                                    itemBuilder: (context, index) {
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 10),
+                                        child: ItemPaymentWidget(
+                                          paymentModel:
+                                              model.paymentsFromStore[index],
+                                          onPressed: () {
+                                            showDialog(
+                                                context: screenState.context,
+                                                builder: (context) {
+                                                  return CustomAlertDialog(
+                                                      onPressed: () {
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                        Navigator.of(context)
+                                                            .pop();
+                                                        screenState.manager
+                                                            .deletePayment(
+                                                                screenState,
+                                                                model
+                                                                    .paymentsFromStore[
+                                                                        index]
+                                                                    .id
+                                                                    .toString());
+                                                      },
+                                                      oneAction: false,
+                                                      content: S.current
+                                                          .areYouSureToDeleteThisPayment);
+                                                });
+                                          },
+                                        ),
+                                      );
+                                    },
+                                    itemCount: model.paymentsFromStore.length),
+                              )
+                            ],
+                          )),
+                );
+              },
+              child: Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: Text(
+                  S.current.storePayments,
+                  style: Theme.of(context).textTheme.button,
+                ),
+              )),
+        ),
       ],
     );
   }
@@ -488,7 +556,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
               children: [
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        shape: StadiumBorder(), primary: Colors.amber),
+                        shape: StadiumBorder(), backgroundColor: Colors.amber),
                     onPressed: () {
                       showDialog(
                           context: context,
@@ -520,7 +588,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                 ),
                 ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        shape: StadiumBorder(), primary: Colors.red),
+                        shape: StadiumBorder(), backgroundColor: Colors.red),
                     onPressed: () {
                       showDialog(
                           context: context,

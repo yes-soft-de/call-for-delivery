@@ -157,6 +157,7 @@ class StoresRepository {
       request.toJson(),
       headers: {'Authorization': 'Bearer $token'},
     );
+
     if (response == null) return null;
     return TopActiveStoreResponse.fromJson(response);
   }
