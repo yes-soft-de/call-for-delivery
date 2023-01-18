@@ -22,8 +22,8 @@ class AdminStoreCashOrderService
     {
         $deleteCashOrdersAmountResult = $this->deleteStoreOwnerDuesFromCashOrderByCaptainProfileIdAndOrderId($storeOwnerProfileId, $orderId);
 
-        if ($deleteCashOrdersAmountResult === OrderAmountCashConstant::CAPTAIN_AMOUNT_FROM_CASH_ORDER_NOT_EXIST_CONST) {
-            return OrderAmountCashConstant::CAPTAIN_AMOUNT_FROM_CASH_ORDER_NOT_EXIST_CONST;
+        if ($deleteCashOrdersAmountResult === OrderAmountCashConstant::STORE_DUES_FROM_CASH_ORDER_NOT_EXIST_CONST) {
+            return OrderAmountCashConstant::STORE_DUES_FROM_CASH_ORDER_NOT_EXIST_CONST;
         }
 
         if ($deleteCashOrdersAmountResult[1]) {
