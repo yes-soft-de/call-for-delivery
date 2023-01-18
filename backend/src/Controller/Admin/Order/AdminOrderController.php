@@ -833,7 +833,7 @@ class AdminOrderController extends BaseController
      *                          @OA\Property(type="string", property="msg")
      *                   ),
      *                   @OA\Schema(type="object",
-     *                          @OA\Property(type="string", property="status_code", description="9202"),
+     *                          @OA\Property(type="string", property="status_code", description="9215"),
      *                          @OA\Property(type="string", property="msg")
      *                   ),
      *                   @OA\Schema(type="object",
@@ -928,6 +928,10 @@ class AdminOrderController extends BaseController
      *                   ),
      *                   @OA\Schema(type="object",
      *                          @OA\Property(type="string", property="status_code", description="9218"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9224"),
      *                          @OA\Property(type="string", property="msg")
      *                   )
      *              }

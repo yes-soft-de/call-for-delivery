@@ -244,7 +244,7 @@ class AdminOrderManager
         $captainUserId = $orderEntity->getCaptainId()->getCaptainId();
 
         $orderEntity->setDateCaptainArrived(null);
-        $orderEntity->setIsCaptainArrived(false);
+        $orderEntity->setIsCaptainArrived(null);
         // if order belongs to an aggregated one, then unlink them
         $orderEntity->setPrimaryOrder(null);
         $orderEntity->setCaptainId(null);
