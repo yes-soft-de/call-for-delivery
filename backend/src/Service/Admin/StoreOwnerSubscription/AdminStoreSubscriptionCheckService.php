@@ -7,8 +7,7 @@ use App\Constant\Subscription\SubscriptionConstant;
 use App\Service\DateFactory\DateFactoryService;
 use DateTimeInterface;
 
-////TODO to be continued
-// This service for only check specific operation related to store subscription
+// This service for only check if certain actions on store subscription are applicable
 class AdminStoreSubscriptionCheckService
 {
     private DateFactoryService $dateFactoryService;
