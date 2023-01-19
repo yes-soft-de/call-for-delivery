@@ -1501,7 +1501,7 @@ class AdminOrderService
     // Note: factor is the parameter that we want to subtract/add from/to remaining cars field
     public function updateRemainingCarsOfStoreSubscriptionByAdmin(int $storeOwnerProfileId, DateTimeInterface $orderCreationDate, string $operationType, int $factor): SubscriptionDetailsEntity|int
     {
-        return $this->adminStoreSubscriptionService->handleUpdatingRemainingCarsOfStoreSubscriptionByAdmin($storeOwnerProfileId,
+        return $this->adminStoreSubscriptionService->handleUpdatingRemainingCarsOfStoreSubscriptionViaStoreOwnerProfileIdAndOrderCreationDateByAdmin($storeOwnerProfileId,
             $orderCreationDate, $operationType, $factor);
     }
 

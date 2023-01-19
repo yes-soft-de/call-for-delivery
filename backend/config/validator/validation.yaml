@@ -798,3 +798,12 @@ App\Request\Admin\CaptainFinancialSystem\CaptainFinancialSystemDetailCreateByAdm
             - NotBlank: ~
         captain:
             - NotBlank: ~
+
+App\Request\Admin\Subscription\StoreSubscription\StoreSubscriptionRemainingCarsUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        factor:
+            - NotBlank: ~
+        operationType:
+            - NotBlank: ~

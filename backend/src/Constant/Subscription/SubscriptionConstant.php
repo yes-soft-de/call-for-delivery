@@ -62,19 +62,21 @@ final class SubscriptionConstant
     
     const CAN_SUBSCRIPTION_EXTRA_FALSE = false;
 
-    const SUBSCRIPTION_FOUND = "subscription found";
-
-    const CONSUMED_LESS_THAN_20_PERCENT = "less than 20 %";
-
-    const CONSUMED_LESS_THAN_50_PERCENT = "less than 50 %";
-    
-    const CONSUMED_LESS_THAN_80_PERCENT = "less than 80 %";
-
-    const CONSUMED_100_PERCENT = "100 %";
-
-    const CONSUMED_0_PERCENT = "0 %";
-
-    const CONSUMED_MORE_THAN_80_PERCENT = "more than 80 %";
+    ///TODO to be delete later
+//    const SUBSCRIPTION_FOUND = "subscription found";
+//
+//    const CONSUMED_LESS_THAN_20_PERCENT = "less than 20 %";
+//
+//    const CONSUMED_LESS_THAN_50_PERCENT = "less than 50 %";
+//
+//    const CONSUMED_LESS_THAN_80_PERCENT = "less than 80 %";
+//
+//    const CONSUMED_100_PERCENT = "100 %";
+//
+//    const CONSUMED_0_PERCENT = "0 %";
+//
+//    const CONSUMED_MORE_THAN_80_PERCENT = "more than 80 %";
+    ///TODO end
 
     const PERCENT = "%";   
 
@@ -93,4 +95,14 @@ final class SubscriptionConstant
     const OLD_STORE_SUBSCRIPTION = 30;
 
     const WRONG_SUBSCRIPTION_UPDATE_OPERATION_CONST = 134;
+
+    const SUBSCRIPTION_DATE_IS_VALID_CONST = 135;
+
+    const SUBSCRIPTION_DATE_IS_FINISHED_CONST = 141;
+
+    const SUBSCRIPTION_REMAINING_ORDERS_AND_DATE_ARE_VALID_CONST = 148;
+
+    const FUTURE_SUBSCRIPTION_DOES_NOT_EXIST_CONST = 149;
+
+    const SUBSCRIPTION_DOES_NOT_EXIST_CONST = 150;
 }

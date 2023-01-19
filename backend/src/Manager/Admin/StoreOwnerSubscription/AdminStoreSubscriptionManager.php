@@ -2,9 +2,11 @@
 
 namespace App\Manager\Admin\StoreOwnerSubscription;
 
+use App\Constant\Subscription\SubscriptionConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Repository\SubscriptionEntityRepository;
 use App\Repository\SubscriptionHistoryEntityRepository;
+use App\Request\Subscription\SubscriptionStatusUpdateByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\Admin\StoreOwnerSubscription\AdminSubscriptionDetailsManager;
 use App\Manager\Admin\StoreOwnerSubscription\AdminSubscriptionHistoryManager;
@@ -98,9 +100,18 @@ class AdminStoreSubscriptionManager
         return $this->subscribeRepository->findOneBy(['id'=>$id]);
     }
 
-    // Following function had been commented out because it is not being used
-//    public function getOrdersExceedGeographicalRangeBySubscriptionId(int $subscriptionId, float $packageGeographicalRange): ?array
-//    {
-//       return $this->subscribeRepository->getOrdersExceedGeographicalRangeBySubscriptionId($subscriptionId, $packageGeographicalRange);
-//    }
+    public function updateCurrentSubscriptionStatus(SubscriptionStatusUpdateByAdminRequest $request): SubscriptionEntity|int
+    {
+        $subscriptionEntity = $this->subscribeRepository->findOneBy(['id' => $request->getId()]);
+
+        if (! $subscriptionEntity) {
+            return SubscriptionConstant::SUBSCRIPTION_DOES_NOT_EXIST_CONST;
+        }
+
+        $subscriptionEntity->setStatus($request->getStatus());
+
+        $this->entityManager->flush();
+
+        return $subscriptionEntity;
+    }
 }
