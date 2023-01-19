@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Entity\CaptainPaymentToCompanyEntity;
 use App\Manager\Admin\CaptainPayment\AdminCaptainPaymentToCompanyManager;
 use App\Request\Admin\CaptainPayment\AdminCaptainPaymentCreateRequest;
+use App\Request\Admin\CaptainPayment\CaptainPaymentToCompany\CaptainPaymentToCompanyUpdateAmountByAdminRequest;
 use App\Response\Admin\CaptainPayment\AdminCaptainPaymentCreateResponse;
 use App\Response\Admin\CaptainPayment\AdminCaptainPaymentResponse;
 use App\Constant\Captain\CaptainConstant;
@@ -69,5 +70,10 @@ class AdminCaptainPaymentToCompanyService
     public function getSumPaymentsToCompanyInSpecificDate(int $captainId, string $fromDate, string $toDate): array
     {
        return $this->adminCaptainPaymentToCompanyManager->getSumPaymentsToCompanyInSpecificDate($captainId, $fromDate, $toDate);
+    }
+
+    public function updateCaptainPaymentToCompanyBySpecificAmount(CaptainPaymentToCompanyUpdateAmountByAdminRequest $request): CaptainPaymentToCompanyEntity|int
+    {
+        return $this->adminCaptainPaymentToCompanyManager->updateCaptainPaymentToCompanyBySpecificAmount($request);
     }
 }

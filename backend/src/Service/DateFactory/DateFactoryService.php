@@ -105,4 +105,13 @@ class DateFactoryService
 
         return false;
     }
+
+    public function checkIfDateTimeInterfaceIsBetweenTwoDateTime(DateTimeInterface $dateTime, DateTimeInterface $fromDateTime, DateTimeInterface $toDateTime): bool
+    {
+        if (($dateTime >= $fromDateTime) && ($dateTime <= $toDateTime)) {
+            return true;
+        }
+
+        return false;
+    }
 }

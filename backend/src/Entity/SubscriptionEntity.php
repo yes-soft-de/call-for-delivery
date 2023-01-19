@@ -21,6 +21,7 @@ class SubscriptionEntity
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $endDate;
 
+    // Ex: active - date finished - cars finished - order finished.
     #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $status;
 

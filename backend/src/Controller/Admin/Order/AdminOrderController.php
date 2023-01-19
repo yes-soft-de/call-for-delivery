@@ -688,6 +688,7 @@ class AdminOrderController extends BaseController
 
         return $this->response($result, self::CREATE);
     }
+
      /**
      * admin: Assign a order to a captain.
      * @Route("assignordertocaptain", name="assignOrderToCaptain", methods={"PUT"})
@@ -727,29 +728,29 @@ class AdminOrderController extends BaseController
      * or
      *
      * @OA\Response(
-      *      response=200,
-      *      description="Return error.",
-      *      @OA\JsonContent(
-      *          oneOf={
-      *                   @OA\Schema(type="object",
-      *                          @OA\Property(type="string", property="status_code", description="9207"),
-      *                          @OA\Property(type="string", property="msg")
-      *                   ),
-      *                   @OA\Schema(type="object",
-      *                          @OA\Property(type="string", property="status_code", description="9306"),
-      *                          @OA\Property(type="string", property="msg")
-      *                   ),
-      *                   @OA\Schema(type="object",
-      *                          @OA\Property(type="string", property="status_code", description="9101"),
-      *                          @OA\Property(type="string", property="msg")
-      *                   ),
-      *                   @OA\Schema(type="object",
-      *                          @OA\Property(type="string", property="status_code", description="9218"),
-      *                          @OA\Property(type="string", property="msg")
-      *                   )
-      *              }
-      *      )
-      * )
+     *      response=200,
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *          oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9207"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9306"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9101"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9218"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   )
+     *              }
+     *      )
+     * )
      * 
      * @Security(name="Bearer")
      */
@@ -832,7 +833,7 @@ class AdminOrderController extends BaseController
      *                          @OA\Property(type="string", property="msg")
      *                   ),
      *                   @OA\Schema(type="object",
-     *                          @OA\Property(type="string", property="status_code", description="9202"),
+     *                          @OA\Property(type="string", property="status_code", description="9215"),
      *                          @OA\Property(type="string", property="msg")
      *                   ),
      *                   @OA\Schema(type="object",
@@ -852,23 +853,24 @@ class AdminOrderController extends BaseController
      */
     public function orderCancelByAdmin(int $id): JsonResponse
     {
-        $response = $this->adminOrderService->orderCancelByAdmin($id, $this->getUserId());
+        $response = $this->adminOrderService->cancelOrderByAdmin($id, $this->getUserId());
 
         if ($response === OrderResultConstant::ORDER_TYPE_BID) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_WRONG_ORDER_TYPE);
-        }
 
-        if ($response === OrderResultConstant::ORDER_ALREADY_IS_BEING_ACCEPTED) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_REMOVE_CAPTAIN_RECEIVE);
-        }
-
-        if ($response === OrderResultConstant::ORDER_UPDATE_PROBLEM) {
+        } elseif ($response === OrderResultConstant::ORDER_UPDATE_PROBLEM) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_UPDATE);
+
+        } elseif ($response === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_NOT_FOUND);
+
+        } elseif ($response === OrderResultConstant::ORDER_ALREADY_BEING_CANCELLED) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CANCEL);
         }
 
-        if ($response === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_NOT_FOUND);
-        }
+        // elseif ($response === OrderResultConstant::ORDER_ALREADY_IS_BEING_ACCEPTED) {
+        // return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_REMOVE_CAPTAIN_RECEIVE);
+        // }
 
         return $this->response($response, self::UPDATE);
     }
@@ -927,6 +929,10 @@ class AdminOrderController extends BaseController
      *                   @OA\Schema(type="object",
      *                          @OA\Property(type="string", property="status_code", description="9218"),
      *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9224"),
+     *                          @OA\Property(type="string", property="msg")
      *                   )
      *              }
      *      )
@@ -953,10 +959,12 @@ class AdminOrderController extends BaseController
 
         if ($result === OrderResultConstant::ORDER_IS_BEING_DELIVERED) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_ALREADY_DELIVERED);
-        }
 
-        if ($result === OrderResultConstant::ORDER_IS_HIDDEN_CONST) {
+        } elseif ($result === OrderResultConstant::ORDER_IS_HIDDEN_CONST) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_HIDE);
+
+        } elseif ($result === OrderResultConstant::ORDER_CANCEL_NOT_ALLOWED_DUE_TO_WRONG_API) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CANCEL_NOT_ALLOWED_DUE_TO_WRONG_API);
         }
 
         return $this->response($result, self::UPDATE);

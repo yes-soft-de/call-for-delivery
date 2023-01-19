@@ -3,9 +3,11 @@
 namespace App\Manager\Admin\CaptainPayment;
 
 use App\AutoMapping;
+use App\Constant\CaptainPayment\CaptainPaymentToCompany\CaptainPaymentToCompanyConstant;
 use App\Entity\CaptainPaymentToCompanyEntity;
 use App\Repository\CaptainPaymentToCompanyEntityRepository;
 use App\Request\Admin\CaptainPayment\AdminCaptainPaymentCreateRequest;
+use App\Request\Admin\CaptainPayment\CaptainPaymentToCompany\CaptainPaymentToCompanyUpdateAmountByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\Captain\CaptainManager;
 use App\Constant\Captain\CaptainConstant;
@@ -88,5 +90,25 @@ class AdminCaptainPaymentToCompanyManager
     public function  getSumPaymentsToCompanyInSpecificDate(int $captainId, string $fromDate, string $toDate): ?array
     {
         return $this->captainPaymentToCompanyEntityRepository->getSumPaymentsToCompanyInSpecificDate($captainId, $fromDate, $toDate);
+    }
+
+    public function updateCaptainPaymentToCompanyBySpecificAmount(CaptainPaymentToCompanyUpdateAmountByAdminRequest $request): CaptainPaymentToCompanyEntity|int
+    {
+        $captainPaymentToCompanyEntity = $this->captainPaymentToCompanyEntityRepository->findOneBy(['id' => $request->getId()]);
+
+        if (! $captainPaymentToCompanyEntity) {
+            return CaptainPaymentToCompanyConstant::CAPTAIN_PAYMENT_TO_COMPANY_NOT_EXIST_CONST;
+        }
+
+        if ($request->getOperationType() === OrderAmountCashConstant::AMOUNT_ADDITION_TYPE_OPERATION_CONST) {
+            $captainPaymentToCompanyEntity->setAmount($captainPaymentToCompanyEntity->getAmount() + $request->getAmount());
+
+        } elseif ($request->getOperationType() === OrderAmountCashConstant::AMOUNT_SUBTRACTION_TYPE_OPERATION_CONST) {
+            $captainPaymentToCompanyEntity->setAmount($captainPaymentToCompanyEntity->getAmount() - $request->getAmount());
+        }
+
+        $this->entityManager->flush();
+
+        return $captainPaymentToCompanyEntity;
     }
 }

@@ -2,10 +2,8 @@
 
 namespace App\Manager\Admin\CaptainAmountFromOrderCash;
 
-use App\AutoMapping;
-use App\Entity\CaptainAmountFromOrderCashEntity;
-use App\Entity\CaptainEntity;
 use App\Repository\CaptainAmountFromOrderCashEntityRepository;
+use App\Request\Admin\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashDeleteByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Request\Admin\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashFilterGetRequest;
 use App\Entity\CaptainPaymentToCompanyEntity;
@@ -13,15 +11,11 @@ use App\Constant\Order\OrderAmountCashConstant;
 
 class AdminCaptainAmountFromOrderCashManager
 {
-    private AutoMapping $autoMapping;
-    private CaptainAmountFromOrderCashEntityRepository $captainAmountFromOrderCashEntityRepository;
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(AutoMapping $autoMapping, CaptainAmountFromOrderCashEntityRepository $captainAmountFromOrderCashEntityRepository, EntityManagerInterface $entityManager)
+    public function __construct(
+        private CaptainAmountFromOrderCashEntityRepository $captainAmountFromOrderCashEntityRepository,
+        private EntityManagerInterface $entityManager
+    )
     {
-        $this->captainAmountFromOrderCashEntityRepository = $captainAmountFromOrderCashEntityRepository;
-        $this->autoMapping = $autoMapping;
-        $this->entityManager = $entityManager;
     }
 
     public function filterCaptainAmountFromOrderCash(CaptainAmountFromOrderCashFilterGetRequest $request): ?array
@@ -61,5 +55,24 @@ class AdminCaptainAmountFromOrderCashManager
     public function getCaptainAmountFromOrderCashBySpecificDateOnUnpaidCondition(string $fromDate, string $toDate, int $captainId): ?array
     {      
       return $this->captainAmountFromOrderCashEntityRepository->getCaptainAmountFromOrderCashBySpecificDateOnUnpaidCondition($captainId, $fromDate, $toDate);
+    }
+
+    public function deleteCaptainAmountFromCashOrderByCaptainProfileIdAndOrderId(CaptainAmountFromOrderCashDeleteByAdminRequest $request): array|int
+    {
+        $captainAmountsFromCashOrder = $this->captainAmountFromOrderCashEntityRepository->findOneBy(['captain' => $request->getCaptainProfileId(),
+            'orderId' => $request->getOrderId()]);
+
+        if (! $captainAmountsFromCashOrder) {
+            return OrderAmountCashConstant::CAPTAIN_AMOUNT_FROM_CASH_ORDER_NOT_EXIST_CONST;
+        }
+
+        $payment = $captainAmountsFromCashOrder->getCaptainPaymentToCompany();
+
+        $captainAmountsFromCashOrder->setCaptainPaymentToCompany(null);
+
+        $this->entityManager->remove($captainAmountsFromCashOrder);
+        $this->entityManager->flush();
+
+        return [$captainAmountsFromCashOrder, $payment];
     }
 }
