@@ -1,5 +1,6 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/ui/widgets/owner_order_card/icon_info_button.dart';
+import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -15,6 +16,7 @@ class OwnerOrderCard extends StatelessWidget {
   final bool orderIsMain;
   final String? primaryTitle;
   final IconData? icon;
+  final num? isHide;
   OwnerOrderCard(
       {required this.orderNumber,
       required this.orderStatus,
@@ -25,7 +27,8 @@ class OwnerOrderCard extends StatelessWidget {
       this.background,
       this.primaryTitle,
       required this.orderIsMain,
-      this.icon});
+      this.icon,
+      this.isHide});
 
   @override
   Widget build(BuildContext context) {
@@ -167,6 +170,68 @@ class OwnerOrderCard extends StatelessWidget {
                 )
               ],
             ),
+            SizedBox(
+              height: 10,
+            ),
+            Visibility(
+                visible: isHide == 3,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushNamed(SubscriptionsRoutes.SUBSCRIPTIONS_SCREEN);
+                  },
+                  child: Row(
+                    children: [
+                      Icon(
+                        FontAwesomeIcons.infoCircle,
+                        color: Colors.red,
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Colors.red),
+                        child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: RichText(
+                                text: TextSpan(children: [
+                              TextSpan(
+                                text: S.current.pendingOffer + ' :',
+                                style: TextStyle(
+                                    fontSize: 10,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              TextSpan(
+                                text: S.current.outOfCars + '\n',
+                                style: TextStyle(
+                                    fontSize: 8,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                              TextSpan(
+                                text: S.current.pressHereDetails,
+                                style: TextStyle(
+                                    fontSize: 8,
+                                    color: Colors.white,
+                                    decoration: TextDecoration.underline,
+                                    fontWeight: FontWeight.w700),
+                              ),
+                            ]))
+                            // Text(
+                            //   primaryTitle ?? S.current.outOfCars,
+                            //   style: TextStyle(
+                            //       fontSize: 10,
+                            //       color: Colors.white,
+                            //       fontWeight: FontWeight.bold),
+                            // ),
+                            ),
+                      ),
+                    ],
+                  ),
+                )),
           ],
         ),
       ),
