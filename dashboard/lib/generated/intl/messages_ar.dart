@@ -93,6 +93,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "all": MessageLookupByLibrary.simpleMessage("الكل"),
         "allOrdersCount": MessageLookupByLibrary.simpleMessage("عدد الطلبات"),
+        "alreadyCanceled":
+            MessageLookupByLibrary.simpleMessage("الطلب ملغي مسبقا"),
         "amount":
             MessageLookupByLibrary.simpleMessage("سعر الطلب ضمن المدى المحدد"),
         "amountForStore":
@@ -616,12 +618,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "invalidMapLink":
             MessageLookupByLibrary.simpleMessage("وجهة غير صالحة"),
         "invalidNumber": MessageLookupByLibrary.simpleMessage("الرقم غير صالح"),
+        "invalidOrderType": MessageLookupByLibrary.simpleMessage(
+            "الطلب من نوع مناقصة لايمكن إلغاءه"),
         "invoiceCost": MessageLookupByLibrary.simpleMessage("تكلفة الفاتورة"),
         "invoiceImage": MessageLookupByLibrary.simpleMessage("صورة الفاتورة"),
         "isCashPaymentConfirmedByStore": MessageLookupByLibrary.simpleMessage(
             "تم تأكيد/نفي استلام المبلغ النقدي من قبل الادارة نيابة عن المتجر"),
         "isFutureSubscriptions":
             MessageLookupByLibrary.simpleMessage("اشتراك مستقبلي"),
+        "issuesWithOrderStatusUpdate": MessageLookupByLibrary.simpleMessage(
+            "يوجد مشكلة في عملية تحديث الطلب"),
         "item": MessageLookupByLibrary.simpleMessage("عنصر"),
         "kilometerLimt":
             MessageLookupByLibrary.simpleMessage("عدد الكيلومترات"),
@@ -786,6 +792,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderList": MessageLookupByLibrary.simpleMessage("قائمة الطلبات"),
         "orderLog": MessageLookupByLibrary.simpleMessage("سجل الطلبات"),
         "orderLogHistory": MessageLookupByLibrary.simpleMessage("سجل الطلب"),
+        "orderNotFound":
+            MessageLookupByLibrary.simpleMessage("الطلب غير موجود"),
         "orderNumber": MessageLookupByLibrary.simpleMessage("رقم الطلب"),
         "orderNumberNotFound":
             MessageLookupByLibrary.simpleMessage("الطلب غير موجود"),
@@ -1126,6 +1134,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "storePhone": MessageLookupByLibrary.simpleMessage("رقم هاتف المحل"),
         "storeProducts":
             MessageLookupByLibrary.simpleMessage("المنتجات المتاحة"),
+        "storeProfileNotFound":
+            MessageLookupByLibrary.simpleMessage("بروفايل المتجر غير معلوم"),
         "storeProfitMargin":
             MessageLookupByLibrary.simpleMessage("هامش الربح من المتجر"),
         "storeRated":

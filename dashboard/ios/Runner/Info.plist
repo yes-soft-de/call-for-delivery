@@ -28,6 +28,12 @@
 		<string>We need to access your current location to calculate customer distance to you </string>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>We need to access your gellary to pick photo to your profile or order</string>
+		<key>LSApplicationQueriesSchemes</key>
+		<array>
+			<string>https</string>
+			<string>http</string>
+			<string>comgooglemaps</string>
+		</array>
 		<key>LSRequiresIPhoneOS</key>
 		<true/>
 		<key>UIBackgroundModes</key>

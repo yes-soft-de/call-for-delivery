@@ -8679,6 +8679,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Illegal Command`
+  String get illegalCommand {
+    return Intl.message(
+      'Illegal Command',
+      name: 'illegalCommand',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Already canceled`
+  String get alreadyCanceled {
+    return Intl.message(
+      'Already canceled',
+      name: 'alreadyCanceled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order not found`
+  String get orderNotFound {
+    return Intl.message(
+      'Order not found',
+      name: 'orderNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Issues with order status update `
+  String get issuesWithOrderStatusUpdate {
+    return Intl.message(
+      'Issues with order status update ',
+      name: 'issuesWithOrderStatusUpdate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid order type`
+  String get invalidOrderType {
+    return Intl.message(
+      'Invalid order type',
+      name: 'invalidOrderType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store profile not found`
+  String get storeProfileNotFound {
+    return Intl.message(
+      'Store profile not found',
+      name: 'storeProfileNotFound',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -62,7 +62,7 @@ class ActionTypeLogsHelper {
       case 29:
         return S.current.destinationUpdate;
       case 30:
-        return S.current.storeBranchToClientDistance;
+        return S.current.storeBranchToClientDistance2;
       case 31:
         return S.current.storeBranchToClientDistanceDirectly;
       case 32:

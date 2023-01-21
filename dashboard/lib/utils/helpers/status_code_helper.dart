@@ -48,6 +48,18 @@ class StatusCodeHelper {
         return S.current.thereIsNoValidSubscription;
       case '9453':
         return S.current.cannotSubscribeToCaptainOffer;
+      case '9224':
+        return S.current.illegalCommand + '9224';
+      case '9213':
+        return S.current.invalidOrderType;
+      case '9203':
+        return S.current.issuesWithOrderStatusUpdate;
+      case '9205':
+        return S.current.orderNotFound;
+      case '9215':
+        return S.current.alreadyCanceled;
+      case '9157':
+        return S.current.storeProfileNotFound;
       case '-1':
         return S.current.dataDecodeError;
       default:
