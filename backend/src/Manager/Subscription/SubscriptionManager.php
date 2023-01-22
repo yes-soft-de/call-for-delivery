@@ -380,4 +380,21 @@ class SubscriptionManager
     {
         return $this->subscribeRepository->findBy(['storeOwner' => $storeOwnerProfileId, 'isFuture' => 1], ['id' => 'ASC'], 1);
     }
+
+    public function updateFutureSubscriptionToCurrentSubscription(int $futureSubscriptionId): SubscriptionEntity|int
+    {
+        $subscriptionEntity = $this->subscribeRepository->findOneBy(['id' => $futureSubscriptionId]);
+
+        if (! $subscriptionEntity) {
+            return SubscriptionConstant::SUBSCRIPTION_DOES_NOT_EXIST_CONST;
+        }
+
+        $subscriptionEntity->setIsFuture(0);
+
+        $this->entityManager->flush();
+
+        $this->subscriptionDetailsManager->createSubscriptionDetails($subscriptionEntity, SubscriptionConstant::IS_HAS_EXTRA_FALSE);
+
+        return $subscriptionEntity;
+    }
 }

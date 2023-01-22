@@ -94,6 +94,11 @@ class BaseController extends AbstractController
     const ERROR_THERE_ARE_PAYMENT_RELATED_WITH_SUBSCRIPTION = ["there are payment related with subscription", "9307"];
     const SUBSCRIPTION_NOT_FOUND = ["subscription is not exist", "9308"];
     const OLD_STORE_SUBSCRIPTION = ["subscription is an old one", "9309"];
+    const SUBSCRIPTION_DETAILS_NOT_FOUND = ["subscription details not found", "9310"];
+    const SUBSCRIPTION_DATE_IS_FINISHED = ["subscription date is finished", "9311"];
+    const SUBSCRIPTION_REMAINING_ORDERS_IS_FINISHED = ["subscription remaining orders is finished", "9312"];
+    const SUBSCRIPTION_REMAINING_ORDERS_IS_OUT_OF_LIMITS = ["subscription remaining orders is out of limits", "9313"];
+    const SUBSCRIPTION_REMAINING_CARS_NOT_ALLOWED_UPDATE = ["updating remaining cars is not correct", "9314"];
     //profile not completed
     const PROFILE_NOT_COMPLETED = ["profile is not completed!", "9220"];
     const WRONG_COMPLETE_ACCOUNT_STATUS = ["wrong complete account status", "9221"];

@@ -4,6 +4,7 @@ namespace App\Service\Admin\StoreOwnerSubscription;
 
 use App\Entity\SubscriptionDetailsEntity;
 use App\Manager\Admin\StoreOwnerSubscription\AdminSubscriptionDetailsManager;
+use App\Request\Subscription\SubscriptionStatusUpdateByAdminRequest;
 
 class AdminStoreSubscriptionDetailsService
 {
@@ -31,5 +32,20 @@ class AdminStoreSubscriptionDetailsService
     {
         return $this->adminSubscriptionDetailsManager->updateRemainingOrdersOfStoreSubscriptionBySubscriptionDetailsId($subscriptionDetailsId,
             $operationType, $factor);
+    }
+
+    public function getSubscriptionDetailsBySubscriptionIdAndSpecificGroupOfStatusForAdmin(int $subscriptionId, array $statusArray): ?SubscriptionDetailsEntity
+    {
+        return $this->adminSubscriptionDetailsManager->getSubscriptionDetailsBySubscriptionIdAndSpecificGroupOfStatusForAdmin($subscriptionId, $statusArray);
+    }
+
+    public function updateCurrentSubscriptionDetailsStatus(SubscriptionStatusUpdateByAdminRequest $request): SubscriptionDetailsEntity|int
+    {
+        return $this->adminSubscriptionDetailsManager->updateCurrentSubscriptionDetailsStatus($request);
+    }
+
+    public function getCurrentSubscriptionIdBySubscriptionDetailsId(int $subscriptionDetailsId): ?int
+    {
+        return $this->adminSubscriptionDetailsManager->getCurrentSubscriptionIdBySubscriptionDetailsId($subscriptionDetailsId);
     }
 }

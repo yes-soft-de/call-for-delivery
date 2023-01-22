@@ -7,6 +7,7 @@ use App\Constant\Subscription\SubscriptionDetailsConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionDetailsEntity;
 use App\Repository\SubscriptionDetailsEntityRepository;
+use App\Request\Subscription\SubscriptionStatusUpdateByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AdminSubscriptionDetailsManager
@@ -91,5 +92,36 @@ class AdminSubscriptionDetailsManager
         $this->entityManager->flush();
 
         return $subscriptionDetailsEntity;
+    }
+
+    public function getSubscriptionDetailsBySubscriptionIdAndSpecificGroupOfStatusForAdmin(int $subscriptionId, array $statusArray): ?SubscriptionDetailsEntity
+    {
+        return $this->subscriptionDetailsEntityRepository->findOneBy(['lastSubscription' => $subscriptionId, 'status' => $statusArray]);
+    }
+
+    public function updateCurrentSubscriptionDetailsStatus(SubscriptionStatusUpdateByAdminRequest $request): SubscriptionDetailsEntity|int
+    {
+        $subscriptionDetailsEntity = $this->subscriptionDetailsEntityRepository->findOneBy(['id' => $request->getId()]);
+
+        if (! $subscriptionDetailsEntity) {
+            return SubscriptionConstant::SUBSCRIPTION_DOES_NOT_EXIST_CONST;
+        }
+
+        $subscriptionDetailsEntity->setStatus($request->getStatus());
+
+        $this->entityManager->flush();
+
+        return $subscriptionDetailsEntity;
+    }
+
+    public function getCurrentSubscriptionIdBySubscriptionDetailsId(int $subscriptionDetailsId): ?int
+    {
+        $subscriptionDetailsEntity = $this->subscriptionDetailsEntityRepository->findOneBy(['id' => $subscriptionDetailsId]);
+
+        if (! $subscriptionDetailsEntity) {
+            return SubscriptionConstant::SUBSCRIPTION_DOES_NOT_EXIST_CONST;
+        }
+
+        return $subscriptionDetailsEntity->getId();
     }
 }
