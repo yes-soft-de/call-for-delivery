@@ -125,6 +125,7 @@ class SubscriptionBalanceLoadedState extends States {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Text('data'),
             // status hint
             Visibility(
               visible: balanceStatusEnum != BalanceStatus.ACTIVE,
