@@ -517,6 +517,6 @@ class AdminStoreSubscriptionService
         //}
 
         return $this->autoMapping->map(SubscriptionDetailsEntity::class, SubscriptionRemainingCarsUpdateByAdminResponse::class,
-            $updateSubscriptionStatusResult);
+            $subscriptionDetailsResult);
     }
 }
