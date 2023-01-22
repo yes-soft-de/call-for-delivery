@@ -13,7 +13,7 @@ class Data {
   int? packageCarCount;
   int? packageOrderCount;
   int? expired;
-  double? unPaidCashOrdersSum;
+  dynamic unPaidCashOrdersSum;
 
   Data(
       {this.id,
@@ -45,7 +45,7 @@ class Data {
         packageCarCount: json['packageCarCount'] as int?,
         packageOrderCount: json['packageOrderCount'] as int?,
         expired: json['expired'] as int?,
-        unPaidCashOrdersSum: json['unPaidCashOrdersSum'] as double?,
+        unPaidCashOrdersSum: json['unPaidCashOrdersSum'],
       );
 
   Map<String, dynamic> toJson() => {

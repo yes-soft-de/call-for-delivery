@@ -15,7 +15,7 @@ class SubscriptionBalanceModel extends DataModel {
   late int packageOrdersCount;
   late String? status;
   late int expired;
-  late double? unPaidCashOrdersSum;
+  late var unPaidCashOrdersSum;
   SubscriptionBalanceModel(
       {required this.packageID,
       required this.id,

@@ -962,6 +962,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("The number of cars unknown"),
         "unlinkSubOrders":
             MessageLookupByLibrary.simpleMessage("Unlink suborders"),
+        "unpaidOrders":
+            MessageLookupByLibrary.simpleMessage("Total unpaid (cash orders)"),
         "update": MessageLookupByLibrary.simpleMessage("Update"),
         "updateBranch": MessageLookupByLibrary.simpleMessage("Update Branch"),
         "updateBranchFailure": MessageLookupByLibrary.simpleMessage(

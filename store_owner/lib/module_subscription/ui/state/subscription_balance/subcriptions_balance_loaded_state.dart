@@ -125,7 +125,6 @@ class SubscriptionBalanceLoadedState extends States {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Text('data'),
             // status hint
             Visibility(
               visible: balanceStatusEnum != BalanceStatus.ACTIVE,
@@ -158,6 +157,7 @@ class SubscriptionBalanceLoadedState extends States {
               packageName: balance.packageName,
               active: true,
               expired: balance.expired.toString(),
+              unPaidCashOrdersSum: balance.unPaidCashOrdersSum,
             ),
             // Subscription status
             Padding(
