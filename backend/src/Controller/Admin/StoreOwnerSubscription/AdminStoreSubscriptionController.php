@@ -560,7 +560,7 @@ class AdminStoreSubscriptionController extends BaseController
         } elseif ($result === SubscriptionConstant::SUBSCRIPTION_DATE_IS_FINISHED_CONST) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::SUBSCRIPTION_DATE_IS_FINISHED);
 
-        } elseif (SubscriptionDetailsConstant::SUBSCRIPTION_REMAINING_ORDERS_IS_FINISHED) {
+        } elseif ($result === SubscriptionDetailsConstant::SUBSCRIPTION_REMAINING_ORDERS_IS_FINISHED) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::SUBSCRIPTION_REMAINING_ORDERS_IS_FINISHED);
 
         } elseif ($result === SubscriptionDetailsConstant::SUBSCRIPTION_REMAINING_ORDERS_OUT_OF_LIMITS_CONST) {
