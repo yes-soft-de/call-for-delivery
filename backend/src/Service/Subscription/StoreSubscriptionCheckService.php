@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Admin\StoreOwnerSubscription;
+namespace App\Service\Subscription;
 
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\Subscription\SubscriptionConstant;
@@ -8,7 +8,7 @@ use App\Service\DateFactory\DateFactoryService;
 use DateTimeInterface;
 
 // This service for only check if certain actions on store subscription are applicable
-class AdminStoreSubscriptionCheckService
+class StoreSubscriptionCheckService
 {
     private DateFactoryService $dateFactoryService;
 
