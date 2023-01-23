@@ -475,6 +475,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "endDate": MessageLookupByLibrary.simpleMessage("إلى تاريخ"),
         "endedSubscriptions":
             MessageLookupByLibrary.simpleMessage("الاشتراكات المنتهية"),
+        "enterCarsCountYouWantToAdd":
+            MessageLookupByLibrary.simpleMessage("ادخل سيارات اضافية"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("ادخل معلومات المنتج"),
         "errOc": MessageLookupByLibrary.simpleMessage("حصلت المشاكل التالية"),
@@ -1291,9 +1293,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تحديث الدفعة بنجاح"),
         "updatePersonalInformation":
             MessageLookupByLibrary.simpleMessage("تعديل البيانات الشخصية"),
+        "updateRemainingCars":
+            MessageLookupByLibrary.simpleMessage("تحديث الكباتن المتبقية"),
         "updateStore": MessageLookupByLibrary.simpleMessage("تعديل المتجر"),
         "updateStoreAnswerSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث جواب المتجر بنجاح"),
+        "updateSuccess":
+            MessageLookupByLibrary.simpleMessage("تم التحديث بنجاح"),
         "updateYourData":
             MessageLookupByLibrary.simpleMessage("تحديث البيانات"),
         "updatedBy":

@@ -7,6 +7,7 @@ import 'package:c4d/module_stores/hive/store_hive_helper.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_subscriptions/model/store_subscriptions_financial.dart';
 import 'package:c4d/module_subscriptions/request/delete_captain_offer_request.dart';
+import 'package:c4d/module_subscriptions/request/update_remaining_cars_request.dart';
 import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_details_screen.dart';
 import 'package:c4d/module_subscriptions/ui/widget/item_payment_widget.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
@@ -173,7 +174,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                                 child: Text(
                                   S.current.cancel,
                                   style: Theme.of(context).textTheme.button,
-                                ))
+                                )),
                           ],
                         );
                       });
@@ -467,6 +468,41 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                       title: S.current.packageRemainingCaptains),
                   secondBubble: verticalBubble(context,
                       title: model.remainingCars.toString())),
+              ElevatedButton(
+                  onPressed: () {
+                    final factorController = TextEditingController();
+                    showDialog(
+                        context: context,
+                        builder: (ctx) {
+                          return AlertDialog(
+                            title: Text(S.current.updateRemainingCars),
+                            content: Column(
+                              children: [
+                                CustomFormField(
+                                  controller: factorController,
+                                  hintText:
+                                      S.current.enterCarsCountYouWantToAdd,
+                                ),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      screenState.manager.updateRemainingCars(
+                                        screenState,
+                                        UpdateRemainingCarsRequest(
+                                          id: model.id,
+                                          factor: num.tryParse(
+                                              factorController.text),
+                                          operationType: 'addition',
+                                        ),
+                                      );
+                                    },
+                                    child: Text(S.current.update)),
+                              ],
+                            ),
+                          );
+                        });
+                  },
+                  child: Text(S.current.updateRemainingCars)),
             ],
           ),
         ),

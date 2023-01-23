@@ -24,7 +24,7 @@ class CaptainActivityFilterRequest {
     if (fromDate != null) {
       data['fromDate'] = DateFormat('yyyy-MM-dd', 'en').format(fromDate!);
     }
-     if (Platform.isAndroid || Platform.isIOS) {
+    if (Platform.isAndroid || Platform.isIOS) {
       data['customizedTimezone'] =
           await FlutterNativeTimezone.getLocalTimezone();
     }

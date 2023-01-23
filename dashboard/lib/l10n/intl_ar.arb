@@ -867,5 +867,8 @@
     "orderNotFound": "الطلب غير موجود",
     "issuesWithOrderStatusUpdate": "يوجد مشكلة في عملية تحديث الطلب",
     "invalidOrderType": "الطلب من نوع مناقصة لايمكن إلغاءه",
-    "storeProfileNotFound": "بروفايل المتجر غير معلوم"
+    "storeProfileNotFound": "بروفايل المتجر غير معلوم",
+    "updateSuccess":"تم التحديث بنجاح",
+    "updateRemainingCars":"تحديث الكباتن المتبقية",
+    "enterCarsCountYouWantToAdd":"ادخل سيارات اضافية"
 }

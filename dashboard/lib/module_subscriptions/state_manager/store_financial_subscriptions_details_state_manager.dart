@@ -4,6 +4,7 @@ import 'package:c4d/module_stores/hive/store_hive_helper.dart';
 import 'package:c4d/module_subscriptions/model/store_subscriptions_financial.dart';
 import 'package:c4d/module_subscriptions/request/delete_captain_offer_request.dart';
 import 'package:c4d/module_subscriptions/request/delete_subscription_request.dart';
+import 'package:c4d/module_subscriptions/request/update_remaining_cars_request.dart';
 import 'package:c4d/module_subscriptions/service/subscriptions_service.dart';
 import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_details_screen.dart';
 import 'package:c4d/module_subscriptions/ui/state/store_financial_subscriptions_details/store_financial_details_state.dart';
@@ -28,7 +29,7 @@ class StoreFinancialSubscriptionsDuesDetailsStateManager {
   StoreFinancialSubscriptionsDuesDetailsStateManager(
       this._paymentsService, this._storesService);
 
-  void getCaptainPaymentsDetails(
+  void getStorePaymentsDetails(
       StoreSubscriptionsFinanceDetailsScreenState screenState) {
     _storesService
         .getSubscriptionsFinance(StoresHiveHelper().getCurrentStoreID())
@@ -61,10 +62,10 @@ class StoreFinancialSubscriptionsDuesDetailsStateManager {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error.toString())
             .show(screenState.context);
-        getCaptainPaymentsDetails(screenState);
+        getStorePaymentsDetails(screenState);
       } else {
         getIt<GlobalStateManager>().updateList();
-        getCaptainPaymentsDetails(screenState);
+        getStorePaymentsDetails(screenState);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.paymentSuccessfully)
@@ -82,10 +83,10 @@ class StoreFinancialSubscriptionsDuesDetailsStateManager {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error.toString())
             .show(screenState.context);
-        getCaptainPaymentsDetails(screenState);
+        getStorePaymentsDetails(screenState);
       } else {
         getIt<GlobalStateManager>().updateList();
-        getCaptainPaymentsDetails(screenState);
+        getStorePaymentsDetails(screenState);
         Navigator.of(screenState.context).pop();
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
@@ -104,10 +105,10 @@ class StoreFinancialSubscriptionsDuesDetailsStateManager {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error.toString())
             .show(screenState.context);
-        getCaptainPaymentsDetails(screenState);
+        getStorePaymentsDetails(screenState);
       } else {
         getIt<GlobalStateManager>().updateList();
-        getCaptainPaymentsDetails(screenState);
+        getStorePaymentsDetails(screenState);
       }
     });
   }
@@ -120,12 +121,32 @@ class StoreFinancialSubscriptionsDuesDetailsStateManager {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error.toString())
             .show(screenState.context);
-        getCaptainPaymentsDetails(screenState);
+        getStorePaymentsDetails(screenState);
       } else {
         getIt<GlobalStateManager>().updateList();
-        getCaptainPaymentsDetails(screenState);
+        getStorePaymentsDetails(screenState);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning, message: S.current.deleteSuccess)
+            .show(screenState.context);
+      }
+    });
+  }
+
+  void updateRemainingCars(
+      StoreSubscriptionsFinanceDetailsScreenState screenState,
+      UpdateRemainingCarsRequest request) {
+    _stateSubject.add(LoadingState(screenState));
+    _storesService.updateRemainingCars(request).then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error.toString())
+            .show(screenState.context);
+        getStorePaymentsDetails(screenState);
+      } else {
+        getIt<GlobalStateManager>().updateList();
+        getStorePaymentsDetails(screenState);
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning, message: S.current.updateSuccess)
             .show(screenState.context);
       }
     });

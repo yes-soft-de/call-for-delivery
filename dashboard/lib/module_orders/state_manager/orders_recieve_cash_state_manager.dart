@@ -114,7 +114,9 @@ class OrdersReceiveCashStateManager {
           return CustomAlertDialog(
               onPressed: () {
                 Navigator.of(ctx).pop();
-                _myOrdersService.updateAnswerOrderCashForStore(resolve).then((value) {
+                _myOrdersService
+                    .updateAnswerOrderCashForStore(resolve)
+                    .then((value) {
                   if (value.hasError) {
                     CustomFlushBarHelper.createError(
                             title: S.current.warnning,

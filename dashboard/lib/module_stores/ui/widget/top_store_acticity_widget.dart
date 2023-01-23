@@ -92,7 +92,6 @@ class TopStoreActivityWidget extends StatelessWidget {
                       //     // )
                       //   ],
                       // ),
-                    
                     ],
                   ),
                 )

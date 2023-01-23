@@ -481,6 +481,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "endDate": MessageLookupByLibrary.simpleMessage("To date"),
         "endedSubscriptions":
             MessageLookupByLibrary.simpleMessage("Ended subscriptions"),
+        "enterCarsCountYouWantToAdd":
+            MessageLookupByLibrary.simpleMessage("Enter extra cars count"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("Enter product information"),
         "errOc":
@@ -1307,9 +1309,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "Payment updated successfully"),
         "updatePersonalInformation":
             MessageLookupByLibrary.simpleMessage("Update profile"),
+        "updateRemainingCars":
+            MessageLookupByLibrary.simpleMessage("Update remaining cars"),
         "updateStore": MessageLookupByLibrary.simpleMessage("Update store"),
         "updateStoreAnswerSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Update store answer for cash order"),
+        "updateSuccess": MessageLookupByLibrary.simpleMessage("Update success"),
         "updateYourData": MessageLookupByLibrary.simpleMessage("Update Data"),
         "updatedBy": MessageLookupByLibrary.simpleMessage("Updated by"),
         "updatedOrder": MessageLookupByLibrary.simpleMessage("Updated order"),

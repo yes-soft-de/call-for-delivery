@@ -868,7 +868,11 @@
     "orderNotFound":"Order not found",
     "issuesWithOrderStatusUpdate":"Issues with order status update ",
     "invalidOrderType":"Invalid order type",
-    "storeProfileNotFound": "Store profile not found"
+    "storeProfileNotFound": "Store profile not found",
+    "updateSuccess":"Update success",
+    "updateRemainingCars":"Update remaining cars",
+    "enterCarsCountYouWantToAdd":"Enter extra cars count"
+
 
 
 }

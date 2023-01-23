@@ -8739,6 +8739,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Update success`
+  String get updateSuccess {
+    return Intl.message(
+      'Update success',
+      name: 'updateSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update remaining cars`
+  String get updateRemainingCars {
+    return Intl.message(
+      'Update remaining cars',
+      name: 'updateRemainingCars',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter extra cars count`
+  String get enterCarsCountYouWantToAdd {
+    return Intl.message(
+      'Enter extra cars count',
+      name: 'enterCarsCountYouWantToAdd',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
