@@ -15,4 +15,6 @@ final class GeoDistanceResultConstant
     const ZERO_DISTANCE_CONST = "0";
 
     const DESTINATION_COULD_NOT_BE_CALCULATED = 3;
+
+    const DESTINATION_HAS_NULL_VALUE = 157;
 }

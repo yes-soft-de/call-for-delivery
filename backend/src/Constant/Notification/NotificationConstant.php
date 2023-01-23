@@ -56,6 +56,8 @@ final class NotificationConstant
 
     const ORDER_DESTINATION_ADDITION_BY_ADMIN_MESSAGE_CONST = "تم إضافة مسافة من قبل الإدارة على المسافة المحتسبة تلقائيا من أجل الطلب رقم ";
 
+    const ORDER_DESTINATION_ADDITION_BY_CAPTAIN_MESSAGE_CONST = "تم إضافة مسافة من قبل الكابتن على المسافة المحتسبة تلقائيا من أجل الطلب رقم ";
+
     //for captain
     const STATE_ON_WAY_PICK_ORDER_CAPTAIN = "لقد قبلت الطلب ";
 

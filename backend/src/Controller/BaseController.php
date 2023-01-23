@@ -41,7 +41,7 @@ class BaseController extends AbstractController
     const ERROR_IN_RETURNING_ORDER_TO_PENDING_STATUS = ["problem In Returning Order To Pending Status", "9214"];
     const ERROR_ORDER_CANCEL = ["order cancelled", "9215"];
     const ERROR_UPDATE_BRANCH = ["captain is in store,You can not modify the branch", "9216"];
-    const ERROR_UPDATE_CAPTAIN_ONGOING = ["captain is ongoing,You can not modify detail or destination or deliveryDate", "9217"];
+    const ERROR_STORE_ORDER_DETAILS_NOT_FOUND = ["no order details was found", "9217"];
     const ERROR_ORDER_HIDE = ["order hide", "9218"];
     const ERROR_ORDER_ALREADY_DELIVERED = ["order is already delivered", "9219"];
     const CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE = ["previous order from same store still ongoing", "9200"];
@@ -130,6 +130,7 @@ class BaseController extends AbstractController
     const CAPTAIN_FINANCIAL_SYSTEM_CAN_NOT_CHOSE = ["youHaveFinancialSystem,canNotChooseAnotherFinancialSystemNow", "9601"];
     const YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM = ["youNotHaveCaptainFinancialSystem", "9602"];
     const NOT_UPDATE_FINANCIAL_SYSTEM_ACTIVE = ["not update because financial System is active", "9603"];
+    const CAPTAIN_FINANCIAL_DUES_WAS_NOT_FOUND = ["captain doesn't have financial dues", "9604"];
     // announcement
     const ANNOUNCEMENT_NOT_EXIST = ["announcement does not exist", "9440"];
     // erase
@@ -146,6 +147,7 @@ class BaseController extends AbstractController
     const ERROR_BAD_REQUEST = ["bad request", "9370"];
     const ERROR_CAN_NOT_DECODING_CONTENT = ["content can not be decoded", "9371"];
     const ERROR_CAN_NOT_CALCULATE_DISTANCE = ["distance can not be calculated", "9372"];
+    const ERROR_DESTINATION_HAS_NULL_VALUE = ["destination had null value", "9373"];
     //
     const CAPTAIN_NOT_ALLOWED_TO_EDIT_ORDER_PAID_FLAG = ["You can not edit, because you paid the admin", "9380"];
     // captain offer subscription

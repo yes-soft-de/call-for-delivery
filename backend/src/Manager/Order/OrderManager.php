@@ -17,9 +17,11 @@ use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\BidDetailsCreateRequest;
 use App\Request\Main\OrderStateUpdateBySuperAdminRequest;
 use App\Request\Order\CashOrdersPaidOrNotFilterByStoreRequest;
+use App\Request\Order\OrderDeliveryCostUpdateRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
+use App\Request\Order\OrderStoreBranchToClientDistanceUpdateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
 use App\Request\OrderTimeLine\OrderLogsCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
@@ -391,10 +393,11 @@ class OrderManager
         return $this->orderTimeLineManager->createOrderLogs($request);
     }
 
-    public function getOrdersPendingBeforeSpecificDate(DateTime $specificTime): ?array
-    {
-        return $this->orderRepository->getOrdersPendingBeforeSpecificDate($specificTime);
-    }
+    /// This function had been commented out because it isn't being used anywhere
+    //public function getOrdersPendingBeforeSpecificDate(DateTime $specificTime): ?array
+    //{
+     //   return $this->orderRepository->getOrdersPendingBeforeSpecificDate($specificTime);
+    //}
 
     public function getOrdersPending(): ?array
     {
@@ -684,5 +687,59 @@ class OrderManager
     public function filterCashOrdersPaidOrNotByStore(CashOrdersPaidOrNotFilterByStoreRequest $request): array
     {
         return $this->orderRepository->filterCashOrdersPaidOrNotByStore($request);
+    }
+
+    public function updateStoreBranchToClientDistanceByAddNewDistance(OrderStoreBranchToClientDistanceUpdateRequest $request): string|OrderEntity
+    {
+        $orderEntity = $this->orderRepository->findOneBy(['id' => $request->getId()]);
+
+        if (! $orderEntity) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+        }
+
+        $orderEntity = $this->autoMapping->mapToObject(OrderStoreBranchToClientDistanceUpdateRequest::class, OrderEntity::class,
+            $request, $orderEntity);
+
+        $this->entityManager->flush();
+
+        return $orderEntity;
+    }
+
+    public function getStoreBranchToClientDistanceByOrderId(int $orderId): float|string|null
+    {
+        $orderEntity = $this->orderRepository->findOneBy(['id' => $orderId]);
+
+        if (! $orderEntity) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+        }
+
+        return $orderEntity->getStoreBranchToClientDistance();
+    }
+
+    public function getStoreOwnerProfileByOrderId(int $orderId): string|StoreOwnerProfileEntity
+    {
+        $orderEntity = $this->orderRepository->findOneBy(['id' => $orderId]);
+
+        if (! $orderEntity) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+        }
+
+        return $orderEntity->getStoreOwner();
+    }
+
+    public function updateOrderDeliveryCost(OrderDeliveryCostUpdateRequest $request)
+    {
+        $orderEntity = $this->orderRepository->findOneBy(['id' => $request->getId()]);
+
+        if (! $orderEntity) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+        }
+
+        $orderEntity = $this->autoMapping->mapToObject(OrderDeliveryCostUpdateRequest::class, OrderEntity::class,
+            $request, $orderEntity);
+
+        $this->entityManager->flush();
+
+        return $orderEntity;
     }
 }

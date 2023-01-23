@@ -807,3 +807,10 @@ App\Request\Admin\Subscription\StoreSubscription\StoreSubscriptionRemainingCarsU
             - NotBlank: ~
         operationType:
             - NotBlank: ~
+
+App\Request\Order\Destination\OrderStoreBranchToClientDistanceAdditionByCaptainUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        destination:
+            - NotBlank: ~

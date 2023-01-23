@@ -1166,11 +1166,11 @@ class AdminOrderService
 
                         ///TODO move following two calls to the function which responsible for add distance by captain (When ready)
                         // Send local notification to the store
-                        $this->createLocalNotificationForStore($orderEntity->getStoreOwner()->getStoreOwnerId(), NotificationConstant::ORDER_DESTINATION_DIFFERENT_TITLE_CONST,
-                            NotificationConstant::ORDER_DESTINATION_ADDITION_BY_ADMIN_MESSAGE_CONST.$orderEntity->getId(), $orderEntity->getId());
+                        //$this->createLocalNotificationForStore($orderEntity->getStoreOwner()->getStoreOwnerId(), NotificationConstant::ORDER_DESTINATION_DIFFERENT_TITLE_CONST,
+                          //  NotificationConstant::ORDER_DESTINATION_ADDITION_BY_ADMIN_MESSAGE_CONST.$orderEntity->getId(), $orderEntity->getId());
                         // Send firebase notification to the store
-                        $this->sendFirebaseNotificationToUserByAdmin($orderEntity->getStoreOwner()->getStoreOwnerId(), $orderEntity->getId(),
-                            NotificationFirebaseConstant::ORDER_DESTINATION_ADDITION_BY_ADMIN_MESSAGE_CONST);
+//                        $this->sendFirebaseNotificationToUserByAdmin($orderEntity->getStoreOwner()->getStoreOwnerId(), $orderEntity->getId(),
+//                            NotificationFirebaseConstant::ORDER_DESTINATION_ADDITION_BY_ADMIN_MESSAGE_CONST);
                     }
 
                     return $orderResult;

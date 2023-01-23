@@ -17,4 +17,6 @@ final class OrderTypeConstant
     const ORDER_PAID_TO_PROVIDER_NO = 2;
 
     const ORDER_PAID_TO_PROVIDER_PARTIALLY= 3;
+
+    const ORDER_TYPE_WRONG_CONST = 156;
 }

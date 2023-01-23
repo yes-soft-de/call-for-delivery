@@ -19,11 +19,12 @@ use App\Manager\Order\OrderManager;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\BidDetailsCreateRequest;
 use App\Request\Order\CashOrdersPaidOrNotFilterByStoreRequest;
+use App\Request\Order\OrderDeliveryCostUpdateRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
+use App\Request\Order\OrderStoreBranchToClientDistanceUpdateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
-use App\Request\Order\OrderUpdateIsCaptainPaidToProviderRequest;
 use App\Response\BidDetails\BidDetailsGetForCaptainResponse;
 use App\Response\Order\BidOrderByIdGetForCaptainResponse;
 use App\Response\Order\BidOrderForStoreOwnerGetResponse;
@@ -32,11 +33,11 @@ use App\Response\Order\FilterBidOrderByStoreOwnerResponse;
 use App\Response\Order\OrderByIdForSupplierGetResponse;
 use App\Response\Order\BidOrderFilterBySupplierResponse;
 use App\Response\Order\FilterOrdersByCaptainResponse;
+use App\Response\Order\OrderDeliveryCostUpdateResponse;
 use App\Response\Order\OrderResponse;
 use App\Response\Order\OrdersResponse;
 use App\Response\Order\OrderClosestResponse;
 use App\Response\Order\OrderUpdateByCaptainResponse;
-use App\Response\Order\OrderUpdateIsCaptainPaidToProviderResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Subscription\SubscriptionConstant;
@@ -44,7 +45,6 @@ use App\Service\CaptainOrderFinancialService\OrderFinancialValueGetService;
 use App\Service\DateFactory\DateFactoryService;
 use App\Service\OrderLog\OrderLogGetService;
 use App\Service\OrderLog\OrderLogService;
-use App\Service\OrderLog\OrderLogToMySqlService;
 use App\Service\Subscription\SubscriptionService;
 use App\Service\Notification\NotificationLocalService;
 use App\Service\Captain\CaptainService;
@@ -82,7 +82,6 @@ use App\Response\Admin\Order\OrderUpdateToHiddenResponse;
 use App\Constant\Order\OrderIsMainConstant;
 use App\Request\Order\OrderUpdateIsCashPaymentConfirmedByStoreRequest;
 use App\Response\Order\OrderUpdateIsCashPaymentConfirmedByStoreResponse;
-use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Constant\Order\OrderAmountCashConstant;
 use App\Request\Subscription\CalculateCostDeliveryOrderRequest;
 use App\Response\Subscription\CalculateCostDeliveryOrderResponse;
@@ -810,10 +809,11 @@ class OrderService
         return $this->orderManager->getCountOrdersByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
     }
 
-    public function getCountOrdersByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): array
-    {
-        return $this->orderManager->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
-    }
+    // Following function had been commented out because it isn't being used anywhere
+//    public function getCountOrdersByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): array
+//    {
+//        return $this->orderManager->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
+//    }
 
     // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
     public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array|string
@@ -1479,18 +1479,6 @@ class OrderService
         return $this->autoMapping->map(OrderEntity::class, OrderUpdateToHiddenResponse::class, $orderEntity);
     }
 
-//    public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainId, int $storeId, int|null $primaryOrderId): int
-//    {
-//        $orderEntity = $this->orderManager->checkWhetherCaptainReceivedOrderForSpecificStore($captainId, $storeId);
-//        if (!empty($orderEntity)) {
-//            //if the order not main
-//            if ($orderEntity->getOrderIsMain() !== true) {
-//                return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT;
-//            }
-//            //if the order main and (request order) related
-//        }
-//    }
-
     public function checkWhetherCaptainReceivedOrderForSpecificStore(int $captainId, int $storeId, int|null $primaryOrderId): int
     {
         $orderEntity = $this->orderManager->checkWhetherCaptainReceivedOrderForSpecificStore($captainId, $storeId);
@@ -1669,5 +1657,46 @@ class OrderService
     public function updateCaptainToStoreBranchDistanceByOrderId(int $orderId, float $captainToStoreBranchDistance = null): int|StoreOrderDetailsEntity
     {
         return $this->storeOrderDetailsService->updateCaptainToStoreBranchDistanceByOrderId($orderId, $captainToStoreBranchDistance);
+    }
+
+    public function getOrderEntityByOrderId(int $orderId): ?OrderEntity
+    {
+        return $this->orderManager->getOrderById($orderId);
+    }
+
+    public function updateStoreBranchToClientDistanceByAddNewDistance(OrderStoreBranchToClientDistanceUpdateRequest $request): OrderEntity|string
+    {
+        return $this->orderManager->updateStoreBranchToClientDistanceByAddNewDistance($request);
+    }
+
+    public function getStoreBranchToClientDistanceByOrderId(int $orderId): float|string
+    {
+        $storeBranchToClientDistance = $this->orderManager->getStoreBranchToClientDistanceByOrderId($orderId);
+
+        if (! $storeBranchToClientDistance) {
+            return 0.0;
+        }
+
+        if ($storeBranchToClientDistance === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+        }
+
+        return $storeBranchToClientDistance;
+    }
+
+    public function getStoreOwnerProfileByOrderId(int $orderId): string|StoreOwnerProfileEntity
+    {
+        return $this->orderManager->getStoreOwnerProfileByOrderId($orderId);
+    }
+
+    public function updateOrderDeliveryCost(OrderDeliveryCostUpdateRequest $request): string|OrderDeliveryCostUpdateResponse
+    {
+        $orderDeliveryCostUpdateResult = $this->orderManager->updateOrderDeliveryCost($request);
+
+        if ($orderDeliveryCostUpdateResult === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+        }
+
+        return $this->autoMapping->map(OrderEntity::class, OrderDeliveryCostUpdateResponse::class, $orderDeliveryCostUpdateResult);
     }
 }

@@ -8,6 +8,7 @@ use App\Entity\OrderEntity;
 use App\Entity\ImageEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Repository\StoreOrderDetailsEntityRepository;
+use App\Request\Order\Destination\StoreOrderDetailsDifferentReceiverDestinationUpdateByOrderIdRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Request\Order\RecyclingOrCancelOrderRequest;
 use Doctrine\ORM\EntityManagerInterface;
@@ -153,5 +154,40 @@ class StoreOrderDetailsManager
         $this->entityManager->flush();
 
         return $storeOrderDetailsEntity;
+    }
+
+    public function updateStoreOrderDetailsDestinationAndDifferentReceiverDestination(StoreOrderDetailsDifferentReceiverDestinationUpdateByOrderIdRequest $request): int|StoreOrderDetailsEntity
+    {
+        $storeOrderDetails = $this->storeOrderDetailsEntityRepository->findOneBy(['orderId' => $request->getOrderId()]);
+
+        if (! $storeOrderDetails) {
+            return StoreOrderDetailsConstant::STORE_ORDER_DETAILS_NOT_FOUND;
+        }
+
+        $orderEntity = $storeOrderDetails->getOrderId();
+
+        $storeOrderDetails = $this->autoMapping->mapToObject(
+            StoreOrderDetailsDifferentReceiverDestinationUpdateByOrderIdRequest::class,
+            StoreOrderDetailsEntity::class,
+            $request,
+            $storeOrderDetails
+        );
+
+        $storeOrderDetails->setOrderId($orderEntity);
+
+        $this->entityManager->flush();
+
+        return $storeOrderDetails;
+    }
+
+    public function getNormalOrderDestinationByOrderId(int $orderId): array|int
+    {
+        $storeOrderDetails = $this->storeOrderDetailsEntityRepository->findOneBy(['orderId' => $orderId]);
+
+        if (! $storeOrderDetails) {
+            return StoreOrderDetailsConstant::STORE_ORDER_DETAILS_NOT_FOUND;
+        }
+
+        return $storeOrderDetails->getDestination();
     }
 }
