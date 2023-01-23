@@ -790,6 +790,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderNumberNotFound":
             MessageLookupByLibrary.simpleMessage("الطلب غير موجود"),
         "orderPrice": MessageLookupByLibrary.simpleMessage("سعر الطلب"),
+        "orderPriceOnCreditWarning": MessageLookupByLibrary.simpleMessage(
+            "لقد حددت سعر الطلبية الرجاء إزالتها في حالة كانت الطلبية مدفوعة"),
         "orderRecycled":
             MessageLookupByLibrary.simpleMessage("تم إعادة نشر طلب "),
         "orderRecycledSuccessfully":
@@ -1016,6 +1018,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المتجر رفض عرضك"),
         "remainingAmountForStore":
             MessageLookupByLibrary.simpleMessage("المبلغ المتبقي للمتجر"),
+        "remove": MessageLookupByLibrary.simpleMessage("إزالة"),
         "renewNewPlan":
             MessageLookupByLibrary.simpleMessage("اشتراك بباقة جديدة"),
         "renewOldPlan":

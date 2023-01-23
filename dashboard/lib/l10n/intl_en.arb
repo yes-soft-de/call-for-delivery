@@ -862,7 +862,9 @@
     "storeBranchToClientDistanceDirectly":"A distance was added to the calculated distance automatically, directly by the administration",
     "storeBranchToClientDistance2":"A distance was added to the calculated distance automatically using the coordinates of the new location by the administration",
     "isCashPaymentConfirmedByStore":"Receipt of the cash amount has been confirmed/denied by the administration on behalf of the store",
-    "copied":"copied successfully"
+    "copied":"copied successfully",
+    "orderPriceOnCreditWarning": "Please remove order price after setting payment method to credit",
+    "remove": "Remove"
 
 
 }
