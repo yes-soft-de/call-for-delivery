@@ -89,24 +89,28 @@ class OrderDestinationController extends BaseController
      *      @OA\JsonContent(
      *           oneOf={
      *                   @OA\Schema(type="object",
-     *                          @OA\Property(type="string", property="status_code", description="9151"),
-     *                          @OA\Property(type="string", property="msg", description="error store inactive Error.")
+     *                          @OA\Property(type="string", property="status_code", description="9205"),
+     *                          @OA\Property(type="string", property="msg")
      *                   ),
      *                   @OA\Schema(type="object",
-     *                          @OA\Property(type="string", property="status_code", description="9204"),
-     *                          @OA\Property(type="string", property="msg", description="errorMsg")
+     *                          @OA\Property(type="string", property="status_code", description="9217"),
+     *                          @OA\Property(type="string", property="msg")
      *                   ),
      *                   @OA\Schema(type="object",
-     *                          @OA\Property(type="string", property="status_code", description="9204"),
-     *                          @OA\Property(type="string", property="msg", description="errorMsg")
+     *                          @OA\Property(type="string", property="status_code", description="9372"),
+     *                          @OA\Property(type="string", property="msg")
      *                   ),
      *                   @OA\Schema(type="object",
-     *                          @OA\Property(type="string", property="status_code", description="9204"),
-     *                          @OA\Property(type="string", property="msg", description="errorMsg")
+     *                          @OA\Property(type="string", property="status_code", description="9602"),
+     *                          @OA\Property(type="string", property="msg")
      *                   ),
      *                   @OA\Schema(type="object",
-     *                          @OA\Property(type="string", property="status_code", description="9204"),
-     *                          @OA\Property(type="string", property="msg", description="errorMsg")
+     *                          @OA\Property(type="string", property="status_code", description="9604"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9373"),
+     *                          @OA\Property(type="string", property="msg")
      *                   )
      *
      *              }
