@@ -23,6 +23,7 @@ use App\Manager\Admin\Order\AdminOrderManager;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
+use App\Request\Admin\Order\OrderDifferentDestinationFilterByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminRequest;
 use App\Request\Admin\Order\OrderRecycleOrCancelByAdminRequest;
@@ -39,6 +40,7 @@ use App\Response\Admin\Order\OrderCancelByAdminResponse;
 use App\Response\Admin\Order\OrderCreateByAdminResponse;
 use App\Response\Admin\Order\OrderCurrentFinancialCycleByCaptainProfileIdForAdminGetResponse;
 use App\Response\Admin\Order\OrderDestinationUpdateByAdminResponse;
+use App\Response\Admin\Order\OrderDifferentDestinationFilterByAdminResponse;
 use App\Response\Admin\Order\OrderGetForAdminResponse;
 use App\Response\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminResponse;
 use App\Response\Admin\Order\OrderRecycleByAdminResponse;
@@ -398,6 +400,7 @@ class AdminOrderService
     public function updateOrderToHidden(int $id, int $userId): OrderUpdateToHiddenResponse|string
     {
        $orderEntity = $this->adminOrderManager->updateOrderToHidden($id);
+
        if($orderEntity === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
         }
@@ -586,6 +589,7 @@ class AdminOrderService
             if($order === CaptainConstant::CAPTAIN_NOT_FOUND) {
                 return CaptainConstant::CAPTAIN_NOT_FOUND;
             }
+
             if($order) {
                 //create order chatRoom
                 $this->orderChatRoomService->createOrderChatRoomOrUpdateCurrent($order);
@@ -782,7 +786,7 @@ class AdminOrderService
 
         $orderResult = $this->adminOrderManager->updateOrderStateByAdmin($request);
 
-        if (! $orderResult) {
+        if (!$orderResult) {
             return $orderResult;
         }
 
@@ -820,7 +824,7 @@ class AdminOrderService
                     if ($request->getState() === OrderStateConstant::ORDER_STATE_PENDING) {
                         // order returned to pending status, so create a local notification for the captain
                         $this->notificationLocalService->createNotificationLocal($orderResult[1], NotificationConstant::ORDER_RETURNED_PENDING_TITLE,
-                            NotificationConstant::ORDER_UNASSIGNED_TO_CAPTAIN.$orderResult[0]->getId(),
+                            NotificationConstant::ORDER_UNASSIGNED_TO_CAPTAIN . $orderResult[0]->getId(),
                             NotificationTokenConstant::APP_TYPE_CAPTAIN, $orderResult[0]->getId());
                     }
                 }
@@ -835,7 +839,7 @@ class AdminOrderService
         }
 
         return $this->autoMapping->map(OrderEntity::class, OrderStateUpdateByAdminResponse::class, $orderResult[0]);
-      }
+    }
       
     public function filterCaptainOrdersByAdmin(OrderCaptainFilterByAdminRequest $request): array
     {
@@ -890,19 +894,13 @@ class AdminOrderService
         $items['orders'] = $this->adminOrderManager->filterOrders($request);
  
         return $items;
-     }
+    }
    
     // filter orders whose has not distance  has calculated 
     public function filterOrdersWithOutDistance(FilterOrdersWhoseHasNotDistanceHasCalculatedRequest $request): array
     {
         return $this->adminOrderManager->filterOrdersWhoseHasNotDistanceHasCalculated($request);  
     }
-
-    // Following function commented out because it isn't used anywhere
-//    public function filterOrders(FilterOrdersWhoseHasNotDistanceHasCalculatedRequest $request): array
-//    {
-//        return $this->adminOrderManager->filterOrders($request);
-//    }
      
     public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request, int $userId): OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse
     {
@@ -1163,14 +1161,6 @@ class AdminOrderService
 
                     if ($orderEntity) {
                         $this->entityManager->getConnection()->commit();
-
-                        ///TODO move following two calls to the function which responsible for add distance by captain (When ready)
-                        // Send local notification to the store
-                        //$this->createLocalNotificationForStore($orderEntity->getStoreOwner()->getStoreOwnerId(), NotificationConstant::ORDER_DESTINATION_DIFFERENT_TITLE_CONST,
-                          //  NotificationConstant::ORDER_DESTINATION_ADDITION_BY_ADMIN_MESSAGE_CONST.$orderEntity->getId(), $orderEntity->getId());
-                        // Send firebase notification to the store
-//                        $this->sendFirebaseNotificationToUserByAdmin($orderEntity->getStoreOwner()->getStoreOwnerId(), $orderEntity->getId(),
-//                            NotificationFirebaseConstant::ORDER_DESTINATION_ADDITION_BY_ADMIN_MESSAGE_CONST);
                     }
 
                     return $orderResult;
@@ -1285,11 +1275,11 @@ class AdminOrderService
 
         ///TODO move following two calls to the function which responsible for add distance by captain (When ready)
         // Send local notification to the store
-        $this->createLocalNotificationForStore($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::ORDER_DESTINATION_DIFFERENT_TITLE_CONST,
-            NotificationConstant::ORDER_DESTINATION_ADDITION_BY_ADMIN_MESSAGE_CONST.$order->getId(), $order->getId());
-        // Send firebase notification to the store
-        $this->sendFirebaseNotificationToUserByAdmin($order->getStoreOwner()->getStoreOwnerId(), $order->getId(),
-            NotificationFirebaseConstant::ORDER_DESTINATION_ADDITION_BY_ADMIN_MESSAGE_CONST);
+//        $this->createLocalNotificationForStore($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::ORDER_DESTINATION_DIFFERENT_TITLE_CONST,
+//            NotificationConstant::ORDER_DESTINATION_ADDITION_BY_ADMIN_MESSAGE_CONST.$order->getId(), $order->getId());
+//        // Send firebase notification to the store
+//        $this->sendFirebaseNotificationToUserByAdmin($order->getStoreOwner()->getStoreOwnerId(), $order->getId(),
+//            NotificationFirebaseConstant::ORDER_DESTINATION_ADDITION_BY_ADMIN_MESSAGE_CONST);
 
         return $this->autoMapping->map(OrderEntity::class, OrderStoreBranchToClientDistanceUpdateByAdminResponse::class, $order);
     }
@@ -1496,5 +1486,21 @@ class AdminOrderService
     public function deleteChatRoomByOrderId(int $orderId): void
     {
         $this->adminOrderChatRoomService->deleteChatRoomByOrderId($orderId);
+    }
+
+    /**
+     * filter orders which have different destination
+     */
+    public function filterDifferentDestinationOrdersByAdmin(OrderDifferentDestinationFilterByAdminRequest $request): array
+    {
+        $response = [];
+
+        $orders = $this->adminOrderManager->filterDifferentDestinationOrdersByAdmin($request);
+
+        foreach ($orders as $order) {
+            $response[] = $this->autoMapping->map("array", OrderDifferentDestinationFilterByAdminResponse::class, $order);
+        }
+
+        return $response;
     }
 }
