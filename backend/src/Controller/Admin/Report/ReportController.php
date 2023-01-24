@@ -376,34 +376,34 @@ class ReportController extends BaseController
         return $this->response($result, self::FETCH);
     }
 
-    /**
-     * DEBUGGER: Get active captains with delivered (during last financial cycle) orders count for admin
-     * @Route("activecaptainswithorderscountfortester", name="getActiveCaptainsWithOrdersCountForTester", methods={"POST"})
-     * @IsGranted("ROLE_SUPER_ADMIN")
-     * @param Request $request
-     * @return JsonResponse
-     *
-     * @OA\Tag(name="Report")
-     *
-     * @OA\Parameter(
-     *      name="token",
-     *      in="header",
-     *      description="token to be passed as a header",
-     *      required=true
-     * )
-     *
-     * @Security(name="Bearer")
-     */
-    public function getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester(Request $request): JsonResponse
-    {
-        $data = json_decode($request->getContent(), true);
-
-        if ($data !== null && $data !== false) {
-            $result = $this->reportService->getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester($data['customizedTimezone']);
-
-            return $this->response($result, self::FETCH);
-        }
-
-        return $this->response(MainErrorConstant::ERROR_MSG, self::FETCH);
-    }
+//    /**
+//     * DEBUGGER: Get active captains with delivered (during last financial cycle) orders count for admin
+//     * @Route("activecaptainswithorderscountfortester", name="getActiveCaptainsWithOrdersCountForTester", methods={"POST"})
+//     * @IsGranted("ROLE_SUPER_ADMIN")
+//     * @param Request $request
+//     * @return JsonResponse
+//     *
+//     * @OA\Tag(name="Report")
+//     *
+//     * @OA\Parameter(
+//     *      name="token",
+//     *      in="header",
+//     *      description="token to be passed as a header",
+//     *      required=true
+//     * )
+//     *
+//     * @Security(name="Bearer")
+//     */
+//    public function getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester(Request $request): JsonResponse
+//    {
+//        $data = json_decode($request->getContent(), true);
+//
+//        if ($data !== null && $data !== false) {
+//            $result = $this->reportService->getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester($data['customizedTimezone']);
+//
+//            return $this->response($result, self::FETCH);
+//        }
+//
+//        return $this->response(MainErrorConstant::ERROR_MSG, self::FETCH);
+//    }
 }
