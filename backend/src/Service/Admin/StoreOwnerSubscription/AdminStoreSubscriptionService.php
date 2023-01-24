@@ -19,6 +19,7 @@ use App\Response\Subscription\RemainingOrdersResponse;
 use App\Service\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Service\Eraser\Subscription\StoreSubscriptionEraserService;
+use App\Service\Subscription\StoreSubscriptionCheckService;
 use App\Service\Subscription\StoreSubscriptionHandleService;
 use App\Service\Subscription\SubscriptionService;
 use App\Constant\Payment\PaymentConstant;
@@ -45,7 +46,7 @@ class AdminStoreSubscriptionService
         private SubscriptionService $subscriptionService,
         private StoreSubscriptionEraserService $storeSubscriptionEraserService,
         private AdminStoreSubscriptionDetailsService $adminStoreSubscriptionDetailsService,
-        private AdminStoreSubscriptionCheckService $adminStoreSubscriptionCheckService,
+        private StoreSubscriptionCheckService $storeSubscriptionCheckService,
         private StoreSubscriptionHandleService $storeSubscriptionHandleService
     )
     {
@@ -249,13 +250,13 @@ class AdminStoreSubscriptionService
         }
 
         // Check if order belong to the current subscription
-        if (! $this->adminStoreSubscriptionCheckService->checkIfOrderBelongToStoreSubscriptionByOrderCreationDateAndSubscriptionValidationDate($orderCreationDate,
+        if (! $this->storeSubscriptionCheckService->checkIfOrderBelongToStoreSubscriptionByOrderCreationDateAndSubscriptionValidationDate($orderCreationDate,
             $currentSubscriptionDetails->getLastSubscription()->getStartDate(), $currentSubscriptionDetails->getLastSubscription()->getEndDate())) {
             return OrderResultConstant::ORDER_DOES_NOT_BELONG_TO_SUBSCRIPTION;
         }
 
         // Check if we can update the remaining orders of the current subscription
-        $updateOrderResult = $this->adminStoreSubscriptionCheckService->checkIfUpdateRemainingOrdersAllowed(
+        $updateOrderResult = $this->storeSubscriptionCheckService->checkIfUpdateRemainingOrdersAllowed(
             $operationType,
             $currentSubscriptionDetails->getRemainingOrders(),
             $factor,
@@ -293,13 +294,13 @@ class AdminStoreSubscriptionService
         }
 
         // Check if order belong to the current subscription
-        if (! $this->adminStoreSubscriptionCheckService->checkIfOrderBelongToStoreSubscriptionByOrderCreationDateAndSubscriptionValidationDate($orderCreationDate,
+        if (! $this->storeSubscriptionCheckService->checkIfOrderBelongToStoreSubscriptionByOrderCreationDateAndSubscriptionValidationDate($orderCreationDate,
             $currentSubscriptionDetails->getLastSubscription()->getStartDate(), $currentSubscriptionDetails->getLastSubscription()->getEndDate())) {
             return OrderResultConstant::ORDER_DOES_NOT_BELONG_TO_SUBSCRIPTION;
         }
 
         // Check if we can update the remaining cars of the current subscription
-        $updateCarResult = $this->adminStoreSubscriptionCheckService->checkIfUpdateRemainingCarsAllowed(
+        $updateCarResult = $this->storeSubscriptionCheckService->checkIfUpdateRemainingCarsAllowed(
             $operationType,
             $currentSubscriptionDetails->getRemainingCars(),
             $factor,
@@ -459,7 +460,7 @@ class AdminStoreSubscriptionService
 
         // 3. Check if we can perform the required operation
         // Check if we can update the remaining cars of the current subscription
-        $updateCarResult = $this->adminStoreSubscriptionCheckService->checkIfUpdateRemainingCarsAllowed(
+        $updateCarResult = $this->storeSubscriptionCheckService->checkIfUpdateRemainingCarsAllowed(
             $operationType,
             $currentSubscriptionDetails->getRemainingCars(),
             $factor,
