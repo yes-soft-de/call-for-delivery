@@ -268,10 +268,10 @@ class AdminCaptainService
     }
 
     // FOR DEBUG ISSUES
-    public function getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester(?string $customizedTimezone): array
-    {
-        return $this->adminCaptainManager->getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester($customizedTimezone);
-    }
+//    public function getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester(?string $customizedTimezone): array
+//    {
+//        return $this->adminCaptainManager->getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester($customizedTimezone);
+//    }
 
     public function getCaptainProfileEntityByIdForAdmin(int $captainProfileId): ?CaptainEntity
     {
