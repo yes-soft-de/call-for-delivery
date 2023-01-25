@@ -3,6 +3,9 @@
 namespace App\Service\Admin\Order;
 
 use App\AutoMapping;
+use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificationAppTypeConstant;
+use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificationMessageConstant;
+use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificationTitleConstant;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Notification\NotificationTokenConstant;
 use App\Constant\Order\OrderIsCancelConstant;
@@ -57,6 +60,7 @@ use App\Service\Admin\StoreCashOrder\AdminStoreCashOrderService;
 use App\Service\ChatRoom\OrderChatRoomService;
 use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\GeoDistance\GeoDistanceService;
+use App\Service\Notification\DashboardLocalNotification\DashboardLocalNotificationService;
 use App\Service\Notification\NotificationFirebaseService;
 use App\Service\Notification\NotificationLocalService;
 use App\Service\Order\StoreOrderDetailsService;
@@ -119,7 +123,8 @@ class AdminOrderService
         private GeoDistanceService $geoDistanceService,
         private AdminCaptainCashOrderService $adminCaptainCashOrderService,
         private AdminStoreCashOrderService $adminStoreCashOrderService,
-        private AdminOrderChatRoomService $adminOrderChatRoomService
+        private AdminOrderChatRoomService $adminOrderChatRoomService,
+        private DashboardLocalNotificationService $dashboardLocalNotificationService
     )
     {
     }
@@ -678,9 +683,15 @@ class AdminOrderService
                 // local notification to store
                 $this->createLocalNotificationForStore($arrayResult[0]->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
                     NotificationConstant::CANCEL_ORDER_SUCCESS, $arrayResult[0]->getId());
+
                 // local notification to captain
                 $this->createLocalNotificationForCaptain($arrayResult[1]->getCaptainId(), NotificationConstant::CANCEL_ORDER_TITLE,
                     NotificationConstant::CANCEL_ORDER_SUCCESS, $arrayResult[0]->getId());
+
+                // Create local notification for admin
+                $this->createDashboardLocalNotification(DashboardLocalNotificationTitleConstant::CANCEL_ORDER_TITLE_CONST,
+                    ['text' => DashboardLocalNotificationMessageConstant::CANCEL_ORDER_BY_ADMIN_TEXT_CONST.$arrayResult[0]->getId()],
+                    $userId, $arrayResult[0]->getId());
 
                 // firebase notification to store
                 $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($arrayResult[0]->getStoreOwner()->getStoreOwnerId(),
@@ -713,6 +724,11 @@ class AdminOrderService
                 // local notification to store
                 $this->createLocalNotificationForStore($newUpdatedOrder->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
                     NotificationConstant::CANCEL_ORDER_SUCCESS, $newUpdatedOrder->getId());
+
+                // Create local notification for admin
+                $this->createDashboardLocalNotification(DashboardLocalNotificationTitleConstant::CANCEL_ORDER_TITLE_CONST,
+                    ['text' => DashboardLocalNotificationMessageConstant::CANCEL_ORDER_BY_ADMIN_TEXT_CONST.$newUpdatedOrder->getId()],
+                    $userId, $newUpdatedOrder->getId());
 
                 // firebase notification to store
                 $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($newUpdatedOrder->getStoreOwner()->getStoreOwnerId(), $newUpdatedOrder->getId(), $newUpdatedOrder->getState(),
@@ -747,9 +763,15 @@ class AdminOrderService
                 // local notification to store
                 $this->createLocalNotificationForStore($arrayResult[0]->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
                     NotificationConstant::CANCEL_ORDER_SUCCESS, $arrayResult[0]->getId());
+
                 // local notification to captain
                 $this->createLocalNotificationForCaptain($arrayResult[1], NotificationConstant::CANCEL_ORDER_TITLE,
                     NotificationConstant::CANCEL_ORDER_SUCCESS, $arrayResult[0]->getId());
+
+                // Create local notification for admin
+                $this->createDashboardLocalNotification(DashboardLocalNotificationTitleConstant::CANCEL_ORDER_TITLE_CONST,
+                    ['text' => DashboardLocalNotificationMessageConstant::CANCEL_ORDER_BY_ADMIN_TEXT_CONST.$arrayResult[0]->getId()],
+                    $userId, $arrayResult[0]->getId());
 
                 // firebase notification to store
                 $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($arrayResult[0]->getStoreOwner()->getStoreOwnerId(),
@@ -1502,5 +1524,11 @@ class AdminOrderService
         }
 
         return $response;
+    }
+
+    public function createDashboardLocalNotification(string $title, array $message, int $adminUserId, int $orderId = null)
+    {
+        $this->dashboardLocalNotificationService->createOrderLogMessage($adminUserId, $title, $message,
+            DashboardLocalNotificationAppTypeConstant::DASHBOARD_APP_TYPE_CONST, $orderId);
     }
 }
