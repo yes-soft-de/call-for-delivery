@@ -21,7 +21,7 @@ class DashboardLocalNotificationMySqlService
         return $this->dashboardLocalNotificationManager->createDashboardLocalNotification($request);
     }
 
-    public function initializeAndCreateDashboardLocalNotification(string $title, array $message, UserEntity $userEntity, int $appType, OrderEntity $orderEntity = null)
+    public function initializeAndCreateDashboardLocalNotification(string $title, array $message, int $appType, UserEntity $userEntity = null, OrderEntity $orderEntity = null)
     {
         $dashboardLocalNotificationCreateRequest = new DashboardLocalNotificationCreateRequest();
 

@@ -2,7 +2,6 @@
 
 namespace App\MessageHandler\DashboardLocalNotification;
 
-use App\Entity\UserEntity;
 use App\Message\DashboardLocalNotification\DashboardLocalNotificationCreateMessage;
 use App\Repository\OrderEntityRepository;
 use App\Repository\UserEntityRepository;
@@ -28,20 +27,23 @@ class CreateDashboardLocalNotificationHandler implements MessageSubscriberInterf
 
     public function handleCreateDashboardLocalNotification(DashboardLocalNotificationCreateMessage $dashboardLocalNotificationCreateMessage)
     {
-        $userEntity = $this->userEntityRepository->findOneBy(['id' => $dashboardLocalNotificationCreateMessage->getUser()]);
-
-        if ($userEntity) {
-            $this->initializeAndCreateDashboardLocalNotification($dashboardLocalNotificationCreateMessage, $userEntity);
-        }
+        $this->initializeAndCreateDashboardLocalNotification($dashboardLocalNotificationCreateMessage);
     }
 
-    public function initializeAndCreateDashboardLocalNotification(DashboardLocalNotificationCreateMessage $dashboardLocalNotificationCreateMessage, UserEntity $userEntity)
+    public function initializeAndCreateDashboardLocalNotification(DashboardLocalNotificationCreateMessage $dashboardLocalNotificationCreateMessage)
     {
+        $orderEntity = null;
+        $userEntity = null;
+
         if ($dashboardLocalNotificationCreateMessage->getOrderId()) {
             $orderEntity = $this->orderEntityRepository->findOneBy(['id' => $dashboardLocalNotificationCreateMessage->getOrderId()]);
         }
 
+        if ($dashboardLocalNotificationCreateMessage->getUser()) {
+            $userEntity = $this->userEntityRepository->findOneBy(['id' => $dashboardLocalNotificationCreateMessage->getUser()]);
+        }
+
         $this->dashboardLocalNotificationMySqlService->initializeAndCreateDashboardLocalNotification($dashboardLocalNotificationCreateMessage->getTitle(),
-            $dashboardLocalNotificationCreateMessage->getMessage(), $userEntity, $dashboardLocalNotificationCreateMessage->getAppType(), $orderEntity);
+            $dashboardLocalNotificationCreateMessage->getMessage(), $dashboardLocalNotificationCreateMessage->getAppType(), $userEntity, $orderEntity);
     }
 }

@@ -11,7 +11,11 @@ class DashboardLocalNotificationCreateMessage
      */
     private $message;
 
-    private int $user;
+    /**
+     * admin user id
+     * @var int|null
+     */
+    private $user;
 
     /**
      * @var int|null
@@ -20,7 +24,7 @@ class DashboardLocalNotificationCreateMessage
 
     private int $appType;
 
-    public static function create(string $title, array $message, int $user, int $appType, int $orderId = null)
+    public static function create(string $title, array $message, int $appType, int $user = null, int $orderId = null)
     {
         $dashboardLocalNotificationCreateMessage = new DashboardLocalNotificationCreateMessage();
 
@@ -43,7 +47,7 @@ class DashboardLocalNotificationCreateMessage
         return $this->message;
     }
 
-    public function getUser(): int
+    public function getUser(): ?int
     {
         return $this->user;
     }

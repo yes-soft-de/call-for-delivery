@@ -13,9 +13,9 @@ class DashboardLocalNotificationService
     {
     }
 
-    public function createOrderLogMessage(int $adminUserId, string $title, array $message, int $appType, int $orderId = null)
+    public function createOrderLogMessage(string $title, array $message, int $appType, int $adminUserId = null, int $orderId = null)
     {
-        $this->eventBus->dispatch(DashboardLocalNotificationCreateMessage::create($title, $message, $adminUserId,
-            $appType, $orderId));
+        $this->eventBus->dispatch(DashboardLocalNotificationCreateMessage::create($title, $message, $appType, $adminUserId,
+            $orderId));
     }
 }

@@ -28,7 +28,6 @@ class DashboardLocalNotificationEntity
     private $orderId;
 
     #[ORM\ManyToOne(targetEntity: UserEntity::class, inversedBy: 'dashboardLocalNotificationEntities')]
-    #[ORM\JoinColumn(nullable: false)]
     private $user;
 
     #[ORM\Column(type: 'integer')]
