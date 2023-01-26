@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueResultConstant;
 use App\Constant\Eraser\EraserResultConstant;
 use App\Constant\Notification\NotificationTokenConstant;
+use App\Entity\ChatRoomEntity;
 use App\Entity\UserEntity;
 use App\Request\Admin\Captain\DeleteCaptainAccountAndProfileByAdminRequest;
 use App\Request\Eraser\DeleteCaptainAccountAndProfileBySuperAdminRequest;
@@ -15,6 +16,7 @@ use App\Security\IsGranted\CanDeleteCaptainAccountAndProfileByAdminService;
 use App\Service\Captain\CaptainService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialDuesService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialSystemDetailService;
+use App\Service\ChatRoom\ChatRoomService;
 use App\Service\ChatRoom\OrderChatRoomService;
 use App\Service\Image\ImageService;
 use App\Service\Notification\NotificationFirebaseService;
@@ -39,7 +41,8 @@ class CaptainEraserService
         private ResetPasswordOrderService $resetPasswordOrderService,
         private EntityManagerInterface $entityManager,
         private CanDeleteCaptainAccountAndProfileByAdminService $canDeleteCaptainAccountAndProfileByAdminService,
-        private CaptainFinancialDuesService $captainFinancialDuesService
+        private CaptainFinancialDuesService $captainFinancialDuesService,
+        private ChatRoomService $chatRoomService
     )
     {
     }
@@ -75,6 +78,9 @@ class CaptainEraserService
 
         // delete order chat rooms
         $this->orderChatRoomService->deleteOrderChatRoomEntitiesByCaptainId($request->getId());
+
+        // delete chat room
+        $this->deleteChatRoomByUserId($request->getId());
 
         // delete captain profile
         $this->captainService->deleteCaptainProfileByCaptainId($request->getId());
@@ -121,6 +127,9 @@ class CaptainEraserService
             // delete order chat rooms
             $this->orderChatRoomService->deleteOrderChatRoomEntitiesByCaptainId($request->getCaptainId());
 
+            // delete chat room
+            $this->deleteChatRoomByUserId($request->getCaptainId());
+
             // delete captain profile
             $this->captainService->deleteCaptainProfileByCaptainId($request->getCaptainId());
 
@@ -150,5 +159,10 @@ class CaptainEraserService
     public function deleteAllCaptainFinancialDuesByCaptainId(int $captainId): array
     {
         return $this->captainFinancialDuesService->deleteAllCaptainFinancialDuesByCaptainId($captainId);
+    }
+
+    public function deleteChatRoomByUserId(int $userId): ChatRoomEntity|int
+    {
+        return $this->chatRoomService->deleteChatRoomByUserId($userId);
     }
 }
