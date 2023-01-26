@@ -257,4 +257,41 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
     //--------------->END fix create financial dues
+
+    public function getFinancialDuesSumByCaptainId(int $captainId): array
+    {
+        return $this->createQueryBuilder('captainFinancialDuesEntity')
+            ->select('SUM(captainFinancialDuesEntity.amount)', 'SUM(captainFinancialDuesEntity.amountForStore)')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = captainFinancialDuesEntity.captain')
+
+            ->andWhere('captainEntity.captainId = :captainId')
+            ->setParameter('captainId', $captainId)
+
+            ->getQuery()
+            ->getSingleResult();
+    }
+
+    public function getCaptainFinancialDueEntitiesByCaptainId(int $captainId): array
+    {
+        return $this->createQueryBuilder('captainFinancialDuesEntity')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = captainFinancialDuesEntity.captain')
+
+            ->andWhere('captainEntity.captainId = :captainId')
+            ->setParameter('captainId', $captainId)
+
+            ->orderBy('captainFinancialDuesEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -140,4 +140,23 @@ class CaptainFinancialDuesManager
         return $this->captainFinancialDuesRepository->getCaptainFinancialDuesByUserIDAndOrderIdForFix($captainId, $orderId, $createdDate);
     } 
     //--------------->END fix create financial dues
+
+    public function getFinancialDuesSumByCaptainId(int $captainId): array
+    {
+        return $this->captainFinancialDuesRepository->getFinancialDuesSumByCaptainId($captainId);
+    }
+
+    public function deleteAllCaptainFinancialDuesByCaptainId(int $captainId): array
+    {
+        $financialDues = $this->captainFinancialDuesRepository->getCaptainFinancialDueEntitiesByCaptainId($captainId);
+
+        if (count($financialDues) > 0) {
+            foreach ($financialDues as $financialDue) {
+                $this->entityManager->remove($financialDue);
+                $this->entityManager->flush();
+            }
+        }
+
+        return $financialDues;
+    }
 }
