@@ -1,5 +1,5 @@
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/consts/order_status.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/effect/scaling.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -139,7 +139,7 @@ class MyNotificationsLoadedState extends States {
                           ),
                           child: Text(
                             '${getSelectedItem()}' + ' ' + S.current.selected,
-                            style: Theme.of(context).textTheme.headline6,
+                            style: Theme.of(context).textTheme.titleLarge,
                           ),
                         )),
                     Padding(
@@ -172,39 +172,43 @@ class MyNotificationsLoadedState extends States {
             screenState.refresh();
           },
           onTap: () {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    scrollable: true,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25)),
-                    title: Text(element.title),
-                    content: Container(
-                      child: Text(element.body),
-                    ),
-                    actionsAlignment: MainAxisAlignment.center,
-                    actions: [
-                      TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(S.current.cancel))
-                    ],
-                  );
-                });
+            if (element.orderId != null) {
+              print(element.orderId);
+              Navigator.of(screenState.context).pushNamed(
+                  OrdersRoutes.ORDER_STATUS_SCREEN,
+                  arguments: element.orderId);
+            } else {
+              showDialog(
+                  context: context,
+                  builder: (context) {
+                    return AlertDialog(
+                      scrollable: true,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25)),
+                      title: Text(element.title),
+                      content: Container(
+                        child: Text(element.body),
+                      ),
+                      actionsAlignment: MainAxisAlignment.center,
+                      actions: [
+                        TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text(S.current.cancel))
+                      ],
+                    );
+                  });
+            }
           },
           child: Slidable(
-            key: ValueKey(element.orderNumber),
+            key: ValueKey(element.id),
             groupTag: '0',
             // The start action pane is the one at the left or the top side.
             endActionPane: ActionPane(
               // A motion is a widget used to control how the pane animates.
               motion: const ScrollMotion(),
-              extentRatio: element.orderStatus == OrderStatusEnum.FINISHED ||
-                      element.captainID != null
-                  ? 0.7
-                  : 0.2,
+
               // A pane can dismiss the Slidable.
               dismissible: null,
               dragDismissible: false,
@@ -269,7 +273,7 @@ class MyNotificationsLoadedState extends States {
                 Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: Theme.of(context).backgroundColor),
+                      color: Theme.of(context).colorScheme.background),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Icon(
@@ -285,20 +289,36 @@ class MyNotificationsLoadedState extends States {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        element.title,
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Flexible(
+                            child: Text(
+                              element.title,
+                              style: TextStyle(fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                          SizedBox(
+                            width: 4,
+                          ),
+                          Flexible(
+                            child: Text(
+                              (element.id != null
+                                  ? '(${S.current.admin} ${element.adminName})'
+                                  : ''),
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                            ),
+                          ),
+                        ],
                       ),
                       Text(
-                        element.body +
-                            (element.orderNumber != null
-                                ? ', (${S.current.orderNumber} ${element.orderNumber})'
-                                : ''),
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
+                        element.message ?? '',
+                        style:
+                            TextStyle(color: Theme.of(context).disabledColor),
                       ),
                       Text(
-                        element.date,
+                        element.date ?? '',
                         style:
                             TextStyle(color: Theme.of(context).disabledColor),
                       ),

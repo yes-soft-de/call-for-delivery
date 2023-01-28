@@ -1,31 +1,31 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
-import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
-import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:intl/intl.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_my_notifications/response/my_notification_response.dart';
 
 class NotificationModel extends DataModel {
-  String? orderNumber;
+  String? id;
   String body = S.current.orderDetails;
   String title = S.current.orderNumber;
-  String date = '';
+  String? adminName;
+  // OrderStatusEnum? orderStatus;
+  String? date;
+  int? orderId;
   bool marked = false;
-  late int id;
-  OrderStatusEnum? orderStatus;
-  int? captainID;
+  String? message;
   List<NotificationModel> models = [];
 
   NotificationModel({
-    required this.orderNumber,
     required this.title,
     required this.body,
-    required this.date,
+    required this.id,
+    required this.adminName,
+    this.message,
+    this.date,
+    this.orderId,
     required this.marked,
     // required this.id,
-    required this.captainID,
-    required this.orderStatus,
   });
 
   NotificationModel.withData(MyNotificationResponse orders) {
@@ -37,14 +37,15 @@ class NotificationModel extends DataModel {
           DateFormat.Md()
               .format(DateHelper.convert(element.createdAt?.timestamp));
       models.add(NotificationModel(
+        adminName: element.adminName ?? '',
+        id: element.id,
+        message: element.message?.text ?? '',
         marked: false,
-        title: element.title ?? '',
-        orderNumber: element.message?.orderId?.toString() ?? '-1',
-        body: element.message?.text ?? '',
         date: notificationDate,
+        title: element.title ?? '',
+        orderId: element.orderId,
+        body: element.message?.text ?? '',
         // id: element.id ?? -1 ,
-        captainID: element.message?.captainID,
-        orderStatus: StatusHelper.getStatusEnum(element.message?.orderStatus),
       ));
     });
   }

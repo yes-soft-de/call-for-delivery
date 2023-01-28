@@ -1,63 +1,89 @@
-import 'package:c4d/module_my_notifications/response/message.dart';
-
 class MyNotificationResponse {
   String? statusCode;
   String? msg;
-  List<Data>? data;
+  List<DataNotification>? data;
 
   MyNotificationResponse({this.statusCode, this.msg, this.data});
 
-  MyNotificationResponse.fromJson(dynamic json) {
+  MyNotificationResponse.fromJson(Map<String, dynamic> json) {
     statusCode = json['status_code'];
     msg = json['msg'];
     if (json['Data'] != null) {
-      data = [];
+      data = <DataNotification>[];
       json['Data'].forEach((v) {
-        data?.add(Data.fromJson(v));
+        data!.add(new DataNotification.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map['status_code'] = statusCode;
-    map['msg'] = msg;
-    if (data != null) {
-      map['Data'] = data?.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['status_code'] = this.statusCode;
+    data['msg'] = this.msg;
+    if (this.data != null) {
+      data['Data'] = this.data!.map((v) => v.toJson()).toList();
     }
-    return map;
+    return data;
   }
 }
 
-class Data {
-  dynamic? id;
+class DataNotification {
+  String? id;
   String? title;
   Message? message;
+  String? adminName;
+  int? orderId;
   CreatedAt? createdAt;
 
-  Data({this.id, this.title, this.message, this.createdAt});
+  DataNotification(
+      {this.id,
+      this.title,
+      this.message,
+      this.adminName,
+      this.orderId,
+      this.createdAt});
 
-  Data.fromJson(dynamic json) {
+  DataNotification.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
-    message = Message.fromJson(json);
+    message =
+        json['message'] != null ? new Message.fromJson(json['message']) : null;
+    adminName = json['adminName'];
+    orderId = json['orderId'];
     createdAt = json['createdAt'] != null
-        ? CreatedAt.fromJson(json['createdAt'])
+        ? new CreatedAt.fromJson(json['createdAt'])
         : null;
-    message = json['message'] == null
-        ? null
-        : Message.fromJson(json['message'] as Map<String, dynamic>);
   }
 
   Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map['id'] = id;
-    map['title'] = title;
-    map['message'] = message;
-    if (createdAt != null) {
-      map['createdAt'] = createdAt?.toJson();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['title'] = this.title;
+    if (this.message != null) {
+      data['message'] = this.message!.toJson();
     }
-    return map;
+    data['adminName'] = this.adminName;
+    data['orderId'] = this.orderId;
+    if (this.createdAt != null) {
+      data['createdAt'] = this.createdAt!.toJson();
+    }
+    return data;
+  }
+}
+
+class Message {
+  String? text;
+
+  Message({this.text});
+
+  Message.fromJson(Map<String, dynamic> json) {
+    text = json['text'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['text'] = this.text;
+    return data;
   }
 }
 
@@ -68,21 +94,22 @@ class CreatedAt {
 
   CreatedAt({this.timezone, this.offset, this.timestamp});
 
-  CreatedAt.fromJson(dynamic json) {
-    timezone =
-        json['timezone'] != null ? Timezone.fromJson(json['timezone']) : null;
+  CreatedAt.fromJson(Map<String, dynamic> json) {
+    timezone = json['timezone'] != null
+        ? new Timezone.fromJson(json['timezone'])
+        : null;
     offset = json['offset'];
     timestamp = json['timestamp'];
   }
 
   Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    if (timezone != null) {
-      map['timezone'] = timezone?.toJson();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.timezone != null) {
+      data['timezone'] = this.timezone!.toJson();
     }
-    map['offset'] = offset;
-    map['timestamp'] = timestamp;
-    return map;
+    data['offset'] = this.offset;
+    data['timestamp'] = this.timestamp;
+    return data;
   }
 }
 
@@ -93,53 +120,29 @@ class Timezone {
 
   Timezone({this.name, this.transitions, this.location});
 
-  Timezone.fromJson(dynamic json) {
+  Timezone.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     if (json['transitions'] != null) {
-      transitions = [];
+      transitions = <Transitions>[];
       json['transitions'].forEach((v) {
-        transitions?.add(Transitions.fromJson(v));
+        transitions!.add(new Transitions.fromJson(v));
       });
     }
-    location =
-        json['location'] != null ? Location.fromJson(json['location']) : null;
+    location = json['location'] != null
+        ? new Location.fromJson(json['location'])
+        : null;
   }
 
   Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map['name'] = name;
-    if (transitions != null) {
-      map['transitions'] = transitions?.map((v) => v.toJson()).toList();
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = this.name;
+    if (this.transitions != null) {
+      data['transitions'] = this.transitions!.map((v) => v.toJson()).toList();
     }
-    if (location != null) {
-      map['location'] = location?.toJson();
+    if (this.location != null) {
+      data['location'] = this.location!.toJson();
     }
-    return map;
-  }
-}
-
-class Location {
-  String? countryCode;
-  num? latitude;
-  num? longitude;
-  String? comments;
-
-  Location({this.countryCode, this.latitude, this.longitude, this.comments});
-
-  Location.fromJson(dynamic json) {
-    countryCode = json['country_code'];
-    latitude = json['latitude'];
-    longitude = json['longitude'];
-    comments = json['comments'];
-  }
-
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map['country_code'] = countryCode;
-    map['latitude'] = latitude;
-    map['longitude'] = longitude;
-    map['comments'] = comments;
-    return map;
+    return data;
   }
 }
 
@@ -152,7 +155,7 @@ class Transitions {
 
   Transitions({this.ts, this.time, this.offset, this.isdst, this.abbr});
 
-  Transitions.fromJson(dynamic json) {
+  Transitions.fromJson(Map<String, dynamic> json) {
     ts = json['ts'];
     time = json['time'];
     offset = json['offset'];
@@ -161,12 +164,37 @@ class Transitions {
   }
 
   Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map['ts'] = ts;
-    map['time'] = time;
-    map['offset'] = offset;
-    map['isdst'] = isdst;
-    map['abbr'] = abbr;
-    return map;
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['ts'] = this.ts;
+    data['time'] = this.time;
+    data['offset'] = this.offset;
+    data['isdst'] = this.isdst;
+    data['abbr'] = this.abbr;
+    return data;
+  }
+}
+
+class Location {
+  String? countryCode;
+  int? latitude;
+  int? longitude;
+  String? comments;
+
+  Location({this.countryCode, this.latitude, this.longitude, this.comments});
+
+  Location.fromJson(Map<String, dynamic> json) {
+    countryCode = json['country_code'];
+    latitude = json['latitude'];
+    longitude = json['longitude'];
+    comments = json['comments'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['country_code'] = this.countryCode;
+    data['latitude'] = this.latitude;
+    data['longitude'] = this.longitude;
+    data['comments'] = this.comments;
+    return data;
   }
 }

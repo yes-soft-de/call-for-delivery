@@ -3,6 +3,7 @@ class StoresRoutes {
   static const STORE_INFO = '/store_info';
   static const STORES_INACTIVE = '/stores_inactive';
   static const TOP_STORE_ACTIVE = '/top_active_store';
+  static const ORDERS_TOP_STORE_ACTIVE = '/orders_top_active_store';
   static const STORE_BALANCE = '/stores_balance';
   static const STORE_SUPPORT = '/stores_support';
   static const ORDER_STATUS_SCREEN = '/order_status';
