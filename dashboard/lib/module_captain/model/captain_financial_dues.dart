@@ -79,7 +79,7 @@ class PaymentModel {
 }
 
 class Total {
-  bool? advancePayment;
+  int? advancePayment;
   num sumCaptainFinancialDues;
   num sumPaymentsToCaptain;
   num total;

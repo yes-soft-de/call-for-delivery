@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/hive/captain_hive_helper.dart';
@@ -32,7 +31,7 @@ class CaptainFinancialDuesDetailsStateLoaded extends States {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).colorScheme.background,
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -127,7 +126,7 @@ class CaptainFinancialDuesDetailsStateLoaded extends States {
                                       },
                                 child: Text(
                                   S.current.pay,
-                                  style: Theme.of(context).textTheme.button,
+                                  style: Theme.of(context).textTheme.labelLarge,
                                 )),
                             ElevatedButton(
                                 onPressed: () {
@@ -137,7 +136,7 @@ class CaptainFinancialDuesDetailsStateLoaded extends States {
                                 },
                                 child: Text(
                                   S.current.cancel,
-                                  style: Theme.of(context).textTheme.button,
+                                  style: Theme.of(context).textTheme.labelLarge,
                                 ))
                           ],
                         );
@@ -148,7 +147,7 @@ class CaptainFinancialDuesDetailsStateLoaded extends States {
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
                   S.current.makePayment,
-                  style: Theme.of(context).textTheme.button,
+                  style: Theme.of(context).textTheme.labelLarge,
                 ),
               )),
         ),
@@ -161,7 +160,7 @@ class CaptainFinancialDuesDetailsStateLoaded extends States {
 
   Widget CustomTile(
       BuildContext context, IconData icon, String text, num? value,
-      {String? stringValue, bool? advancedValue, Color? backGround}) {
+      {String? stringValue, int? advancedValue, Color? backGround}) {
     bool currency = S.current.countOrdersDelivered != text;
     return Visibility(
       visible: value != null || stringValue != null,
@@ -179,9 +178,9 @@ class CaptainFinancialDuesDetailsStateLoaded extends States {
             constraints: const BoxConstraints(
                 maxWidth: 120, minWidth: 95, maxHeight: 55),
             decoration: BoxDecoration(
-              color: advancedValue != null
-                  ? (advancedValue ? Colors.green : Colors.red)
-                  : (backGround ?? Theme.of(context).disabledColor),
+              color: advancedValue != null ? Colors.black : Colors.amber,
+              // ? (advancedValue ? Colors.green : Colors.red)
+              // : (backGround ?? Theme.of(context).disabledColor),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(
@@ -252,7 +251,7 @@ class CaptainFinancialDuesDetailsStateLoaded extends States {
         child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25),
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).colorScheme.background,
             ),
             child: ListTile(
               shape: RoundedRectangleBorder(

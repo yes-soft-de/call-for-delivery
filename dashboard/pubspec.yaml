@@ -127,7 +127,8 @@ dependencies:
 
 
 
-
+dependency_overrides:
+  firebase_core_platform_interface: 4.5.1
 
 dev_dependencies:
   # Test Libs
@@ -148,7 +149,7 @@ dev_dependencies:
   dropdown_search: ^3.0.1
   flutter_linkify: ^5.0.2
   flutter_native_timezone: ^2.0.0
-  
+
 
 
 flutter_icons:
