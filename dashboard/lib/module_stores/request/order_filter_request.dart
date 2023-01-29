@@ -10,15 +10,16 @@ class FilterOrderRequest {
   num? maxKilo;
   num? maxKiloFromDistance;
   int? chosenDistanceIndicator;
-  FilterOrderRequest({
-    this.fromDate,
-    this.maxKilo,
-    this.maxKiloFromDistance,
-    this.state,
-    this.toDate,
-    this.storeOwnerProfileId,
-    this.chosenDistanceIndicator,
-  });
+  int? orderId;
+  FilterOrderRequest(
+      {this.fromDate,
+      this.maxKilo,
+      this.maxKiloFromDistance,
+      this.state,
+      this.toDate,
+      this.storeOwnerProfileId,
+      this.chosenDistanceIndicator,
+      this.orderId});
 
   Future<Map<String, dynamic>> toJson() async {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -42,6 +43,9 @@ class FilterOrderRequest {
     if (Platform.isAndroid || Platform.isIOS) {
       data['customizedTimezone'] =
           await FlutterNativeTimezone.getLocalTimezone();
+    }
+    if (this.orderId != null) {
+      data['orderId'] = this.orderId;
     }
     return data;
   }

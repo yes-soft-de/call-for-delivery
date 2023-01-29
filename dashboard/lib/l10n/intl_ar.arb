@@ -861,5 +861,15 @@
     "storeBranchToClientDistanceDirectly":"تم إضافة مسافة على المسافة المحتسبة تلقائيا بشكل مباشر من قبل الإدارة",
     "storeBranchToClientDistance ":"تم إضافة مسافة على المسافة المحتسبة تلقائيا باستخدام احداثيات الموقع الجديد من قبل الإدارة",
     "isCashPaymentConfirmedByStore":"تم تأكيد/نفي استلام المبلغ النقدي من قبل الادارة نيابة عن المتجر",
-    "copied":"تم نسخه بنجاح"
+    "copied":"تم نسخه بنجاح",
+    "notificationDeletedSuccess": "تم حذف الإشعار بنجاح",
+    "notificationsDeletedSuccess": "تم حذف الإشعارات بنجاح",
+    "areYouSureAboutDeleteSelectedNotifications": "هل أنت متأكد في رغبتك في حذف الإشعارات التي تم تحديدها",
+    "areYouSureAboutDeleteThisNotification": "هل أنت متأكد في رغبتك في حذف هذا الإشعار",
+    "sortedByLatest": "من الأقدم للأحدث",
+    "selected": "تحديد",
+    "delete": "حذف",
+    "notices": "التحديثات",
+    "orderPriceOnCreditWarning": "لقد حددت سعر الطلبية الرجاء إزالتها في حالة كانت الطلبية مدفوعة",
+    "remove": "إزالة"
 }

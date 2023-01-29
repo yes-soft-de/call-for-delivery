@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/model/top_active_store_model.dart';
+import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_stores/ui/screen/top_active_store_screen.dart';
 import 'package:c4d/module_stores/ui/widget/top_store_acticity_widget.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
@@ -54,7 +55,7 @@ class TopActiveStoreLoaded extends States {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).colorScheme.background,
                   ),
                   child: Material(
                     color: Colors.transparent,
@@ -103,14 +104,14 @@ class TopActiveStoreLoaded extends States {
                 child: Container(
                   width: 32,
                   height: 2.5,
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(context).colorScheme.background,
                 ),
               ),
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).colorScheme.background,
                   ),
                   child: Material(
                     color: Colors.transparent,
@@ -157,8 +158,18 @@ class TopActiveStoreLoaded extends States {
         Expanded(
           child: ListView.builder(
             itemCount: model!.length,
-            itemBuilder: (context, index) =>
-                TopStoreActivityWidget(model![index]),
+            itemBuilder: (context, index) => InkWell(
+                onTap: () {
+                  Navigator.of(screenState.context).pushNamed(
+                      StoresRoutes.ORDERS_TOP_STORE_ACTIVE,
+                      arguments: [
+                        screenState.filter?.fromDate ?? DateTime.now(),
+                        screenState.filter?.toDate ?? DateTime.now(),
+                        model![index].id,
+                        model![index].storeOwnerName
+                      ]);
+                },
+                child: TopStoreActivityWidget(model![index])),
           ),
         ),
       ],
