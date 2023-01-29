@@ -43,6 +43,12 @@ class Urls {
       DOMAIN + VERSION + '/notificationfirbase';
   static const String BASE_API_NOTIFICATION_TOKEN =
       DOMAIN + VERSION + '/notificationtoken';
+  //-------my Notifications
+  static const String GET_MY_NOTIFICATION = DOMAIN +
+      VERSION_ADMIN +
+      '/dashboardlocalnotification/dashboardlocalnotification';
+  static const String GET_UPDATES = '';
+  static const String DELETE_MY_NOTIFICATION = '';
 
   static const String BASE_API_CAPTAIN_OFFER_ADMIN =
       DOMAIN + VERSION_ADMIN + '/captainoffer';

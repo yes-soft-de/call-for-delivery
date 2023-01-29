@@ -8,6 +8,7 @@
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
 // ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -122,6 +123,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "هل أنت متأكد من رغبتك في إنشاء طلب فرعي ، بإمكانك فك ارتباطه لاحقا كطلب مستقل"),
         "areYouSureAboutDeleteOrder": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من رغبتك في حذف هذا الطلب ؟"),
+        "areYouSureAboutDeleteSelectedNotifications":
+            MessageLookupByLibrary.simpleMessage(
+                "هل أنت متأكد في رغبتك في حذف الإشعارات التي تم تحديدها"),
+        "areYouSureAboutDeleteThisNotification":
+            MessageLookupByLibrary.simpleMessage(
+                "هل أنت متأكد في رغبتك في حذف هذا الإشعار"),
         "areYouSureAboutRependingOrder": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من رغبتك بإعادة هذا الطلب لحالة الانتظار وإلغاء اسناد الكابتن"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
@@ -413,6 +420,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deadLine": MessageLookupByLibrary.simpleMessage("تاريخ التسليم"),
         "defaultBranch":
             MessageLookupByLibrary.simpleMessage("الفرع الافتراضي"),
+        "delete": MessageLookupByLibrary.simpleMessage("حذف"),
         "deleteAccount": MessageLookupByLibrary.simpleMessage("حذف الحساب"),
         "deleteAllFutureSubscriptions": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من رغبتك في حذف جميع الاشتراكات المستقبلية لهذا المتجر"),
@@ -737,7 +745,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "noteOfOrder":
             MessageLookupByLibrary.simpleMessage("دون ملاحظاتك حول الطلب"),
         "notice": MessageLookupByLibrary.simpleMessage("التحديثات"),
+        "notices": MessageLookupByLibrary.simpleMessage("التحديثات"),
+        "notificationDeletedSuccess":
+            MessageLookupByLibrary.simpleMessage("تم حذف الإشعار بنجاح"),
         "notifications": MessageLookupByLibrary.simpleMessage("الاشعارات"),
+        "notificationsDeletedSuccess":
+            MessageLookupByLibrary.simpleMessage("تم حذف الإشعارات بنجاح"),
         "now": MessageLookupByLibrary.simpleMessage("الآن"),
         "numberofRatings":
             MessageLookupByLibrary.simpleMessage("عدد التقييمات"),
@@ -805,6 +818,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderNumberNotFound":
             MessageLookupByLibrary.simpleMessage("الطلب غير موجود"),
         "orderPrice": MessageLookupByLibrary.simpleMessage("سعر الطلب"),
+        "orderPriceOnCreditWarning": MessageLookupByLibrary.simpleMessage(
+            "لقد حددت سعر الطلبية الرجاء إزالتها في حالة كانت الطلبية مدفوعة"),
         "orderRecycled":
             MessageLookupByLibrary.simpleMessage("تم إعادة نشر طلب "),
         "orderRecycledSuccessfully":
@@ -1034,6 +1049,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المتجر رفض عرضك"),
         "remainingAmountForStore":
             MessageLookupByLibrary.simpleMessage("المبلغ المتبقي للمتجر"),
+        "remove": MessageLookupByLibrary.simpleMessage("إزالة"),
         "renewNewPlan":
             MessageLookupByLibrary.simpleMessage("اشتراك بباقة جديدة"),
         "renewOldPlan":
@@ -1078,6 +1094,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "seconds": MessageLookupByLibrary.simpleMessage("ثواني"),
         "selectLanguage":
             MessageLookupByLibrary.simpleMessage("اختر لغتك المفضلة"),
+        "selected": MessageLookupByLibrary.simpleMessage("تحديد"),
         "selectedBranchesMenu":
             MessageLookupByLibrary.simpleMessage("My Selected Branches"),
         "selectedBranchesMenuDescribtion": MessageLookupByLibrary.simpleMessage(
@@ -1102,6 +1119,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sortByEarlier":
             MessageLookupByLibrary.simpleMessage("من الأحدث للأقدم"),
         "sortByRate": MessageLookupByLibrary.simpleMessage("الأعلى تقييما"),
+        "sortedByLatest":
+            MessageLookupByLibrary.simpleMessage("من الأقدم للأحدث"),
         "specification": MessageLookupByLibrary.simpleMessage("المواصفات"),
         "startWriting": MessageLookupByLibrary.simpleMessage("ابدأ الكتابة"),
         "status": MessageLookupByLibrary.simpleMessage("الحالة"),

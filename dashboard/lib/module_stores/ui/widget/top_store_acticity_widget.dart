@@ -108,7 +108,10 @@ class TopStoreActivityWidget extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Theme.of(context).backgroundColor.withOpacity(0.2),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .background
+                        .withOpacity(0.2),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

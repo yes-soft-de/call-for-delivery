@@ -124,7 +124,7 @@ class SubscriptionsRepository {
   Future<ActionResponse?> updateRemainingCars(
       UpdateRemainingCarsRequest request) async {
     var token = await _authService.getToken();
-    var response = await _apiClient.post(
+    var response = await _apiClient.put(
       Urls.UPDATE_REMAINING_CAPTAIN,
       request.toJson(),
       headers: {'Authorization': 'Bearer ' + '$token'},

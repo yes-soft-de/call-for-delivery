@@ -8580,106 +8580,6 @@ class S {
     );
   }
 
-  /// `Are you sure ?\n you will recycle this order`
-  String get recycleOrderWarning {
-    return Intl.message(
-      'Are you sure ?\n you will recycle this order',
-      name: 'recycleOrderWarning',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Recycle Order`
-  String get recycleOrder {
-    return Intl.message(
-      'Recycle Order',
-      name: 'recycleOrder',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `You can choose captain plan`
-  String get youCanChooseCaptainPlan {
-    return Intl.message(
-      'You can choose captain plan',
-      name: 'youCanChooseCaptainPlan',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Top store activity`
-  String get topstoreActivity {
-    return Intl.message(
-      'Top store activity',
-      name: 'topstoreActivity',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `The recipient location field has been updated by the administration`
-  String get destinationUpdate {
-    return Intl.message(
-      'The recipient location field has been updated by the administration',
-      name: 'destinationUpdate',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `The request has been recycled by the administration`
-  String get recycleOrderDone {
-    return Intl.message(
-      'The request has been recycled by the administration',
-      name: 'recycleOrderDone',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `A distance was added to the calculated distance automatically, directly by the administration`
-  String get storeBranchToClientDistanceDirectly {
-    return Intl.message(
-      'A distance was added to the calculated distance automatically, directly by the administration',
-      name: 'storeBranchToClientDistanceDirectly',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `A distance was added to the calculated distance automatically using the coordinates of the new location by the administration`
-  String get storeBranchToClientDistance2 {
-    return Intl.message(
-      'A distance was added to the calculated distance automatically using the coordinates of the new location by the administration',
-      name: 'storeBranchToClientDistance2',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Receipt of the cash amount has been confirmed/denied by the administration on behalf of the store`
-  String get isCashPaymentConfirmedByStore {
-    return Intl.message(
-      'Receipt of the cash amount has been confirmed/denied by the administration on behalf of the store',
-      name: 'isCashPaymentConfirmedByStore',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `copied successfully`
-  String get copied {
-    return Intl.message(
-      'copied successfully',
-      name: 'copied',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Illegal Command`
   String get illegalCommand {
     return Intl.message(
@@ -8815,6 +8715,206 @@ class S {
     return Intl.message(
       'Please enter valid coordinates',
       name: 'pleaseEnterValidCoord',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure ?\n you will recycle this order`
+  String get recycleOrderWarning {
+    return Intl.message(
+      'Are you sure ?\n you will recycle this order',
+      name: 'recycleOrderWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Recycle Order`
+  String get recycleOrder {
+    return Intl.message(
+      'Recycle Order',
+      name: 'recycleOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You can choose captain plan`
+  String get youCanChooseCaptainPlan {
+    return Intl.message(
+      'You can choose captain plan',
+      name: 'youCanChooseCaptainPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Top store activity`
+  String get topstoreActivity {
+    return Intl.message(
+      'Top store activity',
+      name: 'topstoreActivity',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The recipient location field has been updated by the administration`
+  String get destinationUpdate {
+    return Intl.message(
+      'The recipient location field has been updated by the administration',
+      name: 'destinationUpdate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The request has been recycled by the administration`
+  String get recycleOrderDone {
+    return Intl.message(
+      'The request has been recycled by the administration',
+      name: 'recycleOrderDone',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A distance was added to the calculated distance automatically, directly by the administration`
+  String get storeBranchToClientDistanceDirectly {
+    return Intl.message(
+      'A distance was added to the calculated distance automatically, directly by the administration',
+      name: 'storeBranchToClientDistanceDirectly',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `A distance was added to the calculated distance automatically using the coordinates of the new location by the administration`
+  String get storeBranchToClientDistance2 {
+    return Intl.message(
+      'A distance was added to the calculated distance automatically using the coordinates of the new location by the administration',
+      name: 'storeBranchToClientDistance2',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Receipt of the cash amount has been confirmed/denied by the administration on behalf of the store`
+  String get isCashPaymentConfirmedByStore {
+    return Intl.message(
+      'Receipt of the cash amount has been confirmed/denied by the administration on behalf of the store',
+      name: 'isCashPaymentConfirmedByStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `copied successfully`
+  String get copied {
+    return Intl.message(
+      'copied successfully',
+      name: 'copied',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notification deleted successfully`
+  String get notificationDeletedSuccess {
+    return Intl.message(
+      'Notification deleted successfully',
+      name: 'notificationDeletedSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notifications deleted successfully`
+  String get notificationsDeletedSuccess {
+    return Intl.message(
+      'Notifications deleted successfully',
+      name: 'notificationsDeletedSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about deleting selected notifications`
+  String get areYouSureAboutDeleteSelectedNotifications {
+    return Intl.message(
+      'Are you sure about deleting selected notifications',
+      name: 'areYouSureAboutDeleteSelectedNotifications',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about deleting this notification`
+  String get areYouSureAboutDeleteThisNotification {
+    return Intl.message(
+      'Are you sure about deleting this notification',
+      name: 'areYouSureAboutDeleteThisNotification',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Sorted by latest`
+  String get sortedByLatest {
+    return Intl.message(
+      'Sorted by latest',
+      name: 'sortedByLatest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Selected`
+  String get selected {
+    return Intl.message(
+      'Selected',
+      name: 'selected',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delete`
+  String get delete {
+    return Intl.message(
+      'Delete',
+      name: 'delete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notices`
+  String get notices {
+    return Intl.message(
+      'Notices',
+      name: 'notices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please remove order price after setting payment method to credit`
+  String get orderPriceOnCreditWarning {
+    return Intl.message(
+      'Please remove order price after setting payment method to credit',
+      name: 'orderPriceOnCreditWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remove`
+  String get remove {
+    return Intl.message(
+      'Remove',
+      name: 'remove',
       desc: '',
       args: [],
     );

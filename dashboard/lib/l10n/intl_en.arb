@@ -853,16 +853,6 @@
     "theOrderHidden": "This order cannot be assigned to this captain because the request is hidden",
     "orderRecycledSuccessfully": "Order updated successfully",
     "confirmRecycleOrder": "Confirm recycle order ",
-    "recycleOrderWarning": "Are you sure ?\n you will recycle this order",
-    "recycleOrder": "Recycle Order",
-    "youCanChooseCaptainPlan": "You can choose captain plan",
-    "topstoreActivity": "Top store activity",
-    "destinationUpdate": "The recipient location field has been updated by the administration",
-    "recycleOrderDone": "The request has been recycled by the administration",
-    "storeBranchToClientDistanceDirectly": "A distance was added to the calculated distance automatically, directly by the administration",
-    "storeBranchToClientDistance2": "A distance was added to the calculated distance automatically using the coordinates of the new location by the administration",
-    "isCashPaymentConfirmedByStore": "Receipt of the cash amount has been confirmed/denied by the administration on behalf of the store",
-    "copied": "copied successfully",
     "illegalCommand": "Illegal Command",
     "alreadyCanceled":"Already canceled",
     "orderNotFound":"Order not found",
@@ -876,13 +866,27 @@
     "addExtraDestination":"Extra destination",
     "reason":"Reason",
     "coordinates":"Coordinates",
-    "pleaseEnterValidCoord":"Please enter valid coordinates"
-
-
-
-
-    
-
+    "pleaseEnterValidCoord":"Please enter valid coordinates",
+    "recycleOrderWarning":"Are you sure ?\n you will recycle this order",
+    "recycleOrder":"Recycle Order",
+    "youCanChooseCaptainPlan":"You can choose captain plan",
+    "topstoreActivity":"Top store activity",
+    "destinationUpdate":"The recipient location field has been updated by the administration",
+    "recycleOrderDone":"The request has been recycled by the administration",
+    "storeBranchToClientDistanceDirectly":"A distance was added to the calculated distance automatically, directly by the administration",
+    "storeBranchToClientDistance2":"A distance was added to the calculated distance automatically using the coordinates of the new location by the administration",
+    "isCashPaymentConfirmedByStore":"Receipt of the cash amount has been confirmed/denied by the administration on behalf of the store",
+    "copied":"copied successfully",
+    "notificationDeletedSuccess": "Notification deleted successfully",
+    "notificationsDeletedSuccess": "Notifications deleted successfully",
+    "areYouSureAboutDeleteSelectedNotifications": "Are you sure about deleting selected notifications",
+    "areYouSureAboutDeleteThisNotification": "Are you sure about deleting this notification",
+    "sortedByLatest": "Sorted by latest",
+    "selected": "Selected",
+    "delete": "Delete",
+    "notices": "Notices",
+    "orderPriceOnCreditWarning": "Please remove order price after setting payment method to credit",
+    "remove": "Remove"
 
 
 }

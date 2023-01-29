@@ -875,5 +875,15 @@
     "addExtraDestination": "مسافة زائدة",
     "reason": "السبب",
     "coordinates": "الإحداثيات",
-    "pleaseEnterValidCoord": "من فضلك ادخل احداثيات صالحة"
+    "pleaseEnterValidCoord": "من فضلك ادخل احداثيات صالحة",
+    "notificationDeletedSuccess": "تم حذف الإشعار بنجاح",
+    "notificationsDeletedSuccess": "تم حذف الإشعارات بنجاح",
+    "areYouSureAboutDeleteSelectedNotifications": "هل أنت متأكد في رغبتك في حذف الإشعارات التي تم تحديدها",
+    "areYouSureAboutDeleteThisNotification": "هل أنت متأكد في رغبتك في حذف هذا الإشعار",
+    "sortedByLatest": "من الأقدم للأحدث",
+    "selected": "تحديد",
+    "delete": "حذف",
+    "notices": "التحديثات",
+    "orderPriceOnCreditWarning": "لقد حددت سعر الطلبية الرجاء إزالتها في حالة كانت الطلبية مدفوعة",
+    "remove": "إزالة"
 }

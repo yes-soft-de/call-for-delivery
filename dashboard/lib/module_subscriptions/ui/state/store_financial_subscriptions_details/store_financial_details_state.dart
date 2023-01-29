@@ -476,28 +476,31 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                         builder: (ctx) {
                           return AlertDialog(
                             title: Text(S.current.updateRemainingCars),
-                            content: Column(
-                              children: [
-                                CustomFormField(
-                                  controller: factorController,
-                                  hintText:
-                                      S.current.enterCarsCountYouWantToAdd,
-                                ),
-                                ElevatedButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      screenState.manager.updateRemainingCars(
-                                        screenState,
-                                        UpdateRemainingCarsRequest(
-                                          id: model.id,
-                                          factor: num.tryParse(
-                                              factorController.text),
-                                          operationType: 'addition',
-                                        ),
-                                      );
-                                    },
-                                    child: Text(S.current.update)),
-                              ],
+                            content: SizedBox(
+                              height: 100,
+                              child: Column(
+                                children: [
+                                  CustomFormField(
+                                    controller: factorController,
+                                    hintText:
+                                        S.current.enterCarsCountYouWantToAdd,
+                                  ),
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        screenState.manager.updateRemainingCars(
+                                          screenState,
+                                          UpdateRemainingCarsRequest(
+                                            id: model.id,
+                                            factor: num.tryParse(
+                                                factorController.text),
+                                            operationType: 'addition',
+                                          ),
+                                        );
+                                      },
+                                      child: Text(S.current.update)),
+                                ],
+                              ),
                             ),
                           );
                         });
