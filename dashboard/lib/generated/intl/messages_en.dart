@@ -8,6 +8,7 @@
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
 // ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -119,6 +120,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "Are you sure about creating new sub order , you can split later if needed"),
         "areYouSureAboutDeleteOrder": MessageLookupByLibrary.simpleMessage(
             "Are sure about deleting this order ? "),
+        "areYouSureAboutDeleteSelectedNotifications":
+            MessageLookupByLibrary.simpleMessage(
+                "Are you sure about deleting selected notifications"),
+        "areYouSureAboutDeleteThisNotification":
+            MessageLookupByLibrary.simpleMessage(
+                "Are you sure about deleting this notification"),
         "areYouSureAboutRependingOrder": MessageLookupByLibrary.simpleMessage(
             "Are you sure about reset this order and remove it form captain"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
@@ -413,6 +420,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "days": MessageLookupByLibrary.simpleMessage("days"),
         "deadLine": MessageLookupByLibrary.simpleMessage("Dead Line"),
         "defaultBranch": MessageLookupByLibrary.simpleMessage("Default Branch"),
+        "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleteAccount": MessageLookupByLibrary.simpleMessage("Delete Account"),
         "deleteAllFutureSubscriptions": MessageLookupByLibrary.simpleMessage(
             "Are you sure about deleting all future subscriptions"),
@@ -733,7 +741,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "noteOfOrder": MessageLookupByLibrary.simpleMessage(
             "Please place your order notes"),
         "notice": MessageLookupByLibrary.simpleMessage("Updates"),
+        "notices": MessageLookupByLibrary.simpleMessage("Notices"),
+        "notificationDeletedSuccess": MessageLookupByLibrary.simpleMessage(
+            "Notification deleted successfully"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
+        "notificationsDeletedSuccess": MessageLookupByLibrary.simpleMessage(
+            "Notifications deleted successfully"),
         "now": MessageLookupByLibrary.simpleMessage("Now"),
         "numberofRatings":
             MessageLookupByLibrary.simpleMessage("Number of rates"),
@@ -798,6 +811,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderNumberNotFound":
             MessageLookupByLibrary.simpleMessage("Order number not found!!"),
         "orderPrice": MessageLookupByLibrary.simpleMessage("order price"),
+        "orderPriceOnCreditWarning": MessageLookupByLibrary.simpleMessage(
+            "Please remove order price after setting payment method to credit"),
         "orderRecycled": MessageLookupByLibrary.simpleMessage("Order recycled"),
         "orderRecycledSuccessfully":
             MessageLookupByLibrary.simpleMessage("Order updated successfully"),
@@ -1025,6 +1040,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Store reject your offer"),
         "remainingAmountForStore":
             MessageLookupByLibrary.simpleMessage("Amount owed for store"),
+        "remove": MessageLookupByLibrary.simpleMessage("Remove"),
         "renewNewPlan": MessageLookupByLibrary.simpleMessage(
             "Subscription with new package"),
         "renewOldPlan":
@@ -1073,6 +1089,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "seconds": MessageLookupByLibrary.simpleMessage("seconds"),
         "selectLanguage":
             MessageLookupByLibrary.simpleMessage("Select Language"),
+        "selected": MessageLookupByLibrary.simpleMessage("Selected"),
         "selectedBranchesMenu":
             MessageLookupByLibrary.simpleMessage("My Selected Branches"),
         "selectedBranchesMenuDescribtion": MessageLookupByLibrary.simpleMessage(
@@ -1095,6 +1112,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sold": MessageLookupByLibrary.simpleMessage("Sold"),
         "sortByEarlier": MessageLookupByLibrary.simpleMessage("By Earlier"),
         "sortByRate": MessageLookupByLibrary.simpleMessage("highest rate"),
+        "sortedByLatest":
+            MessageLookupByLibrary.simpleMessage("Sorted by latest"),
         "specification": MessageLookupByLibrary.simpleMessage("Specification"),
         "startWriting": MessageLookupByLibrary.simpleMessage("Start Writing"),
         "status": MessageLookupByLibrary.simpleMessage("Online Status"),

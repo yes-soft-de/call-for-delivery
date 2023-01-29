@@ -10,6 +10,7 @@ import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_company/company_module.dart';
 import 'package:c4d/module_delivary_car/cars_module.dart';
 import 'package:c4d/module_main/main_module.dart';
+import 'package:c4d/module_my_notifications/my_notifications_module.dart';
 import 'package:c4d/module_notice/notice_module.dart';
 import 'package:c4d/module_notifications/model/notification_model.dart';
 import 'package:c4d/module_orders/orders_module.dart';
@@ -114,7 +115,8 @@ class MyApp extends StatefulWidget {
       this._carsModule,
       this._bidOrderModule,
       this._ordersModule,
-      this._subscriptionsModule);
+      this._subscriptionsModule,
+      this._myNotificationsModule);
 
   final AuthorizationModule _authorizationModule;
   final BidOrderModule _bidOrderModule;
@@ -134,6 +136,7 @@ class MyApp extends StatefulWidget {
   final SettingsModule _settingsModule;
   final SplashModule _splashModule;
   final StoresModule _storesModule;
+  final MyNotificationsModule _myNotificationsModule;
   final SubscriptionsModule _subscriptionsModule;
   final SupplierCategoriesModule _supplierCategoriesModule;
   final SupplierModule _supplierModule;
