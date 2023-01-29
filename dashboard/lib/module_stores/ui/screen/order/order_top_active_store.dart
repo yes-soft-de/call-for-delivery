@@ -3,7 +3,6 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_stores/request/order_filter_request.dart';
 import 'package:c4d/module_stores/state_manager/order/filter_orders_top_active_state_manager.dart';
-import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -196,103 +195,7 @@ class OrdersTopActiveStoreScreenState
           SizedBox(
             height: 8,
           ),
-          // filter on state
-          // FilterBar(
-          //   cursorRadius: BorderRadius.circular(25),
-          //   animationDuration: Duration(milliseconds: 350),
-          //   backgroundColor: Theme.of(context).colorScheme.background,
-          //   borderRadius: BorderRadius.circular(25),
-          //   floating: true,
-          //   height: 40,
-          //   cursorColor: Theme.of(context).colorScheme.primary,
-          //   items: [
-          //     FilterItem(
-          //       label: S.current.pending,
-          //     ),
-          //     FilterItem(label: S.current.ongoing),
-          //     FilterItem(label: S.current.completed),
-          //     FilterItem(label: S.current.cancelled2),
-          //   ],
-          //   onItemSelected: (index) {
-          //     if (index == 0) {
-          //       ordersFilter.state = 'pending';
-          //     } else if (index == 1) {
-          //       ordersFilter.state = 'ongoing';
-          //     } else if (index == 3) {
-          //       ordersFilter.state = 'cancelled';
-          //     } else {
-          //       ordersFilter.state = 'delivered';
-          //     }
-          //     currentIndex = index;
-          //     getOrders();
-          //   },
-          //   selectedContent: Theme.of(context).textTheme.labelLarge!.color!,
-          //   unselectedContent: Theme.of(context).textTheme.titleLarge!.color!,
-          // ),
-          // kilo filter
-          Visibility(
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
-                  child: CustomFormField(
-                    numbers: true,
-                    hintText: S.current.countKilometersTo +
-                        '(${S.current.clientDistance})',
-                    controller: geoController,
-                    onChanged: () {
-                      changeDistanceIndicator();
-                      getOrders(false);
-                    },
-                  ),
-                ),
-                Row(
-                  children: [
-                    Expanded(
-                      child: ListTile(
-                        minLeadingWidth: 0,
-                        title: Text(
-                          S.of(context).captainDistance,
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        // leading: Radio(
-                        //   value: false,
-                        //   groupValue: geoKilo,
-                        //   onChanged: (value) {
-                        //     geoKilo = false;
-                        //     changeDistanceIndicator();
-                        //     refresh();
-                        //     getOrders(false);
-                        //   },
-                        //   activeColor: Theme.of(context).colorScheme.primary,
-                        // ),
-                      ),
-                    ),
-                    Expanded(
-                      child: ListTile(
-                        minLeadingWidth: 0,
-                        title: Text(
-                          S.current.geoDistance,
-                          style: TextStyle(fontSize: 14),
-                        ),
-                        // leading: Radio(
-                        //   value: true,
-                        //   groupValue: geoKilo,
-                        //   onChanged: (value) {
-                        //     geoKilo = true;
-                        //     changeDistanceIndicator();
-                        //     refresh();
-                        //     getOrders(false);
-                        //   },
-                        //   activeColor: Theme.of(context).colorScheme.primary,
-                        // ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
+
           SizedBox(
             height: 16,
           ),
