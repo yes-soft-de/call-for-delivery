@@ -118,6 +118,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "هل أنت متأكد من رغبتك في إنشاء طلب فرعي ، بإمكانك فك ارتباطه لاحقا كطلب مستقل"),
         "areYouSureAboutDeleteOrder": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من رغبتك في حذف هذا الطلب ؟"),
+        "areYouSureAboutDeleteSelectedNotifications":
+            MessageLookupByLibrary.simpleMessage(
+                "هل أنت متأكد في رغبتك في حذف الإشعارات التي تم تحديدها"),
+        "areYouSureAboutDeleteThisNotification":
+            MessageLookupByLibrary.simpleMessage(
+                "هل أنت متأكد في رغبتك في حذف هذا الإشعار"),
         "areYouSureAboutRependingOrder": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من رغبتك بإعادة هذا الطلب لحالة الانتظار وإلغاء اسناد الكابتن"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
@@ -408,6 +414,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deadLine": MessageLookupByLibrary.simpleMessage("تاريخ التسليم"),
         "defaultBranch":
             MessageLookupByLibrary.simpleMessage("الفرع الافتراضي"),
+        "delete": MessageLookupByLibrary.simpleMessage("حذف"),
         "deleteAccount": MessageLookupByLibrary.simpleMessage("حذف الحساب"),
         "deleteAllFutureSubscriptions": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من رغبتك في حذف جميع الاشتراكات المستقبلية لهذا المتجر"),
@@ -726,7 +733,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "noteOfOrder":
             MessageLookupByLibrary.simpleMessage("دون ملاحظاتك حول الطلب"),
         "notice": MessageLookupByLibrary.simpleMessage("التحديثات"),
+        "notices": MessageLookupByLibrary.simpleMessage("التحديثات"),
+        "notificationDeletedSuccess":
+            MessageLookupByLibrary.simpleMessage("تم حذف الإشعار بنجاح"),
         "notifications": MessageLookupByLibrary.simpleMessage("الاشعارات"),
+        "notificationsDeletedSuccess":
+            MessageLookupByLibrary.simpleMessage("تم حذف الإشعارات بنجاح"),
         "now": MessageLookupByLibrary.simpleMessage("الآن"),
         "numberofRatings":
             MessageLookupByLibrary.simpleMessage("عدد التقييمات"),
@@ -1063,6 +1075,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "seconds": MessageLookupByLibrary.simpleMessage("ثواني"),
         "selectLanguage":
             MessageLookupByLibrary.simpleMessage("اختر لغتك المفضلة"),
+        "selected": MessageLookupByLibrary.simpleMessage("تحديد"),
         "selectedBranchesMenu":
             MessageLookupByLibrary.simpleMessage("My Selected Branches"),
         "selectedBranchesMenuDescribtion": MessageLookupByLibrary.simpleMessage(
@@ -1087,6 +1100,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "sortByEarlier":
             MessageLookupByLibrary.simpleMessage("من الأحدث للأقدم"),
         "sortByRate": MessageLookupByLibrary.simpleMessage("الأعلى تقييما"),
+        "sortedByLatest":
+            MessageLookupByLibrary.simpleMessage("من الأقدم للأحدث"),
         "specification": MessageLookupByLibrary.simpleMessage("المواصفات"),
         "startWriting": MessageLookupByLibrary.simpleMessage("ابدأ الكتابة"),
         "status": MessageLookupByLibrary.simpleMessage("الحالة"),

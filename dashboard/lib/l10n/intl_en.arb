@@ -863,6 +863,14 @@
     "storeBranchToClientDistance2":"A distance was added to the calculated distance automatically using the coordinates of the new location by the administration",
     "isCashPaymentConfirmedByStore":"Receipt of the cash amount has been confirmed/denied by the administration on behalf of the store",
     "copied":"copied successfully",
+    "notificationDeletedSuccess": "Notification deleted successfully",
+    "notificationsDeletedSuccess": "Notifications deleted successfully",
+    "areYouSureAboutDeleteSelectedNotifications": "Are you sure about deleting selected notifications",
+    "areYouSureAboutDeleteThisNotification": "Are you sure about deleting this notification",
+    "sortedByLatest": "Sorted by latest",
+    "selected": "Selected",
+    "delete": "Delete",
+    "notices": "Notices",
     "orderPriceOnCreditWarning": "Please remove order price after setting payment method to credit",
     "remove": "Remove"
 
