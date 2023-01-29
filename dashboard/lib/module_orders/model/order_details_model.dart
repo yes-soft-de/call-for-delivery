@@ -227,7 +227,7 @@ class OrderDetailsModel extends DataModel {
   }
 
   bool _canRemove(OrderStatusEnum state) {
-    if (state == OrderStatusEnum.WAITING) {
+    if (state != OrderStatusEnum.FINISHED) {
       return true;
     }
     return canRemove;
