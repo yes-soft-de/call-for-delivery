@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
@@ -627,6 +628,28 @@ class RecycleOrderLoaded2 extends States {
                     ),
                   ),
                 ),
+                Visibility(
+                    visible: screenState.payments == 'card' &&
+                        screenState.priceController.text.isNotEmpty,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Flushbar(
+                        title: S.current.warnning,
+                        message: S.current.orderPriceOnCreditWarning,
+                        titleColor: Colors.white,
+                        messageColor: Colors.white,
+                        backgroundColor: Colors.amber,
+                        borderRadius: BorderRadius.circular(25),
+                        mainButton: TextButton(
+                          onPressed: () {
+                            screenState.priceController.clear();
+                            screenState.refresh();
+                          },
+                          child: Text(S.current.remove,
+                              style: TextStyle(color: Colors.red)),
+                        ),
+                      ),
+                    )),
                 // payment method
                 ListTile(
                   title: Padding(

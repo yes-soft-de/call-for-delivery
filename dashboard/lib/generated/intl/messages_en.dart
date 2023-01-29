@@ -810,6 +810,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderNumberNotFound":
             MessageLookupByLibrary.simpleMessage("Order number not found!!"),
         "orderPrice": MessageLookupByLibrary.simpleMessage("order price"),
+        "orderPriceOnCreditWarning": MessageLookupByLibrary.simpleMessage(
+            "Please remove order price after setting payment method to credit"),
         "orderRecycled": MessageLookupByLibrary.simpleMessage("Order recycled"),
         "orderRecycledSuccessfully":
             MessageLookupByLibrary.simpleMessage("Order updated successfully"),
@@ -1037,6 +1039,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Store reject your offer"),
         "remainingAmountForStore":
             MessageLookupByLibrary.simpleMessage("Amount owed for store"),
+        "remove": MessageLookupByLibrary.simpleMessage("Remove"),
         "renewNewPlan": MessageLookupByLibrary.simpleMessage(
             "Subscription with new package"),
         "renewOldPlan":

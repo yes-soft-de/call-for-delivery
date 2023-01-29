@@ -869,7 +869,7 @@
     "sortedByLatest": "من الأقدم للأحدث",
     "selected": "تحديد",
     "delete": "حذف",
-    "notices": "التحديثات"
-
-
+    "notices": "التحديثات",
+    "orderPriceOnCreditWarning": "لقد حددت سعر الطلبية الرجاء إزالتها في حالة كانت الطلبية مدفوعة",
+    "remove": "إزالة"
 }

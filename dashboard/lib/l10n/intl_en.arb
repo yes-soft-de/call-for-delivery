@@ -870,7 +870,9 @@
     "sortedByLatest": "Sorted by latest",
     "selected": "Selected",
     "delete": "Delete",
-    "notices": "Notices"
+    "notices": "Notices",
+    "orderPriceOnCreditWarning": "Please remove order price after setting payment method to credit",
+    "remove": "Remove"
 
 
 }
