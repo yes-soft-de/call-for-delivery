@@ -7,6 +7,7 @@ class OrdersRoutes {
   static const PENDING_ORDERS_SCREEN = '/pending-orders';
   static const UPDATE_ORDERS_SCREEN = '/update-order';
   static const RECYCLE_ORDERS_SCREEN = '/recycle-order';
+  static const ORDER_CONFLICT_DISTANCE_SCREEN = '/order-conflict-distance';
   static const CAPTAIN_ORDERS_SCREEN = '/captain-orders';
   static const ORDERS_ACTIONS_LOGS_SCREEN = '/order_actions_logs_screen';
   static const ORDERS_WITHOUT_DISTANCE_SCREEN =

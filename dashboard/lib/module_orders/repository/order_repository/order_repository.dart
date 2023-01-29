@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
+import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
@@ -86,6 +87,42 @@ class OrderRepository {
     );
     if (response == null) return null;
     return OrderCaptainLogsResponse.fromJson(response);
+  }
+
+  Future<OrdersResponse?> getOrdersConflictedDistance(
+      FilterOrderRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+      Urls.FILTER_ORDERS_CONFLICTED_DISTANCE_API,
+      await request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return OrdersResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> updateExtraDistanceToOrder(
+      AddExtraDistanceRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+      Urls.ADD_EXTRA_DISTANCE_TO_ORDER_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> addExtraDistanceToOrder(
+      AddExtraDistanceRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+      Urls.UPDATE_EXTRA_DISTANCE_TO_ORDER_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
   }
 
   Future<OrdersCashFinancesForCaptainResponse?> getOrderCashFinancesForCaptain(

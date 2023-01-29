@@ -8769,6 +8769,56 @@ class S {
       args: [],
     );
   }
+
+  /// `Order conflicted distance`
+  String get orderConflictDistances {
+    return Intl.message(
+      'Order conflicted distance',
+      name: 'orderConflictDistances',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra destination`
+  String get addExtraDestination {
+    return Intl.message(
+      'Extra destination',
+      name: 'addExtraDestination',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reason`
+  String get reason {
+    return Intl.message(
+      'Reason',
+      name: 'reason',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Coordinates`
+  String get coordinates {
+    return Intl.message(
+      'Coordinates',
+      name: 'coordinates',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter valid coordinates`
+  String get pleaseEnterValidCoord {
+    return Intl.message(
+      'Please enter valid coordinates',
+      name: 'pleaseEnterValidCoord',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

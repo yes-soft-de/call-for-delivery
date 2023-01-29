@@ -87,6 +87,11 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       Icons.edit_road_rounded,
                       true),
                   customListTile(
+                      getIt<OrdersModule>().orderDistanceConflictScreen,
+                      S.current.orderConflictDistances,
+                      Icons.edit_road_rounded,
+                      true),
+                  customListTile(
                       getIt<StoresModule>().captainNotArrivedScreen,
                       S.current.captainNotArrived,
                       Icons.storefront_rounded,

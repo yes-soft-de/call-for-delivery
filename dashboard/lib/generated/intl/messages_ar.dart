@@ -77,6 +77,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تمت إضافة الفرع بنجاح"),
         "addCars": MessageLookupByLibrary.simpleMessage("أضف سيارة"),
         "addCategory": MessageLookupByLibrary.simpleMessage("إضاف تصنيف"),
+        "addExtraDestination":
+            MessageLookupByLibrary.simpleMessage("مسافة زائدة"),
         "addNote": MessageLookupByLibrary.simpleMessage("إضافة تحديث"),
         "addOffer": MessageLookupByLibrary.simpleMessage("إضافة عرض"),
         "addOfferSuccessfully":
@@ -340,6 +342,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "contactInfo": MessageLookupByLibrary.simpleMessage("معلومات الإتصال"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف للتواصل"),
+        "coordinates": MessageLookupByLibrary.simpleMessage("الإحداثيات"),
         "copied": MessageLookupByLibrary.simpleMessage("تم نسخه بنجاح"),
         "cost": MessageLookupByLibrary.simpleMessage("التكلفة"),
         "countCaptains": MessageLookupByLibrary.simpleMessage("عدد الكباتن"),
@@ -757,6 +760,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("سعر الطلبية للمتجر"),
         "orderCashWithCaptain":
             MessageLookupByLibrary.simpleMessage("المبلغ المقبوض مع الكابتن"),
+        "orderConflictDistances":
+            MessageLookupByLibrary.simpleMessage("طلبات بمسافات متنازعة"),
         "orderConflictedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم حل التعارض بنجاح"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
@@ -936,6 +941,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseDownloadmandob_moshtarayat":
             MessageLookupByLibrary.simpleMessage(
                 "الرجاء تحميل mandob_moshtarayat"),
+        "pleaseEnterValidCoord":
+            MessageLookupByLibrary.simpleMessage("من فضلك ادخل احداثيات صالحة"),
         "pleaseEnterValidCountryCode":
             MessageLookupByLibrary.simpleMessage("ادخال خاطئ"),
         "pleaseEnterValidPhoneNumber":
@@ -999,6 +1006,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "rateSubmitting":
             MessageLookupByLibrary.simpleMessage("جاري إرسال تقييمك"),
         "rating": MessageLookupByLibrary.simpleMessage("التقييم"),
+        "reason": MessageLookupByLibrary.simpleMessage("السبب"),
         "reasonIsRequired":
             MessageLookupByLibrary.simpleMessage("الرجاء تزويدنا بسبب الابلاغ"),
         "reasonOfTheReport":

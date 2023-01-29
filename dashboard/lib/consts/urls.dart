@@ -2,12 +2,12 @@
 // Production Domain ===> 'http://46.101.100.62';
 class Urls {
   static List<String> admins = [
-    '551111111',
-    '551111112',
-    '551111113',
-    '552222223',
-    '552222224',
-    '552222225',
+    // '551111111',
+    // '551111112',
+    // '551111113',
+    // '552222223',
+    // '552222224',
+    // '552222225',
   ];
   /*--------BASES-------------------*/
   static const String DOMAIN = 'http://134.209.241.49';
@@ -145,6 +145,8 @@ class Urls {
       BASE_API_ORDER + '/filterdifferentansweredcashorders';
   static const FILTER_CAPTAIN_ORDERS_API =
       BASE_API_ORDER + '/filtercaptainordersbyadmin';
+  static const FILTER_ORDERS_CONFLICTED_DISTANCE_API =
+      BASE_API_ORDER + '/filterdifferentdestinationsorders';
   static const GET_ORDER_LOGS_API =
       DOMAIN + '/v1/admin/orderlog' + '/orderlogsbyorderidforadmin';
   static const ORDERS_PENDING_API = BASE_API_ORDER + '/orderpending';
@@ -304,6 +306,10 @@ class Urls {
       BASE_API_ORDER + '/bidorderbyidforadmin/';
   /*-----------------------------order----------------------------*/
   static const CREATE_ORDER_API = BASE_API_ORDER + '/createorder';
+  static const ADD_EXTRA_DISTANCE_TO_ORDER_API =
+      BASE_API_ORDER + '/addstorebranchtoclientdistanceviadestinationbyadmin';
+  static const UPDATE_EXTRA_DISTANCE_TO_ORDER_API =
+      BASE_API_ORDER + '/additionaldistancetostorebranchtoclientdistancebyadmin';
   static const DELETE_ORDER = BASE_API_ORDER + '/ordercancelbyadmin';
   static const UNASSIGNED_ORDER_FROM_CAPTAIN =
       BASE_API_ORDER + '/rependingacceptedorder';

@@ -871,7 +871,17 @@
     "storeProfileNotFound": "Store profile not found",
     "updateSuccess":"Update success",
     "updateRemainingCars":"Update remaining cars",
-    "enterCarsCountYouWantToAdd":"Enter extra cars count"
+    "enterCarsCountYouWantToAdd":"Enter extra cars count",
+    "orderConflictDistances": "Order conflicted distance",
+    "addExtraDestination":"Extra destination",
+    "reason":"Reason",
+    "coordinates":"Coordinates",
+    "pleaseEnterValidCoord":"Please enter valid coordinates"
+
+
+
+
+    
 
 
 

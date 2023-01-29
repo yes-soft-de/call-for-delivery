@@ -868,7 +868,12 @@
     "issuesWithOrderStatusUpdate": "يوجد مشكلة في عملية تحديث الطلب",
     "invalidOrderType": "الطلب من نوع مناقصة لايمكن إلغاءه",
     "storeProfileNotFound": "بروفايل المتجر غير معلوم",
-    "updateSuccess":"تم التحديث بنجاح",
-    "updateRemainingCars":"تحديث الكباتن المتبقية",
-    "enterCarsCountYouWantToAdd":"ادخل سيارات اضافية"
+    "updateSuccess": "تم التحديث بنجاح",
+    "updateRemainingCars": "تحديث الكباتن المتبقية",
+    "enterCarsCountYouWantToAdd": "ادخل سيارات اضافية",
+    "orderConflictDistances": "طلبات بمسافات متنازعة",
+    "addExtraDestination": "مسافة زائدة",
+    "reason": "السبب",
+    "coordinates": "الإحداثيات",
+    "pleaseEnterValidCoord": "من فضلك ادخل احداثيات صالحة"
 }

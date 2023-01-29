@@ -80,6 +80,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Branch has been added successfully"),
         "addCars": MessageLookupByLibrary.simpleMessage("Add cars"),
         "addCategory": MessageLookupByLibrary.simpleMessage("Add category"),
+        "addExtraDestination":
+            MessageLookupByLibrary.simpleMessage("Extra destination"),
         "addNote": MessageLookupByLibrary.simpleMessage("Add Note"),
         "addOffer": MessageLookupByLibrary.simpleMessage("Add offer"),
         "addOfferSuccessfully":
@@ -346,6 +348,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "contactInfo": MessageLookupByLibrary.simpleMessage("Contact info"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
+        "coordinates": MessageLookupByLibrary.simpleMessage("Coordinates"),
         "copied": MessageLookupByLibrary.simpleMessage("copied successfully"),
         "cost": MessageLookupByLibrary.simpleMessage("cost"),
         "countCaptains": MessageLookupByLibrary.simpleMessage("Captains Count"),
@@ -765,6 +768,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Order cost to store"),
         "orderCashWithCaptain":
             MessageLookupByLibrary.simpleMessage("Cash With Captain"),
+        "orderConflictDistances":
+            MessageLookupByLibrary.simpleMessage("Order conflicted distance"),
         "orderConflictedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Order conflicted Successfully"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
@@ -946,6 +951,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseDownloadmandob_moshtarayat":
             MessageLookupByLibrary.simpleMessage(
                 "Please Download mandob_moshtarayat"),
+        "pleaseEnterValidCoord": MessageLookupByLibrary.simpleMessage(
+            "Please enter valid coordinates"),
         "pleaseEnterValidCountryCode":
             MessageLookupByLibrary.simpleMessage("invalid character"),
         "pleaseEnterValidPhoneNumber":
@@ -1010,6 +1017,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "rateSubmitting": MessageLookupByLibrary.simpleMessage(
             "Your rate has been submitted"),
         "rating": MessageLookupByLibrary.simpleMessage("Rating"),
+        "reason": MessageLookupByLibrary.simpleMessage("Reason"),
         "reasonIsRequired":
             MessageLookupByLibrary.simpleMessage("Reason is Required"),
         "reasonOfTheReport":
