@@ -689,7 +689,7 @@ class AdminOrderService
                     NotificationConstant::CANCEL_ORDER_SUCCESS, $arrayResult[0]->getId());
 
                 // Create local notification for admin
-                $this->createDashboardLocalNotification(DashboardLocalNotificationTitleConstant::CANCEL_ORDER_TITLE_CONST,
+                $this->createDashboardLocalNotification(DashboardLocalNotificationTitleConstant::CANCEL_ORDER_BY_ADMIN_TITLE_CONST,
                     ['text' => DashboardLocalNotificationMessageConstant::CANCEL_ORDER_BY_ADMIN_TEXT_CONST.$arrayResult[0]->getId()],
                     $userId, $arrayResult[0]->getId());
 
@@ -726,7 +726,7 @@ class AdminOrderService
                     NotificationConstant::CANCEL_ORDER_SUCCESS, $newUpdatedOrder->getId());
 
                 // Create local notification for admin
-                $this->createDashboardLocalNotification(DashboardLocalNotificationTitleConstant::CANCEL_ORDER_TITLE_CONST,
+                $this->createDashboardLocalNotification(DashboardLocalNotificationTitleConstant::CANCEL_ORDER_BY_ADMIN_TITLE_CONST,
                     ['text' => DashboardLocalNotificationMessageConstant::CANCEL_ORDER_BY_ADMIN_TEXT_CONST.$newUpdatedOrder->getId()],
                     $userId, $newUpdatedOrder->getId());
 
@@ -769,7 +769,7 @@ class AdminOrderService
                     NotificationConstant::CANCEL_ORDER_SUCCESS, $arrayResult[0]->getId());
 
                 // Create local notification for admin
-                $this->createDashboardLocalNotification(DashboardLocalNotificationTitleConstant::CANCEL_ORDER_TITLE_CONST,
+                $this->createDashboardLocalNotification(DashboardLocalNotificationTitleConstant::CANCEL_ORDER_BY_ADMIN_TITLE_CONST,
                     ['text' => DashboardLocalNotificationMessageConstant::CANCEL_ORDER_BY_ADMIN_TEXT_CONST.$arrayResult[0]->getId()],
                     $userId, $arrayResult[0]->getId());
 
@@ -1528,7 +1528,7 @@ class AdminOrderService
 
     public function createDashboardLocalNotification(string $title, array $message, int $adminUserId, int $orderId = null)
     {
-        $this->dashboardLocalNotificationService->createOrderLogMessage($adminUserId, $title, $message,
-            DashboardLocalNotificationAppTypeConstant::DASHBOARD_APP_TYPE_CONST, $orderId);
+        $this->dashboardLocalNotificationService->createOrderLogMessage($title, $message,
+            DashboardLocalNotificationAppTypeConstant::DASHBOARD_APP_TYPE_CONST, $adminUserId, $orderId);
     }
 }

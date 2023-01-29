@@ -4,6 +4,9 @@ namespace App\Service\Order;
 
 use App\AutoMapping;
 use App\Constant\Eraser\EraserResultConstant;
+use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificationAppTypeConstant;
+use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificationMessageConstant;
+use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificationTitleConstant;
 use App\Constant\Notification\NotificationTokenConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Constant\OrderLog\OrderLogActionTypeConstant;
@@ -43,6 +46,7 @@ use App\Constant\Notification\NotificationConstant;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Service\CaptainOrderFinancialService\OrderFinancialValueGetService;
 use App\Service\DateFactory\DateFactoryService;
+use App\Service\Notification\DashboardLocalNotification\DashboardLocalNotificationService;
 use App\Service\OrderLog\OrderLogGetService;
 use App\Service\OrderLog\OrderLogService;
 use App\Service\Subscription\SubscriptionService;
@@ -88,56 +92,30 @@ use App\Response\Subscription\CalculateCostDeliveryOrderResponse;
 
 class OrderService
 {
-    private AutoMapping $autoMapping;
-    private OrderManager $orderManager;
-    private SubscriptionService $subscriptionService;
-    private NotificationLocalService $notificationLocalService;
-    private UploadFileHelperService $uploadFileHelperService;
-    private CaptainService $captainService;
-    private OrderChatRoomService $orderChatRoomService;
-    private OrderTimeLineService $orderTimeLineService;
-    private NotificationFirebaseService $notificationFirebaseService;
-    private CaptainFinancialDuesService $captainFinancialDuesService;
-    private CaptainAmountFromOrderCashService $captainAmountFromOrderCashService;
-    private StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService;
-    private BidOrderFinancialService $bidOrderFinancialService;
-    private OrderLogService $orderLogService;
-    private OrderLogGetService $orderLogGetService;
-    private DateFactoryService $dateFactoryService;
-    private OrderFinancialValueGetService $orderFinancialValueGetService;
-    private StoreOrderDetailsService $storeOrderDetailsService;
-
-    public function __construct(AutoMapping $autoMapping, OrderManager $orderManager, SubscriptionService $subscriptionService, NotificationLocalService $notificationLocalService,
-                                UploadFileHelperService $uploadFileHelperService, CaptainService $captainService, OrderChatRoomService $orderChatRoomService,
-                                OrderTimeLineService $orderTimeLineService, NotificationFirebaseService $notificationFirebaseService, CaptainFinancialDuesService $captainFinancialDuesService,
-                                CaptainAmountFromOrderCashService $captainAmountFromOrderCashService, StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService,
-                                BidOrderFinancialService $bidOrderFinancialService, OrderLogService $orderLogService, OrderLogGetService $orderLogGetService,
-                                DateFactoryService $dateFactoryService, OrderFinancialValueGetService $orderFinancialValueGetService, StoreOrderDetailsService $storeOrderDetailsService)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private OrderManager $orderManager,
+        private SubscriptionService $subscriptionService,
+        private NotificationLocalService $notificationLocalService,
+        private UploadFileHelperService $uploadFileHelperService,
+        private CaptainService $captainService,
+        private OrderChatRoomService $orderChatRoomService,
+        private OrderTimeLineService $orderTimeLineService,
+        private NotificationFirebaseService $notificationFirebaseService,
+        private CaptainFinancialDuesService $captainFinancialDuesService,
+        private CaptainAmountFromOrderCashService $captainAmountFromOrderCashService,
+        private StoreOwnerDuesFromCashOrdersService $storeOwnerDuesFromCashOrdersService,
+        private BidOrderFinancialService $bidOrderFinancialService,
+        private OrderLogService $orderLogService,
+        private OrderLogGetService $orderLogGetService,
+        private DateFactoryService $dateFactoryService,
+        private OrderFinancialValueGetService $orderFinancialValueGetService,
+        private StoreOrderDetailsService $storeOrderDetailsService,
+        private DashboardLocalNotificationService $dashboardLocalNotificationService
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->orderManager = $orderManager;
-        $this->subscriptionService = $subscriptionService;
-        $this->notificationLocalService = $notificationLocalService;
-        $this->uploadFileHelperService = $uploadFileHelperService;
-        $this->captainService = $captainService;
-        $this->orderChatRoomService = $orderChatRoomService;
-        $this->orderTimeLineService = $orderTimeLineService;
-        $this->notificationFirebaseService = $notificationFirebaseService;
-        $this->captainFinancialDuesService = $captainFinancialDuesService;
-        $this->captainAmountFromOrderCashService = $captainAmountFromOrderCashService;
-        $this->storeOwnerDuesFromCashOrdersService = $storeOwnerDuesFromCashOrdersService;
-        $this->bidOrderFinancialService = $bidOrderFinancialService;
-        $this->orderLogService = $orderLogService;
-        $this->orderLogGetService = $orderLogGetService;
-        $this->dateFactoryService = $dateFactoryService;
-        $this->orderFinancialValueGetService = $orderFinancialValueGetService;
-        $this->storeOrderDetailsService = $storeOrderDetailsService;
     }
 
-    /**
-     * @param OrderCreateRequest $request
-     * @return OrderResponse|CanCreateOrderResponse
-     */
     public function createOrder(OrderCreateRequest $request): OrderResponse|CanCreateOrderResponse|string
     {
         if (new DateTime($request->getDeliveryDate()) < new DateTime('now')) {
@@ -167,6 +145,10 @@ class OrderService
 
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE,
                 NotificationConstant::CREATE_ORDER_SUCCESS, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
+
+            // create dashboard local notification
+            $this->createDashboardLocalNotificationByStore(DashboardLocalNotificationTitleConstant::CREATE_NEW_ORDER_BY_STORE_TITLE_CONST,
+                ["text" => DashboardLocalNotificationMessageConstant::CREATE_ORDER_BY_STORE_TEXT_CONST.$order->getId()], null, $order->getId());
 
             $this->orderTimeLineService->createOrderLogsRequest($order);
 
@@ -610,6 +592,10 @@ class OrderService
             //create Notification Local for captain
             $this->notificationLocalService->createNotificationLocalForOrderState($order->getCaptainId()->getCaptainId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::CAPTAIN);
 
+            // create dashboard local notification
+            $this->createDashboardLocalNotificationByCaptain(DashboardLocalNotificationTitleConstant::UPDATE_ORDER_STATE_BY_CAPTAIN_TITLE_CONST,
+                ["text" => DashboardLocalNotificationMessageConstant::UPDATE_ORDER_STATE_BY_CAPTAIN_TEXT_CONST.$order->getId()], null, $order->getId());
+
             if ($order->getOrderType() === OrderTypeConstant::ORDER_TYPE_BID) {
                 //create Notification Local for supplier
                 $this->notificationLocalService->createNotificationLocalForOrderState($order->getBidDetailsEntity()->getSupplierProfile()->getUser()->getId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(),
@@ -779,6 +765,10 @@ class OrderService
                 //create local notification to store
                 $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
                     NotificationConstant::CANCEL_ORDER_SUCCESS, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
+
+                // create dashboard local notification
+                $this->createDashboardLocalNotificationByStore(DashboardLocalNotificationTitleConstant::CANCEL_ORDER_BY_STORE_TITLE_CONST,
+                    ["text" => DashboardLocalNotificationMessageConstant::CANCEL_ORDER_BY_STORE_TEXT_CONST.$order->getId()], null, $order->getId());
 
                 //create firebase notification to store
                 try {
@@ -1104,12 +1094,18 @@ class OrderService
         }
 
         $order = $this->orderManager->createSubOrder($request);
+
         if ($order) {
 
             $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
             //notification to store
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_SUB_ORDER_TITLE,
                 NotificationConstant::CREATE_SUB_ORDER_SUCCESS, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
+
+            // create dashboard local notification
+            $this->createDashboardLocalNotificationByStore(DashboardLocalNotificationTitleConstant::CREATE_SUB_ORDER_BY_STORE_TITLE_CONST,
+                ["text" => DashboardLocalNotificationMessageConstant::CREATE_SUB_ORDER_BY_STORE_TEXT_CONST.$order->getId()], null, $order->getId());
+
             if ($primaryOrder->getCaptainId()) {
                 //notification to captain
                 $this->notificationLocalService->createNotificationLocal($primaryOrder->getCaptainId()->getCaptainId(), NotificationConstant::NEW_SUB_ORDER_TITLE,
@@ -1138,6 +1134,10 @@ class OrderService
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
     }
 
+    /**
+     * un-link order by captain
+     * orderId is the id of the sub order
+     */
     public function orderNonSub(int $orderId, $userId): ?OrderUpdatePaidToProviderResponse
     {
         $checkRemainingCars = $this->subscriptionService->checkRemainingCarsByOrderId($orderId);
@@ -1167,6 +1167,10 @@ class OrderService
         //notification to captain
         $this->notificationLocalService->createNotificationLocal($userId, NotificationConstant::NON_SUB_ORDER_TITLE, NotificationConstant::NON_SUB_ORDER,
             NotificationTokenConstant::APP_TYPE_CAPTAIN, $order->getId());
+
+        // create dashboard local notification
+        $this->createDashboardLocalNotificationByCaptain(DashboardLocalNotificationTitleConstant::UN_LINK_ORDERS_BY_CAPTAIN_TITLE_CONST,
+            ["text" => DashboardLocalNotificationMessageConstant::UN_LINK_ORDERS_BY_CAPTAIN_TEXT_CONST.$order->getId()], null, $order->getId());
 
         try {
             // create firebase notification to store
@@ -1245,6 +1249,10 @@ class OrderService
                     $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
                         NotificationConstant::CANCEL_ORDER_SUCCESS, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
 
+                    // create dashboard local notification
+                    $this->createDashboardLocalNotificationByStore(DashboardLocalNotificationTitleConstant::CANCEL_ORDER_BY_STORE_TITLE_CONST,
+                        ["text" => DashboardLocalNotificationMessageConstant::CANCEL_ORDER_BY_STORE_TEXT_CONST.$order->getId()], null, $order->getId());
+
                     //create firebase notification to store
                     try {
                         $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), NotificationConstant::CANCEL_ORDER_SUCCESS, NotificationConstant::STORE);
@@ -1289,6 +1297,10 @@ class OrderService
                 $this->notificationLocalService->createNotificationLocal($orderEntity->getStoreOwner()->getStoreOwnerId(), NotificationConstant::RECYCLING_ORDER_TITLE,
                     NotificationConstant::RECYCLING_ORDER_SUCCESS, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
 
+                // create dashboard local notification
+                $this->createDashboardLocalNotificationByStore(DashboardLocalNotificationTitleConstant::RECYCLE_ORDER_BY_STORE_TITLE_CONST,
+                    ["text" => DashboardLocalNotificationMessageConstant::RECYCLE_ORDER_BY_STORE_TEXT_CONST.$order->getId()], null, $order->getId());
+
                 //create firebase notification to store
 //                  try{
 //                       $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
@@ -1310,6 +1322,10 @@ class OrderService
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $orderEntity);
     }
 
+    /**
+     * un-link order by store
+     * orderId is the id of the sub order
+     */
     public function orderNonSubByStore(int $orderId): OrderUpdatePaidToProviderResponse|string
     {
         $checkRemainingCars = $this->subscriptionService->checkRemainingCarsByOrderId($orderId);
@@ -1334,6 +1350,10 @@ class OrderService
         //notification to store
         $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NON_SUB_ORDER_TITLE,
             NotificationConstant::NON_SUB_ORDER, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
+
+        // create dashboard local notification
+        $this->createDashboardLocalNotificationByStore(DashboardLocalNotificationTitleConstant::UN_LINK_ORDERS_BY_STORE_TITLE_CONST,
+            ["text" => DashboardLocalNotificationMessageConstant::UN_LINK_ORDERS_BY_STORE_TEXT_CONST.$order->getId()], null, $order->getId());
 
         if ($isHide === OrderIsHideConstant::ORDER_HIDE_TEMPORARILY) {
             $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::SUB_ORDER_ATTENTION,
@@ -1698,5 +1718,17 @@ class OrderService
         }
 
         return $this->autoMapping->map(OrderEntity::class, OrderDeliveryCostUpdateResponse::class, $orderDeliveryCostUpdateResult);
+    }
+
+    public function createDashboardLocalNotificationByStore(string $title, array $message, int $adminUserId = null, int $orderId = null)
+    {
+        $this->dashboardLocalNotificationService->createOrderLogMessage($title, $message,
+            DashboardLocalNotificationAppTypeConstant::STORE_APP_TYPE_CONST, $adminUserId, $orderId);
+    }
+
+    public function createDashboardLocalNotificationByCaptain(string $title, array $message, int $adminUserId = null, int $orderId = null)
+    {
+        $this->dashboardLocalNotificationService->createOrderLogMessage($title, $message,
+            DashboardLocalNotificationAppTypeConstant::CAPTAIN_APP_TYPE_CONST, $adminUserId, $orderId);
     }
 }

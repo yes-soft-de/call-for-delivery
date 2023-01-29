@@ -17,7 +17,8 @@ class DashboardLocalNotificationCreateRequest
     private $orderId;
 
     /**
-     * @var int|UserEntity
+     * admin user id
+     * @var int|UserEntity|null
      */
     private $user;
 
@@ -53,12 +54,12 @@ class DashboardLocalNotificationCreateRequest
         $this->orderId = $orderId;
     }
 
-    public function getUser(): UserEntity|int
+    public function getUser(): UserEntity|int|null
     {
         return $this->user;
     }
 
-    public function setUser(UserEntity|int $user): void
+    public function setUser(UserEntity|int|null $user): void
     {
         $this->user = $user;
     }
