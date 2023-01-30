@@ -16,7 +16,10 @@ class DashboardLocalNotificationGetResponse
      */
     public $message;
 
-    public string $adminName;
+    /**
+     * @var string|null
+     */
+    public $adminName;
 
     /**
      * @var int|null
