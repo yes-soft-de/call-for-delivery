@@ -25,7 +25,7 @@ class OrderActionLogsLoadedState extends States {
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
         ),
         child: ListTile(
           leading: Icon(
@@ -40,6 +40,7 @@ class OrderActionLogsLoadedState extends States {
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: ActionOrderCard(
+          image: element.image,
           orderStatus: StatusHelper.getOrderStatusMessages(element.state),
           createdDate: element.createdAt,
           action: element.action,

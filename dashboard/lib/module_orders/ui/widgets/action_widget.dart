@@ -1,4 +1,5 @@
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:flutter/material.dart';
 
 class ActionOrderCard extends StatelessWidget {
@@ -8,13 +9,15 @@ class ActionOrderCard extends StatelessWidget {
   final String action;
   final Color? background;
   final IconData? icon;
+  final String image;
   ActionOrderCard(
       {required this.orderStatus,
       required this.createdDate,
       this.background,
       this.icon,
       required this.createdBy,
-      required this.action});
+      required this.action,
+      required this.image});
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +37,32 @@ class ActionOrderCard extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
+            //image
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 16.0, right: 16, bottom: 8, top: 8),
+                  child: SizedBox(
+                    width: 50,
+                    height: 50,
+                    child: ClipOval(
+                      // borderRadius: BorderRadius.circular(25),
+                      child: CustomNetworkImage(
+                        width: 50,
+                        height: 50,
+                        imageSource: image,
+                      ),
+                    ),
+                  ),
+                ),
+                // verticalTile(context,
+                //     title: S.current.action, subtitle: action),
+                // verticalTile(context,
+                //     title: S.of(context).actionDate, subtitle: createdDate),
+              ],
+            ),
             // action & date
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -69,19 +98,19 @@ class ActionOrderCard extends StatelessWidget {
           title,
           style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).textTheme.button?.color),
+              color: Theme.of(context).textTheme.labelLarge?.color),
         ),
         Text(subtitle,
             style: Theme.of(context)
                 .textTheme
-                .button
+                .labelLarge
                 ?.copyWith(fontWeight: FontWeight.normal)),
       ],
     );
   }
 
   Widget divider(context) {
-    Color dividerColor = Theme.of(context).textTheme.button!.color!;
+    Color dividerColor = Theme.of(context).textTheme.labelLarge!.color!;
     return Divider(
       thickness: 2,
       indent: 16,

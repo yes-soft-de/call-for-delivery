@@ -13,12 +13,17 @@ class OrderActionLogsModel extends DataModel {
   late OrderStatusEnum state;
   late String createdAt;
   late String createdBy;
-  OrderActionLogsModel(
-      {required this.id,
-      required this.action,
-      required this.createdAt,
-      required this.createdBy,
-      required this.state});
+  late String image;
+  late String imagePath;
+  OrderActionLogsModel({
+    required this.id,
+    required this.action,
+    required this.createdAt,
+    required this.createdBy,
+    required this.state,
+    required this.image,
+    required this.imagePath,
+  });
   List<OrderActionLogsModel> _orders = [];
   OrderActionLogsModel.withData(OrderActionLogsResponse response) {
     var data = response.data;
@@ -37,6 +42,8 @@ class OrderActionLogsModel extends DataModel {
         action: ActionTypeLogsHelper.getOrderLogsMessages(element.action),
         createdAt: create,
         createdBy: element.createdBy ?? S.current.unknown,
+        image: element.image?.image ?? '',
+        imagePath: element.image?.imageUrl ?? '',
       ));
     });
   }
