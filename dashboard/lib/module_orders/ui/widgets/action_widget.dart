@@ -10,6 +10,7 @@ class ActionOrderCard extends StatelessWidget {
   final Color? background;
   final IconData? icon;
   final String image;
+  final String userJobDescription;
   ActionOrderCard(
       {required this.orderStatus,
       required this.createdDate,
@@ -17,7 +18,8 @@ class ActionOrderCard extends StatelessWidget {
       this.icon,
       required this.createdBy,
       required this.action,
-      required this.image});
+      required this.image,
+      required this.userJobDescription});
 
   @override
   Widget build(BuildContext context) {
@@ -37,26 +39,51 @@ class ActionOrderCard extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(createdDate,
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                        fontWeight: FontWeight.normal, color: Colors.white)),
+              ],
+            ),
             //image
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(
-                      left: 16.0, right: 16, bottom: 8, top: 8),
-                  child: SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: ClipOval(
-                      // borderRadius: BorderRadius.circular(25),
-                      child: CustomNetworkImage(
-                        width: 50,
-                        height: 50,
-                        imageSource: image,
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 16.0, right: 16, bottom: 8, top: 8),
+                      child: SizedBox(
+                        width: 25,
+                        height: 25,
+                        child: ClipOval(
+                          // borderRadius: BorderRadius.circular(25),
+                          child: CustomNetworkImage(
+                            width: 25,
+                            height: 25,
+                            imageSource: image,
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    Text(userJobDescription,
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelLarge
+                            ?.copyWith(fontWeight: FontWeight.normal)),
+                  ],
                 ),
+                Text(createdBy,
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelLarge
+                        ?.copyWith(fontWeight: FontWeight.normal)),
+                // verticalTile(context,
+                //     title: '', subtitle: createdBy),
+
                 // verticalTile(context,
                 //     title: S.current.action, subtitle: action),
                 // verticalTile(context,
@@ -64,22 +91,22 @@ class ActionOrderCard extends StatelessWidget {
               ],
             ),
             // action & date
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                verticalTile(context,
-                    title: S.current.action, subtitle: action),
-                verticalTile(context,
-                    title: S.of(context).actionDate, subtitle: createdDate),
-              ],
-            ),
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //   children: [
+            //     verticalTile(context,
+            //         title: S.current.action, subtitle: action),
+            //     verticalTile(context,
+            //         title: S.of(context).actionDate, subtitle: createdDate),
+            //   ],
+            // ),
             // divider
             divider(context),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 verticalTile(context,
-                    title: S.current.actionBy, subtitle: createdBy),
+                    title: S.current.action, subtitle: action),
                 verticalTile(context,
                     title: S.current.currentOrderStatus, subtitle: orderStatus),
               ],

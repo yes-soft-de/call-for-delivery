@@ -19,6 +19,7 @@ class Datum {
   bool? orderIsMain;
   dynamic primaryOrderId;
   Images? image;
+  String? userJobDescription;
 
   Datum({
     this.id,
@@ -37,6 +38,7 @@ class Datum {
     this.orderIsMain,
     this.primaryOrderId,
     this.image,
+    this.userJobDescription,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -61,6 +63,7 @@ class Datum {
         image: json['images'] == null
             ? null
             : Images.fromJson(json['images'] as Map<String, dynamic>),
+        userJobDescription: json['userJobDescription'] as String?,
       );
 
   Map<String, dynamic> toJson() => {

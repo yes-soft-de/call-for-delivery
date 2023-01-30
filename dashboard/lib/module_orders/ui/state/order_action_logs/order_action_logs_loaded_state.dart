@@ -40,6 +40,7 @@ class OrderActionLogsLoadedState extends States {
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: ActionOrderCard(
+          userJobDescription: element.userJobDescription,
           image: element.image,
           orderStatus: StatusHelper.getOrderStatusMessages(element.state),
           createdDate: element.createdAt,
