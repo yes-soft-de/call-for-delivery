@@ -3,6 +3,7 @@
 namespace App\Manager\Subscription;
 
 use App\AutoMapping;
+use App\Constant\Subscription\SubscriptionCaptainOffer;
 use App\Constant\Subscription\SubscriptionDetailsConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionEntity;
@@ -12,6 +13,7 @@ use App\Entity\SubscriptionHistoryEntity;
 use App\Repository\SubscriptionEntityRepository;
 use App\Request\Account\CompleteAccountStatusUpdateRequest;
 use App\Request\Subscription\SubscriptionCreateRequest;
+use App\Request\Subscription\SubscriptionStatusUpdateRequest;
 use App\Request\Subscription\SubscriptionUpdateRequest;
 use App\Request\Subscription\SubscriptionUpdateIsFutureRequest;
 use Doctrine\ORM\EntityManagerInterface;
@@ -127,6 +129,7 @@ class SubscriptionManager
 
         if ($subscribeEntity) {
 
+            // Why we need this?
             $this->autoMapping->map(SubscriptionUpdateRequest::class, SubscriptionEntity::class, $subscribeEntity);
 
             $this->entityManager->flush();
@@ -313,10 +316,11 @@ class SubscriptionManager
        return $this->storeOwnerProfileManager->getStoreOwnerProfile($storeOwnerProfileId);
     }
 
-    public function getAllSubscriptionsEntitiesByStoreOwnerId(int $storeOwnerId): array
-    {
-        return $this->subscribeRepository->getAllSubscriptionsEntitiesByStoreOwnerId($storeOwnerId);
-    }
+    // Following function had been commented out because it isn't being used anywhere
+//    public function getAllSubscriptionsEntitiesByStoreOwnerId(int $storeOwnerId): array
+//    {
+//        return $this->subscribeRepository->getAllSubscriptionsEntitiesByStoreOwnerId($storeOwnerId);
+//    }
 
     public function deleteStoreSubscriptionByStoreOwnerId(int $storeOwnerId): array
     {
@@ -396,5 +400,56 @@ class SubscriptionManager
         $this->subscriptionDetailsManager->createSubscriptionDetails($subscriptionEntity, SubscriptionConstant::IS_HAS_EXTRA_FALSE);
 
         return $subscriptionEntity;
+    }
+
+    /**
+     * Update subscription status and subscription details status
+     */
+    public function updateSubscribeStatusAndCurrentSubscriptionStatus(SubscriptionStatusUpdateRequest $request): SubscriptionEntity|string|int
+    {
+        $subscriptionEntity = $this->subscribeRepository->findOneBy(['id' => $request->getId()]);
+
+        if (! $subscriptionEntity) {
+            return SubscriptionConstant::SUBSCRIPTION_NOT_FOUND;
+        }
+
+        $this->entityManager->getConnection()->beginTransaction();
+
+        try {
+            $subscriptionEntity->setStatus($request->getStatus());
+
+            $this->entityManager->flush();
+
+            // Also, update the status of the current subscription details
+            $subscriptionDetailsStatusUpdateResult = $this->subscriptionDetailsManager->updateSubscriptionDetailsStatusBySubscriptionId($request);
+
+            if ($subscriptionDetailsStatusUpdateResult === SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND) {
+                return SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND;
+            }
+
+            $this->entityManager->getConnection()->commit();
+
+            return $subscriptionEntity;
+
+        } catch (\Exception $e) {
+            $this->entityManager->getConnection()->rollBack();
+
+            throw $e;
+        }
+    }
+
+    public function getActiveCaptainOfferSubscriptionBySubscriptionId(int $subscriptionId): SubscriptionCaptainOfferEntity|int|string
+    {
+        $subscriptionEntity = $this->subscribeRepository->getSubscriptionWithActiveCaptainOfferSubscriptionBySubscriptionId($subscriptionId);
+
+        if (! $subscriptionEntity) {
+            return SubscriptionConstant::SUBSCRIPTION_NOT_FOUND;
+        }
+
+        if (! $subscriptionEntity->getSubscriptionCaptainOffer()) {
+            return SubscriptionCaptainOffer::CAPTAIN_OFFER_SUBSCRIPTION_NOT_EXIST;
+        }
+
+        return $subscriptionEntity->getSubscriptionCaptainOffer();
     }
 }

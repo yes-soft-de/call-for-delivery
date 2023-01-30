@@ -347,10 +347,11 @@ class AdminStoreSubscriptionService
      */
     public function checkSubscriptionValidation(int $storeOwnerUserId): string
     {
-        ///TODO temporary depending on following function, but later will depend on different service
+        ///TODO temporary depending on following function, but later will depend on StoreSubscriptionHandleService service
         return $this->subscriptionService->checkSubscription($storeOwnerUserId);
 
-        //$checkSubscriptionResult = $this->storeSubscriptionHandleService->checkStoreSubscriptionValidationBySubscriptionDetailsEntity($subscriptionDetailsEntity);
+        ///TODO Following function will be use when StoreSubscriptionHandleService is ready
+        //$checkSubscriptionResult = $this->storeSubscriptionHandleService->checkCurrentSubscriptionSituationAndUpdateIt($subscriptionDetailsEntity);
     }
 
     public function updateCurrentSubscriptionStatus(SubscriptionStatusUpdateByAdminRequest $request): SubscriptionEntity|int

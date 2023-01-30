@@ -563,6 +563,10 @@ class SubscriptionService
       return $this->checkRemainingCars($subscription);
     }
 
+    /**
+     * Check if there is captain offer subscription linked with a previous store subscription,
+     * And if it exists, and active, then link it with the new current store subscription
+     */
     public function checkWhetherThereIsActiveCaptainsOfferAndUpdateSubscription(int $storeOwnerId): string
     {
       $captainOfferId = $this->subscriptionManager->checkWhetherThereIsActiveCaptainsOffer($storeOwnerId);
