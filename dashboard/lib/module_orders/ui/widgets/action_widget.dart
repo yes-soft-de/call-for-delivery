@@ -54,16 +54,16 @@ class ActionOrderCard extends StatelessWidget {
                 Row(
                   children: [
                     Padding(
-                      padding: const EdgeInsets.only(
-                          left: 16.0, right: 16, bottom: 8, top: 8),
+                      padding: const EdgeInsetsDirectional.only(
+                          end: 8, bottom: 8, top: 8),
                       child: SizedBox(
-                        width: 25,
-                        height: 25,
+                        width: 30,
+                        height: 30,
                         child: ClipOval(
                           // borderRadius: BorderRadius.circular(25),
                           child: CustomNetworkImage(
-                            width: 25,
-                            height: 25,
+                            width: 30,
+                            height: 30,
                             imageSource: image,
                           ),
                         ),
