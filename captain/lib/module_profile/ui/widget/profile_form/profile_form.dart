@@ -445,6 +445,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _carController,
                 hintText: S.current.car,
+                validator: false,
                 preIcon: const Icon(Icons.local_taxi_rounded),
               ),
             ),
@@ -454,6 +455,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _bankNameController,
                 hintText: S.current.bankName,
+                validator: false,
                 preIcon: const Icon(Icons.monetization_on_rounded),
               ),
             ),
@@ -463,6 +465,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _bankAccountNumberController,
                 hintText: '123456789',
+                validator: false,
                 preIcon: const Icon(Icons.password_rounded),
                 numbers: true,
               ),
@@ -473,6 +476,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _stcPayController,
                 hintText: 'XXXXXXXX',
+                validator: false,
                 preIcon: const Icon(Icons.credit_card_rounded),
                 last: true,
               ),

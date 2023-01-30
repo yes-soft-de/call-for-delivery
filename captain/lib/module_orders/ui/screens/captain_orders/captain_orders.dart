@@ -28,7 +28,6 @@ import 'package:c4d/module_orders/response/company_info/company_info.dart';
 import 'package:c4d/module_orders/state_manager/captain_orders/captain_orders.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:new_version/new_version.dart';
 import 'package:location/location.dart' as loc;
 
 @injectable
@@ -53,22 +52,6 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   final advancedController = AdvancedDrawerController();
   LatLng? currentLocation;
   CaptainOrdersListStateManager get stateManager => widget._stateManager;
-  Future<void> checkForUpdates(context) async {
-    final newVersion = NewVersion();
-    final VersionStatus? status = await newVersion.getVersionStatus();
-    if (status?.canUpdate == true) {
-      newVersion.showUpdateDialog(
-        context: context,
-        versionStatus: status!,
-        dialogTitle: S.current.newVersion,
-        dialogText: S.current.newVersionHint
-            .replaceAll('^', status.localVersion)
-            .replaceAll('&', status.storeVersion),
-        updateButtonText: S.current.update,
-        dismissButtonText: S.current.later,
-      );
-    }
-  }
 
   void getMyOrders([String? trigger]) {
     widget._stateManager.getProfile(this);
@@ -163,7 +146,6 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
         setState(() {});
       }
     });
-    checkForUpdates(context);
     currentPage = NotificationsPrefHelper().getHomeIndex();
     if (NotificationsPrefHelper().getHomeIndex() == 1) {
       NotificationsPrefHelper().setHomeIndex(1);

@@ -44,9 +44,8 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
     currentState = LoadingState(this);
     ordersFilter = FilterOrderRequest(
         state: 'ongoing',
-        fromDate:
-            DateTime(today.year, today.month, today.day, 0).toIso8601String(),
-        toDate: DateTime.now().toIso8601String());
+        fromDate: DateTime(today.year, today.month, today.day, 0),
+        toDate: DateTime.now());
     widget._stateManager.getOrdersFilters(this, ordersFilter);
     widget._stateManager.stateStream.listen((event) {
       currentState = event;
@@ -76,9 +75,8 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
             actions: [
               CustomC4dAppBar.actionIcon(context, onTap: () {
                 ordersFilter.fromDate =
-                    DateTime(today.year, today.month, today.day, 0)
-                        .toIso8601String();
-                ordersFilter.toDate = DateTime.now().toIso8601String();
+                    DateTime(today.year, today.month, today.day, 0);
+                ordersFilter.toDate = DateTime.now();
                 currentIndex = 0;
                 ordersFilter.state = 'ongoing';
                 getOrders();
@@ -127,7 +125,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                                     lastDate: DateTime.now())
                                 .then((value) {
                               if (value != null) {
-                                ordersFilter.fromDate = value.toIso8601String();
+                                ordersFilter.fromDate = value;
                                 setState(() {});
                                 getOrders();
                               }
@@ -135,9 +133,8 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                           },
                           title: Text(S.current.firstDate),
                           subtitle: Text(ordersFilter.fromDate != null
-                              ? DateFormat('yyyy/M/d').format(DateTime.parse(
-                                  ordersFilter.fromDate ??
-                                      DateTime.now().toIso8601String()))
+                              ? DateFormat('yyyy/M/d').format(
+                                  ordersFilter.fromDate ?? DateTime.now())
                               : '0000/00/00'),
                         ),
                       ),
@@ -184,12 +181,11 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                               if (value != null) {
                                 var currentTime = TimeOfDay.now();
                                 ordersFilter.toDate = DateTime(
-                                        value.year,
-                                        value.month,
-                                        value.day,
-                                        currentTime.hour,
-                                        currentTime.minute)
-                                    .toIso8601String();
+                                    value.year,
+                                    value.month,
+                                    value.day,
+                                    currentTime.hour,
+                                    currentTime.minute);
                                 setState(() {});
                                 getOrders();
                               }
@@ -197,9 +193,9 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                           },
                           title: Text(S.current.endDate),
                           subtitle: Text(ordersFilter.toDate != null
-                              ? DateFormat('yyyy/M/d').format(DateTime.parse(
+                              ? DateFormat('yyyy/M/d').format(
                                   ordersFilter.toDate ??
-                                      DateTime.now().toIso8601String()))
+                                      DateTime.now())
                               : '0000/00/00'),
                         ),
                       ),
