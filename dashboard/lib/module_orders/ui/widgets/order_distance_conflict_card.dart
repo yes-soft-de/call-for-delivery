@@ -67,7 +67,7 @@ class OrderDistanceConflict extends StatelessWidget {
                     color: Theme.of(context).colorScheme.primaryContainer,
                   ),
                   child: IconButton(
-                      onPressed: onEdit,
+                      onPressed: onEditExtra,
                       icon: Icon(
                         Icons.add_road_rounded,
                         color: Theme.of(context).colorScheme.primary,

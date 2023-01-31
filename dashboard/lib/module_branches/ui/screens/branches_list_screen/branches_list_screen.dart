@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
@@ -21,7 +23,7 @@ class BranchesListScreen extends StatefulWidget {
 class BranchesListScreenState extends State<BranchesListScreen> {
   States? currentState;
   String? storeID = '-1';
-
+  StreamSubscription? streamSubscription;
   @override
   void initState() {
     currentState = LoadingState(this);
@@ -31,7 +33,8 @@ class BranchesListScreenState extends State<BranchesListScreen> {
         setState(() {});
       }
     });
-    getIt<GlobalStateManager>().stateStream.listen((event) {
+    streamSubscription =
+        getIt<GlobalStateManager>().stateStream.listen((event) {
       widget._manager.getBranchesList(this, storeID ?? '-1');
       if (mounted) {
         setState(() {});
@@ -42,6 +45,12 @@ class BranchesListScreenState extends State<BranchesListScreen> {
 
   void refresh() {
     setState(() {});
+  }
+
+  @override
+  void dispose() {
+    streamSubscription?.cancel();
+    super.dispose();
   }
 
   void deleteBranch(int id) {
