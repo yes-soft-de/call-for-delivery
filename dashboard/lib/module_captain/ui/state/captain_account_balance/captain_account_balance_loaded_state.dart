@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/model/captain_balance_model.dart';
@@ -7,7 +5,6 @@ import 'package:c4d/module_captain/ui/screen/captain_account_balance_screen.dart
 import 'package:c4d/module_captain/ui/widget/account_balance_details.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/ui/widgets/owner_order_card/owner_order_card.dart';
-import 'package:c4d/module_payments/payments_routes.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
@@ -32,7 +29,7 @@ class AccountBalanceStateLoaded extends States {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).colorScheme.background,
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -200,7 +197,7 @@ class AccountBalanceStateLoaded extends States {
                 padding: const EdgeInsets.all(12.0),
                 child: Text(
                   S.current.orders,
-                  style: Theme.of(context).textTheme.button,
+                  style: Theme.of(context).textTheme.labelLarge,
                 ),
               ),
             )),

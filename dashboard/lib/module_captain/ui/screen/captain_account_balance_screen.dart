@@ -67,7 +67,7 @@ class CaptainAccountBalanceScreenState
                 child: FilterBar(
                   cursorRadius: BorderRadius.circular(25),
                   animationDuration: const Duration(milliseconds: 350),
-                  backgroundColor: Theme.of(context).backgroundColor,
+                  backgroundColor: Theme.of(context).colorScheme.background,
                   currentIndex: currentIndex,
                   borderRadius: BorderRadius.circular(25),
                   floating: true,
@@ -84,9 +84,10 @@ class CaptainAccountBalanceScreenState
                         curve: Curves.linear);
                     setState(() {});
                   },
-                  selectedContent: Theme.of(context).textTheme.button!.color!,
+                  selectedContent:
+                      Theme.of(context).textTheme.labelLarge!.color!,
                   unselectedContent:
-                      Theme.of(context).textTheme.headline6!.color!,
+                      Theme.of(context).textTheme.titleLarge!.color!,
                 ),
               ),
               preferredSize: const Size.fromHeight(48))),

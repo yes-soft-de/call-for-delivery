@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/captains_routes.dart';
@@ -42,7 +41,7 @@ class CaptainFinancialDuesStateLoaded extends States {
                         blurRadius: 5,
                         spreadRadius: 0.5,
                         offset: const Offset(-1, 0),
-                        color: Theme.of(context).backgroundColor),
+                        color: Theme.of(context).colorScheme.background),
                   ]),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -68,7 +67,7 @@ class CaptainFinancialDuesStateLoaded extends States {
                             child: Container(
                               width: 32,
                               height: 2.5,
-                              color: Theme.of(context).backgroundColor,
+                              color: Theme.of(context).colorScheme.background,
                             ),
                           ),
                           Expanded(
@@ -95,7 +94,7 @@ class CaptainFinancialDuesStateLoaded extends States {
                             child: Container(
                               width: 32,
                               height: 2.5,
-                              color: Theme.of(context).backgroundColor,
+                              color: Theme.of(context).colorScheme.background,
                             ),
                           ),
                           Expanded(
@@ -113,23 +112,32 @@ class CaptainFinancialDuesStateLoaded extends States {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Expanded(
-                            child: verticalBubble(context,
-                                title: S.current.total,
-                                subtitle: FixedNumber.getFixedNumber(
-                                        element.total.total) +
-                                    ' ${S.current.sar}',
-                                background: element.total.advancePayment == null
-                                    ? null
-                                    : (element.total.advancePayment == true
-                                        ? Colors.green
-                                        : Colors.red)),
+                            child: InkWell(
+                              onTap: () {
+                                print(element.total.advancePayment);
+                              },
+                              child: verticalBubble(context,
+                                  title: S.current.total,
+                                  subtitle: FixedNumber.getFixedNumber(
+                                          element.total.total) +
+                                      ' ${S.current.sar}',
+                                  background: element.total.advancePayment ==
+                                          null
+                                      ? null
+                                      : (element.total.advancePayment == 160
+                                          ? Colors.green
+                                          : element.total.advancePayment == 159
+                                              ? Colors.red
+                                              : Theme.of(screenState.context)
+                                                  .disabledColor)),
+                            ),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
                               width: 32,
                               height: 2.5,
-                              color: Theme.of(context).backgroundColor,
+                              color: Theme.of(context).colorScheme.background,
                             ),
                           ),
                           Expanded(
@@ -164,7 +172,7 @@ class CaptainFinancialDuesStateLoaded extends States {
       children: [
         Text(title),
         Container(
-            color: backgroundColor ?? Theme.of(context).backgroundColor,
+            color: backgroundColor ?? Theme.of(context).colorScheme.background,
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Text(
@@ -185,7 +193,7 @@ class CaptainFinancialDuesStateLoaded extends States {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-        color: background ?? Theme.of(context).backgroundColor,
+        color: background ?? Theme.of(context).colorScheme.background,
       ),
       child: Material(
         color: Colors.transparent,

@@ -8685,11 +8685,6 @@ class S {
     return Intl.message(
       'Notification deleted successfully',
       name: 'notificationDeletedSuccess',
-  /// `Please remove order price after setting payment method to credit`
-  String get orderPriceOnCreditWarning {
-    return Intl.message(
-      'Please remove order price after setting payment method to credit',
-      name: 'orderPriceOnCreditWarning',
       desc: '',
       args: [],
     );
@@ -8760,6 +8755,21 @@ class S {
     return Intl.message(
       'Notices',
       name: 'notices',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please remove order price after setting payment method to credit`
+  String get orderPriceOnCreditWarning {
+    return Intl.message(
+      'Please remove order price after setting payment method to credit',
+      name: 'orderPriceOnCreditWarning',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Remove`
   String get remove {
     return Intl.message(
