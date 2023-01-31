@@ -6,6 +6,7 @@ import 'package:c4d/module_orders/model/company_info_model.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/phone_number_formtter.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class CompanyInfoLoadedState extends States {
@@ -50,7 +51,8 @@ class CompanyInfoLoadedState extends States {
       ),
       CompanyListTile(
         number: true,
-        icon: Icons.whatsapp_rounded,
+        // icon: Icons.whatsapp_rounded,
+        icon: FontAwesomeIcons.whatsapp,
         subtitle:
             PhoneNumberFormatter.format(company.whatsapp) ?? S.current.unknown,
         title: S.current.whatsapp,

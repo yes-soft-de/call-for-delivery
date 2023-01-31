@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
@@ -20,13 +19,11 @@ import 'package:c4d/utils/effect/checked.dart';
 import 'package:c4d/utils/helpers/contacts_helper.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/phone_number_detection.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:latlong2/latlong.dart';
@@ -92,7 +89,7 @@ class NewOrderStateBranchesLoaded extends States {
                         width: double.maxFinite,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
-                            color: Theme.of(context).backgroundColor),
+                            color: Theme.of(context).colorScheme.background),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 16.0, right: 16),
                           child: DropdownSearch<BranchesModel>(
@@ -207,7 +204,7 @@ class NewOrderStateBranchesLoaded extends States {
                                 '+',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .button
+                                    .labelLarge
                                     ?.copyWith(
                                         color: Colors.white, fontSize: 20),
                               ),
@@ -222,6 +219,7 @@ class NewOrderStateBranchesLoaded extends States {
                 ListTile(
                   title: LabelText(S.of(context).destinationAddress),
                   subtitle: CustomFormField(
+                    readOnly: true,
                     contentPadding: EdgeInsets.only(left: 16, right: 16),
                     hintText: S.of(context).locationOfCustomer,
                     onTap: () {},
@@ -340,7 +338,8 @@ class NewOrderStateBranchesLoaded extends States {
                                                 indent: 16,
                                                 endIndent: 16,
                                                 color: Theme.of(context)
-                                                    .backgroundColor,
+                                                    .colorScheme
+                                                    .background,
                                                 thickness: 2.5,
                                               ),
                                               SizedBox(
@@ -382,7 +381,7 @@ class NewOrderStateBranchesLoaded extends States {
                                                 S.current.close,
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .button,
+                                                    .labelLarge,
                                               ),
                                             )),
                                       ),
@@ -399,7 +398,9 @@ class NewOrderStateBranchesLoaded extends States {
                               child: Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(18),
-                                    color: Theme.of(context).backgroundColor),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -469,7 +470,9 @@ class NewOrderStateBranchesLoaded extends States {
                                 child: Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(18),
-                                      color: Theme.of(context).backgroundColor),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .background),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -493,8 +496,9 @@ class NewOrderStateBranchesLoaded extends States {
                                   child: Container(
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(18),
-                                        color:
-                                            Theme.of(context).backgroundColor),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .background),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -526,7 +530,7 @@ class NewOrderStateBranchesLoaded extends States {
                   padding: const EdgeInsets.only(left: 8, right: 8),
                   child: Container(
                     decoration: BoxDecoration(
-                        color: Theme.of(context).backgroundColor,
+                        color: Theme.of(context).colorScheme.background,
                         borderRadius: BorderRadius.circular(25)),
                     child: ListTile(
                       onTap: () {
@@ -578,7 +582,7 @@ class NewOrderStateBranchesLoaded extends States {
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
-                        color: Theme.of(context).backgroundColor),
+                        color: Theme.of(context).colorScheme.background),
                     child: Material(
                       color: Colors.transparent,
                       child: CheckboxListTile(
@@ -636,7 +640,7 @@ class NewOrderStateBranchesLoaded extends States {
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Theme.of(context).backgroundColor,
+                            color: Theme.of(context).colorScheme.background,
                           ),
                           child: RadioListTile(
                             shape: RoundedRectangleBorder(
@@ -658,7 +662,7 @@ class NewOrderStateBranchesLoaded extends States {
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Theme.of(context).backgroundColor,
+                            color: Theme.of(context).colorScheme.background,
                           ),
                           child: RadioListTile(
                             title: Text(S.of(context).cash),

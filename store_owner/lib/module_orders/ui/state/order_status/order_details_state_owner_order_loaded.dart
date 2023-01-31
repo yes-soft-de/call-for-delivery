@@ -56,7 +56,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
   Widget getUI(BuildContext context) {
     var decoration = BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-        color: Theme.of(context).backgroundColor);
+        color: Theme.of(context).colorScheme.background);
     return CustomListView.custom(
       children: [
         // svg picture
@@ -298,13 +298,13 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                   leading: Icon(
                     Icons.star_rounded,
                     size: 30,
-                    color: Theme.of(context).textTheme.button?.color,
+                    color: Theme.of(context).textTheme.labelLarge?.color,
                   ),
                   title: Text(S.current.rating),
-                  textColor: Theme.of(context).textTheme.button?.color,
+                  textColor: Theme.of(context).textTheme.labelLarge?.color,
                   subtitle: Text(S.current.rateCaptain),
                   trailing: Icon(Icons.arrow_forward_rounded,
-                      color: Theme.of(context).textTheme.button?.color),
+                      color: Theme.of(context).textTheme.labelLarge?.color),
                 ),
               ),
             ),
@@ -353,13 +353,13 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                   },
                   leading: Icon(
                     Icons.chat_bubble_rounded,
-                    color: Theme.of(context).textTheme.button?.color,
+                    color: Theme.of(context).textTheme.labelLarge?.color,
                   ),
                   title: Text(S.current.chatRoom),
-                  textColor: Theme.of(context).textTheme.button?.color,
+                  textColor: Theme.of(context).textTheme.labelLarge?.color,
                   subtitle: Text(S.current.chatWithCaptain),
                   trailing: Icon(Icons.arrow_forward_rounded,
-                      color: Theme.of(context).textTheme.button?.color),
+                      color: Theme.of(context).textTheme.labelLarge?.color),
                 ),
               ),
             ),
@@ -405,14 +405,15 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                     });
                   },
                   leading: Icon(
-                    Icons.whatsapp,
-                    color: Theme.of(context).textTheme.button?.color,
+                    // Icons.whatsapp,
+                    FontAwesomeIcons.whatsapp,
+                    color: Theme.of(context).textTheme.labelLarge?.color,
                   ),
                   title: Text(S.current.whatsapp),
-                  textColor: Theme.of(context).textTheme.button?.color,
+                  textColor: Theme.of(context).textTheme.labelLarge?.color,
                   subtitle: Text(S.current.whatsappWithCaptain),
                   trailing: Icon(Icons.arrow_forward_rounded,
-                      color: Theme.of(context).textTheme.button?.color),
+                      color: Theme.of(context).textTheme.labelLarge?.color),
                 ),
               ),
             ),
@@ -424,7 +425,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
           leading: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: Theme.of(context).backgroundColor),
+                  color: Theme.of(context).colorScheme.background),
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Icon(Icons.info_rounded),
@@ -927,7 +928,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
           },
           child: Text(
             S.of(context).redo,
-            style: Theme.of(context).textTheme.button,
+            style: Theme.of(context).textTheme.labelLarge,
           )),
     )..show(context);
   }
