@@ -20,7 +20,7 @@ use App\Service\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Service\Eraser\Subscription\StoreSubscriptionEraserService;
 use App\Service\Subscription\StoreSubscriptionCheckService;
-use App\Service\Subscription\StoreSubscriptionHandleService;
+use App\Service\Subscription\StoreSubscription\StoreSubscriptionHandleService;
 use App\Service\Subscription\SubscriptionService;
 use App\Constant\Payment\PaymentConstant;
 use App\Request\Admin\Subscription\AdminDeleteSubscriptionRequest;

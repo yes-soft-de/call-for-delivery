@@ -199,6 +199,10 @@ class SubscriptionManager
         return $this->subscriptionDetailsManager->updateRemainingCars($id, $remainingCars);
     }
 
+    /**
+     * This function link captain offer subscription with current store subscription,
+     * And updates the remainingCars field of the subscription details record
+     */
     public function updateSubscriptionCaptainOfferId(SubscriptionCaptainOfferEntity $subscriptionCaptainOfferEntity, $captainOfferFirstTime = false): string|array
     { 
         //TODO shortcut two queries in one query

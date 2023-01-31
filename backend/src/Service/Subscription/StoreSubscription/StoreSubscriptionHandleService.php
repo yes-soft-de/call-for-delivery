@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\Subscription;
+namespace App\Service\Subscription\StoreSubscription;
 
 use App\Constant\Subscription\SubscriptionCaptainOffer;
 use App\Constant\Subscription\SubscriptionConstant;
@@ -10,6 +10,7 @@ use App\Entity\SubscriptionDetailsEntity;
 use App\Entity\SubscriptionEntity;
 use App\Manager\Subscription\SubscriptionManager;
 use App\Request\Subscription\SubscriptionStatusUpdateRequest;
+use App\Service\Subscription\CaptainOfferSubscription\CaptainOfferSubscriptionHandleService;
 use DateTime;
 use DateTimeInterface;
 
@@ -20,7 +21,8 @@ use DateTimeInterface;
 class StoreSubscriptionHandleService
 {
     public function __construct(
-        private SubscriptionManager $subscriptionManager
+        private SubscriptionManager $subscriptionManager,
+        private CaptainOfferSubscriptionHandleService $captainOfferSubscriptionHandleService
     )
     {
     }
@@ -41,15 +43,7 @@ class StoreSubscriptionHandleService
             || ($checkSubscriptionResult === SubscriptionDetailsConstant::SUBSCRIPTION_REMAINING_ORDERS_IS_FINISHED)) {
             // Move to the next subscription (future) (if exists)
             // But, first, check if there is a valid captain offer subscription, in order to transfer it to the next subscription
-            $updateSubscriptionResult = $this->checkIfThereIsFutureSubscriptionAndSetItAsCurrentSubscription($checkSubscriptionResult->getStoreOwner()->getId());
-
-            if (($updateSubscriptionResult === SubscriptionConstant::FUTURE_SUBSCRIPTION_DOES_NOT_EXIST_CONST)
-                || ($updateSubscriptionResult === SubscriptionConstant::SUBSCRIPTION_DOES_NOT_EXIST_CONST)) {
-                return $updateSubscriptionResult;
-            }
-
-            // Reaching here means there was a future subscription, and by now it turned into the current one
-            return $updateSubscriptionResult; // SubscriptionEntity
+            $updateSubscriptionResult = $this->handleConvertingCurrentSubscriptionToFutureSubscription($subscriptionDetails->getLastSubscription());
 
         } elseif ($checkSubscriptionResult === SubscriptionDetailsConstant::SUBSCRIPTION_REMAINING_ORDERS_IS_BIGGER_THAN_PACKAGE_ORDERS_CONST) {
             // as a initial solution, set the subscription as an active one
@@ -285,24 +279,77 @@ class StoreSubscriptionHandleService
         return $this->subscriptionManager->updateSubscribeStatusAndCurrentSubscriptionStatus($subscriptionStatusUpdateRequest);
     }
 
+    /**
+     * Get only active captain offer subscription linked with specific store subscription
+     */
     public function getActiveCaptainOfferSubscriptionBySubscriptionId(int $subscriptionId): SubscriptionCaptainOfferEntity|int|string
     {
         return $this->subscriptionManager->getActiveCaptainOfferSubscriptionBySubscriptionId($subscriptionId);
     }
 
-    public function checkIfValidCaptainSubscriptionOfferExist(int $storeOwnerProfileId)
+    /**
+     * Check if the date of the captain offer subscription expired or not yet
+     */
+    public function checkIfCaptainOfferSubscriptionIsValid(SubscriptionCaptainOfferEntity $subscriptionCaptainOfferEntity): int
     {
-        // Check if there is a captain offer subscription first
-        // Captain offer subscription exists, then check its validity
+        return $this->captainOfferSubscriptionHandleService->checkCaptainOfferSubscriptionDate($subscriptionCaptainOfferEntity);
     }
 
     /**
      * Check if there is a captain offer subscription linked with current subscription,
-     * And if it exist, and not being used yet, then activate it
+     * And if it exist, and not being used yet, then return it
      */
-    public function checkCaptainOfferSubscription()
+    public function getActiveAndValidCaptainOfferSubscriptionByStoreSubscriptionId(int $subscriptionId): SubscriptionCaptainOfferEntity|int|string
     {
         // check if there is active captain offer subscription linked with current subscription
+        $captainOfferSubscription = $this->getActiveCaptainOfferSubscriptionBySubscriptionId($subscriptionId);
 
+        if (($captainOfferSubscription === SubscriptionConstant::SUBSCRIPTION_NOT_FOUND)
+            || ($captainOfferSubscription === SubscriptionCaptainOffer::CAPTAIN_OFFER_SUBSCRIPTION_NOT_EXIST)) {
+            return $captainOfferSubscription;
+        }
+
+        // check if captain offer subscription date is valid or not anymore
+        $captainOfferSubscriptionDateValidation = $this->checkIfCaptainOfferSubscriptionIsValid($captainOfferSubscription);
+
+        if ($captainOfferSubscriptionDateValidation === SubscriptionCaptainOffer::CAPTAIN_OFFER_SUBSCRIPTION_EXPIRED) {
+            return SubscriptionCaptainOffer::CAPTAIN_OFFER_SUBSCRIPTION_EXPIRED;
+        }
+
+        // till here, captain offer subscription is active (not used yet) and not expired, so we can still use it
+        return $captainOfferSubscription;
+    }
+
+    /**
+     * Responsible only for updating subscriptionCaptainOffer filed of a specific store subscription
+     */
+    public function updateCaptainOfferSubscriptionOfStoreSubscription(SubscriptionEntity $subscriptionEntity, SubscriptionCaptainOfferEntity $subscriptionCaptainOfferEntity)
+    {
+        ///todo initialize update request and call the appropriate updating function
+    }
+
+    public function handleConvertingCurrentSubscriptionToFutureSubscription(SubscriptionEntity $subscriptionEntity)
+    {
+        // Move to the next subscription (future) (if exists)
+        // But, first, check if there is a valid captain offer subscription, in order to transfer it to the next subscription
+        $captainOfferSubscription = $this->getActiveAndValidCaptainOfferSubscriptionByStoreSubscriptionId($subscriptionEntity->getId());
+
+        if (($captainOfferSubscription === SubscriptionConstant::SUBSCRIPTION_NOT_FOUND)
+            || ($captainOfferSubscription === SubscriptionCaptainOffer::CAPTAIN_OFFER_SUBSCRIPTION_NOT_EXIST)
+            || ($captainOfferSubscription === SubscriptionCaptainOffer::CAPTAIN_OFFER_SUBSCRIPTION_EXPIRED)) {
+            return $captainOfferSubscription;
+        }
+
+        // Check if there is a future subscription, and if is exists, then turn to it
+        $updateSubscriptionResult = $this->checkIfThereIsFutureSubscriptionAndSetItAsCurrentSubscription($subscriptionEntity->getStoreOwner()->getId());
+
+        if (($updateSubscriptionResult === SubscriptionConstant::FUTURE_SUBSCRIPTION_DOES_NOT_EXIST_CONST)
+            || ($updateSubscriptionResult === SubscriptionConstant::SUBSCRIPTION_DOES_NOT_EXIST_CONST)) {
+            return $updateSubscriptionResult;
+        }
+
+        // Reaching here means there was a future subscription, and by now it turned into the current one
+        // So, link captain offer subscription with the new current subscription
+        $this->updateCaptainOfferSubscriptionOfStoreSubscription($updateSubscriptionResult, $captainOfferSubscription);
     }
 }
