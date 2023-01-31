@@ -1,3 +1,5 @@
+import 'package:c4d/module_captain/response/captain_order_control_response/images.dart';
+
 import 'created_at.dart';
 
 class Datum {
@@ -16,6 +18,8 @@ class Datum {
   int? isHide;
   bool? orderIsMain;
   dynamic primaryOrderId;
+  Images? image;
+  String? userJobDescription;
 
   Datum({
     this.id,
@@ -33,6 +37,8 @@ class Datum {
     this.isHide,
     this.orderIsMain,
     this.primaryOrderId,
+    this.image,
+    this.userJobDescription,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
@@ -54,6 +60,10 @@ class Datum {
         isHide: json['isHide'] as int?,
         orderIsMain: json['orderIsMain'] as bool?,
         primaryOrderId: json['primaryOrderId'] as dynamic,
+        image: json['images'] == null
+            ? null
+            : Images.fromJson(json['images'] as Map<String, dynamic>),
+        userJobDescription: json['userJobDescription'] as String?,
       );
 
   Map<String, dynamic> toJson() => {
