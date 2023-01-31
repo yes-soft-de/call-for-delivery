@@ -13,12 +13,18 @@ class OrderActionLogsModel extends DataModel {
   late OrderStatusEnum state;
   late String createdAt;
   late String createdBy;
+  late String image;
+  late String imagePath;
+  late String userJobDescription;
   OrderActionLogsModel(
       {required this.id,
       required this.action,
       required this.createdAt,
       required this.createdBy,
-      required this.state});
+      required this.state,
+      required this.image,
+      required this.imagePath,
+      required this.userJobDescription});
   List<OrderActionLogsModel> _orders = [];
   OrderActionLogsModel.withData(OrderActionLogsResponse response) {
     var data = response.data;
@@ -32,12 +38,14 @@ class OrderActionLogsModel extends DataModel {
               .format(DateHelper.convert(element.createdAt?.timestamp));
 
       _orders.add(OrderActionLogsModel(
-        id: element.id ?? -1,
-        state: StatusHelper.getOrderStatusEnumFromIndex(element.state),
-        action: ActionTypeLogsHelper.getOrderLogsMessages(element.action),
-        createdAt: create,
-        createdBy: element.createdBy ?? S.current.unknown,
-      ));
+          id: element.id ?? -1,
+          state: StatusHelper.getOrderStatusEnumFromIndex(element.state),
+          action: ActionTypeLogsHelper.getOrderLogsMessages(element.action),
+          createdAt: create,
+          createdBy: element.createdBy ?? S.current.unknown,
+          image: element.image?.image ?? '',
+          imagePath: element.image?.imageUrl ?? '',
+          userJobDescription: element.userJobDescription ?? ''));
     });
   }
   List<OrderActionLogsModel> get data => _orders;

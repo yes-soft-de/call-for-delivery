@@ -1,4 +1,5 @@
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:flutter/material.dart';
 
 class ActionOrderCard extends StatelessWidget {
@@ -8,13 +9,17 @@ class ActionOrderCard extends StatelessWidget {
   final String action;
   final Color? background;
   final IconData? icon;
+  final String image;
+  final String userJobDescription;
   ActionOrderCard(
       {required this.orderStatus,
       required this.createdDate,
       this.background,
       this.icon,
       required this.createdBy,
-      required this.action});
+      required this.action,
+      required this.image,
+      required this.userJobDescription});
 
   @override
   Widget build(BuildContext context) {
@@ -34,23 +39,74 @@ class ActionOrderCard extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            // action & date
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(createdDate,
+                    style: Theme.of(context).textTheme.labelMedium?.copyWith(
+                        fontWeight: FontWeight.normal, color: Colors.white)),
+              ],
+            ),
+            //image
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                verticalTile(context,
-                    title: S.current.action, subtitle: action),
-                verticalTile(context,
-                    title: S.of(context).actionDate, subtitle: createdDate),
+                Row(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsetsDirectional.only(
+                          end: 8, bottom: 8, top: 8),
+                      child: SizedBox(
+                        width: 30,
+                        height: 30,
+                        child: ClipOval(
+                          // borderRadius: BorderRadius.circular(25),
+                          child: CustomNetworkImage(
+                            width: 30,
+                            height: 30,
+                            imageSource: image,
+                          ),
+                        ),
+                      ),
+                    ),
+                    Text(userJobDescription,
+                        style: Theme.of(context)
+                            .textTheme
+                            .labelLarge
+                            ?.copyWith(fontWeight: FontWeight.normal)),
+                  ],
+                ),
+                Text(createdBy,
+                    style: Theme.of(context)
+                        .textTheme
+                        .labelLarge
+                        ?.copyWith(fontWeight: FontWeight.normal)),
+                // verticalTile(context,
+                //     title: '', subtitle: createdBy),
+
+                // verticalTile(context,
+                //     title: S.current.action, subtitle: action),
+                // verticalTile(context,
+                //     title: S.of(context).actionDate, subtitle: createdDate),
               ],
             ),
+            // action & date
+            // Row(
+            //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //   children: [
+            //     verticalTile(context,
+            //         title: S.current.action, subtitle: action),
+            //     verticalTile(context,
+            //         title: S.of(context).actionDate, subtitle: createdDate),
+            //   ],
+            // ),
             // divider
             divider(context),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 verticalTile(context,
-                    title: S.current.actionBy, subtitle: createdBy),
+                    title: S.current.action, subtitle: action),
                 verticalTile(context,
                     title: S.current.currentOrderStatus, subtitle: orderStatus),
               ],
@@ -69,19 +125,19 @@ class ActionOrderCard extends StatelessWidget {
           title,
           style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).textTheme.button?.color),
+              color: Theme.of(context).textTheme.labelLarge?.color),
         ),
         Text(subtitle,
             style: Theme.of(context)
                 .textTheme
-                .button
+                .labelLarge
                 ?.copyWith(fontWeight: FontWeight.normal)),
       ],
     );
   }
 
   Widget divider(context) {
-    Color dividerColor = Theme.of(context).textTheme.button!.color!;
+    Color dividerColor = Theme.of(context).textTheme.labelLarge!.color!;
     return Divider(
       thickness: 2,
       indent: 16,
