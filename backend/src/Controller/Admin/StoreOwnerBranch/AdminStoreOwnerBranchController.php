@@ -25,16 +25,14 @@ use OpenApi\Annotations as OA;
  */
 class AdminStoreOwnerBranchController extends BaseController
 {
-    private AutoMapping $autoMapping;
-    private ValidatorInterface $validator;
-    private AdminStoreOwnerBranchService $adminStoreOwnerBranchService;
-
-    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, AdminStoreOwnerBranchService $adminStoreOwnerBranchService)
+    public function __construct(
+        SerializerInterface $serializer,
+        private AutoMapping $autoMapping,
+        private ValidatorInterface $validator,
+        private AdminStoreOwnerBranchService $adminStoreOwnerBranchService
+    )
     {
         parent::__construct($serializer);
-        $this->autoMapping = $autoMapping;
-        $this->validator = $validator;
-        $this->adminStoreOwnerBranchService = $adminStoreOwnerBranchService;
     }
 
     /**
@@ -135,6 +133,7 @@ class AdminStoreOwnerBranchController extends BaseController
      *              ),
      *          @OA\Property(type="string", property="name"),
      *          @OA\Property(type="string", property="city"),
+     *          @OA\Property(type="string", property="branchPhone")
      *      )
      * )
      *
@@ -152,7 +151,8 @@ class AdminStoreOwnerBranchController extends BaseController
      *              ),
      *              @OA\Property(type="string", property="name"),
      *              @OA\Property(type="boolean", property="isActive"),
-     *              @OA\Property(type="string", property="city")
+     *              @OA\Property(type="string", property="city"),
+     *              @OA\Property(type="string", property="branchPhone")
      *      )
      *   )
      * )

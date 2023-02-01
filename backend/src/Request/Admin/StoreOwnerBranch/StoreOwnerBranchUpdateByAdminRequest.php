@@ -22,6 +22,11 @@ class StoreOwnerBranchUpdateByAdminRequest
     private $city;
 
     /**
+     * @var string|null
+     */
+    private $branchPhone;
+
+    /**
      * Get the value of id
      */
     public function getId(): int
