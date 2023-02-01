@@ -401,4 +401,25 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleColumnResult();
     }
+
+    public function getSubscriptionWithActiveCaptainOfferSubscriptionBySubscriptionId(int $subscriptionId): ?SubscriptionEntity
+    {
+        return $this->createQueryBuilder('subscription')
+
+            ->where('subscription.id = :subscriptionId')
+            ->setParameter('subscriptionId', $subscriptionId)
+
+            ->leftJoin(
+                SubscriptionCaptainOfferEntity::class,
+                'subscriptionCaptainOfferEntity',
+                Join::WITH,
+                'subscription.subscriptionCaptainOffer = subscriptionCaptainOfferEntity.id'
+            )
+
+            ->andWhere('subscriptionCaptainOfferEntity.status = :status')
+            ->setParameter('status', SubscriptionCaptainOffer::SUBSCRIBE_CAPTAIN_OFFER_ACTIVE)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

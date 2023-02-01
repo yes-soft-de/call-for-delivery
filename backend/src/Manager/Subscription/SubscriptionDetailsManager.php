@@ -9,6 +9,7 @@ use App\Entity\SubscriptionDetailsEntity;
 use App\Entity\SubscriptionEntity;
 use App\Repository\SubscriptionDetailsEntityRepository;
 use App\Request\Subscription\SubscriptionDetailsCreateRequest;
+use App\Request\Subscription\SubscriptionStatusUpdateRequest;
 use App\Request\Subscription\SubscriptionUpdateRequest;
 use App\Request\Subscription\SubscriptionRemainingOrdersUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
@@ -67,6 +68,7 @@ class SubscriptionDetailsManager
 
         $subscriptionDetailsEntity->setStatus($status);
 
+        // Why we need this?
         $subscriptionDetailsEntity = $this->autoMapping->map(SubscriptionUpdateRequest::class, SubscriptionDetailsEntity::class, $subscriptionDetailsEntity);
        
         $this->entityManager->flush();
@@ -189,6 +191,24 @@ class SubscriptionDetailsManager
         $subscriptionDetailsEntity->setStoreOwner(new StoreOwnerProfileEntity());
 
         $this->entityManager->remove($subscriptionDetailsEntity);
+        $this->entityManager->flush();
+
+        return $subscriptionDetailsEntity;
+    }
+
+    /**
+     * Update subscription details status depending on subscription id
+     */
+    public function updateSubscriptionDetailsStatusBySubscriptionId(SubscriptionStatusUpdateRequest $request): SubscriptionDetailsEntity|int
+    {
+        $subscriptionDetailsEntity = $this->subscribeDetailsRepository->findOneBy(['lastSubscription' => $request->getId()]);
+
+        if (! $subscriptionDetailsEntity) {
+            return SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND;
+        }
+
+        $subscriptionDetailsEntity->setStatus($request->getStatus());
+
         $this->entityManager->flush();
 
         return $subscriptionDetailsEntity;
