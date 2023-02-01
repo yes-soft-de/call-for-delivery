@@ -1,5 +1,6 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_subscription/ui/widget/package_card/info_button.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -11,13 +12,15 @@ class SinglePackageCard extends StatelessWidget {
   final String carsCount;
   final bool active;
   final String expired;
+  final dynamic unPaidCashOrdersSum;
   SinglePackageCard(
       {this.active = false,
       required this.packageInfo,
       required this.packageName,
       required this.carsCount,
       required this.ordersCount,
-      required this.expired});
+      required this.expired,
+      this.unPaidCashOrdersSum});
 
   @override
   Widget build(BuildContext context) {
@@ -257,6 +260,69 @@ class SinglePackageCard extends StatelessWidget {
                 ),
               ),
 
+              SizedBox(
+                height: 16,
+              ),
+              InkWell(
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return CustomAlertDialog(
+                            onPressed: () {},
+                            content: S.current
+                                .areYouSureAboutDeleteSelectedNotifications);
+                      });
+                },
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: Flex(
+                    direction: Axis.horizontal,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Theme.of(context).backgroundColor),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(FontAwesomeIcons.moneyCheck,
+                              color: active
+                                  ? Theme.of(context).colorScheme.primary
+                                  : Theme.of(context).disabledColor),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 16,
+                      ),
+                      Row(
+                        children: [
+                          Text(
+                            '$unPaidCashOrdersSum' + ' ' + S.current.sar,
+                            style: TextStyle(
+                              color: active
+                                  ? Theme.of(context).textTheme.button?.color
+                                  : null,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            '${S.current.unpaidOrders}',
+                            style: TextStyle(
+                              color: active
+                                  ? Theme.of(context).textTheme.button?.color
+                                  : null,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
               SizedBox(
                 height: 16,
               )

@@ -33,8 +33,9 @@ apply plugin: 'com.google.gms.google-services'
 apply plugin: 'com.google.firebase.crashlytics'
 
 android {
+     compileSdkVersion 33
     // compileSdkVersion localProperties.getProperty('flutter.compileSdkVersion').toInteger()
-        compileSdkVersion 33
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
