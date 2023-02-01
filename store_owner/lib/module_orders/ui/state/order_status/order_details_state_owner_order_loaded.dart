@@ -405,8 +405,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                     });
                   },
                   leading: Icon(
-                    // Icons.whatsapp,
-                    FontAwesomeIcons.whatsapp,
+                    Icons.whatsapp,
                     color: Theme.of(context).textTheme.labelLarge?.color,
                   ),
                   title: Text(S.current.whatsapp),
