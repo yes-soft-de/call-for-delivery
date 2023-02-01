@@ -740,6 +740,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "preferredLanguage":
             MessageLookupByLibrary.simpleMessage("Preferred Language"),
         "pressHere": MessageLookupByLibrary.simpleMessage("Press here"),
+        "pressHereDetails":
+            MessageLookupByLibrary.simpleMessage("press for details"),
         "primaryOrder": MessageLookupByLibrary.simpleMessage("Primary order"),
         "privacy": MessageLookupByLibrary.simpleMessage("privacy policy"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
@@ -962,6 +964,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("The number of cars unknown"),
         "unlinkSubOrders":
             MessageLookupByLibrary.simpleMessage("Unlink suborders"),
+        "unpaidOrders":
+            MessageLookupByLibrary.simpleMessage("Total unpaid (cash orders)"),
         "update": MessageLookupByLibrary.simpleMessage("Update"),
         "updateBranch": MessageLookupByLibrary.simpleMessage("Update Branch"),
         "updateBranchFailure": MessageLookupByLibrary.simpleMessage(

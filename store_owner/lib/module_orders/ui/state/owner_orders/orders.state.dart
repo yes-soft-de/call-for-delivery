@@ -1,5 +1,4 @@
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
@@ -92,6 +91,7 @@ class OrdersListStateOrdersLoaded extends States {
               }
             },
             child: OwnerOrderCard(
+              isHide: element.isHide,
               orderNumber: element.id.toString(),
               orderStatus: StatusHelper.getOrderStatusMessages(element.state),
               createdDate: element.createdDate,

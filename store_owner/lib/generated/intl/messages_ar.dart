@@ -732,6 +732,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "preferredLanguage":
             MessageLookupByLibrary.simpleMessage("اللغة المفضلة"),
         "pressHere": MessageLookupByLibrary.simpleMessage("اضغط هنا"),
+        "pressHereDetails":
+            MessageLookupByLibrary.simpleMessage("اضغط للتفاصيل"),
         "primaryOrder": MessageLookupByLibrary.simpleMessage("طلب أساسي"),
         "privacy": MessageLookupByLibrary.simpleMessage("الخصوصية"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("سياسة الخصوصية"),
@@ -955,6 +957,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("عدد السيارات غير محدود"),
         "unlinkSubOrders":
             MessageLookupByLibrary.simpleMessage("فك ارتباط الطلبات الفرعية"),
+        "unpaidOrders": MessageLookupByLibrary.simpleMessage(
+            "إجمالي الغير مدفوع (الطلبات الكاش)"),
         "update": MessageLookupByLibrary.simpleMessage("تحديث"),
         "updateBranch": MessageLookupByLibrary.simpleMessage("تعديل الفرع"),
         "updateBranchFailure": MessageLookupByLibrary.simpleMessage(

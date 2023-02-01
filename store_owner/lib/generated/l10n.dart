@@ -6909,6 +6909,20 @@ class S {
       args: [],
     );
   }
+  /// `Total unpaid (cash orders)`
+  String get unpaidOrders {
+    return Intl.message(
+      'Total unpaid (cash orders)',
+      name: 'unpaidOrders',
+  /// `press for details`
+  String get pressHereDetails {
+    return Intl.message(
+      'press for details',
+      name: 'pressHereDetails',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
