@@ -3,9 +3,9 @@
 namespace App\Service\Subscription;
 
 use App\AutoMapping;
-use App\Constant\Admin\Subscription\AdminStoreSubscriptionConstant;
 use App\Constant\Notification\SubscriptionFirebaseNotificationConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Constant\StoreOwnerPayment\StoreOwnerPaymentConstant;
 use App\Constant\Subscription\SubscriptionDetailsConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionEntity;
@@ -22,7 +22,6 @@ use App\Constant\Subscription\SubscriptionConstant;
 use App\Constant\Subscription\SubscriptionCaptainOffer;
 use App\Constant\Package\PackageConstant;
 use App\Service\Notification\SubscriptionFirebaseNotificationService;
-use App\Service\Subscription\SubscriptionCaptainOfferService;
 use App\Service\StoreOwner\StoreOwnerProfileService;
 use App\Service\StoreOwnerPayment\StoreOwnerPaymentService;
 use App\Response\Subscription\StoreSubscriptionResponse;
@@ -35,25 +34,16 @@ use App\Request\Admin\Subscription\AdminCalculateCostDeliveryOrderRequest;
 
 class SubscriptionService
 {
-    private AutoMapping $autoMapping;
-    private SubscriptionManager $subscriptionManager;
-    private SubscriptionCaptainOfferService $subscriptionCaptainOfferService;
-    private StoreOwnerProfileService $storeOwnerProfileService;
-    private StoreOwnerPaymentService $storeOwnerPaymentService;
-    private SubscriptionNotificationService $subscriptionNotificationService;
-    private SubscriptionFirebaseNotificationService $subscriptionFirebaseNotificationService;
-
-    public function __construct(AutoMapping $autoMapping, SubscriptionManager $subscriptionManager, SubscriptionCaptainOfferService $subscriptionCaptainOfferService,
-                                StoreOwnerProfileService $storeOwnerProfileService, StoreOwnerPaymentService $storeOwnerPaymentService,
-                                SubscriptionNotificationService $subscriptionNotificationService, SubscriptionFirebaseNotificationService $subscriptionFirebaseNotificationService)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private SubscriptionManager $subscriptionManager,
+        private SubscriptionCaptainOfferService $subscriptionCaptainOfferService,
+        private StoreOwnerProfileService $storeOwnerProfileService,
+        private StoreOwnerPaymentService $storeOwnerPaymentService,
+        private SubscriptionNotificationService $subscriptionNotificationService,
+        private SubscriptionFirebaseNotificationService $subscriptionFirebaseNotificationService
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->subscriptionManager = $subscriptionManager;
-        $this->subscriptionCaptainOfferService = $subscriptionCaptainOfferService;
-        $this->storeOwnerProfileService = $storeOwnerProfileService;
-        $this->storeOwnerPaymentService = $storeOwnerPaymentService;
-        $this->subscriptionNotificationService = $subscriptionNotificationService;
-        $this->subscriptionFirebaseNotificationService = $subscriptionFirebaseNotificationService;
     }
     
     public function createSubscription(SubscriptionCreateRequest $request): SubscriptionResponse|SubscriptionErrorResponse
@@ -665,6 +655,7 @@ class SubscriptionService
 
         return $response;
     }
+
     //Get the cost of regular subscriptions 
     public function getTotal(array $payments, float $packageCost, array $captainOffers, float $packageExtraCost, int $totalDistanceExtra): array
     {
@@ -691,10 +682,10 @@ class SubscriptionService
       
         $total = $item['sumPayments'] - $item['requiredToPay'];
        
-        $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
+        $item['advancePayment'] = StoreOwnerPaymentConstant::ADVANCED_PAYMENT_BALANCE_CONST;
     
         if($total <= 0 ) {
-            $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_YES;    
+            $item['advancePayment'] = StoreOwnerPaymentConstant::ADVANCED_PAYMENT_EXIST_CONST;
         }
 
         $item['total'] = abs($total);
