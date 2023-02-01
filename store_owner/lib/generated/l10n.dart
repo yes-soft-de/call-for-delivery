@@ -6909,6 +6909,16 @@ class S {
       args: [],
     );
   }
+
+  /// `press for details`
+  String get pressHereDetails {
+    return Intl.message(
+      'press for details',
+      name: 'pressHereDetails',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

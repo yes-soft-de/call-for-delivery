@@ -740,6 +740,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "preferredLanguage":
             MessageLookupByLibrary.simpleMessage("Preferred Language"),
         "pressHere": MessageLookupByLibrary.simpleMessage("Press here"),
+        "pressHereDetails":
+            MessageLookupByLibrary.simpleMessage("press for details"),
         "primaryOrder": MessageLookupByLibrary.simpleMessage("Primary order"),
         "privacy": MessageLookupByLibrary.simpleMessage("privacy policy"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
