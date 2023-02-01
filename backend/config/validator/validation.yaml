@@ -814,3 +814,14 @@ App\Request\Order\Destination\OrderStoreBranchToClientDistanceAdditionByCaptainU
             - NotBlank: ~
         destination:
             - NotBlank: ~
+
+App\Request\Admin\DirectSupportScript\DirectSupportScriptCreateByAdminRequest:
+    properties:
+        action:
+            - NotBlank: ~
+        message:
+            - NotBlank: ~
+        appType:
+            - NotBlank: ~
+        adminProfile:
+            - NotBlank: ~

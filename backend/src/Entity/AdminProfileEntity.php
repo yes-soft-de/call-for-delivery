@@ -40,9 +40,13 @@ class AdminProfileEntity
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: ImageEntity::class)]
     private $images;
 
+    #[ORM\OneToMany(mappedBy: 'adminProfile', targetEntity: DirectSupportScriptEntity::class)]
+    private $directSupportScriptEntities;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
+        $this->directSupportScriptEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -146,6 +150,36 @@ class AdminProfileEntity
             // set the owning side to null (unless already changed)
             if ($image->getUser() === $this) {
                 $image->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DirectSupportScriptEntity>
+     */
+    public function getDirectSupportScriptEntities(): Collection
+    {
+        return $this->directSupportScriptEntities;
+    }
+
+    public function addDirectSupportScriptEntity(DirectSupportScriptEntity $directSupportScriptEntity): self
+    {
+        if (!$this->directSupportScriptEntities->contains($directSupportScriptEntity)) {
+            $this->directSupportScriptEntities[] = $directSupportScriptEntity;
+            $directSupportScriptEntity->setAdminProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDirectSupportScriptEntity(DirectSupportScriptEntity $directSupportScriptEntity): self
+    {
+        if ($this->directSupportScriptEntities->removeElement($directSupportScriptEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($directSupportScriptEntity->getAdminProfile() === $this) {
+                $directSupportScriptEntity->setAdminProfile(null);
             }
         }
 
