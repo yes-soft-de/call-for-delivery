@@ -732,6 +732,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "preferredLanguage":
             MessageLookupByLibrary.simpleMessage("اللغة المفضلة"),
         "pressHere": MessageLookupByLibrary.simpleMessage("اضغط هنا"),
+        "pressHereDetails":
+            MessageLookupByLibrary.simpleMessage("اضغط للتفاصيل"),
         "primaryOrder": MessageLookupByLibrary.simpleMessage("طلب أساسي"),
         "privacy": MessageLookupByLibrary.simpleMessage("الخصوصية"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("سياسة الخصوصية"),
