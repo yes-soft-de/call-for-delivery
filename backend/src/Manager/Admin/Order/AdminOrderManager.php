@@ -7,6 +7,7 @@ use App\Constant\Order\OrderHasPayConflictAnswersConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Entity\OrderEntity;
+use App\Entity\StoreOrderDetailsEntity;
 use App\Repository\OrderEntityRepository;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
@@ -545,5 +546,13 @@ class AdminOrderManager
     public function filterDifferentDestinationOrdersByAdmin(OrderDifferentDestinationFilterByAdminRequest $request): array
     {
         return $this->orderEntityRepository->filterDifferentDestinationOrdersByAdmin($request);
+    }
+
+    /**
+     * Update differentReceiverDestination field of store order details
+     */
+    public function updateStoreOrderDetailsDifferentReceiverDestinationByOrderId(int $orderId, int $differentReceiverDestination): int|StoreOrderDetailsEntity
+    {
+        return $this->adminStoreOrderDetailsManager->updateStoreOrderDetailsDifferentReceiverDestinationByOrderId($orderId, $differentReceiverDestination);
     }
 }
