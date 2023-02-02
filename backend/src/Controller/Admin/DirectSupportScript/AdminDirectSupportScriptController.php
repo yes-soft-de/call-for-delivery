@@ -225,18 +225,24 @@ class AdminDirectSupportScriptController extends BaseController
      * @OA\RequestBody(
      *      description="filter direct support script by admin request",
      *      @OA\JsonContent(
-     *          @OA\Property(type="integer", property="id")
+     *          @OA\Property(type="integer", property="action"),
+     *          @OA\Property(type="integer", property="appType"),
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="string", property="customizedTimezone", example="Asia/Riyadh")
      *      )
      * )
      *
      * @OA\Response(
      *      response=200,
-     *      description="Returns the deleted script of the direct support",
+     *      description="Returns script of the direct support",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *              ref=@Model(type="App\Response\Admin\DirectSupportScript\DirectSupportScriptDeleteByAdminResponse")
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Admin\DirectSupportScript\DirectSupportScriptFilterByAdminResponse")
+     *              )
      *      )
      *   )
      * )

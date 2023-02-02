@@ -95,7 +95,6 @@ class AdminDirectSupportScriptService
             $response = [];
 
             foreach ($directSupportScripts as $key => $value) {
-                //dd($directSupportScript);
                 $response[$key] = $this->autoMapping->map(DirectSupportScriptEntity::class, DirectSupportScriptFilterByAdminResponse::class,
                     $value);
 
