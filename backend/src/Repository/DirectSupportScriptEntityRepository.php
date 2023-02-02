@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\DirectSupportScriptEntity;
 use App\Request\Admin\DirectSupportScript\DirectSupportScriptFilterByAdminRequest;
+use App\Request\DirectSupportScript\DirectSupportScriptFilterRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -47,6 +48,33 @@ class DirectSupportScriptEntityRepository extends ServiceEntityRepository
     }
 
     public function filterDirectSupportScriptByAdmin(DirectSupportScriptFilterByAdminRequest $request): array
+    {
+        $query = $this->createQueryBuilder('directSupportScriptEntity')
+
+            ->orderBy('directSupportScriptEntity.id', 'DESC');
+
+        if ($request->getAppType()) {
+            $query->andWhere('directSupportScriptEntity.appType = :specificAppType')
+                ->setParameter('specificAppType', $request->getAppType());
+        }
+
+        if ($request->getAction()) {
+            $query->andWhere('directSupportScriptEntity.action = :specificAction')
+                ->setParameter('specificAction', $request->getAction());
+        }
+
+        if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
+            || ($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")
+            || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $tempQuery = $query->getQuery()->getResult();
+
+            return $this->filterDirectSupportScriptEntitiesByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
+    public function filterDirectSupportScript(DirectSupportScriptFilterRequest $request): array
     {
         $query = $this->createQueryBuilder('directSupportScriptEntity')
 
