@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\DirectSupportScriptEntity;
+use App\Request\Admin\DirectSupportScript\DirectSupportScriptFilterByAdminRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -45,32 +46,66 @@ class DirectSupportScriptEntityRepository extends ServiceEntityRepository
         }
     }
 
-    // /**
-    //  * @return DirectSupportScriptEntity[] Returns an array of DirectSupportScriptEntity objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function filterDirectSupportScriptByAdmin(DirectSupportScriptFilterByAdminRequest $request): array
     {
-        return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('d.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $query = $this->createQueryBuilder('directSupportScriptEntity')
 
-    /*
-    public function findOneBySomeField($value): ?DirectSupportScriptEntity
-    {
-        return $this->createQueryBuilder('d')
-            ->andWhere('d.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+            ->orderBy('directSupportScriptEntity.id', 'DESC');
+
+        if ($request->getAppType()) {
+            $query->andWhere('directSupportScriptEntity.appType = :specificAppType')
+                ->setParameter('specificAppType', $request->getAppType());
+        }
+
+        if ($request->getAction()) {
+            $query->andWhere('directSupportScriptEntity.action = :specificAction')
+                ->setParameter('specificAction', $request->getAction());
+        }
+
+        if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
+            || ($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")
+            || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $tempQuery = $query->getQuery()->getResult();
+
+            return $this->filterDirectSupportScriptEntitiesByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
+        }
+
+        return $query->getQuery()->getResult();
     }
-    */
+
+    public function filterDirectSupportScriptEntitiesByDates(array $tempArrayResult, ?string $fromDate, ?string $toDate, ?string $timeZone): array
+    {
+        $filteredResult = [];
+
+        if (count($tempArrayResult) > 0) {
+            if (($fromDate != null || $fromDate != "") && ($toDate === null || $toDate === "")) {
+                foreach ($tempArrayResult as $key => $value) {
+                    if ($value->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) >=
+                        new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) {
+                        $filteredResult[$key] = $value;
+                    }
+                }
+
+            } elseif (($fromDate === null || $fromDate === "") && ($toDate != null || $toDate != "")) {
+                foreach ($tempArrayResult as $key => $value) {
+                    if ($value->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) <=
+                        new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59'))) {
+                        $filteredResult[$key] = $value;
+                    }
+                }
+
+            } elseif (($fromDate != null || $fromDate != "") && ($toDate != null || $toDate != "")) {
+                foreach ($tempArrayResult as $key => $value) {
+                    if (($value->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) >=
+                            new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) &&
+                        ($value->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) <=
+                            new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59')))) {
+                        $filteredResult[$key] = $value;
+                    }
+                }
+            }
+        }
+
+        return $filteredResult;
+    }
 }
