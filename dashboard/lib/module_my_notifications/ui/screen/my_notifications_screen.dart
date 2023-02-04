@@ -36,10 +36,6 @@ class MyNotificationsScreenState extends State<MyNotificationsScreen> {
     widget._stateManager.deleteNotifications(this, notification);
   }
 
-  // void rateCaptain(RatingRequest request) {
-  //   widget._stateManager.rateCaptain(this, request);
-  // }
-
   void goToLogin() {
     Navigator.of(context)
         .pushNamed(AuthorizationRoutes.LOGIN_SCREEN, arguments: 3);

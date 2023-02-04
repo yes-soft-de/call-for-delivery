@@ -1,6 +1,7 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
+import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
 import 'package:c4d/module_stores/request/order_filter_request.dart';
 import 'package:c4d/module_stores/state_manager/order/filter_orders_top_active_state_manager.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
@@ -25,6 +26,7 @@ class OrdersTopActiveStoreScreen extends StatefulWidget {
 class OrdersTopActiveStoreScreenState
     extends State<OrdersTopActiveStoreScreen> {
   late States currentState;
+  int currentIndex = 0;
   void refresh() {
     if (mounted) {
       setState(() {});
@@ -66,7 +68,10 @@ class OrdersTopActiveStoreScreenState
         storeID = arg[2];
         storeName = arg[3];
         ordersFilter = FilterOrderRequest(
-            fromDate: arg[0], toDate: arg[1], storeOwnerProfileId: storeID);
+            state: 'pending',
+            fromDate: arg[0],
+            toDate: arg[1],
+            storeOwnerProfileId: storeID);
         widget._stateManager.getOrdersFilters(this, ordersFilter);
       }
     }
@@ -191,6 +196,42 @@ class OrdersTopActiveStoreScreenState
                 ),
               ],
             ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          FilterBar(
+            cursorRadius: BorderRadius.circular(25),
+            animationDuration: Duration(milliseconds: 350),
+            backgroundColor: Theme.of(context).colorScheme.background,
+            currentIndex: currentIndex,
+            borderRadius: BorderRadius.circular(25),
+            floating: true,
+            height: 40,
+            cursorColor: Theme.of(context).colorScheme.primary,
+            items: [
+              FilterItem(
+                label: S.current.pending,
+              ),
+              FilterItem(label: S.current.ongoing),
+              FilterItem(label: S.current.completed),
+              FilterItem(label: S.current.cancelled2),
+            ],
+            onItemSelected: (index) {
+              if (index == 0) {
+                ordersFilter.state = 'pending';
+              } else if (index == 1) {
+                ordersFilter.state = 'ongoing';
+              } else if (index == 3) {
+                ordersFilter.state = 'cancelled';
+              } else {
+                ordersFilter.state = 'delivered';
+              }
+              currentIndex = index;
+              getOrders();
+            },
+            selectedContent: Theme.of(context).textTheme.labelLarge!.color!,
+            unselectedContent: Theme.of(context).textTheme.titleLarge!.color!,
           ),
           SizedBox(
             height: 8,
