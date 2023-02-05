@@ -870,7 +870,7 @@
     "storeProfileNotFound": "بروفايل المتجر غير معلوم",
     "updateSuccess": "تم التحديث بنجاح",
     "updateRemainingCars": "تحديث الكباتن المتبقية",
-    "enterCarsCountYouWantToAdd": "ادخل سيارات اضافية",
+    "enterCarsCountYouWantToAdd": "ادخل سيارات للاضافة / للانقاص",
     "orderConflictDistances": "طلبات بمسافات متنازعة",
     "addExtraDestination": "مسافة زائدة",
     "reason": "السبب",
@@ -885,5 +885,7 @@
     "delete": "حذف",
     "notices": "التحديثات",
     "orderPriceOnCreditWarning": "لقد حددت سعر الطلبية الرجاء إزالتها في حالة كانت الطلبية مدفوعة",
-    "remove": "إزالة"
+    "remove": "إزالة",
+    "addition":"إضافة",
+    "subtraction":"إنقاص"
 }

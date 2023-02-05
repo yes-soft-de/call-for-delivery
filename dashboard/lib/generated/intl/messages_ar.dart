@@ -91,6 +91,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addStore": MessageLookupByLibrary.simpleMessage("أضف متجر"),
         "addWorkPackage":
             MessageLookupByLibrary.simpleMessage("إضافة باقة عمل"),
+        "addition": MessageLookupByLibrary.simpleMessage("إضافة"),
         "address": MessageLookupByLibrary.simpleMessage("العنوان"),
         "admin": MessageLookupByLibrary.simpleMessage("المدير"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
@@ -486,8 +487,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "endDate": MessageLookupByLibrary.simpleMessage("إلى تاريخ"),
         "endedSubscriptions":
             MessageLookupByLibrary.simpleMessage("الاشتراكات المنتهية"),
-        "enterCarsCountYouWantToAdd":
-            MessageLookupByLibrary.simpleMessage("ادخل سيارات اضافية"),
+        "enterCarsCountYouWantToAdd": MessageLookupByLibrary.simpleMessage(
+            "ادخل سيارات للاضافة / للانقاص"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("ادخل معلومات المنتج"),
         "errOc": MessageLookupByLibrary.simpleMessage("حصلت المشاكل التالية"),
@@ -1201,6 +1202,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "في هذه النافذة نستعرض التفاصيل المالية للاشتراك الحالي في التاريخ"),
         "subscriptionsFinanceHint": MessageLookupByLibrary.simpleMessage(
             "هنا تجد قائمة بالاشتراكات التي قام المتجر بالاشتراك فيها وتفاصيل عن النفقات التي يترتب عليها والدفعات التي تلقيها"),
+        "subtraction": MessageLookupByLibrary.simpleMessage("إنقاص"),
         "successCreateOrder":
             MessageLookupByLibrary.simpleMessage("تم إنشاء الطلب بنجاح"),
         "successRenew":

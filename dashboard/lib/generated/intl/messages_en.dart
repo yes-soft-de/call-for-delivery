@@ -93,6 +93,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addProducts": MessageLookupByLibrary.simpleMessage("Add Products"),
         "addStore": MessageLookupByLibrary.simpleMessage("Add Stores"),
         "addWorkPackage": MessageLookupByLibrary.simpleMessage("Add work plan"),
+        "addition": MessageLookupByLibrary.simpleMessage("Addition"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
         "admin": MessageLookupByLibrary.simpleMessage("Admin"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
@@ -1215,6 +1216,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Here you find all financial details included in this subscription with date"),
         "subscriptionsFinanceHint": MessageLookupByLibrary.simpleMessage(
             "Here you find all your subscriptions financial information with included all payments "),
+        "subtraction": MessageLookupByLibrary.simpleMessage("Subtraction"),
         "successCreateOrder":
             MessageLookupByLibrary.simpleMessage("Order created successfully"),
         "successRenew": MessageLookupByLibrary.simpleMessage(

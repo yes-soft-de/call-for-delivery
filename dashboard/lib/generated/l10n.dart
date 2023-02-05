@@ -8919,6 +8919,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Addition`
+  String get addition {
+    return Intl.message(
+      'Addition',
+      name: 'addition',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subtraction`
+  String get subtraction {
+    return Intl.message(
+      'Subtraction',
+      name: 'subtraction',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

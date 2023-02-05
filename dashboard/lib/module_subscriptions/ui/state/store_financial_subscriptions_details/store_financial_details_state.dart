@@ -474,10 +474,11 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                     showDialog(
                         context: context,
                         builder: (ctx) {
+                          String operationType = 'addition';
                           return AlertDialog(
                             title: Text(S.current.updateRemainingCars),
                             content: SizedBox(
-                              height: 100,
+                              height: 155,
                               child: Column(
                                 children: [
                                   CustomFormField(
@@ -485,6 +486,49 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                                     hintText:
                                         S.current.enterCarsCountYouWantToAdd,
                                   ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  StatefulBuilder(builder: (ctx, setState) {
+                                    return Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        ChoiceChip(
+                                          onSelected: (v) {
+                                            operationType = 'addition';
+                                            setState(() {});
+                                          },
+                                          label: Text(
+                                            S.current.addition,
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary),
+                                          ),
+                                          selected: operationType == 'addition',
+                                        ),
+                                        SizedBox(
+                                          width: 16,
+                                        ),
+                                        ChoiceChip(
+                                          label: Text(
+                                            S.current.subtraction,
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary),
+                                          ),
+                                          onSelected: (v) {
+                                            operationType = 'subtraction';
+                                            setState(() {});
+                                          },
+                                          selected:
+                                              operationType == 'subtraction',
+                                        ),
+                                      ],
+                                    );
+                                  }),
                                   ElevatedButton(
                                       onPressed: () {
                                         Navigator.of(context).pop();
@@ -494,7 +538,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                                             id: model.id,
                                             factor: num.tryParse(
                                                 factorController.text),
-                                            operationType: 'addition',
+                                            operationType: operationType,
                                           ),
                                         );
                                       },
