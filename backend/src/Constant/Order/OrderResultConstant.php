@@ -53,4 +53,6 @@ final class OrderResultConstant
     const ORDER_ALREADY_BEING_CANCELLED = 36;
 
     const ORDER_DOES_NOT_BELONG_TO_SUBSCRIPTION = 38;
+
+    const ORDER_IS_NOT_BEING_DELIVERED_YET_CONST = 154;
 }

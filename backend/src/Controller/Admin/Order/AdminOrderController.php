@@ -12,6 +12,7 @@ use App\Controller\BaseController;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
+use App\Request\Admin\Order\OrderDifferentDestinationFilterByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminRequest;
 use App\Request\Admin\Order\OrderRecycleOrCancelByAdminRequest;
@@ -50,16 +51,14 @@ use App\Request\Admin\Order\OrderUpdateIsCashPaymentConfirmedByStoreByAdminReque
  */
 class AdminOrderController extends BaseController
 {
-    private AutoMapping $autoMapping;
-    private ValidatorInterface $validator;
-    private AdminOrderService $adminOrderService;
-
-    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, AdminOrderService $adminOrderService)
+    public function __construct(
+        SerializerInterface $serializer,
+        private AutoMapping $autoMapping,
+        private ValidatorInterface $validator,
+        private AdminOrderService $adminOrderService
+    )
     {
         parent::__construct($serializer);
-        $this->autoMapping = $autoMapping;
-        $this->validator = $validator;
-        $this->adminOrderService = $adminOrderService;
     }
 
     /**
@@ -1915,6 +1914,58 @@ class AdminOrderController extends BaseController
     public function getOrdersByCaptainProfileIdAndCaptainFinancialCycle(int $captainProfileId): JsonResponse
     {
         $result = $this->adminOrderService->getOrdersByCaptainProfileIdAndCaptainFinancialCycle($captainProfileId);
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * admin: filter orders which have different destinations that had been updated by captains
+     * @Route("filterdifferentdestinationsorders", name="filterDifferentDestinationOrdersByAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Post a request with filtering orders options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="string", property="customizedTimezone", example="Asia/Riyadh")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns orders that have different destination which updated by captain",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Admin\Order\OrderDifferentDestinationFilterByAdminResponse")
+     *              )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterDifferentDestinationOrdersByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderDifferentDestinationFilterByAdminRequest::class, (object)$data);
+
+        $result = $this->adminOrderService->filterDifferentDestinationOrdersByAdmin($request);
 
         return $this->response($result, self::FETCH);
     }

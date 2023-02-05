@@ -122,6 +122,9 @@ class OrderEntity
     #[ORM\Column(type: 'text', nullable: true)]
     private $storeBranchToClientDistanceAdditionExplanation;
 
+    #[ORM\OneToMany(mappedBy: 'orderId', targetEntity: DashboardLocalNotificationEntity::class)]
+    private $dashboardLocalNotificationEntities;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
@@ -129,6 +132,7 @@ class OrderEntity
         $this->OrderLogsEntity = new ArrayCollection();
         $this->orderEntities = new ArrayCollection();
         $this->orderLogEntities = new ArrayCollection();
+        $this->dashboardLocalNotificationEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -621,6 +625,36 @@ class OrderEntity
     public function setStoreBranchToClientDistanceAdditionExplanation(?string $storeBranchToClientDistanceAdditionExplanation): self
     {
         $this->storeBranchToClientDistanceAdditionExplanation = $storeBranchToClientDistanceAdditionExplanation;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DashboardLocalNotificationEntity>
+     */
+    public function getDashboardLocalNotificationEntities(): Collection
+    {
+        return $this->dashboardLocalNotificationEntities;
+    }
+
+    public function addDashboardLocalNotificationEntity(DashboardLocalNotificationEntity $dashboardLocalNotificationEntity): self
+    {
+        if (!$this->dashboardLocalNotificationEntities->contains($dashboardLocalNotificationEntity)) {
+            $this->dashboardLocalNotificationEntities[] = $dashboardLocalNotificationEntity;
+            $dashboardLocalNotificationEntity->setOrderId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDashboardLocalNotificationEntity(DashboardLocalNotificationEntity $dashboardLocalNotificationEntity): self
+    {
+        if ($this->dashboardLocalNotificationEntities->removeElement($dashboardLocalNotificationEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($dashboardLocalNotificationEntity->getOrderId() === $this) {
+                $dashboardLocalNotificationEntity->setOrderId(null);
+            }
+        }
 
         return $this;
     }

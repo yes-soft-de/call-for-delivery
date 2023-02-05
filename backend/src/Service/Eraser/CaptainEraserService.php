@@ -3,8 +3,10 @@
 namespace App\Service\Eraser;
 
 use App\AutoMapping;
+use App\Constant\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueResultConstant;
 use App\Constant\Eraser\EraserResultConstant;
 use App\Constant\Notification\NotificationTokenConstant;
+use App\Entity\ChatRoomEntity;
 use App\Entity\UserEntity;
 use App\Request\Admin\Captain\DeleteCaptainAccountAndProfileByAdminRequest;
 use App\Request\Eraser\DeleteCaptainAccountAndProfileBySuperAdminRequest;
@@ -12,7 +14,9 @@ use App\Response\Admin\Captain\DeleteCaptainAccountAndProfileByAdminResponse;
 use App\Response\Eraser\DeleteCaptainAccountAndProfileBySuperAdminResponse;
 use App\Security\IsGranted\CanDeleteCaptainAccountAndProfileByAdminService;
 use App\Service\Captain\CaptainService;
+use App\Service\CaptainFinancialSystem\CaptainFinancialDuesService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialSystemDetailService;
+use App\Service\ChatRoom\ChatRoomService;
 use App\Service\ChatRoom\OrderChatRoomService;
 use App\Service\Image\ImageService;
 use App\Service\Notification\NotificationFirebaseService;
@@ -24,36 +28,23 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class CaptainEraserService
 {
-    private AutoMapping $autoMapping;
-    private ParameterBagInterface $param;
-    private CaptainFinancialSystemDetailService $captainFinancialSystemDetailService;
-    private ImageService $imageService;
-    private NotificationFirebaseService $notificationFirebaseService;
-    private OrderChatRoomService $orderChatRoomService;
-    private CaptainService $captainService;
-    private UserService $userService;
-    private VerificationService $verificationService;
-    private ResetPasswordOrderService $resetPasswordOrderService;
-    private EntityManagerInterface $entityManager;
-    private CanDeleteCaptainAccountAndProfileByAdminService $canDeleteCaptainAccountAndProfileByAdminService;
-
-    public function __construct(AutoMapping $autoMapping, ParameterBagInterface $param, CaptainFinancialSystemDetailService $captainFinancialSystemDetailService,
-                                ImageService $imageService, NotificationFirebaseService $notificationFirebaseService, OrderChatRoomService $orderChatRoomService,
-                                CaptainService $captainService, UserService $userService, VerificationService $verificationService, ResetPasswordOrderService $resetPasswordOrderService,
-                                EntityManagerInterface $entityManager, CanDeleteCaptainAccountAndProfileByAdminService $canDeleteCaptainAccountAndProfileByAdminService)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private ParameterBagInterface $param,
+        private CaptainFinancialSystemDetailService $captainFinancialSystemDetailService,
+        private ImageService $imageService,
+        private NotificationFirebaseService $notificationFirebaseService,
+        private OrderChatRoomService $orderChatRoomService,
+        private CaptainService $captainService,
+        private UserService $userService,
+        private VerificationService $verificationService,
+        private ResetPasswordOrderService $resetPasswordOrderService,
+        private EntityManagerInterface $entityManager,
+        private CanDeleteCaptainAccountAndProfileByAdminService $canDeleteCaptainAccountAndProfileByAdminService,
+        private CaptainFinancialDuesService $captainFinancialDuesService,
+        private ChatRoomService $chatRoomService
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->param = $param;
-        $this->captainFinancialSystemDetailService = $captainFinancialSystemDetailService;
-        $this->imageService = $imageService;
-        $this->notificationFirebaseService = $notificationFirebaseService;
-        $this->orderChatRoomService = $orderChatRoomService;
-        $this->captainService = $captainService;
-        $this->userService = $userService;
-        $this->verificationService = $verificationService;
-        $this->resetPasswordOrderService = $resetPasswordOrderService;
-        $this->entityManager = $entityManager;
-        $this->canDeleteCaptainAccountAndProfileByAdminService = $canDeleteCaptainAccountAndProfileByAdminService;
     }
 
     public function deleteCaptainAccountAndProfileBySuperAdmin(DeleteCaptainAccountAndProfileBySuperAdminRequest $request): string|DeleteCaptainAccountAndProfileBySuperAdminResponse
@@ -67,10 +58,15 @@ class CaptainEraserService
         $canDeleteCaptainResult = $this->canDeleteCaptainAccountAndProfileByAdminService->checkIfCaptainAccountAndProfileCanBeDeletedByCaptainId($request->getId());
 
         if ($canDeleteCaptainResult !== EraserResultConstant::CAPTAIN_ACCOUNT_AND_PROFILE_CAN_BE_DELETED) {
-            return $canDeleteCaptainResult;
+            if ($canDeleteCaptainResult !== CaptainFinancialDueResultConstant::CAPTAIN_FINANCIAL_DUE_HAVE_ZERO_VALUE_CONST) {
+                return $canDeleteCaptainResult;
+            }
         }
 
         // Now we can start deleting the account and related info
+        // Delete captain financial dues (as long as it have zero value)
+        $this->deleteAllCaptainFinancialDuesByCaptainId($request->getId());
+
         // delete financial system that the captain subscribed with
         $this->captainFinancialSystemDetailService->deleteCaptainFinancialSystemDetailsByCaptainId($request->getId());
 
@@ -82,6 +78,9 @@ class CaptainEraserService
 
         // delete order chat rooms
         $this->orderChatRoomService->deleteOrderChatRoomEntitiesByCaptainId($request->getId());
+
+        // delete chat room
+        $this->deleteChatRoomByUserId($request->getId());
 
         // delete captain profile
         $this->captainService->deleteCaptainProfileByCaptainId($request->getId());
@@ -107,10 +106,15 @@ class CaptainEraserService
             $canDeleteCaptainResult = $this->canDeleteCaptainAccountAndProfileByAdminService->checkIfCaptainAccountAndProfileCanBeDeletedByCaptainId($request->getCaptainId());
 
             if ($canDeleteCaptainResult !== EraserResultConstant::CAPTAIN_ACCOUNT_AND_PROFILE_CAN_BE_DELETED) {
-                return $canDeleteCaptainResult;
+                if ($canDeleteCaptainResult !== CaptainFinancialDueResultConstant::CAPTAIN_FINANCIAL_DUE_HAVE_ZERO_VALUE_CONST) {
+                    return $canDeleteCaptainResult;
+                }
             }
 
             // Now we can start deleting the account and related info
+            // Delete captain financial dues (as long as it have zero value)
+            $this->deleteAllCaptainFinancialDuesByCaptainId($request->getCaptainId());
+
             // delete financial system that the captain subscribed with
             $this->captainFinancialSystemDetailService->deleteCaptainFinancialSystemDetailsByCaptainId($request->getCaptainId());
 
@@ -122,6 +126,9 @@ class CaptainEraserService
 
             // delete order chat rooms
             $this->orderChatRoomService->deleteOrderChatRoomEntitiesByCaptainId($request->getCaptainId());
+
+            // delete chat room
+            $this->deleteChatRoomByUserId($request->getCaptainId());
 
             // delete captain profile
             $this->captainService->deleteCaptainProfileByCaptainId($request->getCaptainId());
@@ -147,5 +154,15 @@ class CaptainEraserService
             $this->entityManager->getConnection()->rollBack();
             throw $e;
         }
+    }
+
+    public function deleteAllCaptainFinancialDuesByCaptainId(int $captainId): array
+    {
+        return $this->captainFinancialDuesService->deleteAllCaptainFinancialDuesByCaptainId($captainId);
+    }
+
+    public function deleteChatRoomByUserId(int $userId): ChatRoomEntity|int
+    {
+        return $this->chatRoomService->deleteChatRoomByUserId($userId);
     }
 }

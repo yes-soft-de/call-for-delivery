@@ -23,5 +23,6 @@ class StoresWithOrdersCountDuringSpecificTimeFilterByAdminResponse
 
     public string $todayOrdersCount;
 
-    public string $lastTwentyFourOrdersCount;
+    ///TODO Currently has constant value because it will be commented out when frontend doesn't depend on it
+    public string $lastTwentyFourOrdersCount = "0";
 }

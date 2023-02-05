@@ -2,10 +2,12 @@
 
 namespace App\Controller\Admin\StoreOwnerSubscription;
 
+use App\Constant\Subscription\SubscriptionDetailsConstant;
 use App\Controller\BaseController;
 use App\Request\Admin\Subscription\AdminCreateStoreSubscriptionRequest;
 use App\Request\Admin\Subscription\AdminExtraSubscriptionForDayRequest;
 use App\Request\Admin\Subscription\CreateNewStoreSubscriptionWithSamePackageByAdminRequest;
+use App\Request\Admin\Subscription\StoreSubscription\StoreSubscriptionRemainingCarsUpdateByAdminRequest;
 use App\Service\Admin\StoreOwnerSubscription\AdminStoreSubscriptionService;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
@@ -459,5 +461,118 @@ class AdminStoreSubscriptionController extends BaseController
         }
 
         return $this->response($result, self::CREATE);
+    }
+
+    /**
+     * admin: update remaining cars of a store subscription
+     * @Route("subscriptionremainingcars", name="updateStoreSubscriptionRemainingCarsByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Subscription")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="update remaining cars of store subscription",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id", description="subscription id"),
+     *          @OA\Property(type="integer", property="factor", description="the amount that will be add/subtract to/from remainingCars"),
+     *          @OA\Property(type="string", property="operationType", example="'addition' or 'subtraction'"),
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns subscription",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *             ref=@Model(type="App\Response\Admin\StoreOwnerSubscription\SubscriptionRemainingCarsUpdateByAdminResponse")
+     *      )
+     *    )
+     *  )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *          oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9310"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9311"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9312"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9313"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9314"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9308"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   )
+     *              }
+     *      )
+     *
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function updateStoreSubscriptionRemainingCarsByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, StoreSubscriptionRemainingCarsUpdateByAdminRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminStoreSubscriptionService->updateStoreSubscriptionRemainingCarsByAdmin($request);
+
+        if ($result === SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::SUBSCRIPTION_DETAILS_NOT_FOUND);
+
+        } elseif ($result === SubscriptionConstant::SUBSCRIPTION_DATE_IS_FINISHED_CONST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::SUBSCRIPTION_DATE_IS_FINISHED);
+
+        } elseif ($result === SubscriptionDetailsConstant::SUBSCRIPTION_REMAINING_ORDERS_IS_FINISHED) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::SUBSCRIPTION_REMAINING_ORDERS_IS_FINISHED);
+
+        } elseif ($result === SubscriptionDetailsConstant::SUBSCRIPTION_REMAINING_ORDERS_OUT_OF_LIMITS_CONST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::SUBSCRIPTION_REMAINING_ORDERS_IS_OUT_OF_LIMITS);
+
+        } elseif ($result === SubscriptionDetailsConstant::REMAINING_CARS_CAN_NOT_BE_UPDATED) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::SUBSCRIPTION_REMAINING_CARS_NOT_ALLOWED_UPDATE);
+
+        } elseif ($result === SubscriptionConstant::SUBSCRIPTION_DOES_NOT_EXIST_CONST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::SUBSCRIPTION_NOT_FOUND);
+        }
+
+        return $this->response($result, self::UPDATE);
     }
 }

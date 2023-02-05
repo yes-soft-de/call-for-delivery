@@ -60,4 +60,10 @@ final class CaptainFinancialSystem
     const TARGET_FAILED_INT = 3;
 
     const OK_RESULT_CONST = 'ok';
+
+    const ADVANCED_PAYMENT_BALANCE_CONST = 158;
+
+    const ADVANCED_PAYMENT_NOT_EXIST_CONST = 159;
+
+    const ADVANCED_PAYMENT_EXIST_CONST = 160;
 }

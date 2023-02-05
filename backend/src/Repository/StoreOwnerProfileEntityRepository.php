@@ -306,16 +306,17 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
                     $finalResponse[$key]['todayOrdersCount'] = (string) 0;
                 }
                 // ------------------------------------------------
+                //*** orders count last 24 block commented out temporary just in order to be required in the future ***//
                 // Get the count of orders which delivered last 24 hours
-                $lastTwentyFourHoursOrdersCountResult = $this->getStoreDeliveredOrdersCountDuringSpecificDateForAdmin($value['id'],
-                    new \DateTime('-24 hour'), new \DateTime('now'));
-
-                if(count($lastTwentyFourHoursOrdersCountResult) > 0) {
-                    $finalResponse[$key]['lastTwentyFourOrdersCount'] = $lastTwentyFourHoursOrdersCountResult[0];
-
-                } else {
-                    $finalResponse[$key]['lastTwentyFourOrdersCount'] = (string) 0;
-                }
+//                $lastTwentyFourHoursOrdersCountResult = $this->getStoreDeliveredOrdersCountDuringSpecificDateForAdmin($value['id'],
+//                    new \DateTime('-24 hour'), new \DateTime('now'));
+//
+//                if(count($lastTwentyFourHoursOrdersCountResult) > 0) {
+//                    $finalResponse[$key]['lastTwentyFourOrdersCount'] = $lastTwentyFourHoursOrdersCountResult[0];
+//
+//                } else {
+//                    $finalResponse[$key]['lastTwentyFourOrdersCount'] = (string) 0;
+//                }
                 // ------------------------------------------------
             }
 

@@ -41,7 +41,7 @@ class BaseController extends AbstractController
     const ERROR_IN_RETURNING_ORDER_TO_PENDING_STATUS = ["problem In Returning Order To Pending Status", "9214"];
     const ERROR_ORDER_CANCEL = ["order cancelled", "9215"];
     const ERROR_UPDATE_BRANCH = ["captain is in store,You can not modify the branch", "9216"];
-    const ERROR_UPDATE_CAPTAIN_ONGOING = ["captain is ongoing,You can not modify detail or destination or deliveryDate", "9217"];
+    const ERROR_STORE_ORDER_DETAILS_NOT_FOUND = ["no order details was found", "9217"];
     const ERROR_ORDER_HIDE = ["order hide", "9218"];
     const ERROR_ORDER_ALREADY_DELIVERED = ["order is already delivered", "9219"];
     const CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE = ["previous order from same store still ongoing", "9200"];
@@ -94,6 +94,11 @@ class BaseController extends AbstractController
     const ERROR_THERE_ARE_PAYMENT_RELATED_WITH_SUBSCRIPTION = ["there are payment related with subscription", "9307"];
     const SUBSCRIPTION_NOT_FOUND = ["subscription is not exist", "9308"];
     const OLD_STORE_SUBSCRIPTION = ["subscription is an old one", "9309"];
+    const SUBSCRIPTION_DETAILS_NOT_FOUND = ["subscription details not found", "9310"];
+    const SUBSCRIPTION_DATE_IS_FINISHED = ["subscription date is finished", "9311"];
+    const SUBSCRIPTION_REMAINING_ORDERS_IS_FINISHED = ["subscription remaining orders is finished", "9312"];
+    const SUBSCRIPTION_REMAINING_ORDERS_IS_OUT_OF_LIMITS = ["subscription remaining orders is out of limits", "9313"];
+    const SUBSCRIPTION_REMAINING_CARS_NOT_ALLOWED_UPDATE = ["updating remaining cars is not correct", "9314"];
     //profile not completed
     const PROFILE_NOT_COMPLETED = ["profile is not completed!", "9220"];
     const WRONG_COMPLETE_ACCOUNT_STATUS = ["wrong complete account status", "9221"];
@@ -125,6 +130,7 @@ class BaseController extends AbstractController
     const CAPTAIN_FINANCIAL_SYSTEM_CAN_NOT_CHOSE = ["youHaveFinancialSystem,canNotChooseAnotherFinancialSystemNow", "9601"];
     const YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM = ["youNotHaveCaptainFinancialSystem", "9602"];
     const NOT_UPDATE_FINANCIAL_SYSTEM_ACTIVE = ["not update because financial System is active", "9603"];
+    const CAPTAIN_FINANCIAL_DUES_WAS_NOT_FOUND = ["captain doesn't have financial dues", "9604"];
     // announcement
     const ANNOUNCEMENT_NOT_EXIST = ["announcement does not exist", "9440"];
     // erase
@@ -141,6 +147,7 @@ class BaseController extends AbstractController
     const ERROR_BAD_REQUEST = ["bad request", "9370"];
     const ERROR_CAN_NOT_DECODING_CONTENT = ["content can not be decoded", "9371"];
     const ERROR_CAN_NOT_CALCULATE_DISTANCE = ["distance can not be calculated", "9372"];
+    const ERROR_DESTINATION_HAS_NULL_VALUE = ["destination had null value", "9373"];
     //
     const CAPTAIN_NOT_ALLOWED_TO_EDIT_ORDER_PAID_FLAG = ["You can not edit, because you paid the admin", "9380"];
     // captain offer subscription
@@ -149,6 +156,8 @@ class BaseController extends AbstractController
     const CAPTAIN_OFFER_CARS_HAVE_BEING_USED = ["captain offer subscription is being used", "9378"];
     const CAPTAIN_OFFER_SUBSCRIPTION_NOT_EXIST = ["captain offer subscription is not exist", "9379"];
     const CAPTAIN_OFFER_SUBSCRIPTION_DELETE_PROBLEM = ["problem in deleting captain offer subscription", "9385"];
+    // direct support
+    const DIRECT_SUPPORT_SCRIPT_NOT_EXIST_CONST = ["direct support script not exists", "9450"];
     
 //    const TEST = [
 //        "one"=>[ "error error", "9003"],

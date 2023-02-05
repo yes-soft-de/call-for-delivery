@@ -70,4 +70,10 @@ final class OrderLogActionTypeConstant
     const UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_VIA_ADD_ADDITIONAL_DISTANCE_BY_ADMIN_ACTION_CONST = 31;
 
     const RECYCLE_ORDER_BY_ADMIN_ACTION_CONST = 32;
+
+    // order destination had been saved in order to be replaced by a new one
+    const ORDER_OLD_DESTINATION_SAVED_CONST = 33;
+
+    // order destination had been updated by captain
+    // const NORMAL_ORDER_DESTINATION_ADDITION_BY_CAPTAIN_CONST = 34;
 }

@@ -798,3 +798,48 @@ App\Request\Admin\CaptainFinancialSystem\CaptainFinancialSystemDetailCreateByAdm
             - NotBlank: ~
         captain:
             - NotBlank: ~
+
+App\Request\Admin\Subscription\StoreSubscription\StoreSubscriptionRemainingCarsUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        factor:
+            - NotBlank: ~
+        operationType:
+            - NotBlank: ~
+
+App\Request\Order\Destination\OrderStoreBranchToClientDistanceAdditionByCaptainUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        destination:
+            - NotBlank: ~
+
+App\Request\Admin\DirectSupportScript\DirectSupportScriptCreateByAdminRequest:
+    properties:
+        action:
+            - NotBlank: ~
+        message:
+            - NotBlank: ~
+        appType:
+            - NotBlank: ~
+        adminProfile:
+            - NotBlank: ~
+
+App\Request\Admin\DirectSupportScript\DirectSupportScriptUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        action:
+            - NotBlank: ~
+        message:
+            - NotBlank: ~
+        appType:
+            - NotBlank: ~
+        adminProfile:
+            - NotBlank: ~
+
+App\Request\Admin\DirectSupportScript\DirectSupportScriptDeleteByRequest:
+    properties:
+        id:
+            - NotBlank: ~

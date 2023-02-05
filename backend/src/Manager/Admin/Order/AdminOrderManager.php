@@ -7,10 +7,12 @@ use App\Constant\Order\OrderHasPayConflictAnswersConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Entity\OrderEntity;
+use App\Entity\StoreOrderDetailsEntity;
 use App\Repository\OrderEntityRepository;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
+use App\Request\Admin\Order\OrderDifferentDestinationFilterByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminRequest;
 use App\Request\Admin\Order\OrderRecycleOrCancelByAdminRequest;
@@ -34,19 +36,14 @@ use App\Request\Admin\Order\OrderUpdateIsCashPaymentConfirmedByStoreByAdminReque
 
 class AdminOrderManager
 {
-    private AutoMapping $autoMapping;
-    private EntityManagerInterface $entityManager;
-    private OrderEntityRepository $orderEntityRepository;
-    private AdminStoreOrderDetailsManager $adminStoreOrderDetailsManager;
-    private AdminCaptainManager $adminCaptainManager;
-
-    public function __construct(EntityManagerInterface $entityManager, OrderEntityRepository $orderEntityRepository, AutoMapping $autoMapping, AdminStoreOrderDetailsManager $adminStoreOrderDetailsManager, AdminCaptainManager $adminCaptainManager)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private EntityManagerInterface $entityManager,
+        private OrderEntityRepository $orderEntityRepository,
+        private AdminStoreOrderDetailsManager $adminStoreOrderDetailsManager,
+        private AdminCaptainManager $adminCaptainManager
+    )
     {
-        $this->entityManager = $entityManager;
-        $this->orderEntityRepository = $orderEntityRepository;
-        $this->autoMapping = $autoMapping;
-        $this->adminStoreOrderDetailsManager = $adminStoreOrderDetailsManager;
-        $this->adminCaptainManager = $adminCaptainManager;
     }
 
     public function getCountOrderOngoingForAdmin(): int
@@ -541,5 +538,21 @@ class AdminOrderManager
     public function getOrdersByCaptainProfileIdAndCaptainFinancialCycle(int $captainProfileId): array
     {
         return $this->orderEntityRepository->getOrdersByCaptainProfileIdAndCaptainFinancialCycle($captainProfileId);
+    }
+
+    /**
+     * filter orders which have different destination
+     */
+    public function filterDifferentDestinationOrdersByAdmin(OrderDifferentDestinationFilterByAdminRequest $request): array
+    {
+        return $this->orderEntityRepository->filterDifferentDestinationOrdersByAdmin($request);
+    }
+
+    /**
+     * Update differentReceiverDestination field of store order details
+     */
+    public function updateStoreOrderDetailsDifferentReceiverDestinationByOrderId(int $orderId, int $differentReceiverDestination): int|StoreOrderDetailsEntity
+    {
+        return $this->adminStoreOrderDetailsManager->updateStoreOrderDetailsDifferentReceiverDestinationByOrderId($orderId, $differentReceiverDestination);
     }
 }

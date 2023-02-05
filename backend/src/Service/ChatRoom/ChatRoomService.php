@@ -97,4 +97,9 @@ class ChatRoomService
 
         return $response;
     }
+
+    public function deleteChatRoomByUserId(int $userId): ChatRoomEntity|int
+    {
+        return $this->chatRoomManager->deleteChatRoomByUserId($userId);
+    }
 }

@@ -46,6 +46,7 @@ class SubscriptionEntity
     #[ORM\OneToMany(mappedBy: 'subscription', targetEntity: StoreOwnerPaymentEntity::class)]
     private $storeOwnerPaymentEntities;
 
+    // true: when create subscription captain offer
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $captainOfferFirstTime;
 

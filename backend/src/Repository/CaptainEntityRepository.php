@@ -467,17 +467,17 @@ class CaptainEntityRepository extends ServiceEntityRepository
                     $finalResponse[$key]['todayOrdersCount'] = (string) 0;
                 }
                 // ------------------------------------------------
-
+                //*** orders count last 24 block commented out temporary just in order to be required in the future ***//
                 // Get the count of orders which delivered last 24 hours
-                $lastTwentyFourHoursOrdersCountResult = $this->getCaptainDeliveredOrdersCountDuringSpecificDateForAdmin($value['id'],
-                    new \DateTime('-24 hour'), new \DateTime('now'));
-
-                if(count($lastTwentyFourHoursOrdersCountResult) > 0) {
-                    $finalResponse[$key]['lastTwentyFourOrdersCount'] = $lastTwentyFourHoursOrdersCountResult[0];
-
-                } else {
-                    $finalResponse[$key]['lastTwentyFourOrdersCount'] = (string) 0;
-                }
+//                $lastTwentyFourHoursOrdersCountResult = $this->getCaptainDeliveredOrdersCountDuringSpecificDateForAdmin($value['id'],
+//                    new \DateTime('-24 hour'), new \DateTime('now'));
+//
+//                if(count($lastTwentyFourHoursOrdersCountResult) > 0) {
+//                    $finalResponse[$key]['lastTwentyFourOrdersCount'] = $lastTwentyFourHoursOrdersCountResult[0];
+//
+//                } else {
+//                    $finalResponse[$key]['lastTwentyFourOrdersCount'] = (string) 0;
+//                }
                 // ------------------------------------------------
             }
 
@@ -520,56 +520,56 @@ class CaptainEntityRepository extends ServiceEntityRepository
     }
 
     // FOR DEBUG ISSUES
-    public function getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester(?string $customizedTimezone): array
-    {
-        $captainsProfiles = $this->createQueryBuilder('captainEntity')
-            ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName')
-            ->addSelect('imageEntity.imagePath', 'imageEntity.usedAs')
-
-            ->where('captainEntity.status = :activeStatus')
-            ->setParameter('activeStatus', CaptainConstant::CAPTAIN_ACTIVE)
-
-            ->leftJoin(
-                ImageEntity::class,
-                'imageEntity',
-                Join::WITH,
-                'imageEntity.itemId = captainEntity.id and imageEntity.entityType = :entityType'
-            )
-
-            ->andWhere('imageEntity.usedAs = :captainProfileImage')
-            ->setParameter('captainProfileImage', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
-
-            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE);
-
-        $tempQuery = $captainsProfiles->getQuery()->getResult();
-
-        if (count($tempQuery) > 0) {
-            $finalResponse = [];
-
-            foreach ($tempQuery as $key => $value) {
-                // get last active financial cycle
-                $financialCycle = $this->getLastActiveFinancialCycleByCaptainForAdmin($value['id']);
-
-                if (($financialCycle['startDate']) && ($financialCycle['endDate'])) {
-                    $finalResponse[$key] = $value;
-
-                    $ordersCountResult = $this->getCaptainDeliveredOrdersCountDuringSpecificDateForTester($value['id'],
-                        $financialCycle['startDate'], $financialCycle['endDate'], $customizedTimezone);
-
-                    if(count($ordersCountResult) > 0) {
-                        $finalResponse[$key]['ordersCount'] = $ordersCountResult[0];
-
-                    } else {
-                        $finalResponse[$key]['ordersCount'] = (string) 0;
-                    }
-                }
-            }
-
-            return $finalResponse;
-        }
-
-        return $tempQuery;
-    }
+//    public function getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester(?string $customizedTimezone): array
+//    {
+//        $captainsProfiles = $this->createQueryBuilder('captainEntity')
+//            ->select('captainEntity.id', 'captainEntity.captainId', 'captainEntity.captainName')
+//            ->addSelect('imageEntity.imagePath', 'imageEntity.usedAs')
+//
+//            ->where('captainEntity.status = :activeStatus')
+//            ->setParameter('activeStatus', CaptainConstant::CAPTAIN_ACTIVE)
+//
+//            ->leftJoin(
+//                ImageEntity::class,
+//                'imageEntity',
+//                Join::WITH,
+//                'imageEntity.itemId = captainEntity.id and imageEntity.entityType = :entityType'
+//            )
+//
+//            ->andWhere('imageEntity.usedAs = :captainProfileImage')
+//            ->setParameter('captainProfileImage', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+//
+//            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE);
+//
+//        $tempQuery = $captainsProfiles->getQuery()->getResult();
+//
+//        if (count($tempQuery) > 0) {
+//            $finalResponse = [];
+//
+//            foreach ($tempQuery as $key => $value) {
+//                // get last active financial cycle
+//                $financialCycle = $this->getLastActiveFinancialCycleByCaptainForAdmin($value['id']);
+//
+//                if (($financialCycle['startDate']) && ($financialCycle['endDate'])) {
+//                    $finalResponse[$key] = $value;
+//
+//                    $ordersCountResult = $this->getCaptainDeliveredOrdersCountDuringSpecificDateForTester($value['id'],
+//                        $financialCycle['startDate'], $financialCycle['endDate'], $customizedTimezone);
+//
+//                    if(count($ordersCountResult) > 0) {
+//                        $finalResponse[$key]['ordersCount'] = $ordersCountResult[0];
+//
+//                    } else {
+//                        $finalResponse[$key]['ordersCount'] = (string) 0;
+//                    }
+//                }
+//            }
+//
+//            return $finalResponse;
+//        }
+//
+//        return $tempQuery;
+//    }
 
     public function getCaptainDeliveredOrdersCountDuringSpecificDateForTester(int $captainId, \DateTime $startDate, \DateTime $endDate, ?string $timeZone): array
     {

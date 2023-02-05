@@ -256,20 +256,21 @@ class ReportService
         return $response;
     }
 
-    public function getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester(?string $customizedTimezone): array
-    {
-        $response = [];
-
-        $captainsResult = $this->adminCaptainService->getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester($customizedTimezone);
-
-        if (count($captainsResult) > 0) {
-            foreach ($captainsResult as $captainInfo) {
-                $captainInfo['image'] = $this->uploadFileHelperService->getImageParams($captainInfo['imagePath']);
-
-                $response[] = $this->autoMapping->map('array', ActiveCaptainWithOrdersCountInLastFinancialCycleGetForAdminResponse::class, $captainInfo);
-            }
-        }
-
-        return $response;
-    }
+    // FOR DEBUG ISSUES
+//    public function getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester(?string $customizedTimezone): array
+//    {
+//        $response = [];
+//
+//        $captainsResult = $this->adminCaptainService->getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester($customizedTimezone);
+//
+//        if (count($captainsResult) > 0) {
+//            foreach ($captainsResult as $captainInfo) {
+//                $captainInfo['image'] = $this->uploadFileHelperService->getImageParams($captainInfo['imagePath']);
+//
+//                $response[] = $this->autoMapping->map('array', ActiveCaptainWithOrdersCountInLastFinancialCycleGetForAdminResponse::class, $captainInfo);
+//            }
+//        }
+//
+//        return $response;
+//    }
 }

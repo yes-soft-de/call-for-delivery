@@ -3,6 +3,7 @@
 namespace App\Manager\ChatRoom;
 
 use App\AutoMapping;
+use App\Constant\ChatRoom\ChatRoomResultConstant;
 use App\Entity\ChatRoomEntity;
 use App\Repository\ChatRoomEntityRepository;
 use App\Request\ChatRoom\ChatRoomCreateRequest;
@@ -12,15 +13,12 @@ use Symfony\Component\Uid\Uuid;
 
 class ChatRoomManager
 {
-    private AutoMapping $autoMapping;
-    private EntityManagerInterface $entityManager;
-    private ChatRoomEntityRepository $chatRoomRepository;
-
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, ChatRoomEntityRepository $chatRoomRepository)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private EntityManagerInterface $entityManager,
+        private ChatRoomEntityRepository $chatRoomRepository
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->entityManager = $entityManager;
-        $this->chatRoomRepository = $chatRoomRepository;
     }
 
     /**
@@ -70,5 +68,19 @@ class ChatRoomManager
     public function getChatRoomsWithSuppliers(): ?array
     {
         return $this->chatRoomRepository->getChatRoomsWithSuppliers();
+    }
+
+    public function deleteChatRoomByUserId(int $userId): ChatRoomEntity|int
+    {
+        $chatRoom = $this->chatRoomRepository->findOneBy(['userId' => $userId]);
+
+        if (! $chatRoom) {
+            return ChatRoomResultConstant::CHAT_ROOM_DOES_NOT_EXIST_CONST;
+        }
+
+        $this->entityManager->remove($chatRoom);
+        $this->entityManager->flush();
+
+        return $chatRoom;
     }
 }

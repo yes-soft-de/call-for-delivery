@@ -2,6 +2,7 @@
 
 namespace App\Security\IsGranted;
 
+use App\Constant\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueResultConstant;
 use App\Constant\Eraser\EraserResultConstant;
 use App\Service\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialDuesService;
@@ -41,10 +42,26 @@ class CanDeleteCaptainAccountAndProfileByAdminService
         }
 
         // check if there are financial dues for the captain
-        $financialDues = $this->captainFinancialDuesService->getFinancialDuesByCaptainId($captainId);
+        // $financialDues = $this->captainFinancialDuesService->getFinancialDuesByCaptainId($captainId);
 
-        if (count($financialDues) !== 0) {
-            return EraserResultConstant::CAN_NOT_DELETE_USER_HAS_FINANCIAL_DUES;
+        //if (count($financialDues) !== 0) {
+          //  return EraserResultConstant::CAN_NOT_DELETE_USER_HAS_FINANCIAL_DUES;
+        //}
+
+        // Check if the financial dues of the captain (if exists) are more than zero
+        // $financialDuesSumResult = [amount, amount for store]
+        $financialDuesSumResult = $this->captainFinancialDuesService->getFinancialDuesSumByCaptainId($captainId);
+
+        if (count($financialDuesSumResult) > 0) {
+            if (($financialDuesSumResult[1] !== null) || ($financialDuesSumResult[2] !== null)) {
+                // financial dues are exists
+                // check if they equal zero or not
+                if (($financialDuesSumResult[1] > 0) || ($financialDuesSumResult[2] > 0)) {
+                    return EraserResultConstant::CAN_NOT_DELETE_USER_HAS_FINANCIAL_DUES;
+                }
+
+                return CaptainFinancialDueResultConstant::CAPTAIN_FINANCIAL_DUE_HAVE_ZERO_VALUE_CONST;
+            }
         }
 
         // check if there are payments for the captain

@@ -47,17 +47,14 @@ use App\Request\Subscription\CalculateCostDeliveryOrderRequest;
  */
 class OrderController extends BaseController
 {
-    private AutoMapping $autoMapping;
-    private ValidatorInterface $validator;
-    private OrderService $orderService;
-
-    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, OrderService $orderService)
+    public function __construct(
+        SerializerInterface $serializer,
+        private AutoMapping $autoMapping,
+        private ValidatorInterface $validator,
+        private OrderService $orderService
+    )
     {
         parent::__construct($serializer);
-       $this->autoMapping = $autoMapping;
-       $this->validator = $validator;
-       $this->orderService = $orderService;
-
     }
     
     /**
@@ -1532,7 +1529,7 @@ class OrderController extends BaseController
     }
 
     /**
-     * captain: Order Non Sub.
+     * captain: Order Non Sub. subOderId is the id of the sub order
      * @Route("ordernonsub/{subOderId}", name="orderNonSub", methods={"PUT"})
      * @IsGranted("ROLE_CAPTAIN")
      * @param int $subOderId
@@ -1680,7 +1677,7 @@ class OrderController extends BaseController
     }
 
     /**
-     * store: Order Non Sub by store.
+     * store: Order Non Sub by store. subOderId is the id of the sub order
      * @Route("ordernonsubbyowner/{subOderId}", name="orderNonSubByStore", methods={"PUT"})
      * @IsGranted("ROLE_OWNER")
      * @param int $subOderId

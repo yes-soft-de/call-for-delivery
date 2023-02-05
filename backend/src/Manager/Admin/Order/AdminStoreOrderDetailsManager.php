@@ -4,6 +4,7 @@ namespace App\Manager\Admin\Order;
 
 use App\AutoMapping;
 use App\Constant\Order\OrderDestinationConstant;
+use App\Constant\StoreOrderDetails\StoreOrderDetailsConstant;
 use App\Entity\OrderEntity;
 use App\Entity\ImageEntity;
 use App\Entity\StoreOrderDetailsEntity;
@@ -152,6 +153,25 @@ class AdminStoreOrderDetailsManager
             $this->entityManager->persist($storeOrderDetailsEntity);
             $this->entityManager->flush();
         }
+
+        return $storeOrderDetailsEntity;
+    }
+
+    /**
+     * Update differentReceiverDestination field of store order details
+     */
+    public function updateStoreOrderDetailsDifferentReceiverDestinationByOrderId(int $orderId, int $differentReceiverDestination): int|StoreOrderDetailsEntity
+    {
+        $storeOrderDetailsEntity = $this->storeOrderDetailsEntityRepository->findOneBy(["orderId" => $orderId]);
+
+        if (! $storeOrderDetailsEntity) {
+            return StoreOrderDetailsConstant::STORE_ORDER_DETAILS_NOT_FOUND;
+        }
+
+        // set that the receiver location is different, and had been updated by the admin
+        $storeOrderDetailsEntity->setDifferentReceiverDestination($differentReceiverDestination);
+
+        $this->entityManager->flush();
 
         return $storeOrderDetailsEntity;
     }

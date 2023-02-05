@@ -338,4 +338,14 @@ class CaptainFinancialDuesService
          return CaptainFinancialSystem::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM;
      }
     //END fix create financial dues
+
+    public function getFinancialDuesSumByCaptainId(int $captainId): array
+    {
+        return $this->captainFinancialDuesManager->getFinancialDuesSumByCaptainId($captainId);
+    }
+
+    public function deleteAllCaptainFinancialDuesByCaptainId(int $captainId): array
+    {
+        return $this->captainFinancialDuesManager->deleteAllCaptainFinancialDuesByCaptainId($captainId);
+    }
 }
