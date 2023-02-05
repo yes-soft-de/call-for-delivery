@@ -814,3 +814,32 @@ App\Request\Order\Destination\OrderStoreBranchToClientDistanceAdditionByCaptainU
             - NotBlank: ~
         destination:
             - NotBlank: ~
+
+App\Request\Admin\DirectSupportScript\DirectSupportScriptCreateByAdminRequest:
+    properties:
+        action:
+            - NotBlank: ~
+        message:
+            - NotBlank: ~
+        appType:
+            - NotBlank: ~
+        adminProfile:
+            - NotBlank: ~
+
+App\Request\Admin\DirectSupportScript\DirectSupportScriptUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        action:
+            - NotBlank: ~
+        message:
+            - NotBlank: ~
+        appType:
+            - NotBlank: ~
+        adminProfile:
+            - NotBlank: ~
+
+App\Request\Admin\DirectSupportScript\DirectSupportScriptDeleteByRequest:
+    properties:
+        id:
+            - NotBlank: ~
