@@ -44,7 +44,7 @@ class SinglePackageCard extends StatelessWidget {
             color: Theme.of(context).scaffoldBackgroundColor,
             boxShadow: [
               BoxShadow(
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(context).colorScheme.background,
                   spreadRadius: 1,
                   blurRadius: 5,
                   offset: Offset(-0.2, 0)),
@@ -117,7 +117,7 @@ class SinglePackageCard extends StatelessWidget {
                 padding: const EdgeInsets.only(
                     right: 16.0, left: 16, top: 16, bottom: 16),
                 child: DottedLine(
-                  dashColor: Theme.of(context).backgroundColor,
+                  dashColor: Theme.of(context).colorScheme.background,
                   lineThickness: 2.5,
                   dashRadius: 25,
                 ),
@@ -138,7 +138,8 @@ class SinglePackageCard extends StatelessWidget {
                             Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
-                                  color: Theme.of(context).backgroundColor),
+                                  color:
+                                      Theme.of(context).colorScheme.background),
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Icon(Icons.sync_alt_rounded,
@@ -169,7 +170,8 @@ class SinglePackageCard extends StatelessWidget {
                             Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
-                                  color: Theme.of(context).backgroundColor),
+                                  color:
+                                      Theme.of(context).colorScheme.background),
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: FaIcon(FontAwesomeIcons.car,
@@ -193,43 +195,47 @@ class SinglePackageCard extends StatelessWidget {
                         ),
                       ),
                       // geographical
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Flex(
-                          direction: Axis.horizontal,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: Theme.of(context).backgroundColor),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: FaIcon(Icons.roundabout_left_rounded,
-                                    color: Theme.of(context).disabledColor),
+                      geographicalRange.isNotEmpty && geographicalRange != '0'
+                          ? Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Flex(
+                                direction: Axis.horizontal,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .background),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: FaIcon(
+                                          Icons.roundabout_left_rounded,
+                                          color:
+                                              Theme.of(context).disabledColor),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 16,
+                                  ),
+                                  SizedBox(
+                                      width: 105,
+                                      child: Text(geographicalRange +
+                                          ' ' +
+                                          S.current.km)),
+                                ],
                               ),
-                            ),
-                            SizedBox(
-                              width: 16,
-                            ),
-                            SizedBox(
-                              width: 105,
-                              child: geographicalRange.isNotEmpty &&
-                                      geographicalRange != '0'
-                                  ? Text(geographicalRange + ' ' + S.current.km)
-                                  : SizedBox(),
-                            ),
-                          ],
-                        ),
-                      ),
+                            )
+                          : SizedBox(),
                     ],
                   ),
                   Padding(
                     padding: const EdgeInsets.only(bottom: 16.0),
                     child: DottedLine(
                       direction: Axis.vertical,
-                      dashColor: Theme.of(context).backgroundColor,
+                      dashColor: Theme.of(context).colorScheme.background,
                       lineLength: 125,
                       lineThickness: 2.5,
                       dashRadius: 25,
@@ -248,7 +254,8 @@ class SinglePackageCard extends StatelessWidget {
                             Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
-                                  color: Theme.of(context).backgroundColor),
+                                  color:
+                                      Theme.of(context).colorScheme.background),
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Icon(FontAwesomeIcons.coins,
@@ -278,7 +285,8 @@ class SinglePackageCard extends StatelessWidget {
                             Container(
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(12),
-                                  color: Theme.of(context).backgroundColor),
+                                  color:
+                                      Theme.of(context).colorScheme.background),
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Icon(FontAwesomeIcons.calendarAlt,
@@ -298,36 +306,39 @@ class SinglePackageCard extends StatelessWidget {
                         ),
                       ),
                       // extra cost
-                      Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: Flex(
-                          direction: Axis.horizontal,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(12),
-                                  color: Theme.of(context).backgroundColor),
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Icon(FontAwesomeIcons.dollarSign,
-                                    color: Theme.of(context).disabledColor),
-                              ),
-                            ),
-                            SizedBox(
-                              width: 16,
-                            ),
-                            extraCost != '0' && extraCost.isNotEmpty
-                                ? SizedBox(
-                                    child: Text(
+                      extraCost != '0' && extraCost.isNotEmpty
+                          ? Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: Flex(
+                                direction: Axis.horizontal,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(12),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .background),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Icon(FontAwesomeIcons.dollarSign,
+                                          color:
+                                              Theme.of(context).disabledColor),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 16,
+                                  ),
+                                  SizedBox(
+                                      child: Text(
                                     '$extraCost ' + S.current.sar,
                                     overflow: TextOverflow.ellipsis,
                                   ))
-                                : SizedBox(),
-                          ],
-                        ),
-                      ),
+                                ],
+                              ),
+                            )
+                          : SizedBox(),
                     ],
                   ),
                 ],
