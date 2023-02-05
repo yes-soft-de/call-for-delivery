@@ -66,6 +66,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "عذرا لم تنجح عملية إضافة فرع الرجاء إعادة المحاولة لاحقا"),
         "addBranchSuccess":
             MessageLookupByLibrary.simpleMessage("تمت إضافة الفرع بنجاح"),
+        "addExtraDestination":
+            MessageLookupByLibrary.simpleMessage("مسافة زائدة"),
         "addProducts": MessageLookupByLibrary.simpleMessage("إضافة منتجات"),
         "addWorkPackage":
             MessageLookupByLibrary.simpleMessage("إضافة باقة عمل"),
@@ -290,6 +292,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف للتواصل"),
         "controlPanel": MessageLookupByLibrary.simpleMessage("لوحة التحكم"),
+        "coordinates": MessageLookupByLibrary.simpleMessage("الإحداثيات"),
         "copy": MessageLookupByLibrary.simpleMessage("نسخ"),
         "copyFinished": MessageLookupByLibrary.simpleMessage("تم النسخ بنجاح"),
         "cost": MessageLookupByLibrary.simpleMessage("التكلفة"),
@@ -632,6 +635,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "noteOfOrder":
             MessageLookupByLibrary.simpleMessage("دون ملاحظاتك حول الطلب"),
         "notes": MessageLookupByLibrary.simpleMessage("ملاحظات"),
+        "noticeHasBeenSendedToAdministration":
+            MessageLookupByLibrary.simpleMessage(
+                "تم إعلام الإدارة بطلب تعديل موقع العميل"),
         "notices": MessageLookupByLibrary.simpleMessage("التحديثات"),
         "notificationDeletedSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الإشعار بنجاح"),
@@ -787,6 +793,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "من فضلك قم بتصحيح المسافة المدخلة"),
         "pleaseDownloadmandob_moshtarayat_captain":
             MessageLookupByLibrary.simpleMessage("الرجاء تحميل c4d"),
+        "pleaseEnterValidCoord":
+            MessageLookupByLibrary.simpleMessage("من فضلك ادخل احداثيات صالحة"),
         "pleaseEnterValidCountryCode":
             MessageLookupByLibrary.simpleMessage("ادخال خاطئ"),
         "pleaseEnterValidPhoneNumber":
@@ -869,6 +877,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "rateSubmitting":
             MessageLookupByLibrary.simpleMessage("جاري إرسال تقييمك"),
         "rating": MessageLookupByLibrary.simpleMessage("التقييم"),
+        "reason": MessageLookupByLibrary.simpleMessage("السبب"),
         "reasonIsRequired":
             MessageLookupByLibrary.simpleMessage("الرجاء تزويدنا بسبب الابلاغ"),
         "reasonOfTheReport":
@@ -1086,6 +1095,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateBranchSuccess":
             MessageLookupByLibrary.simpleMessage("تم تعديل الفرع بنجاح"),
         "updateBranches": MessageLookupByLibrary.simpleMessage("تعديل الأفرع"),
+        "updateDistance": MessageLookupByLibrary.simpleMessage("تعديل المسافة"),
         "updateOrderNote": MessageLookupByLibrary.simpleMessage(
             "يمكنك تعديل الطلب من خلال النافذة الحالية"),
         "updateOrderSuccess":

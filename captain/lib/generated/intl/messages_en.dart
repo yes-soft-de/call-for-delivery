@@ -67,6 +67,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Sorry your request for add branch faild please try again"),
         "addBranchSuccess": MessageLookupByLibrary.simpleMessage(
             "Branch has been added successfully"),
+        "addExtraDestination":
+            MessageLookupByLibrary.simpleMessage("Extra destination"),
         "addProducts": MessageLookupByLibrary.simpleMessage("Add Products"),
         "addWorkPackage": MessageLookupByLibrary.simpleMessage("Add work plan"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
@@ -295,6 +297,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
         "controlPanel": MessageLookupByLibrary.simpleMessage("Control Panel"),
+        "coordinates": MessageLookupByLibrary.simpleMessage("Coordinates"),
         "copy": MessageLookupByLibrary.simpleMessage("Copy"),
         "copyFinished":
             MessageLookupByLibrary.simpleMessage("Link Copied Successfully"),
@@ -642,6 +645,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "noteOfOrder": MessageLookupByLibrary.simpleMessage(
             "Please place your order notes"),
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
+        "noticeHasBeenSendedToAdministration":
+            MessageLookupByLibrary.simpleMessage(
+                "Notice has been sended to administration"),
         "notices": MessageLookupByLibrary.simpleMessage("Notices"),
         "notificationDeletedSuccess": MessageLookupByLibrary.simpleMessage(
             "Notification deleted successfully"),
@@ -795,6 +801,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please correct provided distance"),
         "pleaseDownloadmandob_moshtarayat_captain":
             MessageLookupByLibrary.simpleMessage("Please Download c4d"),
+        "pleaseEnterValidCoord": MessageLookupByLibrary.simpleMessage(
+            "Please enter valid coordinates"),
         "pleaseEnterValidCountryCode":
             MessageLookupByLibrary.simpleMessage("invalid character"),
         "pleaseEnterValidPhoneNumber":
@@ -879,6 +887,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "rateSubmitting": MessageLookupByLibrary.simpleMessage(
             "Your rate has been submitted"),
         "rating": MessageLookupByLibrary.simpleMessage("Rating"),
+        "reason": MessageLookupByLibrary.simpleMessage("Reason"),
         "reasonIsRequired":
             MessageLookupByLibrary.simpleMessage("Reason is Required"),
         "reasonOfTheReport":
@@ -1096,6 +1105,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Branch has been updated successfully"),
         "updateBranches":
             MessageLookupByLibrary.simpleMessage("Update Branches"),
+        "updateDistance":
+            MessageLookupByLibrary.simpleMessage("Update distance"),
         "updateOrderNote": MessageLookupByLibrary.simpleMessage(
             "You can update your order item from this interface"),
         "updateOrderSuccess":

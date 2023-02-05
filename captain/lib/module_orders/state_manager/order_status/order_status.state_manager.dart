@@ -8,6 +8,7 @@ import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/model/roomId/room_id_model.dart';
+import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/ui/state/order_status/order_details_captain_state_loaded.dart';
 import 'package:c4d/module_orders/ui/state/order_status/order_status_warning_state.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
@@ -137,6 +138,26 @@ class OrderStatusStateManager {
         Fluttertoast.showToast(msg: S.current.updateOrderSuccess);
         getOrderDetails(request.id ?? -1, screenState,
             loading: false, message: 'Trigger');
+      }
+    });
+  }
+
+  void updateDistance(OrderStatusScreenState screenState,
+      AddExtraDistanceRequest request) {
+    _stateSubject.add(LoadingState(screenState));
+    _ordersService.updateExtraDistanceToOrder(request).then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error ?? '')
+            .show(screenState.context);
+        screenState.getOrderDetails(request.id);
+      } else {
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: S.current.noticeHasBeenSendedToAdministration)
+            .show(screenState.context);
+                      screenState.getOrderDetails(request.id);
+
       }
     });
   }

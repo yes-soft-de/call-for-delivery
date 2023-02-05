@@ -750,6 +750,12 @@
     "addressIsMissing": "neighborhood is missing ",
     "cityIsMissing": "City is missing ",
     "neighborhood": "Neighborhood",
-    "jaddah":"Jaddah"
+    "jaddah": "Jaddah",
+    "noticeHasBeenSendedToAdministration": "Notice has been sended to administration",
+    "addExtraDestination": "Extra destination",
+    "reason": "Reason",
+    "coordinates": "Coordinates",
+    "pleaseEnterValidCoord": "Please enter valid coordinates",
+    "updateDistance":"Update distance"
 
 }

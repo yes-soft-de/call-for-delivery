@@ -7559,6 +7559,66 @@ class S {
       args: [],
     );
   }
+
+  /// `Notice has been sended to administration`
+  String get noticeHasBeenSendedToAdministration {
+    return Intl.message(
+      'Notice has been sended to administration',
+      name: 'noticeHasBeenSendedToAdministration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra destination`
+  String get addExtraDestination {
+    return Intl.message(
+      'Extra destination',
+      name: 'addExtraDestination',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reason`
+  String get reason {
+    return Intl.message(
+      'Reason',
+      name: 'reason',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Coordinates`
+  String get coordinates {
+    return Intl.message(
+      'Coordinates',
+      name: 'coordinates',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter valid coordinates`
+  String get pleaseEnterValidCoord {
+    return Intl.message(
+      'Please enter valid coordinates',
+      name: 'pleaseEnterValidCoord',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update distance`
+  String get updateDistance {
+    return Intl.message(
+      'Update distance',
+      name: 'updateDistance',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

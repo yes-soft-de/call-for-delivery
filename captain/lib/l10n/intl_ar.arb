@@ -752,6 +752,12 @@
     "addressIsMissing":"زودنا بالحي الذي تسكن فيه",
     "cityIsMissing":"زودنا بمدينتك",
     "neighborhood":"الحي",
-    "jaddah":"جدة"
+    "jaddah":"جدة",
+    "noticeHasBeenSendedToAdministration":"تم إعلام الإدارة بطلب تعديل موقع العميل",
+    "addExtraDestination": "مسافة زائدة",
+    "reason": "السبب",
+    "coordinates": "الإحداثيات",
+    "pleaseEnterValidCoord": "من فضلك ادخل احداثيات صالحة",
+    "updateDistance":"تعديل المسافة"
     
 }

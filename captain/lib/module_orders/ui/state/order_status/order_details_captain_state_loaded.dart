@@ -5,6 +5,7 @@ import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
+import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/module_orders/ui/screens/order_status/order_status_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
@@ -55,7 +56,73 @@ class OrderDetailsCaptainOrderLoadedState extends States {
   @override
   Widget getUI(BuildContext context) {
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context, title: S.current.orderDetails),
+      appBar: CustomC4dAppBar
+          .appBar(context, title: S.current.orderDetails, actions: [
+        CustomC4dAppBar.actionIcon(context, onTap: () {
+          final reason = TextEditingController();
+          final coord = TextEditingController();
+          final form_key = GlobalKey<FormState>();
+          showDialog(
+              context: context,
+              builder: (ctx) {
+                return AlertDialog(
+                  title: Text(S.current.updateDistance),
+                  content: SizedBox(
+                    height: 175,
+                    child: Form(
+                      key: form_key,
+                      child: Column(
+                        children: [
+                          CustomFormField(
+                            controller: coord,
+                            hintText: S.current.coordinates + ' 12.4,15.8',
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          CustomFormField(
+                            controller: reason,
+                            hintText: S.current.reason,
+                          ),
+                          const SizedBox(
+                            height: 16,
+                          ),
+                          ElevatedButton(
+                              onPressed: () {
+                                if (form_key.currentState?.validate() == true) {
+                                  if (coord.text.split(',').length == 2) {
+                                    Navigator.of(context).pop();
+                                    screenState.manager.updateDistance(
+                                        screenState,
+                                        AddExtraDistanceRequest(
+                                            id: int.tryParse(screenState.orderId ?? ''),
+                                            storeBranchToClientDistanceAdditionExplanation:
+                                                reason.text.trim(),
+                                            destination: {
+                                              'lat': coord.text
+                                                  .trim()
+                                                  .split(',')[0]
+                                                  .trim(),
+                                              'lon': coord.text
+                                                  .trim()
+                                                  .split(',')[1]
+                                                  .trim(),
+                                            }));
+                                  } else {
+                                    Fluttertoast.showToast(
+                                        msg: S.current.pleaseEnterValidCoord);
+                                  }
+                                }
+                              },
+                              child: Text(S.current.update)),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              });
+        }, icon: Icons.warning_rounded),
+      ]),
       body: CustomListView.custom(
         children: [
           // svg picture
