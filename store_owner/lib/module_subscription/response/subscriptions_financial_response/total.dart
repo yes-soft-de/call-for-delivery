@@ -3,7 +3,7 @@ class Total {
   num? extraCost;
   num? sumPayments;
   num? packageCost;
-  bool? advancePayment;
+  dynamic? advancePayment;
   num? total;
   num? captainOfferPrice;
   num? requiredToPay;
@@ -23,7 +23,7 @@ class Total {
       extraCost: json['extraCost'] as num?,
       packageCost: json['packageCost'] as num?,
       requiredToPay: json['requiredToPay'] as num?,
-      advancePayment: json['advancePayment'] as bool?,
+      advancePayment: json['advancePayment'] as dynamic?,
       total: json['total'] as num?,
       captainOfferPrice: json['captainOfferPrice'] as num?);
 

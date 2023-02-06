@@ -75,14 +75,14 @@ class StoreSubscriptionsFinanceDetailsScreenState
         Text(
           model.packageName,
           style: TextStyle(
-              color: Theme.of(context).textTheme.button?.color,
+              color: Theme.of(context).textTheme.labelLarge?.color,
               fontWeight: FontWeight.bold),
         ),
         Padding(
           padding:
               const EdgeInsets.only(right: 16.0, left: 16, top: 16, bottom: 16),
           child: DottedLine(
-            dashColor: Theme.of(context).backgroundColor,
+            dashColor: Theme.of(context).colorScheme.background,
             lineThickness: 2.5,
             dashRadius: 25,
           ),
@@ -107,7 +107,7 @@ class StoreSubscriptionsFinanceDetailsScreenState
         // subscription details
         Divider(
           thickness: 2.5,
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
           indent: 32,
           endIndent: 32,
         ),
@@ -160,7 +160,7 @@ class StoreSubscriptionsFinanceDetailsScreenState
         //
         Divider(
           thickness: 2.5,
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
           indent: 32,
           endIndent: 32,
         ),
@@ -193,7 +193,7 @@ class StoreSubscriptionsFinanceDetailsScreenState
           visible: model.captainsOffer.isNotEmpty,
           child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                  shape: StadiumBorder(), primary: Colors.amber),
+                  shape: StadiumBorder(), backgroundColor: Colors.amber),
               onPressed: () {
                 showDialog(
                     context: context,
@@ -239,7 +239,7 @@ class StoreSubscriptionsFinanceDetailsScreenState
             indent: 16,
             endIndent: 16,
             thickness: 2.5,
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).colorScheme.background,
           ),
         ),
         Container(
@@ -247,9 +247,13 @@ class StoreSubscriptionsFinanceDetailsScreenState
           child: verticalBubble(
               subtitle: model.total.total.toString() + ' ${S.current.sar}',
               title: S.current.leftToPay,
-              background: model.total.advancePayment == false
-                  ? Colors.green
-                  : Colors.red),
+              background: model.total.advancePayment == null
+                  ? null
+                  : (model.total.advancePayment == 160
+                      ? Colors.green
+                      : model.total.advancePayment == 159
+                          ? Colors.red
+                          : Theme.of(context).disabledColor)),
         )
       ],
     );
@@ -266,7 +270,7 @@ class StoreSubscriptionsFinanceDetailsScreenState
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListTile(
-          tileColor: Theme.of(context).backgroundColor,
+          tileColor: Theme.of(context).colorScheme.background,
           title: Text(FixedNumber.getFixedNumber(element.price ?? 0) +
               ' ${S.current.sar}'),
           subtitle: Text(date),
@@ -312,7 +316,7 @@ class StoreSubscriptionsFinanceDetailsScreenState
             child: Container(
               width: 32,
               height: 2.5,
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).colorScheme.background,
             ),
           ),
           Expanded(child: secondBubble),
@@ -329,7 +333,7 @@ class StoreSubscriptionsFinanceDetailsScreenState
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-        color: background ?? Theme.of(context).backgroundColor,
+        color: background ?? Theme.of(context).colorScheme.background,
       ),
       child: Visibility(
         visible: subtitle != null,
@@ -365,7 +369,7 @@ class StoreSubscriptionsFinanceDetailsScreenState
         child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25),
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).colorScheme.background,
             ),
             child: ListTile(
               shape: RoundedRectangleBorder(
