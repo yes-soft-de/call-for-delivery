@@ -91,6 +91,13 @@ class GeoDistanceService
 
                                 } elseif ($jsonResponse['rows'][0]['elements'][0]['status'] === GeoDistanceResultConstant::OK_STATUS_CONST) {
                                     $response['distance'] = trim($jsonResponse['rows'][0]['elements'][0]['distance']['text'], " km");
+
+                                    // check if distance has comma (it has when it is consists of four digits)
+                                    // if it has comma, then remove it
+                                    if (str_contains($response['distance'], ',')) {
+                                        $response['distance'] = str_replace(',', '', $response['distance']);
+                                    }
+
                                     $response['costDeliveryOrder'] = $this->calculateCostDeliveryOrder($userId, $response['distance']);
                                 }
 
@@ -131,6 +138,13 @@ class GeoDistanceService
 
                                 } elseif ($jsonResponse['rows'][0]['elements'][0]['status'] === GeoDistanceResultConstant::OK_STATUS_CONST) {
                                     $response['distance'] = trim($jsonResponse['rows'][0]['elements'][0]['distance']['text'], " km");
+
+                                    // check if distance has comma (it has when it is consists of four digits)
+                                    // if it has comma, then remove it
+                                    if (str_contains($response['distance'], ',')) {
+                                        $response['distance'] = str_replace(',', '', $response['distance']);
+                                    }
+
                                     $response['costDeliveryOrder'] = $this->calculateCostDeliveryOrderForAdmin($response['distance'], $storeOwnerProfileId);
                                 }
 
