@@ -101,7 +101,7 @@ class AppThemeDataService {
           ),
         )),
         cardColor: Color.fromRGBO(245, 245, 245, 1),
-        backgroundColor: Color.fromRGBO(236, 239, 241, 1),
+        scaffoldBackgroundColor: Colors.grey[50],
         textTheme: TextTheme(button: TextStyle(color: Colors.white)),
         fontFamily: 'Dubai',
         timePickerTheme: TimePickerThemeData(

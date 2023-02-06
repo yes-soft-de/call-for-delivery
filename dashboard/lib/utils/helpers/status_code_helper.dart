@@ -60,6 +60,8 @@ class StatusCodeHelper {
         return S.current.alreadyCanceled;
       case '9157':
         return S.current.storeProfileNotFound;
+      case '9314':
+        return S.current.invalidNumber;
       case '-1':
         return S.current.dataDecodeError;
       default:
