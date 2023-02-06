@@ -66,10 +66,10 @@ class AdminCaptainFinancialSystemTwoGetBalanceDetailsService
 
         $total = round(($sumPayments - $balanceDetailsResponse['financialDues']), 2);
 
-        $balanceDetailsResponse['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
+        $balanceDetailsResponse['advancePayment'] = CaptainFinancialSystem::ADVANCED_PAYMENT_BALANCE_CONST;
 
         if ($total <= 0 ) {
-            $balanceDetailsResponse['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_YES;
+            $balanceDetailsResponse['advancePayment'] = CaptainFinancialSystem::ADVANCED_PAYMENT_EXIST_CONST;
         }
 
         $balanceDetailsResponse['total'] = abs($total);
