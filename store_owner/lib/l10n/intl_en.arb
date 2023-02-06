@@ -685,5 +685,7 @@
     "changePassword": "Change password",
     "onGoingOrderChatRooms": "Ongoing chat rooms",
     "prayerMessage": "This order may take some extra time to be delivered due prayer period",
-    "quickFillUp": "Quick fillUp"
+    "quickFillUp": "Quick fillUp",
+    "unpaidOrders":"Total unpaid (cash orders)",
+    "pressHereDetails" : "press for details"
 }

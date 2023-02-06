@@ -157,6 +157,7 @@ class SubscriptionBalanceLoadedState extends States {
               packageName: balance.packageName,
               active: true,
               expired: balance.expired.toString(),
+              unPaidCashOrdersSum: balance.unPaidCashOrdersSum,
             ),
             // Subscription status
             Padding(

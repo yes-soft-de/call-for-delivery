@@ -685,5 +685,7 @@
     "chatRoomOrder":"غرفة محادثة الطلب",
     "changePassword":"تعديل كلمة المرور",
     "onGoingOrderChatRooms":"محادثات الطلبات الجارية",
-    "quickFillUp":"الملئ السريع"
+    "quickFillUp":"الملئ السريع",
+    "unpaidOrders":"إجمالي الغير مدفوع (الطلبات الكاش)",
+    "pressHereDetails" : "اضغط للتفاصيل"
 }
