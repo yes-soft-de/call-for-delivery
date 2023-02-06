@@ -62,7 +62,7 @@ class AccountBalanceStateLoaded extends States {
     String text,
     num? value, {
     String? stringValue,
-    bool? advancedValue,
+    int? advancedValue,
   }) {
     bool currency = S.current.countOrdersDelivered != text;
     return Visibility(
@@ -80,9 +80,13 @@ class AccountBalanceStateLoaded extends States {
             constraints: const BoxConstraints(
                 maxWidth: 120, minWidth: 95, maxHeight: 55),
             decoration: BoxDecoration(
-              color: advancedValue != null
-                  ? (advancedValue ? Colors.green : Colors.red)
-                  : Theme.of(screenState.context).disabledColor,
+              color: advancedValue == null
+                  ? null
+                  : (advancedValue == 160
+                      ? Colors.green
+                      : advancedValue == 159
+                          ? Colors.red
+                          : Theme.of(screenState.context).disabledColor),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(

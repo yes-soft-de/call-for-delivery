@@ -46,7 +46,7 @@ class OrdersCashCaptainLoadedState extends States {
               child: Container(
                 width: 32,
                 height: 2.5,
-                color: Theme.of(context).backgroundColor,
+                color: Theme.of(context).colorScheme.background,
               ),
             ),
             Expanded(
@@ -66,7 +66,13 @@ class OrdersCashCaptainLoadedState extends States {
         child: VerticalBubble(
           radius: BorderRadius.circular(0),
           title: S.current.total,
-          background: total.advancePayment ? Colors.green : Colors.red,
+          background: total.advancePayment == null
+              ? null
+              : (total.advancePayment == 160
+                  ? Colors.green
+                  : total.advancePayment == 159
+                      ? Colors.red
+                      : Theme.of(screenState.context).disabledColor),
           subtitle:
               FixedNumber.getFixedNumber(total.total) + ' ${S.current.sar}',
           subtitleText: true,
@@ -78,14 +84,14 @@ class OrdersCashCaptainLoadedState extends States {
           indent: 16,
           endIndent: 16,
           thickness: 2.5,
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
         ),
       ),
       // bar
       FilterBar(
         cursorRadius: BorderRadius.circular(25),
         animationDuration: Duration(milliseconds: 350),
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
         currentIndex: screenState.currentIndex,
         borderRadius: BorderRadius.circular(25),
         floating: true,
@@ -101,8 +107,8 @@ class OrdersCashCaptainLoadedState extends States {
           screenState.currentIndex = index;
           screenState.refresh();
         },
-        selectedContent: Theme.of(context).textTheme.button!.color!,
-        unselectedContent: Theme.of(context).textTheme.headline6!.color!,
+        selectedContent: Theme.of(context).textTheme.labelLarge!.color!,
+        unselectedContent: Theme.of(context).textTheme.titleLarge!.color!,
       ),
 
       //

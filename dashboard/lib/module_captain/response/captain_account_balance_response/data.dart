@@ -10,7 +10,7 @@ class Data {
   num? financialDues;
   num? sumPayments;
   num? total;
-  bool? advancePayment;
+  dynamic advancePayment;
   num? monthCompensation;
   num? countOverOrdersThanRequired;
   num? bounce;
@@ -55,11 +55,11 @@ class Data {
         financialDues: json['financialDues'] as num?,
         sumPayments: json['sumPayments'] as num?,
         total: json['total'] as num?,
-        advancePayment: json['advancePayment'] is bool?
-            ? json['advancePayment'] as bool?
-            : (json['advancePayment'] != null
-                ? (json['advancePayment'] == 1 ? true : false)
-                : null),
+        advancePayment: json['advancePayment'] as dynamic,
+        // ? json['advancePayment'] as int?
+        // : (json['advancePayment'] != null
+        //     ? (json['advancePayment'] == 1 ? true : false)
+        //     : null),
         bounce: json['bounce'] as num?,
         countOrdersCompleted: json['countOrdersCompleted'] as num?,
         countOverOrdersThanRequired:

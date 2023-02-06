@@ -1,7 +1,7 @@
 class FinalFinancialAccount {
   num? financialDues;
   num? sumPayments;
-  bool? advancePayment;
+  dynamic advancePayment;
   num? total;
   num? amountForStore;
 
@@ -18,7 +18,7 @@ class FinalFinancialAccount {
       financialDues: json['financialDues'] as num?,
       amountForStore: json['amountForStore'] as num?,
       sumPayments: json['sumPayments'] as num?,
-      advancePayment: json['advancePayment'] as bool?,
+      advancePayment: json['advancePayment'] as dynamic,
       total: json['total'] as num?,
     );
   }
