@@ -61,7 +61,7 @@ dependencies:
   share: ^2.0.4
   # Network Agent
   dio: ^4.0.0
-  dio_firebase_performance: ^0.3.1-dev.3
+  firebase_performance_dio: ^0.4.1
   # Analyzer
   analyzer_plugin: ^0.11.2
   # Time Ago Generator
@@ -74,13 +74,12 @@ dependencies:
   # Stream And RX
   rxdart: ^0.27.1
   # Firebase
-  firebase_core: ^1.2.0
-  firebase_analytics: ^9.3.8
-  firebase_remote_config: ^2.0.20
-  cloud_firestore: ^3.5.1
-  firebase_messaging: ^13.1.0
-  firebase_crashlytics: ^2.0.4
-  firebase_performance_web: ^0.1.0+5
+  firebase_core: ^2.4.1
+  firebase_analytics: ^10.1.0
+  firebase_remote_config: ^3.0.9
+  cloud_firestore: ^4.3.1
+  firebase_messaging: ^14.2.1
+  firebase_crashlytics: ^3.0.11
   # Internationalization
   intl: ^0.17.0
   intl_utils: ^2.3.0
@@ -122,7 +121,6 @@ dependencies:
   flutter_shimmer: ^2.1.2
   rotated_corner_decoration: ^2.0.0
   carousel_slider: ^4.0.0
-  firebase_database: ^9.0.15
   dropdown_search: ^5.0.5
   file_picker: ^5.2.5
   flutter_swipe_detector: ^2.0.0
