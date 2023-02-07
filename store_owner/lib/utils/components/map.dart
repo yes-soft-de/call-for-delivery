@@ -47,18 +47,18 @@ class _MapClientOrderState extends State<MapClientOrder> {
       options: MapOptions(
         center: widget.myPos ?? LatLng(21.5429423, 39.1690945),
         zoom: 17.0,
-        onTap: (newPos) {
-          saveMarker(newPos);
-          widget.onTap(newPos);
+        onTap: (tapPosition, point) {
+          saveMarker(point);
+          widget.onTap(point);
           setState(() {});
         },
       ),
-      layers: [
-        TileLayerOptions(
+      children: [
+        TileLayer(
           urlTemplate: 'https://mt.google.com/vt/lyrs=m&x={x}&y={y}&z={z}',
           subdomains: ['a', 'b', 'c'],
         ),
-        MarkerLayerOptions(
+        MarkerLayer(
           markers: clientAddress == null ? [] : _getMarkers(context),
         ),
       ],

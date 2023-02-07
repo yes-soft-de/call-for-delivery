@@ -93,7 +93,6 @@ class NewOrderStateBranchesLoaded extends States {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 16.0, right: 16),
                           child: DropdownSearch<BranchesModel>(
-                              showSearchBox: true,
                               enabled: branches.isNotEmpty,
                               dropdownBuilder: (context, model) {
                                 return Text(
@@ -101,29 +100,32 @@ class NewOrderStateBranchesLoaded extends States {
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 );
                               },
-                              dropdownSearchDecoration: InputDecoration(
-                                  hintStyle:
-                                      TextStyle(fontWeight: FontWeight.bold),
-                                  border: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  contentPadding:
-                                      EdgeInsets.fromLTRB(0, 12, 0, 0)),
-                              searchFieldProps: TextFieldProps(
-                                  decoration: InputDecoration(
-                                      hintText: S.current.chooseBranch,
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25)))),
-                              popupShape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25)),
-                              mode: Mode.MENU,
+                              dropdownDecoratorProps: DropDownDecoratorProps(
+                                  dropdownSearchDecoration: InputDecoration(
+                                      hintStyle: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                      border: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      contentPadding:
+                                          EdgeInsets.fromLTRB(0, 12, 0, 0))),
+                              dropdownButtonProps: DropdownButtonProps(),
+                              popupProps: PopupProps.menu(
+                                  showSearchBox: true,
+                                  menuProps: MenuProps(
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
+                                  searchFieldProps: TextFieldProps(
+                                      decoration: InputDecoration(
+                                          hintText: S.current.chooseBranch,
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(25))))),
                               items: branches,
                               filterFn: (model, filter) {
-                                return model!.branchName.contains(filter ?? '');
+                                return model.branchName.contains(filter);
                               },
-                              itemAsString: (model) =>
-                                  model?.branchName ?? S.current.unknown,
+                              itemAsString: (model) => model.branchName,
                               onChanged: (v) {
                                 v as BranchesModel;
                                 screenState.branch = v.id;

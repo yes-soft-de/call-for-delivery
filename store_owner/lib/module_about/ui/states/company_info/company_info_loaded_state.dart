@@ -51,7 +51,7 @@ class CompanyInfoLoadedState extends States {
       ),
       CompanyListTile(
         number: true,
-        icon: Icons.whatsapp_rounded,
+        icon: FontAwesomeIcons.whatsapp,
         subtitle:
             PhoneNumberFormatter.format(company.whatsapp) ?? S.current.unknown,
         title: S.current.whatsapp,

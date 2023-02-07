@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'dart:math';
 import 'package:c4d/module_notifications/preferences/notification_preferences/notification_preferences.dart';
-import 'package:c4d/utils/logger/logger.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
@@ -10,13 +9,13 @@ import 'package:rxdart/rxdart.dart';
 import 'package:soundpool/soundpool.dart';
 import 'package:sound_mode/utils/ringer_mode_statuses.dart';
 import 'package:sound_mode/sound_mode.dart';
-
+import 'dart:io' as io;
 @injectable
 class LocalNotificationService {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
       FlutterLocalNotificationsPlugin();
 
-  static final PublishSubject<Map<String, dynamic>> _onNotificationReceived =
+  final PublishSubject<Map<String, dynamic>> _onNotificationReceived =
       PublishSubject();
 
   Stream<Map<String, dynamic>> get onLocalNotificationStream =>
@@ -26,65 +25,62 @@ class LocalNotificationService {
     AndroidInitializationSettings initializationSettingsAndroid =
         const AndroidInitializationSettings('icon');
 
-    const IOSInitializationSettings initializationSettingsIOS =
-        IOSInitializationSettings(requestSoundPermission: true);
+    const DarwinInitializationSettings initializationSettingsIOS =
+        DarwinInitializationSettings(requestSoundPermission: true);
 
     final InitializationSettings initializationSettings =
         InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS,
     );
-
+    if (io.Platform.isAndroid) {
+      flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
+          ?.requestPermission();
+    }
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: selectNotification);
+        onDidReceiveNotificationResponse: selectNotification);
   }
 
   void showNotification(RemoteMessage message) {
     RemoteNotification notification = message.notification!;
-    IOSNotificationDetails iOSPlatformChannelSpecifics =
-        const IOSNotificationDetails(
-      presentAlert: true,
-      presentBadge: true,
-      presentSound: false,
-    );
+    DarwinNotificationDetails iOSPlatformChannelSpecifics =
+        const DarwinNotificationDetails();
 
     AndroidNotificationDetails androidPlatformChannelSpecifics =
         const AndroidNotificationDetails(
-      'C4D_notification_test',
-      'C4D Notification test',
-      'Showing notifications while the app running',
+      'Local_notification',
+      'Local Notification',
+      channelDescription: 'Showing notifications while the app running',
       importance: Importance.max,
       priority: Priority.max,
       showWhen: true,
-      playSound: false,
+      playSound: true,
       channelShowBadge: true,
       enableLights: true,
       enableVibration: true,
       onlyAlertOnce: false,
-      category: 'Local',
+      category: AndroidNotificationCategory.event,
     );
 
     NotificationDetails platformChannelSpecifics = NotificationDetails(
         android: androidPlatformChannelSpecifics,
         iOS: iOSPlatformChannelSpecifics);
-    try {
-      flutterLocalNotificationsPlugin.show(
-          (int.tryParse(message.messageId ?? '1') ?? Random().nextInt(100000)) %
-              100000,
-          notification.title,
-          notification.body,
-          platformChannelSpecifics,
-          payload: json.encode(message.data));
-    } catch (e) {
-      Logger().error('Local notification', e.toString(), StackTrace.current);
-    }
+
+    flutterLocalNotificationsPlugin.show(
+        int.tryParse(message.messageId ?? '1') ?? Random().nextInt(1000000),
+        notification.title,
+        notification.body,
+        platformChannelSpecifics,
+        payload: json.encode(message.data));
 
     playSound();
   }
 
-  Future selectNotification(String? payload) async {
-    if (payload != null) {
-      var data = json.decode(payload);
+  Future selectNotification(NotificationResponse? notification) async {
+    if (notification?.payload != null) {
+      var data = json.decode(notification!.payload!);
       _onNotificationReceived.add(data);
     }
   }
