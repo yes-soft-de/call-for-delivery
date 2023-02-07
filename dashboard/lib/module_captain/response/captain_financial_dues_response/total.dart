@@ -12,7 +12,7 @@ class Total {
   });
 
   factory Total.fromJson(Map<String, dynamic> json) => Total(
-        advancePayment: json['advancePayment'],
+        advancePayment: json['advancePayment'] as dynamic,
         sumCaptainFinancialDues: json['sumCaptainFinancialDues'] is String?
             ? num.tryParse(json['sumCaptainFinancialDues'] ?? '')
             : json['sumCaptainFinancialDues'] as num?,

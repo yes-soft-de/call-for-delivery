@@ -16,7 +16,7 @@ class StoreCashOrdersFinanceModel extends DataModel {
       OrdersCashFinancesForStoreResponse response) {
     var data = response.data;
     Total _total = Total(
-        advancePayment: data?.total?.advancePayment ?? false,
+        advancePayment: data?.total?.advancePayment,
         sumAmountStorOwnerDues: data?.total?.sumAmountStorOwnerDues ?? 0,
         sumPaymentsFromCompany:
             num.tryParse(data?.total?.sumPaymentsFromCompany ?? '0') ?? 0,
@@ -46,7 +46,7 @@ class StoreCashOrdersFinanceModel extends DataModel {
 class Total {
   num sumAmountStorOwnerDues;
   num sumPaymentsFromCompany;
-  bool advancePayment;
+  dynamic advancePayment;
   num total;
   Total({
     required this.sumAmountStorOwnerDues,

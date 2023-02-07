@@ -112,25 +112,19 @@ class CaptainFinancialDuesStateLoaded extends States {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Expanded(
-                            child: InkWell(
-                              onTap: () {
-                                print(element.total.advancePayment);
-                              },
-                              child: verticalBubble(context,
-                                  title: S.current.total,
-                                  subtitle: FixedNumber.getFixedNumber(
-                                          element.total.total) +
-                                      ' ${S.current.sar}',
-                                  background: element.total.advancePayment ==
-                                          null
-                                      ? null
-                                      : (element.total.advancePayment == 160
-                                          ? Colors.green
-                                          : element.total.advancePayment == 159
-                                              ? Colors.red
-                                              : Theme.of(screenState.context)
-                                                  .disabledColor)),
-                            ),
+                            child: verticalBubble(context,
+                                title: S.current.total,
+                                subtitle: FixedNumber.getFixedNumber(
+                                        element.total.total) +
+                                    ' ${S.current.sar}',
+                                background: element.total.advancePayment == null
+                                    ? null
+                                    : (element.total.advancePayment == 160
+                                        ? Colors.green
+                                        : element.total.advancePayment == 159
+                                            ? Colors.red
+                                            : Theme.of(screenState.context)
+                                                .disabledColor)),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),

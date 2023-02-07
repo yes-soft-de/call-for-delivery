@@ -16,7 +16,7 @@ class CaptainAccountBalanceModel extends DataModel {
   late num? financialDues;
   late num? sumPayments;
   late num? total;
-  late bool? advancePayment;
+  late dynamic? advancePayment;
   late num? monthCompensation;
   late num? countOverOrdersThanRequired;
   late num? bounce;
