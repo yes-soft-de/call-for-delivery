@@ -31,7 +31,7 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
           padding: const EdgeInsets.all(12.0),
           child: Text(
             S.current.balanceHint,
-            style: Theme.of(context).textTheme.button,
+            style: Theme.of(context).textTheme.labelLarge,
           ),
         ),
       ),
@@ -57,7 +57,7 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
                         blurRadius: 5,
                         spreadRadius: 0.5,
                         offset: const Offset(-1, 0),
-                        color: Theme.of(context).backgroundColor),
+                        color: Theme.of(context).colorScheme.background),
                   ]),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -83,7 +83,7 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
                             child: Container(
                               width: 32,
                               height: 2.5,
-                              color: Theme.of(context).backgroundColor,
+                              color: Theme.of(context).colorScheme.background,
                             ),
                           ),
                           Expanded(
@@ -110,7 +110,7 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
                             child: Container(
                               width: 32,
                               height: 2.5,
-                              color: Theme.of(context).backgroundColor,
+                              color: Theme.of(context).colorScheme.background,
                             ),
                           ),
                           Expanded(
@@ -135,16 +135,19 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
                                     ' ${S.current.sar}',
                                 background: element.total.advancePayment == null
                                     ? null
-                                    : (element.total.advancePayment == true
+                                    : (element.total.advancePayment == 160
                                         ? Colors.green
-                                        : Colors.red)),
+                                        : element.total.advancePayment == 159
+                                            ? Colors.red
+                                            : Theme.of(screenState.context)
+                                                .disabledColor)),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
                               width: 32,
                               height: 2.5,
-                              color: Theme.of(context).backgroundColor,
+                              color: Theme.of(context).colorScheme.background,
                             ),
                           ),
                           Expanded(
@@ -182,7 +185,7 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
       children: [
         Text(title),
         Container(
-            color: backgroundColor ?? Theme.of(context).backgroundColor,
+            color: backgroundColor ?? Theme.of(context).colorScheme.background,
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Text(
@@ -204,7 +207,7 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-        color: background ?? Theme.of(context).backgroundColor,
+        color: background ?? Theme.of(context).colorScheme.background,
       ),
       child: Material(
         color: Colors.transparent,
