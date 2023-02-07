@@ -6909,11 +6909,17 @@ class S {
       args: [],
     );
   }
+
   /// `Total unpaid (cash orders)`
   String get unpaidOrders {
     return Intl.message(
       'Total unpaid (cash orders)',
       name: 'unpaidOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `press for details`
   String get pressHereDetails {
     return Intl.message(

@@ -1,4 +1,3 @@
-import 'dart:developer';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
@@ -22,7 +21,6 @@ import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
@@ -405,7 +403,8 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                     });
                   },
                   leading: Icon(
-                    Icons.whatsapp,
+                    // Icons.whatsapp,
+                    FontAwesomeIcons.whatsapp,
                     color: Theme.of(context).textTheme.labelLarge?.color,
                   ),
                   title: Text(S.current.whatsapp),

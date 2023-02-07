@@ -125,7 +125,7 @@ class PaymentModel {
 }
 
 class Total {
-  bool? advancePayment;
+  dynamic? advancePayment;
   num packageCost;
   num sumPayments;
   num total;
