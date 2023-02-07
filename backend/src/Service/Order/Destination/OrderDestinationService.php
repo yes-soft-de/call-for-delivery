@@ -336,9 +336,7 @@ class OrderDestinationService
         $calculateCostDeliveryOrderRequest = $this->initializeCalculateCostDeliveryOrderRequest($storeBranchToClientDistance,
             $storeOwnerUserId);
 
-        $orderDeliveryCostResponse = $this->subscriptionService->calculateCostDeliveryOrder($calculateCostDeliveryOrderRequest);
-
-        return $orderDeliveryCostResponse;
+        return $this->subscriptionService->calculateCostDeliveryOrder($calculateCostDeliveryOrderRequest);
     }
 
     public function initializeOrderDeliveryCostUpdateRequest(int $orderId, float $deliveryCost): OrderDeliveryCostUpdateRequest
