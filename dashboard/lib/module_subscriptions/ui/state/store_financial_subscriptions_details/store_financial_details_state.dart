@@ -40,7 +40,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).colorScheme.background,
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -162,7 +162,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                                       },
                                 child: Text(
                                   S.current.pay,
-                                  style: Theme.of(context).textTheme.button,
+                                  style: Theme.of(context).textTheme.labelLarge,
                                 )),
                             ElevatedButton(
                                 onPressed: () {
@@ -172,7 +172,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                                 },
                                 child: Text(
                                   S.current.cancel,
-                                  style: Theme.of(context).textTheme.button,
+                                  style: Theme.of(context).textTheme.labelLarge,
                                 ))
                           ],
                         );
@@ -183,7 +183,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
                   S.current.makePayment,
-                  style: Theme.of(context).textTheme.button,
+                  style: Theme.of(context).textTheme.labelLarge,
                 ),
               )),
         ),
@@ -253,7 +253,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                 padding: const EdgeInsets.all(10.0),
                 child: Text(
                   S.current.storePayments,
-                  style: Theme.of(context).textTheme.button,
+                  style: Theme.of(context).textTheme.labelLarge,
                 ),
               )),
         ),
@@ -312,7 +312,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
         child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25),
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).colorScheme.background,
             ),
             child: ListTile(
               shape: RoundedRectangleBorder(
@@ -394,14 +394,14 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
         Text(
           model.packageName,
           style: TextStyle(
-              color: Theme.of(context).textTheme.button?.color,
+              color: Theme.of(context).textTheme.labelLarge?.color,
               fontWeight: FontWeight.bold),
         ),
         Padding(
           padding:
               const EdgeInsets.only(right: 16.0, left: 16, top: 16, bottom: 16),
           child: DottedLine(
-            dashColor: Theme.of(context).backgroundColor,
+            dashColor: Theme.of(context).colorScheme.background,
             lineThickness: 2.5,
             dashRadius: 25,
           ),
@@ -438,7 +438,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
         // subscription details
         Divider(
           thickness: 2.5,
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
           indent: 32,
           endIndent: 32,
         ),
@@ -519,7 +519,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
         //
         Divider(
           thickness: 2.5,
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
           indent: 32,
           endIndent: 32,
         ),
@@ -660,7 +660,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
             indent: 16,
             endIndent: 16,
             thickness: 2.5,
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).colorScheme.background,
           ),
         ),
         Container(
@@ -668,9 +668,15 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
           child: verticalBubble(context,
               subtitle: model.total.total.toString() + ' ${S.current.sar}',
               title: S.current.leftToPay,
-              background: model.total.advancePayment == false
-                  ? Colors.green
-                  : Colors.red),
+              background: model.total.advancePayment ==
+                                          null
+                                      ? null
+                                      : (model.total.advancePayment == 160
+                                          ? Colors.green
+                                          : model.total.advancePayment == 159
+                                              ? Colors.red
+                                              : Theme.of(screenState.context)
+                                                  .disabledColor)),
         )
       ],
     );
@@ -689,7 +695,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
             child: Container(
               width: 32,
               height: 2.5,
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).colorScheme.background,
             ),
           ),
           Expanded(child: secondBubble),
@@ -787,7 +793,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(radius),
-        color: background ?? Theme.of(context).backgroundColor,
+        color: background ?? Theme.of(context).colorScheme.background,
       ),
       child: Visibility(
         visible: subtitle != null,

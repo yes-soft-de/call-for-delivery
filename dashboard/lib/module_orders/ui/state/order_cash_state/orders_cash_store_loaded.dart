@@ -43,7 +43,7 @@ class OrdersCashStoreLoadedState extends States {
               child: Container(
                 width: 32,
                 height: 2.5,
-                color: Theme.of(context).backgroundColor,
+                color: Theme.of(context).colorScheme.background,
               ),
             ),
             Expanded(
@@ -63,7 +63,13 @@ class OrdersCashStoreLoadedState extends States {
         child: VerticalBubble(
           radius: BorderRadius.circular(0),
           title: S.current.total,
-          background: total.advancePayment ? Colors.green : Colors.red,
+          background: total.advancePayment == null
+              ? null
+              : (total.advancePayment == 160
+                  ? Colors.green
+                  : total.advancePayment == 159
+                      ? Colors.red
+                      : Theme.of(screenState.context).disabledColor),
           subtitle:
               FixedNumber.getFixedNumber(total.total) + ' ${S.current.sar}',
           subtitleText: true,
@@ -75,7 +81,7 @@ class OrdersCashStoreLoadedState extends States {
           indent: 16,
           endIndent: 16,
           thickness: 2.5,
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
         ),
       ),
       Column(
