@@ -114,4 +114,9 @@ class DateFactoryService
 
         return false;
     }
+
+    public function getDateTimeObjectFromDateTimeInterface(DateTimeInterface $dateTime): DateTime
+    {
+        return DateTime::createFromInterface($dateTime);
+    }
 }

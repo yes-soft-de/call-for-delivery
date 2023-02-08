@@ -742,4 +742,9 @@ class OrderManager
 
         return $orderEntity;
     }
+
+    public function getOrderEntityByIdAndState(int $orderId, string $orderState): ?OrderEntity
+    {
+        return $this->orderRepository->findOneBy(['id' => $orderId, 'state' => $orderState]);
+    }
 }

@@ -44,6 +44,7 @@ use App\Response\Order\OrderUpdateByCaptainResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Subscription\SubscriptionConstant;
+use App\Service\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyService;
 use App\Service\CaptainOrderFinancialService\OrderFinancialValueGetService;
 use App\Service\DateFactory\DateFactoryService;
 use App\Service\Notification\DashboardLocalNotification\DashboardLocalNotificationService;
@@ -111,7 +112,8 @@ class OrderService
         private DateFactoryService $dateFactoryService,
         private OrderFinancialValueGetService $orderFinancialValueGetService,
         private StoreOrderDetailsService $storeOrderDetailsService,
-        private DashboardLocalNotificationService $dashboardLocalNotificationService
+        private DashboardLocalNotificationService $dashboardLocalNotificationService,
+        private CaptainFinancialDailyService $captainFinancialDailyService
     )
     {
     }
@@ -580,6 +582,9 @@ class OrderService
                     $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($order, OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $order->getOrderCost());
                     $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($order, OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $order->getOrderCost());
                 }
+
+                // Create or update captain financial daily amount
+                //$this->createOrUpdateCaptainFinancialDaily($order->getId());
             }
 
             // save log of the action on order
@@ -1730,5 +1735,13 @@ class OrderService
     {
         $this->dashboardLocalNotificationService->createOrderLogMessage($title, $message,
             DashboardLocalNotificationAppTypeConstant::CAPTAIN_APP_TYPE_CONST, $adminUserId, $orderId);
+    }
+
+    /**
+     * Creates or Updates Daily Financial amount for captain
+     */
+    public function createOrUpdateCaptainFinancialDaily(int $orderId)
+    {
+        $this->captainFinancialDailyService->createOrUpdateCaptainFinancialDaily($orderId);
     }
 }
