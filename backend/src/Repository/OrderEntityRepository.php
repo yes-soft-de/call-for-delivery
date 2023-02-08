@@ -1408,7 +1408,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')
             ->addSelect('bidDetailsEntity as bidDetailsInfo')
-            ->addSelect('captainEntity.captainName')
+            ->addSelect('captainEntity.id as captainProfileId', 'captainEntity.captainName')
 
             ->leftJoin(StoreOrderDetailsEntity::class, 'storeOrderDetails', Join::WITH, 'orderEntity.id = storeOrderDetails.orderId')
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')

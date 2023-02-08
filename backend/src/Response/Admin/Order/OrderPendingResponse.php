@@ -49,4 +49,9 @@ class OrderPendingResponse
      * @var string|null
      */
     public $captainName;
+
+    /**
+     * @var int|null
+     */
+    public $captainProfileId;
 }
