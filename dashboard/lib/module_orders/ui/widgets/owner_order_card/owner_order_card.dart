@@ -16,6 +16,7 @@ class OwnerOrderCard extends StatelessWidget {
   final String? primaryTitle;
   final IconData? icon;
   final bool? isDelivered;
+  final int? captainProfileId;
   OwnerOrderCard(
       {required this.orderNumber,
       required this.orderStatus,
@@ -27,7 +28,8 @@ class OwnerOrderCard extends StatelessWidget {
       this.primaryTitle,
       required this.orderIsMain,
       this.icon,
-      this.isDelivered});
+      this.isDelivered,
+      required this.captainProfileId});
 
   @override
   Widget build(BuildContext context) {
@@ -148,11 +150,17 @@ class OwnerOrderCard extends StatelessWidget {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    verticalTile(context,
-                        title: isDelivered ?? false
-                            ? S.current.captain
-                            : S.current.deliverDate,
-                        subtitle: deliveryDate),
+                    verticalTile(
+                      context,
+                      title: isDelivered ?? false
+                          ? S.current.captain
+                          : S.current.deliverDate,
+                      subtitle: isDelivered ?? false
+                          ? captainProfileId == null
+                              ? deliveryDate
+                              : deliveryDate + ' ${{captainProfileId}}'
+                          : deliveryDate,
+                    ),
                     verticalTile(context,
                         title: S.current.createdDate, subtitle: createdDate),
                   ],
@@ -170,7 +178,7 @@ class OwnerOrderCard extends StatelessWidget {
                             S.current.sar),
                     Icon(
                       icon ?? Icons.arrow_circle_left_outlined,
-                      color: Theme.of(context).textTheme.button?.color,
+                      color: Theme.of(context).textTheme.labelLarge?.color,
                     )
                   ],
                 ),
@@ -190,19 +198,19 @@ class OwnerOrderCard extends StatelessWidget {
           title,
           style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).textTheme.button?.color),
+              color: Theme.of(context).textTheme.labelLarge?.color),
         ),
         Text(subtitle,
             style: Theme.of(context)
                 .textTheme
-                .button
+                .labelLarge
                 ?.copyWith(fontWeight: FontWeight.normal)),
       ],
     );
   }
 
   Widget divider(context) {
-    Color dividerColor = Theme.of(context).textTheme.button!.color!;
+    Color dividerColor = Theme.of(context).textTheme.labelLarge!.color!;
     return Divider(
       thickness: 2,
       indent: 16,

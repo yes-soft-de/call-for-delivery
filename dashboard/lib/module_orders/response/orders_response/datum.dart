@@ -26,6 +26,7 @@ class DatumOrder {
   int? isCashPaymentConfirmedByStore;
   int? paidToProvider;
   String? captainName;
+  dynamic? captainProfileId;
   num? kilometer;
   num? storeBranchToClientDistance;
   DatumOrder({
@@ -51,6 +52,7 @@ class DatumOrder {
     this.isCashPaymentConfirmedByStore,
     this.paidToProvider,
     this.captainName,
+    this.captainProfileId,
     this.kilometer,
     this.storeBranchToClientDistance,
   });
@@ -67,6 +69,7 @@ class DatumOrder {
         storeOwnerName: json['storeOwnerName'] as String?,
         paidToProvider: json['paidToProvider'] as int?,
         captainName: json['captainName'] as String?,
+        captainProfileId: json['captainProfileId'],
         isCashPaymentConfirmedByStore:
             json['isCashPaymentConfirmedByStore'] as int?,
         note: json['note'] as String?,

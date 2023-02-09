@@ -235,6 +235,7 @@ class AccountBalanceStateLoaded extends States {
                     arguments: element.id);
               },
               child: OwnerOrderCard(
+                captainProfileId: element.captainProfileId,
                 createdDate: element.createdDate,
                 deliveryDate: element.deliveryDate,
                 note: element.note,

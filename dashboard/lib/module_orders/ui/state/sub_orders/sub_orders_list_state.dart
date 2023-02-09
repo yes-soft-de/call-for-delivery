@@ -37,6 +37,7 @@ class SubOrdersListStateLoaded extends States {
                   arguments: element.id);
             },
             child: OwnerOrderCard(
+              captainProfileId: element.captainProfileId,
               primaryTitle: element.orderIsMain
                   ? S.current.primaryOrder
                   : S.current.suborder,

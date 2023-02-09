@@ -72,7 +72,7 @@ class OrderPendingLoadedState extends States {
       FilterBar(
         cursorRadius: BorderRadius.circular(25),
         animationDuration: Duration(milliseconds: 350),
-        backgroundColor: Theme.of(context).backgroundColor,
+        backgroundColor: Theme.of(context).colorScheme.background,
         currentIndex: screenState.currentIndex,
         borderRadius: BorderRadius.circular(25),
         floating: true,
@@ -90,8 +90,8 @@ class OrderPendingLoadedState extends States {
           screenState.getOrders(false);
           screenState.refresh();
         },
-        selectedContent: Theme.of(context).textTheme.button!.color!,
-        unselectedContent: Theme.of(context).textTheme.headline6!.color!,
+        selectedContent: Theme.of(context).textTheme.labelLarge!.color!,
+        unselectedContent: Theme.of(context).textTheme.titleLarge!.color!,
       ),
     );
     for (var element in ordersIndex[screenState.currentIndex]) {
@@ -115,6 +115,7 @@ class OrderPendingLoadedState extends States {
                   }
                 },
                 child: OwnerOrderCard(
+                  captainProfileId: element.captainProfileId,
                   isDelivered: screenState.currentIndex == 1,
                   orderNumber: element.id.toString(),
                   orderStatus:

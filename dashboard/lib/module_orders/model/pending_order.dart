@@ -62,6 +62,7 @@ class PendingOrder extends DataModel {
         note: element.note ?? '',
         deliveryDate: delivery,
         createdDate: create,
+        captainProfileId: element.captainProfileId,
         created: DateHelper.convert(element.createdAt?.timestamp),
         delivery: DateHelper.convert(element.deliveryDate?.timestamp),
         id: element.id ?? -1,

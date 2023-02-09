@@ -668,15 +668,13 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
           child: verticalBubble(context,
               subtitle: model.total.total.toString() + ' ${S.current.sar}',
               title: S.current.leftToPay,
-              background: model.total.advancePayment ==
-                                          null
-                                      ? null
-                                      : (model.total.advancePayment == 160
-                                          ? Colors.green
-                                          : model.total.advancePayment == 159
-                                              ? Colors.red
-                                              : Theme.of(screenState.context)
-                                                  .disabledColor)),
+              background: model.total.advancePayment == null
+                  ? null
+                  : (model.total.advancePayment == 160
+                      ? Colors.green
+                      : model.total.advancePayment == 159
+                          ? Colors.red
+                          : Theme.of(screenState.context).disabledColor)),
         )
       ],
     );
@@ -714,6 +712,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                   arguments: element.id);
             },
             child: OwnerOrderCard(
+              captainProfileId: element.captainProfileId,
               createdDate: element.createdDate,
               deliveryDate: element.deliveryDate,
               note: element.note,

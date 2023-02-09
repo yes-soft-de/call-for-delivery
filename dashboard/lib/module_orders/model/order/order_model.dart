@@ -25,6 +25,7 @@ class OrderModel extends DataModel {
   int? isCashPaymentConfirmedByStore;
   int? paidToProvider;
   String? captainName;
+  int? captainProfileId;
   int? storeId;
   String? branchID;
   List<OrderModel> subOrders = [];
@@ -45,6 +46,7 @@ class OrderModel extends DataModel {
     this.isCashPaymentConfirmedByStore,
     this.paidToProvider,
     this.captainName,
+    this.captainProfileId,
     this.storeId,
     this.branchID,
     this.created,
@@ -73,6 +75,7 @@ class OrderModel extends DataModel {
       //
       _orders.add(OrderModel(
         captainName: element.captainName,
+        captainProfileId: element.captainProfileId,
         branchName: element.branchName ?? S.current.unknown,
         createdDate: create,
         deliveryDate: delivery,
@@ -111,6 +114,7 @@ class OrderModel extends DataModel {
           DateFormat.Md()
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       orders.add(OrderModel(
+        captainProfileId: element.captainProfileId,
         branchName: element.branchName ?? S.current.unknown,
         createdDate: create,
         deliveryDate: delivery,

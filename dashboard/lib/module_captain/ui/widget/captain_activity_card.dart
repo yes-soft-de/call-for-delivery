@@ -99,7 +99,8 @@ class CaptainActivityCard extends StatelessWidget {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: Theme.of(context)
-                              .backgroundColor
+                              .colorScheme
+                              .background
                               .withOpacity(0.2),
                         ),
                         child: Padding(
@@ -122,8 +123,10 @@ class CaptainActivityCard extends StatelessWidget {
                         indent: 16,
                         endIndent: 16,
                         thickness: 1.5,
-                        color:
-                            Theme.of(context).backgroundColor.withOpacity(0.5),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .background
+                            .withOpacity(0.5),
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -150,7 +153,8 @@ class CaptainActivityCard extends StatelessWidget {
                             height: 35,
                             width: 1.5,
                             decoration: BoxDecoration(
-                                color: Theme.of(context).backgroundColor),
+                                color:
+                                    Theme.of(context).colorScheme.background),
                           ),
                           Expanded(
                             child: ListTile(
