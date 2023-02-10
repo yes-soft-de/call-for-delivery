@@ -6,6 +6,7 @@ import 'package:c4d/module_captain/ui/widget/account_balance_details.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/ui/widgets/owner_order_card/owner_order_card.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
+import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/effect/scaling.dart';
@@ -13,6 +14,8 @@ import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../../../../di/di_config.dart';
 
 class AccountBalanceStateLoaded extends States {
   CaptainAccountBalanceModel? balance;
@@ -94,8 +97,10 @@ class AccountBalanceStateLoaded extends States {
               child: Text(
                 stringValue ??
                     '${FixedNumber.getFixedNumber(value ?? 0)} ${currency ? S.current.sar : S.current.sOrder}',
-                style: const TextStyle(
-                  color: Colors.white,
+                style: TextStyle(
+                  color: getIt<ThemePreferencesHelper>().isDarkMode()
+                      ? Colors.white
+                      : Colors.black,
                 ),
                 overflow: TextOverflow.ellipsis,
                 maxLines: 1,
