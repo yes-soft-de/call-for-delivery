@@ -15,21 +15,22 @@ class SubOrder {
   Location? location;
   String? branchName;
   String? storeOwnerName;
+  int? captainProfileId;
 
-  SubOrder({
-    this.id,
-    this.deliveryDate,
-    this.createdAt,
-    this.payment,
-    this.orderCost,
-    this.orderType,
-    this.note,
-    this.state,
-    this.storeOwnerBranchId,
-    this.location,
-    this.branchName,
-    this.storeOwnerName,
-  });
+  SubOrder(
+      {this.id,
+      this.deliveryDate,
+      this.createdAt,
+      this.payment,
+      this.orderCost,
+      this.orderType,
+      this.note,
+      this.state,
+      this.storeOwnerBranchId,
+      this.location,
+      this.branchName,
+      this.storeOwnerName,
+      this.captainProfileId});
 
   factory SubOrder.fromJson(Map<String, dynamic> json) => SubOrder(
         id: json['id'] as int?,
@@ -51,6 +52,7 @@ class SubOrder {
             : Location.fromJson(json['location'] as Map<String, dynamic>),
         branchName: json['branchName'] as String?,
         storeOwnerName: json['storeOwnerName'] as String?,
+        captainProfileId: json['captainProfileId'] as int?,
       );
 
   Map<String, dynamic> toJson() => {

@@ -103,6 +103,7 @@ class OrderCaptainLogsLoadedState extends States {
                   arguments: element.id);
             },
             child: OwnerOrderCard(
+              captainProfileId: element.captainProfileId,
               orderNumber: element.id.toString(),
               orderStatus: StatusHelper.getOrderStatusMessages(element.state),
               createdDate: element.createdDate,

@@ -99,7 +99,8 @@ class CaptainActivityCard extends StatelessWidget {
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
                           color: Theme.of(context)
-                              .backgroundColor
+                              .colorScheme
+                              .background
                               .withOpacity(0.2),
                         ),
                         child: Padding(
@@ -122,9 +123,38 @@ class CaptainActivityCard extends StatelessWidget {
                         indent: 16,
                         endIndent: 16,
                         thickness: 1.5,
-                        color:
-                            Theme.of(context).backgroundColor.withOpacity(0.5),
+                        color: Theme.of(context)
+                            .colorScheme
+                            .background
+                            .withOpacity(0.5),
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            child: ListTile(
+                              title: Text(
+                                S.current.last24CountOrder,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              subtitle: Text(
+                                (last24CountOrder ?? '0') +
+                                    ' ' +
+                                    S.current.sOrder,
+                                style: TextStyle(
+                                  color: Colors.white70,
+                                ),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: 35,
+                            width: 1.5,
+                            decoration: BoxDecoration(
+                                color:
+                                    Theme.of(context).colorScheme.background),
                       ListTile(
                         title: Text(
                           S.current.countTodayOrder,
