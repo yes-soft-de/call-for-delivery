@@ -194,7 +194,10 @@ class _UpdateOrderStatusFormState extends State<UpdateOrderStatusForm> {
 
   List<DropdownMenuItem<OrderStatusEnum>> _getStatus() {
     var branchDropDown = <DropdownMenuItem<OrderStatusEnum>>[];
-    OrderStatusEnum.values.forEach((element) {
+    for (var element in OrderStatusEnum.values) {
+      if (element == OrderStatusEnum.CANCELLED) {
+        continue;
+      }
       branchDropDown.add(DropdownMenuItem(
         child: Text(
           StatusHelper.getOrderStatusMessages(element),
@@ -202,7 +205,7 @@ class _UpdateOrderStatusFormState extends State<UpdateOrderStatusForm> {
         ),
         value: element,
       ));
-    });
+    }
     return branchDropDown;
   }
 }

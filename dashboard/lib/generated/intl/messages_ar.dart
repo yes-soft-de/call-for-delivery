@@ -78,6 +78,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تمت إضافة الفرع بنجاح"),
         "addCars": MessageLookupByLibrary.simpleMessage("أضف سيارة"),
         "addCategory": MessageLookupByLibrary.simpleMessage("إضاف تصنيف"),
+        "addExtraDestination":
+            MessageLookupByLibrary.simpleMessage("مسافة زائدة"),
         "addNote": MessageLookupByLibrary.simpleMessage("إضافة تحديث"),
         "addOffer": MessageLookupByLibrary.simpleMessage("إضافة عرض"),
         "addOfferSuccessfully":
@@ -89,11 +91,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "addStore": MessageLookupByLibrary.simpleMessage("أضف متجر"),
         "addWorkPackage":
             MessageLookupByLibrary.simpleMessage("إضافة باقة عمل"),
+        "addition": MessageLookupByLibrary.simpleMessage("إضافة"),
         "address": MessageLookupByLibrary.simpleMessage("العنوان"),
         "admin": MessageLookupByLibrary.simpleMessage("المدير"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "all": MessageLookupByLibrary.simpleMessage("الكل"),
         "allOrdersCount": MessageLookupByLibrary.simpleMessage("عدد الطلبات"),
+        "alreadyCanceled":
+            MessageLookupByLibrary.simpleMessage("الطلب ملغي مسبقا"),
         "amount":
             MessageLookupByLibrary.simpleMessage("سعر الطلب ضمن المدى المحدد"),
         "amountForStore":
@@ -345,6 +350,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "contactInfo": MessageLookupByLibrary.simpleMessage("معلومات الإتصال"),
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف للتواصل"),
+        "coordinates": MessageLookupByLibrary.simpleMessage("الإحداثيات"),
         "copied": MessageLookupByLibrary.simpleMessage("تم نسخه بنجاح"),
         "cost": MessageLookupByLibrary.simpleMessage("التكلفة"),
         "countCaptains": MessageLookupByLibrary.simpleMessage("عدد الكباتن"),
@@ -481,6 +487,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "endDate": MessageLookupByLibrary.simpleMessage("إلى تاريخ"),
         "endedSubscriptions":
             MessageLookupByLibrary.simpleMessage("الاشتراكات المنتهية"),
+        "enterCarsCountYouWantToAdd": MessageLookupByLibrary.simpleMessage(
+            "ادخل سيارات للاضافة / للانقاص"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("ادخل معلومات المنتج"),
         "errOc": MessageLookupByLibrary.simpleMessage("حصلت المشاكل التالية"),
@@ -624,12 +632,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "invalidMapLink":
             MessageLookupByLibrary.simpleMessage("وجهة غير صالحة"),
         "invalidNumber": MessageLookupByLibrary.simpleMessage("الرقم غير صالح"),
+        "invalidOrderType": MessageLookupByLibrary.simpleMessage(
+            "الطلب من نوع مناقصة لايمكن إلغاءه"),
         "invoiceCost": MessageLookupByLibrary.simpleMessage("تكلفة الفاتورة"),
         "invoiceImage": MessageLookupByLibrary.simpleMessage("صورة الفاتورة"),
         "isCashPaymentConfirmedByStore": MessageLookupByLibrary.simpleMessage(
             "تم تأكيد/نفي استلام المبلغ النقدي من قبل الادارة نيابة عن المتجر"),
         "isFutureSubscriptions":
             MessageLookupByLibrary.simpleMessage("اشتراك مستقبلي"),
+        "issuesWithOrderStatusUpdate": MessageLookupByLibrary.simpleMessage(
+            "يوجد مشكلة في عملية تحديث الطلب"),
         "item": MessageLookupByLibrary.simpleMessage("عنصر"),
         "kilometerLimt":
             MessageLookupByLibrary.simpleMessage("عدد الكيلومترات"),
@@ -762,6 +774,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("سعر الطلبية للمتجر"),
         "orderCashWithCaptain":
             MessageLookupByLibrary.simpleMessage("المبلغ المقبوض مع الكابتن"),
+        "orderConflictDistances":
+            MessageLookupByLibrary.simpleMessage("طلبات بمسافات متنازعة"),
         "orderConflictedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم حل التعارض بنجاح"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
@@ -799,6 +813,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderList": MessageLookupByLibrary.simpleMessage("قائمة الطلبات"),
         "orderLog": MessageLookupByLibrary.simpleMessage("سجل الطلبات"),
         "orderLogHistory": MessageLookupByLibrary.simpleMessage("سجل الطلب"),
+        "orderNotFound":
+            MessageLookupByLibrary.simpleMessage("الطلب غير موجود"),
         "orderNumber": MessageLookupByLibrary.simpleMessage("رقم الطلب"),
         "orderNumberNotFound":
             MessageLookupByLibrary.simpleMessage("الطلب غير موجود"),
@@ -941,6 +957,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseDownloadmandob_moshtarayat":
             MessageLookupByLibrary.simpleMessage(
                 "الرجاء تحميل mandob_moshtarayat"),
+        "pleaseEnterValidCoord":
+            MessageLookupByLibrary.simpleMessage("من فضلك ادخل احداثيات صالحة"),
         "pleaseEnterValidCountryCode":
             MessageLookupByLibrary.simpleMessage("ادخال خاطئ"),
         "pleaseEnterValidPhoneNumber":
@@ -1004,6 +1022,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "rateSubmitting":
             MessageLookupByLibrary.simpleMessage("جاري إرسال تقييمك"),
         "rating": MessageLookupByLibrary.simpleMessage("التقييم"),
+        "reason": MessageLookupByLibrary.simpleMessage("السبب"),
         "reasonIsRequired":
             MessageLookupByLibrary.simpleMessage("الرجاء تزويدنا بسبب الابلاغ"),
         "reasonOfTheReport":
@@ -1145,6 +1164,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "storePhone": MessageLookupByLibrary.simpleMessage("رقم هاتف المحل"),
         "storeProducts":
             MessageLookupByLibrary.simpleMessage("المنتجات المتاحة"),
+        "storeProfileNotFound":
+            MessageLookupByLibrary.simpleMessage("بروفايل المتجر غير معلوم"),
         "storeProfitMargin":
             MessageLookupByLibrary.simpleMessage("هامش الربح من المتجر"),
         "storeRated":
@@ -1181,6 +1202,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "في هذه النافذة نستعرض التفاصيل المالية للاشتراك الحالي في التاريخ"),
         "subscriptionsFinanceHint": MessageLookupByLibrary.simpleMessage(
             "هنا تجد قائمة بالاشتراكات التي قام المتجر بالاشتراك فيها وتفاصيل عن النفقات التي يترتب عليها والدفعات التي تلقيها"),
+        "subtraction": MessageLookupByLibrary.simpleMessage("إنقاص"),
         "successCreateOrder":
             MessageLookupByLibrary.simpleMessage("تم إنشاء الطلب بنجاح"),
         "successRenew":
@@ -1300,9 +1322,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تحديث الدفعة بنجاح"),
         "updatePersonalInformation":
             MessageLookupByLibrary.simpleMessage("تعديل البيانات الشخصية"),
+        "updateRemainingCars":
+            MessageLookupByLibrary.simpleMessage("تحديث الكباتن المتبقية"),
         "updateStore": MessageLookupByLibrary.simpleMessage("تعديل المتجر"),
         "updateStoreAnswerSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث جواب المتجر بنجاح"),
+        "updateSuccess":
+            MessageLookupByLibrary.simpleMessage("تم التحديث بنجاح"),
         "updateYourData":
             MessageLookupByLibrary.simpleMessage("تحديث البيانات"),
         "updatedBy":

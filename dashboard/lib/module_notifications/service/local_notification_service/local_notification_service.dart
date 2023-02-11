@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io' as io;
 import 'dart:math';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:injectable/injectable.dart';
@@ -20,29 +21,34 @@ class LocalNotificationService {
     AndroidInitializationSettings initializationSettingsAndroid =
         const AndroidInitializationSettings('icon');
 
-    const IOSInitializationSettings initializationSettingsIOS =
-        IOSInitializationSettings(requestSoundPermission: true);
+    const DarwinInitializationSettings initializationSettingsIOS =
+        DarwinInitializationSettings(requestSoundPermission: true);
 
     final InitializationSettings initializationSettings =
         InitializationSettings(
       android: initializationSettingsAndroid,
       iOS: initializationSettingsIOS,
     );
-
+    if (io.Platform.isAndroid) {
+      flutterLocalNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+              AndroidFlutterLocalNotificationsPlugin>()
+          ?.requestPermission();
+    }
     await flutterLocalNotificationsPlugin.initialize(initializationSettings,
-        onSelectNotification: selectNotification);
+        onDidReceiveNotificationResponse: selectNotification);
   }
 
   void showNotification(RemoteMessage message) {
     RemoteNotification notification = message.notification!;
-    IOSNotificationDetails iOSPlatformChannelSpecifics =
-        const IOSNotificationDetails();
+    DarwinNotificationDetails iOSPlatformChannelSpecifics =
+        const DarwinNotificationDetails();
 
     AndroidNotificationDetails androidPlatformChannelSpecifics =
         const AndroidNotificationDetails(
       'Local_notification',
       'Local Notification',
-      'Showing notifications while the app running',
+      channelDescription: 'Showing notifications while the app running',
       importance: Importance.max,
       priority: Priority.max,
       showWhen: true,
@@ -51,7 +57,7 @@ class LocalNotificationService {
       enableLights: true,
       enableVibration: true,
       onlyAlertOnce: false,
-      category: 'Local',
+      category: AndroidNotificationCategory.event,
     );
 
     NotificationDetails platformChannelSpecifics = NotificationDetails(
@@ -66,9 +72,9 @@ class LocalNotificationService {
         payload: json.encode(message.data));
   }
 
-  Future selectNotification(String? payload) async {
-    if (payload != null) {
-      var data = json.decode(payload);
+  Future selectNotification(NotificationResponse? notification) async {
+    if (notification?.payload != null) {
+      var data = json.decode(notification!.payload!);
       _onNotificationReceived.add(data);
     }
   }

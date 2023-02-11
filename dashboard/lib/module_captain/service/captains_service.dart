@@ -310,7 +310,7 @@ class CaptainsService {
       CaptainActivityFilterRequest request) async {
     CaptainActivityResponse? actionResponse =
         await _manager.getCaptainActivityWithFilter(request);
-      if (actionResponse == null) {
+    if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
     }
     if (actionResponse.statusCode != '200') {

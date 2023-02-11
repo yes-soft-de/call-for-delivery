@@ -7,6 +7,7 @@ import 'package:c4d/module_stores/hive/store_hive_helper.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_subscriptions/model/store_subscriptions_financial.dart';
 import 'package:c4d/module_subscriptions/request/delete_captain_offer_request.dart';
+import 'package:c4d/module_subscriptions/request/update_remaining_cars_request.dart';
 import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_details_screen.dart';
 import 'package:c4d/module_subscriptions/ui/widget/item_payment_widget.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
@@ -467,6 +468,88 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
                       title: S.current.packageRemainingCaptains),
                   secondBubble: verticalBubble(context,
                       title: model.remainingCars.toString())),
+              ElevatedButton(
+                  onPressed: () {
+                    final factorController = TextEditingController();
+                    showDialog(
+                        context: context,
+                        builder: (ctx) {
+                          String operationType = 'addition';
+                          return AlertDialog(
+                            title: Text(S.current.updateRemainingCars),
+                            content: SizedBox(
+                              height: 155,
+                              child: Column(
+                                children: [
+                                  CustomFormField(
+                                    controller: factorController,
+                                    hintText:
+                                        S.current.enterCarsCountYouWantToAdd,
+                                  ),
+                                  SizedBox(
+                                    height: 8,
+                                  ),
+                                  StatefulBuilder(builder: (ctx, setState) {
+                                    return Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        ChoiceChip(
+                                          onSelected: (v) {
+                                            operationType = 'addition';
+                                            setState(() {});
+                                          },
+                                          label: Text(
+                                            S.current.addition,
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary),
+                                          ),
+                                          selected: operationType == 'addition',
+                                        ),
+                                        SizedBox(
+                                          width: 16,
+                                        ),
+                                        ChoiceChip(
+                                          label: Text(
+                                            S.current.subtraction,
+                                            style: TextStyle(
+                                                color: Theme.of(context)
+                                                    .colorScheme
+                                                    .primary),
+                                          ),
+                                          onSelected: (v) {
+                                            operationType = 'subtraction';
+                                            setState(() {});
+                                          },
+                                          selected:
+                                              operationType == 'subtraction',
+                                        ),
+                                      ],
+                                    );
+                                  }),
+                                  ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        screenState.manager.updateRemainingCars(
+                                          screenState,
+                                          UpdateRemainingCarsRequest(
+                                            id: model.id,
+                                            factor: num.tryParse(
+                                                factorController.text),
+                                            operationType: operationType,
+                                          ),
+                                        );
+                                      },
+                                      child: Text(S.current.update)),
+                                ],
+                              ),
+                            ),
+                          );
+                        });
+                  },
+                  child: Text(S.current.updateRemainingCars)),
             ],
           ),
         ),

@@ -6,6 +6,7 @@ import 'package:c4d/module_orders/ui/screens/new_order/update_order_screen.dart'
 import 'package:c4d/module_orders/ui/screens/order_actions_log_screen.dart';
 import 'package:c4d/module_orders/ui/screens/order_cash_captain_screen.dart';
 import 'package:c4d/module_orders/ui/screens/order_cash_store_screen.dart';
+import 'package:c4d/module_orders/ui/screens/order_conflict_distance_screen.dart';
 import 'package:c4d/module_orders/ui/screens/order_logs_screen.dart';
 import 'package:c4d/module_orders/ui/screens/order_pending_screen.dart';
 import 'package:c4d/module_orders/ui/screens/orders_captain_screen.dart';
@@ -34,21 +35,25 @@ class OrdersModule extends YesModule {
   final NewOrderLinkScreen addNewOrderLinkScreen;
   final SearchForOrderScreen searchForOrderScreen;
   final RecycleOrderScreen recycleOrdersScreen;
+  final OrderDistanceConflictScreen orderDistanceConflictScreen;
+
   OrdersModule(
-      this._logsScreen,
-      this._cashCaptain,
-      this._cashStore,
-      this.updateOrderScreen,
-      this.pendingScreen,
-      this.newOrderScreen,
-      this.orderCaptainLogsScreen,
-      this.orderActionLogsScreen,
-      this.ordersWithoutDistanceScreen,
-      this.ordersReceiveCashScreen,
-      this.subOrdersScreen,
-      this.addNewOrderLinkScreen,
-      this.searchForOrderScreen,
-      this.recycleOrdersScreen) {
+    this._logsScreen,
+    this._cashCaptain,
+    this._cashStore,
+    this.updateOrderScreen,
+    this.pendingScreen,
+    this.newOrderScreen,
+    this.orderCaptainLogsScreen,
+    this.orderActionLogsScreen,
+    this.ordersWithoutDistanceScreen,
+    this.ordersReceiveCashScreen,
+    this.subOrdersScreen,
+    this.addNewOrderLinkScreen,
+    this.searchForOrderScreen,
+    this.recycleOrdersScreen,
+    this.orderDistanceConflictScreen,
+  ) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
 
@@ -67,7 +72,9 @@ class OrdersModule extends YesModule {
       OrdersRoutes.SUB_ORDERS_SCREEN: (context) => subOrdersScreen,
       OrdersRoutes.NEW_SUB_ORDER_SCREEN: (context) => addNewOrderLinkScreen,
       OrdersRoutes.SEARCH_FOR_ORDERS_SCREEN: (context) => searchForOrderScreen,
-      OrdersRoutes.RECYCLE_ORDERS_SCREEN: (context) => recycleOrdersScreen
+      OrdersRoutes.RECYCLE_ORDERS_SCREEN: (context) => recycleOrdersScreen,
+      OrdersRoutes.ORDER_CONFLICT_DISTANCE_SCREEN: (context) => orderDistanceConflictScreen,
+
     };
   }
 }

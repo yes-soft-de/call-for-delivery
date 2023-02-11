@@ -6,6 +6,7 @@ import 'package:c4d/module_subscriptions/request/delete_subscription_request.dar
 import 'package:c4d/module_subscriptions/request/store_captain_offer_request.dart';
 import 'package:c4d/module_subscriptions/request/store_edit_subscribe_to_package.dart';
 import 'package:c4d/module_subscriptions/request/store_subscribe_to_package.dart';
+import 'package:c4d/module_subscriptions/request/update_remaining_cars_request.dart';
 import 'package:c4d/module_subscriptions/response/subscriptions_financial_response/subscriptions_financial_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/data_model/data_model.dart';
@@ -122,6 +123,18 @@ class SubscriptionsService {
     if (response == null) {
       return DataModel.withError(S.current.networkError);
     } else if (response.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> updateRemainingCars(
+      UpdateRemainingCarsRequest request) async {
+    ActionResponse? response = await _storeManager.updateRemainingCars(request);
+    if (response == null) {
+      return DataModel.withError(S.current.networkError);
+    } else if (response.statusCode != '204') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }

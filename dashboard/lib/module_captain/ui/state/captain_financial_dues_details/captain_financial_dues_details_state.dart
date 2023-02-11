@@ -160,7 +160,7 @@ class CaptainFinancialDuesDetailsStateLoaded extends States {
 
   Widget CustomTile(
       BuildContext context, IconData icon, String text, num? value,
-      {String? stringValue, int? advancedValue, Color? backGround}) {
+      {String? stringValue, dynamic advancedValue, Color? backGround}) {
     bool currency = S.current.countOrdersDelivered != text;
     return Visibility(
       visible: value != null || stringValue != null,
@@ -178,9 +178,7 @@ class CaptainFinancialDuesDetailsStateLoaded extends States {
             constraints: const BoxConstraints(
                 maxWidth: 120, minWidth: 95, maxHeight: 55),
             decoration: BoxDecoration(
-              color: advancedValue != null ? Colors.black : Colors.amber,
-              // ? (advancedValue ? Colors.green : Colors.red)
-              // : (backGround ?? Theme.of(context).disabledColor),
+              color: advancedValue == true ? Colors.green : Colors.red,
               borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(

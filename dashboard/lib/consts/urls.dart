@@ -151,6 +151,8 @@ class Urls {
       BASE_API_ORDER + '/filterdifferentansweredcashorders';
   static const FILTER_CAPTAIN_ORDERS_API =
       BASE_API_ORDER + '/filtercaptainordersbyadmin';
+  static const FILTER_ORDERS_CONFLICTED_DISTANCE_API =
+      BASE_API_ORDER + '/filterdifferentdestinationsorders';
   static const GET_ORDER_LOGS_API =
       DOMAIN + '/v1/admin/orderlog' + '/orderlogsbyorderidforadmin';
   static const ORDERS_PENDING_API = BASE_API_ORDER + '/orderpending';
@@ -310,6 +312,10 @@ class Urls {
       BASE_API_ORDER + '/bidorderbyidforadmin/';
   /*-----------------------------order----------------------------*/
   static const CREATE_ORDER_API = BASE_API_ORDER + '/createorder';
+  static const ADD_EXTRA_DISTANCE_TO_ORDER_API =
+      BASE_API_ORDER + '/addstorebranchtoclientdistanceviadestinationbyadmin';
+  static const UPDATE_EXTRA_DISTANCE_TO_ORDER_API =
+      BASE_API_ORDER + '/additionaldistancetostorebranchtoclientdistancebyadmin';
   static const DELETE_ORDER = BASE_API_ORDER + '/ordercancelbyadmin';
   static const UNASSIGNED_ORDER_FROM_CAPTAIN =
       BASE_API_ORDER + '/rependingacceptedorder';
@@ -339,6 +345,8 @@ class Urls {
       BASE_API_SUBSCRIPTION + '/deletesubscriptionbyadmin';
   static const SUBSCRIBE_TO_CAPTAIN_OFFER_API =
       BASE_API_SUBSCRIPTION_CAPTAIN_OFFER + '/subscribe';
+  static const UPDATE_REMAINING_CAPTAIN =
+      BASE_API_SUBSCRIPTION + '/subscriptionremainingcars';
   static const DELETE_SUBSCRIPTION_TO_CAPTAIN_OFFER_API =
       BASE_API_SUBSCRIPTION_CAPTAIN_OFFER + '/deletesubscription';
 }

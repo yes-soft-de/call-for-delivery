@@ -115,7 +115,7 @@ class CaptainActivityCard extends StatelessWidget {
                 ),
                 // last 24 hours && today orders
                 Visibility(
-                  visible: last24CountOrder != null && todayCountOrder != null,
+                  visible: todayCountOrder != null,
                   child: Column(
                     children: [
                       Divider(
@@ -125,52 +125,19 @@ class CaptainActivityCard extends StatelessWidget {
                         color:
                             Theme.of(context).backgroundColor.withOpacity(0.5),
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Expanded(
-                            child: ListTile(
-                              title: Text(
-                                S.current.last24CountOrder,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              subtitle: Text(
-                                (last24CountOrder ?? '0') +
-                                    ' ' +
-                                    S.current.sOrder,
-                                style: TextStyle(
-                                  color: Colors.white70,
-                                ),
-                              ),
-                            ),
+                      ListTile(
+                        title: Text(
+                          S.current.countTodayOrder,
+                          style: TextStyle(
+                            color: Colors.white,
                           ),
-                          Container(
-                            height: 35,
-                            width: 1.5,
-                            decoration: BoxDecoration(
-                                color: Theme.of(context).backgroundColor),
+                        ),
+                        subtitle: Text(
+                          (todayCountOrder ?? '0') + ' ' + S.current.sOrder,
+                          style: TextStyle(
+                            color: Colors.white70,
                           ),
-                          Expanded(
-                            child: ListTile(
-                              title: Text(
-                                S.current.countTodayOrder,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              subtitle: Text(
-                                (todayCountOrder ?? '0') +
-                                    ' ' +
-                                    S.current.sOrder,
-                                style: TextStyle(
-                                  color: Colors.white70,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
+                        ),
                       ),
                     ],
                   ),

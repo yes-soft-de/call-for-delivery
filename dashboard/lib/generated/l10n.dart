@@ -8580,6 +8580,146 @@ class S {
     );
   }
 
+  /// `Illegal Command`
+  String get illegalCommand {
+    return Intl.message(
+      'Illegal Command',
+      name: 'illegalCommand',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Already canceled`
+  String get alreadyCanceled {
+    return Intl.message(
+      'Already canceled',
+      name: 'alreadyCanceled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order not found`
+  String get orderNotFound {
+    return Intl.message(
+      'Order not found',
+      name: 'orderNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Issues with order status update `
+  String get issuesWithOrderStatusUpdate {
+    return Intl.message(
+      'Issues with order status update ',
+      name: 'issuesWithOrderStatusUpdate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Invalid order type`
+  String get invalidOrderType {
+    return Intl.message(
+      'Invalid order type',
+      name: 'invalidOrderType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store profile not found`
+  String get storeProfileNotFound {
+    return Intl.message(
+      'Store profile not found',
+      name: 'storeProfileNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update success`
+  String get updateSuccess {
+    return Intl.message(
+      'Update success',
+      name: 'updateSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update remaining cars`
+  String get updateRemainingCars {
+    return Intl.message(
+      'Update remaining cars',
+      name: 'updateRemainingCars',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Enter extra cars count`
+  String get enterCarsCountYouWantToAdd {
+    return Intl.message(
+      'Enter extra cars count',
+      name: 'enterCarsCountYouWantToAdd',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order conflicted distance`
+  String get orderConflictDistances {
+    return Intl.message(
+      'Order conflicted distance',
+      name: 'orderConflictDistances',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra destination`
+  String get addExtraDestination {
+    return Intl.message(
+      'Extra destination',
+      name: 'addExtraDestination',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reason`
+  String get reason {
+    return Intl.message(
+      'Reason',
+      name: 'reason',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Coordinates`
+  String get coordinates {
+    return Intl.message(
+      'Coordinates',
+      name: 'coordinates',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter valid coordinates`
+  String get pleaseEnterValidCoord {
+    return Intl.message(
+      'Please enter valid coordinates',
+      name: 'pleaseEnterValidCoord',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Are you sure ?\n you will recycle this order`
   String get recycleOrderWarning {
     return Intl.message(
@@ -8775,6 +8915,26 @@ class S {
     return Intl.message(
       'Remove',
       name: 'remove',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Addition`
+  String get addition {
+    return Intl.message(
+      'Addition',
+      name: 'addition',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Subtraction`
+  String get subtraction {
+    return Intl.message(
+      'Subtraction',
+      name: 'subtraction',
       desc: '',
       args: [],
     );
