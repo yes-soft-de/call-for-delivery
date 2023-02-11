@@ -116,9 +116,8 @@ class CaptainActivityCard extends StatelessWidget {
                 ),
                 // last 24 hours && today orders
                 Visibility(
-                  visible: todayCountOrder != null,
-                  child: Column(
-                    children: [
+                    visible: todayCountOrder != null,
+                    child: Column(children: [
                       Divider(
                         indent: 16,
                         endIndent: 16,
@@ -155,23 +154,26 @@ class CaptainActivityCard extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color:
                                     Theme.of(context).colorScheme.background),
-                      ListTile(
-                        title: Text(
-                          S.current.countTodayOrder,
-                          style: TextStyle(
-                            color: Colors.white,
+                            child: ListTile(
+                              title: Text(
+                                S.current.countTodayOrder,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                              subtitle: Text(
+                                (todayCountOrder ?? '0') +
+                                    ' ' +
+                                    S.current.sOrder,
+                                style: TextStyle(
+                                  color: Colors.white70,
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                        subtitle: Text(
-                          (todayCountOrder ?? '0') + ' ' + S.current.sOrder,
-                          style: TextStyle(
-                            color: Colors.white70,
-                          ),
-                        ),
+                        ],
                       ),
-                    ],
-                  ),
-                )
+                    ])),
               ],
             )),
       ),
