@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -402,10 +402,12 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
             titleField(S.of(context).city),
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-              child: Badge(
+              child: badges.Badge(
                 showBadge: _cityController.text.isEmpty,
-                badgeColor: Colors.amber,
-                position: BadgePosition.topEnd(top: -6, end: -6),
+                badgeStyle: const badges.BadgeStyle(
+                  badgeColor: Colors.amber,
+                ),
+                position: badges.BadgePosition.topEnd(top: -6, end: -6),
                 child: CustomFormField(
                   controller: _cityController,
                   hintText: S.current.city,
@@ -418,10 +420,12 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
             titleField(S.of(context).neighborhood),
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-              child: Badge(
+              child: badges.Badge(
                 showBadge: _addressController.text.isEmpty,
-                badgeColor: Colors.amber,
-                position: BadgePosition.topEnd(top: -6, end: -6),
+                badgeStyle: const badges.BadgeStyle(
+                  badgeColor: Colors.amber,
+                ),
+                position: badges.BadgePosition.topEnd(top: -6, end: -6),
                 child: CustomFormField(
                   controller: _addressController,
                   hintText: S.current.neighborhood,
@@ -486,7 +490,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: ListTile(
                 tileColor: captainState != null
                     ? (captainState == 'active' ? Colors.green : Colors.red)
-                    : Theme.of(context).backgroundColor,
+                    : Theme.of(context).colorScheme.background,
                 leading: Icon(
                   Icons.wifi_rounded,
                   color: captainState != null ? Colors.white : null,
@@ -503,7 +507,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                     underline: Container(),
                     dropdownColor: captainState != null
                         ? (captainState == 'active' ? Colors.green : Colors.red)
-                        : Theme.of(context).backgroundColor,
+                        : Theme.of(context).colorScheme.background,
                     icon: Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: Icon(
@@ -513,22 +517,22 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                     ),
                     items: [
                       DropdownMenuItem(
+                        value: 'active',
                         child: Text(
                           S.current.captainStateActive,
                           style: TextStyle(
                             color: captainState != null ? Colors.white : null,
                           ),
                         ),
-                        value: 'active',
                       ),
                       DropdownMenuItem(
+                        value: 'inactive',
                         child: Text(
                           S.current.captainStateInactive,
                           style: TextStyle(
                             color: captainState != null ? Colors.white : null,
                           ),
                         ),
-                        value: 'inactive',
                       ),
                     ],
                     onChanged: (newState) {

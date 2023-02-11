@@ -32,7 +32,7 @@ class CustomNetworkImage extends StatelessWidget {
           return Container(
             width: double.maxFinite,
             decoration: BoxDecoration(
-                color: background ?? Theme.of(context).backgroundColor),
+                color: background ?? Theme.of(context).colorScheme.background),
             child: Flex(
               direction: Axis.vertical,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -119,7 +119,7 @@ class CustomNetworkImage extends StatelessWidget {
               width: width,
               height: height,
               decoration: BoxDecoration(
-                  color: background ?? Theme.of(context).backgroundColor),
+                  color: background ?? Theme.of(context).colorScheme.background),
               child: Flex(
                 direction: Axis.vertical,
                 mainAxisAlignment: MainAxisAlignment.center,

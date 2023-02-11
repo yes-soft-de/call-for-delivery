@@ -81,7 +81,7 @@ class _OrderChipState extends State<OrderChip> {
                     height: 40,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      color: Theme.of(context).backgroundColor,
+                      color: Theme.of(context).colorScheme.background,
                     ),
                     child: Center(
                       child: Padding(

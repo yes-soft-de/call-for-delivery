@@ -95,7 +95,8 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                                     screenState.manager.updateDistance(
                                         screenState,
                                         AddExtraDistanceRequest(
-                                            id: int.tryParse(screenState.orderId ?? ''),
+                                            id: int.tryParse(
+                                                screenState.orderId ?? ''),
                                             storeBranchToClientDistanceAdditionExplanation:
                                                 reason.text.trim(),
                                             destination: {
@@ -267,7 +268,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                   FilterDetailsBar(
                     cursorRadius: BorderRadius.circular(25),
                     animationDuration: const Duration(milliseconds: 350),
-                    backgroundColor: Theme.of(context).backgroundColor,
+                    backgroundColor: Theme.of(context).colorScheme.background,
                     currentIndex: screenState.currentIndex,
                     borderRadius: BorderRadius.circular(25),
                     floating: true,
@@ -308,7 +309,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
   Widget details(BuildContext context) {
     var decoration = BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-        color: Theme.of(context).backgroundColor);
+        color: Theme.of(context).colorScheme.background);
     return Column(
       children: [
         const SizedBox(
@@ -320,7 +321,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
           leading: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: Theme.of(context).backgroundColor),
+                  color: Theme.of(context).colorScheme.background),
               child: const Padding(
                 padding: EdgeInsets.all(10.0),
                 child: Icon(Icons.info_rounded),
@@ -920,7 +921,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
               Expanded(
                 child: OrderButton(
                   backgroundColor: Colors.green[600]!,
-                  icon: Icons.whatsapp,
+                  icon: FontAwesomeIcons.whatsapp,
                   subtitle: S.current.whatsappWithStoreOwner,
                   title: S.current.whatsapp,
                   onTap: () {
@@ -938,7 +939,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
               Expanded(
                 child: OrderButton(
                   backgroundColor: Colors.green[600]!,
-                  icon: Icons.whatsapp,
+                  icon: FontAwesomeIcons.whatsapp,
                   subtitle: S.current.whatsappWithClient,
                   title: S.current.whatsapp,
                   short: true,

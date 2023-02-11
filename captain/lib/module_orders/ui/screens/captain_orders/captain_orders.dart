@@ -161,7 +161,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
         controller: advancedController,
         rtlOpening: Localizations.localeOf(context).languageCode != 'en',
         childDecoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
-        backdropColor: Theme.of(context).backgroundColor,
+        backdropColor: Theme.of(context).colorScheme.background,
         child: Scaffold(
           appBar: CustomC4dAppBar.appBar(context,
               showBadge: somethingMissingInProfileData,

@@ -112,7 +112,7 @@ class LoginScreenState extends State<LoginScreen> {
                                 child: Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(25),
-                                      color: Theme.of(context).backgroundColor),
+                                      color: Theme.of(context).colorScheme.background),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: ListTile(
@@ -255,7 +255,7 @@ class LoginScreenState extends State<LoginScreen> {
       ));
       widgets.add(Divider(
         thickness: 2.5,
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).colorScheme.background,
         indent: 16,
         endIndent: 16,
       ));

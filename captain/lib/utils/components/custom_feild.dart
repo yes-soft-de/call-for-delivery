@@ -52,7 +52,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).colorScheme.background,
       ),
       child: Padding(
           padding:
@@ -217,7 +217,7 @@ class _CustomFormFieldWithTranslateState
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
         ),
         child: Padding(
           padding: const EdgeInsetsDirectional.only(start: 8.0, end: 8.0),

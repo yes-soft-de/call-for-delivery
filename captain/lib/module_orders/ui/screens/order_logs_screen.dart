@@ -97,7 +97,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
-                        color: Theme.of(context).backgroundColor,
+                        color: Theme.of(context).colorScheme.background,
                       ),
                       child: Material(
                         color: Colors.transparent,
@@ -145,14 +145,14 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                     child: Container(
                       width: 32,
                       height: 2.5,
-                      color: Theme.of(context).backgroundColor,
+                      color: Theme.of(context).colorScheme.background,
                     ),
                   ),
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
-                        color: Theme.of(context).backgroundColor,
+                        color: Theme.of(context).colorScheme.background,
                       ),
                       child: Material(
                         color: Colors.transparent,
@@ -211,7 +211,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
             FilterBar(
               cursorRadius: BorderRadius.circular(25),
               animationDuration: const Duration(milliseconds: 350),
-              backgroundColor: Theme.of(context).backgroundColor,
+              backgroundColor: Theme.of(context).colorScheme.background,
               currentIndex: currentIndex,
               borderRadius: BorderRadius.circular(25),
               floating: true,

@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:flutter/material.dart';
@@ -39,9 +39,11 @@ class CustomC4dAppBar {
               padding: const EdgeInsets.all(8.0),
               child: Align(
                 alignment: AlignmentDirectional.centerStart,
-                child: Badge(
-                  badgeColor: colorBadge ?? Colors.red,
-                  position: const BadgePosition(top: -3, end: -2),
+                child: badges.Badge(
+                  position: badges.BadgePosition.custom(top: -3, end: -2),
+                  badgeStyle: badges.BadgeStyle(
+                    badgeColor: colorBadge ?? Colors.red,
+                  ),
                   showBadge: showBadge,
                   child: widget ??
                       InkWell(
@@ -57,7 +59,9 @@ class CustomC4dAppBar {
                                           .colorScheme
                                           .background
                                           .withOpacity(0.5)
-                                      : Theme.of(context).backgroundColor,
+                                      : Theme.of(context)
+                                          .colorScheme
+                                          .background,
                                   spreadRadius: 1.5,
                                   blurRadius: 6,
                                   offset: const Offset(-0.2, 0))
@@ -101,9 +105,11 @@ class CustomC4dAppBar {
       padding: const EdgeInsets.all(8.0),
       child: Tooltip(
         message: message ?? '',
-        child: Badge(
-          badgeColor: colorBadge ?? Colors.red,
-          position: const BadgePosition(top: -3, end: -2),
+        child: badges.Badge(
+          position: badges.BadgePosition.custom(top: -3, end: -2),
+          badgeStyle: badges.BadgeStyle(
+            badgeColor: colorBadge ?? Colors.red,
+          ),
           showBadge: showBadge,
           child: InkWell(
             customBorder: CircleBorder(),
@@ -118,7 +124,7 @@ class CustomC4dAppBar {
                               .colorScheme
                               .background
                               .withOpacity(0.5)
-                          : Theme.of(context).backgroundColor,
+                          : Theme.of(context).colorScheme.background,
                       spreadRadius: 1.5,
                       blurRadius: 6,
                       offset: const Offset(-0.2, 0))

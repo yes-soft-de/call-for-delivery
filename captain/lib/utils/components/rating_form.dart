@@ -62,7 +62,7 @@ class _RatingFormState extends State<RatingForm> {
                   ),
                 ),
                 Divider(
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(context).colorScheme.background,
                   indent: 32,
                   endIndent: 32,
                   thickness: 2,

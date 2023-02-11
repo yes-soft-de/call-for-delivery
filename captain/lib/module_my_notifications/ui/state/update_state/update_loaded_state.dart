@@ -213,7 +213,7 @@ class UpdatesLoadedState extends States {
                           .colorScheme
                           .background
                           .withOpacity(0.5)
-                      : Theme.of(context).backgroundColor,
+                      : Theme.of(context).colorScheme.background,
                 )
               ],
             ),
@@ -281,7 +281,7 @@ class UpdatesLoadedState extends States {
       if (index != model.length) {
         children.add(Divider(
           thickness: 2,
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
         ));
       }
     });

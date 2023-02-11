@@ -46,7 +46,7 @@ class FinanceByOrder extends StatelessWidget {
               spreadRadius: 1,
               color: active
                   ? Theme.of(context).colorScheme.primary.withOpacity(0.5)
-                  : Theme.of(context).backgroundColor,
+                  : Theme.of(context).colorScheme.background,
               offset: const Offset(-1, 0),
             )
           ],
@@ -66,7 +66,7 @@ class FinanceByOrder extends StatelessWidget {
                     const EdgeInsets.all(8.0).copyWith(left: 16, right: 16),
                 child: DottedLine(
                   direction: Axis.horizontal,
-                  dashColor: Theme.of(context).backgroundColor,
+                  dashColor: Theme.of(context).colorScheme.background,
                   lineThickness: 2.5,
                   dashRadius: 25,
                 ),

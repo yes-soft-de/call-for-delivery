@@ -98,7 +98,7 @@ class RegisterStatePhoneCodeSent extends RegisterState {
                       hintText: S.of(context).enterCodeSentToYou,
                       prefixIcon: const Icon(Icons.confirmation_num),
                       filled: true,
-                      fillColor: Theme.of(context).backgroundColor,
+                      fillColor: Theme.of(context).colorScheme.background,
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,
                     ),

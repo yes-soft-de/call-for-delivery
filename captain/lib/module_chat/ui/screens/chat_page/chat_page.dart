@@ -333,7 +333,7 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
         padding: const EdgeInsets.only(top: 16.0, bottom: 16),
         child: Container(
           width: double.maxFinite,
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: Container(

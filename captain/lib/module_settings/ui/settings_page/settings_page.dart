@@ -60,7 +60,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(25),
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(context).colorScheme.background,
                 ),
                 child: Flex(
                   direction: Axis.vertical,
