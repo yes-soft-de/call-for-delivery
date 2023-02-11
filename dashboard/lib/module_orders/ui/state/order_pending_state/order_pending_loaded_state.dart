@@ -133,6 +133,8 @@ class OrderPendingLoadedState extends States {
                   background: screenState.currentIndex == 0
                       ? (element.orderIsMain ? Colors.red[700] : null)
                       : StatusHelper.getOrderStatusColor(element.state),
+                  branchName: element.branchName,
+                  storeOwner: element.storeName,
                 ),
               ),
               screenState.currentIndex == 2

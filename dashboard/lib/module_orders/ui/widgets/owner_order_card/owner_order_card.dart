@@ -17,19 +17,24 @@ class OwnerOrderCard extends StatelessWidget {
   final IconData? icon;
   final bool? isDelivered;
   final int? captainProfileId;
-  OwnerOrderCard(
-      {required this.orderNumber,
-      required this.orderStatus,
-      required this.createdDate,
-      required this.deliveryDate,
-      required this.orderCost,
-      required this.note,
-      this.background,
-      this.primaryTitle,
-      required this.orderIsMain,
-      this.icon,
-      this.isDelivered,
-      required this.captainProfileId});
+  final String? storeOwner;
+  final String? branchName;
+  OwnerOrderCard({
+    required this.orderNumber,
+    required this.orderStatus,
+    required this.createdDate,
+    required this.deliveryDate,
+    required this.orderCost,
+    required this.note,
+    this.background,
+    this.primaryTitle,
+    required this.orderIsMain,
+    this.icon,
+    this.isDelivered,
+    required this.captainProfileId,
+    this.storeOwner,
+    this.branchName,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -165,6 +170,25 @@ class OwnerOrderCard extends StatelessWidget {
                         title: S.current.createdDate, subtitle: createdDate),
                   ],
                 ),
+                // store related data
+                Visibility(
+                    visible: storeOwner != null && branchName != null,
+                    child: Column(
+                      children: [
+                        divider(context),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            verticalTile(context,
+                                title: S.current.storeOwner,
+                                subtitle: storeOwner ?? ''),
+                            verticalTile(context,
+                                title: S.current.branch,
+                                subtitle: branchName ?? ''),
+                          ],
+                        ),
+                      ],
+                    )),
                 // divider
                 divider(context),
                 // order cost
