@@ -22,6 +22,7 @@ class OrderModel extends DataModel {
   late bool orderIsMain;
   late LatLng? branchLocation;
   late String? destinationLink;
+  String? storeBranchToClientDistanceAdditionExplanation;
   int? isCashPaymentConfirmedByStore;
   int? paidToProvider;
   String? captainName;
@@ -54,6 +55,7 @@ class OrderModel extends DataModel {
     required this.subOrders,
     required this.kilometer,
     required this.storeBranchToClientDistance,
+    this.storeBranchToClientDistanceAdditionExplanation,
   });
   List<OrderModel> _orders = [];
   OrderModel.withData(OrdersResponse response) {
@@ -96,6 +98,8 @@ class OrderModel extends DataModel {
         subOrders: _getOrders(element.subOrders ?? []),
         kilometer: element.kilometer ?? 0,
         storeBranchToClientDistance: element.storeBranchToClientDistance ?? 0,
+        storeBranchToClientDistanceAdditionExplanation:
+            element.storeBranchToClientDistanceAdditionExplanation,
       ));
     });
   }

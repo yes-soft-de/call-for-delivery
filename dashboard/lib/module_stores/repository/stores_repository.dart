@@ -154,7 +154,7 @@ class StoresRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
       Urls.FILTER_STORE_ACTIVITY,
-      request.toJson(),
+      await request.toJson(),
       headers: {'Authorization': 'Bearer $token'},
     );
 

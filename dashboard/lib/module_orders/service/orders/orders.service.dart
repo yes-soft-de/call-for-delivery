@@ -11,6 +11,7 @@ import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/model/order_without_distance_model.dart';
 import 'package:c4d/module_orders/model/pending_order.dart';
 import 'package:c4d/module_orders/model/store_cash_orders_finance.dart';
+import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
@@ -64,6 +65,19 @@ class OrdersService {
       FilterOrderRequest request) async {
     OrdersResponse? response =
         await _ordersManager.getConflictingAnswerOrderCash(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    return OrderModel.withData(response);
+  }
+
+  Future<DataModel> getOrdersConflictedDistance(
+      FilterOrderRequest request) async {
+    OrdersResponse? response =
+        await _ordersManager.getOrdersConflictedDistance(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '200') {
       return DataModel.withError(
@@ -148,6 +162,30 @@ class OrdersService {
 
   Future<DataModel> updateOrder(CreateOrderRequest request) async {
     ActionResponse? response = await _ordersManager.updateOrder(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> addExtraDistanceToOrder(
+      AddExtraDistanceRequest request) async {
+    ActionResponse? response =
+        await _ordersManager.addExtraDistanceToOrder(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> updateExtraDistanceToOrder(
+      AddExtraDistanceRequest request) async {
+    ActionResponse? response =
+        await _ordersManager.updateExtraDistanceToOrder(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
       return DataModel.withError(

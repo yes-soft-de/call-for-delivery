@@ -5,6 +5,7 @@ import 'package:c4d/module_subscriptions/request/delete_subscription_request.dar
 import 'package:c4d/module_subscriptions/request/store_captain_offer_request.dart';
 import 'package:c4d/module_subscriptions/request/store_edit_subscribe_to_package.dart';
 import 'package:c4d/module_subscriptions/request/store_subscribe_to_package.dart';
+import 'package:c4d/module_subscriptions/request/update_remaining_cars_request.dart';
 import 'package:c4d/module_subscriptions/response/subscriptions_financial_response/subscriptions_financial_response.dart';
 import 'package:injectable/injectable.dart';
 
@@ -36,4 +37,7 @@ class SubscriptionsManager {
   Future<ActionResponse?> subscribeToCaptainOffer(
           StoreSubscribeToCaptainOfferRequest request) async =>
       await _storesRepository.subscribeToCaptainOffer(request);
+  Future<ActionResponse?> updateRemainingCars(
+          UpdateRemainingCarsRequest request) async =>
+      await _storesRepository.updateRemainingCars(request);
 }

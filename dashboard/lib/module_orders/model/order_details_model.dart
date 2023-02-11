@@ -227,10 +227,7 @@ class OrderDetailsModel extends DataModel {
   }
 
   bool _canRemove(OrderStatusEnum state) {
-    if (state == OrderStatusEnum.WAITING) {
-      return true;
-    }
-    return canRemove;
+    return true;
   }
 
   String? _distance(OrderDetailsModel orderInfo, LatLng? location) {

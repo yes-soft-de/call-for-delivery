@@ -9,12 +9,14 @@ import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/ui/widgets/order_widget/order_button.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_stores/ui/screen/order/order_details_screen.dart';
 import 'package:c4d/module_stores/ui/widget/orders/custom_step.dart';
 import 'package:c4d/module_stores/ui/widget/orders/progress_order_status.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
+import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/helpers/finance_status_helper.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
@@ -449,6 +451,79 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                   color: Colors.transparent,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(25),
+                    onDoubleTap: () {
+                      final reason = TextEditingController();
+                      final coord = TextEditingController();
+                      final form_key = GlobalKey<FormState>();
+                      showDialog(
+                          context: context,
+                          builder: (ctx) {
+                            return AlertDialog(
+                              title: Text(S.current.updateDistance),
+                              content: SizedBox(
+                                height: 175,
+                                child: Form(
+                                  key: form_key,
+                                  child: Column(
+                                    children: [
+                                      CustomFormField(
+                                        controller: coord,
+                                        hintText: S.current.coordinates +
+                                            ' 12.4,15.8',
+                                      ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      CustomFormField(
+                                        controller: reason,
+                                        hintText: S.current.reason,
+                                      ),
+                                      SizedBox(
+                                        height: 16,
+                                      ),
+                                      ElevatedButton(
+                                          onPressed: () {
+                                            if (form_key.currentState
+                                                    ?.validate() ==
+                                                true) {
+                                              if (coord.text
+                                                      .split(',')
+                                                      .length ==
+                                                  2) {
+                                                Navigator.of(context).pop();
+                                                screenState.manager
+                                                    .updateDistance(
+                                                        screenState,
+                                                        AddExtraDistanceRequest(
+                                                            id: orderInfo.id,
+                                                            storeBranchToClientDistanceAdditionExplanation:
+                                                                reason.text
+                                                                    .trim(),
+                                                            destination: {
+                                                              'lat': coord.text
+                                                                  .trim()
+                                                                  .split(',')[0]
+                                                                  .trim(),
+                                                              'lon': coord.text
+                                                                  .trim()
+                                                                  .split(',')[1]
+                                                                  .trim(),
+                                                            }));
+                                              } else {
+                                                Fluttertoast.showToast(
+                                                    msg: S.current
+                                                        .pleaseEnterValidCoord);
+                                              }
+                                            }
+                                          },
+                                          child: Text(S.current.update)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          });
+                    },
                     onTap: () {
                       String url = '';
                       if (orderInfo.destinationCoordinate != null) {

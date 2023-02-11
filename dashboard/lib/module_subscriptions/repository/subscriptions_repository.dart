@@ -4,6 +4,7 @@ import 'package:c4d/module_subscriptions/request/delete_subscription_request.dar
 import 'package:c4d/module_subscriptions/request/store_captain_offer_request.dart';
 import 'package:c4d/module_subscriptions/request/store_edit_subscribe_to_package.dart';
 import 'package:c4d/module_subscriptions/request/store_subscribe_to_package.dart';
+import 'package:c4d/module_subscriptions/request/update_remaining_cars_request.dart';
 import 'package:c4d/module_subscriptions/response/subscriptions_financial_response/subscriptions_financial_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
@@ -113,6 +114,18 @@ class SubscriptionsRepository {
     var token = await _authService.getToken();
     var response = await _apiClient.post(
       Urls.SUBSCRIBE_TO_CAPTAIN_OFFER_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> updateRemainingCars(
+      UpdateRemainingCarsRequest request) async {
+    var token = await _authService.getToken();
+    var response = await _apiClient.put(
+      Urls.UPDATE_REMAINING_CAPTAIN,
       request.toJson(),
       headers: {'Authorization': 'Bearer ' + '$token'},
     );

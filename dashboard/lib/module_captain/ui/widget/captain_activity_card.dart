@@ -116,7 +116,7 @@ class CaptainActivityCard extends StatelessWidget {
                 ),
                 // last 24 hours && today orders
                 Visibility(
-                  visible: last24CountOrder != null && todayCountOrder != null,
+                  visible: todayCountOrder != null,
                   child: Column(
                     children: [
                       Divider(
@@ -155,26 +155,19 @@ class CaptainActivityCard extends StatelessWidget {
                             decoration: BoxDecoration(
                                 color:
                                     Theme.of(context).colorScheme.background),
+                      ListTile(
+                        title: Text(
+                          S.current.countTodayOrder,
+                          style: TextStyle(
+                            color: Colors.white,
                           ),
-                          Expanded(
-                            child: ListTile(
-                              title: Text(
-                                S.current.countTodayOrder,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                              subtitle: Text(
-                                (todayCountOrder ?? '0') +
-                                    ' ' +
-                                    S.current.sOrder,
-                                style: TextStyle(
-                                  color: Colors.white70,
-                                ),
-                              ),
-                            ),
+                        ),
+                        subtitle: Text(
+                          (todayCountOrder ?? '0') + ' ' + S.current.sOrder,
+                          style: TextStyle(
+                            color: Colors.white70,
                           ),
-                        ],
+                        ),
                       ),
                     ],
                   ),

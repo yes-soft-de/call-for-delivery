@@ -47,7 +47,7 @@ class SubOrdersStateManager {
       } else {
         value as OrderDetailsModel;
         var order = value.data;
-      OrderModel primaryOrder = OrderModel(
+        OrderModel primaryOrder = OrderModel(
           storeName: order.storeName,
           branchName: order.branchName,
           storeId: order.storeID,

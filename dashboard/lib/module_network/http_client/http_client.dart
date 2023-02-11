@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
-import 'package:dio_firebase_performance/dio_firebase_performance.dart';
+import 'package:firebase_performance_dio/firebase_performance_dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_localization/service/localization_service/localization_service.dart';

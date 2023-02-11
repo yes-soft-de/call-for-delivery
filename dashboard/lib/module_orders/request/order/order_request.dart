@@ -17,7 +17,7 @@ class CreateOrderRequest {
   String? pdf;
   num? deliveryCost;
   int? cancel;
-  
+
   CreateOrderRequest(
       {this.id,
       this.storeId,

@@ -1,5 +1,6 @@
 import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/module_orders/repository/order_repository/order_repository.dart';
+import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
@@ -71,6 +72,15 @@ class OrdersManager {
   Future<OrdersWithoutDistanceResponse?> getOrdersWithoutDistance(
           FilterOrderRequest request) =>
       _repository.getOrdersWithoutDistance(request);
+  Future<OrdersResponse?> getOrdersConflictedDistance(
+          FilterOrderRequest request) =>
+      _repository.getOrdersConflictedDistance(request);
+  Future<ActionResponse?> addExtraDistanceToOrder(
+          AddExtraDistanceRequest request) =>
+      _repository.addExtraDistanceToOrder(request);
+  Future<ActionResponse?> updateExtraDistanceToOrder(
+          AddExtraDistanceRequest request) =>
+      _repository.updateExtraDistanceToOrder(request);
   Future<ActionResponse?> updateDistance(UpdateDistanceRequest request) =>
       _repository.updateDistance(request);
   Future<ActionResponse?> addNewOrderLink(CreateOrderRequest orderRequest) =>

@@ -68,30 +68,30 @@ class TopStoreActivityWidget extends StatelessWidget {
                           )
                         ],
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            S.current.last24CountOrder + ':',
-                            softWrap: false,
-                            style: TextStyle(
-                                color: Colors.grey.shade400,
-                                fontWeight: FontWeight.w500),
-                          ),
-                          SizedBox(
-                            width: 5,
-                          ),
-                          Expanded(
-                            child: Text(
-                              topActiveStoreModel.lastTwentyFourOrdersCount
-                                  .toString(),
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w500),
-                            ),
-                          )
-                        ],
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.center,
+                      //   children: [
+                      //     Text(
+                      //       S.current.last24CountOrder + ':',
+                      //       softWrap: false,
+                      //       style: TextStyle(
+                      //           color: Colors.grey.shade400,
+                      //           fontWeight: FontWeight.w500),
+                      //     ),
+                      //     // SizedBox(
+                      //     //   width: 5,
+                      //     // ),
+                      //     // Expanded(
+                      //     //   child: Text(
+                      //     //     topActiveStoreModel.lastTwentyFourOrdersCount
+                      //     //         .toString(),
+                      //     //     style: TextStyle(
+                      //     //         color: Colors.white,
+                      //     //         fontWeight: FontWeight.w500),
+                      //     //   ),
+                      //     // )
+                      //   ],
+                      // ),
                     ],
                   ),
                 )

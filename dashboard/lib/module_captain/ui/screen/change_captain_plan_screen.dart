@@ -3,6 +3,7 @@ import 'package:c4d/module_captain/state_manager/plan_screen_state_manager.dart'
 import 'package:c4d/module_captain/ui/state/init_plan_state_loaded.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+
 @injectable
 class PlanScreen extends StatefulWidget {
   final PlanScreenStateManager _manager;
