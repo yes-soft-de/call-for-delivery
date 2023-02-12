@@ -121,7 +121,7 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
         }
       }
       if (!chatScrollController
-              .isIndexStateInLayoutRange(chatsMessagesWidgets.length - 1) &&
+              .isIndexStateInLayoutRange(_chatMessagesList.length - 1) &&
           empty == false) {
         down = true;
         if (mounted) {
@@ -129,7 +129,7 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
         }
       }
       if (chatScrollController
-              .isIndexStateInLayoutRange(chatsMessagesWidgets.length - 1) &&
+              .isIndexStateInLayoutRange(_chatMessagesList.length - 1) &&
           down) {
         down = false;
         if (mounted) {}
@@ -182,7 +182,7 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
           remove = 1;
         }
         widget._chatHiveHelper.setChatIndex(chatRoomId,
-            widget._authService.username, chatsMessagesWidgets.length - remove);
+            widget._authService.username, _chatMessagesList.length - remove);
         widget._chatHiveHelper.setChatOffset(chatRoomId,
             widget._authService.username, chatScrollController.offset);
         return true;
@@ -204,7 +204,7 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
               widget._chatHiveHelper.setChatIndex(
                   chatRoomId,
                   widget._authService.username,
-                  chatsMessagesWidgets.length - remove);
+                  _chatMessagesList.length - remove);
               widget._chatHiveHelper.setChatOffset(chatRoomId,
                   widget._authService.username, chatScrollController.offset);
               Navigator.of(context).pop();
@@ -277,7 +277,7 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
                                     down = false;
                                     chatScrollController
                                         .scrollToIndex(
-                                            chatsMessagesWidgets.length - 1)
+                                            _chatMessagesList.length - 1)
                                         .whenComplete(() {
                                       setState(() {});
                                     });
@@ -307,7 +307,6 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
   Future<void> buildMessagesList(List<ChatModel> chatList) async {
     List<Widget> newMessagesList = [];
     String username = widget._authService.username;
-    int index = 0;
     lastSeenIndex = widget._chatHiveHelper.getChatIndex(chatRoomId, username);
     bool newMessages =
         lastSeenIndex != null ? (lastSeenIndex! < chatList.length) : false;
@@ -324,6 +323,7 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
         username: username,
         controller: chatScrollController,
         index: startingPoint,
+        currentIndex: (lastMessageIndex) {},
       ));
       startingPoint += sortedRequests.values.elementAt(i).length;
     }
