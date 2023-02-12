@@ -9,6 +9,7 @@ use App\Constant\Order\OrderTypeConstant;
 use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemThreeBalanceDetailManager;
 use App\Constant\GeoDistance\GeoDistanceResultConstant;
 
+///todo comment out or delete this service when AdminCaptainFinancialSystemThreeGetBalanceDetailsService works correctly
 class AdminCaptainFinancialSystemThreeBalanceDetailService
 {
     private AdminCaptainFinancialSystemThreeBalanceDetailManager $adminCaptainFinancialSystemThreeBalanceDetailManager;

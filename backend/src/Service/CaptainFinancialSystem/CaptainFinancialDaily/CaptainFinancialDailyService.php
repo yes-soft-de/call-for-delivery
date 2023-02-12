@@ -84,21 +84,19 @@ class CaptainFinancialDailyService
 
         if ($captainFinancialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
             // Captain financial system is the first one
-            $orderFinancialValue = $this->getOrderFinancialValueAccordingOnCountOfHours($captainFinancialSystemDetail['compensationForEveryOrder'],
-                $storeBranchToClientDistance);
+            ///todo calculate the order cost according to the first financial system
 
-            return [$orderFinancialValue, 0.0];
+            return [0.0, 0.0];
 
         } elseif ($captainFinancialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
             // Captain financial system is the second one
-            $orderFinancialValue = $this->getOrderFinancialValueAccordingToCountOfOrders($captainProfileId, $captainFinancialSystemDetail,
-                $storeBranchToClientDistance);
+            ///todo calculate the order cost according to the second financial system
 
-            return [$orderFinancialValue, 0.0];
+            return [0.0, 0.0];
 
         } elseif ($captainFinancialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_THREE) {
             // Captain financial system is the third one
-            return $this->getOrderFinancialValueAccordingOnOrders($captainProfileId, $storeBranchToClientDistance);
+
         }
 
         return [$orderFinancialValue, 0.0];

@@ -7,18 +7,13 @@ use App\Service\CaptainFinancialSystemDate\CaptainFinancialSystemDateService;
 
 class OrderFinancialValueAccordingToSystemThreeCalculationService
 {
-    private CaptainFinancialSystemThreeGetService $captainFinancialSystemThreeGetService;
-    private CaptainFinancialDueGetService $captainFinancialDueGetService;
-    private CaptainFinancialSystemDateService $captainFinancialSystemDateService;
-    private CaptainFinancialSystemThreeBalanceDetailsGetService $captainFinancialSystemThreeBalanceDetailsGetService;
-
-    public function __construct(CaptainFinancialSystemThreeGetService $captainFinancialSystemThreeGetService, CaptainFinancialDueGetService $captainFinancialDueGetService,
-                                CaptainFinancialSystemDateService $captainFinancialSystemDateService, CaptainFinancialSystemThreeBalanceDetailsGetService $captainFinancialSystemThreeBalanceDetailsGetService)
+    public function __construct(
+        private CaptainFinancialSystemThreeGetService $captainFinancialSystemThreeGetService,
+        private CaptainFinancialDueGetService $captainFinancialDueGetService,
+        private CaptainFinancialSystemDateService $captainFinancialSystemDateService,
+        private CaptainFinancialSystemThreeOrderGetService $captainFinancialSystemThreeOrderGetService
+    )
     {
-        $this->captainFinancialSystemThreeGetService = $captainFinancialSystemThreeGetService;
-        $this->captainFinancialDueGetService = $captainFinancialDueGetService;
-        $this->captainFinancialSystemDateService = $captainFinancialSystemDateService;
-        $this->captainFinancialSystemThreeBalanceDetailsGetService = $captainFinancialSystemThreeBalanceDetailsGetService;
     }
 
     // Calculate the expected financial value of an order and return it as array which consists of basic value and bonus
@@ -80,7 +75,7 @@ class OrderFinancialValueAccordingToSystemThreeCalculationService
     public function getCountOrdersByFinancialSystemThree(int $captainProfileId, string $fromDate, string $toDate, float $countKilometersFrom,
                                                          float $countKilometersTo): ?array
     {
-        return $this->captainFinancialSystemThreeBalanceDetailsGetService->getCountOrdersByFinancialSystemThree($captainProfileId,
+        return $this->captainFinancialSystemThreeOrderGetService->getCountOrdersByFinancialSystemThree($captainProfileId,
             $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
     }
 
