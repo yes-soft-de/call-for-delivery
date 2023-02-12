@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_chat/ui/widget/chat_bubble/chat_list_filterd.dart';
+import 'package:c4d/utils/helpers/date_utilts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:injectable/injectable.dart';
@@ -315,17 +316,47 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
     Map<String, List<ChatModel>> sortedRequests =
         SplayTreeMap<String, List<ChatModel>>.from(
             messages, (a, b) => a.compareTo(b) > 1 ? 1 : -1);
-    int startingPoint = 0;
-    for (int i = 0; i < messages.length; i++) {
-      newMessagesList.add(SubListChatWidget(
-        date: sortedRequests.keys.elementAt(i),
-        messages: sortedRequests.values.elementAt(i),
-        username: username,
-        controller: chatScrollController,
-        index: startingPoint,
-        currentIndex: (lastMessageIndex) {},
-      ));
-      startingPoint += sortedRequests.values.elementAt(i).length;
+    int index = 0;
+    for (int i = 0; i < sortedRequests.keys.length; i++) {
+      var date = sortedRequests.keys.elementAt(i);
+      newMessagesList.add(
+        Padding(
+          padding: const EdgeInsetsDirectional.only(
+            start: 8,
+            top: 16,
+            bottom: 16,
+          ),
+          child: Text(
+            isDateToday(date, 'd MMM y')
+                ? S.current.today
+                : isDateYesterday(date, 'd MMM y')
+                    ? S.current.yesterday
+                    : date,
+            style: Theme.of(context).textTheme.subtitle1?.copyWith(
+                color: Theme.of(context).disabledColor,
+                fontWeight: FontWeight.bold),
+          ),
+        ),
+      );
+      for (var element in sortedRequests.values.elementAt(i)) {
+        newMessagesList.add(AutoScrollTag(
+          controller: chatScrollController,
+          key: ValueKey(element.sentDate),
+          index: index,
+          child: ChatBubbleWidget(
+            message: element.msg ?? '',
+            me: element.sender == username ? true : false,
+            sentDate: element.sentDate,
+            isAdmin:
+                element.isAdmin ?? Urls.admins.contains(element.sender ?? ''),
+            username: element.sender,
+          ),
+        ));
+        index++;
+        if (index == lastSeenIndex && newMessages) {
+          index++;
+        }
+      }
     }
     // chatList.forEach((element) {
     //   // newMessagesList.add(AutoScrollTag(
