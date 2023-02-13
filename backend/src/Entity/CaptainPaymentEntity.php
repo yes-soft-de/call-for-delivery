@@ -31,6 +31,9 @@ class CaptainPaymentEntity
     #[ORM\ManyToOne(targetEntity: CaptainFinancialDuesEntity::class, inversedBy: 'captainPaymentEntities')]
     private $captainFinancialDues;
 
+    #[ORM\ManyToOne(targetEntity: CaptainFinancialDailyEntity::class, inversedBy: 'captainPayment')]
+    private $captainFinancialDailyEntity;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,6 +95,18 @@ class CaptainPaymentEntity
     public function setCaptainFinancialDues(?CaptainFinancialDuesEntity $captainFinancialDues): self
     {
         $this->captainFinancialDues = $captainFinancialDues;
+
+        return $this;
+    }
+
+    public function getCaptainFinancialDailyEntity(): ?CaptainFinancialDailyEntity
+    {
+        return $this->captainFinancialDailyEntity;
+    }
+
+    public function setCaptainFinancialDailyEntity(?CaptainFinancialDailyEntity $captainFinancialDailyEntity): self
+    {
+        $this->captainFinancialDailyEntity = $captainFinancialDailyEntity;
 
         return $this;
     }

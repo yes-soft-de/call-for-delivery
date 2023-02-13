@@ -104,7 +104,7 @@ class OrderEntity
     private $isCashPaymentConfirmedByStoreUpdateDate;
 
     // refers if the order has conflict answers (from store and captain) about cash payments
-    // 1: no conflict. 2: there is a conflict. 3: conflict resolved by command. 4: conflict resolved by API
+    // 1: conflict. 2: there isn't a conflict. 3: conflict resolved by command. 4: conflict resolved by API
     #[ORM\Column(type: 'integer', nullable: true)]
     private $hasPayConflictAnswers;
 

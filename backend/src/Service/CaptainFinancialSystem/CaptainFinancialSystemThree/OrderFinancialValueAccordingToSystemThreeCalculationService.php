@@ -7,38 +7,34 @@ use App\Service\CaptainFinancialSystemDate\CaptainFinancialSystemDateService;
 
 class OrderFinancialValueAccordingToSystemThreeCalculationService
 {
-    private CaptainFinancialSystemThreeGetService $captainFinancialSystemThreeGetService;
-    private CaptainFinancialDueGetService $captainFinancialDueGetService;
-    private CaptainFinancialSystemDateService $captainFinancialSystemDateService;
-    private CaptainFinancialSystemThreeBalanceDetailsGetService $captainFinancialSystemThreeBalanceDetailsGetService;
-
-    public function __construct(CaptainFinancialSystemThreeGetService $captainFinancialSystemThreeGetService, CaptainFinancialDueGetService $captainFinancialDueGetService,
-                                CaptainFinancialSystemDateService $captainFinancialSystemDateService, CaptainFinancialSystemThreeBalanceDetailsGetService $captainFinancialSystemThreeBalanceDetailsGetService)
+    public function __construct(
+        private CaptainFinancialSystemThreeGetService $captainFinancialSystemThreeGetService,
+        private CaptainFinancialDueGetService $captainFinancialDueGetService,
+        private CaptainFinancialSystemDateService $captainFinancialSystemDateService,
+        private CaptainFinancialSystemThreeOrderGetService $captainFinancialSystemThreeOrderGetService
+    )
     {
-        $this->captainFinancialSystemThreeGetService = $captainFinancialSystemThreeGetService;
-        $this->captainFinancialDueGetService = $captainFinancialDueGetService;
-        $this->captainFinancialSystemDateService = $captainFinancialSystemDateService;
-        $this->captainFinancialSystemThreeBalanceDetailsGetService = $captainFinancialSystemThreeBalanceDetailsGetService;
     }
 
-    // Calculate the expected financial value of an order and return it
+    // Calculate the expected financial value of an order and return it as array which consists of basic value and bonus
     // Get all categories of the third financial system
     // For each category:
     //      Check if order belong to it (according to distance) and if it is, then get its value
     //      Get the delivered orders count in this category kilometers range:
     //          Check if the count meet the required one for getting a bonus after delivering the order
-    public function getOrderFinancialValueAccordingOnOrders(int $captainProfileId, float $orderDistance = null): float
+    public function getOrderFinancialValueAccordingOnOrders(int $captainProfileId, float $orderDistance = null): array
     {
         $thirdFinancialSystemCategories = $this->captainFinancialSystemThreeGetService->getAllActiveCaptainFinancialSystemAccordingOnOrder();
 
         if (($thirdFinancialSystemCategories) && (count($thirdFinancialSystemCategories) > 0)) {
             // First, check if the distance is calculated
             if (! $orderDistance) {
-                return 0.0;
+                return [0.0, 0.0];
             }
 
             // final captain profit of the order
             $captainProfit = 0.0;
+            $bonus = 0.0;
 
             foreach ($thirdFinancialSystemCategories as $thirdFinancialSystemCategory) {//dd($thirdFinancialSystemCategory);
                 // Check if order belong to the category
@@ -55,17 +51,17 @@ class OrderFinancialValueAccordingToSystemThreeCalculationService
 
                         if ($ordersCount) {
                             if (($ordersCount['countOrder'] + 1) >= $thirdFinancialSystemCategory->getBounceCountOrdersInMonth()) {
-                                $captainProfit += $thirdFinancialSystemCategory->getBounce();
+                                $bonus += $thirdFinancialSystemCategory->getBounce();
                             }
                         }
                     }
                 }
             }
 
-            return $captainProfit;
+            return [$captainProfit, $bonus];
         }
 
-        return 0.0;
+        return [0.0, 0.0];
     }
 
     public function getCountOrdersByFinancialSystemThreeDuringCurrentAndActiveFinancialCycle(int $captainProfileId, float $countKilometersFrom,
@@ -79,7 +75,7 @@ class OrderFinancialValueAccordingToSystemThreeCalculationService
     public function getCountOrdersByFinancialSystemThree(int $captainProfileId, string $fromDate, string $toDate, float $countKilometersFrom,
                                                          float $countKilometersTo): ?array
     {
-        return $this->captainFinancialSystemThreeBalanceDetailsGetService->getCountOrdersByFinancialSystemThree($captainProfileId,
+        return $this->captainFinancialSystemThreeOrderGetService->getCountOrdersByFinancialSystemThree($captainProfileId,
             $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
     }
 

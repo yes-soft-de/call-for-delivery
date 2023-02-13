@@ -100,6 +100,9 @@ class CaptainEntity
     #[ORM\Column(type: 'string', length: 255, options: ["default" => ""])]
     private $city = CaptainConstant::CAPTAIN_PROFILE_CITY_DEFAULT_CONST;
 
+    #[ORM\OneToMany(mappedBy: 'captainProfile', targetEntity: CaptainFinancialDailyEntity::class)]
+    private $captainFinancialDailyEntities;
+
     public function __construct()
     {
         $this->orderEntity = new ArrayCollection();
@@ -111,6 +114,7 @@ class CaptainEntity
         $this->captainFinancialDuesEntity = new ArrayCollection();
         $this->captainAmountFromOrderCash = new ArrayCollection();
         $this->orderLogEntities = new ArrayCollection();
+        $this->captainFinancialDailyEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -600,6 +604,36 @@ class CaptainEntity
     public function setCity(string $city): self
     {
         $this->city = $city;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CaptainFinancialDailyEntity>
+     */
+    public function getCaptainFinancialDailyEntities(): Collection
+    {
+        return $this->captainFinancialDailyEntities;
+    }
+
+    public function addCaptainFinancialDailyEntity(CaptainFinancialDailyEntity $captainFinancialDailyEntity): self
+    {
+        if (!$this->captainFinancialDailyEntities->contains($captainFinancialDailyEntity)) {
+            $this->captainFinancialDailyEntities[] = $captainFinancialDailyEntity;
+            $captainFinancialDailyEntity->setCaptainProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCaptainFinancialDailyEntity(CaptainFinancialDailyEntity $captainFinancialDailyEntity): self
+    {
+        if ($this->captainFinancialDailyEntities->removeElement($captainFinancialDailyEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($captainFinancialDailyEntity->getCaptainProfile() === $this) {
+                $captainFinancialDailyEntity->setCaptainProfile(null);
+            }
+        }
 
         return $this;
     }
