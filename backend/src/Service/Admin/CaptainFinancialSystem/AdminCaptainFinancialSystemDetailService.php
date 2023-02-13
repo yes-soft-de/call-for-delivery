@@ -10,6 +10,7 @@ use App\Request\Admin\Account\CompleteAccountStatusUpdateByAdminRequest;
 use App\Request\Admin\CaptainFinancialSystem\CaptainFinancialSystemDetailCreateByAdminRequest;
 use App\Response\Admin\CaptainFinancialSystem\CaptainFinancialSystemDetailCreateByAdminResponse;
 use App\Service\Admin\Captain\AdminCaptainService;
+use App\Service\Admin\CaptainFinancialSystem\CaptainFinancialSystemThree\AdminCaptainFinancialSystemThreeGetBalanceDetailsService;
 use App\Service\Admin\CaptainFinancialSystem\CaptainFinancialSystemTwo\AdminCaptainFinancialSystemTwoGetBalanceDetailsService;
 use App\Service\CaptainPayment\CaptainPaymentService;
 use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse;
@@ -26,38 +27,21 @@ use App\Service\Admin\Order\AdminOrderService;
 
 class AdminCaptainFinancialSystemDetailService implements AdminCaptainFinancialSystemDetailInterface
 {
-    private AdminCaptainFinancialSystemDetailManager $adminCaptainFinancialSystemDetailManager;
-    private CaptainPaymentService $captainPaymentService;
-    private AdminCaptainFinancialSystemOneBalanceDetailService $adminCaptainFinancialSystemOneBalanceDetailService;
-    private AdminCaptainFinancialSystemTwoBalanceDetailService $adminCaptainFinancialSystemTwoBalanceDetailService;
-    private AutoMapping $autoMapping;
-    private AdminCaptainFinancialSystemThreeBalanceDetailService $adminCaptainFinancialSystemThreeBalanceDetailService;
-    private AdminCaptainFinancialSystemAccordingOnOrderService $adminCaptainFinancialSystemAccordingOnOrderService;
-    private CaptainFinancialSystemDateService $captainFinancialSystemDateService;
-    private CaptainFinancialDuesService $captainFinancialDuesService;
-    private AdminOrderService $adminOrderService;
-    private AdminCaptainFinancialSystemTwoGetBalanceDetailsService $adminCaptainFinancialSystemTwoGetBalanceDetailsService;
-    private AdminCaptainService $adminCaptainService;
-
-    public function __construct(CaptainPaymentService $captainPaymentService, AdminCaptainFinancialSystemOneBalanceDetailService $adminCaptainFinancialSystemOneBalanceDetailService,
-                                AdminCaptainFinancialSystemDetailManager $adminCaptainFinancialSystemDetailManager, AdminCaptainFinancialSystemTwoBalanceDetailService $adminCaptainFinancialSystemTwoBalanceDetailService,
-                                AutoMapping $autoMapping, AdminCaptainFinancialSystemThreeBalanceDetailService $adminCaptainFinancialSystemThreeBalanceDetailService,
-                                AdminCaptainFinancialSystemAccordingOnOrderService $adminCaptainFinancialSystemAccordingOnOrderService, CaptainFinancialSystemDateService $captainFinancialSystemDateService,
-                                CaptainFinancialDuesService $captainFinancialDuesService, AdminOrderService $adminOrderService, AdminCaptainFinancialSystemTwoGetBalanceDetailsService $adminCaptainFinancialSystemTwoGetBalanceDetailsService,
-                                AdminCaptainService $adminCaptainService)
+    public function __construct(
+        private CaptainPaymentService $captainPaymentService,
+        private AdminCaptainFinancialSystemOneBalanceDetailService $adminCaptainFinancialSystemOneBalanceDetailService,
+        private AdminCaptainFinancialSystemDetailManager $adminCaptainFinancialSystemDetailManager,
+        private AutoMapping $autoMapping,
+        private AdminCaptainFinancialSystemThreeBalanceDetailService $adminCaptainFinancialSystemThreeBalanceDetailService,
+        private AdminCaptainFinancialSystemAccordingOnOrderService $adminCaptainFinancialSystemAccordingOnOrderService,
+        private CaptainFinancialSystemDateService $captainFinancialSystemDateService,
+        private CaptainFinancialDuesService $captainFinancialDuesService,
+        private AdminOrderService $adminOrderService,
+        private AdminCaptainFinancialSystemTwoGetBalanceDetailsService $adminCaptainFinancialSystemTwoGetBalanceDetailsService,
+        private AdminCaptainService $adminCaptainService,
+        private AdminCaptainFinancialSystemThreeGetBalanceDetailsService $adminCaptainFinancialSystemThreeGetBalanceDetailsService
+    )
     {
-        $this->captainPaymentService = $captainPaymentService;
-        $this->adminCaptainFinancialSystemOneBalanceDetailService = $adminCaptainFinancialSystemOneBalanceDetailService;
-        $this->adminCaptainFinancialSystemDetailManager = $adminCaptainFinancialSystemDetailManager;
-        $this->adminCaptainFinancialSystemTwoBalanceDetailService = $adminCaptainFinancialSystemTwoBalanceDetailService;
-        $this->autoMapping = $autoMapping;
-        $this->adminCaptainFinancialSystemThreeBalanceDetailService = $adminCaptainFinancialSystemThreeBalanceDetailService;
-        $this->adminCaptainFinancialSystemAccordingOnOrderService = $adminCaptainFinancialSystemAccordingOnOrderService;
-        $this->captainFinancialSystemDateService = $captainFinancialSystemDateService;
-        $this->captainFinancialDuesService = $captainFinancialDuesService;
-        $this->adminOrderService = $adminOrderService;
-        $this->adminCaptainFinancialSystemTwoGetBalanceDetailsService = $adminCaptainFinancialSystemTwoGetBalanceDetailsService;
-        $this->adminCaptainService = $adminCaptainService;
     }
 
     public function getBalanceDetailForAdmin(int $captainId): AdminCaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse|string|AdminCaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse|array 
@@ -92,8 +76,15 @@ class AdminCaptainFinancialSystemDetailService implements AdminCaptainFinancialS
 
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_THREE) {
                $choseFinancialSystemDetails = $this->adminCaptainFinancialSystemAccordingOnOrderService->getCaptainFinancialSystemAccordingOnOrder();
-              
-               return $this->adminCaptainFinancialSystemThreeBalanceDetailService->getBalanceDetailWithSystemThree($choseFinancialSystemDetails, $captainId, $sumPayments, $date);
+
+                // **** Habib's code ****
+                //return $this->adminCaptainFinancialSystemThreeBalanceDetailService->getBalanceDetailWithSystemThree($choseFinancialSystemDetails, $captainId, $sumPayments, $date);
+                // **** End of Habib's code ****
+
+                // **** Rami's code ****
+                return $this->adminCaptainFinancialSystemThreeGetBalanceDetailsService->getBalanceDetailsForAdmin($choseFinancialSystemDetails,
+                    $captainId, $sumPayments, $date);
+                // **** End of Rami's code ****
             } 
             
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {

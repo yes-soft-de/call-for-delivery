@@ -32,4 +32,22 @@ class AdminCaptainFinancialSystemThreeBalanceDetailManager
     {
         return $this->orderManager->getOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
     }
+
+    /**
+     * Get all orders with details that delivered by specific captain during specific date and storeBranchToClientDistance
+     * for each order belong to the specific category of the third financial system
+     */
+    public function getOrdersDetailsByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): array
+    {
+        return $this->orderManager->getOrdersDetailsByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom,
+            $countKilometersTo);
+    }
+
+    /**
+     * Get count of orders without distance and delivered by specific captain during specific time
+     */
+    public function getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): array
+    {
+        return $this->orderManager->getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
+    }
 }

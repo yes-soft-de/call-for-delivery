@@ -2498,4 +2498,44 @@ class OrderEntityRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    /**
+     * Get all orders with details that delivered by specific captain during specific date and storeBranchToClientDistance
+     * for each order belong to the specific category of the third financial system
+     */
+    public function getOrdersDetailsByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
+                'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state', 'orderEntity.orderIsMain')
+            ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
+            ->addSelect('storeOwnerProfileEntity.storeOwnerName')
+
+            ->leftJoin(StoreOrderDetailsEntity::class, 'storeOrderDetails', Join::WITH, 'orderEntity.id = storeOrderDetails.orderId')
+            ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')
+            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = orderEntity.storeOwner')
+
+            ->where('orderEntity.state = :state')
+            ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+            ->andWhere('orderEntity.captainId = :captainId')
+            ->setParameter('captainId', $captainId)
+
+            ->andWhere('orderEntity.createdAt >= :fromDate')
+            ->setParameter('fromDate', $fromDate)
+
+            ->andWhere('orderEntity.createdAt <= :toDate')
+            ->setParameter('toDate', $toDate)
+
+            ->andWhere('orderEntity.storeBranchToClientDistance IS NOT NULL')
+
+            ->andWhere('orderEntity.storeBranchToClientDistance >= :countKilometersFrom')
+            ->setParameter('countKilometersFrom', $countKilometersFrom)
+
+            ->andWhere('orderEntity.storeBranchToClientDistance <= :countKilometersTo')
+            ->setParameter('countKilometersTo', $countKilometersTo)
+
+            ->getQuery()
+            ->getResult();
+    }
 }

@@ -4,7 +4,7 @@ namespace App\Manager\CaptainFinancialSystem;
 
 use App\Manager\Order\OrderManager;
 
-class CaptainFinancialSystemThreeBalanceDetailManager
+class CaptainFinancialSystemThreeOrderManager
 {
     private OrderManager $orderManager;
 
@@ -26,5 +26,13 @@ class CaptainFinancialSystemThreeBalanceDetailManager
     public function getCountOrdersByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo)
     {
         return $this->orderManager->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
+    }
+
+    /**
+     * Get count of orders without distance and delivered by specific captain during specific time
+     */
+    public function getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): array
+    {
+        return $this->orderManager->getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
     }
 }
