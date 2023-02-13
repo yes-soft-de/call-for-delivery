@@ -59,10 +59,10 @@ class AdminCaptainFinancialSystemThreeGetBalanceDetailsService
 
         $total = round($sumPayments - $finalFinancialAccount['financialDues'], 2);
 
-        $finalFinancialAccount['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
+        $finalFinancialAccount['advancePayment'] = CaptainFinancialSystem::ADVANCED_PAYMENT_BALANCE_CONST;
 
         if ($total <= 0 ) {
-            $finalFinancialAccount['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_YES;
+            $finalFinancialAccount['advancePayment'] = CaptainFinancialSystem::ADVANCED_PAYMENT_EXIST_CONST;
         }
 
         $finalFinancialAccount['total'] = abs($total);
