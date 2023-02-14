@@ -58,24 +58,30 @@ class CaptainFinancialDailyService
      */
     public function getCaptainFinancialAmountAndStoreCashAmountBySpecificFinancialSystemTypeAndSpecificDate(array $captainFinancialSystemDetail, int $captainProfileId, string $fromDate, string $toDate): array
     {
+        $response = [];
+
+        $response['basicFinancialAmount'] = 0.0;
+        $response['bounce'] = 0.0;
+        $response['amountForStore'] = 0.0;
+
         if ($captainFinancialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
             // Captain financial system is the first one
             ///todo calculate the order cost according to the first financial system
 
-            return [0.0, 0.0, 0.0];
+            return $response;
 
         } elseif ($captainFinancialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
             // Captain financial system is the second one
             ///todo calculate the order cost according to the second financial system
 
-            return [0.0, 0.0, 0.0];
+            return $response;
 
         } elseif ($captainFinancialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_THREE) {
             // Captain financial system is the third one
             return $this->captainFinancialSystemThreeDailyService->getDailyCaptainFinancialAmount($captainProfileId, $fromDate, $toDate);
         }
 
-        return [0.0, 0.0, 0.0];
+        return $response;
     }
 
     /**

@@ -24,7 +24,13 @@ class CaptainFinancialSystemThreeDailyService
         $financialSystemThreeDetails = $this->getAllCaptainFinancialSystemThreePlansAsArray();
 
         if (count($financialSystemThreeDetails) === 0) {
-            return [0.0, 0.0, 0.0];
+            $response = [];
+
+            $response['basicFinancialAmount'] = 0.0;
+            $response['bounce'] = 0.0;
+            $response['amountForStore'] = 0.0;
+
+            return $response;
         }
 
         return $this->captainFinancialSystemThreeGetBalanceDetailsService->calculateCaptainDuesAndStoreCashAmountOnly($financialSystemThreeDetails,
