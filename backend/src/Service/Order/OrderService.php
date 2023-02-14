@@ -584,7 +584,7 @@ class OrderService
                 }
 
                 // Create or update captain financial daily amount
-                //$this->createOrUpdateCaptainFinancialDaily($order->getId());
+                $this->createOrUpdateCaptainFinancialDaily($order->getId());
             }
 
             // save log of the action on order

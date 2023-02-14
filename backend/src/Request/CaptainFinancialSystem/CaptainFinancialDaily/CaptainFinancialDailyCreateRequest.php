@@ -4,6 +4,7 @@ namespace App\Request\CaptainFinancialSystem\CaptainFinancialDaily;
 
 use App\Entity\CaptainEntity;
 use App\Entity\CaptainPaymentEntity;
+use DateTime;
 
 class CaptainFinancialDailyCreateRequest
 {
@@ -19,7 +20,10 @@ class CaptainFinancialDailyCreateRequest
 
     private int $financialSystemType;
 
-    private int $financialSystemPlan;
+    /**
+     * @var int|null
+     */
+    private $financialSystemPlan;
 
     private int $isPaid;
 
@@ -34,6 +38,8 @@ class CaptainFinancialDailyCreateRequest
      * @var CaptainPaymentEntity|null
      */
     private $captainPayment;
+
+    private DateTime $createdAt;
 
     public function getCaptainProfile(): CaptainEntity|int
     {
@@ -75,12 +81,12 @@ class CaptainFinancialDailyCreateRequest
         $this->financialSystemType = $financialSystemType;
     }
 
-    public function getFinancialSystemPlan(): int
+    public function getFinancialSystemPlan(): ?int
     {
         return $this->financialSystemPlan;
     }
 
-    public function setFinancialSystemPlan(int $financialSystemPlan): void
+    public function setFinancialSystemPlan(?int $financialSystemPlan): void
     {
         $this->financialSystemPlan = $financialSystemPlan;
     }
@@ -123,5 +129,15 @@ class CaptainFinancialDailyCreateRequest
     public function setCaptainPayment(?CaptainPaymentEntity $captainPayment): void
     {
         $this->captainPayment = $captainPayment;
+    }
+
+    public function getCreatedAt(): DateTime
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(DateTime $createdAt): void
+    {
+        $this->createdAt = $createdAt;
     }
 }

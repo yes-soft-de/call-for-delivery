@@ -21,14 +21,17 @@ class CaptainFinancialDailyManager
     {
     }
 
-    public function getCaptainFinancialDailyByDate(DateTime $date): ?CaptainFinancialDailyEntity
+    public function getCaptainFinancialDailyByDateAndCaptainProfileId(DateTime $date, int $captainProfileId): ?CaptainFinancialDailyEntity
     {
-        return $this->captainFinancialDailyEntityRepository->getCaptainFinancialDailyByDate($date);
+        return $this->captainFinancialDailyEntityRepository->getCaptainFinancialDailyByDateAndCaptainProfileId($date, $captainProfileId);
     }
 
     public function createCaptainFinancialDaily(CaptainFinancialDailyCreateRequest $request): CaptainFinancialDailyEntity
     {
         $captainFinancialDailyEntity = $this->autoMapping->map(CaptainFinancialDailyCreateRequest::class, CaptainFinancialDailyEntity::class, $request);
+
+        // Save only date, with time equal to 00:00:00
+        $captainFinancialDailyEntity->setCreatedAt(new DateTime(($request->getCreatedAt())->format('Y-m-d')));
 
         $this->entityManager->persist($captainFinancialDailyEntity);
         $this->entityManager->flush();
@@ -50,5 +53,10 @@ class CaptainFinancialDailyManager
         $this->entityManager->flush();
 
         return $captainFinancialDailyEntity;
+    }
+
+    public function getCaptainFinancialAmountDailyByCaptainUserIdAndSpecificDate(int $captainId, DateTime $date): ?CaptainFinancialDailyEntity
+    {
+        return $this->captainFinancialDailyEntityRepository->getCaptainFinancialDailyByDateAndCaptainUserId($date, $captainId);
     }
 }
