@@ -2,11 +2,13 @@
 
 namespace App\Repository;
 
+use App\Entity\CaptainEntity;
 use App\Entity\CaptainFinancialDailyEntity;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -56,6 +58,27 @@ class CaptainFinancialDailyEntityRepository extends ServiceEntityRepository
 
             ->andWhere('captainFinancialDailyEntity.captainProfile = :captainProfileId')
             ->setParameter('captainProfileId', $captainProfileId)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    public function getCaptainFinancialDailyByDateAndCaptainUserId(DateTime $date, int $captainUserId): ?CaptainFinancialDailyEntity
+    {
+        return $this->createQueryBuilder('captainFinancialDailyEntity')
+
+            ->andWhere('captainFinancialDailyEntity.createdAt = :specificDate')
+            ->setParameter('specificDate', $date)
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = captainFinancialDailyEntity.captainProfile'
+            )
+
+            ->andWhere('captainEntity.captainId = :captainId')
+            ->setParameter('captainId', $captainUserId)
 
             ->getQuery()
             ->getOneOrNullResult();

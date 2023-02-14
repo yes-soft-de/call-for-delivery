@@ -158,6 +158,8 @@ class BaseController extends AbstractController
     const CAPTAIN_OFFER_SUBSCRIPTION_DELETE_PROBLEM = ["problem in deleting captain offer subscription", "9385"];
     // direct support
     const DIRECT_SUPPORT_SCRIPT_NOT_EXIST_CONST = ["direct support script not exists", "9450"];
+    // captain financial daily
+    const CAPTAIN_FINANCIAL_DAILY_NOT_EXIST_CONST = ["captain financial daily not exists", "9500"];
     
 //    const TEST = [
 //        "one"=>[ "error error", "9003"],
