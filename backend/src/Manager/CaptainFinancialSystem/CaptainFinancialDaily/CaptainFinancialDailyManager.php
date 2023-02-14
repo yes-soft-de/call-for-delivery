@@ -21,9 +21,9 @@ class CaptainFinancialDailyManager
     {
     }
 
-    public function getCaptainFinancialDailyByDate(DateTime $date): ?CaptainFinancialDailyEntity
+    public function getCaptainFinancialDailyByDateAndCaptainProfileId(DateTime $date, int $captainProfileId): ?CaptainFinancialDailyEntity
     {
-        return $this->captainFinancialDailyEntityRepository->getCaptainFinancialDailyByDate($date);
+        return $this->captainFinancialDailyEntityRepository->getCaptainFinancialDailyByDateAndCaptainProfileId($date, $captainProfileId);
     }
 
     public function createCaptainFinancialDaily(CaptainFinancialDailyCreateRequest $request): CaptainFinancialDailyEntity

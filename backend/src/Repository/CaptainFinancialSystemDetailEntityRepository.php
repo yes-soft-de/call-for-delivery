@@ -152,7 +152,7 @@ class CaptainFinancialSystemDetailEntityRepository extends ServiceEntityReposito
 
             $query->select('captainFinancialSystemDetailEntity.id', 'captainFinancialSystemDetailEntity.createdAt',
                 'captainFinancialSystemDetailEntity.updatedAt', 'captainFinancialSystemDetailEntity.captainFinancialSystemType',
-                'captainFinancialSystemDetailEntity.status')
+                'captainFinancialSystemDetailEntity.status', 'captainFinancialSystemDetailEntity.captainFinancialSystemId')
 
             ->leftJoin(
                 CaptainEntity::class,

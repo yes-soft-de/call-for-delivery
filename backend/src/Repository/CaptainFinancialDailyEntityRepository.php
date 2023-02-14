@@ -46,13 +46,16 @@ class CaptainFinancialDailyEntityRepository extends ServiceEntityRepository
         }
     }
 
-    public function getCaptainFinancialDailyByDate(DateTime $date): ?CaptainFinancialDailyEntity
+    public function getCaptainFinancialDailyByDateAndCaptainProfileId(DateTime $date, int $captainProfileId): ?CaptainFinancialDailyEntity
     {
         return $this->createQueryBuilder('captainFinancialDailyEntity')
 
             ->andWhere('captainFinancialDailyEntity.createdAt BETWEEN :fromDate AND :toDate')
             ->setParameter('fromDate', $date->format('Y-m-d 00:00:00'))
             ->setParameter('toDate', $date->format('Y-m-d 23:59:59'))
+
+            ->andWhere('captainFinancialDailyEntity.captainProfile = :captainProfileId')
+            ->setParameter('captainProfileId', $captainProfileId)
 
             ->getQuery()
             ->getOneOrNullResult();

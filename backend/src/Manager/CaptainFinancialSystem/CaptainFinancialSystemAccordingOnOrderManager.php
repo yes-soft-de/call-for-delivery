@@ -18,7 +18,7 @@ class CaptainFinancialSystemAccordingOnOrderManager
         return $this->captainFinancialSystemAccordingOnOrderEntityRepository->findBy(['status' => 1]);
     }
     
-    public function getCaptainFinancialSystemAccordingOnOrder(): ?array
+    public function getCaptainFinancialSystemAccordingOnOrder(): array
     {
         return $this->captainFinancialSystemAccordingOnOrderEntityRepository->getCaptainFinancialSystemAccordingOnOrder();
     }

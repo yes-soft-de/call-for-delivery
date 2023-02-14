@@ -2,6 +2,8 @@
 
 namespace App\Response\CaptainFinancialSystem\CaptainFinancialDaily;
 
+use DateTime;
+
 class CaptainFinancialDailyCreateResponse
 {
     // id of type big integer
@@ -14,7 +16,10 @@ class CaptainFinancialDailyCreateResponse
 
     public int $financialSystemType;
 
-    public int $financialSystemPlan;
+    /**
+     * @var int|null
+     */
+    public $financialSystemPlan;
 
     public int $isPaid;
 
@@ -24,4 +29,6 @@ class CaptainFinancialDailyCreateResponse
      * @var float|null
      */
     public $bonus;
+
+    public DateTime $createdAt;
 }
