@@ -6,7 +6,9 @@ use App\AutoMapping;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyResultConstant;
 use App\Entity\CaptainFinancialDailyEntity;
 use App\Manager\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyManager;
+use App\Request\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyFilterRequest;
 use App\Response\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyAmountGetForCaptainResponse;
+use App\Response\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyFilterResponse;
 use DateTime;
 
 class CaptainFinancialDailyGetService
@@ -27,5 +29,33 @@ class CaptainFinancialDailyGetService
         }
 
         return $this->autoMapping->map(CaptainFinancialDailyEntity::class, CaptainFinancialDailyAmountGetForCaptainResponse::class, $captainFinancialDaily);
+    }
+
+    public function filterCaptainFinancialDaily(CaptainFinancialDailyFilterRequest $request): array
+    {
+        $response = [];
+
+        $filteredCaptainFinancialDaily = $this->captainFinancialDailyManager->filterCaptainFinancialDaily($request);
+
+        if (count($filteredCaptainFinancialDaily) > 0) {
+            foreach ($filteredCaptainFinancialDaily as $key => $value) {
+                $response[$key] = $this->autoMapping->map(CaptainFinancialDailyEntity::class, CaptainFinancialDailyFilterResponse::class,
+                    $value);
+
+                // Check if there is captain payment linked with the financial daily amount. then get its info
+                $captainPayments = $value->getCaptainPayment()->toArray();
+
+                if (count($captainPayments) > 0) {
+                    foreach ($captainPayments as $captainPaymentKey => $captainPaymentValue) {
+                        $response[$key]->captainPayments[$captainPaymentKey]['id'] = $captainPaymentValue->getId();
+                        $response[$key]->captainPayments[$captainPaymentKey]['amount'] = $captainPaymentValue->getAmount();
+                        $response[$key]->captainPayments[$captainPaymentKey]['createdAt'] = $captainPaymentValue->getCreatedAt();
+                        $response[$key]->captainPayments[$captainPaymentKey]['note'] = $captainPaymentValue->getNote();
+                    }
+                }
+            }
+        }
+
+        return $response;
     }
 }
