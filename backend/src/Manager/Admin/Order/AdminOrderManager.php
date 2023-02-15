@@ -267,6 +267,8 @@ class AdminOrderManager
         $orderEntity->setConflictedAnswersResolvedBy(null);
         $orderEntity->setIsCashPaymentConfirmedByStore(null);
         $orderEntity->setIsCashPaymentConfirmedByStoreUpdateDate(null);
+        $orderEntity->setStoreBranchToClientDistance(null);
+        $orderEntity->setStoreBranchToClientDistanceAdditionExplanation(null);
         $orderEntity->setCaptainId(null);
         // if order belongs to an aggregated one, then unlink them
         $orderEntity->setPrimaryOrder(null);

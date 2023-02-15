@@ -14,9 +14,9 @@ class OrderGetService
     {
     }
 
-    public function getOrderEntityByIdAndState(int $orderId, string $orderState): OrderEntity|string
+    public function getOrderEntityById(int $orderId): OrderEntity|string
     {
-        $order = $this->orderManager->getOrderEntityByIdAndState($orderId, $orderState);
+        $order = $this->orderManager->getOrderById($orderId);
 
         if (! $order) {
             return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
