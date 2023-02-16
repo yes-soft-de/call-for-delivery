@@ -743,10 +743,10 @@ class OrderManager
         return $orderEntity;
     }
 
-    public function getOrderEntityByIdAndState(int $orderId, string $orderState): ?OrderEntity
-    {
-        return $this->orderRepository->findOneBy(['id' => $orderId, 'state' => $orderState]);
-    }
+//    public function getOrderEntityByIdAndState(int $orderId, string $orderState): ?OrderEntity
+//    {
+//        return $this->orderRepository->findOneBy(['id' => $orderId, 'state' => $orderState]);
+//    }
 
     /**
      * Get all orders with details that delivered by specific captain during specific date and storeBranchToClientDistance

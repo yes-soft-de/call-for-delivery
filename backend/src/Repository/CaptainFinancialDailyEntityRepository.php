@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\CaptainEntity;
 use App\Entity\CaptainFinancialDailyEntity;
+use App\Request\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyFilterRequest;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
@@ -82,5 +83,73 @@ class CaptainFinancialDailyEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function filterCaptainFinancialDailyEntitiesByDates(array $tempOrders, ?string $fromDate, ?string $toDate, ?string $timeZone): array
+    {
+        $filteredCaptainFinancialDaily = [];
+
+        if (count($tempOrders) > 0) {
+            if (($fromDate != null || $fromDate != "") && ($toDate === null || $toDate === "")) {
+                foreach ($tempOrders as $key => $value) {
+                    if ($value->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) >=
+                        new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) {
+                        $filteredCaptainFinancialDaily[$key] = $value;
+                    }
+                }
+
+            } elseif (($fromDate === null || $fromDate === "") && ($toDate != null || $toDate != "")) {
+                foreach ($tempOrders as $key => $value) {
+                    if ($value->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) <=
+                        new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59'))) {
+                        $filteredCaptainFinancialDaily[$key] = $value;
+                    }
+                }
+
+            } elseif (($fromDate != null || $fromDate != "") && ($toDate != null || $toDate != "")) {
+                foreach ($tempOrders as $key => $value) {
+                    if (($value->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) >=
+                            new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) &&
+                        ($value->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) <=
+                            new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59')))) {
+                        $filteredCaptainFinancialDaily[$key] = $value;
+                    }
+                }
+            }
+        }
+
+        return $filteredCaptainFinancialDaily;
+    }
+
+    public function filterCaptainFinancialDaily(CaptainFinancialDailyFilterRequest $request): array
+    {
+        $query = $this->createQueryBuilder('captainFinancialDailyEntity')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = captainFinancialDailyEntity.captainProfile'
+            )
+
+            ->andWhere('captainEntity.captainId = :captainId')
+            ->setParameter('captainId', $request->getCaptainUserId())
+
+            ->orderBy('captainFinancialDailyEntity.id', 'DESC');
+
+        if ($request->getIsPaid()) {
+            $query->andWhere('captainFinancialDailyEntity.isPaid = :isPaidValue')
+                ->setParameter('isPaidValue', $request->getIsPaid());
+        }
+
+        if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
+            || ($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")
+            || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $tempQuery = $query->getQuery()->getResult();
+
+            return $this->filterCaptainFinancialDailyEntitiesByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
+        }
+
+        return $query->getQuery()->getResult();
     }
 }

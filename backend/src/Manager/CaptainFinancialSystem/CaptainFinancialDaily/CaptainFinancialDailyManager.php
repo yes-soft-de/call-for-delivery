@@ -8,6 +8,7 @@ use App\Entity\CaptainFinancialDailyEntity;
 use App\Repository\CaptainFinancialDailyEntityRepository;
 use App\Request\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyAmountUpdateRequest;
 use App\Request\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyCreateRequest;
+use App\Request\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyFilterRequest;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -58,5 +59,10 @@ class CaptainFinancialDailyManager
     public function getCaptainFinancialAmountDailyByCaptainUserIdAndSpecificDate(int $captainId, DateTime $date): ?CaptainFinancialDailyEntity
     {
         return $this->captainFinancialDailyEntityRepository->getCaptainFinancialDailyByDateAndCaptainUserId($date, $captainId);
+    }
+
+    public function filterCaptainFinancialDaily(CaptainFinancialDailyFilterRequest $request): array
+    {
+        return $this->captainFinancialDailyEntityRepository->filterCaptainFinancialDaily($request);
     }
 }

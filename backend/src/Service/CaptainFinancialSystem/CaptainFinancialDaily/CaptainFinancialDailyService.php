@@ -39,9 +39,9 @@ class CaptainFinancialDailyService
     /**
      * Get order entity if exists, or string const if not
      */
-    public function getOrderByIdAndState(int $orderId, string $orderState): OrderEntity|string
+    public function getOrderById(int $orderId): OrderEntity|string
     {
-        return $this->orderGetService->getOrderEntityByIdAndState($orderId, $orderState);
+        return $this->orderGetService->getOrderEntityById($orderId);
     }
 
     /**
@@ -199,17 +199,24 @@ class CaptainFinancialDailyService
      * main function
      * Creates or updates captain financial daily
      */
-    public function createOrUpdateCaptainFinancialDaily(int $orderId)
+    public function createOrUpdateCaptainFinancialDaily(int $orderId, CaptainEntity $captainEntity = null)
     {
         // Get order entity first
-        $order = $this->getOrderByIdAndState($orderId, OrderStateConstant::ORDER_STATE_DELIVERED);
+        $order = $this->getOrderById($orderId);
 
         if ($order === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
             return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
         }
 
+        if (! $captainEntity) {
+            $captainProfile = $order->getCaptainId();
+
+        } else {
+            $captainProfile = $captainEntity;
+        }
+
         // Get which financial system has the captain subscribed with
-        $captainFinancialSystemDetail = $this->getCaptainFinancialSystemDetailByCaptainUserId($order->getCaptainId()->getCaptainId());
+        $captainFinancialSystemDetail = $this->getCaptainFinancialSystemDetailByCaptainUserId($captainProfile->getCaptainId());
 
         if (count($captainFinancialSystemDetail) === 0) {
             return CaptainFinancialSystem::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM;
@@ -217,17 +224,17 @@ class CaptainFinancialDailyService
 
         // Depending on financial system type and id, calculate the expected financial value of the order
         $orderFinancialValuesArrayResult = $this->getCaptainFinancialAmountDetailsBySpecificDate($captainFinancialSystemDetail,
-            $order->getCaptainId()->getId(), $order->getCreatedAt()->format('Y-m-d 00:00:00'), $order->getCreatedAt()->format('Y-m-d 23:59:59'));
+            $captainProfile->getId(), $order->getCreatedAt()->format('Y-m-d 00:00:00'), $order->getCreatedAt()->format('Y-m-d 23:59:59'));
 
         // Check if there is financial due for the day similar to the creation day of the order
         // if exists, then update it, if not, create a new one
         $date = $this->getDateTimeObjectFromDateTimeInterface($order->getCreatedAt());
 
-        $captainFinancialDaily = $this->checkIfCaptainFinancialDailyExistForSpecificDay($date, $order->getCaptainId()->getId());
+        $captainFinancialDaily = $this->checkIfCaptainFinancialDailyExistForSpecificDay($date, $captainProfile->getId());
 
         if ($captainFinancialDaily === CaptainFinancialDailyResultConstant::CAPTAIN_FINANCIAL_DAILY_NOT_EXIST_CONST) {
             // create new captain financial daily
-            return $this->createCaptainFinancialDaily($order->getCaptainId(), $orderFinancialValuesArrayResult['basicFinancialAmount'],
+            return $this->createCaptainFinancialDaily($captainProfile, $orderFinancialValuesArrayResult['basicFinancialAmount'],
                 $orderFinancialValuesArrayResult['amountForStore'], $captainFinancialSystemDetail['captainFinancialSystemType'],
                 CaptainFinancialDailyIsPaidConstant::CAPTAIN_FINANCIAL_DAILY_IS_NOT_PAID_CONST, DateTime::createFromInterface($order->getCreatedAt()),
                 $orderFinancialValuesArrayResult['withBonus'], $orderFinancialValuesArrayResult['bounce'], $captainFinancialSystemDetail['captainFinancialSystemId']);

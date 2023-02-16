@@ -15,6 +15,7 @@ use App\Constant\OrderLog\OrderLogResultConstant;
 use App\Constant\PriceOffer\PriceOfferStatusConstant;
 use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\BidDetailsEntity;
+use App\Entity\CaptainEntity;
 use App\Entity\OrderEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Entity\StoreOwnerProfileEntity;
@@ -1740,8 +1741,8 @@ class OrderService
     /**
      * Creates or Updates Daily Financial amount for captain
      */
-    public function createOrUpdateCaptainFinancialDaily(int $orderId)
+    public function createOrUpdateCaptainFinancialDaily(int $orderId, CaptainEntity $captainEntity = null)
     {
-        $this->captainFinancialDailyService->createOrUpdateCaptainFinancialDaily($orderId);
+        $this->captainFinancialDailyService->createOrUpdateCaptainFinancialDaily($orderId, $captainEntity);
     }
 }
