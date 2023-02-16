@@ -120,4 +120,9 @@ class OrderGetForAdminResponse
      * @var float|null
      */
     public $storeBranchToClientDistance;
+
+    /**
+     * @var int|null
+     */
+    public $captainProfileId;
 }
