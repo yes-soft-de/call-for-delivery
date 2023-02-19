@@ -160,6 +160,7 @@ class BaseController extends AbstractController
     const DIRECT_SUPPORT_SCRIPT_NOT_EXIST_CONST = ["direct support script not exists", "9450"];
     // captain financial daily
     const CAPTAIN_FINANCIAL_DAILY_NOT_EXIST_CONST = ["captain financial daily not exists", "9500"];
+    const CAPTAIN_FINANCIAL_DAILY_CREATE_ERROR_CONST = ["problem in creating captain financial daily", "9501"];
     
 //    const TEST = [
 //        "one"=>[ "error error", "9003"],

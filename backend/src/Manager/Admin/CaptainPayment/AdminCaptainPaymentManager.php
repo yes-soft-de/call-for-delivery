@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Entity\CaptainPaymentEntity;
 use App\Repository\CaptainPaymentEntityRepository;
 use App\Request\Admin\CaptainPayment\AdminCaptainPaymentCreateRequest;
+use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentForCaptainFinancialDailyCreateByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\Captain\CaptainManager;
 use App\Constant\Captain\CaptainConstant;
@@ -75,5 +76,16 @@ class AdminCaptainPaymentManager
     public function getSumPaymentsToCaptainByCaptainFinancialDuesId(int $captainFinancialDuesId): ?array
     {
         return $this->captainPaymentEntityRepository->getSumPaymentsToCaptainByCaptainFinancialDuesId($captainFinancialDuesId);
+    }
+
+    public function createCaptainPaymentForCaptainFinancialDailyAmount(CaptainPaymentForCaptainFinancialDailyCreateByAdminRequest $request): CaptainPaymentEntity
+    {
+        $captainPaymentEntity = $this->autoMapping->map(CaptainPaymentForCaptainFinancialDailyCreateByAdminRequest::class,
+            CaptainPaymentEntity::class, $request);
+
+        $this->entityManager->persist($captainPaymentEntity);
+        $this->entityManager->flush();
+
+        return $captainPaymentEntity;
     }
 }
