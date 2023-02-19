@@ -6,12 +6,12 @@ use App\AutoMapping;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyIsPaidConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyResultConstant;
 use App\Constant\CaptainPayment\PaymentToCaptain\CaptainPaymentResultConstant;
-use App\Entity\CaptainEntity;
 use App\Entity\CaptainFinancialDailyEntity;
 use App\Entity\CaptainPaymentEntity;
 use App\Manager\Admin\CaptainPayment\AdminCaptainPaymentManager;
 use App\Request\Admin\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyIsPaidUpdateByAdminRequest;
 use App\Request\Admin\CaptainPayment\AdminCaptainPaymentCreateRequest;
+use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentDeleteByAdminRequest;
 use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentForCaptainFinancialDailyCreateByAdminRequest;
 use App\Response\Admin\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyIsPaidUpdateByAdminResponse;
 use App\Response\Admin\CaptainPayment\AdminCaptainPaymentCreateResponse;
@@ -20,7 +20,6 @@ use App\Constant\Captain\CaptainConstant;
 use App\Constant\Payment\PaymentConstant;
 use App\Response\Admin\CaptainPayment\AdminCaptainPaymentDeleteResponse;
 use App\Response\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentForCaptainFinancialDailyCreateByAdminResponse;
-use App\Service\Admin\Captain\AdminCaptainGetService;
 use App\Service\Admin\CaptainFinancialSystem\AdminCaptainFinancialDuesService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Entity\CaptainFinancialDuesEntity;
@@ -35,7 +34,6 @@ class AdminCaptainPaymentService
         private EntityManagerInterface $entityManager,
         private AdminCaptainPaymentManager $adminCaptainPaymentManager,
         private AdminCaptainFinancialDuesService $adminCaptainFinancialDuesService,
-        private AdminCaptainGetService $adminCaptainGetService,
         private AdminCaptainFinancialDailyGetService $adminCaptainFinancialDailyGetService,
         private AdminCaptainFinancialDailyService $adminCaptainFinancialDailyService
     )
@@ -53,11 +51,15 @@ class AdminCaptainPaymentService
         return $this->autoMapping->map(CaptainPaymentEntity::class, AdminCaptainPaymentCreateResponse::class, $payment);
     }
 
-    public function deleteCaptainPayment($id): AdminCaptainPaymentDeleteResponse|string
+    /**
+     * Delete payment to captain linked with captain financial due (not with captain financial daily)
+     */
+    public function deleteCaptainPayment($id): AdminCaptainPaymentDeleteResponse|string|int
     {
         $payment = $this->adminCaptainPaymentManager->deleteCaptainPayment($id);
       
-        if($payment ===  PaymentConstant::PAYMENT_NOT_EXISTS) {
+        if (($payment === PaymentConstant::PAYMENT_NOT_EXISTS)
+            || ($payment === CaptainPaymentResultConstant::CAPTAIN_PAYMENT_LINKED_TO_CAPTAIN_FINANCIAL_DAILY_CONST)) {
             return $payment;
         }
 
@@ -111,11 +113,6 @@ class AdminCaptainPaymentService
         return $captainFinancialDues;
     }
 
-//    public function getCaptainProfileById(int $captainProfileId): CaptainEntity|string
-//    {
-//        return $this->adminCaptainGetService->getCaptainProfileById($captainProfileId);
-//    }
-
     public function getCaptainFinancialDailyById(int $captainFinancialDailyId): CaptainFinancialDailyEntity|int
     {
         return $this->adminCaptainFinancialDailyGetService->getCaptainFinancialDailyById($captainFinancialDailyId);
@@ -137,8 +134,11 @@ class AdminCaptainPaymentService
         $captainPayments = $captainFinancialDailyEntity->getCaptainPayment()->toArray();
 
         if (count($captainPayments) === 0) {
-            // no payments are exists, no need to update isPaid field
-            return CaptainPaymentResultConstant::CAPTAIN_PAYMENT_NOT_EXIST;
+            // no payments are exists
+            $captainFinancialDailyIsPaidUpdateByAdminRequest = $this->initializeAndGetCaptainFinancialDailyIsPaidUpdateByAdminRequest($captainFinancialDailyEntity->getId(),
+                CaptainFinancialDailyIsPaidConstant::CAPTAIN_FINANCIAL_DAILY_IS_NOT_PAID_CONST);
+
+            return $this->adminCaptainFinancialDailyService->updateCaptainFinancialDailyIsPaid($captainFinancialDailyIsPaidUpdateByAdminRequest);
         }
 
         // There are payment/s, sum their/its amount
@@ -169,14 +169,7 @@ class AdminCaptainPaymentService
 
     public function createCaptainPaymentForCaptainFinancialDailyAmount(CaptainPaymentForCaptainFinancialDailyCreateByAdminRequest $request): int|string|CaptainPaymentForCaptainFinancialDailyCreateByAdminResponse
     {
-        // First get captain profile entity
-        //$captainProfile = $this->getCaptainProfileById($request->getCaptain());
-
-//        if ($captainProfile === CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST) {
-//            return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
-//        }
-
-        // Second get captain financial daily entity
+        // First get captain financial daily entity
         $captainFinancialDaily = $this->getCaptainFinancialDailyById($request->getCaptainFinancialDailyEntity());
 
         if ($captainFinancialDaily === CaptainFinancialDailyResultConstant::CAPTAIN_FINANCIAL_DAILY_NOT_EXIST_CONST) {
@@ -216,5 +209,24 @@ class AdminCaptainPaymentService
             $this->entityManager->getConnection()->rollBack();
             throw $e;
         }
+    }
+
+    /**
+     * Delete payment to captain linked with captain financial daily (not with captain financial due)
+     */
+    public function deleteCaptainPaymentRelatedToCaptainFinancialDailyAmount(CaptainPaymentDeleteByAdminRequest $request): int|AdminCaptainPaymentDeleteResponse
+    {
+        $deletedCaptainPayment = $this->adminCaptainPaymentManager->deleteCaptainPaymentRelatedToCaptainFinancialDailyAmount($request);
+
+        if (($deletedCaptainPayment === CaptainPaymentResultConstant::CAPTAIN_PAYMENT_NOT_EXIST)
+            || ($deletedCaptainPayment === CaptainPaymentResultConstant::CAPTAIN_PAYMENT_LINKED_TO_CAPTAIN_FINANCIAL_DUE_CONST)) {
+            return $deletedCaptainPayment;
+        }
+
+        // Update isPaid field of the captain financial daily which was linked with the deleted payment
+        $this->updateCaptainFinancialDailyIsPaidAccordingToPaymentAmountAndCaptainFinancialDailyAmount($deletedCaptainPayment->getCaptainFinancialDailyEntity());
+
+        return $this->autoMapping->map(CaptainPaymentEntity::class, AdminCaptainPaymentDeleteResponse::class,
+            $deletedCaptainPayment);
     }
 }

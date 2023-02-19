@@ -3,9 +3,11 @@
 namespace App\Manager\Admin\CaptainPayment;
 
 use App\AutoMapping;
+use App\Constant\CaptainPayment\PaymentToCaptain\CaptainPaymentResultConstant;
 use App\Entity\CaptainPaymentEntity;
 use App\Repository\CaptainPaymentEntityRepository;
 use App\Request\Admin\CaptainPayment\AdminCaptainPaymentCreateRequest;
+use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentDeleteByAdminRequest;
 use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentForCaptainFinancialDailyCreateByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\Captain\CaptainManager;
@@ -53,13 +55,19 @@ class AdminCaptainPaymentManager
         return $captainPaymentEntity;
     }
 
-    public function deleteCaptainPayment($id): CaptainPaymentEntity|string
+    /**
+     * Delete payment to captain linked with captain financial due (not with captain financial daily)
+     */
+    public function deleteCaptainPayment($id): CaptainPaymentEntity|string|int
     {
         $captainPaymentEntity = $this->captainPaymentEntityRepository->find($id);
 
-        if (! $captainPaymentEntity) {     
-            
+        if (! $captainPaymentEntity) {
             return PaymentConstant::PAYMENT_NOT_EXISTS;
+        }
+
+        if ($captainPaymentEntity->getCaptainFinancialDailyEntity()) {
+            return CaptainPaymentResultConstant::CAPTAIN_PAYMENT_LINKED_TO_CAPTAIN_FINANCIAL_DAILY_CONST;
         }
        
         $this->entityManager->remove($captainPaymentEntity);
@@ -84,6 +92,28 @@ class AdminCaptainPaymentManager
             CaptainPaymentEntity::class, $request);
 
         $this->entityManager->persist($captainPaymentEntity);
+        $this->entityManager->flush();
+
+        return $captainPaymentEntity;
+    }
+
+    /**
+     * Delete payment to captain linked with captain financial daily (not with captain financial due)
+     */
+    public function deleteCaptainPaymentRelatedToCaptainFinancialDailyAmount(CaptainPaymentDeleteByAdminRequest $request): int|CaptainPaymentEntity
+    {
+        $captainPaymentEntity = $this->captainPaymentEntityRepository->findOneBy(['id' => $request->getId()]);
+
+        if (! $captainPaymentEntity) {
+            return CaptainPaymentResultConstant::CAPTAIN_PAYMENT_NOT_EXIST;
+        }
+
+        // Make sure the payment isn't linked to captain financial due
+        if ($captainPaymentEntity->getCaptainFinancialDues()) {
+            return CaptainPaymentResultConstant::CAPTAIN_PAYMENT_LINKED_TO_CAPTAIN_FINANCIAL_DUE_CONST;
+        }
+
+        $this->entityManager->remove($captainPaymentEntity);
         $this->entityManager->flush();
 
         return $captainPaymentEntity;

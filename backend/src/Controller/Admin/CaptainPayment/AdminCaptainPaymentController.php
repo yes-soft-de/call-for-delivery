@@ -7,6 +7,7 @@ use App\Constant\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDa
 use App\Constant\CaptainPayment\PaymentToCaptain\CaptainPaymentResultConstant;
 use App\Controller\BaseController;
 use App\Request\Admin\CaptainPayment\AdminCaptainPaymentCreateRequest;
+use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentDeleteByAdminRequest;
 use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentForCaptainFinancialDailyCreateByAdminRequest;
 use App\Service\Admin\CaptainPayment\AdminCaptainPaymentService;
 use Nelmio\ApiDocBundle\Annotation\Security;
@@ -164,8 +165,11 @@ class AdminCaptainPaymentController extends BaseController
     {
         $result = $this->adminCaptainPaymentService->deleteCaptainPayment($id);
        
-        if($result === PaymentConstant::PAYMENT_NOT_EXISTS) {
+        if ($result === PaymentConstant::PAYMENT_NOT_EXISTS) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::PAYMENT_NOT_EXIST);
+
+        } elseif ($result === CaptainPaymentResultConstant::CAPTAIN_PAYMENT_LINKED_TO_CAPTAIN_FINANCIAL_DAILY_CONST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::PAYMENT_TO_CAPTAIN_LINKED_WITH_CAPTAIN_FINANCIAL_DAILY_CONST);
         }
 
         return $this->response($result, self::DELETE);
@@ -260,11 +264,11 @@ class AdminCaptainPaymentController extends BaseController
      *      @OA\JsonContent(
      *           oneOf={
      *                   @OA\Schema(type="object",
-     *                          @OA\Property(type="string", property="status_code", description="9500"),
+     *                          @OA\Property(type="string", property="status_code", description="9650"),
      *                          @OA\Property(type="string", property="msg")
      *                   ),
      *                   @OA\Schema(type="object",
-     *                          @OA\Property(type="string", property="status_code", description="9501"),
+     *                          @OA\Property(type="string", property="status_code", description="9651"),
      *                          @OA\Property(type="string", property="msg")
      *                   )
      *
@@ -298,5 +302,90 @@ class AdminCaptainPaymentController extends BaseController
         }
 
         return $this->response($result, self::CREATE);
+    }
+
+    /**
+     * admin: Delete payment to captain linked with captain financial daily
+     * @Route("captainpaymentforcaptainfinancialdaily", name="deleteCaptainPaymentLinkedWithCaptainFinancialDaily", methods={"DELETE"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Captain Payment")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="delete payment to captain by admin request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=401,
+     *      description="Returns deleted payment info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="number", property="amount"),
+     *              @OA\Property(type="object", property="createdAt")
+     *      )
+     *   )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="200",
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *           oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9501"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9503"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   )
+     *
+     *              }
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function deleteCaptainPaymentRelatedToCaptainFinancialDailyAmount(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, CaptainPaymentDeleteByAdminRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminCaptainPaymentService->deleteCaptainPaymentRelatedToCaptainFinancialDailyAmount($request);
+
+        if ($result === CaptainPaymentResultConstant::CAPTAIN_PAYMENT_NOT_EXIST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::PAYMENT_NOT_EXIST);
+
+        } elseif ($result === CaptainPaymentResultConstant::CAPTAIN_PAYMENT_LINKED_TO_CAPTAIN_FINANCIAL_DUE_CONST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::PAYMENT_TO_CAPTAIN_LINKED_WITH_CAPTAIN_FINANCIAL_DUE_CONST);
+        }
+
+        return $this->response($result, self::DELETE);
     }
 }

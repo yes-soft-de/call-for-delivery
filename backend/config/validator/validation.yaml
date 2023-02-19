@@ -852,3 +852,8 @@ App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentForCaptainFinanc
             - NotBlank: ~
         captainFinancialDailyEntity:
             - NotBlank: ~
+
+App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentDeleteByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~

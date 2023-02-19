@@ -61,7 +61,7 @@ class CaptainFinancialDailyController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function getCaptainFinancialDues(): JsonResponse
+    public function getCaptainFinancialDailyOfToday(): JsonResponse
     {
         $result = $this->captainFinancialDailyGetService->getCaptainFinancialAmountDailyByCaptainUserIdAndSpecificDate($this->getUserId(),
             new \DateTime('today'));
