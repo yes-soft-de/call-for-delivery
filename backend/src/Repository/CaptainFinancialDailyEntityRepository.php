@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\CaptainEntity;
 use App\Entity\CaptainFinancialDailyEntity;
+use App\Request\Admin\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyFilterByAdminRequest;
 use App\Request\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyFilterRequest;
 use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -136,6 +137,33 @@ class CaptainFinancialDailyEntityRepository extends ServiceEntityRepository
             ->setParameter('captainId', $request->getCaptainUserId())
 
             ->orderBy('captainFinancialDailyEntity.id', 'DESC');
+
+        if ($request->getIsPaid()) {
+            $query->andWhere('captainFinancialDailyEntity.isPaid = :isPaidValue')
+                ->setParameter('isPaidValue', $request->getIsPaid());
+        }
+
+        if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
+            || ($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")
+            || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $tempQuery = $query->getQuery()->getResult();
+
+            return $this->filterCaptainFinancialDailyEntitiesByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
+    public function filterCaptainFinancialDailyByAdmin(CaptainFinancialDailyFilterByAdminRequest $request): array
+    {
+        $query = $this->createQueryBuilder('captainFinancialDailyEntity')
+
+            ->orderBy('captainFinancialDailyEntity.id', 'DESC');
+
+        if ($request->getCaptainProfileId()) {
+            $query->andWhere('captainFinancialDailyEntity.captainProfile = :captainProfileId')
+                ->setParameter('captainProfileId', $request->getCaptainProfileId());
+        }
 
         if ($request->getIsPaid()) {
             $query->andWhere('captainFinancialDailyEntity.isPaid = :isPaidValue')
