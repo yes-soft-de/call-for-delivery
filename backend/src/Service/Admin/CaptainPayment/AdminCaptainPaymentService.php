@@ -11,6 +11,7 @@ use App\Entity\CaptainPaymentEntity;
 use App\Manager\Admin\CaptainPayment\AdminCaptainPaymentManager;
 use App\Request\Admin\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyIsPaidUpdateByAdminRequest;
 use App\Request\Admin\CaptainPayment\AdminCaptainPaymentCreateRequest;
+use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentAmountAndNoteUpdateByAdminRequest;
 use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentDeleteByAdminRequest;
 use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentForCaptainFinancialDailyCreateByAdminRequest;
 use App\Response\Admin\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyIsPaidUpdateByAdminResponse;
@@ -19,6 +20,7 @@ use App\Response\Admin\CaptainPayment\AdminCaptainPaymentResponse;
 use App\Constant\Captain\CaptainConstant;
 use App\Constant\Payment\PaymentConstant;
 use App\Response\Admin\CaptainPayment\AdminCaptainPaymentDeleteResponse;
+use App\Response\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentAmountAndNoteUpdateByAdminResponse;
 use App\Response\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentForCaptainFinancialDailyCreateByAdminResponse;
 use App\Service\Admin\CaptainFinancialSystem\AdminCaptainFinancialDuesService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
@@ -148,13 +150,13 @@ class AdminCaptainPaymentService
             $paymentSum += $captainPayment->getAmount();
         }
 
-        if ($paymentSum > $captainFinancialDailyEntity->getAmount()) {
+        if ($paymentSum > ($captainFinancialDailyEntity->getAmount() + $captainFinancialDailyEntity->getBonus())) {
             $captainFinancialDailyIsPaidUpdateByAdminRequest = $this->initializeAndGetCaptainFinancialDailyIsPaidUpdateByAdminRequest($captainFinancialDailyEntity->getId(),
                 CaptainFinancialDailyIsPaidConstant::CAPTAIN_FINANCIAL_DAILY_IS_OVER_PAID_CONST);
 
             return $this->adminCaptainFinancialDailyService->updateCaptainFinancialDailyIsPaid($captainFinancialDailyIsPaidUpdateByAdminRequest);
 
-        } elseif ($paymentSum === $captainFinancialDailyEntity->getAmount()) {
+        } elseif ($paymentSum === ($captainFinancialDailyEntity->getAmount() + $captainFinancialDailyEntity->getBonus())) {
             $captainFinancialDailyIsPaidUpdateByAdminRequest = $this->initializeAndGetCaptainFinancialDailyIsPaidUpdateByAdminRequest($captainFinancialDailyEntity->getId(),
                 CaptainFinancialDailyIsPaidConstant::CAPTAIN_FINANCIAL_DAILY_IS_PAID_CONST);
 
@@ -228,5 +230,23 @@ class AdminCaptainPaymentService
 
         return $this->autoMapping->map(CaptainPaymentEntity::class, AdminCaptainPaymentDeleteResponse::class,
             $deletedCaptainPayment);
+    }
+
+    public function updateCaptainPaymentAmountAndNoteByAdmin(CaptainPaymentAmountAndNoteUpdateByAdminRequest $request): int|CaptainPaymentAmountAndNoteUpdateByAdminResponse
+    {
+        $captainPaymentUpdateResult = $this->adminCaptainPaymentManager->updateCaptainPaymentAmountAndNoteByAdmin($request);
+
+        if ($captainPaymentUpdateResult === CaptainPaymentResultConstant::CAPTAIN_PAYMENT_NOT_EXIST) {
+            return CaptainPaymentResultConstant::CAPTAIN_PAYMENT_NOT_EXIST;
+        }
+
+        // Check if payment linked to specific captain financial daily, then update captain financial daily (isPaid field)
+        if ($captainPaymentUpdateResult->getCaptainFinancialDailyEntity()) {
+            // Update isPaid field of the captain financial daily which was linked with the deleted payment
+            $this->updateCaptainFinancialDailyIsPaidAccordingToPaymentAmountAndCaptainFinancialDailyAmount($captainPaymentUpdateResult->getCaptainFinancialDailyEntity());
+        }
+
+        return $this->autoMapping->map(CaptainPaymentEntity::class, CaptainPaymentAmountAndNoteUpdateByAdminResponse::class,
+            $captainPaymentUpdateResult);
     }
 }

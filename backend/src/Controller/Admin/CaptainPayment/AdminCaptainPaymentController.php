@@ -7,9 +7,11 @@ use App\Constant\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDa
 use App\Constant\CaptainPayment\PaymentToCaptain\CaptainPaymentResultConstant;
 use App\Controller\BaseController;
 use App\Request\Admin\CaptainPayment\AdminCaptainPaymentCreateRequest;
+use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentAmountAndNoteUpdateByAdminRequest;
 use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentDeleteByAdminRequest;
 use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentForCaptainFinancialDailyCreateByAdminRequest;
 use App\Service\Admin\CaptainPayment\AdminCaptainPaymentService;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use stdClass;
@@ -250,10 +252,7 @@ class AdminCaptainPaymentController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="number", property="amount"),
-     *              @OA\Property(type="object", property="createdAt"),
-     *              @OA\Property(type="string", property="note")
+     *              ref=@Model(type="App\Response\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentForCaptainFinancialDailyCreateByAdminResponse")
      *          )
      *      )
      * )
@@ -384,6 +383,85 @@ class AdminCaptainPaymentController extends BaseController
 
         } elseif ($result === CaptainPaymentResultConstant::CAPTAIN_PAYMENT_LINKED_TO_CAPTAIN_FINANCIAL_DUE_CONST) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::PAYMENT_TO_CAPTAIN_LINKED_WITH_CAPTAIN_FINANCIAL_DUE_CONST);
+        }
+
+        return $this->response($result, self::DELETE);
+    }
+
+    /**
+     * admin: Update specific payment to captain
+     * @Route("updatecaptainpaymentbyadmin", name="updatePaymentToCaptainByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Captain Payment")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="update payment to captain by admin request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="number", property="amount"),
+     *          @OA\Property(type="string", property="note")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=401,
+     *      description="Returns updated payment info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentAmountAndNoteUpdateByAdminResponse")
+     *      )
+     *   )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="200",
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *           oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9501"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   )
+     *
+     *              }
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function updateCaptainPaymentAmountAndNoteByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, CaptainPaymentAmountAndNoteUpdateByAdminRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->adminCaptainPaymentService->updateCaptainPaymentAmountAndNoteByAdmin($request);
+
+        if ($result === CaptainPaymentResultConstant::CAPTAIN_PAYMENT_NOT_EXIST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::PAYMENT_NOT_EXIST);
+
         }
 
         return $this->response($result, self::DELETE);
