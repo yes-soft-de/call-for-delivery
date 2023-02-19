@@ -121,6 +121,12 @@ class BaseController extends AbstractController
     const NOTFOUND=["Not found", "404"];
     //payments
     const PAYMENT_NOT_EXIST = ["payment not exist!", "9501"];
+    const PAYMENT_TO_CAPTAIN_LINKED_WITH_CAPTAIN_FINANCIAL_DAILY_CONST = [
+        "payment to captain linked with captain financial daily!", "9502"
+    ];
+    const PAYMENT_TO_CAPTAIN_LINKED_WITH_CAPTAIN_FINANCIAL_DUE_CONST = [
+        "payment to captain linked with captain financial due!", "9503"
+    ];
     // supplier
     const SUPPLIER_PROFILE_NOT_EXIST = ["supplier profile not exist!", "9551"];
     const SUPPLIER_PROFILE_CREATED = ["supplier profile created", "9552"];
@@ -159,7 +165,8 @@ class BaseController extends AbstractController
     // direct support
     const DIRECT_SUPPORT_SCRIPT_NOT_EXIST_CONST = ["direct support script not exists", "9450"];
     // captain financial daily
-    const CAPTAIN_FINANCIAL_DAILY_NOT_EXIST_CONST = ["captain financial daily not exists", "9500"];
+    const CAPTAIN_FINANCIAL_DAILY_NOT_EXIST_CONST = ["captain financial daily not exists", "9650"];
+    const CAPTAIN_FINANCIAL_DAILY_CREATE_ERROR_CONST = ["problem in creating captain financial daily", "9651"];
     
 //    const TEST = [
 //        "one"=>[ "error error", "9003"],

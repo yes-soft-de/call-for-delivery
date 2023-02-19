@@ -843,3 +843,17 @@ App\Request\Admin\DirectSupportScript\DirectSupportScriptDeleteByRequest:
     properties:
         id:
             - NotBlank: ~
+
+App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentForCaptainFinancialDailyCreateByAdminRequest:
+    properties:
+        amount:
+            - NotBlank: ~
+        note:
+            - NotBlank: ~
+        captainFinancialDailyEntity:
+            - NotBlank: ~
+
+App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentDeleteByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
