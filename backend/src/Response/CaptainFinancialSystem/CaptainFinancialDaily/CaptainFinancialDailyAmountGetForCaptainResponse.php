@@ -6,18 +6,21 @@ use DateTime;
 
 class CaptainFinancialDailyAmountGetForCaptainResponse
 {
-    public int $id;
+    public int $id = 0;
 
-    public float $amount;
+    public float $amount = 0.0;
 
     // captain financial due which he/she had received before.
-    public float $alreadyHadAmount;
+    public float $alreadyHadAmount = 0.0;
 
-    public int $isPaid;
+    public int $isPaid = 176;
 
-    public bool $withBonus;
+    public bool $withBonus = false;
 
-    public float $bonus;
+    public float $bonus = 0.0;
 
-    public DateTime $updatedAt;
+    /**
+     * @var DateTime|null
+     */
+    public $updatedAt;
 }

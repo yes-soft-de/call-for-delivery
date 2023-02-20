@@ -83,4 +83,42 @@ class AdminCaptainFinancialDailyController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+
+    /**
+     * admin: Get active and online captains with their financial daily of today for admin
+     * @Route("captainswithfinancialdailyoftoday", name="fetchActiveAndOnlineCaptainsWithTodayFinancialDailyByAdmin", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Captain Financial Daily")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns captains info with financial daily of today",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Admin\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyTodayGetForAdminResponse")
+     *              )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getActiveCaptainsWithFinancialDailyOfTodayForAdmin(): JsonResponse
+    {
+        $result = $this->adminCaptainFinancialDailyGetService->getActiveCaptainsWithFinancialDailyOfTodayForAdmin();
+
+        return $this->response($result, self::FETCH);
+    }
 }

@@ -66,10 +66,6 @@ class CaptainFinancialDailyController extends BaseController
         $result = $this->captainFinancialDailyGetService->getCaptainFinancialAmountDailyByCaptainUserIdAndSpecificDate($this->getUserId(),
             new \DateTime('today'));
 
-        if ($result === CaptainFinancialDailyResultConstant::CAPTAIN_FINANCIAL_DAILY_NOT_EXIST_CONST) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_FINANCIAL_DAILY_NOT_EXIST_CONST);
-        }
-
         return $this->response($result, self::FETCH);
     }
 
