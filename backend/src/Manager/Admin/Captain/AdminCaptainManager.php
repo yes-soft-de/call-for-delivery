@@ -226,4 +226,12 @@ class AdminCaptainManager
 
         return true;
     }
+
+    /**
+     * Get active and online captains' profiles with profile images
+     */
+    public function getActiveAndOnlineCaptainsForAdmin(): array
+    {
+        return $this->captainEntityRepository->getActiveAndOnlineCaptainsForAdmin();
+    }
 }
