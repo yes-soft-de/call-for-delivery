@@ -666,6 +666,9 @@ class CaptainEntityRepository extends ServiceEntityRepository
 
             ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
 
+            ->andWhere('imageEntity.usedAs = :profileImage')
+            ->setParameter('profileImage', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+
             ->orderBy('captainEntity.id', 'DESC')
 
             ->getQuery()
