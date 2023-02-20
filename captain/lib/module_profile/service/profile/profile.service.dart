@@ -1,7 +1,9 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/module_profile/model/captain_balance_model.dart';
+import 'package:c4d/module_profile/model/daily_model.dart';
 import 'package:c4d/module_profile/request/captain_payments_request.dart';
 import 'package:c4d/module_profile/response/captain_payments_response/captain_payments_response.dart';
+import 'package:c4d/module_profile/response/daily_finance_response/daily_finance_response.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
@@ -34,6 +36,19 @@ class ProfileService {
     }
     if (response.data == null) return ProfileModel.empty();
     return ProfileModel.withData(response.data!);
+  }
+
+  Future<DataModel> getProfitSummary() async {
+    DailyFinanceResponse? response = await _manager.getProfitSummary();
+    if (response == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    String code = response.statusCode.toString();
+    if (response.statusCode != '200') {
+      return DataModel.withError(StatusCodeHelper.getStatusCodeMessages(code));
+    }
+    if (response.data == null) return DataModel.empty();
+    return DailyFinanceModel.withData(response.data!);
   }
 
   Future<ProfilePostState> createProfile(ProfileRequest profileRequest) async {

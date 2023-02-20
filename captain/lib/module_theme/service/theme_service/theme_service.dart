@@ -90,6 +90,7 @@ class AppThemeDataService {
     mapStyle(dark);
     return ThemeData(
         brightness: Brightness.light,
+        scaffoldBackgroundColor: Colors.grey[50],
         //       primaryColor: PrimaryColor,
         colorScheme: lightScheme,
         useMaterial3: true,

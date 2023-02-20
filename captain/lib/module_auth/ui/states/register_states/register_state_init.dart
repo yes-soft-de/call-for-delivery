@@ -289,7 +289,8 @@ class RegisterStateInit extends RegisterState {
                       if (_registerKey.currentState!.validate()) {
                         if (usernameController.text.trim().startsWith('0')) {
                           CustomFlushBarHelper.createError(
-                                  title: S.current.warnning, message: S.current.yourNumberStartWithZero)
+                                  title: S.current.warnning,
+                                  message: S.current.yourNumberStartWithZero)
                               .show(context);
                         } else {
                           screen.registerClient(RegisterRequest(

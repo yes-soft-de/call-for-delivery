@@ -55,6 +55,8 @@ class Urls {
   static const SEND_TO_RECORD = BASE_API + '/record';
   static const CAPTAIN_PROFILE_API =
       BASE_API + '/v1/captain/captainprofilebyid';
+  static const DAILY_FINANCE_API =
+      BASE_API + '/v1/captainfinancialdaily/todaycaptainfinancialdailyamount';
   static const TERMS_CAPTAIN = BASE_API + '/termscaptain';
   static const LOG_API = BASE_API + '/getRecords';
   static const CAPTAIN_BALANCE_ACCOUNT =
@@ -216,7 +218,8 @@ class Urls {
   static const CREATE_CHATROOM_BEFORE_ACCEPT =
       DOMAIN + '/v1/orderchatroom/createneworderchatroom';
   static const ORDER_NONSUB_API_LINK = DOMAIN + '/v1/order/ordernonsub';
-  static const UPDATE_EXTRA_DISTANCE_TO_ORDER_API = DOMAIN + '/v1/order/destination/newdestinancebycaptain';
+  static const UPDATE_EXTRA_DISTANCE_TO_ORDER_API =
+      DOMAIN + '/v1/order/destination/newdestinancebycaptain';
 
   /*------------------------------------------CAPTAIN FINANCE-------------------------------------------*/
   static const GET_CAPTAIN_FINANCE_BY_ORDER = DOMAIN +

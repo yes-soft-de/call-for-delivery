@@ -8,6 +8,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:c4d/module_notifications/preferences/notification_preferences/notification_preferences.dart';
 import 'package:c4d/module_notifications/service/fire_notification_service/fire_notification_service.dart';
+import 'package:c4d/module_profile/model/daily_model.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
@@ -43,11 +44,13 @@ class CaptainOrdersScreen extends StatefulWidget {
 class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   States? currentState;
   ProfileModel? _currentProfile;
+  DailyFinanceModel? _currentFinance;
   CompanyInfoResponse? _companyInfo;
   int currentPage = 0;
   StreamSubscription? _stateSubscription;
   StreamSubscription? _profileSubscription;
   StreamSubscription? _companySubscription;
+  StreamSubscription? _financeSubscription;
   GlobalKey<ScaffoldState> drawerKey = GlobalKey();
   final advancedController = AdvancedDrawerController();
   LatLng? currentLocation;
@@ -55,6 +58,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
 
   void getMyOrders([String? trigger]) {
     widget._stateManager.getProfile(this);
+    widget._stateManager.getProfitSummary(this);
     widget._stateManager.getMyOrders(this);
     if (trigger != null) {
       FireStoreHelper().backgroundThread(trigger);
@@ -63,6 +67,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
 
   Future<void> refreshOrders() async {
     widget._stateManager.getProfile(this);
+    widget._stateManager.getProfitSummary(this);
     widget._stateManager.getMyOrders(this);
   }
 
@@ -122,6 +127,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
     });
     getIt<GlobalStateManager>().stateStream.listen((event) {
       widget._stateManager.getProfile(this);
+      widget._stateManager.getProfitSummary(this);
     });
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
       currentState = event;
@@ -136,6 +142,12 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
             _currentProfile?.address?.isNotEmpty == false ||
                 _currentProfile?.city?.isNotEmpty == false;
       }
+      if (mounted) {
+        setState(() {});
+      }
+    });
+    _financeSubscription = widget._stateManager.profitStream.listen((event) {
+      _currentFinance = event;
       if (mounted) {
         setState(() {});
       }
@@ -162,6 +174,8 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
         rtlOpening: Localizations.localeOf(context).languageCode != 'en',
         childDecoration: BoxDecoration(borderRadius: BorderRadius.circular(18)),
         backdropColor: Theme.of(context).colorScheme.background,
+        drawer: MenuScreen(this, _currentProfile ?? ProfileModel.empty(),
+            _currentFinance ?? DailyFinanceModel.empty()),
         child: Scaffold(
           appBar: CustomC4dAppBar.appBar(context,
               showBadge: somethingMissingInProfileData,
@@ -260,7 +274,6 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
               ),
               child: currentState?.getUI(context)),
         ),
-        drawer: MenuScreen(this, _currentProfile ?? ProfileModel.empty()),
       ),
     );
   }

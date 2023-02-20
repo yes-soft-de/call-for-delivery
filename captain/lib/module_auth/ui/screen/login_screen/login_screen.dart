@@ -112,7 +112,9 @@ class LoginScreenState extends State<LoginScreen> {
                                 child: Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(25),
-                                      color: Theme.of(context).colorScheme.background),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .background),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: ListTile(

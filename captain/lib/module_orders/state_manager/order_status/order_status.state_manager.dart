@@ -142,8 +142,8 @@ class OrderStatusStateManager {
     });
   }
 
-  void updateDistance(OrderStatusScreenState screenState,
-      AddExtraDistanceRequest request) {
+  void updateDistance(
+      OrderStatusScreenState screenState, AddExtraDistanceRequest request) {
     _stateSubject.add(LoadingState(screenState));
     _ordersService.updateExtraDistanceToOrder(request).then((value) {
       if (value.hasError) {
@@ -156,8 +156,7 @@ class OrderStatusStateManager {
                 title: S.current.warnning,
                 message: S.current.noticeHasBeenSendedToAdministration)
             .show(screenState.context);
-                      screenState.getOrderDetails(request.id);
-
+        screenState.getOrderDetails(request.id);
       }
     });
   }

@@ -28,7 +28,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
- 
   Future<void> someChecks() async {
     bool result = await InternetConnectionChecker().hasConnection;
     if (result) {

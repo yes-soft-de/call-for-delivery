@@ -4,6 +4,7 @@ import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:c4d/module_plan/plan_routes.dart';
+import 'package:c4d/module_profile/model/daily_model.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
@@ -19,7 +20,12 @@ import 'package:package_info_plus/package_info_plus.dart';
 class MenuScreen extends StatelessWidget {
   final CaptainOrdersScreenState screenState;
   final ProfileModel profileModel;
-  const MenuScreen(this.screenState, this.profileModel);
+  final DailyFinanceModel dailyFinance;
+  const MenuScreen(
+    this.screenState,
+    this.profileModel,
+    this.dailyFinance,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -95,6 +101,40 @@ class MenuScreen extends StatelessWidget {
                 ),
               ),
               Center(child: Text(profileModel.name ?? S.current.username)),
+              Row(
+                children: [
+                  Expanded(
+                    child: ListTile(
+                      title: Text(S.current.dailyProfit),
+                      subtitle: Text(
+                        dailyFinance.dailyTotal.toStringAsFixed(2) +
+                            S.current.sar,
+                        style: const TextStyle(
+                          color: Colors.green,
+                        ),
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: VerticalDivider(
+                      color: Theme.of(context).colorScheme.background,
+                    ),
+                  ),
+                  Expanded(
+                    child: ListTile(
+                      title: Text(S.current.totalProfit),
+                      subtitle: Text(
+                        dailyFinance.totalProfit.toStringAsFixed(2) +
+                            S.current.sar,
+                        style: const TextStyle(
+                          color: Colors.green,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               Container(
                 height: 32,
               ),

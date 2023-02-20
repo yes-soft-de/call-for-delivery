@@ -1,5 +1,6 @@
 import 'package:c4d/module_profile/request/captain_payments_request.dart';
 import 'package:c4d/module_profile/response/captain_payments_response/captain_payments_response.dart';
+import 'package:c4d/module_profile/response/daily_finance_response/daily_finance_response.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
@@ -24,12 +25,24 @@ class ProfileRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(
       Urls.CAPTAIN_PROFILE_API,
-      headers: {'Authorization': 'Bearer ' + token.toString()},
+      headers: {'Authorization': 'Bearer $token'},
     );
     if (response == null) {
       return null;
     }
     return ProfileResponse.fromJson(response);
+  }
+
+  Future<DailyFinanceResponse?> getProfitSummary() async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get(
+      Urls.DAILY_FINANCE_API,
+      headers: {'Authorization': 'Bearer $token'},
+    );
+    if (response == null) {
+      return null;
+    }
+    return DailyFinanceResponse.fromJson(response);
   }
 
   Future<CreateCaptainProfileResponse?> createCaptainProfile(
@@ -38,7 +51,7 @@ class ProfileRepository {
     dynamic response = await _apiClient.put(
       Urls.CREATE_CAPTAIN_PROFILE,
       profileRequest.toJSON(),
-      headers: {'Authorization': 'Bearer ' + token.toString()},
+      headers: {'Authorization': 'Bearer $token'},
     );
 
     if (response == null) return null;
@@ -51,7 +64,7 @@ class ProfileRepository {
     dynamic response = await _apiClient.put(
       Urls.CHANGE_CAPTAIN_PROFILE_STATUS_API,
       {'isOnline': status ? '1' : '0'},
-      headers: {'Authorization': 'Bearer ' + token.toString()},
+      headers: {'Authorization': 'Bearer $token'},
     );
 
     if (response == null) return null;
@@ -76,7 +89,7 @@ class ProfileRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
         Urls.GET_ACCOUNT_BALANCE_CAPTAIN, request.toJson(),
-        headers: {'Authorization': 'Bearer ' + token.toString()});
+        headers: {'Authorization': 'Bearer $token'});
     if (response == null) return null;
     return CaptainPaymentsResponse.fromJson(response);
   }

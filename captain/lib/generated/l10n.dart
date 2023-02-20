@@ -7619,6 +7619,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Total profit`
+  String get totalProfit {
+    return Intl.message(
+      'Total profit',
+      name: 'totalProfit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Daily profit`
+  String get dailyProfit {
+    return Intl.message(
+      'Daily profit',
+      name: 'dailyProfit',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

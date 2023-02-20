@@ -10,6 +10,7 @@ import 'package:soundpool/soundpool.dart';
 import 'package:sound_mode/utils/ringer_mode_statuses.dart';
 import 'package:sound_mode/sound_mode.dart';
 import 'dart:io' as io;
+
 @injectable
 class LocalNotificationService {
   FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =

@@ -193,9 +193,8 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                           },
                           title: Text(S.current.endDate),
                           subtitle: Text(ordersFilter.toDate != null
-                              ? DateFormat('yyyy/M/d').format(
-                                  ordersFilter.toDate ??
-                                      DateTime.now())
+                              ? DateFormat('yyyy/M/d')
+                                  .format(ordersFilter.toDate ?? DateTime.now())
                               : '0000/00/00'),
                         ),
                       ),

@@ -138,7 +138,8 @@ class OrderRepository {
 
     return ActionResponse.fromJson(response);
   }
-   Future<ActionResponse?> updateExtraDistanceToOrder(
+
+  Future<ActionResponse?> updateExtraDistanceToOrder(
       AddExtraDistanceRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(

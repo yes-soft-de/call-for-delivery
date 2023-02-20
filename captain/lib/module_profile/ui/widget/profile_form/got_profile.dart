@@ -43,9 +43,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
       leading: badges.Badge(
         showBadge: subTitle != null ? false : true,
         position: badges.BadgePosition.topEnd(top: -1, end: -1),
-        badgeStyle: const badges.BadgeStyle(
-          badgeColor:Colors.amber 
-        ),
+        badgeStyle: const badges.BadgeStyle(badgeColor: Colors.amber),
         child: Container(
             decoration: BoxDecoration(
               shape: BoxShape.circle,

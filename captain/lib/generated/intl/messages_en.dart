@@ -341,6 +341,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "customer": MessageLookupByLibrary.simpleMessage("Customer"),
         "cycleEnd": MessageLookupByLibrary.simpleMessage("Cycle end"),
         "cycleStart": MessageLookupByLibrary.simpleMessage("Cycle start"),
+        "dailyProfit": MessageLookupByLibrary.simpleMessage("Daily profit"),
         "dangerZone": MessageLookupByLibrary.simpleMessage("Danger Zone"),
         "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
         "dataDecodeError":
@@ -1087,6 +1088,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "The total cost without delivery cost"),
         "totalBonus": MessageLookupByLibrary.simpleMessage("Total Salary"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("Total Price"),
+        "totalProfit": MessageLookupByLibrary.simpleMessage("Total profit"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("Try again"),
         "unShow": MessageLookupByLibrary.simpleMessage("Un Show"),
         "unaccept": MessageLookupByLibrary.simpleMessage(

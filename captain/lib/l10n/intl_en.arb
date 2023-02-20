@@ -756,6 +756,7 @@
     "reason": "Reason",
     "coordinates": "Coordinates",
     "pleaseEnterValidCoord": "Please enter valid coordinates",
-    "updateDistance":"Update distance"
-
+    "updateDistance": "Update distance",
+    "totalProfit": "Total profit",
+    "dailyProfit": "Daily profit"
 }

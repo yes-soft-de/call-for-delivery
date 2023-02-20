@@ -112,7 +112,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
                             DropdownMenuItem(
                               child: const Text(
                                 'English',
-                                style:  TextStyle(),
+                                style: TextStyle(),
                               ),
                               value: 'en',
                             ),

@@ -187,7 +187,9 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                                 height: 6,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(25),
-                                    color: Theme.of(context).colorScheme.background),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background),
                               ),
                             ),
                             Expanded(
@@ -429,7 +431,8 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                               height: 6,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(25),
-                                  color: Theme.of(context).colorScheme.background),
+                                  color:
+                                      Theme.of(context).colorScheme.background),
                             ),
                           ),
                           Expanded(

@@ -41,7 +41,7 @@ class CustomNetworkImage extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(left: 8.0),
                   child: Icon(
-                   Icons.delivery_dining_rounded,
+                    Icons.delivery_dining_rounded,
                     size: 30,
                   ),
                 ),
@@ -119,7 +119,8 @@ class CustomNetworkImage extends StatelessWidget {
               width: width,
               height: height,
               decoration: BoxDecoration(
-                  color: background ?? Theme.of(context).colorScheme.background),
+                  color:
+                      background ?? Theme.of(context).colorScheme.background),
               child: Flex(
                 direction: Axis.vertical,
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -128,7 +129,7 @@ class CustomNetworkImage extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 8.0),
                     child: Icon(
-                     Icons.delivery_dining_rounded,
+                      Icons.delivery_dining_rounded,
                       size: 30,
                     ),
                   ),
