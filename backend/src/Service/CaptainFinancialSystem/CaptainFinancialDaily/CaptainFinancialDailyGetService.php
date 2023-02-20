@@ -20,12 +20,15 @@ class CaptainFinancialDailyGetService
     {
     }
 
-    public function getCaptainFinancialAmountDailyByCaptainUserIdAndSpecificDate(int $captainId, DateTime $date): int|CaptainFinancialDailyAmountGetForCaptainResponse
+    public function getCaptainFinancialAmountDailyByCaptainUserIdAndSpecificDate(int $captainId, DateTime $date): array|null|CaptainFinancialDailyAmountGetForCaptainResponse
     {
+        $response = [];
+
         $captainFinancialDaily = $this->captainFinancialDailyManager->getCaptainFinancialAmountDailyByCaptainUserIdAndSpecificDate($captainId, $date);
 
         if (! $captainFinancialDaily) {
-            return CaptainFinancialDailyResultConstant::CAPTAIN_FINANCIAL_DAILY_NOT_EXIST_CONST;
+            //return CaptainFinancialDailyResultConstant::CAPTAIN_FINANCIAL_DAILY_NOT_EXIST_CONST;
+            return $this->autoMapping->map('array', CaptainFinancialDailyAmountGetForCaptainResponse::class, $response);
         }
 
         return $this->autoMapping->map(CaptainFinancialDailyEntity::class, CaptainFinancialDailyAmountGetForCaptainResponse::class, $captainFinancialDaily);
