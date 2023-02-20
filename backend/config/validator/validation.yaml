@@ -857,3 +857,10 @@ App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentDeleteByAdminReq
     properties:
         id:
             - NotBlank: ~
+
+App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentAmountAndNoteUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        amount:
+            - NotBlank: ~

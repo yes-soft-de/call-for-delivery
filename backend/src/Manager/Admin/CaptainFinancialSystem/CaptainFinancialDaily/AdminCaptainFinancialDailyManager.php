@@ -5,6 +5,7 @@ namespace App\Manager\Admin\CaptainFinancialSystem\CaptainFinancialDaily;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyResultConstant;
 use App\Entity\CaptainFinancialDailyEntity;
 use App\Repository\CaptainFinancialDailyEntityRepository;
+use App\Request\Admin\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyFilterByAdminRequest;
 use App\Request\Admin\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyIsPaidUpdateByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -35,5 +36,10 @@ class AdminCaptainFinancialDailyManager
         $this->entityManager->flush();
 
         return $captainFinancialDaily;
+    }
+
+    public function filterCaptainFinancialDailyByAdmin(CaptainFinancialDailyFilterByAdminRequest $request): array
+    {
+        return $this->captainFinancialDailyEntityRepository->filterCaptainFinancialDailyByAdmin($request);
     }
 }
