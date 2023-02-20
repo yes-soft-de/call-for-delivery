@@ -758,5 +758,7 @@
     "pleaseEnterValidCoord": "Please enter valid coordinates",
     "updateDistance": "Update distance",
     "totalProfit": "Total profit",
-    "dailyProfit": "Daily profit"
+    "dailyProfit": "Daily profit",
+    "totalEarnedProfit":"Total Earned",
+    "todayProfit":"Today Balance"
 }

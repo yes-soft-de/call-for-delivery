@@ -101,42 +101,77 @@ class MenuScreen extends StatelessWidget {
                 ),
               ),
               Center(child: Text(profileModel.name ?? S.current.username)),
-              Row(
-                children: [
-                  Expanded(
-                    child: ListTile(
-                      title: Text(S.current.dailyProfit),
-                      subtitle: Text(
-                        dailyFinance.dailyTotal.toStringAsFixed(2) +
-                            S.current.sar,
-                        style: const TextStyle(
-                          color: Colors.green,
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 16),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 125,
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              S.current.todayProfit,
+                              style: const TextStyle(
+                                fontSize: 13,
+                              ),
+                            ),
+                            Text(
+                              dailyFinance.dailyTotal.toStringAsFixed(2) +
+                                  S.current.sar,
+                              style: TextStyle(
+                                color: dailyFinance.dailyTotal > 0
+                                    ? Colors.red
+                                    : Colors.green,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: VerticalDivider(
-                      color: Theme.of(context).colorScheme.background,
-                    ),
-                  ),
-                  Expanded(
-                    child: ListTile(
-                      title: Text(S.current.totalProfit),
-                      subtitle: Text(
-                        dailyFinance.totalProfit.toStringAsFixed(2) +
-                            S.current.sar,
-                        style: const TextStyle(
-                          color: Colors.green,
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        height: 16,
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).disabledColor,
+                          borderRadius: BorderRadius.circular(25),
                         ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-              Container(
-                height: 32,
+                    Container(
+                      width: 125,
+                      color: Theme.of(context).colorScheme.primaryContainer,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              S.current.totalEarnedProfit,
+                              style: const TextStyle(
+                                fontSize: 13,
+                              ),
+                            ),
+                            Text(
+                              dailyFinance.totalProfit.toStringAsFixed(2) +
+                                  S.current.sar,
+                              style: const TextStyle(
+                                color: Colors.green,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Visibility(
                 visible: profileModel.address?.isEmpty == true ||

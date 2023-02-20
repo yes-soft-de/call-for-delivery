@@ -48,7 +48,7 @@ class ProfileService {
       return DataModel.withError(StatusCodeHelper.getStatusCodeMessages(code));
     }
     if (response.data == null) return DataModel.empty();
-    return DailyFinanceModel.withData(response.data!);
+    return DailyFinanceModel.withData(response);
   }
 
   Future<ProfilePostState> createProfile(ProfileRequest profileRequest) async {

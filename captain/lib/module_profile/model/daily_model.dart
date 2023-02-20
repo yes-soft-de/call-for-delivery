@@ -1,5 +1,5 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
-import 'package:c4d/module_profile/response/daily_finaince_response.dart';
+import 'package:c4d/module_profile/response/daily_finance_response/daily_finance_response.dart';
 
 class DailyFinanceModel extends DataModel {
   num dailyTotal = 0;
@@ -9,10 +9,11 @@ class DailyFinanceModel extends DataModel {
     required this.totalProfit,
   });
   late DailyFinanceModel _model;
-  DailyFinanceModel.withData(Finance data) : super.withData() {
+  DailyFinanceModel.withData(DailyFinanceResponse response) : super.withData() {
+    var data = response.data;
     _model = DailyFinanceModel(
-      totalProfit: data.totalAmount ?? 0,
-      dailyTotal: data.dailyTotal ?? 0,
+      totalProfit: data?.alreadyHadAmount ?? 0,
+      dailyTotal: data?.amount ?? 0,
     );
   }
   DailyFinanceModel.empty();

@@ -760,5 +760,7 @@
     "pleaseEnterValidCoord": "من فضلك ادخل احداثيات صالحة",
     "updateDistance": "تعديل المسافة",
     "totalProfit": "إجمالي الأرباح",
-    "dailyProfit": "الأرباح اليومية"
+    "dailyProfit": "الأرباح اليومية",
+    "totalEarnedProfit":"المستحقات المقبوضة",
+    "todayProfit":"مستحقات اليوم"
 }

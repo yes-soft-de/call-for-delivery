@@ -1080,6 +1080,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
             MessageLookupByLibrary.simpleMessage(
                 "To find out more, please leave your phone.\nand we will contact you personally"),
+        "todayProfit": MessageLookupByLibrary.simpleMessage("Today Balance"),
         "took": MessageLookupByLibrary.simpleMessage("Took"),
         "total": MessageLookupByLibrary.simpleMessage("Total"),
         "totalBillCost":
@@ -1087,6 +1088,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
             "The total cost without delivery cost"),
         "totalBonus": MessageLookupByLibrary.simpleMessage("Total Salary"),
+        "totalEarnedProfit":
+            MessageLookupByLibrary.simpleMessage("Total Earned"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("Total Price"),
         "totalProfit": MessageLookupByLibrary.simpleMessage("Total profit"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("Try again"),
