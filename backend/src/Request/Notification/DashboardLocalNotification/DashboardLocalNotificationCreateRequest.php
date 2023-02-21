@@ -17,12 +17,6 @@ class DashboardLocalNotificationCreateRequest
      */
     private $orderId;
 
-//    /**
-//     * admin user id
-//     * @var int|UserEntity|null
-//     */
-//    private $user;
-
     private int $appType;
 
     /**
@@ -59,16 +53,6 @@ class DashboardLocalNotificationCreateRequest
     {
         $this->orderId = $orderId;
     }
-
-//    public function getUser(): UserEntity|int|null
-//    {
-//        return $this->user;
-//    }
-//
-//    public function setUser(UserEntity|int|null $user): void
-//    {
-//        $this->user = $user;
-//    }
 
     public function getAppType(): int
     {
