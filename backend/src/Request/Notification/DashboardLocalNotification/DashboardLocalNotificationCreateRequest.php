@@ -2,6 +2,7 @@
 
 namespace App\Request\Notification\DashboardLocalNotification;
 
+use App\Entity\AdminProfileEntity;
 use App\Entity\OrderEntity;
 use App\Entity\UserEntity;
 
@@ -16,13 +17,18 @@ class DashboardLocalNotificationCreateRequest
      */
     private $orderId;
 
-    /**
-     * admin user id
-     * @var int|UserEntity|null
-     */
-    private $user;
+//    /**
+//     * admin user id
+//     * @var int|UserEntity|null
+//     */
+//    private $user;
 
     private int $appType;
+
+    /**
+     * @var AdminProfileEntity|null
+     */
+    private $adminProfile;
 
     public function getTitle(): string
     {
@@ -54,15 +60,15 @@ class DashboardLocalNotificationCreateRequest
         $this->orderId = $orderId;
     }
 
-    public function getUser(): UserEntity|int|null
-    {
-        return $this->user;
-    }
-
-    public function setUser(UserEntity|int|null $user): void
-    {
-        $this->user = $user;
-    }
+//    public function getUser(): UserEntity|int|null
+//    {
+//        return $this->user;
+//    }
+//
+//    public function setUser(UserEntity|int|null $user): void
+//    {
+//        $this->user = $user;
+//    }
 
     public function getAppType(): int
     {
@@ -72,5 +78,15 @@ class DashboardLocalNotificationCreateRequest
     public function setAppType(int $appType): void
     {
         $this->appType = $appType;
+    }
+
+    public function getAdminProfile(): ?AdminProfileEntity
+    {
+        return $this->adminProfile;
+    }
+
+    public function setAdminProfile(?AdminProfileEntity $adminProfile): void
+    {
+        $this->adminProfile = $adminProfile;
     }
 }

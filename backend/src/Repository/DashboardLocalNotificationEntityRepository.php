@@ -2,13 +2,10 @@
 
 namespace App\Repository;
 
-use App\Entity\AdminProfileEntity;
 use App\Entity\DashboardLocalNotificationEntity;
-use App\Entity\OrderEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
-use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -46,33 +43,5 @@ class DashboardLocalNotificationEntityRepository extends ServiceEntityRepository
         if ($flush) {
             $this->_em->flush();
         }
-    }
-
-    public function getAllDashboardLocalNotification(): array
-    {
-        return $this->createQueryBuilder('dashboardLocalNotificationEntity')
-            ->select('dashboardLocalNotificationEntity.id', 'dashboardLocalNotificationEntity.title', 'dashboardLocalNotificationEntity.message',
-                'dashboardLocalNotificationEntity.appType', 'dashboardLocalNotificationEntity.createdAt')
-            ->addSelect('adminProfileEntity.name as adminName')
-            ->addSelect('orderEntity.id as orderId')
-
-            ->leftJoin(
-                AdminProfileEntity::class,
-                'adminProfileEntity',
-                Join::WITH,
-                'adminProfileEntity.user = dashboardLocalNotificationEntity.user'
-            )
-
-            ->leftJoin(
-                OrderEntity::class,
-                'orderEntity',
-                Join::WITH,
-                'orderEntity.id = dashboardLocalNotificationEntity.orderId'
-            )
-
-            ->orderBy('dashboardLocalNotificationEntity.id', 'DESC')
-
-            ->getQuery()
-            ->getResult();
     }
 }

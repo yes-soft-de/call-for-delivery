@@ -3,8 +3,8 @@
 namespace App\MessageHandler\DashboardLocalNotification;
 
 use App\Message\DashboardLocalNotification\DashboardLocalNotificationCreateMessage;
+use App\Repository\AdminProfileEntityRepository;
 use App\Repository\OrderEntityRepository;
-use App\Repository\UserEntityRepository;
 use App\Service\Notification\DashboardLocalNotification\DashboardLocalNotificationMySqlService;
 use Symfony\Component\Messenger\Handler\MessageSubscriberInterface;
 
@@ -12,7 +12,7 @@ class CreateDashboardLocalNotificationHandler implements MessageSubscriberInterf
 {
     public function __construct(
         private OrderEntityRepository $orderEntityRepository,
-        private UserEntityRepository $userEntityRepository,
+        private AdminProfileEntityRepository $adminProfileEntityRepository,
         private DashboardLocalNotificationMySqlService $dashboardLocalNotificationMySqlService
     )
     {
@@ -33,17 +33,18 @@ class CreateDashboardLocalNotificationHandler implements MessageSubscriberInterf
     public function initializeAndCreateDashboardLocalNotification(DashboardLocalNotificationCreateMessage $dashboardLocalNotificationCreateMessage)
     {
         $orderEntity = null;
-        $userEntity = null;
+        $adminProfileEntity = null;
 
         if ($dashboardLocalNotificationCreateMessage->getOrderId()) {
             $orderEntity = $this->orderEntityRepository->findOneBy(['id' => $dashboardLocalNotificationCreateMessage->getOrderId()]);
         }
 
         if ($dashboardLocalNotificationCreateMessage->getUser()) {
-            $userEntity = $this->userEntityRepository->findOneBy(['id' => $dashboardLocalNotificationCreateMessage->getUser()]);
+            $adminProfileEntity = $this->adminProfileEntityRepository->findOneBy(['user' => $dashboardLocalNotificationCreateMessage->getUser()]);
         }
 
         $this->dashboardLocalNotificationMySqlService->initializeAndCreateDashboardLocalNotification($dashboardLocalNotificationCreateMessage->getTitle(),
-            $dashboardLocalNotificationCreateMessage->getMessage(), $dashboardLocalNotificationCreateMessage->getAppType(), $userEntity, $orderEntity);
+            $dashboardLocalNotificationCreateMessage->getMessage(), $dashboardLocalNotificationCreateMessage->getAppType(),
+            $adminProfileEntity, $orderEntity);
     }
 }
