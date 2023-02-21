@@ -27,11 +27,11 @@ class DashboardLocalNotificationEntity
     #[ORM\ManyToOne(targetEntity: OrderEntity::class, inversedBy: 'dashboardLocalNotificationEntities')]
     private $orderId;
 
-    #[ORM\ManyToOne(targetEntity: UserEntity::class, inversedBy: 'dashboardLocalNotificationEntities')]
-    private $user;
-
     #[ORM\Column(type: 'integer')]
     private $appType;
+
+    #[ORM\ManyToOne(targetEntity: AdminProfileEntity::class, inversedBy: 'dashboardLocalNotificationEntities')]
+    private $adminProfile;
 
     public function getId(): ?string
     {
@@ -86,18 +86,6 @@ class DashboardLocalNotificationEntity
         return $this;
     }
 
-    public function getUser(): ?UserEntity
-    {
-        return $this->user;
-    }
-
-    public function setUser(?UserEntity $user): self
-    {
-        $this->user = $user;
-
-        return $this;
-    }
-
     public function getAppType(): ?int
     {
         return $this->appType;
@@ -106,6 +94,18 @@ class DashboardLocalNotificationEntity
     public function setAppType(int $appType): self
     {
         $this->appType = $appType;
+
+        return $this;
+    }
+
+    public function getAdminProfile(): ?AdminProfileEntity
+    {
+        return $this->adminProfile;
+    }
+
+    public function setAdminProfile(?AdminProfileEntity $adminProfile): self
+    {
+        $this->adminProfile = $adminProfile;
 
         return $this;
     }

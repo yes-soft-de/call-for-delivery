@@ -31,6 +31,6 @@ class DashboardLocalNotificationManager
 
     public function getAllDashboardLocalNotification(): array
     {
-        return $this->dashboardLocalNotificationEntityRepository->getAllDashboardLocalNotification();
+        return $this->dashboardLocalNotificationEntityRepository->findBy([], ['id' => 'DESC']);
     }
 }
