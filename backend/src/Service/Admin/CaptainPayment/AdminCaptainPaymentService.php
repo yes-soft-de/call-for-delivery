@@ -77,7 +77,6 @@ class AdminCaptainPaymentService
         $payments = $this->adminCaptainPaymentManager->getAllCaptainPayments($captainId);
 
         foreach ($payments as $payment) {
-           
             $response[] = $this->autoMapping->map('array', AdminCaptainPaymentResponse::class, $payment);
         }
 

@@ -50,7 +50,7 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
         }
     }
     
-    public function  getAllCaptainPayments(int $captainId): ?array
+    public function getAllCaptainPayments(int $captainId): array
     {
         return $this->createQueryBuilder('captainPaymentEntity')
            
@@ -62,6 +62,8 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
             
             ->andWhere('captainPaymentEntity.captain = :id')
             ->setParameter('id', $captainId)
+
+            ->andWhere('captainPaymentEntity.captainFinancialDailyEntity IS NULL')
 
             ->orderBy('captainPaymentEntity.id', 'DESC')
             

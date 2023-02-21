@@ -178,9 +178,10 @@ class AdminCaptainPaymentController extends BaseController
     }
 
     /**
-     * admin:Get all payments.
+     * admin:Get all payments which paid to a specific captain by admin.
      * @Route("captainpayments/{captainId}", name="getAllCaptainPayments", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
+     * @param int $captainId
      * @return JsonResponse
      *
      * @OA\Tag(name="Captain Payment")
