@@ -153,6 +153,7 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
             ->andWhere('captainFinancialDuesEntity.startDate >= :fromDate')
             ->andWhere('captainFinancialDuesEntity.endDate <= :toDate')
             ->andWhere('captainPaymentEntity.captainFinancialDues = captainFinancialDuesEntity.id')
+            ->andWhere('captainPaymentEntity.captainFinancialDailyEntity IS NULL')
 
             ->setParameter('captainId', $captainId)
             ->setParameter('fromDate', $fromDate)
