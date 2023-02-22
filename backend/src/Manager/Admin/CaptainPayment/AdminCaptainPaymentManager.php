@@ -71,7 +71,7 @@ class AdminCaptainPaymentManager
         return $captainPaymentEntity;
     }
 
-    public function getAllCaptainPayments(int $captainId): ?array
+    public function getAllCaptainPayments(int $captainId): array
     {
         return $this->captainPaymentEntityRepository->getAllCaptainPayments($captainId);
     }

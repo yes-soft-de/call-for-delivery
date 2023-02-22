@@ -24,13 +24,13 @@ class CaptainFinancialDuesService
         private AutoMapping $autoMapping,
         private CaptainFinancialSystemDetailManager $captainFinancialSystemDetailManager,
         private CaptainFinancialSystemOneBalanceDetailService $captainFinancialSystemOneBalanceDetailService,
-        private CaptainFinancialSystemThreeBalanceDetailService $captainFinancialSystemThreeBalanceDetailService,
+        //private CaptainFinancialSystemThreeBalanceDetailService $captainFinancialSystemThreeBalanceDetailService,
         private CaptainFinancialSystemAccordingOnOrderService $captainFinancialSystemAccordingOnOrderService,
         private CaptainFinancialSystemDateService $captainFinancialSystemDateService,
         private CaptainFinancialDuesManager $captainFinancialDuesManager,
         private CaptainPaymentService $captainPaymentService,
         private CaptainFinancialSystemTwoGetBalanceDetailsService $captainFinancialSystemTwoGetBalanceDetailsService,
-        private CaptainFinancialSystemTwoBalanceDetailService $captainFinancialSystemTwoBalanceDetailService,
+        //private CaptainFinancialSystemTwoBalanceDetailService $captainFinancialSystemTwoBalanceDetailService,
         private CaptainFinancialSystemThreeGetBalanceDetailsService $captainFinancialSystemThreeGetBalanceDetailsService
     )
     {
