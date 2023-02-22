@@ -101,76 +101,82 @@ class MenuScreen extends StatelessWidget {
                 ),
               ),
               Center(child: Text(profileModel.name ?? S.current.username)),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                      width: 125,
-                      color: Theme.of(context).colorScheme.primaryContainer,
-                      child: Padding(
+              InkWell(
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed(PlanRoutes.CAPTAIN_DAILY_PAYMENTS);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        width: 125,
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                S.current.todayProfit,
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                ),
+                              ),
+                              Text(
+                                dailyFinance.dailyTotal.toStringAsFixed(2) +
+                                    S.current.sar,
+                                style: TextStyle(
+                                  color: dailyFinance.dailyTotal > 0
+                                      ? Colors.red
+                                      : Colors.green,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              S.current.todayProfit,
-                              style: const TextStyle(
-                                fontSize: 13,
-                              ),
-                            ),
-                            Text(
-                              dailyFinance.dailyTotal.toStringAsFixed(2) +
-                                  S.current.sar,
-                              style: TextStyle(
-                                color: dailyFinance.dailyTotal > 0
-                                    ? Colors.red
-                                    : Colors.green,
-                              ),
-                            ),
-                          ],
+                        child: Container(
+                          height: 16,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).disabledColor,
+                            borderRadius: BorderRadius.circular(25),
+                          ),
                         ),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        height: 16,
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).disabledColor,
-                          borderRadius: BorderRadius.circular(25),
+                      Container(
+                        width: 125,
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                S.current.totalEarnedProfit,
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                ),
+                              ),
+                              Text(
+                                dailyFinance.totalProfit.toStringAsFixed(2) +
+                                    S.current.sar,
+                                style: const TextStyle(
+                                  color: Colors.green,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    Container(
-                      width: 125,
-                      color: Theme.of(context).colorScheme.primaryContainer,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              S.current.totalEarnedProfit,
-                              style: const TextStyle(
-                                fontSize: 13,
-                              ),
-                            ),
-                            Text(
-                              dailyFinance.totalProfit.toStringAsFixed(2) +
-                                  S.current.sar,
-                              style: const TextStyle(
-                                color: Colors.green,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
               Visibility(

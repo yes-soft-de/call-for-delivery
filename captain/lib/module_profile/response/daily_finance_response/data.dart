@@ -1,13 +1,16 @@
+import 'package:c4d/module_profile/response/daily_finance_response/payments.dart';
+
 import 'updated_at.dart';
 
 class Data {
   int? id;
-  int? amount;
-  int? alreadyHadAmount;
+  num? amount;
+  num? alreadyHadAmount;
   int? isPaid;
   bool? withBonus;
-  int? bonus;
+  num? bonus;
   UpdatedAt? updatedAt;
+  List<Payments>? captainPayments;
 
   Data({
     this.id,
@@ -17,15 +20,19 @@ class Data {
     this.withBonus,
     this.bonus,
     this.updatedAt,
+    this.captainPayments,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json['id'] as int?,
-        amount: json['amount'] as int?,
-        alreadyHadAmount: json['alreadyHadAmount'] as int?,
+        amount: json['amount'] as num?,
+        alreadyHadAmount: json['alreadyHadAmount'] as num?,
         isPaid: json['isPaid'] as int?,
         withBonus: json['withBonus'] as bool?,
-        bonus: json['bonus'] as int?,
+        bonus: json['bonus'] as num?,
+        captainPayments: (json['captainPayments'] as List<dynamic>?)
+            ?.map((e) => Payments.fromJson(e as Map<String, dynamic>))
+            .toList(),
         updatedAt: json['updatedAt'] == null
             ? null
             : UpdatedAt.fromJson(json['updatedAt'] as Map<String, dynamic>),

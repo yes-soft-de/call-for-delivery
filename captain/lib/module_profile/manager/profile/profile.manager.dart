@@ -32,4 +32,7 @@ class ProfileManager {
   Future<CaptainPaymentsResponse?> getStoreBalance(
           CaptainPaymentRequest request) =>
       _repository.getStoreAccountBalance(request);
+  Future<DailyFinanceResponse?> getDailyPayments(
+          CaptainPaymentRequest request) =>
+      _repository.getDailyPayments(request);
 }

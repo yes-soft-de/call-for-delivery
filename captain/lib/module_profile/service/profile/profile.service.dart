@@ -94,4 +94,17 @@ class ProfileService {
     }
     return CaptainBalanceModel.withData(actionResponse.data ?? []);
   }
+
+  Future<DataModel> getDailyPayments(CaptainPaymentRequest request) async {
+    DailyFinanceResponse? actionResponse =
+        await _manager.getDailyPayments(request);
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DailyFinanceModel.withData(actionResponse);
+  }
 }

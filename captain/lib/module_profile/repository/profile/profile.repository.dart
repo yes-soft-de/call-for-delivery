@@ -93,4 +93,14 @@ class ProfileRepository {
     if (response == null) return null;
     return CaptainPaymentsResponse.fromJson(response);
   }
+
+  Future<DailyFinanceResponse?> getDailyPayments(
+      CaptainPaymentRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+        Urls.GET_DAILY_PAYMENTS_CAPTAIN, request.toJson(),
+        headers: {'Authorization': 'Bearer $token'});
+    if (response == null) return null;
+    return DailyFinanceResponse.fromJson(response);
+  }
 }
