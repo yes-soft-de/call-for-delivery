@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\CaptainEntity;
 use App\Entity\OrderTimeLineEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -49,5 +51,23 @@ class OrderTimeLineEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function getOrderTimelineByCaptainUserId(int $captainUserId): array
+    {
+        return $this->createQueryBuilder('orderTimeLineEntity')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = orderTimeLineEntity.captainProfile'
+            )
+
+            ->andWhere('captainEntity.captainId = :captainUserId')
+            ->setParameter('captainUserId', $captainUserId)
+
+            ->getQuery()
+            ->getResult();
     }
 }

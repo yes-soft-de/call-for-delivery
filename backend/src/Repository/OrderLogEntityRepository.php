@@ -253,4 +253,22 @@ class OrderLogEntityRepository extends ServiceEntityRepository
 
         return $orderLogs;
     }
+
+    public function getOrderLogByCaptainUserId(int $captainUserId): array
+    {
+        return $this->createQueryBuilder('orderLogEntity')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = orderLogEntity.captainProfile'
+            )
+
+            ->andWhere('captainEntity.captainId = :captainUserId')
+            ->setParameter('captainUserId', $captainUserId)
+
+            ->getQuery()
+            ->getResult();
+    }
 }

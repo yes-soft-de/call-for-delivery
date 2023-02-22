@@ -3,31 +3,25 @@
 namespace App\Service\OrderTimeLine;
 
 use App\AutoMapping;
+use App\Constant\OrderTimeLine\OrderTimeLineResultConstant;
 use App\Manager\OrderTimeLine\OrderTimeLineManager;
 use App\Request\OrderTimeLine\OrderLogsCreateRequest;
 use App\Entity\OrderTimeLineEntity;
 use App\Entity\OrderEntity;
 use App\Response\OrderTimeLine\OrderLogsResponse;
-use App\Response\OrderTimeLine\OrderLogsByOrderIdResponse;
-use App\Service\StoreOwnerBranch\StoreOwnerBranchService;
 use App\Entity\StoreOwnerBranchEntity;
 use App\Constant\Order\OrderStateConstant;
 use App\Response\OrderTimeLine\OrderLogTimeLineResponse;
+use App\Response\OrderTimeLine\OrderTimelineCaptainProfileUpdateResponse;
 use App\Service\DateFactory\DateFactoryService;
 
 class OrderTimeLineService
 {
-    private AutoMapping $autoMapping;
-    private OrderTimeLineManager $orderTimeLineManager;
-    private StoreOwnerBranchService $storeOwnerBranchService;
-    private DateFactoryService $dateFactoryService;
-
-    public function __construct(AutoMapping $autoMapping, OrderTimeLineManager $orderTimeLineManager, StoreOwnerBranchService $storeOwnerBranchService, DateFactoryService $dateFactoryService)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private OrderTimeLineManager $orderTimeLineManager,
+        private DateFactoryService $dateFactoryService)
     {
-       $this->autoMapping = $autoMapping;
-       $this->orderTimeLineManager = $orderTimeLineManager;
-       $this->storeOwnerBranchService = $storeOwnerBranchService;
-       $this->dateFactoryService = $dateFactoryService;
     }
 
     public function createOrderLogs(OrderLogsCreateRequest $request): OrderLogsResponse
@@ -114,7 +108,9 @@ class OrderTimeLineService
       return $this->getOrderLogsTimeLine($orderLogs, $currentStage);
     }
 
-//this remove item duplicated
+    /**
+     * this remove item duplicated
+     */
     public function removeDuplicated(array $array): ?array
     {
         $temp = array_unique(array_column($array, 'orderState'));
@@ -122,5 +118,26 @@ class OrderTimeLineService
         $logs = array_intersect_key($array, $temp);
 
         return array_values($logs);
+    }
+
+    /**
+     * Update captainProfile field to null for each order timeline record related to specific captain
+     */
+    public function updateOrderTimelineCaptainProfileToNullByCaptainUserId(int $captainUserId): array|int
+    {
+        $orderTimelineUpdateResult = $this->orderTimeLineManager->updateOrderTimelineCaptainProfileToNullByCaptainUserId($captainUserId);
+
+        if ($orderTimelineUpdateResult === OrderTimeLineResultConstant::ORDER_TIMELINE_NOT_EXIST_CONST) {
+            return OrderTimeLineResultConstant::ORDER_TIMELINE_NOT_EXIST_CONST;
+        }
+
+        $response = [];
+
+        foreach ($orderTimelineUpdateResult as $orderTimelineEntity) {
+            $response[] = $this->autoMapping->map(OrderTimeLineEntity::class, OrderTimelineCaptainProfileUpdateResponse::class,
+                $orderTimelineEntity);
+        }
+
+        return $response;
     }
 }

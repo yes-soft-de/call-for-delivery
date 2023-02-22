@@ -28,16 +28,14 @@ use App\Constant\Main\MainErrorConstant;
  */
 class AdminCaptainController extends BaseController
 {
-    private AutoMapping $autoMapping;
-    private ValidatorInterface $validator;
-    private AdminCaptainService $adminCaptainService;
-
-    public function __construct( AutoMapping $autoMapping, SerializerInterface $serializer, ValidatorInterface $validator, AdminCaptainService $adminCaptainService)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        SerializerInterface $serializer,
+        private ValidatorInterface $validator,
+        private AdminCaptainService $adminCaptainService
+    )
     {
         parent::__construct($serializer);
-        $this->adminCaptainService = $adminCaptainService;
-        $this->validator = $validator;
-        $this->autoMapping = $autoMapping;
     }
 
     /**
@@ -350,6 +348,37 @@ class AdminCaptainController extends BaseController
      *      )
      * )
      *
+     * or
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *          oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9355"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9351"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9352"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9353"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9354"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   )
+     *              }
+     *      )
+     * )
+     *
      * @Security(name="Bearer")
      */
     public function deleteCaptainAccountAndProfileByAdmin(Request $request): JsonResponse
@@ -370,21 +399,17 @@ class AdminCaptainController extends BaseController
 
         if ($response === EraserResultConstant::CAN_NOT_DELETE_USER_HAS_CASH_ORDER_PAYMENTS) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAN_NOT_DELETE_USER_HAS_CASH_ORDER_PAYMENTS);
-        }
 
-        if ($response === EraserResultConstant::CAN_NOT_DELETE_USER_HAS_ORDERS) {
+        } elseif ($response === EraserResultConstant::CAN_NOT_DELETE_USER_HAS_ORDERS) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAN_NOT_DELETE_USER_HAS_ORDERS);
-        }
 
-        if ($response === EraserResultConstant::CAN_NOT_DELETE_USER_HAS_FINANCIAL_DUES) {
+        } elseif ($response === EraserResultConstant::CAN_NOT_DELETE_USER_HAS_FINANCIAL_DUES) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAN_NOT_DELETE_USER_HAS_FINANCIAL_DUES);
-        }
 
-        if ($response === EraserResultConstant::CAN_NOT_DELETE_USER_HAS_PAYMENTS) {
+        } elseif ($response === EraserResultConstant::CAN_NOT_DELETE_USER_HAS_PAYMENTS) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAN_NOT_DELETE_USER_HAS_PAYMENTS);
-        }
 
-        if ($response === EraserResultConstant::CAN_NOT_DELETE_USER_HAS_PAYMENTS_TO_COMPANY) {
+        } elseif ($response === EraserResultConstant::CAN_NOT_DELETE_USER_HAS_PAYMENTS_TO_COMPANY) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAN_NOT_DELETE_USER_HAS_PAYMENTS_TO_COMPANY);
         }
 
