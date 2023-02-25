@@ -888,5 +888,9 @@
     "orderPriceOnCreditWarning": "Please remove order price after setting payment method to credit",
     "remove": "Remove",
     "addition": "Addition",
-    "subtraction": "Subtraction"
+    "subtraction": "Subtraction",
+    "last_three_active_captain":"Last Three Active Captains ",
+    "captains_active":"Captains active",
+    "captains_not_active":"Captains not active",
+    "captain_statistics":"Captain Statistics"
 }

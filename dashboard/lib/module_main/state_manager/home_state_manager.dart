@@ -1,4 +1,6 @@
 import 'package:c4d/module_main/model/statistics_model.dart';
+import 'package:c4d/module_main/sceen/home_state/new_home_state.dart';
+import 'package:c4d/module_main/sceen/new_home_screen.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -43,6 +45,21 @@ class HomeStateManager {
       } else {
         StatisticsModel data = value as StatisticsModel;
         _stateSubject.add(HomeLoadedState(screenState, null, data.data));
+      }
+    });
+  }
+
+  void getNewStatistics(NewHomeScreenState screenState) {
+    _stateSubject.add(LoadingState(screenState));
+    _homeService.getStatistics().then((value) {
+      if (value.hasError) {
+        _stateSubject.add(
+            NewHomeLoadedState(screenState, null, null, error: value.error));
+      } else if (value.isEmpty) {
+        _stateSubject.add(NewHomeLoadedState(screenState, null, null));
+      } else {
+        StatisticsModel data = value as StatisticsModel;
+        _stateSubject.add(NewHomeLoadedState(screenState, null, data.data));
       }
     });
   }

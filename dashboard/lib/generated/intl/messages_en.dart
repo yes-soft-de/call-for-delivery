@@ -239,6 +239,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain total category"),
         "captainUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Captain updated successfully"),
+        "captain_statistics":
+            MessageLookupByLibrary.simpleMessage("Captain Statistics"),
         "captainractivityDetails":
             MessageLookupByLibrary.simpleMessage("Captain Activity"),
         "captainratingDetails":
@@ -247,6 +249,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainsOffer": MessageLookupByLibrary.simpleMessage("Captains offer"),
         "captainsRating":
             MessageLookupByLibrary.simpleMessage("Captain Ratings"),
+        "captains_active":
+            MessageLookupByLibrary.simpleMessage("Captains active"),
+        "captains_not_active":
+            MessageLookupByLibrary.simpleMessage("Captains not active"),
         "car": MessageLookupByLibrary.simpleMessage("Car"),
         "carCount": MessageLookupByLibrary.simpleMessage("Car count"),
         "carModel": MessageLookupByLibrary.simpleMessage("Car Model"),
@@ -671,6 +677,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "lastName": MessageLookupByLibrary.simpleMessage("Last name"),
         "lastSeenMessage": MessageLookupByLibrary.simpleMessage("New Messages"),
         "lastWeek": MessageLookupByLibrary.simpleMessage("Last week"),
+        "last_three_active_captain":
+            MessageLookupByLibrary.simpleMessage("Last Three Active Captains "),
         "latestUpdates": MessageLookupByLibrary.simpleMessage("Latest Updates"),
         "lebanon": MessageLookupByLibrary.simpleMessage("Lebanon"),
         "leftToPay": MessageLookupByLibrary.simpleMessage("Left to pay"),

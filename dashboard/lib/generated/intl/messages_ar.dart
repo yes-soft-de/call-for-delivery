@@ -236,6 +236,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المستحقات ضمن هذه الفئة"),
         "captainUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث الكابتن بنجاح"),
+        "captain_statistics":
+            MessageLookupByLibrary.simpleMessage("إحصائيات الكباتن"),
         "captainractivityDetails":
             MessageLookupByLibrary.simpleMessage("نشاط الكابتن"),
         "captainratingDetails":
@@ -244,6 +246,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainsOffer": MessageLookupByLibrary.simpleMessage("عروض الكباتن"),
         "captainsRating":
             MessageLookupByLibrary.simpleMessage("تقييمات الكابتن"),
+        "captains_active":
+            MessageLookupByLibrary.simpleMessage("الكباتن النشطة"),
+        "captains_not_active":
+            MessageLookupByLibrary.simpleMessage("الكباتن الغير نشطة"),
         "car": MessageLookupByLibrary.simpleMessage("سيارة "),
         "carCount": MessageLookupByLibrary.simpleMessage("عدد السيارات"),
         "carModel": MessageLookupByLibrary.simpleMessage("نوع السيارة"),
@@ -660,6 +666,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "lastName": MessageLookupByLibrary.simpleMessage("الكنية"),
         "lastSeenMessage": MessageLookupByLibrary.simpleMessage("رسائل جديدة"),
         "lastWeek": MessageLookupByLibrary.simpleMessage("الأسبوع الماضي"),
+        "last_three_active_captain":
+            MessageLookupByLibrary.simpleMessage("آخر ثلاث كباتن نشطين"),
         "latestUpdates": MessageLookupByLibrary.simpleMessage("اخر التحديثات"),
         "lebanon": MessageLookupByLibrary.simpleMessage("لبنان"),
         "leftToPay": MessageLookupByLibrary.simpleMessage("المتبقي للدفع"),

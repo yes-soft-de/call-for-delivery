@@ -8939,6 +8939,46 @@ class S {
       args: [],
     );
   }
+
+  /// `Last Three Active Captains `
+  String get last_three_active_captain {
+    return Intl.message(
+      'Last Three Active Captains ',
+      name: 'last_three_active_captain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captains active`
+  String get captains_active {
+    return Intl.message(
+      'Captains active',
+      name: 'captains_active',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captains not active`
+  String get captains_not_active {
+    return Intl.message(
+      'Captains not active',
+      name: 'captains_not_active',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain Statistics`
+  String get captain_statistics {
+    return Intl.message(
+      'Captain Statistics',
+      name: 'captain_statistics',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

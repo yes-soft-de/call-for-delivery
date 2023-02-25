@@ -887,5 +887,9 @@
     "orderPriceOnCreditWarning": "لقد حددت سعر الطلبية الرجاء إزالتها في حالة كانت الطلبية مدفوعة",
     "remove": "إزالة",
     "addition":"إضافة",
-    "subtraction":"إنقاص"
+    "subtraction":"إنقاص",
+    "last_three_active_captain":"آخر ثلاث كباتن نشطين",
+    "captains_active":"الكباتن النشطة",
+    "captains_not_active":"الكباتن الغير نشطة",
+    "captain_statistics":"إحصائيات الكباتن"
 }

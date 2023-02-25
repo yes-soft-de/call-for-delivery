@@ -81,6 +81,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.reports,
                 icon: Icons.report,
                 children: [
+                  customListTile(getIt<MainModule>().newhomeScreen,
+                      S.current.home, FontAwesomeIcons.home, true),
                   customListTile(
                       getIt<OrdersModule>().ordersWithoutDistanceScreen,
                       S.current.orderWithoutDistance,

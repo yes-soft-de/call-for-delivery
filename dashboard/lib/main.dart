@@ -19,6 +19,7 @@ import 'package:c4d/module_stores/stores_module.dart';
 import 'package:c4d/module_subscriptions/subscriptions_module.dart';
 import 'package:c4d/module_supplier_categories/categories_supplier_module.dart';
 import 'package:device_info/device_info.dart';
+// import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/utils/effect/scroll_behavior.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
@@ -35,8 +36,7 @@ import 'package:c4d/module_settings/settings_module.dart';
 import 'package:c4d/module_splash/splash_module.dart';
 import 'package:c4d/module_theme/service/theme_service/theme_service.dart';
 import 'package:c4d/utils/logger/logger.dart';
-import 'package:firebase_analytics/firebase_analytics.dart';
-import 'package:firebase_analytics/observer.dart';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -147,9 +147,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-  static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-  static FirebaseAnalyticsObserver observer =
-      FirebaseAnalyticsObserver(analytics: analytics);
+  // static FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+  // static FirebaseAnalyticsObserver observer =
+  //     FirebaseAnalyticsObserver(analytics: analytics);
 
   late ThemeData activeTheme;
   bool authorized = false;
@@ -206,7 +206,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       child: MaterialApp(
         scrollBehavior: MyCustomScrollBehavior(),
         debugShowCheckedModeBanner: false,
-        navigatorObservers: <NavigatorObserver>[observer],
+        // navigatorObservers: <NavigatorObserver>[observer],
         navigatorKey: GlobalVariable.navState,
         locale: Locale.fromSubtags(
           languageCode: lang,
