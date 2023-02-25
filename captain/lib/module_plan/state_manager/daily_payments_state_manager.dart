@@ -7,8 +7,6 @@ import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_plan/model/captain_daily_finance_model.dart';
 import 'package:c4d/module_plan/ui/screen/daily_payments_screen.dart';
 import 'package:c4d/module_plan/ui/state/daily_payments_loaded_state.dart';
-import 'package:c4d/module_profile/model/captain_balance_model.dart';
-import 'package:c4d/module_profile/model/daily_model.dart';
 import 'package:c4d/module_profile/request/captain_payments_request.dart';
 import 'package:c4d/module_profile/service/profile/profile.service.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
@@ -35,11 +33,13 @@ class DailyBalanceStateManager {
     _stateSubject.add(LoadingState(screenState));
     _profileService.getDailyPayments(request).then((value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(screenState, onPressed: () {
+        _stateSubject
+            .add(ErrorState(screenState, hasAppbar: false, onPressed: () {
           getAccountBalance(screenState, request);
         }, title: S.current.payments));
       } else if (value.isEmpty) {
-        _stateSubject.add(EmptyState(screenState, onPressed: () {
+        _stateSubject
+            .add(EmptyState(screenState, hasAppbar: false, onPressed: () {
           getAccountBalance(screenState, request);
         }, title: S.current.payments, emptyMessage: S.current.emptyStaff));
       } else {

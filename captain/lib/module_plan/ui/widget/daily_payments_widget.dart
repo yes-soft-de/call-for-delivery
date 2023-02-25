@@ -127,31 +127,34 @@ class DailyWidget extends StatelessWidget {
                           subtitle: FinanceHelper.getStatusString(isPaid),
                           background:
                               FinanceHelper.getFinanceStatusColor(isPaid))),
-                  ElevatedButton(
-                    onPressed: () {
-                      List<Widget> widgets = [];
-                      payments.forEach((element) {
-                        widgets.add(PaymentsWidget(
-                          amount: element.amount,
-                          note: element.note,
-                          paymentDate: element.paymentDate,
-                        ));
-                      });
-                      showDialog(
-                          context: context,
-                          builder: (ctx) {
-                            return Column(
-                              children: widgets,
-                            );
-                          });
-                    },
-                    child: Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Text(S.current.payments)),
-                  )
                 ],
               ),
             ),
+            Visibility(
+              visible: payments.isEmpty,
+              child: ElevatedButton(
+                onPressed: () {
+                  List<Widget> widgets = [];
+                  payments.forEach((element) {
+                    widgets.add(PaymentsWidget(
+                      amount: element.amount,
+                      note: element.note,
+                      paymentDate: element.paymentDate,
+                    ));
+                  });
+                  showDialog(
+                      context: context,
+                      builder: (ctx) {
+                        return Column(
+                          children: widgets,
+                        );
+                      });
+                },
+                child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Text(S.current.payments)),
+              ),
+            )
           ],
         ),
       ),

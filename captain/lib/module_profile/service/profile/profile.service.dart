@@ -106,6 +106,8 @@ class ProfileService {
     if (actionResponse.statusCode != '200') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    } else if (actionResponse.data == null) {
+      return DataModel.empty();
     }
     return CaptainDailyFinanceModel.withData(actionResponse);
   }

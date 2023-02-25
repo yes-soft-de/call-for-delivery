@@ -31,7 +31,7 @@ class CaptainDailyFinanceModel extends DataModel {
   });
   List<CaptainDailyFinanceModel> _data = [];
   CaptainDailyFinanceModel.withData(DailyPaymentsResponse response) {
-    var d = response.data!;
+    var d = response.data ?? [];
     for (var e in d) {
       _data.add(CaptainDailyFinanceModel(
         id: e.id ?? -1,
