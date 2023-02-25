@@ -1,3 +1,4 @@
+import 'package:c4d/module_plan/response/daily_payments_response/daily_payments_response.dart';
 import 'package:c4d/module_profile/request/captain_payments_request.dart';
 import 'package:c4d/module_profile/response/captain_payments_response/captain_payments_response.dart';
 import 'package:c4d/module_profile/response/daily_finance_response/daily_finance_response.dart';
@@ -94,13 +95,13 @@ class ProfileRepository {
     return CaptainPaymentsResponse.fromJson(response);
   }
 
-  Future<DailyFinanceResponse?> getDailyPayments(
+  Future<DailyPaymentsResponse?> getDailyPayments(
       CaptainPaymentRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
         Urls.GET_DAILY_PAYMENTS_CAPTAIN, request.toJson(),
         headers: {'Authorization': 'Bearer $token'});
     if (response == null) return null;
-    return DailyFinanceResponse.fromJson(response);
+    return DailyPaymentsResponse.fromJson(response);
   }
 }

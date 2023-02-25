@@ -773,6 +773,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("رقم الهاتف المدخل قصير"),
         "pickAJob": MessageLookupByLibrary.simpleMessage("اختار عملي"),
         "pickALanguage": MessageLookupByLibrary.simpleMessage("اختار لغتي"),
+        "plan": MessageLookupByLibrary.simpleMessage("الخطة"),
         "planByHours":
             MessageLookupByLibrary.simpleMessage("وظيفية حسب الساعة"),
         "planByOrderCount":

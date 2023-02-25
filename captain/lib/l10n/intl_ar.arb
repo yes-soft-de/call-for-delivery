@@ -762,5 +762,6 @@
     "totalProfit": "إجمالي الأرباح",
     "dailyProfit": "الأرباح اليومية",
     "totalEarnedProfit":"المستحقات المقبوضة",
-    "todayProfit":"مستحقات اليوم"
+    "todayProfit":"مستحقات اليوم",
+    "plan":"الخطة"
 }

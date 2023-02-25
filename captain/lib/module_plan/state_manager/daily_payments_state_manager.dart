@@ -4,6 +4,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
+import 'package:c4d/module_plan/model/captain_daily_finance_model.dart';
 import 'package:c4d/module_plan/ui/screen/daily_payments_screen.dart';
 import 'package:c4d/module_plan/ui/state/daily_payments_loaded_state.dart';
 import 'package:c4d/module_profile/model/captain_balance_model.dart';
@@ -42,7 +43,7 @@ class DailyBalanceStateManager {
           getAccountBalance(screenState, request);
         }, title: S.current.payments, emptyMessage: S.current.emptyStaff));
       } else {
-        DailyFinanceModel captain = value as DailyFinanceModel;
+        CaptainDailyFinanceModel captain = value as CaptainDailyFinanceModel;
         _stateSubject.add(DailyPaymentsLoaded(screenState, captain.data));
       }
     });

@@ -760,5 +760,6 @@
     "totalProfit": "Total profit",
     "dailyProfit": "Daily profit",
     "totalEarnedProfit":"Total Earned",
-    "todayProfit":"Today Balance"
+    "todayProfit":"Today Balance",
+    "plan":"Plan"
 }

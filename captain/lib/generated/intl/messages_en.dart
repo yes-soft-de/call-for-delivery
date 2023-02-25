@@ -783,6 +783,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pickAJob": MessageLookupByLibrary.simpleMessage("Pick a Job"),
         "pickALanguage":
             MessageLookupByLibrary.simpleMessage("Pick a Language"),
+        "plan": MessageLookupByLibrary.simpleMessage("Plan"),
         "planByHours": MessageLookupByLibrary.simpleMessage("Plan by hours"),
         "planByOrderCount":
             MessageLookupByLibrary.simpleMessage("Plan on order count"),
