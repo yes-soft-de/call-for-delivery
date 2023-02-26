@@ -75,6 +75,11 @@ class OrderRecycleOrCancelByAdminRequest
      */
     private $deliveryCost;
 
+    /**
+     * @var int|null
+     */
+    private $costType;
+
     public function getId(): int
     {
         return $this->id;

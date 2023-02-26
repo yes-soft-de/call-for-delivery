@@ -87,6 +87,11 @@ class SubOrderCreateByAdminRequest
      */
     private $deliveryCost;
 
+    /**
+     * @var int|null
+     */
+    private $costType;
+
     public function getStoreOwner(): int|StoreOwnerProfileEntity
     {
         return $this->storeOwner;

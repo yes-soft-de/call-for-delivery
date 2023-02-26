@@ -49,6 +49,11 @@ class SubOrderCreateRequest
     private $deliveryCost;
 
     /**
+     * @var int|null
+     */
+    private $costType;
+
+    /**
      * Get the value of storeOwner
      */ 
     public function getStoreOwner()

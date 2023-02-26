@@ -43,6 +43,11 @@ class RecyclingOrCancelOrderRequest
     private $deliveryCost;
 
     /**
+     * @var int|null
+     */
+    private $costType;
+
+    /**
      * Get the value of id
      */ 
     public function getId()

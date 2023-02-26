@@ -47,6 +47,11 @@ class UpdateOrderByAdminRequest
      * @var int|null
      */
     private $isHide;
+
+    /**
+     * @var int|null
+     */
+    private $costType;
     
     /**
      * Get the value of id
