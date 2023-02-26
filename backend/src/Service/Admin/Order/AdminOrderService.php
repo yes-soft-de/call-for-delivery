@@ -8,7 +8,9 @@ use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificat
 use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificationTitleConstant;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Notification\NotificationTokenConstant;
+use App\Constant\Order\OrderCostTypeConstant;
 use App\Constant\Order\OrderDestinationConstant;
+use App\Constant\Order\OrderHasPayConflictAnswersConstant;
 use App\Constant\Order\OrderIsCancelConstant;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\Order\OrderStateConstant;
@@ -833,7 +835,7 @@ class AdminOrderService
                         $this->captainFinancialDuesService->captainFinancialDues($orderResult[0]->getCaptainId()->getCaptainId());
 
                         //save the price of the order in cash in case the captain does not pay the store
-                        if ($orderResult[0]->getPayment() === OrderTypeConstant::ORDER_PAYMENT_CASH && $orderResult[0]->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
+                        if ($this->checkCashOrderCostPaidToStoreOrNotByOrderEntity($orderResult[0])) {
                             $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($orderResult[0],
                                 OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $orderResult[0]->getOrderCost());
 
@@ -1579,5 +1581,59 @@ class AdminOrderService
     public function createOrUpdateCaptainFinancialDaily(int $orderId, CaptainEntity $captainEntity = null)
     {
         $this->captainFinancialDailyService->createOrUpdateCaptainFinancialDaily($orderId, $captainEntity);
+    }
+
+    /**
+     * returns true if cash order cost had not been paid to store, and returns false otherwise
+     */
+    public function checkCashOrderCostPaidToStoreOrNotByOrderEntity(OrderEntity $orderEntity): bool
+    {
+        if ($orderEntity->getPayment() === PaymentConstant::CASH_PAYMENT_METHOD_CONST) {
+            // payment method is of type cash, so continue checking process
+            if (! $orderEntity->getCostType()) {
+                // cost type is not defined
+                if ($orderEntity->getHasPayConflictAnswers()) {
+                    // it had been set if there conflicted answers or not
+                    if ($orderEntity->getHasPayConflictAnswers() === OrderHasPayConflictAnswersConstant::ORDER_DOES_NOT_HAVE_PAYMENT_CONFLICT_ANSWERS) {
+                        // both store and captain answers are matched, check any one of them
+                        if ($orderEntity->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
+                            return true;
+                        }
+                    }
+
+                } elseif (! $orderEntity->getHasPayConflictAnswers()) {
+                    // till here means the store has not confirmed the cash payment yet
+                    if ($orderEntity->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
+                        return true;
+                    }
+                }
+
+            } elseif ($orderEntity->getCostType()) {
+                // check cost type
+                if ($orderEntity->getCostType() === OrderCostTypeConstant::ORDER_COST_TYPE_DELIVERY_COST_ONLY_CONST) {
+                    // the cost is delivery cost only, no need to create
+                    return false;
+
+                } elseif ($orderEntity->getCostType() === OrderCostTypeConstant::ORDER_COST_TYPE_DELIVERY_COST_AND_ORDER_COST_CONST) {
+                    if ($orderEntity->getHasPayConflictAnswers()) {
+                        // it had been set if there conflicted answers or not
+                        if ($orderEntity->getHasPayConflictAnswers() === OrderHasPayConflictAnswersConstant::ORDER_DOES_NOT_HAVE_PAYMENT_CONFLICT_ANSWERS) {
+                            // both store and captain answers are matched, check any one of them
+                            if ($orderEntity->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
+                                return true;
+                            }
+                        }
+
+                    } elseif (! $orderEntity->getHasPayConflictAnswers()) {
+                        // till here means the store has not confirmed the cash payment yet
+                        if ($orderEntity->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }
