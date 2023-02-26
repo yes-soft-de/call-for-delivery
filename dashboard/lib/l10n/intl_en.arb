@@ -888,5 +888,6 @@
     "orderPriceOnCreditWarning": "Please remove order price after setting payment method to credit",
     "remove": "Remove",
     "addition": "Addition",
-    "subtraction": "Subtraction"
+    "subtraction": "Subtraction",
+    "financialPayment":"The financial payment is linked to the captain's dues for the financial cycle"
 }

@@ -567,6 +567,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Financial dues cycles"),
         "financialDuesDetails":
             MessageLookupByLibrary.simpleMessage("Financial dues details"),
+        "financialPayment": MessageLookupByLibrary.simpleMessage(
+            "The financial payment is linked to the captain\'s dues for the financial cycle"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "Finish Order, Provide distance in KM"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(

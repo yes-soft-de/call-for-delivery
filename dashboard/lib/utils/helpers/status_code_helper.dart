@@ -62,6 +62,8 @@ class StatusCodeHelper {
         return S.current.storeProfileNotFound;
       case '9314':
         return S.current.invalidNumber;
+      case '9502':
+        return S.current.financialPayment;
       case '-1':
         return S.current.dataDecodeError;
       default:

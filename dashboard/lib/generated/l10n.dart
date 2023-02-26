@@ -8939,6 +8939,16 @@ class S {
       args: [],
     );
   }
+
+  /// `The financial payment is linked to the captain's dues for the financial cycle`
+  String get financialPayment {
+    return Intl.message(
+      'The financial payment is linked to the captain\'s dues for the financial cycle',
+      name: 'financialPayment',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -559,6 +559,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الدورات المالية"),
         "financialDuesDetails":
             MessageLookupByLibrary.simpleMessage("تفاصيل الدورة المالية"),
+        "financialPayment": MessageLookupByLibrary.simpleMessage(
+            "الدفعة المالية مرتبطة مع مستحقات الكابتن الخاصة بالدورة المالية"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "انهاء الطلب، المسافة المقطوعة"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
@@ -1160,7 +1162,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeOrders": MessageLookupByLibrary.simpleMessage("طلبات المتجر"),
         "storeOwner": MessageLookupByLibrary.simpleMessage("محل تجاري"),
         "storePayments":
-            MessageLookupByLibrary.simpleMessage("قائمة الدفعات للمتجر"),
+            MessageLookupByLibrary.simpleMessage("الدفعات المقدمة من المتجر"),
         "storePhone": MessageLookupByLibrary.simpleMessage("رقم هاتف المحل"),
         "storeProducts":
             MessageLookupByLibrary.simpleMessage("المنتجات المتاحة"),
