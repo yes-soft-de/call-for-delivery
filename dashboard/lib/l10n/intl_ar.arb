@@ -530,7 +530,7 @@
     "captainNotArrived": "الكباتن اللذين لم يصلو المتجر",
     "paymentSuccessfully": "تم تسجيل دفعة بنجاح",
     "updatePaymentSuccessfully": "تم تحديث الدفعة بنجاح",
-    "storePayments": "قائمة الدفعات للمتجر",
+    "storePayments": "الدفعات المقدمة من المتجر",
     "payments": "الدفعات",
     "paymentsDeletedSuccessfully": "تم حذف الدفعة بنجاح",
     "pleaseEnterValidPhoneNumber": "ادخل رقم هاتف صالح",
