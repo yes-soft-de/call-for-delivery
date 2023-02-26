@@ -7669,6 +7669,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Over paid`
+  String get financeOverPaid {
+    return Intl.message(
+      'Over paid',
+      name: 'financeOverPaid',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

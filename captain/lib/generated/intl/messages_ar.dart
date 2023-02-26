@@ -435,6 +435,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("باقة حسب الطلبات"),
         "financeCountOrder":
             MessageLookupByLibrary.simpleMessage("باقة على الطلب"),
+        "financeOverPaid": MessageLookupByLibrary.simpleMessage("دفعة زائدة"),
         "financePaid": MessageLookupByLibrary.simpleMessage("تم التسديد"),
         "financePartlyPaid":
             MessageLookupByLibrary.simpleMessage("تم التسديد جزئيا"),

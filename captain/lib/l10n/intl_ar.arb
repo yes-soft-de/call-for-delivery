@@ -761,7 +761,8 @@
     "updateDistance": "تعديل المسافة",
     "totalProfit": "إجمالي الأرباح",
     "dailyProfit": "الأرباح اليومية",
-    "totalEarnedProfit":"المستحقات المقبوضة",
-    "todayProfit":"مستحقات اليوم",
-    "plan":"الخطة"
+    "totalEarnedProfit": "المستحقات المقبوضة",
+    "todayProfit": "مستحقات اليوم",
+    "plan": "الخطة",
+    "financeOverPaid": "دفعة زائدة"
 }

@@ -124,7 +124,7 @@ class DailyWidget extends StatelessWidget {
                   Expanded(
                       child: VerticalBubble(
                           title: S.current.financeStatus,
-                          subtitle: FinanceHelper.getStatusString(isPaid),
+                          subtitle: FinanceHelper.getDailyFinance(isPaid),
                           background:
                               FinanceHelper.getFinanceStatusColor(isPaid))),
                 ],
