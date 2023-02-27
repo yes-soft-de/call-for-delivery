@@ -123,6 +123,8 @@ dependencies:
   isolate_handler: ^1.0.1
   package_info_plus: ^3.0.2
   file_picker: ^5.2.5
+  bubble_tab_indicator: ^0.1.6
+  
 
 
 
