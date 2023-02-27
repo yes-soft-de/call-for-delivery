@@ -14,6 +14,17 @@ class CaptainFinanceDailyLoadedState extends States {
 
   @override
   Widget getUI(BuildContext context) {
-    return Text('start is ${model?[0].captainName}');
+    return Column(
+      children: [
+        Expanded(
+          child: ListView.builder(
+            itemCount: model?.length,
+            itemBuilder: (context, index) {
+              return Text(model?[index].captainName ?? '');
+            },
+          ),
+        )
+      ],
+    );
   }
 }
