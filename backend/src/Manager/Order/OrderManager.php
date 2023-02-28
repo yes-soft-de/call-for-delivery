@@ -765,4 +765,33 @@ class OrderManager
     {
         return $this->orderRepository->getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
     }
+
+    public function updateOrderStatusToCancelled(OrderEntity $orderEntity): OrderEntity
+    {
+        $orderEntity->setState(OrderStateConstant::ORDER_STATE_CANCEL);
+        // if order belongs to an aggregated one, then unlink them
+        $orderEntity->setPrimaryOrder(null);
+
+        $this->entityManager->flush();
+
+        return $orderEntity;
+    }
+
+    public function updateOngoingOrderToCancelled(OrderEntity $orderEntity): array
+    {
+        $orderEntity->setState(OrderStateConstant::ORDER_STATE_CANCEL);
+
+        // save captain user id for later use
+        $captainUserId = $orderEntity->getCaptainId()->getCaptainId();
+
+        $orderEntity->setDateCaptainArrived(null);
+        $orderEntity->setIsCaptainArrived(null);
+        // if order belongs to an aggregated one, then unlink them
+        $orderEntity->setPrimaryOrder(null);
+        $orderEntity->setCaptainId(null);
+
+        $this->entityManager->flush();
+
+        return [$orderEntity, $captainUserId];
+    }
 }

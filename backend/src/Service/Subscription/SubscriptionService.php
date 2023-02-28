@@ -4,10 +4,12 @@ namespace App\Service\Subscription;
 
 use App\AutoMapping;
 use App\Constant\Notification\SubscriptionFirebaseNotificationConstant;
+use App\Constant\Order\OrderResultConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\StoreOwnerPayment\StoreOwnerPaymentConstant;
 use App\Constant\Subscription\SubscriptionDetailsConstant;
 use App\Entity\StoreOwnerProfileEntity;
+use App\Entity\SubscriptionDetailsEntity;
 use App\Entity\SubscriptionEntity;
 use App\Manager\Subscription\SubscriptionManager;
 use App\Request\Account\CompleteAccountStatusUpdateRequest;
@@ -31,6 +33,7 @@ use App\Request\Subscription\SubscriptionUpdateByAdminRequest;
 use App\Request\Subscription\CalculateCostDeliveryOrderRequest;
 use App\Response\Subscription\CalculateCostDeliveryOrderResponse;
 use App\Request\Admin\Subscription\AdminCalculateCostDeliveryOrderRequest;
+use DateTimeInterface;
 
 class SubscriptionService
 {
@@ -41,7 +44,9 @@ class SubscriptionService
         private StoreOwnerProfileService $storeOwnerProfileService,
         private StoreOwnerPaymentService $storeOwnerPaymentService,
         private SubscriptionNotificationService $subscriptionNotificationService,
-        private SubscriptionFirebaseNotificationService $subscriptionFirebaseNotificationService
+        private SubscriptionFirebaseNotificationService $subscriptionFirebaseNotificationService,
+        private SubscriptionDetailsService $subscriptionDetailsService,
+        private StoreSubscriptionCheckService $storeSubscriptionCheckService
     )
     {
     }
@@ -990,6 +995,109 @@ class SubscriptionService
             $this->sendFirebaseNotificationToAdmin(SubscriptionFirebaseNotificationConstant::STORE_SUBSCRIPTION_REMAINING_CARS_NEGATIVE_VALUE_CONST,
                 $storeOwnerName, null);
         }
+    }
+
+    public function getSubscriptionDetailsByStoreOwnerProfileId(int $storeOwnerProfileId): ?SubscriptionDetailsEntity
+    {
+        return $this->subscriptionDetailsService->getSubscriptionDetailsByStoreOwnerProfileId($storeOwnerProfileId);
+    }
+
+    private function updateRemainingOrdersOfStoreSubscriptionBySubscriptionDetailsId(int $subscriptionDetailsId, string $operationType, int $factor): SubscriptionDetailsEntity|int
+    {
+        $subscriptionDetailsResult = $this->subscriptionDetailsService->updateRemainingOrdersOfStoreSubscriptionBySubscriptionDetailsId($subscriptionDetailsId,
+            $operationType, $factor);
+
+        if ($subscriptionDetailsResult === SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND) {
+            return SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND;
+        }
+
+        return $subscriptionDetailsResult;
+    }
+
+    public function handleUpdatingRemainingOrdersOfStoreSubscription(int $storeOwnerProfileId, DateTimeInterface $orderCreationDate, string $operationType, int $factor): SubscriptionDetailsEntity|int
+    {
+        // In order to update the store subscription, firstly, we have to check if order belong to the subscription being updated
+        // Get current subscription
+        $currentSubscriptionDetails = $this->getSubscriptionDetailsByStoreOwnerProfileId($storeOwnerProfileId);
+
+        if (! $currentSubscriptionDetails) {
+            return SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND;
+        }
+
+        // Check if order belong to the current subscription
+        if (! $this->storeSubscriptionCheckService->checkIfOrderBelongToStoreSubscriptionByOrderCreationDateAndSubscriptionValidationDate($orderCreationDate,
+            $currentSubscriptionDetails->getLastSubscription()->getStartDate(), $currentSubscriptionDetails->getLastSubscription()->getEndDate())) {
+            return OrderResultConstant::ORDER_DOES_NOT_BELONG_TO_SUBSCRIPTION;
+        }
+
+        // Check if we can update the remaining orders of the current subscription
+        $updateOrderResult = $this->storeSubscriptionCheckService->checkIfUpdateRemainingOrdersAllowed($operationType,
+            $currentSubscriptionDetails->getRemainingOrders(), $factor,
+            $currentSubscriptionDetails->getLastSubscription()->getPackage()->getOrderCount());
+
+        if ((! $updateOrderResult) || ($updateOrderResult === SubscriptionConstant::WRONG_SUBSCRIPTION_UPDATE_OPERATION_CONST)) {
+            ////TODO Also, we can send firebase notification to admin in order to inform about reaching negative value
+            return SubscriptionDetailsConstant::REMAINING_ORDERS_CAN_NOT_BE_UPDATED;
+        }
+
+        // Now we can update the remaining orders
+        $result = $this->updateRemainingOrdersOfStoreSubscriptionBySubscriptionDetailsId($currentSubscriptionDetails->getId(),
+            $operationType, $factor);
+
+        if ($result === SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND) {
+            return SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND;
+        }
+
+        // After applying the updating process, check the subscription status (ex: if remaining cars are finished)
+        //$this->checkSubscriptionValidation();
+        return $result;
+    }
+
+    public function updateRemainingCarsOfStoreSubscriptionBySubscriptionDetailsId(int $subscriptionDetailsId, string $operationType, int $factor): SubscriptionDetailsEntity|int
+    {
+        return $this->subscriptionDetailsService->updateRemainingCarsOfStoreSubscriptionBySubscriptionDetailsId($subscriptionDetailsId,
+            $operationType, $factor);
+    }
+
+    // Responsible for handling the updating remaining cars field of a specific store subscription
+    // The handling includes check if we can update the field and calling the related updating function, if it is allowed
+    // Note: factor is the parameter that we want to subtract/add from/to remaining cars field
+    public function handleUpdatingRemainingCarsOfStoreSubscriptionViaStoreOwnerProfileIdAndOrderCreationDate(int $storeOwnerProfileId, DateTimeInterface $orderCreationDate, string $operationType, int $factor): SubscriptionDetailsEntity|int
+    {
+        // In order to update the store subscription, firstly, we have to check if order belong to the subscription being updated
+        // Get current subscription
+        $currentSubscriptionDetails = $this->getSubscriptionDetailsByStoreOwnerProfileId($storeOwnerProfileId);
+
+        if (! $currentSubscriptionDetails) {
+            return SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND;
+        }
+
+        // Check if order belong to the current subscription
+        if (! $this->storeSubscriptionCheckService->checkIfOrderBelongToStoreSubscriptionByOrderCreationDateAndSubscriptionValidationDate($orderCreationDate,
+            $currentSubscriptionDetails->getLastSubscription()->getStartDate(), $currentSubscriptionDetails->getLastSubscription()->getEndDate())) {
+            return OrderResultConstant::ORDER_DOES_NOT_BELONG_TO_SUBSCRIPTION;
+        }
+
+        // Check if we can update the remaining cars of the current subscription
+        $updateCarResult = $this->storeSubscriptionCheckService->checkIfUpdateRemainingCarsAllowed($operationType,
+            $currentSubscriptionDetails->getRemainingCars(), $factor,
+            $currentSubscriptionDetails->getLastSubscription()->getPackage()->getCarCount());
+
+        if ((! $updateCarResult) || ($updateCarResult === SubscriptionConstant::WRONG_SUBSCRIPTION_UPDATE_OPERATION_CONST)) {
+            return SubscriptionDetailsConstant::REMAINING_CARS_CAN_NOT_BE_UPDATED;
+        }
+
+        // Now we can update the remaining cars
+        $result = $this->updateRemainingCarsOfStoreSubscriptionBySubscriptionDetailsId($currentSubscriptionDetails->getId(),
+            $operationType, $factor);
+
+        if ($result === SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND) {
+            return SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND;
+        }
+
+        // After applying the updating process, check the subscription status (ex: if remaining cars are finished)
+        //$this->checkSubscriptionValidation();
+        return $result;
     }
 }
  

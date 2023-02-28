@@ -3,6 +3,7 @@
 namespace App\Manager\Subscription;
 
 use App\AutoMapping;
+use App\Constant\Subscription\SubscriptionConstant;
 use App\Constant\Subscription\SubscriptionDetailsConstant;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionDetailsEntity;
@@ -208,6 +209,59 @@ class SubscriptionDetailsManager
         }
 
         $subscriptionDetailsEntity->setStatus($request->getStatus());
+
+        $this->entityManager->flush();
+
+        return $subscriptionDetailsEntity;
+    }
+
+    public function getSubscriptionDetailsByStoreOwnerProfileId(int $storeOwnerProfileId): ?SubscriptionDetailsEntity
+    {
+        return $this->subscribeDetailsRepository->findOneBy(['storeOwner' => $storeOwnerProfileId]);
+    }
+
+    public function updateRemainingOrdersOfStoreSubscriptionBySubscriptionDetailsId(int $subscriptionDetailsId, string $operationType, int $factor): SubscriptionDetailsEntity|int
+    {
+        $subscriptionDetailsEntity = $this->subscribeDetailsRepository->findOneBy(['id' => $subscriptionDetailsId]);
+
+        if (! $subscriptionDetailsEntity) {
+            return SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND;
+        }
+
+        if ($operationType === SubscriptionConstant::OPERATION_TYPE_ADDITION) {
+            $subscriptionDetailsEntity->setRemainingOrders(
+                $subscriptionDetailsEntity->getRemainingOrders() + $factor
+            );
+
+        } elseif ($operationType === SubscriptionConstant::OPERATION_TYPE_ADDITION) {
+            $subscriptionDetailsEntity->setRemainingOrders(
+                $subscriptionDetailsEntity->getRemainingOrders() - $factor
+            );
+        }
+
+        $this->entityManager->flush();
+
+        return $subscriptionDetailsEntity;
+    }
+
+    public function updateRemainingCarsOfStoreSubscriptionBySubscriptionDetailsId(int $subscriptionDetailsId, string $operationType, int $factor): SubscriptionDetailsEntity|int
+    {
+        $subscriptionDetailsEntity = $this->subscribeDetailsRepository->findOneBy(['id' => $subscriptionDetailsId]);
+
+        if (! $subscriptionDetailsEntity) {
+            return SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND;
+        }
+
+        if ($operationType === SubscriptionConstant::OPERATION_TYPE_ADDITION) {
+            $subscriptionDetailsEntity->setRemainingCars(
+                $subscriptionDetailsEntity->getRemainingCars() + $factor
+            );
+
+        } elseif ($operationType === SubscriptionConstant::OPERATION_TYPE_ADDITION) {
+            $subscriptionDetailsEntity->setRemainingCars(
+                $subscriptionDetailsEntity->getRemainingCars() - $factor
+            );
+        }
 
         $this->entityManager->flush();
 

@@ -103,4 +103,9 @@ class OrderChatRoomService
 
         return $response;
     }
+
+    public function deleteChatRoomByOrderId(int $orderId): int|array
+    {
+        return $this->orderChatRoomManager->deleteChatRoomByOrderId($orderId);
+    }
 }

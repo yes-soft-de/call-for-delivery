@@ -710,7 +710,7 @@ class AdminOrderService
 
                 // firebase notification to captain
                 $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($arrayResult[1]->getCaptainId(), $arrayResult[0]->getId(),
-                    $arrayResult[0]->getState(), NotificationConstant::STORE);
+                    $arrayResult[0]->getState(), NotificationConstant::CAPTAIN);
 
                 return $this->autoMapping->map(OrderEntity::class, OrderCancelByAdminResponse::class, $arrayResult[0]);
             }
@@ -790,7 +790,7 @@ class AdminOrderService
 
                 // firebase notification to captain
                 $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($arrayResult[1], $arrayResult[0]->getId(), $arrayResult[0]->getState(),
-                    NotificationConstant::STORE);
+                    NotificationConstant::CAPTAIN);
 
                 return $this->autoMapping->map(OrderEntity::class, OrderCancelByAdminResponse::class, $arrayResult[0]);
             }
