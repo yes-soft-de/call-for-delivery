@@ -8949,6 +8949,86 @@ class S {
       args: [],
     );
   }
+
+  /// `Amount`
+  String get amount_daily_captain {
+    return Intl.message(
+      'Amount',
+      name: 'amount_daily_captain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Had Amount`
+  String get had_amount_daily_captain {
+    return Intl.message(
+      'Had Amount',
+      name: 'had_amount_daily_captain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Is Paid`
+  String get isPaid {
+    return Intl.message(
+      'Is Paid',
+      name: 'isPaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bonus`
+  String get bonusCaptainDaily {
+    return Intl.message(
+      'Bonus',
+      name: 'bonusCaptainDaily',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Over paid`
+  String get overPaid {
+    return Intl.message(
+      'Over paid',
+      name: 'overPaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Paid`
+  String get paidCaptainFinanceDaily {
+    return Intl.message(
+      'Paid',
+      name: 'paidCaptainFinanceDaily',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Unpaid`
+  String get unpaidCaptainFinanceDaily {
+    return Intl.message(
+      'Unpaid',
+      name: 'unpaidCaptainFinanceDaily',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Paid partially`
+  String get paidPartiallyCaptainFinanceDaily {
+    return Intl.message(
+      'Paid partially',
+      name: 'paidPartiallyCaptainFinanceDaily',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

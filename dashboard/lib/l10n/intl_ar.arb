@@ -888,5 +888,13 @@
     "remove": "إزالة",
     "addition":"إضافة",
     "subtraction":"إنقاص",
-    "financialPayment":"الدفعة المالية مرتبطة مع مستحقات الكابتن الخاصة بالدورة المالية"
+    "financialPayment":"الدفعة المالية مرتبطة مع مستحقات الكابتن الخاصة بالدورة المالية",
+    "amount_daily_captain":"المستحقات اليومية",
+    "had_amount_daily_captain":"المستحقات المقبوضة",
+    "isPaid":"هل تم الدفع",
+    "bonusCaptainDaily":"العلاوة",
+    "overPaid":"دفع قيمة اكبر من المستحقات",
+    "paidCaptainFinanceDaily":"تم الدفع",
+    "unpaidCaptainFinanceDaily":"غير مدفوع",
+    "paidPartiallyCaptainFinanceDaily":"دفع جزء من المستحقات"
 }

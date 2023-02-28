@@ -4,6 +4,7 @@ import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/model/pending_order.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/screens/order_pending_screen.dart';
+import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
 import 'package:c4d/module_orders/ui/widgets/owner_order_card/owner_order_card.dart';
 import 'package:c4d/module_orders/ui/widgets/recycle_widgets/recycle_button_widget.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
@@ -68,76 +69,30 @@ class OrderPendingLoadedState extends States {
     ));
     widgets.add(
       // filter on state
-      // FilterBar(
-      //   cursorRadius: BorderRadius.circular(25),
-      //   animationDuration: Duration(milliseconds: 350),
-      //   backgroundColor: Theme.of(context).colorScheme.background,
-      //   currentIndex: screenState.currentIndex,
-      //   borderRadius: BorderRadius.circular(25),
-      //   floating: true,
-      //   height: 40,
-      //   cursorColor: Theme.of(context).colorScheme.primary,
-      //   items: [
-      //     FilterItem(
-      //       label: S.current.pending,
-      //     ),
-      //     FilterItem(label: S.current.notAccepted),
-      //     FilterItem(label: S.current.hidden),
-      //   ],
-      //   onItemSelected: (index) {
-      //     screenState.currentIndex = index;
-      //     screenState.getOrders(false);
-      //     screenState.refresh();
-      //   },
-      //   selectedContent: Theme.of(context).textTheme.labelLarge!.color!,
-      //   unselectedContent: Theme.of(context).textTheme.titleLarge!.color!,
-      // ),
-      DefaultTabController(
-          length: 3, // length of tabs
-          initialIndex: 0,
-          child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                Container(
-                  child: TabBar(
-                    labelColor: Colors.green,
-                    unselectedLabelColor: Colors.black,
-                    tabs: [
-                      Tab(text: 'Tab 1'),
-                      Tab(text: 'Tab 2'),
-                      Tab(text: 'Tab 3'),
-                    ],
-                  ),
-                ),
-                Container(
-                    height: 400, //height of TabBarView
-                    decoration: BoxDecoration(
-                        border: Border(
-                            top: BorderSide(color: Colors.grey, width: 0.5))),
-                    child: TabBarView(children: <Widget>[
-                      Container(
-                        child: Center(
-                          child: Text('Display Tab 1',
-                              style: TextStyle(
-                                  fontSize: 22, fontWeight: FontWeight.bold)),
-                        ),
-                      ),
-                      Container(
-                        child: Center(
-                          child: Text('Display Tab 2',
-                              style: TextStyle(
-                                  fontSize: 22, fontWeight: FontWeight.bold)),
-                        ),
-                      ),
-                      Container(
-                        child: Center(
-                          child: Text('Display Tab 3',
-                              style: TextStyle(
-                                  fontSize: 22, fontWeight: FontWeight.bold)),
-                        ),
-                      ),
-                    ]))
-              ])),
+      FilterBar(
+        cursorRadius: BorderRadius.circular(25),
+        animationDuration: Duration(milliseconds: 350),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        currentIndex: screenState.currentIndex,
+        borderRadius: BorderRadius.circular(25),
+        floating: true,
+        height: 40,
+        cursorColor: Theme.of(context).colorScheme.primary,
+        items: [
+          FilterItem(
+            label: S.current.pending,
+          ),
+          FilterItem(label: S.current.notAccepted),
+          FilterItem(label: S.current.hidden),
+        ],
+        onItemSelected: (index) {
+          screenState.currentIndex = index;
+          screenState.getOrders(false);
+          screenState.refresh();
+        },
+        selectedContent: Theme.of(context).textTheme.labelLarge!.color!,
+        unselectedContent: Theme.of(context).textTheme.titleLarge!.color!,
+      ),
     );
     for (var element in ordersIndex[screenState.currentIndex]) {
       widgets.add(Padding(
