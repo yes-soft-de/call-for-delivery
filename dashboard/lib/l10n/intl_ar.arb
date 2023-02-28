@@ -887,5 +887,17 @@
     "orderPriceOnCreditWarning": "لقد حددت سعر الطلبية الرجاء إزالتها في حالة كانت الطلبية مدفوعة",
     "remove": "إزالة",
     "addition":"إضافة",
-    "subtraction":"إنقاص"
+    "subtraction":"إنقاص",
+    "totalProfit": "إجمالي الأرباح",
+    "dailyProfit": "الأرباح اليومية",
+    "totalEarnedProfit": "المستحقات المقبوضة",
+    "todayProfit": "مستحقات اليوم",
+    "plan": "الخطة",
+    "financeOverPaid": "دفعة زائدة",
+    "bonus": "مكافأة",
+    "planByHours": "وظيفية حسب الساعة",
+    "planByOrders": "وظيفة حسب الطلبات",
+    "planByOrderCount": "وظيفة حرة على الطلب"
+  
+    
 }

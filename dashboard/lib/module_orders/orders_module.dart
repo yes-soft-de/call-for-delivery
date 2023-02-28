@@ -73,8 +73,8 @@ class OrdersModule extends YesModule {
       OrdersRoutes.NEW_SUB_ORDER_SCREEN: (context) => addNewOrderLinkScreen,
       OrdersRoutes.SEARCH_FOR_ORDERS_SCREEN: (context) => searchForOrderScreen,
       OrdersRoutes.RECYCLE_ORDERS_SCREEN: (context) => recycleOrdersScreen,
-      OrdersRoutes.ORDER_CONFLICT_DISTANCE_SCREEN: (context) => orderDistanceConflictScreen,
-
+      OrdersRoutes.ORDER_CONFLICT_DISTANCE_SCREEN: (context) =>
+          orderDistanceConflictScreen,
     };
   }
 }

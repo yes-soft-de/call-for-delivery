@@ -174,8 +174,7 @@ class MyNotificationsLoadedState extends States {
           onTap: () {
             if (element.orderId != null) {
               print(element.orderId);
-              Navigator.of(context).pushNamed(
-                  OrdersRoutes.ORDER_STATUS_SCREEN,
+              Navigator.of(context).pushNamed(OrdersRoutes.ORDER_STATUS_SCREEN,
                   arguments: element.orderId);
             } else {
               showDialog(

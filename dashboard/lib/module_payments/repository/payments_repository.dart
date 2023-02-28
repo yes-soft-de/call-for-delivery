@@ -8,6 +8,7 @@ import 'package:c4d/module_payments/request/create_captain_finance_by_count_orde
 import 'package:c4d/module_payments/request/create_captain_finance_by_hours.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_order_request.dart';
 import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
+import 'package:c4d/module_payments/response/captain_dialy_finance/captain_dialy_finance.dart';
 import 'package:c4d/module_payments/response/captain_finance_by_hours_response/captain_finance_by_hours_response.dart';
 import 'package:c4d/module_payments/response/captain_finance_by_order_counts_response/captain_finance_by_order_counts_response.dart';
 import 'package:c4d/module_payments/response/captain_finance_by_order_response/captain_finance_by_order_response.dart';
@@ -116,6 +117,48 @@ class PaymentsRepository {
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return CaptainPaymentsResponse.fromJson(response);
+  }
+
+  /* ---------------------------------- CAPTAIN DAILY PAYMENTS FINANCE --------------------------------------- */
+
+  Future<CaptainDailyFinanceResponse?> getCaptainDailyFinance(
+      CaptainPaymentsRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+        Urls.GET_CAPTAIN_DAILY_FINANCE, request.toJson(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return CaptainDailyFinanceResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> deleteDailyFinance(
+      CaptainPaymentsRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.delete(
+        Urls.DELETE_CAPTAIN_DAILY_FINANCE,
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> payADailyFinance(
+      CaptainPaymentsRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+        Urls.PAY_CAPTAIN_DAILY_FINANCE, request.toJson(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> editADailyFinance(
+      CaptainPaymentsRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+        Urls.EDIT_CAPTAIN_DAILY_FINANCE, request.toJson(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
   }
 
   /* ---------------------------------- CAPTAIN FINANCE --------------------------------------- */

@@ -245,6 +245,18 @@ class Urls {
   static const GET_CAPTAIN_PAYMENTS = BASE_CAPTAIN_PAYMENT + '/captainpayments';
   static const GET_CAPTAIN_PAYMENTS_FROM_CASH =
       BASE_CAPTAIN_PAYMENT_TO_COMPANY + '/captainpaymentstocompany';
+  static const GET_CAPTAIN_DAILY_FINANCE = DOMAIN +
+      'v1/admin/captainfinancialdaily' +
+      '/filtercaptainfinancialdailybyadmin';
+  static const DELETE_CAPTAIN_DAILY_FINANCE = DOMAIN +
+      'v1/admin/captainpayment' +
+      '/captainpaymentforcaptainfinancialdaily';
+  static const PAY_CAPTAIN_DAILY_FINANCE = DOMAIN +
+      'v1/admin/captainpayment' +
+      '/captainpaymentforcaptainfinancialdaily';
+  static const EDIT_CAPTAIN_DAILY_FINANCE = DOMAIN +
+      'v1/admin/captainpayment' +
+      '/captainpaymentforcaptainfinancialdaily';
   static const CREATE_CAPTAIN_FINANCE =
       DOMAIN + '/v1/captainfinancialsystemdetail/captainfinancialsystemdetail';
 
@@ -314,8 +326,8 @@ class Urls {
   static const CREATE_ORDER_API = BASE_API_ORDER + '/createorder';
   static const ADD_EXTRA_DISTANCE_TO_ORDER_API =
       BASE_API_ORDER + '/addstorebranchtoclientdistanceviadestinationbyadmin';
-  static const UPDATE_EXTRA_DISTANCE_TO_ORDER_API =
-      BASE_API_ORDER + '/additionaldistancetostorebranchtoclientdistancebyadmin';
+  static const UPDATE_EXTRA_DISTANCE_TO_ORDER_API = BASE_API_ORDER +
+      '/additionaldistancetostorebranchtoclientdistancebyadmin';
   static const DELETE_ORDER = BASE_API_ORDER + '/ordercancelbyadmin';
   static const UNASSIGNED_ORDER_FROM_CAPTAIN =
       BASE_API_ORDER + '/rependingacceptedorder';

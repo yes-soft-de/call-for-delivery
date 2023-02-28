@@ -55,7 +55,6 @@ class BidOrderDetailsScreenState extends State<BidOrderDetailsScreen> {
 //          widget._stateManager.getOnGoingOrderDetails(this, orderId);
 //
 //        else widget._stateManager.getBidOrder(this, orderId);
-
     }
     return Scaffold(
         appBar: CustomC4dAppBar.appBar(context,

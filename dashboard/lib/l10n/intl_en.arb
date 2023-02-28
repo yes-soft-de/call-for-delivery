@@ -888,5 +888,15 @@
     "orderPriceOnCreditWarning": "Please remove order price after setting payment method to credit",
     "remove": "Remove",
     "addition": "Addition",
-    "subtraction": "Subtraction"
+    "subtraction": "Subtraction",
+    "totalProfit": "Total profit",
+    "dailyProfit": "Daily profit",
+    "totalEarnedProfit": "Total Earned",
+    "todayProfit": "Today Balance",
+    "plan": "Plan",
+    "financeOverPaid": "Over paid",
+    "bonus": "Bonus",
+    "planByHours": "Plan by hours",
+    "planByOrders": "Plan by orders",
+    "planByOrderCount": "Plan on order count"
 }
