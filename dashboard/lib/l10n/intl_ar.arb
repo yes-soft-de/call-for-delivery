@@ -889,6 +889,7 @@
     "addition":"إضافة",
     "subtraction":"إنقاص",
     "financialPayment":"الدفعة المالية مرتبطة مع مستحقات الكابتن الخاصة بالدورة المالية",
+    "captainFinanceDaily":"مستحقات الكابتن اليومية",
     "amount_daily_captain":"المستحقات اليومية",
     "had_amount_daily_captain":"المستحقات المقبوضة",
     "isPaid":"هل تم الدفع",

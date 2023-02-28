@@ -107,7 +107,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       true),
                   customListTile(
                       getIt<CaptainsModule>().captainFinanceDailyScreen,
-                      S.current.captainFinance,
+                      S.current.captainFinanceDaily,
                       FontAwesomeIcons.moneyBills,
                       true),
                   customListTile(getIt<StoresModule>().topActiveStoreScreen,

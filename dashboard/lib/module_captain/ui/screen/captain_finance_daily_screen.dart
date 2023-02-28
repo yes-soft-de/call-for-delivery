@@ -1,5 +1,6 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/state_manager/captain_finance_daily_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -44,7 +45,7 @@ class CaptainFinanceDailyScreenState extends State<CaptainFinanceDailyScreen> {
     return Scaffold(
         appBar: CustomC4dAppBar.appBar(
           context,
-          title: 'Captain Finance Daily',
+          title: S.current.captainFinanceDaily,
         ),
         body: _currentState?.getUI(context));
   }

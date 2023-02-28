@@ -197,6 +197,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تقديرات الكابتن"),
         "captainFinance":
             MessageLookupByLibrary.simpleMessage("باقات عمل الكابتن"),
+        "captainFinanceDaily":
+            MessageLookupByLibrary.simpleMessage("مستحقات الكابتن اليومية"),
         "captainFinishedFillingOrderInformation":
             MessageLookupByLibrary.simpleMessage(
                 "الكابتن أنهى إدخال بيانات طلب"),

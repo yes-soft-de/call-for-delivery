@@ -8950,6 +8950,16 @@ class S {
     );
   }
 
+  /// `Captain daily dues`
+  String get captainFinanceDaily {
+    return Intl.message(
+      'Captain daily dues',
+      name: 'captainFinanceDaily',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Amount`
   String get amount_daily_captain {
     return Intl.message(

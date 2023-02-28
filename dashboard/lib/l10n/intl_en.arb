@@ -890,6 +890,7 @@
     "addition": "Addition",
     "subtraction": "Subtraction",
     "financialPayment":"The financial payment is linked to the captain's dues for the financial cycle",
+    "captainFinanceDaily":"Captain daily dues",
     "amount_daily_captain":"Amount",
     "had_amount_daily_captain":"Had Amount",
     "isPaid":"Is Paid",
