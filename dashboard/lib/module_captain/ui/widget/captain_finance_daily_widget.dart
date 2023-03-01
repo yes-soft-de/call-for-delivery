@@ -69,9 +69,6 @@ class CaptainFinanceDailyWidget extends StatelessWidget {
                   )
                 ],
               ),
-              // verticalTile(context,
-              //     title: model?[index].captainName ?? '',
-              //     subtitle: model?[index].id.toString() ?? ''),
               divider(context),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
