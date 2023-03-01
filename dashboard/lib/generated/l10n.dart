@@ -8945,11 +8945,6 @@ class S {
     return Intl.message(
       'Total profit',
       name: 'totalProfit',
-  /// `The financial payment is linked to the captain's dues for the financial cycle`
-  String get financialPayment {
-    return Intl.message(
-      'The financial payment is linked to the captain\'s dues for the financial cycle',
-      name: 'financialPayment',
       desc: '',
       args: [],
     );
@@ -8960,11 +8955,6 @@ class S {
     return Intl.message(
       'Daily profit',
       name: 'dailyProfit',
-  /// `Captain daily dues`
-  String get captainFinanceDaily {
-    return Intl.message(
-      'Captain daily dues',
-      name: 'captainFinanceDaily',
       desc: '',
       args: [],
     );
@@ -8985,11 +8975,6 @@ class S {
     return Intl.message(
       'Today Balance',
       name: 'todayProfit',
-  /// `Had Amount`
-  String get had_amount_daily_captain {
-    return Intl.message(
-      'Had Amount',
-      name: 'had_amount_daily_captain',
       desc: '',
       args: [],
     );
@@ -9010,6 +8995,91 @@ class S {
     return Intl.message(
       'Over paid',
       name: 'financeOverPaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bonus`
+  String get bonus {
+    return Intl.message(
+      'Bonus',
+      name: 'bonus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Plan by hours`
+  String get planByHours {
+    return Intl.message(
+      'Plan by hours',
+      name: 'planByHours',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Plan by orders`
+  String get planByOrders {
+    return Intl.message(
+      'Plan by orders',
+      name: 'planByOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Plan on order count`
+  String get planByOrderCount {
+    return Intl.message(
+      'Plan on order count',
+      name: 'planByOrderCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The financial payment is linked to the captain's dues for the financial cycle`
+  String get financialPayment {
+    return Intl.message(
+      'The financial payment is linked to the captain\'s dues for the financial cycle',
+      name: 'financialPayment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain daily dues`
+  String get captainFinanceDaily {
+    return Intl.message(
+      'Captain daily dues',
+      name: 'captainFinanceDaily',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Amount`
+  String get amount_daily_captain {
+    return Intl.message(
+      'Amount',
+      name: 'amount_daily_captain',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Had Amount`
+  String get had_amount_daily_captain {
+    return Intl.message(
+      'Had Amount',
+      name: 'had_amount_daily_captain',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Is Paid`
   String get isPaid {
     return Intl.message(
@@ -9021,10 +9091,6 @@ class S {
   }
 
   /// `Bonus`
-  String get bonus {
-    return Intl.message(
-      'Bonus',
-      name: 'bonus',
   String get bonusCaptainDaily {
     return Intl.message(
       'Bonus',
@@ -9034,11 +9100,6 @@ class S {
     );
   }
 
-  /// `Plan by hours`
-  String get planByHours {
-    return Intl.message(
-      'Plan by hours',
-      name: 'planByHours',
   /// `Over paid`
   String get overPaid {
     return Intl.message(
@@ -9049,11 +9110,6 @@ class S {
     );
   }
 
-  /// `Plan by orders`
-  String get planByOrders {
-    return Intl.message(
-      'Plan by orders',
-      name: 'planByOrders',
   /// `Paid`
   String get paidCaptainFinanceDaily {
     return Intl.message(
@@ -9064,11 +9120,6 @@ class S {
     );
   }
 
-  /// `Plan on order count`
-  String get planByOrderCount {
-    return Intl.message(
-      'Plan on order count',
-      name: 'planByOrderCount',
   /// `Unpaid`
   String get unpaidCaptainFinanceDaily {
     return Intl.message(
@@ -9116,4 +9167,3 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
     return false;
   }
 }
-  
