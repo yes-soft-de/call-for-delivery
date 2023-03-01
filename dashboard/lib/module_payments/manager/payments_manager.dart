@@ -6,6 +6,7 @@ import 'package:c4d/module_payments/request/create_captain_finance_by_count_orde
 import 'package:c4d/module_payments/request/create_captain_finance_by_hours.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_order_request.dart';
 import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
+import 'package:c4d/module_payments/response/captain_dialy_finance/captain_dialy_finance.dart';
 import 'package:c4d/module_payments/response/captain_finance_by_hours_response/captain_finance_by_hours_response.dart';
 import 'package:c4d/module_payments/response/captain_finance_by_order_counts_response/captain_finance_by_order_counts_response.dart';
 import 'package:c4d/module_payments/response/captain_finance_by_order_response/captain_finance_by_order_response.dart';
@@ -29,6 +30,16 @@ class PaymentsManager {
       _paymentsRepository.deleteStorePayments(id);
   Future<ActionResponse?> deleteFromStorePayment(String id) =>
       _paymentsRepository.deleteFromStorePayments(id);
+  /* ---------------------------------- CAPTAIN DAILY FINANCE --------------------------------------- */
+  Future<ActionResponse?> deleteDailyFinance(CaptainPaymentsRequest request) =>
+      _paymentsRepository.deleteDailyFinance(request);
+  Future<ActionResponse?> editDailyFinance(CaptainPaymentsRequest request) =>
+      _paymentsRepository.editADailyFinance(request);
+  Future<ActionResponse?> payDailyFinance(CaptainPaymentsRequest request) =>
+      _paymentsRepository.payADailyFinance(request);
+  Future<CaptainDailyFinanceResponse?> getCaptainDailyFinance(
+          CaptainPaymentsRequest request) =>
+      _paymentsRepository.getCaptainDailyFinance(request);
   /* ---------------------------------- CAPTAIN FINANCE --------------------------------------- */
   /* GET */
   Future<CaptainFinanceByOrderResponse?> getCaptainFinanceByOrder() =>

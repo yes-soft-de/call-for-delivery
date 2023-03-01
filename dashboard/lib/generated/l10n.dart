@@ -8940,6 +8940,106 @@ class S {
     );
   }
 
+  /// `Total profit`
+  String get totalProfit {
+    return Intl.message(
+      'Total profit',
+      name: 'totalProfit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Daily profit`
+  String get dailyProfit {
+    return Intl.message(
+      'Daily profit',
+      name: 'dailyProfit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Earned`
+  String get totalEarnedProfit {
+    return Intl.message(
+      'Total Earned',
+      name: 'totalEarnedProfit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Today Balance`
+  String get todayProfit {
+    return Intl.message(
+      'Today Balance',
+      name: 'todayProfit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Plan`
+  String get plan {
+    return Intl.message(
+      'Plan',
+      name: 'plan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Over paid`
+  String get financeOverPaid {
+    return Intl.message(
+      'Over paid',
+      name: 'financeOverPaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Bonus`
+  String get bonus {
+    return Intl.message(
+      'Bonus',
+      name: 'bonus',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Plan by hours`
+  String get planByHours {
+    return Intl.message(
+      'Plan by hours',
+      name: 'planByHours',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Plan by orders`
+  String get planByOrders {
+    return Intl.message(
+      'Plan by orders',
+      name: 'planByOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Plan on order count`
+  String get planByOrderCount {
+    return Intl.message(
+      'Plan on order count',
+      name: 'planByOrderCount',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `The financial payment is linked to the captain's dues for the financial cycle`
   String get financialPayment {
     return Intl.message(

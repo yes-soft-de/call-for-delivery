@@ -159,6 +159,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "birthDate": MessageLookupByLibrary.simpleMessage("Birth Date"),
         "birthDateHint":
             MessageLookupByLibrary.simpleMessage("choose your birth data"),
+        "bonus": MessageLookupByLibrary.simpleMessage("Bonus"),
         "bonusCaptainDaily": MessageLookupByLibrary.simpleMessage("Bonus"),
         "bookACar": MessageLookupByLibrary.simpleMessage("Book a car"),
         "bounce": MessageLookupByLibrary.simpleMessage("Bounce"),
@@ -417,6 +418,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Current subscriptions"),
         "cycleEnd": MessageLookupByLibrary.simpleMessage("Cycle end"),
         "cycleStart": MessageLookupByLibrary.simpleMessage("Cycle start"),
+        "dailyProfit": MessageLookupByLibrary.simpleMessage("Daily profit"),
         "dangerZone": MessageLookupByLibrary.simpleMessage("Danger Zone"),
         "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
         "dataDecodeError":
@@ -553,6 +555,7 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Finance category deleted successfully"),
         "financeCountOrder":
             MessageLookupByLibrary.simpleMessage("Finance on order"),
+        "financeOverPaid": MessageLookupByLibrary.simpleMessage("Over paid"),
         "financePaid": MessageLookupByLibrary.simpleMessage("Paid"),
         "financePartlyPaid":
             MessageLookupByLibrary.simpleMessage("Partly paid"),
@@ -971,6 +974,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "pickAJob": MessageLookupByLibrary.simpleMessage("Pick a Job"),
         "pickALanguage":
             MessageLookupByLibrary.simpleMessage("Pick a Language"),
+        "plan": MessageLookupByLibrary.simpleMessage("Plan"),
+        "planByHours": MessageLookupByLibrary.simpleMessage("Plan by hours"),
+        "planByOrderCount":
+            MessageLookupByLibrary.simpleMessage("Plan on order count"),
+        "planByOrders": MessageLookupByLibrary.simpleMessage("Plan by orders"),
         "planHint": MessageLookupByLibrary.simpleMessage(
             "In this screen you can see our work planes "),
         "pleaseCompleteField":
@@ -1287,6 +1295,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "To find out more, please leave your phone.\nand we will contact you personally"),
         "today": MessageLookupByLibrary.simpleMessage("Today"),
+        "todayProfit": MessageLookupByLibrary.simpleMessage("Today Balance"),
         "took": MessageLookupByLibrary.simpleMessage("Took"),
         "topstoreActivity":
             MessageLookupByLibrary.simpleMessage("Top store activity"),
@@ -1295,11 +1304,14 @@ class MessageLookup extends MessageLookupByLibrary {
             "The total cost without delivery cost"),
         "totalCashOrder":
             MessageLookupByLibrary.simpleMessage("Total cash orders"),
+        "totalEarnedProfit":
+            MessageLookupByLibrary.simpleMessage("Total Earned"),
         "totalExtraDistance":
             MessageLookupByLibrary.simpleMessage("Total extra distance"),
         "totalOrdersCount":
             MessageLookupByLibrary.simpleMessage("Total orders count"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("Total Price"),
+        "totalProfit": MessageLookupByLibrary.simpleMessage("Total profit"),
         "unActiveOffer": MessageLookupByLibrary.simpleMessage("Inactive offer"),
         "unAssignOrder":
             MessageLookupByLibrary.simpleMessage("Un assign order"),

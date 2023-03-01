@@ -2,12 +2,12 @@
 // Production Domain ===> 'http://46.101.100.62';
 class Urls {
   static List<String> admins = [
-    // '551111111',
-    // '551111112',
-    // '551111113',
-    // '552222223',
-    // '552222224',
-    // '552222225',
+    '551111111',
+    '551111112',
+    '551111113',
+    '552222223',
+    '552222224',
+    '552222225',
   ];
   /*--------BASES-------------------*/
   static const String DOMAIN = 'http://134.209.241.49';
@@ -245,6 +245,18 @@ class Urls {
   static const GET_CAPTAIN_PAYMENTS = BASE_CAPTAIN_PAYMENT + '/captainpayments';
   static const GET_CAPTAIN_PAYMENTS_FROM_CASH =
       BASE_CAPTAIN_PAYMENT_TO_COMPANY + '/captainpaymentstocompany';
+  static const GET_CAPTAIN_DAILY_FINANCE = DOMAIN +
+      'v1/admin/captainfinancialdaily' +
+      '/filtercaptainfinancialdailybyadmin';
+  static const DELETE_CAPTAIN_DAILY_FINANCE = DOMAIN +
+      'v1/admin/captainpayment' +
+      '/captainpaymentforcaptainfinancialdaily';
+  static const PAY_CAPTAIN_DAILY_FINANCE = DOMAIN +
+      'v1/admin/captainpayment' +
+      '/captainpaymentforcaptainfinancialdaily';
+  static const EDIT_CAPTAIN_DAILY_FINANCE = DOMAIN +
+      'v1/admin/captainpayment' +
+      '/captainpaymentforcaptainfinancialdaily';
   static const CREATE_CAPTAIN_FINANCE =
       DOMAIN + '/v1/captainfinancialsystemdetail/captainfinancialsystemdetail';
 

@@ -159,6 +159,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "birthDate": MessageLookupByLibrary.simpleMessage("تاريخ الميلاد"),
         "birthDateHint":
             MessageLookupByLibrary.simpleMessage("اختر تاريخ ميلادك"),
+        "bonus": MessageLookupByLibrary.simpleMessage("مكافأة"),
         "bonusCaptainDaily": MessageLookupByLibrary.simpleMessage("العلاوة"),
         "bookACar": MessageLookupByLibrary.simpleMessage("احجز سيارة توصيل"),
         "bounce": MessageLookupByLibrary.simpleMessage("مكافأة"),
@@ -412,6 +413,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الاشتراكات الحالية"),
         "cycleEnd": MessageLookupByLibrary.simpleMessage("نهاية الدورة"),
         "cycleStart": MessageLookupByLibrary.simpleMessage("بداية الدورة"),
+        "dailyProfit": MessageLookupByLibrary.simpleMessage("الأرباح اليومية"),
         "dangerZone": MessageLookupByLibrary.simpleMessage("منطقة خطرة"),
         "darkMode": MessageLookupByLibrary.simpleMessage("الوضع الليلي"),
         "dataDecodeError": MessageLookupByLibrary.simpleMessage(
@@ -545,6 +547,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم حذف باقة عمل كابتن بنجاح"),
         "financeCountOrder":
             MessageLookupByLibrary.simpleMessage("باقة على الطلب"),
+        "financeOverPaid": MessageLookupByLibrary.simpleMessage("دفعة زائدة"),
         "financePaid": MessageLookupByLibrary.simpleMessage("تم التسديد"),
         "financePartlyPaid":
             MessageLookupByLibrary.simpleMessage("تم التسديد جزئيا"),
@@ -964,6 +967,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("رقم الهاتف المدخل قصير"),
         "pickAJob": MessageLookupByLibrary.simpleMessage("اختار عملي"),
         "pickALanguage": MessageLookupByLibrary.simpleMessage("اختار لغتي"),
+        "plan": MessageLookupByLibrary.simpleMessage("الخطة"),
+        "planByHours":
+            MessageLookupByLibrary.simpleMessage("وظيفية حسب الساعة"),
+        "planByOrderCount":
+            MessageLookupByLibrary.simpleMessage("وظيفة حرة على الطلب"),
+        "planByOrders":
+            MessageLookupByLibrary.simpleMessage("وظيفة حسب الطلبات"),
         "planHint": MessageLookupByLibrary.simpleMessage(
             "في هذه النافذة ستظهر شرائح خطط العمل المتاحة"),
         "pleaseCompleteField":
@@ -1276,6 +1286,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "للمزيد من المعلومات خذ موعدا بترك رقم هاتفك، وسيتم التواصل معك"),
         "today": MessageLookupByLibrary.simpleMessage("اليوم"),
+        "todayProfit": MessageLookupByLibrary.simpleMessage("مستحقات اليوم"),
         "took": MessageLookupByLibrary.simpleMessage("استغرق"),
         "topstoreActivity":
             MessageLookupByLibrary.simpleMessage("اكثر المتاجر نشاطاً"),
@@ -1284,11 +1295,14 @@ class MessageLookup extends MessageLookupByLibrary {
             "تكلفة الفاتورة المستحقة بدون تكلفة التوصيل"),
         "totalCashOrder":
             MessageLookupByLibrary.simpleMessage("إجمالي الطلبات الكاش"),
+        "totalEarnedProfit":
+            MessageLookupByLibrary.simpleMessage("المستحقات المقبوضة"),
         "totalExtraDistance": MessageLookupByLibrary.simpleMessage(
             "إجمالي المسافات التي تجاوزت النطاق"),
         "totalOrdersCount":
             MessageLookupByLibrary.simpleMessage("إجمالي عدد الطلبات"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("المبلغ النهائي"),
+        "totalProfit": MessageLookupByLibrary.simpleMessage("إجمالي الأرباح"),
         "unActiveOffer": MessageLookupByLibrary.simpleMessage("عرض غير فعال"),
         "unAssignOrder":
             MessageLookupByLibrary.simpleMessage("إلغاء اسناد طلب "),

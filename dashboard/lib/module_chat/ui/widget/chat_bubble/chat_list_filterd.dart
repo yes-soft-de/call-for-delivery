@@ -13,6 +13,7 @@ class SubListChatWidget extends StatelessWidget {
   final List<ChatModel> messages;
   int index;
   final AutoScrollController controller;
+  final Function(int) currentIndex;
   SubListChatWidget({
     Key? key,
     required this.date,
@@ -20,6 +21,7 @@ class SubListChatWidget extends StatelessWidget {
     required this.username,
     required this.index,
     required this.controller,
+    required this.currentIndex,
   }) : super(key: key);
 
   @override
@@ -68,7 +70,9 @@ class SubListChatWidget extends StatelessWidget {
           username: message.sender,
         ),
       ));
+      i += 1;
     });
+    currentIndex(i);
     return widgets;
   }
 }
