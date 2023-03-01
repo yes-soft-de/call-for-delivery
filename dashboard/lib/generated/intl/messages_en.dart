@@ -104,6 +104,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "amount": MessageLookupByLibrary.simpleMessage("Amount"),
         "amountForStore":
             MessageLookupByLibrary.simpleMessage("Amount for store"),
+        "amount_daily_captain": MessageLookupByLibrary.simpleMessage("Amount"),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
         "apply": MessageLookupByLibrary.simpleMessage("APPLY"),
         "areSureAboutAnsweringBehalfStore":
@@ -158,6 +159,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "birthDate": MessageLookupByLibrary.simpleMessage("Birth Date"),
         "birthDateHint":
             MessageLookupByLibrary.simpleMessage("choose your birth data"),
+        "bonusCaptainDaily": MessageLookupByLibrary.simpleMessage("Bonus"),
         "bookACar": MessageLookupByLibrary.simpleMessage("Book a car"),
         "bounce": MessageLookupByLibrary.simpleMessage("Bounce"),
         "bounceCountOrdersInMonth":
@@ -197,6 +199,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain Distance"),
         "captainFinance":
             MessageLookupByLibrary.simpleMessage("Captain Finance"),
+        "captainFinanceDaily":
+            MessageLookupByLibrary.simpleMessage("Captain daily dues"),
         "captainFinishedFillingOrderInformation":
             MessageLookupByLibrary.simpleMessage(
                 "Captain finished filling information"),
@@ -567,6 +571,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Financial dues cycles"),
         "financialDuesDetails":
             MessageLookupByLibrary.simpleMessage("Financial dues details"),
+        "financialPayment": MessageLookupByLibrary.simpleMessage(
+            "The financial payment is linked to the captain\'s dues for the financial cycle"),
         "finishOrderProvideDistanceInKm": MessageLookupByLibrary.simpleMessage(
             "Finish Order, Provide distance in KM"),
         "finishedDate": MessageLookupByLibrary.simpleMessage(
@@ -594,6 +600,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "getDirection": MessageLookupByLibrary.simpleMessage("Get Direction"),
         "go": MessageLookupByLibrary.simpleMessage("Go"),
         "groupOrder": MessageLookupByLibrary.simpleMessage("Group order"),
+        "had_amount_daily_captain":
+            MessageLookupByLibrary.simpleMessage("Had Amount"),
         "help": MessageLookupByLibrary.simpleMessage("Help"),
         "helpMeMore": MessageLookupByLibrary.simpleMessage("Help me more"),
         "hidden": MessageLookupByLibrary.simpleMessage("Hidden"),
@@ -651,6 +659,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Receipt of the cash amount has been confirmed/denied by the administration on behalf of the store"),
         "isFutureSubscriptions":
             MessageLookupByLibrary.simpleMessage("Is Future Subscriptions"),
+        "isPaid": MessageLookupByLibrary.simpleMessage("Is Paid"),
         "issuesWithOrderStatusUpdate": MessageLookupByLibrary.simpleMessage(
             "Issues with order status update "),
         "item": MessageLookupByLibrary.simpleMessage("Item"),
@@ -875,6 +884,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "There is no car available please wait your ongoing orders to finish"),
         "outOforders": MessageLookupByLibrary.simpleMessage(
             "You reach your limit of orders you can renew your subscription from settings"),
+        "overPaid": MessageLookupByLibrary.simpleMessage("Over paid"),
         "package": MessageLookupByLibrary.simpleMessage("Package"),
         "packageCaptainsCount":
             MessageLookupByLibrary.simpleMessage("Package captains count"),
@@ -897,7 +907,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "packageRemainingCaptains":
             MessageLookupByLibrary.simpleMessage("Remaining Captains"),
         "packages": MessageLookupByLibrary.simpleMessage("Packages"),
+        "paidCaptainFinanceDaily": MessageLookupByLibrary.simpleMessage("Paid"),
         "paidOrder": MessageLookupByLibrary.simpleMessage("Paid Order"),
+        "paidPartiallyCaptainFinanceDaily":
+            MessageLookupByLibrary.simpleMessage("Paid partially"),
         "partners": MessageLookupByLibrary.simpleMessage("Our partners"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "passwordIsTooShort":
@@ -1308,6 +1321,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "unlinkedSubOrderFromGroupedOrder":
             MessageLookupByLibrary.simpleMessage(
                 "Unlinked order from group order"),
+        "unpaidCaptainFinanceDaily":
+            MessageLookupByLibrary.simpleMessage("Unpaid"),
         "update": MessageLookupByLibrary.simpleMessage("Update"),
         "updateBranch": MessageLookupByLibrary.simpleMessage("Update Branch"),
         "updateBranchFailure": MessageLookupByLibrary.simpleMessage(

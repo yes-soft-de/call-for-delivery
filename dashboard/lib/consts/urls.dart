@@ -282,6 +282,9 @@ class Urls {
   static const GET_CAPTAIN_ACTIVITY_DETAILS = DOMAIN +
       VERSION_ADMIN +
       '/order/fetchorderscurrentfinancialcycleforadmin';
+  static const GET_CAPTAIN_FINANCE_DAILY = DOMAIN +
+      VERSION_ADMIN +
+      '/captainfinancialdaily/captainswithfinancialdailyoftoday';
   /*-----------------Supplier--Categories---------------*/
   static const GET_SUPPLIER_CATEGORIES =
       BASE_API_SUPPLIER_CATE + '/suppliercategories';
@@ -314,8 +317,8 @@ class Urls {
   static const CREATE_ORDER_API = BASE_API_ORDER + '/createorder';
   static const ADD_EXTRA_DISTANCE_TO_ORDER_API =
       BASE_API_ORDER + '/addstorebranchtoclientdistanceviadestinationbyadmin';
-  static const UPDATE_EXTRA_DISTANCE_TO_ORDER_API =
-      BASE_API_ORDER + '/additionaldistancetostorebranchtoclientdistancebyadmin';
+  static const UPDATE_EXTRA_DISTANCE_TO_ORDER_API = BASE_API_ORDER +
+      '/additionaldistancetostorebranchtoclientdistancebyadmin';
   static const DELETE_ORDER = BASE_API_ORDER + '/ordercancelbyadmin';
   static const UNASSIGNED_ORDER_FROM_CAPTAIN =
       BASE_API_ORDER + '/rependingacceptedorder';
