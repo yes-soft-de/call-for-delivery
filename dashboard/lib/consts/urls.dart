@@ -294,6 +294,9 @@ class Urls {
   static const GET_CAPTAIN_ACTIVITY_DETAILS = DOMAIN +
       VERSION_ADMIN +
       '/order/fetchorderscurrentfinancialcycleforadmin';
+  static const GET_CAPTAIN_FINANCE_DAILY = DOMAIN +
+      VERSION_ADMIN +
+      '/captainfinancialdaily/captainswithfinancialdailyoftoday';
   /*-----------------Supplier--Categories---------------*/
   static const GET_SUPPLIER_CATEGORIES =
       BASE_API_SUPPLIER_CATE + '/suppliercategories';

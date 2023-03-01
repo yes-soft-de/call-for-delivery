@@ -898,5 +898,15 @@
     "bonus": "Bonus",
     "planByHours": "Plan by hours",
     "planByOrders": "Plan by orders",
-    "planByOrderCount": "Plan on order count"
+    "planByOrderCount": "Plan on order count",
+    "financialPayment":"The financial payment is linked to the captain's dues for the financial cycle",
+    "captainFinanceDaily":"Captain daily dues",
+    "amount_daily_captain":"Amount",
+    "had_amount_daily_captain":"Had Amount",
+    "isPaid":"Is Paid",
+    "bonusCaptainDaily":"Bonus",
+    "overPaid":"Over paid",
+    "paidCaptainFinanceDaily":"Paid",
+    "unpaidCaptainFinanceDaily":"Unpaid",
+    "paidPartiallyCaptainFinanceDaily":"Paid partially"
 }

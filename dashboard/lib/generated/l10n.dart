@@ -8945,6 +8945,11 @@ class S {
     return Intl.message(
       'Total profit',
       name: 'totalProfit',
+  /// `The financial payment is linked to the captain's dues for the financial cycle`
+  String get financialPayment {
+    return Intl.message(
+      'The financial payment is linked to the captain\'s dues for the financial cycle',
+      name: 'financialPayment',
       desc: '',
       args: [],
     );
@@ -8955,6 +8960,11 @@ class S {
     return Intl.message(
       'Daily profit',
       name: 'dailyProfit',
+  /// `Captain daily dues`
+  String get captainFinanceDaily {
+    return Intl.message(
+      'Captain daily dues',
+      name: 'captainFinanceDaily',
       desc: '',
       args: [],
     );
@@ -8975,6 +8985,11 @@ class S {
     return Intl.message(
       'Today Balance',
       name: 'todayProfit',
+  /// `Had Amount`
+  String get had_amount_daily_captain {
+    return Intl.message(
+      'Had Amount',
+      name: 'had_amount_daily_captain',
       desc: '',
       args: [],
     );
@@ -8995,6 +9010,11 @@ class S {
     return Intl.message(
       'Over paid',
       name: 'financeOverPaid',
+  /// `Is Paid`
+  String get isPaid {
+    return Intl.message(
+      'Is Paid',
+      name: 'isPaid',
       desc: '',
       args: [],
     );
@@ -9005,6 +9025,10 @@ class S {
     return Intl.message(
       'Bonus',
       name: 'bonus',
+  String get bonusCaptainDaily {
+    return Intl.message(
+      'Bonus',
+      name: 'bonusCaptainDaily',
       desc: '',
       args: [],
     );
@@ -9015,6 +9039,11 @@ class S {
     return Intl.message(
       'Plan by hours',
       name: 'planByHours',
+  /// `Over paid`
+  String get overPaid {
+    return Intl.message(
+      'Over paid',
+      name: 'overPaid',
       desc: '',
       args: [],
     );
@@ -9025,6 +9054,11 @@ class S {
     return Intl.message(
       'Plan by orders',
       name: 'planByOrders',
+  /// `Paid`
+  String get paidCaptainFinanceDaily {
+    return Intl.message(
+      'Paid',
+      name: 'paidCaptainFinanceDaily',
       desc: '',
       args: [],
     );
@@ -9035,6 +9069,21 @@ class S {
     return Intl.message(
       'Plan on order count',
       name: 'planByOrderCount',
+  /// `Unpaid`
+  String get unpaidCaptainFinanceDaily {
+    return Intl.message(
+      'Unpaid',
+      name: 'unpaidCaptainFinanceDaily',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Paid partially`
+  String get paidPartiallyCaptainFinanceDaily {
+    return Intl.message(
+      'Paid partially',
+      name: 'paidPartiallyCaptainFinanceDaily',
       desc: '',
       args: [],
     );
@@ -9067,3 +9116,4 @@ class AppLocalizationDelegate extends LocalizationsDelegate<S> {
     return false;
   }
 }
+  
