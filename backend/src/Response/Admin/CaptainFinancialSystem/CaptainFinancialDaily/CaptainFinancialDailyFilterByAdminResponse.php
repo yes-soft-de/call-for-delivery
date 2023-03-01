@@ -9,9 +9,15 @@ class CaptainFinancialDailyFilterByAdminResponse
 {
     public int $id;
 
-    public int $captainProfileId;
+    /**
+     * @var int|null
+     */
+    public $captainProfileId;
 
-    public string $captainName;
+    /**
+     * @var string|null
+     */
+    public $captainName;
 
     public float $amount;
 

@@ -95,7 +95,7 @@ class CaptainFinancialDailyEntityRepository extends ServiceEntityRepository
                 foreach ($tempOrders as $key => $value) {
                     if ($value->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) >=
                         new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) {
-                        $filteredCaptainFinancialDaily[$key] = $value;
+                        $filteredCaptainFinancialDaily[] = $value;
                     }
                 }
 
@@ -103,7 +103,7 @@ class CaptainFinancialDailyEntityRepository extends ServiceEntityRepository
                 foreach ($tempOrders as $key => $value) {
                     if ($value->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) <=
                         new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59'))) {
-                        $filteredCaptainFinancialDaily[$key] = $value;
+                        $filteredCaptainFinancialDaily[] = $value;
                     }
                 }
 
@@ -113,7 +113,7 @@ class CaptainFinancialDailyEntityRepository extends ServiceEntityRepository
                             new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) &&
                         ($value->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) <=
                             new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59')))) {
-                        $filteredCaptainFinancialDaily[$key] = $value;
+                        $filteredCaptainFinancialDaily[] = $value;
                     }
                 }
             }
