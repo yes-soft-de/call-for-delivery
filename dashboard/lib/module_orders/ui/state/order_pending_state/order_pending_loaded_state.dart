@@ -4,6 +4,7 @@ import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/model/pending_order.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/screens/order_pending_screen.dart';
+import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
 import 'package:c4d/module_orders/ui/widgets/owner_order_card/owner_order_card.dart';
 import 'package:c4d/module_orders/ui/widgets/recycle_widgets/recycle_button_widget.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
@@ -67,153 +68,32 @@ class OrderPendingLoadedState extends States {
       ),
     ));
     widgets.add(
-        // filter on state
-        // FilterBar(
-        //   cursorRadius: BorderRadius.circular(25),
-        //   animationDuration: Duration(milliseconds: 350),
-        //   backgroundColor: Theme.of(context).colorScheme.background,
-        //   currentIndex: screenState.currentIndex,
-        //   borderRadius: BorderRadius.circular(25),
-        //   floating: true,
-        //   height: 40,
-        //   cursorColor: Theme.of(context).colorScheme.primary,
-        //   items: [
-        //     FilterItem(
-        //       label: S.current.pending,
-        //     ),
-        //     FilterItem(label: S.current.notAccepted),
-        //     FilterItem(label: S.current.hidden),
-        //   ],
-        //   onItemSelected: (index) {
-        //     screenState.currentIndex = index;
-        //     screenState.getOrders(false);
-        //     screenState.refresh();
-        //   },
-        //   selectedContent: Theme.of(context).textTheme.labelLarge!.color!,
-        //   unselectedContent: Theme.of(context).textTheme.titleLarge!.color!,
-        // ),
-        Padding(
-      padding: const EdgeInsets.all(8.0),
-      child:
-          Row(mainAxisAlignment: MainAxisAlignment.center, children: <Widget>[
-        Expanded(
-          child: InkWell(
-            onTap: () {
-              screenState.currentIndex = 0;
-              screenState.refresh();
-            },
-            child: AnimatedContainer(
-              height: 40,
-              padding: EdgeInsets.all(8),
-              alignment: AlignmentDirectional.center,
-              decoration: BoxDecoration(
-                border: Border.all(
-                    color: screenState.currentIndex != 0
-                        ? Colors.white
-                        : Colors.grey,
-                    width: 1),
-                borderRadius: BorderRadiusDirectional.only(
-                    topStart: Radius.circular(25),
-                    bottomStart: Radius.circular(25)),
-                color: screenState.currentIndex == 0
-                    ? Theme.of(context).colorScheme.background
-                    : Theme.of(context).colorScheme.primary,
-              ),
-              duration: Duration(milliseconds: 500),
-              curve: Curves.fastOutSlowIn,
-              child: Text(
-                S.current.pending,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: screenState.currentIndex != 0
-                      ? Colors.white
-                      : Colors.black,
-                ),
-                textAlign: TextAlign.center,
-                textScaleFactor: 1,
-              ),
-            ),
+      // filter on state
+      FilterBar(
+        cursorRadius: BorderRadius.circular(25),
+        animationDuration: Duration(milliseconds: 350),
+        backgroundColor: Theme.of(context).colorScheme.background,
+        currentIndex: screenState.currentIndex,
+        borderRadius: BorderRadius.circular(25),
+        floating: true,
+        height: 40,
+        cursorColor: Theme.of(context).colorScheme.primary,
+        items: [
+          FilterItem(
+            label: S.current.pending,
           ),
-        ),
-        Expanded(
-          child: InkWell(
-            onTap: () {
-              screenState.currentIndex = 1;
-              screenState.refresh();
-            },
-            child: AnimatedContainer(
-              padding: EdgeInsets.all(8),
-              height: 40,
-              alignment: AlignmentDirectional.center,
-              decoration: BoxDecoration(
-                  border: Border.all(
-                      color: screenState.currentIndex != 1
-                          ? Colors.white
-                          : Colors.grey,
-                      width: 1),
-                  color: screenState.currentIndex == 1
-                      ? Theme.of(context).colorScheme.background
-                      : Theme.of(context).colorScheme.primary),
-              duration: Duration(milliseconds: 500),
-              curve: Curves.fastOutSlowIn,
-              child: Text(
-                S.current.notAccepted,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: screenState.currentIndex != 1
-                      ? Colors.white
-                      : Colors.black,
-                ),
-                textAlign: TextAlign.center,
-                textScaleFactor: 1,
-              ),
-            ),
-          ),
-        ),
-        Expanded(
-          child: InkWell(
-            onTap: () {
-              screenState.currentIndex = 2;
-              screenState.refresh();
-            },
-            child: AnimatedContainer(
-              height: 40,
-              padding: EdgeInsets.all(8),
-              alignment: AlignmentDirectional.center,
-              decoration: BoxDecoration(
-                  border: Border.all(
-                      color: screenState.currentIndex != 2
-                          ? Colors.white
-                          : Colors.grey,
-                      width: 1),
-                  borderRadius: BorderRadiusDirectional.only(
-                      topEnd: Radius.circular(25),
-                      bottomEnd: Radius.circular(25)),
-                  color: screenState.currentIndex == 2
-                      ? Theme.of(context).colorScheme.background
-                      : Theme.of(context).colorScheme.primary),
-              duration: Duration(milliseconds: 500),
-              curve: Curves.fastOutSlowIn,
-              child: Text(
-                S.current.hidden,
-                style: TextStyle(
-                  fontSize: 14,
-                  fontWeight: FontWeight.bold,
-                  color: screenState.currentIndex != 2
-                      ? Colors.white
-                      : Colors.black,
-                ),
-                textAlign: TextAlign.center,
-                textScaleFactor: 1,
-              ),
-              // Text(S.current.hidden),
-            ),
-          ),
-        ),
-      ]),
-    ));
+          FilterItem(label: S.current.notAccepted),
+          FilterItem(label: S.current.hidden),
+        ],
+        onItemSelected: (index) {
+          screenState.currentIndex = index;
+          screenState.getOrders(false);
+          screenState.refresh();
+        },
+        selectedContent: Theme.of(context).textTheme.labelLarge!.color!,
+        unselectedContent: Theme.of(context).textTheme.titleLarge!.color!,
+      ),
+    );
     for (var element in ordersIndex[screenState.currentIndex]) {
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
