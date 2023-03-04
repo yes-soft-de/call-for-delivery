@@ -3,7 +3,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_payments/request/captain_payments_request.dart';
+import 'package:c4d/module_captain/request/captain_daily_finance_request.dart';
 import 'package:c4d/module_payments/state_manager/captain_daily_finance_state_manager.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -33,15 +33,14 @@ class DailyPaymentsScreenState extends State<DailyPaymentsScreen> {
     }
   }
 
+  DailyBalanceStateManager get manager => widget._stateManager;
   var today = DateTime.now();
   @override
   void initState() {
     currentState = LoadingState(this);
-    paymentsFilter = CaptainPaymentsRequest(
-        fromDate:
-            DateTime(today.year, today.month, today.day, 0).toIso8601String(),
-        toDate: DateTime.now().toIso8601String());
-    widget._stateManager.getAccountBalance(this, paymentsFilter);
+    paymentsFilter = CaptainDailyFinanceRequest(
+        fromDate: DateTime(today.year, today.month, today.day, 0),
+        toDate: DateTime.now());
     _streamSubscription = widget._stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
@@ -51,9 +50,18 @@ class DailyPaymentsScreenState extends State<DailyPaymentsScreen> {
     super.initState();
   }
 
-  late CaptainPaymentsRequest paymentsFilter;
+  late CaptainDailyFinanceRequest paymentsFilter;
+  int captainID = -1;
+  bool flag = true;
   @override
   Widget build(BuildContext context) {
+    var args = ModalRoute.of(context)?.settings.arguments;
+    if (args != null && args is int && flag) {
+      captainID = args;
+      flag = false;
+      paymentsFilter.captainProfileId = captainID;
+      widget._stateManager.getAccountBalance(this, paymentsFilter);
+    }
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(
         context,
@@ -102,7 +110,7 @@ class DailyPaymentsScreenState extends State<DailyPaymentsScreen> {
                                   lastDate: DateTime.now())
                               .then((value) {
                             if (value != null) {
-                              paymentsFilter.fromDate = value.toIso8601String();
+                              paymentsFilter.fromDate = value;
                               widget._stateManager
                                   .getAccountBalance(this, paymentsFilter);
                               setState(() {});
@@ -111,9 +119,8 @@ class DailyPaymentsScreenState extends State<DailyPaymentsScreen> {
                         },
                         title: Text(S.current.firstDate),
                         subtitle: Text(paymentsFilter.fromDate != null
-                            ? DateFormat('yyyy/M/d').format(DateTime.parse(
-                                paymentsFilter.fromDate ??
-                                    DateTime.now().toIso8601String()))
+                            ? DateFormat('yyyy/M/d').format(
+                                paymentsFilter.fromDate ?? DateTime.now())
                             : '0000/00/00'),
                       ),
                     ),
@@ -158,7 +165,7 @@ class DailyPaymentsScreenState extends State<DailyPaymentsScreen> {
                                   lastDate: DateTime.now())
                               .then((value) {
                             if (value != null) {
-                              paymentsFilter.toDate = value.toIso8601String();
+                              paymentsFilter.toDate = value;
                               setState(() {});
                               widget._stateManager
                                   .getAccountBalance(this, paymentsFilter);
@@ -167,9 +174,8 @@ class DailyPaymentsScreenState extends State<DailyPaymentsScreen> {
                         },
                         title: Text(S.current.endDate),
                         subtitle: Text(paymentsFilter.toDate != null
-                            ? DateFormat('yyyy/M/d').format(DateTime.parse(
-                                paymentsFilter.toDate ??
-                                    DateTime.now().toIso8601String()))
+                            ? DateFormat('yyyy/M/d')
+                                .format(paymentsFilter.toDate ?? DateTime.now())
                             : '0000/00/00'),
                       ),
                     ),

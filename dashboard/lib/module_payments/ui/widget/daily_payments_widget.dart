@@ -2,6 +2,8 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/ui/widgets/bubble_widget.dart';
 import 'package:c4d/module_payments/model/captain_daily_finance.dart';
 import 'package:c4d/module_payments/ui/widget/paymetns_widget.dart';
+import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/helpers/finance_status_helper.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +17,9 @@ class DailyWidget extends StatelessWidget {
   final bool withBonus;
   final num bonus;
   final List<PaymentModel> payments;
+  final Function(num, String) onPay;
+  final Function(int, num, String) onEdit;
+  final Function(int) onDelete;
   const DailyWidget({
     Key? key,
     required this.alreadyHadAmount,
@@ -25,6 +30,9 @@ class DailyWidget extends StatelessWidget {
     required this.isPaid,
     required this.withBonus,
     required this.payments,
+    required this.onPay,
+    required this.onDelete,
+    required this.onEdit,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -130,31 +138,137 @@ class DailyWidget extends StatelessWidget {
                 ],
               ),
             ),
-            Visibility(
-              visible: payments.isEmpty,
-              child: ElevatedButton(
-                onPressed: () {
-                  List<Widget> widgets = [];
-                  payments.forEach((element) {
-                    widgets.add(PaymentsWidget(
-                      amount: element.amount,
-                      note: element.note,
-                      paymentDate: element.paymentDate,
-                    ));
-                  });
-                  showDialog(
-                      context: context,
-                      builder: (ctx) {
-                        return Column(
-                          children: widgets,
-                        );
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Visibility(
+                  visible: payments.isNotEmpty,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      List<Widget> widgets = [];
+                      payments.forEach((element) {
+                        widgets.add(PaymentsWidget(
+                          amount: element.amount,
+                          note: element.note,
+                          paymentDate: element.paymentDate,
+                          delete: onDelete,
+                          onEdit: onEdit,
+                          id: element.id,
+                        ));
                       });
-                },
-                child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Text(S.current.payments)),
-              ),
-            )
+                      showDialog(
+                          context: context,
+                          builder: (ctx) {
+                            return Scaffold(
+                              appBar: CustomC4dAppBar.appBar(
+                                context,
+                                title: '',
+                                icon: Icons.cancel,
+                              ),
+                              body: SingleChildScrollView(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: widgets,
+                                  ),
+                                ),
+                              ),
+                            );
+                          });
+                    },
+                    child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Text(S.current.payments)),
+                  ),
+                ),
+                SizedBox(
+                  width: 16,
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.orange,
+                  ),
+                  onPressed: () {
+                    final _amount = TextEditingController();
+                    final _note = TextEditingController();
+                    showDialog(
+                        context: context,
+                        builder: (context) {
+                          return StatefulBuilder(builder: (context, setState) {
+                            return AlertDialog(
+                              scrollable: true,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(25)),
+                              title: Text(S.current.paymentFromStore),
+                              content: Container(
+                                child: Column(
+                                  children: [
+                                    ListTile(
+                                      title: Text(S.current.paymentAmount),
+                                      subtitle: CustomFormField(
+                                        onChanged: () {
+                                          setState(() {});
+                                        },
+                                        numbers: true,
+                                        controller: _amount,
+                                        hintText: '100',
+                                      ),
+                                    ),
+                                    ListTile(
+                                      title: Text(S.current.note),
+                                      subtitle: CustomFormField(
+                                        controller: _note,
+                                        onChanged: () {
+                                          setState(() {});
+                                        },
+                                        hintText: S.current.note,
+                                        last: true,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              actionsAlignment: MainAxisAlignment.center,
+                              actions: [
+                                ElevatedButton(
+                                    onPressed: _amount.text.isEmpty ||
+                                            _note.text.isEmpty
+                                        ? null
+                                        : () {
+                                            Navigator.of(context).pop();
+                                            onPay(
+                                                num.tryParse(_amount.text) ?? 0,
+                                                _note.text);
+                                          },
+                                    child: Text(
+                                      S.current.pay,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge,
+                                    )),
+                                ElevatedButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      _amount.clear();
+                                      _note.clear();
+                                    },
+                                    child: Text(
+                                      S.current.cancel,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .labelLarge,
+                                    ))
+                              ],
+                            );
+                          });
+                        });
+                  },
+                  child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Text(S.current.pay)),
+                )
+              ],
+            ),
           ],
         ),
       ),

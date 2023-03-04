@@ -3,6 +3,7 @@ import 'package:c4d/module_payments/payments_routes.dart';
 import 'package:c4d/module_payments/ui/screen/captain_finance_by_hours_screen.dart';
 import 'package:c4d/module_payments/ui/screen/captain_finance_by_order_count_screen.dart';
 import 'package:c4d/module_payments/ui/screen/captain_finance_by_order_screen.dart';
+import 'package:c4d/module_payments/ui/screen/daily_payments_screen.dart';
 import 'package:c4d/module_payments/ui/screen/payment_to_captain_screen.dart';
 import 'package:c4d/module_payments/ui/screen/store_balance_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,12 +16,15 @@ class PaymentsModule extends YesModule {
   final CaptainFinanceByHoursScreen financeByHoursScreen;
   final PaymentsToCaptainScreen paymentsToCaptainScreen;
   final StoreBalanceScreen storeBalanceScreen;
+  final DailyPaymentsScreen dailyPaymentsScreen;
   PaymentsModule(
-      this.financeByCountOrderScreen,
-      this.financeByHoursScreen,
-      this.financeByOrderScreen,
-      this.paymentsToCaptainScreen,
-      this.storeBalanceScreen) {
+    this.financeByCountOrderScreen,
+    this.financeByHoursScreen,
+    this.financeByOrderScreen,
+    this.paymentsToCaptainScreen,
+    this.storeBalanceScreen,
+    this.dailyPaymentsScreen,
+  ) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
@@ -32,7 +36,8 @@ class PaymentsModule extends YesModule {
       PaymentsRoutes.CAPTAIN_FINANCE_BY_COUNT_ORDERS: (context) =>
           financeByCountOrderScreen,
       PaymentsRoutes.PAYMENTS_TO_CAPTAIN: (context) => paymentsToCaptainScreen,
-      PaymentsRoutes.PAYMENTS_LIST: (context) => storeBalanceScreen
+      PaymentsRoutes.PAYMENTS_LIST: (context) => storeBalanceScreen,
+      PaymentsRoutes.CAPTAIN_DAILY_PAYMENTS: (context) => dailyPaymentsScreen,
     };
   }
 }
