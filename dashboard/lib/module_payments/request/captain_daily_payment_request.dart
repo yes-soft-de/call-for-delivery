@@ -20,7 +20,7 @@ class CaptainDailyPaymentsRequest {
     if (amount != null) {
       map['amount'] = amount;
     }
-    if (note != null) {
+    if (note != null && note?.isNotEmpty == true) {
       map['note'] = note;
     }
     if (paymentID != null) {

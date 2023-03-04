@@ -45,10 +45,12 @@ class DailyPaymentsLoaded extends States {
                   captainId: element.id, amount: amount, note: note));
         },
         onDelete: (id) {
+          Navigator.of(context).pop();
           screenState.manager.deletePayment(
-              screenState, CaptainDailyPaymentsRequest(captainId: element.id));
+              screenState, CaptainDailyPaymentsRequest(paymentID: id));
         },
         onEdit: (id, amount, note) {
+          Navigator.of(context).pop();
           screenState.manager.updatePayments(
               screenState,
               CaptainDailyPaymentsRequest(

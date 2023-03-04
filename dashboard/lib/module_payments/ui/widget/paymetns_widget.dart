@@ -59,9 +59,14 @@ class PaymentsWidget extends StatelessWidget {
               width: 150,
               child: Row(
                 children: [
-                  Text(DateFormat('yyyy/M/dd').format(paymentDate)),
+                  Text(
+                    DateFormat('yyyy/M/dd').format(paymentDate),
+                    style: TextStyle(
+                      fontSize: 10,
+                    ),
+                  ),
                   const SizedBox(
-                    width: 16,
+                    width: 4,
                   ),
                   Visibility(
                     visible: true,
@@ -123,6 +128,9 @@ class PaymentsWidget extends StatelessWidget {
                                             title: Text(S.current.note),
                                             subtitle: CustomFormField(
                                               controller: _note,
+                                              onChanged: () {
+                                                setState(() {});
+                                              },
                                               hintText: S.current.note,
                                               last: true,
                                             ),
@@ -133,7 +141,8 @@ class PaymentsWidget extends StatelessWidget {
                                     actionsAlignment: MainAxisAlignment.center,
                                     actions: [
                                       ElevatedButton(
-                                          onPressed: _amount.text.isEmpty
+                                          onPressed: _amount.text.isEmpty ||
+                                                  _note.text.isEmpty
                                               ? null
                                               : () {
                                                   Navigator.of(context).pop();

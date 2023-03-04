@@ -17,7 +17,7 @@ class DailyWidget extends StatelessWidget {
   final num bonus;
   final List<PaymentModel> payments;
   final Function(num, String) onPay;
-  final Function(int,num, String) onEdit;
+  final Function(int, num, String) onEdit;
   final Function(int) onDelete;
   const DailyWidget({
     Key? key,
@@ -212,6 +212,9 @@ class DailyWidget extends StatelessWidget {
                                       title: Text(S.current.note),
                                       subtitle: CustomFormField(
                                         controller: _note,
+                                        onChanged: () {
+                                          setState(() {});
+                                        },
                                         hintText: S.current.note,
                                         last: true,
                                       ),
@@ -222,7 +225,8 @@ class DailyWidget extends StatelessWidget {
                               actionsAlignment: MainAxisAlignment.center,
                               actions: [
                                 ElevatedButton(
-                                    onPressed: _amount.text.isEmpty
+                                    onPressed: _amount.text.isEmpty ||
+                                            _note.text.isEmpty
                                         ? null
                                         : () {
                                             Navigator.of(context).pop();

@@ -84,7 +84,7 @@ class DailyBalanceStateManager {
         getAccountBalance(screenState, screenState.paymentsFilter);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
-                message: S.current.paymentSuccessfully)
+                message: S.current.updatePaymentSuccessfully)
             .show(screenState.context);
       }
     });

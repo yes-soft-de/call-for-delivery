@@ -249,13 +249,13 @@ class Urls {
       '/v1/admin/captainfinancialdaily' +
       '/filtercaptainfinancialdailybyadmin';
   static const DELETE_CAPTAIN_DAILY_FINANCE = DOMAIN +
-      'v1/admin/captainpayment' +
+      '/v1/admin/captainpayment' +
       '/captainpaymentforcaptainfinancialdaily';
   static const PAY_CAPTAIN_DAILY_FINANCE = DOMAIN +
-      'v1/admin/captainpayment' +
+      '/v1/admin/captainpayment' +
       '/captainpaymentforcaptainfinancialdaily';
   static const EDIT_CAPTAIN_DAILY_FINANCE = DOMAIN +
-      'v1/admin/captainpayment' +
+      '/v1/admin/captainpayment' +
       '/updatecaptainpaymentbyadmin';
   static const CREATE_CAPTAIN_FINANCE =
       DOMAIN + '/v1/captainfinancialsystemdetail/captainfinancialsystemdetail';
