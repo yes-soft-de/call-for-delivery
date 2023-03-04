@@ -246,7 +246,7 @@ class Urls {
   static const GET_CAPTAIN_PAYMENTS_FROM_CASH =
       BASE_CAPTAIN_PAYMENT_TO_COMPANY + '/captainpaymentstocompany';
   static const GET_CAPTAIN_DAILY_FINANCE = DOMAIN +
-      'v1/admin/captainfinancialdaily' +
+      '/v1/admin/captainfinancialdaily' +
       '/filtercaptainfinancialdailybyadmin';
   static const DELETE_CAPTAIN_DAILY_FINANCE = DOMAIN +
       'v1/admin/captainpayment' +
@@ -256,7 +256,7 @@ class Urls {
       '/captainpaymentforcaptainfinancialdaily';
   static const EDIT_CAPTAIN_DAILY_FINANCE = DOMAIN +
       'v1/admin/captainpayment' +
-      '/captainpaymentforcaptainfinancialdaily';
+      '/updatecaptainpaymentbyadmin';
   static const CREATE_CAPTAIN_FINANCE =
       DOMAIN + '/v1/captainfinancialsystemdetail/captainfinancialsystemdetail';
 

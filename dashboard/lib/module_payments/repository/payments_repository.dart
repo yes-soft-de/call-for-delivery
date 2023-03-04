@@ -1,8 +1,10 @@
 import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
+import 'package:c4d/module_captain/request/captain_daily_finance_request.dart';
 import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
+import 'package:c4d/module_payments/request/captain_daily_payment_request.dart';
 import 'package:c4d/module_payments/request/captain_payments_request.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_count_order_request.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_hours.dart';
@@ -122,7 +124,7 @@ class PaymentsRepository {
   /* ---------------------------------- CAPTAIN DAILY PAYMENTS FINANCE --------------------------------------- */
 
   Future<CaptainDailyFinanceResponse?> getCaptainDailyFinance(
-      CaptainPaymentsRequest request) async {
+      CaptainDailyFinanceRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
         Urls.GET_CAPTAIN_DAILY_FINANCE, request.toJson(),
@@ -132,17 +134,18 @@ class PaymentsRepository {
   }
 
   Future<ActionResponse?> deleteDailyFinance(
-      CaptainPaymentsRequest request) async {
+      CaptainDailyPaymentsRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.delete(
         Urls.DELETE_CAPTAIN_DAILY_FINANCE,
+        payLoad: request.toJson(),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
 
   Future<ActionResponse?> payADailyFinance(
-      CaptainPaymentsRequest request) async {
+      CaptainDailyPaymentsRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
         Urls.PAY_CAPTAIN_DAILY_FINANCE, request.toJson(),
@@ -152,7 +155,7 @@ class PaymentsRepository {
   }
 
   Future<ActionResponse?> editADailyFinance(
-      CaptainPaymentsRequest request) async {
+      CaptainDailyPaymentsRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
         Urls.EDIT_CAPTAIN_DAILY_FINANCE, request.toJson(),

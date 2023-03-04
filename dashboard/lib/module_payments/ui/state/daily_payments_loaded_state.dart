@@ -1,5 +1,7 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_payments/model/captain_daily_finance.dart';
+import 'package:c4d/module_payments/request/captain_daily_payment_request.dart';
+import 'package:c4d/module_payments/request/captain_payments_request.dart';
 import 'package:c4d/module_payments/ui/screen/daily_payments_screen.dart';
 import 'package:c4d/module_payments/ui/widget/daily_payments_widget.dart';
 import 'package:flutter/material.dart';
@@ -36,6 +38,25 @@ class DailyPaymentsLoaded extends States {
         isPaid: element.isPaid,
         payments: element.payments,
         withBonus: element.withBonus,
+        onPay: (amount, note) {
+          screenState.manager.makePayments(
+              screenState,
+              CaptainDailyPaymentsRequest(
+                  captainId: element.id, amount: amount, note: note));
+        },
+        onDelete: (id) {
+          screenState.manager.deletePayment(
+              screenState, CaptainDailyPaymentsRequest(captainId: element.id));
+        },
+        onEdit: (id, amount, note) {
+          screenState.manager.updatePayments(
+              screenState,
+              CaptainDailyPaymentsRequest(
+                amount: amount,
+                note: note,
+                paymentID: id,
+              ));
+        },
       ));
     }
     return widgets;

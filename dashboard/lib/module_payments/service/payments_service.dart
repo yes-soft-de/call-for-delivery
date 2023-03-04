@@ -1,6 +1,7 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_captain/request/captain_daily_finance_request.dart';
 import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_payments/manager/payments_manager.dart';
 import 'package:c4d/module_payments/model/captain_balance_model.dart';
@@ -9,6 +10,7 @@ import 'package:c4d/module_payments/model/captain_finance_by_hours_model.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_order_count.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_order_model.dart';
 import 'package:c4d/module_payments/model/store_balance_model.dart';
+import 'package:c4d/module_payments/request/captain_daily_payment_request.dart';
 import 'package:c4d/module_payments/request/captain_payments_request.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_count_order_request.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_hours.dart';
@@ -171,7 +173,7 @@ class PaymentsService {
 
   /* ---------------------------------- CAPTAIN DAILY FINANCE --------------------------------------- */
   Future<DataModel> getCaptainFinanceDaily(
-      CaptainPaymentsRequest request) async {
+      CaptainDailyFinanceRequest request) async {
     CaptainDailyFinanceResponse? actionResponse =
         await _paymentsManager.getCaptainDailyFinance(request);
     if (actionResponse == null) {
@@ -187,7 +189,7 @@ class PaymentsService {
     return CaptainDailyFinanceModel.withData(actionResponse);
   }
 
-  Future<DataModel> payDailyFinance(CaptainPaymentsRequest request) async {
+  Future<DataModel> payDailyFinance(CaptainDailyPaymentsRequest request) async {
     ActionResponse? actionResponse =
         await _paymentsManager.payDailyFinance(request);
 
@@ -201,7 +203,7 @@ class PaymentsService {
     return DataModel.empty();
   }
 
-  Future<DataModel> editDailyFinance(CaptainPaymentsRequest request) async {
+  Future<DataModel> editDailyFinance(CaptainDailyPaymentsRequest request) async {
     ActionResponse? actionResponse =
         await _paymentsManager.editDailyFinance(request);
 
@@ -215,7 +217,7 @@ class PaymentsService {
     return DataModel.empty();
   }
 
-  Future<DataModel> deleteDailyFinance(CaptainPaymentsRequest request) async {
+  Future<DataModel> deleteDailyFinance(CaptainDailyPaymentsRequest request) async {
     ActionResponse? actionResponse =
         await _paymentsManager.deleteDailyFinance(request);
 

@@ -1,18 +1,25 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
+import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class PaymentsWidget extends StatelessWidget {
+  final int id;
   final String? note;
   final num amount;
   final DateTime paymentDate;
+  final Function(int, num, String) onEdit;
+  final Function(int) delete;
   const PaymentsWidget({
     Key? key,
     required this.note,
     required this.amount,
     required this.paymentDate,
+    required this.onEdit,
+    required this.delete,
+    required this.id,
   }) : super(key: key);
 
   @override
@@ -57,7 +64,7 @@ class PaymentsWidget extends StatelessWidget {
                     width: 16,
                   ),
                   Visibility(
-                    visible: false,
+                    visible: true,
                     child: IconButton(
                         splashRadius: 15,
                         onPressed: () {
@@ -67,6 +74,7 @@ class PaymentsWidget extends StatelessWidget {
                                 return CustomAlertDialog(
                                   onPressed: () {
                                     Navigator.of(context).pop();
+                                    delete(id);
                                   },
                                   content:
                                       S.current.areYouSureToDeleteThisPayment,
@@ -75,6 +83,91 @@ class PaymentsWidget extends StatelessWidget {
                               });
                         },
                         icon: const Icon(Icons.delete)),
+                  ),
+                  Visibility(
+                    visible: true,
+                    child: IconButton(
+                        splashRadius: 15,
+                        onPressed: () {
+                          final _amount = TextEditingController();
+                          _amount.text = amount.toString();
+                          final _note = TextEditingController();
+                          _note.text = note ?? '';
+                          showDialog(
+                              context: context,
+                              builder: (context) {
+                                return StatefulBuilder(
+                                    builder: (context, setState) {
+                                  return AlertDialog(
+                                    scrollable: true,
+                                    shape: RoundedRectangleBorder(
+                                        borderRadius:
+                                            BorderRadius.circular(25)),
+                                    title: Text(S.current.paymentFromStore),
+                                    content: Container(
+                                      child: Column(
+                                        children: [
+                                          ListTile(
+                                            title:
+                                                Text(S.current.paymentAmount),
+                                            subtitle: CustomFormField(
+                                              onChanged: () {
+                                                setState(() {});
+                                              },
+                                              numbers: true,
+                                              controller: _amount,
+                                              hintText: '100',
+                                            ),
+                                          ),
+                                          ListTile(
+                                            title: Text(S.current.note),
+                                            subtitle: CustomFormField(
+                                              controller: _note,
+                                              hintText: S.current.note,
+                                              last: true,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    actionsAlignment: MainAxisAlignment.center,
+                                    actions: [
+                                      ElevatedButton(
+                                          onPressed: _amount.text.isEmpty
+                                              ? null
+                                              : () {
+                                                  Navigator.of(context).pop();
+                                                  onEdit(
+                                                      id,
+                                                      num.tryParse(
+                                                              _amount.text) ??
+                                                          0,
+                                                      _note.text);
+                                                },
+                                          child: Text(
+                                            S.current.pay,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge,
+                                          )),
+                                      ElevatedButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                            _amount.clear();
+                                            _note.clear();
+                                          },
+                                          child: Text(
+                                            S.current.cancel,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .labelLarge,
+                                          ))
+                                    ],
+                                  );
+                                });
+                              });
+                        },
+                        icon: const Icon(Icons.edit)),
                   ),
                 ],
               ),

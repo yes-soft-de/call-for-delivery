@@ -3,7 +3,6 @@ import 'package:c4d/module_payments/response/captain_dialy_finance/captain_dialy
 import 'package:c4d/module_payments/response/captain_dialy_finance/captain_payment.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 
-
 class CaptainDailyFinanceModel extends DataModel {
   late int id;
   late num amount;
