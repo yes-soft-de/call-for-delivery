@@ -6,7 +6,6 @@ import 'package:c4d/module_captain/ui/widget/captain_profile/captain_finance_inf
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
-import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/state.dart';
@@ -59,28 +58,117 @@ class CaptainProfileLoadedState extends States {
     return FixedContainer(
         child: Column(
       children: [
-        FilterBar(
-          cursorRadius: BorderRadius.circular(25),
-          animationDuration: Duration(milliseconds: 350),
-          backgroundColor: Theme.of(context).backgroundColor,
-          currentIndex: screenState.currentIndex,
-          borderRadius: BorderRadius.circular(25),
-          floating: true,
-          height: 40,
-          cursorColor: Theme.of(context).colorScheme.primary,
-          items: [
-            FilterItem(
-              label: S.current.accountInfo,
-            ),
-            FilterItem(label: S.current.accountManaging),
-          ],
-          onItemSelected: (index) {
-            screenState.currentIndex = index;
-            screenState.refresh();
-          },
-          selectedContent: Theme.of(context).textTheme.button!.color!,
-          unselectedContent: Theme.of(context).textTheme.headline6!.color!,
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Expanded(
+                  child: AnimatedContainer(
+                    height: 40,
+                    padding: EdgeInsets.all(8),
+                    alignment: AlignmentDirectional.center,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                          color: screenState.currentIndex != 0
+                              ? Colors.grey
+                              : Colors.white,
+                          width: 1),
+                      borderRadius: BorderRadiusDirectional.only(
+                          topStart: Radius.circular(25),
+                          bottomStart: Radius.circular(25)),
+                      color: screenState.currentIndex == 0
+                          ? Theme.of(context).colorScheme.primary
+                          : Theme.of(context).colorScheme.background,
+                    ),
+                    duration: Duration(milliseconds: 500),
+                    curve: Curves.fastOutSlowIn,
+                    child: InkWell(
+                      splashFactory: NoSplash.splashFactory,
+                      onTap: () {
+                        screenState.currentIndex = 0;
+                        screenState.refresh();
+                      },
+                      child: Text(
+                        S.current.pending,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: screenState.currentIndex != 0
+                              ? Colors.black
+                              : Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                        textScaleFactor: 1,
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: AnimatedContainer(
+                    height: 40,
+                    padding: EdgeInsets.all(8),
+                    alignment: AlignmentDirectional.center,
+                    decoration: BoxDecoration(
+                        border: Border.all(
+                            color: screenState.currentIndex != 1
+                                ? Colors.grey
+                                : Colors.white,
+                            width: 1),
+                        borderRadius: BorderRadiusDirectional.only(
+                            topEnd: Radius.circular(25),
+                            bottomEnd: Radius.circular(25)),
+                        color: screenState.currentIndex == 1
+                            ? Theme.of(context).colorScheme.primary
+                            : Theme.of(context).colorScheme.background),
+                    duration: Duration(milliseconds: 500),
+                    curve: Curves.fastOutSlowIn,
+                    child: InkWell(
+                      splashFactory: NoSplash.splashFactory,
+                      onTap: () {
+                        screenState.currentIndex = 1;
+                        screenState.refresh();
+                      },
+                      child: Text(
+                        S.current.hidden,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color: screenState.currentIndex != 1
+                              ? Colors.black
+                              : Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                        textScaleFactor: 1,
+                      ),
+                    ),
+                    // Text(S.current.hidden),
+                  ),
+                ),
+              ]),
         ),
+        // FilterBar(
+        //   cursorRadius: BorderRadius.circular(25),
+        //   animationDuration: Duration(milliseconds: 350),
+        //   backgroundColor: Theme.of(context).backgroundColor,
+        //   currentIndex: screenState.currentIndex,
+        //   borderRadius: BorderRadius.circular(25),
+        //   floating: true,
+        //   height: 40,
+        //   cursorColor: Theme.of(context).colorScheme.primary,
+        //   items: [
+        //     FilterItem(
+        //       label: S.current.accountInfo,
+        //     ),
+        //     FilterItem(label: S.current.accountManaging),
+        //   ],
+        //   onItemSelected: (index) {
+        //     screenState.currentIndex = index;
+        //     screenState.refresh();
+        //   },
+        //   selectedContent: Theme.of(context).textTheme.button!.color!,
+        //   unselectedContent: Theme.of(context).textTheme.headline6!.color!,
+        // ),
         SizedBox(
           height: 8,
         ),
@@ -231,7 +319,7 @@ class CaptainProfileLoadedState extends States {
                             padding: const EdgeInsets.all(12.0),
                             child: Text(
                               S.current.updatePersonalInformation,
-                              style: Theme.of(context).textTheme.button,
+                              style: Theme.of(context).textTheme.labelLarge,
                             ),
                           ),
                         ),
