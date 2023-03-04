@@ -2,6 +2,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/ui/widgets/bubble_widget.dart';
 import 'package:c4d/module_payments/model/captain_daily_finance.dart';
 import 'package:c4d/module_payments/ui/widget/paymetns_widget.dart';
+import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/helpers/finance_status_helper.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
@@ -159,6 +160,11 @@ class DailyWidget extends StatelessWidget {
                           context: context,
                           builder: (ctx) {
                             return Scaffold(
+                              appBar: CustomC4dAppBar.appBar(
+                                context,
+                                title: '',
+                                icon: Icons.cancel,
+                              ),
                               body: SingleChildScrollView(
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
