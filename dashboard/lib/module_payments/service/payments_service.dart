@@ -1,18 +1,22 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_captain/request/captain_daily_finance_request.dart';
 import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_payments/manager/payments_manager.dart';
 import 'package:c4d/module_payments/model/captain_balance_model.dart';
+import 'package:c4d/module_payments/model/captain_daily_finance.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_hours_model.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_order_count.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_order_model.dart';
 import 'package:c4d/module_payments/model/store_balance_model.dart';
+import 'package:c4d/module_payments/request/captain_daily_payment_request.dart';
 import 'package:c4d/module_payments/request/captain_payments_request.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_count_order_request.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_hours.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_order_request.dart';
 import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
+import 'package:c4d/module_payments/response/captain_dialy_finance/captain_dialy_finance.dart';
 import 'package:c4d/module_payments/response/captain_finance_by_hours_response/captain_finance_by_hours_response.dart';
 import 'package:c4d/module_payments/response/captain_finance_by_order_counts_response/captain_finance_by_order_counts_response.dart';
 import 'package:c4d/module_payments/response/captain_finance_by_order_response/captain_finance_by_order_response.dart';
@@ -156,6 +160,66 @@ class PaymentsService {
   Future<DataModel> deletePaymentFROMCaptain(String id) async {
     ActionResponse? actionResponse =
         await _paymentsManager.deletePaymentFROMCaptain(id);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '401') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  /* ---------------------------------- CAPTAIN DAILY FINANCE --------------------------------------- */
+  Future<DataModel> getCaptainFinanceDaily(
+      CaptainDailyFinanceRequest request) async {
+    CaptainDailyFinanceResponse? actionResponse =
+        await _paymentsManager.getCaptainDailyFinance(request);
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    if (actionResponse.data == null) {
+      return DataModel.empty();
+    }
+    return CaptainDailyFinanceModel.withData(actionResponse);
+  }
+
+  Future<DataModel> payDailyFinance(CaptainDailyPaymentsRequest request) async {
+    ActionResponse? actionResponse =
+        await _paymentsManager.payDailyFinance(request);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> editDailyFinance(CaptainDailyPaymentsRequest request) async {
+    ActionResponse? actionResponse =
+        await _paymentsManager.editDailyFinance(request);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '401') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> deleteDailyFinance(CaptainDailyPaymentsRequest request) async {
+    ActionResponse? actionResponse =
+        await _paymentsManager.deleteDailyFinance(request);
 
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
