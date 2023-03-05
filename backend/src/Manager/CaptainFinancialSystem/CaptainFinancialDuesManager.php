@@ -3,6 +3,7 @@
 namespace App\Manager\CaptainFinancialSystem;
 
 use App\AutoMapping;
+use App\Constant\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueResultConstant;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Repository\CaptainFinancialDuesEntityRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -159,4 +160,32 @@ class CaptainFinancialDuesManager
 
         return $financialDues;
     }
+
+//    public function getCaptainFinancialDuesByCaptainUserIdAndDate(int $captainUserId, $date): ?CaptainFinancialDuesEntity
+//    {
+//        return $this->captainFinancialDuesRepository->getCaptainFinancialDuesByCaptainUserIdAndDate($captainUserId, $date);
+//    }
+
+//    public function createCaptainFinancialDue(CreateCaptainFinancialDuesRequest $request): CaptainFinancialDuesEntity
+//    {
+//        $captainFinancialDuesEntity = $this->autoMapping->map(CreateCaptainFinancialDuesRequest::class, CaptainFinancialDuesEntity::class, $request);
+//
+//        $captainFinancialDuesEntity->setState(CaptainFinancialDues::FINANCIAL_STATE_ACTIVE);
+//
+//        $this->entityManager->persist($captainFinancialDuesEntity);
+//        $this->entityManager->flush();
+//
+//        return $captainFinancialDuesEntity;
+//    }
+
+//    public function updateCaptainFinancialDueByAddNewValueForAmount(int $captainFinancialDueId, float $amount)
+//    {
+//        $captainFinancialDue = $this->captainFinancialDuesRepository->findOneBy(['id' => $captainFinancialDueId]);
+//
+//        if (! $captainFinancialDue) {
+//            return CaptainFinancialDueResultConstant::CAPTAIN_FINANCIAL_DUE_NOT_EXIST_CONST;
+//        }
+//
+//        $captainFinancialDue->setAmount($captainFinancialDue->getAmount() + $amount);
+//    }
 }

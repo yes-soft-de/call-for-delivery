@@ -3,8 +3,11 @@
 namespace App\Service\CaptainFinancialSystem;
 
 use App\AutoMapping;
+use App\Entity\CaptainFinancialSystemDetailEntity;
 use App\Manager\CaptainFinancialSystem\CaptainFinancialSystemDetailManager;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
+use App\Service\CaptainFinancialSystem\CaptainFinancialSystemDetail\CaptainFinancialSystemDetailGetService;
+use App\Service\CaptainFinancialSystem\CaptainFinancialSystemOne\CaptainFinancialSystemOneGetBalanceDetailsService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialSystemThree\CaptainFinancialSystemThreeGetBalanceDetailsService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialSystemTwo\CaptainFinancialSystemTwoGetBalanceDetailsService;
 use App\Service\CaptainFinancialSystemDate\CaptainFinancialSystemDateService;
@@ -14,9 +17,11 @@ use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Response\CaptainFinancialSystem\CaptainFinancialDuesResponse;
 use App\Service\CaptainPayment\CaptainPaymentService;
+use App\Service\DateFactory\DateFactoryService;
 use DateTime;
 use App\Service\CaptainFinancialSystem\CaptainFinancialSystemDetailServiceTwo;
 use App\Request\CaptainFinancialSystem\CreateCaptainFinancialDuesByOptionalDatesRequest;
+use DateTimeInterface;
 
 class CaptainFinancialDuesService
 {
@@ -24,14 +29,15 @@ class CaptainFinancialDuesService
         private AutoMapping $autoMapping,
         private CaptainFinancialSystemDetailManager $captainFinancialSystemDetailManager,
         private CaptainFinancialSystemOneBalanceDetailService $captainFinancialSystemOneBalanceDetailService,
-        //private CaptainFinancialSystemThreeBalanceDetailService $captainFinancialSystemThreeBalanceDetailService,
         private CaptainFinancialSystemAccordingOnOrderService $captainFinancialSystemAccordingOnOrderService,
         private CaptainFinancialSystemDateService $captainFinancialSystemDateService,
         private CaptainFinancialDuesManager $captainFinancialDuesManager,
         private CaptainPaymentService $captainPaymentService,
         private CaptainFinancialSystemTwoGetBalanceDetailsService $captainFinancialSystemTwoGetBalanceDetailsService,
-        //private CaptainFinancialSystemTwoBalanceDetailService $captainFinancialSystemTwoBalanceDetailService,
-        private CaptainFinancialSystemThreeGetBalanceDetailsService $captainFinancialSystemThreeGetBalanceDetailsService
+        private CaptainFinancialSystemThreeGetBalanceDetailsService $captainFinancialSystemThreeGetBalanceDetailsService,
+        //private DateFactoryService $dateFactoryService,
+        //private CaptainFinancialSystemDetailGetService $captainFinancialSystemDetailGetService
+        private CaptainFinancialSystemOneGetBalanceDetailsService $captainFinancialSystemOneGetBalanceDetailsService
     )
     {
     }
@@ -72,7 +78,15 @@ class CaptainFinancialDuesService
 
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
                //Calculation of financial dues
-                $financialDues = $this->captainFinancialSystemOneBalanceDetailService->getFinancialDuesWithSystemOne($financialSystemDetail, $financialSystemDetail['captainId'], $date, $countWorkdays);
+                // *** Habib code ***
+                // $financialDues = $this->captainFinancialSystemOneBalanceDetailService->getFinancialDuesWithSystemOne($financialSystemDetail, $financialSystemDetail['captainId'], $date, $countWorkdays);
+                // *** End of Habib code ***
+
+                // *** Rami code ***
+                $financialDues = $this->captainFinancialSystemOneGetBalanceDetailsService->calculateCaptainDues($financialSystemDetail,
+                    $financialSystemDetail['captainId'], $date, $countWorkdays);
+                // *** End of Rami code ***
+
                //update captain financial dues
                return $this->updateCaptainFinancialDuesAmount($captainFinancialDues, $financialDues);
             }
@@ -299,8 +313,16 @@ class CaptainFinancialDuesService
  
              if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
                 //Calculation of financial dues
+                 // *** Habib code ***
                  $financialDues = $this->captainFinancialSystemOneBalanceDetailService->getFinancialDuesWithSystemOne($financialSystemDetail, $financialSystemDetail['captainId'], $date, $countWorkdays);
-                //update captain financial dues
+                 // *** End of Habib code ***
+
+                 // *** Rami code ***
+//                 $financialDues = $this->captainFinancialSystemOneGetBalanceDetailsService->calculateCaptainDues($financialSystemDetail,
+//                     $financialSystemDetail['captainId'], $date, $countWorkdays);
+                 // *** End of Rami code ***
+
+                 //update captain financial dues
                 return $this->updateCaptainFinancialDuesAmount($captainFinancialDues, $financialDues);
              }
  
@@ -349,4 +371,65 @@ class CaptainFinancialDuesService
     {
         return $this->captainFinancialDuesManager->deleteAllCaptainFinancialDuesByCaptainId($captainId);
     }
+
+//    /**
+//     * Get Captain Financial System Detail entity
+//     */
+//    public function getCaptainFinancialSystemDetailByCaptainUserId(int $captainUserId): CaptainFinancialSystemDetailEntity|string
+//    {
+//        return $this->captainFinancialSystemDetailGetService->getCaptainFinancialSystemDetailEntityByCaptainUserId($captainUserId);
+//    }
+
+//    public function getCaptainFinancialDuesByCaptainUserIdAndDate(int $captainUserId, $orderCreatedAt): ?CaptainFinancialDuesEntity
+//    {
+//        return $this->captainFinancialDuesManager->getCaptainFinancialDuesByCaptainUserIdAndDate($captainUserId, $orderCreatedAt);
+//    }
+
+//    public function initializeCaptainFinancialDueCreateRequest(): CreateCaptainFinancialDuesRequest
+//    {
+//        return new CreateCaptainFinancialDuesRequest();
+//    }
+
+//    public function createCaptainFinancialDueBySpecificAmount($captain, float $amount, float $amountForStore, $date)
+//    {
+//        $captainFinancialDueCreateRequest = $this->initializeCaptainFinancialDueCreateRequest();
+//
+//        $captainFinancialDueCreateRequest->setAmount($amount);
+//        $captainFinancialDueCreateRequest->setStatus(CaptainFinancialDues::FINANCIAL_DUES_UNPAID);
+//        $captainFinancialDueCreateRequest->setAmountForStore($amountForStore);
+//        $captainFinancialDueCreateRequest->setStatusAmountForStore(CaptainFinancialDues::FINANCIAL_DUES_UNPAID);
+//        $captainFinancialDueCreateRequest->setCaptain($captain);
+//        $captainFinancialDueCreateRequest->setStartDate($date);
+//        $captainFinancialDueCreateRequest->setEndDate($date);
+//
+//        return $this->captainFinancialDuesManager->createCaptainFinancialDue($captainFinancialDueCreateRequest);
+//    }
+
+//    public function getStringDateFromDateTimeInterface(DateTimeInterface $dateTime): string
+//    {
+//        return $this->dateFactoryService->getStringDateOnlyFromDateTimeInterface($dateTime);
+//    }
+
+//    public function createOrUpdateCaptainFinancialDue(int $captainUserId, DateTimeInterface $orderCreatedAt, float $amount, float $amountForStore)
+//    {
+//        //get Captain Financial System Detail current
+//        $financialSystemDetail = $this->getCaptainFinancialSystemDetailByCaptainUserId($captainUserId);
+//
+//        if ($financialSystemDetail === CaptainFinancialSystem::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM) {
+//            return CaptainFinancialSystem::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM;
+//        }
+//
+//        //Get financial dues by orderId and userId
+//        $captainFinancialDues = $this->getCaptainFinancialDuesByCaptainUserIdAndDate($captainUserId, $orderCreatedAt);
+//
+//        if (! $captainFinancialDues) {
+//            /// ----- Create Captain Financial Dues -----------
+//            $date = $this->getStringDateFromDateTimeInterface($orderCreatedAt);
+//
+//            return $this->createCaptainFinancialDueBySpecificAmount($financialSystemDetail->getCaptain(), $amount,
+//                $amountForStore, $date);
+//        }
+//
+//        /// -----  Update Captain Financial Dues -----------
+//    }
 }
