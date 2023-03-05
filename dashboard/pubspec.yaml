@@ -65,7 +65,7 @@ dependencies:
   # Analyzer
   analyzer_plugin:
   # Time Ago Generator
-  timeago: ^3.0.2
+  timeago:
   simple_moment: ^1.1.1
   # String Validators
   validators: ^3.0.0

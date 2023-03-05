@@ -66,11 +66,11 @@ class InitCaptainPlanLoadedState extends States {
                 child: ListTile(
                   leading: Icon(
                     Icons.info,
-                    color: Theme.of(context).textTheme.button?.color,
+                    color: Theme.of(context).textTheme.labelLarge?.color,
                   ),
                   title: Text(
                     S.current.planHint + ' . ',
-                    style: Theme.of(context).textTheme.button,
+                    style: Theme.of(context).textTheme.labelLarge,
                   ),
                 ),
               ),
@@ -78,7 +78,7 @@ class InitCaptainPlanLoadedState extends States {
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: DottedLine(
-                dashColor: Theme.of(context).backgroundColor,
+                dashColor: Theme.of(context).colorScheme.background,
                 lineThickness: 4,
               ),
             ),
@@ -89,7 +89,7 @@ class InitCaptainPlanLoadedState extends States {
                 width: double.maxFinite,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(25),
-                    color: Theme.of(context).backgroundColor),
+                    color: Theme.of(context).colorScheme.background),
                 child: Padding(
                   padding: const EdgeInsets.only(left: 16.0, right: 16),
                   child: DropdownButtonHideUnderline(

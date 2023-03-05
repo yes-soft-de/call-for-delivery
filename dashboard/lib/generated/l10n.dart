@@ -9139,6 +9139,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Dues for payment`
+  String get duesPayments {
+    return Intl.message(
+      'Dues for payment',
+      name: 'duesPayments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captains dues`
+  String get sumCaptainsFinancialDues {
+    return Intl.message(
+      'Captains dues',
+      name: 'sumCaptainsFinancialDues',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The customer location field has been updated and the old location saved`
+  String get updateCustomerLocation {
+    return Intl.message(
+      'The customer location field has been updated and the old location saved',
+      name: 'updateCustomerLocation',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

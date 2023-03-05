@@ -479,6 +479,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
             "Download Twaslna App on Play Store"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("Driver Licence"),
+        "duesPayments":
+            MessageLookupByLibrary.simpleMessage("Dues for payment"),
         "earnCash": MessageLookupByLibrary.simpleMessage("Earn Cash"),
         "editBranchName":
             MessageLookupByLibrary.simpleMessage("Edit Branch Name"),
@@ -1251,6 +1253,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Cash with captain"),
         "sumCaptainFinancialDues":
             MessageLookupByLibrary.simpleMessage("Captain dues"),
+        "sumCaptainsFinancialDues":
+            MessageLookupByLibrary.simpleMessage("Captains dues"),
         "sumPayments": MessageLookupByLibrary.simpleMessage("Sum payments"),
         "sumPaymentsForStore":
             MessageLookupByLibrary.simpleMessage("Total payments for store"),
@@ -1343,6 +1347,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Branch has been updated successfully"),
         "updateBranches":
             MessageLookupByLibrary.simpleMessage("Update Branches"),
+        "updateCustomerLocation": MessageLookupByLibrary.simpleMessage(
+            "The customer location field has been updated and the old location saved"),
         "updateDate": MessageLookupByLibrary.simpleMessage("Update date"),
         "updateDistance":
             MessageLookupByLibrary.simpleMessage("Update distance"),
