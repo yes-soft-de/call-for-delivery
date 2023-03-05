@@ -17,13 +17,13 @@ class CaptainDailyFinanceRequest {
       toDate: json['toDate'] == null
           ? null
           : DateTime.parse(json['toDate'] as String),
-      captainProfileId: json['captainProfileID'] as int?,
+      captainProfileId: json['captainProfileId'] as int?,
     );
   }
 
   Map<String, dynamic> toJson() => {
         'fromDate': fromDate?.toIso8601String(),
         'toDate': toDate?.toIso8601String(),
-        'captainProfileID': captainProfileId,
+        'captainProfileId': captainProfileId,
       };
 }
