@@ -415,7 +415,7 @@ class AdminCaptainPaymentController extends BaseController
      * )
      *
      * @OA\Response(
-     *      response=401,
+     *      response=204,
      *      description="Returns updated payment info",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
@@ -462,9 +462,8 @@ class AdminCaptainPaymentController extends BaseController
 
         if ($result === CaptainPaymentResultConstant::CAPTAIN_PAYMENT_NOT_EXIST) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::PAYMENT_NOT_EXIST);
-
         }
 
-        return $this->response($result, self::DELETE);
+        return $this->response($result, self::UPDATE);
     }
 }
