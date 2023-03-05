@@ -67,6 +67,8 @@ class ActionTypeLogsHelper {
         return S.current.storeBranchToClientDistanceDirectly;
       case 32:
         return S.current.recycleOrderDone;
+      case 33:
+        return S.current.updateCustomerLocation;
       default:
         return S.current.unknownAction + ' !${orderLog}';
     }
