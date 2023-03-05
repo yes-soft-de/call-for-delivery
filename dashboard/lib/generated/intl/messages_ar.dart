@@ -474,6 +474,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
             "حمل تطبيقنا على متجر غوغل عبر الرابط"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("رخصة القيادة"),
+        "duesPayments": MessageLookupByLibrary.simpleMessage("المستحقات للدفع"),
         "earnCash": MessageLookupByLibrary.simpleMessage("اكسب المال"),
         "editBranchName":
             MessageLookupByLibrary.simpleMessage("تعديل اسم الفرع"),
@@ -1242,6 +1243,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الكاش مع الكابتن"),
         "sumCaptainFinancialDues":
             MessageLookupByLibrary.simpleMessage("مستحقات الكابتن"),
+        "sumCaptainsFinancialDues":
+            MessageLookupByLibrary.simpleMessage("مستحقات الكباتن"),
         "sumPayments": MessageLookupByLibrary.simpleMessage("مجموع الدفعات"),
         "sumPaymentsForStore":
             MessageLookupByLibrary.simpleMessage("إجمالي الدفعات"),

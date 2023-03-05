@@ -907,5 +907,7 @@
     "overPaid":"دفع قيمة اكبر من المستحقات",
     "paidCaptainFinanceDaily":"تم الدفع",
     "unpaidCaptainFinanceDaily":"غير مدفوع",
-    "paidPartiallyCaptainFinanceDaily":"دفع جزء من المستحقات"
+    "paidPartiallyCaptainFinanceDaily":"دفع جزء من المستحقات",
+    "duesPayments":"المستحقات للدفع",
+    "sumCaptainsFinancialDues": "مستحقات الكباتن"
 }

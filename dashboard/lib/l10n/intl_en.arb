@@ -908,5 +908,7 @@
     "overPaid":"Over paid",
     "paidCaptainFinanceDaily":"Paid",
     "unpaidCaptainFinanceDaily":"Unpaid",
-    "paidPartiallyCaptainFinanceDaily":"Paid partially"
+    "paidPartiallyCaptainFinanceDaily":"Paid partially",
+    "duesPayments":"Dues for payment",
+    "sumCaptainsFinancialDues": "Captains dues"
 }
