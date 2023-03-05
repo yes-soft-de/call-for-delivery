@@ -105,11 +105,6 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.captainActivity,
                       Icons.show_chart_rounded,
                       true),
-                  customListTile(
-                      getIt<CaptainsModule>().captainFinanceDailyScreen,
-                      S.current.captainFinanceDaily,
-                      FontAwesomeIcons.moneyBills,
-                      true),
                   customListTile(getIt<StoresModule>().topActiveStoreScreen,
                       S.current.topstoreActivity, FontAwesomeIcons.store, true),
                 ],
@@ -179,6 +174,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.packages,
                       FontAwesomeIcons.wolfPackBattalion,
                       true),
+
                   customListTile(
                       getIt<CaptainsModule>().captainOffersScreen,
                       S.current.captainsOffer,
@@ -202,6 +198,18 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.financeCountOrder, FontAwesomeIcons.box, true),
                 ],
                 page: widget.currentPage),
+            customExpansionTile(
+                title: S.current.payments,
+                icon: FontAwesomeIcons.moneyBillTransfer,
+                children: [
+                  customListTile(
+                      getIt<CaptainsModule>().captainFinanceDailyScreen,
+                      S.current.captainFinanceDaily,
+                      FontAwesomeIcons.moneyBills,
+                      true),
+                ],
+                page: widget.currentPage),
+
             // supplier
             Visibility(
               visible: false,

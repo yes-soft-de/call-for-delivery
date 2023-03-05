@@ -158,7 +158,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.initState();
     lang = widget._localizationService.getLanguage();
     activeTheme = widget._themeDataService.getActiveTheme();
-    timeago.setDefaultLocale(lang);
+    timeago.setDefaultLocale('en');
     Moment.setLocaleGlobally(lang == 'en' ? LocaleEn() : LocaleAr());
     widget._fireNotificationService.init();
     widget._localNotificationService.init();
