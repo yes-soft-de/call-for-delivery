@@ -7489,6 +7489,176 @@ class S {
       args: [],
     );
   }
+
+  /// `Your current plan stopped successfully`
+  String get yourCurrentPlanStoppedSuccessfully {
+    return Intl.message(
+      'Your current plan stopped successfully',
+      name: 'yourCurrentPlanStoppedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Stop Plan`
+  String get stopPlan {
+    return Intl.message(
+      'Stop Plan',
+      name: 'stopPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Are you sure about stopping your current plan`
+  String get areSureAboutStoppingPlan {
+    return Intl.message(
+      'Are you sure about stopping your current plan',
+      name: 'areSureAboutStoppingPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `neighborhood is missing `
+  String get addressIsMissing {
+    return Intl.message(
+      'neighborhood is missing ',
+      name: 'addressIsMissing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `City is missing `
+  String get cityIsMissing {
+    return Intl.message(
+      'City is missing ',
+      name: 'cityIsMissing',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Neighborhood`
+  String get neighborhood {
+    return Intl.message(
+      'Neighborhood',
+      name: 'neighborhood',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Jaddah`
+  String get jaddah {
+    return Intl.message(
+      'Jaddah',
+      name: 'jaddah',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Notice has been sended to administration`
+  String get noticeHasBeenSendedToAdministration {
+    return Intl.message(
+      'Notice has been sended to administration',
+      name: 'noticeHasBeenSendedToAdministration',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Extra destination`
+  String get addExtraDestination {
+    return Intl.message(
+      'Extra destination',
+      name: 'addExtraDestination',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Reason`
+  String get reason {
+    return Intl.message(
+      'Reason',
+      name: 'reason',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Coordinates`
+  String get coordinates {
+    return Intl.message(
+      'Coordinates',
+      name: 'coordinates',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Please enter valid coordinates`
+  String get pleaseEnterValidCoord {
+    return Intl.message(
+      'Please enter valid coordinates',
+      name: 'pleaseEnterValidCoord',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Update distance`
+  String get updateDistance {
+    return Intl.message(
+      'Update distance',
+      name: 'updateDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total profit`
+  String get totalProfit {
+    return Intl.message(
+      'Total profit',
+      name: 'totalProfit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Daily profit`
+  String get dailyProfit {
+    return Intl.message(
+      'Daily profit',
+      name: 'dailyProfit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Total Earned`
+  String get totalEarnedProfit {
+    return Intl.message(
+      'Total Earned',
+      name: 'totalEarnedProfit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Today Balance`
+  String get todayProfit {
+    return Intl.message(
+      'Today Balance',
+      name: 'todayProfit',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

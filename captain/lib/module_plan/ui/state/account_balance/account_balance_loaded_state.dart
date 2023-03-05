@@ -4,6 +4,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_plan/model/captain_balance_model.dart';
 import 'package:c4d/module_plan/ui/screen/account_balance_screen.dart';
 import 'package:c4d/module_plan/ui/widget/account_balance_details.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/fixed_numbers.dart';
 import 'package:c4d/utils/effect/scaling.dart';
@@ -36,7 +37,7 @@ class AccountBalanceStateLoaded extends States {
           child: Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).colorScheme.background,
             ),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
@@ -55,6 +56,28 @@ class AccountBalanceStateLoaded extends States {
                     ),
                   ),
                   balanceDetails(context),
+                  Visibility(
+                    visible: false,
+                    child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.red,
+                        ),
+                        onPressed: () {
+                          showDialog(
+                              context: context,
+                              builder: (ctx) {
+                                return CustomAlertDialog(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                      screenState.manager
+                                          .stopeCurrentAccountPlan(screenState);
+                                    },
+                                    content:
+                                        S.current.areSureAboutStoppingPlan);
+                              });
+                        },
+                        child: Text(S.current.stopPlan)),
+                  ),
                 ],
               ),
             ),

@@ -46,7 +46,7 @@ class _InfoButtonOrderState extends State<InfoButtonOrder>
         child: AnimatedContainer(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(25),
-              color: Theme.of(context).backgroundColor),
+              color: Theme.of(context).colorScheme.background),
           height: 35,
           width: width,
           duration: Duration(seconds: 1),

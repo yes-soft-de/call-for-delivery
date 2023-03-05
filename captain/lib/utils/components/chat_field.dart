@@ -48,7 +48,7 @@ class _CustomFormFieldState extends State<ChatFormField> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).colorScheme.background,
       ),
       child: Padding(
         padding: const EdgeInsets.only(right: 4, left: 4, bottom: 1, top: 1),

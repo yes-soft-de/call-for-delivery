@@ -65,7 +65,7 @@ class GetImagePath extends StatelessWidget {
               Positioned.fill(
                 child: Container(
                   decoration: BoxDecoration(
-                      color: Theme.of(context).backgroundColor,
+                      color: Theme.of(context).colorScheme.background,
                       borderRadius: BorderRadius.circular(10)),
                   child: Icon(
                     Icons.camera,

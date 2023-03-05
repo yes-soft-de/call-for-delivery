@@ -1,4 +1,4 @@
-import 'package:badges/badges.dart';
+import 'package:badges/badges.dart' as badges;
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/module_notifications/preferences/notification_preferences/notification_preferences.dart';
@@ -311,13 +311,13 @@ class MyNotificationsLoadedState extends States {
             ),
             child: Row(
               children: [
-                Badge(
+                badges.Badge(
                   showBadge: element.seen ? false : true,
-                  position: BadgePosition(top: -2, end: -3),
+                  position: badges.BadgePosition.custom(top: -2, end: -3),
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(12),
-                        color: Theme.of(context).backgroundColor),
+                        color: Theme.of(context).colorScheme.background),
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Icon(

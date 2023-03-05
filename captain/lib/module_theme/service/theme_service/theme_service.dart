@@ -22,7 +22,10 @@ class AppThemeDataService {
 
   ThemeData getActiveTheme() {
     var dark = _preferencesHelper.isDarkMode();
-    final lightScheme = ColorScheme.fromSeed(seedColor: PrimaryColor);
+    final lightScheme = ColorScheme.fromSeed(
+      seedColor: PrimaryColor,
+      background: const Color.fromRGBO(236, 239, 241, 1),
+    );
     final darkScheme = ColorScheme.fromSeed(
       seedColor: PrimaryColor,
       brightness: Brightness.dark,
@@ -87,6 +90,7 @@ class AppThemeDataService {
     mapStyle(dark);
     return ThemeData(
         brightness: Brightness.light,
+        scaffoldBackgroundColor: Colors.grey[50],
         //       primaryColor: PrimaryColor,
         colorScheme: lightScheme,
         useMaterial3: true,
@@ -94,7 +98,6 @@ class AppThemeDataService {
         focusColor: PrimaryColor,
         primarySwatch: Colors.indigo,
         cardColor: const Color.fromRGBO(245, 245, 245, 1),
-        backgroundColor: const Color.fromRGBO(236, 239, 241, 1),
         textTheme: const TextTheme(button: TextStyle(color: Colors.white)),
         fontFamily: 'Dubai',
         elevatedButtonTheme: ElevatedButtonThemeData(

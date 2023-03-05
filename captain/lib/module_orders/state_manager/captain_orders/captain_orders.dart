@@ -6,6 +6,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
+import 'package:c4d/module_profile/model/daily_model.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -28,9 +29,12 @@ class CaptainOrdersListStateManager {
   final PublishSubject<States> _stateSubject = PublishSubject<States>();
   final PublishSubject<ProfileModel> _profileSubject =
       PublishSubject<ProfileModel>();
+  final PublishSubject<DailyFinanceModel> _financeSubject =
+      PublishSubject<DailyFinanceModel>();
   final PublishSubject<CompanyInfoResponse> _companySubject =
       PublishSubject<CompanyInfoResponse>();
   Stream<ProfileModel> get profileStream => _profileSubject.stream;
+  Stream<DailyFinanceModel> get profitStream => _financeSubject.stream;
   Stream<States> get stateStream => _stateSubject.stream;
   Stream<CompanyInfoResponse> get companyStream => _companySubject.stream;
 
@@ -49,6 +53,23 @@ class CaptainOrdersListStateManager {
             .show(screenState.context);
       } else {
         _profileSubject.add(profile.data);
+      }
+    });
+  }
+
+  void getProfitSummary(CaptainOrdersScreenState screenState) {
+    _profileService.getProfitSummary().then((profile) {
+      if (profile.hasError) {
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: profile.error ?? '')
+            .show(screenState.context);
+      } else if (profile.isEmpty) {
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: S.current.profileDataEmpty)
+            .show(screenState.context);
+      } else {
+        profile as DailyFinanceModel;
+        _financeSubject.add(profile.data);
       }
     });
   }

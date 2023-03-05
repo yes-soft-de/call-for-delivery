@@ -55,6 +55,8 @@ class Urls {
   static const SEND_TO_RECORD = BASE_API + '/record';
   static const CAPTAIN_PROFILE_API =
       BASE_API + '/v1/captain/captainprofilebyid';
+  static const DAILY_FINANCE_API =
+      BASE_API + '/v1/captainfinancialdaily/todaycaptainfinancialdailyamount';
   static const TERMS_CAPTAIN = BASE_API + '/termscaptain';
   static const LOG_API = BASE_API + '/getRecords';
   static const CAPTAIN_BALANCE_ACCOUNT =
@@ -136,6 +138,8 @@ class Urls {
   static const GET_REPORT = BASE_API + '/countreport';
   static const GET_ACCOUNT_BALANCE_CAPTAIN =
       BASE_API + '/v1/captainpayment/captainpayments';
+  static const GET_DAILY_PAYMENTS_CAPTAIN =
+      BASE_API + '/v1/captainfinancialdaily/filtercaptainfinancialdaily';
   static const GET_ACCOUNT_BALANCE_DISTRO =
       BASE_API + '/representativefinancialaccountforadmin/';
   static const GET_ACCOUNT_BALANCE_CAPTAIN_LAST_MONTH =
@@ -216,6 +220,8 @@ class Urls {
   static const CREATE_CHATROOM_BEFORE_ACCEPT =
       DOMAIN + '/v1/orderchatroom/createneworderchatroom';
   static const ORDER_NONSUB_API_LINK = DOMAIN + '/v1/order/ordernonsub';
+  static const UPDATE_EXTRA_DISTANCE_TO_ORDER_API =
+      DOMAIN + '/v1/order/destination/newdestinancebycaptain';
 
   /*------------------------------------------CAPTAIN FINANCE-------------------------------------------*/
   static const GET_CAPTAIN_FINANCE_BY_ORDER = DOMAIN +
@@ -226,6 +232,8 @@ class Urls {
       '/v1/captainfinancialsystemaccordingntocountoforders/captainfinancialsystemaccordingtocountoforders';
   static const CREATE_CAPTAIN_FINANCE =
       DOMAIN + '/v1/captainfinancialsystemdetail/captainfinancialsystemdetail';
+  static const STOP_FINANCE_CAPTAIN =
+      DOMAIN + '/v1/captainfinancialdues/stopfinancialcycle';
   static const GET_CAPTAIN_ACCOUNT_BALANCE =
       DOMAIN + '/v1/captainfinancialsystemdetail/captainbalancedetail';
   static const GET_CAPTAIN_FINANCIAL_DUES =

@@ -5,5 +5,6 @@ class OrdersRoutes {
   static const UPDATE_SCREEN = '/update_screen';
   static const TERMS_SCREEN = '/terms_screen';
   static const SUB_ORDERS_SCREEN = '/sub_orders_screen';
-  static const ORDER_STATUS_WITHOUT_ACTIONS_SCREEN = '/order_details_without_actions';
+  static const ORDER_STATUS_WITHOUT_ACTIONS_SCREEN =
+      '/order_details_without_actions';
 }

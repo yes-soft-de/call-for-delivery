@@ -31,7 +31,7 @@ class OrderLogsCard extends StatelessWidget {
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(10),
-            color: Theme.of(context).backgroundColor.withOpacity(0.7),
+            color: Theme.of(context).colorScheme.background.withOpacity(0.7),
           ),
           child: Padding(
             padding: const EdgeInsets.all(16.0),

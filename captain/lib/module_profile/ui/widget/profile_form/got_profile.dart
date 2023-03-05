@@ -1,3 +1,4 @@
+import 'package:badges/badges.dart' as badges;
 import 'package:c4d/module_profile/ui/widget/image_tile.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/consts/urls.dart';
@@ -25,7 +26,6 @@ class _ProfileWidgetState extends State<ProfileWidget> {
       {required String title, String? subTitle, required IconData iconData}) {
     Widget? icon;
     if (title == S.current.myStatus) {
-      print(subTitle);
       icon = PhysicalModel(
           color: Theme.of(context).scaffoldBackgroundColor,
           elevation: 5,
@@ -40,15 +40,20 @@ class _ProfileWidgetState extends State<ProfileWidget> {
           : S.current.captainStateInactive;
     }
     return ListTile(
-      leading: Container(
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: Theme.of(context).primaryColor,
-          ),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(iconData, color: Colors.white),
-          )),
+      leading: badges.Badge(
+        showBadge: subTitle != null ? false : true,
+        position: badges.BadgePosition.topEnd(top: -1, end: -1),
+        badgeStyle: const badges.BadgeStyle(badgeColor: Colors.amber),
+        child: Container(
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Theme.of(context).primaryColor,
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Icon(iconData, color: Colors.white),
+            )),
+      ),
       title: Text(
         title,
       ),
@@ -111,7 +116,7 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).colorScheme.background,
                   ),
                   child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -129,9 +134,13 @@ class _ProfileWidgetState extends State<ProfileWidget> {
                             subTitle: widget.request.phone,
                             iconData: Icons.phone),
                         customListTile(
-                            title: S.of(context).addresses,
+                            title: S.of(context).neighborhood,
                             subTitle: widget.request.address,
                             iconData: Icons.location_on),
+                        customListTile(
+                            title: S.of(context).city,
+                            subTitle: widget.request.city,
+                            iconData: Icons.location_city),
                         customListTile(
                             title: S.of(context).car,
                             subTitle: widget.request.car,

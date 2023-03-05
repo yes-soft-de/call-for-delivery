@@ -49,41 +49,44 @@ class OrderDetailsModel extends DataModel {
   late DateTime createDateTime;
   PdfModel? pdf;
   String? storeBranchToClientDistance;
-  OrderDetailsModel(
-      {required this.id,
-      required this.branchName,
-      required this.customerName,
-      required this.customerPhone,
-      required this.destinationCoordinate,
-      required this.destinationLink,
-      required this.deliveryDateString,
-      required this.createdDate,
-      required this.note,
-      required this.orderCost,
-      required this.payment,
-      required this.state,
-      required this.roomID,
-      required this.deliveryDate,
-      required this.image,
-      required this.captainID,
-      required this.storeName,
-      required this.branchCoordinate,
-      required this.storePhone,
-      required this.branchLink,
-      required this.distance,
-      required this.branchDistance,
-      required this.usedAs,
-      required this.rating,
-      required this.branchPhone,
-      required this.ratingComment,
-      required this.storeId,
-      required this.paidToProvider,
-      required this.subOrders,
-      required this.isHide,
-      required this.orderIsMain,
-      required this.createDateTime,
-      required this.pdf,
-      required this.storeBranchToClientDistance});
+  num? captainProfit;
+  OrderDetailsModel({
+    required this.id,
+    required this.branchName,
+    required this.customerName,
+    required this.customerPhone,
+    required this.destinationCoordinate,
+    required this.destinationLink,
+    required this.deliveryDateString,
+    required this.createdDate,
+    required this.note,
+    required this.orderCost,
+    required this.payment,
+    required this.state,
+    required this.roomID,
+    required this.deliveryDate,
+    required this.image,
+    required this.captainID,
+    required this.storeName,
+    required this.branchCoordinate,
+    required this.storePhone,
+    required this.branchLink,
+    required this.distance,
+    required this.branchDistance,
+    required this.usedAs,
+    required this.rating,
+    required this.branchPhone,
+    required this.ratingComment,
+    required this.storeId,
+    required this.paidToProvider,
+    required this.subOrders,
+    required this.isHide,
+    required this.orderIsMain,
+    required this.createDateTime,
+    required this.pdf,
+    required this.storeBranchToClientDistance,
+    required this.captainProfit,
+  });
 
   late OrderDetailsModel _orders;
 
@@ -151,6 +154,7 @@ class OrderDetailsModel extends DataModel {
               pdfBaseUrl: element?.pdf?.baseUrl)
           : null,
       storeBranchToClientDistance: element?.storeBranchToClientDistance,
+      captainProfit: element?.captainProfit ?? 0,
     );
     // _orders.distance = _distance(
     //     _orders,
@@ -188,7 +192,8 @@ class OrderDetailsModel extends DataModel {
               element.location?.longitude?.toDouble() ?? 0),
           paymentMethod: element.payment ?? 'cash',
           storeBranchToClientDistance: element.storeBranchToClientDistance,
-          storeName: element.storeOwnerName ?? S.current.unknown));
+          storeName: element.storeOwnerName ?? S.current.unknown,
+          captainProfit: element.captainProfit));
     });
     return orders;
   }

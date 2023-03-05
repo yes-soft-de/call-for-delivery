@@ -187,7 +187,9 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                                 height: 6,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(25),
-                                    color: Theme.of(context).backgroundColor),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background),
                               ),
                             ),
                             Expanded(
@@ -390,6 +392,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                 ),
                 credit: element.paymentMethod != 'cash',
                 storeName: element.storeName,
+                captainProfit: element.captainProfit ?? 0,
               ),
             ),
           ),
@@ -428,7 +431,8 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                               height: 6,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(25),
-                                  color: Theme.of(context).backgroundColor),
+                                  color:
+                                      Theme.of(context).colorScheme.background),
                             ),
                           ),
                           Expanded(
@@ -627,6 +631,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                     ),
                     screenState);
               },
+              captainProfit: element.captainProfit ?? 0,
             ),
           ),
         ),

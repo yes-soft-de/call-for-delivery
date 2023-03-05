@@ -1,8 +1,10 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:c4d/module_plan/plan_routes.dart';
+import 'package:c4d/module_profile/model/daily_model.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
@@ -18,7 +20,12 @@ import 'package:package_info_plus/package_info_plus.dart';
 class MenuScreen extends StatelessWidget {
   final CaptainOrdersScreenState screenState;
   final ProfileModel profileModel;
-  const MenuScreen(this.screenState, this.profileModel);
+  final DailyFinanceModel dailyFinance;
+  const MenuScreen(
+    this.screenState,
+    this.profileModel,
+    this.dailyFinance,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -94,8 +101,97 @@ class MenuScreen extends StatelessWidget {
                 ),
               ),
               Center(child: Text(profileModel.name ?? S.current.username)),
-              Container(
-                height: 32,
+              InkWell(
+                onTap: () {
+                  Navigator.of(context)
+                      .pushNamed(PlanRoutes.CAPTAIN_DAILY_PAYMENTS);
+                },
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        width: 125,
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                S.current.todayProfit,
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                ),
+                              ),
+                              Text(
+                                dailyFinance.dailyTotal.toStringAsFixed(2) +
+                                    S.current.sar,
+                                style: TextStyle(
+                                  color: dailyFinance.dailyTotal > 0
+                                      ? Colors.red
+                                      : Colors.green,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          height: 16,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).disabledColor,
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                        ),
+                      ),
+                      Container(
+                        width: 125,
+                        color: Theme.of(context).colorScheme.primaryContainer,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: [
+                              Text(
+                                S.current.totalEarnedProfit,
+                                style: const TextStyle(
+                                  fontSize: 13,
+                                ),
+                              ),
+                              Text(
+                                dailyFinance.totalProfit.toStringAsFixed(2) +
+                                    S.current.sar,
+                                style: const TextStyle(
+                                  color: Colors.green,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              Visibility(
+                visible: profileModel.address?.isEmpty == true ||
+                    profileModel.city?.isEmpty == true,
+                child: Flushbar(
+                  backgroundColor: Colors.amber,
+                  icon: const Icon(
+                    Icons.info,
+                    color: Colors.white,
+                  ),
+                  message: profileModel.address?.isEmpty == true
+                      ? S.current.addressIsMissing
+                      : S.current.cityIsMissing,
+                ),
               ),
               ListTile(
                 onTap: () {
@@ -104,6 +200,14 @@ class MenuScreen extends StatelessWidget {
                 },
                 leading: const Icon(Icons.account_circle_rounded),
                 title: Text(S.of(context).profile),
+                trailing: Visibility(
+                  visible: profileModel.address?.isEmpty == true ||
+                      profileModel.city?.isEmpty == true,
+                  child: const Icon(
+                    Icons.info,
+                    color: Colors.amber,
+                  ),
+                ),
               ),
               ListTileSwitch(
                   value: profileModel.isOnline ?? false,

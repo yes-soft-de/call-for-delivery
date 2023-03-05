@@ -1,3 +1,4 @@
+import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/response/enquery_response/enquery_response.dart';
@@ -82,7 +83,7 @@ class OrderRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
       Urls.FILTER_CAPTAIN_ORDERS_API,
-      request.toJson(),
+      await request.toJson(),
       headers: {'Authorization': 'Bearer ${token}'},
     );
     if (response == null) return null;
@@ -135,6 +136,18 @@ class OrderRepository {
 
     if (response == null) return null;
 
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> updateExtraDistanceToOrder(
+      AddExtraDistanceRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+      Urls.UPDATE_EXTRA_DISTANCE_TO_ORDER_API,
+      request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
 }

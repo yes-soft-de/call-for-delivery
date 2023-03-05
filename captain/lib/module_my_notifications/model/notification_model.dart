@@ -45,7 +45,7 @@ class NotificationModel extends DataModel {
       models.add(NotificationModel(
         marked: false,
         title: element.title ?? '',
-        orderNumber: element.message?.orderId?.toString() ?? '-1',
+        orderNumber: element.message?.orderId?.toString(),
         body: element.message?.text ?? '',
         date: notificationDate,
         id: element.id ?? -1,

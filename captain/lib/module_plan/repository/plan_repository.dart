@@ -52,6 +52,14 @@ class PackageBalanceRepository {
     return ActionResponse.fromJson(response);
   }
 
+  Future<ActionResponse?> stopFinanceRequest() async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(Urls.STOP_FINANCE_CAPTAIN, {},
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
   /*------------------------------------------ACCOUNT BALANCE-------------------------------------------*/
   Future<CaptainAccountBalanceResponse?> getCaptainAccountBalance() async {
     var token = await _authService.getToken();

@@ -36,7 +36,7 @@ class _ChatWriterWidget extends State<ChatWriterWidget> {
   bool notUploaded = true;
   @override
   Widget build(BuildContext context) {
-    Color color = Theme.of(context).backgroundColor;
+    Color color = Theme.of(context).colorScheme.background;
     if (imageFile != null && notUploaded) {
       return ScalingWidget(
         child: Container(

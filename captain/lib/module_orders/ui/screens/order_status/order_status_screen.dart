@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:c4d/consts/order_status.dart';
+import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/utils/logger/logger.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:location/location.dart' as loc;
@@ -111,43 +113,51 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
     }
   }
 
-  void requestOrderProgress(UpdateOrderRequest request,bool orderCash) {
-    if (request.paid == null ||
-        request.distance == null ||
-        (request.orderCost ?? 0) <= 0 && orderCash) {
-      showDialog(context: context, builder: (ctx) {
-        return CustomAlertDialog(onPressed: (){
-          Navigator.of(context).pop();
-        }, content: request.paid == null ? S.current.pleaseConfirmPayingToProvider : request.distance == null ? S.current.pleaseProvideDistance : S.current.pleaseProvideCashReceivedFromClient);
-      });
+  void requestOrderProgress(
+      UpdateOrderRequest request, OrderDetailsModel orderInfo) {
+    if (orderInfo.state == OrderStatusEnum.DELIVERING &&
+        (request.distance == null ||
+            (request.orderCost ?? 0) <= 0 && orderInfo.payment == 'cash')) {
+      showDialog(
+          context: context,
+          builder: (ctx) {
+            return CustomAlertDialog(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                content: request.distance == null
+                    ? S.current.pleaseProvideDistance
+                    : S.current.pleaseProvideCashReceivedFromClient);
+          });
     } else {
-  showDialog(
-        context: context,
-        routeSettings: const RouteSettings(name: '/accepting_order'),
-        builder: (_) {
-          return CustomAlertDialog(
-              onPressed: () {
-                Navigator.of(context).pop();
-                if (request.orderCost != null && request.state == 'delivered') {
-                  showDialog(
-                      barrierDismissible: false,
-                      context: context,
-                      routeSettings: const RouteSettings(name: '/paid'),
-                      builder: (_) {
-                        return CustomAlertDialogForCash(
-                            onPressed: (paid) {
-                              Navigator.of(context).pop();
-                              request.paid = paid ? 1 : 2;
-                              widget.stateManager.updateOrder(request, this);
-                            },
-                            content: S.of(context).paidToProvider);
-                      });
-                } else {
-                  widget.stateManager.updateOrder(request, this);
-                }
-              },
-              content: S.of(context).confirmUpdateOrderStatus);
-        });
+      showDialog(
+          context: context,
+          routeSettings: const RouteSettings(name: '/accepting_order'),
+          builder: (_) {
+            return CustomAlertDialog(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  if (request.orderCost != null &&
+                      request.state == 'delivered') {
+                    showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        routeSettings: const RouteSettings(name: '/paid'),
+                        builder: (_) {
+                          return CustomAlertDialogForCash(
+                              onPressed: (paid) {
+                                Navigator.of(context).pop();
+                                request.paid = paid ? 1 : 2;
+                                widget.stateManager.updateOrder(request, this);
+                              },
+                              content: S.of(context).paidToProvider);
+                        });
+                  } else {
+                    widget.stateManager.updateOrder(request, this);
+                  }
+                },
+                content: S.of(context).confirmUpdateOrderStatus);
+          });
     }
   }
 

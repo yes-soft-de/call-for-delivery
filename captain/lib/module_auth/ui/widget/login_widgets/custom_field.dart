@@ -67,7 +67,7 @@ class _CustomLoginFormFieldState extends State<CustomLoginFormField> {
         Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(widget.borderRadius ?? 25),
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).colorScheme.background,
           ),
           child: Row(
             children: [

@@ -49,7 +49,7 @@ class ChatBubbleWidgetState extends State<ChatBubbleWidget> {
                   borderRadius: const BorderRadius.all(Radius.circular(25)),
                   color: widget.me
                       ? Theme.of(context).primaryColor.withOpacity(0.25)
-                      : Theme.of(context).backgroundColor),
+                      : Theme.of(context).colorScheme.background),
               child: Padding(
                 padding: const EdgeInsets.all(18.0),
                 child: Container(

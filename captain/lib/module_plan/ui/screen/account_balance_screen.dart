@@ -63,7 +63,7 @@ class AccountBalanceScreenState extends State<AccountBalanceScreen> {
               child: FilterBar(
                 cursorRadius: BorderRadius.circular(25),
                 animationDuration: const Duration(milliseconds: 350),
-                backgroundColor: Theme.of(context).backgroundColor,
+                backgroundColor: Theme.of(context).colorScheme.background,
                 currentIndex: currentIndex,
                 borderRadius: BorderRadius.circular(25),
                 floating: true,

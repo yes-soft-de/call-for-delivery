@@ -74,7 +74,7 @@ class AccountBalanceScreenState extends State<AccountBalanceScreen> {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
-                      color: Theme.of(context).backgroundColor,
+                      color: Theme.of(context).colorScheme.background,
                     ),
                     child: Material(
                       color: Colors.transparent,
@@ -124,14 +124,14 @@ class AccountBalanceScreenState extends State<AccountBalanceScreen> {
                   child: Container(
                     width: 32,
                     height: 2.5,
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).colorScheme.background,
                   ),
                 ),
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
-                      color: Theme.of(context).backgroundColor,
+                      color: Theme.of(context).colorScheme.background,
                     ),
                     child: Material(
                       color: Colors.transparent,

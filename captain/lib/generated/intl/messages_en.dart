@@ -67,9 +67,13 @@ class MessageLookup extends MessageLookupByLibrary {
             "Sorry your request for add branch faild please try again"),
         "addBranchSuccess": MessageLookupByLibrary.simpleMessage(
             "Branch has been added successfully"),
+        "addExtraDestination":
+            MessageLookupByLibrary.simpleMessage("Extra destination"),
         "addProducts": MessageLookupByLibrary.simpleMessage("Add Products"),
         "addWorkPackage": MessageLookupByLibrary.simpleMessage("Add work plan"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
+        "addressIsMissing":
+            MessageLookupByLibrary.simpleMessage("neighborhood is missing "),
         "addresses": MessageLookupByLibrary.simpleMessage("Address"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
@@ -87,6 +91,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "apply": MessageLookupByLibrary.simpleMessage("APPLY"),
         "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
             "Are you sure about deleting your account , you won\'t be able to login with this credential any more"),
+        "areSureAboutStoppingPlan": MessageLookupByLibrary.simpleMessage(
+            "Are you sure about stopping your current plan"),
         "areYouSureAboutDeleteSelectedNotifications":
             MessageLookupByLibrary.simpleMessage(
                 "Are you sure about deleting selected notifications"),
@@ -242,6 +248,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("choose your state"),
         "city": MessageLookupByLibrary.simpleMessage("City"),
         "cityHint": MessageLookupByLibrary.simpleMessage("Jaddah"),
+        "cityIsMissing":
+            MessageLookupByLibrary.simpleMessage("City is missing "),
         "close": MessageLookupByLibrary.simpleMessage("Close"),
         "closingTime": MessageLookupByLibrary.simpleMessage("Closing Time"),
         "codeNumber": MessageLookupByLibrary.simpleMessage("Code number"),
@@ -289,6 +297,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
         "controlPanel": MessageLookupByLibrary.simpleMessage("Control Panel"),
+        "coordinates": MessageLookupByLibrary.simpleMessage("Coordinates"),
         "copy": MessageLookupByLibrary.simpleMessage("Copy"),
         "copyFinished":
             MessageLookupByLibrary.simpleMessage("Link Copied Successfully"),
@@ -332,6 +341,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "customer": MessageLookupByLibrary.simpleMessage("Customer"),
         "cycleEnd": MessageLookupByLibrary.simpleMessage("Cycle end"),
         "cycleStart": MessageLookupByLibrary.simpleMessage("Cycle start"),
+        "dailyProfit": MessageLookupByLibrary.simpleMessage("Daily profit"),
         "dangerZone": MessageLookupByLibrary.simpleMessage("Danger Zone"),
         "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
         "dataDecodeError":
@@ -528,6 +538,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "isBilledForCompany":
             MessageLookupByLibrary.simpleMessage("Is billed on company"),
         "item": MessageLookupByLibrary.simpleMessage("Item"),
+        "jaddah": MessageLookupByLibrary.simpleMessage("Jaddah"),
         "kiloBonus": MessageLookupByLibrary.simpleMessage("Fuel Bonus"),
         "kilometerBonus":
             MessageLookupByLibrary.simpleMessage("Kilometer Bonus"),
@@ -601,6 +612,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("National Address"),
         "nearbyOrders": MessageLookupByLibrary.simpleMessage("Nearby Orders"),
         "nearbyStore": MessageLookupByLibrary.simpleMessage("Nearby Store"),
+        "neighborhood": MessageLookupByLibrary.simpleMessage("Neighborhood"),
         "netProfit": MessageLookupByLibrary.simpleMessage("Profit"),
         "netProfite": MessageLookupByLibrary.simpleMessage("General Profite"),
         "networkError": MessageLookupByLibrary.simpleMessage(
@@ -634,6 +646,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "noteOfOrder": MessageLookupByLibrary.simpleMessage(
             "Please place your order notes"),
         "notes": MessageLookupByLibrary.simpleMessage("Notes"),
+        "noticeHasBeenSendedToAdministration":
+            MessageLookupByLibrary.simpleMessage(
+                "Notice has been sended to administration"),
         "notices": MessageLookupByLibrary.simpleMessage("Notices"),
         "notificationDeletedSuccess": MessageLookupByLibrary.simpleMessage(
             "Notification deleted successfully"),
@@ -787,6 +802,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please correct provided distance"),
         "pleaseDownloadmandob_moshtarayat_captain":
             MessageLookupByLibrary.simpleMessage("Please Download c4d"),
+        "pleaseEnterValidCoord": MessageLookupByLibrary.simpleMessage(
+            "Please enter valid coordinates"),
         "pleaseEnterValidCountryCode":
             MessageLookupByLibrary.simpleMessage("invalid character"),
         "pleaseEnterValidPhoneNumber":
@@ -871,6 +888,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "rateSubmitting": MessageLookupByLibrary.simpleMessage(
             "Your rate has been submitted"),
         "rating": MessageLookupByLibrary.simpleMessage("Rating"),
+        "reason": MessageLookupByLibrary.simpleMessage("Reason"),
         "reasonIsRequired":
             MessageLookupByLibrary.simpleMessage("Reason is Required"),
         "reasonOfTheReport":
@@ -991,6 +1009,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "statusCodeUnauthorized":
             MessageLookupByLibrary.simpleMessage("Unauthorized"),
         "stcPayCode": MessageLookupByLibrary.simpleMessage("STC Pay Code"),
+        "stopPlan": MessageLookupByLibrary.simpleMessage("Stop Plan"),
         "store": MessageLookupByLibrary.simpleMessage("Store"),
         "storeAccountInit":
             MessageLookupByLibrary.simpleMessage("Setup Account"),
@@ -1061,6 +1080,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
             MessageLookupByLibrary.simpleMessage(
                 "To find out more, please leave your phone.\nand we will contact you personally"),
+        "todayProfit": MessageLookupByLibrary.simpleMessage("Today Balance"),
         "took": MessageLookupByLibrary.simpleMessage("Took"),
         "total": MessageLookupByLibrary.simpleMessage("Total"),
         "totalBillCost":
@@ -1068,7 +1088,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalBillCostHint": MessageLookupByLibrary.simpleMessage(
             "The total cost without delivery cost"),
         "totalBonus": MessageLookupByLibrary.simpleMessage("Total Salary"),
+        "totalEarnedProfit":
+            MessageLookupByLibrary.simpleMessage("Total Earned"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("Total Price"),
+        "totalProfit": MessageLookupByLibrary.simpleMessage("Total profit"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("Try again"),
         "unShow": MessageLookupByLibrary.simpleMessage("Un Show"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
@@ -1087,6 +1110,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Branch has been updated successfully"),
         "updateBranches":
             MessageLookupByLibrary.simpleMessage("Update Branches"),
+        "updateDistance":
+            MessageLookupByLibrary.simpleMessage("Update distance"),
         "updateOrderNote": MessageLookupByLibrary.simpleMessage(
             "You can update your order item from this interface"),
         "updateOrderSuccess":
@@ -1172,6 +1197,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "youReached": MessageLookupByLibrary.simpleMessage("You have reached "),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
             "Your cart is empty please choose items to add"),
+        "yourCurrentPlanStoppedSuccessfully":
+            MessageLookupByLibrary.simpleMessage(
+                "Your current plan stopped successfully"),
         "yourNumberStartWithZero": MessageLookupByLibrary.simpleMessage(
             "Your number start with zero please remove it and try again"),
         "yourRequestSent":

@@ -187,19 +187,22 @@ class NearbyOrdersCard extends StatelessWidget {
   final Color? background;
   final String storeName;
   final Function() acceptOrder;
-  const NearbyOrdersCard(
-      {required this.orderNumber,
-      this.branchToDestination,
-      required this.distance,
-      required this.orderCost,
-      required this.note,
-      required this.branchName,
-      required this.credit,
-      this.orderIsMain = false,
-      this.background,
-      this.primaryTitle,
-      required this.storeName,
-      required this.acceptOrder});
+  final num captainProfit;
+  const NearbyOrdersCard({
+    required this.orderNumber,
+    this.branchToDestination,
+    required this.distance,
+    required this.orderCost,
+    required this.note,
+    required this.branchName,
+    required this.credit,
+    this.orderIsMain = false,
+    this.background,
+    this.primaryTitle,
+    required this.storeName,
+    required this.acceptOrder,
+    required this.captainProfit,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -387,6 +390,23 @@ class NearbyOrdersCard extends StatelessWidget {
                             S.current.cash),
                   ),
                 ),
+                Visibility(
+                    visible: captainProfit > 0,
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(25),
+                        color: Colors.amber,
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Text(
+                          S.current.netProfit +
+                              ' $captainProfit ' +
+                              S.current.sar,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    )),
                 Visibility(
                   replacement: ElevatedButton.icon(
                     onPressed: () {

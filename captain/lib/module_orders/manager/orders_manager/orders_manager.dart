@@ -1,3 +1,4 @@
+import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/response/enquery_response/enquery_response.dart';
@@ -33,10 +34,12 @@ class OrdersManager {
   Future<OrderActionResponse?> updateOrder(
           UpdateOrderRequest updateOrderRequest) =>
       _repository.updateOrderState(updateOrderRequest);
-      Future<OrderActionResponse?> updateCashStatus(
+  Future<OrderActionResponse?> updateCashStatus(
           UpdateOrderRequest updateOrderRequest) =>
       _repository.updateCashStatus(updateOrderRequest);
-
+  Future<ActionResponse?> updateExtraDistanceToOrder(
+          AddExtraDistanceRequest request) =>
+      _repository.updateExtraDistanceToOrder(request);
   Future<OrdersResponse?> getMyOrdersFilter(FilterOrderRequest request) =>
       _repository.getMyOrdersFilter(request);
   Future<EnquiryResponse?> createChatRoom(int orderId) =>

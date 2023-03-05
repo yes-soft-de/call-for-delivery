@@ -75,5 +75,4 @@ class ChatRepository {
   //     headers: {'Authorization': 'Bearer ' + token!},
   //   );
   // }
-
 }

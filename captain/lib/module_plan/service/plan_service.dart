@@ -106,6 +106,18 @@ class PlanService {
     return CaptainFinancialDuesModel.withData(actionResponse);
   }
 
+  Future<DataModel> stopCaptainFinancialDues() async {
+    ActionResponse? actionResponse = await _manager.stopFinanceRequest();
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
+
   Future<List<FinancialAccountDetail>?> _getTranslated(
       CaptainAccountBalanceResponse actionResponse) async {
     try {

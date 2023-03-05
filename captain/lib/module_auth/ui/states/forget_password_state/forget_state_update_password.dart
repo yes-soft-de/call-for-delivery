@@ -21,114 +21,113 @@ class ForgotStateUpdatePassword extends States {
 
   @override
   Widget getUI(BuildContext context) {
-    return    Form(
-          key: _verifyKey,
-          child: ListView(
-            physics: const BouncingScrollPhysics(
-                parent: AlwaysScrollableScrollPhysics()),
-            children: [
-              Container(
-                height: 50,
-              ),
-              MediaQuery.of(context).viewInsets.bottom == 0
-                  ? Image.asset(
-                      ImageAsset.LOGO,
-                      height: 250,
-                      width: 150,
-                    )
-                  : Container(),
-              const SizedBox(
-                height: 18,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    bottom: 8.0, left: 32, right: 32, top: 8),
-                child: Text(
-                  S.of(context).newPassword,
-                  style: tileStyle,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CustomLoginFormField(
-                  preIcon: Icon(
-                    Icons.lock,
-                    color: Theme.of(context).disabledColor,
-                  ),
-                  confirmationPassword: confirmPasswordController.text,
-                  controller: passwordController,
-                  password: true,
-                  hintText: S.of(context).newPassword,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    bottom: 8.0, left: 32, right: 32, top: 8),
-                child: Text(
-                  S.of(context).confirmNewPass,
-                  style: tileStyle,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: CustomLoginFormField(
-                  preIcon: Icon(
-                    Icons.lock,
-                    color: Theme.of(context).disabledColor,
-                  ),
-                  last: true,
-                  controller: confirmPasswordController,
-                  confirmationPassword: passwordController.text,
-                  password: true,
-                  hintText: S.of(context).confirmNewPass,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(
-                    right: 16.0, left: 16, bottom: 8.0, top: 8.0),
-                child: SizedBox(
-                  width: double.maxFinite,
-                  height: 50,
-                  child: ElevatedButton(
-                      onPressed: () {
-                        if (_verifyKey.currentState!.validate()) {
-                          screenState.updatePassword(UpdatePassRequest(
-                              userID: getIt<AuthService>().username,
-                              newPassword: passwordController.text));
-                        } else {
-                          CustomFlushBarHelper.createError(
-                                  title: S.current.warnning,
-                                  message: S.current.passwordNotMatch)
-                              .show(context);
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        textStyle: const TextStyle(color: Colors.white),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(12),
-                        ),
-                      ),
-                      child: Center(
-                        child: screenState.loadingSnapshot.connectionState ==
-                                ConnectionState.waiting
-                            ? const CircularProgressIndicator(
-                                valueColor:
-                                    AlwaysStoppedAnimation<Color>(Colors.white),
-                              )
-                            : Text(
-                                S.of(context).update,
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                      )),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
+    return Form(
+      key: _verifyKey,
+      child: ListView(
+        physics: const BouncingScrollPhysics(
+            parent: AlwaysScrollableScrollPhysics()),
+        children: [
+          Container(
+            height: 50,
           ),
-        )
-     ;
+          MediaQuery.of(context).viewInsets.bottom == 0
+              ? Image.asset(
+                  ImageAsset.LOGO,
+                  height: 250,
+                  width: 150,
+                )
+              : Container(),
+          const SizedBox(
+            height: 18,
+          ),
+          Padding(
+            padding:
+                const EdgeInsets.only(bottom: 8.0, left: 32, right: 32, top: 8),
+            child: Text(
+              S.of(context).newPassword,
+              style: tileStyle,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CustomLoginFormField(
+              preIcon: Icon(
+                Icons.lock,
+                color: Theme.of(context).disabledColor,
+              ),
+              confirmationPassword: confirmPasswordController.text,
+              controller: passwordController,
+              password: true,
+              hintText: S.of(context).newPassword,
+            ),
+          ),
+          Padding(
+            padding:
+                const EdgeInsets.only(bottom: 8.0, left: 32, right: 32, top: 8),
+            child: Text(
+              S.of(context).confirmNewPass,
+              style: tileStyle,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: CustomLoginFormField(
+              preIcon: Icon(
+                Icons.lock,
+                color: Theme.of(context).disabledColor,
+              ),
+              last: true,
+              controller: confirmPasswordController,
+              confirmationPassword: passwordController.text,
+              password: true,
+              hintText: S.of(context).confirmNewPass,
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(
+                right: 16.0, left: 16, bottom: 8.0, top: 8.0),
+            child: SizedBox(
+              width: double.maxFinite,
+              height: 50,
+              child: ElevatedButton(
+                  onPressed: () {
+                    if (_verifyKey.currentState!.validate()) {
+                      screenState.updatePassword(UpdatePassRequest(
+                          userID: getIt<AuthService>().username,
+                          newPassword: passwordController.text));
+                    } else {
+                      CustomFlushBarHelper.createError(
+                              title: S.current.warnning,
+                              message: S.current.passwordNotMatch)
+                          .show(context);
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    textStyle: const TextStyle(color: Colors.white),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                  ),
+                  child: Center(
+                    child: screenState.loadingSnapshot.connectionState ==
+                            ConnectionState.waiting
+                        ? const CircularProgressIndicator(
+                            valueColor:
+                                AlwaysStoppedAnimation<Color>(Colors.white),
+                          )
+                        : Text(
+                            S.of(context).update,
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                  )),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -1,10 +1,9 @@
+import 'package:badges/badges.dart' as badges;
 import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'dart:io';
-
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_profile/request/profile/profile_request.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
@@ -39,6 +38,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
   final _bankNameController = TextEditingController();
   final _ageController = TextEditingController();
   final _addressController = TextEditingController();
+  final _cityController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
   String imageAvatar = '';
   String? captainState;
@@ -63,7 +63,8 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
         } catch (e) {}
         setState(() {});
       }
-
+      _cityController.text = widget.profileRequest?.city ?? '';
+      _addressController.text = widget.profileRequest?.address ?? '';
       _stcPayController.text = widget.profileRequest?.stcPay ?? '';
       _bankAccountNumberController.text =
           widget.profileRequest?.bankAccountNumber ?? '';
@@ -97,7 +98,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 color: Theme.of(context).primaryColor),
             child: const Padding(
               padding: EdgeInsets.all(8.0),
-              child: const Icon(
+              child: Icon(
                 Icons.add_a_photo_rounded,
                 color: Colors.white,
               ),
@@ -135,19 +136,21 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 .then((value) {
               if (value != null) {
                 profile = ProfileModel(
-                    image: request.image,
-                    drivingLicence: request.drivingLicence,
-                    mechanicLicense: request.mechanicLicense,
-                    identity: request.identity,
-                    car: _carController.text,
-                    age: _ageController.text,
-                    name: _nameController.text,
-                    phone: _phoneController.text,
-                    stcPay: _stcPayController.text,
-                    bankNumber: _bankAccountNumberController.text,
-                    bankName: _bankNameController.text,
-                    isOnline: captainState == 'active' ? true : false,
-                    address: _addressController.text);
+                  image: request.image,
+                  drivingLicence: request.drivingLicence,
+                  mechanicLicense: request.mechanicLicense,
+                  identity: request.identity,
+                  car: _carController.text,
+                  age: _ageController.text,
+                  name: _nameController.text,
+                  phone: _phoneController.text,
+                  stcPay: _stcPayController.text,
+                  bankNumber: _bankAccountNumberController.text,
+                  bankName: _bankNameController.text,
+                  isOnline: captainState == 'active' ? true : false,
+                  address: _addressController.text,
+                  city: _cityController.text,
+                );
                 if (S.current.identity == imageType) {
                   profile?.identity = value.path;
                   widget.onImageUpload(profile!, 'identity', value.path);
@@ -211,19 +214,21 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 .show(context);
           } else if (_formKey.currentState!.validate()) {
             var profile = ProfileModel(
-                image: widget.profileRequest?.image,
-                name: _nameController.text,
-                phone: _countryCodeController.text + _phoneController.text,
-                stcPay: _stcPayController.text,
-                bankName: _bankNameController.text,
-                bankNumber: _bankAccountNumberController.text,
-                car: _carController.text,
-                age: _ageController.text,
-                mechanicLicense: widget.profileRequest?.mechanicLicense,
-                drivingLicence: widget.profileRequest?.drivingLicence,
-                identity: widget.profileRequest?.identity,
-                isOnline: captainState == 'active' ? true : false,
-                address: _addressController.text);
+              image: widget.profileRequest?.image,
+              name: _nameController.text,
+              phone: _countryCodeController.text + _phoneController.text,
+              stcPay: _stcPayController.text,
+              bankName: _bankNameController.text,
+              bankNumber: _bankAccountNumberController.text,
+              car: _carController.text,
+              age: _ageController.text,
+              mechanicLicense: widget.profileRequest?.mechanicLicense,
+              drivingLicence: widget.profileRequest?.drivingLicence,
+              identity: widget.profileRequest?.identity,
+              isOnline: captainState == 'active' ? true : false,
+              address: _addressController.text,
+              city: _cityController.text,
+            );
             widget.onProfileSaved(profile);
           } else {
             CustomFlushBarHelper.createError(
@@ -244,20 +249,21 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                       .then((value) {
                     if (value != null) {
                       profile = ProfileModel(
-                          image: value.path,
-                          name: _nameController.text,
-                          phone: _phoneController.text,
-                          stcPay: _stcPayController.text,
-                          bankName: _bankNameController.text,
-                          bankNumber: _bankAccountNumberController.text,
-                          car: _carController.text,
-                          age: _ageController.text,
-                          mechanicLicense:
-                              widget.profileRequest?.mechanicLicense,
-                          drivingLicence: widget.profileRequest?.drivingLicence,
-                          identity: widget.profileRequest?.identity,
-                          isOnline: captainState == 'active' ? true : false,
-                          address: _addressController.text);
+                        image: value.path,
+                        name: _nameController.text,
+                        phone: _phoneController.text,
+                        stcPay: _stcPayController.text,
+                        bankName: _bankNameController.text,
+                        bankNumber: _bankAccountNumberController.text,
+                        car: _carController.text,
+                        age: _ageController.text,
+                        mechanicLicense: widget.profileRequest?.mechanicLicense,
+                        drivingLicence: widget.profileRequest?.drivingLicence,
+                        identity: widget.profileRequest?.identity,
+                        isOnline: captainState == 'active' ? true : false,
+                        address: _addressController.text,
+                        city: _cityController.text,
+                      );
                       widget.onImageUpload(profile!, null, null);
                     }
                   });
@@ -315,7 +321,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                                   color: Theme.of(context).primaryColor),
                               child: const Padding(
                                 padding: EdgeInsets.all(8.0),
-                                child: const Icon(
+                                child: Icon(
                                   Icons.add_a_photo_rounded,
                                   color: Colors.white,
                                 ),
@@ -393,13 +399,38 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 ),
               ],
             ),
-            titleField(S.of(context).addresses),
+            titleField(S.of(context).city),
             Padding(
               padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-              child: CustomFormField(
-                controller: _addressController,
-                hintText: S.current.addresses,
-                preIcon: const Icon(Icons.location_on),
+              child: badges.Badge(
+                showBadge: _cityController.text.isEmpty,
+                badgeStyle: const badges.BadgeStyle(
+                  badgeColor: Colors.amber,
+                ),
+                position: badges.BadgePosition.topEnd(top: -6, end: -6),
+                child: CustomFormField(
+                  controller: _cityController,
+                  hintText: S.current.city,
+                  preIcon: const Icon(
+                    Icons.location_city,
+                  ),
+                ),
+              ),
+            ),
+            titleField(S.of(context).neighborhood),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+              child: badges.Badge(
+                showBadge: _addressController.text.isEmpty,
+                badgeStyle: const badges.BadgeStyle(
+                  badgeColor: Colors.amber,
+                ),
+                position: badges.BadgePosition.topEnd(top: -6, end: -6),
+                child: CustomFormField(
+                  controller: _addressController,
+                  hintText: S.current.neighborhood,
+                  preIcon: const Icon(Icons.location_on),
+                ),
               ),
             ),
             titleField(S.of(context).age),
@@ -418,6 +449,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _carController,
                 hintText: S.current.car,
+                validator: false,
                 preIcon: const Icon(Icons.local_taxi_rounded),
               ),
             ),
@@ -427,6 +459,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _bankNameController,
                 hintText: S.current.bankName,
+                validator: false,
                 preIcon: const Icon(Icons.monetization_on_rounded),
               ),
             ),
@@ -436,6 +469,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _bankAccountNumberController,
                 hintText: '123456789',
+                validator: false,
                 preIcon: const Icon(Icons.password_rounded),
                 numbers: true,
               ),
@@ -446,6 +480,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _stcPayController,
                 hintText: 'XXXXXXXX',
+                validator: false,
                 preIcon: const Icon(Icons.credit_card_rounded),
                 last: true,
               ),
@@ -455,7 +490,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: ListTile(
                 tileColor: captainState != null
                     ? (captainState == 'active' ? Colors.green : Colors.red)
-                    : Theme.of(context).backgroundColor,
+                    : Theme.of(context).colorScheme.background,
                 leading: Icon(
                   Icons.wifi_rounded,
                   color: captainState != null ? Colors.white : null,
@@ -472,7 +507,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                     underline: Container(),
                     dropdownColor: captainState != null
                         ? (captainState == 'active' ? Colors.green : Colors.red)
-                        : Theme.of(context).backgroundColor,
+                        : Theme.of(context).colorScheme.background,
                     icon: Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: Icon(
@@ -482,22 +517,22 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                     ),
                     items: [
                       DropdownMenuItem(
+                        value: 'active',
                         child: Text(
                           S.current.captainStateActive,
                           style: TextStyle(
                             color: captainState != null ? Colors.white : null,
                           ),
                         ),
-                        value: 'active',
                       ),
                       DropdownMenuItem(
+                        value: 'inactive',
                         child: Text(
                           S.current.captainStateInactive,
                           style: TextStyle(
                             color: captainState != null ? Colors.white : null,
                           ),
                         ),
-                        value: 'inactive',
                       ),
                     ],
                     onChanged: (newState) {

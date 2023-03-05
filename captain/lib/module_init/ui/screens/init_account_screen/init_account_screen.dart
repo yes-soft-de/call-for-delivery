@@ -31,6 +31,9 @@ class InitAccountScreenState extends State<InitAccountScreen> {
   final bankAccountNumberController = TextEditingController();
   final stcPayController = TextEditingController();
   final countryCodeController = TextEditingController();
+  final cityController = TextEditingController();
+  final addressController = TextEditingController();
+
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   void refresh() {

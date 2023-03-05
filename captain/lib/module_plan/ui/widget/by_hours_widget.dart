@@ -38,7 +38,7 @@ class FinanceByHours extends StatelessWidget {
               spreadRadius: 1,
               color: active
                   ? Theme.of(context).colorScheme.primary.withOpacity(0.5)
-                  : Theme.of(context).backgroundColor,
+                  : Theme.of(context).colorScheme.background,
               offset: const Offset(-1, 0),
             )
           ],

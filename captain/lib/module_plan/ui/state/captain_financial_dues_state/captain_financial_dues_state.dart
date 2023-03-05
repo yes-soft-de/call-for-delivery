@@ -43,7 +43,7 @@ class CaptainFinancialDuesStateLoaded extends States {
                         blurRadius: 5,
                         spreadRadius: 0.5,
                         offset: const Offset(-1, 0),
-                        color: Theme.of(context).backgroundColor),
+                        color: Theme.of(context).colorScheme.background),
                   ]),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
@@ -69,7 +69,7 @@ class CaptainFinancialDuesStateLoaded extends States {
                             child: Container(
                               width: 32,
                               height: 2.5,
-                              color: Theme.of(context).backgroundColor,
+                              color: Theme.of(context).colorScheme.background,
                             ),
                           ),
                           Expanded(
@@ -96,7 +96,7 @@ class CaptainFinancialDuesStateLoaded extends States {
                             child: Container(
                               width: 32,
                               height: 2.5,
-                              color: Theme.of(context).backgroundColor,
+                              color: Theme.of(context).colorScheme.background,
                             ),
                           ),
                           Expanded(
@@ -130,7 +130,7 @@ class CaptainFinancialDuesStateLoaded extends States {
                             child: Container(
                               width: 32,
                               height: 2.5,
-                              color: Theme.of(context).backgroundColor,
+                              color: Theme.of(context).colorScheme.background,
                             ),
                           ),
                           Expanded(
@@ -165,7 +165,7 @@ class CaptainFinancialDuesStateLoaded extends States {
       children: [
         Text(title),
         Container(
-            color: backgroundColor ?? Theme.of(context).backgroundColor,
+            color: backgroundColor ?? Theme.of(context).colorScheme.background,
             child: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Text(
@@ -187,7 +187,7 @@ class CaptainFinancialDuesStateLoaded extends States {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-        color: background ?? Theme.of(context).backgroundColor,
+        color: background ?? Theme.of(context).colorScheme.background,
       ),
       child: Material(
         color: Colors.transparent,

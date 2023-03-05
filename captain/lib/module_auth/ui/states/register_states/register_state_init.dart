@@ -77,7 +77,7 @@ class RegisterStateInit extends RegisterState {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Theme.of(context).backgroundColor,
+                        color: Theme.of(context).colorScheme.background,
                       ),
                       child: Padding(
                         padding: EdgeInsets.all(8.0),
@@ -150,7 +150,7 @@ class RegisterStateInit extends RegisterState {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Theme.of(context).backgroundColor,
+                        color: Theme.of(context).colorScheme.background,
                       ),
                       child: Padding(
                         padding: EdgeInsets.all(8.0),
@@ -192,7 +192,7 @@ class RegisterStateInit extends RegisterState {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10),
-                        color: Theme.of(context).backgroundColor,
+                        color: Theme.of(context).colorScheme.background,
                       ),
                       child: Padding(
                         padding: EdgeInsets.all(8.0),
@@ -289,7 +289,8 @@ class RegisterStateInit extends RegisterState {
                       if (_registerKey.currentState!.validate()) {
                         if (usernameController.text.trim().startsWith('0')) {
                           CustomFlushBarHelper.createError(
-                                  title: S.current.warnning, message: S.current.yourNumberStartWithZero)
+                                  title: S.current.warnning,
+                                  message: S.current.yourNumberStartWithZero)
                               .show(context);
                         } else {
                           screen.registerClient(RegisterRequest(

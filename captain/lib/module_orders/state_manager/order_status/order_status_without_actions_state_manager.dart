@@ -32,7 +32,8 @@ class OrderStatusWithoutActionsStateManager {
   OrderStatusWithoutActionsStateManager(
       this._ordersService, this._imageUploadService);
 
-  void getOrderDetails(int orderId, OrderStatusWithoutActionsScreenState screenState,
+  void getOrderDetails(
+      int orderId, OrderStatusWithoutActionsScreenState screenState,
       [bool loading = true]) {
     if (loading) {
       _stateSubject.add(LoadingState(screenState));
@@ -51,14 +52,14 @@ class OrderStatusWithoutActionsStateManager {
             title: S.current.orderDetails));
       } else {
         value as OrderDetailsModel;
-        _stateSubject
-            .add(OrderDetailsCaptainWithoutActionsOrderLoadedState(screenState, value.data));
+        _stateSubject.add(OrderDetailsCaptainWithoutActionsOrderLoadedState(
+            screenState, value.data));
       }
     });
   }
 
-  void createChatRoom(
-      OrderStatusWithoutActionsScreenState screenState, int orderId, int storeId) {
+  void createChatRoom(OrderStatusWithoutActionsScreenState screenState,
+      int orderId, int storeId) {
     _ordersService.createChatRoom(orderId).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
@@ -82,6 +83,7 @@ class OrderStatusWithoutActionsStateManager {
       }
     });
   }
+
   void dispose() {
     _updateStateListener?.cancel();
   }

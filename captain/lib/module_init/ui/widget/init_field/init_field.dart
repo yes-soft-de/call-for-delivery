@@ -46,7 +46,7 @@ class InitField extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).colorScheme.background,
                   ),
                   child: Padding(
                     padding: EdgeInsets.all(8.0),

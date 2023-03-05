@@ -148,8 +148,8 @@ class Timezone {
 
 class Location {
   String? countryCode;
-  int? latitude;
-  int? longitude;
+  num? latitude;
+  num? longitude;
   String? comments;
 
   Location({this.countryCode, this.latitude, this.longitude, this.comments});

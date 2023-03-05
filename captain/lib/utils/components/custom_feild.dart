@@ -52,16 +52,30 @@ class _CustomFormFieldState extends State<CustomFormField> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).colorScheme.background,
       ),
       child: Padding(
-          padding: !clean ? EdgeInsets.only(bottom: 8.0) : EdgeInsets.zero,
+          padding:
+              !clean ? const EdgeInsets.only(bottom: 8.0) : EdgeInsets.zero,
           child: Row(
             children: [
+              Visibility(
+                  visible: widget.preIcon != null,
+                  child: Material(
+                      color: Colors.transparent,
+                      child: Theme(
+                        data: Theme.of(context).copyWith(
+                            iconTheme: IconThemeData(
+                                color: Theme.of(context).disabledColor)),
+                        child: Padding(
+                            padding:
+                                const EdgeInsetsDirectional.only(start: 12),
+                            child: widget.preIcon ?? const SizedBox.shrink()),
+                      ))),
               Expanded(
                 child: TextFormField(
                   autovalidateMode: mode,
-                  toolbarOptions: ToolbarOptions(
+                  toolbarOptions: const ToolbarOptions(
                       copy: true, paste: true, selectAll: true, cut: true),
                   onTap: widget.onTap,
                   controller: widget.controller,
@@ -72,7 +86,9 @@ class _CustomFormFieldState extends State<CustomFormField> {
                               kIsWeb
                           ? 16
                           : null,
-                  keyboardType: widget.numbers ? const TextInputType.numberWithOptions(decimal: true) : null,
+                  keyboardType: widget.numbers
+                      ? const TextInputType.numberWithOptions(decimal: true)
+                      : null,
                   onEditingComplete:
                       widget.maxLines != null ? null : () => node.nextFocus(),
                   onFieldSubmitted: widget.maxLines == null && widget.last
@@ -95,9 +111,8 @@ class _CustomFormFieldState extends State<CustomFormField> {
                     }
                     setState(() {});
                   },
-                  validator: widget.validatorFunction != null
-                      ? widget.validatorFunction
-                      : widget.validator
+                  validator: widget.validatorFunction ??
+                      (widget.validator
                           ? (value) {
                               if (mode == AutovalidateMode.disabled) {
                                 setState(() {
@@ -125,11 +140,10 @@ class _CustomFormFieldState extends State<CustomFormField> {
                                 return null;
                               }
                             }
-                          : null,
+                          : null),
                   decoration: InputDecoration(
                     border: InputBorder.none,
                     hintText: widget.hintText,
-                    prefixIcon: widget.preIcon,
                     enabledBorder: InputBorder.none,
                     contentPadding: widget.contentPadding,
                     focusedBorder: InputBorder.none,
@@ -139,7 +153,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
               Visibility(
                   child: Material(
                       color: Colors.transparent,
-                      child: widget.sufIcon ?? SizedBox.shrink())),
+                      child: widget.sufIcon ?? const SizedBox.shrink())),
             ],
           )),
     );
@@ -203,7 +217,7 @@ class _CustomFormFieldWithTranslateState
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
         ),
         child: Padding(
           padding: const EdgeInsetsDirectional.only(start: 8.0, end: 8.0),
@@ -211,11 +225,12 @@ class _CustomFormFieldWithTranslateState
             children: [
               Expanded(
                 child: Padding(
-                  padding:
-                      !clean ? EdgeInsets.only(bottom: 8.0) : EdgeInsets.zero,
+                  padding: !clean
+                      ? const EdgeInsets.only(bottom: 8.0)
+                      : EdgeInsets.zero,
                   child: TextFormField(
                     autovalidateMode: mode,
-                    toolbarOptions: ToolbarOptions(
+                    toolbarOptions: const ToolbarOptions(
                         copy: true, paste: true, selectAll: true, cut: true),
                     onTap: widget.onTap,
                     controller: widget.controller,
@@ -295,7 +310,7 @@ class _CustomFormFieldWithTranslateState
                   child: Row(
                     children: <Widget>[
                       Text(lan),
-                      enabled ? Icon(Icons.arrow_drop_down) : Container(),
+                      enabled ? const Icon(Icons.arrow_drop_down) : Container(),
                     ],
                   ),
                   itemBuilder: (context) => widget.languages

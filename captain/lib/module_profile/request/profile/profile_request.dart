@@ -17,26 +17,28 @@ class ProfileRequest {
   String? identity;
   bool? canGoBack;
   String? address;
+  String? city;
   ProfileRequest.empty();
 
-  ProfileRequest(
-      {this.name,
-      this.phone,
-      this.image,
-      this.branch = '-1',
-      this.car = 'Unknown',
-      this.drivingLicence = 'Unknown',
-      this.age,
-      this.stcPay,
-      this.bankName,
-      this.bankAccountNumber,
-      this.state = 'active',
-      this.isOnline = true,
-      this.identity,
-      this.mechanicLicense,
-      required this.canGoBack,
-      required this.address,
-      });
+  ProfileRequest({
+    this.name,
+    this.phone,
+    this.image,
+    this.branch = '-1',
+    this.car = 'Unknown',
+    this.drivingLicence = 'Unknown',
+    this.age,
+    this.stcPay,
+    this.bankName,
+    this.bankAccountNumber,
+    this.state = 'active',
+    this.isOnline = true,
+    this.identity,
+    this.mechanicLicense,
+    required this.canGoBack,
+    required this.address,
+    required this.city,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -89,6 +91,7 @@ class ProfileRequest {
         licence = licence.substring(Urls.IMAGES_ROOT.length);
       }
       data['identity'] = licence;
+      data['city'] = city;
       print('Licence Url: ' + licence);
     }
     return data;
@@ -108,7 +111,8 @@ class ProfileRequest {
       'stcPay': stcPay,
       'bankAccountNumber': bankAccountNumber,
       'bankName': bankName,
-      'address':address
+      'address': address,
+      'city': city
     };
   }
 
