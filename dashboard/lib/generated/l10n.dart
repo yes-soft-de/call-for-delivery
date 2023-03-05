@@ -9159,6 +9159,16 @@ class S {
       args: [],
     );
   }
+
+  /// `The customer location field has been updated and the old location saved`
+  String get updateCustomerLocation {
+    return Intl.message(
+      'The customer location field has been updated and the old location saved',
+      name: 'updateCustomerLocation',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -910,5 +910,6 @@
     "unpaidCaptainFinanceDaily":"Unpaid",
     "paidPartiallyCaptainFinanceDaily":"Paid partially",
     "duesPayments":"Dues for payment",
-    "sumCaptainsFinancialDues": "Captains dues"
+    "sumCaptainsFinancialDues": "Captains dues",
+    "updateCustomerLocation":"The customer location field has been updated and the old location saved"
 }

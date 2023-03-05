@@ -1347,6 +1347,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Branch has been updated successfully"),
         "updateBranches":
             MessageLookupByLibrary.simpleMessage("Update Branches"),
+        "updateCustomerLocation": MessageLookupByLibrary.simpleMessage(
+            "The customer location field has been updated and the old location saved"),
         "updateDate": MessageLookupByLibrary.simpleMessage("Update date"),
         "updateDistance":
             MessageLookupByLibrary.simpleMessage("Update distance"),

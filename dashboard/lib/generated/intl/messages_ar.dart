@@ -1336,6 +1336,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateBranchSuccess":
             MessageLookupByLibrary.simpleMessage("تم تعديل الفرع بنجاح"),
         "updateBranches": MessageLookupByLibrary.simpleMessage("تعديل الأفرع"),
+        "updateCustomerLocation": MessageLookupByLibrary.simpleMessage(
+            "تم تحديث حقل موقع العميل وحفظ الموقع القديم"),
         "updateDate": MessageLookupByLibrary.simpleMessage("تاريخ التعديل"),
         "updateDistance": MessageLookupByLibrary.simpleMessage("تحديث المسافة"),
         "updateOfferSuccessfully":

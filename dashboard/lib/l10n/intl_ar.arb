@@ -909,5 +909,6 @@
     "unpaidCaptainFinanceDaily":"غير مدفوع",
     "paidPartiallyCaptainFinanceDaily":"دفع جزء من المستحقات",
     "duesPayments":"المستحقات للدفع",
-    "sumCaptainsFinancialDues": "مستحقات الكباتن"
+    "sumCaptainsFinancialDues": "مستحقات الكباتن",
+    "updateCustomerLocation":"تم تحديث حقل موقع العميل وحفظ الموقع القديم"
 }
