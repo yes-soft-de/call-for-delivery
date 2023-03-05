@@ -199,12 +199,12 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 ],
                 page: widget.currentPage),
             customExpansionTile(
-                title: S.current.payments,
+                title: S.current.duesPayments,
                 icon: FontAwesomeIcons.moneyBillTransfer,
                 children: [
                   customListTile(
                       getIt<CaptainsModule>().captainFinanceDailyScreen,
-                      S.current.captainFinanceDaily,
+                      S.current.sumCaptainsFinancialDues,
                       FontAwesomeIcons.moneyBills,
                       true),
                 ],
