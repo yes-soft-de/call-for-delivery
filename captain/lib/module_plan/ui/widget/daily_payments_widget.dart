@@ -2,6 +2,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_plan/model/captain_daily_finance_model.dart';
 import 'package:c4d/module_plan/ui/widget/paymetns_widget.dart';
 import 'package:c4d/module_plan/ui/widget/vertical_bubble.dart';
+import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/finance_status_helper.dart';
 import 'package:flutter/material.dart';
@@ -145,8 +146,20 @@ class DailyWidget extends StatelessWidget {
                   showDialog(
                       context: context,
                       builder: (ctx) {
-                        return Column(
-                          children: widgets,
+                        return Scaffold(
+                          appBar: CustomC4dAppBar.appBar(
+                            context,
+                            title: '',
+                            icon: Icons.cancel,
+                          ),
+                          body: SingleChildScrollView(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                children: widgets,
+                              ),
+                            ),
+                          ),
                         );
                       });
                 },
