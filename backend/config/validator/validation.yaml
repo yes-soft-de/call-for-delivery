@@ -848,8 +848,6 @@ App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentForCaptainFinanc
     properties:
         amount:
             - NotBlank: ~
-        note:
-            - NotBlank: ~
         captainFinancialDailyEntity:
             - NotBlank: ~
 
