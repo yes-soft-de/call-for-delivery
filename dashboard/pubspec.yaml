@@ -3,7 +3,7 @@ description: New c4d version
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -29,7 +29,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -65,7 +64,7 @@ dependencies:
   # Analyzer
   analyzer_plugin:
   # Time Ago Generator
-  timeago:
+  timeago: 3.0.2
   simple_moment: ^1.1.1
   # String Validators
   validators: ^3.0.0
@@ -125,10 +124,6 @@ dependencies:
   file_picker: ^5.2.5
   bubble_tab_indicator: ^0.1.6
   group_button: ^5.2.2
-  
-
-
-
 
 # dependency_overrides:
 #   firebase_core_platform_interface: 4.5.1
@@ -152,7 +147,6 @@ dev_dependencies:
   dropdown_search: ^5.0.5
   flutter_linkify: ^5.0.2
   flutter_native_timezone: ^2.0.0
-  
 
 flutter_icons:
   android: "launcher_icon"
@@ -165,7 +159,6 @@ flutter_icons:
 
 # The following section is specific to Flutter.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
