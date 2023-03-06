@@ -32,6 +32,7 @@
 		<array>
 			<string>https</string>
 			<string>http</string>
+			<string>whatsapp</string>
 			<string>comgooglemaps</string>
 		</array>
 		<key>LSRequiresIPhoneOS</key>
