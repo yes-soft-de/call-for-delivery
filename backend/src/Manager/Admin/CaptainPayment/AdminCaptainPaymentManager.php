@@ -3,9 +3,13 @@
 namespace App\Manager\Admin\CaptainPayment;
 
 use App\AutoMapping;
+use App\Constant\CaptainPayment\PaymentToCaptain\CaptainPaymentResultConstant;
 use App\Entity\CaptainPaymentEntity;
 use App\Repository\CaptainPaymentEntityRepository;
 use App\Request\Admin\CaptainPayment\AdminCaptainPaymentCreateRequest;
+use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentAmountAndNoteUpdateByAdminRequest;
+use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentDeleteByAdminRequest;
+use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentForCaptainFinancialDailyCreateByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\Captain\CaptainManager;
 use App\Constant\Captain\CaptainConstant;
@@ -14,19 +18,13 @@ use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialDuesManager;
 
 class AdminCaptainPaymentManager
 {
-    private AutoMapping $autoMapping;
-    private EntityManagerInterface $entityManager;
-    private CaptainPaymentEntityRepository $captainPaymentEntityRepository;
-    private CaptainManager $captainManager;
-    private AdminCaptainFinancialDuesManager $adminCaptainFinancialDuesManager;
-
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, CaptainPaymentEntityRepository $captainPaymentEntityRepository, CaptainManager $captainManager, AdminCaptainFinancialDuesManager $adminCaptainFinancialDuesManager)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private EntityManagerInterface $entityManager,
+        private CaptainPaymentEntityRepository $captainPaymentEntityRepository,
+        private CaptainManager $captainManager,
+        private AdminCaptainFinancialDuesManager $adminCaptainFinancialDuesManager)
     {
-        $this->autoMapping = $autoMapping;
-        $this->entityManager = $entityManager;
-        $this->captainPaymentEntityRepository = $captainPaymentEntityRepository;
-        $this->captainManager = $captainManager;
-        $this->adminCaptainFinancialDuesManager = $adminCaptainFinancialDuesManager;
     }
 
     public function createCaptainPayment(AdminCaptainPaymentCreateRequest $request): CaptainPaymentEntity|string
@@ -52,13 +50,19 @@ class AdminCaptainPaymentManager
         return $captainPaymentEntity;
     }
 
-    public function deleteCaptainPayment($id): CaptainPaymentEntity|string
+    /**
+     * Delete payment to captain linked with captain financial due (not with captain financial daily)
+     */
+    public function deleteCaptainPayment($id): CaptainPaymentEntity|string|int
     {
         $captainPaymentEntity = $this->captainPaymentEntityRepository->find($id);
 
-        if (! $captainPaymentEntity) {     
-            
+        if (! $captainPaymentEntity) {
             return PaymentConstant::PAYMENT_NOT_EXISTS;
+        }
+
+        if ($captainPaymentEntity->getCaptainFinancialDailyEntity()) {
+            return CaptainPaymentResultConstant::CAPTAIN_PAYMENT_LINKED_TO_CAPTAIN_FINANCIAL_DAILY_CONST;
         }
        
         $this->entityManager->remove($captainPaymentEntity);
@@ -67,7 +71,7 @@ class AdminCaptainPaymentManager
         return $captainPaymentEntity;
     }
 
-    public function getAllCaptainPayments(int $captainId): ?array
+    public function getAllCaptainPayments(int $captainId): array
     {
         return $this->captainPaymentEntityRepository->getAllCaptainPayments($captainId);
     }
@@ -75,5 +79,54 @@ class AdminCaptainPaymentManager
     public function getSumPaymentsToCaptainByCaptainFinancialDuesId(int $captainFinancialDuesId): ?array
     {
         return $this->captainPaymentEntityRepository->getSumPaymentsToCaptainByCaptainFinancialDuesId($captainFinancialDuesId);
+    }
+
+    public function createCaptainPaymentForCaptainFinancialDailyAmount(CaptainPaymentForCaptainFinancialDailyCreateByAdminRequest $request): CaptainPaymentEntity
+    {
+        $captainPaymentEntity = $this->autoMapping->map(CaptainPaymentForCaptainFinancialDailyCreateByAdminRequest::class,
+            CaptainPaymentEntity::class, $request);
+
+        $this->entityManager->persist($captainPaymentEntity);
+        $this->entityManager->flush();
+
+        return $captainPaymentEntity;
+    }
+
+    /**
+     * Delete payment to captain linked with captain financial daily (not with captain financial due)
+     */
+    public function deleteCaptainPaymentRelatedToCaptainFinancialDailyAmount(CaptainPaymentDeleteByAdminRequest $request): int|CaptainPaymentEntity
+    {
+        $captainPaymentEntity = $this->captainPaymentEntityRepository->findOneBy(['id' => $request->getId()]);
+
+        if (! $captainPaymentEntity) {
+            return CaptainPaymentResultConstant::CAPTAIN_PAYMENT_NOT_EXIST;
+        }
+
+        // Make sure the payment isn't linked to captain financial due
+        if ($captainPaymentEntity->getCaptainFinancialDues()) {
+            return CaptainPaymentResultConstant::CAPTAIN_PAYMENT_LINKED_TO_CAPTAIN_FINANCIAL_DUE_CONST;
+        }
+
+        $this->entityManager->remove($captainPaymentEntity);
+        $this->entityManager->flush();
+
+        return $captainPaymentEntity;
+    }
+
+    public function updateCaptainPaymentAmountAndNoteByAdmin(CaptainPaymentAmountAndNoteUpdateByAdminRequest $request): int|CaptainPaymentEntity
+    {
+        $captainPaymentEntity = $this->captainPaymentEntityRepository->findOneBy(['id' => $request->getId()]);
+
+        if (! $captainPaymentEntity) {
+            return CaptainPaymentResultConstant::CAPTAIN_PAYMENT_NOT_EXIST;
+        }
+
+        $captainPaymentEntity = $this->autoMapping->mapToObject(CaptainPaymentAmountAndNoteUpdateByAdminRequest::class,
+            CaptainPaymentEntity::class, $request, $captainPaymentEntity);
+
+        $this->entityManager->flush();
+
+        return $captainPaymentEntity;
     }
 }

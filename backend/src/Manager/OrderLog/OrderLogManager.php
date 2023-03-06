@@ -3,6 +3,7 @@
 namespace App\Manager\OrderLog;
 
 use App\AutoMapping;
+use App\Constant\OrderLog\OrderLogResultConstant;
 use App\Entity\OrderLogEntity;
 use App\Repository\OrderLogEntityRepository;
 use App\Request\OrderLog\OrderLogCreateRequest;
@@ -10,15 +11,12 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class OrderLogManager
 {
-    private EntityManagerInterface $entityManager;
-    private AutoMapping $autoMapping;
-    private OrderLogEntityRepository $orderLogEntityRepository;
-
-    public function __construct(EntityManagerInterface $entityManager, AutoMapping $autoMapping, OrderLogEntityRepository $orderLogEntityRepository)
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private AutoMapping $autoMapping,
+        private OrderLogEntityRepository $orderLogEntityRepository
+    )
     {
-        $this->entityManager = $entityManager;
-        $this->autoMapping = $autoMapping;
-        $this->orderLogEntityRepository = $orderLogEntityRepository;
     }
 
     public function createNewOrderLog(OrderLogCreateRequest $request): OrderLogEntity
@@ -40,5 +38,25 @@ class OrderLogManager
     {
         return $this->orderLogEntityRepository->findOneBy(['orderId'=>$orderId, 'type'=>$orderType, 'action'=>$actions,
             'createdByUserType'=>$createdByUserType], ['id'=>'DESC']);
+    }
+
+    /**
+     * Update captainProfile field to null for each order log record related to specific captain
+     */
+    public function updateOrderLogCaptainProfileToNullByCaptainUserId(int $captainUserId): array|int
+    {
+        $orderLogArrayResult = $this->orderLogEntityRepository->getOrderLogByCaptainUserId($captainUserId);
+
+        if (count($orderLogArrayResult) === 0) {
+            return OrderLogResultConstant::ORDER_LOG_NOT_EXIST_CONST;
+        }
+
+        foreach ($orderLogArrayResult as $orderLogEntity) {
+            $orderLogEntity->setCaptainProfile(null);
+
+            $this->entityManager->flush();
+        }
+
+        return $orderLogArrayResult;
     }
 }

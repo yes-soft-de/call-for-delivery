@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Constant\Captain\CaptainConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Entity\CaptainEntity;
+use App\Entity\CaptainFinancialDailyEntity;
 use App\Entity\ImageEntity;
 use App\Entity\OrderEntity;
 use App\Entity\RateEntity;
@@ -639,5 +640,38 @@ class CaptainEntityRepository extends ServiceEntityRepository
         }
 
         return $filteredOrders;
+    }
+
+    /**
+     * Get active and online captains' profiles with profile images
+     */
+    public function getActiveAndOnlineCaptainsForAdmin(): array
+    {
+        return $this->createQueryBuilder('captainEntity')
+
+            ->addSelect('imageEntity.imagePath', 'imageEntity.usedAs')
+
+            ->andWhere('captainEntity.status = :activeStatus')
+            ->setParameter('activeStatus', CaptainConstant::CAPTAIN_ACTIVE)
+
+            ->andWhere('captainEntity.isOnline = :onlineValue')
+            ->setParameter('onlineValue', CaptainConstant::CAPTAIN_ONLINE_TRUE)
+
+            ->leftJoin(
+                ImageEntity::class,
+                'imageEntity',
+                Join::WITH,
+                'imageEntity.itemId = captainEntity.id and imageEntity.entityType = :entityType'
+            )
+
+            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
+
+            ->andWhere('imageEntity.usedAs = :profileImage')
+            ->setParameter('profileImage', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+
+            ->orderBy('captainEntity.id', 'DESC')
+
+            ->getQuery()
+            ->getResult();
     }
 }

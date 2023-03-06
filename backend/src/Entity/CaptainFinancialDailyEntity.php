@@ -42,7 +42,6 @@ class CaptainFinancialDailyEntity
     #[ORM\Column(type: 'float', nullable: true)]
     private $bonus;
 
-    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'datetime')]
     private $createdAt;
 

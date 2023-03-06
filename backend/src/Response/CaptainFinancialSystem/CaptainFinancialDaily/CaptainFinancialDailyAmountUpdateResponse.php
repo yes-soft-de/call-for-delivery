@@ -14,7 +14,10 @@ class CaptainFinancialDailyAmountUpdateResponse
 
     public int $financialSystemType;
 
-    public int $financialSystemPlan;
+    /**
+     * @var int|null
+     */
+    public $financialSystemPlan;
 
     public int $isPaid;
 

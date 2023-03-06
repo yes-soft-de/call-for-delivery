@@ -14,6 +14,7 @@ use App\Constant\Order\OrderStateConstant;
 use App\Constant\OrderLog\OrderLogActionTypeConstant;
 use App\Constant\OrderLog\OrderLogCreatedByUserTypeConstant;
 use App\Constant\StoreOrderDetails\StoreOrderDetailsConstant;
+use App\Entity\CaptainEntity;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Entity\OrderEntity;
 use App\Entity\StoreOrderDetailsEntity;
@@ -26,6 +27,7 @@ use App\Request\Subscription\CalculateCostDeliveryOrderRequest;
 use App\Response\Order\Destination\OrderDestinationUpdateResponse;
 use App\Response\Order\OrderDeliveryCostUpdateResponse;
 use App\Response\Subscription\CalculateCostDeliveryOrderResponse;
+use App\Service\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialDuesService;
 use App\Service\GeoDistance\GeoDistanceService;
 use App\Service\Notification\NotificationFirebaseService;
@@ -49,7 +51,8 @@ class OrderDestinationService
         private SubscriptionService $subscriptionService,
         private CaptainFinancialDuesService $captainFinancialDuesService,
         private NotificationLocalService $notificationLocalService,
-        private NotificationFirebaseService $notificationFirebaseService
+        private NotificationFirebaseService $notificationFirebaseService,
+        private CaptainFinancialDailyService $captainFinancialDailyService
     )
     {
     }
@@ -126,7 +129,11 @@ class OrderDestinationService
                 return CaptainFinancialDues::FINANCIAL_NOT_FOUND;
             }
 
-            // 6. Create notifications
+            // 6. Create or update daily captain financial amount (if order had been delivered)
+            $this->checkIfCaptainFinancialDailyNeedToBeUpdatedByOrderState($storeBranchToClientDistanceUpdateResult->getState(),
+                $storeBranchToClientDistanceUpdateResult->getId());
+
+            // 7. Create notifications
             // Create local notification for store
             $this->createLocalNotificationForStore($storeBranchToClientDistanceUpdateResult->getStoreOwner()->getStoreOwnerId(),
                 $storeBranchToClientDistanceUpdateResult->getId(), NotificationConstant::ORDER_DESTINATION_DIFFERENT_TITLE_CONST,
@@ -384,5 +391,20 @@ class OrderDestinationService
     public function sendFirebaseNotificationToUser(int $userId, int $orderId, string $text)
     {
         $this->notificationFirebaseService->notificationToUser($userId, $orderId, $text);
+    }
+
+    /**
+     * Creates or Updates Daily Financial amount for captain
+     */
+    public function createOrUpdateCaptainFinancialDaily(int $orderId, CaptainEntity $captainEntity = null)
+    {
+        $this->captainFinancialDailyService->createOrUpdateCaptainFinancialDaily($orderId, $captainEntity);
+    }
+
+    public function checkIfCaptainFinancialDailyNeedToBeUpdatedByOrderState(string $orderState, int $orderId): void
+    {
+        if ($orderState === OrderStateConstant::ORDER_STATE_DELIVERED) {
+            $this->createOrUpdateCaptainFinancialDaily($orderId);
+        }
     }
 }

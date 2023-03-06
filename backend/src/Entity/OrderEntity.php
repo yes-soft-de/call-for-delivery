@@ -125,6 +125,9 @@ class OrderEntity
     #[ORM\OneToMany(mappedBy: 'orderId', targetEntity: DashboardLocalNotificationEntity::class)]
     private $dashboardLocalNotificationEntities;
 
+    #[ORM\Column(type: 'smallint', nullable: true)]
+    private $costType;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
@@ -655,6 +658,18 @@ class OrderEntity
                 $dashboardLocalNotificationEntity->setOrderId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCostType(): ?int
+    {
+        return $this->costType;
+    }
+
+    public function setCostType(?int $costType): self
+    {
+        $this->costType = $costType;
 
         return $this;
     }

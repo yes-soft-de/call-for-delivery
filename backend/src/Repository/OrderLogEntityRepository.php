@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Constant\Image\ImageEntityTypeConstant;
+use App\Constant\Image\ImageUseAsConstant;
 use App\Constant\OrderLog\OrderLogCreatedByUserTypeConstant;
 use App\Entity\ImageEntity;
 use App\Entity\AdminProfileEntity;
@@ -98,6 +99,9 @@ class OrderLogEntityRepository extends ServiceEntityRepository
             )
             
             ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
+
+            ->andWhere('imageEntity.usedAs = :profileImage')
+            ->setParameter('profileImage', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
 
             ->leftJoin(
                 OrderEntity::class,
@@ -248,5 +252,23 @@ class OrderLogEntityRepository extends ServiceEntityRepository
         }
 
         return $orderLogs;
+    }
+
+    public function getOrderLogByCaptainUserId(int $captainUserId): array
+    {
+        return $this->createQueryBuilder('orderLogEntity')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = orderLogEntity.captainProfile'
+            )
+
+            ->andWhere('captainEntity.captainId = :captainUserId')
+            ->setParameter('captainUserId', $captainUserId)
+
+            ->getQuery()
+            ->getResult();
     }
 }

@@ -8,7 +8,9 @@ use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificat
 use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificationTitleConstant;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Notification\NotificationTokenConstant;
+use App\Constant\Order\OrderCostTypeConstant;
 use App\Constant\Order\OrderDestinationConstant;
+use App\Constant\Order\OrderHasPayConflictAnswersConstant;
 use App\Constant\Order\OrderIsCancelConstant;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\Order\OrderStateConstant;
@@ -21,6 +23,7 @@ use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\StoreOwnerBranch\StoreOwnerBranch;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Entity\BidDetailsEntity;
+use App\Entity\CaptainEntity;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Entity\OrderEntity;
 use App\Entity\StoreOrderDetailsEntity;
@@ -60,6 +63,7 @@ use App\Response\Subscription\CanCreateOrderResponse;
 use App\Service\Admin\CaptainCashOrder\AdminCaptainCashOrderService;
 use App\Service\Admin\ChatRoom\OrderChatRoom\AdminOrderChatRoomService;
 use App\Service\Admin\StoreCashOrder\AdminStoreCashOrderService;
+use App\Service\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyService;
 use App\Service\ChatRoom\OrderChatRoomService;
 use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\GeoDistance\GeoDistanceService;
@@ -127,7 +131,8 @@ class AdminOrderService
         private AdminCaptainCashOrderService $adminCaptainCashOrderService,
         private AdminStoreCashOrderService $adminStoreCashOrderService,
         private AdminOrderChatRoomService $adminOrderChatRoomService,
-        private DashboardLocalNotificationService $dashboardLocalNotificationService
+        private DashboardLocalNotificationService $dashboardLocalNotificationService,
+        private CaptainFinancialDailyService $captainFinancialDailyService
     )
     {
     }
@@ -677,12 +682,15 @@ class AdminOrderService
                 $this->createOrUpdateCaptainFinancialDues($arrayResult[1]->getCaptainId(), $arrayResult[0]->getId(),
                     $arrayResult[0]->getCreatedAt());
 
-                // 6. Create log
+                // 4. Update daily captain financial amount
+                $this->createOrUpdateCaptainFinancialDaily($arrayResult[0]->getId(), $arrayResult[1]);
+
+                // 5. Create log
                 $this->createOrderLogViaOrderEntity($arrayResult[0]);
 
                 $this->createOrderLogMessageViaOrderEntityAndByAdmin($arrayResult[0], $userId);
 
-                // 7. Send notifications
+                // 6. Send notifications
                 // local notification to store
                 $this->createLocalNotificationForStore($arrayResult[0]->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
                     NotificationConstant::CANCEL_ORDER_SUCCESS, $arrayResult[0]->getId());
@@ -827,13 +835,16 @@ class AdminOrderService
                         $this->captainFinancialDuesService->captainFinancialDues($orderResult[0]->getCaptainId()->getCaptainId());
 
                         //save the price of the order in cash in case the captain does not pay the store
-                        if ($orderResult[0]->getPayment() === OrderTypeConstant::ORDER_PAYMENT_CASH && $orderResult[0]->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
+                        if ($this->checkCashOrderCostPaidToStoreOrNotByOrderEntity($orderResult[0])) {
                             $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($orderResult[0],
                                 OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $orderResult[0]->getOrderCost());
 
                             $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($orderResult[0],
                                 OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $orderResult[0]->getOrderCost());
                         }
+
+                        // Create or update daily captain financial amount
+                        $this->createOrUpdateCaptainFinancialDaily($orderResult[0]->getId());
                     }
 
                     // create firebase notification to captain
@@ -934,6 +945,9 @@ class AdminOrderService
         if ($order) {
             if ($order->getCaptainId()?->getCaptainId()) {
                 $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
+
+                // Create or update daily captain financial amount
+                $this->createOrUpdateCaptainFinancialDaily($order->getId());
             }
 
             // save log of the action on order
@@ -1267,6 +1281,9 @@ class AdminOrderService
         // Re-calculate the financial dues of the captain who has the order (if exists)
         if ($order->getCaptainId()?->getCaptainId()) {
             $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
+
+            // Create or update daily captain financial amount
+            $this->createOrUpdateCaptainFinancialDaily($order->getId());
         }
 
         // save log of the action on order
@@ -1303,6 +1320,9 @@ class AdminOrderService
                 // Re-calculate the financial dues of the captain who has the order (if exists)
                 if ($order->getCaptainId()?->getCaptainId()) {
                     $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
+
+                    // Re-calculate daily captain financial due
+                    $this->createOrUpdateCaptainFinancialDaily($order->getId());
                 }
 
                 $this->entityManager->getConnection()->commit();
@@ -1553,5 +1573,67 @@ class AdminOrderService
     public function updateStoreOrderDetailsDifferentReceiverDestinationByOrderId(int $orderId, int $differentReceiverDestination): int|StoreOrderDetailsEntity
     {
         return $this->adminOrderManager->updateStoreOrderDetailsDifferentReceiverDestinationByOrderId($orderId, $differentReceiverDestination);
+    }
+
+    /**
+     * Creates or Updates Daily Financial amount for captain
+     */
+    public function createOrUpdateCaptainFinancialDaily(int $orderId, CaptainEntity $captainEntity = null)
+    {
+        $this->captainFinancialDailyService->createOrUpdateCaptainFinancialDaily($orderId, $captainEntity);
+    }
+
+    /**
+     * returns true if cash order cost had not been paid to store, and returns false otherwise
+     */
+    public function checkCashOrderCostPaidToStoreOrNotByOrderEntity(OrderEntity $orderEntity): bool
+    {
+        if ($orderEntity->getPayment() === PaymentConstant::CASH_PAYMENT_METHOD_CONST) {
+            // payment method is of type cash, so continue checking process
+            if (! $orderEntity->getCostType()) {
+                // cost type is not defined
+                if ($orderEntity->getHasPayConflictAnswers()) {
+                    // it had been set if there conflicted answers or not
+                    if ($orderEntity->getHasPayConflictAnswers() === OrderHasPayConflictAnswersConstant::ORDER_DOES_NOT_HAVE_PAYMENT_CONFLICT_ANSWERS) {
+                        // both store and captain answers are matched, check any one of them
+                        if ($orderEntity->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
+                            return true;
+                        }
+                    }
+
+                } elseif (! $orderEntity->getHasPayConflictAnswers()) {
+                    // till here means the store has not confirmed the cash payment yet
+                    if ($orderEntity->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
+                        return true;
+                    }
+                }
+
+            } elseif ($orderEntity->getCostType()) {
+                // check cost type
+                if ($orderEntity->getCostType() === OrderCostTypeConstant::ORDER_COST_TYPE_DELIVERY_COST_ONLY_CONST) {
+                    // the cost is delivery cost only, no need to create
+                    return false;
+
+                } elseif ($orderEntity->getCostType() === OrderCostTypeConstant::ORDER_COST_TYPE_DELIVERY_COST_AND_ORDER_COST_CONST) {
+                    if ($orderEntity->getHasPayConflictAnswers()) {
+                        // it had been set if there conflicted answers or not
+                        if ($orderEntity->getHasPayConflictAnswers() === OrderHasPayConflictAnswersConstant::ORDER_DOES_NOT_HAVE_PAYMENT_CONFLICT_ANSWERS) {
+                            // both store and captain answers are matched, check any one of them
+                            if ($orderEntity->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
+                                return true;
+                            }
+                        }
+
+                    } elseif (! $orderEntity->getHasPayConflictAnswers()) {
+                        // till here means the store has not confirmed the cash payment yet
+                        if ($orderEntity->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
+                            return true;
+                        }
+                    }
+                }
+            }
+        }
+
+        return false;
     }
 }

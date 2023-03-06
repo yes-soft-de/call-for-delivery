@@ -457,7 +457,8 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate',
                 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.storeBranchToClientDistance', 'storeOrderDetails.id as storeOrderDetailsId',
                 'storeOrderDetails.destination', 'storeOrderDetails.recipientName', 'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId',
-                'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName', 'imageEntity.id as imageId', 'imageEntity.imagePath as images')
+                'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName', 'imageEntity.id as imageId', 'imageEntity.imagePath as images',
+                'captainEntity.id as captainProfileId')
 
             ->leftJoin(
                 StoreOrderDetailsEntity::class,
@@ -476,6 +477,13 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'imageEntity',
                 Join::WITH,
                 'imageEntity.id = storeOrderDetails.images')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = orderEntity.captainId'
+            )
 
             ->orderBy('orderEntity.id', 'DESC');
 

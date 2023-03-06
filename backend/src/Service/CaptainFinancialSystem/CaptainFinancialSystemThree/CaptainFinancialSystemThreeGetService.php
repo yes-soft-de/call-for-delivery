@@ -17,4 +17,9 @@ class CaptainFinancialSystemThreeGetService
     {
         return $this->captainFinancialSystemAccordingOnOrderManager->getAllCaptainFinancialSystemAccordingOnOrder();
     }
+
+    public function getAllCaptainFinancialSystemThreePlansAsArray(): array
+    {
+        return $this->captainFinancialSystemAccordingOnOrderManager->getCaptainFinancialSystemAccordingOnOrder();
+    }
 }

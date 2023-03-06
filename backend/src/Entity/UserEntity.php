@@ -51,16 +51,12 @@ class UserEntity implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $updatedAt;
 
-    #[ORM\OneToMany(mappedBy: 'user', targetEntity: DashboardLocalNotificationEntity::class)]
-    private $dashboardLocalNotificationEntities;
-
     public function __construct($userID)
     {
         $this->userId = $userID;
         $this->rateEntities = new ArrayCollection();
         $this->verificationEntities = new ArrayCollection();
         $this->resetPasswordOrderEntities = new ArrayCollection();
-        $this->dashboardLocalNotificationEntities = new ArrayCollection();
     }
 
     /**
@@ -278,36 +274,6 @@ class UserEntity implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, DashboardLocalNotificationEntity>
-     */
-    public function getDashboardLocalNotificationEntities(): Collection
-    {
-        return $this->dashboardLocalNotificationEntities;
-    }
-
-    public function addDashboardLocalNotificationEntity(DashboardLocalNotificationEntity $dashboardLocalNotificationEntity): self
-    {
-        if (!$this->dashboardLocalNotificationEntities->contains($dashboardLocalNotificationEntity)) {
-            $this->dashboardLocalNotificationEntities[] = $dashboardLocalNotificationEntity;
-            $dashboardLocalNotificationEntity->setUser($this);
-        }
-
-        return $this;
-    }
-
-    public function removeDashboardLocalNotificationEntity(DashboardLocalNotificationEntity $dashboardLocalNotificationEntity): self
-    {
-        if ($this->dashboardLocalNotificationEntities->removeElement($dashboardLocalNotificationEntity)) {
-            // set the owning side to null (unless already changed)
-            if ($dashboardLocalNotificationEntity->getUser() === $this) {
-                $dashboardLocalNotificationEntity->setUser(null);
-            }
-        }
 
         return $this;
     }

@@ -43,10 +43,14 @@ class AdminProfileEntity
     #[ORM\OneToMany(mappedBy: 'adminProfile', targetEntity: DirectSupportScriptEntity::class)]
     private $directSupportScriptEntities;
 
+    #[ORM\OneToMany(mappedBy: 'adminProfile', targetEntity: DashboardLocalNotificationEntity::class)]
+    private $dashboardLocalNotificationEntities;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->directSupportScriptEntities = new ArrayCollection();
+        $this->dashboardLocalNotificationEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -180,6 +184,36 @@ class AdminProfileEntity
             // set the owning side to null (unless already changed)
             if ($directSupportScriptEntity->getAdminProfile() === $this) {
                 $directSupportScriptEntity->setAdminProfile(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, DashboardLocalNotificationEntity>
+     */
+    public function getDashboardLocalNotificationEntities(): Collection
+    {
+        return $this->dashboardLocalNotificationEntities;
+    }
+
+    public function addDashboardLocalNotificationEntity(DashboardLocalNotificationEntity $dashboardLocalNotificationEntity): self
+    {
+        if (!$this->dashboardLocalNotificationEntities->contains($dashboardLocalNotificationEntity)) {
+            $this->dashboardLocalNotificationEntities[] = $dashboardLocalNotificationEntity;
+            $dashboardLocalNotificationEntity->setAdminProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDashboardLocalNotificationEntity(DashboardLocalNotificationEntity $dashboardLocalNotificationEntity): self
+    {
+        if ($this->dashboardLocalNotificationEntities->removeElement($dashboardLocalNotificationEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($dashboardLocalNotificationEntity->getAdminProfile() === $this) {
+                $dashboardLocalNotificationEntity->setAdminProfile(null);
             }
         }
 

@@ -20,6 +20,8 @@ use App\Service\ChatRoom\ChatRoomService;
 use App\Service\ChatRoom\OrderChatRoomService;
 use App\Service\Image\ImageService;
 use App\Service\Notification\NotificationFirebaseService;
+use App\Service\OrderLog\OrderLogService;
+use App\Service\OrderTimeLine\OrderTimeLineService;
 use App\Service\ResetPassword\ResetPasswordOrderService;
 use App\Service\User\UserService;
 use App\Service\Verification\VerificationService;
@@ -42,7 +44,9 @@ class CaptainEraserService
         private EntityManagerInterface $entityManager,
         private CanDeleteCaptainAccountAndProfileByAdminService $canDeleteCaptainAccountAndProfileByAdminService,
         private CaptainFinancialDuesService $captainFinancialDuesService,
-        private ChatRoomService $chatRoomService
+        private ChatRoomService $chatRoomService,
+        private OrderTimeLineService $orderTimeLineService,
+        private OrderLogService $orderLogService
     )
     {
     }
@@ -66,6 +70,14 @@ class CaptainEraserService
         // Now we can start deleting the account and related info
         // Delete captain financial dues (as long as it have zero value)
         $this->deleteAllCaptainFinancialDuesByCaptainId($request->getId());
+
+        // Update order time line record/s related to the captain by setting captain profile field to NULL value,
+        // in order to be able to delete captain profile
+        $this->updateOrderTimelineCaptainProfileToNullByCaptainUserId($request->getId());
+
+        // Update order log record/s related to the captain by setting captain profile field to NULL value,
+        // in order to be able to delete captain profile
+        $this->updateOrderLogCaptainProfileToNullByCaptainUserId($request->getId());
 
         // delete financial system that the captain subscribed with
         $this->captainFinancialSystemDetailService->deleteCaptainFinancialSystemDetailsByCaptainId($request->getId());
@@ -111,9 +123,17 @@ class CaptainEraserService
                 }
             }
 
-            // Now we can start deleting the account and related info
+            ///// Now we can start deleting the account and related info
             // Delete captain financial dues (as long as it have zero value)
             $this->deleteAllCaptainFinancialDuesByCaptainId($request->getCaptainId());
+
+            // Update order time line record/s related to the captain by setting captain profile field to NULL value,
+            // in order to be able to delete captain profile
+            $this->updateOrderTimelineCaptainProfileToNullByCaptainUserId($request->getCaptainId());
+
+            // Update order log record/s related to the captain by setting captain profile field to NULL value,
+            // in order to be able to delete captain profile
+            $this->updateOrderLogCaptainProfileToNullByCaptainUserId($request->getCaptainId());
 
             // delete financial system that the captain subscribed with
             $this->captainFinancialSystemDetailService->deleteCaptainFinancialSystemDetailsByCaptainId($request->getCaptainId());
@@ -164,5 +184,21 @@ class CaptainEraserService
     public function deleteChatRoomByUserId(int $userId): ChatRoomEntity|int
     {
         return $this->chatRoomService->deleteChatRoomByUserId($userId);
+    }
+
+    /**
+     * Update captainProfile field to null for each order timeline record related to specific captain
+     */
+    public function updateOrderTimelineCaptainProfileToNullByCaptainUserId(int $captainUserId): array|int
+    {
+        return $this->orderTimeLineService->updateOrderTimelineCaptainProfileToNullByCaptainUserId($captainUserId);
+    }
+
+    /**
+     * Update captainProfile field to null for each order log record related to specific captain
+     */
+    public function updateOrderLogCaptainProfileToNullByCaptainUserId(int $captainUserId): array|int
+    {
+        return $this->orderLogService->updateOrderLogCaptainProfileToNullByCaptainUserId($captainUserId);
     }
 }

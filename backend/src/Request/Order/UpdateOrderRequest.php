@@ -48,6 +48,11 @@ class UpdateOrderRequest
     private $orderIsMain;
 
     /**
+     * @var int|null
+     */
+    private $costType;
+
+    /**
      * Get the value of id
      */ 
     public function getId()
