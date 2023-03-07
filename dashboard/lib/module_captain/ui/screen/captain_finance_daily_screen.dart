@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
+import 'package:c4d/module_captain/request/captain_daily_finance_request.dart';
 import 'package:c4d/module_captain/state_manager/captain_finance_daily_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,8 @@ class CaptainFinanceDailyScreen extends StatefulWidget {
 
 class CaptainFinanceDailyScreenState extends State<CaptainFinanceDailyScreen> {
   States? _currentState;
+  int currentIndex = 0;
+  late CaptainDailyFinanceRequest filter;
   @override
   void initState() {
     _currentState = LoadingState(this);
@@ -27,7 +30,8 @@ class CaptainFinanceDailyScreenState extends State<CaptainFinanceDailyScreen> {
 
       if (mounted) setState(() {});
     });
-    widget._manager.getCaptainsFinanceDaily(this);
+    filter = CaptainDailyFinanceRequest(isPaid: 176);
+    widget._manager.getCaptainsFinanceDailyNew(this, filter);
     super.initState();
   }
 

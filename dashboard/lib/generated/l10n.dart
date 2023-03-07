@@ -9169,6 +9169,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Dues`
+  String get dues {
+    return Intl.message(
+      'Dues',
+      name: 'dues',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Remaining to pay`
+  String get remainingtoPay {
+    return Intl.message(
+      'Remaining to pay',
+      name: 'remainingtoPay',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

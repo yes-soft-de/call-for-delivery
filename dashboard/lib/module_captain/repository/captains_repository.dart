@@ -1,5 +1,6 @@
 import 'package:c4d/module_captain/request/assign_order_to_captain_request.dart';
 import 'package:c4d/module_captain/request/captain_activities_filter_request.dart';
+import 'package:c4d/module_captain/request/captain_daily_finance_request.dart';
 import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/request/captain_offer_request.dart';
 import 'package:c4d/module_captain/request/enable_captain.dart';
@@ -14,6 +15,7 @@ import 'package:c4d/module_captain/response/captain_need_support_response/captai
 import 'package:c4d/module_captain/response/captain_order_control_response/captain_order_control_response.dart';
 import 'package:c4d/module_captain/response/captain_profile_response.dart';
 import 'package:c4d/module_captain/response/in_active_captain_response.dart';
+import 'package:c4d/module_captain/response/new_get_finance_daily_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
@@ -229,5 +231,15 @@ class CaptainsRepository {
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return CaptainFinanceDailyResponse.fromJson(response);
+  }
+
+  Future<CaptainFinanceDailyNewResponse?> getCaptainFinanceDailyNew(
+      CaptainDailyFinanceRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+        Urls.NEW_GET_CAPTAIN_FINANCE_DAILY, request.toJson(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return CaptainFinanceDailyNewResponse.fromJson(response);
   }
 }

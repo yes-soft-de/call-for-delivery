@@ -2,12 +2,10 @@ class CaptainDailyFinanceRequest {
   DateTime? fromDate;
   DateTime? toDate;
   int? captainProfileId;
+  int? isPaid;
 
-  CaptainDailyFinanceRequest({
-    this.fromDate,
-    this.toDate,
-    this.captainProfileId,
-  });
+  CaptainDailyFinanceRequest(
+      {this.fromDate, this.toDate, this.captainProfileId, this.isPaid});
 
   factory CaptainDailyFinanceRequest.fromJson(Map<String, dynamic> json) {
     return CaptainDailyFinanceRequest(
@@ -18,6 +16,7 @@ class CaptainDailyFinanceRequest {
           ? null
           : DateTime.parse(json['toDate'] as String),
       captainProfileId: json['captainProfileId'] as int?,
+      isPaid: json['isPaid'] as int?,
     );
   }
 
@@ -25,5 +24,6 @@ class CaptainDailyFinanceRequest {
         'fromDate': fromDate?.toIso8601String(),
         'toDate': toDate?.toIso8601String(),
         'captainProfileId': captainProfileId,
+        'isPaid': isPaid,
       };
 }

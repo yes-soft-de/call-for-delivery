@@ -1,6 +1,7 @@
 import 'package:c4d/module_captain/repository/captains_repository.dart';
 import 'package:c4d/module_captain/request/assign_order_to_captain_request.dart';
 import 'package:c4d/module_captain/request/captain_activities_filter_request.dart';
+import 'package:c4d/module_captain/request/captain_daily_finance_request.dart';
 import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/request/captain_offer_request.dart';
 import 'package:c4d/module_captain/request/enable_captain.dart';
@@ -16,6 +17,7 @@ import 'package:c4d/module_captain/response/captain_order_control_response/capta
 import 'package:c4d/module_captain/response/captain_profile_response.dart';
 import 'package:c4d/module_captain/response/captain_rating_response/captain_rating_response.dart';
 import 'package:c4d/module_captain/response/in_active_captain_response.dart';
+import 'package:c4d/module_captain/response/new_get_finance_daily_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 
@@ -86,4 +88,7 @@ class CaptainsManager {
       _repository.getCaptainActivityDetails(captainID);
   Future<CaptainFinanceDailyResponse?> getCaptainFinanceDaily() =>
       _repository.getCaptainFinanceDaily();
+  Future<CaptainFinanceDailyNewResponse?> getCaptainFinanceDailyNew(
+          CaptainDailyFinanceRequest request) =>
+      _repository.getCaptainFinanceDailyNew(request);
 }

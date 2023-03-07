@@ -910,5 +910,7 @@
     "paidPartiallyCaptainFinanceDaily":"دفع جزء من المستحقات",
     "duesPayments":"المستحقات للدفع",
     "sumCaptainsFinancialDues": "مستحقات الكباتن",
-    "updateCustomerLocation":"تم تحديث حقل موقع العميل وحفظ الموقع القديم"
+    "updateCustomerLocation":"تم تحديث حقل موقع العميل وحفظ الموقع القديم",
+    "dues":"المستحقات",
+    "remainingtoPay":"المتبقي للدفع"
 }

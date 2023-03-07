@@ -479,6 +479,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
             "Download Twaslna App on Play Store"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("Driver Licence"),
+        "dues": MessageLookupByLibrary.simpleMessage("Dues"),
         "duesPayments":
             MessageLookupByLibrary.simpleMessage("Dues for payment"),
         "earnCash": MessageLookupByLibrary.simpleMessage("Earn Cash"),
@@ -1084,6 +1085,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Store reject your offer"),
         "remainingAmountForStore":
             MessageLookupByLibrary.simpleMessage("Amount owed for store"),
+        "remainingtoPay":
+            MessageLookupByLibrary.simpleMessage("Remaining to pay"),
         "remove": MessageLookupByLibrary.simpleMessage("Remove"),
         "renewNewPlan": MessageLookupByLibrary.simpleMessage(
             "Subscription with new package"),
