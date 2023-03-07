@@ -67,7 +67,7 @@ class DailyPaymentsScreenState extends State<DailyPaymentsScreen> {
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(
         context,
-        title: 'captainName' + ' (${captainID})',
+        title: captainName + ' (${captainID})',
       ),
       body: Column(
         children: [
