@@ -52,12 +52,14 @@ class DailyPaymentsScreenState extends State<DailyPaymentsScreen> {
 
   late CaptainDailyFinanceRequest paymentsFilter;
   int captainID = -1;
+  String captainName = '';
   bool flag = true;
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
-    if (args != null && args is int && flag) {
-      captainID = args;
+    if (args != null && args is List && flag) {
+      captainID = args[0];
+      captainName = args[1];
       flag = false;
       paymentsFilter.captainProfileId = captainID;
       widget._stateManager.getAccountBalance(this, paymentsFilter);
@@ -65,7 +67,7 @@ class DailyPaymentsScreenState extends State<DailyPaymentsScreen> {
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(
         context,
-        title: S.current.payments,
+        title: 'captainName' + ' (${captainID})',
       ),
       body: Column(
         children: [

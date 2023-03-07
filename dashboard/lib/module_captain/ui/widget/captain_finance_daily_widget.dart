@@ -16,7 +16,7 @@ class CaptainFinanceDailyWidget extends StatelessWidget {
       onTap: () {
         Navigator.of(context).pushNamed(
           PaymentsRoutes.CAPTAIN_DAILY_PAYMENTS,
-          arguments: model?.id,
+          arguments: [model?.id, model?.captainName],
         );
       },
       child: Padding(
