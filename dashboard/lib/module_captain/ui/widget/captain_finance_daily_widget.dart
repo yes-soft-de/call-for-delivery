@@ -69,7 +69,7 @@ class CaptainFinanceDailyWidget extends StatelessWidget {
                               color: Theme.of(context).colorScheme.background),
                         ),
                         Text(
-                          ' (${model?.id.toString()}) ',
+                          ' (${model?.captainProfileId.toString()}) ',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Theme.of(context).colorScheme.background),
