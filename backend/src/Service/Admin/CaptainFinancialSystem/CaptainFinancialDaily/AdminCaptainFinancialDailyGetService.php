@@ -9,6 +9,7 @@ use App\Entity\CaptainFinancialDailyEntity;
 use App\Manager\Admin\CaptainFinancialSystem\CaptainFinancialDaily\AdminCaptainFinancialDailyManager;
 use App\Request\Admin\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyFilterByAdminRequest;
 use App\Response\Admin\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyFilterByAdminResponse;
+use App\Response\Admin\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailySumFilterByAdminResponse;
 use App\Response\Admin\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyTodayGetForAdminResponse;
 use App\Service\Admin\Captain\AdminCaptainGetService;
 use App\Service\FileUpload\UploadFileHelperService;
@@ -29,7 +30,7 @@ class AdminCaptainFinancialDailyGetService
     {
         $captainFinancialDaily = $this->adminCaptainFinancialDailyManager->getCaptainFinancialDailyById($captainFinancialDailyId);
 
-        if (! $captainFinancialDaily) {
+        if (!$captainFinancialDaily) {
             return CaptainFinancialDailyResultConstant::CAPTAIN_FINANCIAL_DAILY_NOT_EXIST_CONST;
         }
 
@@ -99,7 +100,7 @@ class AdminCaptainFinancialDailyGetService
                                 $captainFinancialDaily);
 
                             $response[$key]->captainFinancialDailyId = $response[$key]->id;
-                            $response[$key]->captainFinancialDailyUpdatedAt =$captainFinancialDaily->getUpdatedAt();
+                            $response[$key]->captainFinancialDailyUpdatedAt = $captainFinancialDaily->getUpdatedAt();
 
                             $response[$key]->id = $value[0]->getId();
                             $response[$key]->captainName = $value[0]->getCaptainName();
@@ -112,5 +113,94 @@ class AdminCaptainFinancialDailyGetService
         }
 
         return $response;
+    }
+
+    public function filterCaptainFinancialDailySumByAdmin(CaptainFinancialDailyFilterByAdminRequest $request): array
+    {
+        $response = [];
+
+        if ($request->getCaptainProfileId()) {
+            $captainFinancialDailyArray = $this->adminCaptainFinancialDailyManager->filterCaptainFinancialDailyWithImagesByAdmin($request);
+
+            if (count($captainFinancialDailyArray) > 0) {
+                $tempResponse['id'] = 1;
+                $tempResponse['captainProfileId'] = $captainFinancialDailyArray[0][0]->getCaptainProfile()->getId();
+                $tempResponse['captainName'] = $captainFinancialDailyArray[0][0]->getCaptainProfile()->getCaptainName();
+                $tempResponse['image'] = $this->uploadFileHelperService->getImageParams($captainFinancialDailyArray[0]['imagePath']);
+                $tempResponse['amountSum'] = $this->getAmountSumByCaptainFinancialDaily($captainFinancialDailyArray);
+                $tempResponse['toBePaid'] = $this->getToBePaidAmountByCaptainFinancialDaily($captainFinancialDailyArray);
+
+                $response[] = $this->autoMapping->map('array', CaptainFinancialDailySumFilterByAdminResponse::class, $tempResponse);
+            }
+
+        } else {
+            $captainsProfiles = $this->getActiveAndOnlineCaptainsForAdmin();
+
+            if (count($captainsProfiles) > 0) {
+                foreach ($captainsProfiles as $key => $value) {
+                    $request->setCaptainProfileId($value[0]->getId());
+
+                    $captainFinancialDailyArray = $this->adminCaptainFinancialDailyManager->filterCaptainFinancialDailyWithImagesByAdmin($request);
+
+                    if (count($captainFinancialDailyArray) > 0) {
+                        $tempResponse['id'] = $key;
+                        $tempResponse['captainProfileId'] = $captainFinancialDailyArray[0][0]->getCaptainProfile()->getId();
+                        $tempResponse['captainName'] = $captainFinancialDailyArray[0][0]->getCaptainProfile()->getCaptainName();
+                        $tempResponse['image'] = $this->uploadFileHelperService->getImageParams($captainFinancialDailyArray[0]['imagePath']);
+                        $tempResponse['amountSum'] = $this->getAmountSumByCaptainFinancialDaily($captainFinancialDailyArray);
+                        $tempResponse['toBePaid'] = $this->getToBePaidAmountByCaptainFinancialDaily($captainFinancialDailyArray);
+
+                        $response[] = $this->autoMapping->map('array', CaptainFinancialDailySumFilterByAdminResponse::class, $tempResponse);
+                    }
+                }
+            }
+        }
+
+        return $response;
+    }
+
+    /**
+     * Calculate and return the sum of captain financial daily amount
+     * note: the sum of both amount and bonus fields
+     */
+    public function getAmountSumByCaptainFinancialDaily(array $captainFinancialDailyArray): float
+    {
+        if (count($captainFinancialDailyArray) === 0) {
+            return 0.0;
+        }
+
+        $sum = 0.0;
+
+        foreach ($captainFinancialDailyArray as $captainFinancialDaily) {
+            $sum += $captainFinancialDaily[0]->getAmount() + $captainFinancialDaily[0]->getBonus();
+        }
+
+        return $sum;
+    }
+
+    /**
+     * Calculate and return the remind payment amount for a group of captain financial daily
+     */
+    public function getToBePaidAmountByCaptainFinancialDaily(array $captainFinancialDailyArray): float
+    {
+        if (count($captainFinancialDailyArray) === 0) {
+            return 0.0;
+        }
+
+        $sum = $this->getAmountSumByCaptainFinancialDaily($captainFinancialDailyArray);
+
+        $paymentsSum = 0.0;
+
+        foreach ($captainFinancialDailyArray as $captainFinancialDaily) {
+            $payments = $captainFinancialDaily[0]->getCaptainPayment()->toArray();
+
+            if (count($payments) > 0) {
+                foreach ($payments as $payment) {
+                    $paymentsSum += $payment->getAmount();
+                }
+            }
+        }
+
+        return ($sum - $paymentsSum);
     }
 }

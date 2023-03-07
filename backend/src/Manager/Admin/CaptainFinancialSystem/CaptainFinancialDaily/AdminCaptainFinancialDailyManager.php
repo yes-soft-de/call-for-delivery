@@ -42,4 +42,12 @@ class AdminCaptainFinancialDailyManager
     {
         return $this->captainFinancialDailyEntityRepository->filterCaptainFinancialDailyByAdmin($request);
     }
+
+    /**
+     * Filter captain financial daily and return it with captains' images
+     */
+    public function filterCaptainFinancialDailyWithImagesByAdmin(CaptainFinancialDailyFilterByAdminRequest $request): array
+    {
+        return $this->captainFinancialDailyEntityRepository->filterCaptainFinancialDailyWithImagesByAdmin($request);
+    }
 }
