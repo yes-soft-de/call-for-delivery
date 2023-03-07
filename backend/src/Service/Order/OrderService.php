@@ -850,11 +850,7 @@ class OrderService
 
             return OrderResultConstant::ORDER_UPDATE_PROBLEM;
 
-        } elseif (($orderEntity->getState() === OrderStateConstant::ORDER_STATE_ON_WAY)
-            || ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_IN_STORE)) {
-            // Before continue, save the state of the order for later use
-            $orderOldState = $orderEntity->getState();
-
+        } elseif ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
             // 3.1. Update order state and other info
             $arrayResult = $this->orderManager->updateOngoingOrderToCancelled($orderEntity);
 
@@ -862,15 +858,9 @@ class OrderService
                 // 3.2. Delete the chat room of the order
                 $this->deleteChatRoomByOrderId($arrayResult[0]->getId());
 
-                // If the captain had reached the store then we won't update remaining orders
-                if ($orderOldState === OrderStateConstant::ORDER_STATE_ON_WAY) {
-                    // 3.3. Update store subscription (remaining orders + remaining cars), if order relate
-                    $this->updateRemainingOrdersOfStoreSubscription($arrayResult[0]->getStoreOwner()->getId(), $arrayResult[0]->getCreatedAt(),
-                        SubscriptionConstant::OPERATION_TYPE_ADDITION, 1);
-                }
-
-                // If the captain had reached the store, then we would count half of the order financial value for the captain
-                if ($orderOldState === OrderStateConstant::ORDER_STATE_IN_STORE) {}
+                // 3.3. Update store subscription (remaining orders + remaining cars), if order relate
+                $this->updateRemainingOrdersOfStoreSubscription($arrayResult[0]->getStoreOwner()->getId(), $arrayResult[0]->getCreatedAt(),
+                    SubscriptionConstant::OPERATION_TYPE_ADDITION, 1);
 
                 $this->updateRemainingCarsOfStoreSubscription($arrayResult[0]->getStoreOwner()->getId(), $arrayResult[0]->getCreatedAt(),
                     SubscriptionConstant::OPERATION_TYPE_ADDITION, 1);
@@ -904,6 +894,56 @@ class OrderService
                     NotificationConstant::CAPTAIN);
 
                 return $this->autoMapping->map(OrderEntity::class, OrderCancelResponse::class, $arrayResult[0]);
+            }
+
+            return OrderResultConstant::ORDER_UPDATE_PROBLEM;
+
+        } elseif ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_IN_STORE) {
+            // 3.1. Update order state and other info
+            $updatedOrder = $this->orderManager->updateInStoreOrderToCancelledByStore($orderEntity);
+
+            if ($updatedOrder) {
+                // 3.2. Delete the chat room of the order
+                $this->deleteChatRoomByOrderId($updatedOrder->getId());
+
+                // If the captain had reached the store then we won't update remaining orders
+
+                // If the captain had reached the store, then we would count half of the order financial value for the captain
+                $this->createOrUpdateCaptainFinancialDue($updatedOrder->getCaptainId()->getCaptainId(), $updatedOrder->getId(),
+                    $updatedOrder->getCreatedAt());
+
+                $this->updateRemainingCarsOfStoreSubscription($updatedOrder->getStoreOwner()->getId(), $updatedOrder->getCreatedAt(),
+                    SubscriptionConstant::OPERATION_TYPE_ADDITION, 1);
+
+                // 3.4. Create log
+                $this->createOrderLogViaOrderEntity($updatedOrder);
+
+                $this->createOrderLogMessageViaOrderEntityAndByStoreOwner($updatedOrder, $userId,
+                    OrderLogActionTypeConstant::CANCEL_ORDER_BY_STORE_ACTION_CONST);
+
+                // 3.5. Send notifications
+                // local notification to store
+                $this->createLocalNotificationForStore($userId, NotificationConstant::CANCEL_ORDER_TITLE,
+                    NotificationConstant::CANCEL_ORDER_SUCCESS, $updatedOrder->getId());
+
+                // local notification to captain
+                $this->createLocalNotificationForCaptain($updatedOrder->getCaptainId()->getCaptainId(), NotificationConstant::CANCEL_ORDER_TITLE,
+                    NotificationConstant::CANCEL_ORDER_SUCCESS, $updatedOrder->getId());
+
+                // Create local notification for admin
+                $this->createDashboardLocalNotificationByStore(DashboardLocalNotificationTitleConstant::CANCEL_ORDER_BY_STORE_TITLE_CONST,
+                    ['text' => DashboardLocalNotificationMessageConstant::CANCEL_ORDER_BY_STORE_TEXT_CONST.$updatedOrder->getId()],
+                    null, $updatedOrder->getId());
+
+                // firebase notification to store
+                $this->sendFirebaseNotificationAboutOrderStateForUser($userId, $updatedOrder->getId(), $updatedOrder->getState(),
+                    NotificationConstant::STORE);
+
+                // firebase notification to captain
+                $this->sendFirebaseNotificationAboutOrderStateForUser($updatedOrder->getCaptainId()->getCaptainId(),
+                    $updatedOrder->getId(), $updatedOrder->getState(), NotificationConstant::CAPTAIN);
+
+                return $this->autoMapping->map(OrderEntity::class, OrderCancelResponse::class, $updatedOrder);
             }
 
             return OrderResultConstant::ORDER_UPDATE_PROBLEM;
@@ -1981,5 +2021,10 @@ class OrderService
     public function deleteChatRoomByOrderId(int $orderId): void
     {
         $this->orderChatRoomService->deleteChatRoomByOrderId($orderId);
+    }
+
+    public function createOrUpdateCaptainFinancialDue(int $captainUserId, int $orderId = null, DateTimeInterface $orderCreatedAt = null)
+    {
+        $this->captainFinancialDuesService->captainFinancialDues($captainUserId, $orderId, $orderCreatedAt);
     }
 }
