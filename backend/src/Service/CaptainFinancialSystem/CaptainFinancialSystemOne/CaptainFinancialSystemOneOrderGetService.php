@@ -29,4 +29,15 @@ class CaptainFinancialSystemOneOrderGetService
         return $this->captainFinancialSystemOneOrderManager->getDeliveredOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
             $fromDate, $toDate);
     }
+
+    public function getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): array
+    {
+        return $this->captainFinancialSystemOneOrderManager->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
+            $fromDate, $toDate);
+    }
+
+    public function getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainId, string $fromDate, string $toDate): array
+    {
+        return $this->captainFinancialSystemOneOrderManager->getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates($captainId, $fromDate, $toDate);
+    }
 }

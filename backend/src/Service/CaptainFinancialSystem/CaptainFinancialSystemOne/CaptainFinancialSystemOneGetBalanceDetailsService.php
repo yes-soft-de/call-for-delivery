@@ -59,6 +59,29 @@ class CaptainFinancialSystemOneGetBalanceDetailsService
         return 0;
     }
 
+    public function getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): int
+    {
+        $countOrdersResult = $this->captainFinancialSystemOneOrderGetService->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
+            $fromDate, $toDate);
+
+        if (count($countOrdersResult) > 0) {
+            return $countOrdersResult[0];
+        }
+
+        return 0;
+    }
+
+    public function getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainId, string $fromDate, string $toDate): int
+    {
+        $overdueOrdersResult = $this->captainFinancialSystemOneOrderGetService->getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates($captainId, $fromDate, $toDate);
+
+        if (count($overdueOrdersResult) > 0) {
+            return $overdueOrdersResult[0];
+        }
+
+        return 0;
+    }
+
     // To prepare the financial details for the captain
     public function calculateCaptainDues(array $financialSystemDetail, int $captainProfileId, array $date, int $countWorkdays): array
     {
@@ -66,11 +89,22 @@ class CaptainFinancialSystemOneGetBalanceDetailsService
         $countOrders = $this->getDeliveredOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId, $date['fromDate'],
             $date['toDate']);
 
+        $cancelledOrdersCount = $this->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId, $date['fromDate'],
+            $date['toDate']);
+
+        $totalOrdersCount = (float) $countOrders + ((float) $cancelledOrdersCount / 2.0);
+
         //get the count of orders which overdue the 19 kilometer
         $countOrdersMaxFromNineteen = $this->getOverdueDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
             $date['fromDate'], $date['toDate']);
 
-        $financialSystemDetail['financialDues'] = $this->financialDuesCalculator($countWorkdays, $countOrders, $countOrdersMaxFromNineteen,
+        //get the count of orders which overdue the 19 kilometer
+        $overdueCancelledOrdersCount = $this->getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
+            $date['fromDate'], $date['toDate']);
+
+        $totalOverdueOrdersCount = (float) $countOrdersMaxFromNineteen + ((float) $overdueCancelledOrdersCount / 2.0);
+
+        $financialSystemDetail['financialDues'] = $this->financialDuesCalculator($countWorkdays, $totalOrdersCount, $totalOverdueOrdersCount,
             $financialSystemDetail['compensationForEveryOrder'], $financialSystemDetail['salary']);
 
         //The amount received by the captain in cash from the orders, this amount will be handed over to the admin
@@ -81,7 +115,7 @@ class CaptainFinancialSystemOneGetBalanceDetailsService
     }
 
     //If the captain works 25 days he gets the monthly salary, if he works less than 25 days the captain gets the daily salary
-    public function financialDuesCalculator(int $countWorkdays, int $countOrdersCompleted, int $countOrdersMaxFromNineteen, float $compensationForEveryOrder, float $salary): float
+    public function financialDuesCalculator(int $countWorkdays, float $countOrdersCompleted, float $countOrdersMaxFromNineteen, float $compensationForEveryOrder, float $salary): float
     {
         if ($countWorkdays >= 25) {
             return round((($countOrdersCompleted + $countOrdersMaxFromNineteen) * $compensationForEveryOrder ) + $salary,
@@ -97,11 +131,15 @@ class CaptainFinancialSystemOneGetBalanceDetailsService
     public function initializeNecessaryFieldsForDuesCalculation(int $captainProfileId, array $datesArray, float $sumPayments, array $response): array
     {
         //get Count Orders
-        $response['countOrders'] = $this->getDeliveredOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
-            $datesArray['fromDate'], $datesArray['toDate']);
+        $response['countOrders'] = (float) $this->getDeliveredOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
+            $datesArray['fromDate'], $datesArray['toDate']) +
+            ((float) $this->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId, $datesArray['fromDate'],
+                    $datesArray['toDate']) / 2.0);
 
-        $response['countOrdersMaxFromNineteen'] = $this->getOverdueDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
-            $datesArray['fromDate'], $datesArray['toDate']);
+        $response['countOrdersMaxFromNineteen'] = (float) $this->getOverdueDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
+            $datesArray['fromDate'], $datesArray['toDate']) +
+            ((float) $this->getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId, $datesArray['fromDate'],
+                    $datesArray['toDate']) / 2.0);
 
         $response['countOrdersWithoutDistance'] = $this->getOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainProfileId,
             $datesArray['fromDate'], $datesArray['toDate']);

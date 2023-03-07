@@ -28,4 +28,14 @@ class CaptainFinancialSystemOneOrderManager
     {
         return $this->orderEntityRepository->getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate($captainProfileId, $fromDate, $toDate);
     }
+
+    public function getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates(int $captainId, string $fromDate, string $toDate): array
+    {
+        return $this->orderEntityRepository->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainId, $fromDate, $toDate);
+    }
+
+    public function getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainId, string $fromDate, string $toDate): array
+    {
+        return $this->orderEntityRepository->getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates($captainId, $fromDate, $toDate);
+    }
 }
