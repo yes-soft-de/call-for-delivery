@@ -1,12 +1,10 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_payments/model/captain_daily_finance.dart';
 import 'package:c4d/module_payments/request/captain_daily_payment_request.dart';
-import 'package:c4d/module_payments/request/captain_payments_request.dart';
 import 'package:c4d/module_payments/ui/screen/daily_payments_screen.dart';
 import 'package:c4d/module_payments/ui/widget/daily_payments_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
-import 'package:intl/intl.dart' as intl;
 
 class DailyPaymentsLoaded extends States {
   final DailyPaymentsScreenState screenState;
