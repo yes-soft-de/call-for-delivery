@@ -60,7 +60,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
   Widget getUI(BuildContext context) {
     var decoration = BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-        color: Theme.of(context).backgroundColor);
+        color: Theme.of(context).colorScheme.background);
     return CustomListView.custom(
       children: [
         // svg picture
@@ -347,13 +347,13 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                   },
                   leading: Icon(
                     Icons.chat_bubble_rounded,
-                    color: Theme.of(context).textTheme.button?.color,
+                    color: Theme.of(context).textTheme.labelLarge?.color,
                   ),
                   title: Text(S.current.chatRoom),
-                  textColor: Theme.of(context).textTheme.button?.color,
+                  textColor: Theme.of(context).textTheme.labelLarge?.color,
                   subtitle: Text(S.current.chatWithCaptain),
                   trailing: Icon(Icons.arrow_forward_rounded,
-                      color: Theme.of(context).textTheme.button?.color),
+                      color: Theme.of(context).textTheme.labelLarge?.color),
                 ),
               ),
             ),
@@ -365,7 +365,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
           leading: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
-                  color: Theme.of(context).backgroundColor),
+                  color: Theme.of(context).colorScheme.background),
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Icon(Icons.info_rounded),
@@ -451,6 +451,65 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                   color: Colors.transparent,
                   child: InkWell(
                     borderRadius: BorderRadius.circular(25),
+                    onLongPress: () {
+                      final reason = TextEditingController();
+                      final distance = TextEditingController();
+                      final form_key = GlobalKey<FormState>();
+                      showDialog(
+                          context: context,
+                          builder: (ctx) {
+                            return AlertDialog(
+                              title: Text(S.current.updateDistance),
+                              content: SizedBox(
+                                height: 175,
+                                child: Form(
+                                  key: form_key,
+                                  child: Column(
+                                    children: [
+                                      CustomFormField(
+                                        controller: distance,
+                                        hintText: S.current.distance + '10',
+                                      ),
+                                      // SizedBox(
+                                      //   height: 8,
+                                      // ),
+                                      // CustomFormField(
+                                      //   controller: reason,
+                                      //   hintText: S.current.reason,
+                                      // ),
+                                      SizedBox(
+                                        height: 16,
+                                      ),
+                                      ElevatedButton(
+                                          onPressed: () {
+                                            if (form_key.currentState
+                                                    ?.validate() ==
+                                                true) {
+                                              Navigator.of(context).pop();
+                                              screenState.manager.updateDistance(
+                                                  screenState,
+                                                  AddExtraDistanceRequest(
+                                                      id: orderInfo.id,
+                                                      storeBranchToClientDistanceAdditionExplanation:
+                                                          reason.text.trim(),
+                                                      destination: null,
+                                                      additionalDistance:
+                                                          double.parse(
+                                                              distance.text)));
+                                            } else {
+                                              Fluttertoast.showToast(
+                                                  msg: S.current
+                                                      .pleaseEnterValidCoord);
+                                            }
+                                          },
+                                          child: Text(S.current.update)),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            );
+                          });
+                    },
                     onDoubleTap: () {
                       final reason = TextEditingController();
                       final coord = TextEditingController();
