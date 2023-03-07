@@ -8,7 +8,10 @@ class CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse
 
     public float|null $monthCompensation;
 
-    public int|null $countOverOrdersThanRequired;
+    /**
+     * @var float|null
+     */
+    public $countOverOrdersThanRequired;
 
     public float|null $bounce;
 
@@ -18,7 +21,10 @@ class CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse
 
     public float|null $total;
 
-    public int|null $countOrdersCompleted;
+    /**
+     * @var float|null
+     */
+    public $countOrdersCompleted;
 
     public string|null $dateFinancialCycleEnds;
 
@@ -32,7 +38,7 @@ class CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse
   
     public string|null $dateFinancialCycleStarts;
 
-    public int $countOrdersMaxFromNineteen;
+    public float $countOrdersMaxFromNineteen;
 
-    public int $countOrdersWithoutDistance;
+    public float $countOrdersWithoutDistance;
 }
