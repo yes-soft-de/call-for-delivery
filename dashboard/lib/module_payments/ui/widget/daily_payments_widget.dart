@@ -84,7 +84,7 @@ class DailyWidget extends StatelessWidget {
                                       //     : null
                                     )),
                                 Text(
-                                    '${FixedNumber.getFixedNumber(amount)} ${S.current.sar}',
+                                    '${FixedNumber.getFixedNumber(amount) + FixedNumber.getFixedNumber(bonus)} ${S.current.sar}',
                                     style: TextStyle(
                                       fontSize: 14,
                                       // color: background != null
@@ -109,7 +109,7 @@ class DailyWidget extends StatelessWidget {
                   // ),
                   // Expanded(
                   //     child: VerticalBubble(
-                  //         title: S.current.totalEarnedProfit,
+                  //         tile: S.current.totalEarnedProfit,
                   //         subtitle:
                   //             '${FixedNumber.getFixedNumber(alreadyHadAmount)} ${S.current.sar}')),
                 ],
