@@ -1,14 +1,13 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/ui/widgets/bubble_widget.dart';
 import 'package:c4d/module_payments/model/captain_daily_finance.dart';
-import 'package:c4d/module_payments/ui/widget/paymetns_widget.dart';
-import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/helpers/finance_status_helper.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:flutter/material.dart';
 
 class DailyWidget extends StatelessWidget {
+  int? id;
   final num amount;
   final num alreadyHadAmount;
   final int financeType;
@@ -18,22 +17,20 @@ class DailyWidget extends StatelessWidget {
   final num bonus;
   final List<PaymentModel> payments;
   final Function(num, String) onPay;
-  final Function(int, num, String) onEdit;
-  final Function(int) onDelete;
-  const DailyWidget({
-    Key? key,
-    required this.alreadyHadAmount,
-    required this.amount,
-    required this.bonus,
-    required this.financeSystemPlan,
-    required this.financeType,
-    required this.isPaid,
-    required this.withBonus,
-    required this.payments,
-    required this.onPay,
-    required this.onDelete,
-    required this.onEdit,
-  }) : super(key: key);
+
+  DailyWidget(
+      {Key? key,
+      required this.alreadyHadAmount,
+      required this.amount,
+      required this.bonus,
+      required this.financeSystemPlan,
+      required this.financeType,
+      required this.isPaid,
+      required this.withBonus,
+      required this.payments,
+      required this.onPay,
+      this.id})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     List<String> packages = [
@@ -186,49 +183,9 @@ class DailyWidget extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Visibility(
-                  visible: payments.isNotEmpty,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      List<Widget> widgets = [];
-                      payments.forEach((element) {
-                        widgets.add(PaymentsWidget(
-                          amount: element.amount,
-                          note: element.note,
-                          paymentDate: element.paymentDate,
-                          delete: onDelete,
-                          onEdit: onEdit,
-                          id: element.id,
-                        ));
-                      });
-                      showDialog(
-                          context: context,
-                          builder: (ctx) {
-                            return Scaffold(
-                              appBar: CustomC4dAppBar.appBar(
-                                context,
-                                title: '',
-                                icon: Icons.cancel,
-                              ),
-                              body: SingleChildScrollView(
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    children: widgets,
-                                  ),
-                                ),
-                              ),
-                            );
-                          });
-                    },
-                    child: Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: Text(S.current.showPayments)),
-                  ),
-                ),
-                SizedBox(
-                  width: 16,
-                ),
+                // SizedBox(
+                //   width: 16,
+                // ),
                 ElevatedButton(
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.orange,

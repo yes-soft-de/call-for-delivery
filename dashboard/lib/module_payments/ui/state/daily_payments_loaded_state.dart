@@ -1,5 +1,7 @@
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_payments/model/captain_daily_finance.dart';
+import 'package:c4d/module_payments/payments_routes.dart';
 import 'package:c4d/module_payments/request/captain_daily_payment_request.dart';
 import 'package:c4d/module_payments/ui/screen/daily_payments_screen.dart';
 import 'package:c4d/module_payments/ui/widget/daily_payments_widget.dart';
@@ -42,27 +44,30 @@ class DailyPaymentsLoaded extends States {
                             amount: amount,
                             note: note));
                   },
-                  onDelete: (id) {
-                    Navigator.of(context).pop();
-                    screenState.manager.deletePayment(screenState,
-                        CaptainDailyPaymentsRequest(paymentID: id));
-                  },
-                  onEdit: (id, amount, note) {
-                    Navigator.of(context).pop();
-                    screenState.manager.updatePayments(
-                        screenState,
-                        CaptainDailyPaymentsRequest(
-                          amount: amount,
-                          note: note,
-                          paymentID: id,
-                        ));
-                  },
+                  id: model[index].captainProfileId,
                 );
               },
             ),
           ),
           SizedBox(
             height: 10,
+          ),
+          Row(
+            children: [
+              Expanded(
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(
+                      PaymentsRoutes.ALL_AMOUNT_CAPTAINS,
+                      arguments: [screenState.captainID],
+                    );
+                  },
+                  child: Padding(
+                      padding: const EdgeInsets.all(8),
+                      child: Text(S.current.showPayments)),
+                ),
+              ),
+            ],
           ),
 
           // CustomListView.custom(children: getStorePaymentFrom(context))
