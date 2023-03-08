@@ -9,6 +9,7 @@ use App\Controller\BaseController;
 use App\Request\Admin\CaptainPayment\AdminCaptainPaymentCreateRequest;
 use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentAmountAndNoteUpdateByAdminRequest;
 use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentDeleteByAdminRequest;
+use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentFilterByAdminRequest;
 use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentForCaptainFinancialDailyCreateByAdminRequest;
 use App\Service\Admin\CaptainPayment\AdminCaptainPaymentService;
 use Nelmio\ApiDocBundle\Annotation\Model;
@@ -465,5 +466,56 @@ class AdminCaptainPaymentController extends BaseController
         }
 
         return $this->response($result, self::UPDATE);
+    }
+
+    /**
+     * admin: filter payments for captain financial daily
+     * @Route("filterpaymentsforcaptainfinancialdailybyadmin", name="filterPaymentsForCaptainFinancialDailyByAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Captain Payment")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="update payment to captain by admin request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="integer", property="captainProfileId"),
+     *          @OA\Property(type="string", property="customizedTimezone")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns updated payment info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentFilterByAdminResponse")
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterCaptainPaymentByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, CaptainPaymentFilterByAdminRequest::class, (object)$data);
+
+        $result = $this->adminCaptainPaymentService->filterCaptainPaymentByAdmin($request);
+
+        return $this->response($result, self::FETCH);
     }
 }
