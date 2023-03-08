@@ -13,6 +13,7 @@ use App\Request\Admin\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinanc
 use App\Request\Admin\CaptainPayment\AdminCaptainPaymentCreateRequest;
 use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentAmountAndNoteUpdateByAdminRequest;
 use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentDeleteByAdminRequest;
+use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentFilterByAdminRequest;
 use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentForCaptainFinancialDailyCreateByAdminRequest;
 use App\Response\Admin\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyIsPaidUpdateByAdminResponse;
 use App\Response\Admin\CaptainPayment\AdminCaptainPaymentCreateResponse;
@@ -21,6 +22,7 @@ use App\Constant\Captain\CaptainConstant;
 use App\Constant\Payment\PaymentConstant;
 use App\Response\Admin\CaptainPayment\AdminCaptainPaymentDeleteResponse;
 use App\Response\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentAmountAndNoteUpdateByAdminResponse;
+use App\Response\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentFilterByAdminResponse;
 use App\Response\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentForCaptainFinancialDailyCreateByAdminResponse;
 use App\Service\Admin\CaptainFinancialSystem\AdminCaptainFinancialDuesService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
@@ -247,5 +249,20 @@ class AdminCaptainPaymentService
 
         return $this->autoMapping->map(CaptainPaymentEntity::class, CaptainPaymentAmountAndNoteUpdateByAdminResponse::class,
             $captainPaymentUpdateResult);
+    }
+
+    public function filterCaptainPaymentByAdmin(CaptainPaymentFilterByAdminRequest $request): array
+    {
+        $response = [];
+
+        $captainsPayments = $this->adminCaptainPaymentManager->filterCaptainPaymentByAdmin($request);
+
+        if (count($captainsPayments) > 0) {
+            foreach ($captainsPayments as $captainPayment) {
+                $response[] = $this->autoMapping->map(CaptainPaymentEntity::class, CaptainPaymentFilterByAdminResponse::class, $captainPayment);
+            }
+        }
+
+        return $response;
     }
 }

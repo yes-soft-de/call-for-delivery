@@ -9,6 +9,7 @@ use App\Repository\CaptainPaymentEntityRepository;
 use App\Request\Admin\CaptainPayment\AdminCaptainPaymentCreateRequest;
 use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentAmountAndNoteUpdateByAdminRequest;
 use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentDeleteByAdminRequest;
+use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentFilterByAdminRequest;
 use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentForCaptainFinancialDailyCreateByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\Captain\CaptainManager;
@@ -128,5 +129,10 @@ class AdminCaptainPaymentManager
         $this->entityManager->flush();
 
         return $captainPaymentEntity;
+    }
+
+    public function filterCaptainPaymentByAdmin(CaptainPaymentFilterByAdminRequest $request): array
+    {
+        return $this->captainPaymentEntityRepository->filterCaptainPaymentByAdmin($request);
     }
 }
