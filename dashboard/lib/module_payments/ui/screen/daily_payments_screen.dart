@@ -53,6 +53,7 @@ class DailyPaymentsScreenState extends State<DailyPaymentsScreen> {
   late CaptainDailyFinanceRequest paymentsFilter;
   int captainID = -1;
   String captainName = '';
+
   bool flag = true;
   @override
   Widget build(BuildContext context) {

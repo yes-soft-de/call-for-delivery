@@ -4,6 +4,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_captain/request/captain_daily_finance_request.dart';
 import 'package:c4d/module_captain/state_manager/captain_finance_daily_state_manager.dart';
+import 'package:c4d/utils/components/costom_search.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -21,6 +22,7 @@ class CaptainFinanceDailyScreen extends StatefulWidget {
 class CaptainFinanceDailyScreenState extends State<CaptainFinanceDailyScreen> {
   States? _currentState;
   int currentIndex = 0;
+  String? search;
   late CaptainDailyFinanceRequest filter;
   @override
   void initState() {
@@ -57,6 +59,21 @@ class CaptainFinanceDailyScreenState extends State<CaptainFinanceDailyScreen> {
         ),
         body: Column(
           children: [
+            Padding(
+              padding: EdgeInsets.only(left: 18.0, right: 18.0, bottom: 16),
+              child: CustomDeliverySearch(
+                hintText: S.current.searchForCaptain,
+                onChanged: (s) {
+                  if (s == '' || s.isEmpty) {
+                    search = null;
+                    refresh();
+                  } else {
+                    search = s;
+                    refresh();
+                  }
+                },
+              ),
+            ),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child:
