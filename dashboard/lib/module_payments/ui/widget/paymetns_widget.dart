@@ -8,15 +8,15 @@ import 'package:intl/intl.dart';
 class PaymentsWidget extends StatelessWidget {
   final int id;
   final String? note;
-  final num amount;
-  final DateTime paymentDate;
+  final int amount;
+  // final DateTime paymentDate;
   final Function(int, num, String) onEdit;
   final Function(int) delete;
   const PaymentsWidget({
     Key? key,
     required this.note,
     required this.amount,
-    required this.paymentDate,
+    // required this.paymentDate,
     required this.onEdit,
     required this.delete,
     required this.id,
@@ -60,7 +60,7 @@ class PaymentsWidget extends StatelessWidget {
               child: Row(
                 children: [
                   Text(
-                    DateFormat('yyyy/M/dd').format(paymentDate),
+                    DateFormat('yyyy/M/dd').format(DateTime.now()),
                     style: TextStyle(
                       fontSize: 10,
                     ),

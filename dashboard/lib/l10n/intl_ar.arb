@@ -912,5 +912,8 @@
     "sumCaptainsFinancialDues": "مستحقات الكباتن",
     "updateCustomerLocation":"تم تحديث حقل موقع العميل وحفظ الموقع القديم",
     "dues":"المستحقات",
-    "remainingtoPay":"المتبقي للدفع"
+    "remainingtoPay":"المتبقي للدفع",
+    "showPayments":"عرض المدفوعات",
+    "addaPayment":"إضافة دفعة",
+    "duesByFilter":"المستحقات وفق الفلترة"
 }

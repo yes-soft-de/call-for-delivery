@@ -93,6 +93,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addProducts": MessageLookupByLibrary.simpleMessage("Add Products"),
         "addStore": MessageLookupByLibrary.simpleMessage("Add Stores"),
         "addWorkPackage": MessageLookupByLibrary.simpleMessage("Add work plan"),
+        "addaPayment": MessageLookupByLibrary.simpleMessage("add a payment"),
         "addition": MessageLookupByLibrary.simpleMessage("Addition"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
         "admin": MessageLookupByLibrary.simpleMessage("Admin"),
@@ -480,6 +481,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Download Twaslna App on Play Store"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("Driver Licence"),
         "dues": MessageLookupByLibrary.simpleMessage("Dues"),
+        "duesByFilter": MessageLookupByLibrary.simpleMessage("Dues by filter"),
         "duesPayments":
             MessageLookupByLibrary.simpleMessage("Dues for payment"),
         "earnCash": MessageLookupByLibrary.simpleMessage("Earn Cash"),
@@ -1148,6 +1150,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
         "showAll": MessageLookupByLibrary.simpleMessage("Show All"),
+        "showPayments": MessageLookupByLibrary.simpleMessage("show payments"),
         "showingCart": MessageLookupByLibrary.simpleMessage("Cart"),
         "signOut": MessageLookupByLibrary.simpleMessage("Sign out"),
         "similarProducts":

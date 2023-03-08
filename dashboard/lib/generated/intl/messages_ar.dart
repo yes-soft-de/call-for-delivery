@@ -91,6 +91,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addStore": MessageLookupByLibrary.simpleMessage("أضف متجر"),
         "addWorkPackage":
             MessageLookupByLibrary.simpleMessage("إضافة باقة عمل"),
+        "addaPayment": MessageLookupByLibrary.simpleMessage("إضافة دفعة"),
         "addition": MessageLookupByLibrary.simpleMessage("إضافة"),
         "address": MessageLookupByLibrary.simpleMessage("العنوان"),
         "admin": MessageLookupByLibrary.simpleMessage("المدير"),
@@ -475,6 +476,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "حمل تطبيقنا على متجر غوغل عبر الرابط"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("رخصة القيادة"),
         "dues": MessageLookupByLibrary.simpleMessage("المستحقات"),
+        "duesByFilter":
+            MessageLookupByLibrary.simpleMessage("المستحقات وفق الفلترة"),
         "duesPayments": MessageLookupByLibrary.simpleMessage("المستحقات للدفع"),
         "earnCash": MessageLookupByLibrary.simpleMessage("اكسب المال"),
         "editBranchName":
@@ -1136,6 +1139,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "settings": MessageLookupByLibrary.simpleMessage("الاعدادات"),
         "share": MessageLookupByLibrary.simpleMessage("المشاركة"),
         "showAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
+        "showPayments": MessageLookupByLibrary.simpleMessage("عرض المدفوعات"),
         "showingCart": MessageLookupByLibrary.simpleMessage("مشاهدة السلة"),
         "signOut": MessageLookupByLibrary.simpleMessage("تسحيل الخروج"),
         "similarProducts":

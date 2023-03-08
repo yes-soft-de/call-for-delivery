@@ -299,6 +299,9 @@ class Urls {
   static const NEW_GET_CAPTAIN_FINANCE_DAILY = DOMAIN +
       VERSION_ADMIN +
       '/captainfinancialdaily/filtercaptainfinancialdailysumbyadmin';
+  static const NEW_GET_CAPTAIN_FINANCE_ALL_AMOUNT = DOMAIN +
+      VERSION_ADMIN +
+      '/captainpayment/filterpaymentsforcaptainfinancialdailybyadmin';
   /*-----------------Supplier--Categories---------------*/
   static const GET_SUPPLIER_CATEGORIES =
       BASE_API_SUPPLIER_CATE + '/suppliercategories';
