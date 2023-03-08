@@ -1195,19 +1195,20 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getOrdersPendingBeforeSpecificDate(DateTime $specificTime): ?array
-    {
-        return $this->createQueryBuilder('orderEntity')
-
-            ->andWhere('orderEntity.deliveryDate < :specificTime')
-            ->setParameter('specificTime', $specificTime)
-
-            ->andWhere('orderEntity.state = :state')
-            ->setParameter('state', OrderStateConstant::ORDER_STATE_PENDING)
-
-            ->getQuery()
-            ->getResult();
-    }
+    // Following function had been commented out because it isn't being used anywhere
+//    public function getOrdersPendingBeforeSpecificDate(DateTime $specificTime): ?array
+//    {
+//        return $this->createQueryBuilder('orderEntity')
+//
+//            ->andWhere('orderEntity.deliveryDate < :specificTime')
+//            ->setParameter('specificTime', $specificTime)
+//
+//            ->andWhere('orderEntity.state = :state')
+//            ->setParameter('state', OrderStateConstant::ORDER_STATE_PENDING)
+//
+//            ->getQuery()
+//            ->getResult();
+//    }
 
     public function getOrdersPending(): ?array
     {
@@ -1610,8 +1611,11 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = orderEntity.storeOwner')
 
-            ->where('orderEntity.state = :state')
-            ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
+            ->where('orderEntity.state = :deliveredState'
+                .'OR (orderEntity.state = :cancelledState AND orderEntity.orderCancelledByUserAndAtState = :orderCancelledByStoreAndAtInStoreState)')
+            ->setParameter('deliveredState', OrderStateConstant::ORDER_STATE_DELIVERED)
+            ->setParameter('cancelledState', OrderStateConstant::ORDER_STATE_CANCEL)
+            ->setParameter('orderCancelledByStoreAndAtInStoreState', OrderCancelledByUserAndAtStateConstant::ORDER_CANCELLED_BY_STORE_AND_AT_IN_STORE_STATE_CONST)
 
             ->andWhere('orderEntity.captainId = :captainId')
             ->setParameter('captainId', $captainId)
@@ -2548,6 +2552,9 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Get cancelled orders, by store at 'in store' state, count according to specific captain and dates
+     */
     public function getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): array
     {
         return $this->createQueryBuilder('orderEntity')
@@ -2573,6 +2580,10 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getSingleColumnResult();
     }
 
+    /**
+     * Get cancelled orders, by store at 'in store' state, count and which overdue the 19 kilometer according to
+     * specific captain and dates
+     */
     public function getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): array
     {
         return $this->createQueryBuilder('orderEntity')

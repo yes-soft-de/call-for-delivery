@@ -82,6 +82,19 @@ class CaptainFinancialSystemOneGetBalanceDetailsService
         return 0;
     }
 
+    // Get count of orders without distance and delivered by specific captain during specific time
+    public function getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate(int $captainProfileId, string $fromDate, string $toDate): int
+    {
+        $result = $this->captainFinancialSystemOneOrderGetService->getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainProfileId,
+            $fromDate, $toDate);
+
+        if (count($result) > 0) {
+            return $result[0];
+        }
+
+        return 0;
+    }
+
     // To prepare the financial details for the captain
     public function calculateCaptainDues(array $financialSystemDetail, int $captainProfileId, array $date, int $countWorkdays): array
     {
@@ -141,8 +154,10 @@ class CaptainFinancialSystemOneGetBalanceDetailsService
             ((float) $this->getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId, $datesArray['fromDate'],
                     $datesArray['toDate']) / 2.0);
 
-        $response['countOrdersWithoutDistance'] = $this->getOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainProfileId,
-            $datesArray['fromDate'], $datesArray['toDate']);
+        $response['countOrdersWithoutDistance'] = (float) $this->getOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainProfileId,
+            $datesArray['fromDate'], $datesArray['toDate']) +
+            ((float) $this->getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainProfileId,
+                $datesArray['fromDate'], $datesArray['toDate']) / 2.0);
 
         //The amount received by the captain in cash from the orders, this amount will be handed over to the admin
         $response['amountForStore'] = $this->getUnPaidCashOrdersDuesByCaptainProfileIdAndDuringSpecificTime($captainProfileId,

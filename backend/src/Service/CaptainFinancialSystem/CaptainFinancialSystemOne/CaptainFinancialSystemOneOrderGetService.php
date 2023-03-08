@@ -20,13 +20,14 @@ class CaptainFinancialSystemOneOrderGetService
 
     public function getOverdueDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainId, string $fromDate, string $toDate): array
     {
-        return $this->captainFinancialSystemOneOrderManager->getOverdueDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainId, $fromDate, $toDate);
+        return $this->captainFinancialSystemOneOrderManager->getOverdueDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainId,
+            $fromDate, $toDate);
     }
 
     // Get count of orders without distance and delivered by specific captain during specific time
     public function getOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate(int $captainProfileId, string $fromDate, string $toDate): array
     {
-        return $this->captainFinancialSystemOneOrderManager->getDeliveredOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
+        return $this->captainFinancialSystemOneOrderManager->getOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainProfileId,
             $fromDate, $toDate);
     }
 
@@ -38,6 +39,16 @@ class CaptainFinancialSystemOneOrderGetService
 
     public function getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainId, string $fromDate, string $toDate): array
     {
-        return $this->captainFinancialSystemOneOrderManager->getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates($captainId, $fromDate, $toDate);
+        return $this->captainFinancialSystemOneOrderManager->getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates($captainId,
+            $fromDate, $toDate);
+    }
+
+    /**
+     * Get count of orders without distance and cancelled by store and related to specific captain during specific time
+     */
+    public function getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate(int $captainProfileId, string $fromDate, string $toDate): array
+    {
+        return $this->captainFinancialSystemOneOrderManager->getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainProfileId,
+            $fromDate, $toDate);
     }
 }
