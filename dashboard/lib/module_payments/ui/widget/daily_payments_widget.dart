@@ -63,23 +63,55 @@ class DailyWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Expanded(
-                      child: VerticalBubble(
-                          title: S.current.duesByFilter,
-                          subtitle:
-                              '${FixedNumber.getFixedNumber(amount)} ${S.current.sar}')),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: 32,
-                      height: 2.5,
-                      color: Theme.of(context).colorScheme.background,
-                    ),
-                  ),
-                  Expanded(
-                      child: VerticalBubble(
-                          title: S.current.totalEarnedProfit,
-                          subtitle:
-                              '${FixedNumber.getFixedNumber(alreadyHadAmount)} ${S.current.sar}')),
+                      child: Container(
+                          height: 70,
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color: Theme.of(context).colorScheme.background,
+                          ),
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 14.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(S.current.duesByFilter,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.bold,
+                                      // color:
+                                      //      Colors.white
+                                      //     : null
+                                    )),
+                                Text(
+                                    '${FixedNumber.getFixedNumber(amount)} ${S.current.sar}',
+                                    style: TextStyle(
+                                      fontSize: 14,
+                                      // color: background != null
+                                      //     ? Colors.white
+                                      //     : null
+                                    ))
+                              ],
+                            ),
+                          ))
+                      //  VerticalBubble(
+                      //     title: S.current.duesByFilter,
+                      //     subtitle:
+                      //         '${FixedNumber.getFixedNumber(amount)} ${S.current.sar}')
+                      ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(8.0),
+                  //   child: Container(
+                  //     width: 32,
+                  //     height: 2.5,
+                  //     color: Theme.of(context).colorScheme.background,
+                  //   ),
+                  // ),
+                  // Expanded(
+                  //     child: VerticalBubble(
+                  //         title: S.current.totalEarnedProfit,
+                  //         subtitle:
+                  //             '${FixedNumber.getFixedNumber(alreadyHadAmount)} ${S.current.sar}')),
                 ],
               ),
             ),
@@ -102,12 +134,11 @@ class DailyWidget extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                    child: VerticalBubble(
-                        title: S.current.bonus,
-                        subtitle:
-                            '${FixedNumber.getFixedNumber(bonus)} ${S.current.sar}',
-                        background: withBonus ? Colors.green : null),
-                  ),
+                      child: VerticalBubble(
+                          title: S.current.totalEarnedProfit,
+                          subtitle:
+                              '${FixedNumber.getFixedNumber(alreadyHadAmount)} ${S.current.sar}')),
+
                   // Expanded(
                   //     child: VerticalBubble(
                   //         title: S.current.plan,
@@ -128,14 +159,21 @@ class DailyWidget extends StatelessWidget {
                   //           '${FixedNumber.getFixedNumber(bonus)} ${S.current.sar}',
                   //       background: withBonus ? Colors.green : null),
                   // ),
-                  // Padding(
-                  //   padding: const EdgeInsets.all(8.0),
-                  //   child: Container(
-                  //     width: 32,
-                  //     height: 2.5,
-                  //     color: Theme.of(context).colorScheme.background,
-                  //   ),
-                  // ),
+                  Expanded(
+                    child: VerticalBubble(
+                        title: S.current.bonus,
+                        subtitle:
+                            '${FixedNumber.getFixedNumber(bonus)} ${S.current.sar}',
+                        background: withBonus ? Colors.green : null),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: 32,
+                      height: 2.5,
+                      color: Theme.of(context).colorScheme.background,
+                    ),
+                  ),
                   Expanded(
                       child: VerticalBubble(
                           title: S.current.financeStatus,
