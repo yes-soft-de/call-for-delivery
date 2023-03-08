@@ -55,6 +55,100 @@ class CaptainFinanceDailyScreenState extends State<CaptainFinanceDailyScreen> {
           },
           icon: Icons.menu,
         ),
-        body: _currentState?.getUI(context));
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child:
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: <
+                      Widget>[
+                Expanded(
+                  child: InkWell(
+                    splashFactory: NoSplash.splashFactory,
+                    onTap: () {
+                      currentIndex = 0;
+                      filter = CaptainDailyFinanceRequest(isPaid: 176);
+                      refresh();
+                      widget._manager.getCaptainsFinanceDailyNew(this, filter);
+                    },
+                    child: AnimatedContainer(
+                      height: 40,
+                      padding: EdgeInsets.all(8),
+                      alignment: AlignmentDirectional.center,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color:
+                                currentIndex != 0 ? Colors.grey : Colors.white,
+                            width: 1),
+                        borderRadius: BorderRadiusDirectional.only(
+                            topStart: Radius.circular(25),
+                            bottomStart: Radius.circular(25)),
+                        color: currentIndex == 0
+                            ? Theme.of(context).colorScheme.primary
+                            : Theme.of(context).colorScheme.background,
+                      ),
+                      duration: Duration(milliseconds: 500),
+                      curve: Curves.fastOutSlowIn,
+                      child: Text(
+                        S.current.unpaidCaptainFinanceDaily,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color:
+                              currentIndex != 0 ? Colors.black : Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                        textScaleFactor: 1,
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: InkWell(
+                    splashFactory: NoSplash.splashFactory,
+                    onTap: () {
+                      currentIndex = 1;
+                      filter = CaptainDailyFinanceRequest(isPaid: null);
+                      refresh();
+                      widget._manager.getCaptainsFinanceDailyNew(this, filter);
+                    },
+                    child: AnimatedContainer(
+                      height: 40,
+                      padding: EdgeInsets.all(8),
+                      alignment: AlignmentDirectional.center,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: currentIndex != 1
+                                  ? Colors.grey
+                                  : Colors.white,
+                              width: 1),
+                          borderRadius: BorderRadiusDirectional.only(
+                              topEnd: Radius.circular(25),
+                              bottomEnd: Radius.circular(25)),
+                          color: currentIndex == 1
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(context).colorScheme.background),
+                      duration: Duration(milliseconds: 500),
+                      curve: Curves.fastOutSlowIn,
+                      child: Text(
+                        S.current.all,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color:
+                              currentIndex != 1 ? Colors.black : Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                        textScaleFactor: 1,
+                      ),
+                      // Text(S.current.hidden),
+                    ),
+                  ),
+                ),
+              ]),
+            ),
+            Expanded(child: _currentState!.getUI(context)),
+          ],
+        ));
   }
 }

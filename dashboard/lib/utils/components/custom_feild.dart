@@ -4,7 +4,6 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_localization/service/localization_service/localization_service.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
-import 'package:c4d/utils/global/screen_type.dart';
 import 'package:the_country_number/the_country_number.dart';
 
 class CustomFormField extends StatefulWidget {
@@ -25,6 +24,7 @@ class CustomFormField extends StatefulWidget {
   final FormFieldValidator<String>? validatorFunction;
   final TextInputAction? keyAction;
   final int? maxLength;
+  final int? minLines;
   final TextStyle? hintStyle;
   @override
   _CustomFormFieldState createState() => _CustomFormFieldState();
@@ -47,6 +47,7 @@ class CustomFormField extends StatefulWidget {
       this.validatorFunction,
       this.keyAction,
       this.maxLength,
+      this.minLines,
       this.hintStyle});
 }
 
@@ -59,7 +60,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-        color: Theme.of(context).backgroundColor,
+        color: Theme.of(context).colorScheme.background,
       ),
       child: Padding(
           padding: !clean ? EdgeInsets.only(bottom: 8.0) : EdgeInsets.zero,
@@ -67,6 +68,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
             children: [
               Expanded(
                 child: TextFormField(
+                  minLines: widget.minLines,
                   autovalidateMode: mode,
                   toolbarOptions: ToolbarOptions(
                       copy: true, paste: true, selectAll: true, cut: true),
@@ -224,7 +226,7 @@ class _CustomFormFieldWithTranslateState
       child: Container(
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(25),
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
         ),
         child: Padding(
           padding: const EdgeInsetsDirectional.only(start: 8.0, end: 8.0),

@@ -4,7 +4,6 @@ import 'package:c4d/module_payments/request/captain_daily_payment_request.dart';
 import 'package:c4d/module_payments/ui/screen/daily_payments_screen.dart';
 import 'package:c4d/module_payments/ui/widget/daily_payments_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 
 class DailyPaymentsLoaded extends States {
   final DailyPaymentsScreenState screenState;
@@ -20,45 +19,65 @@ class DailyPaymentsLoaded extends States {
   Widget getUI(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: CustomListView.custom(children: getStorePaymentFrom(context)),
+      child: Column(
+        children: [
+          Expanded(
+            child: ListView.builder(
+              itemCount: model.length,
+              itemBuilder: (context, index) {
+                return DailyWidget(
+                  alreadyHadAmount: model[index].alreadyHadAmount,
+                  amount: model[index].amount,
+                  bonus: model[index].bonus,
+                  financeSystemPlan: model[index].financialSystemPlan,
+                  financeType: model[index].financialSystemType,
+                  isPaid: model[index].isPaid,
+                  payments: model[index].payments,
+                  withBonus: model[index].withBonus,
+                  onPay: (amount, note) {
+                    screenState.manager.makePayments(
+                        screenState,
+                        CaptainDailyPaymentsRequest(
+                            captainId: model[index].id,
+                            amount: amount,
+                            note: note));
+                  },
+                  onDelete: (id) {
+                    Navigator.of(context).pop();
+                    screenState.manager.deletePayment(screenState,
+                        CaptainDailyPaymentsRequest(paymentID: id));
+                  },
+                  onEdit: (id, amount, note) {
+                    Navigator.of(context).pop();
+                    screenState.manager.updatePayments(
+                        screenState,
+                        CaptainDailyPaymentsRequest(
+                          amount: amount,
+                          note: note,
+                          paymentID: id,
+                        ));
+                  },
+                );
+              },
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+
+          // CustomListView.custom(children: getStorePaymentFrom(context))
+        ],
+      ),
     );
   }
 
-  List<Widget> getStorePaymentFrom(BuildContext context) {
-    List<Widget> widgets = [];
-    for (var element in model) {
-      widgets.add(DailyWidget(
-        alreadyHadAmount: element.alreadyHadAmount,
-        amount: element.amount,
-        bonus: element.bonus,
-        financeSystemPlan: element.financialSystemPlan,
-        financeType: element.financialSystemType,
-        isPaid: element.isPaid,
-        payments: element.payments,
-        withBonus: element.withBonus,
-        onPay: (amount, note) {
-          screenState.manager.makePayments(
-              screenState,
-              CaptainDailyPaymentsRequest(
-                  captainId: element.id, amount: amount, note: note));
-        },
-        onDelete: (id) {
-          Navigator.of(context).pop();
-          screenState.manager.deletePayment(
-              screenState, CaptainDailyPaymentsRequest(paymentID: id));
-        },
-        onEdit: (id, amount, note) {
-          Navigator.of(context).pop();
-          screenState.manager.updatePayments(
-              screenState,
-              CaptainDailyPaymentsRequest(
-                amount: amount,
-                note: note,
-                paymentID: id,
-              ));
-        },
-      ));
-    }
-    return widgets;
-  }
+  // List<Widget> getStorePaymentFrom(BuildContext context) {
+  //   List<Widget> widgets = [];
+  //   for (var model[index] in model) {
+  //     widgets.add();
+  //       },
+  //     ));
+  //   }
+  // return widgets;
 }
+// }

@@ -132,7 +132,7 @@ class DailyPaymentsScreenState extends State<DailyPaymentsScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     width: 32,
-                    height: 2.5,
+                    height: 3,
                     color: Theme.of(context).colorScheme.background,
                   ),
                 ),

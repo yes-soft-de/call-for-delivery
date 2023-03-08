@@ -64,7 +64,7 @@ class DailyWidget extends StatelessWidget {
                 children: [
                   Expanded(
                       child: VerticalBubble(
-                          title: S.current.todayProfit,
+                          title: S.current.duesByFilter,
                           subtitle:
                               '${FixedNumber.getFixedNumber(amount)} ${S.current.sar}')),
                   Padding(
@@ -102,9 +102,16 @@ class DailyWidget extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                      child: VerticalBubble(
-                          title: S.current.plan,
-                          subtitle: financeSystemPlan.toString())),
+                    child: VerticalBubble(
+                        title: S.current.bonus,
+                        subtitle:
+                            '${FixedNumber.getFixedNumber(bonus)} ${S.current.sar}',
+                        background: withBonus ? Colors.green : null),
+                  ),
+                  // Expanded(
+                  //     child: VerticalBubble(
+                  //         title: S.current.plan,
+                  //         subtitle: financeSystemPlan.toString())),
                 ],
               ),
             ),
@@ -114,21 +121,21 @@ class DailyWidget extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Expanded(
-                    child: VerticalBubble(
-                        title: S.current.bonus,
-                        subtitle:
-                            '${FixedNumber.getFixedNumber(bonus)} ${S.current.sar}',
-                        background: withBonus ? Colors.green : Colors.red),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: 32,
-                      height: 2.5,
-                      color: Theme.of(context).colorScheme.background,
-                    ),
-                  ),
+                  // Expanded(
+                  //   child: VerticalBubble(
+                  //       title: S.current.bonus,
+                  //       subtitle:
+                  //           '${FixedNumber.getFixedNumber(bonus)} ${S.current.sar}',
+                  //       background: withBonus ? Colors.green : null),
+                  // ),
+                  // Padding(
+                  //   padding: const EdgeInsets.all(8.0),
+                  //   child: Container(
+                  //     width: 32,
+                  //     height: 2.5,
+                  //     color: Theme.of(context).colorScheme.background,
+                  //   ),
+                  // ),
                   Expanded(
                       child: VerticalBubble(
                           title: S.current.financeStatus,
@@ -178,7 +185,7 @@ class DailyWidget extends StatelessWidget {
                     },
                     child: Padding(
                         padding: const EdgeInsets.all(8),
-                        child: Text(S.current.payments)),
+                        child: Text(S.current.showPayments)),
                   ),
                 ),
                 SizedBox(
@@ -199,7 +206,18 @@ class DailyWidget extends StatelessWidget {
                               scrollable: true,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(25)),
-                              title: Text(S.current.paymentFromStore),
+                              title: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Flexible(child: Text(S.current.addaPayment)),
+                                  Flexible(
+                                    child: Text(DateTime.now()
+                                        .toString()
+                                        .substring(0, 10)),
+                                  ),
+                                ],
+                              ),
                               content: Container(
                                 child: Column(
                                   children: [
@@ -218,6 +236,8 @@ class DailyWidget extends StatelessWidget {
                                       title: Text(S.current.note),
                                       subtitle: CustomFormField(
                                         controller: _note,
+                                        minLines: 2,
+                                        maxLines: 3,
                                         onChanged: () {
                                           setState(() {});
                                         },
