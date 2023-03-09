@@ -31,7 +31,7 @@ class AllAmountCaptainsLoadedState extends States {
                 return PaymentsWidget(
                   amount: model[index].amount ?? 0,
                   note: model[index].note,
-                  // paymentDate: model[index].createdAt ?? DateTime.now(),
+                  paymentDate: model[index].createdAt ?? DateTime.now(),
                   onEdit: (id, amount, note) {
                     screenState.manager.updatePayments(
                         screenState,

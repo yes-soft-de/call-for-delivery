@@ -1,14 +1,14 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/module_payments/response/captain_all_amounts.dart';
-import 'package:c4d/module_payments/response/captain_dialy_finance/created_at.dart';
+import 'package:c4d/utils/helpers/date_converter.dart';
 
 class CaptainAllAmountModel extends DataModel {
   int? id;
   int? amount;
   String? note;
-  CreatedAt? createdAt;
+  DateTime? createdAt;
 
-  CaptainAllAmountModel({this.id, this.amount, this.note});
+  CaptainAllAmountModel({this.id, this.amount, this.note, this.createdAt});
 
   List<CaptainAllAmountModel> _captainAllAmount = [];
 
@@ -20,7 +20,7 @@ class CaptainAllAmountModel extends DataModel {
         id: element.id,
         amount: element.amount,
         note: element.note,
-        // createdAt: DateHelper.convert(element.createdAt?.timestamp)
+        createdAt: DateHelper.convert(element.createdAt?.timestamp),
       ));
     });
   }

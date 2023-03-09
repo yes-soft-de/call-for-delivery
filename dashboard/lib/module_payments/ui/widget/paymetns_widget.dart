@@ -9,14 +9,14 @@ class PaymentsWidget extends StatelessWidget {
   final int id;
   final String? note;
   final int amount;
-  // final DateTime paymentDate;
+  final DateTime paymentDate;
   final Function(int, num, String) onEdit;
   final Function(int) delete;
   const PaymentsWidget({
     Key? key,
     required this.note,
     required this.amount,
-    // required this.paymentDate,
+    required this.paymentDate,
     required this.onEdit,
     required this.delete,
     required this.id,
@@ -54,13 +54,14 @@ class PaymentsWidget extends StatelessWidget {
                 : null,
             leading: const Icon(Icons.credit_card_rounded),
             title: Text(S.current.paymentAmount),
-            subtitle: Text(FixedNumber.getFixedNumber(amount)),
+            subtitle:
+                Text(FixedNumber.getFixedNumber(amount) + ' ${S.current.sar}'),
             trailing: SizedBox(
               width: 150,
               child: Row(
                 children: [
                   Text(
-                    DateFormat('yyyy/M/dd').format(DateTime.now()),
+                    DateFormat('yyyy/M/dd').format(paymentDate),
                     style: TextStyle(
                       fontSize: 10,
                     ),

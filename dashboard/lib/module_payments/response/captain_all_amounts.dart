@@ -1,3 +1,5 @@
+import 'package:c4d/module_payments/response/captain_dialy_finance/created_at.dart';
+
 class CaptainAllFinanceResponse {
   String? statusCode;
   String? msg;
@@ -30,28 +32,24 @@ class CaptainAllFinanceResponse {
 class CaptainDataAmount {
   int? id;
   int? amount;
-  // CreatedAt? createdAt;
+  CreatedAt? createdAt;
   String? note;
 
-  CaptainDataAmount(
-      {this.id,
-      this.amount,
-      //  this.createdAt,
-      this.note});
+  CaptainDataAmount({this.id, this.amount, this.createdAt, this.note});
 
   CaptainDataAmount.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     amount = json['amount'];
-    // createdAt = json['createdAt'];
+    createdAt = CreatedAt.fromJson(json['createdAt'] as Map<String, dynamic>);
     note = json['note'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['amount'] = this.amount;
-    // data['createdAt'] = this.createdAt;
-    data['note'] = this.note;
+    data['id'] = id;
+    data['amount'] = amount;
+    data['createdAt'] = createdAt?.toJson();
+    data['note'] = note;
 
     return data;
   }

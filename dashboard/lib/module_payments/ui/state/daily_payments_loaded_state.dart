@@ -27,24 +27,28 @@ class DailyPaymentsLoaded extends States {
             child: ListView.builder(
               itemCount: model.length,
               itemBuilder: (context, index) {
-                return DailyWidget(
-                  alreadyHadAmount: model[index].alreadyHadAmount,
-                  amount: model[index].amount,
-                  bonus: model[index].bonus,
-                  financeSystemPlan: model[index].financialSystemPlan,
-                  financeType: model[index].financialSystemType,
-                  isPaid: model[index].isPaid,
-                  payments: model[index].payments,
-                  withBonus: model[index].withBonus,
-                  onPay: (amount, note) {
-                    screenState.manager.makePayments(
-                        screenState,
-                        CaptainDailyPaymentsRequest(
-                            captainId: model[index].id,
-                            amount: amount,
-                            note: note));
-                  },
-                  id: model[index].captainProfileId,
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: DailyWidget(
+                    alreadyHadAmount: model[index].alreadyHadAmount,
+                    amount: model[index].amount,
+                    bonus: model[index].bonus,
+                    financeSystemPlan: model[index].financialSystemPlan,
+                    financeType: model[index].financialSystemType,
+                    isPaid: model[index].isPaid,
+                    payments: model[index].payments,
+                    withBonus: model[index].withBonus,
+                    onPay: (amount, note) {
+                      screenState.manager.makePayments(
+                          screenState,
+                          CaptainDailyPaymentsRequest(
+                              captainId: model[index].id,
+                              amount: amount,
+                              note: note));
+                    },
+                    id: model[index].captainProfileId,
+                    createdAt: model[index].createdAt,
+                  ),
                 );
               },
             ),

@@ -117,14 +117,15 @@ class DailyBalanceStateManager {
     _stateSubject.add(LoadingState(screenState));
     _profileService.getAllAmountCaptains(request).then((value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(screenState,
-            hasAppbar: false, onPressed: () {}, title: S.current.payments));
+        _stateSubject
+            .add(ErrorState(screenState, hasAppbar: false, onPressed: () {
+          getAllAmount(screenState, request);
+        }, title: S.current.payments));
       } else if (value.isEmpty) {
-        _stateSubject.add(EmptyState(screenState,
-            hasAppbar: false,
-            onPressed: () {},
-            title: S.current.payments,
-            emptyMessage: S.current.emptyStaff));
+        _stateSubject
+            .add(EmptyState(screenState, hasAppbar: false, onPressed: () {
+          getAllAmount(screenState, request);
+        }, title: S.current.payments, emptyMessage: S.current.emptyStaff));
       } else {
         CaptainAllAmountModel model = value as CaptainAllAmountModel;
         _stateSubject

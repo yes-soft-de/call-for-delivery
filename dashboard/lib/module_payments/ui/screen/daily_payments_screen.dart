@@ -187,7 +187,7 @@ class DailyPaymentsScreenState extends State<DailyPaymentsScreen> {
               ],
             ),
           ),
-
+          Divider(height: 5, color: Theme.of(context).colorScheme.background),
           Expanded(child: currentState.getUI(context)),
         ],
       ),
