@@ -6,11 +6,10 @@ use App\Repository\OrderEntityRepository;
 
 class CaptainFinancialSystemTwoOrderManager
 {
-    private OrderEntityRepository $orderEntityRepository;
-
-    public function __construct(OrderEntityRepository $orderEntityRepository)
+    public function __construct(
+        private OrderEntityRepository $orderEntityRepository
+    )
     {
-        $this->orderEntityRepository = $orderEntityRepository;
     }
 
     public function getDeliveredOrdersCountByCaptainIdAndBetweenTwoDates(int $captainId, string $fromDate, string $toDate): array
@@ -25,7 +24,9 @@ class CaptainFinancialSystemTwoOrderManager
             $toDate);
     }
 
-    // Get count of orders without distance and delivered by specific captain during specific time
+    /**
+     * Get count of orders without distance and delivered by specific captain during specific time
+     */
     public function getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): array
     {
         return $this->orderEntityRepository->getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate($captainId, $fromDate,

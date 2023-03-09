@@ -116,7 +116,7 @@ class CaptainFinancialSystemTwoGetBalanceDetailsService
         $response['countOrdersWithoutDistance'] = (float) $this->getOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainId,
             $datesArray['fromDate'], $datesArray['toDate']) +
             ((float) $this->getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainId,
-                $datesArray['fromDate'], $datesArray['toDate']) / 2.0);
+                $datesArray['fromDate'], $datesArray['toDate']) / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
 
         // Check if captain accomplish the target of the financial system, or not, or beyond
         $checkTarget = $this->checkAchievedFinancialSystemTarget($financialSystemDetail['countOrdersInMonth'],
@@ -248,14 +248,14 @@ class CaptainFinancialSystemTwoGetBalanceDetailsService
         $response['countOrdersMaxFromNineteen'] = ((float) $this->getOverdueDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainId,
             $datesArray['fromDate'], $datesArray['toDate']) +
             ((float) $this->getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates($captainId,
-                $datesArray['fromDate'], $datesArray['toDate'])) / 2.0);
+                $datesArray['fromDate'], $datesArray['toDate'])) / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
 
         // Get the count of delivered orders by specific captain and between two dates
         // besides half of the cancelled orders count
         $response['countOrdersCompleted'] = ((float) $this->getDeliveredOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainId,
             $datesArray['fromDate'], $datesArray['toDate']) +
             ((float) $this->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainId,
-                $datesArray['fromDate'], $datesArray['toDate'])) / 2.0);
+                $datesArray['fromDate'], $datesArray['toDate'])) / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
 
         // Each order overdue 19 Kilometer will be counted as two orders
         $response['countOrdersCompleted'] += $response['countOrdersMaxFromNineteen'];
