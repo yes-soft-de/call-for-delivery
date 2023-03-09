@@ -59,9 +59,9 @@ class AdminCaptainFinancialSystemOneBalanceDetailManager
      * Get cancelled orders, by store at 'in store' state, count and which overdue the 19 kilometer according to
      * specific captain and dates
      */
-    public function getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): array
+    public function getCancelledAndOverdueStoreBranchToClientDistanceOrdersCountByCaptainProfileIdAndDates(int $captainProfileId, string $fromDate, string $toDate): array
     {
-        return $this->orderEntityRepository->getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
+        return $this->orderEntityRepository->getCancelledAndOverdueStoreBranchToClientDistanceOrdersCountByCaptainProfileIdAndDates($captainProfileId,
             $fromDate, $toDate);
     }
 

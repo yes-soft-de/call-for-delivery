@@ -105,7 +105,7 @@ class CaptainFinancialSystemOneGetBalanceDetailsService
         $cancelledOrdersCount = $this->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId, $date['fromDate'],
             $date['toDate']);
 
-        $totalOrdersCount = (float) $countOrders + ((float) $cancelledOrdersCount / 2.0);
+        $totalOrdersCount = (float) $countOrders + ((float) $cancelledOrdersCount / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
 
         //get the count of orders which overdue the 19 kilometer
         $countOrdersMaxFromNineteen = $this->getOverdueDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
@@ -115,7 +115,7 @@ class CaptainFinancialSystemOneGetBalanceDetailsService
         $overdueCancelledOrdersCount = $this->getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
             $date['fromDate'], $date['toDate']);
 
-        $totalOverdueOrdersCount = (float) $countOrdersMaxFromNineteen + ((float) $overdueCancelledOrdersCount / 2.0);
+        $totalOverdueOrdersCount = (float) $countOrdersMaxFromNineteen + ((float) $overdueCancelledOrdersCount / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
 
         $financialSystemDetail['financialDues'] = $this->financialDuesCalculator($countWorkdays, $totalOrdersCount, $totalOverdueOrdersCount,
             $financialSystemDetail['compensationForEveryOrder'], $financialSystemDetail['salary']);
@@ -147,17 +147,17 @@ class CaptainFinancialSystemOneGetBalanceDetailsService
         $response['countOrders'] = (float) $this->getDeliveredOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
             $datesArray['fromDate'], $datesArray['toDate']) +
             ((float) $this->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId, $datesArray['fromDate'],
-                    $datesArray['toDate']) / 2.0);
+                    $datesArray['toDate']) / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
 
         $response['countOrdersMaxFromNineteen'] = (float) $this->getOverdueDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
             $datesArray['fromDate'], $datesArray['toDate']) +
             ((float) $this->getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId, $datesArray['fromDate'],
-                    $datesArray['toDate']) / 2.0);
+                    $datesArray['toDate']) / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
 
         $response['countOrdersWithoutDistance'] = (float) $this->getOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainProfileId,
             $datesArray['fromDate'], $datesArray['toDate']) +
             ((float) $this->getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainProfileId,
-                $datesArray['fromDate'], $datesArray['toDate']) / 2.0);
+                $datesArray['fromDate'], $datesArray['toDate']) / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
 
         //The amount received by the captain in cash from the orders, this amount will be handed over to the admin
         $response['amountForStore'] = $this->getUnPaidCashOrdersDuesByCaptainProfileIdAndDuringSpecificTime($captainProfileId,

@@ -749,15 +749,15 @@ class OrderManager
 //        return $this->orderRepository->findOneBy(['id' => $orderId, 'state' => $orderState]);
 //    }
 
-    /**
-     * Get all orders with details that delivered by specific captain during specific date and storeBranchToClientDistance
-     * for each order belong to the specific category of the third financial system
-     */
-    public function getOrdersDetailsByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): array
-    {
-        return $this->orderRepository->getOrdersDetailsByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom,
-            $countKilometersTo);
-    }
+//    /**
+//     * Get all orders with details that delivered by specific captain during specific date and storeBranchToClientDistance
+//     * for each order belong to the specific category of the third financial system
+//     */
+//    public function getOrdersDetailsByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): array
+//    {
+//        return $this->orderRepository->getOrdersDetailsByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom,
+//            $countKilometersTo);
+//    }
 
     /**
      * Get count of orders without distance and delivered by specific captain during specific time

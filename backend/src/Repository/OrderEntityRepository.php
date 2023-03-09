@@ -1612,7 +1612,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = orderEntity.storeOwner')
 
             ->where('orderEntity.state = :deliveredState'
-                .'OR (orderEntity.state = :cancelledState AND orderEntity.orderCancelledByUserAndAtState = :orderCancelledByStoreAndAtInStoreState)')
+                .' OR (orderEntity.state = :cancelledState AND orderEntity.orderCancelledByUserAndAtState = :orderCancelledByStoreAndAtInStoreState)')
             ->setParameter('deliveredState', OrderStateConstant::ORDER_STATE_DELIVERED)
             ->setParameter('cancelledState', OrderStateConstant::ORDER_STATE_CANCEL)
             ->setParameter('orderCancelledByStoreAndAtInStoreState', OrderCancelledByUserAndAtStateConstant::ORDER_CANCELLED_BY_STORE_AND_AT_IN_STORE_STATE_CONST)
@@ -2528,8 +2528,11 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = orderEntity.storeOwner')
 
-            ->where('orderEntity.state = :state')
-            ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
+            ->where('orderEntity.state = :deliveredState'
+                .' OR (orderEntity.state = :cancelledState AND orderEntity.orderCancelledByUserAndAtState = :orderCancelledByStoreAndAtInStoreState)')
+            ->setParameter('deliveredState', OrderStateConstant::ORDER_STATE_DELIVERED)
+            ->setParameter('cancelledState', OrderStateConstant::ORDER_STATE_CANCEL)
+            ->setParameter('orderCancelledByStoreAndAtInStoreState', OrderCancelledByUserAndAtStateConstant::ORDER_CANCELLED_BY_STORE_AND_AT_IN_STORE_STATE_CONST)
 
             ->andWhere('orderEntity.captainId = :captainId')
             ->setParameter('captainId', $captainId)
@@ -2581,8 +2584,8 @@ class OrderEntityRepository extends ServiceEntityRepository
     }
 
     /**
-     * Get cancelled orders, by store at 'in store' state, count and which overdue the 19 kilometer according to
-     * specific captain and dates
+     * Get cancelled orders, by store at 'in store' state, count and which storeBranchToClientDistance or
+     * kilometer is more than 19 kilometer and according to specific captain and dates
      */
     public function getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): array
     {
@@ -2676,5 +2679,38 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    /**
+     * Get cancelled orders, by store at 'in store' state, count and which storeBranchToClientDistance is more
+     * than 19 kilometer and according to specific captain and dates
+     */
+    public function getCancelledAndOverdueStoreBranchToClientDistanceOrdersCountByCaptainProfileIdAndDates(int $captainProfileId, string $fromDate, string $toDate): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+
+            ->select('count(orderEntity.id)')
+
+            ->where('orderEntity.state = :state')
+            ->setParameter('state', OrderStateConstant::ORDER_STATE_CANCEL)
+
+            ->andWhere('orderEntity.captainId = :captainId')
+            ->setParameter('captainId', $captainProfileId)
+
+            ->andWhere('orderEntity.createdAt >= :fromDate')
+            ->setParameter('fromDate', $fromDate)
+
+            ->andWhere('orderEntity.createdAt <= :toDate')
+            ->setParameter('toDate', $toDate)
+
+            ->andWhere('(orderEntity.storeBranchToClientDistance IS NOT NULL'
+                .' AND orderEntity.storeBranchToClientDistance >= :limitDistance)')
+            ->setParameter('limitDistance', CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER)
+
+            ->andWhere('orderEntity.orderCancelledByUserAndAtState = :orderCancelledByStoreAtInStoreState')
+            ->setParameter('orderCancelledByStoreAtInStoreState', OrderCancelledByUserAndAtStateConstant::ORDER_CANCELLED_BY_STORE_AND_AT_IN_STORE_STATE_CONST)
+
+            ->getQuery()
+            ->getSingleColumnResult();
     }
 }

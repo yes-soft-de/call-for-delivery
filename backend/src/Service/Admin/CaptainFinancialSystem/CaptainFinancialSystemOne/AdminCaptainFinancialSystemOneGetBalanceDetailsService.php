@@ -80,29 +80,47 @@ class AdminCaptainFinancialSystemOneGetBalanceDetailsService
     /**
      * Get cancelled orders, by store at 'in store' state, count according to specific captain and dates
      */
-    public function getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): array
+    public function getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): int
     {
-        return $this->adminCaptainFinancialSystemOneBalanceDetailManager->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
+        $ordersCountResult = $this->adminCaptainFinancialSystemOneBalanceDetailManager->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
             $fromDate, $toDate);
+
+        if (count($ordersCountResult) > 0) {
+            return $ordersCountResult[0];
+        }
+
+        return 0;
     }
 
     /**
      * Get cancelled orders, by store at 'in store' state, count and which overdue the 19 kilometer according to
      * specific captain and dates
      */
-    public function getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): array
+    public function getCancelledAndOverdueStoreBranchToClientDistanceOrdersCountByCaptainProfileIdAndDates(int $captainProfileId, string $fromDate, string $toDate): int
     {
-        return $this->adminCaptainFinancialSystemOneBalanceDetailManager->getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
+        $ordersCountResult = $this->adminCaptainFinancialSystemOneBalanceDetailManager->getCancelledAndOverdueStoreBranchToClientDistanceOrdersCountByCaptainProfileIdAndDates($captainProfileId,
             $fromDate, $toDate);
+
+        if (count($ordersCountResult) > 0) {
+            return $ordersCountResult[0];
+        }
+
+        return 0;
     }
 
     /**
      * Get count of orders without distance and cancelled by store and related to specific captain during specific time
      */
-    public function getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate(int $captainProfileId, string $fromDate, string $toDate): array
+    public function getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate(int $captainProfileId, string $fromDate, string $toDate): int
     {
-        return $this->adminCaptainFinancialSystemOneBalanceDetailManager->getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainProfileId,
+        $ordersCountResult = $this->adminCaptainFinancialSystemOneBalanceDetailManager->getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainProfileId,
             $fromDate, $toDate);
+
+        if (count($ordersCountResult) > 0) {
+            return $ordersCountResult[0];
+        }
+
+        return 0;
     }
 
     /**
@@ -111,10 +129,10 @@ class AdminCaptainFinancialSystemOneGetBalanceDetailsService
     public function initializeNecessaryFieldsForDuesCalculation(int $captainProfileId, array $datesArray, float $sumPayments, array $financialDetailsArray): array
     {
         // initialize delivered orders count field: delivered orders count according to a specific captain and date
-        $financialDetailsArray['countOrders'] = (float) $this->getDeliveredOrdersCountByCaptainProfileIdAndSpecificDateForAdmin($captainProfileId,
-            $datesArray['fromDate'], $datesArray['toDate']);
+        $financialDetailsArray['countOrders'] = ((float) $this->getDeliveredOrdersCountByCaptainProfileIdAndSpecificDateForAdmin($captainProfileId,
+            $datesArray['fromDate'], $datesArray['toDate']))
             + ((float) $this->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
-                $datesArray['fromDate'], $datesArray['toDate']));
+                $datesArray['fromDate'], $datesArray['toDate']) / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
 
         $financialDetailsArray['sumPayments'] = $sumPayments;
 
@@ -123,16 +141,16 @@ class AdminCaptainFinancialSystemOneGetBalanceDetailsService
             $datesArray['fromDate'], $datesArray['toDate']);
 
         // initialize following field be getting all orders count which overdue the 19 kilometer
-        $financialDetailsArray['countOrdersMaxFromNineteen'] = (float) $this->getOverdueDeliveredOrdersByCaptainProfileIdAndBetweenTwoDatesForAdmin($captainProfileId,
-            $datesArray['fromDate'], $datesArray['toDate'])
-            + ((float) $this->getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
-                $datesArray['fromDate'], $datesArray['toDate']));
+        $financialDetailsArray['countOrdersMaxFromNineteen'] = ((float) $this->getOverdueDeliveredOrdersByCaptainProfileIdAndBetweenTwoDatesForAdmin($captainProfileId,
+            $datesArray['fromDate'], $datesArray['toDate']))
+            + ((float) $this->getCancelledAndOverdueStoreBranchToClientDistanceOrdersCountByCaptainProfileIdAndDates($captainProfileId,
+                $datesArray['fromDate'], $datesArray['toDate']) / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
 
         // initialize following field by getting all orders count which have no distance
         $financialDetailsArray['countOrdersWithoutDistance'] = (float) $this->getOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDateForAdmin($captainProfileId,
             $datesArray['fromDate'], $datesArray['toDate'])
             + ((float) $this->getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainProfileId,
-                $datesArray['fromDate'], $datesArray['toDate']));
+                $datesArray['fromDate'], $datesArray['toDate']) / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
 
         // initialize following field by getting all due from cash orders for store
         $financialDetailsArray['amountForStore'] = $this->getUnPaidCashOrdersDuesByCaptainProfileIdAndDuringSpecificDateForAdmin($captainProfileId,
