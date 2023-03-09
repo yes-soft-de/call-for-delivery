@@ -99,7 +99,7 @@ class CaptainFinancialSystemThreeGetBalanceDetailsService
         $finalFinancialAccount['countOrdersWithoutDistance'] = (float) $this->getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate($captainId,
             $date['fromDate'], $date['toDate']) +
             ((float) $this->getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainId, $date['fromDate'],
-                    $date['toDate']) / 2.0);
+                    $date['toDate']) / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
 
         $finalFinancialAccount['amountForStore'] = $this->getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime($captainId,
             $date['fromDate'], $date['toDate']);
@@ -120,7 +120,7 @@ class CaptainFinancialSystemThreeGetBalanceDetailsService
                 $date['toDate'], $financialSystemThreeDetail['countKilometersFrom'], $financialSystemThreeDetail['countKilometersTo']) +
                 ((float) $this->getCancelledOrdersCountByCaptainProfileIdAndSpecificDateAndSpecificDistanceRange($captainId,
                         $date['fromDate'], $date['toDate'], $financialSystemThreeDetail['countKilometersFrom'],
-                        $financialSystemThreeDetail['countKilometersTo']) / 2.0);
+                        $financialSystemThreeDetail['countKilometersTo']) / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
 
             // Calculate basic orders cost without bonus: total cost = order count * amount
             $financialSystemThreeDetail['captainTotalCategory'] = $countOrders * $financialSystemThreeDetail['amount'];
@@ -172,7 +172,7 @@ class CaptainFinancialSystemThreeGetBalanceDetailsService
             $countOrders = (float) $this->getCountOrdersByFinancialSystemThree($captainId, $date['fromDate'], $date['toDate'],
                 $financialSystemThreeDetail['countKilometersFrom'], $financialSystemThreeDetail['countKilometersTo']) +
                 ((float) $this->getCancelledOrdersCountByCaptainProfileIdAndSpecificDateAndSpecificDistanceRange($captainId, $date['fromDate'], $date['toDate'],
-                    $financialSystemThreeDetail['countKilometersFrom'], $financialSystemThreeDetail['countKilometersTo']) / 2.0);
+                    $financialSystemThreeDetail['countKilometersFrom'], $financialSystemThreeDetail['countKilometersTo']) / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
 
             // Calculate basic orders cost without bonus: total cost = order count * amount
             $financialSystemThreeDetail['captainTotalCategory'] = $countOrders * (float) $financialSystemThreeDetail['amount'];
