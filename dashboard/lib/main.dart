@@ -64,7 +64,17 @@ void main() async {
   }
   await HiveSetUp.init();
   await ArgumentHiveHelper().clean();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+      apiKey: "AIzaSyBI1NPRqgXwAHgRBuy_7IAXnnvM8XT-Fu0",
+      authDomain: "c4d-app-c299b.firebaseapp.com",
+      projectId: "c4d-app-c299b",
+      storageBucket: "c4d-app-c299b.appspot.com",
+      messagingSenderId: "410273886458",
+      appId: "1:410273886458:web:78390256f1f5efb11f1943",
+      measurementId: "G-XSMNHCSQGV",
+    ),
+  );
   if (kIsWeb) {
   } else {
     await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(true);
