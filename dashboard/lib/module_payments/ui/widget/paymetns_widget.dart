@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 class PaymentsWidget extends StatelessWidget {
   final int id;
   final String? note;
-  final num amount;
+  final int amount;
   final DateTime paymentDate;
   final Function(int, num, String) onEdit;
   final Function(int) delete;
@@ -54,7 +54,8 @@ class PaymentsWidget extends StatelessWidget {
                 : null,
             leading: const Icon(Icons.credit_card_rounded),
             title: Text(S.current.paymentAmount),
-            subtitle: Text(FixedNumber.getFixedNumber(amount)),
+            subtitle:
+                Text(FixedNumber.getFixedNumber(amount) + ' ${S.current.sar}'),
             trailing: SizedBox(
               width: 150,
               child: Row(

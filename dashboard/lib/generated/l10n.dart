@@ -9189,6 +9189,36 @@ class S {
       args: [],
     );
   }
+
+  /// `show payments`
+  String get showPayments {
+    return Intl.message(
+      'show payments',
+      name: 'showPayments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `add a payment`
+  String get addaPayment {
+    return Intl.message(
+      'add a payment',
+      name: 'addaPayment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Dues by filter`
+  String get duesByFilter {
+    return Intl.message(
+      'Dues by filter',
+      name: 'duesByFilter',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
