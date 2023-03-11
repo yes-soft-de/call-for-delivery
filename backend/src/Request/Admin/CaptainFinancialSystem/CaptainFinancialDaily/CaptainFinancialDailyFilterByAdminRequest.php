@@ -34,6 +34,14 @@ class CaptainFinancialDailyFilterByAdminRequest
         return $this->captainProfileId;
     }
 
+    /**
+     * @param int|null $captainProfileId
+     */
+    public function setCaptainProfileId(?int $captainProfileId): void
+    {
+        $this->captainProfileId = $captainProfileId;
+    }
+
     public function getFromDate(): ?string
     {
         return $this->fromDate;

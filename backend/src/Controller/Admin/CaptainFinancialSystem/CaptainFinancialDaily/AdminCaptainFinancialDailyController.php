@@ -121,4 +121,58 @@ class AdminCaptainFinancialDailyController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+
+    /**
+     * admin: filter captain financial daily sum by admin
+     * @Route("filtercaptainfinancialdailysumbyadmin", name="filtercaptainfinancialdailySumbyadmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Captain Financial Daily")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Post a request with filtering captain financial daily options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="captainProfileId"),
+     *          @OA\Property(type="integer", property="isPaid"),
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="string", property="customizedTimezone", example="Asia/Riyadh")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns captain financial daily which meet the filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Admin\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailySumFilterByAdminResponse")
+     *              )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterCaptainFinancialDailySumByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, CaptainFinancialDailyFilterByAdminRequest::class, (object)$data);
+
+        $result = $this->adminCaptainFinancialDailyGetService->filterCaptainFinancialDailySumByAdmin($request);
+
+        return $this->response($result, self::FETCH);
+    }
 }

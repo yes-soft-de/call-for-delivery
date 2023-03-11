@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\CaptainPaymentEntity;
 use App\Entity\CaptainEntity;
+use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentFilterByAdminRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -183,5 +184,22 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getResult();
+    }
+
+    public function filterCaptainPaymentByAdmin(CaptainPaymentFilterByAdminRequest $request): array
+    {
+        $query = $this->createQueryBuilder('captainPaymentEntity')
+
+            ->andWhere('captainPaymentEntity.captainFinancialDues IS NULL')
+            ->andWhere('captainPaymentEntity.captainFinancialDailyEntity IS NOT NULL')
+
+            ->orderBy('captainPaymentEntity.id', 'DESC');
+
+        if ($request->getCaptainProfileId()) {
+            $query->andWhere('captainPaymentEntity.captain = :captainProfileId')
+                ->setParameter('captainProfileId', $request->getCaptainProfileId());
+        }
+
+        return $query->getQuery()->getResult();
     }
 }

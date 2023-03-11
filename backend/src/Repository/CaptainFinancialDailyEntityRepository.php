@@ -2,8 +2,11 @@
 
 namespace App\Repository;
 
+use App\Constant\Image\ImageEntityTypeConstant;
+use App\Constant\Image\ImageUseAsConstant;
 use App\Entity\CaptainEntity;
 use App\Entity\CaptainFinancialDailyEntity;
+use App\Entity\ImageEntity;
 use App\Request\Admin\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyFilterByAdminRequest;
 use App\Request\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyFilterRequest;
 use DateTime;
@@ -86,6 +89,9 @@ class CaptainFinancialDailyEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    /**
+     * Filter captain financial daily entities according on dates
+     */
     public function filterCaptainFinancialDailyEntitiesByDates(array $tempOrders, ?string $fromDate, ?string $toDate, ?string $timeZone): array
     {
         $filteredCaptainFinancialDaily = [];
@@ -158,6 +164,18 @@ class CaptainFinancialDailyEntityRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('captainFinancialDailyEntity')
 
+            ->leftJoin(
+                ImageEntity::class,
+                'imageEntity',
+                Join::WITH,
+                'imageEntity.itemId = captainFinancialDailyEntity.captainProfile AND imageEntity.entityType = :entityType'
+            )
+
+            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
+
+            ->andWhere('imageEntity.usedAs = :profileImage')
+            ->setParameter('profileImage', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+
             ->orderBy('captainFinancialDailyEntity.id', 'DESC');
 
         if ($request->getCaptainProfileId()) {
@@ -176,6 +194,89 @@ class CaptainFinancialDailyEntityRepository extends ServiceEntityRepository
             $tempQuery = $query->getQuery()->getResult();
 
             return $this->filterCaptainFinancialDailyEntitiesByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
+    /**
+     * Filter captain financial daily array according on dates
+     */
+    public function filterCaptainFinancialDailyArrayByDates(array $tempOrders, ?string $fromDate, ?string $toDate, ?string $timeZone): array
+    {
+        $filteredCaptainFinancialDaily = [];
+
+        if (count($tempOrders) > 0) {
+            if (($fromDate != null || $fromDate != "") && ($toDate === null || $toDate === "")) {
+                foreach ($tempOrders as $key => $value) {
+                    if ($value[0]->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) >=
+                        new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) {
+                        $filteredCaptainFinancialDaily[] = $value;
+                    }
+                }
+
+            } elseif (($fromDate === null || $fromDate === "") && ($toDate != null || $toDate != "")) {
+                foreach ($tempOrders as $key => $value) {
+                    if ($value[0]->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) <=
+                        new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59'))) {
+                        $filteredCaptainFinancialDaily[] = $value;
+                    }
+                }
+
+            } elseif (($fromDate != null || $fromDate != "") && ($toDate != null || $toDate != "")) {
+                foreach ($tempOrders as $key => $value) {
+                    if (($value[0]->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) >=
+                            new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) &&
+                        ($value[0]->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) <=
+                            new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59')))) {
+                        $filteredCaptainFinancialDaily[] = $value;
+                    }
+                }
+            }
+        }
+
+        return $filteredCaptainFinancialDaily;
+    }
+
+    /**
+     * Filter captain financial daily and return it with captains' images
+     */
+    public function filterCaptainFinancialDailyWithImagesByAdmin(CaptainFinancialDailyFilterByAdminRequest $request): array
+    {
+        $query = $this->createQueryBuilder('captainFinancialDailyEntity')
+
+            ->addSelect('imageEntity.imagePath', 'imageEntity.usedAs')
+
+            ->leftJoin(
+                ImageEntity::class,
+                'imageEntity',
+                Join::WITH,
+                'imageEntity.itemId = captainFinancialDailyEntity.captainProfile AND imageEntity.entityType = :entityType'
+            )
+
+            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
+
+            ->andWhere('imageEntity.usedAs = :profileImage')
+            ->setParameter('profileImage', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+
+            ->orderBy('captainFinancialDailyEntity.id', 'DESC');
+
+        if ($request->getCaptainProfileId()) {
+            $query->andWhere('captainFinancialDailyEntity.captainProfile = :captainProfileId')
+                ->setParameter('captainProfileId', $request->getCaptainProfileId());
+        }
+
+        if ($request->getIsPaid()) {
+            $query->andWhere('captainFinancialDailyEntity.isPaid = :isPaidValue')
+                ->setParameter('isPaidValue', $request->getIsPaid());
+        }
+
+        if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
+            || ($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")
+            || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $tempQuery = $query->getQuery()->getResult();
+
+            return $this->filterCaptainFinancialDailyArrayByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
         }
 
         return $query->getQuery()->getResult();
