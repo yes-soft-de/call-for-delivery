@@ -98,7 +98,7 @@ class DailyWidget extends StatelessWidget {
                                       fontWeight: FontWeight.bold,
                                     )),
                                 Text(
-                                    '${FixedNumber.getFixedNumber(amount) + FixedNumber.getFixedNumber(bonus)} ${S.current.sar}',
+                                    '${FixedNumber.getFixedNumber(amount + bonus)} ${S.current.sar}',
                                     style: TextStyle(
                                       fontSize: 14,
                                     ))
