@@ -53,6 +53,7 @@ class DailyPaymentsScreenState extends State<DailyPaymentsScreen> {
   late CaptainDailyFinanceRequest paymentsFilter;
   int captainID = -1;
   String captainName = '';
+
   bool flag = true;
   @override
   Widget build(BuildContext context) {
@@ -132,7 +133,7 @@ class DailyPaymentsScreenState extends State<DailyPaymentsScreen> {
                   padding: const EdgeInsets.all(8.0),
                   child: Container(
                     width: 32,
-                    height: 2.5,
+                    height: 3,
                     color: Theme.of(context).colorScheme.background,
                   ),
                 ),
@@ -186,7 +187,7 @@ class DailyPaymentsScreenState extends State<DailyPaymentsScreen> {
               ],
             ),
           ),
-
+          Divider(height: 5, color: Theme.of(context).colorScheme.background),
           Expanded(child: currentState.getUI(context)),
         ],
       ),

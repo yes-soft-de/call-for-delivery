@@ -5,6 +5,7 @@ import 'package:c4d/utils/helpers/date_converter.dart';
 
 class CaptainDailyFinanceModel extends DataModel {
   late int id;
+  late int captainProfileId;
   late num amount;
   late num alreadyHadAmount;
   late int financialSystemType;
@@ -17,6 +18,7 @@ class CaptainDailyFinanceModel extends DataModel {
   List<PaymentModel> payments = [];
   CaptainDailyFinanceModel({
     required this.id,
+    required this.captainProfileId,
     required this.amount,
     required this.alreadyHadAmount,
     required this.financialSystemType,
@@ -34,6 +36,7 @@ class CaptainDailyFinanceModel extends DataModel {
     for (var e in d) {
       _data.add(CaptainDailyFinanceModel(
         id: e.id ?? -1,
+        captainProfileId: e.captainProfileId ?? 0,
         alreadyHadAmount: e.alreadyHadAmount ?? 0,
         amount: e.amount ?? 0,
         bonus: e.bonus ?? 0,

@@ -1,5 +1,6 @@
 import 'package:c4d/abstracts/module/yes_module.dart';
 import 'package:c4d/module_payments/payments_routes.dart';
+import 'package:c4d/module_payments/ui/screen/all_amount_captains_screen.dart';
 import 'package:c4d/module_payments/ui/screen/captain_finance_by_hours_screen.dart';
 import 'package:c4d/module_payments/ui/screen/captain_finance_by_order_count_screen.dart';
 import 'package:c4d/module_payments/ui/screen/captain_finance_by_order_screen.dart';
@@ -17,14 +18,15 @@ class PaymentsModule extends YesModule {
   final PaymentsToCaptainScreen paymentsToCaptainScreen;
   final StoreBalanceScreen storeBalanceScreen;
   final DailyPaymentsScreen dailyPaymentsScreen;
+  final AllAmountCaptainsScreen allAmountCaptainsScreen;
   PaymentsModule(
-    this.financeByCountOrderScreen,
-    this.financeByHoursScreen,
-    this.financeByOrderScreen,
-    this.paymentsToCaptainScreen,
-    this.storeBalanceScreen,
-    this.dailyPaymentsScreen,
-  ) {
+      this.financeByCountOrderScreen,
+      this.financeByHoursScreen,
+      this.financeByOrderScreen,
+      this.paymentsToCaptainScreen,
+      this.storeBalanceScreen,
+      this.dailyPaymentsScreen,
+      this.allAmountCaptainsScreen) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
@@ -38,6 +40,7 @@ class PaymentsModule extends YesModule {
       PaymentsRoutes.PAYMENTS_TO_CAPTAIN: (context) => paymentsToCaptainScreen,
       PaymentsRoutes.PAYMENTS_LIST: (context) => storeBalanceScreen,
       PaymentsRoutes.CAPTAIN_DAILY_PAYMENTS: (context) => dailyPaymentsScreen,
+      PaymentsRoutes.ALL_AMOUNT_CAPTAINS: (context) => allAmountCaptainsScreen,
     };
   }
 }

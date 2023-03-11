@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 @injectable
 class AppThemeDataService {
@@ -68,7 +69,7 @@ class AppThemeDataService {
             }),
           ),
           cardColor: Colors.grey[150],
-          fontFamily: 'Dubai',
+          fontFamily: kIsWeb ? null : 'Dubai',
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
             backgroundColor: darkScheme.primary,
@@ -103,7 +104,7 @@ class AppThemeDataService {
         cardColor: Color.fromRGBO(245, 245, 245, 1),
         scaffoldBackgroundColor: Colors.grey[50],
         textTheme: TextTheme(button: TextStyle(color: Colors.white)),
-        fontFamily: 'Dubai',
+        fontFamily: kIsWeb ? null : 'Dubai',
         timePickerTheme: TimePickerThemeData(
           dialBackgroundColor: Color.fromRGBO(235, 235, 235, 1),
           dayPeriodBorderSide:
