@@ -66,7 +66,7 @@ class DailyWidget extends StatelessWidget {
                       child: VerticalBubble(
                           title: S.current.todayProfit,
                           subtitle:
-                              '${FixedNumber.getFixedNumber(amount)} ${S.current.sar}')),
+                              '${FixedNumber.getFixedNumber(amount + bonus)} ${S.current.sar}')),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
