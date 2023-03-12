@@ -10,6 +10,7 @@ import 'package:c4d/module_payments/request/create_captain_finance_by_count_orde
 import 'package:c4d/module_payments/request/create_captain_finance_by_hours.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_order_request.dart';
 import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
+import 'package:c4d/module_payments/response/captain_all_amounts.dart';
 import 'package:c4d/module_payments/response/captain_dialy_finance/captain_dialy_finance.dart';
 import 'package:c4d/module_payments/response/captain_finance_by_hours_response/captain_finance_by_hours_response.dart';
 import 'package:c4d/module_payments/response/captain_finance_by_order_counts_response/captain_finance_by_order_counts_response.dart';
@@ -298,5 +299,15 @@ class PaymentsRepository {
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ActionResponse.fromJson(response);
+  }
+
+  Future<CaptainAllFinanceResponse?> getAllAmountCaptain(
+      CaptainDailyFinanceRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+        Urls.NEW_GET_CAPTAIN_FINANCE_ALL_AMOUNT, request.toJson(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return CaptainAllFinanceResponse.fromJson(response);
   }
 }
