@@ -78,7 +78,8 @@ class CaptainFinancialDailyService
 
         } elseif ($captainFinancialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_THREE) {
             // Captain financial system is the third one
-            return $this->captainFinancialSystemThreeDailyService->getDailyCaptainFinancialAmount($captainProfileId, $fromDate, $toDate);
+            return $this->captainFinancialSystemThreeDailyService->getDailyCaptainFinancialAmount($captainProfileId,
+                $fromDate, $toDate);
         }
 
         return $response;

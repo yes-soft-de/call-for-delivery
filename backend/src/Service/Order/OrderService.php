@@ -909,8 +909,12 @@ class OrderService
                 // If the captain had reached the store then we won't update remaining orders
 
                 // If the captain had reached the store, then we would count half of the order financial value for the captain
+                // A. Update captain financial due
                 $this->createOrUpdateCaptainFinancialDue($updatedOrder->getCaptainId()->getCaptainId(), $updatedOrder->getId(),
                     $updatedOrder->getCreatedAt());
+
+                // B. Update captain financial daily
+                $this->createOrUpdateCaptainFinancialDaily($updatedOrder->getId(), $updatedOrder->getCaptainId());
 
                 $this->updateRemainingCarsOfStoreSubscription($updatedOrder->getStoreOwner()->getId(), $updatedOrder->getCreatedAt(),
                     SubscriptionConstant::OPERATION_TYPE_ADDITION, 1);
