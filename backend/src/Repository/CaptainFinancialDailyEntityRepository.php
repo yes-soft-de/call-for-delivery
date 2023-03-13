@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Constant\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyIsPaidConstant;
 use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\Image\ImageUseAsConstant;
 use App\Entity\CaptainEntity;
@@ -267,8 +268,17 @@ class CaptainFinancialDailyEntityRepository extends ServiceEntityRepository
         }
 
         if ($request->getIsPaid()) {
-            $query->andWhere('captainFinancialDailyEntity.isPaid = :isPaidValue')
-                ->setParameter('isPaidValue', $request->getIsPaid());
+            if ($request->getIsPaid() === CaptainFinancialDailyIsPaidConstant::CAPTAIN_FINANCIAL_DAILY_IS_NOT_PAID_CONST) {
+                // If not paid captain financial daily amount is what requested, then get what is not paid and what is
+                // paid partially
+                $query->andWhere('captainFinancialDailyEntity.isPaid = :isNotPaidValue OR captainFinancialDailyEntity.isPaid = :isPaidPartiallyValue')
+                    ->setParameter('isNotPaidValue', CaptainFinancialDailyIsPaidConstant::CAPTAIN_FINANCIAL_DAILY_IS_NOT_PAID_CONST)
+                    ->setParameter('isPaidPartiallyValue', CaptainFinancialDailyIsPaidConstant::CAPTAIN_FINANCIAL_DAILY_IS_PAID_PARTIALLY_CONST);
+
+            } else {
+                $query->andWhere('captainFinancialDailyEntity.isPaid = :isPaidValue')
+                    ->setParameter('isPaidValue', $request->getIsPaid());
+            }
         }
 
         if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
