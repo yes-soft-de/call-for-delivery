@@ -105,9 +105,4 @@ class CaptainFinancialSystemDetailManager
 
         return $financialSystemDetail;
     }
-
-//    public function getCaptainFinancialSystemDetailEntityByCaptainUserId(int $captainUserId): ?CaptainFinancialSystemDetailEntity
-//    {
-//        return $this->captainFinancialSystemDetailEntityRepository->getCaptainFinancialSystemDetailEntityByCaptainUserId($captainUserId);
-//    }
 }
