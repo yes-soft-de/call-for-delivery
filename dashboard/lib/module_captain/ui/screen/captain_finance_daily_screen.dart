@@ -43,6 +43,7 @@ class CaptainFinanceDailyScreenState extends State<CaptainFinanceDailyScreen> {
   }
 
   void getAccount() {
+    widget._manager.getCaptainsFinanceDailyNew(this, filter);
     refresh();
   }
 

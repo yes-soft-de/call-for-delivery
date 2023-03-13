@@ -52,7 +52,7 @@ class _OrderStatisticsUIState extends State<OrderStatisticsUI> {
                 color: Theme.of(context).scaffoldBackgroundColor,
                 boxShadow: [
                   BoxShadow(
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).colorScheme.background,
                     offset: Offset(0.5, 0.5),
                     spreadRadius: 2.5,
                     blurRadius: 6,

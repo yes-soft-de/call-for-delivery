@@ -84,10 +84,11 @@ class CaptainFinanceDailyWidget extends StatelessWidget {
                   children: [
                     verticalTile(context,
                         title: S.current.dues,
-                        subtitle: model?.amountSum.toString() ?? ''),
+                        subtitle:
+                            model?.amountSum.toString() ?? '' + S.current.sar),
                     verticalTile(context,
                         title: S.current.remainingtoPay,
-                        subtitle: model?.toBePaid.toString() ?? ''),
+                        subtitle: '${model?.toBePaid.toString() ?? ''}'),
                   ],
                 ),
                 // // divider
@@ -130,7 +131,7 @@ class CaptainFinanceDailyWidget extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: Theme.of(context).colorScheme.background),
         ),
-        Text(subtitle,
+        Text(subtitle + ' ${S.current.sar}',
             style: Theme.of(context)
                 .textTheme
                 .labelLarge
