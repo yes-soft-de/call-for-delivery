@@ -10,10 +10,9 @@ class CaptainFinancialSystemTwoCalculationService
 {
     public function __construct()
     {
-
     }
 
-    public function calculateFinancialDues(int $targetStatus, float $salary, float $monthCompensation, int $countOrdersCompleted = null,
+    public function calculateFinancialDues(int $targetStatus, float $salary, float $monthCompensation, float $countOrdersCompleted = null,
                                            int $countOrdersInMonth = null, float $bounceMaxCountOrdersInMonth = null): float
     {
         $financialDues = 0.0;

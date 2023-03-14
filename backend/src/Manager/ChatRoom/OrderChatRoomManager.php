@@ -3,6 +3,7 @@
 namespace App\Manager\ChatRoom;
 
 use App\AutoMapping;
+use App\Constant\ChatRoom\OrderChatRoomConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Entity\OrderChatRoomEntity;
 use App\Entity\OrderEntity;
@@ -151,5 +152,22 @@ class OrderChatRoomManager
     public function getOnGoingOrdersChatRoomsForStore(int $userId): array
     {
         return $this->orderChatRoomRepository->getOnGoingOrdersChatRoomsForStore($userId);
+    }
+
+    public function deleteChatRoomByOrderId(int $orderId): int|array
+    {
+        $chatRoomResults = $this->orderChatRoomRepository->findBy(['orderId' => $orderId]);
+
+        if (count($chatRoomResults) === 0) {
+            return OrderChatRoomConstant::ORDER_CHAT_ROOM_NOT_EXIST_CONST;
+        }
+
+        foreach ($chatRoomResults as $chatRoom) {
+            $this->entityManager->remove($chatRoom);
+
+            $this->entityManager->flush();
+        }
+
+        return $chatRoomResults;
     }
 }

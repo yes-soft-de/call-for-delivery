@@ -18,9 +18,9 @@ class CaptainFinancialSystemAccordingOnOrderBalanceDetailResponse
 
     public float|null $captainTotalCategory;
 
-    public int|null $contOrderCompleted;
+    public float|null $contOrderCompleted;
 
-    public int|null $countOfOrdersLeft;
+    public float|null $countOfOrdersLeft;
 
     public string|null $message;
 

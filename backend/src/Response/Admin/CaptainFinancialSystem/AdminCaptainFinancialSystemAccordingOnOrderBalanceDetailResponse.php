@@ -18,9 +18,15 @@ class AdminCaptainFinancialSystemAccordingOnOrderBalanceDetailResponse
 
     public float|null $captainTotalCategory;
 
-    public int|null $contOrderCompleted;
+    /**
+     * @var float|null
+     */
+    public $contOrderCompleted;
 
-    public int|null $countOfOrdersLeft;
+    /**
+     * @var float|null
+     */
+    public $countOfOrdersLeft;
 
     public string|null $message;
 

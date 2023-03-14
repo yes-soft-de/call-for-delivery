@@ -2,35 +2,31 @@
 
 namespace App\Manager\Admin\CaptainFinancialSystem;
 
-use App\Manager\Order\OrderManager;
+use App\Repository\OrderEntityRepository;
 
 class AdminCaptainFinancialSystemThreeBalanceDetailManager
 {
-    private OrderManager $orderManager;
-
-    public function __construct(OrderManager $orderManager)
+    public function __construct(
+        private OrderEntityRepository $orderEntityRepository
+    )
     {
-        $this->orderManager = $orderManager;
     }
 
-    public function getCountOrdersByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate)
+    public function getDetailOrdersByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): array
     {
-       return $this->orderManager->getCountOrdersByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
+        return $this->orderEntityRepository->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
     }
 
-    public function getDetailOrdersByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate)
+    public function getCountOrdersByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): ?array
     {
-        return $this->orderManager->getDetailOrdersByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
+        return $this->orderEntityRepository->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate,
+            $countKilometersFrom, $countKilometersTo);
     }
 
-    public function getCountOrdersByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo)
+    public function getOrdersByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): ?array
     {
-        return $this->orderManager->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
-    }
-
-    public function getOrdersByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo)
-    {
-        return $this->orderManager->getOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
+        return $this->orderEntityRepository->getOrdersByFinancialSystemThree($captainId, $fromDate, $toDate,
+            $countKilometersFrom, $countKilometersTo);
     }
 
     /**
@@ -39,8 +35,8 @@ class AdminCaptainFinancialSystemThreeBalanceDetailManager
      */
     public function getOrdersDetailsByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): array
     {
-        return $this->orderManager->getOrdersDetailsByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom,
-            $countKilometersTo);
+        return $this->orderEntityRepository->getOrdersDetailsByFinancialSystemThree($captainId, $fromDate, $toDate,
+            $countKilometersFrom, $countKilometersTo);
     }
 
     /**
@@ -48,6 +44,25 @@ class AdminCaptainFinancialSystemThreeBalanceDetailManager
      */
     public function getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): array
     {
-        return $this->orderManager->getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
+        return $this->orderEntityRepository->getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate($captainId, $fromDate,
+            $toDate);
+    }
+
+    /**
+     * Get count of orders without distance and cancelled by store and related to specific captain during specific time
+     */
+    public function getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate(int $captainProfileId, string $fromDate, string $toDate): array
+    {
+        return $this->orderEntityRepository->getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainProfileId,
+            $fromDate, $toDate);
+    }
+
+    /**
+     * Get cancelled orders, by store at 'in store' state, count according to specific captain and dates
+     */
+    public function getCancelledOrdersCountByCaptainProfileIdAndSpecificDateAndSpecificDistanceRange(int $captainProfileId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): array
+    {
+        return $this->orderEntityRepository->getCancelledOrdersCountByCaptainProfileIdAndSpecificDateAndSpecificDistanceRange($captainProfileId,
+            $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
     }
 }

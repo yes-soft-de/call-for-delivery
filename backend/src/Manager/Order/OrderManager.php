@@ -3,6 +3,7 @@
 namespace App\Manager\Order;
 
 use App\AutoMapping;
+use App\Constant\Order\OrderCancelledByUserAndAtStateConstant;
 use App\Constant\Order\OrderHasPayConflictAnswersConstant;
 use App\Constant\Order\OrderResultConstant;
 use App\Entity\OrderEntity;
@@ -748,15 +749,15 @@ class OrderManager
 //        return $this->orderRepository->findOneBy(['id' => $orderId, 'state' => $orderState]);
 //    }
 
-    /**
-     * Get all orders with details that delivered by specific captain during specific date and storeBranchToClientDistance
-     * for each order belong to the specific category of the third financial system
-     */
-    public function getOrdersDetailsByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): array
-    {
-        return $this->orderRepository->getOrdersDetailsByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom,
-            $countKilometersTo);
-    }
+//    /**
+//     * Get all orders with details that delivered by specific captain during specific date and storeBranchToClientDistance
+//     * for each order belong to the specific category of the third financial system
+//     */
+//    public function getOrdersDetailsByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): array
+//    {
+//        return $this->orderRepository->getOrdersDetailsByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom,
+//            $countKilometersTo);
+//    }
 
     /**
      * Get count of orders without distance and delivered by specific captain during specific time
@@ -764,5 +765,67 @@ class OrderManager
     public function getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): array
     {
         return $this->orderRepository->getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
+    }
+
+    public function updateOrderStatusToCancelled(OrderEntity $orderEntity): OrderEntity
+    {
+        $orderEntity->setState(OrderStateConstant::ORDER_STATE_CANCEL);
+        // if order belongs to an aggregated one, then unlink them
+        $orderEntity->setPrimaryOrder(null);
+
+        $this->entityManager->flush();
+
+        return $orderEntity;
+    }
+
+    public function updateOngoingOrderToCancelled(OrderEntity $orderEntity): array
+    {
+        $orderEntity->setState(OrderStateConstant::ORDER_STATE_CANCEL);
+
+        // save captain user id for later use
+        $captainUserId = $orderEntity->getCaptainId()->getCaptainId();
+
+        $orderEntity->setDateCaptainArrived(null);
+        $orderEntity->setIsCaptainArrived(null);
+        // if order belongs to an aggregated one, then unlink them
+        $orderEntity->setPrimaryOrder(null);
+        $orderEntity->setCaptainId(null);
+        // set flag which indicates that the order had been cancelled by the store and at the 'on way to pick order' state
+        $orderEntity->setOrderCancelledByUserAndAtState(OrderCancelledByUserAndAtStateConstant::ORDER_CANCELLED_BY_STORE_AND_AT_ON_WAY_TO_PICK_ORDER_STATE_CONST);
+
+        $this->entityManager->flush();
+
+        return [$orderEntity, $captainUserId];
+    }
+
+    public function updateInStoreOrderToCancelledByStore(OrderEntity $orderEntity): OrderEntity
+    {
+        $orderEntity->setState(OrderStateConstant::ORDER_STATE_CANCEL);
+
+        $orderEntity->setDateCaptainArrived(null);
+        $orderEntity->setIsCaptainArrived(null);
+        // if order belongs to an aggregated one, then unlink them
+        $orderEntity->setPrimaryOrder(null);
+        // set flag which indicates that the order had been cancelled by the store and at the 'in store' state
+        $orderEntity->setOrderCancelledByUserAndAtState(OrderCancelledByUserAndAtStateConstant::ORDER_CANCELLED_BY_STORE_AND_AT_IN_STORE_STATE_CONST);
+
+        $this->entityManager->flush();
+
+        return $orderEntity;
+    }
+
+    public function getCancelledOrdersCountByCaptainProfileIdAndSpecificDateAndSpecificDistanceRange(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): ?array
+    {
+        return $this->orderRepository->getCancelledOrdersCountByCaptainProfileIdAndSpecificDateAndSpecificDistanceRange($captainId,
+            $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
+    }
+
+    /**
+     * Get count of orders without distance and cancelled by store and related to specific captain during specific time
+     */
+    public function getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate(int $captainProfileId, string $fromDate, string $toDate): array
+    {
+        return $this->orderRepository->getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainProfileId,
+            $fromDate, $toDate);
     }
 }

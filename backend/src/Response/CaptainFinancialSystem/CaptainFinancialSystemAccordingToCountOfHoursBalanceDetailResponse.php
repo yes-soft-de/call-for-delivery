@@ -4,7 +4,7 @@ namespace App\Response\CaptainFinancialSystem;
 
 class CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse
 {
-    public int $countOrders;
+    public float $countOrders;
     
     public float $countOrdersMaxFromNineteen;
     
@@ -26,5 +26,5 @@ class CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse
 
     public string|null $dateFinancialCycleEnds;
 
-    public int $countOrdersWithoutDistance;
+    public float $countOrdersWithoutDistance;
 }

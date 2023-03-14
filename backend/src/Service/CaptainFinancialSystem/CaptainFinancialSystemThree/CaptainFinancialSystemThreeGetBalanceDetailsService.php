@@ -20,10 +20,41 @@ class CaptainFinancialSystemThreeGetBalanceDetailsService
     {
     }
 
-    public function getCountOrdersByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): ?array
+    public function getCountOrdersByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): int
     {
-        return $this->captainFinancialSystemThreeOrderGetService->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom,
-            $countKilometersTo);
+        $result = $this->captainFinancialSystemThreeOrderGetService->getCountOrdersByFinancialSystemThree($captainId,
+            $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
+
+        if ($result) {
+            if (count($result) > 0) {
+                return $result['countOrder'];
+            }
+        }
+
+        return 0;
+    }
+
+    public function getCancelledOrdersCountByCaptainProfileIdAndSpecificDateAndSpecificDistanceRange(int $captainProfileId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): int
+    {
+        $result = $this->captainFinancialSystemThreeOrderGetService->getCancelledOrdersCountByCaptainProfileIdAndSpecificDateAndSpecificDistanceRange($captainProfileId,
+            $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
+
+        if ($result) {
+            if (count($result) > 0) {
+                return $result['countOrder'];
+            }
+        }
+
+        return 0;
+    }
+
+    /**
+     * Get count of orders without distance and cancelled by store and related to specific captain during specific time
+     */
+    public function getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate(int $captainProfileId, string $fromDate, string $toDate): array
+    {
+        return $this->captainFinancialSystemThreeOrderGetService->getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainProfileId,
+            $fromDate, $toDate);
     }
 
     /**
@@ -31,7 +62,8 @@ class CaptainFinancialSystemThreeGetBalanceDetailsService
      */
     public function getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime(int $captainId, string $fromDate, string $toDate): int
     {
-        return (int) $this->storeOwnerDuesFromCashOrdersService->getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime($captainId, $fromDate, $toDate);
+        return (int) $this->storeOwnerDuesFromCashOrdersService->getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime($captainId,
+            $fromDate, $toDate);
     }
 
     /**
@@ -39,7 +71,8 @@ class CaptainFinancialSystemThreeGetBalanceDetailsService
      */
     public function getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate(int $captainId, string $fromDate, string $toDate): int
     {
-        return $this->captainFinancialSystemThreeOrderGetService->getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
+        return $this->captainFinancialSystemThreeOrderGetService->getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate($captainId,
+            $fromDate, $toDate);
     }
 
     public function getFinalFinancialAccount(float $sumPayments, array $financialAccountDetails, int $captainId, array $date): array
@@ -63,8 +96,10 @@ class CaptainFinancialSystemThreeGetBalanceDetailsService
 
         $finalFinancialAccount['total'] = abs($total);
 
-        $finalFinancialAccount['countOrdersWithoutDistance'] = $this->getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate($captainId,
-            $date['fromDate'], $date['toDate']);
+        $finalFinancialAccount['countOrdersWithoutDistance'] = (float) $this->getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate($captainId,
+            $date['fromDate'], $date['toDate']) +
+            ((float) $this->getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainId, $date['fromDate'],
+                    $date['toDate']) / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
 
         $finalFinancialAccount['amountForStore'] = $this->getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime($captainId,
             $date['fromDate'], $date['toDate']);
@@ -81,19 +116,22 @@ class CaptainFinancialSystemThreeGetBalanceDetailsService
 
         foreach ($financialSystemThreeDetails as $financialSystemThreeDetail) {
             // Get the number of orders arranged according to the categories of the financial system
-            $countOrders = $this->getCountOrdersByFinancialSystemThree($captainId, $date['fromDate'],
-                $date['toDate'], $financialSystemThreeDetail['countKilometersFrom'], $financialSystemThreeDetail['countKilometersTo']);
+            $countOrders = (float) $this->getCountOrdersByFinancialSystemThree($captainId, $date['fromDate'],
+                $date['toDate'], $financialSystemThreeDetail['countKilometersFrom'], $financialSystemThreeDetail['countKilometersTo']) +
+                ((float) $this->getCancelledOrdersCountByCaptainProfileIdAndSpecificDateAndSpecificDistanceRange($captainId,
+                        $date['fromDate'], $date['toDate'], $financialSystemThreeDetail['countKilometersFrom'],
+                        $financialSystemThreeDetail['countKilometersTo']) / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
 
             // Calculate basic orders cost without bonus: total cost = order count * amount
-            $financialSystemThreeDetail['captainTotalCategory'] = $countOrders['countOrder'] * $financialSystemThreeDetail['amount'];
+            $financialSystemThreeDetail['captainTotalCategory'] = $countOrders * $financialSystemThreeDetail['amount'];
 
             // Set completed orders
-            $financialSystemThreeDetail['contOrderCompleted'] = $countOrders['countOrder'];
+            $financialSystemThreeDetail['contOrderCompleted'] = $countOrders;
 
             // Check if the category offers bonus
             if ($financialSystemThreeDetail['bounceCountOrdersInMonth']) {
                 //Find the remaining number of orders to get the bounce
-                $financialSystemThreeDetail['countOfOrdersLeft'] = $financialSystemThreeDetail['bounceCountOrdersInMonth'] - $financialSystemThreeDetail['contOrderCompleted'];
+                $financialSystemThreeDetail['countOfOrdersLeft'] = (float) $financialSystemThreeDetail['bounceCountOrdersInMonth'] - $financialSystemThreeDetail['contOrderCompleted'];
 
                 // Initialize motivational message
                 $financialSystemThreeDetail['message'] = CaptainFinancialSystem::COUNT_REMAINING_ORDER ." "
@@ -131,25 +169,27 @@ class CaptainFinancialSystemThreeGetBalanceDetailsService
 
         foreach ($financialSystemThreeDetails as $financialSystemThreeDetail) {
             // Get the number of orders arranged according to the categories of the financial system
-            $countOrders = $this->getCountOrdersByFinancialSystemThree($captainId, $date['fromDate'], $date['toDate'],
-                $financialSystemThreeDetail['countKilometersFrom'], $financialSystemThreeDetail['countKilometersTo']);
+            $countOrders = (float) $this->getCountOrdersByFinancialSystemThree($captainId, $date['fromDate'], $date['toDate'],
+                $financialSystemThreeDetail['countKilometersFrom'], $financialSystemThreeDetail['countKilometersTo']) +
+                ((float) $this->getCancelledOrdersCountByCaptainProfileIdAndSpecificDateAndSpecificDistanceRange($captainId, $date['fromDate'], $date['toDate'],
+                    $financialSystemThreeDetail['countKilometersFrom'], $financialSystemThreeDetail['countKilometersTo']) / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
 
             // Calculate basic orders cost without bonus: total cost = order count * amount
-            $financialSystemThreeDetail['captainTotalCategory'] = $countOrders['countOrder'] * $financialSystemThreeDetail['amount'];
+            $financialSystemThreeDetail['captainTotalCategory'] = $countOrders * (float) $financialSystemThreeDetail['amount'];
 
             // Set completed orders
-            $financialSystemThreeDetail['contOrderCompleted'] = $countOrders['countOrder'];
+            $financialSystemThreeDetail['contOrderCompleted'] = $countOrders;
 
             // Check if the captain achieve the required orders to gain the bonus
             if ($financialSystemThreeDetail['bounceCountOrdersInMonth']) {
                 //Remaining number of orders to get the bounce
-                $financialSystemThreeDetail['countOfOrdersLeft'] = $financialSystemThreeDetail['bounceCountOrdersInMonth'] - $financialSystemThreeDetail['contOrderCompleted'] ;
+                $financialSystemThreeDetail['countOfOrdersLeft'] = (float) $financialSystemThreeDetail['bounceCountOrdersInMonth'] - $financialSystemThreeDetail['contOrderCompleted'];
 
                 //If the captain's achieve the order number of orders to get the bounce
-                if ($financialSystemThreeDetail['contOrderCompleted'] >= $financialSystemThreeDetail['bounceCountOrdersInMonth']) {
+                if ($financialSystemThreeDetail['contOrderCompleted'] >= (float) $financialSystemThreeDetail['bounceCountOrdersInMonth']) {
                     $financialSystemThreeDetail['captainBounce'] = $financialSystemThreeDetail['bounce'];
                     // Add the bonus to the total amount owed by the captain
-                    $financialSystemThreeDetail['captainTotalCategory'] = $financialSystemThreeDetail['bounce'] +  $financialSystemThreeDetail['captainTotalCategory'];
+                    $financialSystemThreeDetail['captainTotalCategory'] = $financialSystemThreeDetail['bounce'] + $financialSystemThreeDetail['captainTotalCategory'];
                 }
             }
 
@@ -186,16 +226,19 @@ class CaptainFinancialSystemThreeGetBalanceDetailsService
 
         foreach ($financialSystemThreeDetails as $financialSystemThreePlan) {
             // Get the number of orders arranged according to the categories of the financial system
-            $countOrders = $this->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $financialSystemThreePlan['countKilometersFrom'],
-                $financialSystemThreePlan['countKilometersTo']);
+            $countOrders = ((float) $this->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $financialSystemThreePlan['countKilometersFrom'],
+                $financialSystemThreePlan['countKilometersTo']))
+            + (((float) $this->getCancelledOrdersCountByCaptainProfileIdAndSpecificDateAndSpecificDistanceRange($captainId,
+                    $fromDate, $toDate, $financialSystemThreePlan['countKilometersFrom'],
+                    $financialSystemThreePlan['countKilometersTo'])) / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
 
             // Calculate basic orders cost without bonus: total cost = order count * amount
-            $financialAccountDetails['basicFinancialAmount'] += $countOrders['countOrder'] * $financialSystemThreePlan['amount'];
+            $financialAccountDetails['basicFinancialAmount'] += $countOrders * $financialSystemThreePlan['amount'];
 
             // Check if the captain achieve the required orders to gain the bonus
             if ($financialSystemThreePlan['bounceCountOrdersInMonth']) {
                 //If the captain's achieve the order number of orders to get the bounce
-                if ($countOrders['countOrder'] >= $financialSystemThreePlan['bounceCountOrdersInMonth']) {
+                if ($countOrders >= (float) $financialSystemThreePlan['bounceCountOrdersInMonth']) {
                     $financialAccountDetails['bounce'] += $financialSystemThreePlan['bounce'];
 
                 } else {

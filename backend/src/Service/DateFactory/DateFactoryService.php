@@ -119,4 +119,9 @@ class DateFactoryService
     {
         return DateTime::createFromInterface($dateTime);
     }
+
+    public function getStringDateOnlyFromDateTimeInterface(DateTimeInterface $dateTime): string
+    {
+        return (DateTime::createFromInterface($dateTime)->format('Y-m-d 00:00:00'));
+    }
 }

@@ -58,10 +58,11 @@ class CaptainFinancialSystemDetailManager
         return $financialSystemDetail;
     }
 
-    public function getCaptainFinancialSystemDetailForAdmin(int $captainId): ?array
-    {      
-        return $this->captainFinancialSystemDetailEntityRepository->getCaptainFinancialSystemDetailCurrent($captainId);
-    }
+    // Following function had been commented out because it isn't used anywhere
+//    public function getCaptainFinancialSystemDetailForAdmin(int $captainId): ?array
+//    {
+//        return $this->captainFinancialSystemDetailEntityRepository->getCaptainFinancialSystemDetailCurrent($captainId);
+//    }
 
     public function updateCaptainFinancialSystemDetail(bool $status, int $userId): CaptainFinancialSystemDetailEntity |null
     {      

@@ -12,18 +12,88 @@ use App\Response\CaptainFinancialSystem\CaptainFinancialSystemAccordingToCountOf
 
 class CaptainFinancialSystemTwoGetBalanceDetailsService
 {
-    private AutoMapping $autoMapping;
-    private CaptainFinancialSystemTwoOrderManager $captainFinancialSystemTwoOrderManager;
-    private CaptainFinancialSystemTwoCalculationService $captainFinancialSystemTwoCalculationService;
-    private CaptainFinancialSystemTwoGetStoreAmountService $captainFinancialSystemTwoGetStoreAmountService;
-
-    public function __construct(AutoMapping $autoMapping, CaptainFinancialSystemTwoOrderManager $captainFinancialSystemTwoOrderManager,
-                                CaptainFinancialSystemTwoCalculationService $captainFinancialSystemTwoCalculationService, CaptainFinancialSystemTwoGetStoreAmountService $captainFinancialSystemTwoGetStoreAmountService)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private CaptainFinancialSystemTwoCalculationService $captainFinancialSystemTwoCalculationService,
+        private CaptainFinancialSystemTwoGetStoreAmountService $captainFinancialSystemTwoGetStoreAmountService,
+        private CaptainFinancialSystemTwoOrderGetService $captainFinancialSystemTwoOrderGetService
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->captainFinancialSystemTwoOrderManager = $captainFinancialSystemTwoOrderManager;
-        $this->captainFinancialSystemTwoCalculationService = $captainFinancialSystemTwoCalculationService;
-        $this->captainFinancialSystemTwoGetStoreAmountService = $captainFinancialSystemTwoGetStoreAmountService;
+    }
+
+    public function getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainId, string $fromDate, string $toDate): int
+    {
+        $overdueOrdersResult = $this->captainFinancialSystemTwoOrderGetService->getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates($captainId, $fromDate, $toDate);
+
+        if (count($overdueOrdersResult) > 0) {
+            return $overdueOrdersResult[0];
+        }
+
+        return 0;
+    }
+
+    // Get count of orders without distance and delivered by specific captain during specific time
+    public function getOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate(int $captainProfileId, string $fromDate, string $toDate): int
+    {
+        $result = $this->captainFinancialSystemTwoOrderGetService->getOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainProfileId,
+            $fromDate, $toDate);
+
+        if (count($result) > 0) {
+            return $result[0];
+        }
+
+        return 0;
+    }
+
+    public function getOverdueDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): int
+    {
+        $overdueOrdersResult = $this->captainFinancialSystemTwoOrderGetService->getOverdueDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
+            $fromDate, $toDate);
+
+        if (count($overdueOrdersResult) > 0) {
+            return $overdueOrdersResult[0];
+        }
+
+        return 0;
+    }
+
+    public function getDeliveredOrdersCountByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): int
+    {
+        $ordersCountResult = $this->captainFinancialSystemTwoOrderGetService->getDeliveredOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
+            $fromDate, $toDate);
+
+        if (count($ordersCountResult) > 0) {
+            return $ordersCountResult[0];
+        }
+
+        return 0;
+    }
+
+    public function getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): int
+    {
+        $countOrdersResult = $this->captainFinancialSystemTwoOrderGetService->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
+            $fromDate, $toDate);
+
+        if (count($countOrdersResult) > 0) {
+            return $countOrdersResult[0];
+        }
+
+        return 0;
+    }
+
+    /**
+     * Get count of orders without distance and cancelled by store and related to specific captain during specific time
+     */
+    public function getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate(int $captainProfileId, string $fromDate, string $toDate): int
+    {
+        $countOrdersResult = $this->captainFinancialSystemTwoOrderGetService->getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainProfileId,
+            $fromDate, $toDate);
+
+        if (count($countOrdersResult) > 0) {
+            return $countOrdersResult[0];
+        }
+
+        return 0;
     }
 
     public function getBalanceDetails(int $captainId, array $datesArray, float $sumPayments, array $financialSystemDetail): CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse
@@ -43,15 +113,10 @@ class CaptainFinancialSystemTwoGetBalanceDetailsService
         $response['sumPayments'] = $sumPayments;
 
         // Get count of orders without distance which delivered by the captain and during specific dates
-        $result = $this->captainFinancialSystemTwoOrderManager->getOrdersWithoutDistanceCountByCaptainIdOnSpecificDate($captainId,
-            $datesArray['fromDate'], $datesArray['toDate']);
-
-        if (count($result) > 0) {
-            $response['countOrdersWithoutDistance'] = $result[0];
-
-        } else {
-            $response['countOrdersWithoutDistance'] = 0;
-        }
+        $response['countOrdersWithoutDistance'] = (float) $this->getOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainId,
+            $datesArray['fromDate'], $datesArray['toDate']) +
+            ((float) $this->getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainId,
+                $datesArray['fromDate'], $datesArray['toDate']) / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
 
         // Check if captain accomplish the target of the financial system, or not, or beyond
         $checkTarget = $this->checkAchievedFinancialSystemTarget($financialSystemDetail['countOrdersInMonth'],
@@ -152,12 +217,12 @@ class CaptainFinancialSystemTwoGetBalanceDetailsService
     }
 
     // Check if captain accomplish the target of the financial system, or not, or beyond
-    public function checkAchievedFinancialSystemTarget(int $countOrdersInMonth, int $countOrdersCompleted): int
+    public function checkAchievedFinancialSystemTarget(int $countOrdersInMonth, float $countOrdersCompleted): int
     {
-        if ($countOrdersCompleted < $countOrdersInMonth) {
+        if ($countOrdersCompleted < (float) $countOrdersInMonth) {
             return CaptainFinancialSystem::TARGET_FAILED_INT;
 
-        } elseif ($countOrdersCompleted === $countOrdersInMonth) {
+        } elseif ($countOrdersCompleted === (float) $countOrdersInMonth) {
             return  CaptainFinancialSystem::TARGET_SUCCESS_INT;
 
         } else {
@@ -179,26 +244,18 @@ class CaptainFinancialSystemTwoGetBalanceDetailsService
         $response['amountForStore'] = 0.0;
 
         // Get delivered orders of the captain between two dates and which overdue the 19 Kilometer
-        $overdueOrdersResult = $this->captainFinancialSystemTwoOrderManager->getOverdueDeliveredOrdersByCaptainIdAndBetweenTwoDates($captainId,
-            $datesArray['fromDate'], $datesArray['toDate']);
-
-        if (count($overdueOrdersResult) > 0) {
-            $response['countOrdersMaxFromNineteen'] = $overdueOrdersResult[0];
-
-        } else {
-            $response['countOrdersMaxFromNineteen'] = 0;
-        }
+        // besides half of the cancelled orders count which also overdue the 19 Kilometer
+        $response['countOrdersMaxFromNineteen'] = ((float) $this->getOverdueDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainId,
+            $datesArray['fromDate'], $datesArray['toDate']) +
+            ((float) $this->getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates($captainId,
+                $datesArray['fromDate'], $datesArray['toDate'])) / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
 
         // Get the count of delivered orders by specific captain and between two dates
-        $ordersCountResult = $this->captainFinancialSystemTwoOrderManager->getDeliveredOrdersCountByCaptainIdAndBetweenTwoDates($captainId,
-            $datesArray['fromDate'], $datesArray['toDate']);
-
-        if (count($ordersCountResult) > 0) {
-            $response['countOrdersCompleted'] = $ordersCountResult[0];
-
-        } else {
-            $response['countOrdersCompleted'] = 0;
-        }
+        // besides half of the cancelled orders count
+        $response['countOrdersCompleted'] = ((float) $this->getDeliveredOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainId,
+            $datesArray['fromDate'], $datesArray['toDate']) +
+            ((float) $this->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainId,
+                $datesArray['fromDate'], $datesArray['toDate'])) / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
 
         // Each order overdue 19 Kilometer will be counted as two orders
         $response['countOrdersCompleted'] += $response['countOrdersMaxFromNineteen'];

@@ -3,8 +3,11 @@
 namespace App\Service\CaptainFinancialSystem;
 
 use App\AutoMapping;
+use App\Entity\CaptainFinancialSystemDetailEntity;
 use App\Manager\CaptainFinancialSystem\CaptainFinancialSystemDetailManager;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
+use App\Service\CaptainFinancialSystem\CaptainFinancialSystemDetail\CaptainFinancialSystemDetailGetService;
+use App\Service\CaptainFinancialSystem\CaptainFinancialSystemOne\CaptainFinancialSystemOneGetBalanceDetailsService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialSystemThree\CaptainFinancialSystemThreeGetBalanceDetailsService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialSystemTwo\CaptainFinancialSystemTwoGetBalanceDetailsService;
 use App\Service\CaptainFinancialSystemDate\CaptainFinancialSystemDateService;
@@ -14,9 +17,11 @@ use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Response\CaptainFinancialSystem\CaptainFinancialDuesResponse;
 use App\Service\CaptainPayment\CaptainPaymentService;
+use App\Service\DateFactory\DateFactoryService;
 use DateTime;
 use App\Service\CaptainFinancialSystem\CaptainFinancialSystemDetailServiceTwo;
 use App\Request\CaptainFinancialSystem\CreateCaptainFinancialDuesByOptionalDatesRequest;
+use DateTimeInterface;
 
 class CaptainFinancialDuesService
 {
@@ -24,14 +29,15 @@ class CaptainFinancialDuesService
         private AutoMapping $autoMapping,
         private CaptainFinancialSystemDetailManager $captainFinancialSystemDetailManager,
         private CaptainFinancialSystemOneBalanceDetailService $captainFinancialSystemOneBalanceDetailService,
-        //private CaptainFinancialSystemThreeBalanceDetailService $captainFinancialSystemThreeBalanceDetailService,
         private CaptainFinancialSystemAccordingOnOrderService $captainFinancialSystemAccordingOnOrderService,
         private CaptainFinancialSystemDateService $captainFinancialSystemDateService,
         private CaptainFinancialDuesManager $captainFinancialDuesManager,
         private CaptainPaymentService $captainPaymentService,
         private CaptainFinancialSystemTwoGetBalanceDetailsService $captainFinancialSystemTwoGetBalanceDetailsService,
-        //private CaptainFinancialSystemTwoBalanceDetailService $captainFinancialSystemTwoBalanceDetailService,
-        private CaptainFinancialSystemThreeGetBalanceDetailsService $captainFinancialSystemThreeGetBalanceDetailsService
+        private CaptainFinancialSystemThreeGetBalanceDetailsService $captainFinancialSystemThreeGetBalanceDetailsService,
+        //private DateFactoryService $dateFactoryService,
+        //private CaptainFinancialSystemDetailGetService $captainFinancialSystemDetailGetService
+        private CaptainFinancialSystemOneGetBalanceDetailsService $captainFinancialSystemOneGetBalanceDetailsService
     )
     {
     }
@@ -72,7 +78,15 @@ class CaptainFinancialDuesService
 
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
                //Calculation of financial dues
-                $financialDues = $this->captainFinancialSystemOneBalanceDetailService->getFinancialDuesWithSystemOne($financialSystemDetail, $financialSystemDetail['captainId'], $date, $countWorkdays);
+                // *** Habib code ***
+                // $financialDues = $this->captainFinancialSystemOneBalanceDetailService->getFinancialDuesWithSystemOne($financialSystemDetail, $financialSystemDetail['captainId'], $date, $countWorkdays);
+                // *** End of Habib code ***
+
+                // *** Rami code ***
+                $financialDues = $this->captainFinancialSystemOneGetBalanceDetailsService->calculateCaptainDues($financialSystemDetail,
+                    $financialSystemDetail['captainId'], $date, $countWorkdays);
+                // *** End of Rami code ***
+
                //update captain financial dues
                return $this->updateCaptainFinancialDuesAmount($captainFinancialDues, $financialDues);
             }
@@ -299,8 +313,16 @@ class CaptainFinancialDuesService
  
              if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
                 //Calculation of financial dues
-                 $financialDues = $this->captainFinancialSystemOneBalanceDetailService->getFinancialDuesWithSystemOne($financialSystemDetail, $financialSystemDetail['captainId'], $date, $countWorkdays);
-                //update captain financial dues
+                 // *** Habib code ***
+                 //$financialDues = $this->captainFinancialSystemOneBalanceDetailService->getFinancialDuesWithSystemOne($financialSystemDetail, $financialSystemDetail['captainId'], $date, $countWorkdays);
+                 // *** End of Habib code ***
+
+                 // *** Rami code ***
+                 $financialDues = $this->captainFinancialSystemOneGetBalanceDetailsService->calculateCaptainDues($financialSystemDetail,
+                     $financialSystemDetail['captainId'], $date, $countWorkdays);
+                 // *** End of Rami code ***
+
+                 //update captain financial dues
                 return $this->updateCaptainFinancialDuesAmount($captainFinancialDues, $financialDues);
              }
  

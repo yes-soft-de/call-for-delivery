@@ -66,4 +66,6 @@ final class CaptainFinancialSystem
     const ADVANCED_PAYMENT_NOT_EXIST_CONST = 159;
 
     const ADVANCED_PAYMENT_EXIST_CONST = 160;
+
+    const CANCELLED_ORDER_DIVISION_FACTOR_CONST = 2.0;
 }
