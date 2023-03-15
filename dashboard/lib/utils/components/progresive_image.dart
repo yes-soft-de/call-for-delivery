@@ -1,9 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:image_network/image_network.dart';
 import 'package:pinch_zoom/pinch_zoom.dart';
+import 'package:progressive_image/progressive_image.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/utils/images/images.dart';
-import 'package:progressive_image/progressive_image.dart';
 
 class CustomNetworkImage extends StatelessWidget {
   final double height;
@@ -104,9 +106,7 @@ class CustomNetworkImage extends StatelessWidget {
                   ),
                   backgroundColor: Colors.black,
                   body: PinchZoom(
-                    child: CachedNetworkImage(
-                      imageUrl: image,
-                    ),
+                    child: Image.network(image),
                     resetDuration: const Duration(milliseconds: 150),
                     onZoomStart: () {},
                     onZoomEnd: () {},
@@ -114,47 +114,63 @@ class CustomNetworkImage extends StatelessWidget {
                 );
               });
         },
-        child: CachedNetworkImage(
-          height: height,
-          width: width,
-          placeholder: (context, url) {
-            return Container(
-              width: width,
-              height: height,
-              decoration: BoxDecoration(
-                  color: background ?? Theme.of(context).backgroundColor),
-              child: Flex(
-                direction: Axis.vertical,
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 8.0),
-                    child: Icon(
-                      Icons.delivery_dining_rounded,
-                      size: 30,
+        child: Visibility(
+          replacement: ImageNetwork(
+            height: height,
+            image: image,
+            width: width,
+            fitWeb: BoxFitWeb.cover,
+            imageCache: CachedNetworkImageProvider(image),
+            onLoading: const CircularProgressIndicator(
+              color: Colors.indigoAccent,
+            ),
+            onError: const Icon(
+              Icons.error,
+              color: Colors.red,
+            ),
+          ),
+          visible: !kIsWeb,
+          child: ProgressiveImage.custom(
+            height: height,
+            width: width,
+            placeholderBuilder: (context) {
+              return Container(
+                width: width,
+                height: height,
+                decoration: BoxDecoration(
+                    color: background ?? Theme.of(context).backgroundColor),
+                child: Flex(
+                  direction: Axis.vertical,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 8.0),
+                      child: Icon(
+                        Icons.delivery_dining_rounded,
+                        size: 30,
+                      ),
                     ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        left: 16.0, right: 16.0, top: 10.0),
-                    child: Container(
-                      width: 28,
-                      child: LinearProgressIndicator(
-                          minHeight: 2,
-                          valueColor: AlwaysStoppedAnimation<Color>(
-                              Theme.of(context).textTheme.headline1!.color!)),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                          left: 16.0, right: 16.0, top: 10.0),
+                      child: Container(
+                        width: 28,
+                        child: LinearProgressIndicator(
+                            minHeight: 2,
+                            valueColor: AlwaysStoppedAnimation<Color>(
+                                Theme.of(context).textTheme.headline1!.color!)),
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            );
-          },
-          filterQuality: FilterQuality.medium,
-          fadeInDuration: Duration(milliseconds: 750),
-          fadeOutDuration: Duration(milliseconds: 750),
-          imageUrl: image,
-          fit: BoxFit.cover,
+                  ],
+                ),
+              );
+            },
+            fadeDuration: Duration(milliseconds: 750),
+            thumbnail: NetworkImage(image),
+            image: NetworkImage(image),
+            fit: BoxFit.cover,
+          ),
         ),
       );
     }
