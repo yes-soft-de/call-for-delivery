@@ -400,9 +400,12 @@ class OrderManager
      //   return $this->orderRepository->getOrdersPendingBeforeSpecificDate($specificTime);
     //}
 
-    public function getOrdersPending(): ?array
+    /**
+     * Get pending orders which aren't hidden nor sub orders
+     */
+    public function getNotHiddenNotSubPendingOrders(): ?array
     {
-        return $this->orderRepository->getOrdersPending();
+        return $this->orderRepository->getNotHiddenNotSubPendingOrders();
     }
     
     // this function checks if an order is being accepted by a captain

@@ -1210,7 +1210,10 @@ class OrderEntityRepository extends ServiceEntityRepository
 //            ->getResult();
 //    }
 
-    public function getOrdersPending(): ?array
+    /**
+     * Get pending orders which aren't hidden nor sub orders
+     */
+    public function getNotHiddenNotSubPendingOrders(): ?array
     {
         return $this->createQueryBuilder('orderEntity')
 
@@ -1220,8 +1223,9 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('orderEntity.orderType = :normalOrderType')
             ->setParameter('normalOrderType', OrderTypeConstant::ORDER_TYPE_NORMAL)
 
-            ->andWhere('orderEntity.isHide != :hide')
+            ->andWhere('orderEntity.isHide != :hide AND orderEntity.isHide != :subOrderVisibility')
             ->setParameter('hide', OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)
+            ->setParameter('subOrderVisibility', OrderIsHideConstant::ORDER_HIDE)
 
             ->getQuery()
             ->getResult();

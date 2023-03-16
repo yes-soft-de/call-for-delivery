@@ -1175,8 +1175,9 @@ class OrderService
     //Hide the order that exceeded the delivery time by an hour
     public function hideOrderExceededDeliveryTimeByHour(int $userId, int $userType)
     {
-        //get orders pending and  not hidden due to exceeding delivery time
-        $pendingOrders = $this->orderManager->getOrdersPending();
+        //Get pending orders which aren't hidden nor sub orders
+        $pendingOrders = $this->orderManager->getNotHiddenNotSubPendingOrders();
+
         foreach ($pendingOrders as $pendingOrder) {
 
             $deliveredDate = $pendingOrder->getDeliveryDate();
