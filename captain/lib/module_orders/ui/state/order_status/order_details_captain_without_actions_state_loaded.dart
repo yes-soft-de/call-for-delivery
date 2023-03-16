@@ -735,7 +735,8 @@ class OrderDetailsCaptainWithoutActionsOrderLoadedState extends States {
                   subtitle: S.current.whatsappWithStoreOwner,
                   title: S.current.whatsapp,
                   onTap: () {
-                    var url = 'https://wa.me/${orderInfo.storePhone}';
+                    var url = LauncherLinkHelper.getWhatsAppLink(
+                        orderInfo.storePhone);
                     canLaunch(url).then((value) {
                       if (value) {
                         launch(url);
@@ -753,7 +754,8 @@ class OrderDetailsCaptainWithoutActionsOrderLoadedState extends States {
                   title: S.current.whatsapp,
                   short: true,
                   onTap: () {
-                    var url = 'https://wa.me/${orderInfo.customerPhone}';
+                    var url = LauncherLinkHelper.getWhatsAppLink(
+                        orderInfo.customerPhone);
                     canLaunch(url).then((value) {
                       if (value) {
                         launch(url);

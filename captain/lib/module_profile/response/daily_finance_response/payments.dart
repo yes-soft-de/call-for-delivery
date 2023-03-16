@@ -18,7 +18,7 @@ class Payments {
         amount: json['amount'] as num?,
         date: json['createdAt'] == null
             ? null
-            : Date.fromJson(json['date'] as Map<String, dynamic>),
+            : Date.fromJson(json['createdAt'] as Map<String, dynamic>),
         note: json['note'] as String?,
       );
 

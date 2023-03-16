@@ -113,7 +113,10 @@ class MenuScreen extends StatelessWidget {
                     children: [
                       Container(
                         width: 125,
-                        color: Theme.of(context).colorScheme.primaryContainer,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                        ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -132,7 +135,7 @@ class MenuScreen extends StatelessWidget {
                                 style: TextStyle(
                                   color: dailyFinance.dailyTotal > 0
                                       ? Colors.red
-                                      : Colors.green,
+                                      : Theme.of(context).colorScheme.primary,
                                 ),
                               ),
                             ],
@@ -151,7 +154,10 @@ class MenuScreen extends StatelessWidget {
                       ),
                       Container(
                         width: 125,
-                        color: Theme.of(context).colorScheme.primaryContainer,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Theme.of(context).colorScheme.primaryContainer,
+                        ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -167,8 +173,8 @@ class MenuScreen extends StatelessWidget {
                               Text(
                                 dailyFinance.totalProfit.toStringAsFixed(2) +
                                     S.current.sar,
-                                style: const TextStyle(
-                                  color: Colors.green,
+                                style: TextStyle(
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                               ),
                             ],

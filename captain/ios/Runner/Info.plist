@@ -31,6 +31,7 @@
 			<string>https</string>
 			<string>http</string>
 			<string>comgooglemaps</string>
+			<string>whatsapp</string>
 		</array>
 		<key>LSRequiresIPhoneOS</key>
 		<true/>
@@ -72,6 +73,8 @@
 		<key>UIStatusBarHidden</key>
 		<false/>
 		<key>CADisableMinimumFrameDurationOnPhone</key>
+	<true/>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
 </dict>
 </plist>
