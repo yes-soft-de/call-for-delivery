@@ -531,7 +531,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "note": MessageLookupByLibrary.simpleMessage("ملاحظات"),
         "noteOfOrder":
             MessageLookupByLibrary.simpleMessage("دون ملاحظاتك حول الطلب"),
-        "notices": MessageLookupByLibrary.simpleMessage("التحديثات"),
+        "notices": MessageLookupByLibrary.simpleMessage("الإعلانات والعروض"),
         "notificationDeletedSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الإشعار بنجاح"),
         "notificationSound":
