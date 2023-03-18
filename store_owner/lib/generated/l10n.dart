@@ -5230,10 +5230,10 @@ class S {
     );
   }
 
-  /// `Notices`
+  /// `Ads and Offers`
   String get notices {
     return Intl.message(
-      'Notices',
+      'Ads and Offers',
       name: 'notices',
       desc: '',
       args: [],

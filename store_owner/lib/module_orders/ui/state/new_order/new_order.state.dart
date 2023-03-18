@@ -747,7 +747,9 @@ class NewOrderStateBranchesLoaded extends States {
               lon: screenState.customerLocation?.longitude),
           note: screenState.orderDetailsController.text.trim(),
           detail: screenState.orderDetailsController.text.trim(),
-          orderCost: num.tryParse(screenState.priceController.text.trim()),
+          orderCost: screenState.priceController.text.trim().isEmpty
+              ? 0
+              : num.tryParse(screenState.priceController.text.trim()),
           image: value,
           date: orderDate == null
               ? DateTime.now().toUtc().toIso8601String()
@@ -774,7 +776,9 @@ class NewOrderStateBranchesLoaded extends States {
             lon: screenState.customerLocation?.longitude),
         note: screenState.orderDetailsController.text.trim(),
         detail: screenState.orderDetailsController.text.trim(),
-        orderCost: num.tryParse(screenState.priceController.text.trim()),
+        orderCost: screenState.priceController.text.trim().isEmpty
+            ? 0
+            : num.tryParse(screenState.priceController.text.trim()),
         image: null,
         date: orderDate == null
             ? DateTime.now().toUtc().toIso8601String()
