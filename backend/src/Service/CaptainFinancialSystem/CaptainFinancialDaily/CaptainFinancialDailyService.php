@@ -32,7 +32,8 @@ class CaptainFinancialDailyService
         private DateFactoryService $dateFactoryService,
         private CaptainFinancialDailyManager $captainFinancialDailyManager,
         private CaptainFinancialSystemThreeDailyService $captainFinancialSystemThreeDailyService,
-        private CaptainFinancialSystemOneDailyService $captainFinancialSystemOneDailyService
+        private CaptainFinancialSystemOneDailyService $captainFinancialSystemOneDailyService,
+        private CaptainFinancialSystemTwoDailyService $captainFinancialSystemTwoDailyService
     )
     {
     }
@@ -72,9 +73,8 @@ class CaptainFinancialDailyService
 
         } elseif ($captainFinancialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
             // Captain financial system is the second one
-            ///todo calculate the order cost according to the second financial system
-
-            return $response;
+            return $this->captainFinancialSystemTwoDailyService->getDailyCaptainFinancialAmount($captainFinancialSystemDetail,
+                $captainProfileId, $fromDate, $toDate);
 
         } elseif ($captainFinancialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_THREE) {
             // Captain financial system is the third one

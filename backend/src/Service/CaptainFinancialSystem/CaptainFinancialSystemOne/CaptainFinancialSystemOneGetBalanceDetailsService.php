@@ -49,7 +49,7 @@ class CaptainFinancialSystemOneGetBalanceDetailsService
     }
 
     /**
-     * Get the count of unpaid cash delivered orders by specific captain and among specific date
+     * Get the sum of unpaid cash and delivered orders amount (for store) by specific captain and among specific date
      */
     public function getUnPaidCashOrdersDuesByCaptainProfileIdAndDuringSpecificTime(int $captainProfileId, string $fromDate, string $toDate): int
     {
