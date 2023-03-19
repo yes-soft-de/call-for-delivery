@@ -4,18 +4,24 @@ namespace App\Service\CaptainFinancialSystem\CaptainFinancialSystemOne;
 
 use App\AutoMapping;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
+use App\Constant\CaptainFinancialSystem\CaptainFinancialSystemOne\CaptainFinancialSystemOneWorkDayConstant;
 use App\Response\CaptainFinancialSystem\CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse;
+use App\Service\DateFactory\DateFactoryService;
 
 class CaptainFinancialSystemOneGetBalanceDetailsService
 {
     public function __construct(
         private AutoMapping $autoMapping,
         private CaptainFinancialSystemOneOrderGetService $captainFinancialSystemOneOrderGetService,
-        private CaptainFinancialSystemStoreCashAmountGetService $captainFinancialSystemStoreCashAmountGetService
+        private CaptainFinancialSystemStoreCashAmountGetService $captainFinancialSystemStoreCashAmountGetService,
+        private DateFactoryService $dateFactoryService
     )
     {
     }
 
+    /**
+     * Get the count of delivered orders by specific captain and among specific date
+     */
     public function getDeliveredOrdersCountByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): int
     {
         $countOrdersResult = $this->captainFinancialSystemOneOrderGetService->getDeliveredOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
@@ -28,6 +34,9 @@ class CaptainFinancialSystemOneGetBalanceDetailsService
         return 0;
     }
 
+    /**
+     * Get the count of delivered orders which overdue the 19 kilometer by specific captain and among specific date
+     */
     public function getOverdueDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainId, string $fromDate, string $toDate): int
     {
         $overdueOrdersResult = $this->captainFinancialSystemOneOrderGetService->getOverdueDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainId, $fromDate, $toDate);
@@ -39,14 +48,18 @@ class CaptainFinancialSystemOneGetBalanceDetailsService
         return 0;
     }
 
-    // Get the dues of unpaid cash orders (for group of orders)
+    /**
+     * Get the count of unpaid cash delivered orders by specific captain and among specific date
+     */
     public function getUnPaidCashOrdersDuesByCaptainProfileIdAndDuringSpecificTime(int $captainProfileId, string $fromDate, string $toDate): int
     {
         return (int) $this->captainFinancialSystemStoreCashAmountGetService->getUnPaidCashOrdersDuesByCaptainProfileIdAndDuringSpecificTime($captainProfileId,
             $fromDate, $toDate);
     }
 
-    // Get count of orders without distance and delivered by specific captain during specific time
+    /**
+     * Get the count of delivered orders which have no distance by specific captain and among specific date
+     */
     public function getOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate(int $captainProfileId, string $fromDate, string $toDate): int
     {
         $result = $this->captainFinancialSystemOneOrderGetService->getOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainProfileId,
@@ -59,6 +72,9 @@ class CaptainFinancialSystemOneGetBalanceDetailsService
         return 0;
     }
 
+    /**
+     * Get the count of cancelled orders and related to a specific captain and among specific date
+     */
     public function getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): int
     {
         $countOrdersResult = $this->captainFinancialSystemOneOrderGetService->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
@@ -71,6 +87,9 @@ class CaptainFinancialSystemOneGetBalanceDetailsService
         return 0;
     }
 
+    /**
+     * Get the count of cancelled orders which overdue the 19 Kilometer and related to a specific captain and among specific date
+     */
     public function getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainId, string $fromDate, string $toDate): int
     {
         $overdueOrdersResult = $this->captainFinancialSystemOneOrderGetService->getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates($captainId, $fromDate, $toDate);
@@ -82,7 +101,9 @@ class CaptainFinancialSystemOneGetBalanceDetailsService
         return 0;
     }
 
-    // Get count of orders without distance and delivered by specific captain during specific time
+    /**
+     * Get count of orders without distance and delivered by specific captain during specific time
+     */
     public function getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate(int $captainProfileId, string $fromDate, string $toDate): int
     {
         $result = $this->captainFinancialSystemOneOrderGetService->getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainProfileId,
@@ -95,7 +116,10 @@ class CaptainFinancialSystemOneGetBalanceDetailsService
         return 0;
     }
 
-    // To prepare the financial details for the captain
+    /**
+     * Calculate captain financial due according to the first financial system, and
+     * Get  array which include financial details for captain
+     */
     public function calculateCaptainDues(array $financialSystemDetail, int $captainProfileId, array $date, int $countWorkdays): array
     {
         //get the count of delivered orders by captain
@@ -127,7 +151,10 @@ class CaptainFinancialSystemOneGetBalanceDetailsService
         return $financialSystemDetail;
     }
 
-    //If the captain works 25 days he gets the monthly salary, if he works less than 25 days the captain gets the daily salary
+    /**
+     * The core function which responsible for the calculation of the captain financial due according to specific parameters
+     * If the captain works 25 days he gets the monthly salary, if he works less than 25 days the captain gets the daily salary
+     */
     public function financialDuesCalculator(int $countWorkdays, float $countOrdersCompleted, float $countOrdersMaxFromNineteen, float $compensationForEveryOrder, float $salary): float
     {
         if ($countWorkdays >= 25) {
@@ -140,7 +167,9 @@ class CaptainFinancialSystemOneGetBalanceDetailsService
         return round((($countOrdersCompleted + $countOrdersMaxFromNineteen) * $compensationForEveryOrder ) + ($dailySalary * $countWorkdays), 2);
     }
 
-    // This function retrieve and initialize necessary fields for captain financial dues calculation
+    /**
+     * This function retrieve and initialize necessary fields for captain financial dues calculation
+     */
     public function initializeNecessaryFieldsForDuesCalculation(int $captainProfileId, array $datesArray, float $sumPayments, array $response): array
     {
         //get Count Orders
@@ -172,6 +201,11 @@ class CaptainFinancialSystemOneGetBalanceDetailsService
         return $response;
     }
 
+    /**
+     * Calculate captain financial due according to the first financial system, and
+     * Get object of type CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse
+     * which include financial details
+     */
     public function getBalanceDetails(array $financialSystemDetail, int $captainProfileId, float $sumPayments, array $datesArray, int $countWorkdays): CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse
     {
         $financialSystemDetail = $this->initializeNecessaryFieldsForDuesCalculation($captainProfileId, $datesArray, $sumPayments,
@@ -192,5 +226,52 @@ class CaptainFinancialSystemOneGetBalanceDetailsService
 
         return $this->autoMapping->map('array', CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse::class,
             $financialSystemDetail);
+    }
+
+    /**
+     * Get days count between two dates (each one of type string)
+     */
+    public function getDaysCountBetweenTwoDatesOfTypeString(string $fromDate, string $toDate): int
+    {
+        $daysCountResult = $this->dateFactoryService->getDaysCountBetweenTwoDatesOfTypeString($fromDate, $toDate);
+
+        if ($daysCountResult === false) {
+            return CaptainFinancialSystemOneWorkDayConstant::ZERO_WORK_DAY_COUNT_CONST;
+        }
+
+        return $daysCountResult;
+    }
+
+    /**
+     * Get array which includes:
+     * basic captain financial amount (due), bonus, and amount for store
+     */
+    public function calculateCaptainDuesAndStoreCashAmountOnly(array $captainFinancialSystemDetail, int $captainProfileId, string $fromDate, string $toDate): array
+    {
+        $financialAccountDetails = [];
+
+        $financialAccountDetails['basicFinancialAmount'] = 0.0;
+        $financialAccountDetails['bounce'] = 0.0;
+        $financialAccountDetails['amountForStore'] = 0.0;
+
+        $financialAccountDetails['amountForStore'] = $this->getUnPaidCashOrdersDuesByCaptainProfileIdAndDuringSpecificTime($captainProfileId,
+            $fromDate, $toDate);
+
+        $ordersCount = (float) $this->getDeliveredOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
+                $fromDate, $toDate) +
+            ((float) $this->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId, $fromDate, $toDate)
+                / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
+
+        $ordersMaxFromNineteenCount = (float) $this->getOverdueDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
+                $fromDate, $toDate) +
+            ((float) $this->getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId, $fromDate, $toDate)
+                / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST);
+
+        $workDaysCount = $this->getDaysCountBetweenTwoDatesOfTypeString($fromDate, $toDate);
+
+        $financialAccountDetails['basicFinancialAmount'] = $this->financialDuesCalculator($workDaysCount, $ordersCount,
+            $ordersMaxFromNineteenCount, $captainFinancialSystemDetail['compensationForEveryOrder'], $captainFinancialSystemDetail['salary']);
+
+        return $financialAccountDetails;
     }
 }
