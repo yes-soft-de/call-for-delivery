@@ -365,6 +365,7 @@ class SubscriptionService
     public function canCreateOrder(int $storeOwnerId): CanCreateOrderResponse|string
     {
         $storeStatus = $this->storeOwnerProfileService->checkStoreStatus($storeOwnerId);
+
         if($storeStatus === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
             return $storeStatus;
         }

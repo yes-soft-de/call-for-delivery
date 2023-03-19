@@ -45,5 +45,8 @@ class OrderLogCaptainProfileUpdateResponse
      */
     public $isCashPaymentConfirmedByStore;
 
-    public array $details = [];
+    /**
+     * @var array|null
+     */
+    public $details;
 }

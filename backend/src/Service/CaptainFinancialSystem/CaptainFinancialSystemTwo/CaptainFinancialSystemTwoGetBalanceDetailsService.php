@@ -21,6 +21,9 @@ class CaptainFinancialSystemTwoGetBalanceDetailsService
     {
     }
 
+    /**
+     * Get the count of cancelled orders which overdue the 19 Kilometer and related to a specific captain and among specific date
+     */
     public function getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainId, string $fromDate, string $toDate): int
     {
         $overdueOrdersResult = $this->captainFinancialSystemTwoOrderGetService->getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates($captainId, $fromDate, $toDate);
@@ -32,7 +35,9 @@ class CaptainFinancialSystemTwoGetBalanceDetailsService
         return 0;
     }
 
-    // Get count of orders without distance and delivered by specific captain during specific time
+    /**
+     * Get the count of delivered orders which have no distance by specific captain and among specific date
+     */
     public function getOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate(int $captainProfileId, string $fromDate, string $toDate): int
     {
         $result = $this->captainFinancialSystemTwoOrderGetService->getOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainProfileId,
@@ -45,6 +50,9 @@ class CaptainFinancialSystemTwoGetBalanceDetailsService
         return 0;
     }
 
+    /**
+     * Get the count of delivered orders which overdue the 19 kilometer by specific captain and among specific date
+     */
     public function getOverdueDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): int
     {
         $overdueOrdersResult = $this->captainFinancialSystemTwoOrderGetService->getOverdueDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
@@ -57,6 +65,9 @@ class CaptainFinancialSystemTwoGetBalanceDetailsService
         return 0;
     }
 
+    /**
+     * Get the count of delivered orders by specific captain and among specific date
+     */
     public function getDeliveredOrdersCountByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): int
     {
         $ordersCountResult = $this->captainFinancialSystemTwoOrderGetService->getDeliveredOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
@@ -69,6 +80,9 @@ class CaptainFinancialSystemTwoGetBalanceDetailsService
         return 0;
     }
 
+    /**
+     * Get the count of cancelled orders and related to a specific captain and among specific date
+     */
     public function getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): int
     {
         $countOrdersResult = $this->captainFinancialSystemTwoOrderGetService->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
@@ -94,6 +108,20 @@ class CaptainFinancialSystemTwoGetBalanceDetailsService
         }
 
         return 0;
+    }
+
+    // Get the dues of unpaid cash orders (for group of orders)
+    public function getUnPaidCashOrdersDueByCaptainProfileIdAndDuringSpecificTime(int $captainId, string $fromDate, string $toDate): string
+    {
+        return $this->captainFinancialSystemTwoGetStoreAmountService->getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime($captainId,
+            $fromDate, $toDate);
+    }
+
+    public function calculateFinancialDues(int $targetStatus, float $salary, float $monthCompensation, float $countOrdersCompleted = null,
+                                           int $countOrdersInMonth = null, float $bounceMaxCountOrdersInMonth = null): float
+    {
+        return $this->captainFinancialSystemTwoCalculationService->calculateFinancialDues($targetStatus, $salary,
+            $monthCompensation, $countOrdersCompleted, $countOrdersInMonth, $bounceMaxCountOrdersInMonth);
     }
 
     public function getBalanceDetails(int $captainId, array $datesArray, float $sumPayments, array $financialSystemDetail): CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse
@@ -209,9 +237,9 @@ class CaptainFinancialSystemTwoGetBalanceDetailsService
 //        }
 
         // Call the function responsible for the core calculation of the financial dues
-        $response['financialDues'] = $this->captainFinancialSystemTwoCalculationService->calculateFinancialDues($checkTarget,
-            $financialSystemDetail['salary'], $financialSystemDetail['monthCompensation'], $response['countOrdersCompleted'],
-            $financialSystemDetail['countOrdersInMonth'], $financialSystemDetail['bounceMaxCountOrdersInMonth']);
+        $response['financialDues'] = $this->calculateFinancialDues($checkTarget, $financialSystemDetail['salary'],
+            $financialSystemDetail['monthCompensation'], $response['countOrdersCompleted'], $financialSystemDetail['countOrdersInMonth'],
+            $financialSystemDetail['bounceMaxCountOrdersInMonth']);
 
         return $response;
     }
@@ -261,9 +289,47 @@ class CaptainFinancialSystemTwoGetBalanceDetailsService
         $response['countOrdersCompleted'] += $response['countOrdersMaxFromNineteen'];
 
         // Get the sum amount of the dues of unpaid cash orders that the captain delivers during specific time
-        $response['amountForStore'] = $this->captainFinancialSystemTwoGetStoreAmountService->getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime($captainId,
+        $response['amountForStore'] = $this->getUnPaidCashOrdersDueByCaptainProfileIdAndDuringSpecificTime($captainId,
             $datesArray['fromDate'], $datesArray['toDate']);
 
         return $response;
+    }
+
+    /**
+     * Get array which includes:
+     * basic captain financial amount (due), bonus, and amount for store
+     */
+    public function calculateCaptainDuesAndStoreCashAmountOnly(array $captainFinancialSystemDetail, int $captainProfileId, string $fromDate, string $toDate): array
+    {
+        $financialAccountDetails = [];
+
+        $financialAccountDetails['basicFinancialAmount'] = 0.0;
+        $financialAccountDetails['bounce'] = 0.0;
+        $financialAccountDetails['amountForStore'] = 0.0;
+
+        $financialAccountDetails['amountForStore'] = $this->getUnPaidCashOrdersDueByCaptainProfileIdAndDuringSpecificTime($captainProfileId,
+            $fromDate, $toDate);
+
+        // orders count = (delivered orders count + (cancelled orders count / 2)) +
+        // (overdue 19 kilo orders count + (cancelled overdue 19 kilo orders count / 2))
+        $ordersCount = ((float) $this->getDeliveredOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
+                $fromDate, $toDate) +
+            ((float) $this->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId, $fromDate, $toDate)
+                / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST))
+
+        + ((float) $this->getOverdueDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
+                $fromDate, $toDate) +
+            ((float) $this->getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId, $fromDate, $toDate)
+                / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST));
+
+        // Check if the captain achieve the target of the financial system
+        $checkTarget = $this->checkAchievedFinancialSystemTarget($captainFinancialSystemDetail['countOrdersInMonth'], $ordersCount);
+
+        // Calculate the financial due according to the target state
+        $financialAccountDetails['basicFinancialAmount'] = $this->calculateFinancialDues($checkTarget,
+            $captainFinancialSystemDetail['salary'], $captainFinancialSystemDetail['monthCompensation'], $ordersCount,
+            $captainFinancialSystemDetail['countOrdersInMonth'], $captainFinancialSystemDetail['bounceMaxCountOrdersInMonth']);
+
+        return $financialAccountDetails;
     }
 }

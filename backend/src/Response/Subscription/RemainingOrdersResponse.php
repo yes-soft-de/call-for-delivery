@@ -68,4 +68,9 @@ class RemainingOrdersResponse
 
     // The sum of unpaid cash orders
     public float $unPaidCashOrdersSum;
+
+    /**
+     * @var int|null
+     */
+    public $packageType;
 }
