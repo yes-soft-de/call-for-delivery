@@ -114,17 +114,15 @@ class SubscriptionService
       
        $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwnerId);
     
-       if($subscription) {
-
-           if($subscription['subscriptionCaptainOfferCarStatus'] === CaptainOfferConstant::STATUS_ACTIVE) {
+       if ($subscription) {
+           if ($subscription['subscriptionCaptainOfferCarStatus'] === CaptainOfferConstant::STATUS_ACTIVE) {
               $subscription['packageCarCount'] += $subscription['subscriptionCaptainOfferCarCount'];
            }
 
            $subscription['canSubscriptionExtra'] = $this->canSubscriptionExtra($subscription["status"], $subscription["type"]);
            
-           if($subscription['hasExtra'] === true) {
-
-              $subscription['endDate'] =  new \DateTime($subscription['startDate']->format('Y-m-d h:i:s') . '1 day');
+           if ($subscription['hasExtra'] === true) {
+               $subscription['endDate'] = new \DateTime($subscription['startDate']->format('Y-m-d h:i:s').'1 day');
            }
 
            // get the sum of unpaid cash orders
@@ -366,34 +364,32 @@ class SubscriptionService
     {
         $storeStatus = $this->storeOwnerProfileService->checkStoreStatus($storeOwnerId);
 
-        if($storeStatus === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
+        if ($storeStatus === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
             return $storeStatus;
         }
 
         $packageBalance = $this->packageBalance($storeOwnerId);
     
-        if($packageBalance !== SubscriptionConstant::UNSUBSCRIBED) {
-
+        if ($packageBalance !== SubscriptionConstant::UNSUBSCRIBED) {
             $item['subscriptionStatus'] = $packageBalance->status;
-            //if subscription active
-            if($packageBalance->status === SubscriptionConstant::SUBSCRIBE_ACTIVE) {
-            
-            $item['canCreateOrder'] = SubscriptionConstant::CAN_CREATE_ORDER;
-            }
-            //if subscription cars finished
-            elseif($packageBalance->status === SubscriptionConstant::CARS_FINISHED) {
-            
-            $item['canCreateOrder'] = SubscriptionConstant::CARS_FINISHED;
+            // if subscription active
+            if ($packageBalance->status === SubscriptionConstant::SUBSCRIBE_ACTIVE) {
+                $item['canCreateOrder'] = SubscriptionConstant::CAN_CREATE_ORDER;
+
+            } elseif ($packageBalance->status === SubscriptionConstant::CARS_FINISHED) {
+                // if subscription cars finished
+                $item['canCreateOrder'] = SubscriptionConstant::CARS_FINISHED;
             }
 
-            else{
-    
-            $item['canCreateOrder'] = SubscriptionConstant::CAN_NOT_CREATE_ORDER;
+            else {
+                $item['canCreateOrder'] = SubscriptionConstant::CAN_NOT_CREATE_ORDER;
             }
             
             $item['percentageOfOrdersConsumed'] = $this->getPercentageOfOrdersConsumed($packageBalance->packageOrderCount, $packageBalance->remainingOrders);
+
             $item['packageName'] = $packageBalance->packageName;
-            // dd( $item['canCreateOrder']);
+            $item['packageType'] = $packageBalance->packageType;
+
             return $this->autoMapping->map("array", CanCreateOrderResponse::class, $item);
         }
 

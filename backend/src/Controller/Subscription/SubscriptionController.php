@@ -168,21 +168,12 @@ class SubscriptionController extends BaseController
      *
      * @OA\Response(
      *      response=200,
-     *      description="Returns package balance",
+     *      description="Returns the details of current subscription package",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *                @OA\Property(type="integer", property="id"),
-     *                @OA\Property(type="integer", property="packageID"),
-     *                @OA\Property(type="string", property="packageName"),
-     *                @OA\Property(type="integer", property="remainingOrders"),
-     *                @OA\Property(type="integer", property="remainingCars"),
-     *                @OA\Property(type="object", property="status"),
-     *                @OA\Property(type="object", property="startDate"),
-     *                @OA\Property(type="integer", property="endDate"),
-     *                @OA\Property(type="integer", property="packageCarCount"),
-     *                @OA\Property(type="integer", property="packageOrderCount"),
+     *                ref=@Model(type="App\Response\Subscription\RemainingOrdersResponse")
      *        )
      *     )
      * )
@@ -207,8 +198,7 @@ class SubscriptionController extends BaseController
     {
         $result = $this->subscriptionService->packageBalance($this->getUserId());
        
-        if( $result->status === SubscriptionConstant::UNSUBSCRIBED ) {
-
+        if ($result->status === SubscriptionConstant::UNSUBSCRIBED) {
             return $this->response($result, self::SUBSCRIPTION_UNSUBSCRIBED);
         }
 

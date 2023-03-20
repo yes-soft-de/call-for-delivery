@@ -73,4 +73,14 @@ class RemainingOrdersResponse
      * @var int|null
      */
     public $packageType;
+
+    /**
+     * @var float|null
+     */
+    public $geographicalRange;
+
+    /**
+     * @var float|null
+     */
+    public $packageExtraCost;
 }
