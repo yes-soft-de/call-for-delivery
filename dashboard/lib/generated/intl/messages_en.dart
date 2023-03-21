@@ -997,6 +997,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please enter valid coordinates"),
         "pleaseEnterValidCountryCode":
             MessageLookupByLibrary.simpleMessage("invalid character"),
+        "pleaseEnterValidDistance":
+            MessageLookupByLibrary.simpleMessage("Please enter valid distance"),
         "pleaseEnterValidPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Please enter phone number"),
         "pleaseEnterYourEmail":

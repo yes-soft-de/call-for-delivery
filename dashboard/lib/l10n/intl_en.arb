@@ -867,6 +867,7 @@
     "reason": "Reason",
     "coordinates": "Coordinates",
     "pleaseEnterValidCoord": "Please enter valid coordinates",
+    "pleaseEnterValidDistance": "Please enter valid distance",
     "recycleOrderWarning": "Are you sure ?\n you will recycle this order",
     "recycleOrder": "Recycle Order",
     "youCanChooseCaptainPlan": "You can choose captain plan",
