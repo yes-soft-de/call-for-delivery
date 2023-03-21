@@ -11,6 +11,7 @@ use App\Constant\StoreOwnerBranch\StoreOwnerBranch;
 use App\Controller\BaseController;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
+use App\Request\Admin\Order\NormalOrderCancelByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderDifferentDestinationFilterByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
@@ -797,6 +798,7 @@ class AdminOrderController extends BaseController
     }
 
     /**
+     * to be replaced by normalordercancelbyadmin when the new api works correctly
      * admin: cancel normal order by admin
      * @Route("ordercancelbyadmin/{id}", name="orderCancelByAdmin", methods={"PUT"})
      * @IsGranted("ROLE_ADMIN")
@@ -1976,5 +1978,104 @@ class AdminOrderController extends BaseController
         $result = $this->adminOrderService->filterDifferentDestinationOrdersByAdmin($request);
 
         return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * admin: cancel normal order by admin (2nd version)
+     * @Route("normalordercancelbyadmin", name="normalOrderCancelByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Post a request with cancelling order options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id"),
+     *          @OA\Property(type="boolean", property="cutOrderFromStoreSubscription"),
+     *          @OA\Property(type="boolean", property="addHalfOrderValueToCaptainFinancialDue")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Return updated order info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *                  ref=@Model(type="App\Response\Admin\Order\OrderCancelByAdminResponse")
+     *          )
+     *      )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Return error according to situation.",
+     *      @OA\JsonContent(
+     *          oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9213"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9215"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9203"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9205"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   )
+     *              }
+     *      )
+     *
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function normalOrderCancelByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, NormalOrderCancelByAdminRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $response = $this->adminOrderService->cancelNormalOrderByAdmin($request, $this->getUserId());
+
+        if ($response === OrderResultConstant::ORDER_TYPE_BID) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_WRONG_ORDER_TYPE);
+
+        } elseif ($response === OrderResultConstant::ORDER_UPDATE_PROBLEM) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_UPDATE);
+
+        } elseif ($response === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_NOT_FOUND);
+
+        } elseif ($response === OrderResultConstant::ORDER_ALREADY_BEING_CANCELLED) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CANCEL);
+        }
+
+        return $this->response($response, self::UPDATE);
     }
 }
