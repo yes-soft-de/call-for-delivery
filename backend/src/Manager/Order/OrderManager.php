@@ -39,26 +39,17 @@ use App\Request\Order\OrderUpdateIsCashPaymentConfirmedByStoreRequest;
 
 class OrderManager
 {
-   private AutoMapping $autoMapping;
-   private EntityManagerInterface $entityManager;
-   private OrderEntityRepository $orderRepository;
-   private StoreOwnerProfileManager $storeOwnerProfileManager;
-   private StoreOrderDetailsManager $storeOrderDetailsManager;
-   private CaptainManager $captainManager;
-   private BidDetailsManager $bidDetailsManager;
-   private OrderTimeLineManager $orderTimeLineManager;
-
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, OrderEntityRepository $orderRepository, StoreOwnerProfileManager $storeOwnerProfileManager,
-                                StoreOrderDetailsManager $storeOrderDetailsManager, CaptainManager $captainManager, BidDetailsManager $bidDetailsManager, OrderTimeLineManager $orderTimeLineManager)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private EntityManagerInterface $entityManager,
+        private OrderEntityRepository $orderRepository,
+        private StoreOwnerProfileManager $storeOwnerProfileManager,
+        private StoreOrderDetailsManager $storeOrderDetailsManager,
+        private CaptainManager $captainManager,
+        private BidDetailsManager $bidDetailsManager,
+        private OrderTimeLineManager $orderTimeLineManager
+    )
     {
-      $this->autoMapping = $autoMapping;
-      $this->entityManager = $entityManager;
-      $this->orderRepository = $orderRepository;
-      $this->storeOwnerProfileManager = $storeOwnerProfileManager;
-      $this->storeOrderDetailsManager = $storeOrderDetailsManager;
-      $this->captainManager = $captainManager;
-      $this->bidDetailsManager = $bidDetailsManager;
-      $this->orderTimeLineManager = $orderTimeLineManager;
     }
     
     /**
@@ -108,10 +99,6 @@ class OrderManager
         return [$orderEntity, $bidDetailsEntity];
     }
 
-    /**
-     * @param $userId
-     * @return array|null
-     */
     public function getStoreOrders(int $userId): ?array
     {      
        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($userId);
@@ -307,10 +294,13 @@ class OrderManager
         return $this->orderRepository->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
     }
 
-    public function getOrdersByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): ?array
-    {
-        return $this->orderRepository->getOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
-    }
+    /**
+     * This function had been commented out because it isn't being used anywhere
+     */
+//    public function getOrdersByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): ?array
+//    {
+//        return $this->orderRepository->getOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
+//    }
 
     // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
     public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array|string

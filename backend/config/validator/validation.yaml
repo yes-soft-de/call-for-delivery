@@ -862,3 +862,8 @@ App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentAmountAndNoteUpd
             - NotBlank: ~
         amount:
             - NotBlank: ~
+
+App\Request\Admin\Order\NormalOrderCancelByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~

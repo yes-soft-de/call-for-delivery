@@ -2,6 +2,7 @@
 
 namespace App\Manager\Admin\Order;
 
+use App\Constant\Order\OrderCancelledByUserAndAtStateConstant;
 use App\Constant\Order\OrderConflictedAnswersResolvedByConstant;
 use App\Constant\Order\OrderHasPayConflictAnswersConstant;
 use App\Constant\Order\OrderStateConstant;
@@ -238,13 +239,37 @@ class AdminOrderManager
         $orderEntity->setState(OrderStateConstant::ORDER_STATE_CANCEL);
 
         // save captain user id for later use
-        $captainUserId = $orderEntity->getCaptainId()->getCaptainId();
+        $captainUserId = $orderEntity->getCaptainId();
 
         $orderEntity->setDateCaptainArrived(null);
         $orderEntity->setIsCaptainArrived(null);
         // if order belongs to an aggregated one, then unlink them
         $orderEntity->setPrimaryOrder(null);
         $orderEntity->setCaptainId(null);
+
+        $this->entityManager->flush();
+
+        return [$orderEntity, $captainUserId];
+    }
+
+    /**
+     * Update order state to cancelled, but keep it linked with the captain (for financial reasons)
+     *
+     * orderCancelledByAdminAndAtState refers to who cancelled the order and at which state
+     */
+    public function updateOngoingOrderToCancelledWithoutRemovingCaptain(OrderEntity $orderEntity, int $orderCancelledByAdminAndAtState): array
+    {
+        $orderEntity->setState(OrderStateConstant::ORDER_STATE_CANCEL);
+
+        // save captain user id for later use
+        $captainUserId = $orderEntity->getCaptainId();
+
+        $orderEntity->setDateCaptainArrived(null);
+        $orderEntity->setIsCaptainArrived(null);
+        // if order belongs to an aggregated one, then unlink them
+        $orderEntity->setPrimaryOrder(null);
+        // set flag which indicates that the order had been cancelled by admin and at specific state
+        $orderEntity->setOrderCancelledByUserAndAtState($orderCancelledByAdminAndAtState);
 
         $this->entityManager->flush();
 
