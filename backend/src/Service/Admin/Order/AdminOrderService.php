@@ -897,12 +897,12 @@ class AdminOrderService
                         ['text' => DashboardLocalNotificationMessageConstant::CANCEL_ORDER_BY_ADMIN_TEXT_CONST . $arrayResult[0]->getId()],
                         $userId, $arrayResult[0]->getId());
 
+                    // ... commit the transaction
+                    $this->entityManager->getConnection()->commit();
+
                     // firebase notification to store
                     $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($arrayResult[0]->getStoreOwner()->getStoreOwnerId(),
                         $arrayResult[0]->getId(), $arrayResult[0]->getState(), NotificationConstant::STORE);
-
-                    // ... commit the transaction
-                    $this->entityManager->getConnection()->commit();
 
                     // firebase notification to captain
                     $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($arrayResult[1]->getCaptainId(), $arrayResult[0]->getId(),
@@ -992,12 +992,12 @@ class AdminOrderService
                         ['text' => DashboardLocalNotificationMessageConstant::CANCEL_ORDER_BY_ADMIN_TEXT_CONST . $arrayResult[0]->getId()],
                         $userId, $arrayResult[0]->getId());
 
+                    // ... commit the transaction
+                    $this->entityManager->getConnection()->commit();
+
                     // firebase notification to store
                     $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($arrayResult[0]->getStoreOwner()->getStoreOwnerId(),
                         $arrayResult[0]->getId(), $arrayResult[0]->getState(), NotificationConstant::STORE);
-
-                    // ... commit the transaction
-                    $this->entityManager->getConnection()->commit();
 
                     // firebase notification to captain
                     $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($arrayResult[1]->getCaptainId(), $arrayResult[0]->getId(),
