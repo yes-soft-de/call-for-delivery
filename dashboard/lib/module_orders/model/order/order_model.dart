@@ -90,8 +90,8 @@ class OrderModel extends DataModel {
         paidToProvider: element.paidToProvider,
         isCashPaymentConfirmedByStore: element.isCashPaymentConfirmedByStore,
         branchID: element.storeOwnerBranchId?.toString(),
-        branchLocation:
-            LatLng(element.location?.lat ?? 0, element.location?.lon ?? 0),
+        branchLocation: LatLng(element.location?.lat?.toDouble() ?? 0,
+            element.location?.lon?.toDouble() ?? 0),
         destinationLink: element.destination?.link,
         created: DateHelper.convert(element.createdAt?.timestamp),
         delivery: DateHelper.convert(element.deliveryDate?.timestamp),

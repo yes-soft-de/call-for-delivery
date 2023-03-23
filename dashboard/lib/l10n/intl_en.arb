@@ -911,5 +911,11 @@
     "paidPartiallyCaptainFinanceDaily":"Paid partially",
     "duesPayments":"Dues for payment",
     "sumCaptainsFinancialDues": "Captains dues",
-    "updateCustomerLocation":"The customer location field has been updated and the old location saved"
+    "updateCustomerLocation":"The customer location field has been updated and the old location saved",
+    "dues":"Dues",
+    "remainingtoPay":"Remaining to pay",
+    "showPayments":"show payments",
+    "addaPayment":"add a payment",
+    "duesByFilter":"Dues by filter"
+
 }

@@ -25,6 +25,7 @@ class OrderDetailsScreen extends StatefulWidget {
 
 class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   int orderId = -1;
+
   late States currentState;
   StreamSubscription? firebaseStream;
   OrderStatusStateManager get manager => widget._stateManager;
@@ -62,6 +63,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
     }
   }
 
+  int currentIndex = -1;
   bool flag = true;
   bool canRemoveOrder = false;
   @override

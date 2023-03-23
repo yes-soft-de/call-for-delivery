@@ -1,6 +1,7 @@
 import 'package:c4d/module_captain/repository/captains_repository.dart';
 import 'package:c4d/module_captain/request/assign_order_to_captain_request.dart';
 import 'package:c4d/module_captain/request/captain_activities_filter_request.dart';
+import 'package:c4d/module_captain/request/captain_daily_finance_request.dart';
 import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/request/captain_offer_request.dart';
 import 'package:c4d/module_captain/request/enable_captain.dart';
@@ -9,6 +10,7 @@ import 'package:c4d/module_captain/request/update_captain_request.dart';
 import 'package:c4d/module_captain/response/capatin_offer_response.dart';
 import 'package:c4d/module_captain/response/captain_account_balance_response/captain_account_balance_response.dart';
 import 'package:c4d/module_captain/response/captain_activity_response/captain_activity_response.dart';
+import 'package:c4d/module_payments/response/captain_all_amounts.dart';
 import 'package:c4d/module_captain/response/captain_finance_daily_response.dart';
 import 'package:c4d/module_captain/response/captain_financial_dues_response/captain_financial_dues_response.dart';
 import 'package:c4d/module_captain/response/captain_need_support_response/captain_need_support_response.dart';
@@ -16,6 +18,7 @@ import 'package:c4d/module_captain/response/captain_order_control_response/capta
 import 'package:c4d/module_captain/response/captain_profile_response.dart';
 import 'package:c4d/module_captain/response/captain_rating_response/captain_rating_response.dart';
 import 'package:c4d/module_captain/response/in_active_captain_response.dart';
+import 'package:c4d/module_captain/response/new_get_finance_daily_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 
@@ -86,4 +89,7 @@ class CaptainsManager {
       _repository.getCaptainActivityDetails(captainID);
   Future<CaptainFinanceDailyResponse?> getCaptainFinanceDaily() =>
       _repository.getCaptainFinanceDaily();
+  Future<CaptainFinanceDailyNewResponse?> getCaptainFinanceDailyNew(
+          CaptainDailyFinanceRequest request) =>
+      _repository.getCaptainFinanceDailyNew(request);
 }

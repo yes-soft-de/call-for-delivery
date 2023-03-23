@@ -90,7 +90,7 @@ class CaptainProfileLoadedState extends States {
                         screenState.refresh();
                       },
                       child: Text(
-                        S.current.pending,
+                        S.current.accountInfo,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,
@@ -130,7 +130,7 @@ class CaptainProfileLoadedState extends States {
                         screenState.refresh();
                       },
                       child: Text(
-                        S.current.hidden,
+                        S.current.accountManaging,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.bold,

@@ -1,11 +1,12 @@
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_captain/model/captain_finance_daily_model.dart';
+import 'package:c4d/module_captain/model/new_captain_finance_daily_model.dart';
 import 'package:c4d/module_payments/payments_routes.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:flutter/material.dart';
 
 class CaptainFinanceDailyWidget extends StatelessWidget {
-  final CaptainFinanceDailyModel? model;
+  // final CaptainFinanceDailyModel? model;
+  final NewCaptainFinanceDailyModel? model;
   const CaptainFinanceDailyWidget({Key? key, required this.model})
       : super(key: key);
 
@@ -15,7 +16,7 @@ class CaptainFinanceDailyWidget extends StatelessWidget {
       onTap: () {
         Navigator.of(context).pushNamed(
           PaymentsRoutes.CAPTAIN_DAILY_PAYMENTS,
-          arguments: model?.id,
+          arguments: [model?.captainProfileId, model?.captainName],
         );
       },
       child: Padding(
@@ -68,7 +69,7 @@ class CaptainFinanceDailyWidget extends StatelessWidget {
                               color: Theme.of(context).colorScheme.background),
                         ),
                         Text(
-                          ' (${model?.id.toString()}) ',
+                          ' (${model?.captainProfileId.toString()}) ',
                           style: TextStyle(
                               fontWeight: FontWeight.bold,
                               color: Theme.of(context).colorScheme.background),
@@ -77,43 +78,41 @@ class CaptainFinanceDailyWidget extends StatelessWidget {
                     )
                   ],
                 ),
-                // verticalTile(context,
-                //     title: model?[index].captainName ?? '',
-                //     subtitle: model?[index].id.toString() ?? ''),
                 divider(context),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
                     verticalTile(context,
-                        title: S.current.amount_daily_captain,
-                        subtitle: model?.amount.toString() ?? ''),
+                        title: S.current.dues,
+                        subtitle:
+                            model?.amountSum.toString() ?? '' + S.current.sar),
                     verticalTile(context,
-                        title: S.current.had_amount_daily_captain,
-                        subtitle: model?.alreadyHadAmount.toString() ?? ''),
+                        title: S.current.remainingtoPay,
+                        subtitle: '${model?.toBePaid.toString() ?? ''}'),
                   ],
                 ),
-                // divider
-                divider(context),
+                // // divider
+                // divider(context),
                 // order date & create date
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    verticalTile(context,
-                        title: S.current.payments,
-                        subtitle: model?.isPaid == 176
-                            ? S.current.unpaidCaptainFinanceDaily
-                            : model?.isPaid == 177
-                                ? S.current.paidCaptainFinanceDaily
-                                : model?.isPaid == 179
-                                    ? S.current.paidPartiallyCaptainFinanceDaily
-                                    : model?.isPaid == 182
-                                        ? S.current.overPaid
-                                        : 'unknown'),
-                    verticalTile(context,
-                        title: S.current.bonusCaptainDaily,
-                        subtitle: model?.bonus.toString() ?? '')
-                  ],
-                ),
+                // Row(
+                //   mainAxisAlignment: MainAxisAlignment.spaceAround,
+                //   children: [
+                //     verticalTile(context,
+                //         title: S.current.payments,
+                //         subtitle: model?.isPaid == 176
+                //             ? S.current.unpaidCaptainFinanceDaily
+                //             : model?.isPaid == 177
+                //                 ? S.current.paidCaptainFinanceDaily
+                //                 : model?.isPaid == 179
+                //                     ? S.current.paidPartiallyCaptainFinanceDaily
+                //                     : model?.isPaid == 182
+                //                         ? S.current.overPaid
+                //                         : 'unknown'),
+                //     verticalTile(context,
+                //         title: S.current.bonusCaptainDaily,
+                //         subtitle: model?.bonus.toString() ?? '')
+                //   ],
+                // ),
               ],
             ),
           ),
@@ -132,7 +131,7 @@ class CaptainFinanceDailyWidget extends StatelessWidget {
               fontWeight: FontWeight.bold,
               color: Theme.of(context).colorScheme.background),
         ),
-        Text(subtitle,
+        Text(subtitle + ' ${S.current.sar}',
             style: Theme.of(context)
                 .textTheme
                 .labelLarge
