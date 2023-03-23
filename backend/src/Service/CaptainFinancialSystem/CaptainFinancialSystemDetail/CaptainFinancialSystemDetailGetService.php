@@ -6,11 +6,10 @@ use App\Manager\CaptainFinancialSystem\CaptainFinancialSystemDetail\CaptainFinan
 
 class CaptainFinancialSystemDetailGetService
 {
-    private CaptainFinancialSystemDetailGetManager $captainFinancialSystemDetailGetManager;
-
-    public function __construct(CaptainFinancialSystemDetailGetManager $captainFinancialSystemDetailGetManager)
+    public function __construct(
+        private CaptainFinancialSystemDetailGetManager $captainFinancialSystemDetailGetManager
+    )
     {
-        $this->captainFinancialSystemDetailGetManager = $captainFinancialSystemDetailGetManager;
     }
 
     public function getLastCaptainFinancialSystemDetailByCaptainUserId(int $captainUserId): array

@@ -10,6 +10,7 @@ use App\Request\Admin\Account\CompleteAccountStatusUpdateByAdminRequest;
 use App\Request\Admin\CaptainFinancialSystem\CaptainFinancialSystemDetailCreateByAdminRequest;
 use App\Response\Admin\CaptainFinancialSystem\CaptainFinancialSystemDetailCreateByAdminResponse;
 use App\Service\Admin\Captain\AdminCaptainService;
+use App\Service\Admin\CaptainFinancialSystem\CaptainFinancialSystemOne\AdminCaptainFinancialSystemOneGetBalanceDetailsService;
 use App\Service\Admin\CaptainFinancialSystem\CaptainFinancialSystemThree\AdminCaptainFinancialSystemThreeGetBalanceDetailsService;
 use App\Service\Admin\CaptainFinancialSystem\CaptainFinancialSystemTwo\AdminCaptainFinancialSystemTwoGetBalanceDetailsService;
 use App\Service\CaptainPayment\CaptainPaymentService;
@@ -29,17 +30,16 @@ class AdminCaptainFinancialSystemDetailService implements AdminCaptainFinancialS
 {
     public function __construct(
         private CaptainPaymentService $captainPaymentService,
-        private AdminCaptainFinancialSystemOneBalanceDetailService $adminCaptainFinancialSystemOneBalanceDetailService,
         private AdminCaptainFinancialSystemDetailManager $adminCaptainFinancialSystemDetailManager,
         private AutoMapping $autoMapping,
-        private AdminCaptainFinancialSystemThreeBalanceDetailService $adminCaptainFinancialSystemThreeBalanceDetailService,
         private AdminCaptainFinancialSystemAccordingOnOrderService $adminCaptainFinancialSystemAccordingOnOrderService,
         private CaptainFinancialSystemDateService $captainFinancialSystemDateService,
         private CaptainFinancialDuesService $captainFinancialDuesService,
         private AdminOrderService $adminOrderService,
         private AdminCaptainFinancialSystemTwoGetBalanceDetailsService $adminCaptainFinancialSystemTwoGetBalanceDetailsService,
         private AdminCaptainService $adminCaptainService,
-        private AdminCaptainFinancialSystemThreeGetBalanceDetailsService $adminCaptainFinancialSystemThreeGetBalanceDetailsService
+        private AdminCaptainFinancialSystemThreeGetBalanceDetailsService $adminCaptainFinancialSystemThreeGetBalanceDetailsService,
+        private AdminCaptainFinancialSystemOneGetBalanceDetailsService $adminCaptainFinancialSystemOneGetBalanceDetailsService
     )
     {
     }
@@ -70,8 +70,14 @@ class AdminCaptainFinancialSystemDetailService implements AdminCaptainFinancialS
             }
             
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
-             
-                return $this->adminCaptainFinancialSystemOneBalanceDetailService->getBalanceDetailWithSystemOne($financialSystemDetail, $captainId, $sumPayments, $date, $countWorkdays);
+                // **** Habib's code ****
+                //return $this->adminCaptainFinancialSystemOneBalanceDetailService->getBalanceDetailWithSystemOne($financialSystemDetail, $captainId, $sumPayments, $date, $countWorkdays);
+                // **** End of Habib's code ****
+
+                // **** Rami's code ****
+                return $this->adminCaptainFinancialSystemOneGetBalanceDetailsService->getBalanceDetailWithSystemOne($financialSystemDetail,
+                    $captainId, $sumPayments, $date, $countWorkdays);
+                // **** End of Rami's code ****
             }
 
             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_THREE) {

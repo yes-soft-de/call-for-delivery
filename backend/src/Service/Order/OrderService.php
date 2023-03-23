@@ -23,6 +23,7 @@ use App\Entity\CaptainEntity;
 use App\Entity\OrderEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Entity\StoreOwnerProfileEntity;
+use App\Entity\SubscriptionDetailsEntity;
 use App\Manager\Order\OrderManager;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\BidDetailsCreateRequest;
@@ -46,6 +47,7 @@ use App\Response\Order\OrderResponse;
 use App\Response\Order\OrdersResponse;
 use App\Response\Order\OrderClosestResponse;
 use App\Response\Order\OrderUpdateByCaptainResponse;
+use App\Response\OrderTimeLine\OrderLogsResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Subscription\SubscriptionConstant;
@@ -95,6 +97,7 @@ use App\Response\Order\OrderUpdateIsCashPaymentConfirmedByStoreResponse;
 use App\Constant\Order\OrderAmountCashConstant;
 use App\Request\Subscription\CalculateCostDeliveryOrderRequest;
 use App\Response\Subscription\CalculateCostDeliveryOrderResponse;
+use DateTimeInterface;
 
 class OrderService
 {
@@ -710,88 +713,255 @@ class OrderService
         return $this->autoMapping->map(OrderEntity::class, OrderUpdateCaptainArrivedResponse::class, $order);
     }
 
-    public function orderCancel(int $id): string|OrderCancelResponse|null
+    ///todo remove following function when the function 'orderCancelByStoreOwner' works correctly
+//    public function orderCancel(int $id): string|OrderCancelResponse|null
+//    {
+//        $order = $this->orderManager->getOrderById($id);
+//
+//        if ($order) {
+//            // if order of type bid, then use another api in order to cancel it
+//            if ($order->getOrderType() === OrderTypeConstant::ORDER_TYPE_BID) {
+//                return OrderResultConstant::ORDER_TYPE_BID;
+//            }
+//
+//            $halfHourLaterTime = date_modify(DateTime::createFromInterface($order->getCreatedAt()), '+30 minutes');
+//
+//            $nowDate = new DateTime('now');
+//
+//            if ($halfHourLaterTime < $nowDate) {
+//                //create local notification to store
+//                $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
+//                    NotificationConstant::CANCEL_ORDER_ERROR_TIME, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
+//
+//                //create firebase notification to store
+//                try {
+//                    $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), NotificationConstant::CANCEL_ORDER_ERROR_TIME, NotificationConstant::STORE);
+//                } catch (\Exception $e) {
+//                    error_log($e);
+//                }
+//
+//                $response = $this->autoMapping->map(OrderEntity::class, OrderCancelResponse::class, $order);
+//
+//                $response->statusError = OrderResultConstant::ORDER_NOT_REMOVE_TIME;
+//
+//                return $response;
+//
+//            } elseif ($order->getState() != OrderStateConstant::ORDER_STATE_PENDING) {
+//
+//                //create local notification to store
+//                $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
+//                    NotificationConstant::CANCEL_ORDER_ERROR_ACCEPTED, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
+//
+//                //create firebase notification to store
+//                try {
+//                    $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), NotificationConstant::CANCEL_ORDER_ERROR_ACCEPTED, NotificationConstant::STORE);
+//                } catch (\Exception $e) {
+//                    error_log($e);
+//                }
+//
+//                $response = $this->autoMapping->map(OrderEntity::class, OrderCancelResponse::class, $order);
+//
+//                $response->statusError = OrderResultConstant::ORDER_NOT_REMOVE_CAPTAIN_RECEIVED;
+//
+//                return $response;
+//            }
+//
+//            $order = $this->orderManager->orderCancel($order);
+//
+//            if ($order) {
+//                $this->orderTimeLineService->createOrderLogsRequest($order);
+//
+//                // save log of the action on order
+//                $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
+//                    OrderLogActionTypeConstant::CANCEL_ORDER_BY_STORE_ACTION_CONST, [], null,
+//                    null);
+//
+//                //create local notification to store
+//                $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
+//                    NotificationConstant::CANCEL_ORDER_SUCCESS, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
+//
+//                // create dashboard local notification
+//                $this->createDashboardLocalNotificationByStore(DashboardLocalNotificationTitleConstant::CANCEL_ORDER_BY_STORE_TITLE_CONST,
+//                    ["text" => DashboardLocalNotificationMessageConstant::CANCEL_ORDER_BY_STORE_TEXT_CONST.$order->getId()], null, $order->getId());
+//
+//                //create firebase notification to store
+//                try {
+//                    $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), NotificationConstant::CANCEL_ORDER_SUCCESS, NotificationConstant::STORE);
+//                } catch (\Exception $e) {
+//                    error_log($e);
+//                }
+//
+//                $this->subscriptionService->updateRemainingOrders($order->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_ADDITION);
+//            }
+//        }
+//
+//        return $this->autoMapping->map(OrderEntity::class, OrderCancelResponse::class, $order);
+//    }
+
+    /**
+     * This function currently cancel NORMAL order exclusively (not a bid order)
+     */
+    public function orderCancelByStoreOwner(int $orderId, int $userId)
     {
-        $order = $this->orderManager->getOrderById($id);
+        // 1. Make sure order is exist
+        $orderEntity = $this->getOrderEntityByOrderId($orderId);
 
-        if ($order) {
-            // if order of type bid, then use another api in order to cancel it
-            if ($order->getOrderType() === OrderTypeConstant::ORDER_TYPE_BID) {
-                return OrderResultConstant::ORDER_TYPE_BID;
-            }
-
-            $halfHourLaterTime = date_modify(DateTime::createFromInterface($order->getCreatedAt()), '+30 minutes');
-
-            $nowDate = new DateTime('now');
-
-            if ($halfHourLaterTime < $nowDate) {
-                //create local notification to store
-                $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
-                    NotificationConstant::CANCEL_ORDER_ERROR_TIME, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
-
-                //create firebase notification to store
-                try {
-                    $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), NotificationConstant::CANCEL_ORDER_ERROR_TIME, NotificationConstant::STORE);
-                } catch (\Exception $e) {
-                    error_log($e);
-                }
-
-                $response = $this->autoMapping->map(OrderEntity::class, OrderCancelResponse::class, $order);
-
-                $response->statusError = OrderResultConstant::ORDER_NOT_REMOVE_TIME;
-
-                return $response;
-
-            } elseif ($order->getState() != OrderStateConstant::ORDER_STATE_PENDING) {
-
-                //create local notification to store
-                $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
-                    NotificationConstant::CANCEL_ORDER_ERROR_ACCEPTED, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
-
-                //create firebase notification to store
-                try {
-                    $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), NotificationConstant::CANCEL_ORDER_ERROR_ACCEPTED, NotificationConstant::STORE);
-                } catch (\Exception $e) {
-                    error_log($e);
-                }
-
-                $response = $this->autoMapping->map(OrderEntity::class, OrderCancelResponse::class, $order);
-
-                $response->statusError = OrderResultConstant::ORDER_NOT_REMOVE_CAPTAIN_RECEIVED;
-
-                return $response;
-            }
-
-            $order = $this->orderManager->orderCancel($order);
-
-            if ($order) {
-                $this->orderTimeLineService->createOrderLogsRequest($order);
-
-                // save log of the action on order
-                $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
-                    OrderLogActionTypeConstant::CANCEL_ORDER_BY_STORE_ACTION_CONST, [], null,
-                    null);
-
-                //create local notification to store
-                $this->notificationLocalService->createNotificationLocal($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
-                    NotificationConstant::CANCEL_ORDER_SUCCESS, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
-
-                // create dashboard local notification
-                $this->createDashboardLocalNotificationByStore(DashboardLocalNotificationTitleConstant::CANCEL_ORDER_BY_STORE_TITLE_CONST,
-                    ["text" => DashboardLocalNotificationMessageConstant::CANCEL_ORDER_BY_STORE_TEXT_CONST.$order->getId()], null, $order->getId());
-
-                //create firebase notification to store
-                try {
-                    $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), NotificationConstant::CANCEL_ORDER_SUCCESS, NotificationConstant::STORE);
-                } catch (\Exception $e) {
-                    error_log($e);
-                }
-
-                $this->subscriptionService->updateRemainingOrders($order->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_ADDITION);
-            }
+        if (! $orderEntity) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
         }
 
-        return $this->autoMapping->map(OrderEntity::class, OrderCancelResponse::class, $order);
+        // 2. Check order type
+        if ($orderEntity->getOrderType() === OrderTypeConstant::ORDER_TYPE_BID) {
+            return OrderResultConstant::ORDER_TYPE_BID;
+        }
+
+        // 3. Check order state, and according to it, cancel order, or not
+        if ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_PENDING) {
+            // 3.1. Update order state
+            $newUpdatedOrder = $this->orderManager->updateOrderStatusToCancelled($orderEntity);
+
+            // 3.2. Update store subscription (remaining orders), if order relate
+            if ($newUpdatedOrder) {
+                $this->updateRemainingOrdersOfStoreSubscription($newUpdatedOrder->getStoreOwner()->getId(), $newUpdatedOrder->getCreatedAt(),
+                    SubscriptionConstant::OPERATION_TYPE_ADDITION, 1);
+
+                // 3.3. Create log
+                $this->createOrderLogViaOrderEntity($newUpdatedOrder);
+
+                $this->createOrderLogMessageViaOrderEntityAndByStoreOwner($newUpdatedOrder, $userId,
+                    OrderLogActionTypeConstant::CANCEL_ORDER_BY_STORE_ACTION_CONST);
+
+                // 3.4. Send notifications
+                // local notification to store
+                $this->createLocalNotificationForStore($userId, NotificationConstant::CANCEL_ORDER_TITLE,
+                    NotificationConstant::CANCEL_ORDER_SUCCESS, $newUpdatedOrder->getId());
+
+                // Create local notification for admin
+                $this->createDashboardLocalNotificationByStore(DashboardLocalNotificationTitleConstant::CANCEL_ORDER_BY_STORE_TITLE_CONST,
+                    ['text' => DashboardLocalNotificationMessageConstant::CANCEL_ORDER_BY_STORE_TEXT_CONST.$newUpdatedOrder->getId()],
+                    null, $newUpdatedOrder->getId());
+
+                // firebase notification to store
+                $this->sendFirebaseNotificationAboutOrderStateForUser($userId, $newUpdatedOrder->getId(), $newUpdatedOrder->getState(),
+                    NotificationConstant::STORE);
+
+                return $this->autoMapping->map(OrderEntity::class, OrderCancelResponse::class, $newUpdatedOrder);
+            }
+
+            return OrderResultConstant::ORDER_UPDATE_PROBLEM;
+
+        } elseif ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
+            // 3.1. Update order state and other info
+            $arrayResult = $this->orderManager->updateOngoingOrderToCancelled($orderEntity);
+
+            if ($arrayResult[0]) {
+                // 3.2. Delete the chat room of the order
+                $this->deleteChatRoomByOrderId($arrayResult[0]->getId());
+
+                // 3.3. Update store subscription (remaining orders + remaining cars), if order relate
+                $this->updateRemainingOrdersOfStoreSubscription($arrayResult[0]->getStoreOwner()->getId(), $arrayResult[0]->getCreatedAt(),
+                    SubscriptionConstant::OPERATION_TYPE_ADDITION, 1);
+
+                $this->updateRemainingCarsOfStoreSubscription($arrayResult[0]->getStoreOwner()->getId(), $arrayResult[0]->getCreatedAt(),
+                    SubscriptionConstant::OPERATION_TYPE_ADDITION, 1);
+
+                // 3.4. Create log
+                $this->createOrderLogViaOrderEntity($arrayResult[0]);
+
+                $this->createOrderLogMessageViaOrderEntityAndByStoreOwner($arrayResult[0], $userId,
+                    OrderLogActionTypeConstant::CANCEL_ORDER_BY_STORE_ACTION_CONST);
+
+                // 3.5. Send notifications
+                // local notification to store
+                $this->createLocalNotificationForStore($userId, NotificationConstant::CANCEL_ORDER_TITLE,
+                    NotificationConstant::CANCEL_ORDER_SUCCESS, $arrayResult[0]->getId());
+
+                // local notification to captain
+                $this->createLocalNotificationForCaptain($arrayResult[1], NotificationConstant::CANCEL_ORDER_TITLE,
+                    NotificationConstant::CANCEL_ORDER_SUCCESS, $arrayResult[0]->getId());
+
+                // Create local notification for admin
+                $this->createDashboardLocalNotificationByStore(DashboardLocalNotificationTitleConstant::CANCEL_ORDER_BY_STORE_TITLE_CONST,
+                    ['text' => DashboardLocalNotificationMessageConstant::CANCEL_ORDER_BY_STORE_TEXT_CONST.$arrayResult[0]->getId()],
+                    null, $arrayResult[0]->getId());
+
+                // firebase notification to store
+                $this->sendFirebaseNotificationAboutOrderStateForUser($userId, $arrayResult[0]->getId(), $arrayResult[0]->getState(),
+                    NotificationConstant::STORE);
+
+                // firebase notification to captain
+                $this->sendFirebaseNotificationAboutOrderStateForUser($arrayResult[1], $arrayResult[0]->getId(), $arrayResult[0]->getState(),
+                    NotificationConstant::CAPTAIN);
+
+                return $this->autoMapping->map(OrderEntity::class, OrderCancelResponse::class, $arrayResult[0]);
+            }
+
+            return OrderResultConstant::ORDER_UPDATE_PROBLEM;
+
+        } elseif ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_IN_STORE) {
+            // 3.1. Update order state and other info
+            $updatedOrder = $this->orderManager->updateInStoreOrderToCancelledByStore($orderEntity);
+
+            if ($updatedOrder) {
+                // 3.2. Delete the chat room of the order
+                $this->deleteChatRoomByOrderId($updatedOrder->getId());
+
+                // If the captain had reached the store then we won't update remaining orders
+
+                // If the captain had reached the store, then we would count half of the order financial value for the captain
+                // A. Update captain financial due
+                $this->createOrUpdateCaptainFinancialDue($updatedOrder->getCaptainId()->getCaptainId(), $updatedOrder->getId(),
+                    $updatedOrder->getCreatedAt());
+
+                // B. Update captain financial daily
+                $this->createOrUpdateCaptainFinancialDaily($updatedOrder->getId(), $updatedOrder->getCaptainId());
+
+                $this->updateRemainingCarsOfStoreSubscription($updatedOrder->getStoreOwner()->getId(), $updatedOrder->getCreatedAt(),
+                    SubscriptionConstant::OPERATION_TYPE_ADDITION, 1);
+
+                // 3.4. Create log
+                $this->createOrderLogViaOrderEntity($updatedOrder);
+
+                $this->createOrderLogMessageViaOrderEntityAndByStoreOwner($updatedOrder, $userId,
+                    OrderLogActionTypeConstant::CANCEL_ORDER_BY_STORE_ACTION_CONST);
+
+                // 3.5. Send notifications
+                // local notification to store
+                $this->createLocalNotificationForStore($userId, NotificationConstant::CANCEL_ORDER_TITLE,
+                    NotificationConstant::CANCEL_ORDER_SUCCESS, $updatedOrder->getId());
+
+                // local notification to captain
+                $this->createLocalNotificationForCaptain($updatedOrder->getCaptainId()->getCaptainId(), NotificationConstant::CANCEL_ORDER_TITLE,
+                    NotificationConstant::CANCEL_ORDER_SUCCESS, $updatedOrder->getId());
+
+                // Create local notification for admin
+                $this->createDashboardLocalNotificationByStore(DashboardLocalNotificationTitleConstant::CANCEL_ORDER_BY_STORE_TITLE_CONST,
+                    ['text' => DashboardLocalNotificationMessageConstant::CANCEL_ORDER_BY_STORE_TEXT_CONST.$updatedOrder->getId()],
+                    null, $updatedOrder->getId());
+
+                // firebase notification to store
+                $this->sendFirebaseNotificationAboutOrderStateForUser($userId, $updatedOrder->getId(), $updatedOrder->getState(),
+                    NotificationConstant::STORE);
+
+                // firebase notification to captain
+                $this->sendFirebaseNotificationAboutOrderStateForUser($updatedOrder->getCaptainId()->getCaptainId(),
+                    $updatedOrder->getId(), $updatedOrder->getState(), NotificationConstant::CAPTAIN);
+
+                return $this->autoMapping->map(OrderEntity::class, OrderCancelResponse::class, $updatedOrder);
+            }
+
+            return OrderResultConstant::ORDER_UPDATE_PROBLEM;
+
+        } elseif (($orderEntity->getState() === OrderStateConstant::ORDER_STATE_ONGOING)
+            || ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_DELIVERED)) {
+            // Order is already being cancelled
+            return OrderResultConstant::ORDER_IS_EITHER_ONGOING_OR_DELIVERED_CONST;
+
+        }
+        //else {
+            // Order is already being cancelled
+            return OrderResultConstant::ORDER_ALREADY_BEING_CANCELLED;
+        //}
     }
 
     public function getCountOrdersByCaptainId(int $captainId): array
@@ -1005,8 +1175,9 @@ class OrderService
     //Hide the order that exceeded the delivery time by an hour
     public function hideOrderExceededDeliveryTimeByHour(int $userId, int $userType)
     {
-        //get orders pending and  not hidden due to exceeding delivery time
-        $pendingOrders = $this->orderManager->getOrdersPending();
+        //Get pending orders which aren't hidden nor sub orders
+        $pendingOrders = $this->orderManager->getNotHiddenNotSubPendingOrders();
+
         foreach ($pendingOrders as $pendingOrder) {
 
             $deliveredDate = $pendingOrder->getDeliveryDate();
@@ -1802,5 +1973,63 @@ class OrderService
         }
 
         return false;
+    }
+
+    // Note: factor is the parameter that we want to subtract/add from/to remaining cars field
+    public function updateRemainingOrdersOfStoreSubscription(int $storeOwnerProfileId, DateTimeInterface $orderCreationDate, string $operationType, int $factor): SubscriptionDetailsEntity|int
+    {
+        return $this->subscriptionService->handleUpdatingRemainingOrdersOfStoreSubscription($storeOwnerProfileId, $orderCreationDate,
+            $operationType, $factor);
+    }
+
+    // Note: factor is the parameter that we want to subtract/add from/to remaining cars field
+    public function updateRemainingCarsOfStoreSubscription(int $storeOwnerProfileId, DateTimeInterface $orderCreationDate, string $operationType, int $factor): SubscriptionDetailsEntity|int
+    {
+        return $this->subscriptionService->handleUpdatingRemainingCarsOfStoreSubscriptionViaStoreOwnerProfileIdAndOrderCreationDate($storeOwnerProfileId,
+            $orderCreationDate, $operationType, $factor);
+    }
+
+    public function createOrderLogViaOrderEntity(OrderEntity $orderEntity): OrderLogsResponse
+    {
+        return $this->orderTimeLineService->createOrderLogsRequest($orderEntity);
+    }
+
+    public function createOrderLogMessageViaOrderEntityAndByStoreOwner(OrderEntity $orderEntity, int $userId, int $action)
+    {
+        // save log of the action on order
+        $this->orderLogService->createOrderLogMessage($orderEntity, $userId, OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
+            $action, [], null, null);
+    }
+
+    public function createLocalNotificationForStore(int $storeOwnerUserId, string $title, string $text, int $orderId)
+    {
+        $this->notificationLocalService->createNotificationLocal($storeOwnerUserId, $title, $text,
+            NotificationTokenConstant::APP_TYPE_STORE, $orderId);
+    }
+
+    public function createLocalNotificationForCaptain(int $captainUserId, string $title, string $text, int $orderId)
+    {
+        $this->notificationLocalService->createNotificationLocal($captainUserId, $title, $text,
+            NotificationTokenConstant::APP_TYPE_CAPTAIN, $orderId);
+    }
+
+    public function sendFirebaseNotificationAboutOrderStateForUser(int $userId, int $orderId, string $orderState, string $userType)
+    {
+        try {
+            $this->notificationFirebaseService->notificationOrderStateForUser($userId, $orderId, $orderState, $userType);
+
+        } catch (\Exception $exception) {
+            error_log($exception);
+        }
+    }
+
+    public function deleteChatRoomByOrderId(int $orderId): void
+    {
+        $this->orderChatRoomService->deleteChatRoomByOrderId($orderId);
+    }
+
+    public function createOrUpdateCaptainFinancialDue(int $captainUserId, int $orderId = null, DateTimeInterface $orderCreatedAt = null)
+    {
+        $this->captainFinancialDuesService->captainFinancialDues($captainUserId, $orderId, $orderCreatedAt);
     }
 }

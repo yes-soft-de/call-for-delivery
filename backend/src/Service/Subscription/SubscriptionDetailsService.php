@@ -77,4 +77,23 @@ class SubscriptionDetailsService
     {
         return $this->subscriptionFirebaseNotificationService->sendFirebaseNotificationToAdmin($notificationDescription, $storeName);
     }
+
+    public function getSubscriptionDetailsByStoreOwnerProfileId(int $storeOwnerProfileId): ?SubscriptionDetailsEntity
+    {
+        return $this->subscriptionDetailsManager->getSubscriptionDetailsByStoreOwnerProfileId($storeOwnerProfileId);
+    }
+
+    // Note: factor is the parameter that we want to subtract/add from/to remaining cars field
+    public function updateRemainingOrdersOfStoreSubscriptionBySubscriptionDetailsId(int $subscriptionDetailsId, string $operationType, int $factor): SubscriptionDetailsEntity|int
+    {
+        return $this->subscriptionDetailsManager->updateRemainingOrdersOfStoreSubscriptionBySubscriptionDetailsId($subscriptionDetailsId,
+            $operationType, $factor);
+    }
+
+    // Note: factor is the parameter that we want to subtract/add from/to remaining cars field
+    public function updateRemainingCarsOfStoreSubscriptionBySubscriptionDetailsId(int $subscriptionDetailsId, string $operationType, int $factor): SubscriptionDetailsEntity|int
+    {
+        return $this->subscriptionDetailsManager->updateRemainingCarsOfStoreSubscriptionBySubscriptionDetailsId($subscriptionDetailsId,
+            $operationType, $factor);
+    }
 }

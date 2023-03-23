@@ -128,6 +128,10 @@ class OrderEntity
     #[ORM\Column(type: 'smallint', nullable: true)]
     private $costType;
 
+    // Refers to the user type who cancelled the order, and at what state
+    #[ORM\Column(type: 'integer', nullable: true)]
+    private $orderCancelledByUserAndAtState;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
@@ -670,6 +674,18 @@ class OrderEntity
     public function setCostType(?int $costType): self
     {
         $this->costType = $costType;
+
+        return $this;
+    }
+
+    public function getOrderCancelledByUserAndAtState(): ?int
+    {
+        return $this->orderCancelledByUserAndAtState;
+    }
+
+    public function setOrderCancelledByUserAndAtState(?int $orderCancelledByUserAndAtState): self
+    {
+        $this->orderCancelledByUserAndAtState = $orderCancelledByUserAndAtState;
 
         return $this;
     }

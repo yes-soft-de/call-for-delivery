@@ -8,6 +8,7 @@ use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificat
 use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificationTitleConstant;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Notification\NotificationTokenConstant;
+use App\Constant\Order\OrderCancelledByUserAndAtStateConstant;
 use App\Constant\Order\OrderCostTypeConstant;
 use App\Constant\Order\OrderDestinationConstant;
 use App\Constant\Order\OrderHasPayConflictAnswersConstant;
@@ -31,6 +32,7 @@ use App\Entity\SubscriptionDetailsEntity;
 use App\Manager\Admin\Order\AdminOrderManager;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
+use App\Request\Admin\Order\NormalOrderCancelByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderDifferentDestinationFilterByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
@@ -641,6 +643,7 @@ class AdminOrderService
     }
 
     /**
+     * to be replaced by normalordercancelbyadmin when the new api works correctly
      * This function currently cancel NORMAL order exclusively (not a bid order)
      */
     public function cancelOrderByAdmin(int $id, int $userId): string|OrderCancelByAdminResponse|int
@@ -710,7 +713,7 @@ class AdminOrderService
 
                 // firebase notification to captain
                 $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($arrayResult[1]->getCaptainId(), $arrayResult[0]->getId(),
-                    $arrayResult[0]->getState(), NotificationConstant::STORE);
+                    $arrayResult[0]->getState(), NotificationConstant::CAPTAIN);
 
                 return $this->autoMapping->map(OrderEntity::class, OrderCancelByAdminResponse::class, $arrayResult[0]);
             }
@@ -790,7 +793,7 @@ class AdminOrderService
 
                 // firebase notification to captain
                 $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($arrayResult[1], $arrayResult[0]->getId(), $arrayResult[0]->getState(),
-                    NotificationConstant::STORE);
+                    NotificationConstant::CAPTAIN);
 
                 return $this->autoMapping->map(OrderEntity::class, OrderCancelByAdminResponse::class, $arrayResult[0]);
             }
@@ -800,6 +803,221 @@ class AdminOrderService
         } else {
             // Order is already being cancelled
             return OrderResultConstant::ORDER_ALREADY_BEING_CANCELLED;
+        }
+    }
+
+    /**
+     * This function currently cancel NORMAL order exclusively (not a bid order)
+     * (2nd version)
+     */
+    public function cancelNormalOrderByAdmin(NormalOrderCancelByAdminRequest $request, int $userId): string|OrderCancelByAdminResponse|int
+    {
+        $orderEntity = $this->adminOrderManager->getOrderByIdForAdmin($request->getId());
+
+        if (! $orderEntity) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+        }
+
+        // if order of type bid, then use another api in order to cancel it
+        if ($orderEntity->getOrderType() === OrderTypeConstant::ORDER_TYPE_BID) {
+            return OrderResultConstant::ORDER_TYPE_BID;
+        }
+
+        // start transaction commit ...
+        $this->entityManager->getConnection()->beginTransaction();
+
+        try {
+            if ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_PENDING) {
+                // 1. Update order state
+                $newUpdatedOrder = $this->adminOrderManager->updateOrderStatusToCancelled($orderEntity);
+
+                // 2. Update store subscription (remaining orders), if order relate
+                if ($newUpdatedOrder) {
+                    $this->updateRemainingOrdersOfStoreSubscriptionByAdmin($newUpdatedOrder->getStoreOwner()->getId(),
+                        $newUpdatedOrder->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_ADDITION, 1);
+
+                    // 3. Create log
+                    $this->createOrderLogViaOrderEntity($newUpdatedOrder);
+
+                    $this->createOrderLogMessageViaOrderEntityAndByAdmin($newUpdatedOrder, $userId);
+
+                    // 4. Send notifications
+                    // local notification to store
+                    $this->createLocalNotificationForStore($newUpdatedOrder->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
+                        NotificationConstant::CANCEL_ORDER_SUCCESS, $newUpdatedOrder->getId());
+
+                    // Create local notification for admin
+                    $this->createDashboardLocalNotification(DashboardLocalNotificationTitleConstant::CANCEL_ORDER_BY_ADMIN_TITLE_CONST,
+                        ['text' => DashboardLocalNotificationMessageConstant::CANCEL_ORDER_BY_ADMIN_TEXT_CONST . $newUpdatedOrder->getId()],
+                        $userId, $newUpdatedOrder->getId());
+
+                    // ... commit the transaction
+                    $this->entityManager->getConnection()->commit();
+
+                    // firebase notification to store
+                    $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($newUpdatedOrder->getStoreOwner()->getStoreOwnerId(), $newUpdatedOrder->getId(), $newUpdatedOrder->getState(),
+                        NotificationConstant::STORE);
+
+                    return $this->autoMapping->map(OrderEntity::class, OrderCancelByAdminResponse::class, $newUpdatedOrder);
+                }
+
+                return OrderResultConstant::ORDER_UPDATE_PROBLEM;
+
+            } elseif ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
+                // 1. Update order state and other info
+                $arrayResult = $this->adminOrderManager->updateOngoingOrderToCancelled($orderEntity);
+
+                if ($arrayResult[0]) {
+                    // 2. Delete the chat room of the order
+                    $this->deleteChatRoomByOrderId($arrayResult[0]->getId());
+
+                    // 3. Update store subscription (remaining orders + remaining cars), if order relate
+                    $this->updateRemainingOrdersOfStoreSubscriptionByAdmin($arrayResult[0]->getStoreOwner()->getId(), $arrayResult[0]->getCreatedAt(),
+                        SubscriptionConstant::OPERATION_TYPE_ADDITION, 1);
+
+                    $this->updateRemainingCarsOfStoreSubscriptionByAdmin($arrayResult[0]->getStoreOwner()->getId(), $arrayResult[0]->getCreatedAt(),
+                        SubscriptionConstant::OPERATION_TYPE_ADDITION, 1);
+
+                    // 4. Create log
+                    $this->createOrderLogViaOrderEntity($arrayResult[0]);
+
+                    $this->createOrderLogMessageViaOrderEntityAndByAdmin($arrayResult[0], $userId);
+
+                    // 5. Send notifications
+                    // local notification to store
+                    $this->createLocalNotificationForStore($arrayResult[0]->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
+                        NotificationConstant::CANCEL_ORDER_SUCCESS, $arrayResult[0]->getId());
+
+                    // local notification to captain
+                    $this->createLocalNotificationForCaptain($arrayResult[1]->getCaptainId(), NotificationConstant::CANCEL_ORDER_TITLE,
+                        NotificationConstant::CANCEL_ORDER_SUCCESS, $arrayResult[0]->getId());
+
+                    // Create local notification for admin
+                    $this->createDashboardLocalNotification(DashboardLocalNotificationTitleConstant::CANCEL_ORDER_BY_ADMIN_TITLE_CONST,
+                        ['text' => DashboardLocalNotificationMessageConstant::CANCEL_ORDER_BY_ADMIN_TEXT_CONST . $arrayResult[0]->getId()],
+                        $userId, $arrayResult[0]->getId());
+
+                    // ... commit the transaction
+                    $this->entityManager->getConnection()->commit();
+
+                    // firebase notification to store
+                    $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($arrayResult[0]->getStoreOwner()->getStoreOwnerId(),
+                        $arrayResult[0]->getId(), $arrayResult[0]->getState(), NotificationConstant::STORE);
+
+                    // firebase notification to captain
+                    $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($arrayResult[1]->getCaptainId(), $arrayResult[0]->getId(),
+                        $arrayResult[0]->getState(), NotificationConstant::CAPTAIN);
+
+                    return $this->autoMapping->map(OrderEntity::class, OrderCancelByAdminResponse::class, $arrayResult[0]);
+                }
+
+                return OrderResultConstant::ORDER_UPDATE_PROBLEM;
+
+            } elseif (in_array($orderEntity->getState(), OrderStateConstant::ORDER_STATE_ONGOING_TILL_DELIVERED_ARRAY)) {
+                // 1. Update order state and other info
+                if ($request->getAddHalfOrderValueToCaptainFinancialDue() === true) {
+                    // As long as it required to add half financial value of the order to captain due
+                    // then, we won't remove captain from order record.
+                    // Also, we have to know at which state the admin cancelled the order
+                    $orderCancelledByAdminAndAtState = OrderCancelledByUserAndAtStateConstant::ORDER_CANCEL_USER_AND_STATE_ARRAY['ORDER_CANCELLED_BY_ADMIN_AND_AT_IN_STORE_STATE_CONST'];
+
+                    if ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_ONGOING) {
+                        $orderCancelledByAdminAndAtState = OrderCancelledByUserAndAtStateConstant::ORDER_CANCEL_USER_AND_STATE_ARRAY['ORDER_CANCELLED_BY_ADMIN_AND_AT_ONGOING_STATE_CONST'];
+
+                    } elseif ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                        $orderCancelledByAdminAndAtState = OrderCancelledByUserAndAtStateConstant::ORDER_CANCEL_USER_AND_STATE_ARRAY['ORDER_CANCELLED_BY_ADMIN_AND_AT_DELIVERED_STATE_CONST'];
+                    }
+
+                    $arrayResult = $this->adminOrderManager->updateOngoingOrderToCancelledWithoutRemovingCaptain($orderEntity,
+                        $orderCancelledByAdminAndAtState);
+
+                } else {
+                    // while it isn't required to add half financial value of the order to captain due
+                    // then, we can update order state and remove the captain as well from the order record
+                    $arrayResult = $this->adminOrderManager->updateOngoingOrderToCancelled($orderEntity);
+                }
+
+                if ($arrayResult[0]) {
+                    // 2. Delete the chat room of the order
+                    $this->deleteChatRoomByOrderId($arrayResult[0]->getId());
+
+                    // 3. Check if admin requested to cut the order from the store subscription or not
+                    if ($request->getCutOrderFromStoreSubscription() !== true) {
+                        // Update store subscription (remaining orders + remaining cars), if order relate
+                        $this->updateRemainingOrdersOfStoreSubscriptionByAdmin($arrayResult[0]->getStoreOwner()->getId(),
+                            $arrayResult[0]->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_ADDITION, 1);
+
+                        if ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                            // Delete cash dues and update payments - if exist/s - of the store
+                            $this->deleteStoreDuesFromCashOrderAndUpdatePaymentByStoreOwnerProfileIdAndOrderId($arrayResult[0]->getStoreOwner()->getId(),
+                                $arrayResult[0]->getId(), $arrayResult[0]->getPayment());
+
+                            // Delete cash amount and update payments - if exist/s - of the captain
+                            // note: here we pass the order id and creation date just for updating the exact financial cycle
+                            // that the order belongs to
+                            $this->deleteCaptainAmountFromCashOrderAndUpdatePaymentByCaptainProfileIdAndOrderId($arrayResult[1]->getId(),
+                                $arrayResult[0]->getId(), $arrayResult[0]->getPayment());
+                        }
+                    }
+
+                    // 4. If order isn't delivered yet, then update the remaining cars (because the captain returned available)
+                    if ($orderEntity->getState() !== OrderStateConstant::ORDER_STATE_DELIVERED) {
+                        $this->updateRemainingCarsOfStoreSubscriptionByAdmin($arrayResult[0]->getStoreOwner()->getId(),
+                            $arrayResult[0]->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_ADDITION, 1);
+                    }
+
+                    // 5. Update captain financial dues (re-calculate them actually)
+                    $this->createOrUpdateCaptainFinancialDues($arrayResult[1]->getCaptainId(), $arrayResult[0]->getId(),
+                        $arrayResult[0]->getCreatedAt());
+
+                    // 6. Update daily captain financial amount
+                    $this->createOrUpdateCaptainFinancialDaily($arrayResult[0]->getId(), $arrayResult[1]);
+
+                    // 7. Create log
+                    $this->createOrderLogViaOrderEntity($arrayResult[0]);
+
+                    $this->createOrderLogMessageViaOrderEntityAndByAdmin($arrayResult[0], $userId);
+
+                    // 8. Send notifications
+                    // local notification to store
+                    $this->createLocalNotificationForStore($arrayResult[0]->getStoreOwner()->getStoreOwnerId(), NotificationConstant::CANCEL_ORDER_TITLE,
+                        NotificationConstant::CANCEL_ORDER_SUCCESS, $arrayResult[0]->getId());
+
+                    // local notification to captain
+                    $this->createLocalNotificationForCaptain($arrayResult[1]->getCaptainId(), NotificationConstant::CANCEL_ORDER_TITLE,
+                        NotificationConstant::CANCEL_ORDER_SUCCESS, $arrayResult[0]->getId());
+
+                    // Create local notification for admin
+                    $this->createDashboardLocalNotification(DashboardLocalNotificationTitleConstant::CANCEL_ORDER_BY_ADMIN_TITLE_CONST,
+                        ['text' => DashboardLocalNotificationMessageConstant::CANCEL_ORDER_BY_ADMIN_TEXT_CONST . $arrayResult[0]->getId()],
+                        $userId, $arrayResult[0]->getId());
+
+                    // ... commit the transaction
+                    $this->entityManager->getConnection()->commit();
+
+                    // firebase notification to store
+                    $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($arrayResult[0]->getStoreOwner()->getStoreOwnerId(),
+                        $arrayResult[0]->getId(), $arrayResult[0]->getState(), NotificationConstant::STORE);
+
+                    // firebase notification to captain
+                    $this->sendFirebaseNotificationAboutOrderStateForUserByAdmin($arrayResult[1]->getCaptainId(), $arrayResult[0]->getId(),
+                        $arrayResult[0]->getState(), NotificationConstant::CAPTAIN);
+
+                    return $this->autoMapping->map(OrderEntity::class, OrderCancelByAdminResponse::class, $arrayResult[0]);
+                }
+
+                return OrderResultConstant::ORDER_UPDATE_PROBLEM;
+
+            } else {
+                // Order is already being cancelled
+                return OrderResultConstant::ORDER_ALREADY_BEING_CANCELLED;
+            }
+
+        } catch (\Exception $e) {
+            // ... roll back the started transaction
+            $this->entityManager->getConnection()->rollBack();
+
+            throw $e;
         }
     }
 

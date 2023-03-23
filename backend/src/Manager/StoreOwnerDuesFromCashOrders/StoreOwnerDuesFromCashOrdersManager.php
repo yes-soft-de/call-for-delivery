@@ -48,7 +48,9 @@ class StoreOwnerDuesFromCashOrdersManager
         return $this->storeOwnerDuesFromCashOrdersEntityRepository->getStoreOwnerDuesFromCashOrdersByStoreOwnerId($storeOwnerId);
     }
 
-    // Get the dues of unpaid cash orders (for group of orders)
+    /**
+     * Get the sum of unpaid cash and delivered orders amount (for store) by specific captain and among specific date
+     */
     public function getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime(int $captainId, string $fromDate, string $toDate): array
     {
         return $this->storeOwnerDuesFromCashOrdersEntityRepository->getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime($captainId, $fromDate, $toDate);

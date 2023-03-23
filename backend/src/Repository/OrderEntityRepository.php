@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\ChatRoom\ChatRoomConstant;
+use App\Constant\Order\OrderCancelledByUserAndAtStateConstant;
 use App\Constant\Order\OrderDestinationConstant;
 use App\Constant\Order\OrderDistanceConstant;
 use App\Constant\Order\OrderHasPayConflictAnswersConstant;
@@ -1194,21 +1195,25 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getOrdersPendingBeforeSpecificDate(DateTime $specificTime): ?array
-    {
-        return $this->createQueryBuilder('orderEntity')
+    // Following function had been commented out because it isn't being used anywhere
+//    public function getOrdersPendingBeforeSpecificDate(DateTime $specificTime): ?array
+//    {
+//        return $this->createQueryBuilder('orderEntity')
+//
+//            ->andWhere('orderEntity.deliveryDate < :specificTime')
+//            ->setParameter('specificTime', $specificTime)
+//
+//            ->andWhere('orderEntity.state = :state')
+//            ->setParameter('state', OrderStateConstant::ORDER_STATE_PENDING)
+//
+//            ->getQuery()
+//            ->getResult();
+//    }
 
-            ->andWhere('orderEntity.deliveryDate < :specificTime')
-            ->setParameter('specificTime', $specificTime)
-
-            ->andWhere('orderEntity.state = :state')
-            ->setParameter('state', OrderStateConstant::ORDER_STATE_PENDING)
-
-            ->getQuery()
-            ->getResult();
-    }
-
-    public function getOrdersPending(): ?array
+    /**
+     * Get pending orders which aren't hidden nor sub orders
+     */
+    public function getNotHiddenNotSubPendingOrders(): ?array
     {
         return $this->createQueryBuilder('orderEntity')
 
@@ -1218,8 +1223,9 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('orderEntity.orderType = :normalOrderType')
             ->setParameter('normalOrderType', OrderTypeConstant::ORDER_TYPE_NORMAL)
 
-            ->andWhere('orderEntity.isHide != :hide')
+            ->andWhere('orderEntity.isHide != :hide AND orderEntity.isHide != :subOrderVisibility')
             ->setParameter('hide', OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)
+            ->setParameter('subOrderVisibility', OrderIsHideConstant::ORDER_HIDE)
 
             ->getQuery()
             ->getResult();
@@ -1609,8 +1615,11 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = orderEntity.storeOwner')
 
-            ->where('orderEntity.state = :state')
-            ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
+            ->where('orderEntity.state = :deliveredState'
+                .' OR (orderEntity.state = :cancelledState AND orderEntity.orderCancelledByUserAndAtState IN (:orderCancelledByUserAndAtStateArray)')
+            ->setParameter('deliveredState', OrderStateConstant::ORDER_STATE_DELIVERED)
+            ->setParameter('cancelledState', OrderStateConstant::ORDER_STATE_CANCEL)
+            ->setParameter('orderCancelledByUserAndAtStateArray', OrderCancelledByUserAndAtStateConstant::ORDER_CANCEL_USER_AND_STATE_ARRAY)
 
             ->andWhere('orderEntity.captainId = :captainId')
             ->setParameter('captainId', $captainId)
@@ -2523,8 +2532,11 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = orderEntity.storeOwner')
 
-            ->where('orderEntity.state = :state')
-            ->setParameter('state', OrderStateConstant::ORDER_STATE_DELIVERED)
+            ->where('orderEntity.state = :deliveredState'
+                .' OR (orderEntity.state = :cancelledState AND orderEntity.orderCancelledByUserAndAtState IN (:orderCancelledByUserAndAtStateArray))')
+            ->setParameter('deliveredState', OrderStateConstant::ORDER_STATE_DELIVERED)
+            ->setParameter('cancelledState', OrderStateConstant::ORDER_STATE_CANCEL)
+            ->setParameter('orderCancelledByUserAndAtStateArray', OrderCancelledByUserAndAtStateConstant::ORDER_CANCEL_USER_AND_STATE_ARRAY)
 
             ->andWhere('orderEntity.captainId = :captainId')
             ->setParameter('captainId', $captainId)
@@ -2545,5 +2557,164 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * Get cancelled orders, by store at 'in store' state, count according to specific captain and dates
+     */
+    public function getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+
+            ->select('count(orderEntity.id)')
+
+            ->where('orderEntity.state = :state')
+            ->setParameter('state', OrderStateConstant::ORDER_STATE_CANCEL)
+
+            ->andWhere('orderEntity.captainId = :captainId')
+            ->setParameter('captainId', $captainProfileId)
+
+            ->andWhere('orderEntity.createdAt >= :fromDate')
+            ->setParameter('fromDate', $fromDate)
+
+            ->andWhere('orderEntity.createdAt <= :toDate')
+            ->setParameter('toDate', $toDate)
+
+            ->andWhere('orderEntity.orderCancelledByUserAndAtState IN (:orderCancelledByUserAndAtStateArray)')
+            ->setParameter('orderCancelledByUserAndAtStateArray', OrderCancelledByUserAndAtStateConstant::ORDER_CANCEL_USER_AND_STATE_ARRAY)
+
+            ->getQuery()
+            ->getSingleColumnResult();
+    }
+
+    /**
+     * Get cancelled orders, by store at 'in store' state, count and which storeBranchToClientDistance or
+     * kilometer is more than 19 kilometer and according to specific captain and dates
+     */
+    public function getOverdueCancelledOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+
+            ->select('count(orderEntity.id)')
+
+            ->where('orderEntity.state = :state')
+            ->setParameter('state', OrderStateConstant::ORDER_STATE_CANCEL)
+
+            ->andWhere('orderEntity.captainId = :captainId')
+            ->setParameter('captainId', $captainProfileId)
+
+            ->andWhere('orderEntity.createdAt >= :fromDate')
+            ->setParameter('fromDate', $fromDate)
+
+            ->andWhere('orderEntity.createdAt <= :toDate')
+            ->setParameter('toDate', $toDate)
+
+            ->andWhere('(orderEntity.storeBranchToClientDistance IS NOT NULL AND orderEntity.storeBranchToClientDistance >= :limitDistance) '
+                .'OR (orderEntity.storeBranchToClientDistance IS NULL AND orderEntity.kilometer >= :limitDistance)')
+            ->setParameter('limitDistance', CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER)
+
+            ->andWhere('orderEntity.orderCancelledByUserAndAtState IN (:orderCancelledByUserAndAtStateArray)')
+            ->setParameter('orderCancelledByUserAndAtStateArray', OrderCancelledByUserAndAtStateConstant::ORDER_CANCEL_USER_AND_STATE_ARRAY)
+
+            ->getQuery()
+            ->getSingleColumnResult();
+    }
+
+    /**
+     * Get count of orders without distance and cancelled by store and related to specific captain during specific time
+     */
+    public function getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate(int $captainProfileId, string $fromDate, string $toDate): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+
+            ->select('COUNT(orderEntity.id)')
+
+            ->where('orderEntity.state = :state')
+            ->setParameter('state', OrderStateConstant::ORDER_STATE_CANCEL)
+
+            ->andWhere('orderEntity.orderCancelledByUserAndAtState IN (:orderCancelledByUserAndAtStateArray)')
+            ->setParameter('orderCancelledByUserAndAtStateArray', OrderCancelledByUserAndAtStateConstant::ORDER_CANCEL_USER_AND_STATE_ARRAY)
+
+            ->andWhere('orderEntity.captainId = :captainId')
+            ->setParameter('captainId', $captainProfileId)
+
+            ->andWhere('orderEntity.createdAt >= :fromDate')
+            ->setParameter('fromDate', $fromDate)
+
+            ->andWhere('orderEntity.createdAt <= :toDate')
+            ->setParameter('toDate', $toDate)
+
+            ->andWhere('orderEntity.storeBranchToClientDistance IS NULL OR orderEntity.storeBranchToClientDistance = :zeroValue')
+            ->setParameter('zeroValue', 0)
+
+            ->getQuery()
+            ->getSingleColumnResult();
+    }
+
+    public function getCancelledOrdersCountByCaptainProfileIdAndSpecificDateAndSpecificDistanceRange(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+
+            ->select('count(orderEntity.id) as countOrder')
+
+            ->where('orderEntity.state = :state')
+            ->setParameter('state', OrderStateConstant::ORDER_STATE_CANCEL)
+
+            ->andWhere('orderEntity.orderCancelledByUserAndAtState IN (:orderCancelledByUserAndAtStateArray)')
+            ->setParameter('orderCancelledByUserAndAtStateArray', OrderCancelledByUserAndAtStateConstant::ORDER_CANCEL_USER_AND_STATE_ARRAY)
+
+            ->andWhere('orderEntity.captainId = :captainId')
+            ->setParameter('captainId', $captainId)
+
+            ->andWhere('orderEntity.createdAt >= :fromDate')
+            ->setParameter('fromDate', $fromDate)
+
+            ->andWhere('orderEntity.createdAt <= :toDate')
+            ->setParameter('toDate', $toDate)
+
+            ->andWhere('orderEntity.storeBranchToClientDistance >= :countKilometersFrom')
+            ->setParameter('countKilometersFrom', $countKilometersFrom)
+
+            ->andWhere('orderEntity.storeBranchToClientDistance <= :countKilometersTo')
+            ->setParameter('countKilometersTo', $countKilometersTo)
+
+            ->andWhere('orderEntity.storeBranchToClientDistance != :zero')
+            ->setParameter('zero', 0)
+
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
+     * Get cancelled orders, by store at 'in store' state, count and which storeBranchToClientDistance is more
+     * than 19 kilometer and according to specific captain and dates
+     */
+    public function getCancelledAndOverdueStoreBranchToClientDistanceOrdersCountByCaptainProfileIdAndDates(int $captainProfileId, string $fromDate, string $toDate): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+
+            ->select('count(orderEntity.id)')
+
+            ->where('orderEntity.state = :state')
+            ->setParameter('state', OrderStateConstant::ORDER_STATE_CANCEL)
+
+            ->andWhere('orderEntity.captainId = :captainId')
+            ->setParameter('captainId', $captainProfileId)
+
+            ->andWhere('orderEntity.createdAt >= :fromDate')
+            ->setParameter('fromDate', $fromDate)
+
+            ->andWhere('orderEntity.createdAt <= :toDate')
+            ->setParameter('toDate', $toDate)
+
+            ->andWhere('(orderEntity.storeBranchToClientDistance IS NOT NULL'
+                .' AND orderEntity.storeBranchToClientDistance >= :limitDistance)')
+            ->setParameter('limitDistance', CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER)
+
+            ->andWhere('orderEntity.orderCancelledByUserAndAtState IN (:orderCancelledByUserAndAtStateArray)')
+            ->setParameter('orderCancelledByUserAndAtStateArray', OrderCancelledByUserAndAtStateConstant::ORDER_CANCEL_USER_AND_STATE_ARRAY)
+
+            ->getQuery()
+            ->getSingleColumnResult();
     }
 }

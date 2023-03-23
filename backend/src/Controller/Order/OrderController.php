@@ -1082,19 +1082,31 @@ class OrderController extends BaseController
      */
     public function orderCancel(int $id): JsonResponse
     {
-        $response = $this->orderService->orderCancel($id);
+        $response = $this->orderService->orderCancelByStoreOwner($id, $this->getUserId());
 
-        if(isset($response->statusError)) {
-            if($response->statusError === OrderResultConstant::ORDER_NOT_REMOVE_TIME) {
-                return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_REMOVE_TIME);
-            }
-           
-            if($response->statusError === OrderResultConstant::ORDER_NOT_REMOVE_CAPTAIN_RECEIVED) {
-                return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_REMOVE_CAPTAIN_RECEIVE);
-            }
+//        if(isset($response->statusError)) {
+//            if($response->statusError === OrderResultConstant::ORDER_NOT_REMOVE_TIME) {
+//                return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_REMOVE_TIME);
+//            }
+//
+//            if($response->statusError === OrderResultConstant::ORDER_NOT_REMOVE_CAPTAIN_RECEIVED) {
+//                return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_REMOVE_CAPTAIN_RECEIVE);
+//            }
+
+        if ($response === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_NOT_FOUND);
 
         } elseif ($response === OrderResultConstant::ORDER_TYPE_BID) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_WRONG_ORDER_TYPE);
+
+        } elseif ($response === OrderResultConstant::ORDER_IS_EITHER_ONGOING_OR_DELIVERED_CONST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_ALREADY_ONGOING_OR_DELIVERED_CONST);
+
+        } elseif ($response === OrderResultConstant::ORDER_ALREADY_BEING_CANCELLED) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CANCEL);
+
+        } elseif ($response === OrderResultConstant::ORDER_UPDATE_PROBLEM) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_UPDATE);
         }
       
         return $this->response($response, self::UPDATE);
