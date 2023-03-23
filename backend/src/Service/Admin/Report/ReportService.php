@@ -54,11 +54,13 @@ class ReportService
         $response['allOrdersCount'] = $this->adminOrderService->getAllOrdersCountForAdmin();
         $response['pendingOrdersCount'] = $this->adminOrderService->getPendingOrdersCountForAdmin();
 
-        //$todayStartAndEndDatesAndTime = $this->dateFactoryService->getStartAndEndDatesAndTimeOfToday();
-        $response['todayDeliveredOrdersCount'] = $this->adminOrderService->getDeliveredOrdersCountBetweenTwoDatesForAdmin(new \DateTime('-24 hour'), new \DateTime('now'));
+        // Get the count of delivered orders today
+        $response['todayDeliveredOrdersCount'] = $this->adminOrderService->getDeliveredOrdersCountBetweenTwoDatesForAdmin(new \DateTime('midnight yesterday'),
+            new \DateTime('midnight today'));
 
-        //$previousWeekStartAndEndDatesAndTime = $this->dateFactoryService->getStartAndEndDatesAndTimeOfPreviousWeek();
-        $response['previousWeekDeliveredOrdersCount'] = $this->adminOrderService->getDeliveredOrdersCountBetweenTwoDatesForAdmin(new \DateTime('-7 day'), new \DateTime('now'),);
+        // Get the count of delivered orders last seven days
+        $response['previousWeekDeliveredOrdersCount'] = $this->adminOrderService->getDeliveredOrdersCountBetweenTwoDatesForAdmin(new \DateTime('-7 day'),
+            new \DateTime('now'),);
 
         return $this->autoMapping->map('array', StatisticsForAdminGetResponse::class, $response);
     }
