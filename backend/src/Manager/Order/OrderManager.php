@@ -821,4 +821,23 @@ class OrderManager
         return $this->orderRepository->getCancelledOrdersWithoutDistanceCountByCaptainProfileIdOnSpecificDate($captainProfileId,
             $fromDate, $toDate);
     }
+
+    /**
+     * Updates an (ongoing) order to 'pending' state
+     */
+    public function updateOrderStateToPendingByOrderEntity(OrderEntity $orderEntity): array
+    {
+        $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
+
+        // save captain for later use
+        $captainProfile = $orderEntity->getCaptainId();
+
+        $orderEntity->setDateCaptainArrived(null);
+        $orderEntity->setIsCaptainArrived(null);
+        $orderEntity->setCaptainId(null);
+
+        $this->entityManager->flush();
+
+        return [$orderEntity, $captainProfile];
+    }
 }

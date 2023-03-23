@@ -12,6 +12,7 @@ use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
+use App\Request\Order\RePendingAcceptedOrderByCaptainRequest;
 use App\Service\Order\OrderService;
 use stdClass;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -2146,5 +2147,115 @@ class OrderController extends BaseController
         $result = $this->orderService->filterCashOrdersPaidOrNotByStore($request);
 
         return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * captain: un-accept order by captain
+     * @Route("unacceptorderbycaptain", name="unAcceptOrderByCaptain", methods={"PUT"})
+     * @IsGranted("ROLE_CAPTAIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="un accept order by captain request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="id", description="order id")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="return updated order response",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Order\RePendingOrderByCaptainResponse")
+     *      )
+     *   )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *          oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9205"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9219"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9215"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9226"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9214"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9227"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   )
+     *              }
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function rePendingOrderByCaptain(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, RePendingAcceptedOrderByCaptainRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if (\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $result = $this->orderService->rePendingOrderByCaptain($request);
+
+        if ($result === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_NOT_FOUND);
+
+        } elseif ($result === OrderResultConstant::ORDER_IS_BEING_DELIVERED) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_ALREADY_DELIVERED);
+
+        } elseif ($result === OrderResultConstant::ORDER_ALREADY_BEING_CANCELLED) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CANCEL);
+
+        } elseif ($result === OrderResultConstant::ORDER_STATE_PENDING_CONST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ORDER_PENDING_STATE_CONST);
+
+        } elseif ($result === OrderResultConstant::ORDER_RETURNING_TO_PENDING_HAS_PROBLEM) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_IN_RETURNING_ORDER_TO_PENDING_STATUS);
+
+        } elseif ($result === OrderResultConstant::ORDER_STATE_NOT_CORRECT_CONST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ORDER_STATE_NOT_CORRECT_CONST);
+        }
+
+        return $this->response($result, self::UPDATE);
     }
 }

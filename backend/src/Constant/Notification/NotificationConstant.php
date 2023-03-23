@@ -58,6 +58,8 @@ final class NotificationConstant
 
     const ORDER_DESTINATION_ADDITION_BY_CAPTAIN_MESSAGE_CONST = "تم إضافة مسافة من قبل الكابتن على المسافة المحتسبة تلقائيا من أجل الطلب رقم ";
 
+    const ORDER_RETURNED_PENDING_BY_CAPTAIN_TEXT = "تراجع الكابتن عن المتابعة في تسليم الطلب";
+
     //for captain
     const STATE_ON_WAY_PICK_ORDER_CAPTAIN = "لقد قبلت الطلب ";
 
@@ -68,6 +70,10 @@ final class NotificationConstant
     const STATE_ONGOING_CAPTAIN = "أنت في طريقك لتسليم الطلب";
 
     const STATE_DELIVERED_CAPTAIN = "لقد سلمت الطلب ,شكرا لك";
+
+    const UN_ACCEPT_ORDER_BY_CAPTAIN_TITLE_CONST = "التراجع عن تسليم الطلب";
+
+    const UN_ACCEPT_ORDER_BY_CAPTAIN_TEXT_CONST = "لقد قمت بالتراجع عن تسليم الطلب";
     
     const STORE = "store";
     

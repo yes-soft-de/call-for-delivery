@@ -867,3 +867,8 @@ App\Request\Admin\Order\NormalOrderCancelByAdminRequest:
     properties:
         id:
             - NotBlank: ~
+
+App\Request\Order\RePendingAcceptedOrderByCaptainRequest:
+    properties:
+        id:
+            - NotBlank: ~
