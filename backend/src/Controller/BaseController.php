@@ -16,10 +16,6 @@ class BaseController extends AbstractController
     private $serializer;
     private $statusCode;
 
-    public function __construct(SerializerInterface $serializer)
-    {
-        $this->serializer = $serializer;
-    }
     const STATE_OK = 200;
     const CREATE = ["created ","201"];
     const UPDATE = ["updated","204"];
@@ -49,6 +45,8 @@ class BaseController extends AbstractController
     const ERROR_ORDER_UPDATE_STATE_BY_CAPTAIN_BEFORE_TIME = ["update order state by captain before time", "9223"];
     const ERROR_ORDER_CANCEL_NOT_ALLOWED_DUE_TO_WRONG_API = ["wrong api for cancelling order by admin", "9224"];
     const ERROR_ORDER_ALREADY_ONGOING_OR_DELIVERED_CONST = ["order is already ongoing or delivered", "9225"];
+    const ORDER_PENDING_STATE_CONST = ["order is in pending state", "9226"];
+    const ORDER_STATE_NOT_CORRECT_CONST = ["order is in pending state", "9227"];
     //error related
     const ERROR_RELATED= ["error related","9251"];
     // error users
@@ -168,11 +166,11 @@ class BaseController extends AbstractController
     // captain financial daily
     const CAPTAIN_FINANCIAL_DAILY_NOT_EXIST_CONST = ["captain financial daily not exists", "9650"];
     const CAPTAIN_FINANCIAL_DAILY_CREATE_ERROR_CONST = ["problem in creating captain financial daily", "9651"];
-    
-//    const TEST = [
-//        "one"=>[ "error error", "9003"],
-//        "tow"=>[ "error captain inactive", "9002"]
-//    ];
+
+    public function __construct(SerializerInterface $serializer)
+    {
+        $this->serializer = $serializer;
+    }
 
     public function getUserId()
     {

@@ -19,4 +19,6 @@ final class DashboardLocalNotificationTitleConstant
     const RECYCLE_ORDER_BY_STORE_TITLE_CONST = "إعادة إصدار الطلب من قبل المتجر";
 
     const UN_LINK_ORDERS_BY_STORE_TITLE_CONST = "فك ارتباط طلب من قبل المتجر";
+
+    const UN_ACCEPT_ORDER_BY_CAPTAIN_TITLE_CONST = "التراجع عن تسليم طلب";
 }

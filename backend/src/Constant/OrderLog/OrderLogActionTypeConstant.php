@@ -76,4 +76,6 @@ final class OrderLogActionTypeConstant
 
     // order destination had been updated by captain
     // const NORMAL_ORDER_DESTINATION_ADDITION_BY_CAPTAIN_CONST = 34;
+
+    const UN_ASSIGN_ORDER_TO_CAPTAIN_BY_CAPTAIN_ACTION_CONST = 35;
 }
