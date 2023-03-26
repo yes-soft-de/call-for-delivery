@@ -12,6 +12,7 @@ use App\Constant\Order\OrderCostTypeConstant;
 use App\Constant\Order\OrderHasPayConflictAnswersConstant;
 use App\Constant\Order\OrderPaidToProviderConstant;
 use App\Constant\Order\OrderTypeConstant;
+use App\Constant\Order\OrderUpdateStateConstant;
 use App\Constant\OrderLog\OrderLogActionTypeConstant;
 use App\Constant\OrderLog\OrderLogCreatedByUserTypeConstant;
 use App\Constant\OrderLog\OrderLogResultConstant;
@@ -526,7 +527,8 @@ class OrderService
 
         // Check if captain try to update order state before specific time (except 'on way to pick order' state)
         if (in_array($request->getState(), OrderStateConstant::ORDER_STATE_ONGOING_TILL_DELIVERED_ARRAY)) {
-            $result = $this->checkIfNormalOrderStateUpdateBeforeSpecificTimeForCaptain($request->getId(), $request->getCaptainId());
+            $result = $this->checkIfNormalOrderStateUpdateBeforeSpecificTimeForCaptain($request->getId(),
+                $request->getCaptainId(), $request->getState());
 
             if ($result === true) {
                 return OrderResultConstant::ORDER_UPDATE_STATE_NOT_ALLOWED_DUE_TO_SHORT_TIME_CONST;
@@ -1796,12 +1798,13 @@ class OrderService
             $orderType, $actions, $createdByUserType);
     }
 
-    public function checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanThreeMinutes(\DateTimeInterface $oldDate, DateTime $newDate): bool
+    public function checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanSpecificMinutes(\DateTimeInterface $oldDate, DateTime $newDate, int $minuets): bool
     {
-        return $this->dateFactoryService->checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanThreeMinutes($oldDate, $newDate);
+        return $this->dateFactoryService->checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanSpecificMinutes($oldDate,
+            $newDate, $minuets);
     }
 
-    public function checkIfNormalOrderStateUpdateBeforeSpecificTimeForCaptain(int $orderId, int $captainUserId): bool|int
+    public function checkIfNormalOrderStateUpdateBeforeSpecificTimeForCaptain(int $orderId, int $captainUserId, string $nextOrderState): bool|int
     {
         // Get the creation time of the record of last order state
         $createdAtResult = $this->getOrderLogCreatedAtByOrderIdAndTypeAndActionAndCreatedByUserType($orderId, OrderTypeConstant::ORDER_TYPE_NORMAL,
@@ -1811,8 +1814,15 @@ class OrderService
             return OrderLogResultConstant::ORDER_LOG_NOT_EXIST_CONST;
         }
 
-        // Check date
-        $overdueTime = $this->checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanThreeMinutes($createdAtResult, new DateTime('now'));
+        // Check date according to order state
+        if ($nextOrderState === OrderStateConstant::ORDER_STATE_IN_STORE) {
+            $overdueTime = $this->checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanSpecificMinutes($createdAtResult,
+                new DateTime('now'), OrderUpdateStateConstant::TWO_MINUETS_TIME_CONST);
+
+        } else {
+            $overdueTime = $this->checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanSpecificMinutes($createdAtResult,
+                new DateTime('now'), OrderUpdateStateConstant::ONE_MINUETS_TIME_CONST);
+        }
 
         if ($overdueTime === true) {
             // 1. Send firebase notification to admin
@@ -2098,11 +2108,6 @@ class OrderService
                 if ($orderUpdateResultArray[0]) {
                     // 2. Delete chat room
                     $this->deleteChatRoomByOrderIdAndCaptainProfileId($orderUpdateResultArray[0]->getId(), $orderUpdateResultArray[1]->getId());
-
-                    // 2. Update remaining orders of the current subscription of the store
-                    $this->updateRemainingOrdersOfStoreSubscription($orderUpdateResultArray[0]->getStoreOwner()->getId(),
-                        $orderUpdateResultArray[0]->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_ADDITION,
-                        SubscriptionDetailsConstant::ONE_VALUE_CONST);
 
                     // 3. Update remaining cars of the current subscription of the store
                     $this->updateRemainingCarsOfStoreSubscription($orderUpdateResultArray[0]->getStoreOwner()->getId(),
