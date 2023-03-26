@@ -264,7 +264,9 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    // Get top stores according on delivered orders during specific time
+    /**
+     * Get top stores according on delivered orders during specific time
+     */
     public function filterTopStoresAccordingOnOrdersByAdmin(StoresAndOrdersCountDuringSpecificTimeFilterByAdminRequest $request): array
     {
         $stores = $this->createQueryBuilder('storeOwnerProfileEntity')
@@ -284,9 +286,9 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
             foreach ($stores as $key => $value) {
                 $finalResponse[$key] = $value;
 
-                // Get delivered orders count of the captain
+                // Get delivered orders count of the store
                 $finalResponse[$key]['orders'] = $this->getStoreDeliveredOrdersCountByOptionalDatesForAdmin($value['id'],
-                    $request->getFromDate(), $request->getToDate());
+                    $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
 
                 if(count($finalResponse[$key]['orders']) > 0) {
                     $finalResponse[$key]['ordersCount'] = count($finalResponse[$key]['orders']);
@@ -296,15 +298,11 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
                 }
                 // ------------------------------------------------
                 // Get the count of orders which delivered today
-                $todayOrdersCountResult = $this->getStoreDeliveredOrdersCountDuringSpecificDateForAdmin($value['id'],
-                    new \DateTime('today midnight'), new \DateTime('tomorrow midnight'));
+                $todayOrdersCountResult = $this->getStoreDeliveredOrdersCountByOptionalDatesForAdmin($value['id'],
+                    (new \DateTime('today midnight'))->format('Y-m-d'), (new \DateTime('tomorrow midnight'))->format('Y-m-d'),
+                    $request->getCustomizedTimezone());
 
-                if(count($todayOrdersCountResult) > 0) {
-                    $finalResponse[$key]['todayOrdersCount'] = $todayOrdersCountResult[0];
-
-                } else {
-                    $finalResponse[$key]['todayOrdersCount'] = (string) 0;
-                }
+                $finalResponse[$key]['todayOrdersCount'] = (string) count($todayOrdersCountResult);
                 // ------------------------------------------------
                 //*** orders count last 24 block commented out temporary just in order to be required in the future ***//
                 // Get the count of orders which delivered last 24 hours
@@ -326,36 +324,37 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
         return $stores;
     }
 
-    public function getStoreDeliveredOrdersCountDuringSpecificDateForAdmin(int $storeProfileId, \DateTime $startDate, \DateTime $endDate): array
-    {
-        return $this->createQueryBuilder('storeOwnerProfileEntity')
-            ->select('COUNT(orderEntity.id)')
+//    public function getStoreDeliveredOrdersCountDuringSpecificDateForAdmin(int $storeProfileId, \DateTime $startDate, \DateTime $endDate): array
+//    {
+//        return $this->createQueryBuilder('storeOwnerProfileEntity')
+//            ->select('COUNT(orderEntity.id)')
+//
+//            ->andWhere('storeOwnerProfileEntity.id = :storeProfileId')
+//            ->setParameter('storeProfileId', $storeProfileId)
+//
+//            ->leftJoin(
+//                OrderEntity::class,
+//                'orderEntity',
+//                Join::WITH,
+//                'orderEntity.storeOwner = storeOwnerProfileEntity.id'
+//            )
+//
+//            ->andWhere('orderEntity.state = :delivered')
+//            ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
+//
+//            ->andWhere('orderEntity.createdAt >= :fromDate AND orderEntity.createdAt <= :toDate')
+//            ->setParameter('fromDate', $startDate)
+//            ->setParameter('toDate', $endDate)
+//
+//            ->getQuery()
+//            ->getSingleColumnResult();
+//    }
 
-            ->andWhere('storeOwnerProfileEntity.id = :storeProfileId')
-            ->setParameter('storeProfileId', $storeProfileId)
-
-            ->leftJoin(
-                OrderEntity::class,
-                'orderEntity',
-                Join::WITH,
-                'orderEntity.storeOwner = storeOwnerProfileEntity.id'
-            )
-
-            ->andWhere('orderEntity.state = :delivered')
-            ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
-
-            ->andWhere('orderEntity.createdAt >= :fromDate AND orderEntity.createdAt <= :toDate')
-            ->setParameter('fromDate', $startDate)
-            ->setParameter('toDate', $endDate)
-
-            ->getQuery()
-            ->getSingleColumnResult();
-    }
-
-    public function getStoreDeliveredOrdersCountByOptionalDatesForAdmin(int $storeProfileId, ?string $startDate, ?string $endDate): array
+    public function getStoreDeliveredOrdersCountByOptionalDatesForAdmin(int $storeProfileId, ?string $startDate, ?string $endDate, ?string $customizedTimeZone): array
     {
         $query = $this->createQueryBuilder('storeOwnerProfileEntity')
-            ->select('orderEntity.id as orderId', 'storeOwnerBranchEntity.id as branchId', 'storeOwnerBranchEntity.name as branchName')
+            ->select('orderEntity.id as orderId', 'storeOwnerBranchEntity.id as branchId', 'storeOwnerBranchEntity.name as branchName',
+                'orderEntity.createdAt')
 
             ->andWhere('storeOwnerProfileEntity.id = :storeProfileId')
             ->setParameter('storeProfileId', $storeProfileId)
@@ -384,16 +383,51 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
             ->andWhere('orderEntity.state = :delivered')
             ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED);
 
-        if (($startDate) && ($startDate !== "")) {
-            $query->andWhere('orderEntity.createdAt >= :fromDate')
-                ->setParameter('fromDate', $startDate);
-        }
+        if ((($startDate) && ($startDate !== "")) || (($endDate) && ($endDate !== ""))) {
+            $tempQuery = $query->getQuery()->getResult();
 
-        if (($endDate) && ($endDate !== "")) {
-            $query->andWhere('orderEntity.createdAt <= :toDate')
-                ->setParameter('toDate', $endDate);
+            return $this->filterOrdersByDates($tempQuery, $startDate, $endDate, $customizedTimeZone);
         }
 
         return $query->getQuery()->getResult();
+    }
+
+    /**
+     * filter array of orders according to dates of type string and a customized time zone
+     */
+    public function filterOrdersByDates(array $tempOrders, ?string $fromDate, ?string $toDate, ?string $timeZone): array
+    {
+        $filteredOrders = [];
+
+        if (count($tempOrders) > 0) {
+            if (($fromDate != null || $fromDate != "") && ($toDate === null || $toDate === "")) {
+                foreach ($tempOrders as $key => $value) {
+                    if ($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) >=
+                        new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) {
+                        $filteredOrders[$key] = $value;
+                    }
+                }
+
+            } elseif (($fromDate === null || $fromDate === "") && ($toDate != null || $toDate != "")) {
+                foreach ($tempOrders as $key => $value) {
+                    if ($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) <=
+                        new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59'))) {
+                        $filteredOrders[$key] = $value;
+                    }
+                }
+
+            } elseif (($fromDate != null || $fromDate != "") && ($toDate != null || $toDate != "")) {
+                foreach ($tempOrders as $key => $value) {
+                    if (($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) >=
+                            new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) &&
+                        ($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) <=
+                            new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59')))) {
+                        $filteredOrders[$key] = $value;
+                    }
+                }
+            }
+        }
+
+        return $filteredOrders;
     }
 }
