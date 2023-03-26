@@ -83,7 +83,7 @@ class DateFactoryService
         return date_modify($dateTime, '+'.$days. 'days');
     }
 
-    public function checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanThreeMinutes(DateTimeInterface $oldDateInterface, DateTime $newDate): bool
+    public function checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanSpecificMinutes(DateTimeInterface $oldDateInterface, DateTime $newDate, int $minuets): bool
     {
         $oldDate = DateTime::createFromInterface($oldDateInterface);
 
@@ -97,7 +97,7 @@ class DateFactoryService
             if ($different_hours <= 1) {
                 $different_minutes = $interval->format('%i');
 
-                if ($different_minutes < OrderUpdateStateConstant::ORDER_STATE_UPDATE_AFTER_TIME_CONST) {
+                if ($different_minutes < $minuets) {
                     return true;
                 }
             }
@@ -119,11 +119,6 @@ class DateFactoryService
     {
         return DateTime::createFromInterface($dateTime);
     }
-
-//    public function getStringDateOnlyFromDateTimeInterface(DateTimeInterface $dateTime): string
-//    {
-//        return (DateTime::createFromInterface($dateTime)->format('Y-m-d 00:00:00'));
-//    }
 
     public function getDaysCountBetweenTwoDatesOfTypeString(string $fromDate, string $toDate): bool|int
     {

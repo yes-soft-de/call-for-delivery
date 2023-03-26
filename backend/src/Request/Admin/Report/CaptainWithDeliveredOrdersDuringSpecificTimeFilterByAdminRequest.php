@@ -14,6 +14,11 @@ class CaptainWithDeliveredOrdersDuringSpecificTimeFilterByAdminRequest
      */
     private $toDate;
 
+    /**
+     * @var null|string
+     */
+    private $customizedTimezone;
+
     public function getFromDate(): ?string
     {
         return $this->fromDate;
@@ -22,5 +27,10 @@ class CaptainWithDeliveredOrdersDuringSpecificTimeFilterByAdminRequest
     public function getToDate(): ?string
     {
         return $this->toDate;
+    }
+
+    public function getCustomizedTimezone(): ?string
+    {
+        return $this->customizedTimezone;
     }
 }
