@@ -19,4 +19,6 @@ final class DashboardLocalNotificationMessageConstant
     const RECYCLE_ORDER_BY_STORE_TEXT_CONST = "تم إعادة إصدار الطلب ذو الرقم التالي من قبل المتجر ";
 
     const UN_LINK_ORDERS_BY_STORE_TEXT_CONST = "تم فك ارتباط الطلب ذو الرقم التالي من قبل المتجر ";
+
+    const UN_ACCEPT_ORDER_BY_CAPTAIN_TEXT_CONST = "قام الكابتن بالتراجع عن تسليم الطلب ذو الرقم التالي ";
 }

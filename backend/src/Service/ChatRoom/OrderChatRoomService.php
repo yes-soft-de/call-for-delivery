@@ -3,6 +3,7 @@
 namespace App\Service\ChatRoom;
 
 use App\AutoMapping;
+use App\Constant\ChatRoom\ChatRoomResultConstant;
 use App\Manager\ChatRoom\OrderChatRoomManager;
 use App\Response\ChatRoom\OrderChatRoomsStoreResponse;
 use App\Response\ChatRoom\OrderChatRoomStoreCreateResponse;
@@ -77,9 +78,15 @@ class OrderChatRoomService
         return $result;
     }
 
-    public function deleteChatRoomByOrderIdAndCaptainId(int $orderId, int $captainId): ?OrderChatRoomEntity
+    public function deleteChatRoomByOrderIdAndCaptainId(int $orderId, int $captainId): int|OrderChatRoomEntity
     {
-        return $this->orderChatRoomManager->deleteChatRoomByOrderIdAndCaptainId($orderId, $captainId);
+        $deleteResult = $this->orderChatRoomManager->deleteChatRoomByOrderIdAndCaptainId($orderId, $captainId);
+
+        if (! $deleteResult) {
+            return ChatRoomResultConstant::CHAT_ROOM_DOES_NOT_EXIST_CONST;
+        }
+
+        return $deleteResult;
     }
 
     public function getOnGoingOrdersChatRoomsForStore(int $userId): ?array

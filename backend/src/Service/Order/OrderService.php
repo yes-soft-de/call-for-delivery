@@ -12,11 +12,13 @@ use App\Constant\Order\OrderCostTypeConstant;
 use App\Constant\Order\OrderHasPayConflictAnswersConstant;
 use App\Constant\Order\OrderPaidToProviderConstant;
 use App\Constant\Order\OrderTypeConstant;
+use App\Constant\Order\OrderUpdateStateConstant;
 use App\Constant\OrderLog\OrderLogActionTypeConstant;
 use App\Constant\OrderLog\OrderLogCreatedByUserTypeConstant;
 use App\Constant\OrderLog\OrderLogResultConstant;
 use App\Constant\Payment\PaymentConstant;
 use App\Constant\PriceOffer\PriceOfferStatusConstant;
+use App\Constant\Subscription\SubscriptionDetailsConstant;
 use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\CaptainEntity;
@@ -34,6 +36,7 @@ use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
 use App\Request\Order\OrderStoreBranchToClientDistanceUpdateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
+use App\Request\Order\RePendingAcceptedOrderByCaptainRequest;
 use App\Response\BidDetails\BidDetailsGetForCaptainResponse;
 use App\Response\Order\BidOrderByIdGetForCaptainResponse;
 use App\Response\Order\BidOrderForStoreOwnerGetResponse;
@@ -47,6 +50,7 @@ use App\Response\Order\OrderResponse;
 use App\Response\Order\OrdersResponse;
 use App\Response\Order\OrderClosestResponse;
 use App\Response\Order\OrderUpdateByCaptainResponse;
+use App\Response\Order\RePendingOrderByCaptainResponse;
 use App\Response\OrderTimeLine\OrderLogsResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
 use App\Constant\Notification\NotificationConstant;
@@ -98,11 +102,13 @@ use App\Constant\Order\OrderAmountCashConstant;
 use App\Request\Subscription\CalculateCostDeliveryOrderRequest;
 use App\Response\Subscription\CalculateCostDeliveryOrderResponse;
 use DateTimeInterface;
+use Doctrine\ORM\EntityManagerInterface;
 
 class OrderService
 {
     public function __construct(
         private AutoMapping $autoMapping,
+        private EntityManagerInterface $entityManager,
         private OrderManager $orderManager,
         private SubscriptionService $subscriptionService,
         private NotificationLocalService $notificationLocalService,
@@ -521,7 +527,8 @@ class OrderService
 
         // Check if captain try to update order state before specific time (except 'on way to pick order' state)
         if (in_array($request->getState(), OrderStateConstant::ORDER_STATE_ONGOING_TILL_DELIVERED_ARRAY)) {
-            $result = $this->checkIfNormalOrderStateUpdateBeforeSpecificTimeForCaptain($request->getId(), $request->getCaptainId());
+            $result = $this->checkIfNormalOrderStateUpdateBeforeSpecificTimeForCaptain($request->getId(),
+                $request->getCaptainId(), $request->getState());
 
             if ($result === true) {
                 return OrderResultConstant::ORDER_UPDATE_STATE_NOT_ALLOWED_DUE_TO_SHORT_TIME_CONST;
@@ -1791,12 +1798,13 @@ class OrderService
             $orderType, $actions, $createdByUserType);
     }
 
-    public function checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanThreeMinutes(\DateTimeInterface $oldDate, DateTime $newDate): bool
+    public function checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanSpecificMinutes(\DateTimeInterface $oldDate, DateTime $newDate, int $minuets): bool
     {
-        return $this->dateFactoryService->checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanThreeMinutes($oldDate, $newDate);
+        return $this->dateFactoryService->checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanSpecificMinutes($oldDate,
+            $newDate, $minuets);
     }
 
-    public function checkIfNormalOrderStateUpdateBeforeSpecificTimeForCaptain(int $orderId, int $captainUserId): bool|int
+    public function checkIfNormalOrderStateUpdateBeforeSpecificTimeForCaptain(int $orderId, int $captainUserId, string $nextOrderState): bool|int
     {
         // Get the creation time of the record of last order state
         $createdAtResult = $this->getOrderLogCreatedAtByOrderIdAndTypeAndActionAndCreatedByUserType($orderId, OrderTypeConstant::ORDER_TYPE_NORMAL,
@@ -1806,8 +1814,15 @@ class OrderService
             return OrderLogResultConstant::ORDER_LOG_NOT_EXIST_CONST;
         }
 
-        // Check date
-        $overdueTime = $this->checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanThreeMinutes($createdAtResult, new DateTime('now'));
+        // Check date according to order state
+        if ($nextOrderState === OrderStateConstant::ORDER_STATE_IN_STORE) {
+            $overdueTime = $this->checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanSpecificMinutes($createdAtResult,
+                new DateTime('now'), OrderUpdateStateConstant::TWO_MINUETS_TIME_CONST);
+
+        } else {
+            $overdueTime = $this->checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanSpecificMinutes($createdAtResult,
+                new DateTime('now'), OrderUpdateStateConstant::ONE_MINUETS_TIME_CONST);
+        }
 
         if ($overdueTime === true) {
             // 1. Send firebase notification to admin
@@ -1975,14 +1990,18 @@ class OrderService
         return false;
     }
 
-    // Note: factor is the parameter that we want to subtract/add from/to remaining cars field
+    /**
+     * Note: factor is the parameter that we want to subtract/add from/to remaining cars field
+     */
     public function updateRemainingOrdersOfStoreSubscription(int $storeOwnerProfileId, DateTimeInterface $orderCreationDate, string $operationType, int $factor): SubscriptionDetailsEntity|int
     {
         return $this->subscriptionService->handleUpdatingRemainingOrdersOfStoreSubscription($storeOwnerProfileId, $orderCreationDate,
             $operationType, $factor);
     }
 
-    // Note: factor is the parameter that we want to subtract/add from/to remaining cars field
+    /**
+     * Note: factor is the parameter that we want to subtract/add from/to remaining cars field
+     */
     public function updateRemainingCarsOfStoreSubscription(int $storeOwnerProfileId, DateTimeInterface $orderCreationDate, string $operationType, int $factor): SubscriptionDetailsEntity|int
     {
         return $this->subscriptionService->handleUpdatingRemainingCarsOfStoreSubscriptionViaStoreOwnerProfileIdAndOrderCreationDate($storeOwnerProfileId,
@@ -2031,5 +2050,126 @@ class OrderService
     public function createOrUpdateCaptainFinancialDue(int $captainUserId, int $orderId = null, DateTimeInterface $orderCreatedAt = null)
     {
         $this->captainFinancialDuesService->captainFinancialDues($captainUserId, $orderId, $orderCreatedAt);
+    }
+
+    /**
+     * Updates an (ongoing) order to 'pending' state
+     */
+    public function updateOrderStateToPendingByOrderEntity(OrderEntity $orderEntity): array
+    {
+        return $this->orderManager->updateOrderStateToPendingByOrderEntity($orderEntity);
+    }
+
+    /**
+     * Deletes the chat room of the order which being created when order had been accepted by the captain
+     */
+    public function deleteChatRoomByOrderIdAndCaptainProfileId(int $orderId, int $captainProfileId): ?OrderChatRoomEntity
+    {
+        return $this->orderChatRoomService->deleteChatRoomByOrderIdAndCaptainId($orderId, $captainProfileId);
+    }
+
+    /**
+     * save log of the action on order which done by the captain
+     */
+    public function createOrderLogMessageViaOrderEntityAndByCaptain(OrderEntity $orderEntity, int $userId, int $action)
+    {
+        $this->orderLogService->createOrderLogMessage($orderEntity, $userId, OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST,
+            $action, [], null, null);
+    }
+
+    /**
+     * Un accept order by captain by returning it to the pending state
+     */
+    public function rePendingOrderByCaptain(RePendingAcceptedOrderByCaptainRequest $request): string|int|RePendingOrderByCaptainResponse
+    {
+        $orderEntity = $this->getOrderEntityByOrderId($request->getId());
+
+        if (! $orderEntity) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+        }
+
+        if ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
+            return OrderResultConstant::ORDER_IS_BEING_DELIVERED;
+
+        } elseif ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_CANCEL) {
+            return OrderResultConstant::ORDER_ALREADY_BEING_CANCELLED;
+
+        } elseif ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_PENDING) {
+            return OrderResultConstant::ORDER_STATE_PENDING_CONST;
+
+        } elseif (in_array($orderEntity->getState(), OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)) {
+            // start transaction commit ...
+            $this->entityManager->getConnection()->beginTransaction();
+
+            try {
+                // 1. Update order state and other fields
+                $orderUpdateResultArray = $this->updateOrderStateToPendingByOrderEntity($orderEntity);
+
+                if ($orderUpdateResultArray[0]) {
+                    // 2. Delete chat room
+                    $this->deleteChatRoomByOrderIdAndCaptainProfileId($orderUpdateResultArray[0]->getId(), $orderUpdateResultArray[1]->getId());
+
+                    // 3. Update remaining cars of the current subscription of the store
+                    $this->updateRemainingCarsOfStoreSubscription($orderUpdateResultArray[0]->getStoreOwner()->getId(),
+                        $orderUpdateResultArray[0]->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_ADDITION,
+                        SubscriptionDetailsConstant::ONE_VALUE_CONST);
+
+                    // 4. Create order log
+                    // 4.1 create order log record
+                    $this->createOrderLogMessageViaOrderEntityAndByCaptain($orderUpdateResultArray[0], $orderUpdateResultArray[1]->getCaptainId(),
+                        OrderLogActionTypeConstant::UN_ASSIGN_ORDER_TO_CAPTAIN_BY_CAPTAIN_ACTION_CONST);
+
+                    // 4.2 create order timeline record
+                    $this->createOrderLogViaOrderEntity($orderUpdateResultArray[0]);
+
+                    // 5. Create notifications
+                    // Local notifications
+                    // for store
+                    $this->createLocalNotificationForStore($orderUpdateResultArray[0]->getStoreOwner()->getStoreOwnerId(),
+                        NotificationConstant::UN_ACCEPT_ORDER_BY_CAPTAIN_TITLE_CONST, NotificationConstant::ORDER_RETURNED_PENDING_BY_CAPTAIN_TEXT,
+                        $orderUpdateResultArray[0]->getId());
+
+                    // for captain
+                    $this->createLocalNotificationForCaptain($orderUpdateResultArray[1]->getCaptainId(), NotificationConstant::UN_ACCEPT_ORDER_BY_CAPTAIN_TITLE_CONST,
+                        NotificationConstant::UN_ACCEPT_ORDER_BY_CAPTAIN_TEXT_CONST, $orderUpdateResultArray[0]->getId());
+
+                    // for dashboard
+                    $this->createDashboardLocalNotificationByCaptain(DashboardLocalNotificationTitleConstant::UN_ACCEPT_ORDER_BY_CAPTAIN_TITLE_CONST,
+                        ["text" => DashboardLocalNotificationMessageConstant::UN_ACCEPT_ORDER_BY_CAPTAIN_TEXT_CONST . $orderUpdateResultArray[0]->getId()],
+                        null, $orderUpdateResultArray[0]->getId());
+
+                    // ... commit the transaction
+                    $this->entityManager->getConnection()->commit();
+
+                    // Firebase notifications
+                    // for store
+                    $this->sendFirebaseNotificationAboutOrderStateForUser($orderUpdateResultArray[0]->getStoreOwner()->getStoreOwnerId(),
+                        $orderUpdateResultArray[0]->getId(), $orderUpdateResultArray[0]->getState(), NotificationConstant::STORE);
+
+                    // for captain
+                    $this->sendFirebaseNotificationAboutOrderStateForUser($orderUpdateResultArray[1]->getCaptainId(),
+                        $orderUpdateResultArray[0]->getId(), $orderUpdateResultArray[0]->getState(), NotificationConstant::CAPTAIN);
+
+                    // for dashboard
+                    $this->sendFirebaseNotificationToAdminAboutOrder($orderUpdateResultArray[0]->getId(),
+                        NotificationFirebaseConstant::UN_ACCEPT_ORDER_BY_CAPTAIN_CONST);
+
+                    return $this->autoMapping->map(OrderEntity::class, RePendingOrderByCaptainResponse::class, $orderUpdateResultArray[0]);
+                }
+
+                // rollback the started transaction
+                $this->entityManager->getConnection()->rollBack();
+
+                return OrderResultConstant::ORDER_RETURNING_TO_PENDING_HAS_PROBLEM;
+
+            } catch (\Exception $e) {
+                // rollback the started transaction
+                $this->entityManager->getConnection()->rollBack();
+
+                throw $e;
+            }
+        }
+
+        return OrderResultConstant::ORDER_STATE_NOT_CORRECT_CONST;
     }
 }

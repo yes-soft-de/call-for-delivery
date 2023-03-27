@@ -446,27 +446,18 @@ class CaptainEntityRepository extends ServiceEntityRepository
                 $finalResponse[$key] = $value;
 
                 // Get delivered orders count of the captain
-                $ordersCountResult = $this->getCaptainDeliveredOrdersCountByOptionalDatesForAdmin($value['id'],
-                    $request->getFromDate(), $request->getToDate());
+                $ordersCountResult = $this->getDeliveredOrdersByCaptainProfileIdAndOptionalDates($value['id'],
+                    $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
 
-                if(count($ordersCountResult) > 0) {
-                    $finalResponse[$key]['ordersCount'] = $ordersCountResult[0];
-
-                } else {
-                    $finalResponse[$key]['ordersCount'] = (string) 0;
-                }
+                $finalResponse[$key]['ordersCount'] = count($ordersCountResult);
                 // ------------------------------------------------
 
                 // Get the count of orders which delivered today
-                $todayOrdersCountResult = $this->getCaptainDeliveredOrdersCountDuringSpecificDateForAdmin($value['id'],
-                    new \DateTime('today midnight'), new \DateTime('tomorrow midnight'));
+                $todayOrdersCountResult = $this->getDeliveredOrdersByCaptainProfileIdAndOptionalDates($value['id'],
+                    (new \DateTime('today midnight'))->format('Y-m-d'), (new \DateTime('tomorrow midnight'))->format('Y-m-d'),
+                    $request->getCustomizedTimezone());
 
-                if(count($todayOrdersCountResult) > 0) {
-                    $finalResponse[$key]['todayOrdersCount'] = $todayOrdersCountResult[0];
-
-                } else {
-                    $finalResponse[$key]['todayOrdersCount'] = (string) 0;
-                }
+                $finalResponse[$key]['todayOrdersCount'] = count($todayOrdersCountResult);
                 // ------------------------------------------------
                 //*** orders count last 24 block commented out temporary just in order to be required in the future ***//
                 // Get the count of orders which delivered last 24 hours
@@ -489,36 +480,36 @@ class CaptainEntityRepository extends ServiceEntityRepository
     }
 
     // Get the count of delivered orders by captain and via optional dates of type string
-    public function getCaptainDeliveredOrdersCountByOptionalDatesForAdmin(int $captainId, ?string $startDate, ?string $endDate): array
-    {
-        $query = $this->createQueryBuilder('captainEntity')
-            ->select('COUNT(orderEntity.id)')
-
-            ->andWhere('captainEntity.id = :captainProfileId')
-            ->setParameter('captainProfileId', $captainId)
-
-            ->leftJoin(
-                OrderEntity::class,
-                'orderEntity',
-                Join::WITH,
-                'orderEntity.captainId = captainEntity.id'
-            )
-
-            ->andWhere('orderEntity.state = :delivered')
-            ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED);
-
-        if (($startDate) && ($startDate !== "")) {
-            $query->andWhere('orderEntity.createdAt >= :fromDate')
-                ->setParameter('fromDate', $startDate);
-        }
-
-        if (($endDate) && ($endDate !== "")) {
-            $query->andWhere('orderEntity.createdAt <= :toDate')
-                ->setParameter('toDate', $endDate);
-        }
-
-        return $query->getQuery()->getSingleColumnResult();
-    }
+//    public function getCaptainDeliveredOrdersCountByOptionalDatesForAdmin(int $captainId, ?string $startDate, ?string $endDate): array
+//    {
+//        $query = $this->createQueryBuilder('captainEntity')
+//            ->select('COUNT(orderEntity.id)')
+//
+//            ->andWhere('captainEntity.id = :captainProfileId')
+//            ->setParameter('captainProfileId', $captainId)
+//
+//            ->leftJoin(
+//                OrderEntity::class,
+//                'orderEntity',
+//                Join::WITH,
+//                'orderEntity.captainId = captainEntity.id'
+//            )
+//
+//            ->andWhere('orderEntity.state = :delivered')
+//            ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED);
+//
+//        if (($startDate) && ($startDate !== "")) {
+//            $query->andWhere('orderEntity.createdAt >= :fromDate')
+//                ->setParameter('fromDate', $startDate);
+//        }
+//
+//        if (($endDate) && ($endDate !== "")) {
+//            $query->andWhere('orderEntity.createdAt <= :toDate')
+//                ->setParameter('toDate', $endDate);
+//        }
+//
+//        return $query->getQuery()->getSingleColumnResult();
+//    }
 
     // FOR DEBUG ISSUES
 //    public function getActiveCaptainsWithDeliveredOrdersCountInCurrentFinancialCycleByTester(?string $customizedTimezone): array
@@ -572,38 +563,34 @@ class CaptainEntityRepository extends ServiceEntityRepository
 //        return $tempQuery;
 //    }
 
-    public function getCaptainDeliveredOrdersCountDuringSpecificDateForTester(int $captainId, \DateTime $startDate, \DateTime $endDate, ?string $timeZone): array
+    /**
+     * Get delivered orders by captain profile id and two optional dates of type string
+     */
+    public function getDeliveredOrdersByCaptainProfileIdAndOptionalDates(int $captainProfileId, ?string $startDate, ?string $endDate, ?string $timeZone): array
     {
         $query = $this->createQueryBuilder('captainEntity')
             ->select('orderEntity.id', 'orderEntity.createdAt')
 
             ->andWhere('captainEntity.id = :captainProfileId')
-            ->setParameter('captainProfileId', $captainId)
+            ->setParameter('captainProfileId', $captainProfileId)
 
             ->leftJoin(
                 OrderEntity::class,
                 'orderEntity',
                 Join::WITH,
                 'orderEntity.captainId = captainEntity.id'
-            );
+            )
 
-        $query->andWhere('orderEntity.state = :delivered');
-        $query->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED);
+            ->andWhere('orderEntity.state = :delivered')
+            ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED);
 
-        $tempOrders = $query->getQuery()->getResult();
+        if ((($startDate) && ($startDate !== "")) || (($endDate) && ($endDate !== ""))) {
+            $tempQuery = $query->getQuery()->getResult();
 
-        if (count($tempOrders) > 0) {
-            $filteredOrders = $this->filterOrdersByDates($tempOrders, $startDate->format('Y-m-d'),
-                $endDate->format('Y-m-d'), $timeZone);
-
-            if (count($filteredOrders) > 0) {
-                return [count($filteredOrders)];
-            }
-
-            return $filteredOrders;
+            return $this->filterOrdersByDates($tempQuery, $startDate, $endDate, $timeZone);
         }
 
-        return $tempOrders;
+        return $query->getQuery()->getResult();
     }
 
     public function filterOrdersByDates(array $tempOrders, ?string $fromDate, ?string $toDate, ?string $timeZone): array
