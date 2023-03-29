@@ -5,6 +5,7 @@ namespace App\Repository;
 // use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderAmountCashConstant;
 use App\Constant\Order\OrderTypeConstant;
+use App\Constant\Subscription\SubscriptionConstant;
 use App\Entity\SubscriptionEntity;
 use App\Entity\SubscriptionDetailsEntity;
 use App\Entity\PackageEntity;
@@ -318,16 +319,27 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Get orders which overdue the graphical range of the subscription's package by subscription id and package's
+     * geographical range
+     */
     public function getOrdersExceedGeographicalRangeBySubscriptionId(int $subscriptionId, float $packageGeographicalRange): ?array
     {
         return $this->createQueryBuilder('subscription')
-         
-            ->select('orderEntity.id', 'orderEntity.storeBranchToClientDistance','orderEntity.createdAt')
+            ->select('orderEntity.id', 'orderEntity.storeBranchToClientDistance', 'orderEntity.createdAt')
     
-            ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'orderEntity.storeOwner = subscription.storeOwner')
+            ->leftJoin(
+                OrderEntity::class,
+                'orderEntity',
+                Join::WITH,
+                'orderEntity.storeOwner = subscription.storeOwner'
+            )
         
             ->where('subscription.id = :id')
             ->setParameter('id', $subscriptionId)
+
+            ->andWhere('subscription.isFuture != :isFutureTrue')
+            ->setParameter('isFutureTrue', SubscriptionConstant::IS_FUTURE_TRUE)
 
             ->andWhere('orderEntity.state = :delivered')
             ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
@@ -340,20 +352,29 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->andWhere('orderEntity.createdAt <= subscription.endDate')
            
             ->getQuery()
-
             ->getResult();
     }
 
+    /**
+     * Get the count of delivered orders which belong to a specific subscription
+     */
     public function getCountOfConsumedOrders(int $subscriptionId): ?int
     {
         return $this->createQueryBuilder('subscription')
-         
-            ->select('count (orderEntity.id) as countOrders')
+            ->select('count(orderEntity.id) as countOrders')
     
-            ->leftJoin(OrderEntity::class, 'orderEntity', Join::WITH, 'orderEntity.storeOwner = subscription.storeOwner')
+            ->leftJoin(
+                OrderEntity::class,
+                'orderEntity',
+                Join::WITH,
+                'orderEntity.storeOwner = subscription.storeOwner'
+            )
         
             ->where('subscription.id = :id')
             ->setParameter('id', $subscriptionId)
+
+            ->andWhere('subscription.isFuture != :isFutureTrue')
+            ->setParameter('isFutureTrue', SubscriptionConstant::IS_FUTURE_TRUE)
 
             ->andWhere('orderEntity.state = :delivered')
             ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
