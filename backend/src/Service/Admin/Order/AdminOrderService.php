@@ -1446,6 +1446,11 @@ class AdminOrderService
 
         if ($order) {
             if ($order['orderType'] === OrderTypeConstant::ORDER_TYPE_NORMAL) {
+                if ((! $order['destination']['lat']) || (! $order['destination']['lon'])) {
+                    // no destination of client are exist, get store branch location instead
+                    return $order['location'];
+                }
+
                 return $order['destination'];
             }
 

@@ -61,45 +61,54 @@ class AdminStoreSubscriptionService
        $subscriptions = $this->adminStoreSubscriptionManager->getSubscriptionsSpecificStoreForAdmin($storeId);
 
        foreach ($subscriptions as $subscription) {
+           if (!$subscription['remainingCars']) {
+               $subscription['remainingCars'] = 0;
+           }
 
-            if( ! $subscription['remainingCars'] ) {
-                $subscription['remainingCars'] = 0;
-            }
-            if( ! $subscription['remainingOrders'] ) {
-                $subscription['remainingOrders'] = 0;
-            }
+           if (!$subscription['remainingOrders']) {
+               $subscription['remainingOrders'] = 0;
+           }
 
-            $subscription['isCurrent'] = SubscriptionConstant::SUBSCRIBE_NOT_CURRENT_BOOLEAN;
-            
-            if($subscription['subscriptionDetailsId']) {
-                
-                $subscription['isCurrent'] = SubscriptionConstant::SUBSCRIBE_CURRENT_BOOLEAN;
-                $subscription['subscriptionRemainingCars'] = $subscription['remainingCars'];
-                $subscription['subscriptionRemainingOrders'] = $subscription['remainingOrders'];
-            }
+           $subscription['isCurrent'] = SubscriptionConstant::SUBSCRIBE_NOT_CURRENT_BOOLEAN;
 
-            $subscription['paymentsFromStore'] = $this->adminStoreOwnerPaymentService->getStorePaymentsBySubscriptionId($subscription['id']);
-          
-            $subscription['captainOffers'] = $this->adminStoreSubscriptionManager->getCaptainOffersBySubscriptionIdForAdmin($subscription['id']);
-            
-            $subscription['ordersExceedGeographicalRange'] = $this->subscriptionService->getOrdersExceedGeographicalRangeBySubscriptionIdAndGeographicalRange($subscription['id'], (float)$subscription['packageGeographicalRange']);
-          
-            $totalExtraDistance = $this->subscriptionService->getTotalExtraDistance($subscription['ordersExceedGeographicalRange'], (float)$subscription['packageGeographicalRange']);
-            //if package is on order
-            if ($subscription['packageType'] === PackageConstant::PACKAGE_TYPE_ON_ORDER) {
-                $subscription['total'] = $this->subscriptionService->getTotalWithPackageOnOrder($subscription['paymentsFromStore'], $subscription['packageCost'], $subscription['captainOffers'], (float)$subscription['packageExtraCost'], $totalExtraDistance, $subscription['id']);
-            }
-            else {
-                $subscription['total'] = $this->getTotal($subscription['paymentsFromStore'], $subscription['packageCost'], $subscription['captainOffers'],(float)$subscription['packageExtraCost'], $totalExtraDistance);
-            }
+           if ($subscription['subscriptionDetailsId']) {
+               $subscription['isCurrent'] = SubscriptionConstant::SUBSCRIBE_CURRENT_BOOLEAN;
+               $subscription['subscriptionRemainingCars'] = $subscription['remainingCars'];
+               $subscription['subscriptionRemainingOrders'] = $subscription['remainingOrders'];
+           }
 
-            if (($subscription['isCurrent'] === 0) && ($subscription['isFuture'] === false) && (! $subscription['subscriptionDetailsId'])) {
-                $response['oldSubscriptions'][] = $this->autoMapping->map("array", AdminStoreSubscriptionResponse::class, $subscription);
+           $subscription['paymentsFromStore'] = $this->adminStoreOwnerPaymentService->getStorePaymentsBySubscriptionId($subscription['id']);
 
-            } else {
-                $response['currentAndFutureSubscriptions'][] = $this->autoMapping->map("array", AdminStoreSubscriptionResponse::class, $subscription);
-            }
-        }
+           $subscription['captainOffers'] = $this->adminStoreSubscriptionManager->getCaptainOffersBySubscriptionIdForAdmin($subscription['id']);
+
+           $subscription['ordersExceedGeographicalRange'] = $this->subscriptionService->getOrdersExceedGeographicalRangeBySubscriptionIdAndGeographicalRange($subscription['id'],
+               (float)$subscription['packageGeographicalRange']);
+
+           $totalExtraDistance = $this->subscriptionService->getTotalExtraDistance($subscription['ordersExceedGeographicalRange'],
+               (float)$subscription['packageGeographicalRange']);
+
+           //if package is on order
+           if ($subscription['packageType'] === PackageConstant::PACKAGE_TYPE_ON_ORDER) {
+               $subscription['total'] = $this->subscriptionService->getTotalWithPackageOnOrder($subscription['paymentsFromStore'],
+                   $subscription['packageCost'], $subscription['captainOffers'], (float)$subscription['packageExtraCost'],
+                   $totalExtraDistance, $subscription['id']);
+
+           } else {
+               $subscription['total'] = $this->getTotal($subscription['paymentsFromStore'], $subscription['packageCost'],
+                   $subscription['captainOffers'], (float)$subscription['packageExtraCost'], $totalExtraDistance);
+           }
+
+           if (($subscription['isCurrent'] === 0)
+               && ($subscription['isFuture'] === false)
+               && (!$subscription['subscriptionDetailsId'])) {
+               $response['oldSubscriptions'][] = $this->autoMapping->map("array", AdminStoreSubscriptionResponse::class,
+                   $subscription);
+
+           } else {
+               $response['currentAndFutureSubscriptions'][] = $this->autoMapping->map("array", AdminStoreSubscriptionResponse::class,
+                   $subscription);
+           }
+       }
 
         return $response;
     }
