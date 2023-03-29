@@ -61,6 +61,16 @@ class StatusCodeHelper {
         return S.current.inactiveStore;
       case '9211':
         return S.current.orderAlreadyAccepted;
+        case '9205':
+        return S.current.orderNotFound;
+        case '9215':
+        return S.current.orderAlreadyCancelled;
+        case '9213':
+        return S.current.wrongOrderType;
+        case '9225':
+        return S.current.orderIsEitherOngoingOrDelivered;
+        case '9203':
+        return S.current.problemUpdatingOrder;
       case '-1':
         return S.current.dataDecodeError;
       default:

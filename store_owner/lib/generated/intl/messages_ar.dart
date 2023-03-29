@@ -566,6 +566,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "order": MessageLookupByLibrary.simpleMessage("الطلب "),
         "orderAlreadyAccepted": MessageLookupByLibrary.simpleMessage(
             "الطلب تم قبوله من قبل الكابتن لايمكن فك ارتباطه بعد الآن"),
+        "orderAlreadyCancelled":
+            MessageLookupByLibrary.simpleMessage("الطلب تم إلغاءه "),
         "orderAverage35": MessageLookupByLibrary.simpleMessage(
             "نود تذكيرك لسداد الدفعة الثانية من رسوم الباقة وذلك لكي نستمر بخدمتكم . حيث تم استهلاك 35% من رسوم الباقة وشكرا"),
         "orderAverage40": MessageLookupByLibrary.simpleMessage(
@@ -600,12 +602,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderImage": MessageLookupByLibrary.simpleMessage("صورة الطلب"),
         "orderIsCreated": MessageLookupByLibrary.simpleMessage("تم الانشاء"),
         "orderIsDone": MessageLookupByLibrary.simpleMessage("انتهى الطلب!"),
+        "orderIsEitherOngoingOrDelivered": MessageLookupByLibrary.simpleMessage(
+            "الطلب إما تم توصيله أو جاري توصيله"),
         "orderIsFinished": MessageLookupByLibrary.simpleMessage(
             "طلباتك المخصصة لهذا الشهر انتهت"),
         "orderIsInUndefinedState":
             MessageLookupByLibrary.simpleMessage("الطلب في مرحلة غير معروفة"),
         "orderList": MessageLookupByLibrary.simpleMessage("قائمة الطلبات"),
         "orderLog": MessageLookupByLibrary.simpleMessage("سجل الطلبات"),
+        "orderNotFound":
+            MessageLookupByLibrary.simpleMessage("لم يتم العثور على الطلب"),
         "orderNumber": MessageLookupByLibrary.simpleMessage("رقم الطلب"),
         "orderNumberNotFound":
             MessageLookupByLibrary.simpleMessage("الطلب غير موجود"),
@@ -743,6 +749,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "privacy": MessageLookupByLibrary.simpleMessage("الخصوصية"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("سياسة الخصوصية"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("طلب خاص"),
+        "problemUpdatingOrder":
+            MessageLookupByLibrary.simpleMessage("خطأ اثناد عملية تحديث الطلب"),
         "product": MessageLookupByLibrary.simpleMessage("منتج"),
         "productDetails": MessageLookupByLibrary.simpleMessage("تفاصيل منتج"),
         "productName": MessageLookupByLibrary.simpleMessage("اسم المنتج"),
@@ -1037,6 +1045,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "workTime": MessageLookupByLibrary.simpleMessage("ساعات الدوام"),
         "writePasswordAgain":
             MessageLookupByLibrary.simpleMessage("ادخل كلمة المرور مجددا"),
+        "wrongOrderType":
+            MessageLookupByLibrary.simpleMessage("خطأ في نوع الطلب"),
         "yes": MessageLookupByLibrary.simpleMessage("نعم"),
         "youCanResendAfter":
             MessageLookupByLibrary.simpleMessage("يمكنك طلب رمز جديد بعد مرور"),

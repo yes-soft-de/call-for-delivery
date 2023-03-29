@@ -575,6 +575,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "order": MessageLookupByLibrary.simpleMessage("Order"),
         "orderAlreadyAccepted": MessageLookupByLibrary.simpleMessage(
             "Order already accepted by captain"),
+        "orderAlreadyCancelled": MessageLookupByLibrary.simpleMessage(
+            "Order already has been canceled"),
         "orderAverage35":
             MessageLookupByLibrary.simpleMessage("You have consumed 35%"),
         "orderAverage40":
@@ -610,12 +612,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderIsCreated":
             MessageLookupByLibrary.simpleMessage("Order is created"),
         "orderIsDone": MessageLookupByLibrary.simpleMessage("Order is done!"),
+        "orderIsEitherOngoingOrDelivered": MessageLookupByLibrary.simpleMessage(
+            "order is either ongoing or delivered"),
         "orderIsFinished": MessageLookupByLibrary.simpleMessage(
             "Your monthly orders finished"),
         "orderIsInUndefinedState":
             MessageLookupByLibrary.simpleMessage("Order is in undefined State"),
         "orderList": MessageLookupByLibrary.simpleMessage("Order List"),
         "orderLog": MessageLookupByLibrary.simpleMessage("Orders Log"),
+        "orderNotFound":
+            MessageLookupByLibrary.simpleMessage("Order not found"),
         "orderNumber": MessageLookupByLibrary.simpleMessage("Order Number"),
         "orderNumberNotFound":
             MessageLookupByLibrary.simpleMessage("Order number not found!!"),
@@ -751,6 +757,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "privacy": MessageLookupByLibrary.simpleMessage("privacy policy"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("Private Order"),
+        "problemUpdatingOrder": MessageLookupByLibrary.simpleMessage(
+            "Problem in updating the order"),
         "product": MessageLookupByLibrary.simpleMessage("product"),
         "productDetails":
             MessageLookupByLibrary.simpleMessage("Products Details"),
@@ -1045,6 +1053,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "workTime": MessageLookupByLibrary.simpleMessage("Work time"),
         "writePasswordAgain":
             MessageLookupByLibrary.simpleMessage("Write Password Again"),
+        "wrongOrderType":
+            MessageLookupByLibrary.simpleMessage("Wrong order type"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
         "youCanResendAfter": MessageLookupByLibrary.simpleMessage(
             "You can resend verification after"),

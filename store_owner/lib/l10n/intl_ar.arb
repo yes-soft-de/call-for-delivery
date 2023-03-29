@@ -690,6 +690,12 @@
     "pressHereDetails" : "اضغط للتفاصيل",
     "orderCostAndDelivery":"سعر الطلب والتوصيل",
     "costType":"نوع التكلفة",
-    "deliveryOnly":"سعر التوصيل فقط"
+    "deliveryOnly":"سعر التوصيل فقط",
+    "problemUpdatingOrder":"خطأ اثناد عملية تحديث الطلب",
+    "orderIsEitherOngoingOrDelivered":"الطلب إما تم توصيله أو جاري توصيله",
+    "wrongOrderType":"خطأ في نوع الطلب",
+    "orderAlreadyCancelled":"الطلب تم إلغاءه ",
+    "orderNotFound":"لم يتم العثور على الطلب",
+    "ads&offers":"الإعلانات و العروض"
 
 }

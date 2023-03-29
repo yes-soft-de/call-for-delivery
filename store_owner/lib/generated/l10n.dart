@@ -6959,6 +6959,58 @@ class S {
       args: [],
     );
   }
+
+  /// `Problem in updating the order`
+  String get problemUpdatingOrder {
+    return Intl.message(
+      'Problem in updating the order',
+      name: 'problemUpdatingOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order is either ongoing or delivered`
+  String get orderIsEitherOngoingOrDelivered {
+    return Intl.message(
+      'order is either ongoing or delivered',
+      name: 'orderIsEitherOngoingOrDelivered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wrong order type`
+  String get wrongOrderType {
+    return Intl.message(
+      'Wrong order type',
+      name: 'wrongOrderType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order already has been canceled`
+  String get orderAlreadyCancelled {
+    return Intl.message(
+      'Order already has been canceled',
+      name: 'orderAlreadyCancelled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order not found`
+  String get orderNotFound {
+    return Intl.message(
+      'Order not found',
+      name: 'orderNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  // skipped getter for the 'ads&offers' key
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
