@@ -687,5 +687,9 @@
     "onGoingOrderChatRooms":"محادثات الطلبات الجارية",
     "quickFillUp":"الملئ السريع",
     "unpaidOrders":"إجمالي الغير مدفوع (الطلبات الكاش)",
-    "pressHereDetails" : "اضغط للتفاصيل"
+    "pressHereDetails" : "اضغط للتفاصيل",
+    "orderCostAndDelivery":"سعر الطلب والتوصيل",
+    "costType":"نوع التكلفة",
+    "deliveryOnly":"سعر التوصيل فقط"
+
 }

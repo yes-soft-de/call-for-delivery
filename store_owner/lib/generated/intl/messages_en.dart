@@ -8,6 +8,7 @@
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
 // ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -265,6 +266,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "copyFinished":
             MessageLookupByLibrary.simpleMessage("Link Copied Successfully"),
         "cost": MessageLookupByLibrary.simpleMessage("cost"),
+        "costType": MessageLookupByLibrary.simpleMessage("Cost type"),
         "countOrdersDelivered":
             MessageLookupByLibrary.simpleMessage("Count Orders Delivered"),
         "countryCode": MessageLookupByLibrary.simpleMessage("Code"),
@@ -307,6 +309,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliveryCost": MessageLookupByLibrary.simpleMessage("Delivery cost"),
         "deliveryCostDetails":
             MessageLookupByLibrary.simpleMessage("Delivery cost details"),
+        "deliveryOnly": MessageLookupByLibrary.simpleMessage("Delivery only"),
         "description": MessageLookupByLibrary.simpleMessage("description"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("Destination Address"),
@@ -581,6 +584,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderAverage80":
             MessageLookupByLibrary.simpleMessage("You have consumed 80%"),
         "orderCategory": MessageLookupByLibrary.simpleMessage("Order category"),
+        "orderCostAndDelivery":
+            MessageLookupByLibrary.simpleMessage("order & delivery cost"),
         "orderCostHandedByCaptain":
             MessageLookupByLibrary.simpleMessage("Cost received from captain"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(

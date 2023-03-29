@@ -687,5 +687,8 @@
     "prayerMessage": "This order may take some extra time to be delivered due prayer period",
     "quickFillUp": "Quick fillUp",
     "unpaidOrders":"Total unpaid (cash orders)",
-    "pressHereDetails" : "press for details"
+    "pressHereDetails" : "press for details",
+    "orderCostAndDelivery":"order & delivery cost",
+    "deliveryOnly":"Delivery only",
+    "costType":"Cost type"
 }

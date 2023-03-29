@@ -4,6 +4,7 @@ import 'dart:typed_data';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/consts/app_config.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
@@ -723,6 +724,67 @@ class UpdateOrderLoaded extends States {
                     ],
                   ),
                 ),
+
+                /// cost type
+                Visibility(
+                  visible: AppConfig.packageType == 1 || screenState.payments == 'cash',
+                  child: ListTile(
+                    title: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        S.of(context).costType,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    subtitle: Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Theme.of(context).colorScheme.background,
+                            ),
+                            child: RadioListTile(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              title: Text(S.of(context).orderCostAndDelivery),
+                              value: 187,
+                              groupValue: screenState.costType,
+                              onChanged: (int? value) {
+                                screenState.costType = value;
+                                screenState.refresh();
+                              },
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 16,
+                        ),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Theme.of(context).colorScheme.background,
+                            ),
+                            child: RadioListTile(
+                              title: Text(S.of(context).deliveryOnly),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              value: 186,
+                              groupValue: screenState.costType,
+                              onChanged: (int? value) {
+                                screenState.costType = value;
+                                screenState.refresh();
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
                 SizedBox(
                   height: 75,
                 ),
@@ -887,6 +949,7 @@ class UpdateOrderLoaded extends States {
         date: orderDate.toUtc().toIso8601String(),
         payment: screenState.payments,
         deliveryCost: deliveryCost,
+        costType: screenState.costType,
       ));
     });
   }
@@ -913,6 +976,7 @@ class UpdateOrderLoaded extends States {
       date: orderDate.toUtc().toIso8601String(),
       payment: screenState.payments,
       deliveryCost: deliveryCost,
+      costType: null,
     ));
   }
 

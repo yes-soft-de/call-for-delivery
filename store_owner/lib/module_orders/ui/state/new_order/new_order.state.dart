@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/consts/app_config.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:c4d/module_branches/model/branches/branches_model.dart';
@@ -627,6 +628,7 @@ class NewOrderStateBranchesLoaded extends States {
                         ),
                       ),
                     )),
+
                 ListTile(
                   title: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -682,6 +684,67 @@ class NewOrderStateBranchesLoaded extends States {
                     ],
                   ),
                 ),
+
+                /// cost type
+                Visibility(
+                  visible: AppConfig.packageType == 1 && screenState.payments == 'cash',
+                  child: ListTile(
+                    title: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        S.of(context).costType,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    subtitle: Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Theme.of(context).colorScheme.background,
+                            ),
+                            child: RadioListTile(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              title: Text(S.of(context).orderCostAndDelivery),
+                              value: 187,
+                              groupValue: screenState.costType,
+                              onChanged: (int? value) {
+                                screenState.costType = value;      
+                                screenState.refresh();
+                              },
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 16,
+                        ),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Theme.of(context).colorScheme.background,
+                            ),
+                            child: RadioListTile(
+                              title: Text(S.of(context).deliveryOnly),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              value: 186,
+                              groupValue: screenState.costType,
+                              onChanged: (int? value) {
+                                screenState.costType = value;
+                                screenState.refresh();
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
                 SizedBox(
                   height: 75,
                 ),
@@ -755,7 +818,8 @@ class NewOrderStateBranchesLoaded extends States {
               ? DateTime.now().toUtc().toIso8601String()
               : orderDate?.toUtc().toIso8601String(),
           payment: screenState.payments,
-          deliveryCost: deliveryCost));
+          deliveryCost: deliveryCost,
+          costType: screenState.costType));
     });
   }
 
@@ -782,7 +846,8 @@ class NewOrderStateBranchesLoaded extends States {
             ? DateTime.now().toUtc().toIso8601String()
             : orderDate?.toUtc().toIso8601String(),
         payment: screenState.payments,
-        deliveryCost: deliveryCost));
+        deliveryCost: deliveryCost,
+        costType: screenState.costType));
   }
 
   void createOrder() {

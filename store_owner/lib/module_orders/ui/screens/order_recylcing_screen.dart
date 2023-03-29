@@ -42,6 +42,7 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
   String? payments;
   int? branch;
   LatLng? customerLocation;
+  int? costType;
   //
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -145,8 +146,8 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
                       return CustomAlertDialog(
                           onPressed: () {
                             Navigator.of(context).pop();
-                            CreateOrderRequest request =
-                                CreateOrderRequest(order: orderId, cancel: 1, deliveryCost: null);
+                            CreateOrderRequest request = CreateOrderRequest(
+                                order: orderId, cancel: 1, deliveryCost: null, costType: null);
                             if (currentState is OrderRecyclingLoaded) {
                               var orderInfo =
                                   (currentState as OrderRecyclingLoaded)
@@ -154,7 +155,8 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
                               request = CreateOrderRequest(
                                   order: orderId,
                                   fromBranch: orderInfo.branchID,
-                                  cancel: 1, deliveryCost: null);
+                                  cancel: 1,
+                                  deliveryCost: null, costType: null);
                             }
                             manager.recycle(this, request);
                           },
