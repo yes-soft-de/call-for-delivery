@@ -31,94 +31,97 @@ class SubscriptionBalanceLoadedState extends States {
     return Scaffold(
       appBar: CustomC4dAppBar
           .appBar(context, title: S.current.mySubscription, actions: [
-        CustomC4dAppBar.actionIcon(context, onTap: () {
-          showModalBottomSheet(
-              backgroundColor: Colors.transparent,
-              context: context,
-              builder: (context) {
-                return Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    // buttons
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25),
-                            color: Theme.of(context).scaffoldBackgroundColor),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              // extend subscription
-                              CustomTextButton(
-                                label: S.current.packageExtend,
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  screenState.extendSubscriptions();
-                                },
-                              ),
-                              Divider(
-                                indent: 16,
-                                endIndent: 16,
-                                color: Theme.of(context).backgroundColor,
-                                thickness: 2.5,
-                              ),
-                              // renew new subscription
-                              CustomTextButton(
-                                label: S.current.renewNewPlan,
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  Navigator.of(context).pushNamed(
-                                      SubscriptionsRoutes
-                                          .INIT_SUBSCRIPTIONS_SCREEN,
-                                      arguments: S.current.renewSubscription);
-                                },
-                              ),
-                              Divider(
-                                indent: 16,
-                                endIndent: 16,
-                                color: Theme.of(context).backgroundColor,
-                                thickness: 2.5,
-                              ),
-                              // renew current subscription
-                              CustomTextButton(
-                                label: S.current.renewOldPlan,
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  screenState
-                                      .renewSubscription(balance.packageID);
-                                },
-                              ),
-                            ],
+        Visibility(
+          visible: balanceStatusEnum == BalanceStatus.EXPIRED,
+          child: CustomC4dAppBar.actionIcon(context, onTap: () {
+            showModalBottomSheet(
+                backgroundColor: Colors.transparent,
+                context: context,
+                builder: (context) {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      // buttons
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(25),
+                              color: Theme.of(context).scaffoldBackgroundColor),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                // extend subscription
+                                CustomTextButton(
+                                  label: S.current.packageExtend,
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    screenState.extendSubscriptions();
+                                  },
+                                ),
+                                Divider(
+                                  indent: 16,
+                                  endIndent: 16,
+                                  color: Theme.of(context).backgroundColor,
+                                  thickness: 2.5,
+                                ),
+                                // renew new subscription
+                                CustomTextButton(
+                                  label: S.current.renewNewPlan,
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    Navigator.of(context).pushNamed(
+                                        SubscriptionsRoutes
+                                            .INIT_SUBSCRIPTIONS_SCREEN,
+                                        arguments: S.current.renewSubscription);
+                                  },
+                                ),
+                                Divider(
+                                  indent: 16,
+                                  endIndent: 16,
+                                  color: Theme.of(context).backgroundColor,
+                                  thickness: 2.5,
+                                ),
+                                // renew current subscription
+                                CustomTextButton(
+                                  label: S.current.renewOldPlan,
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    screenState
+                                        .renewSubscription(balance.packageID);
+                                  },
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                    // close button
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        width: double.maxFinite,
-                        child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                shape: StadiumBorder()),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Padding(
-                              padding: const EdgeInsets.all(10.0),
-                              child: Text(
-                                S.current.close,
-                                style: Theme.of(context).textTheme.button,
-                              ),
-                            )),
-                      ),
-                    )
-                  ],
-                );
-              });
-        }, icon: Icons.restart_alt_rounded)
+                      // close button
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: SizedBox(
+                          width: double.maxFinite,
+                          child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  shape: StadiumBorder()),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(10.0),
+                                child: Text(
+                                  S.current.close,
+                                  style: Theme.of(context).textTheme.button,
+                                ),
+                              )),
+                        ),
+                      )
+                    ],
+                  );
+                });
+          }, icon: Icons.restart_alt_rounded),
+        )
       ]),
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
