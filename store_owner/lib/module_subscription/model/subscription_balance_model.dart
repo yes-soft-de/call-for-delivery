@@ -16,6 +16,8 @@ class SubscriptionBalanceModel extends DataModel {
   late String? status;
   late int expired;
   late var unPaidCashOrdersSum;
+  late num packageExtraCost;
+  late num geographicalRange;
   SubscriptionBalanceModel(
       {required this.packageID,
       required this.id,
@@ -28,7 +30,10 @@ class SubscriptionBalanceModel extends DataModel {
       required this.packageName,
       this.status,
       required this.expired,
-      this.unPaidCashOrdersSum});
+      this.unPaidCashOrdersSum,
+      required this.geographicalRange,
+      required this.packageExtraCost,
+      });
   late SubscriptionBalanceModel _balance;
   SubscriptionBalanceModel.withData(SubscriptionBalanceResponse response) {
     var data = response.data;
@@ -44,7 +49,9 @@ class SubscriptionBalanceModel extends DataModel {
         status: data?.status ?? 'inactive',
         startDate: DateHelper.convert(data?.startDate?.timestamp),
         expired: data?.expired ?? 0,
-        unPaidCashOrdersSum: data?.unPaidCashOrdersSum ?? 0);
+        unPaidCashOrdersSum: data?.unPaidCashOrdersSum ?? 0,
+        geographicalRange: data?.geographicalRange ?? 0,
+        packageExtraCost: data?.packageExtraCost ?? 0);
   }
   SubscriptionBalanceModel get data => _balance;
 }
