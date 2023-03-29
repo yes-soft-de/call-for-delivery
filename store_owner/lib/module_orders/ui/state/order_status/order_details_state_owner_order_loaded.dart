@@ -40,7 +40,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
       screenState.alertFlag = false;
       showOwnerAlertConfirm();
     } else {}
-    if (orderInfo.state == OrderStatusEnum.WAITING) {
+    if (StatusHelper.getOrderStatusIndexForStore(orderInfo.state) <= StatusHelper.getOrderStatusIndexForStore(OrderStatusEnum.IN_STORE)) {
       screenState.canRemoveIt = orderInfo.canRemove;
     }
     screenState.refresh();
