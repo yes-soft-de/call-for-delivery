@@ -2390,12 +2390,21 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('orderEntity')
             ->select('orderEntity.id ', 'orderEntity.orderType')
             ->addSelect('storeOrderDetails.destination')
+            ->addSelect('storeOwnerBranchEntity.location')
 
             ->leftJoin(
                 StoreOrderDetailsEntity::class,
                 'storeOrderDetails',
                 Join::WITH,
-                'orderEntity.id = storeOrderDetails.orderId')
+                'orderEntity.id = storeOrderDetails.orderId'
+            )
+
+            ->leftJoin(
+                StoreOwnerBranchEntity::class,
+                'storeOwnerBranchEntity',
+                Join::WITH,
+                'storeOwnerBranchEntity.id = storeOrderDetails.branch'
+            )
 
             ->andWhere('orderEntity.id = :id')
             ->setParameter('id', $orderId)
