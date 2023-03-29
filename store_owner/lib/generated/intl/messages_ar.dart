@@ -65,6 +65,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تمت إضافة الفرع بنجاح"),
         "addProducts": MessageLookupByLibrary.simpleMessage("إضافة منتجات"),
         "address": MessageLookupByLibrary.simpleMessage("الموقع"),
+        "adsAndOffers":
+            MessageLookupByLibrary.simpleMessage("الإعلانات و العروض"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "all": MessageLookupByLibrary.simpleMessage("الكل"),
         "allCity": MessageLookupByLibrary.simpleMessage("جميع المدن"),

@@ -696,6 +696,6 @@
     "wrongOrderType":"خطأ في نوع الطلب",
     "orderAlreadyCancelled":"الطلب تم إلغاءه ",
     "orderNotFound":"لم يتم العثور على الطلب",
-    "ads&offers":"الإعلانات و العروض"
+    "adsAndOffers":"الإعلانات و العروض"
 
 }

@@ -244,7 +244,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 Navigator.of(context)
                     .pushNamed(MyNotificationsRoutes.UPDATES_SCREEN);
               },
-              title: S.current.notices),
+              title: S.current.adsAndOffers),
           Visibility(
             visible: widget.company != null,
             child: CustomNavTile(

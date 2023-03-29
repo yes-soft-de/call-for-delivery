@@ -7010,7 +7010,15 @@ class S {
     );
   }
 
-  // skipped getter for the 'ads&offers' key
+  /// `Ads & offers`
+  String get adsAndOffers {
+    return Intl.message(
+      'Ads & offers',
+      name: 'adsAndOffers',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

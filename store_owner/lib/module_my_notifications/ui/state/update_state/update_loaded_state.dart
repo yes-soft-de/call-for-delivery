@@ -53,7 +53,7 @@ class UpdatesLoadedState extends States {
         ),
       ),
       appBar: CustomC4dAppBar.appBar(context,
-          title: S.current.notices,
+          title: S.current.adsAndOffers,
           canGoBack: true,
           onTap: screenState.markerMode ? () {} : null,
           widget: screenState.markerMode
