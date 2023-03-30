@@ -9219,6 +9219,16 @@ class S {
       args: [],
     );
   }
+
+  /// `today delivered`
+  String get countTodayOrderDelivered {
+    return Intl.message(
+      'today delivered',
+      name: 'countTodayOrderDelivered',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

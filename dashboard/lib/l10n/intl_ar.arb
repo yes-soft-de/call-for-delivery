@@ -915,5 +915,6 @@
     "remainingtoPay":"المتبقي للدفع",
     "showPayments":"عرض المدفوعات",
     "addaPayment":"إضافة دفعة",
-    "duesByFilter":"المستحقات وفق الفلترة"
+    "duesByFilter":"المستحقات وفق الفلترة",
+    "countTodayOrderDelivered":"المسلمة اليوم"
 }

@@ -392,6 +392,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "countProducts": MessageLookupByLibrary.simpleMessage("Products Count"),
         "countStores": MessageLookupByLibrary.simpleMessage("Stores Count"),
         "countTodayOrder": MessageLookupByLibrary.simpleMessage("Today Order"),
+        "countTodayOrderDelivered":
+            MessageLookupByLibrary.simpleMessage("today delivered"),
         "countryCode": MessageLookupByLibrary.simpleMessage("Code"),
         "createDate": MessageLookupByLibrary.simpleMessage("Create Date"),
         "createNewOrder":

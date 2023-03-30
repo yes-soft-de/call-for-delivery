@@ -916,6 +916,8 @@
     "remainingtoPay":"Remaining to pay",
     "showPayments":"show payments",
     "addaPayment":"add a payment",
-    "duesByFilter":"Dues by filter"
+    "duesByFilter":"Dues by filter",
+    "countTodayOrderDelivered":"today delivered"
+
 
 }

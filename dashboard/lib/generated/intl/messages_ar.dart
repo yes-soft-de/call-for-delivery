@@ -388,6 +388,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "countStores": MessageLookupByLibrary.simpleMessage("عدد المتاجر"),
         "countTodayOrder":
             MessageLookupByLibrary.simpleMessage("الطلبات اليوم"),
+        "countTodayOrderDelivered":
+            MessageLookupByLibrary.simpleMessage("المسلمة اليوم"),
         "countryCode": MessageLookupByLibrary.simpleMessage("النداء"),
         "createDate": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
         "createNewOrder":
