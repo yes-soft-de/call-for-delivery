@@ -137,5 +137,9 @@ final class NotificationConstant
     const NEW_NOTIFICATION_BY_ADMIN = "تحديث جديد من قبل الإدارة";
 
     const NEW_NOTIFICATION_TEXT_BY_ADMIN = "تم إرسال تحديث جديد من قبل الإدارة";
+
+    const HIDE_ORDER_DUE_TO_UNAVAILABLE_CARS_TITLE_CONST = "إخفاء الطلب لعدم توفر سيارات";
+
+    const HIDE_ORDER_DUE_TO_UNAVAILABLE_CARS_TEXT_CONST = "تم إخفاء الطلب الطلب بسبب استنفاذ سيارات اشتراك المتجر";
 }
 

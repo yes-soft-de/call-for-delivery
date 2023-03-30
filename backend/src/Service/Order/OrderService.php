@@ -247,6 +247,9 @@ class OrderService
 
         $this->hideOrderExceededDeliveryTimeByHour($userId, OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST);
 
+        // Hide pending orders if the remaining cars of the store current subscription are finished
+        $this->hidePendingOrderIfStoreSubscriptionRemainingCarsAreFinished($userId, OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST);
+
         $orders = $this->orderManager->getStoreOrders($userId);
 
         foreach ($orders as $order) {
@@ -353,6 +356,9 @@ class OrderService
 
         $this->showSubOrderIfCarIsAvailable($userId, OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST);
         $this->hideOrderExceededDeliveryTimeByHour($userId, OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST);
+
+        // Hide pending orders if the remaining cars of the store current subscription are finished
+        $this->hidePendingOrderIfStoreSubscriptionRemainingCarsAreFinished($userId, OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST);
 
         $response = [];
         //get closest orders half an hour in advance
@@ -969,10 +975,8 @@ class OrderService
             return OrderResultConstant::ORDER_IS_EITHER_ONGOING_OR_DELIVERED_CONST;
 
         }
-        //else {
-            // Order is already being cancelled
-            return OrderResultConstant::ORDER_ALREADY_BEING_CANCELLED;
-        //}
+
+        return OrderResultConstant::ORDER_ALREADY_BEING_CANCELLED;
     }
 
     public function getCountOrdersByCaptainId(int $captainId): array
@@ -989,12 +993,6 @@ class OrderService
     {
         return $this->orderManager->getCountOrdersByCaptainIdOnSpecificDate($captainId, $fromDate, $toDate);
     }
-
-    // Following function had been commented out because it isn't being used anywhere
-//    public function getCountOrdersByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): array
-//    {
-//        return $this->orderManager->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
-//    }
 
     // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
     public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array|string
@@ -1183,7 +1181,9 @@ class OrderService
         return null;
     }
 
-    //Hide the order that exceeded the delivery time by an hour
+    /**
+     * Hide the order that exceeded the delivery time by an hour
+     */
     public function hideOrderExceededDeliveryTimeByHour(int $userId, int $userType)
     {
         //Get pending orders which aren't hidden nor sub orders
@@ -1572,6 +1572,9 @@ class OrderService
         $this->showSubOrderIfCarIsAvailable($userId, OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST);
 
         $this->hideOrderExceededDeliveryTimeByHour($userId, OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST);
+
+        // Hide pending orders if the remaining cars of the store current subscription are finished
+        $this->hidePendingOrderIfStoreSubscriptionRemainingCarsAreFinished($userId, OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST);
 
         $orders = $this->orderManager->getordersHiddenDueToExceedingDeliveryTime($userId);
 
@@ -2175,5 +2178,103 @@ class OrderService
         }
 
         return OrderResultConstant::ORDER_STATE_NOT_CORRECT_CONST;
+    }
+
+    /**
+     * Creates order log message by order entity, a specific user, user type, action, and other optional parameters
+     */
+    public function createOrderLogMessageByOrderEntityAndUser(OrderEntity $orderEntity, int $createdByUser, int $userType, int $action, array $details, int $storeOwnerBranchId = null, int $supplierProfileId = null)
+    {
+        $this->orderLogService->createOrderLogMessage($orderEntity, $createdByUser, $userType, $action, $details,
+            $storeOwnerBranchId, $supplierProfileId);
+    }
+
+    /**
+     * Updates isHide field of the passed order
+     */
+    public function updateOrderIsHideByOrderEntity(OrderEntity $orderEntity, int $isHide): OrderEntity|string
+    {
+        $orderUpdateResult = $this->orderManager->updateIsHide($orderEntity, $isHide);
+
+        if (! $orderUpdateResult) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+        }
+
+        return $orderUpdateResult;
+    }
+
+    /**
+     * Check ongoing orders count and package's car count and updates remaining cars field according to them and
+     * according to captain offer subscription (if it is available) (and activates it)
+     */
+    public function checkRemainingCarsByOrderId(int $orderId): string
+    {
+        return $this->subscriptionService->checkRemainingCarsByOrderId($orderId);
+    }
+
+    /**
+     * Get visible pending orders which aren't sub orders
+     */
+    public function findVisiblePendingOrders(): array
+    {
+        return $this->orderManager->findVisiblePendingOrders();
+    }
+
+    /**
+     * Hides pending orders if the remaining cars of each store subscription are finished
+     */
+    public function hidePendingOrderIfStoreSubscriptionRemainingCarsAreFinished(int $userId, int $userType): array
+    {
+        //Get pending orders which aren't hidden nor sub orders
+        $pendingOrders = $this->findVisiblePendingOrders();
+
+        if (count($pendingOrders) > 0) {
+            foreach ($pendingOrders as $pendingOrder) {
+                // Check if remaining cars of the subscription of the store of the order are finished or not
+                $checkStoreSubscriptionResult = $this->checkRemainingCarsByOrderId($pendingOrder->getId());
+
+                if ($checkStoreSubscriptionResult === SubscriptionConstant::CARS_FINISHED) {
+                    // start transaction commit ...
+                    $this->entityManager->getConnection()->beginTransaction();
+
+                    try {
+                        // While remaining cars are finished, do the following
+                        // 1. update isHide field of the order
+                        $orderUpdateResult = $this->updateOrderIsHideByOrderEntity($pendingOrder, OrderIsHideConstant::ORDER_HIDE_TEMPORARILY);
+
+                        if ($orderUpdateResult !== OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+                            // 2. create order log
+                            // 4.1 create order log record
+                            $this->createOrderLogMessageByOrderEntityAndUser($pendingOrder, $userId, $userType,
+                                OrderLogActionTypeConstant::HIDE_ORDER_DUE_TO_UNAVAILABLE_CARS, [], null, null);
+
+                            // 4.2 create order timeline record
+                            $this->createOrderLogViaOrderEntity($pendingOrder);
+
+                            // 3. create notification to the store
+                            // Local notifications
+                            $this->createLocalNotificationForStore($pendingOrder->getStoreOwner()->getStoreOwnerId(),
+                                NotificationConstant::HIDE_ORDER_DUE_TO_UNAVAILABLE_CARS_TITLE_CONST, NotificationConstant::HIDE_ORDER_DUE_TO_UNAVAILABLE_CARS_TEXT_CONST,
+                                $pendingOrder->getId());
+
+                            // ... commit the transaction
+                            $this->entityManager->getConnection()->commit();
+
+                            // Firebase notifications
+                            $this->sendFirebaseNotificationAboutOrderStateForUser($pendingOrder->getStoreOwner()->getStoreOwnerId(),
+                                $pendingOrder->getId(), $pendingOrder->getState(), NotificationConstant::STORE);
+                        }
+
+                    } catch (\Exception $e) {
+                        // rollback the started transaction
+                        $this->entityManager->getConnection()->rollBack();
+
+                        throw $e;
+                    }
+                }
+            }
+        }
+
+        return $pendingOrders;
     }
 }

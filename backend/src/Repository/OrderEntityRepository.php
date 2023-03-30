@@ -346,32 +346,33 @@ class OrderEntityRepository extends ServiceEntityRepository
 //            ->getQuery()
 //            ->getResult();
 //    }
-    
-    public function acceptedOrderByCaptainId($captainId, int $userId): ?array
-    {
-        return $this->createQueryBuilder('orderEntity')
-            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
-            'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state', 'orderEntity.orderIsMain')
-            ->addSelect('rateEntity.rating')
-            ->addSelect('bidDetailsEntity as bidDetails')
-           
-            ->leftJoin(RateEntity::class, 'rateEntity', Join::WITH, 'rateEntity.orderId = orderEntity.id and rateEntity.rated = :userId')
 
-            ->leftJoin(BidDetailsEntity::class, 'bidDetailsEntity', Join::WITH, 'bidDetailsEntity.orderId = orderEntity.id')
-
-            ->andWhere('orderEntity.state != :delivered')
-            ->andWhere('orderEntity.captainId = :captainId')
-
-            ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
-            ->setParameter('captainId', $captainId)
-            ->setParameter('userId', $userId)
-           
-            ->andWhere('orderEntity.isHide = :isHide')
-            ->setParameter('isHide', OrderIsHideConstant::ORDER_SHOW)
-           
-            ->getQuery()
-            ->getResult();
-    }
+        // Following function had been commented out because it isn't being used anywhere
+//    public function acceptedOrderByCaptainId($captainId, int $userId): ?array
+//    {
+//        return $this->createQueryBuilder('orderEntity')
+//            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
+//            'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state', 'orderEntity.orderIsMain')
+//            ->addSelect('rateEntity.rating')
+//            ->addSelect('bidDetailsEntity as bidDetails')
+//
+//            ->leftJoin(RateEntity::class, 'rateEntity', Join::WITH, 'rateEntity.orderId = orderEntity.id and rateEntity.rated = :userId')
+//
+//            ->leftJoin(BidDetailsEntity::class, 'bidDetailsEntity', Join::WITH, 'bidDetailsEntity.orderId = orderEntity.id')
+//
+//            ->andWhere('orderEntity.state != :delivered')
+//            ->andWhere('orderEntity.captainId = :captainId')
+//
+//            ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
+//            ->setParameter('captainId', $captainId)
+//            ->setParameter('userId', $userId)
+//
+//            ->andWhere('orderEntity.isHide = :isHide')
+//            ->setParameter('isHide', OrderIsHideConstant::ORDER_SHOW)
+//
+//            ->getQuery()
+//            ->getResult();
+//    }
 
     public function getSpecificOrderForCaptain(int $id, int $captainId, int $userId): ?array
      {   
@@ -527,22 +528,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             $tempQuery = $query->getQuery()->getResult();
 
             return $this->filterOrdersByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
-
-            //$query->andWhere('orderEntity.createdAt >= :createdAt');
-            //$query->setParameter('createdAt', new DateTime($request->getFromDate()));
-
         }
-//        elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-//            $query->andWhere('orderEntity.createdAt <= :createdAt');
-//            $query->setParameter('createdAt', new DateTime($request->getToDate()));
-//
-//        } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-//            $query->andWhere('orderEntity.createdAt >= :fromDate');
-//            $query->setParameter('fromDate', new DateTime($request->getFromDate()));
-//
-//            $query->andWhere('orderEntity.createdAt <= :toDate');
-//            $query->setParameter('toDate', new DateTime($request->getToDate()));
-//        }
 
         return $query->getQuery()->getResult();
     }
@@ -1194,21 +1180,6 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getOneOrNullResult();
     }
-
-    // Following function had been commented out because it isn't being used anywhere
-//    public function getOrdersPendingBeforeSpecificDate(DateTime $specificTime): ?array
-//    {
-//        return $this->createQueryBuilder('orderEntity')
-//
-//            ->andWhere('orderEntity.deliveryDate < :specificTime')
-//            ->setParameter('specificTime', $specificTime)
-//
-//            ->andWhere('orderEntity.state = :state')
-//            ->setParameter('state', OrderStateConstant::ORDER_STATE_PENDING)
-//
-//            ->getQuery()
-//            ->getResult();
-//    }
 
     /**
      * Get pending orders which aren't hidden nor sub orders
