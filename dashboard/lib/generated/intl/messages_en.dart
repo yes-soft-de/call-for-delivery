@@ -1166,6 +1166,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Sorted by latest"),
         "specification": MessageLookupByLibrary.simpleMessage("Specification"),
         "startWriting": MessageLookupByLibrary.simpleMessage("Start Writing"),
+        "statistics": MessageLookupByLibrary.simpleMessage("statistics"),
         "status": MessageLookupByLibrary.simpleMessage("Online Status"),
         "statusCodeBadRequest": MessageLookupByLibrary.simpleMessage(
             "The server could not understand the request due to invalid syntax"),

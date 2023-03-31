@@ -1157,6 +1157,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("من الأقدم للأحدث"),
         "specification": MessageLookupByLibrary.simpleMessage("المواصفات"),
         "startWriting": MessageLookupByLibrary.simpleMessage("ابدأ الكتابة"),
+        "statistics": MessageLookupByLibrary.simpleMessage("إحصائيات"),
         "status": MessageLookupByLibrary.simpleMessage("الحالة"),
         "statusCodeBadRequest":
             MessageLookupByLibrary.simpleMessage("تعذر على الخادم فهم الطلب"),
