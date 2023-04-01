@@ -919,6 +919,8 @@
     "countTodayOrderDelivered":"المسلمة اليوم",
     "costType":"نوع التكلفة",
     "deliveryOnly":"سعر التوصيل فقط",
-    "orderCostAndDelivery":"سعر الطلب والتوصيل"
+    "orderCostAndDelivery":"سعر الطلب والتوصيل",
+    "cutOrderForStore":"احتساب الطلب على المتجر",
+    "giveCaptainHalfProfit":"احتساب نصف قيمة الطلب على الكابتن"
     
 }

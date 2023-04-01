@@ -415,6 +415,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "currentOrders": MessageLookupByLibrary.simpleMessage("طلباتي"),
         "currentSubscriptions":
             MessageLookupByLibrary.simpleMessage("الاشتراكات الحالية"),
+        "cutOrderForStore":
+            MessageLookupByLibrary.simpleMessage("احتساب الطلب على المتجر"),
         "cycleEnd": MessageLookupByLibrary.simpleMessage("نهاية الدورة"),
         "cycleStart": MessageLookupByLibrary.simpleMessage("بداية الدورة"),
         "dailyProfit": MessageLookupByLibrary.simpleMessage("الأرباح اليومية"),
@@ -604,6 +606,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("نطاق الباقة الجغرافي"),
         "getDirection":
             MessageLookupByLibrary.simpleMessage("موقع المحل (الاستلام)"),
+        "giveCaptainHalfProfit": MessageLookupByLibrary.simpleMessage(
+            "احتساب نصف قيمة الطلب على الكابتن"),
         "go": MessageLookupByLibrary.simpleMessage("انطلق"),
         "groupOrder": MessageLookupByLibrary.simpleMessage("طلب مجمع"),
         "had_amount_daily_captain":

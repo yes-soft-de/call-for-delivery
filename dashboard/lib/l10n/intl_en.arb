@@ -920,7 +920,9 @@
     "countTodayOrderDelivered":"today delivered",
     "costType":"Cost type",
     "orderCostAndDelivery":"order & delivery cost",
-    "deliveryOnly":"Delivery only"
+    "deliveryOnly":"Delivery only",
+    "cutOrderForStore":"Cut order from store",
+    "giveCaptainHalfProfit":"Give captain half order delivery cost"
 
 
 

@@ -9259,6 +9259,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Cut order from store`
+  String get cutOrderForStore {
+    return Intl.message(
+      'Cut order from store',
+      name: 'cutOrderForStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Give captain half order delivery cost`
+  String get giveCaptainHalfProfit {
+    return Intl.message(
+      'Give captain half order delivery cost',
+      name: 'giveCaptainHalfProfit',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

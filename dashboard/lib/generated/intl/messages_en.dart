@@ -420,6 +420,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "currentOrders": MessageLookupByLibrary.simpleMessage("Current Orders"),
         "currentSubscriptions":
             MessageLookupByLibrary.simpleMessage("Current subscriptions"),
+        "cutOrderForStore":
+            MessageLookupByLibrary.simpleMessage("Cut order from store"),
         "cycleEnd": MessageLookupByLibrary.simpleMessage("Cycle end"),
         "cycleStart": MessageLookupByLibrary.simpleMessage("Cycle start"),
         "dailyProfit": MessageLookupByLibrary.simpleMessage("Daily profit"),
@@ -610,6 +612,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "geographicalRange":
             MessageLookupByLibrary.simpleMessage("Geographical range"),
         "getDirection": MessageLookupByLibrary.simpleMessage("Get Direction"),
+        "giveCaptainHalfProfit": MessageLookupByLibrary.simpleMessage(
+            "Give captain half order delivery cost"),
         "go": MessageLookupByLibrary.simpleMessage("Go"),
         "groupOrder": MessageLookupByLibrary.simpleMessage("Group order"),
         "had_amount_daily_captain":

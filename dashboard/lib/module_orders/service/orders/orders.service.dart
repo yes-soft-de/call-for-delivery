@@ -29,6 +29,7 @@ import 'package:c4d/module_orders/response/order_without_distance_response/order
 import 'package:c4d/module_orders/response/orders_cash_finances_for_captain_response/orders_cash_finances_for_captain_response.dart';
 import 'package:c4d/module_orders/response/orders_cash_finances_for_store_response/orders_cash_finances_for_store_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
+import 'package:c4d/module_stores/request/delete_order_request.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
 import 'package:injectable/injectable.dart';
@@ -235,8 +236,8 @@ class OrdersService {
     return DataModel.empty();
   }
 
-  Future<DataModel> deleteOrder(int id) async {
-    ActionResponse? response = await _ordersManager.deleteOrder(id);
+  Future<DataModel> deleteOrder(DeleteOrderRequest request) async {
+    ActionResponse? response = await _ordersManager.deleteOrder(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
       return DataModel.withError(

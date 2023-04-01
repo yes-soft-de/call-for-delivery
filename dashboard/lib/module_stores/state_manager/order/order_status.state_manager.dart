@@ -9,6 +9,7 @@ import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
+import 'package:c4d/module_stores/request/delete_order_request.dart';
 import 'package:c4d/module_stores/service/store_service.dart';
 import 'package:c4d/module_stores/ui/screen/order/order_details_screen.dart';
 import 'package:c4d/module_stores/ui/state/order/order_details_state_owner_order_loaded.dart';
@@ -77,20 +78,20 @@ class OrderStatusStateManager {
     });
   }
 
-  void deleteOrder(int orderId, OrderDetailsScreenState screenState) {
+  void deleteOrder(DeleteOrderRequest request, OrderDetailsScreenState screenState) {
     screenState.canRemoveOrder = false;
     _stateSubject.add(LoadingState(screenState));
-    getIt<OrdersService>().deleteOrder(orderId).then((value) {
+    getIt<OrdersService>().deleteOrder(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
             .show(screenState.context);
-        getOrder(screenState, orderId);
+        getOrder(screenState, request.orderID ?? -1);
       } else {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning, message: S.current.deleteSuccess)
             .show(screenState.context);
-        getOrder(screenState, orderId);
+        getOrder(screenState, request.orderID ?? -1);
         FireStoreHelper().backgroundThread('Trigger');
       }
     });
