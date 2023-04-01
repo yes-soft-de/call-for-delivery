@@ -9229,6 +9229,36 @@ class S {
       args: [],
     );
   }
+
+  /// `Cost type`
+  String get costType {
+    return Intl.message(
+      'Cost type',
+      name: 'costType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order & delivery cost`
+  String get orderCostAndDelivery {
+    return Intl.message(
+      'order & delivery cost',
+      name: 'orderCostAndDelivery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delivery only`
+  String get deliveryOnly {
+    return Intl.message(
+      'Delivery only',
+      name: 'deliveryOnly',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

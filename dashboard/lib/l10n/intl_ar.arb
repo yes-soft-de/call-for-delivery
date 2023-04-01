@@ -916,5 +916,9 @@
     "showPayments":"عرض المدفوعات",
     "addaPayment":"إضافة دفعة",
     "duesByFilter":"المستحقات وفق الفلترة",
-    "countTodayOrderDelivered":"المسلمة اليوم"
+    "countTodayOrderDelivered":"المسلمة اليوم",
+    "costType":"نوع التكلفة",
+    "deliveryOnly":"سعر التوصيل فقط",
+    "orderCostAndDelivery":"سعر الطلب والتوصيل"
+    
 }

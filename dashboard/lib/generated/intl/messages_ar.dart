@@ -360,6 +360,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "coordinates": MessageLookupByLibrary.simpleMessage("الإحداثيات"),
         "copied": MessageLookupByLibrary.simpleMessage("تم نسخه بنجاح"),
         "cost": MessageLookupByLibrary.simpleMessage("التكلفة"),
+        "costType": MessageLookupByLibrary.simpleMessage("نوع التكلفة"),
         "countCaptains": MessageLookupByLibrary.simpleMessage("عدد الكباتن"),
         "countClients": MessageLookupByLibrary.simpleMessage("عدد العملاء"),
         "countCompletedOrders":
@@ -459,6 +460,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliveryCostDetails":
             MessageLookupByLibrary.simpleMessage("تفاصيل سعر التوصيل"),
         "deliveryDate": MessageLookupByLibrary.simpleMessage("تاريخ التسليم"),
+        "deliveryOnly": MessageLookupByLibrary.simpleMessage("سعر التوصيل فقط"),
         "description": MessageLookupByLibrary.simpleMessage("وصف"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("التوصيل إلى"),
@@ -798,6 +800,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("طلبات بمسافات متنازعة"),
         "orderConflictedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم حل التعارض بنجاح"),
+        "orderCostAndDelivery":
+            MessageLookupByLibrary.simpleMessage("سعر الطلب والتوصيل"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "سعر الطلب شامل تكلفة التوصيل"),
         "orderCount": MessageLookupByLibrary.simpleMessage("عدد الطلبات"),

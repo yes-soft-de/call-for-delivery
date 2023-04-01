@@ -365,6 +365,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "coordinates": MessageLookupByLibrary.simpleMessage("Coordinates"),
         "copied": MessageLookupByLibrary.simpleMessage("copied successfully"),
         "cost": MessageLookupByLibrary.simpleMessage("cost"),
+        "costType": MessageLookupByLibrary.simpleMessage("Cost type"),
         "countCaptains": MessageLookupByLibrary.simpleMessage("Captains Count"),
         "countClients": MessageLookupByLibrary.simpleMessage("Clients Count"),
         "countCompletedOrders":
@@ -464,6 +465,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliveryCostDetails":
             MessageLookupByLibrary.simpleMessage("Delivery cost details"),
         "deliveryDate": MessageLookupByLibrary.simpleMessage("delivery date"),
+        "deliveryOnly": MessageLookupByLibrary.simpleMessage("Delivery only"),
         "description": MessageLookupByLibrary.simpleMessage("Description"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("Destination Address"),
@@ -805,6 +807,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Order conflicted distance"),
         "orderConflictedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Order conflicted Successfully"),
+        "orderCostAndDelivery":
+            MessageLookupByLibrary.simpleMessage("order & delivery cost"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "Order cost contains delivery tax"),
         "orderCount": MessageLookupByLibrary.simpleMessage("Order count"),

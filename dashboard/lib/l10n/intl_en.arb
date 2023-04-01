@@ -917,7 +917,11 @@
     "showPayments":"show payments",
     "addaPayment":"add a payment",
     "duesByFilter":"Dues by filter",
-    "countTodayOrderDelivered":"today delivered"
+    "countTodayOrderDelivered":"today delivered",
+    "costType":"Cost type",
+    "orderCostAndDelivery":"order & delivery cost",
+    "deliveryOnly":"Delivery only"
+
 
 
 }

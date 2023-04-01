@@ -50,6 +50,7 @@ class NewOrderLinkScreenState extends State<NewOrderLinkScreen>
   String? payments;
   int? branch;
   LatLng? customerLocation;
+  int? costType;
   //
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
