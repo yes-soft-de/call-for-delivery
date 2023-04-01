@@ -154,4 +154,25 @@ class OrderStatusStateManager {
       }
     });
   }
+
+  void addExtraDistance(
+      OrderDetailsScreenState screenState, AddExtraDistanceRequest request) {
+    _stateSubject.add(LoadingState(screenState));
+    getIt<OrdersService>().addExtraDistanceToOrder(request).then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error ?? '')
+            .show(screenState.context);
+        // screenState.getOrders();
+        getOrder(screenState, request.id!, false);
+      } else {
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: S.current.distanceUpdatedSuccessfully)
+            .show(screenState.context);
+        // screenState.getOrders();
+        getOrder(screenState, request.id!, false);
+      }
+    });
+  }
 }

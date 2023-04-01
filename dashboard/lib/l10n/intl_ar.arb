@@ -876,6 +876,7 @@
     "reason": "السبب",
     "coordinates": "الإحداثيات",
     "pleaseEnterValidCoord": "من فضلك ادخل احداثيات صالحة",
+    "pleaseEnterValidDistance": "من فضلك ادخل مسافة صالحة",
     "notificationDeletedSuccess": "تم حذف الإشعار بنجاح",
     "notificationsDeletedSuccess": "تم حذف الإشعارات بنجاح",
     "areYouSureAboutDeleteSelectedNotifications": "هل أنت متأكد في رغبتك في حذف الإشعارات التي تم تحديدها",
