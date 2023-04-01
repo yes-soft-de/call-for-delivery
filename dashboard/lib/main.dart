@@ -15,6 +15,7 @@ import 'package:c4d/module_notice/notice_module.dart';
 import 'package:c4d/module_notifications/model/notification_model.dart';
 import 'package:c4d/module_orders/orders_module.dart';
 import 'package:c4d/module_payments/payments_module.dart';
+import 'package:c4d/module_statistics/model/statistics_model.dart';
 import 'package:c4d/module_stores/stores_module.dart';
 import 'package:c4d/module_subscriptions/subscriptions_module.dart';
 import 'package:c4d/module_supplier_categories/categories_supplier_module.dart';
@@ -47,6 +48,7 @@ import 'package:timeago/timeago.dart' as timeago;
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:lehttp_overrides/lehttp_overrides.dart';
+import 'module_statistics/ui/statistics_module.dart';
 import 'module_supplier/supplier_module.dart';
 
 void main() async {
@@ -67,13 +69,13 @@ void main() async {
   await Firebase.initializeApp(
     options: kIsWeb
         ? FirebaseOptions(
-            apiKey: "AIzaSyBI1NPRqgXwAHgRBuy_7IAXnnvM8XT-Fu0",
-            authDomain: "c4d-app-c299b.firebaseapp.com",
-            projectId: "c4d-app-c299b",
-            storageBucket: "c4d-app-c299b.appspot.com",
-            messagingSenderId: "410273886458",
-            appId: "1:410273886458:web:78390256f1f5efb11f1943",
-            measurementId: "G-XSMNHCSQGV",
+            apiKey: 'AIzaSyBI1NPRqgXwAHgRBuy_7IAXnnvM8XT-Fu0',
+            authDomain: 'c4d-app-c299b.firebaseapp.com',
+            projectId: 'c4d-app-c299b',
+            storageBucket: 'c4d-app-c299b.appspot.com',
+            messagingSenderId: '410273886458',
+            appId: '1:410273886458:web:78390256f1f5efb11f1943',
+            measurementId: 'G-XSMNHCSQGV',
           )
         : null,
   );
@@ -95,8 +97,8 @@ void main() async {
       // Your App Here
       runApp(getIt<MyApp>());
     }, (error, stackTrace) {
-      new Logger().error(
-          'Main', error.toString() + stackTrace.toString(), StackTrace.current);
+      print(error);
+      new Logger().error('Main', error.toString() + stackTrace.toString(), StackTrace.current);
     });
   });
 }
@@ -126,7 +128,8 @@ class MyApp extends StatefulWidget {
       this._bidOrderModule,
       this._ordersModule,
       this._subscriptionsModule,
-      this._myNotificationsModule);
+      this._myNotificationsModule,
+      this._statisticsModule);
 
   final AuthorizationModule _authorizationModule;
   final BidOrderModule _bidOrderModule;
@@ -151,6 +154,7 @@ class MyApp extends StatefulWidget {
   final SupplierCategoriesModule _supplierCategoriesModule;
   final SupplierModule _supplierModule;
   final AppThemeDataService _themeDataService;
+  final StatisticsModule _statisticsModule;
 
   @override
   State<StatefulWidget> createState() => _MyAppState();
@@ -186,15 +190,15 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     widget._localNotificationService.onLocalNotificationStream.listen((event) {
       NotificationModel notificationModel = NotificationModel.fromJson(event);
       if (notificationModel.navigateRoute == ChatRoutes.chatRoute) {
-        Navigator.pushNamed(GlobalVariable.navState.currentContext!,
-            notificationModel.navigateRoute ?? '',
+        Navigator.pushNamed(
+            GlobalVariable.navState.currentContext!, notificationModel.navigateRoute ?? '',
             arguments: ChatArgument(
                 roomID: notificationModel.chatNotification?.roomID ?? '',
                 userID: notificationModel.chatNotification?.senderID,
                 userType: null));
       } else {
-        Navigator.pushNamed(GlobalVariable.navState.currentContext!,
-            notificationModel.navigateRoute ?? '',
+        Navigator.pushNamed(
+            GlobalVariable.navState.currentContext!, notificationModel.navigateRoute ?? '',
             arguments: notificationModel.argument);
       }
     });

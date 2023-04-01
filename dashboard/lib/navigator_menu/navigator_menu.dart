@@ -9,6 +9,7 @@ import 'package:c4d/module_notice/notice_module.dart';
 import 'package:c4d/module_orders/orders_module.dart';
 import 'package:c4d/module_payments/payments_module.dart';
 import 'package:c4d/module_settings/settings_module.dart';
+import 'package:c4d/module_statistics/ui/statistics_module.dart';
 import 'package:c4d/module_stores/stores_module.dart';
 import 'package:c4d/module_supplier/supplier_module.dart';
 import 'package:c4d/module_supplier_categories/categories_supplier_module.dart';
@@ -44,8 +45,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
         children: [
           SizedBox(
             child: ClipRRect(
-                borderRadius: BorderRadius.circular(12.0),
-                child: Image.asset(ImageAsset.DELIVERY)),
+                borderRadius: BorderRadius.circular(12.0), child: Image.asset(ImageAsset.DELIVERY)),
           ),
           SizedBox(
             height: 16,
@@ -63,17 +63,16 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                   : BorderRadius.horizontal(right: Radius.circular(12))),
           child: CustomListView.custom(children: [
             drawerHeader,
-            customListTile(getIt<MainModule>().homeScreen, S.current.home,
-                FontAwesomeIcons.home),
+            customListTile(getIt<MainModule>().homeScreen, S.current.home, FontAwesomeIcons.home),
             // order
             customExpansionTile(
                 title: S.current.orders,
                 icon: FontAwesomeIcons.boxes,
                 children: [
-                  customListTile(getIt<OrdersModule>().pendingScreen,
-                      S.current.orderedNotAccepted, FontAwesomeIcons.box, true),
-                  customListTile(getIt<OrdersModule>().newOrderScreen,
-                      S.current.newOrder, Icons.add_rounded, true)
+                  customListTile(getIt<OrdersModule>().pendingScreen, S.current.orderedNotAccepted,
+                      FontAwesomeIcons.box, true),
+                  customListTile(getIt<OrdersModule>().newOrderScreen, S.current.newOrder,
+                      Icons.add_rounded, true)
                 ],
                 page: widget.currentPage),
             // report
@@ -81,30 +80,20 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.reports,
                 icon: Icons.report,
                 children: [
-                  customListTile(
-                      getIt<OrdersModule>().ordersWithoutDistanceScreen,
-                      S.current.orderWithoutDistance,
-                      Icons.edit_road_rounded,
-                      true),
-                  customListTile(
-                      getIt<OrdersModule>().orderDistanceConflictScreen,
-                      S.current.orderConflictDistances,
-                      Icons.edit_road_rounded,
-                      true),
-                  customListTile(
-                      getIt<StoresModule>().captainNotArrivedScreen,
-                      S.current.captainNotArrived,
-                      Icons.storefront_rounded,
-                      true),
+                  customListTile(getIt<StatisticsModule>().statisticsScreen, S.current.statistics,
+                      Icons.edit_road_rounded, true),
+                  customListTile(getIt<OrdersModule>().ordersWithoutDistanceScreen,
+                      S.current.orderWithoutDistance, Icons.edit_road_rounded, true),
+                  customListTile(getIt<OrdersModule>().orderDistanceConflictScreen,
+                      S.current.orderConflictDistances, Icons.edit_road_rounded, true),
+                  customListTile(getIt<StoresModule>().captainNotArrivedScreen,
+                      S.current.captainNotArrived, Icons.storefront_rounded, true),
                   customListTile(getIt<OrdersModule>().ordersReceiveCashScreen,
                       S.current.ordersCash, Icons.payments_rounded, true),
                   customListTile(getIt<CaptainsModule>().captainsRatingsScreen,
                       S.current.captainsRating, Icons.star_rounded, true),
-                  customListTile(
-                      getIt<CaptainsModule>().captainsActivityScreen,
-                      S.current.captainActivity,
-                      Icons.show_chart_rounded,
-                      true),
+                  customListTile(getIt<CaptainsModule>().captainsActivityScreen,
+                      S.current.captainActivity, Icons.show_chart_rounded, true),
                   customListTile(getIt<StoresModule>().topActiveStoreScreen,
                       S.current.topstoreActivity, FontAwesomeIcons.store, true),
                 ],
@@ -115,13 +104,10 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.captains,
                 icon: FontAwesomeIcons.car,
                 children: [
-                  customListTile(getIt<CaptainsModule>().captainsScreen,
-                      S.current.captains, FontAwesomeIcons.solidListAlt, true),
-                  customListTile(
-                      getIt<CaptainsModule>().inActiveCaptains,
-                      S.current.inActiveCaptains,
-                      FontAwesomeIcons.solidAddressCard,
-                      true),
+                  customListTile(getIt<CaptainsModule>().captainsScreen, S.current.captains,
+                      FontAwesomeIcons.solidListAlt, true),
+                  customListTile(getIt<CaptainsModule>().inActiveCaptains,
+                      S.current.inActiveCaptains, FontAwesomeIcons.solidAddressCard, true),
                 ],
                 page: widget.currentPage),
             // Store
@@ -129,13 +115,10 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.stores,
                 icon: FontAwesomeIcons.store,
                 children: [
-                  customListTile(getIt<StoresModule>().storesScreen,
-                      S.current.storesList, Icons.storefront_rounded, true),
-                  customListTile(
-                      getIt<StoresModule>().storesInActiveScreen,
-                      S.current.storesInActive,
-                      FontAwesomeIcons.storeSlash,
-                      true),
+                  customListTile(getIt<StoresModule>().storesScreen, S.current.storesList,
+                      Icons.storefront_rounded, true),
+                  customListTile(getIt<StoresModule>().storesInActiveScreen,
+                      S.current.storesInActive, FontAwesomeIcons.storeSlash, true),
                 ],
                 page: widget.currentPage),
             // support
@@ -143,10 +126,10 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.directSupport,
                 icon: FontAwesomeIcons.headphonesAlt,
                 children: [
-                  customListTile(getIt<StoresModule>().supportScreen,
-                      S.current.stores, Icons.storefront_rounded, true),
-                  customListTile(getIt<CaptainsModule>().supportScreen,
-                      S.current.captains, FontAwesomeIcons.car, true),
+                  customListTile(getIt<StoresModule>().supportScreen, S.current.stores,
+                      Icons.storefront_rounded, true),
+                  customListTile(getIt<CaptainsModule>().supportScreen, S.current.captains,
+                      FontAwesomeIcons.car, true),
                   Visibility(
                     visible: false,
                     child: customListTile(getIt<SupplierModule>().supportScreen,
@@ -155,31 +138,22 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 ],
                 page: widget.currentPage),
             // notice
-            customListTile(getIt<NoticeModule>().noticeScreen, S.current.notice,
-                FontAwesomeIcons.stickyNote),
+            customListTile(
+                getIt<NoticeModule>().noticeScreen, S.current.notice, FontAwesomeIcons.stickyNote),
             // packages
             customExpansionTile(
                 title: S.current.packages,
                 icon: Icons.backpack_outlined,
                 children: [
-                  customListTile(
-                      getIt<CategoriesModule>().packageCategoriesScreen,
-                      S.current.categories,
-                      Icons.category,
-                      true),
+                  customListTile(getIt<CategoriesModule>().packageCategoriesScreen,
+                      S.current.categories, Icons.category, true),
 //                  customListTile(getIt<CategoriesModule>().subCategoriesScreen,
 //                      S.current.subCategories, FontAwesomeIcons.square, true),
-                  customListTile(
-                      getIt<CategoriesModule>().packagesScreen,
-                      S.current.packages,
-                      FontAwesomeIcons.wolfPackBattalion,
-                      true),
+                  customListTile(getIt<CategoriesModule>().packagesScreen, S.current.packages,
+                      FontAwesomeIcons.wolfPackBattalion, true),
 
-                  customListTile(
-                      getIt<CaptainsModule>().captainOffersScreen,
-                      S.current.captainsOffer,
-                      FontAwesomeIcons.solidListAlt,
-                      true),
+                  customListTile(getIt<CaptainsModule>().captainOffersScreen,
+                      S.current.captainsOffer, FontAwesomeIcons.solidListAlt, true),
                 ],
                 page: widget.currentPage),
             // captain finance
@@ -189,11 +163,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 children: [
                   customListTile(getIt<PaymentsModule>().financeByHoursScreen,
                       S.current.financeByHours, FontAwesomeIcons.clock, true),
-                  customListTile(
-                      getIt<PaymentsModule>().financeByCountOrderScreen,
-                      S.current.financeByOrders,
-                      FontAwesomeIcons.boxes,
-                      true),
+                  customListTile(getIt<PaymentsModule>().financeByCountOrderScreen,
+                      S.current.financeByOrders, FontAwesomeIcons.boxes, true),
                   customListTile(getIt<PaymentsModule>().financeByOrderScreen,
                       S.current.financeCountOrder, FontAwesomeIcons.box, true),
                 ],
@@ -202,11 +173,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.duesPayments,
                 icon: FontAwesomeIcons.moneyBillTransfer,
                 children: [
-                  customListTile(
-                      getIt<CaptainsModule>().captainFinanceDailyScreen,
-                      S.current.sumCaptainsFinancialDues,
-                      FontAwesomeIcons.moneyBills,
-                      true),
+                  customListTile(getIt<CaptainsModule>().captainFinanceDailyScreen,
+                      S.current.sumCaptainsFinancialDues, FontAwesomeIcons.moneyBills, true),
                 ],
                 page: widget.currentPage),
 
@@ -217,21 +185,12 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                   title: S.current.suppliers,
                   icon: Icons.backpack_outlined,
                   children: [
-                    customListTile(
-                        getIt<SupplierCategoriesModule>().categoriesScreen,
-                        S.current.suppliersCategories,
-                        Icons.category,
-                        true),
-                    customListTile(
-                        getIt<SupplierModule>().inActiveSupplierScreen,
-                        S.current.inActiveSupplier,
-                        FontAwesomeIcons.square,
-                        true),
-                    customListTile(
-                        getIt<SupplierModule>().suppliersScreen,
-                        S.current.suppliers,
-                        FontAwesomeIcons.wolfPackBattalion,
-                        true),
+                    customListTile(getIt<SupplierCategoriesModule>().categoriesScreen,
+                        S.current.suppliersCategories, Icons.category, true),
+                    customListTile(getIt<SupplierModule>().inActiveSupplierScreen,
+                        S.current.inActiveSupplier, FontAwesomeIcons.square, true),
+                    customListTile(getIt<SupplierModule>().suppliersScreen, S.current.suppliers,
+                        FontAwesomeIcons.wolfPackBattalion, true),
                     //                  customListTile(
                     //                      getIt<CaptainsModule>().captainOffersScreen,
                     //                      S.current.captainsOffer,
@@ -243,36 +202,30 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
             // cars
             Visibility(
               visible: false,
-              child: customListTile(getIt<CarsModule>().carsScreen,
-                  S.current.deliveryCars, FontAwesomeIcons.car),
+              child: customListTile(
+                  getIt<CarsModule>().carsScreen, S.current.deliveryCars, FontAwesomeIcons.car),
             ),
             // company
             customExpansionTile(
                 title: S.current.companyInfo,
                 icon: FontAwesomeIcons.solidCopyright,
                 children: [
-                  customListTile(
-                      getIt<CompanyModule>().companyFinanceScreen,
-                      S.current.companyFinance,
-                      FontAwesomeIcons.moneyCheckAlt,
-                      true),
-                  customListTile(getIt<CompanyModule>().companyProfileScreen,
-                      S.current.contactInfo, Icons.info, true),
+                  customListTile(getIt<CompanyModule>().companyFinanceScreen,
+                      S.current.companyFinance, FontAwesomeIcons.moneyCheckAlt, true),
+                  customListTile(getIt<CompanyModule>().companyProfileScreen, S.current.contactInfo,
+                      Icons.info, true),
                 ],
                 page: widget.currentPage),
             // setting
-            customListTile(getIt<SettingsModule>().settingsScreen,
-                S.current.settings, FontAwesomeIcons.cog),
+            customListTile(
+                getIt<SettingsModule>().settingsScreen, S.current.settings, FontAwesomeIcons.cog),
           ])),
     );
   }
 
-  Widget customListTile(StatefulWidget page, String title, IconData icon,
-      [bool subtitle = false]) {
-    bool selected = page.runtimeType.toString() ==
-        widget.currentPage.runtimeType.toString();
-    double? size =
-        icon.fontPackage == 'font_awesome_flutter' ? (subtitle ? 18 : 22) : 26;
+  Widget customListTile(StatefulWidget page, String title, IconData icon, [bool subtitle = false]) {
+    bool selected = page.runtimeType.toString() == widget.currentPage.runtimeType.toString();
+    double? size = icon.fontPackage == 'font_awesome_flutter' ? (subtitle ? 18 : 22) : 26;
     if (size == 26 && subtitle) {
       size = 20;
     }
@@ -291,10 +244,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
             boxShadow: selected
                 ? [
                     BoxShadow(
-                        color: Theme.of(context)
-                            .colorScheme
-                            .primary
-                            .withOpacity(0.5),
+                        color: Theme.of(context).colorScheme.primary.withOpacity(0.5),
                         spreadRadius: 0.5,
                         blurRadius: 5,
                         offset: Offset(1, 1)),
@@ -316,13 +266,10 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
             GlobalVariable.mainScreenScaffold.currentState?.openEndDrawer();
             setState(() {});
           },
-          leading:
-              Icon(icon, color: selected ? Colors.white : null, size: size),
+          leading: Icon(icon, color: selected ? Colors.white : null, size: size),
           title: Text(
             title,
-            style: TextStyle(
-                color: selected ? Colors.white : null,
-                fontSize: subtitle ? 14 : null),
+            style: TextStyle(color: selected ? Colors.white : null, fontSize: subtitle ? 14 : null),
           ),
         ),
       ),
