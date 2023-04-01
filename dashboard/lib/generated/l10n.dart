@@ -9289,6 +9289,106 @@ class S {
       args: [],
     );
   }
+
+  /// `all orders`
+  String get allOrders {
+    return Intl.message(
+      'all orders',
+      name: 'allOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `last seven days`
+  String get lastSevenDays {
+    return Intl.message(
+      'last seven days',
+      name: 'lastSevenDays',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `last 3 avtive`
+  String get last3Active {
+    return Intl.message(
+      'last 3 avtive',
+      name: 'last3Active',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Min delivered per day`
+  String get minDeliveredPerDay {
+    return Intl.message(
+      'Min delivered per day',
+      name: 'minDeliveredPerDay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Max delivered per day`
+  String get maxDeliveredPerDay {
+    return Intl.message(
+      'Max delivered per day',
+      name: 'maxDeliveredPerDay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `active capitan`
+  String get activeCapitan {
+    return Intl.message(
+      'active capitan',
+      name: 'activeCapitan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `active stores`
+  String get activeStores {
+    return Intl.message(
+      'active stores',
+      name: 'activeStores',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `inactive stores`
+  String get inactiveStores {
+    return Intl.message(
+      'inactive stores',
+      name: 'inactiveStores',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `id`
+  String get id {
+    return Intl.message(
+      'id',
+      name: 'id',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `statistics`
+  String get statistics {
+    return Intl.message(
+      'statistics',
+      name: 'statistics',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

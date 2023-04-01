@@ -70,9 +70,11 @@ class MessageLookup extends MessageLookupByLibrary {
             "In this window we will view action logs history in this order"),
         "activatedPlan": MessageLookupByLibrary.simpleMessage("Activated plan"),
         "active": MessageLookupByLibrary.simpleMessage("This store is active"),
+        "activeCapitan": MessageLookupByLibrary.simpleMessage("active capitan"),
         "activeCars": MessageLookupByLibrary.simpleMessage("Active Cars"),
         "activeOffer": MessageLookupByLibrary.simpleMessage("Active Offer"),
         "activePlan": MessageLookupByLibrary.simpleMessage("Active Plan"),
+        "activeStores": MessageLookupByLibrary.simpleMessage("active stores"),
         "activityLog": MessageLookupByLibrary.simpleMessage("Activity Log"),
         "addBranch": MessageLookupByLibrary.simpleMessage("Add Branch"),
         "addBranchFailure": MessageLookupByLibrary.simpleMessage(
@@ -99,6 +101,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "admin": MessageLookupByLibrary.simpleMessage("Admin"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
+        "allOrders": MessageLookupByLibrary.simpleMessage("all orders"),
         "allOrdersCount": MessageLookupByLibrary.simpleMessage("Orders count"),
         "alreadyCanceled":
             MessageLookupByLibrary.simpleMessage("Already canceled"),
@@ -644,6 +647,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "iHaveAnAccount":
             MessageLookupByLibrary.simpleMessage("I have an account"),
         "iSpeak": MessageLookupByLibrary.simpleMessage("Preferred language"),
+        "id": MessageLookupByLibrary.simpleMessage("id"),
         "identity": MessageLookupByLibrary.simpleMessage("Identity"),
         "illegalCommand":
             MessageLookupByLibrary.simpleMessage("Illegal Command"),
@@ -655,6 +659,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "This store is not active yet"),
         "inactiveOffer": MessageLookupByLibrary.simpleMessage("Inactive Offer"),
         "inactivePlan": MessageLookupByLibrary.simpleMessage("Inactive plan"),
+        "inactiveStores":
+            MessageLookupByLibrary.simpleMessage("inactive stores"),
         "info": MessageLookupByLibrary.simpleMessage("Info"),
         "informSendCode": MessageLookupByLibrary.simpleMessage(
             "We will send a verification code to your number"),
@@ -691,10 +697,13 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("+100 Employees"),
         "last24CountOrder":
             MessageLookupByLibrary.simpleMessage("Last 24h orders"),
+        "last3Active": MessageLookupByLibrary.simpleMessage("last 3 avtive"),
         "last7WeekOrders":
             MessageLookupByLibrary.simpleMessage("Last 7 days orders"),
         "lastName": MessageLookupByLibrary.simpleMessage("Last name"),
         "lastSeenMessage": MessageLookupByLibrary.simpleMessage("New Messages"),
+        "lastSevenDays":
+            MessageLookupByLibrary.simpleMessage("last seven days"),
         "lastWeek": MessageLookupByLibrary.simpleMessage("Last week"),
         "latestUpdates": MessageLookupByLibrary.simpleMessage("Latest Updates"),
         "lebanon": MessageLookupByLibrary.simpleMessage("Lebanon"),
@@ -708,12 +717,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "makePayment": MessageLookupByLibrary.simpleMessage("Make Payment"),
         "male": MessageLookupByLibrary.simpleMessage("Male"),
         "manageBranch": MessageLookupByLibrary.simpleMessage("Manage branch"),
+        "maxDeliveredPerDay":
+            MessageLookupByLibrary.simpleMessage("Max delivered per day"),
         "me": MessageLookupByLibrary.simpleMessage("ME"),
         "mechanichLicence":
             MessageLookupByLibrary.simpleMessage("Mechanich Licence"),
         "mediumMoreThan20EmployeesLessThan100":
             MessageLookupByLibrary.simpleMessage("21 - 100 Employees"),
         "middleName": MessageLookupByLibrary.simpleMessage("Middle name"),
+        "minDeliveredPerDay":
+            MessageLookupByLibrary.simpleMessage("Min delivered per day"),
         "minute": MessageLookupByLibrary.simpleMessage("minute"),
         "minutes": MessageLookupByLibrary.simpleMessage("minutes"),
         "mohammad": MessageLookupByLibrary.simpleMessage("Mohammad"),
@@ -1178,6 +1191,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Sorted by latest"),
         "specification": MessageLookupByLibrary.simpleMessage("Specification"),
         "startWriting": MessageLookupByLibrary.simpleMessage("Start Writing"),
+        "statistics": MessageLookupByLibrary.simpleMessage("statistics"),
         "status": MessageLookupByLibrary.simpleMessage("Online Status"),
         "statusCodeBadRequest": MessageLookupByLibrary.simpleMessage(
             "The server could not understand the request due to invalid syntax"),
