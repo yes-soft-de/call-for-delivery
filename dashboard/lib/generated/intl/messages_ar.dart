@@ -631,6 +631,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("حصلت على الطلب"),
         "iHaveAnAccount": MessageLookupByLibrary.simpleMessage("لدي حساب"),
         "iSpeak": MessageLookupByLibrary.simpleMessage("اللغة المفضلة"),
+        "id": MessageLookupByLibrary.simpleMessage("المعرف"),
         "identity": MessageLookupByLibrary.simpleMessage("الهوية"),
         "inActiveCaptains":
             MessageLookupByLibrary.simpleMessage("الكباتن الغير مفعلين"),
@@ -699,7 +700,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "male": MessageLookupByLibrary.simpleMessage("ذكر"),
         "manageBranch": MessageLookupByLibrary.simpleMessage("إدارة الأفرع"),
         "maxDeliveredPerDay":
-            MessageLookupByLibrary.simpleMessage("اكثر عدد باليوم"),
+            MessageLookupByLibrary.simpleMessage("اكثر عدد طلبات باليوم"),
         "me": MessageLookupByLibrary.simpleMessage("أنا"),
         "mechanichLicence": MessageLookupByLibrary.simpleMessage("رخصة السير"),
         "mediumMoreThan20EmployeesLessThan100":

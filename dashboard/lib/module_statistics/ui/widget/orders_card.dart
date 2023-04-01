@@ -17,6 +17,10 @@ class OrdersCard extends StatelessWidget {
             trailing: Text(statisticsOrder.allOrders.toString()),
           ),
           ListTile(
+            leading: Text(S.current.countTodayOrder),
+            trailing: Text(statisticsOrder.dailyOrders[6].count.toString()),
+          ),
+          ListTile(
             leading: Text(S.current.last7WeekOrders),
             trailing: Text(statisticsOrder.lastSevenDays.toString()),
           ),

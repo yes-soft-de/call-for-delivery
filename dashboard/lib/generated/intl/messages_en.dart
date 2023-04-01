@@ -639,6 +639,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "iHaveAnAccount":
             MessageLookupByLibrary.simpleMessage("I have an account"),
         "iSpeak": MessageLookupByLibrary.simpleMessage("Preferred language"),
+        "id": MessageLookupByLibrary.simpleMessage("id"),
         "identity": MessageLookupByLibrary.simpleMessage("Identity"),
         "illegalCommand":
             MessageLookupByLibrary.simpleMessage("Illegal Command"),
@@ -709,7 +710,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "male": MessageLookupByLibrary.simpleMessage("Male"),
         "manageBranch": MessageLookupByLibrary.simpleMessage("Manage branch"),
         "maxDeliveredPerDay":
-            MessageLookupByLibrary.simpleMessage("max delivered per day"),
+            MessageLookupByLibrary.simpleMessage("Max delivered per day"),
         "me": MessageLookupByLibrary.simpleMessage("ME"),
         "mechanichLicence":
             MessageLookupByLibrary.simpleMessage("Mechanich Licence"),
@@ -717,7 +718,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("21 - 100 Employees"),
         "middleName": MessageLookupByLibrary.simpleMessage("Middle name"),
         "minDeliveredPerDay":
-            MessageLookupByLibrary.simpleMessage("min delivered per day"),
+            MessageLookupByLibrary.simpleMessage("Min delivered per day"),
         "minute": MessageLookupByLibrary.simpleMessage("minute"),
         "minutes": MessageLookupByLibrary.simpleMessage("minutes"),
         "mohammad": MessageLookupByLibrary.simpleMessage("Mohammad"),

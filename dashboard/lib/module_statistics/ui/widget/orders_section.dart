@@ -20,7 +20,9 @@ class OrdersSection extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: Align(
-              alignment: Alignment.centerLeft,
+              alignment: Directionality.of(context) == TextDirection.ltr
+                  ? Alignment.centerLeft
+                  : Alignment.centerRight,
               child: Text(
                 S.current.lastSevenDays,
                 style: Theme.of(context).textTheme.titleMedium,

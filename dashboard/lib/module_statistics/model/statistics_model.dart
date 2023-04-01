@@ -1,3 +1,5 @@
+import 'package:c4d/utils/helpers/date_converter.dart';
+
 import '../../abstracts/data_model/data_model.dart';
 import '../../generated/l10n.dart';
 import '../response/statistics_response/daily.dart';
@@ -50,14 +52,22 @@ class StatisticsModel extends DataModel {
       daily.add(DailyOrder(
           count: element.count ?? 0, date: element.date?.substring(5) ?? ''));
     });
+    daily = daily.reversed.toList();
     return daily;
   }
 
   List<LastThreeActive> _getLastThreeCaptain(List<LastThreeCaptainsActive> d) {
     List<LastThreeActive> daily = [];
     d.forEach((element) {
+      var date = '';
+      date += DateHelper.convert(element.createdAt?.timestamp).year.toString() +
+          '/';
+      date +=
+          DateHelper.convert(element.createdAt?.timestamp).month.toString() +
+              '/';
+      date += DateHelper.convert(element.createdAt?.timestamp).day.toString();
       daily.add(LastThreeActive(
-          createAt: '',
+          createAt: date,
           id: element.id ?? -1,
           image: element.images?.image ?? '',
           name: element.captainName ?? S.current.unknown));
@@ -68,8 +78,16 @@ class StatisticsModel extends DataModel {
   List<LastThreeActive> _getLastThreeStore(List<LastThreeStoresActive> d) {
     List<LastThreeActive> daily = [];
     d.forEach((element) {
+      var date = '';
+      date += DateHelper.convert(element.createdAt?.timestamp).year.toString() +
+          '/';
+      date +=
+          DateHelper.convert(element.createdAt?.timestamp).month.toString() +
+              '/';
+      date += DateHelper.convert(element.createdAt?.timestamp).day.toString();
+
       daily.add(LastThreeActive(
-          createAt: '',
+          createAt: date,
           id: element.id ?? -1,
           image: element.images?.image ?? '',
           name: element.storeOwnerName ?? S.current.unknown));

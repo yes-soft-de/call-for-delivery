@@ -1,3 +1,4 @@
+import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_statistics/model/statistics_model.dart';
 import 'package:flutter/material.dart';
 
@@ -17,8 +18,9 @@ class LastAvtiveInfo extends StatelessWidget {
               lastActive.image,
               fit: BoxFit.cover,
             )),
-        title: Text(lastActive.id.toString()),
-        subtitle: Text(lastActive.name),
+        title: Text('${S.current.id}: ${lastActive.id.toString()}'),
+        subtitle: Text(
+            '${S.current.name}: ${lastActive.name}\n${S.current.createDate}: ${lastActive.createAt}'),
       ),
     );
   }

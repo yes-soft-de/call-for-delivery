@@ -920,9 +920,10 @@
     "lastSevenDays": "اخر سبع ايام",
     "last3Active": "اخر 3 متصلين",
     "minDeliveredPerDay": "اقل عدد طلبات في اليوم",
-    "maxDeliveredPerDay": "اكثر عدد باليوم",
+    "maxDeliveredPerDay": "اكثر عدد طلبات باليوم",
     "activeCapitan": "الكباتن المفعلين",
     "activeStores": "المتاجر المفعلة",
     "inactiveStores": "المتاجر الغير مفعلة",
+    "id": "المعرف",
     "statistics": "إحصائيات"
 }

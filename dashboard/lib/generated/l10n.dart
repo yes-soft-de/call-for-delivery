@@ -9250,20 +9250,20 @@ class S {
     );
   }
 
-  /// `min delivered per day`
+  /// `Min delivered per day`
   String get minDeliveredPerDay {
     return Intl.message(
-      'min delivered per day',
+      'Min delivered per day',
       name: 'minDeliveredPerDay',
       desc: '',
       args: [],
     );
   }
 
-  /// `max delivered per day`
+  /// `Max delivered per day`
   String get maxDeliveredPerDay {
     return Intl.message(
-      'max delivered per day',
+      'Max delivered per day',
       name: 'maxDeliveredPerDay',
       desc: '',
       args: [],
@@ -9295,6 +9295,16 @@ class S {
     return Intl.message(
       'inactive stores',
       name: 'inactiveStores',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `id`
+  String get id {
+    return Intl.message(
+      'id',
+      name: 'id',
       desc: '',
       args: [],
     );
