@@ -461,22 +461,23 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                             return AlertDialog(
                               title: Text(S.current.updateDistance),
                               content: SizedBox(
-                                height: 175,
+                                height: 240,
                                 child: Form(
                                   key: form_key,
                                   child: Column(
                                     children: [
                                       CustomFormField(
                                         controller: distance,
-                                        hintText: S.current.distance + '10',
+                                        hintText: S.current.distance +
+                                            ' 10 ${S.current.km}',
                                       ),
-                                      // SizedBox(
-                                      //   height: 8,
-                                      // ),
-                                      // CustomFormField(
-                                      //   controller: reason,
-                                      //   hintText: S.current.reason,
-                                      // ),
+                                      SizedBox(
+                                        height: 8,
+                                      ),
+                                      CustomFormField(
+                                        controller: reason,
+                                        hintText: S.current.reason,
+                                      ),
                                       SizedBox(
                                         height: 16,
                                       ),
@@ -486,7 +487,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                                                     ?.validate() ==
                                                 true) {
                                               Navigator.of(context).pop();
-                                              screenState.manager.updateDistance(
+                                              screenState.manager.addExtraDistance(
                                                   screenState,
                                                   AddExtraDistanceRequest(
                                                       id: orderInfo.id,
@@ -499,7 +500,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                                             } else {
                                               Fluttertoast.showToast(
                                                   msg: S.current
-                                                      .pleaseEnterValidCoord);
+                                                      .pleaseEnterValidDistance);
                                             }
                                           },
                                           child: Text(S.current.update)),
@@ -520,7 +521,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                             return AlertDialog(
                               title: Text(S.current.updateDistance),
                               content: SizedBox(
-                                height: 175,
+                                height: 240,
                                 child: Form(
                                   key: form_key,
                                   child: Column(

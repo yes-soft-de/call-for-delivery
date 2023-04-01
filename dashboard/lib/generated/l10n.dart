@@ -8720,6 +8720,16 @@ class S {
     );
   }
 
+  /// `Please enter valid distance`
+  String get pleaseEnterValidDistance {
+    return Intl.message(
+      'Please enter valid distance',
+      name: 'pleaseEnterValidDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Are you sure ?\n you will recycle this order`
   String get recycleOrderWarning {
     return Intl.message(

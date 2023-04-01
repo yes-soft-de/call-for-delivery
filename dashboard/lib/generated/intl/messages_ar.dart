@@ -992,6 +992,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("من فضلك ادخل احداثيات صالحة"),
         "pleaseEnterValidCountryCode":
             MessageLookupByLibrary.simpleMessage("ادخال خاطئ"),
+        "pleaseEnterValidDistance":
+            MessageLookupByLibrary.simpleMessage("من فضلك ادخل مسافة صالحة"),
         "pleaseEnterValidPhoneNumber":
             MessageLookupByLibrary.simpleMessage("ادخل رقم هاتف صالح"),
         "pleaseEnterYourEmail": MessageLookupByLibrary.simpleMessage(
