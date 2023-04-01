@@ -26,7 +26,6 @@ class StatisticsStateManager {
     if (value.hasError) {
       _stateSubject.add(StatisticsLoadedState(screenState, null, error: value.error));
     } else if (value.isEmpty) {
-      // TODO: it may need to set empty to true
       _stateSubject.add(StatisticsLoadedState(screenState, null));
     } else {
       StatisticsModel statistics = value as StatisticsModel;

@@ -67,9 +67,12 @@ class MessageLookup extends MessageLookupByLibrary {
             "الإجرائيات التي طرأت على الطلب "),
         "activatedPlan": MessageLookupByLibrary.simpleMessage("الخطة مفعلة"),
         "active": MessageLookupByLibrary.simpleMessage("هذا المتجر  فعال"),
+        "activeCapitan":
+            MessageLookupByLibrary.simpleMessage("الكباتن المفعلين"),
         "activeCars": MessageLookupByLibrary.simpleMessage("السيارات المشغولة"),
         "activeOffer": MessageLookupByLibrary.simpleMessage("عرض فعال"),
         "activePlan": MessageLookupByLibrary.simpleMessage("الباقة الحالية"),
+        "activeStores": MessageLookupByLibrary.simpleMessage("المتاجر المفعلة"),
         "activityLog": MessageLookupByLibrary.simpleMessage("سجل الاستخدام"),
         "addBranch": MessageLookupByLibrary.simpleMessage("إضافة فرع"),
         "addBranchFailure": MessageLookupByLibrary.simpleMessage(
@@ -97,6 +100,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "admin": MessageLookupByLibrary.simpleMessage("المدير"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "all": MessageLookupByLibrary.simpleMessage("الكل"),
+        "allOrders": MessageLookupByLibrary.simpleMessage("كل الطلبات"),
         "allOrdersCount": MessageLookupByLibrary.simpleMessage("عدد الطلبات"),
         "alreadyCanceled":
             MessageLookupByLibrary.simpleMessage("الطلب ملغي مسبقا"),
@@ -637,6 +641,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "inactiveOffer":
             MessageLookupByLibrary.simpleMessage("عرض منتهي الصلاحية"),
         "inactivePlan": MessageLookupByLibrary.simpleMessage("الخطة غير مفعلة"),
+        "inactiveStores":
+            MessageLookupByLibrary.simpleMessage("المتاجر الغير مفعلة"),
         "info": MessageLookupByLibrary.simpleMessage("حول الطلب"),
         "informSendCode": MessageLookupByLibrary.simpleMessage(
             "سنقوم بأرسال كود تحقق الى رقمك"),
@@ -673,10 +679,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("+100 موظف"),
         "last24CountOrder":
             MessageLookupByLibrary.simpleMessage("الطلبات آخر ٢٤ ساعة"),
+        "last3Active": MessageLookupByLibrary.simpleMessage("اخر 3 متصلين"),
         "last7WeekOrders":
             MessageLookupByLibrary.simpleMessage("الطلبات آخر ٧ أيام"),
         "lastName": MessageLookupByLibrary.simpleMessage("الكنية"),
         "lastSeenMessage": MessageLookupByLibrary.simpleMessage("رسائل جديدة"),
+        "lastSevenDays": MessageLookupByLibrary.simpleMessage("اخر سبع ايام"),
         "lastWeek": MessageLookupByLibrary.simpleMessage("الأسبوع الماضي"),
         "latestUpdates": MessageLookupByLibrary.simpleMessage("اخر التحديثات"),
         "lebanon": MessageLookupByLibrary.simpleMessage("لبنان"),
@@ -690,12 +698,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "makePayment": MessageLookupByLibrary.simpleMessage("تسجيل دفعة"),
         "male": MessageLookupByLibrary.simpleMessage("ذكر"),
         "manageBranch": MessageLookupByLibrary.simpleMessage("إدارة الأفرع"),
+        "maxDeliveredPerDay":
+            MessageLookupByLibrary.simpleMessage("اكثر عدد باليوم"),
         "me": MessageLookupByLibrary.simpleMessage("أنا"),
         "mechanichLicence": MessageLookupByLibrary.simpleMessage("رخصة السير"),
         "mediumMoreThan20EmployeesLessThan100":
             MessageLookupByLibrary.simpleMessage("21 - 100 موظف"),
         "middleName":
             MessageLookupByLibrary.simpleMessage("الاسم الاوسط او اسم الأب"),
+        "minDeliveredPerDay":
+            MessageLookupByLibrary.simpleMessage("اقل عدد طلبات في اليوم"),
         "minute": MessageLookupByLibrary.simpleMessage("دقيقة"),
         "minutes": MessageLookupByLibrary.simpleMessage("دقائق"),
         "mohammad": MessageLookupByLibrary.simpleMessage("محمد"),

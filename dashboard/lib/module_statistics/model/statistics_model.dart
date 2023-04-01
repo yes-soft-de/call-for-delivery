@@ -11,7 +11,8 @@ class StatisticsModel extends DataModel {
   late StatisticsStores stores;
   late StatisticsModel _model;
 
-  StatisticsModel({required this.orders, required this.captains, required this.stores});
+  StatisticsModel(
+      {required this.orders, required this.captains, required this.stores});
 
   StatisticsModel.withData(StatisticsResponse response) : super.withData() {
     var ordersR = response.data?.data?.orders?.counts;
@@ -20,10 +21,13 @@ class StatisticsModel extends DataModel {
 
     StatisticsOrder order = StatisticsOrder(
         allOrders: ordersR?.allOrders ?? 0,
-        dailyOrders: _getDailyOrder(ordersR?.delivered?.lastSevenDays?.daily ?? []),
+        dailyOrders:
+            _getDailyOrder(ordersR?.delivered?.lastSevenDays?.daily ?? []),
         lastSevenDays: ordersR?.delivered?.lastSevenDays?.sum ?? 0,
-        maxDeliveredPerDay: ordersR?.delivered?.lastSevenDays?.maxDeliveredCountPerDay ?? 0,
-        minDeliveredPerDay: ordersR?.delivered?.lastSevenDays?.minDeliveredCountPerDay ?? 0,
+        maxDeliveredPerDay:
+            ordersR?.delivered?.lastSevenDays?.maxDeliveredCountPerDay ?? 0,
+        minDeliveredPerDay:
+            ordersR?.delivered?.lastSevenDays?.minDeliveredCountPerDay ?? 0,
         ongoing: ordersR?.onGoing ?? 0,
         pending: ordersR?.pending ?? 0);
 
@@ -43,7 +47,8 @@ class StatisticsModel extends DataModel {
   List<DailyOrder> _getDailyOrder(List<Daily> d) {
     List<DailyOrder> daily = [];
     d.forEach((element) {
-      daily.add(DailyOrder(count: element.count ?? 0, date: element.date?.substring(5) ?? ''));
+      daily.add(DailyOrder(
+          count: element.count ?? 0, date: element.date?.substring(5) ?? ''));
     });
     return daily;
   }
@@ -54,7 +59,7 @@ class StatisticsModel extends DataModel {
       daily.add(LastThreeActive(
           createAt: '',
           id: element.id ?? -1,
-          images: element.images?.image ?? '',
+          image: element.images?.image ?? '',
           name: element.captainName ?? S.current.unknown));
     });
     return daily;
@@ -66,7 +71,7 @@ class StatisticsModel extends DataModel {
       daily.add(LastThreeActive(
           createAt: '',
           id: element.id ?? -1,
-          images: element.images?.image ?? '',
+          image: element.images?.image ?? '',
           name: element.storeOwnerName ?? S.current.unknown));
     });
     return daily;
@@ -134,11 +139,11 @@ class LastThreeActive {
   int id;
   String name;
   String createAt;
-  String images;
+  String image;
   LastThreeActive({
     required this.id,
     required this.name,
     required this.createAt,
-    required this.images,
+    required this.image,
   });
 }

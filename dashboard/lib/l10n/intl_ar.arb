@@ -916,5 +916,13 @@
     "showPayments": "عرض المدفوعات",
     "addaPayment": "إضافة دفعة",
     "duesByFilter": "المستحقات وفق الفلترة",
+    "allOrders": "كل الطلبات",
+    "lastSevenDays": "اخر سبع ايام",
+    "last3Active": "اخر 3 متصلين",
+    "minDeliveredPerDay": "اقل عدد طلبات في اليوم",
+    "maxDeliveredPerDay": "اكثر عدد باليوم",
+    "activeCapitan": "الكباتن المفعلين",
+    "activeStores": "المتاجر المفعلة",
+    "inactiveStores": "المتاجر الغير مفعلة",
     "statistics": "إحصائيات"
 }

@@ -20,9 +20,9 @@ class StatisticsServiec {
 
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '200')
-      return DataModel.withError(StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
 
-    // TODO: data before datum
     if (response.data == null) return DataModel.empty();
 
     return StatisticsModel.withData(response);

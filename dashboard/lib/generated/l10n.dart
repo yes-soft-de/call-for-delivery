@@ -9220,6 +9220,86 @@ class S {
     );
   }
 
+  /// `all orders`
+  String get allOrders {
+    return Intl.message(
+      'all orders',
+      name: 'allOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `last seven days`
+  String get lastSevenDays {
+    return Intl.message(
+      'last seven days',
+      name: 'lastSevenDays',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `last 3 avtive`
+  String get last3Active {
+    return Intl.message(
+      'last 3 avtive',
+      name: 'last3Active',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `min delivered per day`
+  String get minDeliveredPerDay {
+    return Intl.message(
+      'min delivered per day',
+      name: 'minDeliveredPerDay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `max delivered per day`
+  String get maxDeliveredPerDay {
+    return Intl.message(
+      'max delivered per day',
+      name: 'maxDeliveredPerDay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `active capitan`
+  String get activeCapitan {
+    return Intl.message(
+      'active capitan',
+      name: 'activeCapitan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `active stores`
+  String get activeStores {
+    return Intl.message(
+      'active stores',
+      name: 'activeStores',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `inactive stores`
+  String get inactiveStores {
+    return Intl.message(
+      'inactive stores',
+      name: 'inactiveStores',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `statistics`
   String get statistics {
     return Intl.message(

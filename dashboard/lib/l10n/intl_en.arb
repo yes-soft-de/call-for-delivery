@@ -917,5 +917,13 @@
     "showPayments": "show payments",
     "addaPayment": "add a payment",
     "duesByFilter": "Dues by filter",
+    "allOrders": "all orders",
+    "lastSevenDays": "last seven days",
+    "last3Active": "last 3 avtive",
+    "minDeliveredPerDay": "min delivered per day",
+    "maxDeliveredPerDay": "max delivered per day",
+    "activeCapitan": "active capitan",
+    "activeStores": "active stores",
+    "inactiveStores": "inactive stores",
     "statistics": "statistics"
 }
