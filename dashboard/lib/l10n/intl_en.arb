@@ -926,5 +926,9 @@
     "activeStores": "active stores",
     "inactiveStores": "inactive stores",
     "id": "id",
+    "number": "number",
+    "LastDeliveredDelivery": "Last delivered delivery",
+    "LastCreatedDelivery": "Last created delivery",
+    "orderDeliveredThisWeek": "order delivered this week",
     "statistics": "statistics"
 }

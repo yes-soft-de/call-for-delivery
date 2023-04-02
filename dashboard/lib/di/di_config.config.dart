@@ -660,10 +660,10 @@ _i1.GetIt $initGetIt(_i1.GetIt getIt,
       () => _i111.SplashModule(gh<_i47.SplashScreen>()));
   gh.factory<_i112.StatisticManager>(
       () => _i112.StatisticManager(gh<_i48.StatisticsReposetory>()));
-  gh.factory<_i113.StatisticsServiec>(
-      () => _i113.StatisticsServiec(gh<_i112.StatisticManager>()));
+  gh.factory<_i113.StatisticsService>(
+      () => _i113.StatisticsService(gh<_i112.StatisticManager>()));
   gh.factory<_i114.StatisticsStateManager>(
-      () => _i114.StatisticsStateManager(gh<_i113.StatisticsServiec>()));
+      () => _i114.StatisticsStateManager(gh<_i113.StatisticsService>()));
   gh.factory<_i115.StoreBalanceStateManager>(
       () => _i115.StoreBalanceStateManager(gh<_i104.PaymentsService>()));
   gh.factory<_i116.StoreManager>(

@@ -29,6 +29,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "هذه المنطقة تحتوي زر ذو تأثير حساس قد يؤدي إلى فقدان جميع بيانات هذا الحساب مع عدم الإمكانية لاستردادها في الوقت الراهن"),
         "FinanceRequest": MessageLookupByLibrary.simpleMessage("طلب خطة عمل"),
         "InvalidInput": MessageLookupByLibrary.simpleMessage("غير صالح"),
+        "LastCreatedDelivery":
+            MessageLookupByLibrary.simpleMessage("انشاء اخر طلب"),
+        "LastDeliveredDelivery":
+            MessageLookupByLibrary.simpleMessage("تسليم اخر طلب"),
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("المسافة المقطوعة بالكيلومتر"),
         "StatusCodeNotFound": MessageLookupByLibrary.simpleMessage(
@@ -784,6 +788,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "notificationsDeletedSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الإشعارات بنجاح"),
         "now": MessageLookupByLibrary.simpleMessage("الآن"),
+        "number": MessageLookupByLibrary.simpleMessage("الرقم"),
         "numberofRatings":
             MessageLookupByLibrary.simpleMessage("عدد التقييمات"),
         "offerLog": MessageLookupByLibrary.simpleMessage("سجل العروض"),
@@ -819,6 +824,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderDate": MessageLookupByLibrary.simpleMessage("تاريخ الطلب"),
         "orderDeliveredDescription":
             MessageLookupByLibrary.simpleMessage("تم توصيل الطلب"),
+        "orderDeliveredThisWeek":
+            MessageLookupByLibrary.simpleMessage("الطلبات المسلمة هذا الاسبوع"),
         "orderDeliveryCost":
             MessageLookupByLibrary.simpleMessage("سعر توصيل الطلب"),
         "orderDetailHint": MessageLookupByLibrary.simpleMessage(

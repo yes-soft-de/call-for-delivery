@@ -10,18 +10,18 @@ import 'package:rxdart/rxdart.dart';
 
 @injectable
 class StatisticsStateManager {
-  final StatisticsServiec _statisticsServiec;
+  final StatisticsService _statisticsService;
   final PublishSubject<States> _stateSubject = PublishSubject();
 
   StatisticsStateManager(
-    this._statisticsServiec,
+    this._statisticsService,
   );
 
   Stream<States> get stateStream => _stateSubject.stream;
 
   void getStatistics(StatisticsScreenState screenState) async {
     _stateSubject.add(LoadingState(screenState));
-    var value = await _statisticsServiec.getStatistics();
+    var value = await _statisticsService.getStatistics();
 
     if (value.hasError) {
       _stateSubject.add(StatisticsLoadedState(screenState, null, error: value.error));

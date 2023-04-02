@@ -9310,6 +9310,46 @@ class S {
     );
   }
 
+  /// `number`
+  String get number {
+    return Intl.message(
+      'number',
+      name: 'number',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last delivered delivery`
+  String get LastDeliveredDelivery {
+    return Intl.message(
+      'Last delivered delivery',
+      name: 'LastDeliveredDelivery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last created delivery`
+  String get LastCreatedDelivery {
+    return Intl.message(
+      'Last created delivery',
+      name: 'LastCreatedDelivery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order delivered this week`
+  String get orderDeliveredThisWeek {
+    return Intl.message(
+      'order delivered this week',
+      name: 'orderDeliveredThisWeek',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `statistics`
   String get statistics {
     return Intl.message(

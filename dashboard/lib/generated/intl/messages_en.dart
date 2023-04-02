@@ -30,6 +30,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "FinanceRequest":
             MessageLookupByLibrary.simpleMessage("Finance request"),
         "InvalidInput": MessageLookupByLibrary.simpleMessage("Invalid"),
+        "LastCreatedDelivery":
+            MessageLookupByLibrary.simpleMessage("Last created delivery"),
+        "LastDeliveredDelivery":
+            MessageLookupByLibrary.simpleMessage("Last delivered delivery"),
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("distance in KM"),
         "StatusCodeNotFound":
@@ -792,6 +796,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "notificationsDeletedSuccess": MessageLookupByLibrary.simpleMessage(
             "Notifications deleted successfully"),
         "now": MessageLookupByLibrary.simpleMessage("Now"),
+        "number": MessageLookupByLibrary.simpleMessage("number"),
         "numberofRatings":
             MessageLookupByLibrary.simpleMessage("Number of rates"),
         "offerLog": MessageLookupByLibrary.simpleMessage("Offer log"),
@@ -826,6 +831,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderDate": MessageLookupByLibrary.simpleMessage("order date"),
         "orderDeliveredDescription":
             MessageLookupByLibrary.simpleMessage("your order has delivered"),
+        "orderDeliveredThisWeek":
+            MessageLookupByLibrary.simpleMessage("order delivered this week"),
         "orderDeliveryCost":
             MessageLookupByLibrary.simpleMessage("Order delivery cost"),
         "orderDetailHint": MessageLookupByLibrary.simpleMessage(

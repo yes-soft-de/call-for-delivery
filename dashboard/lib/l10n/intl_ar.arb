@@ -925,5 +925,9 @@
     "activeStores": "المتاجر المفعلة",
     "inactiveStores": "المتاجر الغير مفعلة",
     "id": "المعرف",
+    "number": "الرقم",
+    "LastDeliveredDelivery": "تسليم اخر طلب",
+    "LastCreatedDelivery": "انشاء اخر طلب",
+    "orderDeliveredThisWeek": "الطلبات المسلمة هذا الاسبوع",
     "statistics": "إحصائيات"
 }

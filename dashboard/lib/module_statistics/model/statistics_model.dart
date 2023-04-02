@@ -60,12 +60,18 @@ class StatisticsModel extends DataModel {
     List<LastThreeActive> daily = [];
     d.forEach((element) {
       var date = '';
-      date += DateHelper.convert(element.createdAt?.timestamp).year.toString() +
-          '/';
       date +=
           DateHelper.convert(element.createdAt?.timestamp).month.toString() +
-              '/';
+              '-';
       date += DateHelper.convert(element.createdAt?.timestamp).day.toString();
+
+      date += '  ';
+
+      date += DateHelper.convert(element.createdAt?.timestamp).hour.toString()+
+              ':';
+      date +=
+          DateHelper.convert(element.createdAt?.timestamp).minute.toString();
+          
       daily.add(LastThreeActive(
           createAt: date,
           id: element.id ?? -1,
@@ -79,12 +85,17 @@ class StatisticsModel extends DataModel {
     List<LastThreeActive> daily = [];
     d.forEach((element) {
       var date = '';
-      date += DateHelper.convert(element.createdAt?.timestamp).year.toString() +
-          '/';
       date +=
           DateHelper.convert(element.createdAt?.timestamp).month.toString() +
-              '/';
+              '-';
       date += DateHelper.convert(element.createdAt?.timestamp).day.toString();
+
+      date += '  ';
+
+      date += DateHelper.convert(element.createdAt?.timestamp).hour.toString()+
+              ':';
+      date +=
+          DateHelper.convert(element.createdAt?.timestamp).minute.toString();
 
       daily.add(LastThreeActive(
           createAt: date,
