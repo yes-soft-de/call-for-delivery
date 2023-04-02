@@ -943,5 +943,7 @@
     "inactiveStores": "inactive stores",
     "id": "id",
     "statistics": "statistics",
-    "captainRetreatOrder":"Captain retreat to deliver order"
+    "captainRetreatOrder":"Captain retreat to deliver order",
+    "advanced":"Advanced"
+
 }

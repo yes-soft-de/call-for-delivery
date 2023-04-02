@@ -98,6 +98,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addition": MessageLookupByLibrary.simpleMessage("إضافة"),
         "address": MessageLookupByLibrary.simpleMessage("العنوان"),
         "admin": MessageLookupByLibrary.simpleMessage("المدير"),
+        "advanced": MessageLookupByLibrary.simpleMessage("سلفا"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "all": MessageLookupByLibrary.simpleMessage("الكل"),
         "allOrders": MessageLookupByLibrary.simpleMessage("كل الطلبات"),
