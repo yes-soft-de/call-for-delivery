@@ -349,33 +349,6 @@ class OrderEntityRepository extends ServiceEntityRepository
 //            ->getResult();
 //    }
 
-        // Following function had been commented out because it isn't being used anywhere
-//    public function acceptedOrderByCaptainId($captainId, int $userId): ?array
-//    {
-//        return $this->createQueryBuilder('orderEntity')
-//            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
-//            'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state', 'orderEntity.orderIsMain')
-//            ->addSelect('rateEntity.rating')
-//            ->addSelect('bidDetailsEntity as bidDetails')
-//
-//            ->leftJoin(RateEntity::class, 'rateEntity', Join::WITH, 'rateEntity.orderId = orderEntity.id and rateEntity.rated = :userId')
-//
-//            ->leftJoin(BidDetailsEntity::class, 'bidDetailsEntity', Join::WITH, 'bidDetailsEntity.orderId = orderEntity.id')
-//
-//            ->andWhere('orderEntity.state != :delivered')
-//            ->andWhere('orderEntity.captainId = :captainId')
-//
-//            ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
-//            ->setParameter('captainId', $captainId)
-//            ->setParameter('userId', $userId)
-//
-//            ->andWhere('orderEntity.isHide = :isHide')
-//            ->setParameter('isHide', OrderIsHideConstant::ORDER_SHOW)
-//
-//            ->getQuery()
-//            ->getResult();
-//    }
-
     public function getSpecificOrderForCaptain(int $id, int $captainId, int $userId): ?array
      {   
         return $this->createQueryBuilder('orderEntity')
@@ -1588,8 +1561,8 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = orderEntity.storeOwner')
 
-            ->where('orderEntity.state = :deliveredState'
-                .' OR (orderEntity.state = :cancelledState AND orderEntity.orderCancelledByUserAndAtState IN (:orderCancelledByUserAndAtStateArray)')
+            ->where('(orderEntity.state = :deliveredState)'
+                .' OR (orderEntity.state = :cancelledState AND orderEntity.orderCancelledByUserAndAtState IN (:orderCancelledByUserAndAtStateArray))')
             ->setParameter('deliveredState', OrderStateConstant::ORDER_STATE_DELIVERED)
             ->setParameter('cancelledState', OrderStateConstant::ORDER_STATE_CANCEL)
             ->setParameter('orderCancelledByUserAndAtStateArray', OrderCancelledByUserAndAtStateConstant::ORDER_CANCEL_USER_AND_STATE_ARRAY)
