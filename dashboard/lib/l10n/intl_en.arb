@@ -885,7 +885,7 @@
     "sortedByLatest": "Sorted by latest",
     "selected": "Selected",
     "delete": "Delete",
-    "notices": "Notices",
+    "notices": "Offers & Ads",
     "orderPriceOnCreditWarning": "Please remove order price after setting payment method to credit",
     "remove": "Remove",
     "addition": "Addition",
@@ -942,5 +942,6 @@
     "activeStores": "active stores",
     "inactiveStores": "inactive stores",
     "id": "id",
-    "statistics": "statistics"
+    "statistics": "statistics",
+    "captainRetreatOrder":"Captain retreat to deliver order"
 }

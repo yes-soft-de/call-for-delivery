@@ -238,6 +238,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain Payments"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("Captain rated successfully"),
+        "captainRetreatOrder": MessageLookupByLibrary.simpleMessage(
+            "Captain retreat to deliver order"),
         "captainStartedDelivery":
             MessageLookupByLibrary.simpleMessage("Captain Started Delivery"),
         "captainStateActive": MessageLookupByLibrary.simpleMessage("Active"),
@@ -793,7 +795,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "noteOfOrder": MessageLookupByLibrary.simpleMessage(
             "Please place your order notes"),
         "notice": MessageLookupByLibrary.simpleMessage("Updates"),
-        "notices": MessageLookupByLibrary.simpleMessage("Notices"),
+        "notices": MessageLookupByLibrary.simpleMessage("Offers & Ads"),
         "notificationDeletedSuccess": MessageLookupByLibrary.simpleMessage(
             "Notification deleted successfully"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),

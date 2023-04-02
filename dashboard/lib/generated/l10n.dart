@@ -8900,10 +8900,10 @@ class S {
     );
   }
 
-  /// `Notices`
+  /// `Offers & Ads`
   String get notices {
     return Intl.message(
-      'Notices',
+      'Offers & Ads',
       name: 'notices',
       desc: '',
       args: [],
@@ -9385,6 +9385,16 @@ class S {
     return Intl.message(
       'statistics',
       name: 'statistics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain retreat to deliver order`
+  String get captainRetreatOrder {
+    return Intl.message(
+      'Captain retreat to deliver order',
+      name: 'captainRetreatOrder',
       desc: '',
       args: [],
     );

@@ -69,6 +69,8 @@ class ActionTypeLogsHelper {
         return S.current.recycleOrderDone;
       case 33:
         return S.current.updateCustomerLocation;
+      case 35:
+        return S.current.captainRetreatOrder;
       default:
         return S.current.unknownAction + ' !${orderLog}';
     }

@@ -884,7 +884,7 @@
     "sortedByLatest": "من الأقدم للأحدث",
     "selected": "تحديد",
     "delete": "حذف",
-    "notices": "التحديثات",
+    "notices": "الإعلانات والعروض",
     "orderPriceOnCreditWarning": "لقد حددت سعر الطلبية الرجاء إزالتها في حالة كانت الطلبية مدفوعة",
     "remove": "إزالة",
     "addition": "إضافة",
@@ -939,5 +939,6 @@
     "activeStores": "المتاجر المفعلة",
     "inactiveStores": "المتاجر الغير مفعلة",
     "id": "المعرف",
-    "statistics": "إحصائيات"
+    "statistics": "إحصائيات",
+    "captainRetreatOrder":"قام الكابتن بالتراجع عن تسليم الطلب"
 }

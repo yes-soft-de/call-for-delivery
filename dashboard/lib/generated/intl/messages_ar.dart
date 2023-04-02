@@ -237,6 +237,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("دفعات الكابتن"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("تم تقييم الكابتن بنجاح"),
+        "captainRetreatOrder": MessageLookupByLibrary.simpleMessage(
+            "قام الكابتن بالتراجع عن تسليم الطلب"),
         "captainStartedDelivery":
             MessageLookupByLibrary.simpleMessage("بدأ الكابتن التوصيل"),
         "captainStateActive": MessageLookupByLibrary.simpleMessage("فعال"),
@@ -785,7 +787,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "noteOfOrder":
             MessageLookupByLibrary.simpleMessage("دون ملاحظاتك حول الطلب"),
         "notice": MessageLookupByLibrary.simpleMessage("التحديثات"),
-        "notices": MessageLookupByLibrary.simpleMessage("التحديثات"),
+        "notices": MessageLookupByLibrary.simpleMessage("الإعلانات والعروض"),
         "notificationDeletedSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الإشعار بنجاح"),
         "notifications": MessageLookupByLibrary.simpleMessage("الاشعارات"),
