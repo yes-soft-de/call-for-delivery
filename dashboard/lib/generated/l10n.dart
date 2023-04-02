@@ -9240,10 +9240,10 @@ class S {
     );
   }
 
-  /// `last 3 avtive`
+  /// `last 3 active`
   String get last3Active {
     return Intl.message(
-      'last 3 avtive',
+      'last 3 active',
       name: 'last3Active',
       desc: '',
       args: [],

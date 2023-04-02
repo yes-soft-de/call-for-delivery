@@ -918,7 +918,7 @@
     "duesByFilter": "المستحقات وفق الفلترة",
     "allOrders": "كل الطلبات",
     "lastSevenDays": "اخر سبع ايام",
-    "last3Active": "اخر 3 متصلين",
+    "last3Active": "اخر 3 فعالين",
     "minDeliveredPerDay": "اقل عدد طلبات في اليوم",
     "maxDeliveredPerDay": "اكثر عدد طلبات باليوم",
     "activeCapitan": "الكباتن المفعلين",

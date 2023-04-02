@@ -3,8 +3,8 @@ import 'package:c4d/module_statistics/model/statistics_model.dart';
 import 'package:flutter/material.dart';
 
 class StoreInfo extends StatelessWidget {
-  final LastThreeActive captain;
-  const StoreInfo({Key? key, required this.captain}) : super(key: key);
+  final LastThreeActive store;
+  const StoreInfo({Key? key, required this.store}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,16 +19,16 @@ class StoreInfo extends StatelessWidget {
                 height: 50,
                 width: 50,
                 child: Image.network(
-                  captain.image,
+                  store.image,
                   fit: BoxFit.cover,
                 )),
-            Text('${S.current.name}: ${captain.name}'),
-            Text('${S.current.number}: ${captain.id}'),
+            Text('${S.current.name}: ${store.name}'),
+            Text('${S.current.number}: ${store.id}'),
             Divider(
               thickness: 1,
               color: Colors.white,
             ),
-            Text('${S.current.LastDeliveredDelivery}\n ${captain.createAt}'),
+            Text('${S.current.LastCreatedDelivery}\n ${store.createAt}'),
           ],
         ),
       ),

@@ -17,8 +17,8 @@ class OrdersRows extends StatelessWidget {
             title: S.current.maxDeliveredPerDay,
             value: statisticsOrder.maxDeliveredPerDay.toString()),
         OrdersDetailsRow(
-            title: S.current.maxDeliveredPerDay,
-            value: statisticsOrder.maxDeliveredPerDay.toString()),
+            title: S.current.minDeliveredPerDay,
+            value: statisticsOrder.minDeliveredPerDay.toString()),
       ],
     );
   }

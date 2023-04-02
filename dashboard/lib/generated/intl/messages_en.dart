@@ -693,7 +693,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("+100 Employees"),
         "last24CountOrder":
             MessageLookupByLibrary.simpleMessage("Last 24h orders"),
-        "last3Active": MessageLookupByLibrary.simpleMessage("last 3 avtive"),
+        "last3Active": MessageLookupByLibrary.simpleMessage("last 3 active"),
         "last7WeekOrders":
             MessageLookupByLibrary.simpleMessage("Last 7 days orders"),
         "lastName": MessageLookupByLibrary.simpleMessage("Last name"),

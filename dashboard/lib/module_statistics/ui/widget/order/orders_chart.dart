@@ -177,8 +177,26 @@ class OrdersChartState extends State<OrdersChart> {
     );
   }
 
-  List<String> getDayNameList() {
-    var list = [
+  List<String> get weekDays {
+    // if (getIt<LocalizationService>().getLanguage() == 'ar') {
+    //   return [
+    //     'الاثنين',
+    //     'الثلاثاء',
+    //     'الاربعاء',
+    //     'الخميس',
+    //     'الجمعة',
+    //     'السبت',
+    //     'الاحد',
+    //     'الاثنين',
+    //     'الثلاثاء',
+    //     'الاربعاء',
+    //     'الخميس',
+    //     'الجمعة',
+    //     'السبت',
+    //     'الاحد'
+    //   ];
+    // }
+    return [
       'Mn',
       'Te',
       'Wd',
@@ -194,9 +212,14 @@ class OrdersChartState extends State<OrdersChart> {
       'St',
       'Su'
     ];
+  }
+
+  List<String> getDayNameList() {
+    var list = weekDays;
     var result = <String>[];
 
     int day = DateTime.now().weekday;
+
     for (int i = 0; i < 7; i++) {
       result.add(list[day++]);
     }

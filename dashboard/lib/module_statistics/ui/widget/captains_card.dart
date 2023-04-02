@@ -2,6 +2,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_statistics/model/statistics_model.dart';
 import 'package:c4d/module_statistics/ui/widget/captain_info.dart';
 import 'package:c4d/module_statistics/ui/widget/order/detail_row.dart';
+import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
 class CaptainsCard extends StatelessWidget {
@@ -19,14 +20,18 @@ class CaptainsCard extends StatelessWidget {
               value: captains.active.toString()),
           DetailRow(
               title: S.current.inActiveCaptains,
-              value: captains.active.toString()),
+              value: captains.nonActive.toString()),
           Text(S.current.last3Active),
           Expanded(
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
+            child: Swiper(
               itemCount: captains.captains.length,
-              itemBuilder: (context, index) => Expanded(
-                  child: CaptainInfo(captain: captains.captains[index])),
+              itemBuilder: (BuildContext context, int index) {
+                return CaptainInfo(captain: captains.captains[index]);
+              },
+              pagination: SwiperPagination(
+                  margin: EdgeInsets.only(bottom: 5),
+                  builder: SwiperPagination.dots,
+                  alignment: Alignment.bottomCenter),
             ),
           )
         ],
