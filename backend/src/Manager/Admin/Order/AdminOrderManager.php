@@ -582,4 +582,12 @@ class AdminOrderManager
     {
         return $this->adminStoreOrderDetailsManager->updateStoreOrderDetailsDifferentReceiverDestinationByOrderId($orderId, $differentReceiverDestination);
     }
+
+    /**
+     * Gets last five delivered orders with captains' images
+     */
+    public function getLastFiveDeliveredOrdersWithCaptainsProfilesImages(): array
+    {
+        return $this->orderEntityRepository->getLastDeliveredOrdersWithCaptainProfileImage();
+    }
 }

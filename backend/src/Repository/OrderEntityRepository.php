@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\ChatRoom\ChatRoomConstant;
+use App\Constant\Image\ImageEntityTypeConstant;
+use App\Constant\Image\ImageUseAsConstant;
 use App\Constant\Order\OrderCancelledByUserAndAtStateConstant;
 use App\Constant\Order\OrderDestinationConstant;
 use App\Constant\Order\OrderDistanceConstant;
@@ -2696,5 +2698,41 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getSingleColumnResult();
+    }
+
+    /**
+     * Gets last five delivered orders with captains' images
+     */
+    public function getLastDeliveredOrdersWithCaptainProfileImage(): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+
+            ->addSelect('imageEntity.imagePath as captainProfileImage')
+
+            ->andWhere('orderEntity.state = :deliveredState')
+            ->setParameter('deliveredState', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = orderEntity.captainId'
+            )
+
+            ->leftJoin(
+                ImageEntity::class,
+                'imageEntity',
+                Join::WITH,
+                'imageEntity.itemId = captainEntity.id and imageEntity.entityType = :entityType and imageEntity.usedAs = :usedAs'
+            )
+
+            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
+            ->setParameter('usedAs', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+
+            ->orderBy('orderEntity.id', 'DESC')
+            ->setMaxResults(5)
+
+            ->getQuery()
+            ->getResult();
     }
 }
