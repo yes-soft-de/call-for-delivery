@@ -1859,4 +1859,62 @@ class AdminOrderService
 
         return false;
     }
+
+    /**
+     * Gets last five created orders
+     */
+    public function getLastFiveCreatedOrders(): array
+    {
+        return $this->adminOrderManager->getLastFiveCreatedOrders();
+    }
+
+    /**
+     * Gets last five delivered orders with captains' images
+     */
+    public function getLastFiveDeliveredOrdersWithCaptainsProfilesImages(): array
+    {
+        return $this->adminOrderManager->getLastFiveDeliveredOrdersWithCaptainsProfilesImages();
+    }
+
+    /**
+     * Gets last five stores which created orders
+     */
+    public function getStoresWhichCreatedLastFiveOrders(): array
+    {
+        $response = [];
+
+        $orders = $this->getLastFiveCreatedOrders();
+
+        if (count($orders) > 0) {
+            foreach ($orders as $key => $value) {
+                $response[$key]['id'] = $value->getStoreOwner()->getId();
+                $response[$key]['storeOwnerName'] = $value->getStoreOwner()->getStoreOwnerName();
+                $response[$key]['images'] = $this->uploadFileHelperService->getImageParams($value->getStoreOwner()->getImages());
+                $response[$key]['createdAt'] = $value->getStoreOwner()->getCreatedAt();
+            }
+        }
+
+        return $response;
+    }
+
+    /**
+     * Gets last five captains who delivered orders
+     */
+    public function getCaptainsWhoDeliveredLastFiveOrders(): array
+    {
+        $response = [];
+
+        $orders = $this->getLastFiveDeliveredOrdersWithCaptainsProfilesImages();
+
+        if (count($orders) > 0) {
+            foreach ($orders as $key => $value) {
+                $response[$key]['id'] = $value[0]->getCaptainId()->getId();
+                $response[$key]['captainName'] = $value[0]->getCaptainId()->getCaptainName();
+                $response[$key]['images'] = $this->uploadFileHelperService->getImageParams($value['captainProfileImage']);
+                $response[$key]['createdAt'] = $value[0]->getCaptainId()->getCreatedAt();
+            }
+        }
+
+        return $response;
+    }
 }

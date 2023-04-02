@@ -1071,11 +1071,31 @@ class OrderController extends BaseController
      * or
      *
      * @OA\Response(
-     *      response="default",
-     *      description="Return erorr.",
+     *      response=200,
+     *      description="Return error.",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9202"),
-     *          @OA\Property(type="string", property="msg", description="can not remove it, The captain received the order"),
+     *          oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9205"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9213"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9225"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9215"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9203"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   )
+     *              }
      *      )
      * )
      *
@@ -1084,15 +1104,6 @@ class OrderController extends BaseController
     public function orderCancel(int $id): JsonResponse
     {
         $response = $this->orderService->orderCancelByStoreOwner($id, $this->getUserId());
-
-//        if(isset($response->statusError)) {
-//            if($response->statusError === OrderResultConstant::ORDER_NOT_REMOVE_TIME) {
-//                return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_REMOVE_TIME);
-//            }
-//
-//            if($response->statusError === OrderResultConstant::ORDER_NOT_REMOVE_CAPTAIN_RECEIVED) {
-//                return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_REMOVE_CAPTAIN_RECEIVE);
-//            }
 
         if ($response === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_NOT_FOUND);

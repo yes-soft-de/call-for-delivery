@@ -4,8 +4,6 @@ namespace App\Constant\Order;
 
 final class OrderStateConstant
 {
-    const ORDER_STATE_NOT_PAID = "not paid";
-
     /**
      * this is the first status of the bid order, not pending
      * when a price offer is accepted, then the status of the bid order become pending
@@ -41,4 +39,7 @@ final class OrderStateConstant
     ];
 
     const ORDER_STATE_ONGOING_TILL_DELIVERED_ARRAY = ["in store", "picked", "ongoing", "delivered"];
+
+    const ORDER_STATE_PENDING_TILL_DELIVERED_ARRAY = ["pending", "on way to pick order", "in store", "picked",
+        "ongoing", "delivered"];
 }
