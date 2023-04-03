@@ -12,6 +12,8 @@ class OrdersChart extends StatefulWidget {
   }) : super(key: key);
 
   final Color barColor = Colors.black;
+  final Color minBarColor = Colors.red;
+  final Color maxBarColor = Colors.green;
   final Color thisDayColor = Colors.orange;
   final Color avgColor = Colors.yellowAccent;
   @override
@@ -21,6 +23,7 @@ class OrdersChart extends StatefulWidget {
 class OrdersChartState extends State<OrdersChart> {
   final double barWidth = 13;
   late double maxOrder;
+  late double minOrder;
 
   late List<BarChartGroupData> rawBarGroups;
   late List<BarChartGroupData> showingBarGroups;
@@ -31,7 +34,8 @@ class OrdersChartState extends State<OrdersChart> {
   void initState() {
     super.initState();
 
-    maxOrder = getMaxOrder(widget.statisticsOrder).toDouble();
+    maxOrder = maxOrderNum(widget.statisticsOrder).toDouble();
+    minOrder = minOrderNum(widget.statisticsOrder).toDouble();
     rawBarGroups = getBarChartGroupData(widget.statisticsOrder);
 
     showingBarGroups = rawBarGroups;
@@ -42,6 +46,7 @@ class OrdersChartState extends State<OrdersChart> {
     return Padding(
       padding: const EdgeInsets.only(),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -87,7 +92,9 @@ class OrdersChartState extends State<OrdersChart> {
                             barRods: showingBarGroups[touchedGroupIndex]
                                 .barRods
                                 .map((rod) {
-                              return rod.copyWith(color: widget.avgColor);
+                              return rod.copyWith(
+                                  color: widget.avgColor,
+                                  toY: rod.toY == 0.1 ? 0 : rod.toY);
                             }).toList(),
                           );
                         }
@@ -127,6 +134,17 @@ class OrdersChartState extends State<OrdersChart> {
               ),
             ),
           ),
+          // Padding(
+          //   padding: const EdgeInsets.symmetric(horizontal: 8),
+          //   child: Column(
+          //     children: [
+          //       Text(S.current.maxDeliveredPerDay,
+          //           style: TextStyle(color: Colors.green)),
+          //       Text(S.current.minDeliveredPerDay,
+          //           style: TextStyle(color: Colors.red)),
+          //     ],
+          //   ),
+          // ),
         ],
       ),
     );
@@ -144,13 +162,22 @@ class OrdersChartState extends State<OrdersChart> {
     return list;
   }
 
-  int getMaxOrder(StatisticsOrder statisticsOrder) {
+  int maxOrderNum(StatisticsOrder statisticsOrder) {
     var daily = statisticsOrder.dailyOrders;
     int max = daily[0].count;
 
     for (var day in daily) if (max < day.count) max = day.count;
 
     return max;
+  }
+
+  int minOrderNum(StatisticsOrder statisticsOrder) {
+    var daily = statisticsOrder.dailyOrders;
+    int min = daily[0].count;
+
+    for (var day in daily) if (min > day.count) min = day.count;
+
+    return min;
   }
 
   Widget leftTitles(double value, TitleMeta meta) {
@@ -261,13 +288,22 @@ class OrdersChartState extends State<OrdersChart> {
   }
 
   BarChartGroupData makeGroupData(int x, double y1) {
+    Color color = widget.barColor;
+
+    if (y1 == maxOrder) color = widget.maxBarColor;
+    if (y1 == minOrder) color = widget.minBarColor;
+
+    // to present it as dote in the chart
+    // 0 not showing at all
+    if (y1 == 0) y1 = 0.1;
+
     return BarChartGroupData(
       barsSpace: 4,
       x: x,
       barRods: [
         BarChartRodData(
           toY: y1,
-          color: widget.barColor,
+          color: color,
           width: barWidth,
         ),
       ],

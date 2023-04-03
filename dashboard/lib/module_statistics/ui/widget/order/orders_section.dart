@@ -1,7 +1,6 @@
 import 'package:c4d/module_statistics/model/statistics_model.dart';
 import 'package:c4d/module_statistics/ui/widget/order/orders_cards.dart';
 import 'package:c4d/module_statistics/ui/widget/order/orders_chart.dart';
-import 'package:c4d/module_statistics/ui/widget/order/orders_rows.dart';
 
 import 'package:flutter/material.dart';
 
@@ -21,7 +20,7 @@ class OrdersSection extends StatelessWidget {
           SizedBox(height: 20),
           OrdersCards(statisticsOrder: statisticsOrder),
           SizedBox(height: 20),
-          OrdersRows(statisticsOrder: statisticsOrder)
+          // OrdersRows(statisticsOrder: statisticsOrder)
         ],
       ),
     );

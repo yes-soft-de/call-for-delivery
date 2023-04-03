@@ -12,28 +12,39 @@ class StoresCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        children: [
-          DetailRow(
-              title: S.current.activeStores, value: stores.active.toString()),
-          DetailRow(
-              title: S.current.inactiveStores,
-              value: stores.nonActive.toString()),
-          Text(S.current.last3Active),
-          Expanded(
-            child: Swiper(
-              pagination: SwiperPagination(
-                  margin: EdgeInsets.only(bottom: 5),
-                  builder: SwiperPagination.dots,
-                  alignment: Alignment.bottomCenter),
-              itemCount: stores.stores.length,
-              itemBuilder: (BuildContext context, int index) {
-                return StoreInfo(store: stores.stores[index]);
-              },
+    return AspectRatio(
+      aspectRatio: 1 / 2,
+      child: Card(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  DetailRow(
+                      title: S.current.activeStores,
+                      value: stores.active.toString()),
+                  DetailRow(
+                      title: S.current.inactiveStores,
+                      value: stores.nonActive.toString()),
+                ],
+              ),
             ),
-          )
-        ],
+            Text(S.current.last3Active),
+            Expanded(
+              child: Swiper(
+                pagination: SwiperPagination(
+                    margin: EdgeInsets.only(bottom: 5),
+                    builder: SwiperPagination.dots,
+                    alignment: Alignment.bottomCenter),
+                itemCount: stores.stores.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return StoreInfo(store: stores.stores[index]);
+                },
+              ),
+            )
+          ],
+        ),
       ),
     );
   }

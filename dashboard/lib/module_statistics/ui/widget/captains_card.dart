@@ -12,29 +12,39 @@ class CaptainsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Column(
-        children: [
-          DetailRow(
-              title: S.current.activeCapitan,
-              value: captains.active.toString()),
-          DetailRow(
-              title: S.current.inActiveCaptains,
-              value: captains.nonActive.toString()),
-          Text(S.current.last3Active),
-          Expanded(
-            child: Swiper(
-              itemCount: captains.captains.length,
-              itemBuilder: (BuildContext context, int index) {
-                return CaptainInfo(captain: captains.captains[index]);
-              },
-              pagination: SwiperPagination(
-                  margin: EdgeInsets.only(bottom: 5),
-                  builder: SwiperPagination.dots,
-                  alignment: Alignment.bottomCenter),
+    return AspectRatio(
+      aspectRatio: 1 / 2,
+      child: Card(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                children: [
+                  DetailRow(
+                      title: S.current.activeCapitan,
+                      value: captains.active.toString()),
+                  DetailRow(
+                      title: S.current.inActiveCaptains,
+                      value: captains.nonActive.toString()),
+                ],
+              ),
             ),
-          )
-        ],
+            Text(S.current.last3Active),
+            Expanded(
+              child: Swiper(
+                itemCount: captains.captains.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return CaptainInfo(captain: captains.captains[index]);
+                },
+                pagination: SwiperPagination(
+                    margin: EdgeInsets.only(bottom: 5),
+                    builder: SwiperPagination.dots,
+                    alignment: Alignment.bottomCenter),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
