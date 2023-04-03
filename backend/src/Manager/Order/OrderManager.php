@@ -103,12 +103,12 @@ class OrderManager
     {      
        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($userId);
        
-       return  $this->orderRepository->getStoreOrders($storeOwner->getId());     
+       return $this->orderRepository->getStoreOrders($storeOwner->getId());
     }
 
     public function getSpecificOrderForStore(int $id): ?array
     {      
-       return  $this->orderRepository->getSpecificOrderForStore($id); 
+       return $this->orderRepository->getSpecificOrderForStore($id);
     }
 
     public function filterStoreOrders(OrderFilterRequest $request, int $userId): ?array
@@ -177,7 +177,7 @@ class OrderManager
         return $this->orderRepository->getSpecificBidOrderForCaptain($id, $captainId->getId(), $userId);
     }
 
-    public function  orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request): ?OrderEntity
+    public function orderUpdateStateByCaptain(OrderUpdateByCaptainRequest $request): ?OrderEntity
     {
         $orderEntity = $this->orderRepository->find($request->getId());
 
@@ -294,14 +294,6 @@ class OrderManager
         return $this->orderRepository->getCountOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
     }
 
-    /**
-     * This function had been commented out because it isn't being used anywhere
-     */
-//    public function getOrdersByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): ?array
-//    {
-//        return $this->orderRepository->getOrdersByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom, $countKilometersTo);
-//    }
-
     // This function filter bid orders which the supplier had not provide a price offer for any one of them yet.
     public function filterBidOrdersBySupplier(BidOrderFilterBySupplierRequest $request): array|string
     {
@@ -383,12 +375,6 @@ class OrderManager
 
         return $this->orderTimeLineManager->createOrderLogs($request);
     }
-
-    /// This function had been commented out because it isn't being used anywhere
-    //public function getOrdersPendingBeforeSpecificDate(DateTime $specificTime): ?array
-    //{
-     //   return $this->orderRepository->getOrdersPendingBeforeSpecificDate($specificTime);
-    //}
 
     /**
      * Get pending orders which aren't hidden nor sub orders
@@ -737,21 +723,6 @@ class OrderManager
         return $orderEntity;
     }
 
-//    public function getOrderEntityByIdAndState(int $orderId, string $orderState): ?OrderEntity
-//    {
-//        return $this->orderRepository->findOneBy(['id' => $orderId, 'state' => $orderState]);
-//    }
-
-//    /**
-//     * Get all orders with details that delivered by specific captain during specific date and storeBranchToClientDistance
-//     * for each order belong to the specific category of the third financial system
-//     */
-//    public function getOrdersDetailsByFinancialSystemThree(int $captainId, string $fromDate, string $toDate, float $countKilometersFrom, float $countKilometersTo): array
-//    {
-//        return $this->orderRepository->getOrdersDetailsByFinancialSystemThree($captainId, $fromDate, $toDate, $countKilometersFrom,
-//            $countKilometersTo);
-//    }
-
     /**
      * Get count of orders without distance and delivered by specific captain during specific time
      */
@@ -839,5 +810,14 @@ class OrderManager
         $this->entityManager->flush();
 
         return [$orderEntity, $captainProfile];
+    }
+
+    /**
+     * Get visible pending orders which aren't sub orders
+     */
+    public function findVisiblePendingOrders(): array
+    {
+        return $this->orderRepository->findBy(['state' => OrderStateConstant::ORDER_STATE_PENDING,
+            'orderType' => OrderTypeConstant::ORDER_TYPE_NORMAL, 'isHide' => OrderIsHideConstant::ORDER_SHOW]);
     }
 }

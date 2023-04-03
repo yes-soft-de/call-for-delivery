@@ -22,22 +22,14 @@ use DateTime;
 
 class ReportService
 {
-    private AutoMapping $autoMapping;
-    private AdminStoreOwnerService $adminStoreOwnerService;
-    private AdminOrderService $adminOrderService;
-    private AdminCaptainService $adminCaptainService;
-    private DateFactoryService $dateFactoryService;
-    private UploadFileHelperService $uploadFileHelperService;
-
-    public function __construct(AutoMapping $autoMapping, AdminStoreOwnerService $adminStoreOwnerService, AdminOrderService $adminOrderService, AdminCaptainService $adminCaptainService,
-                                DateFactoryService $dateFactoryService, UploadFileHelperService $uploadFileHelperService)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private AdminStoreOwnerService $adminStoreOwnerService,
+        private AdminOrderService $adminOrderService,
+        private AdminCaptainService $adminCaptainService,
+        private DateFactoryService $dateFactoryService,
+        private UploadFileHelperService $uploadFileHelperService)
     {
-        $this->autoMapping = $autoMapping;
-        $this->adminStoreOwnerService = $adminStoreOwnerService;
-        $this->adminOrderService = $adminOrderService;
-        $this->adminCaptainService = $adminCaptainService;
-        $this->dateFactoryService = $dateFactoryService;
-        $this->uploadFileHelperService = $uploadFileHelperService;
     }
 
     public function getStatisticsForAdmin(): StatisticsForAdminGetResponse
@@ -60,7 +52,7 @@ class ReportService
 
         // Get the count of delivered orders last seven days
         $response['previousWeekDeliveredOrdersCount'] = $this->adminOrderService->getDeliveredOrdersCountBetweenTwoDatesForAdmin(new \DateTime('-7 day'),
-            new \DateTime('now'),);
+            new \DateTime('now'));
 
         return $this->autoMapping->map('array', StatisticsForAdminGetResponse::class, $response);
     }
@@ -86,8 +78,24 @@ class ReportService
         $response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["sum"] = array_sum($response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["daily"]);
 
         $countValues = array_column($response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["daily"], "count");
-        $response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["minDeliveredCountPerDay"] = min($countValues);
-        $response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["maxDeliveredCountPerDay"] = max($countValues);
+
+        $minOrderCountPerDay = min($countValues);
+        $maxOrderCountPerDay = max($countValues);
+
+        $response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["minDeliveredCountPerDay"] = $minOrderCountPerDay;
+        $response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["maxDeliveredCountPerDay"] = $maxOrderCountPerDay;
+
+        // get the date of the day which contains the min orders count
+        $response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["minDeliveredCountDayDate"] = $this->getSpecificObjectOfArrayBySpecificPropertyValue(
+            $response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["daily"], "count",
+            $minOrderCountPerDay, "date"
+        );
+
+        // get the date of the day which contains the max orders count
+        $response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["maxDeliveredCountDayDate"] = $this->getSpecificObjectOfArrayBySpecificPropertyValue(
+            $response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["daily"], "count",
+            $maxOrderCountPerDay, "date"
+        );
 
         $response["data"]["orders"]["count"]["pending"] = $this->adminOrderService->getPendingOrdersCountForAdmin();
         $response["data"]["orders"]["count"]["onGoing"] = $this->adminOrderService->getCountOrderOngoingForAdmin();
@@ -96,11 +104,13 @@ class ReportService
         $response["data"]["stores"]["count"]["active"] = $this->adminStoreOwnerService->getStoreOwnersProfilesCountByStatusForAdmin(StoreProfileConstant::STORE_OWNER_PROFILE_ACTIVE_STATUS);
         $response["data"]["stores"]["count"]["inactive"] = $this->adminStoreOwnerService->getStoreOwnersProfilesCountByStatusForAdmin(StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS);
         $response["data"]["stores"]["count"]["lastThreeActive"] = $this->adminStoreOwnerService->getLastThreeActiveStoreOwnersProfilesForAdmin();
+        $response["data"]["stores"]["count"]["lastFiveCreatedOrderStores"] = $this->adminOrderService->getStoresWhichCreatedLastFiveOrders();
 
         // 3. captains statistics
         $response["data"]["captains"]["count"]["active"] = $this->adminCaptainService->getCaptainsCountByStatusForAdmin(CaptainConstant::CAPTAIN_ACTIVE);;
         $response["data"]["captains"]["count"]["inactive"] = $this->adminCaptainService->getCaptainsCountByStatusForAdmin(CaptainConstant::CAPTAIN_INACTIVE);;
         $response["data"]["captains"]["count"]["lastThreeActive"] = $this->adminCaptainService->getLastThreeActiveCaptainsProfilesForAdmin();
+        $response["data"]["captains"]["count"]["lastFiveDeliveredOrdersCaptains"] = $this->adminOrderService->getCaptainsWhoDeliveredLastFiveOrders();
 
         return $response;
     }
@@ -275,4 +285,18 @@ class ReportService
 //
 //        return $response;
 //    }
+
+    /**
+     * Get specific object of array by specific parameter's value of this object
+     */
+    public function getSpecificObjectOfArrayBySpecificPropertyValue(array $mainArray, string $propertyKey, int $comparingValue, string $propertyToBeReturned): string
+    {
+        foreach ($mainArray as $item) {
+            if ($item[$propertyKey] === $comparingValue) {
+                return $item[$propertyToBeReturned];
+            }
+        }
+
+        return $mainArray[0][$propertyToBeReturned];
+    }
 }

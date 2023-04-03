@@ -1147,8 +1147,8 @@ class AdminOrderController extends BaseController
     }
 
     /**
-     * admin: filter orders whose has not distance  has calculated 
-     * @Route("filterorderswhosehasnotdistancehascalculated", name="filterOrdersWhoseHasNotDistanceHasCalculated ", methods={"POST"})
+     * admin: filter orders which distance hadn't been calculated
+     * @Route("filterorderswhosehasnotdistancehascalculated", name="filterOrdersWhoseHasNotDistanceHasCalculated", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse

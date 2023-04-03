@@ -14,7 +14,6 @@ use App\Request\Admin\Report\StoresAndOrdersCountDuringSpecificTimeFilterByAdmin
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\Persistence\ManagerRegistry;
-use Symfony\Component\Validator\Constraints\Date;
 
 /**
  * @method StoreOwnerProfileEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -323,32 +322,6 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
 
         return $stores;
     }
-
-//    public function getStoreDeliveredOrdersCountDuringSpecificDateForAdmin(int $storeProfileId, \DateTime $startDate, \DateTime $endDate): array
-//    {
-//        return $this->createQueryBuilder('storeOwnerProfileEntity')
-//            ->select('COUNT(orderEntity.id)')
-//
-//            ->andWhere('storeOwnerProfileEntity.id = :storeProfileId')
-//            ->setParameter('storeProfileId', $storeProfileId)
-//
-//            ->leftJoin(
-//                OrderEntity::class,
-//                'orderEntity',
-//                Join::WITH,
-//                'orderEntity.storeOwner = storeOwnerProfileEntity.id'
-//            )
-//
-//            ->andWhere('orderEntity.state = :delivered')
-//            ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
-//
-//            ->andWhere('orderEntity.createdAt >= :fromDate AND orderEntity.createdAt <= :toDate')
-//            ->setParameter('fromDate', $startDate)
-//            ->setParameter('toDate', $endDate)
-//
-//            ->getQuery()
-//            ->getSingleColumnResult();
-//    }
 
     public function getStoreDeliveredOrdersCountByOptionalDatesForAdmin(int $storeProfileId, ?string $startDate, ?string $endDate, ?string $customizedTimeZone): array
     {

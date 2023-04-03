@@ -582,4 +582,21 @@ class AdminOrderManager
     {
         return $this->adminStoreOrderDetailsManager->updateStoreOrderDetailsDifferentReceiverDestinationByOrderId($orderId, $differentReceiverDestination);
     }
+
+    /**
+     * Gets last five delivered orders with captains' images
+     */
+    public function getLastFiveDeliveredOrdersWithCaptainsProfilesImages(): array
+    {
+        return $this->orderEntityRepository->getLastDeliveredOrdersWithCaptainProfileImage();
+    }
+
+    /**
+     * Gets last five created orders
+     */
+    public function getLastFiveCreatedOrders(): array
+    {
+        return $this->orderEntityRepository->findBy(['state' => OrderStateConstant::ORDER_STATE_PENDING_TILL_DELIVERED_ARRAY],
+            ['id' =>'DESC'], 5);
+    }
 }

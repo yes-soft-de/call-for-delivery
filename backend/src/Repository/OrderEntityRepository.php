@@ -5,6 +5,8 @@ namespace App\Repository;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\ChatRoom\ChatRoomConstant;
+use App\Constant\Image\ImageEntityTypeConstant;
+use App\Constant\Image\ImageUseAsConstant;
 use App\Constant\Order\OrderCancelledByUserAndAtStateConstant;
 use App\Constant\Order\OrderDestinationConstant;
 use App\Constant\Order\OrderDistanceConstant;
@@ -346,32 +348,6 @@ class OrderEntityRepository extends ServiceEntityRepository
 //            ->getQuery()
 //            ->getResult();
 //    }
-    
-    public function acceptedOrderByCaptainId($captainId, int $userId): ?array
-    {
-        return $this->createQueryBuilder('orderEntity')
-            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
-            'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state', 'orderEntity.orderIsMain')
-            ->addSelect('rateEntity.rating')
-            ->addSelect('bidDetailsEntity as bidDetails')
-           
-            ->leftJoin(RateEntity::class, 'rateEntity', Join::WITH, 'rateEntity.orderId = orderEntity.id and rateEntity.rated = :userId')
-
-            ->leftJoin(BidDetailsEntity::class, 'bidDetailsEntity', Join::WITH, 'bidDetailsEntity.orderId = orderEntity.id')
-
-            ->andWhere('orderEntity.state != :delivered')
-            ->andWhere('orderEntity.captainId = :captainId')
-
-            ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
-            ->setParameter('captainId', $captainId)
-            ->setParameter('userId', $userId)
-           
-            ->andWhere('orderEntity.isHide = :isHide')
-            ->setParameter('isHide', OrderIsHideConstant::ORDER_SHOW)
-           
-            ->getQuery()
-            ->getResult();
-    }
 
     public function getSpecificOrderForCaptain(int $id, int $captainId, int $userId): ?array
      {   
@@ -527,22 +503,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             $tempQuery = $query->getQuery()->getResult();
 
             return $this->filterOrdersByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
-
-            //$query->andWhere('orderEntity.createdAt >= :createdAt');
-            //$query->setParameter('createdAt', new DateTime($request->getFromDate()));
-
         }
-//        elseif (($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-//            $query->andWhere('orderEntity.createdAt <= :createdAt');
-//            $query->setParameter('createdAt', new DateTime($request->getToDate()));
-//
-//        } elseif (($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
-//            $query->andWhere('orderEntity.createdAt >= :fromDate');
-//            $query->setParameter('fromDate', new DateTime($request->getFromDate()));
-//
-//            $query->andWhere('orderEntity.createdAt <= :toDate');
-//            $query->setParameter('toDate', new DateTime($request->getToDate()));
-//        }
 
         return $query->getQuery()->getResult();
     }
@@ -1195,21 +1156,6 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    // Following function had been commented out because it isn't being used anywhere
-//    public function getOrdersPendingBeforeSpecificDate(DateTime $specificTime): ?array
-//    {
-//        return $this->createQueryBuilder('orderEntity')
-//
-//            ->andWhere('orderEntity.deliveryDate < :specificTime')
-//            ->setParameter('specificTime', $specificTime)
-//
-//            ->andWhere('orderEntity.state = :state')
-//            ->setParameter('state', OrderStateConstant::ORDER_STATE_PENDING)
-//
-//            ->getQuery()
-//            ->getResult();
-//    }
-
     /**
      * Get pending orders which aren't hidden nor sub orders
      */
@@ -1615,8 +1561,8 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = orderEntity.storeOwner')
 
-            ->where('orderEntity.state = :deliveredState'
-                .' OR (orderEntity.state = :cancelledState AND orderEntity.orderCancelledByUserAndAtState IN (:orderCancelledByUserAndAtStateArray)')
+            ->where('(orderEntity.state = :deliveredState)'
+                .' OR (orderEntity.state = :cancelledState AND orderEntity.orderCancelledByUserAndAtState IN (:orderCancelledByUserAndAtStateArray))')
             ->setParameter('deliveredState', OrderStateConstant::ORDER_STATE_DELIVERED)
             ->setParameter('cancelledState', OrderStateConstant::ORDER_STATE_CANCEL)
             ->setParameter('orderCancelledByUserAndAtStateArray', OrderCancelledByUserAndAtStateConstant::ORDER_CANCEL_USER_AND_STATE_ARRAY)
@@ -2390,12 +2336,21 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('orderEntity')
             ->select('orderEntity.id ', 'orderEntity.orderType')
             ->addSelect('storeOrderDetails.destination')
+            ->addSelect('storeOwnerBranchEntity.location')
 
             ->leftJoin(
                 StoreOrderDetailsEntity::class,
                 'storeOrderDetails',
                 Join::WITH,
-                'orderEntity.id = storeOrderDetails.orderId')
+                'orderEntity.id = storeOrderDetails.orderId'
+            )
+
+            ->leftJoin(
+                StoreOwnerBranchEntity::class,
+                'storeOwnerBranchEntity',
+                Join::WITH,
+                'storeOwnerBranchEntity.id = storeOrderDetails.branch'
+            )
 
             ->andWhere('orderEntity.id = :id')
             ->setParameter('id', $orderId)
@@ -2716,5 +2671,41 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getSingleColumnResult();
+    }
+
+    /**
+     * Gets last five delivered orders with captains' images
+     */
+    public function getLastDeliveredOrdersWithCaptainProfileImage(): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+
+            ->addSelect('imageEntity.imagePath as captainProfileImage')
+
+            ->andWhere('orderEntity.state = :deliveredState')
+            ->setParameter('deliveredState', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = orderEntity.captainId'
+            )
+
+            ->leftJoin(
+                ImageEntity::class,
+                'imageEntity',
+                Join::WITH,
+                'imageEntity.itemId = captainEntity.id and imageEntity.entityType = :entityType and imageEntity.usedAs = :usedAs'
+            )
+
+            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
+            ->setParameter('usedAs', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+
+            ->orderBy('orderEntity.id', 'DESC')
+            ->setMaxResults(5)
+
+            ->getQuery()
+            ->getResult();
     }
 }

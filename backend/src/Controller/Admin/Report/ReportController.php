@@ -105,7 +105,9 @@ class ReportController extends BaseController
      *                                  ),
      *                                  @OA\Property(type="integer", property="sum"),
      *                                  @OA\Property(type="integer", property="minDeliveredCountPerDay"),
-     *                                  @OA\Property(type="integer", property="maxDeliveredCountPerDay")
+     *                                  @OA\Property(type="integer", property="maxDeliveredCountPerDay"),
+     *                                  @OA\Property(type="string", property="minDeliveredCountDayDate"),
+     *                                  @OA\Property(type="string", property="maxDeliveredCountDayDate")
      *                              ),
      *                          ),
      *                          @OA\Property(type="integer", property="pending"),
@@ -129,6 +131,20 @@ class ReportController extends BaseController
      *                                  ),
      *                                  @OA\Property(type="object", property="createdAt")
      *                              )
+     *                          ),
+     *                          @OA\Property(type="array", property="lastFiveCreatedOrderStores",
+     *                              @OA\Items(
+     *                                  @OA\Property(type="integer", property="id"),
+     *                                  @OA\Property(type="string", property="storeOwnerName"),
+     *                                  @OA\Property(type="array", property="images",
+     *                                      @OA\Items(
+     *                                          @OA\Property(type="string", property="imageURL"),
+     *                                          @OA\Property(type="string", property="image"),
+     *                                          @OA\Property(type="string", property="baseURL")
+     *                                      )
+     *                                  ),
+     *                                  @OA\Property(type="object", property="createdAt")
+     *                              )
      *                          )
      *                      )
      *                  ),
@@ -137,6 +153,20 @@ class ReportController extends BaseController
      *                          @OA\Property(type="integer", property="active"),
      *                          @OA\Property(type="integer", property="inactive"),
      *                          @OA\Property(type="array", property="lastThreeActive",
+     *                              @OA\Items(
+     *                                  @OA\Property(type="integer", property="id"),
+     *                                  @OA\Property(type="string", property="captainName"),
+     *                                  @OA\Property(type="array", property="images",
+     *                                      @OA\Items(
+     *                                          @OA\Property(type="string", property="imageURL"),
+     *                                          @OA\Property(type="string", property="image"),
+     *                                          @OA\Property(type="string", property="baseURL")
+     *                                      )
+     *                                  ),
+     *                                  @OA\Property(type="object", property="createdAt")
+     *                              )
+     *                          ),
+     *                          @OA\Property(type="array", property="lastFiveDeliveredOrdersCaptains",
      *                              @OA\Items(
      *                                  @OA\Property(type="integer", property="id"),
      *                                  @OA\Property(type="string", property="captainName"),
