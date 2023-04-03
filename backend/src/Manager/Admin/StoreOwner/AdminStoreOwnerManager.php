@@ -13,15 +13,12 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class AdminStoreOwnerManager
 {
-    private AutoMapping $autoMapping;
-    private EntityManagerInterface $entityManager;
-    private StoreOwnerProfileEntityRepository $storeOwnerProfileEntityRepository;
-
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, StoreOwnerProfileEntityRepository $storeOwnerProfileEntityRepository)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private EntityManagerInterface $entityManager,
+        private StoreOwnerProfileEntityRepository $storeOwnerProfileEntityRepository
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->entityManager = $entityManager;
-        $this->storeOwnerProfileEntityRepository = $storeOwnerProfileEntityRepository;
     }
 
     public function getStoreOwnerProfileByIdForAdmin(int $storeOwnerProfileId): ?array
@@ -39,6 +36,9 @@ class AdminStoreOwnerManager
         return $this->storeOwnerProfileEntityRepository->count(["status" => $storeOwnerProfileStatus]);
     }
 
+    /**
+     * Gets store owners' profiles according to status
+     */
     public function getStoreOwnersProfilesByStatusForAdmin(string $storeOwnerProfileStatus): ?array
     {
         return $this->storeOwnerProfileEntityRepository->getStoreOwnersProfilesByStatusForAdmin($storeOwnerProfileStatus);

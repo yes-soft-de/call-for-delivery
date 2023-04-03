@@ -9,6 +9,7 @@ use App\Entity\OrderEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Entity\StoreOwnerBranchEntity;
 use App\Entity\StoreOwnerProfileEntity;
+use App\Entity\SubscriptionDetailsEntity;
 use App\Entity\UserEntity;
 use App\Request\Admin\Report\StoresAndOrdersCountDuringSpecificTimeFilterByAdminRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -87,6 +88,9 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
+    /**
+     * Gets store owners' profiles according to status
+     */
     public function getStoreOwnersProfilesByStatusForAdmin(string $storeOwnerProfileStatus): ?array
     {
         $query = $this->createQueryBuilder('storeOwnerProfile')
@@ -94,18 +98,26 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
              'storeOwnerProfile.bankName', 'storeOwnerProfile.city', 'storeOwnerProfile.openingTime', 'storeOwnerProfile.closingTime', 'storeOwnerProfile.commission', 'storeOwnerProfile.employeeCount', 'storeOwnerProfile.phone', 'storeOwnerProfile.roomID',
              'storeOwnerProfile.stcPay', 'storeOwnerProfile.status', 'storeOwnerProfile.images')
             ->addSelect('userEntity.userId', 'userEntity.verificationStatus')
+            ->addSelect('subscriptionDetailsEntity as storeSubscriptionDetails')
 
             ->leftJoin(
                 UserEntity::class,
                 'userEntity',
                 Join::WITH,
                 'userEntity.id = storeOwnerProfile.storeOwnerId'
+            )
+
+            ->leftJoin(
+                SubscriptionDetailsEntity::class,
+                'subscriptionDetailsEntity',
+                Join::WITH,
+                'subscriptionDetailsEntity.storeOwner = storeOwnerProfile.id'
             );
 
-        if($storeOwnerProfileStatus === StoreProfileConstant::STORE_OWNER_PROFILE_ACTIVE_STATUS || $storeOwnerProfileStatus === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
+        if ($storeOwnerProfileStatus === StoreProfileConstant::STORE_OWNER_PROFILE_ACTIVE_STATUS
+            || $storeOwnerProfileStatus === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
             $query->andWhere('storeOwnerProfile.status = :storeOwnerProfileStatus');
             $query->setParameter('storeOwnerProfileStatus', $storeOwnerProfileStatus);
-
         }
 
         $query->orderBy('storeOwnerProfile.id', 'DESC');
