@@ -257,11 +257,14 @@ class OrderService
         return $response;
     }
 
+    /**
+     * Gets specific order details with store and captain info for store owner
+     */
     public function getSpecificOrderForStore(int $id): ?OrdersResponse
     {
         $order = $this->orderManager->getSpecificOrderForStore($id);
-        if ($order) {
 
+        if ($order) {
             $order['attention'] = $order['noteCaptainOrderCost'];
 
             $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);

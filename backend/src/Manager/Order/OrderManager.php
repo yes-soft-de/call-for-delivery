@@ -106,6 +106,9 @@ class OrderManager
        return $this->orderRepository->getStoreOrders($storeOwner->getId());
     }
 
+    /**
+     * Gets specific order details with store and captain info for store owner
+     */
     public function getSpecificOrderForStore(int $id): ?array
     {      
        return $this->orderRepository->getSpecificOrderForStore($id);

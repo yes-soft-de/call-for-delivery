@@ -93,6 +93,9 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Gets specific order details with store and captain info for store owner
+     */
     public function getSpecificOrderForStore(int $id): ?array
      {   
         return $this->createQueryBuilder('orderEntity')
@@ -100,7 +103,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->addSelect('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.noteCaptainOrderCost',
              'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.isCaptainArrived', 'orderEntity.dateCaptainArrived',
                 'orderEntity.captainOrderCost', 'orderEntity.paidToProvider', 'orderEntity.isHide', 'orderEntity.orderIsMain', 'orderEntity.storeBranchToClientDistance',
-                'orderEntity.isCashPaymentConfirmedByStore', 'orderEntity.isCashPaymentConfirmedByStoreUpdateDate')
+                'orderEntity.isCashPaymentConfirmedByStore', 'orderEntity.isCashPaymentConfirmedByStoreUpdateDate', 'orderEntity.costType')
             ->addSelect('storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
              'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOrderDetails.filePdf')
             ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName', 'storeOwnerBranch.branchPhone')
