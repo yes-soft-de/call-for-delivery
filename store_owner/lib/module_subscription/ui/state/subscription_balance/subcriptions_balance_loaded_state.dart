@@ -32,7 +32,7 @@ class SubscriptionBalanceLoadedState extends States {
       appBar: CustomC4dAppBar
           .appBar(context, title: S.current.mySubscription, actions: [
         Visibility(
-          visible: balanceStatusEnum == BalanceStatus.EXPIRED,
+          visible: balanceStatusEnum == BalanceStatus.EXPIRED || balanceStatusEnum == BalanceStatus.ORDERS_FINISHED,
           child: CustomC4dAppBar.actionIcon(context, onTap: () {
             showModalBottomSheet(
                 backgroundColor: Colors.transparent,

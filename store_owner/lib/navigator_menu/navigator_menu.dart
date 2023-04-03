@@ -323,7 +323,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                     children: [
                       ClipOval(
                         child: Image.asset(
-                          'assets/icon/logo.jpg',
+                          'assets/icon/logo.jpeg',
                           width: 75,
                           height: 75,
                           fit: BoxFit.scaleDown,

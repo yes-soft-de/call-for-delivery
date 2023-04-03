@@ -585,7 +585,7 @@ class OrderRecyclingLoaded extends States {
                 ),
                 // payment method
                 Visibility(
-                    visible: screenState.payments == 'card' &&
+                    visible: screenState.payments == 'cash' &&
                         screenState.priceController.text.isNotEmpty,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),

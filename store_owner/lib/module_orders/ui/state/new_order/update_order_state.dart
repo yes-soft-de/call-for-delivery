@@ -648,7 +648,7 @@ class UpdateOrderLoaded extends States {
                 ),
                 // payment method
                 Visibility(
-                    visible: screenState.payments == 'card' &&
+                    visible: screenState.payments == 'cash' &&
                         screenState.priceController.text.isNotEmpty,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -976,7 +976,7 @@ class UpdateOrderLoaded extends States {
       date: orderDate.toUtc().toIso8601String(),
       payment: screenState.payments,
       deliveryCost: deliveryCost,
-      costType: null,
+      costType: screenState.costType,
     ));
   }
 
