@@ -115,6 +115,9 @@ class AdminCaptainFinancialDailyGetService
         return $response;
     }
 
+    /**
+     * Filters captain financial daily amounts and get the sum amount of each captain
+     */
     public function filterCaptainFinancialDailySumByAdmin(CaptainFinancialDailyFilterByAdminRequest $request): array
     {
         $response = [];

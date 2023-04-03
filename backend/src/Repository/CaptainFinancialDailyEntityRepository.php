@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Constant\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyAmountConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyIsPaidConstant;
 use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\Image\ImageUseAsConstant;
@@ -247,6 +248,9 @@ class CaptainFinancialDailyEntityRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('captainFinancialDailyEntity')
 
             ->addSelect('imageEntity.imagePath', 'imageEntity.usedAs')
+
+            ->andWhere('captainFinancialDailyEntity.amount != :zeroValue')
+            ->setParameter('zeroValue', CaptainFinancialDailyAmountConstant::CAPTAIN_FINANCIAL_DAILY_AMOUNT_ZERO_CONST)
 
             ->leftJoin(
                 ImageEntity::class,
