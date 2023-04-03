@@ -164,6 +164,9 @@ class AdminOrderService
         return $response;
     }
 
+    /**
+     * Gets specific order details with store and captain info by order id for admin
+     */
     public function getSpecificOrderByIdForAdmin(int $id): ?OrderByIdGetForAdminResponse
     {
         $order = $this->adminOrderManager->getSpecificOrderByIdForAdmin($id);

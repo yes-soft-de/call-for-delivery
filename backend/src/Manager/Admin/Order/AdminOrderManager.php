@@ -62,6 +62,9 @@ class AdminOrderManager
         return $this->orderEntityRepository->filterStoreOrdersByAdmin($request);
     }
 
+    /**
+     * Gets specific order details with store and captain info by order id for admin
+     */
     public function getSpecificOrderByIdForAdmin(int $id): ?array
     {
         return $this->orderEntityRepository->getSpecificOrderByIdForAdmin($id);
