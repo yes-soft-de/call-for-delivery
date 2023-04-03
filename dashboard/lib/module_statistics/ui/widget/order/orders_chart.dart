@@ -14,7 +14,7 @@ class OrdersChart extends StatefulWidget {
   final Color barColor = Colors.black;
   final Color minBarColor = Colors.red;
   final Color maxBarColor = Colors.green;
-  final Color thisDayColor = Colors.orange;
+  final Color currentDayColor = Colors.blueAccent;
   final Color avgColor = Colors.yellowAccent;
   @override
   State<StatefulWidget> createState() => OrdersChartState();
@@ -61,7 +61,7 @@ class OrdersChartState extends State<OrdersChart> {
             ),
           ),
           AspectRatio(
-            aspectRatio: 6 / 2,
+            aspectRatio: 7 / 3,
             child: Card(
               color: Colors.white,
               child: BarChart(
@@ -171,11 +171,15 @@ class OrdersChartState extends State<OrdersChart> {
     return max;
   }
 
+  /// the current day not counted
   int minOrderNum(StatisticsOrder statisticsOrder) {
     var daily = statisticsOrder.dailyOrders;
+
     int min = daily[0].count;
 
-    for (var day in daily) if (min > day.count) min = day.count;
+    for (int i = 0; i < 6; i++) {
+      if (min > daily[i].count) min = daily[i].count;
+    }
 
     return min;
   }
@@ -265,7 +269,7 @@ class OrdersChartState extends State<OrdersChart> {
       text = Text(
         titles[value.toInt()],
         style: TextStyle(
-          color: widget.thisDayColor,
+          color: widget.currentDayColor,
           fontWeight: FontWeight.bold,
           fontSize: 14,
         ),
@@ -296,6 +300,9 @@ class OrdersChartState extends State<OrdersChart> {
     // to present it as dote in the chart
     // 0 not showing at all
     if (y1 == 0) y1 = 0.1;
+
+    // current day colored with [currentDayColor]
+    if (x == 6) color = widget.currentDayColor;
 
     return BarChartGroupData(
       barsSpace: 4,
