@@ -408,6 +408,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "createdDate": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
         "createdNewOrder":
             MessageLookupByLibrary.simpleMessage("تم إنشاء طلب جديد"),
+        "createdOrders": MessageLookupByLibrary.simpleMessage("أنشأوا طلبات"),
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("الرصيد الحالي:"),
         "currentFinancialCycle":
@@ -457,6 +458,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverForMe": MessageLookupByLibrary.simpleMessage("طلب خارجي"),
         "deliverPrice": MessageLookupByLibrary.simpleMessage("التوصيل"),
         "deliverTo": MessageLookupByLibrary.simpleMessage("اسم المستلم"),
+        "deliveredOrders": MessageLookupByLibrary.simpleMessage("سلمو طلبات"),
         "deliveringDescription":
             MessageLookupByLibrary.simpleMessage("الكابتن في طريقه إليك"),
         "deliveryCars": MessageLookupByLibrary.simpleMessage("سيارات التوصيل"),

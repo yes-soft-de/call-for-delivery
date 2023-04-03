@@ -931,5 +931,7 @@
     "orderDeliveredThisWeek": "الطلبات المسلمة هذا الاسبوع",
     "last": "اخر",
     "actives": "فعالين",
+    "deliveredOrders": "سلمو طلبات",
+    "createdOrders": "أنشأوا طلبات",
     "statistics": "إحصائيات"
 }

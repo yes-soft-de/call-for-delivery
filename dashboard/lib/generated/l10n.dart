@@ -9370,6 +9370,26 @@ class S {
     );
   }
 
+  /// `delivered orders`
+  String get deliveredOrders {
+    return Intl.message(
+      'delivered orders',
+      name: 'deliveredOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `created orders`
+  String get createdOrders {
+    return Intl.message(
+      'created orders',
+      name: 'createdOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `statistics`
   String get statistics {
     return Intl.message(

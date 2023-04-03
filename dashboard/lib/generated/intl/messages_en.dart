@@ -412,6 +412,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "createdDate": MessageLookupByLibrary.simpleMessage("Created date"),
         "createdNewOrder":
             MessageLookupByLibrary.simpleMessage("Created new order"),
+        "createdOrders": MessageLookupByLibrary.simpleMessage("created orders"),
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("Current Balance:"),
         "currentFinancialCycle":
@@ -461,6 +462,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverForMe": MessageLookupByLibrary.simpleMessage("Deliver on me"),
         "deliverPrice": MessageLookupByLibrary.simpleMessage("deliver price"),
         "deliverTo": MessageLookupByLibrary.simpleMessage("Deliver To"),
+        "deliveredOrders":
+            MessageLookupByLibrary.simpleMessage("delivered orders"),
         "deliveringDescription":
             MessageLookupByLibrary.simpleMessage("captain on his way to you"),
         "deliveryCars": MessageLookupByLibrary.simpleMessage("Delivery cars"),

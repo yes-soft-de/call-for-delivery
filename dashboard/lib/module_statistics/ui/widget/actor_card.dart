@@ -41,7 +41,10 @@ class ActorCard extends StatelessWidget {
                 ? Text(
                     '${S.current.last} ${actor.lastActorsActive.length} ${S.current.actives}')
                 : Text(
-                    '${S.current.last} ${actor.lastActorsMadeTransactions.length} ${S.current.actives}'),
+                    '${S.current.last} ${actor.lastActorsMadeTransactions.length} ' +
+                        (actor is StatisticsCaptains
+                            ? '${S.current.deliveredOrders}'
+                            : '${S.current.createdOrders}')),
             Expanded(
               child: Swiper(
                 pagination: SwiperPagination(
