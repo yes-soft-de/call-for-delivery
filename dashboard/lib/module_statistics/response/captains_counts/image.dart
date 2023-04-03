@@ -1,11 +1,11 @@
-class Images {
+class Image {
   String? imageUrl;
   String? image;
   String? baseUrl;
 
-  Images({this.imageUrl, this.image, this.baseUrl});
+  Image({this.imageUrl, this.image, this.baseUrl});
 
-  factory Images.fromJson(Map<String, dynamic> json) => Images(
+  factory Image.fromJson(Map<String, dynamic> json) => Image(
         imageUrl: json['imageURL'] as String?,
         image: json['image'] as String?,
         baseUrl: json['baseURL'] as String?,

@@ -3,7 +3,7 @@ import 'package:c4d/module_statistics/model/statistics_model.dart';
 import 'package:flutter/material.dart';
 
 class CaptainInfo extends StatelessWidget {
-  final LastThreeActive captain;
+  final Actor captain;
 
   const CaptainInfo({Key? key, required this.captain}) : super(key: key);
 

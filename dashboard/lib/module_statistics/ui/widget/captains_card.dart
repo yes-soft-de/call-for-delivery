@@ -33,9 +33,10 @@ class CaptainsCard extends StatelessWidget {
             Text(S.current.last3Active),
             Expanded(
               child: Swiper(
-                itemCount: captains.captains.length,
+                itemCount: captains.lastActorsMadeTransactions.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return CaptainInfo(captain: captains.captains[index]);
+                  return CaptainInfo(
+                      captain: captains.lastActorsMadeTransactions[index]);
                 },
                 pagination: SwiperPagination(
                     margin: EdgeInsets.only(bottom: 5),

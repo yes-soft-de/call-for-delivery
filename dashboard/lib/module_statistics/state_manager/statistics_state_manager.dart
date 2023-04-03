@@ -4,7 +4,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_statistics/model/statistics_model.dart';
 import 'package:c4d/module_statistics/service/statistics_service.dart';
 import 'package:c4d/module_statistics/ui/screen/statistics_screen.dart';
-import 'package:c4d/module_statistics/ui/state/statisics_state/statistics_state_loaded.dart';
+import 'package:c4d/module_statistics/ui/state/statistics_state/statistics_state_loaded.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -24,7 +24,8 @@ class StatisticsStateManager {
     var value = await _statisticsService.getStatistics();
 
     if (value.hasError) {
-      _stateSubject.add(StatisticsLoadedState(screenState, null, error: value.error));
+      _stateSubject
+          .add(StatisticsLoadedState(screenState, null, error: value.error));
     } else if (value.isEmpty) {
       _stateSubject.add(StatisticsLoadedState(screenState, null));
     } else {

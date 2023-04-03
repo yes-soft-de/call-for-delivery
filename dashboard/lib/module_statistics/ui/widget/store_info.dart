@@ -3,7 +3,7 @@ import 'package:c4d/module_statistics/model/statistics_model.dart';
 import 'package:flutter/material.dart';
 
 class StoreInfo extends StatelessWidget {
-  final LastThreeActive store;
+  final Actor store;
   const StoreInfo({Key? key, required this.store}) : super(key: key);
 
   @override

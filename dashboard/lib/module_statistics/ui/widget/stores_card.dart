@@ -37,9 +37,10 @@ class StoresCard extends StatelessWidget {
                     margin: EdgeInsets.only(bottom: 5),
                     builder: SwiperPagination.dots,
                     alignment: Alignment.bottomCenter),
-                itemCount: stores.stores.length,
+                itemCount: stores.lastActorsMadeTransactions.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return StoreInfo(store: stores.stores[index]);
+                  return StoreInfo(
+                      store: stores.lastActorsMadeTransactions[index]);
                 },
               ),
             )

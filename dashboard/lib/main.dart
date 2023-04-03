@@ -98,7 +98,8 @@ void main() async {
       runApp(getIt<MyApp>());
     }, (error, stackTrace) {
       print(error);
-      new Logger().error('Main', error.toString() + stackTrace.toString(), StackTrace.current);
+      new Logger().error(
+          'Main', error.toString() + stackTrace.toString(), StackTrace.current);
     });
   });
 }
@@ -190,15 +191,15 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     widget._localNotificationService.onLocalNotificationStream.listen((event) {
       NotificationModel notificationModel = NotificationModel.fromJson(event);
       if (notificationModel.navigateRoute == ChatRoutes.chatRoute) {
-        Navigator.pushNamed(
-            GlobalVariable.navState.currentContext!, notificationModel.navigateRoute ?? '',
+        Navigator.pushNamed(GlobalVariable.navState.currentContext!,
+            notificationModel.navigateRoute ?? '',
             arguments: ChatArgument(
                 roomID: notificationModel.chatNotification?.roomID ?? '',
                 userID: notificationModel.chatNotification?.senderID,
                 userType: null));
       } else {
-        Navigator.pushNamed(
-            GlobalVariable.navState.currentContext!, notificationModel.navigateRoute ?? '',
+        Navigator.pushNamed(GlobalVariable.navState.currentContext!,
+            notificationModel.navigateRoute ?? '',
             arguments: notificationModel.argument);
       }
     });
