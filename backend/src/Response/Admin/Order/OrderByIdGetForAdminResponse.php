@@ -144,4 +144,9 @@ class OrderByIdGetForAdminResponse
      * @var int|null
      */
     public $primaryOrderId;
+
+    /**
+     * @var int|null
+     */
+    public $costType;
 }

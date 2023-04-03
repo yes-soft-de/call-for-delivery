@@ -508,6 +508,9 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
+    /**
+     * Gets specific order details with store and captain info by order id for admin
+     */
     public function getSpecificOrderByIdForAdmin(int $id): ?array
     {
         return $this->createQueryBuilder('orderEntity')
@@ -516,7 +519,7 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'storeOrderDetails.recipientName', 'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
                 'imageEntity.imagePath as orderImage', 'captainEntity.captainName', 'captainEntity.phone', 'orderEntity.paidToProvider', 'orderEntity.noteCaptainOrderCost', 'orderEntity.captainOrderCost',
                 'storeOrderDetails.filePdf', 'orderEntity.storeBranchToClientDistance', 'orderEntity.isCashPaymentConfirmedByStore', 'orderEntity.isCashPaymentConfirmedByStoreUpdateDate',
-                'primaryOrderEntity.id as primaryOrderId')
+                'primaryOrderEntity.id as primaryOrderId', 'orderEntity.costType')
 
             ->addSelect('storeOwnerProfileEntity.id as storeOwnerId')
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')
