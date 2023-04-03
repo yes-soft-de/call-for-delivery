@@ -929,5 +929,7 @@
     "LastDeliveredDelivery": "تسليم اخر طلب",
     "LastCreatedDelivery": "انشاء اخر طلب",
     "orderDeliveredThisWeek": "الطلبات المسلمة هذا الاسبوع",
+    "last": "اخر",
+    "actives": "فعالين",
     "statistics": "إحصائيات"
 }

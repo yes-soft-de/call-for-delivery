@@ -9350,6 +9350,26 @@ class S {
     );
   }
 
+  /// `last`
+  String get last {
+    return Intl.message(
+      'last',
+      name: 'last',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `actives`
+  String get actives {
+    return Intl.message(
+      'actives',
+      name: 'actives',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `statistics`
   String get statistics {
     return Intl.message(

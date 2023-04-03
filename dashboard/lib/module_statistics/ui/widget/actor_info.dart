@@ -2,15 +2,16 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_statistics/model/statistics_model.dart';
 import 'package:flutter/material.dart';
 
-class CaptainInfo extends StatelessWidget {
-  final Actor captain;
+class ActorInfo extends StatelessWidget {
+  final Actor actor;
 
-  const CaptainInfo({Key? key, required this.captain}) : super(key: key);
+  const ActorInfo({Key? key, required this.actor}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: Colors.lightBlue.shade200,
+      color:
+          actor is Captain ? Colors.lightBlue.shade200 : Colors.yellow.shade200,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -20,16 +21,16 @@ class CaptainInfo extends StatelessWidget {
                 height: 50,
                 width: 50,
                 child: Image.network(
-                  captain.image,
+                  actor.image,
                   fit: BoxFit.cover,
                 )),
-            Text('${S.current.name}: ${captain.name}'),
-            Text('${S.current.number}: ${captain.id}'),
+            Text('${S.current.name}: ${actor.name}'),
+            Text('${S.current.number}: ${actor.id}'),
             Divider(
               thickness: 1,
               color: Colors.white,
             ),
-            Text('${S.current.LastDeliveredDelivery}\n ${captain.createAt}'),
+            Text('${S.current.LastDeliveredDelivery}\n ${actor.createAt}'),
           ],
         ),
       ),

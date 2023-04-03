@@ -2,11 +2,12 @@
 
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_statistics/response/captains_counts/captain.dart';
 import 'package:c4d/module_statistics/response/orders_counts/daily.dart';
 import 'package:c4d/module_statistics/response/statistics_response/statistics_response.dart';
-import 'package:c4d/module_statistics/response/stores_counts/store.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
+import 'package:c4d/module_statistics/response/stores_counts/store.dart' as r;
+import 'package:c4d/module_statistics/response/captains_counts/captain.dart'
+    as r;
 
 class StatisticsModel extends DataModel {
   late StatisticsOrder orders;
@@ -37,7 +38,8 @@ class StatisticsModel extends DataModel {
     StatisticsCaptains captain = StatisticsCaptains(
         active: captainsR?.active ?? 0,
         lastActorsActive: _getCaptainsList(captainsR?.lastThreeActive ?? []),
-        lastActorsMadeTransactions: _getCaptainsList(captainsR?.lastFiveDeliveredOrdersCaptains ?? []),
+        lastActorsMadeTransactions:
+            _getCaptainsList(captainsR?.lastFiveDeliveredOrdersCaptains ?? []),
         nonActive: captainsR?.inactive ?? 0);
 
     StatisticsStores store = StatisticsStores(
@@ -74,12 +76,12 @@ class StatisticsModel extends DataModel {
     return date;
   }
 
-  List<Actor> _getCaptainsList(List<Captain> d) {
+  List<Actor> _getCaptainsList(List<r.Captain> d) {
     List<Actor> daily = [];
     d.forEach((element) {
       var date = _getDate(element.createdAt?.timestamp ?? 0);
 
-      daily.add(Actor(
+      daily.add(Captain(
           createAt: date,
           id: element.id ?? -1,
           image: element.images?.image ?? '',
@@ -88,12 +90,12 @@ class StatisticsModel extends DataModel {
     return daily;
   }
 
-  List<Actor> _getStoresList(List<Store> d) {
+  List<Actor> _getStoresList(List<r.Store> d) {
     List<Actor> daily = [];
     d.forEach((element) {
       var date = _getDate(element.createdAt?.timestamp ?? 0);
 
-      daily.add(Actor(
+      daily.add(Store(
           createAt: date,
           id: element.id ?? -1,
           image: element.images?.image ?? '',
@@ -136,6 +138,7 @@ class DailyOrder {
   });
 }
 
+/// it can be either [StatisticsCaptains] or [StatisticsStores]
 abstract class StatisticsActors {
   num active;
   num nonActive;
@@ -176,7 +179,8 @@ class StatisticsStores extends StatisticsActors {
             lastActorsMadeTransactions: lastActorsMadeTransactions);
 }
 
-class Actor {
+/// it can be either  [Captain] or [Store]
+abstract class Actor {
   int id;
   String name;
   String createAt;
@@ -187,4 +191,22 @@ class Actor {
     required this.createAt,
     required this.image,
   });
+}
+
+class Captain extends Actor {
+  Captain(
+      {required int id,
+      required String name,
+      required String createAt,
+      required String image})
+      : super(id: id, name: name, createAt: createAt, image: image);
+}
+
+class Store extends Actor {
+  Store(
+      {required int id,
+      required String name,
+      required String createAt,
+      required String image})
+      : super(id: id, name: name, createAt: createAt, image: image);
 }

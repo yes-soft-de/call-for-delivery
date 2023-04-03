@@ -79,6 +79,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "activeOffer": MessageLookupByLibrary.simpleMessage("Active Offer"),
         "activePlan": MessageLookupByLibrary.simpleMessage("Active Plan"),
         "activeStores": MessageLookupByLibrary.simpleMessage("active stores"),
+        "actives": MessageLookupByLibrary.simpleMessage("actives"),
         "activityLog": MessageLookupByLibrary.simpleMessage("Activity Log"),
         "addBranch": MessageLookupByLibrary.simpleMessage("Add Branch"),
         "addBranchFailure": MessageLookupByLibrary.simpleMessage(
@@ -691,6 +692,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "language": MessageLookupByLibrary.simpleMessage("Language"),
         "largeMoreThan100Employees":
             MessageLookupByLibrary.simpleMessage("+100 Employees"),
+        "last": MessageLookupByLibrary.simpleMessage("last"),
         "last24CountOrder":
             MessageLookupByLibrary.simpleMessage("Last 24h orders"),
         "last3Active": MessageLookupByLibrary.simpleMessage("last 3 active"),

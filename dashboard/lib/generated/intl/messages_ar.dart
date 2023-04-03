@@ -77,6 +77,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "activeOffer": MessageLookupByLibrary.simpleMessage("عرض فعال"),
         "activePlan": MessageLookupByLibrary.simpleMessage("الباقة الحالية"),
         "activeStores": MessageLookupByLibrary.simpleMessage("المتاجر المفعلة"),
+        "actives": MessageLookupByLibrary.simpleMessage("فعالين"),
         "activityLog": MessageLookupByLibrary.simpleMessage("سجل الاستخدام"),
         "addBranch": MessageLookupByLibrary.simpleMessage("إضافة فرع"),
         "addBranchFailure": MessageLookupByLibrary.simpleMessage(
@@ -682,6 +683,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "language": MessageLookupByLibrary.simpleMessage("اللغة"),
         "largeMoreThan100Employees":
             MessageLookupByLibrary.simpleMessage("+100 موظف"),
+        "last": MessageLookupByLibrary.simpleMessage("اخر"),
         "last24CountOrder":
             MessageLookupByLibrary.simpleMessage("الطلبات آخر ٢٤ ساعة"),
         "last3Active": MessageLookupByLibrary.simpleMessage("اخر 3 فعالين"),

@@ -930,5 +930,7 @@
     "LastDeliveredDelivery": "Last delivered delivery",
     "LastCreatedDelivery": "Last created delivery",
     "orderDeliveredThisWeek": "order delivered this week",
+    "last": "last",
+    "actives": "actives",
     "statistics": "statistics"
 }
