@@ -1,7 +1,9 @@
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_captain/captains_routes.dart';
 import 'package:c4d/module_statistics/model/statistics_model.dart';
 import 'package:c4d/module_statistics/ui/widget/actor_info.dart';
 import 'package:c4d/module_statistics/ui/widget/order/detail_row.dart';
+import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
 
@@ -25,11 +27,24 @@ class ActorCard extends StatelessWidget {
               child: Column(
                 children: [
                   DetailRow(
+                      onTap: () {
+                        actor is Store
+                            ? Navigator.pushNamed(context, StoresRoutes.STORES)
+                            : Navigator.pushNamed(
+                                context, CaptainsRoutes.CAPTAINS);
+                      },
                       title: actor is StatisticsStores
                           ? S.current.activeStores
                           : S.current.activeCapitan,
                       value: actor.active.toString()),
                   DetailRow(
+                      onTap: () {
+                        actor is Store
+                            ? Navigator.pushNamed(
+                                context, StoresRoutes.STORES_INACTIVE)
+                            : Navigator.pushNamed(
+                                context, CaptainsRoutes.IN_ACTIVE_CAPTAINS);
+                      },
                       title: actor is StatisticsStores
                           ? S.current.inactiveStores
                           : S.current.inActiveCaptains,
