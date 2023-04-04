@@ -14,9 +14,13 @@ class OrdersSection extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         children: [
           SizedBox(height: 10),
-          OrdersChart(statisticsOrder: statisticsOrder),
+          Flexible(
+            child: OrdersChart(statisticsOrder: statisticsOrder),
+            fit: FlexFit.loose,
+          ),
           SizedBox(height: 20),
           OrdersCards(statisticsOrder: statisticsOrder),
           SizedBox(height: 20),

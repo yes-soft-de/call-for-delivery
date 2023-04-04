@@ -38,11 +38,14 @@ class StatisticsLoadedState extends States {
     }
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          OrdersSection(statisticsOrder: statistics!.orders),
-          Expanded(child: ActorsSection(statisticsModel: statistics!)),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Flexible(child: OrdersSection(statisticsOrder: statistics!.orders)),
+            Flexible(child: ActorsSection(statisticsModel: statistics!)),
+          ],
+        ),
       ),
     );
   }

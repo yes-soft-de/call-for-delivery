@@ -28,7 +28,7 @@ class ActorCard extends StatelessWidget {
                 children: [
                   DetailRow(
                       onTap: () {
-                        actor is Store
+                        actor is StatisticsStores
                             ? Navigator.pushNamed(context, StoresRoutes.STORES)
                             : Navigator.pushNamed(
                                 context, CaptainsRoutes.CAPTAINS);
@@ -39,7 +39,7 @@ class ActorCard extends StatelessWidget {
                       value: actor.active.toString()),
                   DetailRow(
                       onTap: () {
-                        actor is Store
+                        actor is StatisticsStores
                             ? Navigator.pushNamed(
                                 context, StoresRoutes.STORES_INACTIVE)
                             : Navigator.pushNamed(

@@ -46,6 +46,7 @@ class OrdersChartState extends State<OrdersChart> {
     return Padding(
       padding: const EdgeInsets.only(),
       child: Column(
+        mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
@@ -60,10 +61,12 @@ class OrdersChartState extends State<OrdersChart> {
               ),
             ),
           ),
-          AspectRatio(
-            aspectRatio: 7 / 3,
-            child: Card(
-              color: Colors.white,
+          Card(
+            color: Colors.white,
+            child: ConstrainedBox(
+              constraints: BoxConstraints.tight(Size(
+                  MediaQuery.of(context).size.width,
+                  MediaQuery.of(context).size.height * 0.2)),
               child: BarChart(
                 BarChartData(
                   maxY: maxOrder + maxOrder * 0.2,
