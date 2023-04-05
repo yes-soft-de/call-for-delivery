@@ -42,6 +42,7 @@ class UpdateOrderLoaded extends States {
     screenState.orderDetailsController.text = orderInfo.note;
     screenState.noteController.text = orderInfo.note;
     screenState.receiptNameController.text = orderInfo.customerName;
+    screenState.costType = orderInfo.costType;
     distance = orderInfo.storeBranchToClientDistance;
     var number = orderInfo.customerPhone;
     if (number == S.current.unknown) number = '';
@@ -707,7 +708,7 @@ class UpdateOrderLoaded extends States {
                 ),
                 /// cost type
                 Visibility(
-                  visible: screenState.payments == 'cash',
+                  visible: screenState.payments == 'cash' && orderInfo.packageType == 1,
                   child: ListTile(
                     title: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -910,6 +911,7 @@ class UpdateOrderLoaded extends States {
             .show(screenState.context);
       }
       screenState.addNewOrder(CreateOrderRequest(
+        costType: screenState.costType,
         distance: distance,
         id: orderInfo.id,
         orderIsMain: orderIsMain,
@@ -938,6 +940,7 @@ class UpdateOrderLoaded extends States {
   // function create order without upload image
   void createOrderWithoutImage() {
     screenState.addNewOrder(CreateOrderRequest(
+      costType:   screenState.costType,
       id: orderInfo.id,
       orderIsMain: orderIsMain,
       distance: distance,

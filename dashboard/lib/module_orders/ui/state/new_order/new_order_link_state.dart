@@ -49,7 +49,6 @@ class NewOrderLinkStateLoaded extends States {
   PdfModel? pdfModel;
   String? distance;
   String? deliveryCost;
-
   @override
   Widget getUI(context) {
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
@@ -575,9 +574,10 @@ class NewOrderLinkStateLoaded extends States {
                     ],
                   ),
                 ),
+
                 /// cost type
                 Visibility(
-                  visible: screenState.payments == 'cash',
+                  visible: screenState.payments == 'cash' && screenState.packageType == 1,
                   child: ListTile(
                     title: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -602,7 +602,7 @@ class NewOrderLinkStateLoaded extends States {
                               value: 187,
                               groupValue: screenState.costType,
                               onChanged: (int? value) {
-                                screenState.costType = value;      
+                                screenState.costType = value;
                                 screenState.refresh();
                               },
                             ),

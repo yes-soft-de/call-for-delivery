@@ -129,6 +129,7 @@ class NewOrderLinkScreenState extends State<NewOrderLinkScreen>
   void saveInfo(String info) {}
   int orderId = -1;
   int? storeID;
+  int? packageType;
   bool flag = true;
   @override
   Widget build(BuildContext context) {
@@ -137,6 +138,7 @@ class NewOrderLinkScreenState extends State<NewOrderLinkScreen>
       if (args is OrderModel) {
         orderId = args.id;
         storeID = args.storeId;
+        packageType = args.packageType;
         branch = int.tryParse(args.branchID.toString());
         widget._stateManager.getBranches(this, storeID.toString());
       }
