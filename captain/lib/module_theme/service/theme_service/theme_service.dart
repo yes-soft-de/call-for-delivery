@@ -27,18 +27,19 @@ class AppThemeDataService {
       background: const Color.fromRGBO(236, 239, 241, 1),
     );
     final darkScheme = ColorScheme.fromSeed(
-      seedColor: PrimaryColor,
-      brightness: Brightness.dark,
-      error: Colors.red[900],
-      errorContainer: Colors.red[100],
-      primaryContainer: Colors.grey[500],
-      primary: Colors.grey[900],
-      secondary: Colors.grey.shade600,
-      secondaryContainer: Colors.grey.shade900,
-    );
+        seedColor: PrimaryColor,
+        brightness: Brightness.dark,
+        error: Colors.red[900],
+        errorContainer: Colors.red[100],
+        primaryContainer: Colors.grey[500],
+        primary: Colors.grey[900],
+        secondary: Colors.grey.shade600,
+        secondaryContainer: Colors.grey.shade900,
+        background: Colors.grey.shade800);
     if (dark == true) {
       mapStyle(dark);
       return ThemeData(
+          scaffoldBackgroundColor: Colors.grey.shade700,
           brightness: Brightness.dark,
           colorScheme: darkScheme,
           useMaterial3: true,

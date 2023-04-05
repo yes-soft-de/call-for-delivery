@@ -1,3 +1,4 @@
+import 'package:c4d/module_plan/response/daily_payments_response/daily_payments_response.dart';
 import 'package:c4d/module_profile/request/captain_payments_request.dart';
 import 'package:c4d/module_profile/response/captain_payments_response/captain_payments_response.dart';
 import 'package:c4d/module_profile/response/daily_finance_response/daily_finance_response.dart';
@@ -32,7 +33,7 @@ class ProfileManager {
   Future<CaptainPaymentsResponse?> getStoreBalance(
           CaptainPaymentRequest request) =>
       _repository.getStoreAccountBalance(request);
-  Future<DailyFinanceResponse?> getDailyPayments(
+  Future<DailyPaymentsResponse?> getDailyPayments(
           CaptainPaymentRequest request) =>
       _repository.getDailyPayments(request);
 }

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
-import 'package:c4d/module_orders/util/whatsapp_link_helper.dart';
 import 'package:custom_map_markers/custom_map_markers.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
@@ -50,7 +50,7 @@ class _OrderMapPreviewState extends State<OrderMapPreview> {
               position: LatLng(widget.order.location?.latitude ?? 0,
                   widget.order.location?.longitude ?? 0),
               onTap: () {
-                var url = WhatsAppLinkHelper.getMapsLink(
+                var url = LauncherLinkHelper.getMapsLink(
                     widget.order.location?.latitude ?? 0,
                     widget.order.location?.longitude ?? 0);
                 canLaunch(url).then((value) {

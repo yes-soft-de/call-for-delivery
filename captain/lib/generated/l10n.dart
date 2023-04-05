@@ -7659,6 +7659,26 @@ class S {
       args: [],
     );
   }
+
+  /// `Plan`
+  String get plan {
+    return Intl.message(
+      'Plan',
+      name: 'plan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Over paid`
+  String get financeOverPaid {
+    return Intl.message(
+      'Over paid',
+      name: 'financeOverPaid',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

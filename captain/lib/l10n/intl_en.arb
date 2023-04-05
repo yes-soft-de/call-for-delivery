@@ -759,6 +759,8 @@
     "updateDistance": "Update distance",
     "totalProfit": "Total profit",
     "dailyProfit": "Daily profit",
-    "totalEarnedProfit":"Total Earned",
-    "todayProfit":"Today Balance"
+    "totalEarnedProfit": "Total Earned",
+    "todayProfit": "Today Balance",
+    "plan": "Plan",
+    "financeOverPaid": "Over paid"
 }

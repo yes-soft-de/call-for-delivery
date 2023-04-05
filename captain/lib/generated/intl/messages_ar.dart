@@ -435,6 +435,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("باقة حسب الطلبات"),
         "financeCountOrder":
             MessageLookupByLibrary.simpleMessage("باقة على الطلب"),
+        "financeOverPaid": MessageLookupByLibrary.simpleMessage("دفعة زائدة"),
         "financePaid": MessageLookupByLibrary.simpleMessage("تم التسديد"),
         "financePartlyPaid":
             MessageLookupByLibrary.simpleMessage("تم التسديد جزئيا"),
@@ -773,6 +774,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("رقم الهاتف المدخل قصير"),
         "pickAJob": MessageLookupByLibrary.simpleMessage("اختار عملي"),
         "pickALanguage": MessageLookupByLibrary.simpleMessage("اختار لغتي"),
+        "plan": MessageLookupByLibrary.simpleMessage("الخطة"),
         "planByHours":
             MessageLookupByLibrary.simpleMessage("وظيفية حسب الساعة"),
         "planByOrderCount":

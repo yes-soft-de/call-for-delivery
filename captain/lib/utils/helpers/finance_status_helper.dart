@@ -15,6 +15,21 @@ class FinanceHelper {
     }
   }
 
+  static String getDailyFinance(int? status) {
+    switch (status) {
+      case 176:
+        return S.current.financeUnPaid;
+      case 177:
+        return S.current.financePaid;
+      case 179:
+        return S.current.financePartlyPaid;
+      case 182:
+        return S.current.financeOverPaid;
+      default:
+        return S.current.unknown;
+    }
+  }
+
   static Color? getFinanceStatusColor(int status) {
     switch (status) {
       case 1:
@@ -22,6 +37,14 @@ class FinanceHelper {
       case 2:
         return Colors.red;
       case 3:
+        return Colors.purple;
+      case 176:
+        return Colors.red;
+      case 177:
+        return Colors.green;
+      case 179:
+        return Colors.orange;
+      case 182:
         return Colors.purple;
       default:
         return null;

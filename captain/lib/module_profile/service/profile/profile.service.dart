@@ -1,4 +1,6 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
+import 'package:c4d/module_plan/model/captain_daily_finance_model.dart';
+import 'package:c4d/module_plan/response/daily_payments_response/daily_payments_response.dart';
 import 'package:c4d/module_profile/model/captain_balance_model.dart';
 import 'package:c4d/module_profile/model/daily_model.dart';
 import 'package:c4d/module_profile/request/captain_payments_request.dart';
@@ -96,7 +98,7 @@ class ProfileService {
   }
 
   Future<DataModel> getDailyPayments(CaptainPaymentRequest request) async {
-    DailyFinanceResponse? actionResponse =
+    DailyPaymentsResponse? actionResponse =
         await _manager.getDailyPayments(request);
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
@@ -104,7 +106,9 @@ class ProfileService {
     if (actionResponse.statusCode != '200') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    } else if (actionResponse.data == null) {
+      return DataModel.empty();
     }
-    return DailyFinanceModel.withData(actionResponse);
+    return CaptainDailyFinanceModel.withData(actionResponse);
   }
 }
