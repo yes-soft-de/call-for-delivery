@@ -2,7 +2,6 @@
 
 namespace App\Manager\Admin\Order;
 
-use App\Constant\Order\OrderCancelledByUserAndAtStateConstant;
 use App\Constant\Order\OrderConflictedAnswersResolvedByConstant;
 use App\Constant\Order\OrderHasPayConflictAnswersConstant;
 use App\Constant\Order\OrderStateConstant;
@@ -601,5 +600,14 @@ class AdminOrderManager
     {
         return $this->orderEntityRepository->findBy(['state' => OrderStateConstant::ORDER_STATE_PENDING_TILL_DELIVERED_ARRAY],
             ['id' =>'DESC'], 5);
+    }
+
+    /**
+     * Get the count of delivered orders according to dates and a specific store's branch
+     */
+    public function getDeliveredOrdersCountBetweenTwoDatesAndByStoreBranchId(int $storeBranchId, DateTime $fromDate, DateTime $toDate): array
+    {
+        return $this->orderEntityRepository->getDeliveredOrdersCountBetweenTwoDatesAndByStoreBranchId($storeBranchId,
+            $fromDate, $toDate);
     }
 }

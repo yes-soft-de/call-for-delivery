@@ -2714,4 +2714,40 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * Get the count of delivered orders according to dates and a specific store's branch
+     */
+    public function getDeliveredOrdersCountBetweenTwoDatesAndByStoreBranchId(int $storeBranchId, DateTime $fromDate, DateTime $toDate): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('COUNT(orderEntity.id)')
+
+            ->andWhere('orderEntity.state = :deliveredState')
+            ->setParameter('deliveredState', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+            ->leftJoin(
+                StoreOrderDetailsEntity::class,
+                'storeOrderDetailsEntity',
+                Join::WITH,
+                'storeOrderDetailsEntity.orderId = orderEntity.id'
+            )
+
+            ->leftJoin(
+                StoreOwnerBranchEntity::class,
+                'storeOwnerBranchEntity',
+                Join::WITH,
+                'storeOwnerBranchEntity.id = storeOrderDetailsEntity.branch'
+            )
+
+            ->andWhere('storeOwnerBranchEntity.id = :storeBranchId')
+            ->setParameter('storeBranchId', $storeBranchId)
+
+            ->andWhere('orderEntity.createdAt BETWEEN :currentMonthStartDate AND :currentMonthEndDate')
+            ->setParameter('currentMonthStartDate', $fromDate)
+            ->setParameter('currentMonthEndDate', $toDate)
+
+            ->getQuery()
+            ->getSingleColumnResult();
+    }
 }
