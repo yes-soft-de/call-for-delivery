@@ -1,11 +1,13 @@
-import 'package:c4d/utils/helpers/date_converter.dart';
+// ignore_for_file: unused_local_variable
 
-import '../../abstracts/data_model/data_model.dart';
-import '../../generated/l10n.dart';
-import '../response/statistics_response/daily.dart';
-import '../response/statistics_response/last_three_captains_active.dart';
-import '../response/statistics_response/last_three_stores_active.dart';
-import '../response/statistics_response/statistics_response.dart';
+import 'package:c4d/abstracts/data_model/data_model.dart';
+import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_statistics/response/orders_counts/daily.dart';
+import 'package:c4d/module_statistics/response/statistics_response/statistics_response.dart';
+import 'package:c4d/utils/helpers/date_converter.dart';
+import 'package:c4d/module_statistics/response/stores_counts/store.dart' as r;
+import 'package:c4d/module_statistics/response/captains_counts/captain.dart'
+    as r;
 
 class StatisticsModel extends DataModel {
   late StatisticsOrder orders;
@@ -17,9 +19,9 @@ class StatisticsModel extends DataModel {
       {required this.orders, required this.captains, required this.stores});
 
   StatisticsModel.withData(StatisticsResponse response) : super.withData() {
-    var ordersR = response.data?.data?.orders?.counts;
+    var ordersR = response.data?.data?.orders?.count;
     var captainsR = response.data?.data?.captains?.count;
-    var storesR = response.data?.data?.stores?.counts;
+    var storesR = response.data?.data?.stores?.count;
 
     StatisticsOrder order = StatisticsOrder(
         allOrders: ordersR?.allOrders ?? 0,
@@ -35,38 +37,51 @@ class StatisticsModel extends DataModel {
 
     StatisticsCaptains captain = StatisticsCaptains(
         active: captainsR?.active ?? 0,
-        captains: _getLastThreeCaptain(captainsR?.lastThreeActive ?? []),
+        lastActorsActive: _getCaptainsList(captainsR?.lastThreeActive ?? []),
+        lastActorsMadeTransactions:
+            _getCaptainsList(captainsR?.lastFiveDeliveredOrdersCaptains ?? []),
         nonActive: captainsR?.inactive ?? 0);
 
     StatisticsStores store = StatisticsStores(
         active: storesR?.active ?? 0,
-        stores: _getLastThreeStore(storesR?.lastThreeActive ?? []),
+        lastActorsActive: _getStoresList(storesR?.lastThreeActive ?? []),
+        lastActorsMadeTransactions:
+            _getStoresList(storesR?.lastFiveCreatedOrderStores ?? []),
         nonActive: storesR?.inactive ?? 0);
 
     _model = StatisticsModel(captains: captain, orders: order, stores: store);
-    print(_model);
   }
+
   List<DailyOrder> _getDailyOrder(List<Daily> d) {
     List<DailyOrder> daily = [];
+
     d.forEach((element) {
       daily.add(DailyOrder(
           count: element.count ?? 0, date: element.date?.substring(5) ?? ''));
     });
+
     daily = daily.reversed.toList();
     return daily;
   }
 
-  List<LastThreeActive> _getLastThreeCaptain(List<LastThreeCaptainsActive> d) {
-    List<LastThreeActive> daily = [];
+  String _getDate(int timeStamp) {
+    var date = '';
+    date += DateHelper.convert(timeStamp).month.toString() + '-';
+    date += DateHelper.convert(timeStamp).day.toString();
+
+    date += '  ';
+
+    date += DateHelper.convert(timeStamp).hour.toString() + ':';
+    date += DateHelper.convert(timeStamp).minute.toString();
+    return date;
+  }
+
+  List<Actor> _getCaptainsList(List<r.Captain> d) {
+    List<Actor> daily = [];
     d.forEach((element) {
-      var date = '';
-      date += DateHelper.convert(element.createdAt?.timestamp).year.toString() +
-          '/';
-      date +=
-          DateHelper.convert(element.createdAt?.timestamp).month.toString() +
-              '/';
-      date += DateHelper.convert(element.createdAt?.timestamp).day.toString();
-      daily.add(LastThreeActive(
+      var date = _getDate(element.createdAt?.timestamp ?? 0);
+
+      daily.add(Captain(
           createAt: date,
           id: element.id ?? -1,
           image: element.images?.image ?? '',
@@ -75,18 +90,12 @@ class StatisticsModel extends DataModel {
     return daily;
   }
 
-  List<LastThreeActive> _getLastThreeStore(List<LastThreeStoresActive> d) {
-    List<LastThreeActive> daily = [];
+  List<Actor> _getStoresList(List<r.Store> d) {
+    List<Actor> daily = [];
     d.forEach((element) {
-      var date = '';
-      date += DateHelper.convert(element.createdAt?.timestamp).year.toString() +
-          '/';
-      date +=
-          DateHelper.convert(element.createdAt?.timestamp).month.toString() +
-              '/';
-      date += DateHelper.convert(element.createdAt?.timestamp).day.toString();
+      var date = _getDate(element.createdAt?.timestamp ?? 0);
 
-      daily.add(LastThreeActive(
+      daily.add(Store(
           createAt: date,
           id: element.id ?? -1,
           image: element.images?.image ?? '',
@@ -129,39 +138,75 @@ class DailyOrder {
   });
 }
 
-class StatisticsCaptains {
+/// it can be either [StatisticsCaptains] or [StatisticsStores]
+abstract class StatisticsActors {
   num active;
   num nonActive;
-  List<LastThreeActive> captains;
+  List<Actor> lastActorsActive;
+  List<Actor> lastActorsMadeTransactions;
 
-  StatisticsCaptains({
+  StatisticsActors({
     required this.active,
     required this.nonActive,
-    required this.captains,
+    required this.lastActorsActive,
+    required this.lastActorsMadeTransactions,
   });
 }
 
-class StatisticsStores {
-  num active;
-  num nonActive;
-  List<LastThreeActive> stores;
-
-  StatisticsStores({
-    required this.active,
-    required this.nonActive,
-    required this.stores,
-  });
+class StatisticsCaptains extends StatisticsActors {
+  StatisticsCaptains(
+      {required num active,
+      required num nonActive,
+      required List<Actor> lastActorsActive,
+      required List<Actor> lastActorsMadeTransactions})
+      : super(
+            active: active,
+            nonActive: nonActive,
+            lastActorsActive: lastActorsActive,
+            lastActorsMadeTransactions: lastActorsMadeTransactions);
 }
 
-class LastThreeActive {
+class StatisticsStores extends StatisticsActors {
+  StatisticsStores(
+      {required num active,
+      required num nonActive,
+      required List<Actor> lastActorsActive,
+      required List<Actor> lastActorsMadeTransactions})
+      : super(
+            active: active,
+            nonActive: nonActive,
+            lastActorsActive: lastActorsActive,
+            lastActorsMadeTransactions: lastActorsMadeTransactions);
+}
+
+/// it can be either  [Captain] or [Store]
+abstract class Actor {
   int id;
   String name;
   String createAt;
   String image;
-  LastThreeActive({
+  Actor({
     required this.id,
     required this.name,
     required this.createAt,
     required this.image,
   });
+}
+
+class Captain extends Actor {
+  Captain(
+      {required int id,
+      required String name,
+      required String createAt,
+      required String image})
+      : super(id: id, name: name, createAt: createAt, image: image);
+}
+
+class Store extends Actor {
+  Store(
+      {required int id,
+      required String name,
+      required String createAt,
+      required String image})
+      : super(id: id, name: name, createAt: createAt, image: image);
 }

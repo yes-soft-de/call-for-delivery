@@ -6,18 +6,18 @@ import 'package:c4d/module_statistics/response/statistics_response/statistics_re
 import 'package:injectable/injectable.dart';
 
 @injectable
-class StatisticsReposetory {
+class StatisticsRepository {
   final ApiClient _apiClient;
   final AuthService _authService;
 
-  StatisticsReposetory(
+  StatisticsRepository(
     this._apiClient,
     this._authService,
   );
 
   Future<StatisticsResponse?> getStatistics() async {
     var token = await _authService.getToken();
-    
+
     dynamic response = await _apiClient.get(
       Urls.GET_STATISTICS,
       headers: {'Authorization': 'Bearer ${token}'},

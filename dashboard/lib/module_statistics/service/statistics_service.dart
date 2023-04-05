@@ -8,10 +8,10 @@ import 'package:c4d/utils/helpers/status_code_helper.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class StatisticsServiec {
+class StatisticsService {
   final StatisticManager _statisticManager;
 
-  StatisticsServiec(
+  StatisticsService(
     this._statisticManager,
   );
 

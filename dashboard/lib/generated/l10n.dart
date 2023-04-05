@@ -9250,10 +9250,10 @@ class S {
     );
   }
 
-  /// `last 3 avtive`
+  /// `last 3 active`
   String get last3Active {
     return Intl.message(
-      'last 3 avtive',
+      'last 3 active',
       name: 'last3Active',
       desc: '',
       args: [],
@@ -9315,6 +9315,86 @@ class S {
     return Intl.message(
       'id',
       name: 'id',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `number`
+  String get number {
+    return Intl.message(
+      'number',
+      name: 'number',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last delivered delivery`
+  String get LastDeliveredDelivery {
+    return Intl.message(
+      'Last delivered delivery',
+      name: 'LastDeliveredDelivery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Last created delivery`
+  String get LastCreatedDelivery {
+    return Intl.message(
+      'Last created delivery',
+      name: 'LastCreatedDelivery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order delivered this week`
+  String get orderDeliveredThisWeek {
+    return Intl.message(
+      'order delivered this week',
+      name: 'orderDeliveredThisWeek',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `last`
+  String get last {
+    return Intl.message(
+      'last',
+      name: 'last',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `actives`
+  String get actives {
+    return Intl.message(
+      'actives',
+      name: 'actives',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `delivered orders`
+  String get deliveredOrders {
+    return Intl.message(
+      'delivered orders',
+      name: 'deliveredOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `created orders`
+  String get createdOrders {
+    return Intl.message(
+      'created orders',
+      name: 'createdOrders',
       desc: '',
       args: [],
     );

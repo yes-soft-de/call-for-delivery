@@ -4,27 +4,28 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_statistics/model/statistics_model.dart';
 import 'package:c4d/module_statistics/service/statistics_service.dart';
 import 'package:c4d/module_statistics/ui/screen/statistics_screen.dart';
-import 'package:c4d/module_statistics/ui/state/statisics_state/statistics_state_loaded.dart';
+import 'package:c4d/module_statistics/ui/state/statistics_state/statistics_state_loaded.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
 @injectable
 class StatisticsStateManager {
-  final StatisticsServiec _statisticsServiec;
+  final StatisticsService _statisticsService;
   final PublishSubject<States> _stateSubject = PublishSubject();
 
   StatisticsStateManager(
-    this._statisticsServiec,
+    this._statisticsService,
   );
 
   Stream<States> get stateStream => _stateSubject.stream;
 
   void getStatistics(StatisticsScreenState screenState) async {
     _stateSubject.add(LoadingState(screenState));
-    var value = await _statisticsServiec.getStatistics();
+    var value = await _statisticsService.getStatistics();
 
     if (value.hasError) {
-      _stateSubject.add(StatisticsLoadedState(screenState, null, error: value.error));
+      _stateSubject
+          .add(StatisticsLoadedState(screenState, null, error: value.error));
     } else if (value.isEmpty) {
       _stateSubject.add(StatisticsLoadedState(screenState, null));
     } else {

@@ -2,9 +2,8 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_statistics/model/statistics_model.dart';
 import 'package:c4d/module_statistics/ui/screen/statistics_screen.dart';
-import 'package:c4d/module_statistics/ui/widget/captains_section.dart';
-import 'package:c4d/module_statistics/ui/widget/orders_section.dart';
-import 'package:c4d/module_statistics/ui/widget/stores_section.dart';
+import 'package:c4d/module_statistics/ui/widget/actors_section.dart';
+import 'package:c4d/module_statistics/ui/widget/order/orders_section.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:flutter/material.dart';
@@ -37,14 +36,16 @@ class StatisticsLoadedState extends States {
             screenState.getStatistics();
           });
     }
-    return SingleChildScrollView(
-      physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-      child: Column(
-        children: [
-          OrdersSection(statisticsOrder: statistics!.orders),
-          CaptainsSection(statisticsCaptains: statistics!.captains),
-          StoresSection(statisticsStores: statistics!.stores)
-        ],
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Flexible(child: OrdersSection(statisticsOrder: statistics!.orders)),
+            Flexible(child: ActorsSection(statisticsModel: statistics!)),
+          ],
+        ),
       ),
     );
   }

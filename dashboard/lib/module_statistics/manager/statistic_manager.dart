@@ -4,12 +4,12 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class StatisticManager {
-  StatisticsReposetory _statisticsReposetory;
+  StatisticsRepository _statisticsRepository;
 
   StatisticManager(
-    this._statisticsReposetory,
+    this._statisticsRepository,
   );
 
-
-  Future<StatisticsResponse?> getStatistics() => _statisticsReposetory.getStatistics();
+  Future<StatisticsResponse?> getStatistics() =>
+      _statisticsRepository.getStatistics();
 }

@@ -1,9 +1,9 @@
-import 'dataum.dart';
+import 'data.dart';
 
 class StatisticsResponse {
   String? statusCode;
   String? msg;
-  Dataum? data;
+  Data? data;
 
   StatisticsResponse({this.statusCode, this.msg, this.data});
 
@@ -11,7 +11,9 @@ class StatisticsResponse {
     return StatisticsResponse(
       statusCode: json['status_code'] as String?,
       msg: json['msg'] as String?,
-      data: json['Data'] == null ? null : Dataum.fromJson(json['Data'] as Map<String, dynamic>),
+      data: json['Data'] == null
+          ? null
+          : Data.fromJson(json['Data'] as Map<String, dynamic>),
     );
   }
 

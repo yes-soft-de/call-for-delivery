@@ -526,8 +526,8 @@ _i1.GetIt $initGetIt(_i1.GetIt getIt,
       () => _i46.SearchForOrderStateManager(gh<_i42.OrdersService>()));
   gh.factory<_i47.SplashScreen>(
       () => _i47.SplashScreen(gh<_i24.AuthService>()));
-  gh.factory<_i48.StatisticsReposetory>(() =>
-      _i48.StatisticsReposetory(gh<_i18.ApiClient>(), gh<_i24.AuthService>()));
+  gh.factory<_i48.StatisticsRepository>(() =>
+      _i48.StatisticsRepository(gh<_i18.ApiClient>(), gh<_i24.AuthService>()));
   gh.factory<_i49.StoresRepository>(() =>
       _i49.StoresRepository(gh<_i18.ApiClient>(), gh<_i24.AuthService>()));
   gh.factory<_i50.SubOrdersStateManager>(() => _i50.SubOrdersStateManager(
@@ -659,11 +659,11 @@ _i1.GetIt $initGetIt(_i1.GetIt getIt,
   gh.factory<_i111.SplashModule>(
       () => _i111.SplashModule(gh<_i47.SplashScreen>()));
   gh.factory<_i112.StatisticManager>(
-      () => _i112.StatisticManager(gh<_i48.StatisticsReposetory>()));
-  gh.factory<_i113.StatisticsServiec>(
-      () => _i113.StatisticsServiec(gh<_i112.StatisticManager>()));
+      () => _i112.StatisticManager(gh<_i48.StatisticsRepository>()));
+  gh.factory<_i113.StatisticsService>(
+      () => _i113.StatisticsService(gh<_i112.StatisticManager>()));
   gh.factory<_i114.StatisticsStateManager>(
-      () => _i114.StatisticsStateManager(gh<_i113.StatisticsServiec>()));
+      () => _i114.StatisticsStateManager(gh<_i113.StatisticsService>()));
   gh.factory<_i115.StoreBalanceStateManager>(
       () => _i115.StoreBalanceStateManager(gh<_i104.PaymentsService>()));
   gh.factory<_i116.StoreManager>(

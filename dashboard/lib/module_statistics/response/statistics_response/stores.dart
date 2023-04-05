@@ -1,17 +1,17 @@
-import 'stores_counts.dart';
+import 'package:c4d/module_statistics/response/stores_counts/stores_counts.dart';
 
 class Stores {
-  StoresCounts? counts;
+  StoresCounts? count;
 
-  Stores({this.counts});
+  Stores({this.count});
 
   factory Stores.fromJson(Map<String, dynamic> json) => Stores(
-        counts: json['count'] == null
+        count: json['count'] == null
             ? null
             : StoresCounts.fromJson(json['count'] as Map<String, dynamic>),
       );
 
   Map<String, dynamic> toJson() => {
-        'counts': counts?.toJson(),
+        'count': count?.toJson(),
       };
 }

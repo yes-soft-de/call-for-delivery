@@ -49,15 +49,17 @@ class StatisticsScreenState extends State<StatisticsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar:
-          CustomC4dAppBar.appBar(context, title: S.of(context).home, icon: Icons.menu, onTap: () {
+      appBar: CustomC4dAppBar.appBar(context,
+          title: S.of(context).home, icon: Icons.menu, onTap: () {
         GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
       }, actions: [
         CustomC4dAppBar.actionIcon(context, onTap: () {
-          Navigator.of(context).pushNamed(MyNotificationsRoutes.MY_NOTIFICATIONS);
+          Navigator.of(context)
+              .pushNamed(MyNotificationsRoutes.MY_NOTIFICATIONS);
         }, icon: Icons.notifications),
         CustomC4dAppBar.actionIcon(context, onTap: () {
-          Navigator.of(context).pushNamed(OrdersRoutes.SEARCH_FOR_ORDERS_SCREEN);
+          Navigator.of(context)
+              .pushNamed(OrdersRoutes.SEARCH_FOR_ORDERS_SCREEN);
         }, icon: Icons.search)
       ]),
       body: Stack(

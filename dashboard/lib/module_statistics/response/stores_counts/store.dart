@@ -1,25 +1,26 @@
-import 'created_at.dart';
-import 'images.dart';
+import '../created_at/created_at.dart';
+import 'image.dart';
 
-class LastThreeStoresActive {
+class Store {
   int? id;
   String? storeOwnerName;
-  Images? images;
+  Image? images;
   CreatedAt? createdAt;
 
-  LastThreeStoresActive({
+  Store({
     this.id,
     this.storeOwnerName,
     this.images,
     this.createdAt,
   });
 
-  factory LastThreeStoresActive.fromJson(Map<String, dynamic> json) {
-    return LastThreeStoresActive(
+  factory Store.fromJson(Map<String, dynamic> json) {
+    return Store(
       id: json['id'] as int?,
       storeOwnerName: json['storeOwnerName'] as String?,
-      images:
-          json['images'] == null ? null : Images.fromJson(json['images'] as Map<String, dynamic>),
+      images: json['images'] == null
+          ? null
+          : Image.fromJson(json['images'] as Map<String, dynamic>),
       createdAt: json['createdAt'] == null
           ? null
           : CreatedAt.fromJson(json['createdAt'] as Map<String, dynamic>),

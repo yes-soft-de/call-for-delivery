@@ -1,4 +1,4 @@
-import 'captains_counts.dart';
+import 'package:c4d/module_statistics/response/captains_counts/captains_counts.dart';
 
 class Captains {
   CaptainsCounts? count;
@@ -12,6 +12,6 @@ class Captains {
       );
 
   Map<String, dynamic> toJson() => {
-        'counts': count?.toJson(),
+        'count': count?.toJson(),
       };
 }

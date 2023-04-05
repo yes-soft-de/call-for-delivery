@@ -29,6 +29,10 @@ class MessageLookup extends MessageLookupByLibrary {
             "هذه المنطقة تحتوي زر ذو تأثير حساس قد يؤدي إلى فقدان جميع بيانات هذا الحساب مع عدم الإمكانية لاستردادها في الوقت الراهن"),
         "FinanceRequest": MessageLookupByLibrary.simpleMessage("طلب خطة عمل"),
         "InvalidInput": MessageLookupByLibrary.simpleMessage("غير صالح"),
+        "LastCreatedDelivery":
+            MessageLookupByLibrary.simpleMessage("انشاء اخر طلب"),
+        "LastDeliveredDelivery":
+            MessageLookupByLibrary.simpleMessage("تسليم اخر طلب"),
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("المسافة المقطوعة بالكيلومتر"),
         "StatusCodeNotFound": MessageLookupByLibrary.simpleMessage(
@@ -73,6 +77,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "activeOffer": MessageLookupByLibrary.simpleMessage("عرض فعال"),
         "activePlan": MessageLookupByLibrary.simpleMessage("الباقة الحالية"),
         "activeStores": MessageLookupByLibrary.simpleMessage("المتاجر المفعلة"),
+        "actives": MessageLookupByLibrary.simpleMessage("فعالين"),
         "activityLog": MessageLookupByLibrary.simpleMessage("سجل الاستخدام"),
         "addBranch": MessageLookupByLibrary.simpleMessage("إضافة فرع"),
         "addBranchFailure": MessageLookupByLibrary.simpleMessage(
@@ -403,6 +408,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "createdDate": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
         "createdNewOrder":
             MessageLookupByLibrary.simpleMessage("تم إنشاء طلب جديد"),
+        "createdOrders": MessageLookupByLibrary.simpleMessage("أنشأوا طلبات"),
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("الرصيد الحالي:"),
         "currentFinancialCycle":
@@ -452,6 +458,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverForMe": MessageLookupByLibrary.simpleMessage("طلب خارجي"),
         "deliverPrice": MessageLookupByLibrary.simpleMessage("التوصيل"),
         "deliverTo": MessageLookupByLibrary.simpleMessage("اسم المستلم"),
+        "deliveredOrders": MessageLookupByLibrary.simpleMessage("سلمو طلبات"),
         "deliveringDescription":
             MessageLookupByLibrary.simpleMessage("الكابتن في طريقه إليك"),
         "deliveryCars": MessageLookupByLibrary.simpleMessage("سيارات التوصيل"),
@@ -678,9 +685,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "language": MessageLookupByLibrary.simpleMessage("اللغة"),
         "largeMoreThan100Employees":
             MessageLookupByLibrary.simpleMessage("+100 موظف"),
+        "last": MessageLookupByLibrary.simpleMessage("اخر"),
         "last24CountOrder":
             MessageLookupByLibrary.simpleMessage("الطلبات آخر ٢٤ ساعة"),
-        "last3Active": MessageLookupByLibrary.simpleMessage("اخر 3 متصلين"),
+        "last3Active": MessageLookupByLibrary.simpleMessage("اخر 3 فعالين"),
         "last7WeekOrders":
             MessageLookupByLibrary.simpleMessage("الطلبات آخر ٧ أيام"),
         "lastName": MessageLookupByLibrary.simpleMessage("الكنية"),
@@ -784,6 +792,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "notificationsDeletedSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الإشعارات بنجاح"),
         "now": MessageLookupByLibrary.simpleMessage("الآن"),
+        "number": MessageLookupByLibrary.simpleMessage("الرقم"),
         "numberofRatings":
             MessageLookupByLibrary.simpleMessage("عدد التقييمات"),
         "offerLog": MessageLookupByLibrary.simpleMessage("سجل العروض"),
@@ -819,6 +828,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderDate": MessageLookupByLibrary.simpleMessage("تاريخ الطلب"),
         "orderDeliveredDescription":
             MessageLookupByLibrary.simpleMessage("تم توصيل الطلب"),
+        "orderDeliveredThisWeek":
+            MessageLookupByLibrary.simpleMessage("الطلبات المسلمة هذا الاسبوع"),
         "orderDeliveryCost":
             MessageLookupByLibrary.simpleMessage("سعر توصيل الطلب"),
         "orderDetailHint": MessageLookupByLibrary.simpleMessage(
