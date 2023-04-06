@@ -7670,6 +7670,16 @@ class S {
     );
   }
 
+  /// `adds and offers`
+  String get addsAndOffers {
+    return Intl.message(
+      'adds and offers',
+      name: 'addsAndOffers',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Over paid`
   String get financeOverPaid {
     return Intl.message(

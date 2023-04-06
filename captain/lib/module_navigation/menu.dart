@@ -268,7 +268,7 @@ class MenuScreen extends StatelessWidget {
                       .pushNamed(MyNotificationsRoutes.UPDATES_SCREEN);
                 },
                 leading: const Icon(Icons.notifications_active_rounded),
-                title: Text(S.of(context).notices),
+                title: Text(S.of(context).addsAndOffers),
               ),
               ListTile(
                 onTap: () {

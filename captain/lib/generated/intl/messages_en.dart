@@ -75,6 +75,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "addressIsMissing":
             MessageLookupByLibrary.simpleMessage("neighborhood is missing "),
         "addresses": MessageLookupByLibrary.simpleMessage("Address"),
+        "addsAndOffers":
+            MessageLookupByLibrary.simpleMessage("adds and offers"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "allCity": MessageLookupByLibrary.simpleMessage("All city"),

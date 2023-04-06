@@ -53,7 +53,7 @@ class UpdatesLoadedState extends States {
         ),
       ),
       appBar: CustomC4dAppBar.appBar(context,
-          title: S.current.notices,
+          title: S.current.addsAndOffers,
           canGoBack: true,
           onTap: screenState.markerMode ? () {} : null,
           widget: screenState.markerMode
@@ -133,8 +133,8 @@ class UpdatesLoadedState extends States {
                       left: 10,
                     ),
                     child: Text(
-                      '${getSelectedItem()}' + ' ' + S.current.selected,
-                      style: Theme.of(context).textTheme.headline6,
+                      '${getSelectedItem()}' ' ' + S.current.selected,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                   )),
               Padding(

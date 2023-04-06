@@ -75,6 +75,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "addressIsMissing":
             MessageLookupByLibrary.simpleMessage("زودنا بالحي الذي تسكن فيه"),
         "addresses": MessageLookupByLibrary.simpleMessage("العنوان"),
+        "addsAndOffers":
+            MessageLookupByLibrary.simpleMessage("الاعلانات والعروض"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "all": MessageLookupByLibrary.simpleMessage("الكل"),
         "allCity": MessageLookupByLibrary.simpleMessage("جميع المدن"),
