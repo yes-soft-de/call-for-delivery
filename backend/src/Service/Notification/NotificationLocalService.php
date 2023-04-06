@@ -13,13 +13,11 @@ use App\Constant\Order\OrderStateConstant;
 
 class NotificationLocalService
 {
-    private $autoMapping;
-    private $notificationLocalManager;
-
-    public function __construct(AutoMapping $autoMapping, NotificationLocalManager $notificationLocalManager)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private NotificationLocalManager $notificationLocalManager
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->notificationLocalManager = $notificationLocalManager;
     }
 
     public function createNotificationLocal(int $userId, string $title, string $text, int $appType, int $orderId = null): NotificationLocalResponse
@@ -130,10 +128,14 @@ class NotificationLocalService
 
         return $state;
     }
-    
-    public function createNotificationLocalForOrderState(int $userId, string $title, string $state, int $orderId = null, string $userType, int $captainProfileId = null): NotificationLocalResponse
+
+    /**
+     * Creates local notification for specific user who defined by userId, and includes order state within the notification
+     */
+    public function createNotificationLocalForOrderState(int $userId, string $title, string $state, string $userType, int $orderId = null, int $captainProfileId = null): NotificationLocalResponse
     {
         $appType = 0;
+        $message = [];
 
         if ($userType === NotificationConstant::STORE) {
             $text = $this->getOrderStateForStore($state);
