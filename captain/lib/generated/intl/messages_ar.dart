@@ -1085,7 +1085,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "تكلفة الفاتورة المستحقة بدون تكلفة التوصيل"),
         "totalBonus": MessageLookupByLibrary.simpleMessage("الراتب"),
         "totalEarnedProfit":
-            MessageLookupByLibrary.simpleMessage("المستحقات المقبوضة"),
+            MessageLookupByLibrary.simpleMessage("المستحقات المقبوضة (سلفا)"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("المبلغ النهائي"),
         "totalProfit": MessageLookupByLibrary.simpleMessage("إجمالي الأرباح"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
