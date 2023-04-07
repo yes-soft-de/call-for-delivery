@@ -1,25 +1,26 @@
-import 'data.dart';
+import 'package:c4d/module_plan/response/captain_account_balance_response/by_hour/by_hour.dart';
+import 'package:c4d/module_plan/response/captain_account_balance_response/by_order/by_order.dart';
+import 'package:c4d/module_plan/response/captain_account_balance_response/on_order/on_order.dart';
 
-class CaptainAccountBalanceResponse {
+import 'account_balance_data.dart';
+
+const int _kByHoursFelidsNumber = 12;
+const int _kByOrderFelidsNumber = 16;
+
+abstract class CaptainAccountBalanceResponse {
   String? statusCode;
   String? msg;
-  Data? data;
+  AccountBalanceData? data;
 
   CaptainAccountBalanceResponse({this.statusCode, this.msg, this.data});
 
   factory CaptainAccountBalanceResponse.fromJson(Map<String, dynamic> json) {
-    return CaptainAccountBalanceResponse(
-      statusCode: json['status_code'] as String?,
-      msg: json['msg'] as String?,
-      data: json['Data'] == null
-          ? null
-          : Data.fromJson(json['Data'] as Map<String, dynamic>),
-    );
+    if (json['Data'].length == _kByHoursFelidsNumber) {
+      return ByHour.fromJson(json);
+    } else if (json['Data'].length == _kByOrderFelidsNumber) {
+      return ByOrder.fromJson(json);
+    } else {
+      return OnOrder.fromJson(json);
+    }
   }
-
-  Map<String, dynamic> toJson() => {
-        'status_code': statusCode,
-        'msg': msg,
-        'Data': data?.toJson(),
-      };
 }

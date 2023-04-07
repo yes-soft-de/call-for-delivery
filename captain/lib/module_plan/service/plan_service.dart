@@ -6,7 +6,8 @@ import 'package:c4d/module_plan/model/captain_finance_by_order_model.dart';
 import 'package:c4d/module_plan/model/captain_financial_dues.dart';
 import 'package:c4d/module_plan/request/captain_finance_request.dart';
 import 'package:c4d/module_plan/response/captain_account_balance_response/captain_account_balance_response.dart';
-import 'package:c4d/module_plan/response/captain_account_balance_response/financial_account_detail.dart';
+import 'package:c4d/module_plan/response/captain_account_balance_response/on_order/on_order.dart';
+import 'package:c4d/module_plan/response/captain_account_balance_response/on_order/on_order_data.dart';
 import 'package:c4d/module_plan/response/captain_finance_by_hours_response/captain_finance_by_hours_response.dart';
 import 'package:c4d/module_plan/response/captain_finance_by_order_count_response/captain_finance_by_order_count_response.dart';
 import 'package:c4d/module_plan/response/captain_financeby_order_response/captain_financeby_order_response.dart';
@@ -17,6 +18,8 @@ import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_plan/manager/captain_balance_manager.dart';
+
+import '../response/captain_account_balance_response/on_order/financial_account_detail.dart';
 
 @injectable
 class PlanService {
@@ -83,9 +86,13 @@ class PlanService {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
-    if (actionResponse.data?.financialAccountDetails != null) {
-      actionResponse.data?.financialAccountDetails =
-          await _getTranslated(actionResponse);
+
+    if (actionResponse is OnOrder) {
+      var data = actionResponse.data as OnOrderData?;
+
+      data?.financialAccountDetails = await _getTranslated(data);
+
+      actionResponse.data = data;
     }
     return CaptainAccountBalanceModel.withData(actionResponse);
   }
@@ -119,10 +126,10 @@ class PlanService {
   }
 
   Future<List<FinancialAccountDetail>?> _getTranslated(
-      CaptainAccountBalanceResponse actionResponse) async {
+      OnOrderData data) async {
     try {
       var translated = <FinancialAccountDetail>[];
-      translated = actionResponse.data!.financialAccountDetails!;
+      translated = data.financialAccountDetails!;
       for (var element in translated) {
         if (element.message == null) {
           continue;
@@ -131,7 +138,7 @@ class PlanService {
       }
       return translated;
     } catch (e) {
-      return actionResponse.data!.financialAccountDetails;
+      return data.financialAccountDetails;
     }
   }
 }
