@@ -18,6 +18,7 @@ import 'package:c4d/module_orders/response/order_without_distance_response/order
 import 'package:c4d/module_orders/response/orders_cash_finances_for_captain_response/orders_cash_finances_for_captain_response.dart';
 import 'package:c4d/module_orders/response/orders_cash_finances_for_store_response/orders_cash_finances_for_store_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
+import 'package:c4d/module_stores/request/delete_order_request.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -62,8 +63,8 @@ class OrdersManager {
   Future<ActionResponse?> hideOrder(int orderID) =>
       _repository.hideOrder(orderID);
 
-  Future<ActionResponse?> deleteOrder(int orderId) =>
-      _repository.deleteOrder(orderId);
+  Future<ActionResponse?> deleteOrder(DeleteOrderRequest request) =>
+      _repository.deleteOrder(request);
 
   Future<ActionResponse?> unAssignCaptain(int orderId) =>
       _repository.unAssignCaptain(orderId);

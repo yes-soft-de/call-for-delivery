@@ -885,7 +885,7 @@
     "sortedByLatest": "Sorted by latest",
     "selected": "Selected",
     "delete": "Delete",
-    "notices": "Notices",
+    "notices": "Offers & Ads",
     "orderPriceOnCreditWarning": "Please remove order price after setting payment method to credit",
     "remove": "Remove",
     "addition": "Addition",
@@ -912,6 +912,21 @@
     "paidPartiallyCaptainFinanceDaily": "Paid partially",
     "duesPayments": "Dues for payment",
     "sumCaptainsFinancialDues": "Captains dues",
+    "updateCustomerLocation":"The customer location field has been updated and the old location saved",
+    "dues":"Dues",
+    "remainingtoPay":"Remaining to pay",
+    "showPayments":"show payments",
+    "addaPayment":"add a payment",
+    "duesByFilter":"Dues by filter",
+    "countTodayOrderDelivered":"today delivered",
+    "costType":"Cost type",
+    "orderCostAndDelivery":"order & delivery cost",
+    "deliveryOnly":"Delivery only",
+    "cutOrderForStore":"Cut order from store",
+    "giveCaptainHalfProfit":"Give captain half order delivery cost",
+
+
+
     "updateCustomerLocation": "The customer location field has been updated and the old location saved",
     "dues": "Dues",
     "remainingtoPay": "Remaining to pay",
@@ -936,4 +951,8 @@
     "deliveredOrders": "delivered orders",
     "createdOrders": "created orders",
     "statistics": "statistics"
+    "statistics": "statistics",
+    "captainRetreatOrder":"Captain retreat to deliver order",
+    "advanced":"Advanced"
+
 }

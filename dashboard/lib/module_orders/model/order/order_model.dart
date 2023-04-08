@@ -32,6 +32,8 @@ class OrderModel extends DataModel {
   List<OrderModel> subOrders = [];
   late num kilometer;
   late num storeBranchToClientDistance;
+  int? packageType;
+  int? costType;
   OrderModel({
     required this.branchName,
     required this.state,
@@ -56,6 +58,8 @@ class OrderModel extends DataModel {
     required this.kilometer,
     required this.storeBranchToClientDistance,
     this.storeBranchToClientDistanceAdditionExplanation,
+    this.packageType,
+    this.costType,
   });
   List<OrderModel> _orders = [];
   OrderModel.withData(OrdersResponse response) {
@@ -100,6 +104,8 @@ class OrderModel extends DataModel {
         storeBranchToClientDistance: element.storeBranchToClientDistance ?? 0,
         storeBranchToClientDistanceAdditionExplanation:
             element.storeBranchToClientDistanceAdditionExplanation,
+        packageType: element.packageType,
+        costType: element.costType,
       ));
     });
   }

@@ -65,7 +65,7 @@ class HomeLoadedState extends States {
                 ),
               ),
               HomeWidgetTile(model?.todayDeliveredOrdersCount.toString() ?? '',
-                  S.current.last24CountOrder),
+                  S.current.countTodayOrderDelivered),
               HomeWidgetTile(
                   model?.previousWeekDeliveredOrdersCount.toString() ?? '',
                   S.current.last7WeekOrders),

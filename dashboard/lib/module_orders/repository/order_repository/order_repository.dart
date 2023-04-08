@@ -20,6 +20,7 @@ import 'package:c4d/module_orders/response/order_without_distance_response/order
 import 'package:c4d/module_orders/response/orders_cash_finances_for_captain_response/orders_cash_finances_for_captain_response.dart';
 import 'package:c4d/module_orders/response/orders_cash_finances_for_store_response/orders_cash_finances_for_store_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
+import 'package:c4d/module_stores/request/delete_order_request.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -215,9 +216,9 @@ class OrderRepository {
     return ActionResponse.fromJson(response);
   }
 
-  Future<ActionResponse?> deleteOrder(int orderId) async {
+  Future<ActionResponse?> deleteOrder(DeleteOrderRequest request) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.put('${Urls.DELETE_ORDER}/$orderId', {},
+    dynamic response = await _apiClient.put('${Urls.DELETE_ORDER}', request.toJson(),
         headers: {'Authorization': 'Bearer $token'});
     if (response == null) return null;
     return ActionResponse.fromJson(response);

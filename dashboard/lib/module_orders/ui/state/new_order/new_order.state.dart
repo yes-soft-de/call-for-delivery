@@ -54,6 +54,7 @@ class NewOrderStateBranchesLoaded extends States {
   String? distance;
   String? deliveryCost;
   PdfModel? pdfModel;
+  int? packageType;
   @override
   Widget getUI(context) {
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
@@ -116,6 +117,7 @@ class NewOrderStateBranchesLoaded extends States {
                               itemAsString: (model) => model.storeOwnerName,
                               onChanged: (v) {
                                 v as StoresModel;
+                                packageType = v.packageType;
                                 screenState.storeID = v.id;
                                 screenState.branch = null;
                                 screenState.getBranches(stores);
@@ -714,6 +716,66 @@ class NewOrderStateBranchesLoaded extends States {
                     ],
                   ),
                 ),
+                /// cost type
+                Visibility(
+                  visible: screenState.payments == 'cash' && packageType == 1,
+                  child: ListTile(
+                    title: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        S.of(context).costType,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    subtitle: Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Theme.of(context).colorScheme.background,
+                            ),
+                            child: RadioListTile(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              title: Text(S.of(context).orderCostAndDelivery),
+                              value: 187,
+                              groupValue: screenState.costType,
+                              onChanged: (int? value) {
+                                screenState.costType = value;      
+                                screenState.refresh();
+                              },
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 16,
+                        ),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Theme.of(context).colorScheme.background,
+                            ),
+                            child: RadioListTile(
+                              title: Text(S.of(context).deliveryOnly),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              value: 186,
+                              groupValue: screenState.costType,
+                              onChanged: (int? value) {
+                                screenState.costType = value;
+                                screenState.refresh();
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
                 SizedBox(
                   height: 75,
                 ),
@@ -772,6 +834,7 @@ class NewOrderStateBranchesLoaded extends States {
       }
       screenState.addNewOrder(CreateOrderRequest(
           storeId: screenState.storeID,
+          costType: screenState.costType,
           fromBranch: screenState.branch,
           distance: distance,
           orderIsMain: orderIsMain,
@@ -793,6 +856,7 @@ class NewOrderStateBranchesLoaded extends States {
               ? DateTime.now().toUtc().toIso8601String()
               : orderDate?.toUtc().toIso8601String(),
           payment: screenState.payments,
+          
           deliveryCost: num.tryParse(deliveryCost.toString())));
     });
   }
@@ -800,6 +864,7 @@ class NewOrderStateBranchesLoaded extends States {
   // function create order without upload image
   void createOrderWithoutImage() {
     screenState.addNewOrder(CreateOrderRequest(
+        costType: screenState.costType,
         storeId: screenState.storeID,
         fromBranch: screenState.branch,
         orderIsMain: orderIsMain,

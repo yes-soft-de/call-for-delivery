@@ -45,6 +45,7 @@ class RecycleOrderLoaded2 extends States {
     distance = orderInfo.storeBranchToClientDistance;
     var number = orderInfo.customerPhone;
     branches = screenState.branches;
+    screenState.costType = orderInfo.costType;
     if (number == S.current.unknown) number = '';
     if (number.isNotEmpty || number != '') {
       final sNumber =
@@ -708,6 +709,65 @@ class RecycleOrderLoaded2 extends States {
                     ],
                   ),
                 ),
+                /// cost type
+                Visibility(
+                  visible: screenState.payments == 'cash' && orderInfo.packageType == 1,
+                  child: ListTile(
+                    title: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        S.of(context).costType,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    subtitle: Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Theme.of(context).colorScheme.background,
+                            ),
+                            child: RadioListTile(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              title: Text(S.of(context).orderCostAndDelivery),
+                              value: 187,
+                              groupValue: screenState.costType,
+                              onChanged: (int? value) {
+                                screenState.costType = value;      
+                                screenState.refresh();
+                              },
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 16,
+                        ),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Theme.of(context).colorScheme.background,
+                            ),
+                            child: RadioListTile(
+                              title: Text(S.of(context).deliveryOnly),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              value: 186,
+                              groupValue: screenState.costType,
+                              onChanged: (int? value) {
+                                screenState.costType = value;
+                                screenState.refresh();
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 SizedBox(
                   height: 75,
                 ),
@@ -874,6 +934,7 @@ class RecycleOrderLoaded2 extends States {
         fromBranch: screenState.branch,
         deliveryCost: num.tryParse(deliveryCost.toString()),
         cancel: 0,
+        costType: screenState.costType,
       ));
     });
   }
@@ -900,6 +961,7 @@ class RecycleOrderLoaded2 extends States {
       fromBranch: screenState.branch,
       deliveryCost: num.tryParse(deliveryCost.toString()),
       cancel: 0,
+      costType: screenState.costType,
     ));
   }
 

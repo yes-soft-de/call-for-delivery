@@ -42,6 +42,7 @@ class UpdateOrderLoaded extends States {
     screenState.orderDetailsController.text = orderInfo.note;
     screenState.noteController.text = orderInfo.note;
     screenState.receiptNameController.text = orderInfo.customerName;
+    screenState.costType = orderInfo.costType;
     distance = orderInfo.storeBranchToClientDistance;
     var number = orderInfo.customerPhone;
     if (number == S.current.unknown) number = '';
@@ -705,6 +706,65 @@ class UpdateOrderLoaded extends States {
                     ],
                   ),
                 ),
+                /// cost type
+                Visibility(
+                  visible: screenState.payments == 'cash' && orderInfo.packageType == 1,
+                  child: ListTile(
+                    title: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        S.of(context).costType,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    subtitle: Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Theme.of(context).colorScheme.background,
+                            ),
+                            child: RadioListTile(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              title: Text(S.of(context).orderCostAndDelivery),
+                              value: 187,
+                              groupValue: screenState.costType,
+                              onChanged: (int? value) {
+                                screenState.costType = value;      
+                                screenState.refresh();
+                              },
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 16,
+                        ),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Theme.of(context).colorScheme.background,
+                            ),
+                            child: RadioListTile(
+                              title: Text(S.of(context).deliveryOnly),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              value: 186,
+                              groupValue: screenState.costType,
+                              onChanged: (int? value) {
+                                screenState.costType = value;
+                                screenState.refresh();
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
                 SizedBox(
                   height: 75,
                 ),
@@ -851,6 +911,7 @@ class UpdateOrderLoaded extends States {
             .show(screenState.context);
       }
       screenState.addNewOrder(CreateOrderRequest(
+        costType: screenState.costType,
         distance: distance,
         id: orderInfo.id,
         orderIsMain: orderIsMain,
@@ -879,6 +940,7 @@ class UpdateOrderLoaded extends States {
   // function create order without upload image
   void createOrderWithoutImage() {
     screenState.addNewOrder(CreateOrderRequest(
+      costType:   screenState.costType,
       id: orderInfo.id,
       orderIsMain: orderIsMain,
       distance: distance,

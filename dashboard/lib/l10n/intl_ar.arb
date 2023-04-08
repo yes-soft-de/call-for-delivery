@@ -884,7 +884,7 @@
     "sortedByLatest": "من الأقدم للأحدث",
     "selected": "تحديد",
     "delete": "حذف",
-    "notices": "التحديثات",
+    "notices": "الإعلانات والعروض",
     "orderPriceOnCreditWarning": "لقد حددت سعر الطلبية الرجاء إزالتها في حالة كانت الطلبية مدفوعة",
     "remove": "إزالة",
     "addition": "إضافة",
@@ -911,6 +911,19 @@
     "paidPartiallyCaptainFinanceDaily": "دفع جزء من المستحقات",
     "duesPayments": "المستحقات للدفع",
     "sumCaptainsFinancialDues": "مستحقات الكباتن",
+    "updateCustomerLocation":"تم تحديث حقل موقع العميل وحفظ الموقع القديم",
+    "dues":"المستحقات",
+    "remainingtoPay":"المتبقي للدفع",
+    "showPayments":"عرض المدفوعات",
+    "addaPayment":"إضافة دفعة",
+    "duesByFilter":"المستحقات وفق الفلترة",
+    "countTodayOrderDelivered":"المسلمة اليوم",
+    "costType":"نوع التكلفة",
+    "deliveryOnly":"سعر التوصيل فقط",
+    "orderCostAndDelivery":"سعر الطلب والتوصيل",
+    "cutOrderForStore":"احتساب الطلب على المتجر",
+    "giveCaptainHalfProfit":"احتساب نصف قيمة الطلب على الكابتن",
+    
     "updateCustomerLocation": "تم تحديث حقل موقع العميل وحفظ الموقع القديم",
     "dues": "المستحقات",
     "remainingtoPay": "المتبقي للدفع",
@@ -935,4 +948,7 @@
     "deliveredOrders": "سلمو طلبات",
     "createdOrders": "أنشأوا طلبات",
     "statistics": "إحصائيات"
+    "statistics": "إحصائيات",
+    "captainRetreatOrder":"قام الكابتن بالتراجع عن تسليم الطلب",
+    "advanced":"سلفا"
 }

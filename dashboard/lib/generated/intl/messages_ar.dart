@@ -103,6 +103,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addition": MessageLookupByLibrary.simpleMessage("إضافة"),
         "address": MessageLookupByLibrary.simpleMessage("العنوان"),
         "admin": MessageLookupByLibrary.simpleMessage("المدير"),
+        "advanced": MessageLookupByLibrary.simpleMessage("سلفا"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "all": MessageLookupByLibrary.simpleMessage("الكل"),
         "allOrders": MessageLookupByLibrary.simpleMessage("كل الطلبات"),
@@ -242,6 +243,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("دفعات الكابتن"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("تم تقييم الكابتن بنجاح"),
+        "captainRetreatOrder": MessageLookupByLibrary.simpleMessage(
+            "قام الكابتن بالتراجع عن تسليم الطلب"),
         "captainStartedDelivery":
             MessageLookupByLibrary.simpleMessage("بدأ الكابتن التوصيل"),
         "captainStateActive": MessageLookupByLibrary.simpleMessage("فعال"),
@@ -369,6 +372,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "coordinates": MessageLookupByLibrary.simpleMessage("الإحداثيات"),
         "copied": MessageLookupByLibrary.simpleMessage("تم نسخه بنجاح"),
         "cost": MessageLookupByLibrary.simpleMessage("التكلفة"),
+        "costType": MessageLookupByLibrary.simpleMessage("نوع التكلفة"),
         "countCaptains": MessageLookupByLibrary.simpleMessage("عدد الكباتن"),
         "countClients": MessageLookupByLibrary.simpleMessage("عدد العملاء"),
         "countCompletedOrders":
@@ -397,6 +401,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "countStores": MessageLookupByLibrary.simpleMessage("عدد المتاجر"),
         "countTodayOrder":
             MessageLookupByLibrary.simpleMessage("الطلبات اليوم"),
+        "countTodayOrderDelivered":
+            MessageLookupByLibrary.simpleMessage("المسلمة اليوم"),
         "countryCode": MessageLookupByLibrary.simpleMessage("النداء"),
         "createDate": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
         "createNewOrder":
@@ -422,6 +428,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "currentOrders": MessageLookupByLibrary.simpleMessage("طلباتي"),
         "currentSubscriptions":
             MessageLookupByLibrary.simpleMessage("الاشتراكات الحالية"),
+        "cutOrderForStore":
+            MessageLookupByLibrary.simpleMessage("احتساب الطلب على المتجر"),
         "cycleEnd": MessageLookupByLibrary.simpleMessage("نهاية الدورة"),
         "cycleStart": MessageLookupByLibrary.simpleMessage("بداية الدورة"),
         "dailyProfit": MessageLookupByLibrary.simpleMessage("الأرباح اليومية"),
@@ -468,6 +476,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliveryCostDetails":
             MessageLookupByLibrary.simpleMessage("تفاصيل سعر التوصيل"),
         "deliveryDate": MessageLookupByLibrary.simpleMessage("تاريخ التسليم"),
+        "deliveryOnly": MessageLookupByLibrary.simpleMessage("سعر التوصيل فقط"),
         "description": MessageLookupByLibrary.simpleMessage("وصف"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("التوصيل إلى"),
@@ -611,6 +620,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("نطاق الباقة الجغرافي"),
         "getDirection":
             MessageLookupByLibrary.simpleMessage("موقع المحل (الاستلام)"),
+        "giveCaptainHalfProfit": MessageLookupByLibrary.simpleMessage(
+            "احتساب نصف قيمة الطلب على الكابتن"),
         "go": MessageLookupByLibrary.simpleMessage("انطلق"),
         "groupOrder": MessageLookupByLibrary.simpleMessage("طلب مجمع"),
         "had_amount_daily_captain":
@@ -785,7 +796,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "noteOfOrder":
             MessageLookupByLibrary.simpleMessage("دون ملاحظاتك حول الطلب"),
         "notice": MessageLookupByLibrary.simpleMessage("التحديثات"),
-        "notices": MessageLookupByLibrary.simpleMessage("التحديثات"),
+        "notices": MessageLookupByLibrary.simpleMessage("الإعلانات والعروض"),
         "notificationDeletedSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الإشعار بنجاح"),
         "notifications": MessageLookupByLibrary.simpleMessage("الاشعارات"),
@@ -818,6 +829,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("طلبات بمسافات متنازعة"),
         "orderConflictedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم حل التعارض بنجاح"),
+        "orderCostAndDelivery":
+            MessageLookupByLibrary.simpleMessage("سعر الطلب والتوصيل"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "سعر الطلب شامل تكلفة التوصيل"),
         "orderCount": MessageLookupByLibrary.simpleMessage("عدد الطلبات"),

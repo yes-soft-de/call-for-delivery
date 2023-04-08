@@ -17,7 +17,7 @@ class CreateOrderRequest {
   String? pdf;
   num? deliveryCost;
   int? cancel;
-
+  int? costType;
   CreateOrderRequest(
       {this.id,
       this.storeId,
@@ -36,7 +36,9 @@ class CreateOrderRequest {
       this.distance,
       this.pdf,
       required this.deliveryCost,
-      this.cancel});
+      this.cancel,
+      this.costType,
+      });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -84,6 +86,9 @@ class CreateOrderRequest {
     }
     if (this.pdf != null) {
       data['filePdf'] = this.pdf;
+    }
+    if (this.costType != null) {
+      data['costType'] = this.costType;
     }
     return data;
   }
