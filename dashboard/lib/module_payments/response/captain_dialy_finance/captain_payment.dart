@@ -2,7 +2,7 @@ import 'created_at.dart';
 
 class CaptainPayment {
   int? id;
-  int? amount;
+  num? amount;
   CreatedAt? createdAt;
   String? note;
 

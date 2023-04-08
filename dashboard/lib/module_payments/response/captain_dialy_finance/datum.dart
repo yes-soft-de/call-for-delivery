@@ -6,13 +6,13 @@ class Datum {
   int? id;
   int? captainProfileId;
   String? captainName;
-  int? amount;
-  int? alreadyHadAmount;
+  num? amount;
+  num? alreadyHadAmount;
   int? financialSystemType;
   int? financialSystemPlan;
   int? isPaid;
   bool? withBonus;
-  int? bonus;
+  num? bonus;
   CreatedAt? createdAt;
   UpdatedAt? updatedAt;
   List<CaptainPayment>? captainPayments;
