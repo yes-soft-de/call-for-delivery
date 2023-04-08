@@ -11,7 +11,7 @@ class CaptainPayment {
   factory CaptainPayment.fromJson(Map<String, dynamic> json) {
     return CaptainPayment(
       id: json['id'] as int?,
-      amount: json['amount'] as int?,
+      amount: json['amount'] as num?,
       createdAt: json['createdAt'] == null
           ? null
           : CreatedAt.fromJson(json['createdAt'] as Map<String, dynamic>),
