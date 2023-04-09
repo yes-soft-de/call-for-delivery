@@ -188,6 +188,9 @@ class AdminOrderService
             }
 
             $order['subOrder'] = $this->adminOrderManager->getSubOrdersByPrimaryOrderIdForAdmin($order['id']);
+
+            $order['packageId'] = $order['storeSubscription']->getPackage()->getId();
+            $order['packageType'] = $order['storeSubscription']->getPackage()->getType();
         }
 
         return $this->autoMapping->map("array", OrderByIdGetForAdminResponse::class, $order);

@@ -26,6 +26,8 @@ use App\Entity\StoreOwnerBranchEntity;
 use App\Entity\ImageEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\OrderChatRoomEntity;
+use App\Entity\SubscriptionDetailsEntity;
+use App\Entity\SubscriptionEntity;
 use App\Entity\SupplierCategoryEntity;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
@@ -523,9 +525,9 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'imageEntity.imagePath as orderImage', 'captainEntity.captainName', 'captainEntity.phone', 'orderEntity.paidToProvider', 'orderEntity.noteCaptainOrderCost', 'orderEntity.captainOrderCost',
                 'storeOrderDetails.filePdf', 'orderEntity.storeBranchToClientDistance', 'orderEntity.isCashPaymentConfirmedByStore', 'orderEntity.isCashPaymentConfirmedByStoreUpdateDate',
                 'primaryOrderEntity.id as primaryOrderId', 'orderEntity.costType')
-
             ->addSelect('storeOwnerProfileEntity.id as storeOwnerId')
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')
+            ->addSelect('subscriptionEntity as storeSubscription')
 
             ->leftJoin(
                 StoreOrderDetailsEntity::class,
@@ -555,7 +557,12 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'captainEntity.id = orderEntity.captainId'
             )
 
-            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = orderEntity.storeOwner')
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+            )
 
             ->leftJoin(
                 OrderEntity::class,
@@ -563,6 +570,19 @@ class OrderEntityRepository extends ServiceEntityRepository
                 Join::WITH,
                 'primaryOrderEntity.id = orderEntity.primaryOrder'
             )
+
+            ->leftJoin(
+                SubscriptionEntity::class,
+                'subscriptionEntity',
+                Join::WITH,
+                'subscriptionEntity.storeOwner = storeOwnerProfileEntity.id'
+                .' AND subscriptionEntity.startDate < orderEntity.createdAt AND subscriptionEntity.endDate > orderEntity.createdAt'
+            )
+
+            // orderBy and setMaxResults (besides the date condition) had been used to prevent returning more than one subscription,
+            // as long as store could create two subscriptions (current and future) then create an order
+            ->orderBy('subscriptionEntity.id', 'DESC')
+            ->setMaxResults(1)
 
             ->andWhere('orderEntity.id = :id')
             ->setParameter('id', $id)
