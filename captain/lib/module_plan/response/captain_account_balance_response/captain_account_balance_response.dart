@@ -4,8 +4,11 @@ import 'package:c4d/module_plan/response/captain_account_balance_response/on_ord
 
 import 'account_balance_data.dart';
 
-const int _kByHoursFelidsNumber = 12;
-const int _kByOrderFelidsNumber = 16;
+// ----< response type >---- \\
+const int _kByHours = 1;
+const int _kByOrder = 2;
+// ignore: unused_element
+const int _kOnOrder = 3;
 
 abstract class CaptainAccountBalanceResponse {
   String? statusCode;
@@ -15,9 +18,10 @@ abstract class CaptainAccountBalanceResponse {
   CaptainAccountBalanceResponse({this.statusCode, this.msg, this.data});
 
   factory CaptainAccountBalanceResponse.fromJson(Map<String, dynamic> json) {
-    if (json['Data'].length == _kByHoursFelidsNumber) {
+    int type = json['Data']['captainFinancialSystemType'];
+    if (type == _kByHours) {
       return ByHour.fromJson(json);
-    } else if (json['Data'].length == _kByOrderFelidsNumber) {
+    } else if (type == _kByOrder) {
       return ByOrder.fromJson(json);
     } else {
       return OnOrder.fromJson(json);
