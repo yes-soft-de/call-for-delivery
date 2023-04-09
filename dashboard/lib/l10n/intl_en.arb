@@ -943,6 +943,7 @@
     "createdOrders": "created orders",
     "statistics": "statistics",
     "time": "time",
+    "last7days": "last 7 days",
     "captainRetreatOrder": "Captain retreat to deliver order",
     "advanced": "Advanced"
 }

@@ -9480,6 +9480,16 @@ class S {
     );
   }
 
+  /// `last 7 days`
+  String get last7days {
+    return Intl.message(
+      'last 7 days',
+      name: 'last7days',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Captain retreat to deliver order`
   String get captainRetreatOrder {
     return Intl.message(

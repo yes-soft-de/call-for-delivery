@@ -702,6 +702,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "last3Active": MessageLookupByLibrary.simpleMessage("اخر 3 فعالين"),
         "last7WeekOrders":
             MessageLookupByLibrary.simpleMessage("الطلبات آخر ٧ أيام"),
+        "last7days": MessageLookupByLibrary.simpleMessage("اخر 7 ايام"),
         "lastName": MessageLookupByLibrary.simpleMessage("الكنية"),
         "lastSeenMessage": MessageLookupByLibrary.simpleMessage("رسائل جديدة"),
         "lastSevenDays": MessageLookupByLibrary.simpleMessage("اخر سبع ايام"),
