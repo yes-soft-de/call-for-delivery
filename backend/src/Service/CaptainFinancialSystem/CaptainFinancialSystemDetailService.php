@@ -52,25 +52,25 @@ class CaptainFinancialSystemDetailService
         //get Captain Financial System Detail current
         $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailCurrent($userId);
        
-        if($financialSystemDetail) {
+        if ($financialSystemDetail) {
            $captainFinancialDues = $this->captainFinancialDuesService->getLatestCaptainFinancialDues($financialSystemDetail['captainId']);
-           if($captainFinancialDues ) {
-                $date = ["fromDate" => $captainFinancialDues['startDate']->format('Y-m-d 00:00:00'), "toDate" => $captainFinancialDues['endDate']->format('y-m-d 23:59:59')];
-        
-                $sumPayments = $this->getSumPayments($financialSystemDetail['captainId'], $captainFinancialDues['startDate'], $captainFinancialDues['endDate']);
 
-                $countWorkdays = $this->captainFinancialSystemDateService->subtractTwoDates(new DateTime ($date ['fromDate']), new DateTime($date['toDate']));
-            }
+           if ($captainFinancialDues ) {
+               $date = ["fromDate" => $captainFinancialDues['startDate']->format('Y-m-d 00:00:00'), "toDate" => $captainFinancialDues['endDate']->format('y-m-d 23:59:59')];
 
-            else {
-                $dateForPayments = $this->captainFinancialSystemDateService->getFromDateAndToDate(); 
+               $sumPayments = $this->getSumPayments($financialSystemDetail['captainId'], $captainFinancialDues['startDate'], $captainFinancialDues['endDate']);
 
-                $sumPayments = $this->getSumPayments($financialSystemDetail['captainId'], $dateForPayments['fromDate'], $dateForPayments['toDate']);
+               $countWorkdays = $this->captainFinancialSystemDateService->subtractTwoDates(new DateTime ($date ['fromDate']), new DateTime($date['toDate']));
 
-                $date = $this->captainFinancialSystemDateService->getFromDateAndToDateForCaptainFinancialSystemOneAndThtree();
-            }
+           } else {
+               $dateForPayments = $this->captainFinancialSystemDateService->getFromDateAndToDate();
+
+               $sumPayments = $this->getSumPayments($financialSystemDetail['captainId'], $dateForPayments['fromDate'], $dateForPayments['toDate']);
+
+               $date = $this->captainFinancialSystemDateService->getFromDateAndToDateForCaptainFinancialSystemOneAndThtree();
+           }
             
-            if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
+            if ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
                 // *** Habib code ***
                 //return $this->captainFinancialSystemOneBalanceDetailService->getBalanceDetailWithSystemOne($financialSystemDetail, $financialSystemDetail['captainId'], $sumPayments, $date, $countWorkdays);
                 // *** End of Habib code ***
@@ -81,7 +81,7 @@ class CaptainFinancialSystemDetailService
                 // *** End of Rami code ***
             }
 
-            if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
+            if ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
 
                 // *** Habib code ***
                 // return $this->captainFinancialSystemTwoBalanceDetailService->getBalanceDetailWithSystemTwo($financialSystemDetail, $financialSystemDetail['captainId'], $sumPayments, $date, $countWorkdays);
@@ -93,7 +93,7 @@ class CaptainFinancialSystemDetailService
                 // *** End of Rami code ***
             }
 
-            if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_THREE) {
+            if ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_THREE) {
               
                 $choseFinancialSystemDetails = $this->captainFinancialSystemAccordingOnOrderService->getCaptainFinancialSystemAccordingOnOrder();
 

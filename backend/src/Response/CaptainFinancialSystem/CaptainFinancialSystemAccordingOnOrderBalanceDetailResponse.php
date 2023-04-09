@@ -35,4 +35,6 @@ class CaptainFinancialSystemAccordingOnOrderBalanceDetailResponse
     public bool|null $advancePayment;
 
     public float $amountForStore;
+
+    public int $captainFinancialSystemType;
 }

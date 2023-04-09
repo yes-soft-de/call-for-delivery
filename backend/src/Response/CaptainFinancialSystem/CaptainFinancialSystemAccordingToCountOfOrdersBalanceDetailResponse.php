@@ -41,4 +41,6 @@ class CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse
     public float $countOrdersMaxFromNineteen;
 
     public float $countOrdersWithoutDistance;
+
+    public int $captainFinancialSystemType;
 }
