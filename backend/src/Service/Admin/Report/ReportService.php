@@ -80,7 +80,8 @@ class ReportService
             }
         }
 
-        $response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["sum"] = array_sum($response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["daily"]);
+        $response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["sum"] = array_sum(array_column($response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["daily"],
+            "count"));
 
         $countValues = array_column($response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["daily"], "count");
 
