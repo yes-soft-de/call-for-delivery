@@ -1329,6 +1329,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "سوف يستغرق الامر دقيقة واحدة الرجاء الانتظار"),
         "thisOrderCanBeLinked": MessageLookupByLibrary.simpleMessage(
             "الطلب من الممكن أن يحتوي على طلبات فرعية"),
+        "time": MessageLookupByLibrary.simpleMessage("الوقت"),
         "title": MessageLookupByLibrary.simpleMessage("عنوان"),
         "to": MessageLookupByLibrary.simpleMessage("الى"),
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
