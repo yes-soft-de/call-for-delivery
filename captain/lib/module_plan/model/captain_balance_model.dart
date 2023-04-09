@@ -111,8 +111,7 @@ class CaptainAccountBalanceModel extends DataModel {
     if (element is ByOrderData?) {
       _data = CaptainAccountBalanceModel(
           orderCountsDetails: null,
-          //TODO: this need to check
-          advancePayment: null, //element?.advancePayment,
+          advancePayment: element?.advancePayment != 0,
           compensationForEveryOrder: null,
           countOrders: null,
           countOrdersMaxFromNineteen: element?.countOrdersMaxFromNineteen,
@@ -130,65 +129,6 @@ class CaptainAccountBalanceModel extends DataModel {
           paymentsToClient: getPayments(),
           ordersInMonth: element?.countOrdersInMonth);
     }
-
-    // TODO: old code delete it
-    // if (element?.finalFinancialAccount != null &&
-    //     element?.financialAccountDetails != null) {
-    //   var details = <OrderCountsSystemDetails>[];
-    //   element?.financialAccountDetails?.forEach((element) {
-    //     details.add(OrderCountsSystemDetails(
-    //         amount: element.amount ?? 0,
-    //         bounce: element.bounce ?? 0,
-    //         bounceCountOrdersInMonth: element.bounceCountOrdersInMonth ?? 0,
-    //         captainTotalCategory: element.captainTotalCategory ?? 0,
-    //         categoryName: element.categoryName ?? '',
-    //         contOrderCompleted: element.contOrderCompleted ?? 0,
-    //         countKilometersFrom: element.countKilometersFrom ?? 0,
-    //         countKilometersTo: element.countKilometersTo ?? 0,
-    //         countOfOrdersLeft: element.countOfOrdersLeft ?? 0,
-    //         message: element.message));
-    //   });
-
-    //   _data = CaptainAccountBalanceModel(
-    //       orderCountsDetails: details,
-    //       advancePayment: element?.finalFinancialAccount?.advancePayment,
-    //       compensationForEveryOrder: element?.compensationForEveryOrder,
-    //       countOrders: element?.countOrders,
-    //       countOrdersMaxFromNineteen: element?.countOrdersMaxFromNineteen,
-    //       financialDues: element?.finalFinancialAccount?.financialDues,
-    //       salary: element?.salary,
-    //       sumPayments: element?.finalFinancialAccount?.sumPayments,
-    //       total: element?.finalFinancialAccount?.total,
-    //       bounce: element?.bounce,
-    //       countOrdersCompleted: element?.countOrdersCompleted,
-    //       countOverOrdersThanRequired: element?.countOverOrdersThanRequired,
-    //       dateFinancialCycleEnds: element?.dateFinancialCycleEnds,
-    //       monthCompensation: element?.monthCompensation,
-    //       monthTargetSuccess: element?.monthTargetSuccess,
-    //       amountForStore: element?.amountForStore ?? 0,
-    //       paymentsToClient: getPayments(),
-    //       ordersInMonth: element?.countOrdersInMonth);
-    // } else {
-    //   _data = CaptainAccountBalanceModel(
-    //     advancePayment: element?.advancePayment,
-    //     compensationForEveryOrder: element?.compensationForEveryOrder,
-    //     countOrders: element?.countOrders,
-    //     countOrdersMaxFromNineteen: element?.countOrdersMaxFromNineteen,
-    //     financialDues: element?.financialDues,
-    //     salary: element?.salary,
-    //     sumPayments: element?.sumPayments,
-    //     total: element?.total,
-    //     bounce: element?.bounce,
-    //     countOrdersCompleted: element?.countOrdersCompleted,
-    //     countOverOrdersThanRequired: element?.countOverOrdersThanRequired,
-    //     dateFinancialCycleEnds: element?.dateFinancialCycleEnds,
-    //     monthCompensation: element?.monthCompensation,
-    //     monthTargetSuccess: element?.monthTargetSuccess,
-    //     amountForStore: element?.amountForStore ?? 0,
-    //     paymentsToClient: getPayments(),
-    //     ordersInMonth: element?.countOrdersInMonth,
-    //   );
-    // }
   }
 
   CaptainAccountBalanceModel get data => _data;
