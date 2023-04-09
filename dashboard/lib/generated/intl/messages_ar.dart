@@ -414,7 +414,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "createdDate": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
         "createdNewOrder":
             MessageLookupByLibrary.simpleMessage("تم إنشاء طلب جديد"),
-        "createdOrders": MessageLookupByLibrary.simpleMessage("أنشأوا طلبات"),
+        "createdOrders": MessageLookupByLibrary.simpleMessage("أنشؤوا طلبات"),
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("الرصيد الحالي:"),
         "currentFinancialCycle":
