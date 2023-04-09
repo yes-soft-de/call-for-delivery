@@ -1340,6 +1340,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "This Might Take a while, please wait"),
         "thisOrderCanBeLinked": MessageLookupByLibrary.simpleMessage(
             "Order can contains a sub orders"),
+        "time": MessageLookupByLibrary.simpleMessage("time"),
         "title": MessageLookupByLibrary.simpleMessage("title"),
         "to": MessageLookupByLibrary.simpleMessage("To"),
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":

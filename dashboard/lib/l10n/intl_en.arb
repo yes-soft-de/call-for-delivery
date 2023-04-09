@@ -942,6 +942,7 @@
     "deliveredOrders": "delivered orders",
     "createdOrders": "created orders",
     "statistics": "statistics",
+    "time": "time",
     "captainRetreatOrder": "Captain retreat to deliver order",
     "advanced": "Advanced"
 }

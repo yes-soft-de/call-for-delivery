@@ -466,7 +466,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverForMe": MessageLookupByLibrary.simpleMessage("طلب خارجي"),
         "deliverPrice": MessageLookupByLibrary.simpleMessage("التوصيل"),
         "deliverTo": MessageLookupByLibrary.simpleMessage("اسم المستلم"),
-        "deliveredOrders": MessageLookupByLibrary.simpleMessage("سلمو طلبات"),
+        "deliveredOrders": MessageLookupByLibrary.simpleMessage("سلموا طلبات"),
         "deliveringDescription":
             MessageLookupByLibrary.simpleMessage("الكابتن في طريقه إليك"),
         "deliveryCars": MessageLookupByLibrary.simpleMessage("سيارات التوصيل"),
@@ -1329,6 +1329,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "سوف يستغرق الامر دقيقة واحدة الرجاء الانتظار"),
         "thisOrderCanBeLinked": MessageLookupByLibrary.simpleMessage(
             "الطلب من الممكن أن يحتوي على طلبات فرعية"),
+        "time": MessageLookupByLibrary.simpleMessage("الوقت"),
         "title": MessageLookupByLibrary.simpleMessage("عنوان"),
         "to": MessageLookupByLibrary.simpleMessage("الى"),
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":

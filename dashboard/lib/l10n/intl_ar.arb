@@ -938,9 +938,10 @@
     "orderDeliveredThisWeek": "الطلبات المسلمة هذا الاسبوع",
     "last": "اخر",
     "actives": "فعالين",
-    "deliveredOrders": "سلمو طلبات",
+    "deliveredOrders": "سلموا طلبات",
     "createdOrders": "أنشؤوا طلبات",
     "statistics": "إحصائيات",
+    "time": "الوقت",
     "captainRetreatOrder": "قام الكابتن بالتراجع عن تسليم الطلب",
     "advanced": "سلفا"
 }

@@ -2,6 +2,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_statistics/model/statistics_model.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ActorInfo extends StatelessWidget {
   final Actor actor;
@@ -36,9 +37,20 @@ class ActorInfo extends StatelessWidget {
               color: Colors.white,
             ),
             Text(
-              '${actor is Captain ? S.current.LastDeliveredDelivery : S.current.LastCreatedDelivery}\n ${actor.createAt}',
+              '${actor is Captain ? S.current.LastDeliveredDelivery : S.current.LastCreatedDelivery}',
               textAlign: TextAlign.center,
             ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                    '${S.current.time}: ${DateFormat.jm().format(actor.createAt)}'),
+                Text(
+                  '${S.current.date}: ${DateFormat.MMMMd().format(actor.createAt)}',
+                ),
+              ],
+            ),
+            SizedBox()
           ],
         ),
       ),
