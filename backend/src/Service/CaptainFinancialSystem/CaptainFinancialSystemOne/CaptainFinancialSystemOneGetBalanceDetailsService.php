@@ -216,10 +216,10 @@ class CaptainFinancialSystemOneGetBalanceDetailsService
 
         $total = $financialSystemDetail['financialDues'] - $sumPayments;
 
-        $financialSystemDetail['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
+        $financialSystemDetail['advancePayment'] = CaptainFinancialSystem::ADVANCED_PAYMENT_BALANCE_CONST;
 
         if ($total <= 0) {
-            $financialSystemDetail['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_YES;
+            $financialSystemDetail['advancePayment'] = CaptainFinancialSystem::ADVANCED_PAYMENT_EXIST_CONST;
         }
 
         $financialSystemDetail['total'] = abs($total);

@@ -7,24 +7,45 @@ class CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse
     public float $countOrders;
     
     public float $countOrdersMaxFromNineteen;
-    
-    public float|null $compensationForEveryOrder;
 
-    public float|null $salary;
+    /**
+     * @var float|null
+     */
+    public $compensationForEveryOrder;
 
-    public float|null $financialDues;
+    /**
+     * @var float|null
+     */
+    public $salary;
 
-    public float|null $sumPayments;
+    /**
+     * @var float|null
+     */
+    public $financialDues;
 
-    public float|null $total;
+    /**
+     * @var float|null
+     */
+    public $sumPayments;
 
-    public bool $advancePayment;
+    /**
+     * @var float|null
+     */
+    public $total;
+
+    public int $advancePayment;
     
     public float $amountForStore;
 
-    public string|null $dateFinancialCycleStarts;
+    /**
+     * @var string|null
+     */
+    public $dateFinancialCycleStarts;
 
-    public string|null $dateFinancialCycleEnds;
+    /**
+     * @var string|null
+     */
+    public $dateFinancialCycleEnds;
 
     public float $countOrdersWithoutDistance;
 
