@@ -100,15 +100,27 @@ class OrderByIdGetForAdminResponse
      */
     public $phone;
 
-    public int|null $paidToProvider;
+    /**
+     * @var int|null
+     */
+    public $paidToProvider;
 
     public int $storeOwnerId;
 
-    public string|null $storeOwnerName;
+    /**
+     * @var string|null
+     */
+    public $storeOwnerName;
 
-    public float|null $captainOrderCost;
+    /**
+     * @var float|null
+     */
+    public $captainOrderCost;
 
-    public string|null $noteCaptainOrderCost;
+    /**
+     * @var string|null
+     */
+    public $noteCaptainOrderCost;
 
     /**
      * @OA\Property(type="array", property="captain",
@@ -122,7 +134,10 @@ class OrderByIdGetForAdminResponse
      */
     public array|null $filePdf;
 
-    public float|null $storeBranchToClientDistance;
+    /**
+     * @var float|null
+     */
+    public $storeBranchToClientDistance;
 
     /**
      * @OA\Property(type="array", property="subOrder",
@@ -149,4 +164,14 @@ class OrderByIdGetForAdminResponse
      * @var int|null
      */
     public $costType;
+
+    /**
+     * @var int|null
+     */
+    public $packageId;
+
+    /**
+     * @var int|null
+     */
+    public $packageType;
 }

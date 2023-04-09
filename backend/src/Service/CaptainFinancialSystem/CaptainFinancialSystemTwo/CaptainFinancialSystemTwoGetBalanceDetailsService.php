@@ -127,7 +127,7 @@ class CaptainFinancialSystemTwoGetBalanceDetailsService
     public function getBalanceDetails(int $captainId, array $datesArray, float $sumPayments, array $financialSystemDetail): CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse
     {
         $total = 0.0;
-        $response = $this->initializeNecessaryFieldsForDuesCalculation($captainId, $datesArray);
+        $response = $this->initializeNecessaryFieldsForDuesCalculation($captainId, $datesArray, $financialSystemDetail);
 
         $response['countOverOrdersThanRequired'] = 0;
         $response['bounce'] = 0.0;
@@ -206,7 +206,7 @@ class CaptainFinancialSystemTwoGetBalanceDetailsService
     // To prepare the financial details for the captain
     public function calculateCaptainDues(int $captainId, array $financialSystemDetail, array $datesArray): array
     {
-        $response = $this->initializeNecessaryFieldsForDuesCalculation($captainId, $datesArray);
+        $response = $this->initializeNecessaryFieldsForDuesCalculation($captainId, $datesArray, $financialSystemDetail);
 
         // Check if the captain achieve the target of the financial system
         $checkTarget = $this->checkAchievedFinancialSystemTarget($financialSystemDetail['countOrdersInMonth'],
@@ -260,10 +260,11 @@ class CaptainFinancialSystemTwoGetBalanceDetailsService
     }
 
     // This function retrieve and initialize necessary fields for captain financial dues calculation
-    public function initializeNecessaryFieldsForDuesCalculation(int $captainId, array $datesArray): array
+    public function initializeNecessaryFieldsForDuesCalculation(int $captainId, array $datesArray, array $financialSystemDetail): array
     {
         $response = [];
 
+        $response['captainFinancialSystemType'] = $financialSystemDetail['captainFinancialSystemType'];
         $response['salary'] = 0.0;
         $response['monthCompensation'] = 0;
         $response['financialDues'] = 0.0;

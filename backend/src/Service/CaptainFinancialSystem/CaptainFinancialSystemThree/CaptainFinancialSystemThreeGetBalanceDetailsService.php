@@ -158,6 +158,7 @@ class CaptainFinancialSystemThreeGetBalanceDetailsService
         $finalFinancialAccount = $this->getFinalFinancialAccount($sumPayments, $financialAccountDetails, $captainId, $date);
 
         return [
+            "captainFinancialSystemType" => CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_THREE,
             "financialAccountDetails" => $financialAccountDetails,
             "finalFinancialAccount" => $finalFinancialAccount
         ];
