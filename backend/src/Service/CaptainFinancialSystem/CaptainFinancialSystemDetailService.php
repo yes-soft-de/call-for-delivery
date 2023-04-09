@@ -23,7 +23,6 @@ class CaptainFinancialSystemDetailService
         private AutoMapping $autoMapping,
         private CaptainFinancialSystemDetailManager $captainFinancialSystemDetailManager,
         private CaptainPaymentService $captainPaymentService,
-        //private CaptainFinancialSystemOneBalanceDetailService $captainFinancialSystemOneBalanceDetailService,
         private CaptainFinancialSystemAccordingOnOrderService $captainFinancialSystemAccordingOnOrderService,
         private CaptainFinancialSystemDateService $captainFinancialSystemDateService,
         private CaptainFinancialDuesService $captainFinancialDuesService,
@@ -38,14 +37,14 @@ class CaptainFinancialSystemDetailService
     {
         $captainFinancialSystemDetailEntity = $this->captainFinancialSystemDetailManager->createCaptainFinancialSystemDetail($request);
       
-        if($captainFinancialSystemDetailEntity === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_CAN_NOT_CHOSE) {
+        if ($captainFinancialSystemDetailEntity === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_CAN_NOT_CHOSE) {
             return CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_CAN_NOT_CHOSE;
         }
 
         return $this->autoMapping->map(CaptainFinancialSystemDetailEntity::class, CaptainFinancialSystemDetailResponse::class, $captainFinancialSystemDetailEntity);
     }
 
-    public function getBalanceDetailForCaptain(int $userId):CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse|string|CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse|array
+    public function getBalanceDetailForCaptain(int $userId): CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse|string|CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse|array
     {
         $this->captainFinancialDuesService->updateCaptainFinancialSystemDetail($userId);
 

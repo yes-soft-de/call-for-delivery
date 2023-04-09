@@ -613,9 +613,13 @@ class AdminOrderService
                 $this->orderChatRoomService->createOrderChatRoomOrUpdateCurrent($order);
 
                 //create Notification Local for store
-                $this->notificationLocalService->createNotificationLocalForOrderState($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::STORE, $order->getCaptainId()->getId()); 
+                $this->notificationLocalService->createNotificationLocalForOrderState($order->getStoreOwner()->getStoreOwnerId(),
+                    NotificationConstant::STATE_TITLE, $order->getState(), NotificationConstant::STORE, $order->getId(),
+                    $order->getCaptainId()->getId());
+
                 //create Notification Local for captain
-                $this->notificationLocalService->createNotificationLocalForOrderState($order->getCaptainId()->getCaptainId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::CAPTAIN);
+                $this->notificationLocalService->createNotificationLocalForOrderState($order->getCaptainId()->getCaptainId(),
+                    NotificationConstant::STATE_TITLE, $order->getState(), NotificationConstant::CAPTAIN, $order->getId());
 
                 //create order log
                 $this->orderTimeLineService->createOrderLogsRequest($order);

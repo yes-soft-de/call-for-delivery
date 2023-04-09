@@ -4,6 +4,7 @@ namespace App\Controller\CaptainFinancialSystem;
 
 use App\Controller\BaseController;
 use App\Service\CaptainFinancialSystem\CaptainFinancialSystemDetailService;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -25,16 +26,14 @@ use App\Constant\Main\MainErrorConstant;
  */
 class CaptainFinancialSystemDetailController extends BaseController
 {
-    private CaptainFinancialSystemDetailService $captainFinancialSystemDetailService;
-    private AutoMapping $autoMapping;
-    private ValidatorInterface $validator;
-
-    public function __construct(SerializerInterface $serializer, CaptainFinancialSystemDetailService $captainFinancialSystemDetailService, AutoMapping $autoMapping, ValidatorInterface $validator)
+    public function __construct(
+        SerializerInterface $serializer,
+        private CaptainFinancialSystemDetailService $captainFinancialSystemDetailService,
+        private AutoMapping $autoMapping,
+        private ValidatorInterface $validator
+    )
     {
         parent::__construct($serializer);
-        $this->autoMapping = $autoMapping;
-        $this->validator = $validator;
-        $this->captainFinancialSystemDetailService = $captainFinancialSystemDetailService;
     }
 
     /**
@@ -130,21 +129,39 @@ class CaptainFinancialSystemDetailController extends BaseController
      *
      * @OA\Response(
      *      response=200,
-     *      description="Returns get Balance Detail",
+     *      description="Returns captain financial balance details according to selected financial system",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *          @OA\Property(type="integer", property="countOrders"),
-     *          @OA\Property(type="integer", property="countOrdersMaxFromNineteen"),
-     *          @OA\Property(type="float", property="compensationForEveryOrder"),
-     *          @OA\Property(type="float", property="salary"),
-     *          @OA\Property(type="float", property="total"),
-     *          @OA\Property(type="float", property="financialDues"),
-     *          @OA\Property(type="float", property="sumPayments"),
-     *          @OA\Property(type="string", property="totalIsMain"),
+     *          oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code"),
+     *                          @OA\Property(type="string", property="msg"),
+     *                          @OA\Property(type="object", property="Data",
+     *                              ref=@Model(type="App\Response\CaptainFinancialSystem\CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse")
+     *                          )
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code"),
+     *                          @OA\Property(type="string", property="msg"),
+     *                          @OA\Property(type="object", property="Data",
+     *                                  ref=@Model(type="App\Response\CaptainFinancialSystem\CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse")
+     *                          )
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code"),
+     *                          @OA\Property(type="string", property="msg"),
+     *                          @OA\Property(type="object", property="Data",
+     *                              @OA\Property(type="integer", property="countOrders"),
+     *                              @OA\Property(type="integer", property="countOrdersMaxFromNineteen"),
+     *                              @OA\Property(type="float", property="compensationForEveryOrder"),
+     *                              @OA\Property(type="float", property="salary"),
+     *                              @OA\Property(type="float", property="total"),
+     *                              @OA\Property(type="float", property="financialDues"),
+     *                              @OA\Property(type="float", property="sumPayments"),
+     *                              @OA\Property(type="string", property="totalIsMain")
+     *                          )
+     *                   )
+     *              }
      *      )
-     *   )
      * )
      *
      * or
@@ -164,7 +181,7 @@ class CaptainFinancialSystemDetailController extends BaseController
     {
         $result = $this->captainFinancialSystemDetailService->getBalanceDetailForCaptain($this->getUserId());
 
-        if($result === CaptainFinancialSystem::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM) {
+        if ($result === CaptainFinancialSystem::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM);
         }
 
