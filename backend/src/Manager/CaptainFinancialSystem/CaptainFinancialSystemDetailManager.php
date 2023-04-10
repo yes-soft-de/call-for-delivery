@@ -13,17 +13,13 @@ use App\Constant\Captain\CaptainConstant;
 
 class CaptainFinancialSystemDetailManager
 {
-    private AutoMapping $autoMapping;
-    private EntityManagerInterface $entityManager;
-    private CaptainFinancialSystemDetailEntityRepository $captainFinancialSystemDetailEntityRepository;
-    private CaptainManager $captainManager;
-
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, CaptainFinancialSystemDetailEntityRepository $captainFinancialSystemDetailEntityRepository, CaptainManager $captainManager)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private EntityManagerInterface $entityManager,
+        private CaptainFinancialSystemDetailEntityRepository $captainFinancialSystemDetailEntityRepository,
+        private CaptainManager $captainManager
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->entityManager = $entityManager;
-        $this->captainFinancialSystemDetailEntityRepository = $captainFinancialSystemDetailEntityRepository;
-        $this->captainManager = $captainManager;
     }
 
     public function createCaptainFinancialSystemDetail(CaptainFinancialSystemDetailRequest $request): CaptainFinancialSystemDetailEntity|string
@@ -58,12 +54,6 @@ class CaptainFinancialSystemDetailManager
         return $financialSystemDetail;
     }
 
-    // Following function had been commented out because it isn't used anywhere
-//    public function getCaptainFinancialSystemDetailForAdmin(int $captainId): ?array
-//    {
-//        return $this->captainFinancialSystemDetailEntityRepository->getCaptainFinancialSystemDetailCurrent($captainId);
-//    }
-
     public function updateCaptainFinancialSystemDetail(bool $status, int $userId): CaptainFinancialSystemDetailEntity |null
     {      
         $captainId = $this->captainManager->getCaptainProfileByUserId($userId)->getId();
@@ -94,15 +84,19 @@ class CaptainFinancialSystemDetailManager
         return $financialSystemDetails;
     }
 
-    public function updateCaptainFinancialSystemDetailByCaptainId(int $captainId, int $status): CaptainFinancialSystemDetailEntity
-    {
-        $financialSystemDetail = $this->captainFinancialSystemDetailEntityRepository->findOneBy(["captain" => $captainId]); 
-       
-        if($financialSystemDetail){
-          $financialSystemDetail->setStatus($status);
-          $this->entityManager->flush();
-        }
-
-        return $financialSystemDetail;
-    }
+    /**
+     * used by stopFinancialSystemAndFinancialCycle
+     * This had been commented out currently but we may need it in the future
+     */
+//    public function updateCaptainFinancialSystemDetailByCaptainId(int $captainId, int $status): CaptainFinancialSystemDetailEntity
+//    {
+//        $financialSystemDetail = $this->captainFinancialSystemDetailEntityRepository->findOneBy(["captain" => $captainId]);
+//
+//        if ($financialSystemDetail) {
+//          $financialSystemDetail->setStatus($status);
+//          $this->entityManager->flush();
+//        }
+//
+//        return $financialSystemDetail;
+//    }
 }
