@@ -27,6 +27,7 @@ use App\Entity\BidDetailsEntity;
 use App\Entity\CaptainEntity;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Entity\OrderEntity;
+use App\Entity\PackageEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Entity\SubscriptionDetailsEntity;
 use App\Manager\Admin\Order\AdminOrderManager;
@@ -189,8 +190,12 @@ class AdminOrderService
 
             $order['subOrder'] = $this->adminOrderManager->getSubOrdersByPrimaryOrderIdForAdmin($order['id']);
 
-            $order['packageId'] = $order['storeSubscription']->getPackage()->getId();
-            $order['packageType'] = $order['storeSubscription']->getPackage()->getType();
+            if ($order['storeSubscription']) {
+                if ($order['storeSubscription']->getPackage() instanceof PackageEntity) {
+                    $order['packageId'] = $order['storeSubscription']->getPackage()->getId();
+                    $order['packageType'] = $order['storeSubscription']->getPackage()->getType();
+                }
+            }
         }
 
         return $this->autoMapping->map("array", OrderByIdGetForAdminResponse::class, $order);
