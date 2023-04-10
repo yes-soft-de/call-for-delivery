@@ -3,7 +3,7 @@ class FinalFinancialAccount {
   double? countOrdersWithoutDistance;
   double? financialDues;
   int? sumPayments;
-  bool? advancePayment;
+  int? advancePayment;
   double? total;
   String? dateFinancialCycleStarts;
   String? dateFinancialCycleEnds;
@@ -26,7 +26,7 @@ class FinalFinancialAccount {
           (json['countOrdersWithoutDistance'] as num?)?.toDouble(),
       financialDues: (json['financialDues'] as num?)?.toDouble(),
       sumPayments: json['sumPayments'] as int?,
-      advancePayment: json['advancePayment'] as bool?,
+      advancePayment: json['advancePayment'] as int?,
       total: (json['total'] as num?)?.toDouble(),
       dateFinancialCycleStarts: json['dateFinancialCycleStarts'] as String?,
       dateFinancialCycleEnds: json['dateFinancialCycleEnds'] as String?,

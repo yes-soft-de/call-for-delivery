@@ -12,7 +12,7 @@ class CaptainAccountBalanceModel extends DataModel {
   late num? financialDues;
   late num? sumPayments;
   late num? total;
-  late bool? advancePayment;
+  late int? advancePayment;
   late num? monthCompensation;
   late num? countOverOrdersThanRequired;
   late num? bounce;
@@ -111,7 +111,7 @@ class CaptainAccountBalanceModel extends DataModel {
     if (element is ByOrderData?) {
       _data = CaptainAccountBalanceModel(
           orderCountsDetails: null,
-          advancePayment: element?.advancePayment != 0,
+          advancePayment: element?.advancePayment,
           compensationForEveryOrder: null,
           countOrders: null,
           countOrdersMaxFromNineteen: element?.countOrdersMaxFromNineteen,

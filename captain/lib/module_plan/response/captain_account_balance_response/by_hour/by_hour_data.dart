@@ -8,7 +8,7 @@ class ByHourData extends AccountBalanceData {
   int? financialDues;
   int? sumPayments;
   int? total;
-  bool? advancePayment;
+  int? advancePayment;
   int? amountForStore;
   String? dateFinancialCycleStarts;
   String? dateFinancialCycleEnds;
@@ -37,7 +37,7 @@ class ByHourData extends AccountBalanceData {
         financialDues: json['financialDues'] as int?,
         sumPayments: json['sumPayments'] as int?,
         total: json['total'] as int?,
-        advancePayment: json['advancePayment'] as bool?,
+        advancePayment: json['advancePayment'] as int?,
         amountForStore: json['amountForStore'] as int?,
         dateFinancialCycleStarts: json['dateFinancialCycleStarts'] as String?,
         dateFinancialCycleEnds: json['dateFinancialCycleEnds'] as String?,
