@@ -787,7 +787,7 @@ class NewOrderStateBranchesLoaded extends States {
         onTap: () {
           if (_formKey.currentState?.validate() == true &&
               screenState.branch != null &&
-              screenState.payments != null) {
+              screenState.payments != null && (screenState.packageType != 1 || (screenState.packageType == 1 && screenState.costType != null && screenState.payments == 'cash'))) {
             showDialog(
                 context: context,
                 builder: (context) {
@@ -804,6 +804,11 @@ class NewOrderStateBranchesLoaded extends States {
             CustomFlushBarHelper.createError(
                     title: S.current.warnning,
                     message: S.current.pleaseProvidePaymentMethode)
+                .show(context);
+          } else if (screenState.costType == null && screenState.payments == 'cash' && screenState.packageType == 1) {
+            CustomFlushBarHelper.createError(
+                    title: S.current.warnning,
+                    message: S.current.pleaseProvideCostType)
                 .show(context);
           } else {
             CustomFlushBarHelper.createError(

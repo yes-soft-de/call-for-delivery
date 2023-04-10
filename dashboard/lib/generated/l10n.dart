@@ -9489,6 +9489,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Please provide cost type`
+  String get pleaseProvideCostType {
+    return Intl.message(
+      'Please provide cost type',
+      name: 'pleaseProvideCostType',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

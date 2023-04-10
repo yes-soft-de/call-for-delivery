@@ -26,6 +26,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:the_country_number/the_country_number.dart';
 import 'package:dropdown_search/dropdown_search.dart';
@@ -776,7 +777,7 @@ class UpdateOrderLoaded extends States {
         onTap: () {
           if (_formKey.currentState?.validate() == true &&
               screenState.branch != null &&
-              screenState.payments != null) {
+              screenState.payments != null && (orderInfo.packageType != 1 || (orderInfo.packageType == 1 && screenState.costType != null && screenState.payments == 'cash'))) {
             showDialog(
                 context: context,
                 builder: (context) {
@@ -793,6 +794,11 @@ class UpdateOrderLoaded extends States {
             CustomFlushBarHelper.createError(
                     title: S.current.warnning,
                     message: S.current.pleaseProvidePaymentMethode)
+                .show(context);
+          }  else if (screenState.costType == null && screenState.payments == 'cash' && orderInfo.packageType == 1) {
+            CustomFlushBarHelper.createError(
+                    title: S.current.warnning,
+                    message: S.current.pleaseProvideCostType)
                 .show(context);
           } else {
             CustomFlushBarHelper.createError(

@@ -68,6 +68,7 @@ class SubOrdersStateManager {
           delivery: null,
           kilometer: 0,
           storeBranchToClientDistance: 0,
+          packageType: order.packageType,
         );
         List<OrderModel> orders = [];
         orders.addAll(order.subOrders);

@@ -950,9 +950,9 @@
     "actives": "actives",
     "deliveredOrders": "delivered orders",
     "createdOrders": "created orders",
-    "statistics": "statistics"
     "statistics": "statistics",
     "captainRetreatOrder":"Captain retreat to deliver order",
-    "advanced":"Advanced"
+    "advanced":"Advanced",
+    "pleaseProvideCostType":"Please provide cost type"
 
 }

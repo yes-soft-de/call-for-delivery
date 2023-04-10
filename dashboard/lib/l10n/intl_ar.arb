@@ -947,8 +947,8 @@
     "actives": "فعالين",
     "deliveredOrders": "سلمو طلبات",
     "createdOrders": "أنشأوا طلبات",
-    "statistics": "إحصائيات"
     "statistics": "إحصائيات",
     "captainRetreatOrder":"قام الكابتن بالتراجع عن تسليم الطلب",
-    "advanced":"سلفا"
+    "advanced":"سلفا",
+    "pleaseProvideCostType":"من فضلك اختر نوع التكلفة"
 }

@@ -779,7 +779,7 @@ class RecycleOrderLoaded2 extends States {
         onTap: () {
           if (_formKey.currentState?.validate() == true &&
               screenState.branch != null &&
-              screenState.payments != null) {
+              screenState.payments != null && (orderInfo.packageType != 1 || (orderInfo.packageType == 1 && screenState.costType != null && screenState.payments == 'cash'))) {
             showDialog(
                 context: context,
                 builder: (context) {
@@ -797,6 +797,11 @@ class RecycleOrderLoaded2 extends States {
             CustomFlushBarHelper.createError(
                     title: S.current.warnning,
                     message: S.current.pleaseProvidePaymentMethode)
+                 .show(context);
+          } else if (screenState.costType == null && screenState.payments == 'cash' && orderInfo.packageType == 1) {
+            CustomFlushBarHelper.createError(
+                    title: S.current.warnning,
+                    message: S.current.pleaseProvideCostType)
                 .show(context);
           } else {
             CustomFlushBarHelper.createError(
