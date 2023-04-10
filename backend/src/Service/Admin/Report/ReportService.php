@@ -56,7 +56,7 @@ class ReportService
             new \DateTime('midnight today'));
 
         // Get the count of delivered orders last seven days
-        $response['previousWeekDeliveredOrdersCount'] = $this->adminOrderService->getDeliveredOrdersCountBetweenTwoDatesForAdmin(new \DateTime('-7 day'),
+        $response['previousWeekDeliveredOrdersCount'] = $this->adminOrderService->getDeliveredOrdersCountBetweenTwoDatesForAdmin(new \DateTime('-6 day'),
             new \DateTime('now'));
 
         return $this->autoMapping->map('array', StatisticsForAdminGetResponse::class, $response);
