@@ -64,7 +64,6 @@ class OrderLogEntityRepository extends ServiceEntityRepository
                 'orderLogEntity.isCaptainArrivedConfirmation', 'orderLogEntity.isHide', 'orderLogEntity.orderIsMain', 'orderLogEntity.type',
                 'orderLogEntity.state')
             ->addSelect('storeOwnerProfileEntity.id as storeOwnerProfileId', 'storeOwnerProfileEntity.storeOwnerName')
-//            ->addSelect('storeOwnerBranchEntity as branch')
             ->addSelect('storeOwnerBranchEntity.id as storeOwnerBranchId', 'storeOwnerBranchEntity.name as storeOwnerBranchName')
             ->addSelect('captainEntity.id as captainProfileId', 'captainEntity.captainName')
             ->addSelect('imageEntity.imagePath', 'imageEntity.usedAs')
@@ -92,15 +91,14 @@ class OrderLogEntityRepository extends ServiceEntityRepository
             )
             
             ->leftJoin(
-                ImageEntity::class, 
-                'imageEntity', 
-                Join::WITH, 
-                'imageEntity.itemId = captainEntity.id and imageEntity.entityType = :entityType'
+                ImageEntity::class,
+                'imageEntity',
+                Join::WITH,
+                'imageEntity.itemId = captainEntity.id AND imageEntity.entityType = :entityType'
+                .' AND imageEntity.usedAs = :profileImage'
             )
             
             ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
-
-            ->andWhere('imageEntity.usedAs = :profileImage')
             ->setParameter('profileImage', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
 
             ->leftJoin(
