@@ -206,8 +206,7 @@ class CaptainProfileLoadedState extends States {
                           children: [
                             CustomListTile(
                                 title: S.of(context).name,
-                                subTitle:( model?.name ??
-                                    '') + ' ' + (model?.captainId.toString() ?? ''),
+                                subTitle: (model?.name ?? '') + ' ' + '{${model?.captainId.toString() ?? ''}}',
                                 iconData: Icons.person_rounded),
                             CustomListTile(
                                 title: S.of(context).age,
