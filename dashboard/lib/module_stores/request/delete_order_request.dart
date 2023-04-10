@@ -3,11 +3,21 @@ class DeleteOrderRequest {
   bool? addHalfOrderValueToCaptainFinancialDue;
   bool? cutOrderFromStoreSubscription;
 
-  DeleteOrderRequest({this.orderID, this.addHalfOrderValueToCaptainFinancialDue, this.cutOrderFromStoreSubscription});
+  DeleteOrderRequest(
+      {this.orderID,
+      this.addHalfOrderValueToCaptainFinancialDue,
+      this.cutOrderFromStoreSubscription});
 
-  Map<String, dynamic> toJson() => {
-        'id': orderID,
-        'addHalfOrderValueToCaptainFinancialDue': addHalfOrderValueToCaptainFinancialDue,
-        'cutOrderFromStoreSubscription': cutOrderFromStoreSubscription,
-      };
+  Map<String, dynamic> toJson() {
+    var map = <String,dynamic>{};
+    map['id'] = orderID;
+    if (addHalfOrderValueToCaptainFinancialDue != null) {
+      map['addHalfOrderValueToCaptainFinancialDue'] =
+          addHalfOrderValueToCaptainFinancialDue;
+    }
+    if (cutOrderFromStoreSubscription != null) {
+      map['cutOrderFromStoreSubscription'] = cutOrderFromStoreSubscription;
+    }
+    return map;
+  }
 }
