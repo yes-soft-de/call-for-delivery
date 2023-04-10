@@ -1,6 +1,9 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
+import 'package:c4d/module_deep_links/model/geo_model.dart';
+import 'package:c4d/module_deep_links/request/geo_distance_request.dart';
+import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/module_orders/ui/widgets/geo_widget.dart';
@@ -18,7 +21,6 @@ import 'package:c4d/module_orders/ui/widgets/home_widgets/order_card.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
-import 'package:timeago/timeago.dart' as timeago;
 import 'package:bottom_sheet/bottom_sheet.dart';
 
 class CaptainOrdersListStateOrdersLoaded extends States {
@@ -298,7 +300,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                                                   ),
                                                 ),
                                               ),
-                                              Spacer(),
+                                              const Spacer(),
                                               ElevatedButton.icon(
                                                 onPressed: () {
                                                   Navigator.of(context).pop();
@@ -327,7 +329,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                                                   S.current.accept,
                                                   style: Theme.of(context)
                                                       .textTheme
-                                                      .button,
+                                                      .labelLarge,
                                                 ),
                                                 icon: const Icon(
                                                   Icons.thumb_up_alt_rounded,
@@ -350,13 +352,21 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                 }
               },
               child: NearbyOrdersCard(
-                acceptOrder: () {
+                acceptOrder: () async {
                   var index = StatusHelper.getOrderStatusIndex(element.state);
+
+                  // --- get distance to send it throw the request
+                  int? captainToStoreBranchDistance = await _getDistance(
+                      screenState.currentLocation, element.location);
+                  // ---------------------------------------------
+
                   screenState.stateManager.updateOrder(
                       UpdateOrderRequest(
                         id: element.id,
                         state: StatusHelper.getStatusString(
                             OrderStatusEnum.values[index + 1]),
+                        captainToStoreBranchDistance:
+                            captainToStoreBranchDistance,
                       ),
                       screenState);
                 },
@@ -479,7 +489,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                                               ),
                                             ),
                                             Container(
-                                              margin: EdgeInsets.all(4),
+                                              margin: const EdgeInsets.all(4),
                                               width: 16,
                                               height: 2.5,
                                               decoration: BoxDecoration(
@@ -491,14 +501,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                                               ),
                                             ),
                                             Text(
-                                              (element.storeBranchToClientDistance
-                                                          ?.toString() ??
-                                                      S.current.unknown) +
-                                                  ' ' +
-                                                  (element.storeBranchToClientDistance ==
-                                                          null
-                                                      ? ''
-                                                      : S.current.km),
+                                              '${element.storeBranchToClientDistance?.toString() ?? S.current.unknown} ${element.storeBranchToClientDistance == null ? '' : S.current.km}',
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 color: Theme.of(context)
@@ -507,7 +510,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                                               ),
                                             ),
                                             Container(
-                                              margin: EdgeInsets.all(4),
+                                              margin: const EdgeInsets.all(4),
                                               width: 16,
                                               height: 2.5,
                                               decoration: BoxDecoration(
@@ -541,7 +544,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                                                 ),
                                               ),
                                             ),
-                                            Spacer(),
+                                            const Spacer(),
                                             ElevatedButton.icon(
                                               onPressed: () {
                                                 Navigator.of(context).pop();
@@ -568,7 +571,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                                                 S.current.accept,
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .button,
+                                                    .labelLarge,
                                               ),
                                               icon: const Icon(
                                                 Icons.thumb_up_alt_rounded,
@@ -621,13 +624,21 @@ class CaptainOrdersListStateOrdersLoaded extends States {
               ),
               credit: element.paymentMethod != 'cash',
               storeName: element.storeName,
-              acceptOrder: () {
+              acceptOrder: () async {
                 var index = StatusHelper.getOrderStatusIndex(element.state);
+
+                // --- get distance to send it throw the request
+                int? captainToStoreBranchDistance = await _getDistance(
+                    screenState.currentLocation, element.location);
+                // ---------------------------------------------
+
                 screenState.stateManager.updateOrder(
                     UpdateOrderRequest(
                       id: element.id,
                       state: StatusHelper.getStatusString(
                           OrderStatusEnum.values[index + 1]),
+                      captainToStoreBranchDistance:
+                          captainToStoreBranchDistance,
                     ),
                     screenState);
               },
@@ -671,6 +682,28 @@ class CaptainOrdersListStateOrdersLoaded extends States {
         onRefresh: () {
           return screenState.refreshOrders();
         });
+  }
+
+  Future<int?> _getDistance(LatLng? source, LatLng? destination) async {
+    String? distanceAsString;
+    int? distance;
+
+    // if any of tow location is null then we cant calculate the distance
+    if (source != null && destination != null) {
+      var snap = await DeepLinksService.getGeoDistance(GeoDistanceRequest(
+        origin: source,
+        distance: destination,
+      ));
+
+      if (!(snap.hasError || snap.isEmpty)) {
+        distanceAsString = (snap as GeoDistanceModel).distance;
+
+        distance = int.tryParse(
+            distanceAsString?.replaceAll(RegExp(r'[^0-9]'), '') ?? '');
+      }
+      return distance;
+    }
+    return null;
   }
 
   List<OrderModel> _sortOrder(List<OrderModel> orders) {
