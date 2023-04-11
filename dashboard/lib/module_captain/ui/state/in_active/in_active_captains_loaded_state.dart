@@ -65,7 +65,7 @@ class InCaptainActiveLoadedState extends States {
             ? element.phoneNumber
             : element.captainName,
         image: element.image,
-        verificationStatus: element.verificationStatus,
+        verificationStatus: element.verificationStatus, profileID: element.profileID,
       ));
     }
     if (model != null) {

@@ -796,7 +796,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "note": MessageLookupByLibrary.simpleMessage("ملاحظات"),
         "noteOfOrder":
             MessageLookupByLibrary.simpleMessage("دون ملاحظاتك حول الطلب"),
-        "notice": MessageLookupByLibrary.simpleMessage("التحديثات"),
+        "notice": MessageLookupByLibrary.simpleMessage("الإعلانات و العروض"),
         "notices": MessageLookupByLibrary.simpleMessage("الإعلانات والعروض"),
         "notificationDeletedSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الإشعار بنجاح"),
@@ -1042,6 +1042,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "من فضلك قم بتسجيل الدخول للمتابعة"),
         "pleaseLoginToMakeOrder": MessageLookupByLibrary.simpleMessage(
             "من فضلك قم بتسجيل الدخول لاستكمال طلبك"),
+        "pleaseProvideCostType":
+            MessageLookupByLibrary.simpleMessage("من فضلك اختر نوع التكلفة"),
         "pleaseProvidePaymentMethode":
             MessageLookupByLibrary.simpleMessage("من فضلك اختر طريقة للدفع"),
         "pleaseProvideTheDistance": MessageLookupByLibrary.simpleMessage(

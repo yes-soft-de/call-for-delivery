@@ -58,6 +58,7 @@ class NewOrderScreenState extends State<NewOrderScreen>
   LatLng? customerLocation;
   int? storeID;
   int? costType;
+  int? packageType;
   //
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {

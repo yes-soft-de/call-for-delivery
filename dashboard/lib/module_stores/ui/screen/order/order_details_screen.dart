@@ -153,12 +153,44 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
           child: FloatingActionButton(
             backgroundColor: Theme.of(context).colorScheme.error,
             onPressed: () {
-              showDialog(
-                  context: context,
-                  builder: (ctx) {
-                    return OrderCancelDialog(
-                      onDone: (store, captain) {
-                        showDialog(
+              bool cancleDialog = StatusHelper.getOrderStatusIndex(
+                      (currentState as OrderDetailsStateOwnerOrderLoaded)
+                          .orderInfo
+                          .state) >=
+                  StatusHelper.getOrderStatusIndex(OrderStatusEnum.IN_STORE);
+              if (cancleDialog) {
+                showDialog(
+                    context: context,
+                    builder: (ctx) {
+                      return OrderCancelDialog(
+                        onDone: (store, captain) {
+                          Navigator.of(context).pop();
+                          showDialog(
+                              context: context,
+                              builder: (_) {
+                                return CustomAlertDialog(
+                                  content: S.current.areYouSureAboutDeleteOrder,
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    widget._stateManager.deleteOrder(
+                                        DeleteOrderRequest(
+                                          orderID: orderId,
+                                          cutOrderFromStoreSubscription: store,
+                                          addHalfOrderValueToCaptainFinancialDue:
+                                              captain,
+                                        ),
+                                        this);
+                                  },
+                                  oneAction: false,
+                                );
+                              });
+                        }, onExit: () { 
+                          Navigator.of(context).pop();
+                         },
+                      );
+                    });
+              } else {
+                    showDialog(
                             context: context,
                             builder: (_) {
                               return CustomAlertDialog(
@@ -167,19 +199,15 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                   Navigator.of(context).pop();
                                   widget._stateManager.deleteOrder(
                                       DeleteOrderRequest(
-                                        orderID: orderId,
-                                        cutOrderFromStoreSubscription: store,
-                                        addHalfOrderValueToCaptainFinancialDue:
-                                            captain,
+                                        orderID: orderId,                                    
                                       ),
                                       this);
                                 },
                                 oneAction: false,
                               );
                             });
-                      },
-                    );
-                  });
+                    
+              }
             },
             child: Icon(
               Icons.delete,

@@ -487,7 +487,7 @@
     "title": "عنوان",
     "sendTo": "إرسال إلى",
     "captains": "الكباتن",
-    "notice": "التحديثات",
+    "notice": "الإعلانات و العروض",
     "companyFinance": "المعلومات المالية",
     "contactInfo": "معلومات الإتصال",
     "captainsOffer": "عروض الكباتن",
@@ -938,11 +938,10 @@
     "orderDeliveredThisWeek": "الطلبات المسلمة هذا الاسبوع",
     "last": "اخر",
     "actives": "فعالين",
-    "deliveredOrders": "سلموا طلبات",
-    "createdOrders": "أنشؤوا طلبات",
+    "deliveredOrders": "سلمو طلبات",
+    "createdOrders": "أنشأوا طلبات",
     "statistics": "إحصائيات",
-    "time": "الوقت",
-    "last7days": "اخر 7 ايام",
-    "captainRetreatOrder": "قام الكابتن بالتراجع عن تسليم الطلب",
-    "advanced": "سلفا"
+    "captainRetreatOrder":"قام الكابتن بالتراجع عن تسليم الطلب",
+    "advanced":"سلفا",
+    "pleaseProvideCostType":"من فضلك اختر نوع التكلفة"
 }

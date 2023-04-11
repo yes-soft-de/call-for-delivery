@@ -5,12 +5,14 @@ import 'package:c4d/utils/components/progresive_image.dart';
 
 class CaptainCard extends StatelessWidget {
   final int captainId;
+  final int profileID;
   final String image;
   final String captainName;
   final bool verificationStatus;
   CaptainCard(
       {Key? key,
       required this.captainId,
+      required this.profileID,
       required this.image,
       required this.captainName,
       this.onTap,
@@ -56,7 +58,7 @@ class CaptainCard extends StatelessWidget {
               ),
               Expanded(
                 child: Text(
-                  captainName,
+                  captainName + ' {$profileID} ',
                   style: TextStyle(
                       color: Colors.white, fontWeight: FontWeight.bold),
                 ),

@@ -4,6 +4,7 @@ import 'package:c4d/module_captain/response/in_active_captain_response.dart';
 
 class InActiveModel extends DataModel {
   int captainID = -1;
+  int profileID = -1;
   String captainName = '';
   String image = '';
   late String phoneNumber;
@@ -17,7 +18,9 @@ class InActiveModel extends DataModel {
       required this.captainName,
       required this.phoneNumber,
       required this.userID,
-      required this.verificationStatus});
+      required this.verificationStatus,
+      required this.profileID,
+      });
 
   InActiveModel.withData(List<Data> data) : super.withData() {
     _model = [];
@@ -29,7 +32,7 @@ class InActiveModel extends DataModel {
           phoneNumber:
               element.phone ?? element.userId ?? S.current.notCompletedAccount,
           userID: element.userId,
-          verificationStatus: element.verificationStatus == 1 ? true : false));
+          verificationStatus: element.verificationStatus == 1 ? true : false, profileID: element.captainID ?? -1));
     }
   }
   List<InActiveModel> get data => _model;

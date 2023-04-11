@@ -61,6 +61,7 @@ class CaptainsLoadedState extends States {
             : element.captainName,
         image: element.image,
         verificationStatus: element.verificationStatus,
+        profileID: element.profileID,
       ));
     }
 

@@ -54,7 +54,6 @@ class NewOrderStateBranchesLoaded extends States {
   String? distance;
   String? deliveryCost;
   PdfModel? pdfModel;
-  int? packageType;
   @override
   Widget getUI(context) {
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
@@ -117,7 +116,7 @@ class NewOrderStateBranchesLoaded extends States {
                               itemAsString: (model) => model.storeOwnerName,
                               onChanged: (v) {
                                 v as StoresModel;
-                                packageType = v.packageType;
+                                screenState.packageType = v.packageType;
                                 screenState.storeID = v.id;
                                 screenState.branch = null;
                                 screenState.getBranches(stores);
@@ -716,9 +715,10 @@ class NewOrderStateBranchesLoaded extends States {
                     ],
                   ),
                 ),
+
                 /// cost type
                 Visibility(
-                  visible: screenState.payments == 'cash' && packageType == 1,
+                  visible: screenState.payments == 'cash' && screenState.packageType == 1,
                   child: ListTile(
                     title: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -743,7 +743,7 @@ class NewOrderStateBranchesLoaded extends States {
                               value: 187,
                               groupValue: screenState.costType,
                               onChanged: (int? value) {
-                                screenState.costType = value;      
+                                screenState.costType = value;
                                 screenState.refresh();
                               },
                             ),
@@ -787,7 +787,7 @@ class NewOrderStateBranchesLoaded extends States {
         onTap: () {
           if (_formKey.currentState?.validate() == true &&
               screenState.branch != null &&
-              screenState.payments != null) {
+              screenState.payments != null && (screenState.packageType != 1 || (screenState.packageType == 1 && screenState.costType != null && screenState.payments == 'cash'))) {
             showDialog(
                 context: context,
                 builder: (context) {
@@ -804,6 +804,11 @@ class NewOrderStateBranchesLoaded extends States {
             CustomFlushBarHelper.createError(
                     title: S.current.warnning,
                     message: S.current.pleaseProvidePaymentMethode)
+                .show(context);
+          } else if (screenState.costType == null && screenState.payments == 'cash' && screenState.packageType == 1) {
+            CustomFlushBarHelper.createError(
+                    title: S.current.warnning,
+                    message: S.current.pleaseProvideCostType)
                 .show(context);
           } else {
             CustomFlushBarHelper.createError(
@@ -856,7 +861,6 @@ class NewOrderStateBranchesLoaded extends States {
               ? DateTime.now().toUtc().toIso8601String()
               : orderDate?.toUtc().toIso8601String(),
           payment: screenState.payments,
-          
           deliveryCost: num.tryParse(deliveryCost.toString())));
     });
   }
