@@ -6,13 +6,13 @@ class Datum {
   int? id;
   int? captainProfileId;
   String? captainName;
-  int? amount;
-  int? alreadyHadAmount;
+  num? amount;
+  num? alreadyHadAmount;
   int? financialSystemType;
   int? financialSystemPlan;
   int? isPaid;
   bool? withBonus;
-  int? bonus;
+  num? bonus;
   CreatedAt? createdAt;
   UpdatedAt? updatedAt;
   List<CaptainPayment>? captainPayments;
@@ -37,13 +37,13 @@ class Datum {
         id: json['id'] as int?,
         captainProfileId: json['captainProfileId'] as int?,
         captainName: json['captainName'] as String?,
-        amount: json['amount'] as int?,
-        alreadyHadAmount: json['alreadyHadAmount'] as int?,
+        amount: json['amount'] as num?,
+        alreadyHadAmount: json['alreadyHadAmount'] as num?,
         financialSystemType: json['financialSystemType'] as int?,
         financialSystemPlan: json['financialSystemPlan'] as int?,
         isPaid: json['isPaid'] as int?,
         withBonus: json['withBonus'] as bool?,
-        bonus: json['bonus'] as int?,
+        bonus: json['bonus'] as num?,
         createdAt: json['createdAt'] == null
             ? null
             : CreatedAt.fromJson(json['createdAt'] as Map<String, dynamic>),

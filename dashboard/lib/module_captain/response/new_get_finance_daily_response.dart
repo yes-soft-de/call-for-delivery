@@ -32,8 +32,8 @@ class CaptainDataFinance {
   int? captainProfileId;
   String? captainName;
   Image? image;
-  int? amountSum;
-  int? toBePaid;
+  num? amountSum;
+  num? toBePaid;
 
   CaptainDataFinance(
       {this.id,

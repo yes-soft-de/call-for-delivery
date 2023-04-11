@@ -104,6 +104,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addition": MessageLookupByLibrary.simpleMessage("Addition"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
         "admin": MessageLookupByLibrary.simpleMessage("Admin"),
+        "advanced": MessageLookupByLibrary.simpleMessage("Advanced"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "allOrders": MessageLookupByLibrary.simpleMessage("all orders"),
@@ -243,6 +244,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain Payments"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("Captain rated successfully"),
+        "captainRetreatOrder": MessageLookupByLibrary.simpleMessage(
+            "Captain retreat to deliver order"),
         "captainStartedDelivery":
             MessageLookupByLibrary.simpleMessage("Captain Started Delivery"),
         "captainStateActive": MessageLookupByLibrary.simpleMessage("Active"),
@@ -373,6 +376,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "coordinates": MessageLookupByLibrary.simpleMessage("Coordinates"),
         "copied": MessageLookupByLibrary.simpleMessage("copied successfully"),
         "cost": MessageLookupByLibrary.simpleMessage("cost"),
+        "costType": MessageLookupByLibrary.simpleMessage("Cost type"),
         "countCaptains": MessageLookupByLibrary.simpleMessage("Captains Count"),
         "countClients": MessageLookupByLibrary.simpleMessage("Clients Count"),
         "countCompletedOrders":
@@ -400,6 +404,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "countProducts": MessageLookupByLibrary.simpleMessage("Products Count"),
         "countStores": MessageLookupByLibrary.simpleMessage("Stores Count"),
         "countTodayOrder": MessageLookupByLibrary.simpleMessage("Today Order"),
+        "countTodayOrderDelivered":
+            MessageLookupByLibrary.simpleMessage("today delivered"),
         "countryCode": MessageLookupByLibrary.simpleMessage("Code"),
         "createDate": MessageLookupByLibrary.simpleMessage("Create Date"),
         "createNewOrder":
@@ -426,6 +432,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "currentOrders": MessageLookupByLibrary.simpleMessage("Current Orders"),
         "currentSubscriptions":
             MessageLookupByLibrary.simpleMessage("Current subscriptions"),
+        "cutOrderForStore":
+            MessageLookupByLibrary.simpleMessage("Cut order from store"),
         "cycleEnd": MessageLookupByLibrary.simpleMessage("Cycle end"),
         "cycleStart": MessageLookupByLibrary.simpleMessage("Cycle start"),
         "dailyProfit": MessageLookupByLibrary.simpleMessage("Daily profit"),
@@ -473,6 +481,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliveryCostDetails":
             MessageLookupByLibrary.simpleMessage("Delivery cost details"),
         "deliveryDate": MessageLookupByLibrary.simpleMessage("delivery date"),
+        "deliveryOnly": MessageLookupByLibrary.simpleMessage("Delivery only"),
         "description": MessageLookupByLibrary.simpleMessage("Description"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("Destination Address"),
@@ -617,6 +626,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "geographicalRange":
             MessageLookupByLibrary.simpleMessage("Geographical range"),
         "getDirection": MessageLookupByLibrary.simpleMessage("Get Direction"),
+        "giveCaptainHalfProfit": MessageLookupByLibrary.simpleMessage(
+            "Give captain half order delivery cost"),
         "go": MessageLookupByLibrary.simpleMessage("Go"),
         "groupOrder": MessageLookupByLibrary.simpleMessage("Group order"),
         "had_amount_daily_captain":
@@ -701,6 +712,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "last3Active": MessageLookupByLibrary.simpleMessage("last 3 active"),
         "last7WeekOrders":
             MessageLookupByLibrary.simpleMessage("Last 7 days orders"),
+        "last7days": MessageLookupByLibrary.simpleMessage("last 7 days"),
         "lastName": MessageLookupByLibrary.simpleMessage("Last name"),
         "lastSeenMessage": MessageLookupByLibrary.simpleMessage("New Messages"),
         "lastSevenDays":
@@ -794,7 +806,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "noteOfOrder": MessageLookupByLibrary.simpleMessage(
             "Please place your order notes"),
         "notice": MessageLookupByLibrary.simpleMessage("Updates"),
-        "notices": MessageLookupByLibrary.simpleMessage("Notices"),
+        "notices": MessageLookupByLibrary.simpleMessage("Offers & Ads"),
         "notificationDeletedSuccess": MessageLookupByLibrary.simpleMessage(
             "Notification deleted successfully"),
         "notifications": MessageLookupByLibrary.simpleMessage("Notifications"),
@@ -826,6 +838,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Order conflicted distance"),
         "orderConflictedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Order conflicted Successfully"),
+        "orderCostAndDelivery":
+            MessageLookupByLibrary.simpleMessage("order & delivery cost"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
             "Order cost contains delivery tax"),
         "orderCount": MessageLookupByLibrary.simpleMessage("Order count"),
@@ -1327,6 +1341,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "This Might Take a while, please wait"),
         "thisOrderCanBeLinked": MessageLookupByLibrary.simpleMessage(
             "Order can contains a sub orders"),
+        "time": MessageLookupByLibrary.simpleMessage("time"),
         "title": MessageLookupByLibrary.simpleMessage("title"),
         "to": MessageLookupByLibrary.simpleMessage("To"),
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":

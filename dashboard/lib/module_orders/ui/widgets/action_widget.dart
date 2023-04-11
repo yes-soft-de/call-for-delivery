@@ -119,20 +119,23 @@ class ActionOrderCard extends StatelessWidget {
 
   Widget verticalTile(context,
       {required String title, required String subtitle}) {
-    return Column(
-      children: [
-        Text(
-          title,
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).textTheme.labelLarge?.color),
-        ),
-        Text(subtitle,
-            style: Theme.of(context)
-                .textTheme
-                .labelLarge
-                ?.copyWith(fontWeight: FontWeight.normal)),
-      ],
+    return SizedBox(
+      width: 150,
+      child: Column(
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                color: Theme.of(context).textTheme.labelLarge?.color),
+          ),
+          Text(subtitle,
+              style: Theme.of(context)
+                  .textTheme
+                  .labelLarge
+                  ?.copyWith(fontWeight: FontWeight.normal)),
+        ],
+      ),
     );
   }
 

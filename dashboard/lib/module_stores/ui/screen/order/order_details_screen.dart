@@ -5,8 +5,10 @@ import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/widgets/update_order_status_form.dart';
+import 'package:c4d/module_stores/request/delete_order_request.dart';
 import 'package:c4d/module_stores/state_manager/order/order_status.state_manager.dart';
 import 'package:c4d/module_stores/ui/state/order/order_details_state_owner_order_loaded.dart';
+import 'package:c4d/module_stores/ui/widget/order_cancle_dialog.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
@@ -153,14 +155,29 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
             onPressed: () {
               showDialog(
                   context: context,
-                  builder: (_) {
-                    return CustomAlertDialog(
-                      content: S.current.areYouSureAboutDeleteOrder,
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        widget._stateManager.deleteOrder(orderId, this);
+                  builder: (ctx) {
+                    return OrderCancelDialog(
+                      onDone: (store, captain) {
+                        showDialog(
+                            context: context,
+                            builder: (_) {
+                              return CustomAlertDialog(
+                                content: S.current.areYouSureAboutDeleteOrder,
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                  widget._stateManager.deleteOrder(
+                                      DeleteOrderRequest(
+                                        orderID: orderId,
+                                        cutOrderFromStoreSubscription: store,
+                                        addHalfOrderValueToCaptainFinancialDue:
+                                            captain,
+                                      ),
+                                      this);
+                                },
+                                oneAction: false,
+                              );
+                            });
                       },
-                      oneAction: false,
                     );
                   });
             },

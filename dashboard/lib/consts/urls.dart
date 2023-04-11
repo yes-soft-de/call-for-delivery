@@ -336,7 +336,7 @@ class Urls {
       BASE_API_ORDER + '/addstorebranchtoclientdistanceviadestinationbyadmin';
   static const UPDATE_EXTRA_DISTANCE_TO_ORDER_API = BASE_API_ORDER +
       '/additionaldistancetostorebranchtoclientdistancebyadmin';
-  static const DELETE_ORDER = BASE_API_ORDER + '/ordercancelbyadmin';
+  static const DELETE_ORDER = BASE_API_ORDER + '/normalordercancelbyadmin';
   static const UNASSIGNED_ORDER_FROM_CAPTAIN =
       BASE_API_ORDER + '/rependingacceptedorder';
   static const ORDER_NONSUB_API_LINK = BASE_API_ORDER + '/v1/order/';

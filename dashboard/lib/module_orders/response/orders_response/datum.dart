@@ -30,6 +30,8 @@ class DatumOrder {
   num? kilometer;
   num? storeBranchToClientDistance;
   String? storeBranchToClientDistanceAdditionExplanation;
+  int? costType;
+  int? packageType;
   DatumOrder({
     this.id,
     this.state,
@@ -57,6 +59,8 @@ class DatumOrder {
     this.kilometer,
     this.storeBranchToClientDistance,
     this.storeBranchToClientDistanceAdditionExplanation,
+    this.costType,
+    this.packageType,
   });
 
   factory DatumOrder.fromJson(Map<String, dynamic> json) => DatumOrder(
@@ -97,6 +101,8 @@ class DatumOrder {
         orderIsMain: json['orderIsMain'] as bool?,
         storeBranchToClientDistanceAdditionExplanation:
             json['storeBranchToClientDistanceAdditionExplanation'] as String?,
+        costType: json['costType'] as int?,
+        packageType: json['packageType'] as int?,
         subOrders: (json['subOrder'] as List<dynamic>?)
             ?.map((e) => SubOrder.fromJson(e as Map<String, dynamic>))
             .toList(),

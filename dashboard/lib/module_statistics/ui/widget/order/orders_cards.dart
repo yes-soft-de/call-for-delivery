@@ -23,7 +23,7 @@ class OrdersCards extends StatelessWidget {
             value: statisticsOrder.pending.toString(),
             cardColor: Colors.yellow.shade200),
         OrdersDetailsCard(
-            title: S.current.lastWeek,
+            title: S.current.last7days,
             value: statisticsOrder.lastSevenDays.toString()),
         OrdersDetailsCard(
             title: S.current.allOrders,

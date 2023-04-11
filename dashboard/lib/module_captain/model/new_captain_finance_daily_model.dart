@@ -6,8 +6,8 @@ class NewCaptainFinanceDailyModel extends DataModel {
   int? captainProfileId;
   String? captainName;
   String? image;
-  int? amountSum;
-  int? toBePaid;
+  num? amountSum;
+  num? toBePaid;
 
   NewCaptainFinanceDailyModel(this.id, this.captainName, this.captainProfileId,
       this.image, this.amountSum, this.toBePaid);

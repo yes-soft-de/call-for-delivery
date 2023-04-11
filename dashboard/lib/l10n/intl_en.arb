@@ -885,7 +885,7 @@
     "sortedByLatest": "Sorted by latest",
     "selected": "Selected",
     "delete": "Delete",
-    "notices": "Notices",
+    "notices": "Offers & Ads",
     "orderPriceOnCreditWarning": "Please remove order price after setting payment method to credit",
     "remove": "Remove",
     "addition": "Addition",
@@ -918,6 +918,12 @@
     "showPayments": "show payments",
     "addaPayment": "add a payment",
     "duesByFilter": "Dues by filter",
+    "countTodayOrderDelivered": "today delivered",
+    "costType": "Cost type",
+    "orderCostAndDelivery": "order & delivery cost",
+    "deliveryOnly": "Delivery only",
+    "cutOrderForStore": "Cut order from store",
+    "giveCaptainHalfProfit": "Give captain half order delivery cost",
     "allOrders": "all orders",
     "lastSevenDays": "last seven days",
     "last3Active": "last 3 active",
@@ -935,5 +941,9 @@
     "actives": "actives",
     "deliveredOrders": "delivered orders",
     "createdOrders": "created orders",
-    "statistics": "statistics"
+    "statistics": "statistics",
+    "time": "time",
+    "last7days": "last 7 days",
+    "captainRetreatOrder": "Captain retreat to deliver order",
+    "advanced": "Advanced"
 }

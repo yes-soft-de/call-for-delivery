@@ -8900,10 +8900,10 @@ class S {
     );
   }
 
-  /// `Notices`
+  /// `Offers & Ads`
   String get notices {
     return Intl.message(
-      'Notices',
+      'Offers & Ads',
       name: 'notices',
       desc: '',
       args: [],
@@ -9230,6 +9230,66 @@ class S {
     );
   }
 
+  /// `today delivered`
+  String get countTodayOrderDelivered {
+    return Intl.message(
+      'today delivered',
+      name: 'countTodayOrderDelivered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cost type`
+  String get costType {
+    return Intl.message(
+      'Cost type',
+      name: 'costType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order & delivery cost`
+  String get orderCostAndDelivery {
+    return Intl.message(
+      'order & delivery cost',
+      name: 'orderCostAndDelivery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delivery only`
+  String get deliveryOnly {
+    return Intl.message(
+      'Delivery only',
+      name: 'deliveryOnly',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cut order from store`
+  String get cutOrderForStore {
+    return Intl.message(
+      'Cut order from store',
+      name: 'cutOrderForStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Give captain half order delivery cost`
+  String get giveCaptainHalfProfit {
+    return Intl.message(
+      'Give captain half order delivery cost',
+      name: 'giveCaptainHalfProfit',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `all orders`
   String get allOrders {
     return Intl.message(
@@ -9405,6 +9465,46 @@ class S {
     return Intl.message(
       'statistics',
       name: 'statistics',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `time`
+  String get time {
+    return Intl.message(
+      'time',
+      name: 'time',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `last 7 days`
+  String get last7days {
+    return Intl.message(
+      'last 7 days',
+      name: 'last7days',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain retreat to deliver order`
+  String get captainRetreatOrder {
+    return Intl.message(
+      'Captain retreat to deliver order',
+      name: 'captainRetreatOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Advanced`
+  String get advanced {
+    return Intl.message(
+      'Advanced',
+      name: 'advanced',
       desc: '',
       args: [],
     );

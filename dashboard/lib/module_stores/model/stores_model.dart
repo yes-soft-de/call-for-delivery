@@ -19,6 +19,7 @@ class StoresModel extends DataModel {
   String? employeeCount;
   String? bankAccountNumber;
   String? bankName;
+  int? packageType;
   List<StoresModel> _models = [];
 
   StoresModel(
@@ -33,7 +34,9 @@ class StoresModel extends DataModel {
       this.employeeCount,
       this.bankName,
       this.bankAccountNumber,
-      this.city});
+      this.city,
+      this.packageType, 
+      });
 
   StoresModel.withData(List<Data> data) : super.withData() {
     _models = [];
@@ -50,7 +53,9 @@ class StoresModel extends DataModel {
           bankAccountNumber: element.bankAccountNumber,
           bankName: element.bankName,
           city: element.city,
-          employeeCount: element.employeeCount));
+          employeeCount: element.employeeCount,
+          packageType: element.packageType,
+          ));
     }
   }
 

@@ -54,6 +54,7 @@ class RecycleOrderScreenState extends State<RecycleOrderScreen>
   LatLng? customerLocation;
   List<BranchesModel> branches = [];
   int orderId = -1;
+  int? costType;
   //
   late OrderDetailsModel orderInfo;
   @override
