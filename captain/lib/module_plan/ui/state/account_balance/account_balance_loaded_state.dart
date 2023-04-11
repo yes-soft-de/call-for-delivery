@@ -8,6 +8,7 @@ import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/fixed_numbers.dart';
 import 'package:c4d/utils/effect/scaling.dart';
+import 'package:c4d/utils/helpers/advanced_payment_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -92,7 +93,7 @@ class AccountBalanceStateLoaded extends States {
     String text,
     num? value, {
     String? stringValue,
-    bool? advancedValue,
+    int? advancePayment,
   }) {
     bool currency = S.current.countOrdersDelivered != text;
     return Visibility(
@@ -108,9 +109,8 @@ class AccountBalanceStateLoaded extends States {
             constraints: const BoxConstraints(
                 maxWidth: 120, minWidth: 95, maxHeight: 55),
             decoration: BoxDecoration(
-              color: advancedValue != null
-                  ? (advancedValue ? Colors.green : Colors.red)
-                  : Theme.of(screenState.context).disabledColor,
+              color:
+                  AdvancedPaymentHelper.getFinanceStatusColor(advancePayment),
               borderRadius: BorderRadius.circular(10),
             ),
             child: Padding(
@@ -155,7 +155,7 @@ class AccountBalanceStateLoaded extends States {
             width: double.maxFinite,
             child: Scrollbar(
               radius: const Radius.circular(25),
-              isAlwaysShown: true,
+              thumbVisibility: true,
               child: ListView(
                 controller: _scrollController,
                 physics: const BouncingScrollPhysics(
@@ -192,7 +192,7 @@ class AccountBalanceStateLoaded extends States {
                 minOffset() && (balance?.orderCountsDetails?.length ?? -1) > 1,
             child: Align(
               alignment: AlignmentDirectional.centerStart,
-              child: Container(
+              child: SizedBox(
                   height: 407 - 8,
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -277,7 +277,7 @@ class AccountBalanceStateLoaded extends States {
           ),
         ),
         CustomTile(FontAwesomeIcons.creditCard, S.current.total, balance?.total,
-            advancedValue: balance?.advancePayment),
+            advancePayment: balance?.advancePayment),
       ],
     );
   }

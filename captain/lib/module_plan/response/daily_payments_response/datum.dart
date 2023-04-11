@@ -5,7 +5,7 @@ import 'updated_at.dart';
 
 class Datum {
   int? id;
-  int? amount;
+  num? amount;
   int? alreadyHadAmount;
   int? financialSystemType;
   int? financialSystemPlan;
@@ -32,7 +32,7 @@ class Datum {
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json['id'] as int?,
-        amount: json['amount'] as int?,
+        amount: json['amount'] as num?,
         alreadyHadAmount: json['alreadyHadAmount'] as int?,
         financialSystemType: json['financialSystemType'] as int?,
         financialSystemPlan: json['financialSystemPlan'] as int?,

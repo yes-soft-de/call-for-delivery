@@ -75,6 +75,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "addressIsMissing":
             MessageLookupByLibrary.simpleMessage("زودنا بالحي الذي تسكن فيه"),
         "addresses": MessageLookupByLibrary.simpleMessage("العنوان"),
+        "addsAndOffers":
+            MessageLookupByLibrary.simpleMessage("الاعلانات والعروض"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "all": MessageLookupByLibrary.simpleMessage("الكل"),
         "allCity": MessageLookupByLibrary.simpleMessage("جميع المدن"),
@@ -1083,7 +1085,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "تكلفة الفاتورة المستحقة بدون تكلفة التوصيل"),
         "totalBonus": MessageLookupByLibrary.simpleMessage("الراتب"),
         "totalEarnedProfit":
-            MessageLookupByLibrary.simpleMessage("المستحقات المقبوضة"),
+            MessageLookupByLibrary.simpleMessage("المستحقات المقبوضة (سلفا)"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("المبلغ النهائي"),
         "totalProfit": MessageLookupByLibrary.simpleMessage("إجمالي الأرباح"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
