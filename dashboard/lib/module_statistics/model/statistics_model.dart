@@ -64,22 +64,10 @@ class StatisticsModel extends DataModel {
     return daily;
   }
 
-  String _getDate(int timeStamp) {
-    var date = '';
-    date += DateHelper.convert(timeStamp).month.toString() + '-';
-    date += DateHelper.convert(timeStamp).day.toString();
-
-    date += '  ';
-
-    date += DateHelper.convert(timeStamp).hour.toString() + ':';
-    date += DateHelper.convert(timeStamp).minute.toString();
-    return date;
-  }
-
   List<Actor> _getCaptainsList(List<r.Captain> d) {
     List<Actor> daily = [];
     d.forEach((element) {
-      var date = _getDate(element.createdAt?.timestamp ?? 0);
+      var date = DateHelper.convert(element.createdAt?.timestamp ?? 0);
 
       daily.add(Captain(
           createAt: date,
@@ -93,7 +81,7 @@ class StatisticsModel extends DataModel {
   List<Actor> _getStoresList(List<r.Store> d) {
     List<Actor> daily = [];
     d.forEach((element) {
-      var date = _getDate(element.createdAt?.timestamp ?? 0);
+      var date = DateHelper.convert(element.createdAt?.timestamp ?? 0);
 
       daily.add(Store(
           createAt: date,
@@ -183,7 +171,7 @@ class StatisticsStores extends StatisticsActors {
 abstract class Actor {
   int id;
   String name;
-  String createAt;
+  DateTime createAt;
   String image;
   Actor({
     required this.id,
@@ -197,7 +185,7 @@ class Captain extends Actor {
   Captain(
       {required int id,
       required String name,
-      required String createAt,
+      required DateTime createAt,
       required String image})
       : super(id: id, name: name, createAt: createAt, image: image);
 }
@@ -206,7 +194,7 @@ class Store extends Actor {
   Store(
       {required int id,
       required String name,
-      required String createAt,
+      required DateTime createAt,
       required String image})
       : super(id: id, name: name, createAt: createAt, image: image);
 }

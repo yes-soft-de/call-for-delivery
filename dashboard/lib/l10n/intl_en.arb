@@ -912,27 +912,18 @@
     "paidPartiallyCaptainFinanceDaily": "Paid partially",
     "duesPayments": "Dues for payment",
     "sumCaptainsFinancialDues": "Captains dues",
-    "updateCustomerLocation":"The customer location field has been updated and the old location saved",
-    "dues":"Dues",
-    "remainingtoPay":"Remaining to pay",
-    "showPayments":"show payments",
-    "addaPayment":"add a payment",
-    "duesByFilter":"Dues by filter",
-    "countTodayOrderDelivered":"today delivered",
-    "costType":"Cost type",
-    "orderCostAndDelivery":"order & delivery cost",
-    "deliveryOnly":"Delivery only",
-    "cutOrderForStore":"Cut order from store",
-    "giveCaptainHalfProfit":"Give captain half order delivery cost",
-
-
-
     "updateCustomerLocation": "The customer location field has been updated and the old location saved",
     "dues": "Dues",
     "remainingtoPay": "Remaining to pay",
     "showPayments": "show payments",
     "addaPayment": "add a payment",
     "duesByFilter": "Dues by filter",
+    "countTodayOrderDelivered": "today delivered",
+    "costType": "Cost type",
+    "orderCostAndDelivery": "order & delivery cost",
+    "deliveryOnly": "Delivery only",
+    "cutOrderForStore": "Cut order from store",
+    "giveCaptainHalfProfit": "Give captain half order delivery cost",
     "allOrders": "all orders",
     "lastSevenDays": "last seven days",
     "last3Active": "last 3 active",
@@ -953,6 +944,9 @@
     "statistics": "statistics",
     "captainRetreatOrder":"Captain retreat to deliver order",
     "advanced":"Advanced",
-    "pleaseProvideCostType":"Please provide cost type"
-
+    "pleaseProvideCostType":"Please provide cost type",
+    "time": "time",
+    "last7days": "last 7 days",
+    "captainRetreatOrder": "Captain retreat to deliver order",
+    "advanced": "Advanced"
 }

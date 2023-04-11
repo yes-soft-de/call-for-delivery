@@ -712,6 +712,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "last3Active": MessageLookupByLibrary.simpleMessage("last 3 active"),
         "last7WeekOrders":
             MessageLookupByLibrary.simpleMessage("Last 7 days orders"),
+        "last7days": MessageLookupByLibrary.simpleMessage("last 7 days"),
         "lastName": MessageLookupByLibrary.simpleMessage("Last name"),
         "lastSeenMessage": MessageLookupByLibrary.simpleMessage("New Messages"),
         "lastSevenDays":
@@ -1342,6 +1343,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "This Might Take a while, please wait"),
         "thisOrderCanBeLinked": MessageLookupByLibrary.simpleMessage(
             "Order can contains a sub orders"),
+        "time": MessageLookupByLibrary.simpleMessage("time"),
         "title": MessageLookupByLibrary.simpleMessage("title"),
         "to": MessageLookupByLibrary.simpleMessage("To"),
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
