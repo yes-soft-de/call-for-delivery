@@ -1,6 +1,4 @@
-import 'dart:developer';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
@@ -944,7 +942,10 @@ class UpdateOrderLoaded extends States {
             lon: screenState.customerLocation?.longitude),
         note: screenState.orderDetailsController.text.trim(),
         detail: screenState.orderDetailsController.text.trim(),
-        orderCost: num.tryParse(screenState.priceController.text.trim()),
+        orderCost: screenState.priceController.text.trim().isEmpty
+            ? 0
+            : num.tryParse(screenState.priceController.text.trim()),
+        // num.tryParse(screenState.priceController.text.trim()),
         image: value,
         date: orderDate.toUtc().toIso8601String(),
         payment: screenState.payments,
@@ -971,7 +972,10 @@ class UpdateOrderLoaded extends States {
           lon: screenState.customerLocation?.longitude),
       note: screenState.orderDetailsController.text.trim(),
       detail: screenState.orderDetailsController.text.trim(),
-      orderCost: num.tryParse(screenState.priceController.text.trim()),
+      orderCost: screenState.priceController.text.trim().isEmpty
+          ? 0
+          : num.tryParse(screenState.priceController.text.trim()),
+      // num.tryParse(screenState.priceController.text.trim()),
       image: imagePath ?? null,
       date: orderDate.toUtc().toIso8601String(),
       payment: screenState.payments,
