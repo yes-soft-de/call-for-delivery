@@ -157,4 +157,14 @@ class StatusHelper {
         return 0;
     }
   }
+
+  /// true when [status] equal [OrderStatusEnum.FINISHED] or [OrderStatusEnum.CANCELLED]
+  static bool shouldHideCustomerInfo(OrderStatusEnum status) {
+    if (status == OrderStatusEnum.FINISHED ||
+        status == OrderStatusEnum.CANCELLED) {
+      return true;
+    }
+
+    return false;
+  }
 }
