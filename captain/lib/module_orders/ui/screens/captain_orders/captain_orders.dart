@@ -7,6 +7,7 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:c4d/module_chat/repository/chat/chat_repository.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:c4d/module_notifications/preferences/notification_preferences/notification_preferences.dart';
 import 'package:c4d/module_notifications/service/fire_notification_service/fire_notification_service.dart';
@@ -50,6 +51,8 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   StreamSubscription? _profileSubscription;
   StreamSubscription? _companySubscription;
   StreamSubscription? _financeSubscription;
+  StreamSubscription? _supportMessages;
+  ValueNotifier<bool> _isLastMessageFromAdmin = ValueNotifier(false);
   GlobalKey<ScaffoldState> drawerKey = GlobalKey();
   final advancedController = AdvancedDrawerController();
   LatLng? currentLocation;
@@ -92,6 +95,20 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   void moveTo(String route, dynamic argument) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Navigator.of(context).pushNamed(route, arguments: argument);
+    });
+  }
+
+  subscribeToDirectSupportMessages(String roomID) {
+    _supportMessages =
+        getIt<ChatRepository>().requestMessages(roomID).listen((event) {
+      try {
+        bool? isAdmin = event.docs.last.get('isAdmin');
+        if (isAdmin != null) {
+          _isLastMessageFromAdmin.value = isAdmin;
+        }
+      } catch (e) {
+        _isLastMessageFromAdmin.value = false;
+      }
     });
   }
 
@@ -143,6 +160,9 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
       }
       if (mounted) {
         setState(() {});
+      }
+      if (_currentProfile != null && _currentProfile!.roomID != null) {
+        subscribeToDirectSupportMessages(_currentProfile!.roomID!);
       }
     });
     _financeSubscription = widget._stateManager.profitStream.listen((event) {
@@ -213,9 +233,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
                 ValueListenableBuilder(
                   builder: (context, box, _) {
                     return CustomC4dAppBar.actionIcon(context,
-                        showBadge: NotificationsPrefHelper()
-                                .getNewMessageFromSupport() !=
-                            null, onTap: () {
+                        showBadge: _isLastMessageFromAdmin.value, onTap: () {
                       NotificationsPrefHelper().clearNewMessageFromSupport();
 
                       if (_currentProfile != null) {
@@ -231,8 +249,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
                             : StatusHelper.getOrderStatusColor(
                                 OrderStatusEnum.GOT_CAPTAIN));
                   },
-                  valueListenable: Hive.box('Notifications').listenable(
-                      keys: [NotificationsPrefHelper.kNewMessageFromSupport]),
+                  valueListenable: _isLastMessageFromAdmin,
                 ),
                 ValueListenableBuilder(
                   builder: (context, box, _) {
@@ -308,6 +325,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
     _profileSubscription?.cancel();
     _companySubscription?.cancel();
     widget._stateManager.newActionSubscription?.cancel();
+    _supportMessages?.cancel();
   }
 
   Future<bool> canRequestLocation() async {
