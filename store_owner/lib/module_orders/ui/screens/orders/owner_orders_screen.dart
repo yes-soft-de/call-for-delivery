@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/consts/app_config.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -117,6 +118,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     });
     _statusSubscription = widget._stateManager.statusStream.listen((event) {
       status = event;
+      AppConfig.packageType = status?.packageType ?? -1;
       if (mounted) {
         setState(() {});
       }
@@ -139,7 +141,6 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
 
   String? orderFilter;
   int currentIndex = 0;
-
 
   @override
   Widget build(BuildContext context) {

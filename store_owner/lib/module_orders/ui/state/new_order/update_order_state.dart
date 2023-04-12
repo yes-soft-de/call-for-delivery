@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/consts/app_config.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
@@ -123,7 +124,6 @@ class UpdateOrderLoaded extends States {
                         child: Padding(
                           padding: const EdgeInsets.only(left: 16.0, right: 16),
                           child: DropdownSearch<BranchesModel>(
-                              showSearchBox: true,
                               enabled: branches.isNotEmpty,
                               dropdownBuilder: (context, model) {
                                 return Text(
@@ -131,29 +131,32 @@ class UpdateOrderLoaded extends States {
                                   style: TextStyle(fontWeight: FontWeight.bold),
                                 );
                               },
-                              dropdownSearchDecoration: InputDecoration(
-                                  hintStyle:
-                                      TextStyle(fontWeight: FontWeight.bold),
-                                  border: InputBorder.none,
-                                  enabledBorder: InputBorder.none,
-                                  focusedBorder: InputBorder.none,
-                                  contentPadding:
-                                      EdgeInsets.fromLTRB(0, 12, 0, 0)),
-                              searchFieldProps: TextFieldProps(
-                                  decoration: InputDecoration(
-                                      hintText: S.current.chooseBranch,
-                                      border: OutlineInputBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(25)))),
-                              popupShape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(25)),
-                              mode: Mode.MENU,
+                              dropdownDecoratorProps: DropDownDecoratorProps(
+                                  dropdownSearchDecoration: InputDecoration(
+                                      hintStyle: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                      border: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      contentPadding:
+                                          EdgeInsets.fromLTRB(0, 12, 0, 0))),
+                              dropdownButtonProps: DropdownButtonProps(),
+                              popupProps: PopupProps.menu(
+                                  showSearchBox: true,
+                                  menuProps: MenuProps(
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
+                                  searchFieldProps: TextFieldProps(
+                                      decoration: InputDecoration(
+                                          hintText: S.current.chooseBranch,
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(25))))),
                               items: branches,
                               filterFn: (model, filter) {
-                                return model!.branchName.contains(filter ?? '');
+                                return model.branchName.contains(filter);
                               },
-                              itemAsString: (model) =>
-                                  model?.branchName ?? S.current.unknown,
+                              itemAsString: (model) => model.branchName,
                               onChanged: (v) {
                                 v as BranchesModel;
                                 screenState.branch = v.id;
@@ -643,7 +646,7 @@ class UpdateOrderLoaded extends States {
                 ),
                 // payment method
                 Visibility(
-                    visible: screenState.payments == 'card' &&
+                    visible: screenState.payments == 'cash' &&
                         screenState.priceController.text.isNotEmpty,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -719,6 +722,67 @@ class UpdateOrderLoaded extends States {
                     ],
                   ),
                 ),
+
+                /// cost type
+                Visibility(
+                  visible: AppConfig.packageType == 1 || screenState.payments == 'cash',
+                  child: ListTile(
+                    title: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        S.of(context).costType,
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                    subtitle: Flex(
+                      direction: Axis.horizontal,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Theme.of(context).colorScheme.background,
+                            ),
+                            child: RadioListTile(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              title: Text(S.of(context).orderCostAndDelivery),
+                              value: 187,
+                              groupValue: screenState.costType,
+                              onChanged: (int? value) {
+                                screenState.costType = value;
+                                screenState.refresh();
+                              },
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: 16,
+                        ),
+                        Expanded(
+                          child: Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Theme.of(context).colorScheme.background,
+                            ),
+                            child: RadioListTile(
+                              title: Text(S.of(context).deliveryOnly),
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10)),
+                              value: 186,
+                              groupValue: screenState.costType,
+                              onChanged: (int? value) {
+                                screenState.costType = value;
+                                screenState.refresh();
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+
                 SizedBox(
                   height: 75,
                 ),
@@ -886,6 +950,7 @@ class UpdateOrderLoaded extends States {
         date: orderDate.toUtc().toIso8601String(),
         payment: screenState.payments,
         deliveryCost: deliveryCost,
+        costType: screenState.costType,
       ));
     });
   }
@@ -915,6 +980,7 @@ class UpdateOrderLoaded extends States {
       date: orderDate.toUtc().toIso8601String(),
       payment: screenState.payments,
       deliveryCost: deliveryCost,
+      costType: screenState.costType,
     ));
   }
 

@@ -17,6 +17,7 @@ class CreateOrderRequest {
   String? pdf;
   String? distance;
   num? deliveryCost;
+  int? costType;
   CreateOrderRequest({
     this.fromBranch,
     this.note,
@@ -36,6 +37,7 @@ class CreateOrderRequest {
     this.pdf,
     this.distance,
     required this.deliveryCost,
+    required this.costType,
   });
 
   Map<String, dynamic> toJson() {
@@ -86,7 +88,9 @@ class CreateOrderRequest {
     }
     if (deliveryCost != null) {
       data['deliveryCost'] = this.deliveryCost;
-
+    }
+    if (costType != null) {
+      data['costType'] = this.costType;
     }
     return data;
   }

@@ -3,19 +3,21 @@ class Data {
   String? subscriptionStatus;
   String? percentageOfOrdersConsumed;
   String? packageName;
+  int? packageType;
 
-  Data(
-      {this.canCreateOrder,
-      this.subscriptionStatus,
-      this.percentageOfOrdersConsumed,
-      this.packageName});
+  Data({
+    this.canCreateOrder,
+    this.subscriptionStatus,
+    this.percentageOfOrdersConsumed,
+    this.packageType,
+  });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         canCreateOrder: json['canCreateOrder'] as bool?,
         subscriptionStatus: json['subscriptionStatus'] as String?,
         percentageOfOrdersConsumed:
             json['percentageOfOrdersConsumed'] as String?,
-        packageName: json['packageName'] as String?,
+        packageType: json['packageType'] as int?,
       );
 
   Map<String, dynamic> toJson() => {

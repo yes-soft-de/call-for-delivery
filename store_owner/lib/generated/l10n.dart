@@ -6929,6 +6929,96 @@ class S {
       args: [],
     );
   }
+
+  /// `order & delivery cost`
+  String get orderCostAndDelivery {
+    return Intl.message(
+      'order & delivery cost',
+      name: 'orderCostAndDelivery',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Delivery only`
+  String get deliveryOnly {
+    return Intl.message(
+      'Delivery only',
+      name: 'deliveryOnly',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Cost type`
+  String get costType {
+    return Intl.message(
+      'Cost type',
+      name: 'costType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Problem in updating the order`
+  String get problemUpdatingOrder {
+    return Intl.message(
+      'Problem in updating the order',
+      name: 'problemUpdatingOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order is either ongoing or delivered`
+  String get orderIsEitherOngoingOrDelivered {
+    return Intl.message(
+      'order is either ongoing or delivered',
+      name: 'orderIsEitherOngoingOrDelivered',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Wrong order type`
+  String get wrongOrderType {
+    return Intl.message(
+      'Wrong order type',
+      name: 'wrongOrderType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order already has been canceled`
+  String get orderAlreadyCancelled {
+    return Intl.message(
+      'Order already has been canceled',
+      name: 'orderAlreadyCancelled',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Order not found`
+  String get orderNotFound {
+    return Intl.message(
+      'Order not found',
+      name: 'orderNotFound',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Ads & offers`
+  String get adsAndOffers {
+    return Intl.message(
+      'Ads & offers',
+      name: 'adsAndOffers',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

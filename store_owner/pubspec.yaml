@@ -15,7 +15,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 2.0.41+236
+version: 2.0.45+238
 
 environment:
   sdk: ">=2.16.0 <3.0.0"
@@ -41,13 +41,13 @@ dependencies:
   # Custom Toast
   fluttertoast: ^8.0.8
   # Local Notifications
-  flutter_local_notifications: ^6.0.0
+  flutter_local_notifications: ^13.0.0
 
   flutter_localizations:
     sdk: flutter
   # Fonts
-  font_awesome_flutter: ^9.0.0
-  google_fonts: ^2.1.0
+  font_awesome_flutter: ^10.3.0
+  google_fonts: ^4.0.3
   # Camera And Gallery
   image_picker: ^0.8.6
   # Shared Pref
@@ -55,32 +55,31 @@ dependencies:
   # NoSQL Database
   hive: ^2.0.4
   hive_flutter: ^1.1.0
-  hive_generator: ^1.1.0
+  hive_generator: ^2.0.0
   # Open Url On Browser
   url_launcher: ^6.0.6
   share: ^2.0.4
   # Network Agent
   dio: ^4.0.0
-  dio_firebase_performance: ^0.3.1-dev.3
+  firebase_performance_dio: ^0.4.1
   # Analyzer
-  analyzer_plugin: ^0.6.0
+  analyzer_plugin: ^0.11.2
   # Time Ago Generator
   timeago: ^3.0.2
   simple_moment: ^1.1.1
   # String Validators
   validators: ^3.0.0
   # Svg Loader
-  flutter_svg: ^1.0.1
+  flutter_svg: ^2.0.0+1
   # Stream And RX
   rxdart: ^0.27.1
   # Firebase
-  firebase_core: ^1.2.0
-  firebase_analytics: ^8.1.0
-  firebase_remote_config: ^0.10.0
-  cloud_firestore: ^2.2.0
-  firebase_messaging: ^10.0.0
-  firebase_crashlytics: ^2.0.4
-  firebase_performance_web: ^0.1.0+5
+  firebase_core: ^2.4.1
+  firebase_analytics: ^10.1.0
+  firebase_remote_config: ^3.0.9
+  cloud_firestore: ^4.3.1
+  firebase_messaging: ^14.2.1
+  firebase_crashlytics: ^3.0.11
   # Internationalization
   intl: ^0.17.0
   intl_utils: ^2.3.0
@@ -88,28 +87,28 @@ dependencies:
   uuid: ^3.0.4
   # Geo
   latlong2: ^0.8.0
-  geolocator: ^8.2.1
+  geolocator: ^9.0.2
   location: ^4.4.0
   uni_links: ^0.5.1
   # Lottie And Flare Animation
-  lottie: ^1.2.1
+  lottie: ^2.2.0
   # DI
-  injectable: ^1.4.1
+  injectable: ^2.1.0
   get_it: ^7.1.3
   # Maps
-  flutter_map: ^0.13.1
+  flutter_map: ^3.1.0
   # Material
   list_tile_switch: ^1.0.0
   dotted_line: ^3.0.0
   progressive_image: ^2.0.0
   flutter_advanced_drawer: ^1.2.3
-  flutter_snake_navigationbar: ^0.5.0
-  scroll_to_index: ^2.0.0
+  flutter_snake_navigationbar: ^0.6.1
+  scroll_to_index: ^3.0.1
   soundpool: ^2.1.0
   device_info: ^2.0.2
   liquid_progress_indicator: ^0.4.0
   pinch_zoom: ^1.0.0
-  fl_chart: ^0.40.0
+  fl_chart: ^0.60.0
   flutter_rating_bar: ^4.0.0
   cross_file: ^0.3.2
   image_network: ^2.3.0
@@ -118,19 +117,15 @@ dependencies:
   google_maps_flutter: ^2.1.1
   custom_info_window: ^1.0.1
   clippy_flutter: ^2.0.0-nullsafety.1
-  flutter_slidable: ^1.2.0
+  flutter_slidable: ^2.0.0
   flutter_shimmer: ^2.1.2
   rotated_corner_decoration: ^2.0.0
   carousel_slider: ^4.0.0
-  firebase_database: ^9.0.15
-  dropdown_search: ^3.0.1
+  dropdown_search: ^5.0.5
   file_picker: ^5.2.5
   flutter_swipe_detector: ^2.0.0
   flutter_native_timezone: ^2.0.0
 
-  
-# dependency_overrides:
-#   firebase_core_platform_interface: 4.5.1
 
 dev_dependencies:
   # Test Libs
@@ -139,11 +134,11 @@ dev_dependencies:
   flutter_gherkin: ^2.0.0
   # Build Runner And DI Generator
   build_runner: ^2.1.2
-  injectable_generator: ^1.4.1
+  injectable_generator: ^2.1.3
   # Flutter Launcher Icons Setup
   flutter_launcher_icons: ^0.11.0
   # Flutter Native Splash Screen
-  flutter_native_splash: ^1.1.8+4
+  flutter_native_splash: ^2.2.16
   # Feature Descovery
   feature_discovery: ^0.14.1
   lehttp_overrides: ^1.0.2
@@ -151,7 +146,7 @@ dev_dependencies:
   isolate_handler: ^1.0.1
   # contacts_service: ^0.6.3
   permission_handler: ^10.0.0
-  internet_connection_checker: ^0.0.1+3
+  internet_connection_checker: ^1.0.0+1
   package_info_plus: ^3.0.2
   flutter_linkify: ^5.0.2
   new_version_plus: ^0.0.9

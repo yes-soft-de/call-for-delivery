@@ -51,6 +51,7 @@ class UpdateOrderScreenState extends State<UpdateOrderScreen>
   String? payments;
   int? branch;
   LatLng? customerLocation;
+  int? costType;
   //
   late OrderDetailsModel orderInfo;
   @override

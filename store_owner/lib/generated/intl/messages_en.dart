@@ -8,6 +8,7 @@
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
 // ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -66,6 +67,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Branch has been added successfully"),
         "addProducts": MessageLookupByLibrary.simpleMessage("Add Products"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
+        "adsAndOffers": MessageLookupByLibrary.simpleMessage("Ads & offers"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "allCity": MessageLookupByLibrary.simpleMessage("All city"),
@@ -265,6 +267,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "copyFinished":
             MessageLookupByLibrary.simpleMessage("Link Copied Successfully"),
         "cost": MessageLookupByLibrary.simpleMessage("cost"),
+        "costType": MessageLookupByLibrary.simpleMessage("Cost type"),
         "countOrdersDelivered":
             MessageLookupByLibrary.simpleMessage("Count Orders Delivered"),
         "countryCode": MessageLookupByLibrary.simpleMessage("Code"),
@@ -307,6 +310,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliveryCost": MessageLookupByLibrary.simpleMessage("Delivery cost"),
         "deliveryCostDetails":
             MessageLookupByLibrary.simpleMessage("Delivery cost details"),
+        "deliveryOnly": MessageLookupByLibrary.simpleMessage("Delivery only"),
         "description": MessageLookupByLibrary.simpleMessage("description"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("Destination Address"),
@@ -572,6 +576,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "order": MessageLookupByLibrary.simpleMessage("Order"),
         "orderAlreadyAccepted": MessageLookupByLibrary.simpleMessage(
             "Order already accepted by captain"),
+        "orderAlreadyCancelled": MessageLookupByLibrary.simpleMessage(
+            "Order already has been canceled"),
         "orderAverage35":
             MessageLookupByLibrary.simpleMessage("You have consumed 35%"),
         "orderAverage40":
@@ -581,6 +587,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderAverage80":
             MessageLookupByLibrary.simpleMessage("You have consumed 80%"),
         "orderCategory": MessageLookupByLibrary.simpleMessage("Order category"),
+        "orderCostAndDelivery":
+            MessageLookupByLibrary.simpleMessage("order & delivery cost"),
         "orderCostHandedByCaptain":
             MessageLookupByLibrary.simpleMessage("Cost received from captain"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
@@ -605,12 +613,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderIsCreated":
             MessageLookupByLibrary.simpleMessage("Order is created"),
         "orderIsDone": MessageLookupByLibrary.simpleMessage("Order is done!"),
+        "orderIsEitherOngoingOrDelivered": MessageLookupByLibrary.simpleMessage(
+            "order is either ongoing or delivered"),
         "orderIsFinished": MessageLookupByLibrary.simpleMessage(
             "Your monthly orders finished"),
         "orderIsInUndefinedState":
             MessageLookupByLibrary.simpleMessage("Order is in undefined State"),
         "orderList": MessageLookupByLibrary.simpleMessage("Order List"),
         "orderLog": MessageLookupByLibrary.simpleMessage("Orders Log"),
+        "orderNotFound":
+            MessageLookupByLibrary.simpleMessage("Order not found"),
         "orderNumber": MessageLookupByLibrary.simpleMessage("Order Number"),
         "orderNumberNotFound":
             MessageLookupByLibrary.simpleMessage("Order number not found!!"),
@@ -746,6 +758,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "privacy": MessageLookupByLibrary.simpleMessage("privacy policy"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("Private Order"),
+        "problemUpdatingOrder": MessageLookupByLibrary.simpleMessage(
+            "Problem in updating the order"),
         "product": MessageLookupByLibrary.simpleMessage("product"),
         "productDetails":
             MessageLookupByLibrary.simpleMessage("Products Details"),
@@ -1040,6 +1054,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "workTime": MessageLookupByLibrary.simpleMessage("Work time"),
         "writePasswordAgain":
             MessageLookupByLibrary.simpleMessage("Write Password Again"),
+        "wrongOrderType":
+            MessageLookupByLibrary.simpleMessage("Wrong order type"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
         "youCanResendAfter": MessageLookupByLibrary.simpleMessage(
             "You can resend verification after"),

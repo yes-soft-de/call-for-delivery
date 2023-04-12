@@ -5,11 +5,9 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/state_manager/new_order/new_order.state_manager.dart';
-import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/link_cleaner.dart';
 import 'package:c4d/utils/helpers/phone_number_detection.dart';
-import 'package:c4d/utils/helpers/prayer_dates.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -51,6 +49,7 @@ class NewOrderScreenState extends State<NewOrderScreen>
   TextEditingController toController = TextEditingController();
   TextEditingController priceController = TextEditingController();
   String? payments;
+  int? costType;
   int? branch;
   LatLng? customerLocation;
   //

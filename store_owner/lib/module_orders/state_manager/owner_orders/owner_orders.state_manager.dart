@@ -149,7 +149,8 @@ class OwnerOrdersStateManager {
             status: status.error ?? S.current.errorHappened,
             percentageOfOrdersConsumed: '0%',
             consumingAlert: false,
-            unlimitedPackage: false));
+            unlimitedPackage: false,
+            packageType: -1));
       } else {
         status as CanMakeOrderModel;
         _subscriptionStatus.add(status.data);

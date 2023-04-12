@@ -8,6 +8,7 @@
 // ignore_for_file:prefer_single_quotes,comment_references, directives_ordering
 // ignore_for_file:annotate_overrides,prefer_generic_function_type_aliases
 // ignore_for_file:unused_import, file_names, avoid_escaping_inner_quotes
+// ignore_for_file:unnecessary_string_interpolations, unnecessary_string_escapes
 
 import 'package:intl/intl.dart';
 import 'package:intl/message_lookup_by_library.dart';
@@ -64,6 +65,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تمت إضافة الفرع بنجاح"),
         "addProducts": MessageLookupByLibrary.simpleMessage("إضافة منتجات"),
         "address": MessageLookupByLibrary.simpleMessage("الموقع"),
+        "adsAndOffers":
+            MessageLookupByLibrary.simpleMessage("الإعلانات و العروض"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
         "all": MessageLookupByLibrary.simpleMessage("الكل"),
         "allCity": MessageLookupByLibrary.simpleMessage("جميع المدن"),
@@ -258,6 +261,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "copy": MessageLookupByLibrary.simpleMessage("نسخ"),
         "copyFinished": MessageLookupByLibrary.simpleMessage("تم النسخ بنجاح"),
         "cost": MessageLookupByLibrary.simpleMessage("التكلفة"),
+        "costType": MessageLookupByLibrary.simpleMessage("نوع التكلفة"),
         "countOrdersDelivered":
             MessageLookupByLibrary.simpleMessage("عدد الطلبات المنجزة"),
         "countryCode": MessageLookupByLibrary.simpleMessage("النداء"),
@@ -299,6 +303,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliveryCost": MessageLookupByLibrary.simpleMessage("سعر التوصيل"),
         "deliveryCostDetails":
             MessageLookupByLibrary.simpleMessage("تفاصيل سعر التوصيل"),
+        "deliveryOnly": MessageLookupByLibrary.simpleMessage("سعر التوصيل فقط"),
         "description": MessageLookupByLibrary.simpleMessage("وصف للطلب"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("التوصيل إلى"),
@@ -563,6 +568,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "order": MessageLookupByLibrary.simpleMessage("الطلب "),
         "orderAlreadyAccepted": MessageLookupByLibrary.simpleMessage(
             "الطلب تم قبوله من قبل الكابتن لايمكن فك ارتباطه بعد الآن"),
+        "orderAlreadyCancelled":
+            MessageLookupByLibrary.simpleMessage("الطلب تم إلغاءه "),
         "orderAverage35": MessageLookupByLibrary.simpleMessage(
             "نود تذكيرك لسداد الدفعة الثانية من رسوم الباقة وذلك لكي نستمر بخدمتكم . حيث تم استهلاك 35% من رسوم الباقة وشكرا"),
         "orderAverage40": MessageLookupByLibrary.simpleMessage(
@@ -572,6 +579,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderAverage80": MessageLookupByLibrary.simpleMessage(
             "تذكير ثاني لسدادالدفعة الأخيرة من رسوم الباقة لتفادي انقطاع الخدمة . حيث أنه تم استهلاك 80% من رصيد الباقة وشكرا"),
         "orderCategory": MessageLookupByLibrary.simpleMessage("فئة الطلب"),
+        "orderCostAndDelivery":
+            MessageLookupByLibrary.simpleMessage("سعر الطلب والتوصيل"),
         "orderCostHandedByCaptain":
             MessageLookupByLibrary.simpleMessage("المبلغ المقبوض من الكابتن"),
         "orderCostWithDeliveryCost": MessageLookupByLibrary.simpleMessage(
@@ -595,12 +604,16 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderImage": MessageLookupByLibrary.simpleMessage("صورة الطلب"),
         "orderIsCreated": MessageLookupByLibrary.simpleMessage("تم الانشاء"),
         "orderIsDone": MessageLookupByLibrary.simpleMessage("انتهى الطلب!"),
+        "orderIsEitherOngoingOrDelivered": MessageLookupByLibrary.simpleMessage(
+            "الطلب إما تم توصيله أو جاري توصيله"),
         "orderIsFinished": MessageLookupByLibrary.simpleMessage(
             "طلباتك المخصصة لهذا الشهر انتهت"),
         "orderIsInUndefinedState":
             MessageLookupByLibrary.simpleMessage("الطلب في مرحلة غير معروفة"),
         "orderList": MessageLookupByLibrary.simpleMessage("قائمة الطلبات"),
         "orderLog": MessageLookupByLibrary.simpleMessage("سجل الطلبات"),
+        "orderNotFound":
+            MessageLookupByLibrary.simpleMessage("لم يتم العثور على الطلب"),
         "orderNumber": MessageLookupByLibrary.simpleMessage("رقم الطلب"),
         "orderNumberNotFound":
             MessageLookupByLibrary.simpleMessage("الطلب غير موجود"),
@@ -738,6 +751,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "privacy": MessageLookupByLibrary.simpleMessage("الخصوصية"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("سياسة الخصوصية"),
         "privateOrder": MessageLookupByLibrary.simpleMessage("طلب خاص"),
+        "problemUpdatingOrder":
+            MessageLookupByLibrary.simpleMessage("خطأ اثناد عملية تحديث الطلب"),
         "product": MessageLookupByLibrary.simpleMessage("منتج"),
         "productDetails": MessageLookupByLibrary.simpleMessage("تفاصيل منتج"),
         "productName": MessageLookupByLibrary.simpleMessage("اسم المنتج"),
@@ -1032,6 +1047,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "workTime": MessageLookupByLibrary.simpleMessage("ساعات الدوام"),
         "writePasswordAgain":
             MessageLookupByLibrary.simpleMessage("ادخل كلمة المرور مجددا"),
+        "wrongOrderType":
+            MessageLookupByLibrary.simpleMessage("خطأ في نوع الطلب"),
         "yes": MessageLookupByLibrary.simpleMessage("نعم"),
         "youCanResendAfter":
             MessageLookupByLibrary.simpleMessage("يمكنك طلب رمز جديد بعد مرور"),

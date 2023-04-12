@@ -133,10 +133,11 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
                                 subtitle: FixedNumber.getFixedNumber(
                                         element.total.total) +
                                     ' ${S.current.sar}',
-                                background: element.total.advancePayment == null
+                                background: element.total.advancePayment == 166
                                     ? null
                                     : (element.total.advancePayment == 167
                                         ? Colors.green
+                                        : element.total.advancePayment == 168
                                         : element.total.advancePayment == 166
                                             ? Colors.red
                                             : Theme.of(screenState.context)

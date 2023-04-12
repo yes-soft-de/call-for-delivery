@@ -13,6 +13,8 @@ class SinglePackageCard extends StatelessWidget {
   final bool active;
   final String expired;
   final dynamic unPaidCashOrdersSum;
+  final num geographicalRange;
+  final num packageExtraCost;
   SinglePackageCard(
       {this.active = false,
       required this.packageInfo,
@@ -20,6 +22,8 @@ class SinglePackageCard extends StatelessWidget {
       required this.carsCount,
       required this.ordersCount,
       required this.expired,
+      required this.geographicalRange,
+      required this.packageExtraCost,
       this.unPaidCashOrdersSum});
 
   @override
@@ -253,6 +257,78 @@ class SinglePackageCard extends StatelessWidget {
                           color: active
                               ? Theme.of(context).textTheme.button?.color
                               : null,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              // packageExtraCost
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                child: Flex(
+                  direction: Axis.horizontal,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Theme.of(context).backgroundColor),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(Icons.attach_money_rounded,
+                            color: Theme.of(context).colorScheme.primary),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 16,
+                    ),
+                    SizedBox(
+                      width: 105,
+                      child: Text(
+                        '$packageExtraCost' + ' ' + S.current.sar,
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.button?.color,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 16,
+              ),
+              // geographicalRange
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                child: Flex(
+                  direction: Axis.horizontal,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Theme.of(context).backgroundColor),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(Icons.add_road_rounded,
+                            color: Theme.of(context).colorScheme.primary),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 16,
+                    ),
+                    SizedBox(
+                      width: 105,
+                      child: Text(
+                        '$geographicalRange' + ' ' + S.current.km,
+                        style: TextStyle(
+                          color: Theme.of(context).textTheme.button?.color,
                         ),
                       ),
                     ),
