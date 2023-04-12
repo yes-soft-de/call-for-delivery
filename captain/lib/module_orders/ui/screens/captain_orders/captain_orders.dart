@@ -52,7 +52,9 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   StreamSubscription? _companySubscription;
   StreamSubscription? _financeSubscription;
   StreamSubscription? _supportMessages;
-  ValueNotifier<bool> _isLastMessageFromAdmin = ValueNotifier(false);
+  late String _lastMessageFromSupportSendDate;
+  ValueNotifier<bool> _isLastMessageFromAdminHasntSeenYet =
+      ValueNotifier(false);
   GlobalKey<ScaffoldState> drawerKey = GlobalKey();
   final advancedController = AdvancedDrawerController();
   LatLng? currentLocation;
@@ -102,12 +104,20 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
     _supportMessages =
         getIt<ChatRepository>().requestMessages(roomID).listen((event) {
       try {
-        bool? isAdmin = event.docs.last.get('isAdmin');
-        if (isAdmin != null) {
-          _isLastMessageFromAdmin.value = isAdmin;
+        Map<String, dynamic> lastMessage =
+            event.docs.last.data() as Map<String, dynamic>;
+
+        _lastMessageFromSupportSendDate = lastMessage['sentDate'] ?? '';
+        bool isAdmin = lastMessage['isAdmin'] ?? false;
+
+        if (_lastMessageFromSupportSendDate !=
+                NotificationsPrefHelper()
+                    .getLastMessageHasBeenSeenFromSupport() &&
+            isAdmin) {
+          _isLastMessageFromAdminHasntSeenYet.value = true;
         }
       } catch (e) {
-        _isLastMessageFromAdmin.value = false;
+        _isLastMessageFromAdminHasntSeenYet.value = false;
       }
     });
   }
@@ -233,8 +243,12 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
                 ValueListenableBuilder(
                   builder: (context, box, _) {
                     return CustomC4dAppBar.actionIcon(context,
-                        showBadge: _isLastMessageFromAdmin.value, onTap: () {
-                      _isLastMessageFromAdmin.value = false;
+                        showBadge: _isLastMessageFromAdminHasntSeenYet.value,
+                        onTap: () {
+                      _isLastMessageFromAdminHasntSeenYet.value = false;
+                      NotificationsPrefHelper()
+                          .setLastMessageHasBeenSeenFromSupport(
+                              _lastMessageFromSupportSendDate);
                       if (_currentProfile != null) {
                         Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
                             arguments: ChatArgument(
@@ -248,7 +262,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
                             : StatusHelper.getOrderStatusColor(
                                 OrderStatusEnum.GOT_CAPTAIN));
                   },
-                  valueListenable: _isLastMessageFromAdmin,
+                  valueListenable: _isLastMessageFromAdminHasntSeenYet,
                 ),
                 ValueListenableBuilder(
                   builder: (context, box, _) {

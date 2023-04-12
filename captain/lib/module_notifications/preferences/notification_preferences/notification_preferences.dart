@@ -8,6 +8,7 @@ class NotificationsPrefHelper {
   var box = Hive.box('Notifications');
   // ignore: non_constant_identifier_names
   final NEW_NOTIFICATION = 'new_notifications';
+  static const kLastMessageHasBeenSeenFromSupport = 'last_message_from_support';
 
   void setNotificationPath(String ringtone) {
     box.put('Ringtone', ringtone);
@@ -50,5 +51,17 @@ class NotificationsPrefHelper {
 
   void clearNewLocalNotifications() {
     box.delete(NEW_NOTIFICATION);
+  }
+
+  void setLastMessageHasBeenSeenFromSupport(String date) {
+    box.put(kLastMessageHasBeenSeenFromSupport, date);
+  }
+
+  String? getLastMessageHasBeenSeenFromSupport() {
+    return box.get(kLastMessageHasBeenSeenFromSupport);
+  }
+
+  void clearLastMessageHasBeenSeenFromSupport() {
+    box.delete(kLastMessageHasBeenSeenFromSupport);
   }
 }
