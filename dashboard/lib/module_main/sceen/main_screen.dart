@@ -1,5 +1,6 @@
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_notifications/service/fire_notification_service/fire_notification_service.dart';
+import 'package:c4d/module_statistics/ui/screen/statistics_screen.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -12,7 +13,7 @@ import 'package:c4d/utils/global/screen_type.dart';
 
 @injectable
 class MainScreen extends StatefulWidget {
-  final HomeScreen _homeScreen;
+  final StatisticsScreen _homeScreen;
 
   MainScreen(this._homeScreen);
 
