@@ -777,7 +777,7 @@ class UpdateOrderLoaded extends States {
         onTap: () {
           if (_formKey.currentState?.validate() == true &&
               screenState.branch != null &&
-              screenState.payments != null && (orderInfo.packageType != 1 || (orderInfo.packageType == 1 && screenState.costType != null && screenState.payments == 'cash'))) {
+              screenState.payments != null && (orderInfo.packageType != 1 || screenState.payments == 'card' || (orderInfo.packageType == 1 && screenState.costType != null && screenState.payments == 'cash'))) {
             showDialog(
                 context: context,
                 builder: (context) {

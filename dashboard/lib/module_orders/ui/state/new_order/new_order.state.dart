@@ -787,7 +787,7 @@ class NewOrderStateBranchesLoaded extends States {
         onTap: () {
           if (_formKey.currentState?.validate() == true &&
               screenState.branch != null &&
-              screenState.payments != null && (screenState.packageType != 1 || (screenState.packageType == 1 && screenState.costType != null && screenState.payments == 'cash'))) {
+              screenState.payments != null && (screenState.packageType != 1 || screenState.payments == 'card' || (screenState.packageType == 1 && screenState.costType != null && screenState.payments == 'cash'))) {
             showDialog(
                 context: context,
                 builder: (context) {

@@ -709,9 +709,11 @@ class RecycleOrderLoaded2 extends States {
                     ],
                   ),
                 ),
+
                 /// cost type
                 Visibility(
-                  visible: screenState.payments == 'cash' && orderInfo.packageType == 1,
+                  visible: screenState.payments == 'cash' &&
+                      orderInfo.packageType == 1,
                   child: ListTile(
                     title: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -736,7 +738,7 @@ class RecycleOrderLoaded2 extends States {
                               value: 187,
                               groupValue: screenState.costType,
                               onChanged: (int? value) {
-                                screenState.costType = value;      
+                                screenState.costType = value;
                                 screenState.refresh();
                               },
                             ),
@@ -779,7 +781,12 @@ class RecycleOrderLoaded2 extends States {
         onTap: () {
           if (_formKey.currentState?.validate() == true &&
               screenState.branch != null &&
-              screenState.payments != null && (orderInfo.packageType != 1 || (orderInfo.packageType == 1 && screenState.costType != null && screenState.payments == 'cash'))) {
+              screenState.payments != null &&
+              (orderInfo.packageType != 1 ||
+                  screenState.payments == 'card' ||
+                  (orderInfo.packageType == 1 &&
+                      screenState.costType != null &&
+                      screenState.payments == 'cash'))) {
             showDialog(
                 context: context,
                 builder: (context) {
@@ -797,8 +804,10 @@ class RecycleOrderLoaded2 extends States {
             CustomFlushBarHelper.createError(
                     title: S.current.warnning,
                     message: S.current.pleaseProvidePaymentMethode)
-                 .show(context);
-          } else if (screenState.costType == null && screenState.payments == 'cash' && orderInfo.packageType == 1) {
+                .show(context);
+          } else if (screenState.costType == null &&
+              screenState.payments == 'cash' &&
+              orderInfo.packageType == 1) {
             CustomFlushBarHelper.createError(
                     title: S.current.warnning,
                     message: S.current.pleaseProvideCostType)

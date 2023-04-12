@@ -64,7 +64,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                   : BorderRadius.horizontal(right: Radius.circular(12))),
           child: CustomListView.custom(children: [
             drawerHeader,
-            customListTile(getIt<MainModule>().homeScreen, S.current.home,
+            customListTile(getIt<StatisticsModule>().statisticsScreen, S.current.home,
                 FontAwesomeIcons.home),
             // order
             customExpansionTile(
