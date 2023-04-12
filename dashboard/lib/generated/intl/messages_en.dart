@@ -81,6 +81,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "activeStores": MessageLookupByLibrary.simpleMessage("active stores"),
         "actives": MessageLookupByLibrary.simpleMessage("actives"),
         "activityLog": MessageLookupByLibrary.simpleMessage("Activity Log"),
+        "addAds": MessageLookupByLibrary.simpleMessage("Add Ads"),
         "addBranch": MessageLookupByLibrary.simpleMessage("Add Branch"),
         "addBranchFailure": MessageLookupByLibrary.simpleMessage(
             "Sorry your request for add branch faild please try again"),
@@ -505,6 +506,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "duesPayments":
             MessageLookupByLibrary.simpleMessage("Dues for payment"),
         "earnCash": MessageLookupByLibrary.simpleMessage("Earn Cash"),
+        "editAds": MessageLookupByLibrary.simpleMessage("Edit Ads"),
         "editBranchName":
             MessageLookupByLibrary.simpleMessage("Edit Branch Name"),
         "editOrder": MessageLookupByLibrary.simpleMessage("Edit order"),

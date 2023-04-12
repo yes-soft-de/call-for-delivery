@@ -72,7 +72,7 @@ class NoticeScreenState extends State<NoticeScreen> {
       floatingActionButton: Hider(
         active: canAddCategories,
         child: FloatedIconButton(
-          text: S.current.addNote,
+          text: S.current.addAds,
           icon: Icons.add_circle_rounded,
           onPressed: () {
             showDialog(

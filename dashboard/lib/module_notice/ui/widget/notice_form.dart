@@ -47,7 +47,7 @@ class _CategoryFormState extends State<NoticeForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context, title: S.of(context).addNote),
+      appBar: CustomC4dAppBar.appBar(context, title: widget.request == null ? S.current.addAds : S.current.editAds),
       body: StackedForm(
           child: Form(
             key: _key,
