@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Constant\StoreOwnerBranch\StoreOwnerBranch;
+use App\Entity\ImageEntity;
 use App\Entity\StoreOwnerBranchEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -52,6 +53,26 @@ class StoreOwnerBranchEntityRepository extends ServiceEntityRepository
 
             ->andWhere('storeOwnerProfileEntity.storeOwnerId = :storeOwnerId')
             ->setParameter('storeOwnerId', $storeOwnerId)
+
+            ->getQuery()
+            ->getResult();
+    }
+
+    /**
+     * Get array of branch id, branch name, store id. store name, and store profile image for admin
+     */
+    public function getBranchesForAdmin(): array
+    {
+        return $this->createQueryBuilder('storeOwnerBranchEntity')
+            ->select('storeOwnerBranchEntity.id as storeBranchId', 'storeOwnerBranchEntity.name as storeBranchName')
+            ->addSelect('storeOwnerProfileEntity.id as id', 'storeOwnerProfileEntity.storeOwnerName', 'storeOwnerProfileEntity.images')
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = storeOwnerBranchEntity.storeOwner'
+            )
 
             ->getQuery()
             ->getResult();

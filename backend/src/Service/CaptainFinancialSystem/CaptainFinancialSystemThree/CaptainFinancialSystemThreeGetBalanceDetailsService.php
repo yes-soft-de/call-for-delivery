@@ -88,10 +88,13 @@ class CaptainFinancialSystemThreeGetBalanceDetailsService
 
         $total = $finalFinancialAccount['financialDues'] - $sumPayments;
 
-        $finalFinancialAccount['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
+        $finalFinancialAccount['advancePayment'] = CaptainFinancialSystem::ADVANCED_PAYMENT_NOT_EXIST_CONST;
 
-        if ($total <= 0 ) {
-            $finalFinancialAccount['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_YES;
+        if ($total < 0) {
+            $finalFinancialAccount['advancePayment'] = CaptainFinancialSystem::ADVANCED_PAYMENT_EXIST_CONST;
+
+        } elseif ($total == 0) {
+            $finalFinancialAccount['advancePayment'] = CaptainFinancialSystem::ADVANCED_PAYMENT_BALANCE_CONST;
         }
 
         $finalFinancialAccount['total'] = abs($total);
@@ -158,6 +161,7 @@ class CaptainFinancialSystemThreeGetBalanceDetailsService
         $finalFinancialAccount = $this->getFinalFinancialAccount($sumPayments, $financialAccountDetails, $captainId, $date);
 
         return [
+            "captainFinancialSystemType" => CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_THREE,
             "financialAccountDetails" => $financialAccountDetails,
             "finalFinancialAccount" => $finalFinancialAccount
         ];

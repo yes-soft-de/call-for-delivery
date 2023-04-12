@@ -26,6 +26,8 @@ use App\Entity\StoreOwnerBranchEntity;
 use App\Entity\ImageEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\OrderChatRoomEntity;
+use App\Entity\SubscriptionDetailsEntity;
+use App\Entity\SubscriptionEntity;
 use App\Entity\SupplierCategoryEntity;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
@@ -93,6 +95,9 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
+    /**
+     * Gets specific order details with store and captain info for store owner
+     */
     public function getSpecificOrderForStore(int $id): ?array
      {   
         return $this->createQueryBuilder('orderEntity')
@@ -100,7 +105,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->addSelect('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.noteCaptainOrderCost',
              'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.isCaptainArrived', 'orderEntity.dateCaptainArrived',
                 'orderEntity.captainOrderCost', 'orderEntity.paidToProvider', 'orderEntity.isHide', 'orderEntity.orderIsMain', 'orderEntity.storeBranchToClientDistance',
-                'orderEntity.isCashPaymentConfirmedByStore', 'orderEntity.isCashPaymentConfirmedByStoreUpdateDate')
+                'orderEntity.isCashPaymentConfirmedByStore', 'orderEntity.isCashPaymentConfirmedByStoreUpdateDate', 'orderEntity.costType')
             ->addSelect('storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
              'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOrderDetails.filePdf')
             ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName', 'storeOwnerBranch.branchPhone')
@@ -508,6 +513,9 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
+    /**
+     * Gets specific order details with store and captain info by order id for admin
+     */
     public function getSpecificOrderByIdForAdmin(int $id): ?array
     {
         return $this->createQueryBuilder('orderEntity')
@@ -516,10 +524,10 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'storeOrderDetails.recipientName', 'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
                 'imageEntity.imagePath as orderImage', 'captainEntity.captainName', 'captainEntity.phone', 'orderEntity.paidToProvider', 'orderEntity.noteCaptainOrderCost', 'orderEntity.captainOrderCost',
                 'storeOrderDetails.filePdf', 'orderEntity.storeBranchToClientDistance', 'orderEntity.isCashPaymentConfirmedByStore', 'orderEntity.isCashPaymentConfirmedByStoreUpdateDate',
-                'primaryOrderEntity.id as primaryOrderId')
-
+                'primaryOrderEntity.id as primaryOrderId', 'orderEntity.costType')
             ->addSelect('storeOwnerProfileEntity.id as storeOwnerId')
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')
+            ->addSelect('subscriptionEntity as storeSubscription')
 
             ->leftJoin(
                 StoreOrderDetailsEntity::class,
@@ -549,7 +557,12 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'captainEntity.id = orderEntity.captainId'
             )
 
-            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = orderEntity.storeOwner')
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+            )
 
             ->leftJoin(
                 OrderEntity::class,
@@ -557,6 +570,19 @@ class OrderEntityRepository extends ServiceEntityRepository
                 Join::WITH,
                 'primaryOrderEntity.id = orderEntity.primaryOrder'
             )
+
+            ->leftJoin(
+                SubscriptionEntity::class,
+                'subscriptionEntity',
+                Join::WITH,
+                'subscriptionEntity.storeOwner = storeOwnerProfileEntity.id'
+                .' AND subscriptionEntity.startDate < orderEntity.createdAt AND subscriptionEntity.endDate > orderEntity.createdAt'
+            )
+
+            // orderBy and setMaxResults (besides the date condition) had been used to prevent returning more than one subscription,
+            // as long as store could create two subscriptions (current and future) then create an order
+            ->orderBy('subscriptionEntity.id', 'DESC')
+            ->setMaxResults(1)
 
             ->andWhere('orderEntity.id = :id')
             ->setParameter('id', $id)
@@ -2707,5 +2733,41 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * Get the count of delivered orders according to dates and a specific store's branch
+     */
+    public function getDeliveredOrdersCountBetweenTwoDatesAndByStoreBranchId(int $storeBranchId, DateTime $fromDate, DateTime $toDate): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('COUNT(orderEntity.id)')
+
+            ->andWhere('orderEntity.state = :deliveredState')
+            ->setParameter('deliveredState', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+            ->leftJoin(
+                StoreOrderDetailsEntity::class,
+                'storeOrderDetailsEntity',
+                Join::WITH,
+                'storeOrderDetailsEntity.orderId = orderEntity.id'
+            )
+
+            ->leftJoin(
+                StoreOwnerBranchEntity::class,
+                'storeOwnerBranchEntity',
+                Join::WITH,
+                'storeOwnerBranchEntity.id = storeOrderDetailsEntity.branch'
+            )
+
+            ->andWhere('storeOwnerBranchEntity.id = :storeBranchId')
+            ->setParameter('storeBranchId', $storeBranchId)
+
+            ->andWhere('orderEntity.createdAt BETWEEN :currentMonthStartDate AND :currentMonthEndDate')
+            ->setParameter('currentMonthStartDate', $fromDate)
+            ->setParameter('currentMonthEndDate', $toDate)
+
+            ->getQuery()
+            ->getSingleColumnResult();
     }
 }

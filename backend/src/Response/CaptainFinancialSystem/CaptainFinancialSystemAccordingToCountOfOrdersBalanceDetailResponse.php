@@ -4,41 +4,76 @@ namespace App\Response\CaptainFinancialSystem;
 
 class CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse
 {
-    public float|null $salary;
+    /**
+     * @var float|null
+     */
+    public $salary;
 
-    public float|null $monthCompensation;
+    /**
+     * @var float|null
+     */
+    public $monthCompensation;
 
     /**
      * @var float|null
      */
     public $countOverOrdersThanRequired;
 
-    public float|null $bounce;
+    /**
+     * @var float|null
+     */
+    public $bounce;
 
-    public string|null $monthTargetSuccess;
-   
-    public float|null $financialDues;
+    /**
+     * @var string|null
+     */
+    public $monthTargetSuccess;
 
-    public float|null $total;
+    /**
+     * @var float|null
+     */
+    public $financialDues;
+
+    /**
+     * @var float|null
+     */
+    public $total;
 
     /**
      * @var float|null
      */
     public $countOrdersCompleted;
 
-    public string|null $dateFinancialCycleEnds;
+    /**
+     * @var string|null
+     */
+    public $dateFinancialCycleEnds;
 
-    public float|null $advancePayment;
+    public int $advancePayment;
 
-    public float|null $sumPayments;
+    /**
+     * @var float|null
+     */
+    public $sumPayments;
 
-    public float|null $amountForStore;
+    /**
+     * @var float|null
+     */
+    public $amountForStore;
 
-    public int|null $countOrdersInMonth;
-  
-    public string|null $dateFinancialCycleStarts;
+    /**
+     * @var int|null
+     */
+    public $countOrdersInMonth;
+
+    /**
+     * @var string|null
+     */
+    public $dateFinancialCycleStarts;
 
     public float $countOrdersMaxFromNineteen;
 
     public float $countOrdersWithoutDistance;
+
+    public int $captainFinancialSystemType;
 }

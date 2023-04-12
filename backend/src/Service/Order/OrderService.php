@@ -257,11 +257,14 @@ class OrderService
         return $response;
     }
 
+    /**
+     * Gets specific order details with store and captain info for store owner
+     */
     public function getSpecificOrderForStore(int $id): ?OrdersResponse
     {
         $order = $this->orderManager->getSpecificOrderForStore($id);
-        if ($order) {
 
+        if ($order) {
             $order['attention'] = $order['noteCaptainOrderCost'];
 
             $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);
@@ -610,12 +613,12 @@ class OrderService
 
             //create Notification Local for store
             $this->notificationLocalService->createNotificationLocalForOrderState($order->getStoreOwner()->getStoreOwnerId(),
-                NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::STORE,
+                NotificationConstant::STATE_TITLE, $order->getState(), NotificationConstant::STORE, $order->getId(),
                 $order->getCaptainId()->getId());
 
             //create Notification Local for captain
             $this->notificationLocalService->createNotificationLocalForOrderState($order->getCaptainId()->getCaptainId(),
-                NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::CAPTAIN);
+                NotificationConstant::STATE_TITLE, $order->getState(), NotificationConstant::CAPTAIN, $order->getId());
 
 //            // create dashboard local notification
 //            $this->createDashboardLocalNotificationByCaptain(DashboardLocalNotificationTitleConstant::UPDATE_ORDER_STATE_BY_CAPTAIN_TITLE_CONST,
@@ -623,8 +626,8 @@ class OrderService
 
             if ($order->getOrderType() === OrderTypeConstant::ORDER_TYPE_BID) {
                 //create Notification Local for supplier
-                $this->notificationLocalService->createNotificationLocalForOrderState($order->getBidDetailsEntity()->getSupplierProfile()->getUser()->getId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(),
-                    NotificationConstant::SUPPLIER);
+                $this->notificationLocalService->createNotificationLocalForOrderState($order->getBidDetailsEntity()->getSupplierProfile()->getUser()->getId(),
+                    NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::SUPPLIER);
             }
 
             //create order log
@@ -2163,9 +2166,9 @@ class OrderService
 
                             // 3. create notification to the store
                             // Local notifications
-                            $this->createLocalNotificationForStore($pendingOrder->getStoreOwner()->getStoreOwnerId(),
-                                NotificationConstant::HIDE_ORDER_DUE_TO_UNAVAILABLE_CARS_TITLE_CONST, NotificationConstant::HIDE_ORDER_DUE_TO_UNAVAILABLE_CARS_TEXT_CONST,
-                                $pendingOrder->getId());
+                            $this->createNotificationLocalForOrderState($pendingOrder->getStoreOwner()->getStoreOwnerId(),
+                                NotificationConstant::HIDE_ORDER_DUE_TO_UNAVAILABLE_CARS_TITLE_CONST, $pendingOrder->getState(),
+                                NotificationConstant::STORE, $pendingOrder->getId());
 
                             // ... commit the transaction
                             $this->entityManager->getConnection()->commit();
@@ -2186,5 +2189,14 @@ class OrderService
         }
 
         return $pendingOrders;
+    }
+
+    /**
+     * Creates local notification for specific user who defined by userId, and includes order state within the notification
+     */
+    public function createNotificationLocalForOrderState(int $userId, string $title, string $state, string $userType, int $orderId = null, int $captainProfileId = null)
+    {
+        $this->notificationLocalService->createNotificationLocalForOrderState($userId, $title, $state, $userType,
+            $orderId, $captainProfileId);
     }
 }

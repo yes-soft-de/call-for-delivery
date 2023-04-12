@@ -30,30 +30,20 @@ use App\Service\StoreOwner\StoreOwnerProfileService;
 
 class NotificationFirebaseService
 {
-    private AutoMapping $autoMapping;
-    private Messaging $messaging;
-    private NotificationFirebaseManager $notificationFirebaseManager;
-    private NotificationTokensService $notificationTokensService;
-    private UserService $userService;
-    private OrderChatRoomService $orderChatRoomService;
-    private CaptainService $captainService;
-    private StoreOwnerProfileService $storeOwnerProfileService;
-    private DateFactoryService $dateFactoryService;
-
-    public function __construct(AutoMapping $autoMapping, Messaging $messaging, NotificationFirebaseManager $notificationFirebaseManager, NotificationTokensService $notificationTokensService,
-                                UserService $userService, OrderChatRoomService $orderChatRoomService, CaptainService $captainService, StoreOwnerProfileService $storeOwnerProfileService,
-                                DateFactoryService $dateFactoryService)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private Messaging $messaging,
+        private NotificationFirebaseManager $notificationFirebaseManager,
+        private NotificationTokensService $notificationTokensService,
+        private UserService $userService,
+        private OrderChatRoomService $orderChatRoomService,
+        private CaptainService $captainService,
+        private StoreOwnerProfileService $storeOwnerProfileService,
+        private DateFactoryService $dateFactoryService
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->messaging = $messaging;
-        $this->notificationFirebaseManager = $notificationFirebaseManager;
-        $this->notificationTokensService = $notificationTokensService;
-        $this->userService = $userService;
-        $this->orderChatRoomService = $orderChatRoomService;
-        $this->captainService = $captainService;
-        $this->storeOwnerProfileService = $storeOwnerProfileService;
-        $this->dateFactoryService = $dateFactoryService;
     }
+
     // send notifications to captains when create order
     public function notificationToCaptains(int $orderId)
     {
@@ -999,53 +989,57 @@ class NotificationFirebaseService
         return $devicesToken;
     }
 
-    // notification to admin When the captain stops his financial cycle
-    public function notificationWhenCaptainStopFinancialCycle(int $captainId, string $captainName, int $captainFinancialDuesId)
-    {
-        $devicesToken = [];
-        $sound = NotificationTokenConstant::SOUND;
+    /**
+     * notification to admin When the captain stops his financial cycle
+     * This had been commented out currently but we may need it in the future
+     */
+//    public function notificationWhenCaptainStopFinancialCycle(int $captainId, string $captainName, int $captainFinancialDuesId)
+//    {
+//        $devicesToken = [];
+//        $sound = NotificationTokenConstant::SOUND;
+//
+//        $adminsTokens =  $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_ADMIN);
+//
+//        foreach ($adminsTokens as $token) {
+//            $devicesToken[] = $token['token'];
+//        }
+//
+//        $payload = [
+//           'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+//           'navigate_route' => NotificationFirebaseConstant::URL_CAPTAIN_DETAILS,
+//            'argument' => $captainId,
+//        ];
+//
+//        $config = AndroidConfig::fromArray([
+//            "notification" => [
+//                "channel_id" => "C4d_Notifications_custom_sound_test"
+//            ]
+//        ]);
+//
+//        $apnsConfig = ApnsConfig::fromArray([
+//            'headers' => [
+//                'apns-priority' => '10',
+//                'apns-push-type' => 'alert',
+//            ],
+//            'payload' => [
+//                'aps' =>[
+//                    'sound' => $sound
+//                ]
+//            ]
+//        ]);
+//
+//        $msgContent = NotificationFirebaseConstant::THE_CAPTAIN.' '.$captainName.' '.NotificationFirebaseConstant::CAPTAIN_STOPE_FINANCIAL_CYCLE;
+//
+//        $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msgContent))
+//            ->withHighestPossiblePriority();
+//
+//        $message = $message->withData($payload)->withAndroidConfig($config)->withApnsConfig($apnsConfig);
+//
+//        $this->messaging->sendMulticast($message, $devicesToken);
+//
+//        return $devicesToken;
+//    }
 
-        $adminsTokens =  $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_ADMIN);
-
-        foreach ($adminsTokens as $token) {
-            $devicesToken[] = $token['token'];
-        }
-
-        $payload = [
-           'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
-           'navigate_route' => NotificationFirebaseConstant::URL_CAPTAIN_DETAILS,
-            'argument' => $captainId,
-        ];
-
-        $config = AndroidConfig::fromArray([
-            "notification" => [
-                "channel_id" => "C4d_Notifications_custom_sound_test"
-            ]
-        ]);
-
-        $apnsConfig = ApnsConfig::fromArray([
-            'headers' => [
-                'apns-priority' => '10',
-                'apns-push-type' => 'alert',
-            ],
-            'payload' => [
-                'aps' =>[
-                    'sound' => $sound
-                ]
-            ]
-        ]);
-        
-        $msgContent = NotificationFirebaseConstant::THE_CAPTAIN.' '.$captainName.' '.NotificationFirebaseConstant::CAPTAIN_STOPE_FINANCIAL_CYCLE;
-
-        $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msgContent))
-            ->withHighestPossiblePriority();
-
-        $message = $message->withData($payload)->withAndroidConfig($config)->withApnsConfig($apnsConfig);
-
-        $this->messaging->sendMulticast($message, $devicesToken);
-
-        return $devicesToken;
-    }
     //notification To User by user id
     public function notificationToUserWithoutOrderByUserId(int $userId, string $text)
     {

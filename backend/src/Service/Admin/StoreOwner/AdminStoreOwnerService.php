@@ -62,17 +62,25 @@ class AdminStoreOwnerService
         return $this->adminStoreOwnerManager->getStoreOwnersProfilesCountByStatusForAdmin($storeOwnerProfileStatus);
     }
 
+    /**
+     * Gets store owners' profiles according to status
+     */
     public function getStoreOwnersProfilesByStatusForAdmin(string $storeOwnerProfileStatus): array
     {
         $response = [];
 
         $storeOwnerProfiles = $this->adminStoreOwnerManager->getStoreOwnersProfilesByStatusForAdmin($storeOwnerProfileStatus);
 
-        if($storeOwnerProfiles) {
-            foreach($storeOwnerProfiles as $storeOwnerProfile) {
-                $storeOwnerProfile['images'] = $this->uploadFileHelperService->getImageParams($storeOwnerProfile['images']);
+        if ($storeOwnerProfiles) {
+            foreach($storeOwnerProfiles as $key => $value) {
+                $value['images'] = $this->uploadFileHelperService->getImageParams($value['images']);
 
-                $response[] = $this->autoMapping->map('array', StoreOwnerProfileGetByAdminResponse::class, $storeOwnerProfile);
+                $response[$key] = $this->autoMapping->map('array', StoreOwnerProfileGetByAdminResponse::class, $value);
+
+                // get package type of the current store subscription
+                if ($value['storeSubscriptionDetails']) {
+                    $response[$key]->packageType = $value['storeSubscriptionDetails']->getLastSubscription()->getPackage()->getType();
+                }
             }
         }
 

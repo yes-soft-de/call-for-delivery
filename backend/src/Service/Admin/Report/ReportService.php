@@ -14,8 +14,10 @@ use App\Response\Admin\Report\StatisticsForAdminGetResponse;
 use App\Response\Admin\Report\StoresWithOrdersCountDuringSpecificTimeFilterByAdminResponse;
 use App\Response\Admin\Report\TopOrdersStoresForCurrentMonthByAdminGetResponse;
 use App\Service\Admin\Captain\AdminCaptainService;
+use App\Service\Admin\Order\AdminOrderGetService;
 use App\Service\Admin\Order\AdminOrderService;
 use App\Service\Admin\StoreOwner\AdminStoreOwnerService;
+use App\Service\Admin\StoreOwnerBranch\AdminStoreOwnerBranchGetService;
 use App\Service\DateFactory\DateFactoryService;
 use App\Service\FileUpload\UploadFileHelperService;
 use DateTime;
@@ -28,7 +30,10 @@ class ReportService
         private AdminOrderService $adminOrderService,
         private AdminCaptainService $adminCaptainService,
         private DateFactoryService $dateFactoryService,
-        private UploadFileHelperService $uploadFileHelperService)
+        private UploadFileHelperService $uploadFileHelperService,
+        private AdminStoreOwnerBranchGetService $adminStoreOwnerBranchGetService,
+        private AdminOrderGetService $adminOrderGetService
+    )
     {
     }
 
@@ -51,7 +56,7 @@ class ReportService
             new \DateTime('midnight today'));
 
         // Get the count of delivered orders last seven days
-        $response['previousWeekDeliveredOrdersCount'] = $this->adminOrderService->getDeliveredOrdersCountBetweenTwoDatesForAdmin(new \DateTime('-7 day'),
+        $response['previousWeekDeliveredOrdersCount'] = $this->adminOrderService->getDeliveredOrdersCountBetweenTwoDatesForAdmin(new \DateTime('-6 day'),
             new \DateTime('now'));
 
         return $this->autoMapping->map('array', StatisticsForAdminGetResponse::class, $response);
@@ -75,7 +80,8 @@ class ReportService
             }
         }
 
-        $response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["sum"] = array_sum($response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["daily"]);
+        $response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["sum"] = array_sum(array_column($response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["daily"],
+            "count"));
 
         $countValues = array_column($response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["daily"], "count");
 
@@ -194,24 +200,51 @@ class ReportService
         return $response;
     }
 
-    // Get top stores according on delivered orders during current month
-    public function getTopOrdersStoresDuringCurrentMonthByAdmin(): array
+    /**
+     * Get array of branch id, branch name, store id. store name, and store profile image for admin
+     */
+    public function getBranchesForAdmin(): array
+    {
+        return $this->adminStoreOwnerBranchGetService->getBranchesForAdmin();
+    }
+
+    /**
+     * Get the count of delivered orders according to dates and a specific store's branch
+     */
+    public function getDeliveredOrdersCountBetweenTwoDatesAndByStoreBranchId(int $storeBranchId, DateTime $fromDate, DateTime $toDate): array
+    {
+        return $this->adminOrderGetService->getDeliveredOrdersCountBetweenTwoDatesAndByStoreBranchId($storeBranchId,
+            $fromDate, $toDate);
+    }
+
+    /**
+     * Get top stores' branches according to orders count of each branch in the current month
+     */
+    public function getTopStoreBranchesAccordingToCurrentMonthOrdersCount(): array
     {
         $response = [];
 
-        $storesWithOrders = $this->adminStoreOwnerService->getActiveStoresWithOrdersDuringCurrentMonthForAdmin();
+        $storesBranches = $this->getBranchesForAdmin();
 
-        if (count($storesWithOrders) > 0) {
-            // Sort the results descending according to the orders count
-            $sortedStores = $this->sortArrayDescendingBySpecificKey($storesWithOrders, "ordersCount");
+        if (count($storesBranches) > 0) {
+            foreach ($storesBranches as $branch) {
 
-            foreach ($sortedStores as $value) {
-                $value['image'] = $this->uploadFileHelperService->getImageParams($value['images']);
+                // Get orders count of current month of the branch
+                $branchOrdersCount = $this->getDeliveredOrdersCountBetweenTwoDatesAndByStoreBranchId($branch['storeBranchId'],
+                    (new \DateTime('first day of this month'))->setTime(00, 00, 00),
+                    (new \DateTime('last day of this month'))->setTime(23, 59, 59));
 
-                $value['storeBranchName'] = $this->getTopBranchOfOrders($value['orders']);
+                if (count($branchOrdersCount) > 0) {
+                    $branch['ordersCount'] = (int) $branchOrdersCount[0];
 
-                $response[] = $this->autoMapping->map('array', TopOrdersStoresForCurrentMonthByAdminGetResponse::class, $value);
+                    $branch['image'] = $this->uploadFileHelperService->getImageParams($branch['images']);
+
+                    $response[] = $this->autoMapping->map('array', TopOrdersStoresForCurrentMonthByAdminGetResponse::class, $branch);
+                }
             }
+
+            // Sort the results descending according to the orders count of each element (branch)
+            return $this->sortTopOrdersStoresForCurrentMonthArrayDescendingBySpecificKey($response, "ordersCount");
         }
 
         return $response;
@@ -298,5 +331,25 @@ class ReportService
         }
 
         return $mainArray[0][$propertyToBeReturned];
+    }
+
+    /**
+     * Sort an array of TopOrdersStoresForCurrentMonthByAdminGetResponse objects by specific parameter
+     */
+    public function sortTopOrdersStoresForCurrentMonthArrayDescendingBySpecificKey(array $inputArray, string $keyName): array
+    {
+        usort($inputArray, function($itemOne, $itemTwo) use ($keyName) {
+            if($itemOne->$keyName === $itemTwo->$keyName) {
+                return 0;
+
+            } elseif ($itemOne->$keyName < $itemTwo->$keyName) {
+                return 1;
+
+            } elseif ($itemOne->$keyName > $itemTwo->$keyName) {
+                return -1;
+            }
+        });
+
+        return $inputArray;
     }
 }

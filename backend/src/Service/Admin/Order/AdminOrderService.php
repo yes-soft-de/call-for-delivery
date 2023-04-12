@@ -27,6 +27,7 @@ use App\Entity\BidDetailsEntity;
 use App\Entity\CaptainEntity;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Entity\OrderEntity;
+use App\Entity\PackageEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Entity\SubscriptionDetailsEntity;
 use App\Manager\Admin\Order\AdminOrderManager;
@@ -164,6 +165,9 @@ class AdminOrderService
         return $response;
     }
 
+    /**
+     * Gets specific order details with store and captain info by order id for admin
+     */
     public function getSpecificOrderByIdForAdmin(int $id): ?OrderByIdGetForAdminResponse
     {
         $order = $this->adminOrderManager->getSpecificOrderByIdForAdmin($id);
@@ -185,6 +189,13 @@ class AdminOrderService
             }
 
             $order['subOrder'] = $this->adminOrderManager->getSubOrdersByPrimaryOrderIdForAdmin($order['id']);
+
+            if ($order['storeSubscription']) {
+                if ($order['storeSubscription']->getPackage() instanceof PackageEntity) {
+                    $order['packageId'] = $order['storeSubscription']->getPackage()->getId();
+                    $order['packageType'] = $order['storeSubscription']->getPackage()->getType();
+                }
+            }
         }
 
         return $this->autoMapping->map("array", OrderByIdGetForAdminResponse::class, $order);
@@ -610,9 +621,13 @@ class AdminOrderService
                 $this->orderChatRoomService->createOrderChatRoomOrUpdateCurrent($order);
 
                 //create Notification Local for store
-                $this->notificationLocalService->createNotificationLocalForOrderState($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::STORE, $order->getCaptainId()->getId()); 
+                $this->notificationLocalService->createNotificationLocalForOrderState($order->getStoreOwner()->getStoreOwnerId(),
+                    NotificationConstant::STATE_TITLE, $order->getState(), NotificationConstant::STORE, $order->getId(),
+                    $order->getCaptainId()->getId());
+
                 //create Notification Local for captain
-                $this->notificationLocalService->createNotificationLocalForOrderState($order->getCaptainId()->getCaptainId(), NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::CAPTAIN);
+                $this->notificationLocalService->createNotificationLocalForOrderState($order->getCaptainId()->getCaptainId(),
+                    NotificationConstant::STATE_TITLE, $order->getState(), NotificationConstant::CAPTAIN, $order->getId());
 
                 //create order log
                 $this->orderTimeLineService->createOrderLogsRequest($order);

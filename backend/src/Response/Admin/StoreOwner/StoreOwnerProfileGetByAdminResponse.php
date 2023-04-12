@@ -93,4 +93,9 @@ class StoreOwnerProfileGetByAdminResponse
     public int $verificationStatus;
 
     public string $completeAccountStatus;
+
+    /**
+     * @var int|null
+     */
+    public $packageType;
 }

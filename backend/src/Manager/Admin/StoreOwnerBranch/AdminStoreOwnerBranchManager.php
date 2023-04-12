@@ -11,13 +11,11 @@ use App\Repository\StoreOwnerBranchEntityRepository;
 
 class AdminStoreOwnerBranchManager
 {
-    private StoreOwnerBranchManager $storeOwnerBranchManager;
-    private StoreOwnerBranchEntityRepository $storeOwnerBranchEntityRepository;
-
-    public function __construct(StoreOwnerBranchManager $storeOwnerBranchManager, StoreOwnerBranchEntityRepository $storeOwnerBranchEntityRepository)
+    public function __construct(
+        private StoreOwnerBranchManager $storeOwnerBranchManager,
+        private StoreOwnerBranchEntityRepository $storeOwnerBranchEntityRepository
+    )
     {
-        $this->storeOwnerBranchManager = $storeOwnerBranchManager;
-        $this->storeOwnerBranchEntityRepository = $storeOwnerBranchEntityRepository;
     }
 
     public function createBranchesByAdmin(StoreOwnerBranchCreateRequest $request): ?StoreOwnerBranchEntity
@@ -43,5 +41,13 @@ class AdminStoreOwnerBranchManager
     public function getBranchById($id): ?StoreOwnerBranchEntity
     {
        return $this->storeOwnerBranchEntityRepository->find($id);
+    }
+
+    /**
+     * Get array of branch id, branch name, store id. store name, and store profile image for admin
+     */
+    public function getBranchesForAdmin(): array
+    {
+        return $this->storeOwnerBranchEntityRepository->getBranchesForAdmin();
     }
 }

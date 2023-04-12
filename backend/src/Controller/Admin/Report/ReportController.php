@@ -23,14 +23,13 @@ use OpenApi\Annotations as OA;
  */
 class ReportController extends BaseController
 {
-    private AutoMapping $autoMapping;
-    private ReportService $reportService;
-
-    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ReportService $reportService)
+    public function __construct(
+        SerializerInterface $serializer,
+        private AutoMapping $autoMapping,
+        private ReportService $reportService
+    )
     {
         parent::__construct($serializer);
-        $this->autoMapping = $autoMapping;
-        $this->reportService = $reportService;
     }
 
     /**
@@ -351,7 +350,7 @@ class ReportController extends BaseController
      */
     public function getTopOrdersStoresDuringCurrentMonthByAdmin(): JsonResponse
     {
-        $result = $this->reportService->getTopOrdersStoresDuringCurrentMonthByAdmin();
+        $result = $this->reportService->getTopStoreBranchesAccordingToCurrentMonthOrdersCount();
 
         return $this->response($result, self::FETCH);
     }

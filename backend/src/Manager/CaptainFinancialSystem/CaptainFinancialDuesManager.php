@@ -98,12 +98,16 @@ class CaptainFinancialDuesManager
         $captain = $this->captainManager->getCaptainProfileByUserId($userId);
   
         return $this->getCaptainFinancialDues($captain->getId(), $state);
-    } 
-    
-    public function getLatestCaptainFinancialDuesByUserId(int $userId): ?CaptainFinancialDuesEntity
-    {
-        return $this->captainFinancialDuesRepository->getLatestCaptainFinancialDuesByUserId($userId);
-    } 
+    }
+
+    /**
+     * used by stopFinancialSystemAndFinancialCycle
+     * This had been commented out currently but we may need it in the future
+     */
+//    public function getLatestCaptainFinancialDuesByUserId(int $userId): ?CaptainFinancialDuesEntity
+//    {
+//        return $this->captainFinancialDuesRepository->getLatestCaptainFinancialDuesByUserId($userId);
+//    }
 
     public function getCaptainFinancialDuesByUserIDAndOrderId(int $userId, int $orderId, string $orderCreatedAt): ?CaptainFinancialDuesEntity
     {  
