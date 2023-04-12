@@ -234,8 +234,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
                   builder: (context, box, _) {
                     return CustomC4dAppBar.actionIcon(context,
                         showBadge: _isLastMessageFromAdmin.value, onTap: () {
-                      NotificationsPrefHelper().clearNewMessageFromSupport();
-
+                      _isLastMessageFromAdmin.value = false;
                       if (_currentProfile != null) {
                         Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
                             arguments: ChatArgument(
