@@ -130,9 +130,9 @@ class AdminOrderManager
     /**
      * Get array of delivered orders between two dates
      */
-    public function getDeliveredOrdersCountBetweenTwoDatesForAdmin(DateTime $fromDate, DateTime $toDate, string $customizedTimezone = null): array
+    public function getDeliveredOrdersBetweenTwoDatesForAdmin(DateTime $fromDate, DateTime $toDate, string $customizedTimezone = null): array
     {
-        return $this->orderEntityRepository->getDeliveredOrdersCountBetweenTwoDatesForAdmin($fromDate, $toDate, $customizedTimezone);
+        return $this->orderEntityRepository->getDeliveredOrdersBetweenTwoDatesForAdmin($fromDate, $toDate, $customizedTimezone);
     }
 
     public function updateOrderToHidden(int $id): OrderEntity|string

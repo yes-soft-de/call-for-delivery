@@ -424,7 +424,7 @@ class AdminOrderService
      */
     public function getDeliveredOrdersCountBetweenTwoDatesForAdmin(DateTime $fromDate, DateTime $toDate, string $customizedTimezone = null): int
     {
-        $result = $this->adminOrderManager->getDeliveredOrdersCountBetweenTwoDatesForAdmin($fromDate, $toDate, $customizedTimezone);
+        $result = $this->adminOrderManager->getDeliveredOrdersBetweenTwoDatesForAdmin($fromDate, $toDate, $customizedTimezone);
 
         if (is_array($result)) {
             return count($result);

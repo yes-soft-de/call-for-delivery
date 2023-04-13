@@ -1470,7 +1470,7 @@ class OrderEntityRepository extends ServiceEntityRepository
     /**
      * Get array of delivered orders between two dates
      */
-    public function getDeliveredOrdersCountBetweenTwoDatesForAdmin(DateTime $fromDate, DateTime $toDate, string $customizedTimezone = null): array
+    public function getDeliveredOrdersBetweenTwoDatesForAdmin(DateTime $fromDate, DateTime $toDate, string $customizedTimezone = null): array
     {
         $query = $this->createQueryBuilder('orderEntity')
 

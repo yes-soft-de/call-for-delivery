@@ -84,7 +84,7 @@ class ReportService
         $lastSevenDaysDates = $this->getLastSevenDaysDatesAsArray();
 
         if (! empty($lastSevenDaysDates)) {
-            foreach ($lastSevenDaysDates as $key => $value) {//dd($value);
+            foreach ($lastSevenDaysDates as $key => $value) {
                 $response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["daily"][$key]["date"] = $value;
                 $response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["daily"][$key]["count"] = $this->adminOrderService->getDeliveredOrdersCountBetweenTwoDatesForAdmin(new DateTime($value),
                     (new DateTime($value))->setTime(23, 59, 59), $customizedTimezone);
