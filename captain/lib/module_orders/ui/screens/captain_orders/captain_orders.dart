@@ -5,6 +5,9 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_chat/chat_routes.dart';
+import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:c4d/module_chat/repository/chat/chat_repository.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:c4d/module_notifications/preferences/notification_preferences/notification_preferences.dart';
 import 'package:c4d/module_notifications/service/fire_notification_service/fire_notification_service.dart';
@@ -14,13 +17,10 @@ import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:c4d/utils/logger/logger.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
-import 'package:flutter_switch/flutter_switch.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
@@ -51,6 +51,10 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   StreamSubscription? _profileSubscription;
   StreamSubscription? _companySubscription;
   StreamSubscription? _financeSubscription;
+  StreamSubscription? _supportMessages;
+  late String _lastMessageFromSupportSendDate;
+  ValueNotifier<bool> _isLastMessageFromAdminHasntSeenYet =
+      ValueNotifier(false);
   GlobalKey<ScaffoldState> drawerKey = GlobalKey();
   final advancedController = AdvancedDrawerController();
   LatLng? currentLocation;
@@ -93,6 +97,28 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   void moveTo(String route, dynamic argument) {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Navigator.of(context).pushNamed(route, arguments: argument);
+    });
+  }
+
+  subscribeToDirectSupportMessages(String roomID) {
+    _supportMessages =
+        getIt<ChatRepository>().requestMessages(roomID).listen((event) {
+      try {
+        Map<String, dynamic> lastMessage =
+            event.docs.last.data() as Map<String, dynamic>;
+
+        _lastMessageFromSupportSendDate = lastMessage['sentDate'] ?? '';
+        bool isAdmin = lastMessage['isAdmin'] ?? false;
+
+        if (_lastMessageFromSupportSendDate !=
+                NotificationsPrefHelper()
+                    .getLastMessageHasBeenSeenFromSupport() &&
+            isAdmin) {
+          _isLastMessageFromAdminHasntSeenYet.value = true;
+        }
+      } catch (e) {
+        _isLastMessageFromAdminHasntSeenYet.value = false;
+      }
     });
   }
 
@@ -145,6 +171,9 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
       if (mounted) {
         setState(() {});
       }
+      if (_currentProfile != null && _currentProfile!.roomID != null) {
+        subscribeToDirectSupportMessages(_currentProfile!.roomID!);
+      }
     });
     _financeSubscription = widget._stateManager.profitStream.listen((event) {
       _currentFinance = event;
@@ -187,29 +216,53 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
                       : StatusHelper.getOrderStatusColor(
                           OrderStatusEnum.GOT_CAPTAIN)),
               actions: [
-                Row(
+                Column(
                   children: [
-                    Switch(
-                        value: farOrders,
-                        activeColor: Theme.of(context).colorScheme.secondary,
-                        onChanged: (bool value) {
-                          farOrders = value;
-                          NotificationsPrefHelper().setFarOrders(value);
-                          refresh();
-                        }),
+                    Expanded(
+                      child: Switch(
+                          value: farOrders,
+                          activeColor: Theme.of(context).colorScheme.secondary,
+                          onChanged: (bool value) {
+                            farOrders = value;
+                            NotificationsPrefHelper().setFarOrders(value);
+                            refresh();
+                          }),
+                    ),
                     SizedBox(
-                      width: 35,
                       child: Text(
                         S.current.farOrders,
                         style: TextStyle(
                             fontSize: 10,
-                            height: 1,
                             fontWeight: FontWeight.bold,
                             color: farOrders ? Colors.green : Colors.red),
                         textScaleFactor: 1,
                       ),
                     ),
                   ],
+                ),
+                ValueListenableBuilder(
+                  builder: (context, box, _) {
+                    return CustomC4dAppBar.actionIcon(context,
+                        showBadge: _isLastMessageFromAdminHasntSeenYet.value,
+                        onTap: () {
+                      _isLastMessageFromAdminHasntSeenYet.value = false;
+                      NotificationsPrefHelper()
+                          .setLastMessageHasBeenSeenFromSupport(
+                              _lastMessageFromSupportSendDate);
+                      if (_currentProfile != null) {
+                        Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
+                            arguments: ChatArgument(
+                                roomID: _currentProfile!.roomID ?? '',
+                                userType: 'Admin'));
+                      }
+                    },
+                        icon: Icons.support_agent_rounded,
+                        colorIcon: currentPage == 1
+                            ? null
+                            : StatusHelper.getOrderStatusColor(
+                                OrderStatusEnum.GOT_CAPTAIN));
+                  },
+                  valueListenable: _isLastMessageFromAdminHasntSeenYet,
                 ),
                 ValueListenableBuilder(
                   builder: (context, box, _) {
@@ -285,6 +338,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
     _profileSubscription?.cancel();
     _companySubscription?.cancel();
     widget._stateManager.newActionSubscription?.cancel();
+    _supportMessages?.cancel();
   }
 
   Future<bool> canRequestLocation() async {
