@@ -1193,6 +1193,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "youNeedToAcceptPrimaryOrderFirst": MessageLookupByLibrary.simpleMessage(
             "يتوجب عليك قبول الطلب الرئيسي قبل التفاعل مع الطلبات الفرعية وإدارتها"),
         "youReached": MessageLookupByLibrary.simpleMessage("لقد تجاوزت"),
+        "yourBalanceToday":
+            MessageLookupByLibrary.simpleMessage("رصيدك الليوم"),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
             "قائمة طلباتك فارغة من فضلك اختر ما تريد طلبه"),
         "yourCurrentPlanStoppedSuccessfully":

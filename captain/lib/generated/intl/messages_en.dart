@@ -1199,6 +1199,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "youNeedToAcceptPrimaryOrderFirst": MessageLookupByLibrary.simpleMessage(
             "You need to accept primary order first, before interact with suborders "),
         "youReached": MessageLookupByLibrary.simpleMessage("You have reached "),
+        "yourBalanceToday":
+            MessageLookupByLibrary.simpleMessage("your balance today"),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
             "Your cart is empty please choose items to add"),
         "yourCurrentPlanStoppedSuccessfully":
