@@ -61,7 +61,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
         CustomC4dAppBar.actionIcon(context, onTap: () {
           final reason = TextEditingController();
           final coord = TextEditingController();
-          final form_key = GlobalKey<FormState>();
+          final formKey = GlobalKey<FormState>();
           showDialog(
               context: context,
               builder: (ctx) {
@@ -70,12 +70,12 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                   content: SizedBox(
                     height: 175,
                     child: Form(
-                      key: form_key,
+                      key: formKey,
                       child: Column(
                         children: [
                           CustomFormField(
                             controller: coord,
-                            hintText: S.current.coordinates + ' 12.4,15.8',
+                            hintText: '${S.current.coordinates} 12.4,15.8',
                           ),
                           const SizedBox(
                             height: 8,
@@ -89,7 +89,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                           ),
                           ElevatedButton(
                               onPressed: () {
-                                if (form_key.currentState?.validate() == true) {
+                                if (formKey.currentState?.validate() == true) {
                                   if (coord.text.split(',').length == 2) {
                                     Navigator.of(context).pop();
                                     screenState.manager.updateDistance(
@@ -203,7 +203,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                       children: [
                         Text(
                           S.current.currentRating,
-                          style: Theme.of(context).textTheme.button,
+                          style: Theme.of(context).textTheme.labelLarge,
                         ),
                         RatingBar.builder(
                           ignoreGestures: true,
@@ -231,7 +231,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                               children: [
                                 Text(
                                   S.current.HisComment,
-                                  style: Theme.of(context).textTheme.button,
+                                  style: Theme.of(context).textTheme.labelLarge,
                                 ),
                                 Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -282,9 +282,10 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                       screenState.currentIndex = index;
                       screenState.refresh();
                     },
-                    selectedContent: Theme.of(context).textTheme.button!.color!,
+                    selectedContent:
+                        Theme.of(context).textTheme.labelLarge!.color!,
                     unselectedContent:
-                        Theme.of(context).textTheme.headline6!.color!,
+                        Theme.of(context).textTheme.titleLarge!.color!,
                   ),
                   AnimatedSwitcher(
                     key: ObjectKey(orderInfo),
@@ -317,7 +318,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
         ),
         // order details tile
         ListTile(
-          title: Text(S.current.orderDetails + ' #${orderInfo.id}'),
+          title: Text('${S.current.orderDetails} #${orderInfo.id}'),
           leading: Container(
               decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(12),
@@ -444,9 +445,8 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                             origin: orderInfo.branchCoordinate ?? LatLng(0, 0),
                             leading: S.current.distance,
                           )
-                        : Text(S.current.destination +
-                            ' ' +
-                            S.current.destinationUnavailable),
+                        : Text(
+                            '${S.current.destination} ${S.current.destinationUnavailable}'),
                     trailing: const Icon(Icons.arrow_forward_rounded),
                   ),
                 ),
@@ -591,9 +591,8 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                 ListTile(
                   leading: const Icon(Icons.price_change_rounded),
                   title: Text(S.current.orderCostWithDeliveryCost),
-                  subtitle: Text(orderInfo.orderCost.toStringAsFixed(1) +
-                      ' ' +
-                      S.current.sar),
+                  subtitle: Text(
+                      '${orderInfo.orderCost.toStringAsFixed(1)} ${S.current.sar}'),
                 ),
               ],
             ),
@@ -699,19 +698,16 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                                 visible:
                                     orderInfo.storeBranchToClientDistance !=
                                         null,
-                                replacement: Text(S.current.distance +
-                                    ' ' +
-                                    S.current.destinationUnavailable),
-                                child: Text(S.current.distance +
-                                    ' ' +
-                                    orderInfo.storeBranchToClientDistance
-                                        .toString() +
-                                    ' ' +
-                                    S.current.km),
+                                replacement: Text(
+                                    '${S.current.distance} ${S.current.destinationUnavailable}'),
+                                child: Text(
+                                    '${S.current.distance} ${orderInfo.storeBranchToClientDistance} ${S.current.km}'),
                               ),
                               child: Visibility(
                                   visible: screenState.myLocation != null &&
                                       orderInfo.destinationCoordinate != null,
+                                  replacement: Text(
+                                      '${S.current.distance} ${S.current.destinationUnavailable}'),
                                   child: GeoDistanceText(
                                     textStyle: TextStyle(
                                         color: Theme.of(context)
@@ -724,10 +720,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                                             LatLng(0, 0),
                                     origin:
                                         screenState.myLocation ?? LatLng(0, 0),
-                                  ),
-                                  replacement: Text(S.current.distance +
-                                      ' ' +
-                                      S.current.destinationUnavailable)),
+                                  )),
                             ),
                             trailing: const Icon(Icons.arrow_forward),
                           ),
@@ -862,9 +855,10 @@ class OrderDetailsCaptainOrderLoadedState extends States {
               ),
               // client location
               Visibility(
-                visible: StatusHelper.getOrderStatusIndex(orderInfo.state) >=
-                    StatusHelper.getOrderStatusIndex(
-                        OrderStatusEnum.DELIVERING),
+                visible: !StatusHelper.shouldHideCustomerInfo(orderInfo.state) &&
+                    StatusHelper.getOrderStatusIndex(orderInfo.state) >=
+                        StatusHelper.getOrderStatusIndex(
+                            OrderStatusEnum.DELIVERING),
                 child: Expanded(
                   child: OrderButton(
                     backgroundColor: Colors.red[900]!,
@@ -937,22 +931,25 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                 ),
               ),
               // client
-              Expanded(
-                child: OrderButton(
-                  backgroundColor: Colors.green[600]!,
-                  icon: FontAwesomeIcons.whatsapp,
-                  subtitle: S.current.whatsappWithClient,
-                  title: S.current.whatsapp,
-                  short: true,
-                  onTap: () {
-                    var url = LauncherLinkHelper.getWhatsAppLink(
-                        orderInfo.customerPhone);
-                    canLaunch(url).then((value) {
-                      if (value) {
-                        launch(url);
-                      }
-                    });
-                  },
+              Visibility(
+                visible: !StatusHelper.shouldHideCustomerInfo(orderInfo.state),
+                child: Expanded(
+                  child: OrderButton(
+                    backgroundColor: Colors.green[600]!,
+                    icon: FontAwesomeIcons.whatsapp,
+                    subtitle: S.current.whatsappWithClient,
+                    title: S.current.whatsapp,
+                    short: true,
+                    onTap: () {
+                      var url = LauncherLinkHelper.getWhatsAppLink(
+                          orderInfo.customerPhone);
+                      canLaunch(url).then((value) {
+                        if (value) {
+                          launch(url);
+                        }
+                      });
+                    },
+                  ),
                 ),
               ),
             ],
