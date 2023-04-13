@@ -138,7 +138,6 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
                                     : (element.total.advancePayment == 167
                                         ? Colors.green
                                         : element.total.advancePayment == 168
-                                        : element.total.advancePayment == 166
                                             ? Colors.red
                                             : Theme.of(screenState.context)
                                                 .disabledColor)),
