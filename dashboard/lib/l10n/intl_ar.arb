@@ -484,6 +484,7 @@
     "chooseBranch": "اختر فرع",
     "thereIsNoBranches": "لا يوجد أفرع متاحة",
     "addNote": "إضافة تحديث",
+    "addAds": "إضافة إعلان",
     "title": "عنوان",
     "sendTo": "إرسال إلى",
     "captains": "الكباتن",
@@ -943,5 +944,6 @@
     "statistics": "إحصائيات",
     "captainRetreatOrder":"قام الكابتن بالتراجع عن تسليم الطلب",
     "advanced":"سلفا",
-    "pleaseProvideCostType":"من فضلك اختر نوع التكلفة"
+    "pleaseProvideCostType":"من فضلك اختر نوع التكلفة",
+    "editAds":"تعديل الإعلان"
 }

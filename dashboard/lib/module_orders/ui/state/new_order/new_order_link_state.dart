@@ -646,7 +646,7 @@ class NewOrderLinkStateLoaded extends States {
         onTap: () {
           if (_formKey.currentState?.validate() == true &&
               screenState.branch != null &&
-              screenState.payments != null&& (screenState.packageType != 1 || (screenState.packageType == 1 && screenState.costType != null && screenState.payments == 'cash'))) {
+              screenState.payments != null && (screenState.packageType != 1 || screenState.payments == 'card' || (screenState.packageType == 1 && screenState.costType != null && screenState.payments == 'cash'))) {
             showDialog(
                 context: context,
                 builder: (context) {
@@ -711,6 +711,7 @@ class NewOrderLinkStateLoaded extends States {
             lon: screenState.customerLocation?.longitude),
         note: screenState.orderDetailsController.text.trim(),
         detail: screenState.orderDetailsController.text.trim(),
+        costType: screenState.costType,
         orderCost: num.tryParse(screenState.priceController.text.trim()),
         image: value,
         date: orderDate == null
@@ -741,6 +742,7 @@ class NewOrderLinkStateLoaded extends States {
         detail: screenState.orderDetailsController.text.trim(),
         orderCost: num.tryParse(screenState.priceController.text.trim()),
         image: null,
+        costType: screenState.costType,
         deliveryCost: num.tryParse(deliveryCost ?? ''),
         date: orderDate == null
             ? DateTime.now().toUtc().toIso8601String()

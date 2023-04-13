@@ -29,12 +29,14 @@ class AppThemeDataService {
     final darkScheme = ColorScheme.fromSeed(
         seedColor: PrimaryColor,
         brightness: Brightness.dark,
+        background: Colors.grey.shade800,
         error: Colors.red[900],
         errorContainer: Colors.red[100],
         primary: Colors.grey[900]);
     if (dark == true) {
       mapStyle(dark);
       return ThemeData(
+          scaffoldBackgroundColor: Colors.grey.shade700,
           brightness: Brightness.dark,
           colorScheme: darkScheme,
           useMaterial3: true,
@@ -69,7 +71,7 @@ class AppThemeDataService {
             }),
           ),
           cardColor: Colors.grey[150],
-          fontFamily: kIsWeb ? null : 'Dubai',
+          fontFamily: 'Dubai',
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
             backgroundColor: darkScheme.primary,
@@ -77,12 +79,12 @@ class AppThemeDataService {
               borderRadius: BorderRadius.circular(25),
             ),
           )),
-          textTheme: TextTheme(
+          textTheme: const TextTheme(
             button: TextStyle(
               color: Colors.white,
             ),
           ));
-    }
+   }
     mapStyle(dark);
     return ThemeData(
         brightness: Brightness.light,

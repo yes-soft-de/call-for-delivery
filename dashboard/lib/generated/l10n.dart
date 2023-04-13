@@ -9470,26 +9470,6 @@ class S {
     );
   }
 
-  /// `time`
-  String get time {
-    return Intl.message(
-      'time',
-      name: 'time',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `last 7 days`
-  String get last7days {
-    return Intl.message(
-      'last 7 days',
-      name: 'last7days',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `Captain retreat to deliver order`
   String get captainRetreatOrder {
     return Intl.message(
@@ -9515,6 +9495,46 @@ class S {
     return Intl.message(
       'Please provide cost type',
       name: 'pleaseProvideCostType',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `time`
+  String get time {
+    return Intl.message(
+      'time',
+      name: 'time',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `last 7 days`
+  String get last7days {
+    return Intl.message(
+      'last 7 days',
+      name: 'last7days',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Ads`
+  String get addAds {
+    return Intl.message(
+      'Add Ads',
+      name: 'addAds',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Edit Ads`
+  String get editAds {
+    return Intl.message(
+      'Edit Ads',
+      name: 'editAds',
       desc: '',
       args: [],
     );
