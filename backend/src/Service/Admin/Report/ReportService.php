@@ -74,6 +74,9 @@ class ReportService
     {
         $response = [];
 
+        // Modify customized timezone to be acceptable
+        $customizedTimezone = str_replace("-", "/", $customizedTimezone);
+
         // 1. orders statistics
         $response["data"]["orders"]["count"]["allOrders"] = $this->adminOrderService->getAllOrdersCountForAdmin();
 
