@@ -70,8 +70,9 @@ class ReportController extends BaseController
 
     /**
      * admin: Get advanced statistics for admin.
-     * @Route("fetchdashstatistics", name="getAdvancedStatisticsForAdmin", methods={"GET"})
+     * @Route("fetchdashstatistics/{customizedTimezone}", name="getAdvancedStatisticsForAdmin", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
+     * @param string|null $customizedTimezone
      * @return JsonResponse
      *
      * @OA\Tag(name="Report")
@@ -188,9 +189,9 @@ class ReportController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function getDashboardStatisticsForAdmin(): JsonResponse
+    public function getDashboardStatisticsForAdmin(string $customizedTimezone = null): JsonResponse
     {
-        $result = $this->reportService->getDashboardStatisticsForAdmin();
+        $result = $this->reportService->getDashboardStatisticsForAdmin($customizedTimezone);
 
         return $this->response($result, self::FETCH);
     }
