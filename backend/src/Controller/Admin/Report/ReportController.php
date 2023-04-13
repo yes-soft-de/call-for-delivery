@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\Main\MainErrorConstant;
 use App\Controller\BaseController;
 use App\Request\Admin\Report\CaptainWithDeliveredOrdersDuringSpecificTimeFilterByAdminRequest;
+use App\Request\Admin\Report\DashboardStatisticsPostRequest;
 use App\Request\Admin\Report\StoresAndOrdersCountDuringSpecificTimeFilterByAdminRequest;
 use App\Service\Admin\Report\ReportService;
 use Nelmio\ApiDocBundle\Annotation\Security;
@@ -70,8 +71,9 @@ class ReportController extends BaseController
 
     /**
      * admin: Get advanced statistics for admin.
-     * @Route("fetchdashstatistics", name="getAdvancedStatisticsForAdmin", methods={"GET"})
+     * @Route("fetchdashstatistics", name="getAdvancedStatisticsForAdmin", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
      * @return JsonResponse
      *
      * @OA\Tag(name="Report")
@@ -81,6 +83,13 @@ class ReportController extends BaseController
      *      in="header",
      *      description="token to be passed as a header",
      *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Post a request with filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="customizedTimezone", example="Asia/Riyadh")
+     *      )
      * )
      *
      * @OA\Response(
@@ -188,9 +197,13 @@ class ReportController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function getDashboardStatisticsForAdmin(): JsonResponse
+    public function getDashboardStatisticsForAdmin(Request $request): JsonResponse
     {
-        $result = $this->reportService->getDashboardStatisticsForAdmin();
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, DashboardStatisticsPostRequest::class, (object)$data);
+
+        $result = $this->reportService->getDashboardStatisticsForAdmin($request);
 
         return $this->response($result, self::FETCH);
     }

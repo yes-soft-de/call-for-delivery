@@ -683,11 +683,14 @@ class SubscriptionService
         $item['requiredToPay'] = $packageCost + $sumCaptainOfferPrices + $item['extraCost'];
       
         $total = $item['sumPayments'] - $item['requiredToPay'];
-       
-        $item['advancePayment'] = StoreOwnerPaymentConstant::ADVANCED_PAYMENT_BALANCE_CONST;
-    
-        if($total <= 0 ) {
-            $item['advancePayment'] = StoreOwnerPaymentConstant::ADVANCED_PAYMENT_EXIST_CONST;
+
+        $item['advancePayment'] = CaptainFinancialSystem::ADVANCED_PAYMENT_NOT_EXIST_CONST;
+
+        if ($total > 0) {
+            $item['advancePayment'] = CaptainFinancialSystem::ADVANCED_PAYMENT_EXIST_CONST;
+
+        } elseif ($total == 0) {
+            $item['advancePayment'] = CaptainFinancialSystem::ADVANCED_PAYMENT_BALANCE_CONST;
         }
 
         $item['total'] = abs($total);
@@ -827,6 +830,7 @@ class SubscriptionService
        
         return $this->calculateCostDeliveryOrder($request);
      }
+
     //Get the cost of subscriptions on order
     public function getTotalWithPackageOnOrder(array $payments, float $packageCost, array $captainOffers, float $packageExtraCost, float $totalExtraDistance, int $subscriptionId)
     {
@@ -854,11 +858,14 @@ class SubscriptionService
         $item['requiredToPay'] = ($packageCost * $item['countOfConsumedOrders']) + $sumCaptainOfferPrices + $item['extraCost'];
       
         $total = $item['sumPayments'] - $item['requiredToPay'];
-       
-        $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
-    
-        if($total <= 0 ) {
-            $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_YES;    
+
+        $item['advancePayment'] = CaptainFinancialSystem::ADVANCED_PAYMENT_NOT_EXIST_CONST;
+
+        if ($total > 0) {
+            $item['advancePayment'] = CaptainFinancialSystem::ADVANCED_PAYMENT_EXIST_CONST;
+
+        } elseif ($total == 0) {
+            $item['advancePayment'] = CaptainFinancialSystem::ADVANCED_PAYMENT_BALANCE_CONST;
         }
 
         $item['total'] = abs($total);
