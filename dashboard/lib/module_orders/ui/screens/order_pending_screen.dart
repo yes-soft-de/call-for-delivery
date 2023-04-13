@@ -61,6 +61,8 @@ class OrderPendingScreenState extends State<OrderPendingScreen> {
 
   @override
   Widget build(BuildContext context) {
+    currentIndex =
+        ModalRoute.of(context)?.settings.arguments as int? ?? currentIndex;
     return GestureDetector(
       onTap: () {
         var focus = FocusScope.of(context);
