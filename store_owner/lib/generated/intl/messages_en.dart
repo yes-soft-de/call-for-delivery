@@ -1070,6 +1070,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "You have products from other store , Do you want to clear your cart and add the new ones"),
         "youSubscribedWithOffer": MessageLookupByLibrary.simpleMessage(
             "You already subscribed with captain offer , You can subscribe again when your subscription expired"),
+        "yourBalance": MessageLookupByLibrary.simpleMessage("your balance"),
         "yourBranchMissingPhoneNumber": MessageLookupByLibrary.simpleMessage(
             "Your branch missing phone number"),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
