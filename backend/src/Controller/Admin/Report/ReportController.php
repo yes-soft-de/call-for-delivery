@@ -71,9 +71,9 @@ class ReportController extends BaseController
 
     /**
      * admin: Get advanced statistics for admin.
-     * @Route("fetchdashstatistics", name="getAdvancedStatisticsForAdmin", methods={"POST"})
+     * @Route("fetchdashstatistics/{customizedTimezone}", name="getAdvancedStatisticsForAdmin", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
-     * @param Request $request
+     * @param string|null $customizedTimezone
      * @return JsonResponse
      *
      * @OA\Tag(name="Report")
@@ -83,13 +83,6 @@ class ReportController extends BaseController
      *      in="header",
      *      description="token to be passed as a header",
      *      required=true
-     * )
-     *
-     * @OA\RequestBody(
-     *      description="Post a request with filtering options",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="customizedTimezone", example="Asia/Riyadh")
-     *      )
      * )
      *
      * @OA\Response(
@@ -197,13 +190,13 @@ class ReportController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function getDashboardStatisticsForAdmin(Request $request): JsonResponse
+    public function getDashboardStatisticsForAdmin(string $customizedTimezone = null): JsonResponse
     {
-        $data = json_decode($request->getContent(), true);
+        // $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(stdClass::class, DashboardStatisticsPostRequest::class, (object)$data);
+        // $request = $this->autoMapping->map(stdClass::class, DashboardStatisticsPostRequest::class, (object)$data);
 
-        $result = $this->reportService->getDashboardStatisticsForAdmin($request);
+        $result = $this->reportService->getDashboardStatisticsForAdmin($customizedTimezone);
 
         return $this->response($result, self::FETCH);
     }
