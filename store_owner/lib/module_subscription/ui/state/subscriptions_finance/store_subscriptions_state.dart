@@ -4,6 +4,7 @@ import 'package:c4d/module_subscription/model/store_subscriptions_financial.dart
 import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/module_subscription/ui/screens/store_subscriptions_screen.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
+import 'package:c4d/utils/helpers/advanced_payment_helper.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/subscription_status_helper.dart';
 import 'package:flutter/material.dart';
@@ -129,18 +130,13 @@ class StoreSubscriptionsFinanceStateLoaded extends States {
                         children: [
                           Expanded(
                             child: verticalBubble(
-                                title: S.current.leftToPay,
+                                title: S.current.yourBalance,
                                 subtitle: FixedNumber.getFixedNumber(
                                         element.total.total) +
                                     ' ${S.current.sar}',
-                                background: element.total.advancePayment == 166
-                                    ? null
-                                    : (element.total.advancePayment == 167
-                                        ? Colors.green
-                                        : element.total.advancePayment == 168
-                                            ? Colors.red
-                                            : Theme.of(screenState.context)
-                                                .disabledColor)),
+                                background:
+                                    AdvancedPaymentHelper.getFinanceStatusColor(
+                                        element.total.advancePayment)),
                           ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
