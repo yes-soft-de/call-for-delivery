@@ -8,11 +8,18 @@ class CaptainActivityDetailsResponse {
   CaptainActivityDetailsResponse.fromJson(Map<String, dynamic> json) {
     statusCode = json['status_code'];
     msg = json['msg'];
+
     if (json['Data'] != null) {
       data = <CaptainActivityData>[];
-      json['Data'].forEach((v) {
-        data!.add(new CaptainActivityData.fromJson(v));
-      });
+      if (json['Data'] is List) {
+        json['Data'].forEach((v) {
+          data!.add(new CaptainActivityData.fromJson(v));
+        });
+      } else {
+        json['Data']['orders'].forEach((v) {
+          data!.add(new CaptainActivityData.fromJson(v));
+        });
+      }
     }
   }
 
