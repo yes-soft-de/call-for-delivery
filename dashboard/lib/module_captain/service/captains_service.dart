@@ -16,6 +16,7 @@ import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/request/captain_offer_request.dart';
 import 'package:c4d/module_captain/request/enable_captain.dart';
 import 'package:c4d/module_captain/request/enable_offer.dart';
+import 'package:c4d/module_captain/request/specific_captain_activities_filter_request.dart';
 import 'package:c4d/module_captain/request/update_captain_request.dart';
 import 'package:c4d/module_captain/response/capatin_offer_response.dart';
 import 'package:c4d/module_captain/response/captain_account_balance_response/captain_account_balance_response.dart';
@@ -328,6 +329,23 @@ class CaptainsService {
   Future<DataModel> getCaptainActivityDetails(int captainID) async {
     CaptainActivityDetailsResponse? actionResponse =
         await _manager.getCaptainActivityDetails(captainID);
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    if (actionResponse.data == null) {
+      return DataModel.empty();
+    }
+    return CaptainActivityDetailsModel.withData(actionResponse);
+  }
+
+  Future<DataModel> getCaptainActivityDetailsFilter(
+      SpecificCaptainActivityFilterRequest request) async {
+    CaptainActivityDetailsResponse? actionResponse =
+        await _manager.getCaptainActivityDetailsFilter(request);
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
     }

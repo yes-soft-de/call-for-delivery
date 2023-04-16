@@ -1,4 +1,5 @@
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_captain/request/captain_activities_filter_request.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 
@@ -11,6 +12,8 @@ class CaptainActivityCard extends StatelessWidget {
   final String orderCount;
   final String? last24CountOrder;
   final String? todayCountOrder;
+  final CaptainActivityFilterRequest filter;
+
   CaptainActivityCard({
     Key? key,
     required this.id,
@@ -20,6 +23,7 @@ class CaptainActivityCard extends StatelessWidget {
     required this.orderCount,
     required this.last24CountOrder,
     required this.todayCountOrder,
+    required this.filter,
   });
 
   final Function()? onTap;
@@ -35,9 +39,15 @@ class CaptainActivityCard extends StatelessWidget {
         onTap: () {
           // Navigator.of(context)
           //     .pushNamed(CaptainsRoutes.CAPTAIN_PROFILE, arguments: id);
-          Navigator.of(context).pushNamed(
+          if (filter.fromDate == null && filter.toDate == null) {
+            Navigator.of(context).pushNamed(
+                CaptainsRoutes.CAPTAIN_ACTIVITY_DETAILS,
+                arguments: [id, captainName, null]);
+          } else {
+            Navigator.of(context).pushNamed(
               CaptainsRoutes.CAPTAIN_ACTIVITY_DETAILS,
-              arguments: [id, captainName]);
+              arguments: [id, captainName, filter]);
+          }
         },
         child: Container(
             decoration: BoxDecoration(
