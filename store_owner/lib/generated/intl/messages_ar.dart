@@ -105,9 +105,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "birthDate": MessageLookupByLibrary.simpleMessage("تاريخ الميلاد"),
         "birthDateHint":
             MessageLookupByLibrary.simpleMessage("اختر تاريخ ميلادك"),
-        "bookACar": MessageLookupByLibrary.simpleMessage("احجز سيارة توصيل"),
+        "bookACar": MessageLookupByLibrary.simpleMessage("احجز كابتن للتوصيل"),
         "bookACarDescribtion": MessageLookupByLibrary.simpleMessage(
-            "تحتاج لحجز سيارة لتوصيل غرضك للوجهة المطلوبة"),
+            "تحتاج لحجز كابتن لتوصيل غرضك للوجهة المطلوبة"),
         "bounce": MessageLookupByLibrary.simpleMessage("المكافأة"),
         "branch": MessageLookupByLibrary.simpleMessage("الفرع التجاري"),
         "branch01": MessageLookupByLibrary.simpleMessage("الفرع 01"),
@@ -159,7 +159,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainStartedDelivery":
             MessageLookupByLibrary.simpleMessage("بدأ الكابتن التوصيل"),
         "captainsOffer": MessageLookupByLibrary.simpleMessage("عروض الكباتن"),
-        "car": MessageLookupByLibrary.simpleMessage("سيارة "),
+        "car": MessageLookupByLibrary.simpleMessage("كابتن "),
         "carModel": MessageLookupByLibrary.simpleMessage("نوع السيارة"),
         "card": MessageLookupByLibrary.simpleMessage("بطاقة"),
         "cart": MessageLookupByLibrary.simpleMessage("سلة المشتريات"),

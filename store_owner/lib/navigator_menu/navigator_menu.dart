@@ -18,8 +18,6 @@ import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class NavigatorMenu extends StatefulWidget {
@@ -61,7 +59,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                   borderRadius: BorderRadius.circular(25),
                   boxShadow: [
                     BoxShadow(
-                        color: Theme.of(context).backgroundColor,
+                        color: Theme.of(context).colorScheme.background,
                         spreadRadius: 1.5,
                         blurRadius: 6,
                         offset: Offset(-0.2, 0))
@@ -85,7 +83,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
               indent: 16,
               endIndent: 16,
               thickness: 2.5,
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).colorScheme.background,
             ),
           ],
         ),
@@ -121,7 +119,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
             indent: 32,
             endIndent: 32,
             thickness: 2.5,
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).colorScheme.background,
           ),
           // my work info
           Visibility(
@@ -159,7 +157,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       (ctx) {
                         return widget.screenState.getOngoingChatRoom();
                       },
-                      backgroundColor: Theme.of(context).backgroundColor,
+                      backgroundColor: Theme.of(context).colorScheme.background,
                       shape: RoundedRectangleBorder(
                           borderRadius:
                               BorderRadius.vertical(top: Radius.circular(25))),
@@ -194,7 +192,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
             indent: 32,
             endIndent: 32,
             thickness: 2.5,
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).colorScheme.background,
           ),
           //BID-ORDER
           Visibility(
@@ -233,7 +231,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
               indent: 32,
               endIndent: 32,
               thickness: 2.5,
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).colorScheme.background,
             ),
           ),
 
@@ -245,20 +243,20 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                     .pushNamed(MyNotificationsRoutes.UPDATES_SCREEN);
               },
               title: S.current.adsAndOffers),
-          Visibility(
-            visible: widget.company != null,
-            child: CustomNavTile(
-                icon: FontAwesomeIcons.whatsappSquare,
-                onTap: () {
-                  var url = 'https://wa.me/${widget.company?.whatsapp}';
-                  canLaunch(url).then((value) {
-                    if (value) {
-                      launch(url);
-                    }
-                  });
-                },
-                title: S.current.whatsapp),
-          ),
+          // Visibility(
+          //   visible: widget.company != null,
+          //   child: CustomNavTile(
+          //       icon: FontAwesomeIcons.whatsappSquare,
+          //       onTap: () {
+          //         var url = 'https://wa.me/${widget.company?.whatsapp}';
+          //         canLaunch(url).then((value) {
+          //           if (value) {
+          //             launch(url);
+          //           }
+          //         });
+          //       },
+          //       title: S.current.whatsapp),
+          // ),
           Visibility(
             visible: widget.profileModel != null,
             child: CustomNavTile(
@@ -277,7 +275,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
             indent: 32,
             endIndent: 32,
             thickness: 2.5,
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).colorScheme.background,
           ),
           // settings
           CustomNavTile(
