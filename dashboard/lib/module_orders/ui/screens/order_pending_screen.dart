@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/consts/navigator_assistant.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_orders/state_manager/order_pending_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -39,6 +40,7 @@ class OrderPendingScreenState extends State<OrderPendingScreen> {
   @override
   void initState() {
     super.initState();
+    currentIndex = NavigatorAssistant.nonDeliveringIndex;
     currentState = LoadingState(this);
     widget._stateManager.getPendingOrders(this);
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
