@@ -5,6 +5,7 @@ import 'package:c4d/module_orders/ui/widgets/owner_order_card/owner_order_card.d
 import 'package:c4d/module_subscription/model/store_subscriptions_financial.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
+import 'package:c4d/utils/helpers/advanced_payment_helper.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
@@ -246,14 +247,9 @@ class StoreSubscriptionsFinanceDetailsScreenState
           constraints: BoxConstraints(minWidth: 125, maxWidth: 150),
           child: verticalBubble(
               subtitle: model.total.total.toString() + ' ${S.current.sar}',
-              title: S.current.leftToPay,
-              background: model.total.advancePayment == null
-                  ? null
-                  : (model.total.advancePayment == 160
-                      ? Colors.green
-                      : model.total.advancePayment == 159
-                          ? Colors.red
-                          : Theme.of(context).disabledColor)),
+              title: S.current.yourBalance,
+              background: AdvancedPaymentHelper.getFinanceStatusColor(
+                  model.total.advancePayment)),
         )
       ],
     );

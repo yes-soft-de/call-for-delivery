@@ -7010,6 +7010,16 @@ class S {
     );
   }
 
+  /// `your balance`
+  String get yourBalance {
+    return Intl.message(
+      'your balance',
+      name: 'yourBalance',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Ads & offers`
   String get adsAndOffers {
     return Intl.message(
