@@ -7680,6 +7680,16 @@ class S {
     );
   }
 
+  /// `your balance today`
+  String get yourBalanceToday {
+    return Intl.message(
+      'your balance today',
+      name: 'yourBalanceToday',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Over paid`
   String get financeOverPaid {
     return Intl.message(

@@ -112,7 +112,7 @@ class MenuScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       Container(
-                        width: 125,
+                        padding: const EdgeInsets.all(8),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
                           color: Theme.of(context).colorScheme.primaryContainer,
@@ -124,7 +124,7 @@ class MenuScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
-                                S.current.todayProfit,
+                                S.current.yourBalanceToday,
                                 style: const TextStyle(
                                   fontSize: 13,
                                 ),
@@ -142,45 +142,45 @@ class MenuScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Container(
-                          height: 16,
-                          decoration: BoxDecoration(
-                            color: Theme.of(context).disabledColor,
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        width: 125,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: Theme.of(context).colorScheme.primaryContainer,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                S.current.totalEarnedProfit,
-                                style: const TextStyle(
-                                  fontSize: 13,
-                                ),
-                              ),
-                              Text(
-                                dailyFinance.totalProfit.toStringAsFixed(2) +
-                                    S.current.sar,
-                                style: TextStyle(
-                                  color: Theme.of(context).colorScheme.primary,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.all(8.0),
+                      //   child: Container(
+                      //     height: 16,
+                      //     decoration: BoxDecoration(
+                      //       color: Theme.of(context).disabledColor,
+                      //       borderRadius: BorderRadius.circular(25),
+                      //     ),
+                      //   ),
+                      // ),
+                      // Container(
+                      //   width: 125,
+                      //   decoration: BoxDecoration(
+                      //     borderRadius: BorderRadius.circular(25),
+                      //     color: Theme.of(context).colorScheme.primaryContainer,
+                      //   ),
+                      //   child: Padding(
+                      //     padding: const EdgeInsets.all(8.0),
+                      //     child: Column(
+                      //       crossAxisAlignment: CrossAxisAlignment.start,
+                      //       mainAxisAlignment: MainAxisAlignment.start,
+                      //       children: [
+                      //         Text(
+                      //           S.current.totalEarnedProfit,
+                      //           style: const TextStyle(
+                      //             fontSize: 13,
+                      //           ),
+                      //         ),
+                      //         Text(
+                      //           dailyFinance.totalProfit.toStringAsFixed(2) +
+                      //               S.current.sar,
+                      //           style: TextStyle(
+                      //             color: Theme.of(context).colorScheme.primary,
+                      //           ),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
