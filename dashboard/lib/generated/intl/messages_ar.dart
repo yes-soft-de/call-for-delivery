@@ -415,7 +415,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "createdDate": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
         "createdNewOrder":
             MessageLookupByLibrary.simpleMessage("تم إنشاء طلب جديد"),
-        "createdOrders": MessageLookupByLibrary.simpleMessage("أنشأوا طلبات"),
+        "createdOrders": MessageLookupByLibrary.simpleMessage("أنشؤوا طلبات"),
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("الرصيد الحالي:"),
         "currentFinancialCycle":
@@ -467,7 +467,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverForMe": MessageLookupByLibrary.simpleMessage("طلب خارجي"),
         "deliverPrice": MessageLookupByLibrary.simpleMessage("التوصيل"),
         "deliverTo": MessageLookupByLibrary.simpleMessage("اسم المستلم"),
-        "deliveredOrders": MessageLookupByLibrary.simpleMessage("سلمو طلبات"),
+        "deliveredOrders": MessageLookupByLibrary.simpleMessage("سلموا طلبات"),
         "deliveringDescription":
             MessageLookupByLibrary.simpleMessage("الكابتن في طريقه إليك"),
         "deliveryCars": MessageLookupByLibrary.simpleMessage("سيارات التوصيل"),
@@ -704,6 +704,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "last3Active": MessageLookupByLibrary.simpleMessage("اخر 3 فعالين"),
         "last7WeekOrders":
             MessageLookupByLibrary.simpleMessage("الطلبات آخر ٧ أيام"),
+        "last7days": MessageLookupByLibrary.simpleMessage("اخر 7 ايام"),
         "lastName": MessageLookupByLibrary.simpleMessage("الكنية"),
         "lastSeenMessage": MessageLookupByLibrary.simpleMessage("رسائل جديدة"),
         "lastSevenDays": MessageLookupByLibrary.simpleMessage("اخر سبع ايام"),
@@ -1333,6 +1334,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "سوف يستغرق الامر دقيقة واحدة الرجاء الانتظار"),
         "thisOrderCanBeLinked": MessageLookupByLibrary.simpleMessage(
             "الطلب من الممكن أن يحتوي على طلبات فرعية"),
+        "time": MessageLookupByLibrary.simpleMessage("الوقت"),
         "title": MessageLookupByLibrary.simpleMessage("عنوان"),
         "to": MessageLookupByLibrary.simpleMessage("الى"),
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":

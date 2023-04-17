@@ -1,6 +1,7 @@
 import 'package:c4d/consts/navigator_assistant.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_statistics/model/statistics_model.dart';
 import 'package:c4d/module_statistics/ui/widget/order/orders_details_card.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
