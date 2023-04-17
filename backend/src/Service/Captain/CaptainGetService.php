@@ -3,6 +3,7 @@
 namespace App\Service\Captain;
 
 use App\Constant\Captain\CaptainConstant;
+use App\Entity\CaptainEntity;
 use App\Manager\Captain\CaptainManager;
 
 /**
@@ -25,5 +26,16 @@ class CaptainGetService
         }
 
         return $captainProfile->getId();
+    }
+
+    public function getCaptainProfileEntityById(int $captainProfileId): CaptainEntity|string
+    {
+        $captainProfile = $this->captainManager->getCaptainProfileById($captainProfileId);
+
+        if (! $captainProfile) {
+            return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
+        }
+
+        return $captainProfile;
     }
 }

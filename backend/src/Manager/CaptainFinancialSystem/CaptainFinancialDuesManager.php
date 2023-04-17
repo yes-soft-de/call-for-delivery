@@ -5,6 +5,7 @@ namespace App\Manager\CaptainFinancialSystem;
 use App\AutoMapping;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Repository\CaptainFinancialDuesEntityRepository;
+use App\Request\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Request\CaptainFinancialSystem\CreateCaptainFinancialDuesRequest;
 use App\Manager\Captain\CaptainManager;
@@ -14,17 +15,13 @@ use App\Request\CaptainFinancialSystem\CreateCaptainFinancialDuesByOptionalDates
 
 class CaptainFinancialDuesManager
 {
-    private AutoMapping $autoMapping;
-    private EntityManagerInterface $entityManager;
-    private CaptainFinancialDuesEntityRepository $captainFinancialDuesRepository;
-    private CaptainManager $captainManager;
-
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, CaptainFinancialDuesEntityRepository $captainFinancialDuesRepository, CaptainManager $captainManager)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private EntityManagerInterface $entityManager,
+        private CaptainFinancialDuesEntityRepository $captainFinancialDuesRepository,
+        private CaptainManager $captainManager
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->entityManager = $entityManager;
-        $this->captainFinancialDuesRepository = $captainFinancialDuesRepository;
-        $this->captainManager = $captainManager;
     }
 
     public function createCaptainFinancialDues(CreateCaptainFinancialDuesRequest $request): CaptainFinancialDuesEntity
@@ -162,5 +159,28 @@ class CaptainFinancialDuesManager
         }
 
         return $financialDues;
+    }
+
+    /**
+     * Get the start and end dates of the current active financial cycle of the captain
+     */
+    public function getCurrentAndActiveCaptainFinancialDueByCaptainProfileId(int $captainProfileId): array
+    {
+        return $this->captainFinancialDuesRepository->findBy(['captain' => $captainProfileId, 'state' => CaptainFinancialDues::FINANCIAL_STATE_ACTIVE],
+            ['id'=>'DESC'], 1);
+    }
+
+    /**
+     * Creates captain financial due by CaptainFinancialDueCreateRequest
+     */
+    public function createCaptainFinancialDue(CaptainFinancialDueCreateRequest $request)
+    {
+        $captainFinancialDuesEntity = $this->autoMapping->map(CaptainFinancialDueCreateRequest::class, CaptainFinancialDuesEntity::class,
+            $request);
+
+        $this->entityManager->persist($captainFinancialDuesEntity);
+        $this->entityManager->flush();
+
+        return $captainFinancialDuesEntity;
     }
 }

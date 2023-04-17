@@ -172,26 +172,29 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function getLatestCaptainFinancialDuesByUserId(int $userId): CaptainFinancialDuesEntity
-    {
-        return $this->createQueryBuilder('captainFinancialDuesEntity')
-
-            ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.captainId = :userId')
-
-            ->andWhere('captainFinancialDuesEntity.captain = captainEntity.id')
-            ->setParameter('userId', $userId)
-
-            // ->andWhere('captainFinancialDuesEntity.state = :state')
-            // ->setParameter('state', CaptainFinancialDues::FINANCIAL_STATE_ACTIVE)
-            
-            ->orderBy('captainFinancialDuesEntity.id', 'DESC')
-
-            ->setMaxResults(1)
-
-            ->getQuery()
-
-            ->getOneOrNullResult();
-    }
+    /**
+     * Following function had been commented out because it isn't being used anywhere
+     */
+//    public function getLatestCaptainFinancialDuesByUserId(int $userId): CaptainFinancialDuesEntity
+//    {
+//        return $this->createQueryBuilder('captainFinancialDuesEntity')
+//
+//            ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.captainId = :userId')
+//
+//            ->andWhere('captainFinancialDuesEntity.captain = captainEntity.id')
+//            ->setParameter('userId', $userId)
+//
+//            // ->andWhere('captainFinancialDuesEntity.state = :state')
+//            // ->setParameter('state', CaptainFinancialDues::FINANCIAL_STATE_ACTIVE)
+//
+//            ->orderBy('captainFinancialDuesEntity.id', 'DESC')
+//
+//            ->setMaxResults(1)
+//
+//            ->getQuery()
+//
+//            ->getOneOrNullResult();
+//    }
 
     //get the financial cycle to which the order belongs
     public function getCaptainFinancialDuesByUserIDAndOrderId(int $userId, int $orderId, string $orderCreatedAt): ?CaptainFinancialDuesEntity

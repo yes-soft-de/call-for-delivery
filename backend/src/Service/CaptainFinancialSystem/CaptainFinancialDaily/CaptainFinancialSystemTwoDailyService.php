@@ -2,12 +2,12 @@
 
 namespace App\Service\CaptainFinancialSystem\CaptainFinancialDaily;
 
-use App\Service\CaptainFinancialSystem\CaptainFinancialSystemTwo\CaptainFinancialSystemTwoGetBalanceDetailsService;
+use App\Service\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialSystemTwo\CaptainFinancialSystemTwoDailyGetBalanceDetailsService;
 
 class CaptainFinancialSystemTwoDailyService
 {
     public function __construct(
-        private CaptainFinancialSystemTwoGetBalanceDetailsService $captainFinancialSystemTwoGetBalanceDetailsService
+        private CaptainFinancialSystemTwoDailyGetBalanceDetailsService $captainFinancialSystemTwoDailyGetBalanceDetailsService
     )
     {
     }
@@ -18,7 +18,7 @@ class CaptainFinancialSystemTwoDailyService
      */
     public function getDailyCaptainFinancialAmount(array $captainFinancialSystemDetail, int $captainProfileId, string $fromDate, string $toDate): array
     {
-        return $this->captainFinancialSystemTwoGetBalanceDetailsService->calculateCaptainDuesAndStoreCashAmountOnly($captainFinancialSystemDetail,
+        return $this->captainFinancialSystemTwoDailyGetBalanceDetailsService->calculateCaptainDuesAndStoreCashAmountOnly($captainFinancialSystemDetail,
             $captainProfileId, $fromDate, $toDate);
     }
 }
