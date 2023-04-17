@@ -233,7 +233,7 @@ class OrderDetailsModel extends DataModel {
   }
 
   bool _canRemove(OrderStatusEnum state) {
-    return true;
+    return state != OrderStatusEnum.CANCELLED;
   }
 
   String? _distance(OrderDetailsModel orderInfo, LatLng? location) {
