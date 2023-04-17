@@ -1,5 +1,7 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/module_captain/request/captain_activities_filter_request.dart';
+import 'package:c4d/module_captain/request/specific_captain_activities_filter_request.dart';
 import 'package:c4d/module_captain/state_manager/captain_activity_details_state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -45,6 +47,8 @@ class CaptainActivityDetailsScreenState
   }
 
   int captainId = -1;
+  late SpecificCaptainActivityFilterRequest request;
+  CaptainActivityFilterRequest? filter;
   String captainName = '';
 
   Widget build(BuildContext context) {
@@ -54,7 +58,19 @@ class CaptainActivityDetailsScreenState
       if (arg != null && arg is List) {
         captainId = arg[0];
         captainName = arg[1];
-        widget._stateManager.getCaptainActivityDetails(this, captainId);
+        filter = arg[2];
+        if (filter != null) {
+          widget._stateManager.getCaptainActivityDetailsFilter(
+              this,
+              SpecificCaptainActivityFilterRequest(
+                state: 'delivered',
+                captainId: captainId,
+                fromDate: filter!.fromDate,
+                toDate: filter!.toDate,
+              ));
+        } else {
+          widget._stateManager.getCaptainActivityDetails(this, captainId);
+        }
       }
     }
     return Scaffold(

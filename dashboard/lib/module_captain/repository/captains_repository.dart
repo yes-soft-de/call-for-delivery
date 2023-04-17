@@ -5,11 +5,11 @@ import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/request/captain_offer_request.dart';
 import 'package:c4d/module_captain/request/enable_captain.dart';
 import 'package:c4d/module_captain/request/enable_offer.dart';
+import 'package:c4d/module_captain/request/specific_captain_activities_filter_request.dart';
 import 'package:c4d/module_captain/request/update_captain_request.dart';
 import 'package:c4d/module_captain/response/capatin_offer_response.dart';
 import 'package:c4d/module_captain/response/captain_account_balance_response/captain_account_balance_response.dart';
 import 'package:c4d/module_captain/response/captain_activity_response/captain_activity_response.dart';
-import 'package:c4d/module_payments/response/captain_all_amounts.dart';
 import 'package:c4d/module_captain/response/captain_finance_daily_response.dart';
 import 'package:c4d/module_captain/response/captain_financial_dues_response/captain_financial_dues_response.dart';
 import 'package:c4d/module_captain/response/captain_need_support_response/captain_need_support_response.dart';
@@ -222,6 +222,18 @@ class CaptainsRepository {
     dynamic response = await _apiClient.get(
         Urls.GET_CAPTAIN_ACTIVITY_DETAILS + '/$captainID',
         headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return CaptainActivityDetailsResponse.fromJson(response);
+  }
+
+  Future<CaptainActivityDetailsResponse?> getCaptainActivityDetailsFilter(
+      SpecificCaptainActivityFilterRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+      Urls.FILTER_CAPTAIN_ORDERS_API,
+      await request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
     if (response == null) return null;
     return CaptainActivityDetailsResponse.fromJson(response);
   }

@@ -63,8 +63,10 @@ class CaptainsActivityLoadedState extends States {
         orderCount: element.ordersCount,
         last24CountOrder: element.last24CountOrder,
         todayCountOrder: element.todayCountOrder,
+        filter: screenState.filter,
       ));
     }
+
 
     if (model != null) {
       widgets.insert(
