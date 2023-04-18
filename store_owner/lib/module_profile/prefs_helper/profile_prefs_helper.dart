@@ -1,10 +1,13 @@
 import 'dart:convert';
 import 'package:c4d/module_profile/response/create_branch_response.dart';
+import 'package:hive/hive.dart';
 import 'package:injectable/injectable.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 @injectable
 class ProfilePreferencesHelper {
+  var profileBox = Hive.box('Profile');
+
   Future<void> cacheBranch(List<Branch> branch) async {
     if (branch == null) {
       return null;
@@ -34,10 +37,8 @@ class ProfilePreferencesHelper {
     return branches;
   }
 
-  Future<int?> getProfileId() async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-
-    var profileID = jsonDecode(_prefs.getString('ProfileID') ?? '');
+  int? getProfileId() {
+    var profileID = profileBox.get('id');
 
     if (profileID is int) {
       return profileID;
@@ -46,9 +47,7 @@ class ProfilePreferencesHelper {
     return null;
   }
 
-  Future<void> setProfileId(int profileID) async {
-    SharedPreferences _prefs = await SharedPreferences.getInstance();
-
-    _prefs.setString('ProfileID', profileID.toString());
+  void setProfileId(int profileID) {
+    profileBox.put('id', profileID);
   }
 }
