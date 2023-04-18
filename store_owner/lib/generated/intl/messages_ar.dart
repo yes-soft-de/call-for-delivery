@@ -1011,6 +1011,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم حذف الحساب بنجاح"),
         "username": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
         "validation": MessageLookupByLibrary.simpleMessage("صلاحية"),
+        "valueMustBeGreaterThanZero": MessageLookupByLibrary.simpleMessage(
+            "القيمة يجب ان تكون اكبر من 0"),
         "views": MessageLookupByLibrary.simpleMessage("مشاهدة"),
         "waiting": MessageLookupByLibrary.simpleMessage("في الانتظار"),
         "waitingCaptain": MessageLookupByLibrary.simpleMessage("انتظار كابتن"),

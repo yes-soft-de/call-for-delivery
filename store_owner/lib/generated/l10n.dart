@@ -7020,6 +7020,16 @@ class S {
     );
   }
 
+  /// `your value must be greater than 0`
+  String get valueMustBeGreaterThanZero {
+    return Intl.message(
+      'your value must be greater than 0',
+      name: 'valueMustBeGreaterThanZero',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Ads & offers`
   String get adsAndOffers {
     return Intl.message(
