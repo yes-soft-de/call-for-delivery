@@ -33,4 +33,22 @@ class ProfilePreferencesHelper {
 
     return branches;
   }
+
+  Future<int?> getProfileId() async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+
+    var profileID = jsonDecode(_prefs.getString('ProfileID') ?? '');
+
+    if (profileID is int) {
+      return profileID;
+    }
+
+    return null;
+  }
+
+  Future<void> setProfileId(int profileID) async {
+    SharedPreferences _prefs = await SharedPreferences.getInstance();
+
+    _prefs.setString('ProfileID', profileID.toString());
+  }
 }
