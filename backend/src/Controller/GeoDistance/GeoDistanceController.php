@@ -239,22 +239,28 @@ class GeoDistanceController extends BaseController
      *      response=201,
      *      description="Returns cost delivery and distance info between the two locations",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *              ref=@Model(type="App\Response\GeoDistance\GetDistanceWithDeliveryCostGetForExternalStoreResponse")
-     *          )
-     *      )
-     * )
+     *           oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code"),
+     *                          @OA\Property(type="string", property="msg"),
+     *                          @OA\Property(type="object", property="Data",
+     *                              ref=@Model(type="App\Response\GeoDistance\GetDistanceWithDeliveryCostGetForExternalStoreResponse")
+     *                          )
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", example="9370"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", example="9371"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", example="9162"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   )
      *
-     * or
-     *
-     * @OA\Response(
-     *      response="default",
-     *      description="Returns error message",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", example="9370|9371"),
-     *          @OA\Property(type="string", property="msg")
+     *              }
      *      )
      * )
      *
