@@ -283,7 +283,7 @@ class GeoDistanceController extends BaseController
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_CAN_NOT_DECODING_CONTENT);
 
         } elseif ($response === StoreOwnerBranch::BRANCH_NOT_FOUND) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_CAN_NOT_DECODING_CONTENT);
+            return $this->response(MainErrorConstant::ERROR_MSG, self::STORE_BRANCH_NOT_EXIST);
         }
 
         return $this->response($response, self::FETCH);
