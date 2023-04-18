@@ -21,10 +21,10 @@ import 'package:flutter/material.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:injectable/injectable.dart';
 
-// current last index is 19
 class NavigatorMenu extends StatefulWidget {
-  final Function(StatefulWidget) onTap;
+  final dynamic Function(StatefulWidget) onTap;
   final StatefulWidget currentPage;
   final double? width;
   NavigatorMenu({this.width, required this.onTap, required this.currentPage});
@@ -37,8 +37,10 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
   @override
   void initState() {
     getIt<GlobalStateManager>().stateStream.listen((event) {
-      widget.onTap(event);
-      setState(() {});
+      if (event is StatefulWidget) {
+        widget.onTap(event);
+        setState(() {});
+      }
     });
     super.initState();
   }
