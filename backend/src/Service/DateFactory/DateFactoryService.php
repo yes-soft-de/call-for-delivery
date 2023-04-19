@@ -69,12 +69,12 @@ class DateFactoryService
         ];
     }
 
-    public function getDateTimeMinusThirteenMinutesByDateTimeInterface(DateTimeInterface $dateTimeInterface): DateTime|bool
-    {
-        $dateTime = DateTime::createFromInterface($dateTimeInterface);
-
-        return date_modify($dateTime, '-30 minutes');
-    }
+//    public function getDateTimeMinusThirteenMinutesByDateTimeInterface(DateTimeInterface $dateTimeInterface): DateTime|bool
+//    {
+//        $dateTime = DateTime::createFromInterface($dateTimeInterface);
+//
+//        return date_modify($dateTime, '-30 minutes');
+//    }
 
     public function sumDaysWithDateTimeInterface(DateTimeInterface $dateTimeInterface, int $days): DateTime|bool
     {
@@ -123,5 +123,15 @@ class DateFactoryService
     public function getDaysCountBetweenTwoDatesOfTypeString(string $fromDate, string $toDate): bool|int
     {
         return (new DateTime($fromDate))->diff(new DateTime($toDate))->days;
+    }
+
+    /**
+     * Converts a string date to a DateTime object, and return it with another 30-days date
+     */
+    public function getDateTimeObjectOfStringObjectPlusThirtyDays(string $stringDate): array
+    {
+        $dateTime = new DateTime($stringDate);
+
+        return [$dateTime, $dateTime->modify('+30 day')];
     }
 }

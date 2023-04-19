@@ -15,6 +15,7 @@ class CaptainFinancialDuesEntity
     #[ORM\Column(type: 'integer')]
     private $id;
 
+    // 1: paid. 2: unpaid. 3: partially paid
     #[ORM\Column(type: 'integer')]
     private $status;
 
