@@ -26,6 +26,7 @@ class BranchListStateLoaded extends States {
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: BranchCardList(
+            branchId: element.id.toString(),
             phone: element.branchPhone,
             onDelete: () {
               showDialog(

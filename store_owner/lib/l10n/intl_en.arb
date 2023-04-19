@@ -697,5 +697,6 @@
     "orderAlreadyCancelled":"Order already has been canceled",
     "orderNotFound":"Order not found",
     "yourBalance":"your balance",
+    "id":"id",
     "adsAndOffers":"Ads & offers"
 }

@@ -36,6 +36,7 @@ class SvgAsset {
   static const ACCEPT_ORDER = ROOT + 'accept_order.svg';
   static const EARN_CASH = ROOT + 'earn_cash.svg';
   static const RATE_SVG = ROOT + 'rating.svg';
+  static const ID_SVG = ROOT + 'id.svg';
 }
 
 class LottieAsset {
