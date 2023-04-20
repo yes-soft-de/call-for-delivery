@@ -111,9 +111,9 @@ class CaptainFinancialSystemTwoGetBalanceDetailsService
     }
 
     // Get the dues of unpaid cash orders (for group of orders)
-    public function getUnPaidCashOrdersDueByCaptainProfileIdAndDuringSpecificTime(int $captainId, string $fromDate, string $toDate): string
+    public function getUnPaidCashOrdersDueByCaptainProfileIdAndDuringSpecificTime(int $captainId, string $fromDate, string $toDate): int
     {
-        return $this->captainFinancialSystemTwoGetStoreAmountService->getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime($captainId,
+        return (int) $this->captainFinancialSystemTwoGetStoreAmountService->getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime($captainId,
             $fromDate, $toDate);
     }
 
