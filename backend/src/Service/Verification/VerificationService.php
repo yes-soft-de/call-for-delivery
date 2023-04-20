@@ -19,28 +19,21 @@ use App\Response\User\UserVerificationStatusGetResponse;
 use App\Response\Verification\CodeVerificationResponse;
 use App\Response\Verification\VerificationCodeGetResponse;
 use App\Response\Verification\VerificationCreateResponse;
-use App\Service\MalathSMS\SMSMessageService;
 use App\Service\AppFeature\AppFeatureService;
-use App\Service\MalathSMS\MalathSMSService;
+use App\Service\SMS\SMSMessageService;
 use App\Service\User\UserService;
 
 class VerificationService
 {
-    private AutoMapping $autoMapping;
-    private VerificationManager $verificationManager;
-    private UserService $userService;
-    private SMSMessageService $SMSMessageService;
-    private AppFeatureService $appFeatureService;
-
-    public function __construct(AutoMapping $autoMapping, VerificationManager $verificationManager, UserService $userService, SMSMessageService $SMSMessageService,
-                                AppFeatureService $appFeatureService)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private VerificationManager $verificationManager,
+        private UserService $userService,
+        private SMSMessageService $SMSMessageService,
+        private AppFeatureService $appFeatureService
+    )
 
     {
-        $this->autoMapping = $autoMapping;
-        $this->verificationManager = $verificationManager;
-        $this->userService = $userService;
-        $this->SMSMessageService = $SMSMessageService;
-        $this->appFeatureService = $appFeatureService;
     }
 
     public function createVerificationCode(VerificationCreateRequest $request): ?VerificationCreateResponse
@@ -51,8 +44,10 @@ class VerificationService
 
         if ($verificationEntity) {
             // send sms message with verification code if sending sms feature is activated
-            if ($this->appFeatureService->getAppFeatureStatusByAppFeatureName(AppFeatureNameConstant::APP_FEATURE_SMS_NAME)) {
-                $result = $this->SMSMessageService->sendSMSMessage($request->getUser()->getUserId(), $verificationEntity->getCode(), MessageUsedAsConstant::USER_VERIFICATION_MESSAGE);
+            if ($this->getAppFeatureStatusByAppFeatureName(AppFeatureNameConstant::APP_FEATURE_SMS_NAME)) {
+                $result = $this->SMSMessageService->sendSMSMessage($request->getUser()->getUserId(), $verificationEntity->getCode(),
+                    MessageUsedAsConstant::USER_VERIFICATION_MESSAGE);
+
                 $response->smsMessageStatus = $result;
             }
         }
@@ -182,5 +177,13 @@ class VerificationService
     public function deleteAllVerificationCodesByIdOfUser(int $userId): array
     {
         return $this->verificationManager->deleteAllVerificationCodesByIdOfUser($userId);
+    }
+
+    /**
+     * Get the status of sending SMS feature, activated or not
+     */
+    public function getAppFeatureStatusByAppFeatureName(string $featureName): ?bool
+    {
+        return $this->appFeatureService->getAppFeatureStatusByAppFeatureName($featureName);
     }
 }
