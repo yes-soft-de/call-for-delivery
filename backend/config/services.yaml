@@ -9,11 +9,13 @@ parameters:
     image_folder: '%env(IMAGE_FOLDER)%'
     original_image: '%env(ORIGINAL_IMAGE)%'
     files_folder: '%env(FILES_FOLDER)%'
-    malath_username: '%env(MALATH_USERNAME)%'
-    malath_password: '%env(MALATH_PASSWORD)%'
+    # malath_username: '%env(MALATH_USERNAME)%'
+    # malath_password: '%env(MALATH_PASSWORD)%'
     deletion_user_password: '%env(DELETION_USER_PASSWORD)%'
     renew_database_password: '%env(RENEW_DATABASE_PASSWORD)%'
     google_maps_api_key: '%env(GOOGLE_MAPS_API_KEY)%'
+    msegat_username: '%env(MSEGAT_USERNAME)%'
+    msegat_api_key: '%env(MSEGAT_API_KEY)%'
 
 services:
     # default configuration for services in *this* file

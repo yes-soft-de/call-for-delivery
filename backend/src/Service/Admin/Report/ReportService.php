@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\Captain\CaptainConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Request\Admin\Report\CaptainWithDeliveredOrdersDuringSpecificTimeFilterByAdminRequest;
+use App\Request\Admin\Report\DashboardStatisticsPostRequest;
 use App\Request\Admin\Report\StoresAndOrdersCountDuringSpecificTimeFilterByAdminRequest;
 use App\Response\Admin\Report\ActiveCaptainWithOrdersCountInLastFinancialCycleGetForAdminResponse;
 use App\Response\Admin\Report\CaptainsRatingsForAdminGetResponse;
@@ -62,21 +63,33 @@ class ReportService
         return $this->autoMapping->map('array', StatisticsForAdminGetResponse::class, $response);
     }
 
-    public function getDashboardStatisticsForAdmin(): array
+    /**
+     * Get array of last seven days dates
+     */
+    public function getLastSevenDaysDatesAsArray(): array
+    {
+        return $this->dateFactoryService->getLastSevenDaysDatesAsArray();
+    }
+
+    public function getDashboardStatisticsForAdmin(string $customizedTimezone = null): array
     {
         $response = [];
+
+        if (($customizedTimezone) && ($customizedTimezone !== "")) {
+            $customizedTimezone = str_replace("-", "/", $customizedTimezone);
+        }
 
         // 1. orders statistics
         $response["data"]["orders"]["count"]["allOrders"] = $this->adminOrderService->getAllOrdersCountForAdmin();
 
         // order statistics in the last seven days
-        $lastSevenDaysDates = $this->dateFactoryService->getLastSevenDaysDatesAsArray();
+        $lastSevenDaysDates = $this->getLastSevenDaysDatesAsArray();
 
         if (! empty($lastSevenDaysDates)) {
             foreach ($lastSevenDaysDates as $key => $value) {
                 $response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["daily"][$key]["date"] = $value;
                 $response["data"]["orders"]["count"]["delivered"]["lastSevenDays"]["daily"][$key]["count"] = $this->adminOrderService->getDeliveredOrdersCountBetweenTwoDatesForAdmin(new DateTime($value),
-                    (new DateTime($value))->setTime(23, 59, 59));
+                    (new DateTime($value))->setTime(23, 59, 59), $customizedTimezone);
             }
         }
 

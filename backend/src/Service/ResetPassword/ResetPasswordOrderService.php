@@ -4,6 +4,7 @@
 namespace App\Service\ResetPassword;
 
 use App\AutoMapping;
+use App\Constant\AppFeature\AppFeatureNameConstant;
 use App\Constant\MalathSMS\MessageUsedAsConstant;
 use App\Constant\ResetPassword\ResetPasswordResultConstant;
 use App\Constant\User\UserReturnResultConstant;
@@ -17,22 +18,20 @@ use App\Request\User\UserPasswordUpdateRequest;
 use App\Response\Admin\ResetPassword\ResetPasswordOrderGetForSuperAdminResponse;
 use App\Response\ResetPassword\ResetPasswordOrderGetResponse;
 use App\Response\User\UserRegisterResponse;
-use App\Service\MalathSMS\SMSMessageService;
+use App\Service\AppFeature\AppFeatureService;
+use App\Service\SMS\SMSMessageService;
 use App\Service\User\UserService;
 
 class ResetPasswordOrderService
 {
-    private AutoMapping $autoMapping;
-    private ResetPasswordOrderManager $resetPasswordOrderManager;
-    private UserService $userService;
-    private SMSMessageService $SMSMessageService;
-
-    public function __construct(AutoMapping $autoMapping, ResetPasswordOrderManager $resetPasswordOrderManager, UserService $userService, SMSMessageService $SMSMessageService)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private ResetPasswordOrderManager $resetPasswordOrderManager,
+        private UserService $userService,
+        private SMSMessageService $SMSMessageService,
+        private AppFeatureService $appFeatureService
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->resetPasswordOrderManager = $resetPasswordOrderManager;
-        $this->userService = $userService;
-        $this->SMSMessageService = $SMSMessageService;
     }
 
     public function createResetPasswordOrder(ResetPasswordOrderCreateRequest $request): ResetPasswordOrderGetResponse
@@ -47,10 +46,15 @@ class ResetPasswordOrderService
             $resetPasswordOrder = $this->resetPasswordOrderManager->createResetPasswordOrder($request, $user);
 
             if ($resetPasswordOrder) {
-                // send code in SMS message
-                $this->SMSMessageService->sendSMSMessage($resetPasswordOrder->getUser()->getUserId(), $resetPasswordOrder->getCode(), MessageUsedAsConstant::RESET_PASSWORD_MESSAGE);
+                // send sms message with verification code if sending sms feature is activated
+                if ($this->getAppFeatureStatusByAppFeatureName(AppFeatureNameConstant::APP_FEATURE_SMS_NAME)) {
+                    // send code in SMS message
+                    $this->SMSMessageService->sendSMSMessage($resetPasswordOrder->getUser()->getUserId(), $resetPasswordOrder->getCode(),
+                        MessageUsedAsConstant::RESET_PASSWORD_MESSAGE);
+                }
 
-                return $this->autoMapping->map(ResetPasswordOrderEntity::class, ResetPasswordOrderGetResponse::class, $resetPasswordOrder);
+                return $this->autoMapping->map(ResetPasswordOrderEntity::class, ResetPasswordOrderGetResponse::class,
+                    $resetPasswordOrder);
             }
 
         } else {
@@ -139,5 +143,13 @@ class ResetPasswordOrderService
     public function updateUserPasswordByLoggedInUser(UserPasswordUpdateByLoggedInUserRequest $request): UserRegisterResponse|string
     {
         return $this->userService->updateUserPasswordByLoggedInUser($request);
+    }
+
+    /**
+     * Get the status of sending SMS feature, activated or not
+     */
+    public function getAppFeatureStatusByAppFeatureName(string $featureName): ?bool
+    {
+        return $this->appFeatureService->getAppFeatureStatusByAppFeatureName($featureName);
     }
 }

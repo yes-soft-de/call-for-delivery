@@ -1467,27 +1467,23 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
-    public function getDeliveredOrdersCountBetweenTwoDatesForAdmin(DateTime $fromDate, DateTime $toDate): int
+    /**
+     * Get array of delivered orders between two dates
+     */
+    public function getDeliveredOrdersBetweenTwoDatesForAdmin(DateTime $fromDate, DateTime $toDate, string $customizedTimezone = null): array
     {
-        return $this->createQueryBuilder('orderEntity')
-            ->select('count (orderEntity.id) as deliveredOrdersCount')
+        $query = $this->createQueryBuilder('orderEntity')
 
-            ->leftJoin(
-                OrderTimeLineEntity::class,
-                'orderTimeLineEntity',
-                Join::WITH,
-                'orderTimeLineEntity.orderId = orderEntity.id'
-            )
+            ->andWhere('orderEntity.state = :delivered')
+            ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED);
 
-            ->andWhere('orderTimeLineEntity.orderState = :delivered')
-            ->setParameter('delivered', OrderStateConstant::ORDER_STATE_DELIVERED)
+        $tempArrayResult = $query->getQuery()->getResult();
 
-            ->andWhere('orderTimeLineEntity.createdAt BETWEEN :fromDate AND :toDate')
-            ->setParameter('fromDate', $fromDate)
-            ->setParameter('toDate', $toDate)
+        if (count($tempArrayResult) > 0) {
+            return $this->filterOrdersEntitiesByDates($tempArrayResult, $fromDate, $toDate, $customizedTimezone);
+        }
 
-            ->getQuery()
-            ->getSingleScalarResult();
+        return $tempArrayResult;
     }
 
     public function getOrderByIdWithStoreOrderDetail(int $id): ?array
@@ -2769,5 +2765,26 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getSingleColumnResult();
+    }
+
+    /**
+     * Filter array of orders entities by two dates and a customized timezone
+     */
+    public function filterOrdersEntitiesByDates(array $tempOrders, DateTime $fromDate, DateTime $toDate, ?string $timeZone): array
+    {
+        $filteredOrders = [];
+
+        if (count($tempOrders) > 0) {
+            foreach ($tempOrders as $key => $value) {
+                if (($value->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) >=
+                        new \DateTime(($fromDate)->format('Y-m-d 00:00:00')))
+                    && ($value->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) <=
+                        new \DateTime(($toDate)->format('Y-m-d 23:59:59')))) {
+                    $filteredOrders[$key] = $value;
+                }
+            }
+        }
+
+        return $filteredOrders;
     }
 }

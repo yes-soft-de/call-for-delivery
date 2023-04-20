@@ -127,9 +127,12 @@ class AdminOrderManager
         return $this->orderEntityRepository->getPendingOrdersCountForAdmin();
     }
 
-    public function getDeliveredOrdersCountBetweenTwoDatesForAdmin(DateTime $fromDate, DateTime $toDate): int
+    /**
+     * Get array of delivered orders between two dates
+     */
+    public function getDeliveredOrdersBetweenTwoDatesForAdmin(DateTime $fromDate, DateTime $toDate, string $customizedTimezone = null): array
     {
-        return $this->orderEntityRepository->getDeliveredOrdersCountBetweenTwoDatesForAdmin($fromDate, $toDate);
+        return $this->orderEntityRepository->getDeliveredOrdersBetweenTwoDatesForAdmin($fromDate, $toDate, $customizedTimezone);
     }
 
     public function updateOrderToHidden(int $id): OrderEntity|string

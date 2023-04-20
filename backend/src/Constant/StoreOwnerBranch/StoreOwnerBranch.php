@@ -6,7 +6,7 @@ final class StoreOwnerBranch
 {
     const BRANCH_NOT_FOUND = "not found";
 
-    const BRANCHES_NOT_PROVIDED = "no branches were provided";
+    // const BRANCHES_NOT_PROVIDED = "no branches were provided";
 
     const BRANCH_IS_ACTIVE = 1;
 

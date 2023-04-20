@@ -872,3 +872,12 @@ App\Request\Order\RePendingAcceptedOrderByCaptainRequest:
     properties:
         id:
             - NotBlank: ~
+
+App\Request\Order\OrderDeliveryCostByExternalStoreOwnerGetRequest:
+    properties:
+        storeOwnerProfileId:
+            - NotBlank: ~
+        storeBranchId:
+            - NotBlank: ~
+        clientLocation:
+            - NotBlank: ~

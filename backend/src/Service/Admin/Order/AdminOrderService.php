@@ -3,6 +3,7 @@
 namespace App\Service\Admin\Order;
 
 use App\AutoMapping;
+use App\Constant\Admin\Report\Statistics\StatisticsConstant;
 use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificationAppTypeConstant;
 use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificationMessageConstant;
 use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificationTitleConstant;
@@ -418,9 +419,18 @@ class AdminOrderService
         return $this->adminOrderManager->getPendingOrdersCountForAdmin();
     }
 
-    public function getDeliveredOrdersCountBetweenTwoDatesForAdmin(DateTime $fromDate, DateTime $toDate): int
+    /**
+     * Get the count of delivered orders between two dates
+     */
+    public function getDeliveredOrdersCountBetweenTwoDatesForAdmin(DateTime $fromDate, DateTime $toDate, string $customizedTimezone = null): int
     {
-        return $this->adminOrderManager->getDeliveredOrdersCountBetweenTwoDatesForAdmin($fromDate, $toDate);
+        $result = $this->adminOrderManager->getDeliveredOrdersBetweenTwoDatesForAdmin($fromDate, $toDate, $customizedTimezone);
+
+        if (is_array($result)) {
+            return count($result);
+        }
+
+        return StatisticsConstant::ZERO_VALUE_CONST;
     }
 
     public function updateOrderToHidden(int $id, int $userId): OrderUpdateToHiddenResponse|string
