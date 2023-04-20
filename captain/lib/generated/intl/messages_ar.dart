@@ -377,6 +377,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "directSupport": MessageLookupByLibrary.simpleMessage("دعم مباشر"),
         "discount": MessageLookupByLibrary.simpleMessage("الخصم"),
         "distance": MessageLookupByLibrary.simpleMessage("يبعد عنك"),
+        "dontTakeMoneyThisOrderIsPaidAlready":
+            MessageLookupByLibrary.simpleMessage(
+                "لا تستلم مبلغ من الزبون هذا الطلب مدفوع مسبقا"),
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
             "حمل تطبيقنا على متجر غوغل عبر الرابط"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("رخصة القيادة"),

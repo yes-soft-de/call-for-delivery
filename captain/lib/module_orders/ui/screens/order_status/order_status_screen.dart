@@ -152,6 +152,9 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
                               },
                               content: S.of(context).paidToProvider);
                         });
+                  } else if (orderInfo.state == OrderStatusEnum.IN_STORE &&
+                      orderInfo.payment == 'card') {
+                    noNeedToTakeMoneyDialog(request);
                   } else {
                     widget.stateManager.updateOrder(request, this);
                   }
@@ -159,6 +162,39 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
                 content: S.of(context).confirmUpdateOrderStatus);
           });
     }
+  }
+
+  Future<dynamic> noNeedToTakeMoneyDialog(UpdateOrderRequest request) {
+    return showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text(S.current.warnning),
+          content: SizedBox(
+            width: MediaQuery.of(context).size.width * 0.5,
+            child: Text(S.current.dontTakeMoneyThisOrderIsPaidAlready),
+          ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10),
+          ),
+          actions: [
+            Center(
+              child: SizedBox(
+                width: MediaQuery.of(context).size.width * 0.5,
+                child: ElevatedButton(
+                    onPressed: () {
+                      widget.stateManager.updateOrder(request, this);
+
+                      Navigator.of(context).pop();
+                    },
+                    child: Text(S.current.accept)),
+              ),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void getOrderDetails(var orderId) {
