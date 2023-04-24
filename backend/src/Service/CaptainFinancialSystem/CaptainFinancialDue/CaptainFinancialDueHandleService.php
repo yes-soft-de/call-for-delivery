@@ -77,7 +77,7 @@ class CaptainFinancialDueHandleService
         return $this->captainFinancialDuesManager->createCaptainFinancialDue($captainFinancialDueCreateRequest);
     }
 
-    public function getCurrentAndActiveCaptainFinancialDueStartAndEndDatesByCaptain(int $captainProfileId, \DateTime $fromDate, \DateTime $toDate): array|string
+    public function getCurrentAndActiveCaptainFinancialDueStartAndEndDatesByCaptainProfileId(int $captainProfileId, \DateTime $fromDate, \DateTime $toDate): array|string
     {
         // Get current and active captain financial due
         $captainFinancialDueResult = $this->getCurrentAndActiveCaptainFinancialDueByCaptain($captainProfileId);

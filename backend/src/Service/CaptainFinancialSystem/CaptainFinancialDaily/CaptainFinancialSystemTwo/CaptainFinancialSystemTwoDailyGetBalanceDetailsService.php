@@ -95,7 +95,7 @@ class CaptainFinancialSystemTwoDailyGetBalanceDetailsService
      */
     public function getCurrentAndActiveCaptainFinancialDueStartAndEndDatesByCaptain(int $captainProfileId, \DateTime $fromDate, \DateTime $toDate): array|string
     {
-        return $this->captainFinancialDueHandleService->getCurrentAndActiveCaptainFinancialDueStartAndEndDatesByCaptain($captainProfileId,
+        return $this->captainFinancialDueHandleService->getCurrentAndActiveCaptainFinancialDueStartAndEndDatesByCaptainProfileId($captainProfileId,
             $fromDate, $toDate);
     }
 
