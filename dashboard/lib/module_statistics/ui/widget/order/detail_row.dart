@@ -19,7 +19,6 @@ class DetailRow extends StatelessWidget {
         children: [
           Text(title),
           Card(
-            color: Colors.white,
             child: SizedBox(
                 height: 30, width: 30, child: Center(child: Text(value))),
           )
