@@ -713,7 +713,7 @@ class OrderController extends BaseController
      * @OA\RequestBody (
      *        description="To accept the order AND change state",
      *        @OA\JsonContent(
-     *              @OA\Property(type="integer", property="orderNumber"),
+     *              @OA\Property(type="integer", property="id"),
      *              @OA\Property(type="string", property="state", description="on way to pick order or in store or picked or ongoing or delivered"),
      *              @OA\Property(type="number", property="kilometer"),
      *              @OA\Property(type="number", property="captainOrderCost"),
