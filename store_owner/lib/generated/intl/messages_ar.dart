@@ -54,7 +54,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الحساب غير موجود"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("رقم حساب البنك"),
         "active": MessageLookupByLibrary.simpleMessage("مفعل"),
-        "activeCars": MessageLookupByLibrary.simpleMessage("السيارات المشغولة"),
+        "activeCars": MessageLookupByLibrary.simpleMessage("الكباتن المشغولة"),
         "activeOffer": MessageLookupByLibrary.simpleMessage("عرض فعال"),
         "activePlan": MessageLookupByLibrary.simpleMessage("الباقة الحالية"),
         "activityLog": MessageLookupByLibrary.simpleMessage("سجل الاستخدام"),
@@ -353,7 +353,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("خطأ في تحميل البيانات"),
         "errorLoggingInFirebaseAccountNotFound":
             MessageLookupByLibrary.simpleMessage(
-                "Error logging in, firebase account not found"),
+                "خطا في تسجيل الدخول, لم يتم العثور على حساب فايربيز"),
         "errorUploadingImages":
             MessageLookupByLibrary.simpleMessage("حدث خطأ عند رفع الصور!!"),
         "exceededAllowedTime": MessageLookupByLibrary.simpleMessage(
@@ -646,7 +646,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "ourPackages": MessageLookupByLibrary.simpleMessage("باقاتنا"),
         "ourService": MessageLookupByLibrary.simpleMessage("خدماتنا"),
         "outOfCars": MessageLookupByLibrary.simpleMessage(
-            "لا يوجد سيارات متوفرة لك الرجاء انتظار طلباتك الجارية من الانتهاء"),
+            "لا يوجد كباتن متوفرين لك الرجاء انتظار طلباتك الجارية من الانتهاء"),
         "outOforders": MessageLookupByLibrary.simpleMessage(
             "لقد استهلكت الحد الأقصى من الطلبات يمكنك تجديد الاشتراك "),
         "package": MessageLookupByLibrary.simpleMessage("باقة"),
@@ -969,7 +969,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "unavailable": MessageLookupByLibrary.simpleMessage("غير معروفة"),
         "unknown": MessageLookupByLibrary.simpleMessage("غير معروف"),
         "unknownNumberOfCar":
-            MessageLookupByLibrary.simpleMessage("عدد السيارات غير محدود"),
+            MessageLookupByLibrary.simpleMessage("عدد الكباتن غير محدود"),
         "unlinkSubOrders":
             MessageLookupByLibrary.simpleMessage("فك ارتباط الطلبات الفرعية"),
         "unpaidOrders": MessageLookupByLibrary.simpleMessage(
