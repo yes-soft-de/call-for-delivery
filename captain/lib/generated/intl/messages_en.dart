@@ -384,6 +384,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "directSupport": MessageLookupByLibrary.simpleMessage("Direct Support"),
         "discount": MessageLookupByLibrary.simpleMessage("Discount"),
         "distance": MessageLookupByLibrary.simpleMessage("Distance"),
+        "dontTakeMoneyThisOrderIsPaidAlready":
+            MessageLookupByLibrary.simpleMessage(
+                "don\'t Take Money This Order Paid Already"),
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
             "Download Twaslna App on Play Store"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("Driver Licence"),

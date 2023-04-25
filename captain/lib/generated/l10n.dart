@@ -7690,6 +7690,16 @@ class S {
     );
   }
 
+  /// `don't Take Money This Order Paid Already`
+  String get dontTakeMoneyThisOrderIsPaidAlready {
+    return Intl.message(
+      'don\'t Take Money This Order Paid Already',
+      name: 'dontTakeMoneyThisOrderIsPaidAlready',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Over paid`
   String get financeOverPaid {
     return Intl.message(
