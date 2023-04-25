@@ -339,64 +339,52 @@ class SinglePackageCard extends StatelessWidget {
               SizedBox(
                 height: 16,
               ),
-              InkWell(
-                onTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (context) {
-                        return CustomAlertDialog(
-                            onPressed: () {},
-                            content: S.current
-                                .areYouSureAboutDeleteSelectedNotifications);
-                      });
-                },
-                child: Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: Flex(
-                    direction: Axis.horizontal,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                            color: Theme.of(context).backgroundColor),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Icon(FontAwesomeIcons.moneyCheck,
-                              color: active
-                                  ? Theme.of(context).colorScheme.primary
-                                  : Theme.of(context).disabledColor),
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                child: Flex(
+                  direction: Axis.horizontal,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(12),
+                          color: Theme.of(context).backgroundColor),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(FontAwesomeIcons.moneyCheck,
+                            color: active
+                                ? Theme.of(context).colorScheme.primary
+                                : Theme.of(context).disabledColor),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 16,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          '$unPaidCashOrdersSum' + ' ' + S.current.sar,
+                          style: TextStyle(
+                            color: active
+                                ? Theme.of(context).textTheme.button?.color
+                                : null,
+                          ),
                         ),
-                      ),
-                      SizedBox(
-                        width: 16,
-                      ),
-                      Row(
-                        children: [
-                          Text(
-                            '$unPaidCashOrdersSum' + ' ' + S.current.sar,
-                            style: TextStyle(
-                              color: active
-                                  ? Theme.of(context).textTheme.button?.color
-                                  : null,
-                            ),
+                        SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          '${S.current.unpaidOrders}',
+                          style: TextStyle(
+                            color: active
+                                ? Theme.of(context).textTheme.button?.color
+                                : null,
                           ),
-                          SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            '${S.current.unpaidOrders}',
-                            style: TextStyle(
-                              color: active
-                                  ? Theme.of(context).textTheme.button?.color
-                                  : null,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
               ),
               SizedBox(
