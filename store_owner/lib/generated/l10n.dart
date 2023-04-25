@@ -830,10 +830,10 @@ class S {
     );
   }
 
-  /// `Book a car`
+  /// `Book a captain`
   String get bookACar {
     return Intl.message(
-      'Book a car',
+      'Book a captain',
       name: 'bookACar',
       desc: '',
       args: [],
@@ -1270,10 +1270,10 @@ class S {
     );
   }
 
-  /// `Car`
+  /// `Captain`
   String get car {
     return Intl.message(
-      'Car',
+      'Captain',
       name: 'car',
       desc: '',
       args: [],
@@ -1750,10 +1750,10 @@ class S {
     );
   }
 
-  /// `Active Cars`
+  /// `Active Captains`
   String get activeCars {
     return Intl.message(
-      'Active Cars',
+      'Active Captains',
       name: 'activeCars',
       desc: '',
       args: [],
@@ -1890,10 +1890,10 @@ class S {
     );
   }
 
-  /// `The number of cars unknown`
+  /// `The number of Captain unknown`
   String get unknownNumberOfCar {
     return Intl.message(
-      'The number of cars unknown',
+      'The number of Captain unknown',
       name: 'unknownNumberOfCar',
       desc: '',
       args: [],
@@ -2080,10 +2080,10 @@ class S {
     );
   }
 
-  /// `There is no car available please wait your ongoing orders to finish`
+  /// `There is no captain available please wait your ongoing orders to finish`
   String get outOfCars {
     return Intl.message(
-      'There is no car available please wait your ongoing orders to finish',
+      'There is no captain available please wait your ongoing orders to finish',
       name: 'outOfCars',
       desc: '',
       args: [],
@@ -4250,10 +4250,10 @@ class S {
     );
   }
 
-  /// `You need to book a car to deliver your package to your destenation`
+  /// `You need to book a captain to deliver your package to your destenation`
   String get bookACarDescribtion {
     return Intl.message(
-      'You need to book a car to deliver your package to your destenation',
+      'You need to book a captain to deliver your package to your destenation',
       name: 'bookACarDescribtion',
       desc: '',
       args: [],

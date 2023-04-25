@@ -56,7 +56,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Account not exist"),
         "accountNumber": MessageLookupByLibrary.simpleMessage("Account Number"),
         "active": MessageLookupByLibrary.simpleMessage("Active"),
-        "activeCars": MessageLookupByLibrary.simpleMessage("Active Cars"),
+        "activeCars": MessageLookupByLibrary.simpleMessage("Active Captains"),
         "activeOffer": MessageLookupByLibrary.simpleMessage("Active Offer"),
         "activePlan": MessageLookupByLibrary.simpleMessage("Active Plan"),
         "activityLog": MessageLookupByLibrary.simpleMessage("Activity Log"),
@@ -107,9 +107,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "birthDate": MessageLookupByLibrary.simpleMessage("Birth Date"),
         "birthDateHint":
             MessageLookupByLibrary.simpleMessage("choose your birth data"),
-        "bookACar": MessageLookupByLibrary.simpleMessage("Book a car"),
+        "bookACar": MessageLookupByLibrary.simpleMessage("Book a captain"),
         "bookACarDescribtion": MessageLookupByLibrary.simpleMessage(
-            "You need to book a car to deliver your package to your destenation"),
+            "You need to book a captain to deliver your package to your destenation"),
         "bounce": MessageLookupByLibrary.simpleMessage("Bounce"),
         "branch": MessageLookupByLibrary.simpleMessage("Branch"),
         "branch01": MessageLookupByLibrary.simpleMessage("Branch 01"),
@@ -163,7 +163,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainStartedDelivery":
             MessageLookupByLibrary.simpleMessage("Captain Started Delivery"),
         "captainsOffer": MessageLookupByLibrary.simpleMessage("Captains offer"),
-        "car": MessageLookupByLibrary.simpleMessage("Car"),
+        "car": MessageLookupByLibrary.simpleMessage("Captain"),
         "carModel": MessageLookupByLibrary.simpleMessage("Car model"),
         "card": MessageLookupByLibrary.simpleMessage("Card"),
         "cart": MessageLookupByLibrary.simpleMessage("Cart"),
@@ -656,7 +656,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "ourPackages": MessageLookupByLibrary.simpleMessage("Our Packages"),
         "ourService": MessageLookupByLibrary.simpleMessage("Our Service"),
         "outOfCars": MessageLookupByLibrary.simpleMessage(
-            "There is no car available please wait your ongoing orders to finish"),
+            "There is no captain available please wait your ongoing orders to finish"),
         "outOforders": MessageLookupByLibrary.simpleMessage(
             "You reach your limit of orders you can renew your subscription"),
         "package": MessageLookupByLibrary.simpleMessage("Package"),
@@ -975,8 +975,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Your request not accepted from administration you can contact us to get info"),
         "unavailable": MessageLookupByLibrary.simpleMessage("Unavailable"),
         "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
-        "unknownNumberOfCar":
-            MessageLookupByLibrary.simpleMessage("The number of cars unknown"),
+        "unknownNumberOfCar": MessageLookupByLibrary.simpleMessage(
+            "The number of Captain unknown"),
         "unlinkSubOrders":
             MessageLookupByLibrary.simpleMessage("Unlink suborders"),
         "unpaidOrders":
