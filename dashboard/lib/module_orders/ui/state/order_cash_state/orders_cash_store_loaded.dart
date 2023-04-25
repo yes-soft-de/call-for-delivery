@@ -17,6 +17,8 @@ class OrdersCashStoreLoadedState extends States {
       screenState.canMakePayment = true;
       screenState.paymentLimit = model.total.sumAmountStorOwnerDues;
       screenState.refresh();
+    } else {
+      screenState.canMakePayment = false;
     }
   }
 
