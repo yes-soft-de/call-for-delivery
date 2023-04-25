@@ -308,8 +308,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                             .primary
                             .withOpacity(0.5),
                         spreadRadius: 0.5,
-                        blurRadius: 5,
-                        offset: Offset(1, 1)),
+                        blurRadius: 4,
+                        offset: Offset(0.5, 0.5)),
                   ]
                 : null,
             gradient: selected

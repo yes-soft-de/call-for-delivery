@@ -20,57 +20,63 @@ class AppThemeDataService {
     return Color.fromRGBO(33, 32, 156, 1);
   }
 
-  ThemeData getActiveTheme() {
-    var dark = _preferencesHelper.isDarkMode();
+  ThemeData getActiveTheme([forceLight = false]) {
+    var dark = forceLight ? false : _preferencesHelper.isDarkMode();
     final lightScheme = ColorScheme.fromSeed(
       seedColor: PrimaryColor,
       background: Color.fromRGBO(236, 239, 241, 1),
     );
+    // final darkScheme = ColorScheme.fromSeed(
+    //     seedColor: PrimaryColor,
+    //     brightness: Brightness.dark,
+    //     background: Colors.grey.shade800,
+    //     error: Colors.red[900],
+    //     errorContainer: Colors.red[100],
+    //     primary: Colors.grey[900]);
     final darkScheme = ColorScheme.fromSeed(
-        seedColor: PrimaryColor,
-        brightness: Brightness.dark,
-        background: Colors.grey.shade800,
-        error: Colors.red[900],
-        errorContainer: Colors.red[100],
-        primary: Colors.grey[900]);
+      seedColor: PrimaryColor,
+      brightness: Brightness.dark,
+      );
     if (dark == true) {
       mapStyle(dark);
       return ThemeData(
-          scaffoldBackgroundColor: Colors.grey.shade700,
+          scaffoldBackgroundColor: Colors.grey[900],
           brightness: Brightness.dark,
           colorScheme: darkScheme,
           useMaterial3: true,
-          primarySwatch: Colors.indigo,
+          primarySwatch: Colors.cyan,
+          primaryColor: darkScheme.primary,
           focusColor: PrimaryColor,
-          textButtonTheme: TextButtonThemeData(
-              style: TextButton.styleFrom(primary: Colors.white70)),
-          checkboxTheme: CheckboxThemeData(
-            checkColor:
-                MaterialStateProperty.resolveWith((Set<MaterialState> states) {
-              const Set<MaterialState> interactiveStates = <MaterialState>{
-                MaterialState.pressed,
-                MaterialState.hovered,
-                MaterialState.focused,
-              };
-              if (states.any(interactiveStates.contains)) {
-                return Colors.grey;
-              }
-              return Colors.white;
-            }),
-            fillColor:
-                MaterialStateProperty.resolveWith((Set<MaterialState> states) {
-              const Set<MaterialState> interactiveStates = <MaterialState>{
-                MaterialState.pressed,
-                MaterialState.hovered,
-                MaterialState.focused,
-              };
-              if (states.any(interactiveStates.contains)) {
-                return Colors.black;
-              }
-              return Colors.indigo;
-            }),
-          ),
-          cardColor: Colors.grey[150],
+          // textButtonTheme: TextButtonThemeData(
+          //     style: TextButton.styleFrom(primary: Colors.white70)),
+          // checkboxTheme: CheckboxThemeData(
+          //   checkColor:
+          //       MaterialStateProperty.resolveWith((Set<MaterialState> states) {
+          //     const Set<MaterialState> interactiveStates = <MaterialState>{
+          //       MaterialState.pressed,
+          //       MaterialState.hovered,
+          //       MaterialState.focused,
+          //     };
+          //     if (states.any(interactiveStates.contains)) {
+          //       return Colors.grey;
+          //     }
+          //     return Colors.white;
+          //   }),
+          //   fillColor:
+          //       MaterialStateProperty.resolveWith((Set<MaterialState> states) {
+          //     const Set<MaterialState> interactiveStates = <MaterialState>{
+          //       MaterialState.pressed,
+          //       MaterialState.hovered,
+          //       MaterialState.focused,
+          //     };
+          //     if (states.any(interactiveStates.contains)) {
+          //       return Colors.black;
+          //     }
+          //     return Colors.indigo;
+          //   }),
+          // ),
+          
+         // cardColor: Colors.grey[150],
           fontFamily: 'Dubai',
           elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
@@ -81,7 +87,7 @@ class AppThemeDataService {
           )),
           textTheme: const TextTheme(
             button: TextStyle(
-              color: Colors.white,
+            //  color: Colors.white,
             ),
           ));
    }

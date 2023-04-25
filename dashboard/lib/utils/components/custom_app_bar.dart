@@ -45,9 +45,8 @@ class CustomC4dAppBar {
                                 color: isDark
                                     ? Theme.of(context)
                                         .colorScheme
-                                        .background
-                                        .withOpacity(0.5)
-                                    : Theme.of(context).backgroundColor,
+                                        .background.withOpacity(0.7)
+                                    : Theme.of(context).colorScheme.background,
                                 spreadRadius: 1.5,
                                 blurRadius: 6,
                                 offset: Offset(-0.2, 0))
@@ -97,8 +96,8 @@ class CustomC4dAppBar {
                       ? Theme.of(context)
                           .colorScheme
                           .background
-                          .withOpacity(0.5)
-                      : Theme.of(context).backgroundColor,
+                          .withOpacity(0.7)
+                      : Theme.of(context).colorScheme.background,
                   spreadRadius: 1.5,
                   blurRadius: 6,
                   offset: Offset(-0.2, 0))
