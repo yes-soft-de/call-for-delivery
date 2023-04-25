@@ -19,5 +19,6 @@ class HiveSetUp {
     await Hive.openBox('Order');
     await Hive.openBox('Notifications');
     await Hive.openBox('Suggestions');
+    await Hive.openBox('Profile');
   }
 }

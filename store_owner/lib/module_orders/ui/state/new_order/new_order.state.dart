@@ -3,6 +3,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/app_config.dart';
+import 'package:c4d/consts/c4d_stores_id.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:c4d/module_branches/model/branches/branches_model.dart';
@@ -10,6 +11,7 @@ import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/ui/screens/new_order/new_order_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/geo_widget.dart';
 import 'package:c4d/module_orders/ui/widgets/label_text.dart';
+import 'package:c4d/module_profile/prefs_helper/profile_prefs_helper.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/module_upload/model/pdf_model.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
@@ -274,7 +276,26 @@ class NewOrderStateBranchesLoaded extends States {
                 ListTile(
                   title: LabelText(S.of(context).orderPrice),
                   subtitle: CustomFormField(
-                    validator: false,
+                    validator: true,
+                    validatorFunction: (value) {
+                      var id = ProfilePreferencesHelper().getProfileId();
+
+                      if (isC4D(id ?? -1)) {
+                        return null;
+                      }
+
+                      if (screenState.payments == 'cash') {
+                        if (value == null || value.isEmpty) {
+                          return S.current.pleaseCompleteField;
+                        } else {
+                          int price = int.tryParse(value) ?? 0;
+
+                          if (price <= 0) return S.current.valueMustBeGreaterThanZero;
+                        }
+                      }
+
+                      return null;
+                    },
                     hintText: S.of(context).orderCostWithDeliveryCost,
                     onTap: () {},
                     numbers: true,
@@ -687,7 +708,8 @@ class NewOrderStateBranchesLoaded extends States {
 
                 /// cost type
                 Visibility(
-                  visible: AppConfig.packageType == 1 && screenState.payments == 'cash',
+                  visible: AppConfig.packageType == 1 &&
+                      screenState.payments == 'cash',
                   child: ListTile(
                     title: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -712,7 +734,7 @@ class NewOrderStateBranchesLoaded extends States {
                               value: 187,
                               groupValue: screenState.costType,
                               onChanged: (int? value) {
-                                screenState.costType = value;      
+                                screenState.costType = value;
                                 screenState.refresh();
                               },
                             ),

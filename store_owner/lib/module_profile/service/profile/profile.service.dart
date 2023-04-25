@@ -33,7 +33,12 @@ class ProfileService {
     if (response.data == null) {
       return DataModel.empty();
     }
-    return ProfileModel.withData(response);
+
+    ProfileModel profile = ProfileModel.withData(response);
+
+    _preferencesHelper.setProfileId(profile.data.id ?? -1);
+
+    return profile;
   }
 
   Future<DataModel> updateProfile(ProfileRequest profileRequest) async {
