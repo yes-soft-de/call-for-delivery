@@ -4,7 +4,7 @@ import 'package:c4d/module_profile/response/profile_response/profile_response.da
 import 'package:c4d/utils/helpers/date_converter.dart';
 
 class ProfileModel extends DataModel {
-  int? id;
+  late int id;
   String? image;
   String? imageUrl;
   late String name;
@@ -38,7 +38,7 @@ class ProfileModel extends DataModel {
   ProfileModel.withData(ProfileResponse response) {
     var data = response.data;
     _profile = ProfileModel(
-        id: data?.id,
+        id: data?.id?? -1,
         image: data?.images?.image,
         imageUrl: data?.images?.imageUrl,
         name: data?.storeOwnerName ?? S.current.unknown,

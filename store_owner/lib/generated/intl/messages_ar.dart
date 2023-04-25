@@ -427,6 +427,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("حصلت على الطلب"),
         "iHaveAnAccount": MessageLookupByLibrary.simpleMessage("لدي حساب"),
         "iSpeak": MessageLookupByLibrary.simpleMessage("اللغة المفضلة"),
+        "id": MessageLookupByLibrary.simpleMessage("المعرف"),
         "inactive": MessageLookupByLibrary.simpleMessage("غير مفعل"),
         "inactiveStore": MessageLookupByLibrary.simpleMessage(
             "متجرك غير مفعل الرجاء انتظار التفعيل من قبل الإدارة"),

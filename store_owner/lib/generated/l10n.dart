@@ -7020,6 +7020,16 @@ class S {
     );
   }
 
+  /// `id`
+  String get id {
+    return Intl.message(
+      'id',
+      name: 'id',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `your value must be greater than 0`
   String get valueMustBeGreaterThanZero {
     return Intl.message(

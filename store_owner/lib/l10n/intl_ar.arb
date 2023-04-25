@@ -697,6 +697,7 @@
     "orderAlreadyCancelled": "الطلب تم إلغاءه ",
     "orderNotFound": "لم يتم العثور على الطلب",
     "yourBalance":"رصيدك",
+    "id":"المعرف",
     "valueMustBeGreaterThanZero":"القيمة يجب ان تكون اكبر من 0",
     "adsAndOffers": "الإعلانات و العروض"
 }

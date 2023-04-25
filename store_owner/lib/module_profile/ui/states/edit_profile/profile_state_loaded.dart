@@ -45,7 +45,8 @@ class ProfileStateInit extends States {
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
-                profileModel.name,
+                '${profileModel.name} \n${profileModel.id}',
+                textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 17,
                   fontWeight: FontWeight.w600,

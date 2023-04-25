@@ -438,6 +438,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "iHaveAnAccount":
             MessageLookupByLibrary.simpleMessage("I have an account"),
         "iSpeak": MessageLookupByLibrary.simpleMessage("Preferred language"),
+        "id": MessageLookupByLibrary.simpleMessage("id"),
         "inactive": MessageLookupByLibrary.simpleMessage("Inactive"),
         "inactiveStore": MessageLookupByLibrary.simpleMessage(
             "Your store inactive , please wait until be activated by the administration"),

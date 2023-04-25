@@ -46,7 +46,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
   @override
   Widget build(BuildContext context) {
     var drawerHeader = SizedBox(
-      height: 215,
+      height: 230,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -76,8 +76,9 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
               height: 16,
             ),
             Text(
-              widget.profileModel?.name ?? S.current.loading,
+              '${widget.profileModel?.name ?? S.current.loading}\n${widget.profileModel?.id ?? S.current.loading}',
               style: TextStyle(fontWeight: FontWeight.bold),
+              textAlign: TextAlign.center,
             ),
             Divider(
               indent: 16,
