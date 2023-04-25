@@ -1,3 +1,4 @@
+import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/captains_module.dart';
@@ -7,21 +8,23 @@ import 'package:c4d/module_delivary_car/cars_module.dart';
 import 'package:c4d/module_main/main_module.dart';
 import 'package:c4d/module_notice/notice_module.dart';
 import 'package:c4d/module_orders/orders_module.dart';
+import 'package:c4d/module_orders/ui/screens/order_pending_screen.dart';
 import 'package:c4d/module_payments/payments_module.dart';
 import 'package:c4d/module_settings/settings_module.dart';
 import 'package:c4d/module_statistics/ui/statistics_module.dart';
 import 'package:c4d/module_stores/stores_module.dart';
 import 'package:c4d/module_supplier/supplier_module.dart';
 import 'package:c4d/module_supplier_categories/categories_supplier_module.dart';
+import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:injectable/injectable.dart';
 
-// current last index is 19
 class NavigatorMenu extends StatefulWidget {
-  final Function(StatefulWidget) onTap;
+  final dynamic Function(StatefulWidget) onTap;
   final StatefulWidget currentPage;
   final double? width;
   NavigatorMenu({this.width, required this.onTap, required this.currentPage});
@@ -33,6 +36,12 @@ class NavigatorMenu extends StatefulWidget {
 class _NavigatorMenuState extends State<NavigatorMenu> {
   @override
   void initState() {
+    getIt<GlobalStateManager>().stateStream.listen((event) {
+      if (event is StatefulWidget) {
+        widget.onTap(event);
+        setState(() {});
+      }
+    });
     super.initState();
   }
 
@@ -64,8 +73,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                   : BorderRadius.horizontal(right: Radius.circular(12))),
           child: CustomListView.custom(children: [
             drawerHeader,
-            customListTile(getIt<StatisticsModule>().statisticsScreen, S.current.home,
-                FontAwesomeIcons.home),
+            customListTile(getIt<StatisticsModule>().statisticsScreen,
+                S.current.home, FontAwesomeIcons.home),
             // order
             customExpansionTile(
                 title: S.current.orders,

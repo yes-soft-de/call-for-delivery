@@ -27,6 +27,11 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
   void initState() {
     selectedPage = widget._homeScreen;
     getIt<FireNotificationService>().refreshToken();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
+       Navigator.of(context).pop();
+    });
+
     super.initState();
   }
 
