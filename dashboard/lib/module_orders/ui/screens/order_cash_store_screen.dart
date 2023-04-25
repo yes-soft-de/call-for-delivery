@@ -340,10 +340,12 @@ class OrdersCashStoreScreenState extends State<OrdersCashStoreScreen> {
                                                   0,
                                               note: _note.text,
                                             ));
+                                        _amount.clear();
+                                        _note.clear();
                                       },
                                 child: Text(
                                   S.current.pay,
-                                  style: Theme.of(context).textTheme.button,
+                                  style: Theme.of(context).textTheme.labelLarge,
                                 )),
                             ElevatedButton(
                                 onPressed: () {
@@ -353,7 +355,7 @@ class OrdersCashStoreScreenState extends State<OrdersCashStoreScreen> {
                                 },
                                 child: Text(
                                   S.current.cancel,
-                                  style: Theme.of(context).textTheme.button,
+                                  style: Theme.of(context).textTheme.labelLarge,
                                 ))
                           ],
                         );
