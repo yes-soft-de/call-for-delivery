@@ -89,6 +89,15 @@ class StoreProfileLoadedState extends States {
                             style: TextStyle(
                                 fontWeight: FontWeight.bold, fontSize: 20),
                           ),
+                          Row(
+                            children: [
+                              Text(
+                                S.current.id + ': ',
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text(profile?.id.toString() ?? ''),
+                            ],
+                          ),
                           InkWell(
                             onTap: () {
                               profile?.phone != null ||
