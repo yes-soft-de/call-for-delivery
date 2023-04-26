@@ -52,7 +52,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   StreamSubscription? _companySubscription;
   StreamSubscription? _financeSubscription;
   StreamSubscription? _supportMessages;
-  late String _lastMessageFromSupportSendDate;
+  String? _lastMessageFromSupportDate;
   ValueNotifier<bool> _isLastMessageFromAdminHasntSeenYet =
       ValueNotifier(false);
   GlobalKey<ScaffoldState> drawerKey = GlobalKey();
@@ -107,10 +107,10 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
         Map<String, dynamic> lastMessage =
             event.docs.last.data() as Map<String, dynamic>;
 
-        _lastMessageFromSupportSendDate = lastMessage['sentDate'] ?? '';
+        _lastMessageFromSupportDate = lastMessage['sentDate'] ?? '';
         bool isAdmin = lastMessage['isAdmin'] ?? false;
 
-        if (_lastMessageFromSupportSendDate !=
+        if (_lastMessageFromSupportDate !=
                 NotificationsPrefHelper()
                     .getLastMessageHasBeenSeenFromSupport() &&
             isAdmin) {
@@ -246,9 +246,11 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
                         showBadge: _isLastMessageFromAdminHasntSeenYet.value,
                         onTap: () {
                       _isLastMessageFromAdminHasntSeenYet.value = false;
-                      NotificationsPrefHelper()
-                          .setLastMessageHasBeenSeenFromSupport(
-                              _lastMessageFromSupportSendDate);
+                      if (_lastMessageFromSupportDate != null) {
+                        NotificationsPrefHelper()
+                            .setLastMessageHasBeenSeenFromSupport(
+                                _lastMessageFromSupportDate ?? '');
+                      }
                       if (_currentProfile != null) {
                         Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
                             arguments: ChatArgument(
