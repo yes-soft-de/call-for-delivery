@@ -1,5 +1,3 @@
-import 'package:c4d/module_stores/ui/widget/add_store_widget.dart';
-import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -131,9 +129,10 @@ class StoresInActiveLoadedState extends States {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: getTile(element.storeOwnerName == '0'
-                        ? element.phone
-                        : element.storeOwnerName),
+                    child: getTile((element.storeOwnerName == '0'
+                            ? element.phone
+                            : element.storeOwnerName) +
+                        ' {${element.id.toString()}}'),
                   ),
                 ),
 //                InkWell(

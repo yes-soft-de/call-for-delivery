@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -107,9 +106,10 @@ class StoresLoadedState extends States {
                 Expanded(
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: getTile(element.storeOwnerName == '0'
-                        ? element.phone
-                        : element.storeOwnerName),
+                    child: getTile((element.storeOwnerName == '0'
+                            ? element.phone
+                            : element.storeOwnerName) +
+                        ' {${element.id.toString()}}'),
                   ),
                 ),
 //                InkWell(
