@@ -489,6 +489,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "directSupport": MessageLookupByLibrary.simpleMessage("دعم مباشر"),
         "discount": MessageLookupByLibrary.simpleMessage("الخصم"),
         "distance": MessageLookupByLibrary.simpleMessage("المسافة"),
+        "distanceBetweenClientAndStoreBranch":
+            MessageLookupByLibrary.simpleMessage(
+                "المسافة بين العميل وفرع المتجر"),
         "distanceProvidedByCaptain":
             MessageLookupByLibrary.simpleMessage("المسافة التي ادخلها الكابتن"),
         "distanceUpdatedSuccessfully":

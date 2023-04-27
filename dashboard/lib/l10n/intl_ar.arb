@@ -947,5 +947,6 @@
     "captainRetreatOrder": "قام الكابتن بالتراجع عن تسليم الطلب",
     "advanced": "سلفا",
     "pleaseProvideCostType": "من فضلك اختر نوع التكلفة",
+    "distanceBetweenClientAndStoreBranch": "المسافة بين العميل وفرع المتجر",
     "editAds": "تعديل الإعلان"
 }
