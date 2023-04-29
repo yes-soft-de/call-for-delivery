@@ -67,23 +67,22 @@ class CaptainsLoadedState extends States {
             itemCount: model?.length ?? 0,
             itemBuilder: (context, index) {
               if (model != null) {
-                if (model![index].captainName.contains(search ?? '') &&
-                    search != null) {
-                  return null;
-                } else {
-                  return CaptainCard(
-                    key: ValueKey(model![index].captainID),
-                    captainId: model![index].captainID,
-                    captainName: model![index].captainName == '0'
-                        ? model![index].phoneNumber
-                        : model![index].captainName,
-                    image: model![index].image,
-                    verificationStatus: model![index].verificationStatus,
-                    profileID: model![index].profileID,
-                  );
+                if (search != null &&
+                    !model![index].captainName.contains(search ?? '')) {
+                  return SizedBox();
                 }
+                return CaptainCard(
+                  key: ValueKey(model![index].captainID),
+                  captainId: model![index].captainID,
+                  captainName: model![index].captainName == '0'
+                      ? model![index].phoneNumber
+                      : model![index].captainName,
+                  image: model![index].image,
+                  verificationStatus: model![index].verificationStatus,
+                  profileID: model![index].profileID,
+                );
               }
-              return null;
+              return SizedBox();
             },
           ),
         ),
