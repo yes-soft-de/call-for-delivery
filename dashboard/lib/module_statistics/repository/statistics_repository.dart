@@ -3,6 +3,7 @@ import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
 import 'package:c4d/module_statistics/response/statistics_response/statistics_response.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -17,9 +18,11 @@ class StatisticsRepository {
 
   Future<StatisticsResponse?> getStatistics() async {
     var token = await _authService.getToken();
+    var timezone = await FlutterNativeTimezone.getLocalTimezone();
+    timezone = timezone.replaceAll('/', '-');
 
     dynamic response = await _apiClient.get(
-      Urls.GET_STATISTICS,
+      '${Urls.GET_STATISTICS}/$timezone',
       headers: {'Authorization': 'Bearer ${token}'},
     );
 
