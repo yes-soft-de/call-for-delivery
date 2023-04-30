@@ -10,15 +10,12 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class StoreOwnerDuesFromCashOrdersManager
 {
-    private AutoMapping $autoMapping;
-    private StoreOwnerDuesFromCashOrdersEntityRepository $storeOwnerDuesFromCashOrdersEntityRepository;
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(AutoMapping $autoMapping, StoreOwnerDuesFromCashOrdersEntityRepository $storeOwnerDuesFromCashOrdersEntityRepository, EntityManagerInterface $entityManager)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private StoreOwnerDuesFromCashOrdersEntityRepository $storeOwnerDuesFromCashOrdersEntityRepository,
+        private EntityManagerInterface $entityManager
+    )
     {
-        $this->storeOwnerDuesFromCashOrdersEntityRepository = $storeOwnerDuesFromCashOrdersEntityRepository;
-        $this->autoMapping = $autoMapping;
-        $this->entityManager = $entityManager;
     }
 
     public function createStoreOwnerDuesFromCashOrders(StoreOwnerDuesFromCashOrdersRequest $request): ?StoreOwnerDuesFromCashOrdersEntity
@@ -54,5 +51,13 @@ class StoreOwnerDuesFromCashOrdersManager
     public function getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime(int $captainId, string $fromDate, string $toDate): array
     {
         return $this->storeOwnerDuesFromCashOrdersEntityRepository->getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime($captainId, $fromDate, $toDate);
+    }
+
+    /**
+     * Get the sum of the unpaid cash orders to store
+     */
+    public function getUnPaidStoreOwnerDuesFromCashOrderSumByStoreSubscriptionId(int $subscriptionId): array
+    {
+        return $this->storeOwnerDuesFromCashOrdersEntityRepository->getUnPaidStoreOwnerDuesFromCashOrderSumByStoreSubscriptionId($subscriptionId);
     }
 }

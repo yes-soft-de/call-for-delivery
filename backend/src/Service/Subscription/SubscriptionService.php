@@ -25,6 +25,7 @@ use App\Constant\Subscription\SubscriptionCaptainOffer;
 use App\Constant\Package\PackageConstant;
 use App\Service\Notification\SubscriptionFirebaseNotificationService;
 use App\Service\StoreOwner\StoreOwnerProfileService;
+use App\Service\StoreOwnerDuesFromCashOrders\StoreOwnerDueFromCashOrderGetService;
 use App\Service\StoreOwnerPayment\StoreOwnerPaymentService;
 use App\Response\Subscription\StoreSubscriptionResponse;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
@@ -46,7 +47,8 @@ class SubscriptionService
         private SubscriptionNotificationService $subscriptionNotificationService,
         private SubscriptionFirebaseNotificationService $subscriptionFirebaseNotificationService,
         private SubscriptionDetailsService $subscriptionDetailsService,
-        private StoreSubscriptionCheckService $storeSubscriptionCheckService
+        private StoreSubscriptionCheckService $storeSubscriptionCheckService,
+        private StoreOwnerDueFromCashOrderGetService $storeOwnerDueFromCashOrderGetService
     )
     {
     }
@@ -126,7 +128,7 @@ class SubscriptionService
            }
 
            // get the sum of unpaid cash orders
-           $subscription['unPaidCashOrdersSum'] = $this->getUnPaidCashOrdersSumBySubscriptionId($subscription['id']);
+           $subscription['unPaidCashOrdersSum'] = $this->getUnPaidStoreOwnerDuesFromCashOrderSumByStoreSubscriptionId($subscription['id']);
 
            return $this->autoMapping->map("array", RemainingOrdersResponse::class, $subscription);
        }
@@ -942,16 +944,12 @@ class SubscriptionService
         }
     }
 
-    // Get sum of unpaid cash orders
-    public function getUnPaidCashOrdersSumBySubscriptionId(int $subscriptionId): float
+    /**
+     * Get the sum of the unpaid cash orders to store
+     */
+    public function getUnPaidStoreOwnerDuesFromCashOrderSumByStoreSubscriptionId(int $subscriptionId): float
     {
-        $unPaidCashOrdersSum = $this->subscriptionManager->getUnPaidCashOrdersSumBySubscriptionId($subscriptionId);
-
-        if (count($unPaidCashOrdersSum)) {
-            return $unPaidCashOrdersSum[0];
-        }
-
-        return (float) 0;
+        return $this->storeOwnerDueFromCashOrderGetService->getUnPaidStoreOwnerDuesFromCashOrderSumByStoreSubscriptionId($subscriptionId);
     }
 
     // Send firebase notification to each admin about the action that being made on subscription by a store
