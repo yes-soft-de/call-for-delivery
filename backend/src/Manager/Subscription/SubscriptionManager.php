@@ -20,31 +20,21 @@ use Doctrine\ORM\EntityManagerInterface;
 use DateTime;
 use App\Manager\Package\PackageManager;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
-use App\Manager\Subscription\SubscriptionDetailsManager;
-use App\Manager\Subscription\SubscriptionHistoryManager;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Request\Subscription\SubscriptionUpdateByAdminRequest;
 
 class SubscriptionManager
 {
-    private AutoMapping $autoMapping;
-    private EntityManagerInterface $entityManager;
-    private PackageManager $packageManager;
-    private StoreOwnerProfileManager $storeOwnerProfileManager;
-    private SubscriptionDetailsManager $subscriptionDetailsManager;
-    private SubscriptionHistoryManager $subscriptionHistoryManager;
-    private SubscriptionEntityRepository $subscribeRepository;
-
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, SubscriptionEntityRepository $subscribeRepository, PackageManager $packageManager, StoreOwnerProfileManager $storeOwnerProfileManager, SubscriptionDetailsManager $subscriptionDetailsManager, SubscriptionHistoryManager $subscriptionHistoryManager)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private EntityManagerInterface $entityManager,
+        private PackageManager $packageManager,
+        private StoreOwnerProfileManager $storeOwnerProfileManager,
+        private SubscriptionDetailsManager $subscriptionDetailsManager,
+        private SubscriptionHistoryManager $subscriptionHistoryManager,
+        private SubscriptionEntityRepository $subscribeRepository
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->packageManager = $packageManager;
-        $this->storeOwnerProfileManager = $storeOwnerProfileManager;
-        $this->subscriptionDetailsManager = $subscriptionDetailsManager;
-        $this->subscriptionHistoryManager = $subscriptionHistoryManager;
-        $this->entityManager = $entityManager;
-        $this->subscribeRepository = $subscribeRepository;
-
     }
 
     public function createSubscription(SubscriptionCreateRequest $request): ?SubscriptionEntity
@@ -320,12 +310,6 @@ class SubscriptionManager
        return $this->storeOwnerProfileManager->getStoreOwnerProfile($storeOwnerProfileId);
     }
 
-    // Following function had been commented out because it isn't being used anywhere
-//    public function getAllSubscriptionsEntitiesByStoreOwnerId(int $storeOwnerId): array
-//    {
-//        return $this->subscribeRepository->getAllSubscriptionsEntitiesByStoreOwnerId($storeOwnerId);
-//    }
-
     public function deleteStoreSubscriptionByStoreOwnerId(int $storeOwnerId): array
     {
         $subscriptions = $this->subscribeRepository->getAllSubscriptionsEntitiesByStoreOwnerId($storeOwnerId);
@@ -376,12 +360,6 @@ class SubscriptionManager
         $this->entityManager->flush();
 
         return $subscriptionEntity;
-    }
-
-    // Get sum of unpaid cash orders
-    public function getUnPaidCashOrdersSumBySubscriptionId(int $subscriptionId): array
-    {
-        return $this->subscribeRepository->getUnPaidCashOrdersSumBySubscriptionId($subscriptionId);
     }
 
     public function getFutureSubscriptionByStoreOwnerProfileId(int $storeOwnerProfileId): array
