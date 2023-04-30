@@ -277,8 +277,7 @@ class OrdersService {
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
     if (response.data == null) return DataModel.empty();
-    var location = await DeepLinksService.defaultLocation();
-    return OrderDetailsModel.withData(response, location);
+    return OrderDetailsModel.withData(response, null);
   }
 
   Future<DataModel> removeOrderSub(OrderNonSubRequest request) async {
