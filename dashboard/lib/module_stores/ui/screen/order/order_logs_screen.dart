@@ -88,6 +88,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
           // filter date
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
+            // date picker
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -95,7 +96,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
-                      color: Theme.of(context).backgroundColor,
+                      color: Theme.of(context).colorScheme.background,
                     ),
                     child: Material(
                       color: Colors.transparent,
@@ -142,14 +143,14 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                   child: Container(
                     width: 32,
                     height: 2.5,
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).colorScheme.background,
                   ),
                 ),
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
-                      color: Theme.of(context).backgroundColor,
+                      color: Theme.of(context).colorScheme.background,
                     ),
                     child: Material(
                       color: Colors.transparent,
@@ -204,7 +205,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
           FilterBar(
             cursorRadius: BorderRadius.circular(25),
             animationDuration: Duration(milliseconds: 350),
-            backgroundColor: Theme.of(context).backgroundColor,
+            backgroundColor: Theme.of(context).colorScheme.background,
             currentIndex: currentIndex,
             borderRadius: BorderRadius.circular(25),
             floating: true,
@@ -219,6 +220,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
               FilterItem(label: S.current.cancelled2),
             ],
             onItemSelected: (index) {
+              if (index != 2) clearDistanceFilter();
               if (index == 0) {
                 ordersFilter.state = 'pending';
               } else if (index == 1) {
@@ -231,8 +233,8 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
               currentIndex = index;
               getOrders();
             },
-            selectedContent: Theme.of(context).textTheme.button!.color!,
-            unselectedContent: Theme.of(context).textTheme.headline6!.color!,
+            selectedContent: Theme.of(context).textTheme.labelLarge!.color!,
+            unselectedContent: Theme.of(context).textTheme.titleLarge!.color!,
           ),
           // kilo filter
           Visibility(
@@ -243,11 +245,11 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                   padding: const EdgeInsets.only(left: 8, right: 8, top: 8),
                   child: CustomFormField(
                     numbers: true,
-                    hintText: S.current.countKilometersTo +
-                        '(${S.current.clientDistance})',
+                    hintText: S.current.distanceBetweenClientAndStoreBranch,
                     controller: geoController,
                     onChanged: () {
                       changeDistanceIndicator();
+                      if (geoController.text.isEmpty) clearDistanceFilter();
                       getOrders(false);
                     },
                   ),
@@ -267,6 +269,9 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                           onChanged: (value) {
                             geoKilo = false;
                             changeDistanceIndicator();
+                            if (geoController.text.isEmpty) {
+                              clearDistanceFilter();
+                            }
                             refresh();
                             getOrders(false);
                           },
@@ -287,6 +292,9 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                           onChanged: (value) {
                             geoKilo = true;
                             changeDistanceIndicator();
+                            if (geoController.text.isEmpty) {
+                              clearDistanceFilter();
+                            }
                             refresh();
                             getOrders(false);
                           },
@@ -299,9 +307,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
               ],
             ),
           ),
-          SizedBox(
-            height: 16,
-          ),
+          SizedBox(height: 16),
           Expanded(child: currentState.getUI(context))
         ],
       ),
@@ -312,5 +318,11 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
     ordersFilter.maxKiloFromDistance = num.tryParse(geoController.text) ?? -1;
     ordersFilter.maxKilo = num.tryParse(geoController.text) ?? -1;
     ordersFilter.chosenDistanceIndicator = geoKilo ? 2 : 1;
+  }
+
+  void clearDistanceFilter() {
+    ordersFilter.maxKiloFromDistance = null;
+    ordersFilter.maxKilo = null;
+    ordersFilter.chosenDistanceIndicator = null;
   }
 }

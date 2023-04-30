@@ -9530,6 +9530,16 @@ class S {
     );
   }
 
+  /// `المسافة بين العميل وفرع المتجر`
+  String get distanceBetweenClientAndStoreBranch {
+    return Intl.message(
+      'المسافة بين العميل وفرع المتجر',
+      name: 'distanceBetweenClientAndStoreBranch',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Edit Ads`
   String get editAds {
     return Intl.message(
