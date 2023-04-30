@@ -29,8 +29,9 @@ class AdminNotificationToUsersEntityRepository extends ServiceEntityRepository
             ->andWhere('adminNotification.userId = :userIdNull')
             ->setParameter('userIdNull', NotificationConstant::USER_ID_NULL)
 
-            ->getQuery()
+            ->orderBy('adminNotification.id', 'DESC')
 
+            ->getQuery()
             ->getResult();
      }
     
@@ -48,7 +49,6 @@ class AdminNotificationToUsersEntityRepository extends ServiceEntityRepository
             ->orderBy('adminNotification.id', 'DESC')
             
             ->getQuery()
-
             ->getResult();
      }
 }

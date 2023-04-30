@@ -7,6 +7,7 @@ use App\Constant\Order\OrderTypeConstant;
 use App\Entity\OrderEntity;
 use App\Entity\StoreOwnerDuesFromCashOrdersEntity;
 use App\Entity\StoreOwnerProfileEntity;
+use App\Entity\SubscriptionEntity;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -151,6 +152,40 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
 
             ->andWhere('orderEntity.createdAt <= :toDate')
             ->setParameter('toDate', $toDate)
+
+            ->getQuery()
+            ->getSingleColumnResult();
+    }
+
+    /**
+     * Get the sum of the unpaid cash orders to store
+     */
+    public function getUnPaidStoreOwnerDuesFromCashOrderSumByStoreSubscriptionId(int $subscriptionId): array
+    {
+        return $this->createQueryBuilder('storeOwnerDuesFromCashOrdersEntity')
+            ->select('SUM(storeOwnerDuesFromCashOrdersEntity.storeAmount)')
+
+            ->andWhere('storeOwnerDuesFromCashOrdersEntity.flag = :notPaid')
+            ->setParameter('notPaid', OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO)
+
+            ->leftJoin(
+                OrderEntity::class,
+                'orderEntity',
+                Join::WITH,
+                'orderEntity.id = storeOwnerDuesFromCashOrdersEntity.orderId'
+            )
+
+            ->leftJoin(
+                SubscriptionEntity::class,
+                'subscriptionEntity',
+                Join::WITH,
+                'subscriptionEntity.storeOwner = storeOwnerDuesFromCashOrdersEntity.store'
+            )
+
+            ->andWhere('subscriptionEntity.id = :subscriptionId')
+            ->setParameter('subscriptionId', $subscriptionId)
+
+            ->andWhere('orderEntity.createdAt BETWEEN subscriptionEntity.startDate AND subscriptionEntity.endDate')
 
             ->getQuery()
             ->getSingleColumnResult();

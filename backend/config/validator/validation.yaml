@@ -881,3 +881,14 @@ App\Request\Order\OrderDeliveryCostByExternalStoreOwnerGetRequest:
             - NotBlank: ~
         clientLocation:
             - NotBlank: ~
+
+App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentFromCompanyForOrderCashCreateRequest:
+    properties:
+        amount:
+            - NotBlank: ~
+        store:
+            - NotBlank: ~
+        fromDate:
+            - NotBlank: ~
+        toDate:
+            - NotBlank: ~
