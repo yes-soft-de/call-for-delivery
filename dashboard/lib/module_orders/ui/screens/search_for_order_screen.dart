@@ -41,7 +41,9 @@ class SearchForOrderScreenState extends State<SearchForOrderScreen> {
   void initState() {
     super.initState();
     currentState = LoadingState(this);
-    ordersFilter = FilterOrderRequest();
+    ordersFilter = FilterOrderRequest(
+      state: 'pending',
+    );
     searchForOrderController.addListener(() {
       ordersFilter.orderId = searchForOrderController.text;
       widget._stateManager.getOrdersFilters(this, ordersFilter);
