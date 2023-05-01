@@ -8,6 +8,7 @@ use App\Entity\OrderEntity;
 use App\Entity\StoreOwnerDuesFromCashOrdersEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionEntity;
+use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreDueSumFromCashOrderFilterByAdminRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -189,5 +190,39 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
 
             ->getQuery()
             ->getSingleColumnResult();
+    }
+
+    /**
+     * Get all stores due sum from cash orders depending on filtering options
+     */
+    public function filterStoreDueFromCashOrdersByAdmin(StoreDueSumFromCashOrderFilterByAdminRequest $request): array
+    {
+        $query = $this->createQueryBuilder('storeOwnerDuesFromCashOrdersEntity');
+
+        if ($request->getIsPaid()) {
+            $query->andWhere('storeOwnerDuesFromCashOrdersEntity.flag = :paidFlag')
+                ->setParameter('paidFlag', $request->getIsPaid());
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
+    /**
+     * Get the sum of a specific store due and depending on paid flag
+     */
+    public function getStoreOwnerDueSumFromCashOrderByIsPaidFlagAndStoreOwnerProfileId(int $storeOwnerProfileId, int $isPaid = null): array
+    {
+        $query = $this->createQueryBuilder('storeOwnerDuesFromCashOrdersEntity')
+            ->select('SUM(storeOwnerDuesFromCashOrdersEntity.storeAmount)')
+
+            ->andWhere('storeOwnerDuesFromCashOrdersEntity.store = :storeOwnerProfileId')
+            ->setParameter('storeOwnerProfileId', $storeOwnerProfileId);
+
+        if ($isPaid) {
+            $query->andWhere('storeOwnerDuesFromCashOrdersEntity.flag = :isPaid')
+                ->setParameter('isPaid', $isPaid);
+        }
+
+        return $query->getQuery()->getSingleColumnResult();
     }
 }
