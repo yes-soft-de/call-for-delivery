@@ -31,6 +31,7 @@ import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../module_orders/model/order_details_model.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 
 class OrderDetailsStateOwnerOrderLoaded extends States {
   OrderDetailsModel orderInfo;
@@ -730,9 +731,19 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                     Icons.info,
                   ),
                   title: Text(S.current.orderDetails),
-                  subtitle: Text(orderInfo.note),
+                  subtitle: SelectableLinkify(
+                    onOpen: (link) async {
+                      if (await canLaunch(link.url)) {
+                        await launch(link.url);
+                      } else {
+                        Fluttertoast.showToast(msg: 'Invalid link');
+                      }
+                    },
+                    text: '${orderInfo.note}',
+                  ),
                 ),
               ],
+               
             ),
           ),
         ),
