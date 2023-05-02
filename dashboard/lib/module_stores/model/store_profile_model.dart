@@ -48,7 +48,7 @@ class StoreProfileModel extends DataModel {
       storeOwnerName: data.storeOwnerName ?? S.current.store,
       image: data.image?.image,
       imageUrl: data.image?.imageURL ?? ImageAsset.PLACEHOLDER,
-      phone: data.phone ?? '',
+      phone: data.phone ?? data.userId,
       openingTime: DateHelper.convert(data.openingTime?.timestamp),
       closingTime: DateHelper.convert(data.closingTime?.timestamp),
       bankName: data.bankName ?? '',
