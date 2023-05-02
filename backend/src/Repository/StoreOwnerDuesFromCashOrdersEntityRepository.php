@@ -9,13 +9,13 @@ use App\Entity\StoreOwnerDuesFromCashOrdersEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionEntity;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreDueSumFromCashOrderFilterByAdminRequest;
+use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDueFromCashOrderFilterByAdminRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
 use App\Constant\Order\OrderAmountCashConstant;
-
 
 /**
  * @method StoreOwnerDuesFromCashOrdersEntity|null find($id, $lockMode = null, $lockVersion = null)
@@ -224,5 +224,75 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
         }
 
         return $query->getQuery()->getSingleColumnResult();
+    }
+
+    /**
+     * Filter all store owners due from cash orders by admin
+     */
+    public function filterStoreOwnerDueFromCashOrderByAdmin(StoreOwnerDueFromCashOrderFilterByAdminRequest $request): array
+    {
+        $query = $this->createQueryBuilder('storeOwnerDuesFromCashOrdersEntity')
+
+            ->orderBy('storeOwnerDuesFromCashOrdersEntity.id', 'DESC');
+
+        if ($request->getStoreOwnerProfileId()) {
+            $query->andWhere('storeOwnerDuesFromCashOrdersEntity.store = :storeOwnerProfileId')
+                ->setParameter('storeOwnerProfileId', $request->getStoreOwnerProfileId());
+        }
+
+        if ($request->getIsPaid()) {
+            $query->andWhere('storeOwnerDuesFromCashOrdersEntity.flag = :isPaidFlag')
+                ->setParameter('isPaidFlag', $request->getIsPaid());
+        }
+
+        if (((($request->getFromDate()) || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
+            || ($request->getFromDate() === null || $request->getFromDate() === "") && (($request->getToDate()) || $request->getToDate() != "")
+            || (($request->getFromDate()) || $request->getFromDate() != "") && (($request->getToDate()) || $request->getToDate() != "")) {
+            $tempQuery = $query->getQuery()->getResult();
+
+            // Filter array of store owners due from cash orders entities by optional dates
+            return $this->filterStoreDueFromCashOrderEntitiesArrayByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
+    /**
+     * Filter array of store owners due from cash orders entities by optional dates
+     */
+    public function filterStoreDueFromCashOrderEntitiesArrayByDates(array $tempOrders, ?string $fromDate, ?string $toDate, ?string $timeZone): array
+    {
+        $filteredStoreDueFromCashOrder = [];
+
+        if (count($tempOrders) > 0) {
+            if (($fromDate != null || $fromDate != "") && ($toDate === null || $toDate === "")) {
+                foreach ($tempOrders as $value) {
+                    if ($value->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) >=
+                        new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) {
+                        $filteredStoreDueFromCashOrder[] = $value;
+                    }
+                }
+
+            } elseif (($fromDate === null || $fromDate === "") && ($toDate != null || $toDate != "")) {
+                foreach ($tempOrders as $value) {
+                    if ($value->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) <=
+                        new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59'))) {
+                        $filteredStoreDueFromCashOrder[] = $value;
+                    }
+                }
+
+            } elseif (($fromDate != null || $fromDate != "") && ($toDate != null || $toDate != "")) {
+                foreach ($tempOrders as $value) {
+                    if (($value->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) >=
+                            new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) &&
+                        ($value->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) <=
+                            new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59')))) {
+                        $filteredStoreDueFromCashOrder[] = $value;
+                    }
+                }
+            }
+        }
+
+        return $filteredStoreDueFromCashOrder;
     }
 }

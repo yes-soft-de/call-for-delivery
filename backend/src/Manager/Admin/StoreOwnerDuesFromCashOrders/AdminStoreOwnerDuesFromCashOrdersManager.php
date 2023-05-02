@@ -4,6 +4,7 @@ namespace App\Manager\Admin\StoreOwnerDuesFromCashOrders;
 
 use App\Repository\StoreOwnerDuesFromCashOrdersEntityRepository;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreDueSumFromCashOrderFilterByAdminRequest;
+use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDueFromCashOrderFilterByAdminRequest;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrderDeleteByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersFilterGetRequest;
@@ -91,5 +92,13 @@ class AdminStoreOwnerDuesFromCashOrdersManager
     {
         return $this->storeOwnerDuesFromCashOrdersEntityRepository->getStoreOwnerDueSumFromCashOrderByIsPaidFlagAndStoreOwnerProfileId($storeOwnerProfileId,
             $isPaid);
+    }
+
+    /**
+     * Filter all store owners due from cash orders by admin
+     */
+    public function filterStoreOwnerDueFromCashOrderByAdmin(StoreOwnerDueFromCashOrderFilterByAdminRequest $request): array
+    {
+        return $this->storeOwnerDuesFromCashOrdersEntityRepository->filterStoreOwnerDueFromCashOrderByAdmin($request);
     }
 }
