@@ -29,7 +29,7 @@ class _MainScreenState extends State<MainScreen> with WidgetsBindingObserver {
     getIt<FireNotificationService>().refreshToken();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
-       Navigator.of(context).pop();
+      GlobalVariable.mainScreenScaffold.currentState?.closeDrawer();
     });
 
     super.initState();
