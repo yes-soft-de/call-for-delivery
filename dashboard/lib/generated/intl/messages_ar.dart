@@ -1296,7 +1296,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sumAmountWithCaptain":
             MessageLookupByLibrary.simpleMessage("الكاش مع الكابتن"),
         "sumCaptainFinancialDues":
-            MessageLookupByLibrary.simpleMessage("مستحقات الكابتن"),
+            MessageLookupByLibrary.simpleMessage("يوميات الكابتن"),
         "sumCaptainsFinancialDues":
             MessageLookupByLibrary.simpleMessage("مستحقات الكباتن"),
         "sumPayments": MessageLookupByLibrary.simpleMessage("مجموع الدفعات"),
