@@ -187,6 +187,8 @@ class AdminStoreOwnerDuesFromCashOrdersService
 
                 $response[$key]->storeOwnerProfileId = $value->getStore()->getId();
                 $response[$key]->storeOwnerName = $value->getStore()->getStoreOwnerName();
+                $response[$key]->image = $this->uploadFileHelperService->getImageParams($value->getStore()->getImages());
+
                 $response[$key]->toBePaid = $response[$key]->amount;
 
                 // Check if there is a payment linked with the store due. then get its info
