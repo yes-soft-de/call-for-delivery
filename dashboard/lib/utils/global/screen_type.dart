@@ -46,3 +46,24 @@ class ScreenType {
     }
   }
 }
+
+class ResponsiveLayout extends StatelessWidget {
+  final Widget mobileBody;
+  final Widget? desktopBody;
+  final Widget? tabletBody;
+
+  ResponsiveLayout(
+      {required this.mobileBody, this.desktopBody, this.tabletBody});
+
+  @override
+  Widget build(BuildContext context) {
+    if (ScreenType.isMobile(context))
+      return mobileBody;
+    else if (ScreenType.isDesktop(context))
+      return desktopBody ?? mobileBody;
+    else if (ScreenType.isTablet(context))
+      return tabletBody ?? desktopBody ?? mobileBody;
+    else
+      return mobileBody;
+  }
+}
