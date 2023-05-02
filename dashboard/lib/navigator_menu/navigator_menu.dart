@@ -1,14 +1,11 @@
-import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/captains_module.dart';
 import 'package:c4d/module_categories/categories_module.dart';
 import 'package:c4d/module_company/company_module.dart';
 import 'package:c4d/module_delivary_car/cars_module.dart';
-import 'package:c4d/module_main/main_module.dart';
 import 'package:c4d/module_notice/notice_module.dart';
 import 'package:c4d/module_orders/orders_module.dart';
-import 'package:c4d/module_orders/ui/screens/order_pending_screen.dart';
 import 'package:c4d/module_payments/payments_module.dart';
 import 'package:c4d/module_settings/settings_module.dart';
 import 'package:c4d/module_statistics/ui/statistics_module.dart';
@@ -21,7 +18,6 @@ import 'package:flutter/material.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:injectable/injectable.dart';
 
 class NavigatorMenu extends StatefulWidget {
   final dynamic Function(StatefulWidget) onTap;
@@ -210,13 +206,14 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.financeCountOrder, FontAwesomeIcons.box, true),
                 ],
                 page: widget.currentPage),
+            // dues
             customExpansionTile(
                 title: S.current.duesPayments,
                 icon: FontAwesomeIcons.moneyBillTransfer,
                 children: [
                   customListTile(
                       getIt<CaptainsModule>().captainFinanceDailyScreen,
-                      S.current.sumCaptainsFinancialDues,
+                      S.current.captainDaily,
                       FontAwesomeIcons.moneyBills,
                       true),
                 ],

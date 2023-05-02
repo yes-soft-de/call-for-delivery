@@ -207,6 +207,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainActivity":
             MessageLookupByLibrary.simpleMessage("Captain Activity"),
         "captainAnswer": MessageLookupByLibrary.simpleMessage("Captain Answer"),
+        "captainDaily": MessageLookupByLibrary.simpleMessage("captain daily"),
         "captainDistance":
             MessageLookupByLibrary.simpleMessage("Captain Distance"),
         "captainFinance":
