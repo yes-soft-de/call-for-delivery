@@ -975,7 +975,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentFailed": MessageLookupByLibrary.simpleMessage(
             "للأسف فشلت عملية الدفع الرجاء ، إعادة المحاولة"),
         "paymentFromStore":
-            MessageLookupByLibrary.simpleMessage("دفعة من المتجر"),
+            MessageLookupByLibrary.simpleMessage("دفعات المتجر"),
         "paymentHistory": MessageLookupByLibrary.simpleMessage("تاريخ الدفعات"),
         "paymentMethod": MessageLookupByLibrary.simpleMessage("طريقة الدفع"),
         "paymentMethodHint": MessageLookupByLibrary.simpleMessage("اختر"),
@@ -1188,7 +1188,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "showAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
         "showPayments": MessageLookupByLibrary.simpleMessage("عرض المدفوعات"),
         "showingCart": MessageLookupByLibrary.simpleMessage("مشاهدة السلة"),
-        "signOut": MessageLookupByLibrary.simpleMessage("تسحيل الخروج"),
+        "signOut": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
         "similarProducts":
             MessageLookupByLibrary.simpleMessage("المنتجات المتشابهة"),
         "skip": MessageLookupByLibrary.simpleMessage("تخطي"),
