@@ -5,6 +5,7 @@ namespace App\Controller\Admin\StoreOwnerDuesFromCashOrders;
 use App\AutoMapping;
 use App\Controller\BaseController;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreDueSumFromCashOrderFilterByAdminRequest;
+use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDueFromCashOrderFilterByAdminRequest;
 use App\Service\Admin\StoreOwnerDuesFromCashOrders\AdminStoreOwnerDuesFromCashOrdersService;;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -39,6 +40,7 @@ class AdminStoreOwnerDuesFromCashOrdersController extends BaseController
      * admin:Get Store Owner Dues From Cash Orders.
      * @Route("storeownerduesfromcashorders", name="GetStoreOwnerDuesFromCashOrders", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
      * @return JsonResponse
      *
      * @OA\Tag(name="Store Owner Dues From Cash Orders")
@@ -82,7 +84,7 @@ class AdminStoreOwnerDuesFromCashOrdersController extends BaseController
      *         )
      *      )
      *    )
-     *  ) 
+     *  )
      * )
      * @Security(name="Bearer")
      */
@@ -124,7 +126,7 @@ class AdminStoreOwnerDuesFromCashOrdersController extends BaseController
      * @OA\RequestBody(
      *      description="filter request options",
      *      @OA\JsonContent(
-     *          @OA\Property(type="integer", property="isPaid")
+     *          @OA\Property(type="integer", property="isPaid", example="1: paid. 2: not paid")
      *      )
      * )
      *
@@ -158,6 +160,71 @@ class AdminStoreOwnerDuesFromCashOrdersController extends BaseController
         $request = $this->autoMapping->map(stdClass::class, StoreDueSumFromCashOrderFilterByAdminRequest::class, (object)$data);
 
         $result = $this->adminStoreOwnerDuesFromCashOrdersService->filterStoreDueFromCashOrdersByAdmin($request);
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * admin: filter store owners due from cash orders by admin
+     * @Route("filterstoreduefromcashorderbyadmin", name="filterStoreOwnerDueFromCashOrderByAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Store Owner Dues From Cash Orders")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="filter request options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="storeOwnerProfileId"),
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="integer", property="isPaid", example="1: paid. 2: not paid"),
+     *          @OA\Property(type="string", property="customizedTimezone", example="Asia/Riyadh")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns Store Owner Due from cash orders",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  @OA\Property(type="integer", property="id"),
+     *                  @OA\Property(type="integer", property="storeOwnerProfileId"),
+     *                  @OA\Property(type="string", property="storeOwnerName"),
+     *                  @OA\Property(type="array", property="image",
+     *                      @OA\Items()
+     *                  ),
+     *                  @OA\Property(type="number", property="amount"),
+     *                  @OA\Property(type="number", property="toBePaid"),
+     *                  @OA\Property(type="array", property="paymentFromCompanyToStore",
+     *                      @OA\Items()
+     *                  ),
+     *                  @OA\Property(type="integer", property="flag", example="1: paid. 2: not paid")
+     *              )
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterStoreOwnerDueFromCashOrderByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, StoreOwnerDueFromCashOrderFilterByAdminRequest::class, (object)$data);
+
+        $result = $this->adminStoreOwnerDuesFromCashOrdersService->filterStoreOwnerDueFromCashOrderByAdmin($request);
 
         return $this->response($result, self::FETCH);
     }

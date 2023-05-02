@@ -3,11 +3,14 @@
 namespace App\Service\Admin\StoreOwnerDuesFromCashOrders;
 
 use App\AutoMapping;
+use App\Entity\StoreOwnerDuesFromCashOrdersEntity;
 use App\Manager\Admin\StoreOwnerDuesFromCashOrders\AdminStoreOwnerDuesFromCashOrdersManager;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreDueSumFromCashOrderFilterByAdminRequest;
+use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDueFromCashOrderFilterByAdminRequest;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrderDeleteByAdminRequest;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersFilterGetRequest;
 use App\Response\Admin\StoreOwnerDuesFromCashOrders\StoreDueSumFilterByAdminResponse;
+use App\Response\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDueFromCashOrderFilterByAdminResponse;
 use App\Response\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersResponse;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Service\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentFromCompanyService;
@@ -123,7 +126,7 @@ class AdminStoreOwnerDuesFromCashOrdersService
         if (count($allStoreDueFromCashOrder) > 0) {
             $tempResponse = [];
 
-            foreach ($allStoreDueFromCashOrder as $key => $value) {//dd($value);
+            foreach ($allStoreDueFromCashOrder as $value) {
                 if ($this->checkIfStoreDueSumFilterByAdminResponseArrayHasSpecificValueForSpecificProperty($value->getStore()->getId(), $response, 'storeOwnerProfileId') === false) {
                     $tempResponse['id'] = $value->getId();
                     $tempResponse['storeOwnerProfileId'] = $value->getStore()->getId();
@@ -166,5 +169,41 @@ class AdminStoreOwnerDuesFromCashOrdersService
         }
 
         return ($sumAmount - $paymentsSum);
+    }
+
+    /**
+     * Filter all store owners due from cash orders by admin
+     */
+    public function filterStoreOwnerDueFromCashOrderByAdmin(StoreOwnerDueFromCashOrderFilterByAdminRequest $request): array
+    {
+        $response = [];
+
+        $storeOwnersDueFromCashOrdersArray = $this->adminStoreOwnerDuesFromCashOrdersManager->filterStoreOwnerDueFromCashOrderByAdmin($request);
+
+        if (count($storeOwnersDueFromCashOrdersArray) > 0) {
+            foreach ($storeOwnersDueFromCashOrdersArray as $key => $value) {
+                $response[$key] = $this->autoMapping->map(StoreOwnerDuesFromCashOrdersEntity::class, StoreOwnerDueFromCashOrderFilterByAdminResponse::class,
+                    $value);
+
+                $response[$key]->storeOwnerProfileId = $value->getStore()->getId();
+                $response[$key]->storeOwnerName = $value->getStore()->getStoreOwnerName();
+                $response[$key]->toBePaid = $response[$key]->amount;
+
+                // Check if there is a payment linked with the store due. then get its info
+                $paymentFromCompany = $value->getStoreOwnerPaymentFromCompany();
+
+                if ($paymentFromCompany) {
+                    $response[$key]->paymentFromCompanyToStore['id'] = $paymentFromCompany->getId();
+                    $response[$key]->paymentFromCompanyToStore['amount'] = $paymentFromCompany->getAmount();
+                    $response[$key]->paymentFromCompanyToStore['createdAt'] = $paymentFromCompany->getCreatedAt();
+                    $response[$key]->paymentFromCompanyToStore['note'] = $paymentFromCompany->getNote();
+
+                    // update toBePaid filed as long as there is payment for the store
+                    $response[$key]->toBePaid -= $response[$key]->paymentFromCompanyToStore['amount'];
+                }
+            }
+        }
+
+        return $response;
     }
 }
