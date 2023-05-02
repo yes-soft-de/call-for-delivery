@@ -1,7 +1,7 @@
 class AddExtraDistanceRequest {
   int? id;
   String? storeBranchToClientDistanceAdditionExplanation;
-  Map? destination;
+  Destination? destination;
   double? additionalDistance;
 
   AddExtraDistanceRequest({
@@ -33,4 +33,26 @@ class AddExtraDistanceRequest {
     }
     return map;
   }
+}
+
+// Destination class contains lat and lon with double type .
+class Destination {
+  double? lat;
+  double? lon;
+
+  Destination({this.lat, this.lon});
+
+  factory Destination.fromJson(Map<String, dynamic> json) => Destination(
+        lat: json['lat'] is String
+            ? double.tryParse(json['lat'] ?? '0')
+            : json['lat'] as double?,
+        lon: json['lon'] is String
+            ? double.tryParse(json['lon'] ?? '0')
+            : json['lon'] as double?,
+      );
+
+  Map<String, dynamic> toJson() => {
+        'lat': lat,
+        'lon': lon,
+      };
 }
