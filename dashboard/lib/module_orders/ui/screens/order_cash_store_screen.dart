@@ -333,8 +333,7 @@ class OrdersCashStoreScreenState extends State<OrdersCashStoreScreen> {
                                                   ?.toIso8601String(),
                                               toDate: ordersFilter.toDate
                                                   ?.toIso8601String(),
-                                              storeId: StoresHiveHelper()
-                                                  .getCurrentStoreID(),
+                                              storeId: int.tryParse(ordersFilter.storeId ?? '0'),
                                               amount: num.tryParse(
                                                       _amount.text.trim()) ??
                                                   0,
