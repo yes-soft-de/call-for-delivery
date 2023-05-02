@@ -113,11 +113,18 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
     }
   }
 
+  bool _isCostOk(UpdateOrderRequest request, OrderDetailsModel orderInfo) {
+    if (orderInfo.orderCost == 0) {
+      return (request.orderCost ?? 0) < 0;
+    }
+    return (request.orderCost ?? 0) <= 0;
+  }
+
   void requestOrderProgress(
       UpdateOrderRequest request, OrderDetailsModel orderInfo) {
     if (orderInfo.state == OrderStatusEnum.DELIVERING &&
         (request.distance == null ||
-            (request.orderCost ?? 0) <= 0 && orderInfo.payment == 'cash')) {
+            _isCostOk(request, orderInfo) && orderInfo.payment == 'cash')) {
       showDialog(
           context: context,
           builder: (ctx) {

@@ -52,7 +52,9 @@ class OrderDetailsCaptainOrderLoadedState extends States {
     }
   }
   bool speaking = false;
+  bool shouldButZero = true;
   final TextEditingController noteController = TextEditingController();
+
   @override
   Widget getUI(BuildContext context) {
     return Scaffold(
@@ -855,10 +857,11 @@ class OrderDetailsCaptainOrderLoadedState extends States {
               ),
               // client location
               Visibility(
-                visible: !StatusHelper.shouldHideCustomerInfo(orderInfo.state) &&
-                    StatusHelper.getOrderStatusIndex(orderInfo.state) >=
-                        StatusHelper.getOrderStatusIndex(
-                            OrderStatusEnum.DELIVERING),
+                visible:
+                    !StatusHelper.shouldHideCustomerInfo(orderInfo.state) &&
+                        StatusHelper.getOrderStatusIndex(orderInfo.state) >=
+                            StatusHelper.getOrderStatusIndex(
+                                OrderStatusEnum.DELIVERING),
                 child: Expanded(
                   child: OrderButton(
                     backgroundColor: Colors.red[900]!,
@@ -1052,6 +1055,10 @@ class OrderDetailsCaptainOrderLoadedState extends States {
     if (orderInfo.state == OrderStatusEnum.FINISHED) {
       return const SizedBox();
     } else if (orderInfo.state == OrderStatusEnum.DELIVERING) {
+      if (shouldButZero && screenState.paymentController.text.isEmpty) {
+        shouldButZero = false;
+        screenState.paymentController.text = _orderCostCanBeZero();
+      }
       return Column(
         children: [
           AlertContainer(
@@ -1137,5 +1144,10 @@ class OrderDetailsCaptainOrderLoadedState extends States {
             context,
           ));
     }
+  }
+
+  String _orderCostCanBeZero() {
+    if (orderInfo.orderCost == 0) return '0';
+    return '';
   }
 }
