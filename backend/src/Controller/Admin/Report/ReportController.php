@@ -192,10 +192,6 @@ class ReportController extends BaseController
      */
     public function getDashboardStatisticsForAdmin(string $customizedTimezone = null): JsonResponse
     {
-        // $data = json_decode($request->getContent(), true);
-
-        // $request = $this->autoMapping->map(stdClass::class, DashboardStatisticsPostRequest::class, (object)$data);
-
         $result = $this->reportService->getDashboardStatisticsForAdmin($customizedTimezone);
 
         return $this->response($result, self::FETCH);

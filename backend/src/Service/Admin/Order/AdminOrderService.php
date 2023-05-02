@@ -1916,6 +1916,8 @@ class AdminOrderService
                 $response[$key]['storeOwnerName'] = $value->getStoreOwner()->getStoreOwnerName();
                 $response[$key]['images'] = $this->uploadFileHelperService->getImageParams($value->getStoreOwner()->getImages());
                 $response[$key]['createdAt'] = $value->getStoreOwner()->getCreatedAt();
+                $response[$key]['orderId'] = $value->getId();
+                $response[$key]['orderCreatedAt'] = $value->getCreatedAt();
             }
         }
 
@@ -1937,6 +1939,8 @@ class AdminOrderService
                 $response[$key]['captainName'] = $value[0]->getCaptainId()->getCaptainName();
                 $response[$key]['images'] = $this->uploadFileHelperService->getImageParams($value['captainProfileImage']);
                 $response[$key]['createdAt'] = $value[0]->getCaptainId()->getCreatedAt();
+                $response[$key]['orderId'] = $value[0]->getId();
+                $response[$key]['orderCreatedAt'] = $value[0]->getCreatedAt();
             }
         }
 
