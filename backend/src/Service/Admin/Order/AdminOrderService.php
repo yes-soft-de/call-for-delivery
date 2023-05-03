@@ -1925,6 +1925,14 @@ class AdminOrderService
     }
 
     /**
+     * Get the creation date of the order log record which state is delivered
+     */
+    public function getDeliveredStateOrderLogCreatedAtForAdminByOrderId(int $orderId): DateTime|int
+    {
+        return $this->orderLogService->getDeliveredStateOrderLogCreatedAtForAdminByOrderId($orderId);
+    }
+
+    /**
      * Gets last five captains who delivered orders
      */
     public function getCaptainsWhoDeliveredLastFiveOrders(): array
@@ -1940,7 +1948,7 @@ class AdminOrderService
                 $response[$key]['images'] = $this->uploadFileHelperService->getImageParams($value['captainProfileImage']);
                 $response[$key]['createdAt'] = $value[0]->getCaptainId()->getCreatedAt();
                 $response[$key]['orderId'] = $value[0]->getId();
-                $response[$key]['orderCreatedAt'] = $value[0]->getCreatedAt();
+                $response[$key]['orderDeliveredAt'] = $this->getDeliveredStateOrderLogCreatedAtForAdminByOrderId($response[$key]['orderId']);
             }
         }
 

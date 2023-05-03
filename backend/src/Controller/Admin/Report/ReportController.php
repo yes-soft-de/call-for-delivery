@@ -144,7 +144,9 @@ class ReportController extends BaseController
      *                                          @OA\Property(type="string", property="baseURL")
      *                                      )
      *                                  ),
-     *                                  @OA\Property(type="object", property="createdAt")
+     *                                  @OA\Property(type="object", property="createdAt"),
+     *                                  @OA\Property(type="integer", property="orderId"),
+     *                                  @OA\Property(type="object", property="orderCreatedAt")
      *                              )
      *                          )
      *                      )
@@ -178,7 +180,9 @@ class ReportController extends BaseController
      *                                          @OA\Property(type="string", property="baseURL")
      *                                      )
      *                                  ),
-     *                                  @OA\Property(type="object", property="createdAt")
+     *                                  @OA\Property(type="object", property="createdAt"),
+     *                                  @OA\Property(type="integer", property="orderId"),
+     *                                  @OA\Property(type="object", property="orderDeliveredAt")
      *                              )
      *                          )
      *                      )
