@@ -82,16 +82,16 @@ class OrderDistanceConflictLoadedState extends States {
                                                   id: element.id,
                                                   storeBranchToClientDistanceAdditionExplanation:
                                                       reason.text.trim(),
-                                                  destination: {
-                                                    'lat': coord.text
+                                                  destination:Destination(
+                                                    lat: double.tryParse(coord.text
                                                         .trim()
                                                         .split(',')[0]
-                                                        .trim(),
-                                                    'lon': coord.text
+                                                        .trim()),
+                                                    lon:  double.tryParse(coord.text
                                                         .trim()
                                                         .split(',')[1]
-                                                        .trim(),
-                                                  }));
+                                                        .trim()),
+                                                  )));
                                         } else {
                                           Fluttertoast.showToast(
                                               msg: S.current

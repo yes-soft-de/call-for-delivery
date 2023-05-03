@@ -91,8 +91,6 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.reports,
                 icon: Icons.report,
                 children: [
-                  customListTile(getIt<StatisticsModule>().statisticsScreen,
-                      S.current.statistics, Icons.edit_road_rounded, true),
                   customListTile(
                       getIt<OrdersModule>().ordersWithoutDistanceScreen,
                       S.current.orderWithoutDistance,
