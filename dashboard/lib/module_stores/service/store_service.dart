@@ -3,13 +3,16 @@ import 'package:c4d/module_orders/manager/orders_manager/orders_manager.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_stores/model/order/order_captain_not_arrived.dart';
 import 'package:c4d/module_stores/model/store_need_support.dart';
+import 'package:c4d/module_stores/model/stores_dues/stores_dues.dart';
 import 'package:c4d/module_stores/model/top_active_store_model.dart';
 import 'package:c4d/module_stores/request/active_store_request.dart';
 import 'package:c4d/module_stores/request/captain_not_arrived_request.dart';
 import 'package:c4d/module_stores/request/filter_store_activity_request.dart';
 import 'package:c4d/module_stores/request/order_filter_request.dart';
+import 'package:c4d/module_stores/request/stores_dues_request.dart';
 import 'package:c4d/module_stores/response/order/order_captain_not_arrived/orders_not_arrived_response.dart';
 import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
+import 'package:c4d/module_stores/response/stores_dues_response/stores_dues_response/stores_dues_response.dart';
 import 'package:c4d/module_stores/response/top_active_store.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
@@ -201,5 +204,17 @@ class StoresService {
     }
     if (response.data == null) return DataModel.empty();
     return TopActiveStoreModel.withData(response.data!);
+  }
+
+  Future<DataModel> getStoresDues(StoresDuesRequest request) async {
+    StoresDuesResponse? response = await _storeManager.getStoresDues(request);
+
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    return StoresDuesModel.withData(response);
   }
 }

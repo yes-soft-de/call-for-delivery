@@ -503,6 +503,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dues": MessageLookupByLibrary.simpleMessage("المستحقات"),
         "duesByFilter":
             MessageLookupByLibrary.simpleMessage("المستحقات وفق الفلترة"),
+        "duesCashRequest":
+            MessageLookupByLibrary.simpleMessage("المستحقات (الطلبات الكاش)"),
         "duesPayments": MessageLookupByLibrary.simpleMessage("المستحقات للدفع"),
         "earnCash": MessageLookupByLibrary.simpleMessage("اكسب المال"),
         "editAds": MessageLookupByLibrary.simpleMessage("تعديل الإعلان"),
@@ -1256,6 +1258,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تعديل المتجر بنجاح"),
         "stores": MessageLookupByLibrary.simpleMessage("متاجر"),
         "storesActive": MessageLookupByLibrary.simpleMessage("المتاجر الفعالة"),
+        "storesCashRequest":
+            MessageLookupByLibrary.simpleMessage("المتاجر (الطلبات الكاش)"),
         "storesInActive":
             MessageLookupByLibrary.simpleMessage("المتاجر الغير مفعلة"),
         "storesList": MessageLookupByLibrary.simpleMessage("قائمة المتاجر"),

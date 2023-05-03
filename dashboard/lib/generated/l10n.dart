@@ -9550,6 +9550,26 @@ class S {
     );
   }
 
+  /// `Stores (cash request)`
+  String get storesCashRequest {
+    return Intl.message(
+      'Stores (cash request)',
+      name: 'storesCashRequest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `dues (cash request)`
+  String get duesCashRequest {
+    return Intl.message(
+      'dues (cash request)',
+      name: 'duesCashRequest',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `captain daily`
   String get captainDaily {
     return Intl.message(

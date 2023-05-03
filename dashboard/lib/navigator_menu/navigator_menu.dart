@@ -216,6 +216,11 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.captainDaily,
                       FontAwesomeIcons.moneyBills,
                       true),
+                  customListTile(
+                      getIt<StoresModule>().storesDuesScreen,
+                      S.current.storesCashRequest,
+                      FontAwesomeIcons.moneyBills,
+                      true),
                 ],
                 page: widget.currentPage),
 

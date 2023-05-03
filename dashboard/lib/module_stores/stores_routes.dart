@@ -1,3 +1,5 @@
+import 'package:c4d/generated/l10n.dart';
+
 class StoresRoutes {
   static const STORES = '/stores';
   static const STORE_INFO = '/store_info';
@@ -10,4 +12,5 @@ class StoresRoutes {
   static const LOGS_ORDERS_SCREEN = '/logs_orders';
   static const ORDER_TIMELINE_SCREEN = '/timeline';
   static const ORDER_CAPTAIN_SCREEN = '/captain_not_arrived';
+  static const STORES_DUES_SCREEN = '/stores_dues';
 }

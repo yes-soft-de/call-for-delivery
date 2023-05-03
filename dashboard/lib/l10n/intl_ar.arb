@@ -949,5 +949,7 @@
     "pleaseProvideCostType": "من فضلك اختر نوع التكلفة",
     "distanceBetweenClientAndStoreBranch": "المسافة بين العميل وفرع المتجر",
     "editAds": "تعديل الإعلان",
+    "storesCashRequest": "المتاجر (الطلبات الكاش)",
+    "duesCashRequest": "المستحقات (الطلبات الكاش)",
     "captainDaily": "يوميات الكباتن"
 }

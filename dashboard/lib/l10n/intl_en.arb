@@ -950,5 +950,7 @@
     "addAds": "Add Ads",
     "distanceBetweenClientAndStoreBranch": "المسافة بين العميل وفرع المتجر",
     "editAds": "Edit Ads",
+    "storesCashRequest": "Stores (cash request)",
+    "duesCashRequest": "dues (cash request)",
     "captainDaily": "captain daily"
 }

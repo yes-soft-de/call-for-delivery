@@ -507,6 +507,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "driverLicence": MessageLookupByLibrary.simpleMessage("Driver Licence"),
         "dues": MessageLookupByLibrary.simpleMessage("Dues"),
         "duesByFilter": MessageLookupByLibrary.simpleMessage("Dues by filter"),
+        "duesCashRequest":
+            MessageLookupByLibrary.simpleMessage("dues (cash request)"),
         "duesPayments":
             MessageLookupByLibrary.simpleMessage("Dues for payment"),
         "earnCash": MessageLookupByLibrary.simpleMessage("Earn Cash"),
@@ -1268,6 +1270,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Store Updated Successfully"),
         "stores": MessageLookupByLibrary.simpleMessage("Stores"),
         "storesActive": MessageLookupByLibrary.simpleMessage("Stores Active"),
+        "storesCashRequest":
+            MessageLookupByLibrary.simpleMessage("Stores (cash request)"),
         "storesInActive":
             MessageLookupByLibrary.simpleMessage(" Inactive Stores"),
         "storesList": MessageLookupByLibrary.simpleMessage("Stores List"),

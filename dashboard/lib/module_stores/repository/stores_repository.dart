@@ -3,8 +3,10 @@ import 'package:c4d/module_stores/request/active_store_request.dart';
 import 'package:c4d/module_stores/request/captain_not_arrived_request.dart';
 import 'package:c4d/module_stores/request/filter_store_activity_request.dart';
 import 'package:c4d/module_stores/request/order_filter_request.dart';
+import 'package:c4d/module_stores/request/stores_dues_request.dart';
 import 'package:c4d/module_stores/response/order/order_captain_not_arrived/orders_not_arrived_response.dart';
 import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
+import 'package:c4d/module_stores/response/stores_dues_response/stores_dues_response/stores_dues_response.dart';
 import 'package:c4d/module_stores/response/top_active_store.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
@@ -160,5 +162,20 @@ class StoresRepository {
 
     if (response == null) return null;
     return TopActiveStoreResponse.fromJson(response);
+  }
+
+  Future<StoresDuesResponse?> getStoresDues(StoresDuesRequest request) async {
+    var token = await _authService.getToken();
+
+    request.isPaid = '2';
+
+    dynamic response = await _apiClient.post(
+      Urls.STORES_DUES,
+      await request.toMap(),
+      headers: {'Authorization': 'Bearer $token'},
+    );
+
+    if (response == null) return null;
+    return StoresDuesResponse.fromJson(response);
   }
 }
