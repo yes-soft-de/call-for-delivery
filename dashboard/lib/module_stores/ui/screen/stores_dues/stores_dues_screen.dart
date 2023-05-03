@@ -41,16 +41,13 @@ class StoresDuesScreenState extends State<StoresDuesScreen> {
     super.initState();
   }
 
-  // CaptainFinanceDailyStateManager get manager => widget._manager;
-
   void refresh() {
     if (mounted) setState(() {});
   }
 
-  // void getAccount() {
-  //   widget._manager.getCaptainsFinanceDailyNew(this, filter);
-  //   refresh();
-  // }
+  void getStoresDues() {
+    widget._manager.getStoresDues(this, filter);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,10 +87,9 @@ class StoresDuesScreenState extends State<StoresDuesScreen> {
                         splashFactory: NoSplash.splashFactory,
                         onTap: () {
                           currentIndex = 0;
-                          // filter = CaptainDailyFinanceRequest(isPaid: 176);
+                          filter = StoresDuesRequest(isPaid: '2');
                           refresh();
-                          // TODO: paid not paid
-                          // widget._manager.getCaptainsFinanceDailyNew(this, filter);
+                          widget._manager.getStoresDues(this, filter);
                         },
                         child: AnimatedContainer(
                           height: 40,
@@ -134,10 +130,9 @@ class StoresDuesScreenState extends State<StoresDuesScreen> {
                         splashFactory: NoSplash.splashFactory,
                         onTap: () {
                           currentIndex = 1;
-                          // filter = CaptainDailyFinanceRequest(isPaid: null);
+                          filter = StoresDuesRequest(isPaid: '1');
                           refresh();
-                          // TODO: paid not paid
-                          // widget._manager.getCaptainsFinanceDailyNew(this, filter);
+                          widget._manager.getStoresDues(this, filter);
                         },
                         child: AnimatedContainer(
                           height: 40,
