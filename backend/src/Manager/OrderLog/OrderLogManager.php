@@ -59,4 +59,12 @@ class OrderLogManager
 
         return $orderLogArrayResult;
     }
+
+    /**
+     * Get the creation date of the order log record which state is delivered
+     */
+    public function getDeliveredStateOrderLogCreatedAtForAdminByOrderId(int $orderId): array
+    {
+        return $this->orderLogEntityRepository->findBy(['orderId' => $orderId], ['id' => 'ASC'], 1);
+    }
 }

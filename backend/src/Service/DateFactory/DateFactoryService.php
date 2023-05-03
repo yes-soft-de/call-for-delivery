@@ -2,7 +2,6 @@
 
 namespace App\Service\DateFactory;
 
-use App\Constant\Order\OrderUpdateStateConstant;
 use DateTime;
 use DateTimeInterface;
 
@@ -56,25 +55,21 @@ class DateFactoryService
         return date_modify($deliveryDateTime, '30 minutes ago');
     }
 
-    public function getLastSevenDaysDatesAsArray(): array
+    /**
+     * Get last seven days dates (without time) depending on optional time zone
+     */
+    public function getLastSevenDaysDatesAsArrayAndDependingOnOptionalTimeZone(string $timeZone = null): array
     {
         return [
-            (new DateTime('now'))->format('Y-m-d'),
-            (new DateTime('-1 day'))->format('Y-m-d'),
-            (new DateTime('-2 day'))->format('Y-m-d'),
-            (new DateTime('-3 day'))->format('Y-m-d'),
-            (new DateTime('-4 day'))->format('Y-m-d'),
-            (new DateTime('-5 day'))->format('Y-m-d'),
-            (new DateTime('-6 day'))->format('Y-m-d')
+            (new DateTime('now'))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d'),
+            (new DateTime('-1 day'))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d'),
+            (new DateTime('-2 day'))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d'),
+            (new DateTime('-3 day'))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d'),
+            (new DateTime('-4 day'))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d'),
+            (new DateTime('-5 day'))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d'),
+            (new DateTime('-6 day'))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d')
         ];
     }
-
-//    public function getDateTimeMinusThirteenMinutesByDateTimeInterface(DateTimeInterface $dateTimeInterface): DateTime|bool
-//    {
-//        $dateTime = DateTime::createFromInterface($dateTimeInterface);
-//
-//        return date_modify($dateTime, '-30 minutes');
-//    }
 
     public function sumDaysWithDateTimeInterface(DateTimeInterface $dateTimeInterface, int $days): DateTime|bool
     {
