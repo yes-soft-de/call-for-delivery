@@ -167,8 +167,6 @@ class StoresRepository {
   Future<StoresDuesResponse?> getStoresDues(StoresDuesRequest request) async {
     var token = await _authService.getToken();
 
-    request.isPaid = '2';
-
     dynamic response = await _apiClient.post(
       Urls.STORES_DUES,
       await request.toMap(),
