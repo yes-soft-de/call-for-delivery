@@ -1,6 +1,6 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/module_stores/model/stores_dues/stores_dues.dart';
+import 'package:c4d/module_stores/model/stores_dues/stores_dues_model.dart';
 import 'package:c4d/module_stores/request/stores_dues_request.dart';
 import 'package:c4d/module_stores/service/store_service.dart';
 import 'package:c4d/module_stores/ui/screen/stores_dues/stores_dues_screen.dart';

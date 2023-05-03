@@ -1,6 +1,6 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_stores/model/stores_dues/stores_dues.dart';
+import 'package:c4d/module_stores/model/stores_dues/stores_dues_model.dart';
 import 'package:c4d/module_stores/ui/screen/stores_dues/stores_dues_screen.dart';
 import 'package:c4d/module_stores/ui/widget/stores_dues/store_dues_card.dart';
 import 'package:c4d/utils/components/empty_screen.dart';

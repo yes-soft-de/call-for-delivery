@@ -1,5 +1,5 @@
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_stores/model/stores_dues/stores_dues.dart';
+import 'package:c4d/module_stores/model/stores_dues/stores_dues_model.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:flutter/material.dart';
 
