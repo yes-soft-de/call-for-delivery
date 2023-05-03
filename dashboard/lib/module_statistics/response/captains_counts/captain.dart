@@ -16,9 +16,9 @@ class Captain {
       images: json['images'] == null
           ? null
           : Image.fromJson(json['images'] as Map<String, dynamic>),
-      createdAt: json['orderCreatedAt'] == null
+      createdAt: json['orderDeliveredAt'] == null
           ? null
-          : CreatedAt.fromJson(json['orderCreatedAt'] as Map<String, dynamic>),
+          : CreatedAt.fromJson(json['orderDeliveredAt'] as Map<String, dynamic>),
     );
   }
 

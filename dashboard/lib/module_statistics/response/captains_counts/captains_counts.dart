@@ -17,9 +17,9 @@ class CaptainsCounts {
     return CaptainsCounts(
       active: json['active'] as int?,
       inactive: json['inactive'] as int?,
-      lastThreeActive: (json['lastThreeActive'] as List<dynamic>?)
-          ?.map((e) => Captain.fromJson(e as Map<String, dynamic>))
-          .toList(),
+      // lastThreeActive: (json['lastThreeActive'] as List<dynamic>?)
+      //     ?.map((e) => Captain.fromJson(e as Map<String, dynamic>))
+      //     .toList(),
       lastFiveDeliveredOrdersCaptains:
           (json['lastFiveDeliveredOrdersCaptains'] as List<dynamic>?)
               ?.map((e) => Captain.fromJson(e as Map<String, dynamic>))
