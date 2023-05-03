@@ -16,9 +16,9 @@ class StoresCounts {
   factory StoresCounts.fromJson(Map<String, dynamic> json) => StoresCounts(
         active: json['active'] as int?,
         inactive: json['inactive'] as int?,
-        lastThreeActive: (json['lastThreeActive'] as List<dynamic>?)
-            ?.map((e) => Store.fromJson(e as Map<String, dynamic>))
-            .toList(),
+        // lastThreeActive: (json['lastThreeActive'] as List<dynamic>?)
+        //     ?.map((e) => Store.fromJson(e as Map<String, dynamic>))
+        //     .toList(),
         lastFiveCreatedOrderStores: (json['lastFiveCreatedOrderStores'] as List<dynamic>?)
             ?.map((e) => Store.fromJson(e as Map<String, dynamic>))
             .toList(),
