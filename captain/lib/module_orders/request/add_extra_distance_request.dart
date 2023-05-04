@@ -1,7 +1,8 @@
+
 class AddExtraDistanceRequest {
   int? id;
   String? storeBranchToClientDistanceAdditionExplanation;
-  Map? destination;
+  Destination? destination;
   double? additionalDistance;
 
   AddExtraDistanceRequest({
@@ -11,26 +12,34 @@ class AddExtraDistanceRequest {
     this.additionalDistance,
   });
 
-  factory AddExtraDistanceRequest.fromJson(Map<String, dynamic> json) {
-    return AddExtraDistanceRequest(
-      id: json['orderId'] as int?,
-      storeBranchToClientDistanceAdditionExplanation:
-          json['storeBranchToClientDistanceAdditionExplanation'] as String?,
-      destination: json['destination'],
-    );
-  }
-
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {};
-    map['orderId'] = id;
+    map['id'] = id;
     map['storeBranchToClientDistanceAdditionExplanation'] =
         storeBranchToClientDistanceAdditionExplanation;
     if (destination != null) {
-      map['destination'] = destination;
+      map['destination'] = destination?.toJson();
     }
     if (additionalDistance != null) {
       map['additionalDistance'] = additionalDistance;
     }
+    return map;
+  }
+}
+class Destination {
+  
+  double? lat;
+  double? lon;
+
+  Destination({
+    this.lat,
+    this.lon,
+  });
+
+  Map<String,dynamic> toJson(){
+    Map<String,dynamic> map = {};
+    map['lat'] = lat;
+    map['lon'] = lon;
     return map;
   }
 }
