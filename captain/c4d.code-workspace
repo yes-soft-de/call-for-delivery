@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../../../Dashboard/call-for-delivery/dashboard"
+		},
+		{
+			"path": "../../../Store/call-for-delivery/store_owner"
+		}
+	]
+}
