@@ -24,6 +24,7 @@ class Data {
   String? storeOwnerName;
   ImageUrl? image;
   dynamic phone;
+  String? userId;
 
   Date? closingTime;
   Date? openingTime;
@@ -41,6 +42,7 @@ class Data {
     this.storeOwnerName,
     this.image,
     this.phone,
+    this.userId,
     this.closingTime,
     this.openingTime,
     this.status,
@@ -60,6 +62,7 @@ class Data {
     roomId = json['roomId'];
     image = json['images'] != null ? ImageUrl.fromJson(json['images']) : null;
     phone = json['phone'];
+    userId = json['userId'];
     closingTime =
         json['closingTime'] != null ? Date.fromJson(json['closingTime']) : null;
     openingTime =
