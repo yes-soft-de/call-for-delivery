@@ -229,30 +229,35 @@ class AdminStoreOwnerDuesFromCashOrdersService
             $yearMonthsArray = $this->getStartAndEndDateTimeOfEachMonthByYear(date('Y'));
         }
 
-        foreach ($yearMonthsArray as $key => $value) {
-            $request->setFromDate($value[0]);
-            $request->setToDate($value[1]);
+        foreach ($yearMonthsArray as $month) {
+            $index = 0;
+
+            $request->setFromDate($month[1]);
+            $request->setToDate($month[2]);
 
             $storeOwnersDueFromCashOrdersArray = $this->adminStoreOwnerDuesFromCashOrdersManager->filterStoreOwnerDueFromCashOrderByAdmin($request);
 
             if (count($storeOwnersDueFromCashOrdersArray) > 0) {
-                $response[$key] = $this->autoMapping->map('array', StoreOwnerDueFromCashOrderMonthlyFilterByAdminResponse::class,
+                $response[$index] = $this->autoMapping->map('array', StoreOwnerDueFromCashOrderMonthlyFilterByAdminResponse::class,
                     $storeOwnersDueFromCashOrdersArray);
 
-                $response[$key]->storeOwnerProfileId = $storeOwnersDueFromCashOrdersArray[0]->getStore()->getId();
-                $response[$key]->storeOwnerName = $storeOwnersDueFromCashOrdersArray[0]->getStore()->getStoreOwnerName();
-                $response[$key]->image = $this->uploadFileHelperService->getImageParams($storeOwnersDueFromCashOrdersArray[0]->getStore()->getImages());
-                $response[$key]->amount = $this->getStoreDueFromCashOrderSumByStoreDueEntitiesArray($storeOwnersDueFromCashOrdersArray);
+                $response[$index]->month = $month[0];
+                $response[$index]->storeOwnerProfileId = $storeOwnersDueFromCashOrdersArray[0]->getStore()->getId();
+                $response[$index]->storeOwnerName = $storeOwnersDueFromCashOrdersArray[0]->getStore()->getStoreOwnerName();
+                $response[$index]->image = $this->uploadFileHelperService->getImageParams($storeOwnersDueFromCashOrdersArray[0]->getStore()->getImages());
+                $response[$index]->amount = $this->getStoreDueFromCashOrderSumByStoreDueEntitiesArray($storeOwnersDueFromCashOrdersArray);
                 // Calculate the remaining payment for the store
                 $paymentSum = $this->calculateStoreOwnerDuePaymentSumByStoreOwnerDueFromCashOrderEntitiesArray($storeOwnersDueFromCashOrdersArray);
 
                 if ($paymentSum === 0.0) {
-                    $response[$key]->toBePaid = $response[$key]->amount;
+                    $response[$index]->toBePaid = $response[$index]->amount;
 
                 } else {
-                    $response[$key]->toBePaid = $response[$key]->amount - $paymentSum;
+                    $response[$index]->toBePaid = $response[$index]->amount - $paymentSum;
                 }
             }
+
+            $index++;
         }
 
         return $response;
