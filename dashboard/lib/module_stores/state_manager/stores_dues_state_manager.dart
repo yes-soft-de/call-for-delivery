@@ -25,8 +25,8 @@ class StoresDuesStateManager {
     }
     _storesService.getStoresDues(request).then((value) {
       if (value.hasError) {
-        _stateSubject.add(
-            StoresDuesLoadedState(screenState, null, error: value.error));
+        _stateSubject
+            .add(StoresDuesLoadedState(screenState, null, error: value.error));
       } else if (value.isEmpty) {
         _stateSubject
             .add(StoresDuesLoadedState(screenState, null, empty: true));

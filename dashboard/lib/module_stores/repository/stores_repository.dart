@@ -183,7 +183,7 @@ class StoresRepository {
     var token = await _authService.getToken();
 
     dynamic response = await _apiClient.post(
-      Urls.STORES_DUES,
+      Urls.STORE_DUES,
       request.toMap(),
       headers: {'Authorization': 'Bearer $token'},
     );

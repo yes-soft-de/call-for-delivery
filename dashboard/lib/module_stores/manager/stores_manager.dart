@@ -56,7 +56,7 @@ class StoreManager {
   Future<TopActiveStoreResponse?> filterStoreActivity(
           FilterStoreActivityRequest request) async =>
       await _storesRepository.filterStoreActivity(request);
-      
+
   Future<StoresDuesResponse?> getStoresDues(StoresDuesRequest request) async =>
       _storesRepository.getStoresDues(request);
 

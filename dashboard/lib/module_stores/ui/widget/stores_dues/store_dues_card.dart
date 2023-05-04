@@ -1,5 +1,6 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/model/stores_dues/stores_dues_model.dart';
+import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:flutter/material.dart';
 
@@ -12,11 +13,10 @@ class StoreDuesCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        // TODO:
-        // Navigator.of(context).pushNamed(
-        //   PaymentsRoutes.CAPTAIN_DAILY_PAYMENTS,
-        //   arguments: [model?.captainProfileId, model?.captainName],
-        // );
+        Navigator.of(context).pushNamed(
+          StoresRoutes.STORE_DUES_SCREEN,
+          arguments: [model?.storeOwnerProfileId, model?.storeOwnerName],
+        );
       },
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -85,8 +85,8 @@ class StoreDuesCard extends StatelessWidget {
                         subtitle:
                             model?.amountSum.toString() ?? '' + S.current.sar),
                     verticalTile(context,
-                        title: S.current.remainingtoPay,
-                        subtitle: '${model?.toBePaid.toString() ?? ''}'),
+                        title: _getToBePaidFieldTitle(model?.toBePaid ?? 0),
+                        subtitle: '${model?.toBePaid?.abs().toString() ?? ''}'),
                   ],
                 ),
               ],
@@ -95,6 +95,13 @@ class StoreDuesCard extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _getToBePaidFieldTitle(int toBePaid) {
+    if (toBePaid < 0) {
+      return S.current.prePayments;
+    }
+    return S.current.leftToPay;
   }
 
   Widget verticalTile(context,

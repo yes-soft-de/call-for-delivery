@@ -146,7 +146,7 @@ class Urls {
   static const STORES_DUES =
       '$BASE_API_ORDER_CASH_FINANCE/filterstoreduesumfromcashorderbyadmin';
   static const STORE_DUES =
-      '$BASE_API_ORDER_CASH_FINANCE/filterstoreduefromcashorderbyadmin';
+      '$BASE_API_ORDER_CASH_FINANCE/filterstoreduefromcashordermonthlybyadmin';
 
   static const FILTER_OWNER_ORDERS_API =
       BASE_API_ORDER + '/filterordersbyadmin';

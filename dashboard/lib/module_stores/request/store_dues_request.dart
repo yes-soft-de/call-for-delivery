@@ -1,33 +1,26 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class StoreDuesRequest {
-  int StoreOwnerProfileId;
-  String fromDate;
-  String toDate;
-  String isPaid;
+  int storeOwnerProfileId;
+  String? year;
 
   StoreDuesRequest({
-    required this.StoreOwnerProfileId,
-    required this.fromDate,
-    required this.toDate,
-    required this.isPaid,
+    required this.storeOwnerProfileId,
+    this.year,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'StoreOwnerProfileId': StoreOwnerProfileId,
-      'fromDate': fromDate,
-      'toDate': toDate,
-      'isPaid': isPaid,
+      'storeOwnerProfileId': storeOwnerProfileId,
+      'year': year,
     };
   }
 
   factory StoreDuesRequest.fromMap(Map<String, dynamic> map) {
     return StoreDuesRequest(
-      StoreOwnerProfileId: (map['StoreOwnerProfileId'] ?? 0) as int,
-      fromDate: (map['fromDate'] ?? '') as String,
-      toDate: (map['toDate'] ?? '') as String,
-      isPaid: (map['isPaid'] ?? '') as String,
+      storeOwnerProfileId: (map['storeOwnerProfileId'] ?? 0) as int,
+      year: map['year'] != null ? map['year'] as String : null,
     );
   }
 

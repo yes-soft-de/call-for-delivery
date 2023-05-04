@@ -9570,6 +9570,186 @@ class S {
     );
   }
 
+  /// `select year`
+  String get selectYear {
+    return Intl.message(
+      'select year',
+      name: 'selectYear',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `year`
+  String get year {
+    return Intl.message(
+      'year',
+      name: 'year',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `January`
+  String get fJanuary {
+    return Intl.message(
+      'January',
+      name: 'fJanuary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `February`
+  String get fFebruary {
+    return Intl.message(
+      'February',
+      name: 'fFebruary',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `March`
+  String get fMarch {
+    return Intl.message(
+      'March',
+      name: 'fMarch',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `April`
+  String get fApril {
+    return Intl.message(
+      'April',
+      name: 'fApril',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `May`
+  String get fMay {
+    return Intl.message(
+      'May',
+      name: 'fMay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `June`
+  String get fJune {
+    return Intl.message(
+      'June',
+      name: 'fJune',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `July`
+  String get fJuly {
+    return Intl.message(
+      'July',
+      name: 'fJuly',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `August`
+  String get fAugust {
+    return Intl.message(
+      'August',
+      name: 'fAugust',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `September`
+  String get fSeptember {
+    return Intl.message(
+      'September',
+      name: 'fSeptember',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `October`
+  String get fOctober {
+    return Intl.message(
+      'October',
+      name: 'fOctober',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `November`
+  String get fNovember {
+    return Intl.message(
+      'November',
+      name: 'fNovember',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `December`
+  String get fDecember {
+    return Intl.message(
+      'December',
+      name: 'fDecember',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `all paid`
+  String get allPaid {
+    return Intl.message(
+      'all paid',
+      name: 'allPaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `unpaid`
+  String get unPaid {
+    return Intl.message(
+      'unpaid',
+      name: 'unPaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `partially paid`
+  String get partiallyPaid {
+    return Intl.message(
+      'partially paid',
+      name: 'partiallyPaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `prepayment`
+  String get prePayments {
+    return Intl.message(
+      'prepayment',
+      name: 'prePayments',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `captain daily`
   String get captainDaily {
     return Intl.message(

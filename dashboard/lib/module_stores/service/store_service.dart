@@ -1,4 +1,3 @@
-import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/manager/orders_manager/orders_manager.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_stores/model/order/order_captain_not_arrived.dart';
@@ -232,4 +231,6 @@ class StoresService {
     if (response.data == null) return DataModel.empty();
     return StoreDuesModel.withData(response);
   }
+
+   makePayment(dynamic request){}
 }

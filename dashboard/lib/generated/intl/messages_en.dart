@@ -110,6 +110,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "all": MessageLookupByLibrary.simpleMessage("All"),
         "allOrders": MessageLookupByLibrary.simpleMessage("all orders"),
         "allOrdersCount": MessageLookupByLibrary.simpleMessage("Orders count"),
+        "allPaid": MessageLookupByLibrary.simpleMessage("all paid"),
         "alreadyCanceled":
             MessageLookupByLibrary.simpleMessage("Already canceled"),
         "amount": MessageLookupByLibrary.simpleMessage("Amount"),
@@ -569,6 +570,18 @@ class MessageLookup extends MessageLookupByLibrary {
         "extraOrderDeliveryCost":
             MessageLookupByLibrary.simpleMessage("Extra order delivery cost"),
         "extraTax": MessageLookupByLibrary.simpleMessage("vat fee"),
+        "fApril": MessageLookupByLibrary.simpleMessage("April"),
+        "fAugust": MessageLookupByLibrary.simpleMessage("August"),
+        "fDecember": MessageLookupByLibrary.simpleMessage("December"),
+        "fFebruary": MessageLookupByLibrary.simpleMessage("February"),
+        "fJanuary": MessageLookupByLibrary.simpleMessage("January"),
+        "fJuly": MessageLookupByLibrary.simpleMessage("July"),
+        "fJune": MessageLookupByLibrary.simpleMessage("June"),
+        "fMarch": MessageLookupByLibrary.simpleMessage("March"),
+        "fMay": MessageLookupByLibrary.simpleMessage("May"),
+        "fNovember": MessageLookupByLibrary.simpleMessage("November"),
+        "fOctober": MessageLookupByLibrary.simpleMessage("October"),
+        "fSeptember": MessageLookupByLibrary.simpleMessage("September"),
         "failed": MessageLookupByLibrary.simpleMessage("Failed"),
         "failureRenew": MessageLookupByLibrary.simpleMessage(
             "Your renew has been failed please try again"),
@@ -966,6 +979,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "paidOrder": MessageLookupByLibrary.simpleMessage("Paid Order"),
         "paidPartiallyCaptainFinanceDaily":
             MessageLookupByLibrary.simpleMessage("Paid partially"),
+        "partiallyPaid": MessageLookupByLibrary.simpleMessage("partially paid"),
         "partners": MessageLookupByLibrary.simpleMessage("Our partners"),
         "password": MessageLookupByLibrary.simpleMessage("Password"),
         "passwordIsTooShort":
@@ -1072,6 +1086,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please provide your address on our map"),
         "pleaseSelectABranch":
             MessageLookupByLibrary.simpleMessage("Please Select a Branch"),
+        "prePayments": MessageLookupByLibrary.simpleMessage("prepayment"),
         "preferredLanguage":
             MessageLookupByLibrary.simpleMessage("Preferred Language"),
         "pressHere": MessageLookupByLibrary.simpleMessage("Press here"),
@@ -1189,6 +1204,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "seconds": MessageLookupByLibrary.simpleMessage("seconds"),
         "selectLanguage":
             MessageLookupByLibrary.simpleMessage("Select Language"),
+        "selectYear": MessageLookupByLibrary.simpleMessage("select year"),
         "selected": MessageLookupByLibrary.simpleMessage("Selected"),
         "selectedBranchesMenu":
             MessageLookupByLibrary.simpleMessage("My Selected Branches"),
@@ -1380,6 +1396,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "unActiveOffer": MessageLookupByLibrary.simpleMessage("Inactive offer"),
         "unAssignOrder":
             MessageLookupByLibrary.simpleMessage("Un assign order"),
+        "unPaid": MessageLookupByLibrary.simpleMessage("unpaid"),
         "unPaidOrder": MessageLookupByLibrary.simpleMessage("Unpaid Order"),
         "unableToDeletePaymentsExist": MessageLookupByLibrary.simpleMessage(
             "Unable to delete this subscription , It has a recorded payments"),
@@ -1487,6 +1504,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "withTaxes": MessageLookupByLibrary.simpleMessage("With taxes "),
         "withoutTax": MessageLookupByLibrary.simpleMessage("Without vat fee"),
         "workTime": MessageLookupByLibrary.simpleMessage("Store Shift"),
+        "year": MessageLookupByLibrary.simpleMessage("year"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
         "yesterday": MessageLookupByLibrary.simpleMessage("Yesterday"),
         "youCanChangeCaptainFinancialPlan":
