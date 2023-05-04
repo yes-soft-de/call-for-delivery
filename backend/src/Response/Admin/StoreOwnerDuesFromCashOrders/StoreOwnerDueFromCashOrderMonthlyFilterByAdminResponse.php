@@ -8,6 +8,8 @@ class StoreOwnerDueFromCashOrderMonthlyFilterByAdminResponse
 {
     public int $id;
 
+    public string $month;
+
     public int $storeOwnerProfileId;
 
     public string $storeOwnerName;

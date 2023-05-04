@@ -197,8 +197,8 @@ class AdminStoreOwnerDuesFromCashOrdersController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *              @OA\Property(type="object",
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(type="object",
      *                  @OA\Property(type="integer", property="id"),
      *                  @OA\Property(type="integer", property="storeOwnerProfileId"),
      *                  @OA\Property(type="string", property="storeOwnerName"),
