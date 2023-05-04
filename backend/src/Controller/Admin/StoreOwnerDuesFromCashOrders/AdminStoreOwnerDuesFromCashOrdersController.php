@@ -165,8 +165,8 @@ class AdminStoreOwnerDuesFromCashOrdersController extends BaseController
     }
 
     /**
-     * admin: filter store owners due from cash orders by admin
-     * @Route("filterstoreduefromcashorderbyadmin", name="filterStoreOwnerDueFromCashOrderByAdmin", methods={"POST"})
+     * admin: filter store owners due from cash orders by admin and according to the months of the year
+     * @Route("filterstoreduefromcashordermonthlybyadmin", name="filterStoreOwnerDueFromCashOrderMonthlyByAdmin", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
      * @return JsonResponse
@@ -197,8 +197,8 @@ class AdminStoreOwnerDuesFromCashOrdersController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="array", property="Data",
-     *              @OA\Items(
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="object",
      *                  @OA\Property(type="integer", property="id"),
      *                  @OA\Property(type="integer", property="storeOwnerProfileId"),
      *                  @OA\Property(type="string", property="storeOwnerName"),
@@ -206,11 +206,7 @@ class AdminStoreOwnerDuesFromCashOrdersController extends BaseController
      *                      @OA\Items()
      *                  ),
      *                  @OA\Property(type="number", property="amount"),
-     *                  @OA\Property(type="number", property="toBePaid"),
-     *                  @OA\Property(type="array", property="paymentFromCompanyToStore",
-     *                      @OA\Items()
-     *                  ),
-     *                  @OA\Property(type="integer", property="flag", example="1: paid. 2: not paid")
+     *                  @OA\Property(type="number", property="toBePaid")
      *              )
      *          )
      *      )
@@ -218,13 +214,13 @@ class AdminStoreOwnerDuesFromCashOrdersController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function filterStoreOwnerDueFromCashOrderByAdmin(Request $request): JsonResponse
+    public function filterStoreOwnerDueFromCashOrderMonthlyByAdmin(Request $request): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
 
         $request = $this->autoMapping->map(stdClass::class, StoreOwnerDueFromCashOrderFilterByAdminRequest::class, (object)$data);
 
-        $result = $this->adminStoreOwnerDuesFromCashOrdersService->filterStoreOwnerDueFromCashOrderByAdmin($request);
+        $result = $this->adminStoreOwnerDuesFromCashOrdersService->filterStoreOwnerDueFromCashOrderMonthlyByAdmin($request);
 
         return $this->response($result, self::FETCH);
     }

@@ -31,14 +31,35 @@ class StoreOwnerDueFromCashOrderFilterByAdminRequest
      */
     private $customizedTimezone;
 
+    /**
+     * @var string|null
+     */
+    private $year;
+
     public function getStoreOwnerProfileId(): ?int
     {
         return $this->storeOwnerProfileId;
     }
 
+    /**
+     * @param string|null $fromDate
+     */
+    public function setFromDate(?string $fromDate): void
+    {
+        $this->fromDate = $fromDate;
+    }
+
     public function getFromDate(): ?string
     {
         return $this->fromDate;
+    }
+
+    /**
+     * @param string|null $toDate
+     */
+    public function setToDate(?string $toDate): void
+    {
+        $this->toDate = $toDate;
     }
 
     public function getToDate(): ?string
@@ -54,5 +75,10 @@ class StoreOwnerDueFromCashOrderFilterByAdminRequest
     public function getCustomizedTimezone(): ?string
     {
         return $this->customizedTimezone;
+    }
+
+    public function getYear(): ?string
+    {
+        return $this->year;
     }
 }

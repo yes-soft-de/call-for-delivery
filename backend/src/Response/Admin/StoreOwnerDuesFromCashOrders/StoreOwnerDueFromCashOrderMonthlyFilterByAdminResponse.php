@@ -4,7 +4,7 @@ namespace App\Response\Admin\StoreOwnerDuesFromCashOrders;
 
 use OpenApi\Annotations as OA;
 
-class StoreOwnerDueFromCashOrderFilterByAdminResponse
+class StoreOwnerDueFromCashOrderMonthlyFilterByAdminResponse
 {
     public int $id;
 
@@ -21,13 +21,4 @@ class StoreOwnerDueFromCashOrderFilterByAdminResponse
     public float $amount;
 
     public float $toBePaid;
-
-    /**
-     * @OA\Property(type="array", property="paymentFromCompanyToStore",
-     *     @OA\Items(type="object"))
-     */
-    public $paymentFromCompanyToStore;
-
-    // 1: paid. 2: not paid.
-    public int $flag;
 }
