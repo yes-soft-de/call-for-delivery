@@ -102,16 +102,15 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                                                 screenState.orderId ?? ''),
                                             storeBranchToClientDistanceAdditionExplanation:
                                                 reason.text.trim(),
-                                            destination:Destination(
-                                              lat: double.tryParse(coord.text
-                                                  .trim()
-                                                  .split(',')[0]
-                                                  .trim()),
-                                              lon: double.tryParse(coord.text
-                                                  .trim()
-                                                  .split(',')[1]
-                                                  .trim())    
-                                            )));
+                                            destination: Destination(
+                                                lat: double.tryParse(coord.text
+                                                    .trim()
+                                                    .split(',')[0]
+                                                    .trim()),
+                                                lon: double.tryParse(coord.text
+                                                    .trim()
+                                                    .split(',')[1]
+                                                    .trim()))));
                                   } else {
                                     Fluttertoast.showToast(
                                         msg: S.current.pleaseEnterValidCoord);
@@ -354,8 +353,8 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                   leading: const Icon(
                     Icons.store_rounded,
                   ),
-                  title: Text(S.current.store),
-                  subtitle: Text(orderInfo.storeName),
+                  title: Text(S.current.branch),
+                  subtitle: Text(orderInfo.branchName),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -368,8 +367,8 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                   leading: const Icon(
                     Icons.store_rounded,
                   ),
-                  title: Text(S.current.branch),
-                  subtitle: Text(orderInfo.branchName),
+                  title: Text(S.current.store),
+                  subtitle: Text(orderInfo.storeName),
                 ),
                 Visibility(
                   visible: orderInfo.branchPhone != null,
@@ -553,15 +552,15 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                   ),
                   title: Text(S.current.orderDetails),
                   subtitle: SelectableLinkify(
-                              onOpen: (link) async {
-                                if (await canLaunchUrl(Uri.parse(link.url))) {
-                                  await launchUrl(Uri.parse(link.url));
-                                } else {
-                                  Fluttertoast.showToast(msg: 'Invalid link');
-                                }
-                              },
-                              text: orderInfo.note,
-                            ),
+                    onOpen: (link) async {
+                      if (await canLaunchUrl(Uri.parse(link.url))) {
+                        await launchUrl(Uri.parse(link.url));
+                      } else {
+                        Fluttertoast.showToast(msg: 'Invalid link');
+                      }
+                    },
+                    text: orderInfo.note,
+                  ),
                   trailing: Material(
                     color: Colors.transparent,
                     child: IconButton(
