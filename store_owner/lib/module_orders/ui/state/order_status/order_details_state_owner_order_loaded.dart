@@ -26,6 +26,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 
 class OrderDetailsStateOwnerOrderLoaded extends States {
   OrderDetailsModel orderInfo;
@@ -40,7 +41,8 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
       screenState.alertFlag = false;
       showOwnerAlertConfirm();
     } else {}
-    if (StatusHelper.getOrderStatusIndexForStore(orderInfo.state) <= StatusHelper.getOrderStatusIndexForStore(OrderStatusEnum.IN_STORE)) {
+    if (StatusHelper.getOrderStatusIndexForStore(orderInfo.state) <=
+        StatusHelper.getOrderStatusIndexForStore(OrderStatusEnum.IN_STORE)) {
       screenState.canRemoveIt = orderInfo.canRemove;
     }
     screenState.refresh();
@@ -574,7 +576,19 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                       Icons.info,
                     ),
                     title: Text(S.current.orderDetails),
-                    subtitle: Text(orderInfo.note ?? ''),
+                    subtitle: Linkify(
+                      text: orderInfo.note ?? '',
+                      onOpen: (link) async {
+                        var uri = Uri.tryParse(link.url) ?? Uri();
+                        var canLaunch = await canLaunchUrl(uri);
+
+                        if (canLaunch) {
+                          await launchUrl(uri,
+                              mode: LaunchMode.externalApplication);
+                        }
+                      },
+                      options: LinkifyOptions(removeWww: true, looseUrl: true),
+                    ),
                   ),
                 ),
                 Visibility(

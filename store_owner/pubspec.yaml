@@ -125,6 +125,8 @@ dependencies:
   file_picker: ^5.2.5
   flutter_swipe_detector: ^2.0.0
   flutter_native_timezone: ^2.0.0
+  flutter_linkify: ^5.0.2
+
 
 
 dev_dependencies:
@@ -148,7 +150,6 @@ dev_dependencies:
   permission_handler: ^10.0.0
   internet_connection_checker: ^1.0.0+1
   package_info_plus: ^3.0.2
-  flutter_linkify: ^5.0.2
   new_version_plus: ^0.0.9
 
   
