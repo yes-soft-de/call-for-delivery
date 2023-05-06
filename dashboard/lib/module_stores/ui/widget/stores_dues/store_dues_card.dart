@@ -6,8 +6,10 @@ import 'package:flutter/material.dart';
 
 class StoreDuesCard extends StatelessWidget {
   final StoresDuesModel? model;
+  final String isPaid;
 
-  const StoreDuesCard({Key? key, required this.model}) : super(key: key);
+  const StoreDuesCard({Key? key, required this.model, required this.isPaid})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,11 @@ class StoreDuesCard extends StatelessWidget {
       onTap: () {
         Navigator.of(context).pushNamed(
           StoresRoutes.STORE_DUES_SCREEN,
-          arguments: [model?.storeOwnerProfileId, model?.storeOwnerName],
+          arguments: [
+            model?.storeOwnerProfileId,
+            model?.storeOwnerName,
+            isPaid
+          ],
         );
       },
       child: Padding(

@@ -40,12 +40,14 @@ class StoresDuesLoadedState extends States {
       itemCount: model?.length ?? 0,
       itemBuilder: (context, index) {
         if (screenState.search == null) {
-          return StoreDuesCard(model: model?[index]);
+          return StoreDuesCard(
+              model: model?[index], isPaid: screenState.filter.isPaid);
         } else if (model?[index]
                 .storeOwnerName
                 ?.contains(screenState.search ?? '') ??
             false) {
-          return StoreDuesCard(model: model?[index]);
+          return StoreDuesCard(
+              model: model?[index], isPaid: screenState.filter.isPaid);
         }
 
         return SizedBox();

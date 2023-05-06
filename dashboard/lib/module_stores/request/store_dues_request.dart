@@ -4,16 +4,19 @@ import 'dart:convert';
 class StoreDuesRequest {
   int storeOwnerProfileId;
   String? year;
+  String? isPaid;
 
   StoreDuesRequest({
     required this.storeOwnerProfileId,
     this.year,
+    this.isPaid,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'storeOwnerProfileId': storeOwnerProfileId,
       'year': year,
+      'isPaid': isPaid,
     };
   }
 
@@ -21,6 +24,7 @@ class StoreDuesRequest {
     return StoreDuesRequest(
       storeOwnerProfileId: (map['storeOwnerProfileId'] ?? 0) as int,
       year: map['year'] != null ? map['year'] as String : null,
+      isPaid: map['isPaid'] != null ? map['isPaid'] as String : null,
     );
   }
 

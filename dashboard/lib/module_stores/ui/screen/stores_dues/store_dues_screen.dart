@@ -59,6 +59,7 @@ class StoreDuesScreenState extends State<StoreDuesScreen> {
       storeOwnerName = args[1];
       flag = false;
       filter.storeOwnerProfileId = storeOwnerId;
+      filter.isPaid = args[2];
       widget._manager.getStoreDues(this, filter);
     }
 

@@ -5,7 +5,7 @@ class StoresDuesRequest {
   String isPaid;
 
   StoresDuesRequest({
-    this.isPaid = '1',
+    this.isPaid = '2',
   });
 
   Map<String, dynamic> toMap() {
