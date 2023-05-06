@@ -699,5 +699,6 @@
     "yourBalance":"your balance",
     "id":"id",
     "valueMustBeGreaterThanZero":"your value must be greater than 0",
+    "unLimitedOrders":"unlimited orders",
     "adsAndOffers":"Ads & offers"
 }

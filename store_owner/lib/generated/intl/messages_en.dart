@@ -971,6 +971,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Transportation Count"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("Try again"),
         "unActiveOffer": MessageLookupByLibrary.simpleMessage("Inactive offer"),
+        "unLimitedOrders":
+            MessageLookupByLibrary.simpleMessage("unlimited orders"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "Your request not accepted from administration you can contact us to get info"),
         "unavailable": MessageLookupByLibrary.simpleMessage("Unavailable"),
