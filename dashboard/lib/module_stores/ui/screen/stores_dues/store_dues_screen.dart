@@ -33,7 +33,8 @@ class StoreDuesScreenState extends State<StoreDuesScreen> {
       if (mounted) setState(() {});
     });
 
-    filter = StoreDuesRequest(storeOwnerProfileId: 0);
+    filter = StoreDuesRequest(
+        storeOwnerProfileId: 0, year: DateTime.now().year.toString());
 
     super.initState();
   }
@@ -95,7 +96,6 @@ class StoreDuesScreenState extends State<StoreDuesScreen> {
                               return AlertDialog(
                                 title: Text(S.current.selectYear),
                                 content: Container(
-                                  // Need to use container to add size constraint.
                                   width: 300,
                                   height: 300,
                                   child: YearPicker(
@@ -104,18 +104,12 @@ class StoreDuesScreenState extends State<StoreDuesScreen> {
                                     lastDate:
                                         DateTime(DateTime.now().year + 100, 1),
                                     initialDate: DateTime.now(),
-                                    // save the selected date to _selectedDate DateTime variable.
-                                    // It's used to set the previous selected date when
-                                    // re-showing the dialog.
                                     selectedDate: _selectedDate,
                                     onChanged: (DateTime dateTime) {
-                                      // close the dialog when year is selected.
                                       _selectedDate = dateTime;
                                       Navigator.pop(context);
                                       filter.year = '${dateTime.year}';
                                       getStoresDues();
-                                      // Do something with the dateTime selected.
-                                      // Remember that you need to use dateTime.year to get the year
                                     },
                                   ),
                                 ),

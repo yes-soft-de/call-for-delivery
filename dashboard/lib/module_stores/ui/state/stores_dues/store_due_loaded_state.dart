@@ -7,6 +7,7 @@ import 'package:c4d/module_stores/ui/widget/stores_dues/store_dues_monthly_card.
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
+import 'package:c4d/utils/helpers/date_utilts.dart';
 import 'package:flutter/material.dart';
 
 class StoreDuesLoadedState extends States {
@@ -40,16 +41,22 @@ class StoreDuesLoadedState extends States {
         child: ListView.builder(
       itemCount: model.length,
       itemBuilder: (context, index) {
+        var monthDate = DateTime(
+            int.tryParse(screenState.filter.year ?? '0') ?? 0,
+            model[index].month,
+            1);
+
         return StoreDuesMonthlyCard(
           model: model[index],
           onPay: (amount, note) {
             screenState.stateManager.makePayments(
                 screenState,
                 CreateStorePaymentsRequest(
-                  storeId: model[index].storeOwnerProfileId,
-                  amount: amount,
-                  note: note,
-                ));
+                    storeId: model[index].storeOwnerProfileId,
+                    amount: amount,
+                    note: note,
+                    fromDate: monthDate.toIso8601String(),
+                    toDate: getLastDayOnMonth(monthDate).toIso8601String()));
           },
         );
       },

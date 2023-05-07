@@ -249,7 +249,6 @@ class _PayButton extends StatelessWidget {
                         },
                         numbers: true,
                         controller: _amount,
-                        hintText: '100',
                       ),
                     ),
                     ListTile(

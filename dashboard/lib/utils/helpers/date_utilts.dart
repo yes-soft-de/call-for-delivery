@@ -60,3 +60,8 @@ String getMonthFName(int month) {
   }
   return '';
 }
+
+DateTime getLastDayOnMonth(DateTime time) {
+  var lastDayDateTime = new DateTime(time.year, time.month + 1, 0);
+  return lastDayDateTime;
+}
