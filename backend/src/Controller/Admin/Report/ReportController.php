@@ -144,7 +144,9 @@ class ReportController extends BaseController
      *                                          @OA\Property(type="string", property="baseURL")
      *                                      )
      *                                  ),
-     *                                  @OA\Property(type="object", property="createdAt")
+     *                                  @OA\Property(type="object", property="createdAt"),
+     *                                  @OA\Property(type="integer", property="orderId"),
+     *                                  @OA\Property(type="object", property="orderCreatedAt")
      *                              )
      *                          )
      *                      )
@@ -178,7 +180,9 @@ class ReportController extends BaseController
      *                                          @OA\Property(type="string", property="baseURL")
      *                                      )
      *                                  ),
-     *                                  @OA\Property(type="object", property="createdAt")
+     *                                  @OA\Property(type="object", property="createdAt"),
+     *                                  @OA\Property(type="integer", property="orderId"),
+     *                                  @OA\Property(type="object", property="orderDeliveredAt")
      *                              )
      *                          )
      *                      )
@@ -192,10 +196,6 @@ class ReportController extends BaseController
      */
     public function getDashboardStatisticsForAdmin(string $customizedTimezone = null): JsonResponse
     {
-        // $data = json_decode($request->getContent(), true);
-
-        // $request = $this->autoMapping->map(stdClass::class, DashboardStatisticsPostRequest::class, (object)$data);
-
         $result = $this->reportService->getDashboardStatisticsForAdmin($customizedTimezone);
 
         return $this->response($result, self::FETCH);

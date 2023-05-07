@@ -3,22 +3,21 @@
 namespace App\Manager\Admin\StoreOwnerDuesFromCashOrders;
 
 use App\Repository\StoreOwnerDuesFromCashOrdersEntityRepository;
+use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreDueSumFromCashOrderFilterByAdminRequest;
+use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDueFromCashOrderFilterByAdminRequest;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrderDeleteByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersFilterGetRequest;
-use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\StoreOwnerPaymentFromCompanyEntity;
 use App\Constant\Order\OrderAmountCashConstant;
 
 class AdminStoreOwnerDuesFromCashOrdersManager
 {
-    private StoreOwnerDuesFromCashOrdersEntityRepository $storeOwnerDuesFromCashOrdersEntityRepository;
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(StoreOwnerDuesFromCashOrdersEntityRepository $storeOwnerDuesFromCashOrdersEntityRepository, EntityManagerInterface $entityManager)
+    public function __construct(
+        private StoreOwnerDuesFromCashOrdersEntityRepository $storeOwnerDuesFromCashOrdersEntityRepository,
+        private EntityManagerInterface $entityManager
+    )
     {
-        $this->storeOwnerDuesFromCashOrdersEntityRepository = $storeOwnerDuesFromCashOrdersEntityRepository;
-        $this->entityManager = $entityManager;
     }
 
     public function filterStoreOwnerDuesFromCashOrders(StoreOwnerDuesFromCashOrdersFilterGetRequest $request): ?array
@@ -76,5 +75,30 @@ class AdminStoreOwnerDuesFromCashOrdersManager
         $this->entityManager->flush();
 
         return [$storeDuesFromCashOrder, $payment];
+    }
+
+    /**
+     * Get all stores due sum from cash orders depending on filtering options
+     */
+    public function filterStoreDueFromCashOrdersByAdmin(StoreDueSumFromCashOrderFilterByAdminRequest $request): array
+    {
+        return $this->storeOwnerDuesFromCashOrdersEntityRepository->filterStoreDueFromCashOrdersByAdmin($request);
+    }
+
+    /**
+     * Get the sum of a specific store due and depending on paid flag
+     */
+    public function getStoreOwnerDueSumFromCashOrderByIsPaidFlagAndStoreOwnerProfileId(int $storeOwnerProfileId, int $isPaid = null): array
+    {
+        return $this->storeOwnerDuesFromCashOrdersEntityRepository->getStoreOwnerDueSumFromCashOrderByIsPaidFlagAndStoreOwnerProfileId($storeOwnerProfileId,
+            $isPaid);
+    }
+
+    /**
+     * Filter all store owners due from cash orders by admin
+     */
+    public function filterStoreOwnerDueFromCashOrderByAdmin(StoreOwnerDueFromCashOrderFilterByAdminRequest $request): array
+    {
+        return $this->storeOwnerDuesFromCashOrdersEntityRepository->filterStoreOwnerDueFromCashOrderByAdmin($request);
     }
 }

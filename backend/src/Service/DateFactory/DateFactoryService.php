@@ -2,7 +2,8 @@
 
 namespace App\Service\DateFactory;
 
-use App\Constant\Order\OrderUpdateStateConstant;
+use App\Constant\DateFactory\DateFactoryMonthConstant;
+use DateInterval;
 use DateTime;
 use DateTimeInterface;
 
@@ -56,25 +57,21 @@ class DateFactoryService
         return date_modify($deliveryDateTime, '30 minutes ago');
     }
 
-    public function getLastSevenDaysDatesAsArray(): array
+    /**
+     * Get last seven days dates (without time) depending on optional time zone
+     */
+    public function getLastSevenDaysDatesAsArrayAndDependingOnOptionalTimeZone(string $timeZone = null): array
     {
         return [
-            (new DateTime('now'))->format('Y-m-d'),
-            (new DateTime('-1 day'))->format('Y-m-d'),
-            (new DateTime('-2 day'))->format('Y-m-d'),
-            (new DateTime('-3 day'))->format('Y-m-d'),
-            (new DateTime('-4 day'))->format('Y-m-d'),
-            (new DateTime('-5 day'))->format('Y-m-d'),
-            (new DateTime('-6 day'))->format('Y-m-d')
+            (new DateTime('now'))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d'),
+            (new DateTime('-1 day'))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d'),
+            (new DateTime('-2 day'))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d'),
+            (new DateTime('-3 day'))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d'),
+            (new DateTime('-4 day'))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d'),
+            (new DateTime('-5 day'))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d'),
+            (new DateTime('-6 day'))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d')
         ];
     }
-
-//    public function getDateTimeMinusThirteenMinutesByDateTimeInterface(DateTimeInterface $dateTimeInterface): DateTime|bool
-//    {
-//        $dateTime = DateTime::createFromInterface($dateTimeInterface);
-//
-//        return date_modify($dateTime, '-30 minutes');
-//    }
 
     public function sumDaysWithDateTimeInterface(DateTimeInterface $dateTimeInterface, int $days): DateTime|bool
     {
@@ -133,5 +130,61 @@ class DateFactoryService
         $dateTime = new DateTime($stringDate);
 
         return [$dateTime, $dateTime->modify('+30 day')];
+    }
+
+    /**
+     * Get array of the start and end dates of each month of an array
+     */
+    public function getStartAndEndDateTimeOfEachMonthByYear(string $year, string $timeZone = null): array
+    {
+        return [
+                [DateFactoryMonthConstant::JANUARY_MONTH_CONST,
+                    (new DateTime($year.DateFactoryMonthConstant::JANUARY_MONTH_CONST."01"." "."00:00:00"))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i'),
+                (new DateTime($year.DateFactoryMonthConstant::JANUARY_MONTH_CONST."01"." "."23:59:59"))->modify('last day of this month')->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i')],
+
+                [DateFactoryMonthConstant::FEBRUARY_MONTH_CONST,
+                    (new DateTime($year.DateFactoryMonthConstant::FEBRUARY_MONTH_CONST."01"." "."00:00:00"))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i'),
+                    (new DateTime($year.DateFactoryMonthConstant::FEBRUARY_MONTH_CONST."01"." "."23:59:59"))->modify('last day of this month')->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i')],
+
+                [DateFactoryMonthConstant::MARCH_MONTH_CONST,
+                    (new DateTime($year.DateFactoryMonthConstant::MARCH_MONTH_CONST."01"." "."00:00:00"))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i'),
+                    (new DateTime($year.DateFactoryMonthConstant::MARCH_MONTH_CONST."01"." "."23:59:59"))->modify('last day of this month')->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i')],
+
+                [DateFactoryMonthConstant::APRIL_MONTH_CONST,
+                    (new DateTime($year.DateFactoryMonthConstant::APRIL_MONTH_CONST."01"." "."00:00:00"))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i'),
+                    (new DateTime($year.DateFactoryMonthConstant::APRIL_MONTH_CONST."01"." "."23:59:59"))->modify('last day of this month')->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i')],
+
+                [DateFactoryMonthConstant::MAY_MONTH_CONST,
+                    (new DateTime($year.DateFactoryMonthConstant::MAY_MONTH_CONST."01"." "."00:00:00"))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i'),
+                    (new DateTime($year.DateFactoryMonthConstant::MAY_MONTH_CONST."01"." "."23:59:59"))->modify('last day of this month')->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i')],
+
+                [DateFactoryMonthConstant::JUNE_MONTH_CONST,
+                    (new DateTime($year.DateFactoryMonthConstant::JUNE_MONTH_CONST."01"." "."00:00:00"))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i'),
+                    (new DateTime($year.DateFactoryMonthConstant::JUNE_MONTH_CONST."01"." "."23:59:59"))->modify('last day of this month')->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i')],
+
+                [DateFactoryMonthConstant::JULY_MONTH_CONST,
+                    (new DateTime($year.DateFactoryMonthConstant::JULY_MONTH_CONST."01"." "."00:00:00"))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i'),
+                    (new DateTime($year.DateFactoryMonthConstant::JULY_MONTH_CONST."01"." "."23:59:59"))->modify('last day of this month')->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i')],
+
+                [DateFactoryMonthConstant::AUGUST_MONTH_CONST,
+                    (new DateTime($year.DateFactoryMonthConstant::AUGUST_MONTH_CONST."01"." "."00:00:00"))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i'),
+                    (new DateTime($year.DateFactoryMonthConstant::AUGUST_MONTH_CONST."01"." "."23:59:59"))->modify('last day of this month')->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i')],
+
+                [DateFactoryMonthConstant::SEPTEMBER_MONTH_CONST,
+                    (new DateTime($year.DateFactoryMonthConstant::SEPTEMBER_MONTH_CONST."01"." "."00:00:00"))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i'),
+                    (new DateTime($year.DateFactoryMonthConstant::SEPTEMBER_MONTH_CONST."01"." "."23:59:59"))->modify('last day of this month')->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i')],
+
+                [DateFactoryMonthConstant::OCTOBER_MONTH_CONST,
+                    (new DateTime($year.DateFactoryMonthConstant::OCTOBER_MONTH_CONST."01"." "."00:00:00"))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i'),
+                    (new DateTime($year.DateFactoryMonthConstant::OCTOBER_MONTH_CONST."01"." "."23:59:59"))->modify('last day of this month')->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i')],
+
+                [DateFactoryMonthConstant::NOVEMBER_MONTH_CONST,
+                    (new DateTime($year.DateFactoryMonthConstant::NOVEMBER_MONTH_CONST."01"." "."00:00:00"))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i'),
+                    (new DateTime($year.DateFactoryMonthConstant::NOVEMBER_MONTH_CONST."01"." "."23:59:59"))->modify('last day of this month')->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i')],
+
+                [DateFactoryMonthConstant::DECEMBER_MONTH_CONST,
+                    (new DateTime($year.DateFactoryMonthConstant::DECEMBER_MONTH_CONST."01"." "."00:00:00"))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i'),
+                    (new DateTime($year.DateFactoryMonthConstant::DECEMBER_MONTH_CONST."01"." "."23:59:59"))->modify('last day of this month')->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i')],
+        ];
     }
 }

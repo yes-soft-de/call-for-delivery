@@ -1916,10 +1916,20 @@ class AdminOrderService
                 $response[$key]['storeOwnerName'] = $value->getStoreOwner()->getStoreOwnerName();
                 $response[$key]['images'] = $this->uploadFileHelperService->getImageParams($value->getStoreOwner()->getImages());
                 $response[$key]['createdAt'] = $value->getStoreOwner()->getCreatedAt();
+                $response[$key]['orderId'] = $value->getId();
+                $response[$key]['orderCreatedAt'] = $value->getCreatedAt();
             }
         }
 
         return $response;
+    }
+
+    /**
+     * Get the creation date of the order log record which state is delivered
+     */
+    public function getDeliveredStateOrderLogCreatedAtForAdminByOrderId(int $orderId): DateTime|int
+    {
+        return $this->orderLogService->getDeliveredStateOrderLogCreatedAtForAdminByOrderId($orderId);
     }
 
     /**
@@ -1937,6 +1947,8 @@ class AdminOrderService
                 $response[$key]['captainName'] = $value[0]->getCaptainId()->getCaptainName();
                 $response[$key]['images'] = $this->uploadFileHelperService->getImageParams($value['captainProfileImage']);
                 $response[$key]['createdAt'] = $value[0]->getCaptainId()->getCreatedAt();
+                $response[$key]['orderId'] = $value[0]->getId();
+                $response[$key]['orderDeliveredAt'] = $this->getDeliveredStateOrderLogCreatedAtForAdminByOrderId($response[$key]['orderId']);
             }
         }
 

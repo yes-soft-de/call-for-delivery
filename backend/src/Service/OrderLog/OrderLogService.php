@@ -9,6 +9,7 @@ use App\Entity\OrderLogEntity;
 use App\Manager\OrderLog\OrderLogManager;
 use App\Message\OrderLog\OrderLogCreateMessage;
 use App\Response\OrderLog\OrderLogCaptainProfileUpdateResponse;
+use DateTime;
 use Symfony\Component\Messenger\MessageBusInterface;
 
 class OrderLogService
@@ -47,5 +48,19 @@ class OrderLogService
         }
 
         return $response;
+    }
+
+    /**
+     * Get the creation date of the order log record which state is delivered
+     */
+    public function getDeliveredStateOrderLogCreatedAtForAdminByOrderId(int $orderId): DateTime|int
+    {
+        $orderLogArrayResult = $this->orderLogManager->getDeliveredStateOrderLogCreatedAtForAdminByOrderId($orderId);
+
+        if (count($orderLogArrayResult) > 0) {
+            return $orderLogArrayResult[0]->getCreatedAt();
+        }
+
+        return OrderLogResultConstant::ORDER_LOG_NOT_EXIST_CONST;
     }
 }
