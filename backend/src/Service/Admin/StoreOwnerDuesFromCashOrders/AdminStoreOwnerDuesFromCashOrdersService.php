@@ -3,7 +3,6 @@
 namespace App\Service\Admin\StoreOwnerDuesFromCashOrders;
 
 use App\AutoMapping;
-use App\Entity\StoreOwnerDuesFromCashOrdersEntity;
 use App\Manager\Admin\StoreOwnerDuesFromCashOrders\AdminStoreOwnerDuesFromCashOrdersManager;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreDueSumFromCashOrderFilterByAdminRequest;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDueFromCashOrderFilterByAdminRequest;
@@ -229,9 +228,9 @@ class AdminStoreOwnerDuesFromCashOrdersService
             $yearMonthsArray = $this->getStartAndEndDateTimeOfEachMonthByYear(date('Y'));
         }
 
-        foreach ($yearMonthsArray as $month) {
-            $index = 0;
+        $index = 0;
 
+        foreach ($yearMonthsArray as $month) {
             $request->setFromDate($month[1]);
             $request->setToDate($month[2]);
 
@@ -255,9 +254,9 @@ class AdminStoreOwnerDuesFromCashOrdersService
                 } else {
                     $response[$index]->toBePaid = $response[$index]->amount - $paymentSum;
                 }
-            }
 
-            $index++;
+                $index++;
+            }
         }
 
         return $response;
