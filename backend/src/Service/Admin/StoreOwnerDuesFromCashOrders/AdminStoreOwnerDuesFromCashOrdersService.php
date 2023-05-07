@@ -16,6 +16,7 @@ use App\Service\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentFromCompanyService
 use App\Constant\Order\OrderAmountCashConstant;
 use App\Service\DateFactory\DateFactoryService;
 use App\Service\FileUpload\UploadFileHelperService;
+use DateTime;
 
 class AdminStoreOwnerDuesFromCashOrdersService
 {
@@ -195,10 +196,21 @@ class AdminStoreOwnerDuesFromCashOrdersService
     {
         $sum = 0.0;
 
+        $summedPayments = [];
+
         if (count($storeOwnerDueFromCashOrderArray) > 0) {
             foreach ($storeOwnerDueFromCashOrderArray as $item) {
-                if ($item->getStoreOwnerPaymentFromCompany()) {
-                    $sum += $item->getStoreOwnerPaymentFromCompany()->getAmount();
+                $storePaymentFromCompanyEntity = $item->getStoreOwnerPaymentFromCompany();
+
+                if ($storePaymentFromCompanyEntity) {
+                    $storePaymentFromCompanyId = $storePaymentFromCompanyEntity->getId();
+                    $storePaymentFromCompanyAmount = $storePaymentFromCompanyEntity->getAmount();
+
+                    if (array_search($storePaymentFromCompanyId, $summedPayments) === false) {
+                        $summedPayments[] = $storePaymentFromCompanyId;
+
+                        $sum = $sum + $storePaymentFromCompanyAmount;
+                    }
                 }
             }
         }

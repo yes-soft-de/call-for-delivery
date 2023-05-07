@@ -84,11 +84,6 @@ class AdminStoreOwnerPaymentFromCompanyManager
         return $this->storeOwnerPaymentFromCompanyEntityRepository->getSumPaymentsFromCompany($storeId);
     }
 
-    public function getSumPaymentsFromCompanyInSpecificDate(int $storeId, string $fromDate, string $toDate): ?array
-    {
-        return $this->storeOwnerPaymentFromCompanyEntityRepository->getSumPaymentsFromCompanyInSpecificDate($storeId, $fromDate, $toDate);
-    }
-
     public function updateStoreOwnerPaymentFromCompanyBySpecificAmount(StoreOwnerPaymentFromCompanyUpdateAmountByAdminRequest $request): int|StoreOwnerPaymentFromCompanyEntity
     {
         $storeOwnerPaymentFromCompanyEntity = $this->storeOwnerPaymentFromCompanyEntityRepository->findOneBy(['id' => $request->getId()]);

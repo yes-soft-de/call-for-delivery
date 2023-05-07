@@ -78,25 +78,6 @@ class StoreOwnerPaymentFromCompanyEntityRepository extends ServiceEntityReposito
             ->getQuery()
             ->getOneOrNullResult();
     }
-    
-    public function  getSumPaymentsFromCompanyInSpecificDate(int $storeId, string $fromDate, string $toDate): ?array
-    {
-        return $this->createQueryBuilder('storeOwnerPaymentFromCompanyEntity')
-           
-            ->select('sum (storeOwnerPaymentFromCompanyEntity.amount) as sumPaymentsFromCompany')
-           
-            ->andWhere('storeOwnerPaymentFromCompanyEntity.store = :storeId')
-            ->setParameter('storeId', $storeId)
-            
-            ->andWhere('storeOwnerPaymentFromCompanyEntity.createdAt >= :fromDate')
-            ->setParameter('fromDate', $fromDate)
-           
-            ->andWhere('storeOwnerPaymentFromCompanyEntity.createdAt <= :toDate')
-            ->setParameter('toDate', $toDate)
-
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
 
     public function getPaymentsFromCompanyByStoreOwnerId(int $storeOwnerId): array
     {
