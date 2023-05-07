@@ -192,7 +192,9 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       activeTheme = event;
       setState(() {});
     });
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
     checkForUpdates(context);
+    });
   }
 
   @override
