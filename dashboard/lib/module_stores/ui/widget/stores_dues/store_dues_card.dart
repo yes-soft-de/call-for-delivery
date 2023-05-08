@@ -103,7 +103,7 @@ class StoreDuesCard extends StatelessWidget {
     );
   }
 
-  String _getToBePaidFieldTitle(int toBePaid) {
+  String _getToBePaidFieldTitle(num toBePaid) {
     if (toBePaid < 0) {
       return S.current.prePayments;
     }

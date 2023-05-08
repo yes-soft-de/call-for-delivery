@@ -7,8 +7,8 @@ class StoresDuesModel extends DataModel {
   int? storeOwnerProfileId;
   String? storeOwnerName;
   String? image;
-  int? amountSum;
-  int? toBePaid;
+  num? amountSum;
+  num? toBePaid;
 
   StoresDuesModel(
     this.id,
