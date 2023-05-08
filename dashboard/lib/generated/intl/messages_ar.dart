@@ -109,6 +109,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "all": MessageLookupByLibrary.simpleMessage("الكل"),
         "allOrders": MessageLookupByLibrary.simpleMessage("كل الطلبات"),
         "allOrdersCount": MessageLookupByLibrary.simpleMessage("عدد الطلبات"),
+        "allPaid": MessageLookupByLibrary.simpleMessage("مدفوع بالكامل"),
         "alreadyCanceled":
             MessageLookupByLibrary.simpleMessage("الطلب ملغي مسبقا"),
         "amount":
@@ -206,6 +207,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تفعيل الكابتن بنجاح"),
         "captainActivity": MessageLookupByLibrary.simpleMessage("نشاط الكباتن"),
         "captainAnswer": MessageLookupByLibrary.simpleMessage("جواب الكابتن"),
+        "captainDaily": MessageLookupByLibrary.simpleMessage("يوميات الكباتن"),
         "captainDistance":
             MessageLookupByLibrary.simpleMessage("تقديرات الكابتن"),
         "captainFinance":
@@ -502,6 +504,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "dues": MessageLookupByLibrary.simpleMessage("المستحقات"),
         "duesByFilter":
             MessageLookupByLibrary.simpleMessage("المستحقات وفق الفلترة"),
+        "duesCashRequest":
+            MessageLookupByLibrary.simpleMessage("المستحقات (الطلبات الكاش)"),
         "duesPayments": MessageLookupByLibrary.simpleMessage("المستحقات للدفع"),
         "earnCash": MessageLookupByLibrary.simpleMessage("اكسب المال"),
         "editAds": MessageLookupByLibrary.simpleMessage("تعديل الإعلان"),
@@ -561,6 +565,22 @@ class MessageLookup extends MessageLookupByLibrary {
         "extraOrderDeliveryCost":
             MessageLookupByLibrary.simpleMessage("تكلفة التوصيل الإضافية"),
         "extraTax": MessageLookupByLibrary.simpleMessage("القيمة المضافة"),
+        "fApril": MessageLookupByLibrary.simpleMessage("نيسان (ابريل)"),
+        "fAugust": MessageLookupByLibrary.simpleMessage("آب (اغسطس)"),
+        "fDecember":
+            MessageLookupByLibrary.simpleMessage("كانون الأول (سبتمبر)"),
+        "fFebruary": MessageLookupByLibrary.simpleMessage("شباط (فبرار)"),
+        "fJanuary":
+            MessageLookupByLibrary.simpleMessage("كانون الثاني (يناير)"),
+        "fJuly": MessageLookupByLibrary.simpleMessage("تموز (يوليو)"),
+        "fJune": MessageLookupByLibrary.simpleMessage("حزيران (يونيو)"),
+        "fMarch": MessageLookupByLibrary.simpleMessage("آذار (مارس)"),
+        "fMay": MessageLookupByLibrary.simpleMessage("أيار(مايو)"),
+        "fNovember":
+            MessageLookupByLibrary.simpleMessage("تشرين الثاني (نوفمبر)"),
+        "fOctober":
+            MessageLookupByLibrary.simpleMessage("تشرين الأول (أكتوبر)"),
+        "fSeptember": MessageLookupByLibrary.simpleMessage("أيلول (سبتمبر)"),
         "failed": MessageLookupByLibrary.simpleMessage("الهدف غير محقق"),
         "favoriteCategories":
             MessageLookupByLibrary.simpleMessage("التصنيفات المفضلة"),
@@ -956,6 +976,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "paidOrder": MessageLookupByLibrary.simpleMessage("طلبات مدفوعة"),
         "paidPartiallyCaptainFinanceDaily":
             MessageLookupByLibrary.simpleMessage("دفع جزء من المستحقات"),
+        "partiallyPaid": MessageLookupByLibrary.simpleMessage("مدفوع جزئيا"),
         "partners": MessageLookupByLibrary.simpleMessage("شركائنا"),
         "password": MessageLookupByLibrary.simpleMessage("كلمة السر"),
         "passwordIsTooShort":
@@ -1063,6 +1084,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "من فضلك قم بتزويدنا بموقع التسليم على الخارطة"),
         "pleaseSelectABranch":
             MessageLookupByLibrary.simpleMessage("الرجاء اختيار فرع تجاري"),
+        "prePayments": MessageLookupByLibrary.simpleMessage("دفعات مسبقة"),
         "preferredLanguage":
             MessageLookupByLibrary.simpleMessage("اللغة المفضلة"),
         "pressHere": MessageLookupByLibrary.simpleMessage("اضغط هنا"),
@@ -1174,6 +1196,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "seconds": MessageLookupByLibrary.simpleMessage("ثواني"),
         "selectLanguage":
             MessageLookupByLibrary.simpleMessage("اختر لغتك المفضلة"),
+        "selectYear": MessageLookupByLibrary.simpleMessage("اختر السنة"),
         "selected": MessageLookupByLibrary.simpleMessage("تحديد"),
         "selectedBranchesMenu":
             MessageLookupByLibrary.simpleMessage("My Selected Branches"),
@@ -1255,6 +1278,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تعديل المتجر بنجاح"),
         "stores": MessageLookupByLibrary.simpleMessage("متاجر"),
         "storesActive": MessageLookupByLibrary.simpleMessage("المتاجر الفعالة"),
+        "storesCashRequest":
+            MessageLookupByLibrary.simpleMessage("المتاجر (الطلبات الكاش)"),
         "storesInActive":
             MessageLookupByLibrary.simpleMessage("المتاجر الغير مفعلة"),
         "storesList": MessageLookupByLibrary.simpleMessage("قائمة المتاجر"),
@@ -1364,6 +1389,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "unActiveOffer": MessageLookupByLibrary.simpleMessage("عرض غير فعال"),
         "unAssignOrder":
             MessageLookupByLibrary.simpleMessage("إلغاء اسناد طلب "),
+        "unPaid": MessageLookupByLibrary.simpleMessage("غير مدفوع"),
         "unPaidOrder": MessageLookupByLibrary.simpleMessage("طلبات غير مدفوعة"),
         "unableToDeletePaymentsExist": MessageLookupByLibrary.simpleMessage(
             "يوجد دفعات تابعة للاشتراك المطلوب حذفه, ولذلك لا يمكن حذفه"),
@@ -1476,6 +1502,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "withoutTax": MessageLookupByLibrary.simpleMessage(
             "السعر غير شامل القيمة المضافة"),
         "workTime": MessageLookupByLibrary.simpleMessage("أوقات العمل"),
+        "year": MessageLookupByLibrary.simpleMessage("السنة"),
         "yes": MessageLookupByLibrary.simpleMessage("نعم"),
         "yesterday": MessageLookupByLibrary.simpleMessage("البارحة"),
         "youCanChangeCaptainFinancialPlan":

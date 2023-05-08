@@ -143,6 +143,11 @@ class Urls {
       BASE_API_ORDER + '/recyclingorcancelorderbyadmin';
   static const HIDE_ORDER_API = BASE_API_ORDER + '/updateordertohidden';
 
+  static const STORES_DUES =
+      '$BASE_API_ORDER_CASH_FINANCE/filterstoreduesumfromcashorderbyadmin';
+  static const STORE_DUES =
+      '$BASE_API_ORDER_CASH_FINANCE/filterstoreduefromcashordermonthlybyadmin';
+
   static const FILTER_OWNER_ORDERS_API =
       BASE_API_ORDER + '/filterordersbyadmin';
   static const OWNER_CASH_ORDERS_NOT_ANSWERED_API =
