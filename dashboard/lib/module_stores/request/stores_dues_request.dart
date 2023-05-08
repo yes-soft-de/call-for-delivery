@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class StoresDuesRequest {
   /// '1' paid / '2' not paid
-  String? isPaid;
+  String isPaid;
 
   StoresDuesRequest({
     this.isPaid = '2',
@@ -16,11 +16,11 @@ class StoresDuesRequest {
 
   factory StoresDuesRequest.fromMap(Map<String, dynamic> map) {
     return StoresDuesRequest(
-      isPaid: (map['isPaid'] ?? '') as String?,
+      isPaid: (map['isPaid'] ?? '') as String,
     );
   }
 
-  String toJson() => json.encode(toMap());
+  String toJson() => json.encode(this.isPaid == 1 ? {} : toMap());
 
   factory StoresDuesRequest.fromJson(String source) =>
       StoresDuesRequest.fromMap(json.decode(source) as Map<String, dynamic>);
