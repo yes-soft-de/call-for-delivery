@@ -2,7 +2,7 @@ import 'dart:convert';
 
 class StoresDuesRequest {
   /// '1' paid / '2' not paid
-  String isPaid;
+  String? isPaid;
 
   StoresDuesRequest({
     this.isPaid = '2',
@@ -16,7 +16,7 @@ class StoresDuesRequest {
 
   factory StoresDuesRequest.fromMap(Map<String, dynamic> map) {
     return StoresDuesRequest(
-      isPaid: (map['isPaid'] ?? '') as String,
+      isPaid: (map['isPaid'] ?? '') as String?,
     );
   }
 

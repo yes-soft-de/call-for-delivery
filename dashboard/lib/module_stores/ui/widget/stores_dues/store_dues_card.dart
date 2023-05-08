@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class StoreDuesCard extends StatelessWidget {
   final StoresDuesModel? model;
-  final String isPaid;
+  final String? isPaid;
 
   const StoreDuesCard({Key? key, required this.model, required this.isPaid})
       : super(key: key);
