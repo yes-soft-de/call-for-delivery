@@ -8,6 +8,10 @@ final class OrderAmountCashConstant
 
     const ORDER_PAID_FLAG_NO = 2;
 
+    const ORDER_PAID_FLAG_PARTIALLY_CONST = 3;
+
+    const ORDER_PAYMENT_BIGGER_THAN_DUE_CONST = 4;
+
     const NOT_ORDER_CASH = "error not orders cash";
     
     const CAPTAIN_NOT_ALLOWED_TO_EDIT_ORDER_PAID_FLAG = false;

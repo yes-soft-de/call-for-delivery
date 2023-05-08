@@ -8,7 +8,6 @@ use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDueFromCashOrderFil
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrderDeleteByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersFilterGetRequest;
-use App\Entity\StoreOwnerPaymentFromCompanyEntity;
 use App\Constant\Order\OrderAmountCashConstant;
 
 class AdminStoreOwnerDuesFromCashOrdersManager
@@ -22,35 +21,41 @@ class AdminStoreOwnerDuesFromCashOrdersManager
 
     public function filterStoreOwnerDuesFromCashOrders(StoreOwnerDuesFromCashOrdersFilterGetRequest $request): ?array
     {       
-        return $this->storeOwnerDuesFromCashOrdersEntityRepository->filterStoreOwnerDuesFromCashOrders($request->getStoreId(), $request->getFromDate(), $request->getToDate());
+        return $this->storeOwnerDuesFromCashOrdersEntityRepository->filterStoreOwnerDuesFromCashOrders($request->getStoreId(),
+            $request->getFromDate(), $request->getToDate());
     }
     
     public function updateFlagBySpecificDate(array $ids, int $flag, $storeOwnerPaymentFromCompanyEntity)
-    {      
-      foreach($ids as $item) {
-        $storeOwnerDuesFromCashOrdersEntity = $this->storeOwnerDuesFromCashOrdersEntityRepository->find($item['id']);
+    {
+        foreach ($ids as $item) {
+            $storeOwnerDuesFromCashOrdersEntity = $this->storeOwnerDuesFromCashOrdersEntityRepository->find($item['id']);
 
-        $storeOwnerDuesFromCashOrdersEntity->setFlag($flag);
-        $storeOwnerDuesFromCashOrdersEntity->setStoreOwnerPaymentFromCompany($storeOwnerPaymentFromCompanyEntity);
-       
-        $this->entityManager->flush();
-      }
-    }
+            $storeOwnerDuesFromCashOrdersEntity->setFlag($flag);
+            // save payment id in paymentsFromCompany
+            $paymentsFromCompany = $storeOwnerDuesFromCashOrdersEntity->getPaymentsFromCompany();
 
-    public function getStoreOwnerDuesFromCashOrdersByStoreOwnerPaymentFromCompanyId(StoreOwnerPaymentFromCompanyEntity $storeOwnerPaymentFromCompany): ?array
-    {                   
-        $items = $this->storeOwnerDuesFromCashOrdersEntityRepository->findBy(['storeOwnerPaymentFromCompany' =>$storeOwnerPaymentFromCompany->getId()]);
+            $paymentsFromCompany[] = $storeOwnerPaymentFromCompanyEntity->getId();
 
-        foreach($items as $storeOwnerDuesFromCashOrder) {
-         
-          $storeOwnerDuesFromCashOrder->setStoreOwnerPaymentFromCompany(null);
-          $storeOwnerDuesFromCashOrder->setFlag(OrderAmountCashConstant::ORDER_PAID_FLAG_NO);
+            $storeOwnerDuesFromCashOrdersEntity->setPaymentsFromCompany($paymentsFromCompany);
 
-          $this->entityManager->flush();
+            $this->entityManager->flush();
         }
-
-        return $items;
     }
+
+//    public function getStoreOwnerDuesFromCashOrdersByStoreOwnerPaymentFromCompanyId(int $paymentId): ?array
+//    {
+//        // $items = $this->storeOwnerDuesFromCashOrdersEntityRepository->findBy(['storeOwnerPaymentFromCompany' =>$storeOwnerPaymentFromCompany->getId()]);
+//        $items = $this->storeOwnerDuesFromCashOrdersEntityRepository->getStoreOwnerDueFromCashOrderByStorePaymentFromCompanyId($paymentId);
+//
+//        if (count($items) > 0) {
+//            foreach ($items as $storeOwnerDuesFromCashOrder) {
+//
+//                $this->entityManager->flush();
+//            }
+//        }
+//
+//        return $items;
+//    }
     
     //Get the store's amount from the cash system according to a specific date on an unpaid condition
     public function getStoreAmountFromOrderCashBySpecificDateOnUnpaidCondition(string $fromDate, string $toDate, int $storeId): ?array
@@ -67,9 +72,9 @@ class AdminStoreOwnerDuesFromCashOrdersManager
             return OrderAmountCashConstant::STORE_DUES_FROM_CASH_ORDER_NOT_EXIST_CONST;
         }
 
-        $payment = $storeDuesFromCashOrder->getStoreOwnerPaymentFromCompany();
+        $payment = $storeDuesFromCashOrder->getPaymentsFromCompany();
 
-        $storeDuesFromCashOrder->setStoreOwnerPaymentFromCompany(null);
+        $storeDuesFromCashOrder->setPaymentsFromCompany(null);
 
         $this->entityManager->remove($storeDuesFromCashOrder);
         $this->entityManager->flush();

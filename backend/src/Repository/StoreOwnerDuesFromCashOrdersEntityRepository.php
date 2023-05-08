@@ -59,7 +59,8 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
         return $this->createQueryBuilder('storeOwnerDuesFromCashOrders')
     
             ->select('IDENTITY (storeOwnerDuesFromCashOrders.orderId) as orderId')
-            ->addSelect('storeOwnerDuesFromCashOrders.id', 'storeOwnerDuesFromCashOrders.amount', 'storeOwnerDuesFromCashOrders.flag', 'storeOwnerDuesFromCashOrders.createdAt', 'storeOwnerDuesFromCashOrders.storeAmount', 'storeOwnerDuesFromCashOrders.captainNote')
+            ->addSelect('storeOwnerDuesFromCashOrders.id', 'storeOwnerDuesFromCashOrders.amount', 'storeOwnerDuesFromCashOrders.flag', 'storeOwnerDuesFromCashOrders.createdAt',
+                'storeOwnerDuesFromCashOrders.storeAmount', 'storeOwnerDuesFromCashOrders.captainNote')
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')
            
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = storeOwnerDuesFromCashOrders.store')
@@ -85,7 +86,8 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
         return $this->createQueryBuilder('storeOwnerDuesFromCashOrders')
     
             ->select('IDENTITY (storeOwnerDuesFromCashOrders.orderId) as orderId')
-            ->addSelect('storeOwnerDuesFromCashOrders.id', 'storeOwnerDuesFromCashOrders.amount', 'storeOwnerDuesFromCashOrders.flag', 'storeOwnerDuesFromCashOrders.createdAt')
+            ->addSelect('storeOwnerDuesFromCashOrders.id', 'storeOwnerDuesFromCashOrders.amount', 'storeOwnerDuesFromCashOrders.flag', 'storeOwnerDuesFromCashOrders.createdAt',
+                'storeOwnerDuesFromCashOrders.storeAmount', 'storeOwnerDuesFromCashOrders.paymentsFromCompany')
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')
            
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = storeOwnerDuesFromCashOrders.store')
@@ -99,8 +101,9 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
             ->andWhere('storeOwnerDuesFromCashOrders.createdDate <= :toDate')
             ->setParameter('toDate', $toDate)
             
-            ->andWhere('storeOwnerDuesFromCashOrders.flag = :flag')
+            ->andWhere('storeOwnerDuesFromCashOrders.flag = :flag OR storeOwnerDuesFromCashOrders.flag = :partiallyPaidFlag')
             ->setParameter('flag', OrderAmountCashConstant::ORDER_PAID_FLAG_NO)
+            ->setParameter('partiallyPaidFlag', OrderAmountCashConstant::ORDER_PAID_FLAG_PARTIALLY_CONST)
 
             ->getQuery()
             ->getResult();

@@ -31,9 +31,6 @@ class StoreOwnerDuesFromCashOrdersEntity
 
     #[ORM\Column(type: 'float')]
     private $amount;
-
-    #[ORM\ManyToOne(targetEntity: StoreOwnerPaymentFromCompanyEntity::class, inversedBy: 'storeOwnerDuesFromCashOrdersEntities')]
-    private $storeOwnerPaymentFromCompany;
    
     #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'date', nullable: true)]
@@ -44,6 +41,9 @@ class StoreOwnerDuesFromCashOrdersEntity
 
     #[ORM\Column(type: 'text', nullable: true)]
     private $captainNote;
+
+    #[ORM\Column(type: 'array', nullable: true)]
+    private $paymentsFromCompany = [];
 
     public function getId(): ?int
     {
@@ -109,18 +109,6 @@ class StoreOwnerDuesFromCashOrdersEntity
 
         return $this;
     }
-
-    public function getStoreOwnerPaymentFromCompany(): ?StoreOwnerPaymentFromCompanyEntity
-    {
-        return $this->storeOwnerPaymentFromCompany;
-    }
-
-    public function setStoreOwnerPaymentFromCompany(?StoreOwnerPaymentFromCompanyEntity $storeOwnerPaymentFromCompany): self
-    {
-        $this->storeOwnerPaymentFromCompany = $storeOwnerPaymentFromCompany;
-
-        return $this;
-    }
     
     public function getCreatedDate(): ?\DateTimeInterface
     {
@@ -154,6 +142,18 @@ class StoreOwnerDuesFromCashOrdersEntity
     public function setCaptainNote(?string $captainNote): self
     {
         $this->captainNote = $captainNote;
+
+        return $this;
+    }
+
+    public function getPaymentsFromCompany(): ?array
+    {
+        return $this->paymentsFromCompany;
+    }
+
+    public function setPaymentsFromCompany(?array $paymentsFromCompany): self
+    {
+        $this->paymentsFromCompany = $paymentsFromCompany;
 
         return $this;
     }

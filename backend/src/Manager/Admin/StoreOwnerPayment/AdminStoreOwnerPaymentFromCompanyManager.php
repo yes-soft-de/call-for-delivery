@@ -3,11 +3,9 @@
 namespace App\Manager\Admin\StoreOwnerPayment;
 
 use App\AutoMapping;
-use App\Constant\StoreOwnerPayment\StoreOwnerPaymentFromCompany\StoreOwnerPaymentFromCompanyConstant;
 use App\Entity\StoreOwnerPaymentFromCompanyEntity;
 use App\Repository\StoreOwnerPaymentFromCompanyEntityRepository;
 use App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentFromCompanyForOrderCashCreateRequest;
-use App\Request\Admin\StoreOwnerPayment\StoreOwnerPaymentFromCompanyUpdateAmountByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
 use App\Constant\StoreOwner\StoreProfileConstant;
@@ -17,19 +15,14 @@ use App\Manager\Admin\StoreOwnerDuesFromCashOrders\AdminStoreOwnerDuesFromCashOr
 
 class AdminStoreOwnerPaymentFromCompanyManager
 {
-    private AutoMapping $autoMapping;
-    private EntityManagerInterface $entityManager;
-    private StoreOwnerPaymentFromCompanyEntityRepository $storeOwnerPaymentFromCompanyEntityRepository;
-    private StoreOwnerProfileManager $storeOwnerProfileManager;
-    private AdminStoreOwnerDuesFromCashOrdersManager $adminStoreOwnerDuesFromCashOrdersManager;
-
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, StoreOwnerPaymentFromCompanyEntityRepository $storeOwnerPaymentFromCompanyEntityRepository, StoreOwnerProfileManager $storeOwnerProfileManager, AdminStoreOwnerDuesFromCashOrdersManager $adminStoreOwnerDuesFromCashOrdersManager)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private EntityManagerInterface $entityManager,
+        private StoreOwnerPaymentFromCompanyEntityRepository $storeOwnerPaymentFromCompanyEntityRepository,
+        private StoreOwnerProfileManager $storeOwnerProfileManager,
+        private AdminStoreOwnerDuesFromCashOrdersManager $adminStoreOwnerDuesFromCashOrdersManager,
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->entityManager = $entityManager;
-        $this->storeOwnerPaymentFromCompanyEntityRepository = $storeOwnerPaymentFromCompanyEntityRepository;
-        $this->storeOwnerProfileManager = $storeOwnerProfileManager;
-        $this->adminStoreOwnerDuesFromCashOrdersManager = $adminStoreOwnerDuesFromCashOrdersManager;
     }
 
     public function createStoreOwnerPaymentFromCompany(AdminStoreOwnerPaymentFromCompanyForOrderCashCreateRequest $request): StoreOwnerPaymentFromCompanyEntity|string
@@ -41,15 +34,31 @@ class AdminStoreOwnerPaymentFromCompanyManager
         }
 
         $request->setStore($store);
-        $amountFromOrderCash = $this->adminStoreOwnerDuesFromCashOrdersManager->getStoreAmountFromOrderCashBySpecificDateOnUnpaidCondition($request->getFromDate(), $request->getToDate(), $request->getStore()->getId());
 
+        $amountFromOrderCash = $this->adminStoreOwnerDuesFromCashOrdersManager->getStoreAmountFromOrderCashBySpecificDateOnUnpaidCondition($request->getFromDate(), $request->getToDate(), $request->getStore()->getId());
+        //dd($amountFromOrderCash);
         if($amountFromOrderCash) {
-            $storeOwnerPaymentFromCompanyEntity = $this->autoMapping->map(AdminStoreOwnerPaymentFromCompanyForOrderCashCreateRequest::class, StoreOwnerPaymentFromCompanyEntity::class, $request);
+            $storeDueFromCashOrderIDs = [];
+
+            $storeOwnerPaymentFromCompanyEntity = $this->autoMapping->map(AdminStoreOwnerPaymentFromCompanyForOrderCashCreateRequest::class,
+                StoreOwnerPaymentFromCompanyEntity::class, $request);
+
+            // save store due from cash orders IDs in toreDueFromCashOrder filed
+            foreach ($amountFromOrderCash as $storeDueFromCashOrder) {
+                $storeDueFromCashOrderIDs = $storeOwnerPaymentFromCompanyEntity->getStoreDueFromCashOrder();
+                $storeDueFromCashOrderIDs[] = $storeDueFromCashOrder['id'];
+            }
+
+            $storeOwnerPaymentFromCompanyEntity->setStoreDueFromCashOrder($storeDueFromCashOrderIDs);
 
             $this->entityManager->persist($storeOwnerPaymentFromCompanyEntity);
             $this->entityManager->flush();
 
-            $this->adminStoreOwnerDuesFromCashOrdersManager->updateFlagBySpecificDate($amountFromOrderCash, OrderAmountCashConstant::ORDER_PAID_FLAG_YES, $storeOwnerPaymentFromCompanyEntity);
+            $isPaidFlag = $this->compareStoreDueFromCashOrdersAmountWithPaymentFromCompanyAmount($amountFromOrderCash,
+                $storeOwnerPaymentFromCompanyEntity->getAmount());
+
+            $this->adminStoreOwnerDuesFromCashOrdersManager->updateFlagBySpecificDate($amountFromOrderCash,
+                $isPaidFlag, $storeOwnerPaymentFromCompanyEntity);
 
             return $storeOwnerPaymentFromCompanyEntity;
        }
@@ -65,11 +74,11 @@ class AdminStoreOwnerPaymentFromCompanyManager
             
             return PaymentConstant::PAYMENT_NOT_EXISTS;
         }
-
-        $this->adminStoreOwnerDuesFromCashOrdersManager->getStoreOwnerDuesFromCashOrdersByStoreOwnerPaymentFromCompanyId($storeOwnerPaymentFromCompanyEntity);
        
         $this->entityManager->remove($storeOwnerPaymentFromCompanyEntity);
         $this->entityManager->flush();
+
+        //$this->adminStoreOwnerDuesFromCashOrdersManager->getStoreOwnerDuesFromCashOrdersByStoreOwnerPaymentFromCompanyId($storeOwnerPaymentFromCompanyEntity);
        
         return $storeOwnerPaymentFromCompanyEntity;
     }
@@ -84,23 +93,66 @@ class AdminStoreOwnerPaymentFromCompanyManager
         return $this->storeOwnerPaymentFromCompanyEntityRepository->getSumPaymentsFromCompany($storeId);
     }
 
-    public function updateStoreOwnerPaymentFromCompanyBySpecificAmount(StoreOwnerPaymentFromCompanyUpdateAmountByAdminRequest $request): int|StoreOwnerPaymentFromCompanyEntity
+//    public function updateStoreOwnerPaymentFromCompanyBySpecificAmount(StoreOwnerPaymentFromCompanyUpdateAmountByAdminRequest $request): int|StoreOwnerPaymentFromCompanyEntity
+//    {
+//        $storeOwnerPaymentFromCompanyEntity = $this->storeOwnerPaymentFromCompanyEntityRepository->findOneBy(['id' => $request->getId()]);
+//
+//        if (! $storeOwnerPaymentFromCompanyEntity) {
+//            return StoreOwnerPaymentFromCompanyConstant::STORE_OWNER_PAYMENT_FROM_COMPANY_NOT_EXIST_CONST;
+//        }
+//
+//        if ($request->getOperationType() === OrderAmountCashConstant::AMOUNT_ADDITION_TYPE_OPERATION_CONST) {
+//            $storeOwnerPaymentFromCompanyEntity->setAmount($storeOwnerPaymentFromCompanyEntity->getAmount() + $request->getCashAmount());
+//
+//        } elseif ($request->getOperationType() === OrderAmountCashConstant::AMOUNT_SUBTRACTION_TYPE_OPERATION_CONST) {
+//            $storeOwnerPaymentFromCompanyEntity->setAmount($storeOwnerPaymentFromCompanyEntity->getAmount() - $request->getCashAmount());
+//        }
+//
+//        $this->entityManager->flush();
+//
+//        return $storeOwnerPaymentFromCompanyEntity;
+//    }
+
+    public function getStorePaymentFromCompanyAmountById(int $id): float
     {
-        $storeOwnerPaymentFromCompanyEntity = $this->storeOwnerPaymentFromCompanyEntityRepository->findOneBy(['id' => $request->getId()]);
+        $payment = $this->storeOwnerPaymentFromCompanyEntityRepository->findOneBy(['id' => $id]);
 
-        if (! $storeOwnerPaymentFromCompanyEntity) {
-            return StoreOwnerPaymentFromCompanyConstant::STORE_OWNER_PAYMENT_FROM_COMPANY_NOT_EXIST_CONST;
+        if ($payment) {
+            return $payment->getAmount();
         }
 
-        if ($request->getOperationType() === OrderAmountCashConstant::AMOUNT_ADDITION_TYPE_OPERATION_CONST) {
-            $storeOwnerPaymentFromCompanyEntity->setAmount($storeOwnerPaymentFromCompanyEntity->getAmount() + $request->getCashAmount());
+        return 0.0;
+    }
 
-        } elseif ($request->getOperationType() === OrderAmountCashConstant::AMOUNT_SUBTRACTION_TYPE_OPERATION_CONST) {
-            $storeOwnerPaymentFromCompanyEntity->setAmount($storeOwnerPaymentFromCompanyEntity->getAmount() - $request->getCashAmount());
+    public function compareStoreDueFromCashOrdersAmountWithPaymentFromCompanyAmount(array $storeDueArray, float $paymentAmount): int
+    {
+        if (count($storeDueArray) === 0) {
+            return OrderAmountCashConstant::ORDER_PAYMENT_BIGGER_THAN_DUE_CONST;
         }
 
-        $this->entityManager->flush();
+        $dueSum = 0.0;
 
-        return $storeOwnerPaymentFromCompanyEntity;
+        foreach ($storeDueArray as $singleOrderDueValue) {
+            $dueSum += $singleOrderDueValue['storeAmount'];
+            // check if there is previous payment/s
+            if ($singleOrderDueValue['paymentsFromCompany']) {
+                if (count($singleOrderDueValue['paymentsFromCompany']) > 0) {
+                    foreach ($singleOrderDueValue['paymentsFromCompany'] as $paymentId) {
+                        $paymentAmount += $this->getStorePaymentFromCompanyAmountById($paymentId);
+                    }
+                }
+            }
+        }
+
+        if ($paymentAmount < $dueSum) {
+            return OrderAmountCashConstant::ORDER_PAID_FLAG_PARTIALLY_CONST;
+
+        } elseif ($paymentAmount === $dueSum) {
+            return OrderAmountCashConstant::ORDER_PAID_FLAG_YES;
+
+        } else {
+            // $paymentAmount > $dueSum
+            return OrderAmountCashConstant::ORDER_PAYMENT_BIGGER_THAN_DUE_CONST;
+        }
     }
 }
