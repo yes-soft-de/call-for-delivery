@@ -1,6 +1,7 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_payments/payments_routes.dart';
 import 'package:c4d/module_stores/request/store_dues_request.dart';
 import 'package:c4d/module_stores/state_manager/store_dues_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -65,10 +66,14 @@ class StoreDuesScreenState extends State<StoreDuesScreen> {
     }
 
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(
-        context,
-        title: storeOwnerName + ' (${storeOwnerId})',
-      ),
+      appBar: CustomC4dAppBar.appBar(context,
+          title: storeOwnerName + ' (${storeOwnerId})',
+          actions: [
+            CustomC4dAppBar.actionIcon(context, onTap: () {
+              Navigator.of(context).pushNamed(PaymentsRoutes.PAYMENTS_LIST,
+                  arguments: storeOwnerId);
+            }, icon: Icons.payments),
+          ]),
       body: Column(
         children: [
           const SizedBox(
