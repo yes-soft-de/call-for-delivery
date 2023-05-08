@@ -158,6 +158,8 @@ class AdminStoreOwnerDuesFromCashOrdersService
             return 0.0;
         }
 
+        // contains summed payments
+        $summedPayments = [];
         $paymentsSum = 0.0;
 
         foreach ($storeOwnerDuesFromCashOrdersArray as $storeOwnerDueFromCashOrderEntity) {
@@ -165,7 +167,14 @@ class AdminStoreOwnerDuesFromCashOrdersService
                 $payment = $storeOwnerDueFromCashOrderEntity->getStoreOwnerPaymentFromCompany();
 
                 if ($payment) {
-                    $paymentsSum += $payment->getAmount();
+                    $storePaymentFromCompanyId = $payment->getId();
+                    $storePaymentFromCompanyAmount = $payment->getAmount();
+
+                    if (array_search($storePaymentFromCompanyId, $summedPayments) === false) {
+                        $summedPayments[] = $storePaymentFromCompanyId;
+
+                        $paymentsSum += $storePaymentFromCompanyAmount;
+                    }
                 }
             }
         }
