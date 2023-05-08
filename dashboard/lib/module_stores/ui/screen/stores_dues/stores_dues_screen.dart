@@ -130,7 +130,7 @@ class StoresDuesScreenState extends State<StoresDuesScreen> {
                         splashFactory: NoSplash.splashFactory,
                         onTap: () {
                           currentIndex = 1;
-                          filter = StoresDuesRequest(isPaid: null);
+                          filter = StoresDuesRequest(isPaid: '1');
                           refresh();
                           widget._manager.getStoresDues(this, filter);
                         },
