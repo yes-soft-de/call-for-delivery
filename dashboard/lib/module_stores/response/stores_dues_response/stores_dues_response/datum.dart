@@ -3,8 +3,8 @@ class Datum {
   int? storeOwnerProfileId;
   String? storeOwnerName;
   String? image;
-  int? amountSum;
-  int? toBePaid;
+  num? amountSum;
+  num? toBePaid;
 
   Datum({
     this.id,
@@ -20,8 +20,8 @@ class Datum {
         storeOwnerProfileId: json['storeOwnerProfileId'] as int?,
         storeOwnerName: json['storeOwnerName'] as String?,
         image: json['image']['image'] as String?,
-        amountSum: json['amountSum'] as int?,
-        toBePaid: json['toBePaid'] as int?,
+        amountSum: json['amountSum'] as num?,
+        toBePaid: json['toBePaid'] as num?,
       );
 
   Map<String, dynamic> toJson() => {

@@ -6,8 +6,8 @@ class StoreDuesModel extends DataModel {
   late int storeOwnerProfileId;
   late String storeOwnerName;
   late String image;
-  late int amount;
-  late int toBePaid;
+  late num amount;
+  late num toBePaid;
   late List<StoreDuesModel> _storeDuesModel = [];
 
   StoreDuesModel(
