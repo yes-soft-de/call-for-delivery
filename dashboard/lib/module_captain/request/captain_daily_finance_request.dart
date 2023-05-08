@@ -1,3 +1,7 @@
+import 'package:intl/intl.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
+
 class CaptainDailyFinanceRequest {
   DateTime? fromDate;
   DateTime? toDate;
@@ -20,10 +24,24 @@ class CaptainDailyFinanceRequest {
     );
   }
 
-  Map<String, dynamic> toJson() => {
-        'fromDate': fromDate?.toIso8601String(),
-        'toDate': toDate?.toIso8601String(),
-        'captainProfileId': captainProfileId,
-        'isPaid': isPaid,
-      };
+  Future<Map<String, dynamic>> toJson() async {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (toDate != null) {
+      data['toDate'] = DateFormat('yyyy-MM-dd', 'en').format(toDate!);
+    }
+    if (fromDate != null) {
+      data['fromDate'] = DateFormat('yyyy-MM-dd', 'en').format(fromDate!);
+    }
+     if (!kIsWeb) {
+     data['customizedTimezone'] =
+         await FlutterNativeTimezone.getLocalTimezone();
+    }
+    if (captainProfileId != null) {
+      data['captainProfileId'] = captainProfileId;
+    }
+    if (isPaid != null) {
+      data['isPaid'] = isPaid;
+    }
+    return data;
+  }
 }

@@ -15,7 +15,6 @@ import 'package:c4d/module_notice/notice_module.dart';
 import 'package:c4d/module_notifications/model/notification_model.dart';
 import 'package:c4d/module_orders/orders_module.dart';
 import 'package:c4d/module_payments/payments_module.dart';
-import 'package:c4d/module_statistics/model/statistics_model.dart';
 import 'package:c4d/module_stores/stores_module.dart';
 import 'package:c4d/module_subscriptions/subscriptions_module.dart';
 import 'package:c4d/module_supplier_categories/categories_supplier_module.dart';

@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:intl/intl.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 
 class StoreCashFinanceRequest {
   String? storeId;
@@ -18,9 +19,9 @@ class StoreCashFinanceRequest {
     if (fromDate != null) {
       data['fromDate'] = DateFormat('yyyy-MM-dd', 'en').format(fromDate!);
     }
-    if (Platform.isAndroid || Platform.isIOS) {
-      data['customizedTimezone'] =
-          await FlutterNativeTimezone.getLocalTimezone();
+     if (!kIsWeb) {
+     data['customizedTimezone'] =
+         await FlutterNativeTimezone.getLocalTimezone();
     }
     return data;
   }
