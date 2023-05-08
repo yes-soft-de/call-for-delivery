@@ -965,6 +965,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "transCount": MessageLookupByLibrary.simpleMessage("عدد النقلات"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
         "unActiveOffer": MessageLookupByLibrary.simpleMessage("عرض غير فعال"),
+        "unLimitedOrders":
+            MessageLookupByLibrary.simpleMessage("عدد طلبات غير محدود"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "لم يتم الموافقة على اشتراكك من قبل الإدارة يمكنك التواصل معنا للحصول على المزيد من التفاصيل"),
         "unavailable": MessageLookupByLibrary.simpleMessage("غير معروفة"),

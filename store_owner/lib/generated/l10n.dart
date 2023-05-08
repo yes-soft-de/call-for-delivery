@@ -7040,6 +7040,16 @@ class S {
     );
   }
 
+  /// `unlimited orders`
+  String get unLimitedOrders {
+    return Intl.message(
+      'unlimited orders',
+      name: 'unLimitedOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Ads & offers`
   String get adsAndOffers {
     return Intl.message(

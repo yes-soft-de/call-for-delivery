@@ -699,5 +699,6 @@
     "yourBalance":"رصيدك",
     "id":"المعرف",
     "valueMustBeGreaterThanZero":"القيمة يجب ان تكون اكبر من 0",
+    "unLimitedOrders":"عدد طلبات غير محدود",
     "adsAndOffers": "الإعلانات و العروض"
 }
