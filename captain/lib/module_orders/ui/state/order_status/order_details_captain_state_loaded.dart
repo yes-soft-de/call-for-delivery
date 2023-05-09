@@ -33,6 +33,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 
 class OrderDetailsCaptainOrderLoadedState extends States {
   OrderDetailsModel orderInfo;
@@ -101,16 +102,16 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                                                 screenState.orderId ?? ''),
                                             storeBranchToClientDistanceAdditionExplanation:
                                                 reason.text.trim(),
-                                            destination: {
-                                              'lat': coord.text
+                                            destination:Destination(
+                                              lat: double.tryParse(coord.text
                                                   .trim()
                                                   .split(',')[0]
-                                                  .trim(),
-                                              'lon': coord.text
+                                                  .trim()),
+                                              lon: double.tryParse(coord.text
                                                   .trim()
                                                   .split(',')[1]
-                                                  .trim(),
-                                            }));
+                                                  .trim())    
+                                            )));
                                   } else {
                                     Fluttertoast.showToast(
                                         msg: S.current.pleaseEnterValidCoord);
@@ -551,7 +552,16 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                     Icons.info,
                   ),
                   title: Text(S.current.orderDetails),
-                  subtitle: Text(orderInfo.note),
+                  subtitle: SelectableLinkify(
+                              onOpen: (link) async {
+                                if (await canLaunchUrl(Uri.parse(link.url))) {
+                                  await launchUrl(Uri.parse(link.url));
+                                } else {
+                                  Fluttertoast.showToast(msg: 'Invalid link');
+                                }
+                              },
+                              text: orderInfo.note,
+                            ),
                   trailing: Material(
                     color: Colors.transparent,
                     child: IconButton(

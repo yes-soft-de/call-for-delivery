@@ -14,17 +14,18 @@ class OrderCard extends StatelessWidget {
   final Color? background;
   final String? primaryTitle;
   final bool orderIsMain;
-  const OrderCard(
-      {required this.orderNumber,
-      required this.orderStatus,
-      required this.deliveryDate,
-      required this.orderCost,
-      required this.note,
-      required this.destination,
-      required this.credit,
-      this.orderIsMain = false,
-      this.primaryTitle,
-      this.background});
+  const OrderCard({
+    required this.orderNumber,
+    required this.orderStatus,
+    required this.deliveryDate,
+    required this.orderCost,
+    required this.note,
+    required this.destination,
+    required this.credit,
+    this.orderIsMain = false,
+    this.primaryTitle,
+    this.background,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -188,6 +189,7 @@ class NearbyOrdersCard extends StatelessWidget {
   final String storeName;
   final Function() acceptOrder;
   final num captainProfit;
+  final bool containsSubs;
   const NearbyOrdersCard({
     required this.orderNumber,
     this.branchToDestination,
@@ -202,6 +204,7 @@ class NearbyOrdersCard extends StatelessWidget {
     required this.storeName,
     required this.acceptOrder,
     required this.captainProfit,
+    this.containsSubs = false,
   });
 
   @override
@@ -423,7 +426,7 @@ class NearbyOrdersCard extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  visible: false,
+                  visible: (orderIsMain && containsSubs) || (!orderIsMain),
                   child: Icon(
                     Icons.arrow_circle_left_outlined,
                     color: Theme.of(context).textTheme.button?.color,

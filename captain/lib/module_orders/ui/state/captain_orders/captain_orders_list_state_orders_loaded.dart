@@ -301,39 +301,42 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                                                 ),
                                               ),
                                               const Spacer(),
-                                              ElevatedButton.icon(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                  var index = StatusHelper
-                                                      .getOrderStatusIndex(
-                                                          element.state);
-                                                  screenState.stateManager
-                                                      .updateOrder(
-                                                          UpdateOrderRequest(
-                                                            id: element.id,
-                                                            state: StatusHelper
-                                                                .getStatusString(
-                                                                    OrderStatusEnum
-                                                                            .values[
-                                                                        index +
-                                                                            1]),
-                                                          ),
-                                                          screenState);
-                                                },
-                                                style: ElevatedButton.styleFrom(
-                                                    backgroundColor:
-                                                        Colors.green,
-                                                    shape:
-                                                        const StadiumBorder()),
-                                                label: Text(
-                                                  S.current.accept,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .labelLarge,
-                                                ),
-                                                icon: const Icon(
-                                                  Icons.thumb_up_alt_rounded,
-                                                  color: Colors.white,
+                                              Visibility(
+                                                visible: (element.orderIsMain && element.subOrders.isEmpty) || (!element.orderIsMain),
+                                                child: ElevatedButton.icon(
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                    var index = StatusHelper
+                                                        .getOrderStatusIndex(
+                                                            element.state);
+                                                    screenState.stateManager
+                                                        .updateOrder(
+                                                            UpdateOrderRequest(
+                                                              id: element.id,
+                                                              state: StatusHelper
+                                                                  .getStatusString(
+                                                                      OrderStatusEnum
+                                                                              .values[
+                                                                          index +
+                                                                              1]),
+                                                            ),
+                                                            screenState);
+                                                  },
+                                                  style: ElevatedButton.styleFrom(
+                                                      backgroundColor:
+                                                          Colors.green,
+                                                      shape:
+                                                          const StadiumBorder()),
+                                                  label: Text(
+                                                    S.current.accept,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .labelLarge,
+                                                  ),
+                                                  icon: const Icon(
+                                                    Icons.thumb_up_alt_rounded,
+                                                    color: Colors.white,
+                                                  ),
                                                 ),
                                               ),
                                             ],
@@ -374,6 +377,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                     ? Colors.red[700]
                     : Theme.of(context).colorScheme.secondary,
                 orderIsMain: element.orderIsMain,
+                containsSubs: element.subOrders.isNotEmpty,
                 note: element.note,
                 orderCost: FixedNumber.getFixedNumber(element.orderCost),
                 orderNumber: element.id.toString(),
@@ -596,6 +600,7 @@ class CaptainOrdersListStateOrdersLoaded extends States {
             child: NearbyOrdersCard(
               background: element.orderIsMain ? Colors.red[700] : null,
               orderIsMain: element.orderIsMain,
+              containsSubs: element.subOrders.isNotEmpty,
               note: element.note,
               orderCost: FixedNumber.getFixedNumber(element.orderCost),
               orderNumber: element.id.toString(),
