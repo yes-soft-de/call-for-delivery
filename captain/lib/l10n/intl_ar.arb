@@ -767,5 +767,7 @@
     "addsAndOffers": "الاعلانات والعروض",
     "yourBalanceToday": "رصيدك الليوم",
     "dontTakeMoneyThisOrderIsPaidAlready": "لا تستلم مبلغ من الزبون هذا الطلب مدفوع مسبقا",
+    "remainingOrdersNumber": "عدد الطلبات المتبقية",
+    "toGetBouns": "للحصول على مكافأة",
     "financeOverPaid": "دفعة زائدة"
 }

@@ -910,6 +910,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "reject": MessageLookupByLibrary.simpleMessage("رفض"),
         "remainingAmountForCompany":
             MessageLookupByLibrary.simpleMessage("المبلغ المتبقي للشركة"),
+        "remainingOrdersNumber":
+            MessageLookupByLibrary.simpleMessage("عدد الطلبات المتبقية"),
         "rememberMe": MessageLookupByLibrary.simpleMessage("تذكرني"),
         "renewNewPlan":
             MessageLookupByLibrary.simpleMessage("اشتراك بباقة جديدة"),
@@ -1079,6 +1081,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
             MessageLookupByLibrary.simpleMessage(
                 "للمزيد من المعلومات خذ موعدا بترك رقم هاتفك، وسيتم التواصل معك"),
+        "toGetBouns": MessageLookupByLibrary.simpleMessage("للحصول على مكافأة"),
         "todayProfit": MessageLookupByLibrary.simpleMessage("مستحقات اليوم"),
         "took": MessageLookupByLibrary.simpleMessage("استغرق"),
         "total": MessageLookupByLibrary.simpleMessage("إجمالي الأموال"),

@@ -921,6 +921,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "reject": MessageLookupByLibrary.simpleMessage("Reject"),
         "remainingAmountForCompany": MessageLookupByLibrary.simpleMessage(
             "Remaining Amount For Company"),
+        "remainingOrdersNumber": MessageLookupByLibrary.simpleMessage(
+            "the count of remaining orders"),
         "rememberMe": MessageLookupByLibrary.simpleMessage("Remember me"),
         "renewNewPlan": MessageLookupByLibrary.simpleMessage(
             "Subscription with new package"),
@@ -1087,6 +1089,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
             MessageLookupByLibrary.simpleMessage(
                 "To find out more, please leave your phone.\nand we will contact you personally"),
+        "toGetBouns": MessageLookupByLibrary.simpleMessage("for a bouns"),
         "todayProfit": MessageLookupByLibrary.simpleMessage("Today Balance"),
         "took": MessageLookupByLibrary.simpleMessage("Took"),
         "total": MessageLookupByLibrary.simpleMessage("Total"),
