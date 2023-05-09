@@ -3,7 +3,6 @@
 namespace App\Service\DateFactory;
 
 use App\Constant\DateFactory\DateFactoryMonthConstant;
-use DateInterval;
 use DateTime;
 use DateTimeInterface;
 
@@ -186,5 +185,10 @@ class DateFactoryService
                     (new DateTime($year.DateFactoryMonthConstant::DECEMBER_MONTH_CONST."01"." "."00:00:00"))->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i'),
                     (new DateTime($year.DateFactoryMonthConstant::DECEMBER_MONTH_CONST."01"." "."23:59:59"))->modify('last day of this month')->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC'))->format('Y-m-d h:m:i')],
         ];
+    }
+
+    public function getDateOnlyFromStringDateTime(string $dateTime): DateTime
+    {
+        return (new DateTime(date("Y-m-d", strtotime($dateTime))));
     }
 }

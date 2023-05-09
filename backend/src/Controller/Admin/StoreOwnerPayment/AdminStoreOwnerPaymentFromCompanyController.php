@@ -27,16 +27,14 @@ use App\Constant\Order\OrderAmountCashConstant;
  */
 class AdminStoreOwnerPaymentFromCompanyController extends BaseController
 {
-    private AutoMapping $autoMapping;
-    private ValidatorInterface $validator;
-    private AdminStoreOwnerPaymentFromCompanyService $adminStoreOwnerPaymentFromCompanyService;
-
-    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, AdminStoreOwnerPaymentFromCompanyService $adminStoreOwnerPaymentFromCompanyService)
+    public function __construct(
+        SerializerInterface $serializer,
+        private AutoMapping $autoMapping,
+        private ValidatorInterface $validator,
+        private AdminStoreOwnerPaymentFromCompanyService $adminStoreOwnerPaymentFromCompanyService
+    )
     {
         parent::__construct($serializer);
-        $this->autoMapping = $autoMapping;
-        $this->validator = $validator;
-        $this->adminStoreOwnerPaymentFromCompanyService = $adminStoreOwnerPaymentFromCompanyService;
     }
 
     /**

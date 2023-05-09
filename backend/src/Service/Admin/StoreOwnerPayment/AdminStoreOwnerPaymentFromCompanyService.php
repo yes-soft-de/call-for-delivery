@@ -12,6 +12,7 @@ use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\Payment\PaymentConstant;
 use App\Response\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentDeleteResponse;
 use App\Constant\Order\OrderAmountCashConstant;
+use DateTime;
 
 class AdminStoreOwnerPaymentFromCompanyService
 {
@@ -26,18 +27,20 @@ class AdminStoreOwnerPaymentFromCompanyService
     {
         $payment = $this->adminStoreOwnerPaymentFromCompanyManager->createStoreOwnerPaymentFromCompany($request);
        
-        if($payment === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS || $payment === OrderAmountCashConstant::NOT_ORDER_CASH) {
+        if ($payment === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS
+            || $payment === OrderAmountCashConstant::NOT_ORDER_CASH) {
             return $payment;
         }
 
-        return $this->autoMapping->map(StoreOwnerPaymentFromCompanyEntity::class, AdminStoreOwnerPaymentCreateResponse::class, $payment);
+        return $this->autoMapping->map(StoreOwnerPaymentFromCompanyEntity::class, AdminStoreOwnerPaymentCreateResponse::class,
+            $payment);
     }
 
     public function deleteStoreOwnerPaymentFromCompany($id): AdminStoreOwnerPaymentDeleteResponse|string
     {
         $payment = $this->adminStoreOwnerPaymentFromCompanyManager->deleteStoreOwnerPaymentFromCompany($id);
        
-        if($payment ===  PaymentConstant::PAYMENT_NOT_EXISTS) {
+        if ($payment === PaymentConstant::PAYMENT_NOT_EXISTS) {
             return $payment;
         }
        
@@ -57,9 +60,9 @@ class AdminStoreOwnerPaymentFromCompanyService
         return $response;
     }
 
-    public function getSumPaymentsFromCompany(int $storeId): array
+    public function getSumPaymentsFromCompany(int $storeOwnerProfileId): array
     {
-        return $this->adminStoreOwnerPaymentFromCompanyManager->getSumPaymentsFromCompany($storeId);
+        return $this->adminStoreOwnerPaymentFromCompanyManager->getSumPaymentsFromCompany($storeOwnerProfileId);
     }
 
 //    public function updateStoreOwnerPaymentFromCompanyBySpecificAmount(StoreOwnerPaymentFromCompanyUpdateAmountByAdminRequest $request): int|StoreOwnerPaymentFromCompanyEntity
@@ -70,5 +73,16 @@ class AdminStoreOwnerPaymentFromCompanyService
     public function getStorePaymentFromCompanyAmountById(int $id): float
     {
         return $this->adminStoreOwnerPaymentFromCompanyManager->getStorePaymentFromCompanyAmountById($id);
+    }
+
+    public function getStorePaymentFromCompanySumByMonth(int $storeOwnerProfileId, DateTime $month): array
+    {
+        $firstDayOfMonth = clone $month;
+        $firstDayOfMonth->modify('first day of this month');
+        $lastDayOfMonth = clone $month;
+        $lastDayOfMonth->modify('last day of this month');
+
+        return $this->adminStoreOwnerPaymentFromCompanyManager->getStorePaymentFromCompanySumByMonth($storeOwnerProfileId,
+            $firstDayOfMonth, $lastDayOfMonth);
     }
 }

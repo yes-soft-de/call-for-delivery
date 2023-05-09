@@ -6,6 +6,7 @@ use App\Repository\StoreOwnerDuesFromCashOrdersEntityRepository;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreDueSumFromCashOrderFilterByAdminRequest;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDueFromCashOrderFilterByAdminRequest;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrderDeleteByAdminRequest;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersFilterGetRequest;
 use App\Constant\Order\OrderAmountCashConstant;
@@ -31,12 +32,6 @@ class AdminStoreOwnerDuesFromCashOrdersManager
             $storeOwnerDuesFromCashOrdersEntity = $this->storeOwnerDuesFromCashOrdersEntityRepository->find($item['id']);
 
             $storeOwnerDuesFromCashOrdersEntity->setFlag($flag);
-            // save payment id in paymentsFromCompany
-            $paymentsFromCompany = $storeOwnerDuesFromCashOrdersEntity->getPaymentsFromCompany();
-
-            $paymentsFromCompany[] = $storeOwnerPaymentFromCompanyEntity->getId();
-
-            $storeOwnerDuesFromCashOrdersEntity->setPaymentsFromCompany($paymentsFromCompany);
 
             $this->entityManager->flush();
         }
@@ -72,14 +67,10 @@ class AdminStoreOwnerDuesFromCashOrdersManager
             return OrderAmountCashConstant::STORE_DUES_FROM_CASH_ORDER_NOT_EXIST_CONST;
         }
 
-        $payment = $storeDuesFromCashOrder->getPaymentsFromCompany();
-
-        $storeDuesFromCashOrder->setPaymentsFromCompany(null);
-
         $this->entityManager->remove($storeDuesFromCashOrder);
         $this->entityManager->flush();
 
-        return [$storeDuesFromCashOrder, $payment];
+        return [$storeDuesFromCashOrder];
     }
 
     /**
@@ -105,5 +96,57 @@ class AdminStoreOwnerDuesFromCashOrdersManager
     public function filterStoreOwnerDueFromCashOrderByAdmin(StoreOwnerDueFromCashOrderFilterByAdminRequest $request): array
     {
         return $this->storeOwnerDuesFromCashOrdersEntityRepository->filterStoreOwnerDueFromCashOrderByAdmin($request);
+    }
+
+    /**
+     * Get the sum of a specific store due and depending on dates
+     */
+    public function getStoreOwnerDueSumFromCashOrderByStoreOwnerProfileIdAndTwoDates(int $storeOwnerProfileId, DateTime $firstDayOfMonth, DateTime $lastDayOfMonth): array
+    {
+        return $this->storeOwnerDuesFromCashOrdersEntityRepository->getStoreOwnerDueSumFromCashOrderByStoreOwnerProfileIdAndTwoDates($storeOwnerProfileId,
+            $firstDayOfMonth, $lastDayOfMonth);
+    }
+
+    public function updateStoreOwnerDueFromCashOrderFlagByMonthAfterDeletePayment(int $storeOwnerProfileId, float $paymentSum, DateTime $firstDayOfMonth, DateTime $lastDayOfMonth)
+    {
+        // Check if payment/s sum is smaller, equal, or larger than the due sum
+        $dueSum = 0.0;
+
+        $dueSumArrayResult = $this->getStoreOwnerDueSumFromCashOrderByStoreOwnerProfileIdAndTwoDates($storeOwnerProfileId,
+            $firstDayOfMonth,$lastDayOfMonth);
+
+        if (count($dueSumArrayResult) > 0) {
+            $dueSum = (float) $dueSumArrayResult[0];
+        }
+
+        if ($paymentSum < $dueSum) {
+            $isPaidFlag = OrderAmountCashConstant::ORDER_PAID_FLAG_PARTIALLY_CONST;
+
+        } elseif ($paymentSum === $dueSum) {
+            $isPaidFlag = OrderAmountCashConstant::ORDER_PAID_FLAG_YES;
+
+        } else {
+            // $paymentAmount > $dueSum
+            $isPaidFlag = OrderAmountCashConstant::ORDER_PAYMENT_BIGGER_THAN_DUE_CONST;
+        }
+
+        $this->updateStoreOwnerDueFromCashOrderFlagBySpecificDate($storeOwnerProfileId, $isPaidFlag, $firstDayOfMonth,
+            $lastDayOfMonth);
+    }
+
+    public function updateStoreOwnerDueFromCashOrderFlagBySpecificDate(int $storeOwnerProfileId, int $flag, DateTime $firstDayOfMonth, DateTime $lastDayOfMonth): array
+    {
+        $storeOwnerDueFromCashOrderArrayResult = $this->storeOwnerDuesFromCashOrdersEntityRepository->getStoreOwnerDueFromCashOrderByStoreOwnerProfileIdAndTwoDates($storeOwnerProfileId,
+            $firstDayOfMonth, $lastDayOfMonth);
+
+        if (count($storeOwnerDueFromCashOrderArrayResult) > 0) {
+            foreach ($storeOwnerDueFromCashOrderArrayResult as $item) {
+                $item->setFlag($flag);
+
+                $this->entityManager->flush();
+            }
+        }
+
+        return $storeOwnerDueFromCashOrderArrayResult;
     }
 }

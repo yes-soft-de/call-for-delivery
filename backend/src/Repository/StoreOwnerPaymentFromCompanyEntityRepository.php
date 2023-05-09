@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\StoreOwnerPaymentFromCompanyEntity;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -66,14 +67,13 @@ class StoreOwnerPaymentFromCompanyEntityRepository extends ServiceEntityReposito
             ->getResult();
     }
 
-    public function  getSumPaymentsFromCompany(int $storeId): ?array
+    public function getSumPaymentsFromCompany(int $storeOwnerProfileId): ?array
     {
         return $this->createQueryBuilder('storeOwnerPaymentFromCompanyEntity')
-           
-            ->select('sum (storeOwnerPaymentFromCompanyEntity.amount) as sumPaymentsFromCompany')
+            ->select('SUM(storeOwnerPaymentFromCompanyEntity.amount) as sumPaymentsFromCompany')
            
             ->andWhere('storeOwnerPaymentFromCompanyEntity.store = :storeId')
-            ->setParameter('storeId', $storeId)
+            ->setParameter('storeId', $storeOwnerProfileId)
             
             ->getQuery()
             ->getOneOrNullResult();
@@ -95,5 +95,21 @@ class StoreOwnerPaymentFromCompanyEntityRepository extends ServiceEntityReposito
 
             ->getQuery()
             ->getResult();
+    }
+
+    public function getStorePaymentFromCompanySumByMonth(int $storeOwnerProfileId, DateTime $firstDayOfMonth, DateTime $lastDayOfMonth): array
+    {
+        return $this->createQueryBuilder('storeOwnerPaymentFromCompanyEntity')
+            ->select('SUM(storeOwnerPaymentFromCompanyEntity.amount)')
+
+            ->andWhere('storeOwnerPaymentFromCompanyEntity.store = :storeId')
+            ->setParameter('storeId', $storeOwnerProfileId)
+
+            ->andWhere('storeOwnerPaymentFromCompanyEntity.month BETWEEN :firstDayOfTheMonthDate AND :lastDayOfTheMonthDate')
+            ->setParameter('firstDayOfTheMonthDate', $firstDayOfMonth)
+            ->setParameter('lastDayOfTheMonthDate', $lastDayOfMonth)
+
+            ->getQuery()
+            ->getSingleColumnResult();
     }
 }

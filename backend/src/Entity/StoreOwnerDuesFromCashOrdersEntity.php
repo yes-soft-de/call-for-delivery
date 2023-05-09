@@ -42,9 +42,6 @@ class StoreOwnerDuesFromCashOrdersEntity
     #[ORM\Column(type: 'text', nullable: true)]
     private $captainNote;
 
-    #[ORM\Column(type: 'array', nullable: true)]
-    private $paymentsFromCompany = [];
-
     public function getId(): ?int
     {
         return $this->id;
@@ -142,18 +139,6 @@ class StoreOwnerDuesFromCashOrdersEntity
     public function setCaptainNote(?string $captainNote): self
     {
         $this->captainNote = $captainNote;
-
-        return $this;
-    }
-
-    public function getPaymentsFromCompany(): ?array
-    {
-        return $this->paymentsFromCompany;
-    }
-
-    public function setPaymentsFromCompany(?array $paymentsFromCompany): self
-    {
-        $this->paymentsFromCompany = $paymentsFromCompany;
 
         return $this;
     }

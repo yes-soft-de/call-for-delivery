@@ -22,15 +22,6 @@ class AdminStoreCashOrderService
             return OrderAmountCashConstant::STORE_DUES_FROM_CASH_ORDER_NOT_EXIST_CONST;
         }
 
-//        if ($deleteCashOrdersAmountResult[1]) {
-//               if ($deleteCashOrdersAmountResult[1] > 0) {
-//                   foreach ($deleteCashOrdersAmountResult[1] as $paymentId) {
-//                       $this->updateStorePaymentFromCompanyBySpecificAmount($paymentId, $deleteCashOrdersAmountResult[0]->getStoreAmount(),
-//                           OrderAmountCashConstant::AMOUNT_SUBTRACTION_TYPE_OPERATION_CONST);
-//                   }
-//               }
-//        }
-
         return $deleteCashOrdersAmountResult;
     }
 

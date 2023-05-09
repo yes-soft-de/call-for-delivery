@@ -28,12 +28,8 @@ class StoreOwnerPaymentFromCompanyEntity
     #[ORM\Column(type: 'text', nullable: true)]
     private $note;
 
-    #[ORM\Column(type: 'array', nullable: true)]
-    private $storeDueFromCashOrder = [];
-
-    public function __construct()
-    {
-    }
+    #[ORM\Column(type: 'date', nullable: true)]
+    private $month;
 
     public function getId(): ?int
     {
@@ -88,14 +84,14 @@ class StoreOwnerPaymentFromCompanyEntity
         return $this;
     }
 
-    public function getStoreDueFromCashOrder(): ?array
+    public function getMonth(): ?\DateTimeInterface
     {
-        return $this->storeDueFromCashOrder;
+        return $this->month;
     }
 
-    public function setStoreDueFromCashOrder(?array $storeDueFromCashOrder): self
+    public function setMonth(?\DateTimeInterface $month): self
     {
-        $this->storeDueFromCashOrder = $storeDueFromCashOrder;
+        $this->month = $month;
 
         return $this;
     }

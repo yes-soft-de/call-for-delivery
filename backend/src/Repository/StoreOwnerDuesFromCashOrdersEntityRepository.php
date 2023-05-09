@@ -10,6 +10,7 @@ use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionEntity;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreDueSumFromCashOrderFilterByAdminRequest;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDueFromCashOrderFilterByAdminRequest;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -85,21 +86,26 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
     {
         return $this->createQueryBuilder('storeOwnerDuesFromCashOrders')
     
-            ->select('IDENTITY (storeOwnerDuesFromCashOrders.orderId) as orderId')
+            ->select('IDENTITY(storeOwnerDuesFromCashOrders.orderId) as orderId')
             ->addSelect('storeOwnerDuesFromCashOrders.id', 'storeOwnerDuesFromCashOrders.amount', 'storeOwnerDuesFromCashOrders.flag', 'storeOwnerDuesFromCashOrders.createdAt',
-                'storeOwnerDuesFromCashOrders.storeAmount', 'storeOwnerDuesFromCashOrders.paymentsFromCompany')
+                'storeOwnerDuesFromCashOrders.storeAmount')
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')
            
-            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = storeOwnerDuesFromCashOrders.store')
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = storeOwnerDuesFromCashOrders.store'
+            )
             
             ->andWhere('storeOwnerDuesFromCashOrders.store = :store')
             ->setParameter('store', $storeId)
            
             ->andWhere('storeOwnerDuesFromCashOrders.createdDate >= :fromDate')
-            ->setParameter('fromDate', $fromDate)
+            ->setParameter('fromDate', (new \DateTime($fromDate))->setTime(0, 0,0))
            
             ->andWhere('storeOwnerDuesFromCashOrders.createdDate <= :toDate')
-            ->setParameter('toDate', $toDate)
+            ->setParameter('toDate', (new \DateTime($toDate))->setTime(0, 0,0))
             
             ->andWhere('storeOwnerDuesFromCashOrders.flag = :flag OR storeOwnerDuesFromCashOrders.flag = :partiallyPaidFlag')
             ->setParameter('flag', OrderAmountCashConstant::ORDER_PAID_FLAG_NO)
@@ -297,5 +303,43 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
         }
 
         return $filteredStoreDueFromCashOrder;
+    }
+
+    /**
+     * Get the sum of a specific store due and depending on dates
+     */
+    public function getStoreOwnerDueSumFromCashOrderByStoreOwnerProfileIdAndTwoDates(int $storeOwnerProfileId, DateTime $firstDayOfMonth, DateTime $lastDayOfMonth): array
+    {
+        return $this->createQueryBuilder('storeOwnerDuesFromCashOrdersEntity')
+            ->select('SUM(storeOwnerDuesFromCashOrdersEntity.storeAmount)')
+
+            ->andWhere('storeOwnerDuesFromCashOrdersEntity.store = :storeOwnerProfileId')
+            ->setParameter('storeOwnerProfileId', $storeOwnerProfileId)
+
+            ->andWhere('storeOwnerDuesFromCashOrdersEntity.createdDate >= :firstDayOfMonth')
+            ->setParameter('firstDayOfMonth', $firstDayOfMonth)
+
+            ->andWhere('storeOwnerDuesFromCashOrdersEntity.createdDate <= :lastDayOfMonth')
+            ->setParameter('lastDayOfMonth', $lastDayOfMonth)
+
+            ->getQuery()
+            ->getSingleColumnResult();
+    }
+
+    public function getStoreOwnerDueFromCashOrderByStoreOwnerProfileIdAndTwoDates(int $storeOwnerProfileId, DateTime $firstDayOfMonth, DateTime $lastDayOfMonth): array
+    {
+        return $this->createQueryBuilder('storeOwnerDuesFromCashOrdersEntity')
+
+            ->andWhere('storeOwnerDuesFromCashOrdersEntity.store = :storeOwnerProfileId')
+            ->setParameter('storeOwnerProfileId', $storeOwnerProfileId)
+
+            ->andWhere('storeOwnerDuesFromCashOrdersEntity.createdDate >= :firstDayOfMonth')
+            ->setParameter('firstDayOfMonth', $firstDayOfMonth)
+
+            ->andWhere('storeOwnerDuesFromCashOrdersEntity.createdDate <= :lastDayOfMonth')
+            ->setParameter('lastDayOfMonth', $lastDayOfMonth)
+
+            ->getQuery()
+            ->getResult();
     }
 }
