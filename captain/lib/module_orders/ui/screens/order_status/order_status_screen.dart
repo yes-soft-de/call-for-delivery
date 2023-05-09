@@ -208,6 +208,10 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
     widget.stateManager.getOrderDetails(orderId, this);
   }
 
+  void goBack() {
+    Navigator.of(context).pop();
+  }
+  
   bool flag = true;
   @override
   Widget build(BuildContext context) {

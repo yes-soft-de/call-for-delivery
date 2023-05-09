@@ -293,8 +293,7 @@ class NearbyOrdersCard extends StatelessWidget {
                 verticalTile(context,
                     title: S.current.orderNumber, subtitle: orderNumber),
                 verticalTile(context,
-                    title: S.current.branch,
-                    subtitle: branchName),
+                    title: S.current.branch, subtitle: branchName),
               ],
             ),
             // divider

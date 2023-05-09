@@ -45,6 +45,7 @@ class Urls {
   static const NEARBY_ORDERS_API = '$BASE_API/v1/order/closestorders';
   static const CAPTAIN_ACCEPTED_ORDERS_API = '$BASE_API/v1/order/acceptedorder';
   static const ACCEPT_ORDER_API = '$BASE_API/v1/order/orderupdatestate';
+  static const UNACCEPT_ORDER_API = '$BASE_API/v1/order/unacceptorderbycaptain';
   static const CAPTAIN_ORDER_UPDATE_API = '$BASE_API/v1/order/orderupdatestate';
   static const UPDATE_PAID_TO_PROVIDER_API =
       '$BASE_API/v1/order/orderupdatepaidtoprovider';

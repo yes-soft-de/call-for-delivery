@@ -5,6 +5,7 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_localization/service/localization_service/localization_service.dart';
 import 'package:c4d/module_orders/model/roomId/room_id_model.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
+import 'package:c4d/module_orders/request/cancel_order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/response/enquery_response/enquery_response.dart';
@@ -163,6 +164,16 @@ class OrdersService {
 
   Future<DataModel> removeOrderSub(OrderNonSubRequest request) async {
     ActionResponse? response = await _ordersManager.removeOrderSub(request);
+    await FireStoreHelper().backgroundThread('Trigger');
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+  Future<DataModel> cancelOrder(CancelOrderRequest request) async {
+    ActionResponse? response = await _ordersManager.cancelOrder(request);
     await FireStoreHelper().backgroundThread('Trigger');
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
