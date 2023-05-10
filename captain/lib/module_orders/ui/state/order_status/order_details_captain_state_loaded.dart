@@ -6,6 +6,7 @@ import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
+import 'package:c4d/module_orders/request/cancel_order_request.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/module_orders/ui/screens/order_status/order_status_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
@@ -16,6 +17,7 @@ import 'package:c4d/module_orders/ui/widgets/order_details_widget/order_button.d
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/provide_distance.dart';
 import 'package:c4d/module_orders/ui/widgets/order_widget/custom_step.dart';
 import 'package:c4d/module_orders/utils/icon_helper/order_progression_helper.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
@@ -125,6 +127,14 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                 );
               });
         }, icon: Icons.warning_rounded),
+        CustomC4dAppBar.actionIcon(context, onTap: () {
+          showDialog(context: context, builder: (ctx){
+            return CustomAlertDialog(onPressed: (){
+               screenState.manager.cancelOrder(screenState,
+              CancelOrderRequest(id: int.tryParse(screenState.orderId ?? '')));
+            }, content: S.current.areSureYouWantToCancelThisOrder, title: S.current.warnning,);
+          });
+        }, icon: Icons.cancel_rounded),
       ]),
       body: CustomListView.custom(
         children: [

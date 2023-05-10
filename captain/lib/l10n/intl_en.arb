@@ -765,5 +765,6 @@
     "addsAndOffers": "adds and offers",
     "yourBalanceToday": "your balance today",
     "dontTakeMoneyThisOrderIsPaidAlready": "don't Take Money This Order Paid Already",
-    "financeOverPaid": "Over paid"
+    "financeOverPaid": "Over paid",
+    "areSureYouWantToCancelThisOrder": "Are you sure you want to cancel this order"
 }

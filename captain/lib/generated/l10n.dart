@@ -7709,6 +7709,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Are you sure you want to cancel this order`
+  String get areSureYouWantToCancelThisOrder {
+    return Intl.message(
+      'Are you sure you want to cancel this order',
+      name: 'areSureYouWantToCancelThisOrder',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

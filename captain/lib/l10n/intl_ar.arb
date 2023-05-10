@@ -767,5 +767,6 @@
     "addsAndOffers": "الاعلانات والعروض",
     "yourBalanceToday": "رصيدك الليوم",
     "dontTakeMoneyThisOrderIsPaidAlready": "لا تستلم مبلغ من الزبون هذا الطلب مدفوع مسبقا",
-    "financeOverPaid": "دفعة زائدة"
+    "financeOverPaid": "دفعة زائدة",
+    "areSureYouWantToCancelThisOrder":"هل أنت متأكد من رغبتك في إلغاء هذا الطلب"
 }

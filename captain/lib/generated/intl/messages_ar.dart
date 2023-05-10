@@ -95,6 +95,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "هل انت متأكد من رغبتك في حذف حسابك ، لن تتمكن من استخدام هذه البيانات في تسجيل الدخول بعد الآن"),
         "areSureAboutStoppingPlan": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من رغبتك في إيقاف خطة عملك الحالية"),
+        "areSureYouWantToCancelThisOrder": MessageLookupByLibrary.simpleMessage(
+            "هل أنت متأكد من رغبتك في إلغاء هذا الطلب"),
         "areYouSureAboutDeleteSelectedNotifications":
             MessageLookupByLibrary.simpleMessage(
                 "هل أنت متأكد في رغبتك في حذف الإشعارات التي تم تحديدها"),

@@ -173,7 +173,7 @@ class OrderStatusStateManager {
       } else {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
-                message: S.current.noticeHasBeenSendedToAdministration)
+                message: S.current.updateOrderSuccess)
             .show(screenState.context);
         screenState.goBack();
       }
