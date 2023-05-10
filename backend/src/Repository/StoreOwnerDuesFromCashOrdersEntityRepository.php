@@ -4,12 +4,14 @@ namespace App\Repository;
 
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
+use App\Constant\StoreOwnerDueFromCashOrder\StoreOwnerDueFromCashOrderStoreAmountConstant;
 use App\Entity\OrderEntity;
 use App\Entity\StoreOwnerDuesFromCashOrdersEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionEntity;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreDueSumFromCashOrderFilterByAdminRequest;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDueFromCashOrderFilterByAdminRequest;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -59,7 +61,8 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
         return $this->createQueryBuilder('storeOwnerDuesFromCashOrders')
     
             ->select('IDENTITY (storeOwnerDuesFromCashOrders.orderId) as orderId')
-            ->addSelect('storeOwnerDuesFromCashOrders.id', 'storeOwnerDuesFromCashOrders.amount', 'storeOwnerDuesFromCashOrders.flag', 'storeOwnerDuesFromCashOrders.createdAt', 'storeOwnerDuesFromCashOrders.storeAmount', 'storeOwnerDuesFromCashOrders.captainNote')
+            ->addSelect('storeOwnerDuesFromCashOrders.id', 'storeOwnerDuesFromCashOrders.amount', 'storeOwnerDuesFromCashOrders.flag', 'storeOwnerDuesFromCashOrders.createdAt',
+                'storeOwnerDuesFromCashOrders.storeAmount', 'storeOwnerDuesFromCashOrders.captainNote')
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')
            
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = storeOwnerDuesFromCashOrders.store')
@@ -84,23 +87,30 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
     {
         return $this->createQueryBuilder('storeOwnerDuesFromCashOrders')
     
-            ->select('IDENTITY (storeOwnerDuesFromCashOrders.orderId) as orderId')
-            ->addSelect('storeOwnerDuesFromCashOrders.id', 'storeOwnerDuesFromCashOrders.amount', 'storeOwnerDuesFromCashOrders.flag', 'storeOwnerDuesFromCashOrders.createdAt')
+            ->select('IDENTITY(storeOwnerDuesFromCashOrders.orderId) as orderId')
+            ->addSelect('storeOwnerDuesFromCashOrders.id', 'storeOwnerDuesFromCashOrders.amount', 'storeOwnerDuesFromCashOrders.flag', 'storeOwnerDuesFromCashOrders.createdAt',
+                'storeOwnerDuesFromCashOrders.storeAmount')
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')
            
-            ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = storeOwnerDuesFromCashOrders.store')
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = storeOwnerDuesFromCashOrders.store'
+            )
             
             ->andWhere('storeOwnerDuesFromCashOrders.store = :store')
             ->setParameter('store', $storeId)
            
             ->andWhere('storeOwnerDuesFromCashOrders.createdDate >= :fromDate')
-            ->setParameter('fromDate', $fromDate)
+            ->setParameter('fromDate', (new \DateTime($fromDate))->setTime(0, 0,0))
            
             ->andWhere('storeOwnerDuesFromCashOrders.createdDate <= :toDate')
-            ->setParameter('toDate', $toDate)
+            ->setParameter('toDate', (new \DateTime($toDate))->setTime(0, 0,0))
             
-            ->andWhere('storeOwnerDuesFromCashOrders.flag = :flag')
+            ->andWhere('storeOwnerDuesFromCashOrders.flag = :flag OR storeOwnerDuesFromCashOrders.flag = :partiallyPaidFlag')
             ->setParameter('flag', OrderAmountCashConstant::ORDER_PAID_FLAG_NO)
+            ->setParameter('partiallyPaidFlag', OrderAmountCashConstant::ORDER_PAID_FLAG_PARTIALLY_CONST)
 
             ->getQuery()
             ->getResult();
@@ -197,11 +207,17 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
      */
     public function filterStoreDueFromCashOrdersByAdmin(StoreDueSumFromCashOrderFilterByAdminRequest $request): array
     {
-        $query = $this->createQueryBuilder('storeOwnerDuesFromCashOrdersEntity');
+        $query = $this->createQueryBuilder('storeOwnerDuesFromCashOrdersEntity')
+
+            ->andWhere('storeOwnerDuesFromCashOrdersEntity.storeAmount != :zeroValue')
+            ->setParameter('zeroValue', StoreOwnerDueFromCashOrderStoreAmountConstant::STORE_AMOUNT_ZERO_VALUE_CONST);
 
         if ($request->getIsPaid()) {
-            $query->andWhere('storeOwnerDuesFromCashOrdersEntity.flag = :paidFlag')
-                ->setParameter('paidFlag', $request->getIsPaid());
+            if ($request->getIsPaid() === OrderAmountCashConstant::ORDER_PAID_FLAG_NO) {
+                $query->andWhere('storeOwnerDuesFromCashOrdersEntity.flag = :notPaidFlag OR storeOwnerDuesFromCashOrdersEntity.flag = :paidPartiallyFlag')
+                    ->setParameter('notPaidFlag', OrderAmountCashConstant::ORDER_PAID_FLAG_NO)
+                    ->setParameter('paidPartiallyFlag', OrderAmountCashConstant::ORDER_PAID_FLAG_PARTIALLY_CONST);
+            }
         }
 
         return $query->getQuery()->getResult();
@@ -219,8 +235,11 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
             ->setParameter('storeOwnerProfileId', $storeOwnerProfileId);
 
         if ($isPaid) {
-            $query->andWhere('storeOwnerDuesFromCashOrdersEntity.flag = :isPaid')
-                ->setParameter('isPaid', $isPaid);
+            if ($isPaid === OrderAmountCashConstant::ORDER_PAID_FLAG_NO) {
+                $query->andWhere('storeOwnerDuesFromCashOrdersEntity.flag = :notPaidFlag OR storeOwnerDuesFromCashOrdersEntity.flag = :paidPartiallyFlag')
+                    ->setParameter('notPaidFlag', OrderAmountCashConstant::ORDER_PAID_FLAG_NO)
+                    ->setParameter('paidPartiallyFlag', OrderAmountCashConstant::ORDER_PAID_FLAG_PARTIALLY_CONST);
+            }
         }
 
         return $query->getQuery()->getSingleColumnResult();
@@ -232,6 +251,9 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
     public function filterStoreOwnerDueFromCashOrderByAdmin(StoreOwnerDueFromCashOrderFilterByAdminRequest $request): array
     {
         $query = $this->createQueryBuilder('storeOwnerDuesFromCashOrdersEntity')
+
+            ->andWhere('storeOwnerDuesFromCashOrdersEntity.storeAmount != :zeroValue')
+            ->setParameter('zeroValue', StoreOwnerDueFromCashOrderStoreAmountConstant::STORE_AMOUNT_ZERO_VALUE_CONST)
 
             ->orderBy('storeOwnerDuesFromCashOrdersEntity.id', 'DESC');
 
@@ -294,5 +316,43 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
         }
 
         return $filteredStoreDueFromCashOrder;
+    }
+
+    /**
+     * Get the sum of a specific store due and depending on dates
+     */
+    public function getStoreOwnerDueSumFromCashOrderByStoreOwnerProfileIdAndTwoDates(int $storeOwnerProfileId, DateTime $firstDayOfMonth, DateTime $lastDayOfMonth): array
+    {
+        return $this->createQueryBuilder('storeOwnerDuesFromCashOrdersEntity')
+            ->select('SUM(storeOwnerDuesFromCashOrdersEntity.storeAmount)')
+
+            ->andWhere('storeOwnerDuesFromCashOrdersEntity.store = :storeOwnerProfileId')
+            ->setParameter('storeOwnerProfileId', $storeOwnerProfileId)
+
+            ->andWhere('storeOwnerDuesFromCashOrdersEntity.createdDate >= :firstDayOfMonth')
+            ->setParameter('firstDayOfMonth', $firstDayOfMonth)
+
+            ->andWhere('storeOwnerDuesFromCashOrdersEntity.createdDate <= :lastDayOfMonth')
+            ->setParameter('lastDayOfMonth', $lastDayOfMonth)
+
+            ->getQuery()
+            ->getSingleColumnResult();
+    }
+
+    public function getStoreOwnerDueFromCashOrderByStoreOwnerProfileIdAndTwoDates(int $storeOwnerProfileId, DateTime $firstDayOfMonth, DateTime $lastDayOfMonth): array
+    {
+        return $this->createQueryBuilder('storeOwnerDuesFromCashOrdersEntity')
+
+            ->andWhere('storeOwnerDuesFromCashOrdersEntity.store = :storeOwnerProfileId')
+            ->setParameter('storeOwnerProfileId', $storeOwnerProfileId)
+
+            ->andWhere('storeOwnerDuesFromCashOrdersEntity.createdDate >= :firstDayOfMonth')
+            ->setParameter('firstDayOfMonth', $firstDayOfMonth)
+
+            ->andWhere('storeOwnerDuesFromCashOrdersEntity.createdDate <= :lastDayOfMonth')
+            ->setParameter('lastDayOfMonth', $lastDayOfMonth)
+
+            ->getQuery()
+            ->getResult();
     }
 }

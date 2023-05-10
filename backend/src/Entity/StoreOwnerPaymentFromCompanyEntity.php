@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\StoreOwnerPaymentFromCompanyEntityRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -30,13 +28,8 @@ class StoreOwnerPaymentFromCompanyEntity
     #[ORM\Column(type: 'text', nullable: true)]
     private $note;
 
-    #[ORM\OneToMany(mappedBy: 'storeOwnerPaymentFromCompany', targetEntity: StoreOwnerDuesFromCashOrdersEntity::class)]
-    private $storeOwnerDuesFromCashOrdersEntities;
-
-    public function __construct()
-    {
-        $this->storeOwnerDuesFromCashOrdersEntities = new ArrayCollection();
-    }
+    #[ORM\Column(type: 'date', nullable: true)]
+    private $month;
 
     public function getId(): ?int
     {
@@ -91,32 +84,14 @@ class StoreOwnerPaymentFromCompanyEntity
         return $this;
     }
 
-    /**
-     * @return Collection<int, StoreOwnerDuesFromCashOrdersEntity>
-     */
-    public function getStoreOwnerDuesFromCashOrdersEntities(): Collection
+    public function getMonth(): ?\DateTimeInterface
     {
-        return $this->storeOwnerDuesFromCashOrdersEntities;
+        return $this->month;
     }
 
-    public function addStoreOwnerDuesFromCashOrdersEntity(StoreOwnerDuesFromCashOrdersEntity $storeOwnerDuesFromCashOrdersEntity): self
+    public function setMonth(?\DateTimeInterface $month): self
     {
-        if (!$this->storeOwnerDuesFromCashOrdersEntities->contains($storeOwnerDuesFromCashOrdersEntity)) {
-            $this->storeOwnerDuesFromCashOrdersEntities[] = $storeOwnerDuesFromCashOrdersEntity;
-            $storeOwnerDuesFromCashOrdersEntity->setStoreOwnerPaymentFromCompany($this);
-        }
-
-        return $this;
-    }
-
-    public function removeStoreOwnerDuesFromCashOrdersEntity(StoreOwnerDuesFromCashOrdersEntity $storeOwnerDuesFromCashOrdersEntity): self
-    {
-        if ($this->storeOwnerDuesFromCashOrdersEntities->removeElement($storeOwnerDuesFromCashOrdersEntity)) {
-            // set the owning side to null (unless already changed)
-            if ($storeOwnerDuesFromCashOrdersEntity->getStoreOwnerPaymentFromCompany() === $this) {
-                $storeOwnerDuesFromCashOrdersEntity->setStoreOwnerPaymentFromCompany(null);
-            }
-        }
+        $this->month = $month;
 
         return $this;
     }
