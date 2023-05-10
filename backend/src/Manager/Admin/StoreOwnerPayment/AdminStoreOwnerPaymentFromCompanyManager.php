@@ -58,7 +58,7 @@ class AdminStoreOwnerPaymentFromCompanyManager
             if ($storeOwnerPaymentFromCompanyEntity) {
                 if ($storeOwnerPaymentFromCompanyEntity->getId()) {
                     $isPaidFlag = $this->compareStoreDueFromCashOrdersAmountWithPaymentFromCompanyAmount($amountFromOrderCash,
-                        $storeOwnerPaymentFromCompanyEntity->getAmount(), $month, $storeOwnerPaymentFromCompanyEntity->getStore()->getId());
+                        $month, $storeOwnerPaymentFromCompanyEntity->getStore()->getId());
 
                     $this->adminStoreOwnerDuesFromCashOrdersManager->updateFlagBySpecificDate($amountFromOrderCash,
                         $isPaidFlag, $storeOwnerPaymentFromCompanyEntity);
@@ -133,13 +133,14 @@ class AdminStoreOwnerPaymentFromCompanyManager
         return 0.0;
     }
 
-    public function compareStoreDueFromCashOrdersAmountWithPaymentFromCompanyAmount(array $storeDueArray, float $paymentAmount, DateTime $month, int $storeOwnerProfileId): int
+    public function compareStoreDueFromCashOrdersAmountWithPaymentFromCompanyAmount(array $storeDueArray, DateTime $month, int $storeOwnerProfileId): int
     {
         if (count($storeDueArray) === 0) {
             return OrderAmountCashConstant::ORDER_PAYMENT_BIGGER_THAN_DUE_CONST;
         }
 
         $dueSum = 0.0;
+        $paymentAmount = 0.0;
 
         foreach ($storeDueArray as $singleOrderDueValue) {
             $dueSum += $singleOrderDueValue['storeAmount'];
