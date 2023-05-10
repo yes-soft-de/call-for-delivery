@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
+use App\Constant\StoreOwnerDueFromCashOrder\StoreOwnerDueFromCashOrderStoreAmountConstant;
 use App\Entity\OrderEntity;
 use App\Entity\StoreOwnerDuesFromCashOrdersEntity;
 use App\Entity\StoreOwnerProfileEntity;
@@ -206,11 +207,17 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
      */
     public function filterStoreDueFromCashOrdersByAdmin(StoreDueSumFromCashOrderFilterByAdminRequest $request): array
     {
-        $query = $this->createQueryBuilder('storeOwnerDuesFromCashOrdersEntity');
+        $query = $this->createQueryBuilder('storeOwnerDuesFromCashOrdersEntity')
+
+            ->andWhere('storeOwnerDuesFromCashOrdersEntity.storeAmount != :zeroValue')
+            ->setParameter('zeroValue', StoreOwnerDueFromCashOrderStoreAmountConstant::STORE_AMOUNT_ZERO_VALUE_CONST);
 
         if ($request->getIsPaid()) {
-            $query->andWhere('storeOwnerDuesFromCashOrdersEntity.flag = :paidFlag')
-                ->setParameter('paidFlag', $request->getIsPaid());
+            if ($request->getIsPaid() === OrderAmountCashConstant::ORDER_PAID_FLAG_NO) {
+                $query->andWhere('storeOwnerDuesFromCashOrdersEntity.flag = :notPaidFlag OR storeOwnerDuesFromCashOrdersEntity.flag = :paidPartiallyFlag')
+                    ->setParameter('notPaidFlag', OrderAmountCashConstant::ORDER_PAID_FLAG_NO)
+                    ->setParameter('paidPartiallyFlag', OrderAmountCashConstant::ORDER_PAID_FLAG_PARTIALLY_CONST);
+            }
         }
 
         return $query->getQuery()->getResult();
@@ -228,8 +235,11 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
             ->setParameter('storeOwnerProfileId', $storeOwnerProfileId);
 
         if ($isPaid) {
-            $query->andWhere('storeOwnerDuesFromCashOrdersEntity.flag = :isPaid')
-                ->setParameter('isPaid', $isPaid);
+            if ($isPaid === OrderAmountCashConstant::ORDER_PAID_FLAG_NO) {
+                $query->andWhere('storeOwnerDuesFromCashOrdersEntity.flag = :notPaidFlag OR storeOwnerDuesFromCashOrdersEntity.flag = :paidPartiallyFlag')
+                    ->setParameter('notPaidFlag', OrderAmountCashConstant::ORDER_PAID_FLAG_NO)
+                    ->setParameter('paidPartiallyFlag', OrderAmountCashConstant::ORDER_PAID_FLAG_PARTIALLY_CONST);
+            }
         }
 
         return $query->getQuery()->getSingleColumnResult();
@@ -241,6 +251,9 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
     public function filterStoreOwnerDueFromCashOrderByAdmin(StoreOwnerDueFromCashOrderFilterByAdminRequest $request): array
     {
         $query = $this->createQueryBuilder('storeOwnerDuesFromCashOrdersEntity')
+
+            ->andWhere('storeOwnerDuesFromCashOrdersEntity.storeAmount != :zeroValue')
+            ->setParameter('zeroValue', StoreOwnerDueFromCashOrderStoreAmountConstant::STORE_AMOUNT_ZERO_VALUE_CONST)
 
             ->orderBy('storeOwnerDuesFromCashOrdersEntity.id', 'DESC');
 
