@@ -2,22 +2,17 @@
 
 namespace App\Service\StoreOwnerDuesFromCashOrders;
 
-use App\AutoMapping;
 use App\Request\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersRequest;
 use App\Entity\StoreOwnerDuesFromCashOrdersEntity;
 use App\Entity\OrderEntity;
 use App\Manager\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersManager;
-use App\Constant\Order\OrderTypeConstant;
 
 class StoreOwnerDuesFromCashOrdersService
 {
-    private AutoMapping $autoMapping;
-    private StoreOwnerDuesFromCashOrdersManager $storeOwnerDuesFromCashOrdersManager;
-
-    public function __construct(AutoMapping $autoMapping, StoreOwnerDuesFromCashOrdersManager $storeOwnerDuesFromCashOrdersManager)
+    public function __construct(
+        private StoreOwnerDuesFromCashOrdersManager $storeOwnerDuesFromCashOrdersManager
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->storeOwnerDuesFromCashOrdersManager = $storeOwnerDuesFromCashOrdersManager;
     }
 
     public function createStoreOwnerDuesFromCashOrders(OrderEntity $orderEntity, int $flag, float $orderCost): ?StoreOwnerDuesFromCashOrdersEntity

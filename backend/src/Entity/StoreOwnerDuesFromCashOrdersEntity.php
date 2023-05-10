@@ -31,9 +31,6 @@ class StoreOwnerDuesFromCashOrdersEntity
 
     #[ORM\Column(type: 'float')]
     private $amount;
-
-    #[ORM\ManyToOne(targetEntity: StoreOwnerPaymentFromCompanyEntity::class, inversedBy: 'storeOwnerDuesFromCashOrdersEntities')]
-    private $storeOwnerPaymentFromCompany;
    
     #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'date', nullable: true)]
@@ -106,18 +103,6 @@ class StoreOwnerDuesFromCashOrdersEntity
     public function setAmount(float $amount): self
     {
         $this->amount = $amount;
-
-        return $this;
-    }
-
-    public function getStoreOwnerPaymentFromCompany(): ?StoreOwnerPaymentFromCompanyEntity
-    {
-        return $this->storeOwnerPaymentFromCompany;
-    }
-
-    public function setStoreOwnerPaymentFromCompany(?StoreOwnerPaymentFromCompanyEntity $storeOwnerPaymentFromCompany): self
-    {
-        $this->storeOwnerPaymentFromCompany = $storeOwnerPaymentFromCompany;
 
         return $this;
     }

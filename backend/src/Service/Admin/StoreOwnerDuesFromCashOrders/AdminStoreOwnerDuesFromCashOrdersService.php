@@ -33,7 +33,7 @@ class AdminStoreOwnerDuesFromCashOrdersService
     public function filterStoreOwnerDuesFromCashOrders(StoreOwnerDuesFromCashOrdersFilterGetRequest $request): array
     {
         $detail = [];
-        $sumAmountStorOwnerDues = 0;
+        $sumAmountStoreOwnerDues = 0;
         $finishedPayments = [];
        
         $items = $this->adminStoreOwnerDuesFromCashOrdersManager->filterStoreOwnerDuesFromCashOrders($request);
@@ -41,7 +41,7 @@ class AdminStoreOwnerDuesFromCashOrdersService
         foreach ($items as $storeOwnerDuesFromCashOrders) {
             //Unfinished Payments
             if($storeOwnerDuesFromCashOrders['flag'] ===  OrderAmountCashConstant::ORDER_PAID_FLAG_NO){
-                $sumAmountStorOwnerDues = $sumAmountStorOwnerDues + $storeOwnerDuesFromCashOrders['storeAmount'];
+                $sumAmountStoreOwnerDues = $sumAmountStoreOwnerDues + $storeOwnerDuesFromCashOrders['storeAmount'];
 
                 $detail[] = $this->autoMapping->map("array", StoreOwnerDuesFromCashOrdersResponse::class, $storeOwnerDuesFromCashOrders);
             }
@@ -51,21 +51,21 @@ class AdminStoreOwnerDuesFromCashOrdersService
             }
         }
 
-        $total = $this->getTotal($sumAmountStorOwnerDues, $request->getStoreId(), $request->getFromDate(), $request->getToDate());
+        $total = $this->getTotal($sumAmountStoreOwnerDues, $request->getStoreId(), $request->getFromDate(), $request->getToDate());
 
         return ['detail' => $detail, 'finishedPayments' => $finishedPayments, 'total' => $total];
     }
     
-    public function getTotal(float $sumAmountStorOwnerDues, int $storeId, string $fromDate, string $toDate): array
+    public function getTotal(float $sumAmountStoreOwnerDues, int $storeId, string $fromDate, string $toDate): array
     {
-        $sumPaymentsFromCompany = $this->adminStoreOwnerPaymentFromCompanyService->getSumPaymentsFromCompany($storeId, $fromDate, $toDate);
+        $sumPaymentsFromCompany = $this->adminStoreOwnerPaymentFromCompanyService->getSumPaymentsFromCompany($storeId);
       
         //Now this field shown only in the front the rest of the fields are not needed at the present time
-        $item['sumAmountStorOwnerDues'] = $sumAmountStorOwnerDues;
+        $item['sumAmountStorOwnerDues'] = $sumAmountStoreOwnerDues;
 
         $item['sumPaymentsFromCompany'] = $sumPaymentsFromCompany['sumPaymentsFromCompany'];
 
-        $total = $item['sumPaymentsFromCompany'] -  $sumAmountStorOwnerDues ;
+        $total = $item['sumPaymentsFromCompany'] - $sumAmountStoreOwnerDues ;
     
         $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;
 
@@ -129,7 +129,8 @@ class AdminStoreOwnerDuesFromCashOrdersService
             $tempResponse = [];
 
             foreach ($allStoreDueFromCashOrder as $value) {
-                if ($this->checkIfStoreDueSumFilterByAdminResponseArrayHasSpecificValueForSpecificProperty($value->getStore()->getId(), $response, 'storeOwnerProfileId') === false) {
+                if ($this->checkIfStoreDueSumFilterByAdminResponseArrayHasSpecificValueForSpecificProperty($value->getStore()->getId(),
+                        $response, 'storeOwnerProfileId') === false) {
                     $tempResponse['id'] = $value->getId();
                     $tempResponse['storeOwnerProfileId'] = $value->getStore()->getId();
                     $tempResponse['storeOwnerName'] = $value->getStore()->getStoreOwnerName();
@@ -138,8 +139,8 @@ class AdminStoreOwnerDuesFromCashOrdersService
                     $tempResponse['amountSum'] = $this->getStoreOwnerDueSumFromCashOrderByIsPaidFlagAndStoreOwnerProfileId($tempResponse['storeOwnerProfileId'],
                         $request->getIsPaid());
                     // Get the rest to be paid to the store according to the sum of the due and sum of the payments (if exists)
-                    $tempResponse['toBePaid'] = $this->calculateAndGetToBePaidAmountByStoreOwnerDueArrayAndStoreOwnerProfileIdAndDueSum($allStoreDueFromCashOrder,
-                        $tempResponse['storeOwnerProfileId'], $tempResponse['amountSum']);
+                    $tempResponse['toBePaid'] = $this->calculateAndGetToBePaidAmountByStoreOwnerDueSum($tempResponse['storeOwnerProfileId'],
+                        $tempResponse['amountSum']);
 
                     $response[] = $this->autoMapping->map('array', StoreDueSumFilterByAdminResponse::class, $tempResponse);
                 }
@@ -149,35 +150,32 @@ class AdminStoreOwnerDuesFromCashOrdersService
         return $response;
     }
 
-    /**
-     * Calculate and return the remind payment amount for a group of captain financial daily
-     */
-    public function calculateAndGetToBePaidAmountByStoreOwnerDueArrayAndStoreOwnerProfileIdAndDueSum(array $storeOwnerDuesFromCashOrdersArray, int $storeOwnerProfileId, float $sumAmount): float
+    public function getStorePaymentFromCompanyAmountById(int $id): float
     {
-        if (count($storeOwnerDuesFromCashOrdersArray) === 0) {
-            return 0.0;
-        }
+        return $this->adminStoreOwnerPaymentFromCompanyService->getStorePaymentFromCompanyAmountById($id);
+    }
 
-        // contains summed payments
-        $summedPayments = [];
-        $paymentsSum = 0.0;
+    public function getSumPaymentsFromCompany(int $storeOwnerProfileId): float
+    {
+        $sumPaymentsArrayResult = $this->adminStoreOwnerPaymentFromCompanyService->getSumPaymentsFromCompany($storeOwnerProfileId);
 
-        foreach ($storeOwnerDuesFromCashOrdersArray as $storeOwnerDueFromCashOrderEntity) {
-            if ($storeOwnerDueFromCashOrderEntity->getStore()->getId() === $storeOwnerProfileId) {
-                $payment = $storeOwnerDueFromCashOrderEntity->getStoreOwnerPaymentFromCompany();
-
-                if ($payment) {
-                    $storePaymentFromCompanyId = $payment->getId();
-                    $storePaymentFromCompanyAmount = $payment->getAmount();
-
-                    if (array_search($storePaymentFromCompanyId, $summedPayments) === false) {
-                        $summedPayments[] = $storePaymentFromCompanyId;
-
-                        $paymentsSum += $storePaymentFromCompanyAmount;
-                    }
+        if ($sumPaymentsArrayResult) {
+            if (count($sumPaymentsArrayResult) > 0) {
+                if ($sumPaymentsArrayResult['sumPaymentsFromCompany']) {
+                    return $sumPaymentsArrayResult['sumPaymentsFromCompany'];
                 }
             }
         }
+
+        return 0.0;
+    }
+
+    /**
+     * Calculate and return the remind payment amount for a group of captain financial daily
+     */
+    public function calculateAndGetToBePaidAmountByStoreOwnerDueSum(int $storeOwnerProfileId, float $sumAmount): float
+    {
+        $paymentsSum = $this->getSumPaymentsFromCompany($storeOwnerProfileId);
 
         return ($sumAmount - $paymentsSum);
     }
@@ -201,30 +199,11 @@ class AdminStoreOwnerDuesFromCashOrdersService
     /**
      * get the sum of the payment of Store Due From Cash Order amount
      */
-    public function calculateStoreOwnerDuePaymentSumByStoreOwnerDueFromCashOrderEntitiesArray(array $storeOwnerDueFromCashOrderArray)
+    public function calculateToBePaidMonthlyByStoreOwnerProfileIdAndStoreOwnerDueAndMonth(int $storeOwnerProfileId, float $storeOwnerDueSum, DateTime $month): float
     {
-        $sum = 0.0;
+        $paymentFromCompanySum = $this->getStorePaymentFromCompanySumByMonth($storeOwnerProfileId, $month);
 
-        $summedPayments = [];
-
-        if (count($storeOwnerDueFromCashOrderArray) > 0) {
-            foreach ($storeOwnerDueFromCashOrderArray as $item) {
-                $storePaymentFromCompanyEntity = $item->getStoreOwnerPaymentFromCompany();
-
-                if ($storePaymentFromCompanyEntity) {
-                    $storePaymentFromCompanyId = $storePaymentFromCompanyEntity->getId();
-                    $storePaymentFromCompanyAmount = $storePaymentFromCompanyEntity->getAmount();
-
-                    if (array_search($storePaymentFromCompanyId, $summedPayments) === false) {
-                        $summedPayments[] = $storePaymentFromCompanyId;
-
-                        $sum = $sum + $storePaymentFromCompanyAmount;
-                    }
-                }
-            }
-        }
-
-        return $sum;
+        return ($storeOwnerDueSum - $paymentFromCompanySum);
     }
 
     /**
@@ -233,6 +212,11 @@ class AdminStoreOwnerDuesFromCashOrdersService
     public function getStartAndEndDateTimeOfEachMonthByYear(string $year, string $timeZone = null): array
     {
         return $this->dateFactoryService->getStartAndEndDateTimeOfEachMonthByYear($year, $timeZone);
+    }
+
+    public function getDateOnlyFromStringDateTime(string $dateTime): DateTime
+    {
+        return $this->dateFactoryService->getDateOnlyFromStringDateTime($dateTime);
     }
 
     /**
@@ -267,19 +251,25 @@ class AdminStoreOwnerDuesFromCashOrdersService
                 $response[$index]->image = $this->uploadFileHelperService->getImageParams($storeOwnersDueFromCashOrdersArray[0]->getStore()->getImages());
                 $response[$index]->amount = $this->getStoreDueFromCashOrderSumByStoreDueEntitiesArray($storeOwnersDueFromCashOrdersArray);
                 // Calculate the remaining payment for the store
-                $paymentSum = $this->calculateStoreOwnerDuePaymentSumByStoreOwnerDueFromCashOrderEntitiesArray($storeOwnersDueFromCashOrdersArray);
-
-                if ($paymentSum === 0.0) {
-                    $response[$index]->toBePaid = $response[$index]->amount;
-
-                } else {
-                    $response[$index]->toBePaid = $response[$index]->amount - $paymentSum;
-                }
+                $response[$index]->toBePaid = $this->calculateToBePaidMonthlyByStoreOwnerProfileIdAndStoreOwnerDueAndMonth($storeOwnersDueFromCashOrdersArray[0]->getStore()->getId(),
+                    $response[$index]->amount, $this->getDateOnlyFromStringDateTime($month[2]));
 
                 $index++;
             }
         }
 
         return $response;
+    }
+
+    public function getStorePaymentFromCompanySumByMonth(int $storeOwnerProfileId, DateTime $month): float
+    {
+        $arrayResult = $this->adminStoreOwnerPaymentFromCompanyService->getStorePaymentFromCompanySumByMonth($storeOwnerProfileId,
+            $month);
+
+        if (count($arrayResult) > 0) {
+            return $arrayResult[0];
+        }
+
+        return 0.0;
     }
 }

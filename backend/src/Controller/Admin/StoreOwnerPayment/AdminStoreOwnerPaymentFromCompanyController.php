@@ -27,20 +27,18 @@ use App\Constant\Order\OrderAmountCashConstant;
  */
 class AdminStoreOwnerPaymentFromCompanyController extends BaseController
 {
-    private AutoMapping $autoMapping;
-    private ValidatorInterface $validator;
-    private AdminStoreOwnerPaymentFromCompanyService $adminStoreOwnerPaymentFromCompanyService;
-
-    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, AdminStoreOwnerPaymentFromCompanyService $adminStoreOwnerPaymentFromCompanyService)
+    public function __construct(
+        SerializerInterface $serializer,
+        private AutoMapping $autoMapping,
+        private ValidatorInterface $validator,
+        private AdminStoreOwnerPaymentFromCompanyService $adminStoreOwnerPaymentFromCompanyService
+    )
     {
         parent::__construct($serializer);
-        $this->autoMapping = $autoMapping;
-        $this->validator = $validator;
-        $this->adminStoreOwnerPaymentFromCompanyService = $adminStoreOwnerPaymentFromCompanyService;
     }
 
     /**
-     * admin:Create new Payment from store
+     * admin: Create new payment from company to store
      * @Route("storeownerpaymentfromcompany", name="createStoreOwnerPaymentFromCompany", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
@@ -125,7 +123,7 @@ class AdminStoreOwnerPaymentFromCompanyController extends BaseController
      * admin:delete Payment From Company
      * @Route("storeownerpaymentfromcompany/{id}", name="deleteStoreOwnerPaymentFromCompany", methods={"DELETE"})
      * @IsGranted("ROLE_ADMIN")
-     * @param Request $request
+     * @param $id
      * @return JsonResponse
      *
      * @OA\Tag(name="Store Owner Payment")
@@ -161,7 +159,7 @@ class AdminStoreOwnerPaymentFromCompanyController extends BaseController
      *          @OA\Property(type="string", property="msg", description="payment not exist!"),
      *      )
      * )
-     * 
+     *
      * @Security(name="Bearer")
      */
     public function deleteStoreOwnerPaymentFromCompany($id): JsonResponse
@@ -179,6 +177,7 @@ class AdminStoreOwnerPaymentFromCompanyController extends BaseController
      * admin:Get all payments.
      * @Route("storepaymentsfromcompany/{storeId}", name="getAllStorePaymentsFromCompany", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
+     * @param int $storeId
      * @return JsonResponse
      *
      * @OA\Tag(name="Store Owner Payment From Company")
