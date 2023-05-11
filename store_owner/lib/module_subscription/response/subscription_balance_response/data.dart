@@ -4,6 +4,7 @@ import 'start_date.dart';
 class Data {
   int? id;
   int? packageId;
+  int? packageType;
   String? packageName;
   int? remainingOrders;
   int? remainingCars;
@@ -19,6 +20,7 @@ class Data {
   Data(
       {this.id,
       this.packageId,
+      this.packageType,
       this.packageName,
       this.remainingOrders,
       this.remainingCars,
@@ -36,6 +38,7 @@ class Data {
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         id: json['id'] as int?,
         packageId: json['packageId'] as int?,
+        packageType: json['packageType'] as int?,
         packageName: json['packageName'] as String?,
         remainingOrders: json['remainingOrders'] as int?,
         remainingCars: json['remainingCars'] as int?,

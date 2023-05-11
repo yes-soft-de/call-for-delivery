@@ -6,6 +6,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SinglePackageCard extends StatelessWidget {
   final String packageName;
+  final int packageType;
   final String packageInfo;
   final String ordersCount;
   final String carsCount;
@@ -23,7 +24,7 @@ class SinglePackageCard extends StatelessWidget {
       required this.expired,
       required this.geographicalRange,
       required this.packageExtraCost,
-      this.unPaidCashOrdersSum});
+      this.unPaidCashOrdersSum, required this.packageType});
 
   @override
   Widget build(BuildContext context) {
@@ -158,7 +159,7 @@ class SinglePackageCard extends StatelessWidget {
                     SizedBox(
                       // width: 105,
                       child: Text(
-                        (packageName == 'باقة على الطلب'
+                        (packageType == 1
                             ? S.current.unLimitedOrders
                             : '${ordersCount} ' + S.of(context).sOrder),
                         style: TextStyle(

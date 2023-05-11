@@ -157,6 +157,7 @@ class SubscriptionBalanceLoadedState extends States {
             ),
             // package card
             SinglePackageCard(
+              packageType: balance.packageType,
               carsCount: balance.packageCarsCount.toString(),
               ordersCount: balance.packageOrdersCount.toString(),
               packageInfo: '',
@@ -356,7 +357,7 @@ class SubscriptionBalanceLoadedState extends States {
               ),
             ),
             // capacity bar
-            if (balance.packageName != 'باقة على الطلب')
+            if (balance.packageType != 1)
               _getOrderRow(
                 context,
                 balance.remainingOrders,

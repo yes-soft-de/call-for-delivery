@@ -18,22 +18,25 @@ class SubscriptionBalanceModel extends DataModel {
   late var unPaidCashOrdersSum;
   late num packageExtraCost;
   late num geographicalRange;
-  SubscriptionBalanceModel(
-      {required this.packageID,
-      required this.id,
-      required this.remainingCars,
-      required this.remainingOrders,
-      required this.startDate,
-      required this.endDate,
-      required this.packageCarsCount,
-      required this.packageOrdersCount,
-      required this.packageName,
-      this.status,
-      required this.expired,
-      this.unPaidCashOrdersSum,
-      required this.geographicalRange,
-      required this.packageExtraCost,
-      });
+  late int packageType;
+
+  SubscriptionBalanceModel({
+    required this.packageID,
+    required this.id,
+    required this.packageType,
+    required this.remainingCars,
+    required this.remainingOrders,
+    required this.startDate,
+    required this.endDate,
+    required this.packageCarsCount,
+    required this.packageOrdersCount,
+    required this.packageName,
+    this.status,
+    required this.expired,
+    this.unPaidCashOrdersSum,
+    required this.geographicalRange,
+    required this.packageExtraCost,
+  });
   late SubscriptionBalanceModel _balance;
   SubscriptionBalanceModel.withData(SubscriptionBalanceResponse response) {
     var data = response.data;
@@ -42,6 +45,7 @@ class SubscriptionBalanceModel extends DataModel {
         endDate: DateHelper.convert(data?.endDate?.timestamp),
         packageCarsCount: data?.packageCarCount ?? 0,
         packageID: data?.packageId ?? -1,
+        packageType: data?.packageType ?? -1,
         packageName: data?.packageName ?? S.current.unknown,
         packageOrdersCount: data?.packageOrderCount ?? 0,
         remainingCars: data?.remainingCars ?? 0,
