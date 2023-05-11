@@ -7700,6 +7700,26 @@ class S {
     );
   }
 
+  /// `the count of remaining orders`
+  String get remainingOrdersNumber {
+    return Intl.message(
+      'the count of remaining orders',
+      name: 'remainingOrdersNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `for a bouns`
+  String get toGetBouns {
+    return Intl.message(
+      'for a bouns',
+      name: 'toGetBouns',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Over paid`
   String get financeOverPaid {
     return Intl.message(

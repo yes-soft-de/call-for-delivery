@@ -765,5 +765,7 @@
     "addsAndOffers": "adds and offers",
     "yourBalanceToday": "your balance today",
     "dontTakeMoneyThisOrderIsPaidAlready": "don't Take Money This Order Paid Already",
+    "remainingOrdersNumber": "the count of remaining orders",
+    "toGetBouns": "for a bouns",
     "financeOverPaid": "Over paid"
 }
