@@ -127,14 +127,28 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                 );
               });
         }, icon: Icons.warning_rounded),
-        CustomC4dAppBar.actionIcon(context, onTap: () {
-          showDialog(context: context, builder: (ctx){
-            return CustomAlertDialog(onPressed: (){
-               screenState.manager.cancelOrder(screenState,
-              CancelOrderRequest(id: int.tryParse(screenState.orderId ?? '')));
-            }, content: S.current.areSureYouWantToCancelThisOrder, title: S.current.warnning,);
-          });
-        }, icon: Icons.cancel_rounded),
+        Visibility(
+          visible: orderInfo.state != OrderStatusEnum.FINISHED ||
+              orderInfo.state != OrderStatusEnum.CANCELLED ||
+              orderInfo.state != OrderStatusEnum.WAITING,
+          child: CustomC4dAppBar.actionIcon(context, onTap: () {
+            showDialog(
+                context: context,
+                builder: (ctx) {
+                  return CustomAlertDialog(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      screenState.manager.cancelOrder(
+                          screenState,
+                          CancelOrderRequest(
+                              id: int.tryParse(screenState.orderId ?? '')));
+                    },
+                    content: S.current.areSureYouWantToCancelThisOrder,
+                    title: S.current.warnning,
+                  );
+                });
+          }, icon: Icons.cancel_rounded),
+        ),
       ]),
       body: CustomListView.custom(
         children: [

@@ -171,11 +171,11 @@ class OrderStatusStateManager {
             .show(screenState.context);
         screenState.getOrderDetails(request.id);
       } else {
+        screenState.goBack();
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.updateOrderSuccess)
             .show(screenState.context);
-        screenState.goBack();
       }
     });
   }
