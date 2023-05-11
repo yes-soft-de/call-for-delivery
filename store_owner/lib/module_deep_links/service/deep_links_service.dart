@@ -11,7 +11,6 @@ import 'package:c4d/utils/logger/logger.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:uni_links/uni_links.dart';
-import 'package:location/location.dart' as loc;
 
 class DeepLinksService {
   static Future<DeepLinksModel?> checkForGeoLink() async {
@@ -49,12 +48,13 @@ class DeepLinksService {
       LocationPermission permission;
       // Test if location services are enabled.
       serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      if (!serviceEnabled) {
-        serviceEnabled = await loc.Location().requestService();
-        if (!serviceEnabled) {
-          return null;
-        }
-      }
+
+      // if (!serviceEnabled) {
+      //   serviceEnabled = await loc.Location().requestService();
+      //   if (!serviceEnabled) {
+      //     return null;
+      //   }
+      // }
       permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
