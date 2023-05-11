@@ -725,7 +725,7 @@ class UpdateOrderLoaded extends States {
 
                 /// cost type
                 Visibility(
-                  visible: AppConfig.packageType == 1 || screenState.payments == 'cash',
+                  visible: AppConfig.packageType == 1 && screenState.payments == 'cash',
                   child: ListTile(
                     title: Padding(
                       padding: const EdgeInsets.all(8.0),
