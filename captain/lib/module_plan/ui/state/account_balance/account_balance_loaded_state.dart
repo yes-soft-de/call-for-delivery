@@ -143,7 +143,9 @@ class AccountBalanceStateLoaded extends States {
         countKilometersFrom: e.countKilometersFrom,
         countKilometersTo: e.countKilometersTo,
         countOfOrdersLeft: e.countOfOrdersLeft,
-        message: e.message,
+        message: e.message != null
+            ? '${S.current.remainingOrdersNumber} ${e.countOfOrdersLeft.toInt()} ${S.current.toGetBouns} ${e.bounce}'
+            : null,
       ));
     });
     return Visibility(

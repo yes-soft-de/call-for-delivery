@@ -6,7 +6,6 @@ import 'package:c4d/module_plan/model/captain_finance_by_order_model.dart';
 import 'package:c4d/module_plan/model/captain_financial_dues.dart';
 import 'package:c4d/module_plan/request/captain_finance_request.dart';
 import 'package:c4d/module_plan/response/captain_account_balance_response/captain_account_balance_response.dart';
-import 'package:c4d/module_plan/response/captain_account_balance_response/on_order/on_order.dart';
 import 'package:c4d/module_plan/response/captain_account_balance_response/on_order/on_order_data.dart';
 import 'package:c4d/module_plan/response/captain_finance_by_hours_response/captain_finance_by_hours_response.dart';
 import 'package:c4d/module_plan/response/captain_finance_by_order_count_response/captain_finance_by_order_count_response.dart';
@@ -87,13 +86,14 @@ class PlanService {
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
 
-    if (actionResponse is OnOrder) {
-      var data = actionResponse.data as OnOrderData?;
+    // no need to translate any more
+    // if (actionResponse is OnOrder) {
+    //   var data = actionResponse.data as OnOrderData?;
 
-      data?.financialAccountDetails = await _getTranslated(data);
+    //   data?.financialAccountDetails = await _getTranslated(data);
 
-      actionResponse.data = data;
-    }
+    //   actionResponse.data = data;
+    // }
     return CaptainAccountBalanceModel.withData(actionResponse);
   }
 
@@ -125,8 +125,7 @@ class PlanService {
     return DataModel.empty();
   }
 
-  Future<List<FinancialAccountDetail>?> _getTranslated(
-      OnOrderData data) async {
+  Future<List<FinancialAccountDetail>?> _getTranslated(OnOrderData data) async {
     try {
       var translated = <FinancialAccountDetail>[];
       translated = data.financialAccountDetails!;
@@ -134,6 +133,7 @@ class PlanService {
         if (element.message == null) {
           continue;
         }
+
         element.message = await Trans.translateService(element.message ?? '');
       }
       return translated;
