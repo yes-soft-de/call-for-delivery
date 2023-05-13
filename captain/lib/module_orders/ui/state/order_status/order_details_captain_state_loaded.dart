@@ -6,6 +6,7 @@ import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
+import 'package:c4d/module_orders/request/cancel_order_request.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/module_orders/ui/screens/order_status/order_status_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
@@ -16,6 +17,7 @@ import 'package:c4d/module_orders/ui/widgets/order_details_widget/order_button.d
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/provide_distance.dart';
 import 'package:c4d/module_orders/ui/widgets/order_widget/custom_step.dart';
 import 'package:c4d/module_orders/utils/icon_helper/order_progression_helper.dart';
+import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
@@ -102,16 +104,15 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                                                 screenState.orderId ?? ''),
                                             storeBranchToClientDistanceAdditionExplanation:
                                                 reason.text.trim(),
-                                            destination:Destination(
-                                              lat: double.tryParse(coord.text
-                                                  .trim()
-                                                  .split(',')[0]
-                                                  .trim()),
-                                              lon: double.tryParse(coord.text
-                                                  .trim()
-                                                  .split(',')[1]
-                                                  .trim())    
-                                            )));
+                                            destination: Destination(
+                                                lat: double.tryParse(coord.text
+                                                    .trim()
+                                                    .split(',')[0]
+                                                    .trim()),
+                                                lon: double.tryParse(coord.text
+                                                    .trim()
+                                                    .split(',')[1]
+                                                    .trim()))));
                                   } else {
                                     Fluttertoast.showToast(
                                         msg: S.current.pleaseEnterValidCoord);
@@ -126,6 +127,28 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                 );
               });
         }, icon: Icons.warning_rounded),
+        Visibility(
+          visible: orderInfo.state != OrderStatusEnum.FINISHED ||
+              orderInfo.state != OrderStatusEnum.CANCELLED ||
+              orderInfo.state != OrderStatusEnum.WAITING,
+          child: CustomC4dAppBar.actionIcon(context, onTap: () {
+            showDialog(
+                context: context,
+                builder: (ctx) {
+                  return CustomAlertDialog(
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      screenState.manager.cancelOrder(
+                          screenState,
+                          CancelOrderRequest(
+                              id: int.tryParse(screenState.orderId ?? '')));
+                    },
+                    content: S.current.areSureYouWantToCancelThisOrder,
+                    title: S.current.warnning,
+                  );
+                });
+          }, icon: Icons.cancel_rounded),
+        ),
       ]),
       body: CustomListView.custom(
         children: [
@@ -354,8 +377,8 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                   leading: const Icon(
                     Icons.store_rounded,
                   ),
-                  title: Text(S.current.store),
-                  subtitle: Text(orderInfo.storeName),
+                  title: Text(S.current.branch),
+                  subtitle: Text(orderInfo.branchName),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -368,8 +391,8 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                   leading: const Icon(
                     Icons.store_rounded,
                   ),
-                  title: Text(S.current.branch),
-                  subtitle: Text(orderInfo.branchName),
+                  title: Text(S.current.store),
+                  subtitle: Text(orderInfo.storeName),
                 ),
                 Visibility(
                   visible: orderInfo.branchPhone != null,
@@ -553,15 +576,15 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                   ),
                   title: Text(S.current.orderDetails),
                   subtitle: SelectableLinkify(
-                              onOpen: (link) async {
-                                if (await canLaunchUrl(Uri.parse(link.url))) {
-                                  await launchUrl(Uri.parse(link.url));
-                                } else {
-                                  Fluttertoast.showToast(msg: 'Invalid link');
-                                }
-                              },
-                              text: orderInfo.note,
-                            ),
+                    onOpen: (link) async {
+                      if (await canLaunchUrl(Uri.parse(link.url))) {
+                        await launchUrl(Uri.parse(link.url));
+                      } else {
+                        Fluttertoast.showToast(msg: 'Invalid link');
+                      }
+                    },
+                    text: orderInfo.note,
+                  ),
                   trailing: Material(
                     color: Colors.transparent,
                     child: IconButton(

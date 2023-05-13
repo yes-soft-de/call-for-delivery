@@ -259,8 +259,8 @@ class OrderDetailsCaptainWithoutActionsOrderLoadedState extends States {
                   leading: const Icon(
                     Icons.store_rounded,
                   ),
-                  title: Text(S.current.store),
-                  subtitle: Text(orderInfo.storeName),
+                  title: Text(S.current.branch),
+                  subtitle: Text(orderInfo.branchName),
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -273,8 +273,8 @@ class OrderDetailsCaptainWithoutActionsOrderLoadedState extends States {
                   leading: const Icon(
                     Icons.store_rounded,
                   ),
-                  title: Text(S.current.branch),
-                  subtitle: Text(orderInfo.branchName),
+                  title: Text(S.current.store),
+                  subtitle: Text(orderInfo.storeName),
                 ),
                 Visibility(
                   visible: orderInfo.branchPhone != null,

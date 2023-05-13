@@ -130,6 +130,11 @@ dependencies:
   custom_map_markers: ^0.0.2+1
   bottom_sheet: ^3.1.2
   flutter_native_timezone: ^2.0.0
+  # Feature Descovery
+  feature_discovery: ^0.14.0
+  lehttp_overrides: ^1.0.2
+  internet_connection_checker: ^1.0.0+1
+  new_version_plus: ^0.0.9
 
 
 
@@ -145,12 +150,8 @@ dev_dependencies:
   flutter_launcher_icons: ^0.11.0
   # Flutter Native Splash Screen
   flutter_native_splash: ^2.2.12
-  # Feature Descovery
-  feature_discovery: ^0.14.0
-  lehttp_overrides: ^1.0.2
   flutter_lints: ^2.0.1
-  internet_connection_checker: ^1.0.0+1
-  new_version_plus: ^0.0.9
+
 
 
 flutter_icons:

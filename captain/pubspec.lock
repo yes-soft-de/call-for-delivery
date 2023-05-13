@@ -386,7 +386,7 @@ packages:
     source: hosted
     version: "1.3.1"
   feature_discovery:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: feature_discovery
       sha256: c4008f3d78515883354ab095cabaefbd5116fb7005b150d28cead306f03f4b30
@@ -1016,7 +1016,7 @@ packages:
     source: hosted
     version: "2.1.3"
   internet_connection_checker:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: internet_connection_checker
       sha256: "1c683e63e89c9ac66a40748b1b20889fd9804980da732bf2b58d6d5456c8e876"
@@ -1080,7 +1080,7 @@ packages:
     source: hosted
     version: "0.8.1"
   lehttp_overrides:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: lehttp_overrides
       sha256: "9c54ada96cda6ff848aafa1608bf95c35377a0628e4a9a30d9af1500cfc4f04b"
@@ -1216,7 +1216,7 @@ packages:
     source: hosted
     version: "1.0.0"
   new_version_plus:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: new_version_plus
       sha256: "4ebc9dd951d6fba3dfe6d39f1b88e24d5bfc507f450131d502001ac92d93cabd"

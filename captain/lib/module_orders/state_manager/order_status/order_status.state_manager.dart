@@ -9,6 +9,7 @@ import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/model/roomId/room_id_model.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
+import 'package:c4d/module_orders/request/cancel_order_request.dart';
 import 'package:c4d/module_orders/ui/state/order_status/order_details_captain_state_loaded.dart';
 import 'package:c4d/module_orders/ui/state/order_status/order_status_warning_state.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
@@ -160,7 +161,24 @@ class OrderStatusStateManager {
       }
     });
   }
-
+  void cancelOrder(
+      OrderStatusScreenState screenState, CancelOrderRequest  request) {
+    _stateSubject.add(LoadingState(screenState));
+    _ordersService.cancelOrder(request).then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning, message: value.error ?? '')
+            .show(screenState.context);
+        screenState.getOrderDetails(request.id);
+      } else {
+        screenState.goBack();
+        CustomFlushBarHelper.createSuccess(
+                title: S.current.warnning,
+                message: S.current.updateOrderSuccess)
+            .show(screenState.context);
+      }
+    });
+  }
   void dispose() {
     _updateStateListener?.cancel();
   }

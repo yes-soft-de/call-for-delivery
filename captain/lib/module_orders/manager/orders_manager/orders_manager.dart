@@ -1,4 +1,5 @@
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
+import 'package:c4d/module_orders/request/cancel_order_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/response/enquery_response/enquery_response.dart';
@@ -46,4 +47,6 @@ class OrdersManager {
       _repository.createChatRoom(orderId);
   Future<ActionResponse?> removeOrderSub(OrderNonSubRequest orderRequest) =>
       _repository.removeOrderSub(orderRequest);
+      Future<ActionResponse?> cancelOrder(CancelOrderRequest request) =>
+      _repository.cancelOrder(request);
 }

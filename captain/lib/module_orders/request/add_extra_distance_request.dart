@@ -1,4 +1,3 @@
-
 class AddExtraDistanceRequest {
   int? id;
   String? storeBranchToClientDistanceAdditionExplanation;
@@ -26,8 +25,8 @@ class AddExtraDistanceRequest {
     return map;
   }
 }
+
 class Destination {
-  
   double? lat;
   double? lon;
 
@@ -36,8 +35,8 @@ class Destination {
     this.lon,
   });
 
-  Map<String,dynamic> toJson(){
-    Map<String,dynamic> map = {};
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> map = {};
     map['lat'] = lat;
     map['lon'] = lon;
     return map;

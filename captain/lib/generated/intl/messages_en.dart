@@ -95,6 +95,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Are you sure about deleting your account , you won\'t be able to login with this credential any more"),
         "areSureAboutStoppingPlan": MessageLookupByLibrary.simpleMessage(
             "Are you sure about stopping your current plan"),
+        "areSureYouWantToCancelThisOrder": MessageLookupByLibrary.simpleMessage(
+            "Are you sure you want to cancel this order"),
         "areYouSureAboutDeleteSelectedNotifications":
             MessageLookupByLibrary.simpleMessage(
                 "Are you sure about deleting selected notifications"),

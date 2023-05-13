@@ -302,7 +302,10 @@ class CaptainOrdersListStateOrdersLoaded extends States {
                                               ),
                                               const Spacer(),
                                               Visibility(
-                                                visible: (element.orderIsMain && element.subOrders.isEmpty) || (!element.orderIsMain),
+                                                visible: (element.orderIsMain &&
+                                                        element.subOrders
+                                                            .isEmpty) ||
+                                                    (!element.orderIsMain),
                                                 child: ElevatedButton.icon(
                                                   onPressed: () {
                                                     Navigator.of(context).pop();
