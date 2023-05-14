@@ -2,6 +2,9 @@
 
 namespace App\Response\Notification;
 
+use DateTime;
+use OpenApi\Annotations as OA;
+
 class NotificationFromAdminResponse
 {
     /**
@@ -20,7 +23,13 @@ class NotificationFromAdminResponse
     public $msg;
 
     /**
-     * @var array|null
+     * @var DateTime|null
      */
     public $createdAt;
+
+    /**
+     * @OA\Property(type="array", property="images",
+     *     @OA\Items(type="object"))
+     */
+    public $images;
 }
