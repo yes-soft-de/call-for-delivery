@@ -901,3 +901,14 @@ App\Request\Admin\Notification\AdminNotificationCreateRequest:
             - NotBlank: ~
         appType:
             - NotBlank: ~
+
+App\Request\Admin\Notification\AdminNotificationUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        title:
+            - NotBlank: ~
+        msg:
+            - NotBlank: ~
+        appType:
+            - NotBlank: ~
