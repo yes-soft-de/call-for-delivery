@@ -175,15 +175,4 @@ class AdminNotificationToUsersService
     {
         return $this->adminAnnouncementImageService->deleteAdminAnnouncementImageByAdminNotificationToUserId($adminNotificationToUserId);
     }
-
-    /**
-     * Updates the image/s of a specific admin notification to user by deleting previous one/s and creates new one/s
-     */
-    public function updateAdminAnnouncementImage(array $imagesArray, AdminNotificationToUsersEntity $adminNotificationToUsersEntity)
-    {
-        // First, delete old image/s if exist
-        $this->deleteAdminAnnouncementImageByAdminNotificationToUserId($adminNotificationToUsersEntity->getId());
-        // Second, create new image/s
-        $this->createAdminAnnouncementImage($imagesArray, $adminNotificationToUsersEntity);
-    }
 }
