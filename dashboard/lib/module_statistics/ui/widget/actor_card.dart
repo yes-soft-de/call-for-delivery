@@ -1,9 +1,11 @@
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/captains_routes.dart';
 import 'package:c4d/module_statistics/model/statistics_model.dart';
 import 'package:c4d/module_statistics/ui/widget/actor_info.dart';
 import 'package:c4d/module_statistics/ui/widget/order/detail_row.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
+import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/global/screen_type.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
@@ -44,9 +46,8 @@ class ActorCardMobile extends StatelessWidget {
                   DetailRow(
                       onTap: () {
                         actor is StatisticsStores
-                            ? Navigator.pushNamed(context, StoresRoutes.STORES)
-                            : Navigator.pushNamed(
-                                context, CaptainsRoutes.CAPTAINS);
+                            ?  getIt<GlobalStateManager>().goToStores()
+                            : getIt<GlobalStateManager>().goToCaptains();
                       },
                       title: actor is StatisticsStores
                           ? S.current.activeStores
@@ -55,10 +56,8 @@ class ActorCardMobile extends StatelessWidget {
                   DetailRow(
                       onTap: () {
                         actor is StatisticsStores
-                            ? Navigator.pushNamed(
-                                context, StoresRoutes.STORES_INACTIVE)
-                            : Navigator.pushNamed(
-                                context, CaptainsRoutes.IN_ACTIVE_CAPTAINS);
+                            ? getIt<GlobalStateManager>().goToInActiveStores()
+                            : getIt<GlobalStateManager>().goToInActiveCaptain();
                       },
                       title: actor is StatisticsStores
                           ? S.current.inactiveStores
