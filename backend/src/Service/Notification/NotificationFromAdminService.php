@@ -35,7 +35,7 @@ class NotificationFromAdminService
 
         $notifications = $this->notificationFromAdminManager->getAllNotificationsFromAdmin($userId, $appType);
      
-        foreach ($notifications as $key => $value) {//dd($value);
+        foreach ($notifications as $key => $value) {
             $response[$key] = $this->autoMapping->map(AdminNotificationToUsersEntity::class, NotificationFromAdminResponse::class, $value);
 
             $images = $value->getAdminAnnouncementImageEntities()->toArray();

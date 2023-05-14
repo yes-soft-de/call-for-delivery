@@ -9,7 +9,7 @@ class AdminAnnouncementImageCreateRequest
     private string $imagePath;
 
     /**
-     * @var int|AdminNotificationToUsersEntity
+     * @var AdminNotificationToUsersEntity
      */
     private $AdminNotificationToUser;
 
@@ -18,7 +18,7 @@ class AdminAnnouncementImageCreateRequest
         $this->imagePath = $imagePath;
     }
 
-    public function setAdminNotificationToUser(AdminNotificationToUsersEntity|int $AdminNotificationToUser): void
+    public function setAdminNotificationToUser(AdminNotificationToUsersEntity $AdminNotificationToUser): void
     {
         $this->AdminNotificationToUser = $AdminNotificationToUser;
     }
