@@ -5,39 +5,44 @@ namespace App\Service\Admin\Notification;
 use App\AutoMapping;
 use App\Entity\AdminNotificationToUsersEntity;
 use App\Manager\Admin\Notification\AdminNotificationToUsersManager;
+use App\Request\Admin\AdminAnnouncementImage\AdminAnnouncementImageCreateRequest;
 use App\Request\Admin\Notification\AdminNotificationCreateRequest;
 use App\Request\Admin\Notification\AdminNotificationUpdateRequest;
 use App\Response\Admin\Notification\AdminNotificationToUsersResponse;
 use App\Response\Admin\Notification\AdminNotificationsResponse;
 use App\Response\Admin\Notification\AdminNotificationToUsersNotFoundResponse;
 use App\Constant\Notification\NotificationConstant;
+use App\Service\Admin\AdminAnnouncementImage\AdminAnnouncementImageService;
 use App\Service\Admin\Notification\Local\AdminNotificationLocalService;
+use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\Notification\NotificationFirebaseService;
 use App\Constant\Notification\NotificationFirebaseConstant;
 
 class AdminNotificationToUsersService
 {
-    private AutoMapping $autoMapping;
-    private NotificationFirebaseService $notificationFirebaseService;
-    private AdminNotificationLocalService $adminNotificationLocalService;
-    private AdminNotificationToUsersManager $adminNotificationToUsersManager;
-
-    public function __construct(AutoMapping $autoMapping, NotificationFirebaseService $notificationFirebaseService, AdminNotificationLocalService $adminNotificationLocalService,
-                                AdminNotificationToUsersManager $adminNotificationToUsersManager)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private NotificationFirebaseService $notificationFirebaseService,
+        private AdminNotificationLocalService $adminNotificationLocalService,
+        private AdminNotificationToUsersManager $adminNotificationToUsersManager,
+        private AdminAnnouncementImageService $adminAnnouncementImageService,
+        private UploadFileHelperService $uploadFileHelperService
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->notificationFirebaseService = $notificationFirebaseService;
-        $this->adminNotificationLocalService = $adminNotificationLocalService;
-        $this->adminNotificationToUsersManager = $adminNotificationToUsersManager;
     }
 
     public function createAdminNotificationToUsers(AdminNotificationCreateRequest $request): AdminNotificationToUsersResponse
     {
         $notification = $this->adminNotificationToUsersManager->createAdminNotificationToUsers($request);
 
-        if ($notification) {
+        if ($notification->getId()) {
+            // insert the image record - if there is an image with the create notification request
+            if (($request->getImages()) && (count($request->getImages()) > 0)) {
+                $this->createAdminAnnouncementImage($request->getImages(), $notification);
+            }
             // create local notification for captains if notifications send to them
-            if ($request->getAppType() === NotificationConstant::APP_TYPE_CAPTAIN || $request->getAppType() === NotificationConstant::APP_TYPE_ALL) {
+            if ($request->getAppType() === NotificationConstant::APP_TYPE_CAPTAIN
+                || $request->getAppType() === NotificationConstant::APP_TYPE_ALL) {
                 $this->createLocalNotificationForAllCaptainsByAdmin(
                     NotificationConstant::NEW_NOTIFICATION_BY_ADMIN,
                     [
@@ -60,21 +65,29 @@ class AdminNotificationToUsersService
     public function updateAdminNotification(AdminNotificationUpdateRequest $request): AdminNotificationToUsersResponse|AdminNotificationToUsersNotFoundResponse
     {
         $notification = $this->adminNotificationToUsersManager->updateAdminNotification($request);
-        if($notification === NotificationConstant::NOT_FOUND) {
-        
+
+        if ($notification === NotificationConstant::NOT_FOUND) {
             $item['state'] = NotificationConstant::NOT_FOUND;
         
             return $this->autoMapping->map("array", AdminNotificationToUsersNotFoundResponse::class, $item);
         }
 
+        // create or update notification image/s if it/they send within the request
+        if (($request->getImages()) && (count($request->getImages()) > 0)) {
+            $this->updateAdminAnnouncementImage($request->getImages(), $notification);
+        }
+
         return $this->autoMapping->map(AdminNotificationToUsersEntity::class, AdminNotificationToUsersResponse::class, $notification);
     }
 
-    public function deleteAdminNotification($id): AdminNotificationToUsersResponse|AdminNotificationToUsersNotFoundResponse
+    public function deleteAdminNotification(int $id): AdminNotificationToUsersResponse|AdminNotificationToUsersNotFoundResponse
     {
+        // First, delete any related image/s if exist
+        $this->deleteAdminAnnouncementImageByAdminNotificationToUserId($id);
+
         $notification = $this->adminNotificationToUsersManager->deleteAdminNotification($id);
-        if($notification === NotificationConstant::NOT_FOUND) {
-        
+
+        if ($notification === NotificationConstant::NOT_FOUND) {
             $item['state'] = NotificationConstant::NOT_FOUND;
         
             return $this->autoMapping->map("array", AdminNotificationToUsersNotFoundResponse::class, $item);
@@ -83,28 +96,90 @@ class AdminNotificationToUsersService
         return $this->autoMapping->map(AdminNotificationToUsersEntity::class, AdminNotificationToUsersResponse::class, $notification);
     }
 
-    public function getAllNotificationsForAdmin(): ?array
+    public function getAllNotificationsForAdmin(): array
     {
         $response = [];
+
         $notifications = $this->adminNotificationToUsersManager->getAllNotificationsForAdmin();
      
-        foreach($notifications as $notification) {
+        foreach($notifications as $key => $value) {
+            $response[$key] = $this->autoMapping->map(AdminNotificationToUsersEntity::class, AdminNotificationsResponse::class,
+                $value);
 
-        $response[] = $this->autoMapping->map("array", AdminNotificationsResponse::class, $notification);
+            $images = $value->getAdminAnnouncementImageEntities()->toArray();
+
+            if (count($images) > 0) {
+                foreach ($images as $adminAnnouncementImageEntity) {
+                    $response[$key]->images[] = $this->uploadFileHelperService->getImageParams($adminAnnouncementImageEntity->getImagePath());
+                }
+            }
         }
 
         return $response;
     }
 
-    public function getNotificationByIdForAdmin($id): ?AdminNotificationsResponse
+    public function getNotificationByIdForAdmin(int $id): ?AdminNotificationsResponse
     {
         $notification = $this->adminNotificationToUsersManager->getNotificationByIdForAdmin($id);
      
-        return $this->autoMapping->map(AdminNotificationToUsersEntity::class, AdminNotificationsResponse::class, $notification);
+        $response = $this->autoMapping->map(AdminNotificationToUsersEntity::class, AdminNotificationsResponse::class, $notification);
+
+        $images = $notification->getAdminAnnouncementImageEntities()->toArray();
+
+        if (count($images) > 0) {
+            foreach ($images as $adminAnnouncementImageEntity) {
+                $response->images[] = $this->uploadFileHelperService->getImageParams($adminAnnouncementImageEntity->getImagePath());
+            }
+        }
+
+        return $response;
     }
 
     public function createLocalNotificationForAllCaptainsByAdmin(string $title, array $message): array|string
     {
         return $this->adminNotificationLocalService->initializeAndCreateLocalNotificationForAllCaptainsByAdmin($title, $message);
+    }
+
+    /**
+     * Creates and return a new object of AdminAnnouncementImageCreateRequest
+     */
+    public function initializeAndReturnAdminAnnouncementImageCreateRequest(): AdminAnnouncementImageCreateRequest
+    {
+        return new AdminAnnouncementImageCreateRequest();
+    }
+
+    /**
+     * Creates the image/s of the admin notification to user
+     */
+    public function createAdminAnnouncementImage(array $imagesArray, AdminNotificationToUsersEntity $adminNotificationToUsersEntity): void
+    {
+        $adminAnnouncementImageCreateRequest = $this->initializeAndReturnAdminAnnouncementImageCreateRequest();
+
+        $adminAnnouncementImageCreateRequest->setAdminNotificationToUser($adminNotificationToUsersEntity);
+
+        foreach ($imagesArray as $image) {
+            $adminAnnouncementImageCreateRequest->setImagePath($image);
+
+            $this->adminAnnouncementImageService->createAdminAnnouncementImage($adminAnnouncementImageCreateRequest);
+        }
+    }
+
+    /**
+     * Deletes the image/s of a specific admin notification to user - if exist
+     */
+    public function deleteAdminAnnouncementImageByAdminNotificationToUserId(int $adminNotificationToUserId): array
+    {
+        return $this->adminAnnouncementImageService->deleteAdminAnnouncementImageByAdminNotificationToUserId($adminNotificationToUserId);
+    }
+
+    /**
+     * Updates the image/s of a specific admin notification to user by deleting previous one/s and creates new one/s
+     */
+    public function updateAdminAnnouncementImage(array $imagesArray, AdminNotificationToUsersEntity $adminNotificationToUsersEntity)
+    {
+        // First, delete old image/s if exist
+        $this->deleteAdminAnnouncementImageByAdminNotificationToUserId($adminNotificationToUsersEntity->getId());
+        // Second, create new image/s
+        $this->createAdminAnnouncementImage($imagesArray, $adminNotificationToUsersEntity);
     }
 }

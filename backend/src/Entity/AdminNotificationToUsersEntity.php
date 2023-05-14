@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\AdminNotificationToUsersEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -33,6 +35,14 @@ class AdminNotificationToUsersEntity
     #[Gedmo\Timestampable(on: 'update')]
     #[ORM\Column(type: 'datetime')]
     private $updatedAt;
+
+    #[ORM\OneToMany(mappedBy: 'AdminNotificationToUser', targetEntity: AdminAnnouncementImageEntity::class)]
+    private $adminAnnouncementImageEntities;
+
+    public function __construct()
+    {
+        $this->adminAnnouncementImageEntities = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -107,6 +117,36 @@ class AdminNotificationToUsersEntity
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, AdminAnnouncementImageEntity>
+     */
+    public function getAdminAnnouncementImageEntities(): Collection
+    {
+        return $this->adminAnnouncementImageEntities;
+    }
+
+    public function addAdminAnnouncementImageEntity(AdminAnnouncementImageEntity $adminAnnouncementImageEntity): self
+    {
+        if (!$this->adminAnnouncementImageEntities->contains($adminAnnouncementImageEntity)) {
+            $this->adminAnnouncementImageEntities[] = $adminAnnouncementImageEntity;
+            $adminAnnouncementImageEntity->setAdminNotificationToUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeAdminAnnouncementImageEntity(AdminAnnouncementImageEntity $adminAnnouncementImageEntity): self
+    {
+        if ($this->adminAnnouncementImageEntities->removeElement($adminAnnouncementImageEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($adminAnnouncementImageEntity->getAdminNotificationToUser() === $this) {
+                $adminAnnouncementImageEntity->setAdminNotificationToUser(null);
+            }
+        }
 
         return $this;
     }

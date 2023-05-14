@@ -20,21 +20,6 @@ class AdminNotificationToUsersEntityRepository extends ServiceEntityRepository
         parent::__construct($registry, AdminNotificationToUsersEntity::class);
     }
     
-    public function getAllNotificationsForAdmin(): ?array
-     {   
-        return $this->createQueryBuilder('adminNotification')
-            ->select('adminNotification.id' ,'adminNotification.title', 'adminNotification.msg', 'adminNotification.appType',
-            'adminNotification.createdAt', 'adminNotification.updatedAt', 'adminNotification.userId')
-            
-            ->andWhere('adminNotification.userId = :userIdNull')
-            ->setParameter('userIdNull', NotificationConstant::USER_ID_NULL)
-
-            ->orderBy('adminNotification.id', 'DESC')
-
-            ->getQuery()
-            ->getResult();
-     }
-    
     public function getAllNotificationsFromAdmin(int $userId, string $appType): ?array
      {          
         return $this->createQueryBuilder('adminNotification')

@@ -892,3 +892,12 @@ App\Request\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentFromCompanyForOrderCas
             - NotBlank: ~
         toDate:
             - NotBlank: ~
+
+App\Request\Admin\Notification\AdminNotificationCreateRequest:
+    properties:
+        title:
+            - NotBlank: ~
+        msg:
+            - NotBlank: ~
+        appType:
+            - NotBlank: ~

@@ -11,6 +11,11 @@ class AdminNotificationCreateRequest
     private string $appType;
 
     /**
+     * @var array|null
+     */
+    private $images;
+
+    /**
      * Get the value of title
      */ 
     public function getTitle(): string
@@ -68,5 +73,10 @@ class AdminNotificationCreateRequest
         $this->msg = $msg;
 
         return $this;
+    }
+
+    public function getImages(): ?array
+    {
+        return $this->images;
     }
 }
