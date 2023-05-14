@@ -2,15 +2,14 @@
 
 namespace App\Controller\Notification;
 
-use App\AutoMapping;
 use App\Controller\BaseController;
 use App\Service\Notification\NotificationFromAdminService;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use OpenApi\Annotations as OA;
 use App\Constant\Notification\NotificationConstant;
 
@@ -20,13 +19,12 @@ use App\Constant\Notification\NotificationConstant;
  */
 class NotificationFromAdminController extends BaseController
 {
-    private NotificationFromAdminService $notificationFromAdminService;
-
-    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, NotificationFromAdminService $notificationFromAdminService)
+    public function __construct(
+        SerializerInterface $serializer,
+        private NotificationFromAdminService $notificationFromAdminService
+    )
     {
         parent::__construct($serializer);
-        $this->autoMapping = $autoMapping;
-        $this->notificationFromAdminService = $notificationFromAdminService;
     }
 
     /**
@@ -52,10 +50,7 @@ class NotificationFromAdminController extends BaseController
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="array", property="Data",
      *                  @OA\Items(
-     *                      @OA\Property(type="integer", property="id"),
-     *                      @OA\Property(type="string", property="title"),
-     *                      @OA\Property(type="string", property="msg"),
-     *                      @OA\Property(type="object", property="createdAt"),
+     *                      ref=@Model(type="App\Response\Notification\NotificationFromAdminResponse")
      *              )
      *          )
      *       )
@@ -65,7 +60,8 @@ class NotificationFromAdminController extends BaseController
      */
     public function getAllNotificationsFromAdminForStore(): JsonResponse
     {
-        $result = $this->notificationFromAdminService->getAllNotificationsFromAdmin($this->getUserId(), NotificationConstant::APP_TYPE_STORE);
+        $result = $this->notificationFromAdminService->getAllNotificationsFromAdmin($this->getUserId(),
+            NotificationConstant::APP_TYPE_STORE);
 
         return $this->response($result, self::FETCH);
     }
@@ -93,10 +89,7 @@ class NotificationFromAdminController extends BaseController
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="array", property="Data",
      *                  @OA\Items(
-     *                      @OA\Property(type="integer", property="id"),
-     *                      @OA\Property(type="string", property="title"),
-     *                      @OA\Property(type="string", property="msg"),
-     *                      @OA\Property(type="object", property="createdAt"),
+     *                      ref=@Model(type="App\Response\Notification\NotificationFromAdminResponse")
      *              )
      *          )
      *       )
@@ -106,7 +99,8 @@ class NotificationFromAdminController extends BaseController
      */
     public function getAllNotificationsFromAdminForCaptain(): JsonResponse
     {
-        $result = $this->notificationFromAdminService->getAllNotificationsFromAdmin($this->getUserId(), NotificationConstant::APP_TYPE_CAPTAIN);
+        $result = $this->notificationFromAdminService->getAllNotificationsFromAdmin($this->getUserId(),
+            NotificationConstant::APP_TYPE_CAPTAIN);
 
         return $this->response($result, self::FETCH);
     }
@@ -134,10 +128,7 @@ class NotificationFromAdminController extends BaseController
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="array", property="Data",
      *                  @OA\Items(
-     *                      @OA\Property(type="integer", property="id"),
-     *                      @OA\Property(type="string", property="title"),
-     *                      @OA\Property(type="string", property="msg"),
-     *                      @OA\Property(type="object", property="createdAt"),
+     *                      ref=@Model(type="App\Response\Notification\NotificationFromAdminResponse")
      *              )
      *          )
      *       )
@@ -147,7 +138,8 @@ class NotificationFromAdminController extends BaseController
      */
     public function getAllNotificationsFromAdminForSupplier(): JsonResponse
     {
-        $result = $this->notificationFromAdminService->getAllNotificationsFromAdmin($this->getUserId(), NotificationConstant::APP_TYPE_SUPPLIER);
+        $result = $this->notificationFromAdminService->getAllNotificationsFromAdmin($this->getUserId(),
+            NotificationConstant::APP_TYPE_SUPPLIER);
 
         return $this->response($result, self::FETCH);
     }

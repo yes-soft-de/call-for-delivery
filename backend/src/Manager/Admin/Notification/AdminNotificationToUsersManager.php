@@ -12,15 +12,12 @@ use App\Constant\Notification\NotificationConstant;
 
 class AdminNotificationToUsersManager
 {
-    private AutoMapping $autoMapping;
-    private EntityManagerInterface $entityManager;
-    private AdminNotificationToUsersEntityRepository $adminNotificationToUsersEntityRepository;
-
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, AdminNotificationToUsersEntityRepository $adminNotificationToUsersEntityRepository)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private EntityManagerInterface $entityManager,
+        private AdminNotificationToUsersEntityRepository $adminNotificationToUsersEntityRepository
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->entityManager = $entityManager;
-        $this->adminNotificationToUsersEntityRepository = $adminNotificationToUsersEntityRepository;
     }
 
     public function createAdminNotificationToUsers(AdminNotificationCreateRequest $request): AdminNotificationToUsersEntity
@@ -39,7 +36,6 @@ class AdminNotificationToUsersManager
         $adminNotificationToUsersEntity = $this->adminNotificationToUsersEntityRepository->find($request->getId());
 
         if (! $adminNotificationToUsersEntity) {
-       
             return NotificationConstant::NOT_FOUND;
         } 
         
@@ -55,7 +51,6 @@ class AdminNotificationToUsersManager
         $adminNotificationToUsersEntity = $this->adminNotificationToUsersEntityRepository->find($id);
 
         if (! $adminNotificationToUsersEntity) {
-       
             return NotificationConstant::NOT_FOUND;
         } 
 
@@ -66,12 +61,13 @@ class AdminNotificationToUsersManager
         return $adminNotificationToUsersEntity;
     }
 
-    public function getAllNotificationsForAdmin(): ?array
+    public function getAllNotificationsForAdmin(): array
     {
-        return $this->adminNotificationToUsersEntityRepository->getAllNotificationsForAdmin();
+        return $this->adminNotificationToUsersEntityRepository->findBy(['userId' => NotificationConstant::USER_ID_NULL],
+            ['id' => 'DESC']);
     }
 
-    public function getNotificationByIdForAdmin($id): AdminNotificationToUsersEntity|null
+    public function getNotificationByIdForAdmin(int $id): AdminNotificationToUsersEntity|null
     {
         return $this->adminNotificationToUsersEntityRepository->find($id);
     }

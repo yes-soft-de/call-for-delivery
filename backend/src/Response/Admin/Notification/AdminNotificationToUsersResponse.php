@@ -2,6 +2,8 @@
 
 namespace App\Response\Admin\Notification;
 
+use DateTime;
+
 class AdminNotificationToUsersResponse
 {
     /**
@@ -20,7 +22,7 @@ class AdminNotificationToUsersResponse
     public $msg;
 
     /**
-     * @var array|null
+     * @var DateTime|null
      */
     public $createdAt;
 
