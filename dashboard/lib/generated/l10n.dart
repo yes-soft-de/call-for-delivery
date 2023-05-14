@@ -9750,6 +9750,16 @@ class S {
     );
   }
 
+  /// `image`
+  String get image {
+    return Intl.message(
+      'image',
+      name: 'image',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `captain daily`
   String get captainDaily {
     return Intl.message(

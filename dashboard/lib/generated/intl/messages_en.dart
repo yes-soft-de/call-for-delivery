@@ -683,6 +683,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "identity": MessageLookupByLibrary.simpleMessage("Identity"),
         "illegalCommand":
             MessageLookupByLibrary.simpleMessage("Illegal Command"),
+        "image": MessageLookupByLibrary.simpleMessage("image"),
         "inActiveCaptains":
             MessageLookupByLibrary.simpleMessage("Inactive Captains"),
         "inActiveSupplier":

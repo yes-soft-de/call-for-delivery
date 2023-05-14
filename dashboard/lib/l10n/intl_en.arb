@@ -970,5 +970,6 @@
     "unPaid": "unpaid",
     "partiallyPaid": "partially paid",
     "prePayments": "prepayment",
+    "image": "image",
     "captainDaily": "captain daily"
 }

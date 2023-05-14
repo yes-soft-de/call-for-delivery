@@ -676,6 +676,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "iSpeak": MessageLookupByLibrary.simpleMessage("اللغة المفضلة"),
         "id": MessageLookupByLibrary.simpleMessage("المعرف"),
         "identity": MessageLookupByLibrary.simpleMessage("الهوية"),
+        "image": MessageLookupByLibrary.simpleMessage("صورة"),
         "inActiveCaptains":
             MessageLookupByLibrary.simpleMessage("الكباتن الغير مفعلين"),
         "inActiveSupplier":
