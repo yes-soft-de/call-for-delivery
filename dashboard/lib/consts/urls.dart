@@ -1,5 +1,9 @@
 // Developing Domain ===> 'http://134.209.241.49';
-// Production Domain ===> 'http://134.209.241.49';
+// Production Domain ===> 'http://46.101.100.62';
+
+const String devDomain = 'http://134.209.241.49';
+const String prodDomain = 'http://46.101.100.62';
+
 class Urls {
   static List<String> admins = [
     '551111111',
@@ -10,7 +14,7 @@ class Urls {
     '552222225',
   ];
   /*--------BASES-------------------*/
-  static const String DOMAIN = 'http://46.101.100.62';
+  static const String DOMAIN = devDomain;
   static const String BASE_API = DOMAIN + '';
   static const String VERSION = '/v1';
   static const GEO_DISTANCE = DOMAIN + '/v1/geodistance/geodistance';
