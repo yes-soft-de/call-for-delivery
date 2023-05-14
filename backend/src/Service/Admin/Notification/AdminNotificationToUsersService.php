@@ -72,9 +72,13 @@ class AdminNotificationToUsersService
             return $this->autoMapping->map("array", AdminNotificationToUsersNotFoundResponse::class, $item);
         }
 
+        //  ** Updating image ** //
+        // First, delete old image/s if exist
+        $this->deleteAdminAnnouncementImageByAdminNotificationToUserId($notification->getId());
+        // Second, create new image/s:
         // create or update notification image/s if it/they send within the request
         if (($request->getImages()) && (count($request->getImages()) > 0)) {
-            $this->updateAdminAnnouncementImage($request->getImages(), $notification);
+            $this->createAdminAnnouncementImage($request->getImages(), $notification);
         }
 
         return $this->autoMapping->map(AdminNotificationToUsersEntity::class, AdminNotificationToUsersResponse::class, $notification);
