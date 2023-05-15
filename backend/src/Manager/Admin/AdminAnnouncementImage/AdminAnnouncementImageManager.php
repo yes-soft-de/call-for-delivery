@@ -50,4 +50,24 @@ class AdminAnnouncementImageManager
 
         return $images;
     }
+
+    /**
+     * Get AdminAnnouncementImageEntity by id or null
+     */
+    public function getAnnouncementImageByIdForAdmin(int $id): ?AdminAnnouncementImageEntity
+    {
+        return $this->adminAnnouncementImageEntityRepository->findOneBy(['id' => $id]);
+    }
+
+    public function deleteAnnouncementImageById(int $id): ?AdminAnnouncementImageEntity
+    {
+        $announcementImageEntity = $this->adminAnnouncementImageEntityRepository->findOneBy(['id' => $id]);
+
+        if ($announcementImageEntity) {
+            $this->entityManager->remove($announcementImageEntity);
+            $this->entityManager->flush();
+        }
+
+        return $announcementImageEntity;
+    }
 }
