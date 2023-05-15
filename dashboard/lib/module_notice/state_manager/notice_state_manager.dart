@@ -98,22 +98,22 @@ class NoticeStateManager {
 
       request.images![i] = url;
     }
-    // if (saveToContinue) {
-    //   _service.updateNotice(request).then((value) {
-    //     if (value.hasError) {
-    //       getNotice(screenState);
-    //       CustomFlushBarHelper.createError(
-    //           title: S.current.warnning, message: value.error ?? '')
-    //         ..show(screenState.context);
-    //     } else {
-    //       getNotice(screenState);
-    //       CustomFlushBarHelper.createSuccess(
-    //           title: S.current.warnning,
-    //           message: S.current.categoryUpdatedSuccessfully)
-    //         ..show(screenState.context);
-    //     }
-    //   });
-    // }
+    if (saveToContinue) {
+      _service.updateNotice(request).then((value) {
+        if (value.hasError) {
+          getNotice(screenState);
+          CustomFlushBarHelper.createError(
+              title: S.current.warnning, message: value.error ?? '')
+            ..show(screenState.context);
+        } else {
+          getNotice(screenState);
+          CustomFlushBarHelper.createSuccess(
+              title: S.current.warnning,
+              message: S.current.categoryUpdatedSuccessfully)
+            ..show(screenState.context);
+        }
+      });
+    }
   }
 
 //  void deleteCategories(CategoriesScreenState screenState, String id) {

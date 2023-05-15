@@ -35,9 +35,14 @@ class Data {
     title = json['title'];
     msg = json['msg'];
     appType = json['appType'];
+
+    images =
+        (json['images'] as List?)?.map((e) => e['image'] as String).toList();
   }
+
   int? id;
   String? title;
   String? msg;
   String? appType;
+  List<String>? images;
 }

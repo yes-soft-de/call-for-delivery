@@ -127,12 +127,11 @@ class _CategoryFormState extends State<NoticeForm> {
             Navigator.pop(context);
             widget.onSave(
               NoticeRequest(
-                title: _nameController.text,
-                msg: _decController.text,
-                id: id,
-                appType: appType,
-                images: _images
-              ),
+                  title: _nameController.text,
+                  msg: _decController.text,
+                  id: id,
+                  appType: appType,
+                  images: _images),
             );
           } else {
             CustomFlushBarHelper.createError(
