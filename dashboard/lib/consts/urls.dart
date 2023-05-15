@@ -201,8 +201,8 @@ class Urls {
   static const GET_NOTICE = BASE_API_NOTICE_ADMIN + '/adminnotifications';
   static const UPDATE_NOTICE = BASE_API_NOTICE_ADMIN + '/adminnotification';
   static const CREATE_NOTICE = BASE_API_NOTICE_ADMIN + '/notificationtoapp';
-  static const DELETE_IMAGE = DOMAIN + VERSION_ADMIN + '/announcementimage/announcementimage';
-
+  static const DELETE_NOTICE_IMAGE =
+      DOMAIN + VERSION_ADMIN + '/announcementimage/announcementimage';
 
   /*-------------------chatroom--------------*/
   static const GET_CHAT_ROOMS_STORES =

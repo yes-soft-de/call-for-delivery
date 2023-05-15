@@ -43,7 +43,8 @@ class NoticeRepository {
   Future<ActionResponse?> deleteImage(int imageId) async {
     var token = await _authService.getToken();
 
-    dynamic response = await _apiClient.delete(Urls.UPDATE_NOTICE + '/$imageId',
+    dynamic response = await _apiClient.delete(
+        Urls.DELETE_NOTICE_IMAGE + '/$imageId',
         headers: {'Authorization': 'Bearer ' + token.toString()});
 
     if (response == null) return null;
