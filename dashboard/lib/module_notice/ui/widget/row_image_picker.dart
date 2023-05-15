@@ -98,10 +98,14 @@ class _Image extends StatelessWidget {
   Widget build(BuildContext context) {
     final imageTemp = File(noticeImage.image);
     return noticeImage.isRemote
-        ? CustomNetworkImage(
+        ? SizedBox(
             height: 100,
             width: 100,
-            imageSource: noticeImage.image,
+            child: CustomNetworkImage(
+              height: 100,
+              width: 100,
+              imageSource: noticeImage.image,
+            ),
           )
         : Container(
             constraints: BoxConstraints.loose(

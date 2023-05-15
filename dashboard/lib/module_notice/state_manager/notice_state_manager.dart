@@ -105,14 +105,12 @@ class NoticeStateManager {
         break;
       }
 
-      request.images![i] = NoticeImage(image: url);
+      request.images![i] = NoticeImage(image: url, id: 9999 + i);
     }
-    
 
     if (saveToContinue) {
       request.images =
-        request.images?.where((element) => element.toDelete != true).toList();
-        
+          request.images?.where((element) => element.toDelete != true).toList();
       _service.updateNotice(request).then((value) {
         if (value.hasError) {
           getNotice(screenState);

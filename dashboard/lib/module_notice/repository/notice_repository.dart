@@ -34,7 +34,7 @@ class NoticeRepository {
   Future<ActionResponse?> updateNotice(NoticeRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
-        Urls.UPDATE_NOTICE, request.toJson(),
+        Urls.UPDATE_NOTICE, request.toJson(update: true),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ActionResponse.fromJson(response);
