@@ -138,6 +138,8 @@ class BaseController extends AbstractController
     const CAPTAIN_FINANCIAL_DUES_WAS_NOT_FOUND = ["captain doesn't have financial dues", "9604"];
     // announcement
     const ANNOUNCEMENT_NOT_EXIST = ["announcement does not exist", "9440"];
+    // announcement image
+    const ANNOUNCEMENT_IMAGE_NOT_EXIST_CONST = ["announcement image does not exist", "9500"];
     // erase
     const DELETION_USER_PASSWORD_INCORRECT = ["deletion user password is not correct", "9350"];
     const CAN_NOT_DELETE_USER_HAS_ORDERS = ["user has orders, we can not delete him/her", "9351"];
