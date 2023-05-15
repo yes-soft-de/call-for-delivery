@@ -1,3 +1,6 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'package:c4d/utils/logger/logger.dart';
 
 class NoticeResponse {
@@ -36,13 +39,45 @@ class Data {
     msg = json['msg'];
     appType = json['appType'];
 
-    images =
-        (json['images'] as List?)?.map((e) => e['image'] as String).toList();
+    images = (json['images'] as List?)?.map((e) {
+      return ImageResponse.fromMap(e);
+    }).toList();
   }
 
   int? id;
   String? title;
   String? msg;
   String? appType;
-  List<String>? images;
+  List<ImageResponse>? images;
+}
+
+class ImageResponse {
+  int? id;
+  String? image;
+
+  ImageResponse({
+    this.id,
+    this.image,
+  });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'image': image,
+    };
+  }
+
+  factory ImageResponse.fromMap(Map<String, dynamic> map) {
+    return ImageResponse(
+      id: map['id'] != null ? map['id'] as int : null,
+      image: map['image']['image'] != null
+          ? map['image']['image'] as String
+          : null,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ImageResponse.fromJson(String source) =>
+      ImageResponse.fromMap(json.decode(source) as Map<String, dynamic>);
 }

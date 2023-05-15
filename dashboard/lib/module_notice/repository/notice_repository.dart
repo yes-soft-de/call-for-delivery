@@ -39,4 +39,15 @@ class NoticeRepository {
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }
+
+  Future<ActionResponse?> deleteImage(int imageId) async {
+    var token = await _authService.getToken();
+
+    dynamic response = await _apiClient.delete(Urls.UPDATE_NOTICE + '/$imageId',
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+
+    if (response == null) return null;
+
+    return ActionResponse.fromJson(response);
+  }
 }

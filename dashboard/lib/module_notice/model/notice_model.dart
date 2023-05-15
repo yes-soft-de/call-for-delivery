@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:c4d/abstracts/data_model/data_model.dart';
 
 import '../response/notice_response.dart';
@@ -6,7 +7,7 @@ class NoticeModel extends DataModel {
   String? msg = '';
   String? title = '';
   String? appType = '';
-  List<String>? images;
+  List<NoticeImage>? images;
 
   int id = -1;
 
@@ -23,14 +24,46 @@ class NoticeModel extends DataModel {
   NoticeModel.withData(List<Data> data) : super.withData() {
     _model = [];
     for (var element in data) {
-      _model.add(NoticeModel(
-        id: element.id ?? -1,
-        title: element.title,
-        appType: element.appType,
-        msg: element.msg,
-        images: element.images,
-      ));
+      _model.add(
+        NoticeModel(
+          id: element.id ?? -1,
+          title: element.title,
+          appType: element.appType,
+          msg: element.msg,
+          images: _getImages(element.images),
+        ),
+      );
     }
   }
   List<NoticeModel> get data => _model;
+}
+
+class NoticeImage {
+  int? id;
+  String image;
+  bool isRemote;
+  bool toDelete;
+
+  NoticeImage({
+    this.id,
+    required this.image,
+    this.isRemote = false,
+    this.toDelete = false,
+  });
+}
+
+List<NoticeImage> _getImages(List<ImageResponse>? images) {
+  List<NoticeImage> list = [];
+
+  images?.forEach(
+    (element) {
+      list.add(NoticeImage(
+        id: element.id ?? 0,
+        image: element.image ?? '',
+        isRemote: true,
+      ));
+    },
+  );
+
+  return list;
 }

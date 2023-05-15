@@ -27,7 +27,7 @@ class _CategoryFormState extends State<NoticeForm> {
 
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _decController = TextEditingController();
-  List<String> _images = [];
+  List<NoticeImage> _images = [];
 
   int? id;
   String appType = '';
@@ -41,6 +41,9 @@ class _CategoryFormState extends State<NoticeForm> {
       _decController.text = widget.request?.msg ?? '';
       id = widget.request?.id ?? -1;
       appType = widget.request!.appType ?? '';
+      _images =
+          widget.request?.images?.map((e) => e..toDelete = false).toList() ??
+              [];
     }
   }
 
@@ -100,6 +103,7 @@ class _CategoryFormState extends State<NoticeForm> {
                     height: 150,
                     width: double.infinity,
                     child: RowImagePicker(
+                      initImages: _images,
                       onChange: (images) {
                         _images = images;
                       },

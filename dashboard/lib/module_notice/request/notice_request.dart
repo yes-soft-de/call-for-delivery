@@ -1,9 +1,11 @@
+import 'package:c4d/module_notice/model/notice_model.dart';
+
 class NoticeRequest {
   int? id;
   String? title;
   String? msg;
   String? appType;
-  List<String>? images;
+  List<NoticeImage>? images;
 
   NoticeRequest({this.id, this.title, this.msg, this.appType, this.images});
 
@@ -13,7 +15,7 @@ class NoticeRequest {
     map['title'] = title;
     map['msg'] = msg;
     map['appType'] = appType;
-    map['images'] = images;
+    map['images'] = images?.map((e) => e.image).toList();
     return map;
   }
 }

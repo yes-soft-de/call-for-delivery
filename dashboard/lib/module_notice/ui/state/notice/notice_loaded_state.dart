@@ -94,15 +94,16 @@ class NoticeLoadedState extends States {
             msg: element.msg,
             edit: () {
               showDialog(
-                  context: context,
-                  builder: (_) {
-                    return NoticeForm(
-                      request: element,
-                      onSave: (request) {
-                        screenState.updateNotice(request);
-                      },
-                    );
-                  });
+                context: context,
+                builder: (_) {
+                  return NoticeForm(
+                    request: element,
+                    onSave: (request) {
+                      screenState.updateNotice(request);
+                    },
+                  );
+                },
+              );
             },
           ),
         );
@@ -115,15 +116,16 @@ class NoticeLoadedState extends States {
             msg: element.msg,
             edit: () {
               showDialog(
-                  context: context,
-                  builder: (_) {
-                    return NoticeForm(
-                      request: element,
-                      onSave: (request) {
-                        screenState.updateNotice(request);
-                      },
-                    );
-                  });
+                context: context,
+                builder: (_) {
+                  return NoticeForm(
+                    request: element,
+                    onSave: (request) {
+                      screenState.updateNotice(request);
+                    },
+                  );
+                },
+              );
             },
           ),
         );

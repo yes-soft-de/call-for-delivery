@@ -1,11 +1,15 @@
 import 'dart:io';
 
+import 'package:c4d/module_notice/model/notice_model.dart';
+import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class RowImagePicker extends StatefulWidget {
-  final Function(List<String>) onChange;
-  RowImagePicker({Key? key, required this.onChange}) : super(key: key);
+  final Function(List<NoticeImage>) onChange;
+  final List<NoticeImage> initImages;
+  RowImagePicker({Key? key, required this.onChange, required this.initImages})
+      : super(key: key);
 
   @override
   State<RowImagePicker> createState() => _RowImagePickerState();
@@ -13,16 +17,24 @@ class RowImagePicker extends StatefulWidget {
 
 class _RowImagePickerState extends State<RowImagePicker> {
   final ImagePicker _imagePicker = ImagePicker();
-  List<String> images = [];
+  List<NoticeImage> images = [];
+  bool flag = true;
 
   @override
   Widget build(BuildContext context) {
+    if (flag) {
+      images = widget.initImages;
+      flag = false;
+    }
     return Row(
       mainAxisSize: MainAxisSize.min,
       children: [
         IconButton(
           onPressed: () async {
-            images.addAll((await _imagePicker.pickMultiImage(imageQuality: 70)).map((e) => e.path,));
+            images.addAll(
+                (await _imagePicker.pickMultiImage(imageQuality: 70)).map(
+              (e) => NoticeImage(id: 0, image: e.path),
+            ));
             widget.onChange(images);
             setState(() {});
           },
@@ -43,24 +55,20 @@ class _RowImagePickerState extends State<RowImagePicker> {
               scrollDirection: Axis.horizontal,
               itemCount: images.length,
               itemBuilder: (context, index) {
-                final imageTemp = File(images[index]);
+                if (images[index].toDelete) return SizedBox();
                 return Stack(
                   children: [
-                    Container(
-                      constraints: BoxConstraints.loose(
-                        Size(100, 100),
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Image.file(imageTemp),
-                      ),
-                    ),
+                    _Image(noticeImage: images[index]),
                     Positioned(
                       left: 0,
                       top: 0,
                       child: InkWell(
                         onTap: () {
-                          images.removeAt(index);
+                          if (images[index].isRemote) {
+                            images[index].toDelete = true;
+                          } else {
+                            images.removeAt(index);
+                          }
                           widget.onChange(images);
                           setState(() {});
                         },
@@ -78,5 +86,31 @@ class _RowImagePickerState extends State<RowImagePicker> {
         ),
       ],
     );
+  }
+}
+
+class _Image extends StatelessWidget {
+  final NoticeImage noticeImage;
+
+  const _Image({Key? key, required this.noticeImage}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final imageTemp = File(noticeImage.image);
+    return noticeImage.isRemote
+        ? CustomNetworkImage(
+            height: 100,
+            width: 100,
+            imageSource: noticeImage.image,
+          )
+        : Container(
+            constraints: BoxConstraints.loose(
+              Size(100, 100),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 8.0),
+              child: Image.file(imageTemp),
+            ),
+          );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_notice/model/notice_model.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:card_swiper/card_swiper.dart';
 import 'package:flutter/material.dart';
@@ -6,7 +7,7 @@ import 'package:flutter/material.dart';
 class NoteCard extends StatelessWidget {
   final String? title;
   final String? msg;
-  final List<String>? images;
+  final List<NoticeImage>? images;
   final Function() edit;
 
   NoteCard({
@@ -72,7 +73,7 @@ class _Images extends StatelessWidget {
     required this.images,
   }) : super(key: key);
 
-  final List<String>? images;
+  final List<NoticeImage>? images;
 
   @override
   Widget build(BuildContext context) {
@@ -96,7 +97,7 @@ class _Images extends StatelessWidget {
                 children: [
                   Expanded(
                     child: CustomNetworkImage(
-                      imageSource: images?[index] ?? '',
+                      imageSource: images?[index].image ?? '',
                       height: 150,
                       width: 150,
                     ),

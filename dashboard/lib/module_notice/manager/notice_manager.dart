@@ -17,4 +17,7 @@ class NoticeManager {
 
   Future<ActionResponse?> updateNotice(NoticeRequest request) =>
       _categoriesRepository.updateNotice(request);
+
+  Future<ActionResponse?> deleteImage(int imageId) =>
+      _categoriesRepository.deleteImage(imageId);
 }

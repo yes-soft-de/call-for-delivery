@@ -43,8 +43,8 @@ class NoticeStateManager {
     bool saveToContinue = true;
 
     for (int i = 0; i < (request.images?.length ?? 0); i++) {
-      String? url =
-          await getIt<ImageUploadService>().uploadImage(request.images![i]);
+      String? url = await getIt<ImageUploadService>()
+          .uploadImage(request.images![i].image);
 
       if (url == null) {
         CustomFlushBarHelper.createError(
@@ -56,23 +56,23 @@ class NoticeStateManager {
         break;
       }
 
-      request.images![i] = url;
+      request.images![i] = NoticeImage(image: url);
     }
 
     if (saveToContinue) {
-    _service.addNotice(request).then((value) {
-      if (value.hasError) {
-        getNotice(screenState);
-        CustomFlushBarHelper.createError(
-            title: S.current.warnning, message: value.error ?? '')
-          ..show(screenState.context);
-      } else {
-        getNotice(screenState);
-        CustomFlushBarHelper.createSuccess(
-            title: S.current.warnning, message: S.current.saveSuccess)
-          ..show(screenState.context);
-      }
-    });
+      _service.addNotice(request).then((value) {
+        if (value.hasError) {
+          getNotice(screenState);
+          CustomFlushBarHelper.createError(
+              title: S.current.warnning, message: value.error ?? '')
+            ..show(screenState.context);
+        } else {
+          getNotice(screenState);
+          CustomFlushBarHelper.createSuccess(
+              title: S.current.warnning, message: S.current.saveSuccess)
+            ..show(screenState.context);
+        }
+      });
     }
   }
 
@@ -83,8 +83,17 @@ class NoticeStateManager {
     bool saveToContinue = true;
 
     for (int i = 0; i < (request.images?.length ?? 0); i++) {
-      String? url =
-          await getIt<ImageUploadService>().uploadImage(request.images![i]);
+      // image already uploaded
+      if (request.images![i].isRemote) {
+        if (request.images![i].toDelete) {
+          await _service.deleteImage(request.images![i].id ?? -1);
+        }
+
+        continue;
+      }
+
+      String? url = await getIt<ImageUploadService>()
+          .uploadImage(request.images![i].image);
 
       if (url == null) {
         CustomFlushBarHelper.createError(
@@ -96,9 +105,14 @@ class NoticeStateManager {
         break;
       }
 
-      request.images![i] = url;
+      request.images![i] = NoticeImage(image: url);
     }
+    
+
     if (saveToContinue) {
+      request.images =
+        request.images?.where((element) => element.toDelete != true).toList();
+        
       _service.updateNotice(request).then((value) {
         if (value.hasError) {
           getNotice(screenState);
