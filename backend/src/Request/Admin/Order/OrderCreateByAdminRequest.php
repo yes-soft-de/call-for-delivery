@@ -133,4 +133,74 @@ class OrderCreateByAdminRequest
 
         return $this;
     }
+
+    public function setPayment(string $payment): void
+    {
+        $this->payment = $payment;
+    }
+
+    public function setOrderCost(?float $orderCost): void
+    {
+        $this->orderCost = $orderCost;
+    }
+
+    public function setNote(?string $note): void
+    {
+        $this->note = $note;
+    }
+
+    public function setDestination(array $destination): void
+    {
+        $this->destination = $destination;
+    }
+
+    public function getDestination(): array
+    {
+        return $this->destination;
+    }
+
+    public function setRecipientName(?string $recipientName): void
+    {
+        $this->recipientName = $recipientName;
+    }
+
+    public function setImages(?string $images): void
+    {
+        $this->images = $images;
+    }
+
+    public function setRecipientPhone(?string $recipientPhone): void
+    {
+        $this->recipientPhone = $recipientPhone;
+    }
+
+    public function setDetail(?string $detail): void
+    {
+        $this->detail = $detail;
+    }
+
+    public function setOrderIsMain(?bool $orderIsMain): void
+    {
+        $this->orderIsMain = $orderIsMain;
+    }
+
+    public function setFilePdf(?string $filePdf): void
+    {
+        $this->filePdf = $filePdf;
+    }
+
+    public function setStoreBranchToClientDistance(?float $storeBranchToClientDistance): void
+    {
+        $this->storeBranchToClientDistance = $storeBranchToClientDistance;
+    }
+
+    public function setDeliveryCost(?float $deliveryCost): void
+    {
+        $this->deliveryCost = $deliveryCost;
+    }
+
+    public function setCostType(?int $costType): void
+    {
+        $this->costType = $costType;
+    }
 }
