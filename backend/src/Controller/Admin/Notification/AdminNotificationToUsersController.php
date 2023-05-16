@@ -7,6 +7,7 @@ use App\Controller\BaseController;
 use App\Request\Admin\Notification\AdminNotificationCreateRequest;
 use App\Request\Admin\Notification\AdminNotificationUpdateRequest;
 use App\Service\Admin\Notification\AdminNotificationToUsersService;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use stdClass;
@@ -24,16 +25,14 @@ use OpenApi\Annotations as OA;
  */
 class AdminNotificationToUsersController extends BaseController
 {
-    private AutoMapping $autoMapping;
-    private ValidatorInterface $validator;
-    private AdminNotificationToUsersService $adminNotificationToUsersService;
-
-    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, AdminNotificationToUsersService $adminNotificationToUsersService)
+    public function __construct(
+        SerializerInterface $serializer,
+        private AutoMapping $autoMapping,
+        private ValidatorInterface $validator,
+        private AdminNotificationToUsersService $adminNotificationToUsersService
+    )
     {
         parent::__construct($serializer);
-        $this->autoMapping = $autoMapping;
-        $this->validator = $validator;
-        $this->adminNotificationToUsersService = $adminNotificationToUsersService;
     }
 
     /**
@@ -58,6 +57,9 @@ class AdminNotificationToUsersController extends BaseController
      *          @OA\Property(type="string", property="title"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="string", property="appType", description="stores or captains or all"),
+     *          @OA\Property(type="array", property="images",
+     *              @OA\Items(type="string")
+     *          )
      *      )
      * )
      *
@@ -68,11 +70,7 @@ class AdminNotificationToUsersController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *            @OA\Property(type="integer", property="id"),
-     *            @OA\Property(type="string", property="title"),
-     *            @OA\Property(type="string", property="msg"),
-     *            @OA\Property(type="string", property="appType"),
-     *            @OA\Property(type="integer", property="userId"),
+     *              ref=@Model(type="App\Response\Admin\Notification\AdminNotificationToUsersResponse")
      *      )
      *   )
      * )
@@ -91,7 +89,6 @@ class AdminNotificationToUsersController extends BaseController
             $violationsString = (string) $violations;
 
             return new JsonResponse($violationsString, Response::HTTP_OK);
-
         }
         
         $result = $this->adminNotificationToUsersService->createAdminNotificationToUsers($request);
@@ -123,6 +120,9 @@ class AdminNotificationToUsersController extends BaseController
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="string", property="appType"),
      *          @OA\Property(type="integer", property="userId"),
+     *          @OA\Property(type="array", property="images",
+     *              @OA\Items(type="string")
+     *          )
      *      )
      * )
      *
@@ -133,17 +133,13 @@ class AdminNotificationToUsersController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *            @OA\Property(type="integer", property="id"),
-     *            @OA\Property(type="string", property="title"),
-     *            @OA\Property(type="string", property="msg"),
-     *            @OA\Property(type="string", property="appType"),
-     *            @OA\Property(type="integer", property="userId"),
+     *              ref=@Model(type="App\Response\Admin\Notification\AdminNotificationToUser\AdminNotificationToUserUpdateResponse")
      *      ),
      *   ),
      * )
      *
      * or
-     * 
+     *
      * @OA\Response(
      *      response="default",
      *      description="Returns notification",
@@ -174,8 +170,7 @@ class AdminNotificationToUsersController extends BaseController
 
         $result = $this->adminNotificationToUsersService->updateAdminNotification($request);
 
-        if(isset($result->state)) {
-         
+        if (isset($result->state)) {
             return $this->response($result, self::NOTIFICATION_NOT_FOUND);
         } 
 
@@ -186,7 +181,7 @@ class AdminNotificationToUsersController extends BaseController
      * admin: delete Admin Notification
      * @Route("adminnotification/{id}", name="deleteAdminNotification", methods={"DELETE"})
      * @IsGranted("ROLE_ADMIN")
-     * @param $id
+     * @param int $id
      * @return JsonResponse
      *
      * @OA\Tag(name="Admin Notification")
@@ -205,11 +200,7 @@ class AdminNotificationToUsersController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *            @OA\Property(type="integer", property="id"),
-     *            @OA\Property(type="string", property="title"),
-     *            @OA\Property(type="string", property="msg"),
-     *            @OA\Property(type="string", property="appType"),
-     *            @OA\Property(type="integer", property="userId"),
+     *              ref=@Model(type="App\Response\Admin\Notification\AdminNotificationToUsersResponse")
      *      ),
      *   ),
      * )
@@ -230,12 +221,11 @@ class AdminNotificationToUsersController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function deleteAdminNotification($id): JsonResponse
+    public function deleteAdminNotification(int $id): JsonResponse
     {
         $result = $this->adminNotificationToUsersService->deleteAdminNotification($id);
 
-        if(isset($result->state)) {
-         
+        if (isset($result->state)) {
             return $this->response($result, self::NOTIFICATION_NOT_FOUND);
         } 
 
@@ -264,12 +254,8 @@ class AdminNotificationToUsersController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="array", property="Data",
-     *                  @OA\Items(
-     *                      @OA\Property(type="integer", property="id"),
-     *                      @OA\Property(type="string", property="title"),
-     *                      @OA\Property(type="string", property="msg"),
-     *                      @OA\Property(type="string", property="appType"),
-     *                      @OA\Property(type="integer", property="userId"),
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Admin\Notification\AdminNotificationsResponse")
      *              )
      *          )
      *       )
@@ -288,7 +274,7 @@ class AdminNotificationToUsersController extends BaseController
      * admin: get notification by id.
      * @Route("adminnotification/{id}", name="getNotificationByIdForAdmin", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
-     * @param $id
+     * @param int $id
      * @return JsonResponse
      *
      * @OA\Tag(name="Admin Notification")
@@ -307,18 +293,14 @@ class AdminNotificationToUsersController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *                      @OA\Property(type="integer", property="id"),
-     *                      @OA\Property(type="string", property="title"),
-     *                      @OA\Property(type="string", property="msg"),
-     *                      @OA\Property(type="string", property="appType"),
-     *                      @OA\Property(type="integer", property="userId"),
+     *              ref=@Model(type="App\Response\Admin\Notification\AdminNotificationsResponse")
      *          )
      *       )
      *    )
      *
      * @Security(name="Bearer")
      */
-    public function getNotificationByIdForAdmin($id): JsonResponse
+    public function getNotificationByIdForAdmin(int $id): JsonResponse
     {
         $result = $this->adminNotificationToUsersService->getNotificationByIdForAdmin($id);
 

@@ -132,11 +132,6 @@ class AdminStoreOwnerService
         return $this->adminStoreOwnerManager->getStoreOwnerProfileEntityByStoreOwnerId($storeOwnerId);
     }
 
-    public function getActiveStoresWithOrdersDuringCurrentMonthForAdmin(): array
-    {
-        return $this->adminStoreOwnerManager->getActiveStoresWithOrdersDuringCurrentMonthForAdmin();
-    }
-
     // Get top stores according on delivered orders during specific time
     public function filterTopStoresAccordingOnOrdersByAdmin(StoresAndOrdersCountDuringSpecificTimeFilterByAdminRequest $request): array
     {

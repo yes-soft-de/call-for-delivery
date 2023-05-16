@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Response\Notification;
+namespace App\Response\Admin\Notification\AdminNotificationToUser;
 
 use DateTime;
 use OpenApi\Annotations as OA;
 
-class NotificationFromAdminResponse
+class AdminNotificationToUserUpdateResponse
 {
     /**
      * @var int|null
@@ -26,6 +26,16 @@ class NotificationFromAdminResponse
      * @var DateTime|null
      */
     public $createdAt;
+
+    /**
+     * @var DateTime|null
+     */
+    public $updatedAt;
+
+    /**
+     * @var string|null
+     */
+    public $appType;
 
     /**
      * @OA\Property(type="array", property="images",

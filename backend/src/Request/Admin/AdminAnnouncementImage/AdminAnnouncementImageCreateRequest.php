@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Request\Admin\AdminAnnouncementImage;
+
+use App\Entity\AdminNotificationToUsersEntity;
+
+class AdminAnnouncementImageCreateRequest
+{
+    private string $imagePath;
+
+    /**
+     * @var AdminNotificationToUsersEntity
+     */
+    private $AdminNotificationToUser;
+
+    public function setImagePath(string $imagePath): void
+    {
+        $this->imagePath = $imagePath;
+    }
+
+    public function setAdminNotificationToUser(AdminNotificationToUsersEntity $AdminNotificationToUser): void
+    {
+        $this->AdminNotificationToUser = $AdminNotificationToUser;
+    }
+}
