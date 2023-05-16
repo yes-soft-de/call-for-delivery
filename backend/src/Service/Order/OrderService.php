@@ -162,8 +162,8 @@ class OrderService
                 NotificationConstant::CREATE_ORDER_SUCCESS, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
 
             // create dashboard local notification
-            $this->createDashboardLocalNotificationByStore(DashboardLocalNotificationTitleConstant::CREATE_NEW_ORDER_BY_STORE_TITLE_CONST,
-                ["text" => DashboardLocalNotificationMessageConstant::CREATE_ORDER_BY_STORE_TEXT_CONST.$order->getId()], null, $order->getId());
+            // $this->createDashboardLocalNotificationByStore(DashboardLocalNotificationTitleConstant::CREATE_NEW_ORDER_BY_STORE_TITLE_CONST,
+              // ["text" => DashboardLocalNotificationMessageConstant::CREATE_ORDER_BY_STORE_TEXT_CONST.$order->getId()], null, $order->getId());
 
             $this->orderTimeLineService->createOrderLogsRequest($order);
 
