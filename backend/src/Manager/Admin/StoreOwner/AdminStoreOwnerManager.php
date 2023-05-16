@@ -89,14 +89,14 @@ class AdminStoreOwnerManager
         return $this->storeOwnerProfileEntityRepository->findOneBy(['storeOwnerId'=>$storeOwnerId]);
     }
 
-    public function getActiveStoresWithOrdersDuringCurrentMonthForAdmin(): array
-    {
-        return $this->storeOwnerProfileEntityRepository->getActiveStoresWithOrdersDuringCurrentMonthForAdmin();
-    }
-
     // Get top stores according on delivered orders during specific time
     public function filterTopStoresAccordingOnOrdersByAdmin(StoresAndOrdersCountDuringSpecificTimeFilterByAdminRequest $request): array
     {
         return $this->storeOwnerProfileEntityRepository->filterTopStoresAccordingOnOrdersByAdmin($request);
+    }
+
+    public function getStoreOwnerProfileEntityByIdForAdmin(int $id): ?StoreOwnerProfileEntity
+    {
+        return $this->storeOwnerProfileEntityRepository->findOneBy(['id' => $id]);
     }
 }

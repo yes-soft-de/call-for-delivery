@@ -83,7 +83,7 @@ class AdminSubscriptionDetailsManager
                 $subscriptionDetailsEntity->getRemainingOrders() + $factor
             );
 
-        } elseif ($operationType === SubscriptionConstant::OPERATION_TYPE_ADDITION) {
+        } elseif ($operationType === SubscriptionConstant::OPERATION_TYPE_SUBTRACTION) {
             $subscriptionDetailsEntity->setRemainingOrders(
                 $subscriptionDetailsEntity->getRemainingOrders() - $factor
             );
