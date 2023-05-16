@@ -9,6 +9,7 @@ use App\Entity\OrderEntity;
 use App\Entity\ImageEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Repository\StoreOrderDetailsEntityRepository;
+use App\Request\Admin\Order\Dev\OrderDevCreateByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderRecycleOrCancelByAdminRequest;
 use App\Request\Admin\Order\OrderStoreBranchToClientDistanceAdditionByAdminRequest;
@@ -174,5 +175,24 @@ class AdminStoreOrderDetailsManager
         $this->entityManager->flush();
 
         return $storeOrderDetailsEntity;
+    }
+
+    public function createOrderDevDetailsByAdmin(OrderEntity $orderEntity, OrderDevCreateByAdminRequest $request): StoreOrderDetailsEntity
+    {
+        $orderDetailEntity = $this->autoMapping->map(OrderDevCreateByAdminRequest::class, StoreOrderDetailsEntity::class,
+            $request);
+
+        $orderDetailEntity->setOrderId($orderEntity);
+
+        // if ($request->getImages()) {
+            // $imageEntity = $this->createImage($request->getImages(), $orderEntity->getId());
+
+            // $orderDetailEntity->setImages($imageEntity);
+        // }
+
+        $this->entityManager->persist($orderDetailEntity);
+        $this->entityManager->flush();
+
+        return $orderDetailEntity;
     }
 }

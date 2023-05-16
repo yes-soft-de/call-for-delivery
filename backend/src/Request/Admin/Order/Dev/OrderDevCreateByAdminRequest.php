@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Request\Admin\Order;
+namespace App\Request\Admin\Order\Dev;
 
 use App\Entity\StoreOwnerBranchEntity;
 use App\Entity\StoreOwnerProfileEntity;
 
-class OrderCreateByAdminRequest
+class OrderDevCreateByAdminRequest
 {
     private string $payment;
 
@@ -26,7 +26,8 @@ class OrderCreateByAdminRequest
 
     /**
      * The id of the store owner profile
-     * @var StoreOwnerProfileEntity|int
+     *
+     * @var StoreOwnerProfileEntity
      */
     private $storeOwner;
 
@@ -40,11 +41,6 @@ class OrderCreateByAdminRequest
     /**
      * @var string|null
      */
-    private $images;
-
-    /**
-     * @var string|null
-     */
     private $recipientPhone;
 
     /**
@@ -53,7 +49,7 @@ class OrderCreateByAdminRequest
     private $detail;
 
     /**
-     * @var StoreOwnerBranchEntity|int
+     * @var StoreOwnerBranchEntity
      */
     private $branch;
 
@@ -61,15 +57,17 @@ class OrderCreateByAdminRequest
      * @var bool|null
      */
     private $orderIsMain;
-     
-    private string|null $filePdf;
 
-    private float|null $storeBranchToClientDistance;
+    /**
+     * @var float|null
+     */
+    private $storeBranchToClientDistance;
 
     private int $isHide;
 
     /**
      * Auto-calculated value depending on the distance which is being calculated by Google MAP API
+     *
      * @var float|null
      */
     private $deliveryCost;
@@ -79,30 +77,25 @@ class OrderCreateByAdminRequest
      */
     private $costType;
 
-    public function getStoreOwner(): int|StoreOwnerProfileEntity
-    {
-        return $this->storeOwner;
-    }
-
-    public function setStoreOwner(int|StoreOwnerProfileEntity $storeOwner): void
-    {
-        $this->storeOwner = $storeOwner;
-    }
-
-    public function getBranch(): StoreOwnerBranchEntity|int
-    {
-        return $this->branch;
-    }
-
-    public function setBranch(StoreOwnerBranchEntity|int $branch): void
-    {
-        $this->branch = $branch;
-    }
-
-    public function getImages(): ?string
-    {
-        return $this->images;
-    }
+//    public function getStoreOwner(): int|StoreOwnerProfileEntity
+//    {
+//        return $this->storeOwner;
+//    }
+//
+//    public function setStoreOwner(int|StoreOwnerProfileEntity $storeOwner): void
+//    {
+//        $this->storeOwner = $storeOwner;
+//    }
+//
+//    public function getBranch(): StoreOwnerBranchEntity|int
+//    {
+//        return $this->branch;
+//    }
+//
+//    public function setBranch(StoreOwnerBranchEntity|int $branch): void
+//    {
+//        $this->branch = $branch;
+//    }
 
     public function getDeliveryDate(): ?string
     {
@@ -114,24 +107,14 @@ class OrderCreateByAdminRequest
         $this->deliveryDate = $deliveryDate;
     }
 
-    /**
-     * Get the value of isHide
-     */ 
-    public function getIsHide()
+    public function getIsHide(): int
     {
         return $this->isHide;
     }
 
-    /**
-     * Set the value of isHide
-     *
-     * @return  self
-     */ 
-    public function setIsHide($isHide)
+    public function setIsHide($isHide): void
     {
         $this->isHide = $isHide;
-
-        return $this;
     }
 
     public function setPayment(string $payment): void
@@ -164,11 +147,6 @@ class OrderCreateByAdminRequest
         $this->recipientName = $recipientName;
     }
 
-    public function setImages(?string $images): void
-    {
-        $this->images = $images;
-    }
-
     public function setRecipientPhone(?string $recipientPhone): void
     {
         $this->recipientPhone = $recipientPhone;
@@ -182,11 +160,6 @@ class OrderCreateByAdminRequest
     public function setOrderIsMain(?bool $orderIsMain): void
     {
         $this->orderIsMain = $orderIsMain;
-    }
-
-    public function setFilePdf(?string $filePdf): void
-    {
-        $this->filePdf = $filePdf;
     }
 
     public function setStoreBranchToClientDistance(?float $storeBranchToClientDistance): void

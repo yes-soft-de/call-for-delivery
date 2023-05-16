@@ -10,6 +10,7 @@ use App\Entity\OrderEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Repository\OrderEntityRepository;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
+use App\Request\Admin\Order\Dev\OrderDevCreateByAdminRequest;
 use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
 use App\Request\Admin\Order\OrderDifferentDestinationFilterByAdminRequest;
@@ -612,5 +613,22 @@ class AdminOrderManager
     {
         return $this->orderEntityRepository->getDeliveredOrdersCountBetweenTwoDatesAndByStoreBranchId($storeBranchId,
             $fromDate, $toDate);
+    }
+
+    public function createOrderDevByAdmin(OrderDevCreateByAdminRequest $request): OrderEntity
+    {
+        $orderEntity = $this->autoMapping->map(OrderDevCreateByAdminRequest::class, OrderEntity::class, $request);
+
+        $orderEntity->setDeliveryDate($orderEntity->getDeliveryDate());
+        $orderEntity->setState(OrderStateConstant::ORDER_STATE_PENDING);
+        $orderEntity->setOrderType(OrderTypeConstant::ORDER_TYPE_NORMAL);
+        $orderEntity->setPreviousVisibility($request->getIsHide());
+
+        $this->entityManager->persist($orderEntity);
+        $this->entityManager->flush();
+
+        $this->adminStoreOrderDetailsManager->createOrderDevDetailsByAdmin($orderEntity, $request);
+
+        return $orderEntity;
     }
 }

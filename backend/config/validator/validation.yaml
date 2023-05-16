@@ -912,3 +912,10 @@ App\Request\Admin\Notification\AdminNotificationUpdateRequest:
             - NotBlank: ~
         appType:
             - NotBlank: ~
+
+App\Request\Admin\Order\TestingOrderCreateByAdminRequest:
+    properties:
+        storeOwner:
+            - NotBlank: ~
+        branch:
+            - NotBlank: ~
