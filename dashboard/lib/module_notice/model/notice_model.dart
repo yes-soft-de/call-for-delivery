@@ -43,13 +43,31 @@ class NoticeImage {
   String image;
   bool isRemote;
   bool toDelete;
+  bool uploadError;
 
   NoticeImage({
-    this.id,
+    this.id = 0,
     required this.image,
     this.isRemote = false,
     this.toDelete = false,
+    this.uploadError = false,
   });
+
+  NoticeImage copyWith({
+    int? id,
+    String? image,
+    bool? isRemote,
+    bool? toDelete,
+    bool? uploadError,
+  }) {
+    return NoticeImage(
+      id: id ?? this.id,
+      image: image ?? this.image,
+      isRemote: isRemote ?? this.isRemote,
+      toDelete: toDelete ?? this.toDelete,
+      uploadError: uploadError ?? this.uploadError,
+    );
+  }
 }
 
 List<NoticeImage> _getImages(List<ImageResponse>? images) {

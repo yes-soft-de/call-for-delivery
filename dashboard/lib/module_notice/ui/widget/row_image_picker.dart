@@ -101,19 +101,25 @@ class _Image extends StatelessWidget {
         ? SizedBox(
             height: 100,
             width: 100,
-            child: CustomNetworkImage(
-              height: 100,
-              width: 100,
-              imageSource: noticeImage.image,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CustomNetworkImage(
+                height: 100,
+                width: 100,
+                imageSource: noticeImage.image,
+              ),
             ),
           )
-        : Container(
-            constraints: BoxConstraints.loose(
-              Size(100, 100),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Image.file(imageTemp),
+        : Padding(
+            padding: const EdgeInsets.symmetric(vertical: 8),
+            child: Container(
+              constraints: BoxConstraints.loose(
+                Size(100, 100),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Image.file(imageTemp),
+              ),
             ),
           );
   }

@@ -78,7 +78,7 @@ class _Images extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      visible: images != null,
+      visible: (images?.length ?? 0) > 0,
       child: Expanded(
         child: Container(
           constraints: BoxConstraints(

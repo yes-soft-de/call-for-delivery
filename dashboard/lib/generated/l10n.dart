@@ -9760,6 +9760,16 @@ class S {
     );
   }
 
+  /// `in process`
+  String get inProcess {
+    return Intl.message(
+      'in process',
+      name: 'inProcess',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `captain daily`
   String get captainDaily {
     return Intl.message(

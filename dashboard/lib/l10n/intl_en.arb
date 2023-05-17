@@ -971,5 +971,6 @@
     "partiallyPaid": "partially paid",
     "prePayments": "prepayment",
     "image": "image",
+    "inProcess": "in process",
     "captainDaily": "captain daily"
 }

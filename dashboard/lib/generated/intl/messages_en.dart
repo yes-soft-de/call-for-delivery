@@ -688,6 +688,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Inactive Captains"),
         "inActiveSupplier":
             MessageLookupByLibrary.simpleMessage("inActive Supplier"),
+        "inProcess": MessageLookupByLibrary.simpleMessage("in process"),
         "inactive": MessageLookupByLibrary.simpleMessage(
             "This store is not active yet"),
         "inactiveOffer": MessageLookupByLibrary.simpleMessage("Inactive Offer"),
