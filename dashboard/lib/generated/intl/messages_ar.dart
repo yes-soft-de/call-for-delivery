@@ -867,6 +867,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderDate": MessageLookupByLibrary.simpleMessage("تاريخ الطلب"),
         "orderDeliveredDescription":
             MessageLookupByLibrary.simpleMessage("تم توصيل الطلب"),
+        "orderDeliveredLastSevenDay": MessageLookupByLibrary.simpleMessage(
+            "الطلبات المسلمة آخر سبعة أيام"),
         "orderDeliveredThisWeek":
             MessageLookupByLibrary.simpleMessage("الطلبات المسلمة هذا الاسبوع"),
         "orderDeliveryCost":
