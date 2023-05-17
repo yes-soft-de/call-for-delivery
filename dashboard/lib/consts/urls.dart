@@ -1,5 +1,5 @@
 // Developing Domain ===> 'http://134.209.241.49';
-// Production Domain ===> 'http://134.209.241.49';
+// Production Domain ===> 'http://46.101.100.62';
 class Urls {
   static List<String> admins = [
     '551111111',
@@ -10,7 +10,7 @@ class Urls {
     '552222225',
   ];
   /*--------BASES-------------------*/
-  static const String DOMAIN = 'http://46.101.100.62';
+  static const String DOMAIN = 'http://134.209.241.49';
   static const String BASE_API = DOMAIN + '';
   static const String VERSION = '/v1';
   static const GEO_DISTANCE = DOMAIN + '/v1/geodistance/geodistance';
@@ -337,6 +337,7 @@ class Urls {
       BASE_API_ORDER + '/bidorderbyidforadmin/';
   /*-----------------------------order----------------------------*/
   static const CREATE_ORDER_API = BASE_API_ORDER + '/createorder';
+  static const CREATE_DEV_ORDER_API = DOMAIN + '/v1/dev/admin/order' + '/createorderbyadmin';
   static const ADD_EXTRA_DISTANCE_TO_ORDER_API =
       BASE_API_ORDER + '/addstorebranchtoclientdistanceviadestinationbyadmin';
   static const UPDATE_EXTRA_DISTANCE_TO_ORDER_API = BASE_API_ORDER +

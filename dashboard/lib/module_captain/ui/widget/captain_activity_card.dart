@@ -45,8 +45,8 @@ class CaptainActivityCard extends StatelessWidget {
                 arguments: [id, captainName, null]);
           } else {
             Navigator.of(context).pushNamed(
-              CaptainsRoutes.CAPTAIN_ACTIVITY_DETAILS,
-              arguments: [id, captainName, filter]);
+                CaptainsRoutes.CAPTAIN_ACTIVITY_DETAILS,
+                arguments: [id, captainName, filter]);
           }
         },
         child: Container(

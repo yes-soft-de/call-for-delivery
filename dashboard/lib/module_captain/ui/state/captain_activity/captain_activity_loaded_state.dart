@@ -67,7 +67,6 @@ class CaptainsActivityLoadedState extends States {
       ));
     }
 
-
     if (model != null) {
       widgets.insert(
           0,

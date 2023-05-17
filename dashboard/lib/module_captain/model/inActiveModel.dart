@@ -12,15 +12,15 @@ class InActiveModel extends DataModel {
   late bool verificationStatus;
   List<InActiveModel> _model = [];
 
-  InActiveModel(
-      {required this.captainID,
-      required this.image,
-      required this.captainName,
-      required this.phoneNumber,
-      required this.userID,
-      required this.verificationStatus,
-      required this.profileID,
-      });
+  InActiveModel({
+    required this.captainID,
+    required this.image,
+    required this.captainName,
+    required this.phoneNumber,
+    required this.userID,
+    required this.verificationStatus,
+    required this.profileID,
+  });
 
   InActiveModel.withData(List<Data> data) : super.withData() {
     _model = [];
@@ -32,7 +32,8 @@ class InActiveModel extends DataModel {
           phoneNumber:
               element.phone ?? element.userId ?? S.current.notCompletedAccount,
           userID: element.userId,
-          verificationStatus: element.verificationStatus == 1 ? true : false, profileID: element.captainID ?? -1));
+          verificationStatus: element.verificationStatus == 1 ? true : false,
+          profileID: element.captainID ?? -1));
     }
   }
   List<InActiveModel> get data => _model;

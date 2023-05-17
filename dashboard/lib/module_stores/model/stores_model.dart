@@ -22,40 +22,40 @@ class StoresModel extends DataModel {
   int? packageType;
   List<StoresModel> _models = [];
 
-  StoresModel(
-      {required this.id,
-      required this.storeOwnerName,
-      required this.phone,
-      this.openingTime,
-      this.closingTime,
-      required this.status,
-      this.image,
-      this.imageUrl,
-      this.employeeCount,
-      this.bankName,
-      this.bankAccountNumber,
-      this.city,
-      this.packageType, 
-      });
+  StoresModel({
+    required this.id,
+    required this.storeOwnerName,
+    required this.phone,
+    this.openingTime,
+    this.closingTime,
+    required this.status,
+    this.image,
+    this.imageUrl,
+    this.employeeCount,
+    this.bankName,
+    this.bankAccountNumber,
+    this.city,
+    this.packageType,
+  });
 
   StoresModel.withData(List<Data> data) : super.withData() {
     _models = [];
     for (var element in data) {
       _models.add(StoresModel(
-          id: element.id ?? -1,
-          storeOwnerName: element.storeOwnerName ?? S.current.store,
-          phone: element.phone ?? S.current.notCompletedAccount,
-          openingTime: DateHelper.convert(element.openingTime?.timestamp),
-          closingTime: DateHelper.convert(element.closingTime?.timestamp),
-          status: element.status ?? '',
-          image: element.image?.image,
-          imageUrl: element.image?.imageURL ?? ImageAsset.PLACEHOLDER,
-          bankAccountNumber: element.bankAccountNumber,
-          bankName: element.bankName,
-          city: element.city,
-          employeeCount: element.employeeCount,
-          packageType: element.packageType,
-          ));
+        id: element.id ?? -1,
+        storeOwnerName: element.storeOwnerName ?? S.current.store,
+        phone: element.phone ?? S.current.notCompletedAccount,
+        openingTime: DateHelper.convert(element.openingTime?.timestamp),
+        closingTime: DateHelper.convert(element.closingTime?.timestamp),
+        status: element.status ?? '',
+        image: element.image?.image,
+        imageUrl: element.image?.imageURL ?? ImageAsset.PLACEHOLDER,
+        bankAccountNumber: element.bankAccountNumber,
+        bankName: element.bankName,
+        city: element.city,
+        employeeCount: element.employeeCount,
+        packageType: element.packageType,
+      ));
     }
   }
 

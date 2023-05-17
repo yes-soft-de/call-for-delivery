@@ -1,9 +1,11 @@
+import 'package:c4d/consts/urls.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/captains_module.dart';
 import 'package:c4d/module_categories/categories_module.dart';
 import 'package:c4d/module_company/company_module.dart';
 import 'package:c4d/module_delivary_car/cars_module.dart';
+import 'package:c4d/module_dev/dev_module.dart';
 import 'package:c4d/module_notice/notice_module.dart';
 import 'package:c4d/module_orders/orders_module.dart';
 import 'package:c4d/module_payments/payments_module.dart';
@@ -272,6 +274,21 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.contactInfo, Icons.info, true),
                 ],
                 page: widget.currentPage),
+                 // dev
+            Visibility(
+              visible: 'http://134.209.241.49' == Urls.DOMAIN,
+              child: customExpansionTile(
+                  title: S.current.dev,
+                  icon: FontAwesomeIcons.dev,
+                  children: [
+                    customListTile(
+                        getIt<DevModule>().newTestOrderScreen,
+                        S.current.newOrder,
+                        FontAwesomeIcons.dev,
+                        true),
+                  ],
+                  page: widget.currentPage),
+            ),
             // setting
             customListTile(getIt<SettingsModule>().settingsScreen,
                 S.current.settings, FontAwesomeIcons.cog),

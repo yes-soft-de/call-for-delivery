@@ -232,5 +232,5 @@ class StoresService {
     return StoreDuesModel.withData(response);
   }
 
-   makePayment(dynamic request){}
+  makePayment(dynamic request) {}
 }

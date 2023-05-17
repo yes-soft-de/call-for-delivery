@@ -19,9 +19,9 @@ class StoreCashFinanceRequest {
     if (fromDate != null) {
       data['fromDate'] = DateFormat('yyyy-MM-dd', 'en').format(fromDate!);
     }
-     if (!kIsWeb) {
-     data['customizedTimezone'] =
-         await FlutterNativeTimezone.getLocalTimezone();
+    if (!kIsWeb) {
+      data['customizedTimezone'] =
+          await FlutterNativeTimezone.getLocalTimezone();
     }
     return data;
   }

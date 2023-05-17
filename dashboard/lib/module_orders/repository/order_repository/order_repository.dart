@@ -218,7 +218,8 @@ class OrderRepository {
 
   Future<ActionResponse?> deleteOrder(DeleteOrderRequest request) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.put('${Urls.DELETE_ORDER}', request.toJson(),
+    dynamic response = await _apiClient.put(
+        '${Urls.DELETE_ORDER}', request.toJson(),
         headers: {'Authorization': 'Bearer $token'});
     if (response == null) return null;
     return ActionResponse.fromJson(response);

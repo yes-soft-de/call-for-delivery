@@ -19,9 +19,10 @@ class StoresCounts {
         // lastThreeActive: (json['lastThreeActive'] as List<dynamic>?)
         //     ?.map((e) => Store.fromJson(e as Map<String, dynamic>))
         //     .toList(),
-        lastFiveCreatedOrderStores: (json['lastFiveCreatedOrderStores'] as List<dynamic>?)
-            ?.map((e) => Store.fromJson(e as Map<String, dynamic>))
-            .toList(),
+        lastFiveCreatedOrderStores:
+            (json['lastFiveCreatedOrderStores'] as List<dynamic>?)
+                ?.map((e) => Store.fromJson(e as Map<String, dynamic>))
+                .toList(),
       );
 
   Map<String, dynamic> toJson() => {

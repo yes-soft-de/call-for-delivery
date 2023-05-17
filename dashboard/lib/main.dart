@@ -9,6 +9,7 @@ import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_company/company_module.dart';
 import 'package:c4d/module_delivary_car/cars_module.dart';
+import 'package:c4d/module_dev/dev_module.dart';
 import 'package:c4d/module_main/main_module.dart';
 import 'package:c4d/module_my_notifications/my_notifications_module.dart';
 import 'package:c4d/module_notice/notice_module.dart';
@@ -129,7 +130,9 @@ class MyApp extends StatefulWidget {
       this._ordersModule,
       this._subscriptionsModule,
       this._myNotificationsModule,
-      this._statisticsModule);
+      this._statisticsModule,
+      this._devModule,
+      );
 
   final AuthorizationModule _authorizationModule;
   final BidOrderModule _bidOrderModule;
@@ -155,6 +158,7 @@ class MyApp extends StatefulWidget {
   final SupplierModule _supplierModule;
   final AppThemeDataService _themeDataService;
   final StatisticsModule _statisticsModule;
+  final DevModule _devModule;
 
   @override
   State<StatefulWidget> createState() => _MyAppState();

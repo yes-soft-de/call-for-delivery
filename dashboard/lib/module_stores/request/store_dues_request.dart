@@ -16,8 +16,7 @@ class StoreDuesRequest {
     return <String, dynamic>{
       'storeOwnerProfileId': storeOwnerProfileId,
       'year': year,
-      if(isPaid != null)
-      'isPaid': isPaid,
+      if (isPaid != null) 'isPaid': isPaid,
     };
   }
 

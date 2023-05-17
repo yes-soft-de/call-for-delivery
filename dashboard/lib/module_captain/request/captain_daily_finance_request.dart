@@ -32,9 +32,9 @@ class CaptainDailyFinanceRequest {
     if (fromDate != null) {
       data['fromDate'] = DateFormat('yyyy-MM-dd', 'en').format(fromDate!);
     }
-     if (!kIsWeb) {
-     data['customizedTimezone'] =
-         await FlutterNativeTimezone.getLocalTimezone();
+    if (!kIsWeb) {
+      data['customizedTimezone'] =
+          await FlutterNativeTimezone.getLocalTimezone();
     }
     if (captainProfileId != null) {
       data['captainProfileId'] = captainProfileId;

@@ -29,7 +29,8 @@ class OrdersCards extends StatelessWidget {
           child: OrdersDetailsCard(
               title: S.current.ongoing,
               value: statisticsOrder.ongoing.toString(),
-              cardColor: StatusHelper.getOrderStatusColor(OrderStatusEnum.GOT_CAPTAIN)),
+              cardColor: StatusHelper.getOrderStatusColor(
+                  OrderStatusEnum.GOT_CAPTAIN)),
         ),
         InkWell(
           onTap: () {
@@ -39,7 +40,8 @@ class OrdersCards extends StatelessWidget {
           child: OrdersDetailsCard(
               title: S.current.pending,
               value: statisticsOrder.pending.toString(),
-              cardColor: StatusHelper.getOrderStatusColor(OrderStatusEnum.WAITING)),
+              cardColor:
+                  StatusHelper.getOrderStatusColor(OrderStatusEnum.WAITING)),
         ),
         OrdersDetailsCard(
             title: S.current.last7days,

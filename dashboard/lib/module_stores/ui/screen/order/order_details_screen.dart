@@ -184,29 +184,29 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
                                   oneAction: false,
                                 );
                               });
-                        }, onExit: () { 
+                        },
+                        onExit: () {
                           Navigator.of(context).pop();
-                         },
+                        },
                       );
                     });
               } else {
-                    showDialog(
-                            context: context,
-                            builder: (_) {
-                              return CustomAlertDialog(
-                                content: S.current.areYouSureAboutDeleteOrder,
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  widget._stateManager.deleteOrder(
-                                      DeleteOrderRequest(
-                                        orderID: orderId,                                    
-                                      ),
-                                      this);
-                                },
-                                oneAction: false,
-                              );
-                            });
-                    
+                showDialog(
+                    context: context,
+                    builder: (_) {
+                      return CustomAlertDialog(
+                        content: S.current.areYouSureAboutDeleteOrder,
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          widget._stateManager.deleteOrder(
+                              DeleteOrderRequest(
+                                orderID: orderId,
+                              ),
+                              this);
+                        },
+                        oneAction: false,
+                      );
+                    });
               }
             },
             child: Icon(

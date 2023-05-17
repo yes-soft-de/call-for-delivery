@@ -21,8 +21,8 @@ class FilterStoreActivityRequest {
       data['fromDate'] = DateFormat('yyyy-MM-dd', 'en').format(fromDate!);
     }
     if (!kIsWeb) {
-     data['customizedTimezone'] =
-         await FlutterNativeTimezone.getLocalTimezone();
+      data['customizedTimezone'] =
+          await FlutterNativeTimezone.getLocalTimezone();
     }
 
     return data;
