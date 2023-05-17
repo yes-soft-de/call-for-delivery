@@ -63,6 +63,21 @@ class NoticeStateManager {
             ..show(screenState.context);
         }
       });
+    } else {
+      CustomFlushBarHelper.createError(
+          title: S.current.warnning, message: S.current.failedToUploadSomeImage)
+        ..show(screenState.context);
+
+      await showDialog(
+        barrierDismissible: false,
+        context: screenState.context,
+        builder: (context) => UploadImageFailedDialog(
+          request: request,
+          onConfirm: (newRequest) {
+            addNotice(screenState, newRequest);
+          },
+        ),
+      );
     }
   }
 
@@ -95,9 +110,20 @@ class NoticeStateManager {
         }
       });
     } else {
-      showDialog(
-          context: screenState.context,
-          builder: (context) => UploadImageFailedDialog(request: request));
+      CustomFlushBarHelper.createError(
+          title: S.current.warnning, message: S.current.failedToUploadSomeImage)
+        ..show(screenState.context);
+
+      await showDialog(
+        barrierDismissible: false,
+        context: screenState.context,
+        builder: (context) => UploadImageFailedDialog(
+          request: request,
+          onConfirm: (newRequest) {
+            updateNotice(screenState, newRequest);
+          },
+        ),
+      );
     }
   }
 
@@ -105,6 +131,7 @@ class NoticeStateManager {
     for (int i = 0; i < images.length; i++) {
       // image already uploaded
       if (images[i].isRemote) {
+        // delete toDelete images from the server
         if (images[i].toDelete) {
           await _service.deleteImage(images[i].id ?? -1);
         }
@@ -115,12 +142,13 @@ class NoticeStateManager {
           await getIt<ImageUploadService>().uploadImage(images[i].image);
 
       if (url != null) {
-        images[i] = images[i].copyWith(image: url);
+        images[i] = images[i].copyWith(image: url, isRemote: true);
       } else {
         images[i] = images[i].copyWith(uploadError: true);
       }
     }
 
+    // remove toDelete images from the list
     images = images.where((element) => element.toDelete != true).toList();
 
     return images;

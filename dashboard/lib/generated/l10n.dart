@@ -9770,6 +9770,36 @@ class S {
     );
   }
 
+  /// `failed to upload some image`
+  String get failedToUploadSomeImage {
+    return Intl.message(
+      'failed to upload some image',
+      name: 'failedToUploadSomeImage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `failed across when uploading this images`
+  String get failedAcrossWhenUploadingThisImages {
+    return Intl.message(
+      'failed across when uploading this images',
+      name: 'failedAcrossWhenUploadingThisImages',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `retry`
+  String get retry {
+    return Intl.message(
+      'retry',
+      name: 'retry',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `captain daily`
   String get captainDaily {
     return Intl.message(

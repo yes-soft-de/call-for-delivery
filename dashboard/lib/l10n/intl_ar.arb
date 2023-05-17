@@ -970,6 +970,9 @@
     "partiallyPaid": "مدفوع جزئيا",
     "prePayments": "دفعات مسبقة",
     "image": "صورة",
-    "in process": "جاري معالجة الطلب",
+    "inProcess": "جاري المعالجة",
+    "failedToUploadSomeImage": "حدث خطأ في رفع بعض الصور",
+    "failedAcrossWhenUploadingThisImages": "حدث خطا في رفع هذه الصور",
+    "retry": "اعادة المحاولة",
     "captainDaily": "يوميات الكباتن"
 }

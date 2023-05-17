@@ -972,5 +972,8 @@
     "prePayments": "prepayment",
     "image": "image",
     "inProcess": "in process",
+    "failedToUploadSomeImage": "failed to upload some image",
+    "failedAcrossWhenUploadingThisImages": "failed across when uploading this images",
+    "retry": "retry",
     "captainDaily": "captain daily"
 }

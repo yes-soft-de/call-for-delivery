@@ -582,6 +582,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تشرين الأول (أكتوبر)"),
         "fSeptember": MessageLookupByLibrary.simpleMessage("أيلول (سبتمبر)"),
         "failed": MessageLookupByLibrary.simpleMessage("الهدف غير محقق"),
+        "failedAcrossWhenUploadingThisImages":
+            MessageLookupByLibrary.simpleMessage("حدث خطا في رفع هذه الصور"),
+        "failedToUploadSomeImage":
+            MessageLookupByLibrary.simpleMessage("حدث خطأ في رفع بعض الصور"),
         "favoriteCategories":
             MessageLookupByLibrary.simpleMessage("التصنيفات المفضلة"),
         "favoriteStores":
@@ -681,6 +685,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الكباتن الغير مفعلين"),
         "inActiveSupplier":
             MessageLookupByLibrary.simpleMessage("الموردين غير المفعلة"),
+        "inProcess": MessageLookupByLibrary.simpleMessage("جاري المعالجة"),
         "inactive": MessageLookupByLibrary.simpleMessage(
             "هذا المتجر غير مُفعل حتى الآن"),
         "inactiveOffer":
@@ -1169,6 +1174,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "resendCode": MessageLookupByLibrary.simpleMessage("اعادة الارسال"),
         "resendCodeSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إرسال الرمز بنجاح"),
+        "retry": MessageLookupByLibrary.simpleMessage("اعادة المحاولة"),
         "sOrder": MessageLookupByLibrary.simpleMessage("طلب"),
         "salary": MessageLookupByLibrary.simpleMessage("الراتب"),
         "sar": MessageLookupByLibrary.simpleMessage("ر.س"),

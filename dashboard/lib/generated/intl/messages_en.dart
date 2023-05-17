@@ -583,6 +583,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "fOctober": MessageLookupByLibrary.simpleMessage("October"),
         "fSeptember": MessageLookupByLibrary.simpleMessage("September"),
         "failed": MessageLookupByLibrary.simpleMessage("Failed"),
+        "failedAcrossWhenUploadingThisImages":
+            MessageLookupByLibrary.simpleMessage(
+                "failed across when uploading this images"),
+        "failedToUploadSomeImage":
+            MessageLookupByLibrary.simpleMessage("failed to upload some image"),
         "failureRenew": MessageLookupByLibrary.simpleMessage(
             "Your renew has been failed please try again"),
         "favoriteCategories":
@@ -1175,6 +1180,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "resendCode": MessageLookupByLibrary.simpleMessage("Resend Code"),
         "resendCodeSuccessfully": MessageLookupByLibrary.simpleMessage(
             "The code has been successfully sent"),
+        "retry": MessageLookupByLibrary.simpleMessage("retry"),
         "sOrder": MessageLookupByLibrary.simpleMessage("order"),
         "salary": MessageLookupByLibrary.simpleMessage("Salary"),
         "sar": MessageLookupByLibrary.simpleMessage("SAR"),
