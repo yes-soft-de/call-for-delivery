@@ -15,15 +15,19 @@ class MyNotificationsRepository {
   Future<MyNotificationResponse?> getMyNotification() async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(Urls.GET_MY_NOTIFICATION,
-        headers: {'Authorization': 'Bearer ' + token.toString()});
+        headers: {'Authorization': 'Bearer $token'});
     if (response == null) return null;
     return MyNotificationResponse.fromJson(response);
   }
 
-  Future<UpdateResponse?> getUpdates() async {
+  Future<UpdateResponse?> getUpdates(bool onlyNewUpdates) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(Urls.GET_UPDATES,
-        headers: {'Authorization': 'Bearer ' + token.toString()});
+
+    var url = Urls.GET_UPDATES;
+    if (onlyNewUpdates) url += '/199';
+
+    dynamic response =
+        await _apiClient.get(url, headers: {'Authorization': 'Bearer $token'});
     if (response == null) return null;
     return UpdateResponse.fromJson(response);
   }
@@ -31,8 +35,8 @@ class MyNotificationsRepository {
   Future<ActionResponse?> deleteNotification(String id) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.delete(
-        Urls.DELETE_MY_NOTIFICATION + '/$id',
-        headers: {'Authorization': 'Bearer ' + token.toString()});
+        '${Urls.DELETE_MY_NOTIFICATION}/$id',
+        headers: {'Authorization': 'Bearer $token'});
     if (response == null) return null;
     return ActionResponse.fromJson(response);
   }

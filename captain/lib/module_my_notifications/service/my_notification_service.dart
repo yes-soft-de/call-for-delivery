@@ -29,9 +29,9 @@ class MyNotificationsService {
     return NotificationModel.withData(_myNotificationResponse);
   }
 
-  Future<DataModel> getUpdates() async {
+  Future<DataModel> getUpdates({bool onlyNewUpdates = false}) async {
     UpdateResponse? _updateResponse =
-        await _myNotificationsManager.getUpdates();
+        await _myNotificationsManager.getUpdates(onlyNewUpdates);
     if (_updateResponse == null) {
       return DataModel.withError(S.current.networkError);
     }

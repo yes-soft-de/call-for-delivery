@@ -479,6 +479,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "getDirection":
             MessageLookupByLibrary.simpleMessage("موقع المتجر (الاستلام)"),
         "go": MessageLookupByLibrary.simpleMessage("انطلق"),
+        "goToOffers": MessageLookupByLibrary.simpleMessage("اذهب الى العروض"),
         "goingBackToHome":
             MessageLookupByLibrary.simpleMessage("الرجوع للقائمة الرئيسية"),
         "groupOrder": MessageLookupByLibrary.simpleMessage("طلب مجمع"),

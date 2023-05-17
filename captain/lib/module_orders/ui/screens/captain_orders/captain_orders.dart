@@ -143,7 +143,6 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
         });
       }
     });
-
     getIt<FireNotificationService>().refreshToken();
     currentState = LoadingState(this, picture: true);
     widget._stateManager.getProfile(this);
@@ -174,7 +173,9 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
       if (_currentProfile != null && _currentProfile!.roomID != null) {
         subscribeToDirectSupportMessages(_currentProfile!.roomID!);
       }
+      widget._stateManager.getUpdates(this);
     });
+
     _financeSubscription = widget._stateManager.profitStream.listen((event) {
       _currentFinance = event;
       if (mounted) {

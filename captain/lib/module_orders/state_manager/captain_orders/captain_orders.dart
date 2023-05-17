@@ -4,6 +4,9 @@ import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
+import 'package:c4d/module_my_notifications/model/update_model.dart';
+import 'package:c4d/module_my_notifications/service/my_notification_service.dart';
+import 'package:c4d/module_my_notifications/ui/widget/update_dialog.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/module_profile/model/daily_model.dart';
@@ -134,6 +137,28 @@ class CaptainOrdersListStateManager {
       } else {
         _stateSubject.add(CaptainOrdersListStateOrdersLoaded(
             screenState, value, DataModel.empty()));
+      }
+    });
+  }
+
+  void getUpdates(CaptainOrdersScreenState screenState) {
+    getIt<MyNotificationsService>()
+        .getUpdates(onlyNewUpdates: true)
+        .then((value) {
+      if (value.hasError) {
+        // do nothing
+      } else if (value.isEmpty) {
+        // do nothing
+      } else {
+        value as UpdateModel;
+        showDialog(
+          context: screenState.context,
+          builder: (context) {
+            return UpdateDialog(
+              updateModel: value.data,
+            );
+          },
+        );
       }
     });
   }
