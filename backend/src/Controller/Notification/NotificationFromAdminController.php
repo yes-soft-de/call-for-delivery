@@ -29,8 +29,9 @@ class NotificationFromAdminController extends BaseController
 
     /**
      * store: Get notifications from admin.
-     * @Route("notificationsfromadminforstore", name="getAllNotificationsFromAdminForStore", methods={"GET"})
+     * @Route("notificationsfromadminforstore/{limit}", name="getNotificationsFromAdminForStore", methods={"GET"})
      * @IsGranted("ROLE_OWNER")
+     * @param int|null $limit
      * @return JsonResponse
      *
      * @OA\Tag(name="Notification FROM ADMIN")
@@ -58,18 +59,19 @@ class NotificationFromAdminController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function getAllNotificationsFromAdminForStore(): JsonResponse
+    public function getAllNotificationsFromAdminForStore(int $limit = null): JsonResponse
     {
         $result = $this->notificationFromAdminService->getAllNotificationsFromAdmin($this->getUserId(),
-            NotificationConstant::APP_TYPE_STORE);
+            NotificationConstant::APP_TYPE_STORE, $limit);
 
         return $this->response($result, self::FETCH);
     }
-    
+
     /**
      * captain: Get notifications from admin.
-     * @Route("notificationsfromadminforcaptain", name="getAllNotificationsFromAdminForCaptain", methods={"GET"})
+     * @Route("notificationsfromadminforcaptain/{limit}", name="getNotificationsFromAdminForCaptain", methods={"GET"})
      * @IsGranted("ROLE_CAPTAIN")
+     * @param int|null $limit
      * @return JsonResponse
      *
      * @OA\Tag(name="Notification FROM ADMIN")
@@ -97,18 +99,19 @@ class NotificationFromAdminController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function getAllNotificationsFromAdminForCaptain(): JsonResponse
+    public function getAllNotificationsFromAdminForCaptain(int $limit = null): JsonResponse
     {
         $result = $this->notificationFromAdminService->getAllNotificationsFromAdmin($this->getUserId(),
-            NotificationConstant::APP_TYPE_CAPTAIN);
+            NotificationConstant::APP_TYPE_CAPTAIN, $limit);
 
         return $this->response($result, self::FETCH);
     }
 
     /**
      * supplier: Get all notifications from admin.
-     * @Route("notificationsfromadminforsupplier", name="getAllNotificationsFromAdminForSupplier", methods={"GET"})
+     * @Route("notificationsfromadminforsupplier/{limit}", name="getNotificationsFromAdminForSupplier", methods={"GET"})
      * @IsGranted("ROLE_SUPPLIER")
+     * @param int|null $limit
      * @return JsonResponse
      *
      * @OA\Tag(name="Notification FROM ADMIN")
@@ -136,10 +139,10 @@ class NotificationFromAdminController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function getAllNotificationsFromAdminForSupplier(): JsonResponse
+    public function getAllNotificationsFromAdminForSupplier(int $limit = null): JsonResponse
     {
         $result = $this->notificationFromAdminService->getAllNotificationsFromAdmin($this->getUserId(),
-            NotificationConstant::APP_TYPE_SUPPLIER);
+            NotificationConstant::APP_TYPE_SUPPLIER, $limit);
 
         return $this->response($result, self::FETCH);
     }

@@ -21,4 +21,13 @@ class NotificationFromAdminManager
         return $this->adminNotificationToUsersEntityRepository->findBy(['userId' => [0, $userId],
             'appType' => [$appType, NotificationConstant::APP_TYPE_ALL]], ['id' => 'DESC']);
     }
+
+    /**
+     * Get last notifications from admin according to user type, or user id, and limit number
+     */
+    public function getLastNotificationsFromAdminByLimit(int $userId, string $appType, int $limitNumber): ?array
+    {
+        return $this->adminNotificationToUsersEntityRepository->findBy(['userId' => [0, $userId],
+            'appType' => [$appType, NotificationConstant::APP_TYPE_ALL]], ['id' => 'DESC'], $limitNumber);
+    }
 }
