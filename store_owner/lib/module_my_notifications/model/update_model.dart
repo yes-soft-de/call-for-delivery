@@ -8,15 +8,18 @@ class UpdateModel extends DataModel {
   late String title;
   late String msg;
   late String date;
+  late List<String> images;
   bool marked = false;
 
   List<UpdateModel> _model = [];
-  UpdateModel(
-      {required this.id,
-      required this.title,
-      required this.msg,
-      required this.date,
-      required this.marked});
+  UpdateModel({
+    required this.id,
+    required this.title,
+    required this.msg,
+    required this.date,
+    required this.marked,
+    required this.images,
+  });
 
   UpdateModel.withData(UpdateResponse response) {
     var data = response.data;
@@ -28,11 +31,13 @@ class UpdateModel extends DataModel {
           DateFormat.Md()
               .format(DateHelper.convert(element.createdAt?.timestamp));
       _model.add(UpdateModel(
-          id: element.id ?? -1,
-          title: element.title ?? '',
-          msg: element.msg ?? '',
-          date: date,
-          marked: false));
+        id: element.id ?? -1,
+        title: element.title ?? '', 
+        msg: element.msg ?? '',
+        date: date,
+        marked: false,
+        images: element.images ?? [],
+      ));
     });
   }
   List<UpdateModel> get data => _model;
