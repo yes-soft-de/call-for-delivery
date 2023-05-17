@@ -488,6 +488,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "destinationUpdate": MessageLookupByLibrary.simpleMessage(
             "تم تحديث حقل موقع المستلم من قبل الإدارة"),
         "details": MessageLookupByLibrary.simpleMessage("تفاصيل"),
+        "dev": MessageLookupByLibrary.simpleMessage("المطورين"),
         "directSupport": MessageLookupByLibrary.simpleMessage("دعم مباشر"),
         "discount": MessageLookupByLibrary.simpleMessage("الخصم"),
         "distance": MessageLookupByLibrary.simpleMessage("المسافة"),

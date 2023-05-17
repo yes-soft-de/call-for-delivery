@@ -970,5 +970,6 @@
     "unPaid": "unpaid",
     "partiallyPaid": "partially paid",
     "prePayments": "prepayment",
-    "captainDaily": "captain daily"
+    "captainDaily": "captain daily",
+    "dev":"Dev"
 }

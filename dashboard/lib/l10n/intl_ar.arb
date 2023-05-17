@@ -969,5 +969,6 @@
     "unPaid": "غير مدفوع",
     "partiallyPaid": "مدفوع جزئيا",
     "prePayments": "دفعات مسبقة",
-    "captainDaily": "يوميات الكباتن"
+    "captainDaily": "يوميات الكباتن",
+    "dev":"المطورين"
 }

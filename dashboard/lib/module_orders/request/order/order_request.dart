@@ -18,27 +18,27 @@ class CreateOrderRequest {
   num? deliveryCost;
   int? cancel;
   int? costType;
-  CreateOrderRequest(
-      {this.id,
-      this.storeId,
-      this.fromBranch,
-      this.note,
-      this.payment,
-      this.recipientName,
-      this.recipientPhone,
-      this.date,
-      this.destination,
-      this.orderCost,
-      this.image,
-      this.detail,
-      this.orderID,
-      this.orderIsMain,
-      this.distance,
-      this.pdf,
-      required this.deliveryCost,
-      this.cancel,
-      this.costType,
-      });
+  CreateOrderRequest({
+    this.id,
+    this.storeId,
+    this.fromBranch,
+    this.note,
+    this.payment,
+    this.recipientName,
+    this.recipientPhone,
+    this.date,
+    this.destination,
+    this.orderCost,
+    this.image,
+    this.detail,
+    this.orderID,
+    this.orderIsMain,
+    this.distance,
+    this.pdf,
+    required this.deliveryCost,
+    this.cancel,
+    this.costType,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};

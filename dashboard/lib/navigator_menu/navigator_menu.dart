@@ -4,6 +4,7 @@ import 'package:c4d/module_captain/captains_module.dart';
 import 'package:c4d/module_categories/categories_module.dart';
 import 'package:c4d/module_company/company_module.dart';
 import 'package:c4d/module_delivary_car/cars_module.dart';
+import 'package:c4d/module_dev/dev_module.dart';
 import 'package:c4d/module_notice/notice_module.dart';
 import 'package:c4d/module_orders/orders_module.dart';
 import 'package:c4d/module_payments/payments_module.dart';
@@ -270,6 +271,18 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       true),
                   customListTile(getIt<CompanyModule>().companyProfileScreen,
                       S.current.contactInfo, Icons.info, true),
+                ],
+                page: widget.currentPage),
+                 // dev
+            customExpansionTile(
+                title: S.current.dev,
+                icon: FontAwesomeIcons.dev,
+                children: [
+                  customListTile(
+                      getIt<DevModule>().newTestOrderScreen,
+                      S.current.newOrder,
+                      FontAwesomeIcons.dev,
+                      true),
                 ],
                 page: widget.currentPage),
             // setting

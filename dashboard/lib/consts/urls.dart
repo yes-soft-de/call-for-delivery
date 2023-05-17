@@ -337,6 +337,7 @@ class Urls {
       BASE_API_ORDER + '/bidorderbyidforadmin/';
   /*-----------------------------order----------------------------*/
   static const CREATE_ORDER_API = BASE_API_ORDER + '/createorder';
+  static const CREATE_DEV_ORDER_API = DOMAIN + '/v1/dev/admin/order' + '/createorderbyadmin';
   static const ADD_EXTRA_DISTANCE_TO_ORDER_API =
       BASE_API_ORDER + '/addstorebranchtoclientdistanceviadestinationbyadmin';
   static const UPDATE_EXTRA_DISTANCE_TO_ORDER_API = BASE_API_ORDER +

@@ -82,12 +82,14 @@ class OrderDistanceConflictLoadedState extends States {
                                                   id: element.id,
                                                   storeBranchToClientDistanceAdditionExplanation:
                                                       reason.text.trim(),
-                                                  destination:Destination(
-                                                    lat: double.tryParse(coord.text
+                                                  destination: Destination(
+                                                    lat: double.tryParse(coord
+                                                        .text
                                                         .trim()
                                                         .split(',')[0]
                                                         .trim()),
-                                                    lon:  double.tryParse(coord.text
+                                                    lon: double.tryParse(coord
+                                                        .text
                                                         .trim()
                                                         .split(',')[1]
                                                         .trim()),

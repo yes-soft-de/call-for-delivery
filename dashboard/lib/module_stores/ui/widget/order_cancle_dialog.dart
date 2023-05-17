@@ -5,7 +5,11 @@ import 'package:list_tile_switch/list_tile_switch.dart';
 class OrderCancelDialog extends StatelessWidget {
   final Function(bool, bool) onDone;
   final Function() onExit;
-  const OrderCancelDialog({Key? key, required this.onDone,required this.onExit,}) : super(key: key);
+  const OrderCancelDialog({
+    Key? key,
+    required this.onDone,
+    required this.onExit,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +50,7 @@ class OrderCancelDialog extends StatelessWidget {
               onDone(cutOrder, captainProfit);
             },
             child: Text(S.current.next)),
-             ElevatedButton(
+        ElevatedButton(
             onPressed: () {
               onExit();
             },

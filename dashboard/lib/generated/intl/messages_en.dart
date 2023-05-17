@@ -493,6 +493,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "destinationUpdate": MessageLookupByLibrary.simpleMessage(
             "The recipient location field has been updated by the administration"),
         "details": MessageLookupByLibrary.simpleMessage("Details"),
+        "dev": MessageLookupByLibrary.simpleMessage("Dev"),
         "directSupport": MessageLookupByLibrary.simpleMessage("Direct Support"),
         "discount": MessageLookupByLibrary.simpleMessage("Discount"),
         "distance": MessageLookupByLibrary.simpleMessage("Distance"),

@@ -2,6 +2,7 @@ import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/foundation.dart' show kIsWeb;
+
 class FilterOrderRequest {
   String? state;
   DateTime? toDate;
@@ -34,9 +35,9 @@ class FilterOrderRequest {
     if (fromDate != null) {
       data['fromDate'] = DateFormat('yyyy-MM-dd', 'en').format(fromDate!);
     }
-     if (!kIsWeb) {
-     data['customizedTimezone'] =
-         await FlutterNativeTimezone.getLocalTimezone();
+    if (!kIsWeb) {
+      data['customizedTimezone'] =
+          await FlutterNativeTimezone.getLocalTimezone();
     }
     if (payment != null) {
       data['payment'] = this.payment == S.current.card
