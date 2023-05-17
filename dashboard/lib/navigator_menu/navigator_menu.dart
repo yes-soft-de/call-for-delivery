@@ -1,3 +1,4 @@
+import 'package:c4d/consts/urls.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/captains_module.dart';
@@ -274,17 +275,20 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 ],
                 page: widget.currentPage),
                  // dev
-            customExpansionTile(
-                title: S.current.dev,
-                icon: FontAwesomeIcons.dev,
-                children: [
-                  customListTile(
-                      getIt<DevModule>().newTestOrderScreen,
-                      S.current.newOrder,
-                      FontAwesomeIcons.dev,
-                      true),
-                ],
-                page: widget.currentPage),
+            Visibility(
+              visible: 'http://134.209.241.49' == Urls.DOMAIN,
+              child: customExpansionTile(
+                  title: S.current.dev,
+                  icon: FontAwesomeIcons.dev,
+                  children: [
+                    customListTile(
+                        getIt<DevModule>().newTestOrderScreen,
+                        S.current.newOrder,
+                        FontAwesomeIcons.dev,
+                        true),
+                  ],
+                  page: widget.currentPage),
+            ),
             // setting
             customListTile(getIt<SettingsModule>().settingsScreen,
                 S.current.settings, FontAwesomeIcons.cog),
