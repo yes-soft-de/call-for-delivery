@@ -40,20 +40,20 @@ class Data {
   String? bankName;
   String? bankAccountNumber;
   int? packageType;
-  Data(
-      {this.id,
-      this.storeOwnerName,
-      this.image,
-      this.phone,
-      this.closingTime,
-      this.openingTime,
-      this.status,
-      this.city,
-      this.bankAccountNumber,
-      this.bankName,
-      this.employeeCount,
-      this.packageType,
-      });
+  Data({
+    this.id,
+    this.storeOwnerName,
+    this.image,
+    this.phone,
+    this.closingTime,
+    this.openingTime,
+    this.status,
+    this.city,
+    this.bankAccountNumber,
+    this.bankName,
+    this.employeeCount,
+    this.packageType,
+  });
 
   Data.fromJson(dynamic json) {
     id = json['id'];

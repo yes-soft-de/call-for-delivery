@@ -707,9 +707,11 @@ class UpdateOrderLoaded extends States {
                     ],
                   ),
                 ),
+
                 /// cost type
                 Visibility(
-                  visible: screenState.payments == 'cash' && orderInfo.packageType == 1,
+                  visible: screenState.payments == 'cash' &&
+                      orderInfo.packageType == 1,
                   child: ListTile(
                     title: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -734,7 +736,7 @@ class UpdateOrderLoaded extends States {
                               value: 187,
                               groupValue: screenState.costType,
                               onChanged: (int? value) {
-                                screenState.costType = value;      
+                                screenState.costType = value;
                                 screenState.refresh();
                               },
                             ),
@@ -777,7 +779,12 @@ class UpdateOrderLoaded extends States {
         onTap: () {
           if (_formKey.currentState?.validate() == true &&
               screenState.branch != null &&
-              screenState.payments != null && (orderInfo.packageType != 1 || screenState.payments == 'card' || (orderInfo.packageType == 1 && screenState.costType != null && screenState.payments == 'cash'))) {
+              screenState.payments != null &&
+              (orderInfo.packageType != 1 ||
+                  screenState.payments == 'card' ||
+                  (orderInfo.packageType == 1 &&
+                      screenState.costType != null &&
+                      screenState.payments == 'cash'))) {
             showDialog(
                 context: context,
                 builder: (context) {
@@ -795,7 +802,9 @@ class UpdateOrderLoaded extends States {
                     title: S.current.warnning,
                     message: S.current.pleaseProvidePaymentMethode)
                 .show(context);
-          }  else if (screenState.costType == null && screenState.payments == 'cash' && orderInfo.packageType == 1) {
+          } else if (screenState.costType == null &&
+              screenState.payments == 'cash' &&
+              orderInfo.packageType == 1) {
             CustomFlushBarHelper.createError(
                     title: S.current.warnning,
                     message: S.current.pleaseProvideCostType)
@@ -946,7 +955,7 @@ class UpdateOrderLoaded extends States {
   // function create order without upload image
   void createOrderWithoutImage() {
     screenState.addNewOrder(CreateOrderRequest(
-      costType:   screenState.costType,
+      costType: screenState.costType,
       id: orderInfo.id,
       orderIsMain: orderIsMain,
       distance: distance,

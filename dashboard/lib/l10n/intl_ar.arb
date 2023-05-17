@@ -974,5 +974,6 @@
     "failedToUploadSomeImage": "حدث خطأ في رفع بعض الصور",
     "failedAcrossWhenUploadingThisImages": "حدث خطا في رفع هذه الصور",
     "retry": "اعادة المحاولة",
-    "captainDaily": "يوميات الكباتن"
+    "captainDaily": "يوميات الكباتن",
+    "dev":"المطورين"
 }

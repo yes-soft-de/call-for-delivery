@@ -9,7 +9,7 @@ class DeleteOrderRequest {
       this.cutOrderFromStoreSubscription});
 
   Map<String, dynamic> toJson() {
-    var map = <String,dynamic>{};
+    var map = <String, dynamic>{};
     map['id'] = orderID;
     if (addHalfOrderValueToCaptainFinancialDue != null) {
       map['addHalfOrderValueToCaptainFinancialDue'] =

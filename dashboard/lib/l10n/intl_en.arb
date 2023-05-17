@@ -975,5 +975,6 @@
     "failedToUploadSomeImage": "failed to upload some image",
     "failedAcrossWhenUploadingThisImages": "failed across when uploading this images",
     "retry": "retry",
-    "captainDaily": "captain daily"
+    "captainDaily": "captain daily",
+    "dev":"Dev"
 }

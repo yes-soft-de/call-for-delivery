@@ -78,7 +78,8 @@ class OrderStatusStateManager {
     });
   }
 
-  void deleteOrder(DeleteOrderRequest request, OrderDetailsScreenState screenState) {
+  void deleteOrder(
+      DeleteOrderRequest request, OrderDetailsScreenState screenState) {
     screenState.canRemoveOrder = false;
     _stateSubject.add(LoadingState(screenState));
     getIt<OrdersService>().deleteOrder(request).then((value) {

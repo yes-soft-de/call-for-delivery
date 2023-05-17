@@ -899,10 +899,10 @@ packages:
     dependency: "direct main"
     description:
       name: image_network
-      sha256: "0e1f927385af35954f93d18f2240cf6c87a3f5840caa1bb80b2c4714dc5f0460"
+      sha256: "5f780e4549749efba5280a32fd540e77117b76910357f8a0f1c210230aeb8ef1"
       url: "https://pub.dev"
     source: hosted
-    version: "2.5.2"
+    version: "2.5.1"
   image_picker:
     dependency: "direct main"
     description:
@@ -1696,10 +1696,10 @@ packages:
     dependency: "direct main"
     description:
       name: timeago
-      sha256: a22e036b6abf4912c359a4b410755906d65aa5eb19b5e23d52925b5fc2c7c993
+      sha256: "46c128312ab0ea144b146c0ac6426ddd96810efec2de3fccc425d00179cd8254"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.2"
+    version: "3.3.0"
   timezone:
     dependency: transitive
     description:

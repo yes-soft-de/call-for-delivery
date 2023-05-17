@@ -46,7 +46,7 @@ class ActorCardMobile extends StatelessWidget {
                   DetailRow(
                       onTap: () {
                         actor is StatisticsStores
-                            ?  getIt<GlobalStateManager>().goToStores()
+                            ? getIt<GlobalStateManager>().goToStores()
                             : getIt<GlobalStateManager>().goToCaptains();
                       },
                       title: actor is StatisticsStores

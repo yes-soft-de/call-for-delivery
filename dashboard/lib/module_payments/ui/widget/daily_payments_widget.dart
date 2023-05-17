@@ -160,7 +160,9 @@ class DailyWidget extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(S.current.totalEarnedProfit + '(${S.current.advanced})',
+                                    Text(
+                                        S.current.totalEarnedProfit +
+                                            '(${S.current.advanced})',
                                         style: TextStyle(
                                           fontSize: 15,
                                           // color:

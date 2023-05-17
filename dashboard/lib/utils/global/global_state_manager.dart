@@ -18,15 +18,19 @@ class GlobalStateManager {
   void goToNonDeliveredOrder() {
     _stateSubject.add(getIt<OrdersModule>().pendingScreen);
   }
+
   void goToCaptains() {
     _stateSubject.add(getIt<CaptainsModule>().captainsScreen);
   }
+
   void goToInActiveCaptain() {
     _stateSubject.add(getIt<CaptainsModule>().inActiveCaptains);
   }
+
   void goToStores() {
     _stateSubject.add(getIt<StoresModule>().storesScreen);
   }
+
   void goToInActiveStores() {
     _stateSubject.add(getIt<StoresModule>().storesInActiveScreen);
   }

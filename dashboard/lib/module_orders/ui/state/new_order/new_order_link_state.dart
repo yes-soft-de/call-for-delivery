@@ -577,7 +577,8 @@ class NewOrderLinkStateLoaded extends States {
 
                 /// cost type
                 Visibility(
-                  visible: screenState.payments == 'cash' && screenState.packageType == 1,
+                  visible: screenState.payments == 'cash' &&
+                      screenState.packageType == 1,
                   child: ListTile(
                     title: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -646,7 +647,12 @@ class NewOrderLinkStateLoaded extends States {
         onTap: () {
           if (_formKey.currentState?.validate() == true &&
               screenState.branch != null &&
-              screenState.payments != null && (screenState.packageType != 1 || screenState.payments == 'card' || (screenState.packageType == 1 && screenState.costType != null && screenState.payments == 'cash'))) {
+              screenState.payments != null &&
+              (screenState.packageType != 1 ||
+                  screenState.payments == 'card' ||
+                  (screenState.packageType == 1 &&
+                      screenState.costType != null &&
+                      screenState.payments == 'cash'))) {
             showDialog(
                 context: context,
                 builder: (context) {
@@ -664,7 +670,9 @@ class NewOrderLinkStateLoaded extends States {
                     title: S.current.warnning,
                     message: S.current.pleaseProvidePaymentMethode)
                 .show(context);
-          }  else if (screenState.costType == null && screenState.payments == 'cash' && screenState.packageType == 1) {
+          } else if (screenState.costType == null &&
+              screenState.payments == 'cash' &&
+              screenState.packageType == 1) {
             CustomFlushBarHelper.createError(
                     title: S.current.warnning,
                     message: S.current.pleaseProvideCostType)
