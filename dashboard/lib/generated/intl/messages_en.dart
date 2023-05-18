@@ -879,6 +879,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderDate": MessageLookupByLibrary.simpleMessage("order date"),
         "orderDeliveredDescription":
             MessageLookupByLibrary.simpleMessage("your order has delivered"),
+        "orderDeliveredLastSevenDay": MessageLookupByLibrary.simpleMessage(
+            "order delivered last seven days"),
         "orderDeliveredThisWeek":
             MessageLookupByLibrary.simpleMessage("order delivered this week"),
         "orderDeliveryCost":

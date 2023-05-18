@@ -9420,6 +9420,16 @@ class S {
     );
   }
 
+  /// `order delivered last seven days`
+  String get orderDeliveredLastSevenDay {
+    return Intl.message(
+      'order delivered last seven days',
+      name: 'orderDeliveredLastSevenDay',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `last`
   String get last {
     return Intl.message(
