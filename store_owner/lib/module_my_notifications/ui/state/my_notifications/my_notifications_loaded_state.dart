@@ -140,7 +140,7 @@ class MyNotificationsLoadedState extends States {
                           ),
                           child: Text(
                             '${getSelectedItem()}' + ' ' + S.current.selected,
-                            style: Theme.of(context).textTheme.headline6,
+                            style: Theme.of(context).textTheme.titleLarge,
                           ),
                         )),
                     Padding(
@@ -182,7 +182,11 @@ class MyNotificationsLoadedState extends States {
                         borderRadius: BorderRadius.circular(25)),
                     title: Text(element.title),
                     content: Container(
-                      child: Text(element.body),
+                      child: Text(element.body +
+                          ((element.orderNumber != null &&
+                                  element.orderNumber != '-1')
+                              ? '\n (${S.current.orderNumber} ${element.orderNumber})'
+                              : '')),
                     ),
                     actionsAlignment: MainAxisAlignment.center,
                     actions: [
@@ -269,7 +273,7 @@ class MyNotificationsLoadedState extends States {
                 Container(
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
-                      color: Theme.of(context).backgroundColor),
+                      color: Theme.of(context).colorScheme.background),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Icon(
