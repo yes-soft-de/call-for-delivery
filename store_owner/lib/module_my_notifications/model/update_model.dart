@@ -21,6 +21,12 @@ class UpdateModel extends DataModel {
     required this.images,
   });
 
+  UpdateModel.fromList(List<UpdateModel> updateModel) {
+    updateModel.forEach((element) {
+      _model.add(element);
+    });
+  }
+
   UpdateModel.withData(UpdateResponse response) {
     var data = response.data;
 
@@ -32,7 +38,7 @@ class UpdateModel extends DataModel {
               .format(DateHelper.convert(element.createdAt?.timestamp));
       _model.add(UpdateModel(
         id: element.id ?? -1,
-        title: element.title ?? '', 
+        title: element.title ?? '',
         msg: element.msg ?? '',
         date: date,
         marked: false,

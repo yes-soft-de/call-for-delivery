@@ -77,6 +77,8 @@ class OwnerOrdersStateManager {
         // do nothing
       } else if (value.isEmpty) {
         // do nothing
+      } else if (value is UpdateModel && value.data.isEmpty) {
+        // do nothing
       } else {
         value as UpdateModel;
         showDialog(
@@ -90,7 +92,6 @@ class OwnerOrdersStateManager {
       }
     });
   }
-
 
   void getOrdersFilters(
       OwnerOrdersScreenState screenState, FilterOrderRequest request,

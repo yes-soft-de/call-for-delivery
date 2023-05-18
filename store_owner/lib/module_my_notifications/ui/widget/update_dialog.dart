@@ -63,7 +63,14 @@ class _Body extends StatelessWidget {
               children: [
                 Column(
                   children: [
+                    _ADTitle(title: updateModel[index].title),
                     _Images(images: updateModel[index].images),
+                    Visibility(
+                      visible: updateModel[index].images.isEmpty,
+                      child: const SizedBox(
+                        height: 50,
+                      ),
+                    ),
                     _Text(text: updateModel[index].msg),
                   ],
                 ),
@@ -85,6 +92,21 @@ class _Body extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+}
+
+class _ADTitle extends StatelessWidget {
+  final String title;
+  const _ADTitle({required this.title});
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      title,
+      style: Theme.of(context).textTheme.titleMedium?.copyWith(
+            color: const Color(0xff00f0ff),
+          ),
     );
   }
 }
@@ -130,7 +152,7 @@ class _Images extends StatelessWidget {
       visible: images.isNotEmpty,
       child: Container(
         constraints: const BoxConstraints(
-          maxHeight: 250,
+          maxHeight: 200,
         ),
         child: Swiper(
           autoplay: true,

@@ -1,5 +1,6 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/module_my_notifications/model/update_model.dart';
+import 'package:c4d/module_my_notifications/presistance/my_notification_hive_helper.dart';
 import 'package:c4d/module_my_notifications/response/update_response/update_response.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
@@ -40,9 +41,33 @@ class MyNotificationsService {
           StatusCodeHelper.getStatusCodeMessages(_updateResponse.statusCode));
     }
     if (_updateResponse.data == null) return DataModel.empty();
-    return UpdateModel.withData(_updateResponse);
+        UpdateModel updateModel = UpdateModel.withData(_updateResponse);
+
+    if (onlyNewUpdates) {
+      updateModel = filterNewUpdate(updateModel);
+    }
+
+    return updateModel;
   }
 
+  UpdateModel filterNewUpdate(UpdateModel updateModel) {
+    var hiveHelper = MyNotificationHiveHelper();
+
+    List<UpdateModel> newUpdate = updateModel.data.reversed.toList();
+    var tempList = [...newUpdate];
+
+    for (var update in tempList) {
+      if (update.id > (hiveHelper.getLastNotificationSeenId() ?? 0)) {
+        hiveHelper.setLastNotificationSeenId(update.id);
+      } else {
+        newUpdate.remove(update);
+      }
+    }
+
+    updateModel = UpdateModel.fromList(newUpdate);
+
+    return updateModel;
+  }
   Future<DataModel> deleteNotification(String id) async {
     ActionResponse? _myNotificationResponse =
         await _myNotificationsManager.deleteNotification(id);
