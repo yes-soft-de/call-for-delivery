@@ -20,6 +20,12 @@ class UpdateModel extends DataModel {
     required this.images,
   });
 
+  UpdateModel.fromList(List<UpdateModel> updateModel) {
+    updateModel.forEach((element) {
+      _model.add(element);
+    });
+  }
+
   UpdateModel.withData(UpdateResponse response) {
     var data = response.data;
 
