@@ -128,9 +128,9 @@ class OrderDetailsCaptainOrderLoadedState extends States {
               });
         }, icon: Icons.warning_rounded),
         Visibility(
-          visible: orderInfo.state != OrderStatusEnum.FINISHED ||
-              orderInfo.state != OrderStatusEnum.CANCELLED ||
-              orderInfo.state != OrderStatusEnum.WAITING,
+          visible: !(orderInfo.state == OrderStatusEnum.FINISHED ||
+              orderInfo.state == OrderStatusEnum.CANCELLED ||
+              orderInfo.state == OrderStatusEnum.WAITING),
           child: CustomC4dAppBar.actionIcon(context, onTap: () {
             showDialog(
                 context: context,
