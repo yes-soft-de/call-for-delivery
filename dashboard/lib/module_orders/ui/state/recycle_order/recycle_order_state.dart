@@ -98,7 +98,7 @@ class RecycleOrderLoaded2 extends States {
   Widget getUI(BuildContext context) {
     var decoration = BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-        color: Theme.of(context).backgroundColor);
+        color: Theme.of(context).colorScheme.background);
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
     return StackedForm(
         visible: MediaQuery.of(context).viewInsets.bottom == 0,
@@ -120,7 +120,7 @@ class RecycleOrderLoaded2 extends States {
                         width: double.maxFinite,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
-                            color: Theme.of(context).backgroundColor),
+                            color: Theme.of(context).colorScheme.background),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 16.0, right: 16),
                           child: DropdownSearch<BranchesModel>(
@@ -225,7 +225,7 @@ class RecycleOrderLoaded2 extends States {
                                       '+',
                                       style: Theme.of(context)
                                           .textTheme
-                                          .button
+                                          .labelLarge
                                           ?.copyWith(color: Colors.white),
                                     ),
                                   ),
@@ -361,7 +361,8 @@ class RecycleOrderLoaded2 extends States {
                                                 indent: 16,
                                                 endIndent: 16,
                                                 color: Theme.of(context)
-                                                    .backgroundColor,
+                                                    .colorScheme
+                                                    .background,
                                                 thickness: 2.5,
                                               ),
                                               SizedBox(
@@ -403,7 +404,7 @@ class RecycleOrderLoaded2 extends States {
                                                 S.current.close,
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .button,
+                                                    .labelLarge,
                                               ),
                                             )),
                                       ),
@@ -420,7 +421,9 @@ class RecycleOrderLoaded2 extends States {
                               child: Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(18),
-                                    color: Theme.of(context).backgroundColor),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -498,7 +501,9 @@ class RecycleOrderLoaded2 extends States {
                                 child: Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(18),
-                                      color: Theme.of(context).backgroundColor),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .background),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -523,8 +528,9 @@ class RecycleOrderLoaded2 extends States {
                                   child: Container(
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(18),
-                                        color:
-                                            Theme.of(context).backgroundColor),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .background),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -556,7 +562,7 @@ class RecycleOrderLoaded2 extends States {
                   padding: const EdgeInsets.only(left: 8, right: 8),
                   child: Container(
                     decoration: BoxDecoration(
-                        color: Theme.of(context).backgroundColor,
+                        color: Theme.of(context).colorScheme.background,
                         borderRadius: BorderRadius.circular(25)),
                     child: ListTile(
                       onTap: () {
@@ -610,7 +616,7 @@ class RecycleOrderLoaded2 extends States {
                     child: Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(25),
-                          color: Theme.of(context).backgroundColor),
+                          color: Theme.of(context).colorScheme.background),
                       child: Material(
                         color: Colors.transparent,
                         child: CheckboxListTile(
@@ -669,7 +675,7 @@ class RecycleOrderLoaded2 extends States {
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Theme.of(context).backgroundColor,
+                            color: Theme.of(context).colorScheme.background,
                           ),
                           child: RadioListTile(
                             shape: RoundedRectangleBorder(
@@ -691,7 +697,7 @@ class RecycleOrderLoaded2 extends States {
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Theme.of(context).backgroundColor,
+                            color: Theme.of(context).colorScheme.background,
                           ),
                           child: RadioListTile(
                             title: Text(S.of(context).cash),
@@ -777,7 +783,7 @@ class RecycleOrderLoaded2 extends States {
             ),
           ),
         ),
-        label: S.current.orderRecycled,
+        label: S.current.recycleOrder,
         onTap: () {
           if (_formKey.currentState?.validate() == true &&
               screenState.branch != null &&

@@ -584,6 +584,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "fOctober": MessageLookupByLibrary.simpleMessage("October"),
         "fSeptember": MessageLookupByLibrary.simpleMessage("September"),
         "failed": MessageLookupByLibrary.simpleMessage("Failed"),
+        "failedAcrossWhenUploadingThisImages":
+            MessageLookupByLibrary.simpleMessage(
+                "failed across when uploading this images"),
+        "failedToUploadSomeImage":
+            MessageLookupByLibrary.simpleMessage("failed to upload some image"),
         "failureRenew": MessageLookupByLibrary.simpleMessage(
             "Your renew has been failed please try again"),
         "favoriteCategories":
@@ -684,10 +689,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "identity": MessageLookupByLibrary.simpleMessage("Identity"),
         "illegalCommand":
             MessageLookupByLibrary.simpleMessage("Illegal Command"),
+        "image": MessageLookupByLibrary.simpleMessage("image"),
         "inActiveCaptains":
             MessageLookupByLibrary.simpleMessage("Inactive Captains"),
         "inActiveSupplier":
             MessageLookupByLibrary.simpleMessage("inActive Supplier"),
+        "inProcess": MessageLookupByLibrary.simpleMessage("in process"),
         "inactive": MessageLookupByLibrary.simpleMessage(
             "This store is not active yet"),
         "inactiveOffer": MessageLookupByLibrary.simpleMessage("Inactive Offer"),
@@ -872,6 +879,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderDate": MessageLookupByLibrary.simpleMessage("order date"),
         "orderDeliveredDescription":
             MessageLookupByLibrary.simpleMessage("your order has delivered"),
+        "orderDeliveredLastSevenDay": MessageLookupByLibrary.simpleMessage(
+            "order delivered last seven days"),
         "orderDeliveredThisWeek":
             MessageLookupByLibrary.simpleMessage("order delivered this week"),
         "orderDeliveryCost":
@@ -1174,6 +1183,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "resendCode": MessageLookupByLibrary.simpleMessage("Resend Code"),
         "resendCodeSuccessfully": MessageLookupByLibrary.simpleMessage(
             "The code has been successfully sent"),
+        "retry": MessageLookupByLibrary.simpleMessage("retry"),
         "sOrder": MessageLookupByLibrary.simpleMessage("order"),
         "salary": MessageLookupByLibrary.simpleMessage("Salary"),
         "sar": MessageLookupByLibrary.simpleMessage("SAR"),

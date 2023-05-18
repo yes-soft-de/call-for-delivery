@@ -937,6 +937,7 @@
     "LastDeliveredDelivery": "Last delivered delivery",
     "LastCreatedDelivery": "Last created delivery",
     "orderDeliveredThisWeek": "order delivered this week",
+    "orderDeliveredLastSevenDay": "order delivered last seven days",
     "last": "last",
     "actives": "actives",
     "deliveredOrders": "delivered orders",
@@ -970,6 +971,11 @@
     "unPaid": "unpaid",
     "partiallyPaid": "partially paid",
     "prePayments": "prepayment",
+    "image": "image",
+    "inProcess": "in process",
+    "failedToUploadSomeImage": "failed to upload some image",
+    "failedAcrossWhenUploadingThisImages": "failed across when uploading this images",
+    "retry": "retry",
     "captainDaily": "captain daily",
     "dev":"Dev"
 }
