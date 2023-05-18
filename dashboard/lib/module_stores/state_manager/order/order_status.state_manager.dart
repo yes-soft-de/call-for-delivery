@@ -62,12 +62,12 @@ class OrderStatusStateManager {
 //        getOrder(screenState, screenState.orderId);
 //        CustomFlushBarHelper.createError(
 //                title: S.current.warnning, message: value.error ?? '')
-//            .show(screenState.context);
+//            ;
 //      } else {
 //        getOrder(screenState, screenState.orderId);
 //        CustomFlushBarHelper.createSuccess(
 //                title: S.current.warnning, message: S.current.captainRated)
-//            .show(screenState.context);
+//            ;
 //      }
 //    });
   }
@@ -86,12 +86,12 @@ class OrderStatusStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
         getOrder(screenState, request.orderID ?? -1);
       } else {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning, message: S.current.deleteSuccess)
-            .show(screenState.context);
+            ;
         getOrder(screenState, request.orderID ?? -1);
         FireStoreHelper().backgroundThread('Trigger');
       }
@@ -105,13 +105,13 @@ class OrderStatusStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
         getOrder(screenState, request.id ?? -1);
       } else {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.updateOrderStatusSuccessfully)
-            .show(screenState.context);
+            ;
         getOrder(screenState, request.id ?? -1);
         FireStoreHelper().backgroundThread('Trigger').ignore();
       }
@@ -124,13 +124,13 @@ class OrderStatusStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
         getOrder(screenState, orderId);
       } else {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.orderUpdatedSuccessfully)
-            .show(screenState.context);
+            ;
         getOrder(screenState, orderId);
         FireStoreHelper().backgroundThread('Trigger');
       }
@@ -144,13 +144,13 @@ class OrderStatusStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
         getOrder(screenState, request.id!, false);
       } else {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.distanceUpdatedSuccessfully)
-            .show(screenState.context);
+            ;
         getOrder(screenState, request.id!, false);
       }
     });
@@ -163,14 +163,14 @@ class OrderStatusStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
         // screenState.getOrders();
         getOrder(screenState, request.id!, false);
       } else {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.distanceUpdatedSuccessfully)
-            .show(screenState.context);
+            ;
         // screenState.getOrders();
         getOrder(screenState, request.id!, false);
       }

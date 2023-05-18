@@ -15,8 +15,7 @@ class LoginStateInit extends LoginState {
   LoginStateInit(LoginScreenState screen, {String? error}) : super(screen) {
     if (error != null) {
       CustomFlushBarHelper.createError(
-              title: S.current.warnning, message: error)
-          .show(screen.context);
+              title: S.current.warnning, message: error);
     }
   }
   TextEditingController usernameController = TextEditingController();

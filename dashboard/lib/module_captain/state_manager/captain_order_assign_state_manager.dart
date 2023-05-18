@@ -49,7 +49,7 @@ class CaptainAssignOrderStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
         getCaptains(screenState);
       } else {
         FireStoreHelper().backgroundThread('Trigger');
@@ -57,7 +57,7 @@ class CaptainAssignOrderStateManager {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.orderAssignedSuccessfully)
-            .show(screenState.context);
+            ;
       }
     });
   }

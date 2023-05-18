@@ -42,12 +42,12 @@ class CarsStateManager {
         getCars(screenState);
         CustomFlushBarHelper.createError(
             title: S.current.warnning, message: value.error ?? '')
-          ..show(screenState.context);
+          ;
       } else {
         getCars(screenState);
         CustomFlushBarHelper.createSuccess(
             title: S.current.warnning, message: S.current.saveSuccess)
-          ..show(screenState.context);
+          ;
       }
     });
   }
@@ -59,13 +59,13 @@ class CarsStateManager {
         getCars(screenState);
         CustomFlushBarHelper.createError(
             title: S.current.warnning, message: value.error ?? '')
-          ..show(screenState.context);
+          ;
       } else {
         getCars(screenState);
         CustomFlushBarHelper.createSuccess(
             title: S.current.warnning,
             message: S.current.categoryUpdatedSuccessfully)
-          ..show(screenState.context);
+          ;
       }
     });
   }
@@ -77,12 +77,12 @@ class CarsStateManager {
 //        getCategories(screenState);
 //        CustomFlushBarHelper.createError(
 //                title: S.current.warnning, message: value.error ?? '')
-//            .show(screenState.context);
+//            ;
 //      } else {
 //        getCategories(screenState);
 //        CustomFlushBarHelper.createSuccess(
 //                title: S.current.warnning, message: S.current.deleteSuccess)
-//            .show(screenState.context);
+//            ;
 //      }
 //    });
 //  }

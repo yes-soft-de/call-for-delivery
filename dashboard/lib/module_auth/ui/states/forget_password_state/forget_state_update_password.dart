@@ -101,8 +101,7 @@ class ForgotStateUpdatePassword extends States {
                         } else {
                           CustomFlushBarHelper.createError(
                                   title: S.current.warnning,
-                                  message: S.current.passwordNotMatch)
-                              .show(context);
+                                  message: S.current.passwordNotMatch);
                         }
                       },
                       style: ElevatedButton.styleFrom(

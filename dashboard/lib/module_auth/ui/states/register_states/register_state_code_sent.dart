@@ -22,8 +22,7 @@ class RegisterStatePhoneCodeSent extends RegisterState {
     });
     if (error != null) {
       CustomFlushBarHelper.createError(
-              title: S.current.warnning, message: error)
-          .show(screen.context);
+              title: S.current.warnning, message: error);
     }
   }
 

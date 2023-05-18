@@ -49,7 +49,7 @@ class SupplierCategoriesStateManager {
         getCategories(screenState);
         CustomFlushBarHelper.createError(
             title: S.current.warnning, message: S.current.errorUploadingImages)
-          ..show(screenState.context);
+          ;
       } else {
         request.image = value;
         _categoriesService.createCategory(request).then((value) {
@@ -57,12 +57,12 @@ class SupplierCategoriesStateManager {
             getCategories(screenState);
             CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-              ..show(screenState.context);
+              ;
           } else {
             getCategories(screenState);
             CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning, message: S.current.saveSuccess)
-              ..show(screenState.context);
+              ;
           }
         });
       }
@@ -81,7 +81,7 @@ class SupplierCategoriesStateManager {
           CustomFlushBarHelper.createError(
               title: S.current.warnning,
               message: S.current.errorUploadingImages)
-            ..show(screenState.context);
+            ;
         } else {
           request.image = value;
           _categoriesService.updateCategory(request).then((value) {
@@ -89,13 +89,13 @@ class SupplierCategoriesStateManager {
               getCategories(screenState);
               CustomFlushBarHelper.createError(
                   title: S.current.warnning, message: value.error ?? '')
-                ..show(screenState.context);
+                ;
             } else {
               getCategories(screenState);
               CustomFlushBarHelper.createSuccess(
                   title: S.current.warnning,
                   message: S.current.categoryUpdatedSuccessfully)
-                ..show(screenState.context);
+                ;
             }
           });
         }
@@ -106,13 +106,13 @@ class SupplierCategoriesStateManager {
           getCategories(screenState);
           CustomFlushBarHelper.createError(
               title: S.current.warnning, message: value.error ?? '')
-            ..show(screenState.context);
+            ;
         } else {
           getCategories(screenState);
           CustomFlushBarHelper.createSuccess(
               title: S.current.warnning,
               message: S.current.categoryUpdatedSuccessfully)
-            ..show(screenState.context);
+            ;
         }
       });
     }
@@ -126,13 +126,13 @@ class SupplierCategoriesStateManager {
         getCategories(screenState);
         CustomFlushBarHelper.createError(
             title: S.current.warnning, message: value.error ?? '')
-          ..show(screenState.context);
+          ;
       } else {
         getCategories(screenState);
         CustomFlushBarHelper.createSuccess(
             title: S.current.warnning,
             message: S.current.categoryUpdatedSuccessfully)
-          ..show(screenState.context);
+          ;
       }
     });
   }

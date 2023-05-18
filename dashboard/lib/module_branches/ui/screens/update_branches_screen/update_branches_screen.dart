@@ -64,13 +64,13 @@ class UpdateBranchScreenState extends State<UpdateBranchScreen> {
       CustomFlushBarHelper.createSuccess(
         title: S.of(context).updateBranch,
         message: S.of(context).updateBranchSuccess,
-      ).show(context);
+      );
     } else {
       Navigator.of(context).pop();
       CustomFlushBarHelper.createError(
         title: S.of(context).updateBranch,
         message: S.of(context).updateBranchFailure,
-      ).show(context);
+      );
     }
   }
 
@@ -82,13 +82,13 @@ class UpdateBranchScreenState extends State<UpdateBranchScreen> {
       CustomFlushBarHelper.createSuccess(
         title: S.of(context).addBranch,
         message: S.of(context).addBranchSuccess,
-      ).show(context);
+      );
     } else {
       Navigator.of(context).pop();
       CustomFlushBarHelper.createError(
         title: S.of(context).addBranch,
         message: S.of(context).addBranchFailure,
-      ).show(context);
+      );
     }
   }
 

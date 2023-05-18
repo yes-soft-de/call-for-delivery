@@ -49,13 +49,11 @@ class CaptainOfferStateManager {
       if (value.hasError) {
         getCaptainOffer(screenState);
         CustomFlushBarHelper.createError(
-            title: S.current.warnning, message: value.error ?? '')
-          ..show(screenState.context);
+            title: S.current.warnning, message: value.error ?? '');
       } else {
         getCaptainOffer(screenState);
         CustomFlushBarHelper.createSuccess(
-            title: S.current.warnning, message: S.current.addOfferSuccessfully)
-          ..show(screenState.context);
+            title: S.current.warnning, message: S.current.addOfferSuccessfully);
       }
     });
   }
@@ -67,14 +65,12 @@ class CaptainOfferStateManager {
       if (value.hasError) {
         getCaptainOffer(screenState);
         CustomFlushBarHelper.createError(
-            title: S.current.warnning, message: value.error ?? '')
-          ..show(screenState.context);
+            title: S.current.warnning, message: value.error ?? '');
       } else {
         getCaptainOffer(screenState);
         CustomFlushBarHelper.createSuccess(
             title: S.current.warnning,
-            message: S.current.updateOfferSuccessfully)
-          ..show(screenState.context);
+            message: S.current.updateOfferSuccessfully);
       }
     });
   }
@@ -89,8 +85,7 @@ class CaptainOfferStateManager {
       if (value.hasError) {
         getCaptainOffer(screenState);
         CustomFlushBarHelper.createError(
-            title: S.current.warnning, message: value.error ?? '')
-          ..show(screenState.context);
+            title: S.current.warnning, message: value.error ?? '');
       } else {
         getCaptainOffer(screenState, false);
         Fluttertoast.showToast(msg: S.current.updateOfferSuccessfully);

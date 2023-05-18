@@ -61,14 +61,14 @@ class DailyBalanceStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error.toString())
-            .show(screenState.context);
+            ;
         getAccountBalance(screenState, screenState.paymentsFilter);
       } else {
         getAccountBalance(screenState, screenState.paymentsFilter);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.paymentSuccessfully)
-            .show(screenState.context);
+            ;
       }
     });
   }
@@ -80,14 +80,14 @@ class DailyBalanceStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error.toString())
-            .show(screenState.context);
+            ;
         getAllAmount(screenState, screenState.paymentsFilter);
       } else {
         getAllAmount(screenState, screenState.paymentsFilter);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.updatePaymentSuccessfully)
-            .show(screenState.context);
+            ;
       }
     });
   }
@@ -99,7 +99,7 @@ class DailyBalanceStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error.toString())
-            .show(screenState.context);
+            ;
         getAllAmount(screenState, screenState.paymentsFilter);
         // getAccountBalance(screenState, screenState.paymentsFilter);
       } else {
@@ -107,7 +107,7 @@ class DailyBalanceStateManager {
         // getAccountBalance(screenState, screenState.paymentsFilter);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning, message: S.current.deleteSuccess)
-            .show(screenState.context);
+            ;
       }
     });
   }

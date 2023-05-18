@@ -57,7 +57,7 @@ class SubscriptionToCaptainOfferStateManager {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: value.error ?? S.current.errorHappened)
-            .show(screenState.context);
+            ;
       } else {
         screenState.moveNext();
       }

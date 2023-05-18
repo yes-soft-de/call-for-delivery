@@ -78,7 +78,7 @@ class RecycleOrderStateManager {
             .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
       } else {
         getIt<GlobalStateManager>().updateList();
         Navigator.of(screenState.context)
@@ -86,7 +86,7 @@ class RecycleOrderStateManager {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.orderRecycledSuccessfully)
-            .show(screenState.context);
+            ;
         FireStoreHelper().backgroundThread('Trigger');
       }
     });

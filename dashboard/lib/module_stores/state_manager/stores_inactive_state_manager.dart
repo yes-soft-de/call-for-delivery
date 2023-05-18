@@ -48,7 +48,7 @@ class StoresInActiveStateManager {
           CustomFlushBarHelper.createError(
                   title: S.current.warnning,
                   message: S.current.errorUploadingImages)
-              .show(screenState.context);
+              ;
           return;
         } else {
           request.image = image;
@@ -57,13 +57,13 @@ class StoresInActiveStateManager {
               getStores(screenState);
               CustomFlushBarHelper.createError(
                   title: S.current.warnning, message: value.error ?? '')
-                ..show(screenState.context);
+                ;
             } else {
               getStores(screenState);
               CustomFlushBarHelper.createSuccess(
                   title: S.current.warnning,
                   message: S.current.storeUpdatedSuccessfully)
-                ..show(screenState.context);
+                ;
             }
           });
         }
@@ -74,13 +74,13 @@ class StoresInActiveStateManager {
           getStores(screenState);
           CustomFlushBarHelper.createError(
               title: S.current.warnning, message: value.error ?? '')
-            ..show(screenState.context);
+            ;
         } else {
           getStores(screenState);
           CustomFlushBarHelper.createSuccess(
               title: S.current.warnning,
               message: S.current.storeUpdatedSuccessfully)
-            ..show(screenState.context);
+            ;
         }
       });
     }

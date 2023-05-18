@@ -49,7 +49,7 @@ class StoresStateManager {
 //        getStores(screenState);
 //        CustomFlushBarHelper.createError(
 //            title: S.current.warnning, message: S.current.errorUploadingImages)
-//          ..show(screenState.context);
+//          .;
 //      } else {
 //        request.image = value;
 //        _storesService.createStores(request).then((value) {
@@ -57,13 +57,13 @@ class StoresStateManager {
 //            getStores(screenState);
 //            CustomFlushBarHelper.createError(
 //                title: S.current.warnning, message: value.error ?? '')
-//              ..show(screenState.context);
+//              .;
 //          } else {
 //            getStores(screenState);
 //            CustomFlushBarHelper.createSuccess(
 //                title: S.current.warnning,
 //                message: S.current.storeCreatedSuccessfully)
-//              ..show(screenState.context);
+//              .;
 //          }
 //        });
 //      }
@@ -80,7 +80,7 @@ class StoresStateManager {
           CustomFlushBarHelper.createError(
                   title: S.current.warnning,
                   message: S.current.errorUploadingImages)
-              .show(screenState.context);
+              ;
           return;
         } else {
           request.image = image;
@@ -89,13 +89,13 @@ class StoresStateManager {
               getStores(screenState);
               CustomFlushBarHelper.createError(
                   title: S.current.warnning, message: value.error ?? '')
-                ..show(screenState.context);
+                ;
             } else {
               getStores(screenState);
               CustomFlushBarHelper.createSuccess(
                   title: S.current.warnning,
                   message: S.current.storeUpdatedSuccessfully)
-                ..show(screenState.context);
+                ;
             }
           });
         }
@@ -106,13 +106,13 @@ class StoresStateManager {
           getStores(screenState);
           CustomFlushBarHelper.createError(
               title: S.current.warnning, message: value.error ?? '')
-            ..show(screenState.context);
+            ;
         } else {
           getStores(screenState);
           CustomFlushBarHelper.createSuccess(
               title: S.current.warnning,
               message: S.current.storeUpdatedSuccessfully)
-            ..show(screenState.context);
+            ;
         }
       });
     }

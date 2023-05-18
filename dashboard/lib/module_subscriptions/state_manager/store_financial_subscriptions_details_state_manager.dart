@@ -61,7 +61,7 @@ class StoreFinancialSubscriptionsDuesDetailsStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error.toString())
-            .show(screenState.context);
+            ;
         getStorePaymentsDetails(screenState);
       } else {
         getIt<GlobalStateManager>().updateList();
@@ -69,7 +69,7 @@ class StoreFinancialSubscriptionsDuesDetailsStateManager {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.paymentSuccessfully)
-            .show(screenState.context);
+            ;
       }
     });
   }
@@ -82,7 +82,7 @@ class StoreFinancialSubscriptionsDuesDetailsStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error.toString())
-            .show(screenState.context);
+            ;
         getStorePaymentsDetails(screenState);
       } else {
         getIt<GlobalStateManager>().updateList();
@@ -91,7 +91,7 @@ class StoreFinancialSubscriptionsDuesDetailsStateManager {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.subscriptionDeletedSuccessfully)
-            .show(screenState.context);
+            ;
       }
     });
   }
@@ -104,7 +104,7 @@ class StoreFinancialSubscriptionsDuesDetailsStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error.toString())
-            .show(screenState.context);
+            ;
         getStorePaymentsDetails(screenState);
       } else {
         getIt<GlobalStateManager>().updateList();
@@ -120,14 +120,14 @@ class StoreFinancialSubscriptionsDuesDetailsStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error.toString())
-            .show(screenState.context);
+            ;
         getStorePaymentsDetails(screenState);
       } else {
         getIt<GlobalStateManager>().updateList();
         getStorePaymentsDetails(screenState);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning, message: S.current.deleteSuccess)
-            .show(screenState.context);
+            ;
       }
     });
   }
@@ -140,14 +140,14 @@ class StoreFinancialSubscriptionsDuesDetailsStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error.toString())
-            .show(screenState.context);
+            ;
         getStorePaymentsDetails(screenState);
       } else {
         getIt<GlobalStateManager>().updateList();
         getStorePaymentsDetails(screenState);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning, message: S.current.updateSuccess)
-            .show(screenState.context);
+            ;
       }
     });
   }

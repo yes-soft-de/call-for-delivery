@@ -42,8 +42,7 @@ class CreateSubscriptionToCaptainOfferScreenState
       Navigator.of(context).pop();
       CustomFlushBarHelper.createSuccess(
               title: S.current.warnning,
-              message: S.current.subscribedToOfferSuccessfully)
-          .show(context);
+              message: S.current.subscribedToOfferSuccessfully);
     });
   }
 

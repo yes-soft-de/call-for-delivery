@@ -803,20 +803,17 @@ class RecycleOrderLoaded2 extends States {
           } else if (screenState.payments == null) {
             CustomFlushBarHelper.createError(
                     title: S.current.warnning,
-                    message: S.current.pleaseProvidePaymentMethode)
-                .show(context);
+                    message: S.current.pleaseProvidePaymentMethode);
           } else if (screenState.costType == null &&
               screenState.payments == 'cash' &&
               orderInfo.packageType == 1) {
             CustomFlushBarHelper.createError(
                     title: S.current.warnning,
-                    message: S.current.pleaseProvideCostType)
-                .show(context);
+                    message: S.current.pleaseProvideCostType);
           } else {
             CustomFlushBarHelper.createError(
                     title: S.current.warnning,
-                    message: S.current.pleaseCompleteField)
-                .show(context);
+                    message: S.current.pleaseCompleteField);
           }
         });
   }
@@ -926,7 +923,7 @@ class RecycleOrderLoaded2 extends States {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: S.current.errorUploadingImages)
-            .show(screenState.context);
+            ;
       }
       screenState.addNewOrder(CreateOrderRequest(
         id: orderInfo.id,

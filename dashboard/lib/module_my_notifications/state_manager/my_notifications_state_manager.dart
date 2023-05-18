@@ -63,13 +63,13 @@ class MyNotificationsStateManager {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: value.error ?? S.current.errorHappened)
-            .show(screenState.context);
+            ;
       } else {
         getNotifications(screenState);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.notificationDeletedSuccess)
-            .show(screenState.context);
+            ;
       }
     });
   }
@@ -92,7 +92,7 @@ class MyNotificationsStateManager {
           CustomFlushBarHelper.createSuccess(
                   title: S.current.warnning,
                   message: S.current.notificationsDeletedSuccess)
-              .show(screenState.context);
+              ;
         }
       });
     }
@@ -106,12 +106,12 @@ class MyNotificationsStateManager {
   //       getNotifications(screenState);
   //       CustomFlushBarHelper.createError(
   //               title: S.current.warnning, message: value.error ?? '')
-  //           .show(screenState.context);
+  //           ;
   //     } else {
   //       getNotifications(screenState);
   //       CustomFlushBarHelper.createSuccess(
   //               title: S.current.warnning, message: S.current.captainRated)
-  //           .show(screenState.context);
+  //           ;
   //     }
   //   });
   // }

@@ -53,8 +53,7 @@ class StoreSubscriptionsFinanceDetailsScreenState
       Navigator.of(context).pop();
       CustomFlushBarHelper.createSuccess(
               title: S.current.warnning,
-              message: S.current.deleteCaptainOfferSubscriptionSuccessfully)
-          .show(context);
+              message: S.current.deleteCaptainOfferSubscriptionSuccessfully);
     });
   }
 

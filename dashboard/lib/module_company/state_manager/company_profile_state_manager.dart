@@ -46,14 +46,12 @@ class CompanyProfileStateManager {
       if (value.hasError) {
         getCompanyProfile(screenState);
         CustomFlushBarHelper.createError(
-            title: S.current.warnning, message: value.error ?? '')
-          ..show(screenState.context);
+            title: S.current.warnning, message: value.error ?? '');
       } else {
         getCompanyProfile(screenState);
         CustomFlushBarHelper.createSuccess(
             title: S.current.warnning,
-            message: S.current.companyProfileCreatedSuccessfully)
-          ..show(screenState.context);
+            message: S.current.companyProfileCreatedSuccessfully);
       }
     });
   }
@@ -66,14 +64,12 @@ class CompanyProfileStateManager {
       if (value.hasError) {
         getCompanyProfile(screenState);
         CustomFlushBarHelper.createError(
-            title: S.current.warnning, message: value.error ?? '')
-          ..show(screenState.context);
+            title: S.current.warnning, message: value.error ?? '');
       } else {
         getCompanyProfile(screenState);
         CustomFlushBarHelper.createSuccess(
             title: S.current.warnning,
-            message: S.current.companyProfileUpdatedSuccessfully)
-          ..show(screenState.context);
+            message: S.current.companyProfileUpdatedSuccessfully);
       }
     });
   }

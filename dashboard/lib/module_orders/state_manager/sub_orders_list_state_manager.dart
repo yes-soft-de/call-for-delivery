@@ -88,13 +88,13 @@ class SubOrdersStateManager {
         getOrder(screenState, screenState.orderId);
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
       } else {
         getOrder(screenState, screenState.orderId);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.orderRemovedSuccessfully)
-            .show(screenState.context);
+            ;
         FireStoreHelper().backgroundThread('Trigger');
       }
     });

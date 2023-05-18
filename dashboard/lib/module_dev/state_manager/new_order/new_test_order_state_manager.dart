@@ -51,7 +51,7 @@ class NewTestOrderStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
         _stateSubject
             .add(NewTestOrderStateBranchesLoaded(stores, [], screenState));
       } else if (value.isEmpty) {
@@ -74,14 +74,14 @@ class NewTestOrderStateManager {
         getStores(screenState);
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
       } else {
         screenState.clear();
         getStores(screenState);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.orderCreatedSuccessfully)
-            .show(screenState.context);
+            ;
         FireStoreHelper().backgroundThread('Trigger');
       }
     });

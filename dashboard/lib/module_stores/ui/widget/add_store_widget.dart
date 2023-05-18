@@ -436,13 +436,11 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
             }
           } else if (imagePath == null) {
             CustomFlushBarHelper.createError(
-                    title: S.current.warnning, message: S.current.noImage)
-                .show(context);
+                    title: S.current.warnning, message: S.current.noImage);
           } else {
             CustomFlushBarHelper.createError(
                     title: S.current.warnning,
-                    message: S.current.pleaseCompleteTheForm)
-                .show(context);
+                    message: S.current.pleaseCompleteTheForm);
           }
         });
   }

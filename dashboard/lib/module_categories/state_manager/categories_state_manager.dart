@@ -46,13 +46,11 @@ class PackageCategoriesStateManager {
       if (value.hasError) {
         getCategories(screenState);
         CustomFlushBarHelper.createError(
-            title: S.current.warnning, message: value.error ?? '')
-          ..show(screenState.context);
+            title: S.current.warnning, message: value.error ?? '');
       } else {
         getCategories(screenState);
         CustomFlushBarHelper.createSuccess(
-            title: S.current.warnning, message: S.current.saveSuccess)
-          ..show(screenState.context);
+            title: S.current.warnning, message: S.current.saveSuccess);
       }
     });
   }
@@ -64,14 +62,12 @@ class PackageCategoriesStateManager {
       if (value.hasError) {
         getCategories(screenState);
         CustomFlushBarHelper.createError(
-            title: S.current.warnning, message: value.error ?? '')
-          ..show(screenState.context);
+            title: S.current.warnning, message: value.error ?? '');
       } else {
         getCategories(screenState);
         CustomFlushBarHelper.createSuccess(
             title: S.current.warnning,
-            message: S.current.categoryUpdatedSuccessfully)
-          ..show(screenState.context);
+            message: S.current.categoryUpdatedSuccessfully);
       }
     });
   }
@@ -83,12 +79,12 @@ class PackageCategoriesStateManager {
         getCategories(screenState);
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
       } else {
         getCategories(screenState);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning, message: S.current.deleteSuccess)
-            .show(screenState.context);
+            ;
       }
     });
   }
@@ -100,7 +96,7 @@ class PackageCategoriesStateManager {
         getCategories(screenState);
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
       } else {
         getCategories(screenState);
         Fluttertoast.showToast(msg: S.current.categoryUpdatedSuccessfully);

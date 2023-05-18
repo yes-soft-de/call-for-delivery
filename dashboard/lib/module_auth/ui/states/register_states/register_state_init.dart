@@ -22,12 +22,12 @@ class RegisterStateInit extends RegisterState {
         screenState.userRegistered().whenComplete(() {
           CustomFlushBarHelper.createError(
                   title: S.current.warnning, message: error)
-              .show(screenState.context);
+              ;
         });
       } else {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: error)
-            .show(screenState.context);
+            ;
       }
     }
   }

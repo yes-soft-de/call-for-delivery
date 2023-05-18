@@ -30,14 +30,14 @@ class StoreDuesStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error.toString())
-            .show(screenState.context);
+            ;
         getStoreDues(screenState, screenState.filter);
       } else {
         getStoreDues(screenState, screenState.filter);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.paymentSuccessfully)
-            .show(screenState.context);
+            ;
       }
     });
   }

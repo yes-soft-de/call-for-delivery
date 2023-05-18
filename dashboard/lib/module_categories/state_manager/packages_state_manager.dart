@@ -67,15 +67,13 @@ class PackagesStateManager {
         screenState.id = null;
         getCategories(screenState);
         CustomFlushBarHelper.createError(
-            title: S.current.warnning, message: value.error ?? '')
-          ..show(screenState.context);
+            title: S.current.warnning, message: value.error ?? '');
       } else {
         screenState.id = null;
         getCategories(screenState);
         CustomFlushBarHelper.createSuccess(
             title: S.current.warnning,
-            message: S.current.addPackageSuccessfully)
-          ..show(screenState.context);
+            message: S.current.addPackageSuccessfully);
       }
     });
   }
@@ -91,8 +89,7 @@ class PackagesStateManager {
         screenState.id = null;
         getCategories(screenState, loading);
         CustomFlushBarHelper.createError(
-            title: S.current.warnning, message: value.error ?? '')
-          ..show(screenState.context);
+            title: S.current.warnning, message: value.error ?? '');
       } else {
         getPackagesByCategory(screenState,
             int.tryParse(screenState.id ?? '1') ?? -1, cats?.data ?? []);
@@ -108,15 +105,13 @@ class PackagesStateManager {
         screenState.id = null;
         getCategories(screenState);
         CustomFlushBarHelper.createError(
-            title: S.current.warnning, message: value.error ?? '')
-          ..show(screenState.context);
+            title: S.current.warnning, message: value.error ?? '');
       } else {
         screenState.id = null;
         getCategories(screenState);
         CustomFlushBarHelper.createSuccess(
             title: S.current.warnning,
-            message: S.current.updatePackageSuccessfully)
-          ..show(screenState.context);
+            message: S.current.updatePackageSuccessfully);
       }
     });
   }
