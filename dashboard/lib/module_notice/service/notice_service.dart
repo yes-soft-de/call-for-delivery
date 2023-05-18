@@ -52,4 +52,17 @@ class NoticeService {
     }
     return DataModel.empty();
   }
+
+  Future<DataModel> deleteImage(int imageId) async {
+    ActionResponse? actionResponse = await _manager.deleteImage(imageId);
+
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '401') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
+  }
 }

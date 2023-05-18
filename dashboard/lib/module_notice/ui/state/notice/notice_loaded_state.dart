@@ -70,6 +70,7 @@ class NoticeLoadedState extends States {
           NoteCard(
             title: element.title,
             msg: element.msg,
+            images: element.images,
             edit: () {
               showDialog(
                   context: context,
@@ -88,19 +89,21 @@ class NoticeLoadedState extends States {
           (element.appType == 'stores' || element.appType == 'all')) {
         widgets.add(
           NoteCard(
+            images: element.images,
             title: element.title,
             msg: element.msg,
             edit: () {
               showDialog(
-                  context: context,
-                  builder: (_) {
-                    return NoticeForm(
-                      request: element,
-                      onSave: (request) {
-                        screenState.updateNotice(request);
-                      },
-                    );
-                  });
+                context: context,
+                builder: (_) {
+                  return NoticeForm(
+                    request: element,
+                    onSave: (request) {
+                      screenState.updateNotice(request);
+                    },
+                  );
+                },
+              );
             },
           ),
         );
@@ -108,19 +111,21 @@ class NoticeLoadedState extends States {
           (element.appType == 'suppliers' || element.appType == 'all')) {
         widgets.add(
           NoteCard(
+            images: element.images,
             title: element.title,
             msg: element.msg,
             edit: () {
               showDialog(
-                  context: context,
-                  builder: (_) {
-                    return NoticeForm(
-                      request: element,
-                      onSave: (request) {
-                        screenState.updateNotice(request);
-                      },
-                    );
-                  });
+                context: context,
+                builder: (_) {
+                  return NoticeForm(
+                    request: element,
+                    onSave: (request) {
+                      screenState.updateNotice(request);
+                    },
+                  );
+                },
+              );
             },
           ),
         );
@@ -133,7 +138,7 @@ class NoticeLoadedState extends States {
         FilterBar(
           cursorRadius: BorderRadius.circular(25),
           animationDuration: Duration(milliseconds: 350),
-          backgroundColor: Theme.of(context).backgroundColor,
+          backgroundColor: Theme.of(context).colorScheme.background,
           currentIndex: currentIndex,
           borderRadius: BorderRadius.circular(25),
           floating: true,
@@ -148,8 +153,8 @@ class NoticeLoadedState extends States {
             screenState.currentIndex = index;
             screenState.refresh();
           },
-          selectedContent: Theme.of(context).textTheme.button!.color!,
-          unselectedContent: Theme.of(context).textTheme.headline6!.color!,
+          selectedContent: Theme.of(context).textTheme.labelLarge!.color!,
+          unselectedContent: Theme.of(context).textTheme.titleLarge!.color!,
         ),
       );
     }

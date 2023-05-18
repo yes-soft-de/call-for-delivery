@@ -9420,6 +9420,16 @@ class S {
     );
   }
 
+  /// `order delivered last seven days`
+  String get orderDeliveredLastSevenDay {
+    return Intl.message(
+      'order delivered last seven days',
+      name: 'orderDeliveredLastSevenDay',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `last`
   String get last {
     return Intl.message(
@@ -9745,6 +9755,56 @@ class S {
     return Intl.message(
       'prepayment',
       name: 'prePayments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `image`
+  String get image {
+    return Intl.message(
+      'image',
+      name: 'image',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `in process`
+  String get inProcess {
+    return Intl.message(
+      'in process',
+      name: 'inProcess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `failed to upload some image`
+  String get failedToUploadSomeImage {
+    return Intl.message(
+      'failed to upload some image',
+      name: 'failedToUploadSomeImage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `failed across when uploading this images`
+  String get failedAcrossWhenUploadingThisImages {
+    return Intl.message(
+      'failed across when uploading this images',
+      name: 'failedAcrossWhenUploadingThisImages',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `retry`
+  String get retry {
+    return Intl.message(
+      'retry',
+      name: 'retry',
       desc: '',
       args: [],
     );

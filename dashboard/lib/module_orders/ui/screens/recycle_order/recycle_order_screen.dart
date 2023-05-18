@@ -160,7 +160,7 @@ class RecycleOrderScreenState extends State<RecycleOrderScreen>
         },
         child: Scaffold(
           appBar: CustomC4dAppBar.appBar(context,
-              title: S.current.orderRecycled, canGoBack: false),
+              title: S.current.recycleOrder, canGoBack: false),
           key: _scaffoldKey,
           body: SafeArea(
             child: currentState.getUI(context),

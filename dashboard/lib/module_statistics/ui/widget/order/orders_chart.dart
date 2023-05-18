@@ -56,7 +56,7 @@ class OrdersChartState extends State<OrdersChart> {
                   ? Alignment.centerLeft
                   : Alignment.centerRight,
               child: Text(
-                S.current.orderDeliveredThisWeek,
+                S.current.orderDeliveredLastSevenDay,
                 style: Theme.of(context).textTheme.titleMedium,
               ),
             ),
