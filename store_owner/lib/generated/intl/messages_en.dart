@@ -410,6 +410,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Geographical range"),
         "getDirection": MessageLookupByLibrary.simpleMessage("Get Direction"),
         "go": MessageLookupByLibrary.simpleMessage("Go"),
+        "goToOffers": MessageLookupByLibrary.simpleMessage("go to offers"),
         "groupOrder": MessageLookupByLibrary.simpleMessage("Group Order"),
         "help": MessageLookupByLibrary.simpleMessage("Help"),
         "helpMeMore": MessageLookupByLibrary.simpleMessage("Help me more"),

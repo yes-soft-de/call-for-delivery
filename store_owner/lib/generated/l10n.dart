@@ -7050,6 +7050,16 @@ class S {
     );
   }
 
+  /// `go to offers`
+  String get goToOffers {
+    return Intl.message(
+      'go to offers',
+      name: 'goToOffers',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Ads & offers`
   String get adsAndOffers {
     return Intl.message(
