@@ -146,6 +146,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "canConnectHint": MessageLookupByLibrary.simpleMessage(
             "عن طريق إنشاء زر محادثة مع المتجر"),
         "cancel": MessageLookupByLibrary.simpleMessage("الغاء"),
+        "cancelOrder": MessageLookupByLibrary.simpleMessage("الغاء الطلب"),
         "cancelled": MessageLookupByLibrary.simpleMessage("ملغى"),
         "cancelled2": MessageLookupByLibrary.simpleMessage("ملغاة"),
         "cancelledHint": MessageLookupByLibrary.simpleMessage(
@@ -521,6 +522,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "info": MessageLookupByLibrary.simpleMessage("حول الطلب"),
         "informSendCode": MessageLookupByLibrary.simpleMessage(
             "سنقوم بأرسال كود تحقق الى رقمك"),
+        "informTheAdministration":
+            MessageLookupByLibrary.simpleMessage("ابلاغ الادارة"),
         "initData": MessageLookupByLibrary.simpleMessage("تعيين البيانات"),
         "internalServerError":
             MessageLookupByLibrary.simpleMessage("هناك مشكلة ما في الخادم"),
@@ -928,6 +931,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "renewedNoteYourSubStillActive": MessageLookupByLibrary.simpleMessage(
             "باقتك الحالية لم تنتهي بعد ، في حال اشتراكك بباقة جديدة ستخسر المتبقي بالباقة"),
         "reportSent": MessageLookupByLibrary.simpleMessage("تم ارسال الابلاغ"),
+        "requestDistanceEdit":
+            MessageLookupByLibrary.simpleMessage("طلب تعديل المسافة"),
         "requestMeeting":
             MessageLookupByLibrary.simpleMessage("اطلب موعدا للقاء"),
         "resendCode": MessageLookupByLibrary.simpleMessage("اعادة الارسال"),
@@ -1185,6 +1190,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "yes": MessageLookupByLibrary.simpleMessage("نعم"),
         "youAreOffline": MessageLookupByLibrary.simpleMessage(
             "الحالة الحالية لك (غير نشط) لاتسمح لك بقبول طلبات حاليا الرجاء تغييرها ثم المحاولة لاحقا"),
+        "youCanEditOnlyOneTimeContactWith": MessageLookupByLibrary.simpleMessage(
+            "يمكنك التعديل مرة واحدة فقط, بدلا من ذلك تواصل مع الدعم المباشر"),
+        "youCanEditOnlyOneTimeIfNotSure": MessageLookupByLibrary.simpleMessage(
+            "يمكنك التعديل مرة واحدة فقط, ان لم تكن متأكد قم بالتعديل عند انتهاء تسليم الطلب"),
         "youCanResendAfter":
             MessageLookupByLibrary.simpleMessage("يمكنك طلب رمز جديد بعد مرور"),
         "youCannotAcceptAnotherOrderFromThisStore":
@@ -1194,6 +1203,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "لايمكنك تغيير جوابك بخصوص هذا الطلب لتلقي دفعة من قبل الشركة"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك اختيار خطة حاليا الرجاء المحاولة لاحقا"),
+        "youCantRequestEdit":
+            MessageLookupByLibrary.simpleMessage("لا يمكنك طلب تعديل"),
         "youHaveFinanceAccount": MessageLookupByLibrary.simpleMessage(
             "لايمكنك الاشتراك بخطة جديدة ، لأن خطتك جارية"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(

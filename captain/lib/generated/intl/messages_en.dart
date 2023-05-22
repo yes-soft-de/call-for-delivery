@@ -148,6 +148,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "canConnectHint": MessageLookupByLibrary.simpleMessage(
             "By create chat room between you and store owner"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
+        "cancelOrder": MessageLookupByLibrary.simpleMessage("cancel order"),
         "cancelled": MessageLookupByLibrary.simpleMessage("Cancelled"),
         "cancelled2": MessageLookupByLibrary.simpleMessage("Cancelled"),
         "cancelledHint": MessageLookupByLibrary.simpleMessage(
@@ -532,6 +533,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "info": MessageLookupByLibrary.simpleMessage("Info"),
         "informSendCode": MessageLookupByLibrary.simpleMessage(
             "We will send a verification code to your number"),
+        "informTheAdministration":
+            MessageLookupByLibrary.simpleMessage("Inform the administration"),
         "initData": MessageLookupByLibrary.simpleMessage("Init Data"),
         "internalServerError":
             MessageLookupByLibrary.simpleMessage("Internal server error"),
@@ -939,6 +942,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "renewedNoteYourSubStillActive": MessageLookupByLibrary.simpleMessage(
             "Are you sure about renewing your subscription , because if you do that you will lose current subscriptions"),
         "reportSent": MessageLookupByLibrary.simpleMessage("Report sent"),
+        "requestDistanceEdit":
+            MessageLookupByLibrary.simpleMessage("request edit distance"),
         "requestMeeting":
             MessageLookupByLibrary.simpleMessage("Request Meeting"),
         "resendCode": MessageLookupByLibrary.simpleMessage("Resend Code"),
@@ -1191,6 +1196,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
         "youAreOffline": MessageLookupByLibrary.simpleMessage(
             "You are offline you can\'t accept any order right now"),
+        "youCanEditOnlyOneTimeContactWith": MessageLookupByLibrary.simpleMessage(
+            "you can edit only one time, you can contact with direct support"),
+        "youCanEditOnlyOneTimeIfNotSure": MessageLookupByLibrary.simpleMessage(
+            "you can edit only one time, if you are not sure then edit when order you complete the order"),
         "youCanResendAfter": MessageLookupByLibrary.simpleMessage(
             "You can resend verification after"),
         "youCannotAcceptAnotherOrderFromThisStore":
@@ -1200,6 +1209,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "You cannot change your answer about giving cash to provider because you receive payment for this order from our company"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "You cannot choose plan right now , please try again"),
+        "youCantRequestEdit":
+            MessageLookupByLibrary.simpleMessage("you can\'t request edit"),
         "youHaveFinanceAccount": MessageLookupByLibrary.simpleMessage(
             "You cannot choose new plan , because you have a running one"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(

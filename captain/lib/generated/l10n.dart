@@ -7700,11 +7700,41 @@ class S {
     );
   }
 
+  /// `Are you sure you want to cancel this order`
+  String get areSureYouWantToCancelThisOrder {
+    return Intl.message(
+      'Are you sure you want to cancel this order',
+      name: 'areSureYouWantToCancelThisOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `the count of remaining orders`
   String get remainingOrdersNumber {
     return Intl.message(
       'the count of remaining orders',
       name: 'remainingOrdersNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `cancel order`
+  String get cancelOrder {
+    return Intl.message(
+      'cancel order',
+      name: 'cancelOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `request edit distance`
+  String get requestDistanceEdit {
+    return Intl.message(
+      'request edit distance',
+      name: 'requestDistanceEdit',
       desc: '',
       args: [],
     );
@@ -7720,21 +7750,51 @@ class S {
     );
   }
 
-  /// `Over paid`
-  String get financeOverPaid {
+  /// `Inform the administration`
+  String get informTheAdministration {
     return Intl.message(
-      'Over paid',
-      name: 'financeOverPaid',
+      'Inform the administration',
+      name: 'informTheAdministration',
       desc: '',
       args: [],
     );
   }
 
-  /// `Are you sure you want to cancel this order`
-  String get areSureYouWantToCancelThisOrder {
+  /// `you can't request edit`
+  String get youCantRequestEdit {
     return Intl.message(
-      'Are you sure you want to cancel this order',
-      name: 'areSureYouWantToCancelThisOrder',
+      'you can\'t request edit',
+      name: 'youCantRequestEdit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `you can edit only one time, if you are not sure then edit when order you complete the order`
+  String get youCanEditOnlyOneTimeIfNotSure {
+    return Intl.message(
+      'you can edit only one time, if you are not sure then edit when order you complete the order',
+      name: 'youCanEditOnlyOneTimeIfNotSure',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `you can edit only one time, you can contact with direct support`
+  String get youCanEditOnlyOneTimeContactWith {
+    return Intl.message(
+      'you can edit only one time, you can contact with direct support',
+      name: 'youCanEditOnlyOneTimeContactWith',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Over paid`
+  String get financeOverPaid {
+    return Intl.message(
+      'Over paid',
+      name: 'financeOverPaid',
       desc: '',
       args: [],
     );
