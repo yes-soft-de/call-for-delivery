@@ -13,6 +13,8 @@ class OrderStoreBranchToClientDistanceAdditionByAdminRequest
      */
     private $storeBranchToClientDistanceAdditionExplanation;
 
+    private string $adminNote;
+
     public function getOrderId(): int
     {
         return $this->orderId;

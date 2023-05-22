@@ -81,8 +81,9 @@ class BaseController extends AbstractController
     const STORE_OWNER_BRANCH_CREATED = ["store owner branch created", "9160"];
     const STORE_OWNER_PROFILE_COMPLETED = ["store owner profile completed", "9161"];
     const STORE_BRANCH_NOT_EXIST = ["store branch is not exist", "9162"];
-    // client
-    const CLIENT_PROFILE_NOT_EXIST = ["client profile not exist!", "9210"];
+    // order distance conflict
+    const ORDER_DISTANCE_CONFLICT_NOT_EXIST_CONST = ["order distance conflict not exist!", "9210"];
+    const ORDER_DISTANCE_CONFLICT_ALREADY_EXIST_CONST = ["order distance already exist!", "9240"];
     // subscription
     const SUBSCRIPTION_WAITE_ACTIVE = ["You have a subscription waiting to be activated", "9301"];
     const SUBSCRIPTION_UNSUBSCRIBED = ["You do not have a subscription", "9302"];

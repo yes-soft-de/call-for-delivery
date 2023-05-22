@@ -13,6 +13,7 @@ use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\Dev\OrderDevCreateByAdminRequest;
 use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
+use App\Request\Admin\Order\OrderDeliveryCostUpdateByAdminRequest;
 use App\Request\Admin\Order\OrderDifferentDestinationFilterByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminRequest;
@@ -581,13 +582,14 @@ class AdminOrderManager
         return $this->orderEntityRepository->filterDifferentDestinationOrdersByAdmin($request);
     }
 
-    /**
-     * Update differentReceiverDestination field of store order details
-     */
-    public function updateStoreOrderDetailsDifferentReceiverDestinationByOrderId(int $orderId, int $differentReceiverDestination): int|StoreOrderDetailsEntity
-    {
-        return $this->adminStoreOrderDetailsManager->updateStoreOrderDetailsDifferentReceiverDestinationByOrderId($orderId, $differentReceiverDestination);
-    }
+    ///todo to be removed after OrderDistanceConflict works correctly
+//    /**
+//     * Update differentReceiverDestination field of store order details
+//     */
+//    public function updateStoreOrderDetailsDifferentReceiverDestinationByOrderId(int $orderId, int $differentReceiverDestination): int|StoreOrderDetailsEntity
+//    {
+//        return $this->adminStoreOrderDetailsManager->updateStoreOrderDetailsDifferentReceiverDestinationByOrderId($orderId, $differentReceiverDestination);
+//    }
 
     /**
      * Gets last five delivered orders with captains' images
@@ -628,6 +630,23 @@ class AdminOrderManager
         $this->entityManager->flush();
 
         $this->adminStoreOrderDetailsManager->createOrderDevDetailsByAdmin($orderEntity, $request);
+
+        return $orderEntity;
+    }
+
+    /**
+     * Updates delivery cost of an order by order id
+     */
+    public function updateOrderDeliveryCost(OrderDeliveryCostUpdateByAdminRequest $request): ?OrderEntity
+    {
+        $orderEntity = $this->orderEntityRepository->findOneBy(['id' => 1]);
+
+        if ($orderEntity) {
+            $orderEntity = $this->autoMapping->mapToObject(OrderDeliveryCostUpdateByAdminRequest::class, OrderEntity::class,
+                $request, $orderEntity);
+
+            $this->entityManager->flush();
+        }
 
         return $orderEntity;
     }
