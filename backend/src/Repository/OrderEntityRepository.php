@@ -17,6 +17,7 @@ use App\Constant\Payment\PaymentConstant;
 use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\CaptainFinancialDuesEntity;
+use App\Entity\OrderDistanceConflictEntity;
 use App\Entity\OrderEntity;
 use App\Entity\CaptainEntity;
 use App\Entity\OrderTimeLineEntity;
@@ -111,12 +112,20 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->addSelect('imageEntity.imagePath')
             ->addSelect('captainEntity.captainName', 'captainEntity.phone')
             ->addSelect('primaryOrderEntity.id as primaryOrderId')
+            ->addSelect('orderDistanceConflictEntity as orderDistanceConflict')
 
             ->leftJoin(StoreOrderDetailsEntity::class, 'storeOrderDetails', Join::WITH, 'orderEntity.id = storeOrderDetails.orderId')
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')
             ->leftJoin(OrderChatRoomEntity::class, 'orderChatRoomEntity', Join::WITH, 'orderChatRoomEntity.orderId = orderEntity.id and orderChatRoomEntity.captain = orderEntity.captainId')
             ->leftJoin(ImageEntity::class, 'imageEntity', Join::WITH, 'imageEntity.id = storeOrderDetails.images')
             ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.id = orderEntity.captainId')
+
+            ->leftJoin(
+                OrderDistanceConflictEntity::class,
+                'orderDistanceConflictEntity',
+                Join::WITH,
+                'orderDistanceConflictEntity.orderId = orderEntity.id'
+            )
 
             ->leftJoin(
                 OrderEntity::class,

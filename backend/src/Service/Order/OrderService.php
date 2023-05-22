@@ -264,7 +264,7 @@ class OrderService
     {
         $order = $this->orderManager->getSpecificOrderForStore($id);
 
-        if ($order) {
+        if ($order) {//dd($order);
             $order['attention'] = $order['noteCaptainOrderCost'];
 
             $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);
@@ -284,6 +284,11 @@ class OrderService
             }
 
             $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderIdForStore($order['id']);
+
+            // If there is a note from admin about order distance conflict then return it in the response
+            if ($order['orderDistanceConflict']) {
+                $order['adminNote'] = $order['orderDistanceConflict']->getAdminNote();
+            }
         }
 
         return $this->autoMapping->map("array", OrdersResponse::class, $order);

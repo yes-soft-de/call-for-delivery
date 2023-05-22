@@ -919,3 +919,17 @@ App\Request\Admin\Order\TestingOrderCreateByAdminRequest:
             - NotBlank: ~
         branch:
             - NotBlank: ~
+
+App\Request\OrderDistanceConflict\OrderDistanceConflictCreateByCaptainRequest:
+    properties:
+        orderId:
+            - NotBlank: ~
+        conflictNote:
+            - NotBlank: ~
+
+App\Request\Admin\OrderDistanceConflict\OrderDistanceConflictRefuseByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        adminNote:
+            - NotBlank: ~

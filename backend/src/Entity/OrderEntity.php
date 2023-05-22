@@ -132,6 +132,9 @@ class OrderEntity
     #[ORM\Column(type: 'integer', nullable: true)]
     private $orderCancelledByUserAndAtState;
 
+    #[ORM\OneToOne(mappedBy: 'orderId', targetEntity: OrderDistanceConflictEntity::class, cascade: ['persist', 'remove'])]
+    private $orderDistanceConflictEntity;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
@@ -686,6 +689,23 @@ class OrderEntity
     public function setOrderCancelledByUserAndAtState(?int $orderCancelledByUserAndAtState): self
     {
         $this->orderCancelledByUserAndAtState = $orderCancelledByUserAndAtState;
+
+        return $this;
+    }
+
+    public function getOrderDistanceConflictEntity(): ?OrderDistanceConflictEntity
+    {
+        return $this->orderDistanceConflictEntity;
+    }
+
+    public function setOrderDistanceConflictEntity(OrderDistanceConflictEntity $orderDistanceConflictEntity): self
+    {
+        // set the owning side of the relation if necessary
+        if ($orderDistanceConflictEntity->getOrderId() !== $this) {
+            $orderDistanceConflictEntity->setOrderId($this);
+        }
+
+        $this->orderDistanceConflictEntity = $orderDistanceConflictEntity;
 
         return $this;
     }
