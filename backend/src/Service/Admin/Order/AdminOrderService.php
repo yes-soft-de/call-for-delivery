@@ -1358,12 +1358,12 @@ class AdminOrderService
 
                             // 6. Send notifications
                             // local notification to store
-                            $this->createLocalNotificationForStore($orderDeliveryCostUpdateResult->getStoreOwner()->getStoreOwnerId(),
+                            $this->createLocalNotificationForStore($orderEntity->getStoreOwner()->getStoreOwnerId(),
                                 NotificationConstant::ORDER_NEW_DESTINATION_ADDED_BY_ADMIN_TITLE_CONST, NotificationConstant::ORDER_NEW_DESTINATION_ADDED_BY_ADMIN_MESSAGE_CONST,
-                                $orderDeliveryCostUpdateResult->getId());
+                                $orderEntity->getId());
                             // firebase notification to store
-                            $this->sendFirebaseNotificationToUserByAdmin($orderDeliveryCostUpdateResult->getStoreOwner()->getStoreOwnerId(),
-                                $orderDeliveryCostUpdateResult->getId(), NotificationConstant::ORDER_NEW_DESTINATION_ADDED_BY_ADMIN_MESSAGE_CONST);
+                            $this->sendFirebaseNotificationToUserByAdmin($orderEntity->getStoreOwner()->getStoreOwnerId(),
+                                $orderEntity->getId(), NotificationConstant::ORDER_NEW_DESTINATION_ADDED_BY_ADMIN_MESSAGE_CONST);
                         }
                     }
 
@@ -1569,9 +1569,8 @@ class AdminOrderService
 
                     // 5 Send notifications
                     // local notification to store
-                    $this->createLocalNotificationForStore($orderDeliveryCostUpdateResult->getStoreOwner()->getStoreOwnerId(),
-                        NotificationConstant::ORDER_NEW_DESTINATION_ADDED_BY_ADMIN_TITLE_CONST, NotificationConstant::ORDER_NEW_DESTINATION_ADDED_BY_ADMIN_MESSAGE_CONST,
-                        $orderDeliveryCostUpdateResult->getId());
+                    $this->createLocalNotificationForStore($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::ORDER_DISTANCE_ADDITION_BY_ADMIN_TITLE_CONST,
+                        NotificationConstant::ORDER_DISTANCE_ADDITION_BY_ADMIN_MESSAGE_CONST, $order->getId());
 
                     // save log of the action on order
                     $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
@@ -1579,8 +1578,8 @@ class AdminOrderService
                         [], null, null);
 
                     // firebase notification to store
-                    $this->sendFirebaseNotificationToUserByAdmin($orderDeliveryCostUpdateResult->getStoreOwner()->getStoreOwnerId(),
-                        $orderDeliveryCostUpdateResult->getId(), NotificationConstant::ORDER_NEW_DESTINATION_ADDED_BY_ADMIN_MESSAGE_CONST);
+                    $this->sendFirebaseNotificationToUserByAdmin($order->getStoreOwner()->getStoreOwnerId(), $order->getId(),
+                        NotificationConstant::ORDER_DISTANCE_ADDITION_BY_ADMIN_MESSAGE_CONST);
                 }
             }
 
