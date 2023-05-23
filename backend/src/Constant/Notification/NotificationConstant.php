@@ -52,9 +52,9 @@ final class NotificationConstant
 
     const APP_TYPE_ALL = "all";
 
-    const ORDER_DESTINATION_DIFFERENT_TITLE_CONST = "اختلاف في موقع المستلم";
+    const ORDER_DISTANCE_ADDITION_BY_ADMIN_TITLE_CONST = "إضافة مسافة من قبل الإدارة";
 
-    const ORDER_DESTINATION_ADDITION_BY_ADMIN_MESSAGE_CONST = "تم إضافة مسافة من قبل الإدارة على المسافة المحتسبة تلقائيا من أجل الطلب رقم ";
+    const ORDER_DISTANCE_ADDITION_BY_ADMIN_MESSAGE_CONST = "تم إضافة مسافة من قبل الإدارة ولمزيد من المعلومات الرجاء التوجه لشاشة تفاصيل الطلب ";
 
     const ORDER_NEW_DESTINATION_ADDED_BY_ADMIN_TITLE_CONST = "تحديث احداثيات موقع العميل من قبل الإدارة";
 
