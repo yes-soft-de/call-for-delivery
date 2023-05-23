@@ -3,7 +3,6 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_branches/model/branches/branches_model.dart';
-import 'package:c4d/module_branches/request/create_branch_request/create_branch_request.dart';
 import 'package:c4d/module_branches/request/create_list_branches/create_list_branches.dart';
 import 'package:c4d/module_branches/request/update_branch/update_branch_request.dart';
 import 'package:c4d/module_branches/state_manager/update_branches_state_manager/update_branches_state_manager.dart';

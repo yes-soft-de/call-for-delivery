@@ -3,24 +3,21 @@ import 'package:rxdart/rxdart.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_company/model/company_model.dart';
 import 'package:c4d/module_company/request/create_company_profile.dart';
 import 'package:c4d/module_company/service/company_service.dart';
 import 'package:c4d/module_company/ui/screen/company_profile_screen.dart';
 import 'package:c4d/module_company/ui/state/company_profile/company_loaded_state.dart';
-import 'package:c4d/module_stores/ui/screen/stores_screen.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 
 @injectable
 class CompanyProfileStateManager {
   final CompanyService _companyService;
-  final AuthService _authService;
   final PublishSubject<States> _stateSubject = PublishSubject();
 
   Stream<States> get stateStream => _stateSubject.stream;
 
-  CompanyProfileStateManager(this._authService, this._companyService);
+  CompanyProfileStateManager(this._companyService);
 
   void getCompanyProfile(CompanyProfileScreenState screenState) {
     _stateSubject.add(LoadingState(screenState));

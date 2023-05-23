@@ -9,11 +9,11 @@ class CaptainFinanceDailyModel extends DataModel {
   int? amount;
   int? alreadyHadAmount;
   int? financialSystemType;
-  dynamic? financialSystemPlan;
+  dynamic financialSystemPlan;
   int? isPaid;
   bool? withBonus;
   int? bonus;
-  dynamic? captainFinancialDailyUpdatedAt;
+  dynamic captainFinancialDailyUpdatedAt;
   CaptainFinanceDailyModel(
     this.id,
     this.captainName,

@@ -1,7 +1,5 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/module_categories/request/package_category_request.dart';
-import 'package:c4d/module_categories/ui/widget/category_form.dart';
 import 'package:c4d/module_supplier_categories/request/active_category_request.dart';
 import 'package:c4d/module_supplier_categories/request/supplier_category_request.dart';
 import 'package:c4d/module_supplier_categories/ui/widget/supplier_category_form.dart';
@@ -9,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
-import 'package:c4d/module_categories/state_manager/categories_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/floated_button.dart';
 import 'package:c4d/utils/effect/hidder.dart';

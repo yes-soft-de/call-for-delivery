@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_payments/model/captain_daily_finance.dart';
 import 'package:c4d/utils/components/custom_feild.dart';

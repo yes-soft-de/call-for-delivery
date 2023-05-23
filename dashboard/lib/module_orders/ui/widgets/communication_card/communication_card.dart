@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class CommunicationCard extends StatelessWidget {
   final String text;
   final Widget image;
-  final Color textColor;
-  final Color color;
+  final Color? textColor;
+  final Color? color;
 
   CommunicationCard({
     required this.text,
@@ -34,7 +34,7 @@ class CommunicationCard extends StatelessWidget {
 
   Color getBGColor(BuildContext context) {
     if (color != null) {
-      return color;
+      return color!;
     }
     return Theme.of(context).brightness == Brightness.light
         ? Colors.white
@@ -43,7 +43,7 @@ class CommunicationCard extends StatelessWidget {
 
   Color getTextColor(BuildContext context) {
     if (textColor != null) {
-      return textColor;
+      return textColor!;
     }
     return Theme.of(context).brightness != Brightness.light
         ? Colors.white

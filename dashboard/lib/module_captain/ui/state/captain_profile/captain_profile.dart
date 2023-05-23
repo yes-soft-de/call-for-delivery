@@ -217,7 +217,7 @@ class CaptainProfileLoadedState extends States {
                             InkWell(
                               onTap: () {
                                 Clipboard.setData(
-                                    ClipboardData(text: model?.phone));
+                                    ClipboardData(text: model?.phone ?? ''));
                                 Fluttertoast.showToast(msg: S.current.copied);
                               },
                               child: CustomListTile(

@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:c4d/di/di_config.dart';
 import 'package:injectable/injectable.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
@@ -18,13 +17,11 @@ class SettingsScreen extends StatefulWidget {
   final AuthService _authService;
   final LocalizationService _localizationService;
   final AppThemeDataService _themeDataService;
-  final FireNotificationService _notificationService;
 
   SettingsScreen(
     this._authService,
     this._localizationService,
     this._themeDataService,
-    this._notificationService,
   );
 
   @override

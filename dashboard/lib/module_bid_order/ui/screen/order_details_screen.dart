@@ -2,14 +2,11 @@ import 'dart:async';
 
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_bid_order/state_manager/bid_order_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-
-import '../../../../utils/global/global_state_manager.dart';
 
 @injectable
 class BidOrderDetailsScreen extends StatefulWidget {

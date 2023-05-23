@@ -5,7 +5,6 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/state_manager/order_distance_conflict_state_manager.dart';
-import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';

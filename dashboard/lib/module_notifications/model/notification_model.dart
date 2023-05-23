@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:developer';
 
 class NotificationModel {
   dynamic argument;

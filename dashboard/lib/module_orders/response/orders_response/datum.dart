@@ -26,7 +26,7 @@ class DatumOrder {
   int? isCashPaymentConfirmedByStore;
   int? paidToProvider;
   String? captainName;
-  dynamic? captainProfileId;
+  dynamic captainProfileId;
   num? kilometer;
   num? storeBranchToClientDistance;
   String? storeBranchToClientDistanceAdditionExplanation;

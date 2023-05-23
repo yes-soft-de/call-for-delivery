@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'dart:developer';
 import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/request/order_non_sub_request.dart';
@@ -23,13 +21,12 @@ import 'package:rxdart/rxdart.dart';
 @injectable
 class SubOrdersStateManager {
   final OrdersService _ordersService;
-  final AuthService _authService;
 
   final PublishSubject<States> _stateSubject = new PublishSubject();
 
   Stream<States> get stateStream => _stateSubject.stream;
 
-  SubOrdersStateManager(this._ordersService, this._authService);
+  SubOrdersStateManager(this._ordersService);
   void getOrder(SubOrdersScreenState screenState, int id,
       [bool loading = true]) {
     if (loading) {

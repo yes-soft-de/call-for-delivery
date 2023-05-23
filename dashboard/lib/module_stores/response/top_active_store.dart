@@ -32,7 +32,7 @@ class DataActiveStore {
   String? storeOwnerName;
   Image? image;
   String? storeBranchName;
-  dynamic? ordersCount;
+  dynamic ordersCount;
   String? todayOrdersCount;
   String? lastTwentyFourOrdersCount;
 

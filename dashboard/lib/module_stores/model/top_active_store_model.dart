@@ -9,7 +9,7 @@ class TopActiveStoreModel extends DataModel {
   String? image;
   String? imageUrl;
   String? storeBranchName = '';
-  dynamic? ordersCount;
+  dynamic ordersCount;
   String? todayOrdersCount;
   String? lastTwentyFourOrdersCount;
   List<TopActiveStoreModel> _models = [];

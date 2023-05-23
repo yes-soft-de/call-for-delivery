@@ -38,10 +38,10 @@ class Data {
   int? age;
   String? car;
   ImageUrl? drivingLicence;
-  dynamic? salary;
+  dynamic salary;
   String? status;
   String? rating;
-  dynamic? bounce;
+  dynamic bounce;
   String? roomID;
   ImageUrl? image;
   String? phone;
@@ -49,7 +49,7 @@ class Data {
   String? bankName;
   String? bankAccountNumber;
   String? stcPay;
-  dynamic? vacationStatus;
+  dynamic vacationStatus;
   ImageUrl? mechanicLicense;
   ImageUrl? identity;
   CreateDate? createDate;
@@ -156,7 +156,7 @@ class Data {
 }
 
 class Rating {
-  dynamic? rate;
+  dynamic rate;
 
   Rating({this.rate});
 

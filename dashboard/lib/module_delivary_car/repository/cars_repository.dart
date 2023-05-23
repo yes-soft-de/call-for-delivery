@@ -1,7 +1,5 @@
 import 'package:c4d/module_delivary_car/request/car_request.dart';
 import 'package:c4d/module_delivary_car/response/cars_response.dart';
-import 'package:c4d/module_notice/request/notice_request.dart';
-import 'package:c4d/module_notice/response/notice_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';

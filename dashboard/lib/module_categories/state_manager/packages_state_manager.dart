@@ -9,7 +9,6 @@ import 'package:rxdart/rxdart.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_categories/service/store_categories_service.dart';
 import 'package:c4d/module_categories/ui/screen/packages_screen.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
@@ -17,12 +16,11 @@ import 'package:c4d/utils/helpers/custom_flushbar.dart';
 @injectable
 class PackagesStateManager {
   final CategoriesService _categoriesService;
-  final AuthService _authService;
   final PublishSubject<States> _stateSubject = PublishSubject();
 
   Stream<States> get stateStream => _stateSubject.stream;
 
-  PackagesStateManager(this._categoriesService, this._authService);
+  PackagesStateManager(this._categoriesService);
   PackagesCategoryModel? cats;
   void getCategories(PackagesScreenState screenState, [bool loading = true]) {
     if (loading) {

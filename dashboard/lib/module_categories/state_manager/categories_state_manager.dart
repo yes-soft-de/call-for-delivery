@@ -10,18 +10,16 @@ import 'package:rxdart/rxdart.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_categories/service/store_categories_service.dart';
 import 'package:c4d/module_categories/ui/screen/categories_screen.dart';
-import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 
 @injectable
 class PackageCategoriesStateManager {
   final CategoriesService _categoriesService;
-  final ImageUploadService _uploadService;
 
   final PublishSubject<States> _stateSubject = PublishSubject();
   Stream<States> get stateStream => _stateSubject.stream;
 
-  PackageCategoriesStateManager(this._categoriesService, this._uploadService);
+  PackageCategoriesStateManager(this._categoriesService);
 
   void getCategories(CategoriesScreenState screenState) {
     _stateSubject.add(LoadingState(screenState));

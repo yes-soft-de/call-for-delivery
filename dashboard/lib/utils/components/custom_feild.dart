@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:c4d/di/di_config.dart';
@@ -159,11 +161,9 @@ class _CustomFormFieldState extends State<CustomFormField> {
   }
 
   bool startWithZero(String phone) {
-    String countryCode = '';
     String phoneNumber = '';
     final sNumber =
         TheCountryNumber().parseNumber(internationalNumber: '+' + phone);
-    countryCode = sNumber.dialCode.substring(1);
     phoneNumber = sNumber.number;
     return phoneNumber[0] == '0';
   }

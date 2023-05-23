@@ -1,5 +1,4 @@
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/utils/effect/checked.dart';
 import 'package:flutter/material.dart';
 
 class InfoButton extends StatefulWidget {

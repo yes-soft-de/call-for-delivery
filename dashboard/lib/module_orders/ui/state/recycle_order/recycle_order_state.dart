@@ -78,8 +78,6 @@ class RecycleOrderLoaded2 extends States {
 
     screenState.refresh();
   }
-  final List<String> _paymentMethods = ['online', 'cash'];
-  String _selectedPaymentMethod = 'online';
   DateTime? orderDate;
   DateTime dateTime = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
@@ -96,9 +94,7 @@ class RecycleOrderLoaded2 extends States {
   PdfModel? pdfModel;
   @override
   Widget getUI(BuildContext context) {
-    var decoration = BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
-        color: Theme.of(context).colorScheme.background);
+
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
     return StackedForm(
         visible: MediaQuery.of(context).viewInsets.bottom == 0,
@@ -478,8 +474,6 @@ class RecycleOrderLoaded2 extends States {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(18),
                           onTap: () {
-                            var isDark =
-                                getIt<ThemePreferencesHelper>().isDarkMode();
                             FilePicker.platform.pickFiles(
                                 allowedExtensions: ['pdf'],
                                 type: FileType.custom).then((result) async {
@@ -1018,7 +1012,7 @@ class RecycleOrderLoaded2 extends States {
 
   void pickImageFromCamera() {
     Navigator.of(screenState.context).pop();
-    ImagePicker.platform
+    ImagePicker()
         .pickImage(source: ImageSource.camera, imageQuality: 80)
         .then((value) async {
       memoryBytes = await value?.readAsBytes();
@@ -1029,7 +1023,7 @@ class RecycleOrderLoaded2 extends States {
 
   void pickImageFromGallery() {
     Navigator.of(screenState.context).pop();
-    ImagePicker.platform
+    ImagePicker()
         .pickImage(source: ImageSource.gallery)
         .then((value) async {
       memoryBytes = await value?.readAsBytes();

@@ -5,9 +5,7 @@ import 'package:c4d/module_categories/request/package_request.dart';
 import 'package:c4d/module_categories/response/package_response.dart';
 import '../../abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
-import 'package:intl/intl.dart';
 import 'package:c4d/abstracts/data_model/data_model.dart';
-import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_categories/manager/categories_manager.dart';
 

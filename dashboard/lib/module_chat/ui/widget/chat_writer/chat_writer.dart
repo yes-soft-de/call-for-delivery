@@ -1,14 +1,10 @@
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/components/chat_field.dart';
-import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/effect/scaling.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 
@@ -29,14 +25,12 @@ class ChatWriterWidget extends StatefulWidget {
 
 class _ChatWriterWidget extends State<ChatWriterWidget> {
   final TextEditingController _msgController = TextEditingController();
-  final ImagePicker _imagePicker = ImagePicker();
-
+ 
   File? imageFile;
   String? media;
   bool notUploaded = true;
   @override
   Widget build(BuildContext context) {
-    Color color = Theme.of(context).backgroundColor;
     if (imageFile != null && notUploaded) {
       return ScalingWidget(
         child: Container(

@@ -39,8 +39,6 @@ class NewOrderStateBranchesLoaded extends States {
       screenState.refresh();
     }
   }
-  final List<String> _paymentMethods = ['online', 'cash'];
-  String _selectedPaymentMethod = 'online';
   DateTime? orderDate;
   DateTime dateTime = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
@@ -486,8 +484,6 @@ class NewOrderStateBranchesLoaded extends States {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(18),
                           onTap: () {
-                            var isDark =
-                                getIt<ThemePreferencesHelper>().isDarkMode();
                             FilePicker.platform.pickFiles(
                                 allowedExtensions: ['pdf'],
                                 type: FileType.custom).then((result) async {
@@ -925,7 +921,7 @@ class NewOrderStateBranchesLoaded extends States {
 
   void pickImageFromCamera() {
     Navigator.of(screenState.context).pop();
-    ImagePicker.platform
+    ImagePicker()
         .pickImage(source: ImageSource.camera, imageQuality: 80)
         .then((value) async {
       memoryBytes = await value?.readAsBytes();
@@ -936,7 +932,7 @@ class NewOrderStateBranchesLoaded extends States {
 
   void pickImageFromGallery() {
     Navigator.of(screenState.context).pop();
-    ImagePicker.platform
+    ImagePicker()
         .pickImage(source: ImageSource.gallery)
         .then((value) async {
       memoryBytes = await value?.readAsBytes();

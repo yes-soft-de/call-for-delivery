@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_company/model/company_finance_model.dart';
 import 'package:c4d/module_company/model/company_model.dart';
-import 'package:c4d/module_company/model/company_price.dart';
 import 'package:c4d/module_company/request/create_company_profile.dart';
-import 'package:c4d/module_company/request/delivery_company_financial.dart';
-import 'package:c4d/module_company/request/financial_compensation_request.dart';
 import 'package:c4d/module_company/ui/screen/company_finance_screen.dart';
-import 'package:c4d/module_company/ui/screen/company_profile_screen.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/error_screen.dart';

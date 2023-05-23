@@ -5,7 +5,6 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
@@ -23,13 +22,12 @@ import '../../../module_orders/model/order_details_model.dart';
 @injectable
 class OrderStatusStateManager {
   final StoresService _storeService;
-  final AuthService _authService;
 
   final PublishSubject<States> _stateSubject = new PublishSubject();
 
   Stream<States> get stateStream => _stateSubject.stream;
 
-  OrderStatusStateManager(this._storeService, this._authService);
+  OrderStatusStateManager(this._storeService);
   void getOrder(OrderDetailsScreenState screenState, int id,
       [bool loading = true]) {
     if (loading) {

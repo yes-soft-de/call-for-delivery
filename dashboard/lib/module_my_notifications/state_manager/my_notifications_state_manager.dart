@@ -3,9 +3,7 @@ import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_my_notifications/model/notification_model.dart';
-import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
-
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
@@ -20,10 +18,9 @@ import 'package:c4d/module_my_notifications/ui/state/my_notifications/my_notific
 class MyNotificationsStateManager {
   final MyNotificationsService _myNotificationsService;
   final AuthService _authService;
-  final OrdersService _ordersService;
 
   MyNotificationsStateManager(
-      this._myNotificationsService, this._ordersService, this._authService);
+      this._myNotificationsService, this._authService);
   final PublishSubject<States> _stateSubject = PublishSubject<States>();
 
   Stream<States> get stateStream => _stateSubject.stream;

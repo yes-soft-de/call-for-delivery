@@ -184,9 +184,6 @@ class InitSubscriptionsLoadedState extends States {
   }
 
   List<Widget> _getPackages(String? city) {
-    if (packages == null) {
-      return [];
-    }
     if (packages.isEmpty) {
       return [];
     }

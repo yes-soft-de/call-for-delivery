@@ -1,6 +1,5 @@
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
-import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';

@@ -1,10 +1,7 @@
-import 'package:c4d/consts/offer_status.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_bid_order/model/order_details/offer_model.dart';
 import 'package:c4d/utils/helpers/offer_status_helper.dart';
-import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class OfferCard extends StatelessWidget {
   final OfferModel model;

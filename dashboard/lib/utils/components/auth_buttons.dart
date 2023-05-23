@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/effect/hidder.dart';
 
 class AuthButtons extends StatelessWidget {

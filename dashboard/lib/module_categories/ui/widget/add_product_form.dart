@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:io';
 
 import 'package:c4d/module_categories/ui/state/packages/packages_loaded_state.dart';
