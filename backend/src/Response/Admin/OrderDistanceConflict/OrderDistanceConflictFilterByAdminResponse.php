@@ -85,4 +85,6 @@ class OrderDistanceConflictFilterByAdminResponse
     public string $storeOwnerName;
 
     public int $storeOwnerProfileId;
+
+    public ?string $storeBranchName;
 }
