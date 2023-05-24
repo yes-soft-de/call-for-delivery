@@ -141,8 +141,8 @@ class OrdersService {
     ActionResponse? response =
         await _ordersManager.updateExtraDistanceToOrder(request);
     if (response == null) return DataModel.withError(S.current.networkError);
-    if (response.statusCode != '204') {
-      if (response.statusCode == '405') {
+    if (response.statusCode != '201') {
+      if (response.statusCode == '9240') {
         return DataModel.withError('you can edit only once');
       }
 

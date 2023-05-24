@@ -5,6 +5,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:c4d/module_chat/presistance/chat_hive_helper.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/model/roomId/room_id_model.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
@@ -146,13 +147,11 @@ class OrderStatusStateManager {
     _ordersService.updateExtraDistanceToOrder(request).then((value) {
       if (value.hasError) {
         if (value.error == 'you can edit only once') {
-          _showCantEditDistanceDialog(
-              screenState.context);
-        }
-        else {
+          _showCantEditDistanceDialog(screenState.context);
+        } else {
           CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+                  title: S.current.warnning, message: value.error ?? '')
+              .show(screenState.context);
         }
         screenState.getOrderDetails(request.id);
       } else {
@@ -226,11 +225,14 @@ class OrderStatusStateManager {
                         style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.amber),
                         onPressed: () {
-                          // TODO: navigate to dirct support
-                          // Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
-                          //     arguments: ChatArgument(
-                          //         roomID: ,
-                          //         userType: 'Admin'));
+                          var roomID = ChatHiveHelper().getDirectSupport();
+                          if (roomID != null) {
+                            Navigator.of(context).pushNamed(
+                              ChatRoutes.chatRoute,
+                              arguments: ChatArgument(
+                                  roomID: roomID, userType: 'Admin'),
+                            );
+                          }
                         },
                         child: Text(
                           S.current.directSupport,

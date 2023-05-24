@@ -7,6 +7,7 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:c4d/module_chat/presistance/chat_hive_helper.dart';
 import 'package:c4d/module_chat/repository/chat/chat_repository.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:c4d/module_notifications/preferences/notification_preferences/notification_preferences.dart';
@@ -173,6 +174,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
       }
       if (_currentProfile != null && _currentProfile!.roomID != null) {
         subscribeToDirectSupportMessages(_currentProfile!.roomID!);
+        ChatHiveHelper().setDirectSupportRom(_currentProfile!.roomID!);
       }
     });
     _financeSubscription = widget._stateManager.profitStream.listen((event) {

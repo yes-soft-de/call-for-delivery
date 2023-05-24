@@ -1254,13 +1254,20 @@ class _CancelOrConfirmButtons extends StatelessWidget {
                       screenState,
                       AddExtraDistanceRequest(
                           id: int.tryParse(screenState.orderId ?? ''),
-                          storeBranchToClientDistanceAdditionExplanation:
-                              reason.text.trim(),
+                          conflictNote: reason.text.trim(),
                           destination: Destination(
                               lat: double.tryParse(
                                   coord.text.trim().split(',')[0].trim()),
                               lon: double.tryParse(
                                   coord.text.trim().split(',')[1].trim()))));
+                } else if (coord.text.isNotEmpty) {
+                  Navigator.of(context).pop();
+                  screenState.manager.updateDistance(
+                      screenState,
+                      AddExtraDistanceRequest(
+                          id: int.tryParse(screenState.orderId ?? ''),
+                          conflictNote: reason.text.trim(),
+                          additionalDistance: coord.text,));
                 } else {
                   Fluttertoast.showToast(msg: S.current.pleaseEnterValidCoord);
                 }
