@@ -41,6 +41,7 @@ class OrderDistanceConflictScreenState
     super.initState();
     currentState = LoadingState(this);
     ordersFilter = FilterOrderRequest(
+        isResolved: currentIndex == 0 ? false : true,
         fromDate: DateTime(today.year, today.month, today.day, 0),
         toDate: DateTime.now());
     widget._stateManager.getOrdersFilters(this, ordersFilter);
@@ -107,9 +108,8 @@ class OrderDistanceConflictScreenState
                     splashFactory: NoSplash.splashFactory,
                     onTap: () {
                       currentIndex = 0;
-                      // filter = StoresDuesRequest(isPaid: '2');
-                      refresh();
-                      // widget._manager.getStoresDues(this, filter);
+                      ordersFilter.isResolved = false;
+                      getOrders();
                     },
                     child: AnimatedContainer(
                       height: 40,
@@ -148,9 +148,8 @@ class OrderDistanceConflictScreenState
                     splashFactory: NoSplash.splashFactory,
                     onTap: () {
                       currentIndex = 1;
-                      // filter = StoresDuesRequest(isPaid: null);
-                      refresh();
-                      // widget._manager.getStoresDues(this, filter);
+                      ordersFilter.isResolved = true;
+                      getOrders();
                     },
                     child: AnimatedContainer(
                       height: 40,
