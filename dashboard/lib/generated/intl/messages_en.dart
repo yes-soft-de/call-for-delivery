@@ -91,6 +91,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addCategory": MessageLookupByLibrary.simpleMessage("Add category"),
         "addExtraDestination":
             MessageLookupByLibrary.simpleMessage("Extra destination"),
+        "addKiloMeter": MessageLookupByLibrary.simpleMessage("add kilo meters"),
         "addNote": MessageLookupByLibrary.simpleMessage("Add Note"),
         "addOffer": MessageLookupByLibrary.simpleMessage("Add offer"),
         "addOfferSuccessfully":
@@ -105,6 +106,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addition": MessageLookupByLibrary.simpleMessage("Addition"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
         "admin": MessageLookupByLibrary.simpleMessage("Admin"),
+        "adminDecision": MessageLookupByLibrary.simpleMessage("admin decision"),
         "advanced": MessageLookupByLibrary.simpleMessage("Advanced"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
@@ -281,6 +283,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "cartItemRemoved":
             MessageLookupByLibrary.simpleMessage("Item removed from cart"),
         "cartValidation": MessageLookupByLibrary.simpleMessage("Checking Cart"),
+        "caseDetailsAndMakeAction": MessageLookupByLibrary.simpleMessage(
+            "case details and make action"),
         "cash": MessageLookupByLibrary.simpleMessage("Cash"),
         "cashOrders": MessageLookupByLibrary.simpleMessage("Cash order"),
         "cashPaymentConfirmed": MessageLookupByLibrary.simpleMessage(
@@ -371,6 +375,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "confirmUpdateOrder":
             MessageLookupByLibrary.simpleMessage("Confirm update order"),
         "confirmed": MessageLookupByLibrary.simpleMessage("Confirmed"),
+        "conflictDistances":
+            MessageLookupByLibrary.simpleMessage("conflict distances"),
         "contOrderCompleted":
             MessageLookupByLibrary.simpleMessage("Count orders completed"),
         "contactInfo": MessageLookupByLibrary.simpleMessage("Contact info"),
@@ -517,9 +523,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "editAds": MessageLookupByLibrary.simpleMessage("Edit Ads"),
         "editBranchName":
             MessageLookupByLibrary.simpleMessage("Edit Branch Name"),
+        "editCoordinates":
+            MessageLookupByLibrary.simpleMessage("edit coordinates"),
+        "editDistanceRequestDetails": MessageLookupByLibrary.simpleMessage(
+            "edit distance request details"),
         "editOrder": MessageLookupByLibrary.simpleMessage("Edit order"),
         "editProfile":
             MessageLookupByLibrary.simpleMessage("Edit store profile"),
+        "editReason": MessageLookupByLibrary.simpleMessage(
+            "edit reasons (captain notes)"),
         "editSubscriptions":
             MessageLookupByLibrary.simpleMessage("Edit subscription"),
         "eg": MessageLookupByLibrary.simpleMessage("e.g :"),
@@ -687,6 +699,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "iSpeak": MessageLookupByLibrary.simpleMessage("Preferred language"),
         "id": MessageLookupByLibrary.simpleMessage("id"),
         "identity": MessageLookupByLibrary.simpleMessage("Identity"),
+        "ignoreOrder": MessageLookupByLibrary.simpleMessage("ignore order"),
         "illegalCommand":
             MessageLookupByLibrary.simpleMessage("Illegal Command"),
         "image": MessageLookupByLibrary.simpleMessage("image"),
@@ -725,6 +738,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "issuesWithOrderStatusUpdate": MessageLookupByLibrary.simpleMessage(
             "Issues with order status update "),
         "item": MessageLookupByLibrary.simpleMessage("Item"),
+        "kiloMeterNumber":
+            MessageLookupByLibrary.simpleMessage("kilo meter number"),
         "kilometerLimt":
             MessageLookupByLibrary.simpleMessage("Kilometers limit"),
         "kilometerLimtMax":
@@ -799,9 +814,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "nearbyStore": MessageLookupByLibrary.simpleMessage("Nearby Store"),
         "networkError": MessageLookupByLibrary.simpleMessage(
             "There is problem with your connection , please try again"),
+        "newCoordinates":
+            MessageLookupByLibrary.simpleMessage("new coordinates"),
         "newName": MessageLookupByLibrary.simpleMessage("New name"),
         "newOrder": MessageLookupByLibrary.simpleMessage("New Order"),
         "newOrderLink": MessageLookupByLibrary.simpleMessage("New sub order"),
+        "newOrders": MessageLookupByLibrary.simpleMessage("new orders"),
         "newPassword": MessageLookupByLibrary.simpleMessage("New password"),
         "newSubOrderCreated":
             MessageLookupByLibrary.simpleMessage("New suborder created"),
@@ -1050,6 +1068,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pickAJob": MessageLookupByLibrary.simpleMessage("Pick a Job"),
         "pickALanguage":
             MessageLookupByLibrary.simpleMessage("Pick a Language"),
+        "pickChoice":
+            MessageLookupByLibrary.simpleMessage("please pick an action"),
         "plan": MessageLookupByLibrary.simpleMessage("Plan"),
         "planByHours": MessageLookupByLibrary.simpleMessage("Plan by hours"),
         "planByOrderCount":
@@ -1100,6 +1120,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "preferredLanguage":
             MessageLookupByLibrary.simpleMessage("Preferred Language"),
         "pressHere": MessageLookupByLibrary.simpleMessage("Press here"),
+        "previousOrder": MessageLookupByLibrary.simpleMessage("previous order"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
         "primaryOrder": MessageLookupByLibrary.simpleMessage("Primary order"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
@@ -1178,6 +1199,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "reports": MessageLookupByLibrary.simpleMessage("Reports"),
         "requestMeeting":
             MessageLookupByLibrary.simpleMessage("Request Meeting"),
+        "requestedEdit": MessageLookupByLibrary.simpleMessage("requested edit"),
         "requiredToPay":
             MessageLookupByLibrary.simpleMessage("Required to pay"),
         "resendCode": MessageLookupByLibrary.simpleMessage("Resend Code"),

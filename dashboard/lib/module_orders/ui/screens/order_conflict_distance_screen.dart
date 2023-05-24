@@ -5,7 +5,6 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/state_manager/order_distance_conflict_state_manager.dart';
-import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -75,23 +74,120 @@ class OrderDistanceConflictScreenState
       },
       child: Scaffold(
         appBar: CustomC4dAppBar.appBar(context,
-            title: S.current.orderLog, icon: Icons.menu, onTap: () {
+            title: S.current.conflictDistances, icon: Icons.menu, onTap: () {
           GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
         }, actions: [
-          CustomC4dAppBar.actionIcon(context, onTap: () {
-            ordersFilter.fromDate =
-                DateTime(today.year, today.month, today.day, 0);
-            ordersFilter.toDate = DateTime.now();
-            currentIndex = 0;
-            ordersFilter.state = 'pending';
-            getOrders();
-          }, icon: Icons.restart_alt_rounded)
+          CustomC4dAppBar.actionIcon(
+            context,
+            icon: Icons.search,
+            onTap: () {},
+          ),
+          CustomC4dAppBar.actionIcon(
+            context,
+            onTap: () {
+              ordersFilter.fromDate =
+                  DateTime(today.year, today.month, today.day, 0);
+              ordersFilter.toDate = DateTime.now();
+              currentIndex = 0;
+              ordersFilter.state = 'pending';
+              getOrders();
+            },
+            icon: Icons.restart_alt_rounded,
+          ),
         ]),
         body: Column(
           children: [
-            SizedBox(
-              height: 8,
+            SizedBox(height: 8),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child:
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                Expanded(
+                  child: InkWell(
+                    splashFactory: NoSplash.splashFactory,
+                    onTap: () {
+                      currentIndex = 0;
+                      // filter = StoresDuesRequest(isPaid: '2');
+                      refresh();
+                      // widget._manager.getStoresDues(this, filter);
+                    },
+                    child: AnimatedContainer(
+                      height: 40,
+                      padding: EdgeInsets.all(8),
+                      alignment: AlignmentDirectional.center,
+                      decoration: BoxDecoration(
+                        border: Border.all(
+                            color:
+                                currentIndex != 0 ? Colors.grey : Colors.white,
+                            width: 1),
+                        borderRadius: BorderRadiusDirectional.only(
+                            topStart: Radius.circular(25),
+                            bottomStart: Radius.circular(25)),
+                        color: currentIndex == 0
+                            ? Theme.of(context).colorScheme.primary
+                            : Theme.of(context).colorScheme.background,
+                      ),
+                      duration: Duration(milliseconds: 500),
+                      curve: Curves.fastOutSlowIn,
+                      child: Text(
+                        S.current.newOrders,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color:
+                              currentIndex != 0 ? Colors.black : Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                        textScaleFactor: 1,
+                      ),
+                    ),
+                  ),
+                ),
+                Expanded(
+                  child: InkWell(
+                    splashFactory: NoSplash.splashFactory,
+                    onTap: () {
+                      currentIndex = 1;
+                      // filter = StoresDuesRequest(isPaid: null);
+                      refresh();
+                      // widget._manager.getStoresDues(this, filter);
+                    },
+                    child: AnimatedContainer(
+                      height: 40,
+                      padding: EdgeInsets.all(8),
+                      alignment: AlignmentDirectional.center,
+                      decoration: BoxDecoration(
+                          border: Border.all(
+                              color: currentIndex != 1
+                                  ? Colors.grey
+                                  : Colors.white,
+                              width: 1),
+                          borderRadius: BorderRadiusDirectional.only(
+                              topEnd: Radius.circular(25),
+                              bottomEnd: Radius.circular(25)),
+                          color: currentIndex == 1
+                              ? Theme.of(context).colorScheme.primary
+                              : Theme.of(context).colorScheme.background),
+                      duration: Duration(milliseconds: 500),
+                      curve: Curves.fastOutSlowIn,
+                      child: Text(
+                        S.current.previousOrder,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold,
+                          color:
+                              currentIndex != 1 ? Colors.black : Colors.white,
+                        ),
+                        textAlign: TextAlign.center,
+                        textScaleFactor: 1,
+                      ),
+                      // Text(S.current.hidden),
+                    ),
+                  ),
+                ),
+              ]),
             ),
+            SizedBox(height: 8),
             // filter date
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -102,7 +198,7 @@ class OrderDistanceConflictScreenState
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
-                        color: Theme.of(context).backgroundColor,
+                        color: Theme.of(context).colorScheme.background,
                       ),
                       child: Material(
                         color: Colors.transparent,
@@ -149,14 +245,14 @@ class OrderDistanceConflictScreenState
                     child: Container(
                       width: 32,
                       height: 2.5,
-                      color: Theme.of(context).backgroundColor,
+                      color: Theme.of(context).colorScheme.background,
                     ),
                   ),
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
-                        color: Theme.of(context).backgroundColor,
+                        color: Theme.of(context).colorScheme.background,
                       ),
                       child: Material(
                         color: Colors.transparent,

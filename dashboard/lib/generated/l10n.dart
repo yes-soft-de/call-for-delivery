@@ -9820,6 +9820,146 @@ class S {
     );
   }
 
+  /// `conflict distances`
+  String get conflictDistances {
+    return Intl.message(
+      'conflict distances',
+      name: 'conflictDistances',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `new orders`
+  String get newOrders {
+    return Intl.message(
+      'new orders',
+      name: 'newOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `previous order`
+  String get previousOrder {
+    return Intl.message(
+      'previous order',
+      name: 'previousOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `case details and make action`
+  String get caseDetailsAndMakeAction {
+    return Intl.message(
+      'case details and make action',
+      name: 'caseDetailsAndMakeAction',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `edit distance request details`
+  String get editDistanceRequestDetails {
+    return Intl.message(
+      'edit distance request details',
+      name: 'editDistanceRequestDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `requested edit`
+  String get requestedEdit {
+    return Intl.message(
+      'requested edit',
+      name: 'requestedEdit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `edit reasons (captain notes)`
+  String get editReason {
+    return Intl.message(
+      'edit reasons (captain notes)',
+      name: 'editReason',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `admin decision`
+  String get adminDecision {
+    return Intl.message(
+      'admin decision',
+      name: 'adminDecision',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `please pick an action`
+  String get pickChoice {
+    return Intl.message(
+      'please pick an action',
+      name: 'pickChoice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `add kilo meters`
+  String get addKiloMeter {
+    return Intl.message(
+      'add kilo meters',
+      name: 'addKiloMeter',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `edit coordinates`
+  String get editCoordinates {
+    return Intl.message(
+      'edit coordinates',
+      name: 'editCoordinates',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `new coordinates`
+  String get newCoordinates {
+    return Intl.message(
+      'new coordinates',
+      name: 'newCoordinates',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `kilo meter number`
+  String get kiloMeterNumber {
+    return Intl.message(
+      'kilo meter number',
+      name: 'kiloMeterNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ignore order`
+  String get ignoreOrder {
+    return Intl.message(
+      'ignore order',
+      name: 'ignoreOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(
