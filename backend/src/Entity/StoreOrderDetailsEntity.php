@@ -30,7 +30,7 @@ class StoreOrderDetailsEntity
     #[ORM\JoinColumn(nullable: false)]
     private $branch;
 
-    #[ORM\OneToOne(targetEntity: orderEntity::class, cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'storeOrderDetailsEntity', targetEntity: OrderEntity::class, cascade: ['persist', 'remove'])]
     #[ORM\JoinColumn(nullable: false)]
     private $orderId;
 

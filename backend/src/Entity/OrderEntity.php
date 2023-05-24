@@ -135,6 +135,9 @@ class OrderEntity
     #[ORM\OneToOne(mappedBy: 'orderId', targetEntity: OrderDistanceConflictEntity::class, cascade: ['persist', 'remove'])]
     private $orderDistanceConflictEntity;
 
+    #[ORM\OneToOne(mappedBy: 'orderId', targetEntity: StoreOrderDetailsEntity::class, cascade: ['persist', 'remove'])]
+    private $storeOrderDetailsEntity;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
@@ -706,6 +709,23 @@ class OrderEntity
         }
 
         $this->orderDistanceConflictEntity = $orderDistanceConflictEntity;
+
+        return $this;
+    }
+
+    public function getStoreOrderDetailsEntity(): ?StoreOrderDetailsEntity
+    {
+        return $this->storeOrderDetailsEntity;
+    }
+
+    public function setStoreOrderDetailsEntity(StoreOrderDetailsEntity $storeOrderDetailsEntity): self
+    {
+        // set the owning side of the relation if necessary
+        if ($storeOrderDetailsEntity->getOrderId() !== $this) {
+            $storeOrderDetailsEntity->setOrderId($this);
+        }
+
+        $this->storeOrderDetailsEntity = $storeOrderDetailsEntity;
 
         return $this;
     }
