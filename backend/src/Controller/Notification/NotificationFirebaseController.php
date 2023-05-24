@@ -3,6 +3,7 @@
 namespace App\Controller\Notification;
 
 use App\AutoMapping;
+use App\Constant\Main\MainErrorConstant;
 use App\Constant\User\UserRoleConstant;
 use App\Request\Notification\NotificationFirebaseBySuperAdminCreateRequest;
 use App\Service\Notification\NotificationFirebaseService;
@@ -237,6 +238,10 @@ class NotificationFirebaseController extends BaseController
     public function deleteTokenByUserId(): JsonResponse
     {
         $response = $this->notificationFirebaseService->deleteTokenByUserId($this->getUserId());
+
+        if ($response === NotificationTokenConstant::TOKEN_NOT_FOUND) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::NOTIFICATION_FIREBASE_TOKEN_NOT_FOUND_CONST);
+        }
 
         return $this->response($response, self::DELETE);
     }
