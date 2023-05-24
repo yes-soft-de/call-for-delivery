@@ -68,7 +68,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
               color: const Color(0xff381D87),
               onSelected: (value) {
                 if (value == S.current.requestDistanceEdit) {
-                  _showCantEditDistanceDialog(context);
+                  _showDistanceDialog(context);
                 } else if (value == S.current.cancelOrder) {
                   _showCancelDialog(context);
                 }
@@ -336,6 +336,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                         height: 16,
                       ),
                       _CancelOrConfirmButtons(
+                        captainId: orderInfo.captainID ?? 0,
                         formKey: formKey,
                         coord: coord,
                         screenState: screenState,
@@ -345,86 +346,6 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                   ),
                 ),
               ],
-            ),
-          ),
-        );
-      },
-    );
-  }
-
-  void _showCantEditDistanceDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (context) {
-        return Dialog(
-          backgroundColor: const Color(0xff381D87),
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 10),
-                    child: Text(
-                      S.current.requestDistanceEdit,
-                      style: Theme.of(context)
-                          .textTheme
-                          .titleLarge
-                          ?.copyWith(color: Colors.white),
-                    ),
-                  ),
-                  const SizedBox(height: 30),
-                  Row(
-                    children: [
-                      const Icon(
-                        Icons.warning_rounded,
-                        size: 40,
-                        color: Colors.amber,
-                      ),
-                      const SizedBox(width: 20),
-                      Text(
-                        S.current.youCantRequestEdit,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Text(
-                    S.current.youCanEditOnlyOneTimeContactWith,
-                    style: Theme.of(context)
-                        .textTheme
-                        .bodyMedium
-                        ?.copyWith(color: Colors.white),
-                  ),
-                  const SizedBox(height: 20),
-                  SizedBox(
-                    height: 45,
-                    width: double.maxFinite,
-                    child: Expanded(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.amber),
-                        onPressed: () {},
-                        child: Text(
-                          S.current.directSupport,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium
-                              ?.copyWith(color: const Color(0xff381D87)),
-                        ),
-                      ),
-                    ),
-                  )
-                ],
-              ),
             ),
           ),
         );
@@ -1290,8 +1211,10 @@ class _CancelOrConfirmButtons extends StatelessWidget {
     required this.coord,
     required this.screenState,
     required this.reason,
+    required this.captainId,
   });
 
+  final int captainId;
   final GlobalKey<FormState> formKey;
   final TextEditingController coord;
   final OrderStatusScreenState screenState;

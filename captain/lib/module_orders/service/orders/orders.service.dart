@@ -142,6 +142,10 @@ class OrdersService {
         await _ordersManager.updateExtraDistanceToOrder(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
+      if (response.statusCode == '405') {
+        return DataModel.withError('you can edit only once');
+      }
+
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
@@ -172,6 +176,7 @@ class OrdersService {
     }
     return DataModel.empty();
   }
+
   Future<DataModel> cancelOrder(CancelOrderRequest request) async {
     ActionResponse? response = await _ordersManager.cancelOrder(request);
     await FireStoreHelper().backgroundThread('Trigger');
