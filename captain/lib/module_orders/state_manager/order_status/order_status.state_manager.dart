@@ -149,9 +149,11 @@ class OrderStatusStateManager {
           _showCantEditDistanceDialog(
               screenState.context);
         }
-        CustomFlushBarHelper.createError(
+        else {
+          CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
             .show(screenState.context);
+        }
         screenState.getOrderDetails(request.id);
       } else {
         CustomFlushBarHelper.createSuccess(
