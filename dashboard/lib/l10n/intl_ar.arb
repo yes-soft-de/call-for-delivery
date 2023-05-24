@@ -990,5 +990,10 @@
     "newCoordinates": "الاحداثيات الجديدة",
     "kiloMeterNumber": "عدد الكيلومترات",
     "ignoreOrder": "تجاهل الطلب",
+    "theEdit": "التعديل",
+    "areYouSureAboutEdit": "هل انت متاكد من التعديل؟",
+    "added": "تمت اضافة",
+    "toTheCalculatedDistance": "على المسافة المحتسبة",
+    "clientLocationUpdatedTo": "تم تحديث موقع استلام الزيون الى الموقع",
     "dev":"المطورين"
 }

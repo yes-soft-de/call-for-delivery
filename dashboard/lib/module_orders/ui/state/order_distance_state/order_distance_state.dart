@@ -1,6 +1,6 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_orders/model/order/order_model.dart';
+import 'package:c4d/module_orders/model/order/conflict_distance_order.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/ui/screens/order_conflict_distance_screen.dart';
@@ -12,7 +12,7 @@ import 'package:flutter/material.dart';
 
 class OrderDistanceConflictLoadedState extends States {
   OrderDistanceConflictScreenState screenState;
-  List<OrderModel> orders;
+  List<ConflictDistanceOrder> orders;
   OrderDistanceConflictLoadedState(this.screenState, this.orders)
       : super(screenState);
 
@@ -33,160 +33,25 @@ class OrderDistanceConflictLoadedState extends States {
             onTap: () {
               Navigator.of(screenState.context).pushNamed(
                   OrdersRoutes.ORDER_STATUS_SCREEN,
-                  arguments: element.id);
+                  arguments: element.orderId);
             },
             child: OrderDistanceConflict(
-              orderNumber: element.id.toString(),
-              branchName: element.branchName,
-              captain: element.captainName ?? S.current.unknown,
-              distance: element.storeBranchToClientDistance.toDouble(),
+              orderNumber: element.orderId.toString(),
+              // TODO:
+              branchName: '',
+              captain: element.captainName,
+              distance: element.proposedDestinationOrDistance,
               onEdit: () {
                 ActionType action = ActionType.defaultValue;
                 TextEditingController decision = TextEditingController();
                 TextEditingController reason = TextEditingController();
                 final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-                return showDialog(
-                  context: context,
-                  builder: (context) {
-                    var color =
-                        Theme.of(context).colorScheme.primary.withAlpha(100);
-                    return Dialog(
-                      insetPadding: EdgeInsets.all(20),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: LayoutBuilder(
-                          builder: (context, constrain) {
-                            return Column(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  S.current.editDistanceRequestDetails,
-                                  style:
-                                      Theme.of(context).textTheme.titleMedium,
-                                ),
-                                SizedBox(height: 10),
-                                Container(
-                                  constraints: BoxConstraints(
-                                      maxHeight: constrain.maxHeight - 120),
-                                  child: ListView(
-                                    physics: AlwaysScrollableScrollPhysics(),
-                                    shrinkWrap: true,
-                                    children: [
-                                      _Field(
-                                        title: S.current.requestedEdit,
-                                        text: '34.6950009,36.7304669',
-                                      ),
-                                      SizedBox(height: 20),
-                                      _Field(
-                                        title: S.current.editReason,
-                                        text:
-                                            'bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla',
-                                      ),
-                                      SizedBox(height: 10),
-                                      HDivider(dividerColor: color),
-                                      SizedBox(height: 10),
-                                      _AdminDecisionWidget(
-                                        formKey: formKey,
-                                        reason: reason,
-                                        decision: decision,
-                                        onActionChange: (newAction) {
-                                          action = newAction;
-                                        },
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                // buttons
-                                SizedBox(height: 10),
-                                SizedBox(
-                                  height: 45,
-                                  child: Row(
-                                    children: [
-                                      Expanded(
-                                        child: ElevatedButton(
-                                            style: _elevatedButtonStyle(
-                                                color: Colors.red),
-                                            onPressed: () {
-                                              Navigator.of(context).pop();
-                                            },
-                                            child: Text(S.current.ignoreOrder)),
-                                      ),
-                                      SizedBox(width: 20),
-                                      Expanded(
-                                        child: ElevatedButton(
-                                          style: _elevatedButtonStyle(),
-                                          onPressed: () {
-                                            // TODO: call the other dialog to confirm
-                                            // should filter according to [action]
-                                            if (formKey.currentState
-                                                    ?.validate() ==
-                                                true) {
-                                              Navigator.pop(context);
-                                              if (action ==
-                                                  ActionType.addKiloMeter) {
-                                                // TODO: add values
-                                                screenState.manager
-                                                    .addExtraDistance(
-                                                  screenState,
-                                                  AddExtraDistanceRequest(
-                                                    id: element.id,
-                                                    adminNote:
-                                                        reason.text.trim(),
-                                                    additionalDistance:
-                                                        double.tryParse(
-                                                            decision.text),
-                                                  ),
-                                                );
-                                              } else if (action ==
-                                                  ActionType.editCoordinates) {
-                                                screenState.manager
-                                                    .updateDistance(
-                                                  screenState,
-                                                  AddExtraDistanceRequest(
-                                                    id: element.id,
-                                                    adminNote:
-                                                        reason.text.trim(),
-                                                    destination: Destination(
-                                                      lat: double.tryParse(
-                                                          decision.text
-                                                              .trim()
-                                                              .split(',')[0]
-                                                              .trim()),
-                                                      lon: double.tryParse(
-                                                          decision.text
-                                                              .trim()
-                                                              .split(',')[1]
-                                                              .trim()),
-                                                    ),
-                                                  ),
-                                                );
-                                              }
-                                            }
-                                          },
-                                          child: Text(
-                                            S.current.updateDistance,
-                                            style: TextStyle(
-                                              color: Colors.black,
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            );
-                          },
-                        ),
-                      ),
-                    );
-                  },
-                );
+                _caseDetailsAndSolveDialog(
+                    context, element, formKey, reason, decision, action);
               },
-              storeOwner: element.storeName ?? S.current.unknown,
-              conflictReason:
-                  element.storeBranchToClientDistanceAdditionExplanation,
+              storeOwner: element.storeOwnerName,
+              conflictReason: element.conflictNote,
             ),
           ),
         ),
@@ -196,6 +61,246 @@ class OrderDistanceConflictLoadedState extends States {
       height: 75,
     ));
     return widgets;
+  }
+
+  void _caseDetailsAndSolveDialog(
+      context,
+      ConflictDistanceOrder element,
+      GlobalKey<FormState> formKey,
+      TextEditingController reason,
+      TextEditingController decision,
+      ActionType action) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        var color = Theme.of(context).colorScheme.primary.withAlpha(100);
+        return Dialog(
+          insetPadding: EdgeInsets.all(20),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: LayoutBuilder(
+              builder: (context, constrain) {
+                return Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      S.current.editDistanceRequestDetails,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      constraints:
+                          BoxConstraints(maxHeight: constrain.maxHeight - 120),
+                      child: ListView(
+                        physics: AlwaysScrollableScrollPhysics(),
+                        shrinkWrap: true,
+                        children: [
+                          _Field(
+                            title: S.current.requestedEdit,
+                            text: element.proposedDestinationOrDistance,
+                          ),
+                          SizedBox(height: 20),
+                          _Field(
+                            title: S.current.editReason,
+                            text: element.conflictNote,
+                          ),
+                          SizedBox(height: 10),
+                          HDivider(dividerColor: color),
+                          SizedBox(height: 10),
+                          _AdminDecisionWidget(
+                            formKey: formKey,
+                            reason: reason,
+                            decision: decision,
+                            onActionChange: (newAction) {
+                              action = newAction;
+                            },
+                          ),
+                        ],
+                      ),
+                    ),
+                    // buttons
+                    SizedBox(height: 10),
+                    SizedBox(
+                      height: 45,
+                      child: Row(
+                        children: [
+                          Expanded(
+                            child: ElevatedButton(
+                                style: _elevatedButtonStyle(color: Colors.red),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text(S.current.ignoreOrder)),
+                          ),
+                          SizedBox(width: 20),
+                          Expanded(
+                            child: ElevatedButton(
+                              style: _elevatedButtonStyle(),
+                              onPressed: () {
+                                // TODO: call the other dialog to confirm
+                                // should filter according to [action]
+                                if (formKey.currentState?.validate() == true) {
+                                  Navigator.pop(context);
+                                  if (action == ActionType.addKiloMeter) {
+                                    var request = AddExtraDistanceRequest(
+                                      id: element.id,
+                                      adminNote: reason.text.trim(),
+                                      additionalDistance:
+                                          double.tryParse(decision.text),
+                                    );
+                                    _showConfirmDialog(
+                                        context, action, request);
+                                  } else if (action ==
+                                      ActionType.editCoordinates) {
+                                    var request = AddExtraDistanceRequest(
+                                      id: element.id,
+                                      adminNote: reason.text.trim(),
+                                      destination: Destination(
+                                        lat: double.tryParse(decision.text
+                                            .trim()
+                                            .split(',')[0]
+                                            .trim()),
+                                        lon: double.tryParse(decision.text
+                                            .trim()
+                                            .split(',')[1]
+                                            .trim()),
+                                      ),
+                                    );
+                                    _showConfirmDialog(
+                                        context, action, request);
+                                  }
+                                }
+                              },
+                              child: Text(
+                                S.current.updateDistance,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                );
+              },
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  void _showConfirmDialog(BuildContext context, ActionType action,
+      AddExtraDistanceRequest request) {
+    var text = '';
+
+    if (action == ActionType.addKiloMeter) {
+      text = S.current.added;
+      text += ' ${request.additionalDistance} ${S.current.km} ';
+      text += S.current.toTheCalculatedDistance;
+    }
+    if (action == ActionType.editCoordinates) {
+      text = S.current.clientLocationUpdatedTo;
+    }
+
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: const Color(0xff666ACB),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      Icons.notifications,
+                      size: 50,
+                      color: Colors.amber,
+                    ),
+                    Text(
+                      S.current.areYouSureAboutEdit,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(color: Colors.white),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Text(
+                  text,
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 20),
+                Visibility(
+                    visible: action == ActionType.editCoordinates,
+                    child: Text(
+                      request.destination.toString(),
+                      style: TextStyle(fontSize: 14, color: Color(0xff03D1FE)),
+                    )),
+                SizedBox(height: 20),
+                Text(
+                  request.adminNote ?? '',
+                  style: TextStyle(color: Colors.white),
+                ),
+                SizedBox(height: 20),
+                SizedBox(
+                  height: 40,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            S.current.cancel,
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                      Expanded(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.amber),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            if (action == ActionType.addKiloMeter) {
+                              screenState.manager
+                                  .addExtraDistance(screenState, request);
+                            } else if (action == ActionType.editCoordinates) {
+                              screenState.manager
+                                  .updateDistance(screenState, request);
+                            }
+                          },
+                          child: Text(
+                            S.current.confirm,
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   ButtonStyle _elevatedButtonStyle({Color color = Colors.amber}) {

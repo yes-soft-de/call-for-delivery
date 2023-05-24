@@ -160,8 +160,10 @@ class Urls {
       BASE_API_ORDER + '/filterdifferentansweredcashorders';
   static const FILTER_CAPTAIN_ORDERS_API =
       BASE_API_ORDER + '/filtercaptainordersbyadmin';
-  static const FILTER_ORDERS_CONFLICTED_DISTANCE_API =
-      BASE_API_ORDER + '/filterdifferentdestinationsorders';
+  static const FILTER_ORDERS_CONFLICTED_DISTANCE_API = DOMAIN +
+      VERSION_ADMIN +
+      '/orderdistanceconflict' +
+      '/filterorderdistanceconflictbyadmin';
   static const GET_ORDER_LOGS_API =
       DOMAIN + '/v1/admin/orderlog' + '/orderlogsbyorderidforadmin';
   static const ORDERS_PENDING_API = BASE_API_ORDER + '/orderpending';

@@ -103,6 +103,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addStore": MessageLookupByLibrary.simpleMessage("Add Stores"),
         "addWorkPackage": MessageLookupByLibrary.simpleMessage("Add work plan"),
         "addaPayment": MessageLookupByLibrary.simpleMessage("add a payment"),
+        "added": MessageLookupByLibrary.simpleMessage("added"),
         "addition": MessageLookupByLibrary.simpleMessage("Addition"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
         "admin": MessageLookupByLibrary.simpleMessage("Admin"),
@@ -146,6 +147,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "areYouSureAboutDeleteThisNotification":
             MessageLookupByLibrary.simpleMessage(
                 "Are you sure about deleting this notification"),
+        "areYouSureAboutEdit":
+            MessageLookupByLibrary.simpleMessage("are you sure about edit"),
         "areYouSureAboutRependingOrder": MessageLookupByLibrary.simpleMessage(
             "Are you sure about reset this order and remove it form captain"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
@@ -333,6 +336,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Client Distance"),
         "clientLocation":
             MessageLookupByLibrary.simpleMessage("Client location"),
+        "clientLocationUpdatedTo":
+            MessageLookupByLibrary.simpleMessage("cline location updated to"),
         "close": MessageLookupByLibrary.simpleMessage("Close"),
         "closingTime": MessageLookupByLibrary.simpleMessage("Closing Time"),
         "codeNumber": MessageLookupByLibrary.simpleMessage("Code number"),
@@ -1390,6 +1395,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "taxNumber": MessageLookupByLibrary.simpleMessage("Tax Number"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Terms of Service"),
+        "theEdit": MessageLookupByLibrary.simpleMessage("the edit"),
         "theOrderHidden": MessageLookupByLibrary.simpleMessage(
             "This order cannot be assigned to this captain because the request is hidden"),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
@@ -1408,6 +1414,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
             MessageLookupByLibrary.simpleMessage(
                 "To find out more, please leave your phone.\nand we will contact you personally"),
+        "toTheCalculatedDistance":
+            MessageLookupByLibrary.simpleMessage("to the calculated distance"),
         "today": MessageLookupByLibrary.simpleMessage("Today"),
         "todayProfit": MessageLookupByLibrary.simpleMessage("Today Balance"),
         "took": MessageLookupByLibrary.simpleMessage("Took"),

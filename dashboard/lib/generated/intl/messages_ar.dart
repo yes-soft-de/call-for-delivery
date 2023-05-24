@@ -103,6 +103,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addWorkPackage":
             MessageLookupByLibrary.simpleMessage("إضافة باقة عمل"),
         "addaPayment": MessageLookupByLibrary.simpleMessage("إضافة دفعة"),
+        "added": MessageLookupByLibrary.simpleMessage("تمت اضافة"),
         "addition": MessageLookupByLibrary.simpleMessage("إضافة"),
         "address": MessageLookupByLibrary.simpleMessage("العنوان"),
         "admin": MessageLookupByLibrary.simpleMessage("المدير"),
@@ -148,6 +149,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "areYouSureAboutDeleteThisNotification":
             MessageLookupByLibrary.simpleMessage(
                 "هل أنت متأكد في رغبتك في حذف هذا الإشعار"),
+        "areYouSureAboutEdit":
+            MessageLookupByLibrary.simpleMessage("هل انت متاكد من التعديل؟"),
         "areYouSureAboutRependingOrder": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من رغبتك بإعادة هذا الطلب لحالة الانتظار وإلغاء اسناد الكابتن"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
@@ -329,6 +332,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "clientDistance":
             MessageLookupByLibrary.simpleMessage("المسافة للعميل"),
         "clientLocation": MessageLookupByLibrary.simpleMessage("موقع العميل"),
+        "clientLocationUpdatedTo": MessageLookupByLibrary.simpleMessage(
+            "تم تحديث موقع استلام الزيون الى الموقع"),
         "close": MessageLookupByLibrary.simpleMessage("إغلاق"),
         "closingTime": MessageLookupByLibrary.simpleMessage("وقت الإغلاق"),
         "codeNumber": MessageLookupByLibrary.simpleMessage("رمز التحقق"),
@@ -1384,6 +1389,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "taxNumber": MessageLookupByLibrary.simpleMessage("الرقم الضريبي"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
+        "theEdit": MessageLookupByLibrary.simpleMessage("التعديل"),
         "theOrderHidden": MessageLookupByLibrary.simpleMessage(
             "لا يمكن اسناد هذا الطلب لهذا الكابتن , لأن الطلب مخفي"),
         "thereIsNoBranches":
@@ -1402,6 +1408,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
             MessageLookupByLibrary.simpleMessage(
                 "للمزيد من المعلومات خذ موعدا بترك رقم هاتفك، وسيتم التواصل معك"),
+        "toTheCalculatedDistance":
+            MessageLookupByLibrary.simpleMessage("على المسافة المحتسبة"),
         "today": MessageLookupByLibrary.simpleMessage("اليوم"),
         "todayProfit": MessageLookupByLibrary.simpleMessage("مستحقات اليوم"),
         "took": MessageLookupByLibrary.simpleMessage("استغرق"),

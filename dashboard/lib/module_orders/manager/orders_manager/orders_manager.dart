@@ -4,6 +4,7 @@ import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
+import 'package:c4d/module_orders/request/order_conflict_distance_request/order_conflict_distance_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/request/resolve_conflects_order_request.dart';
@@ -73,7 +74,7 @@ class OrdersManager {
   Future<OrdersWithoutDistanceResponse?> getOrdersWithoutDistance(
           FilterOrderRequest request) =>
       _repository.getOrdersWithoutDistance(request);
-  Future<OrdersResponse?> getOrdersConflictedDistance(
+  Future<OrderConflictDistanceRequest?> getOrdersConflictedDistance(
           FilterOrderRequest request) =>
       _repository.getOrdersConflictedDistance(request);
   Future<ActionResponse?> addExtraDistanceToOrder(

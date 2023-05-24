@@ -9960,6 +9960,56 @@ class S {
     );
   }
 
+  /// `the edit`
+  String get theEdit {
+    return Intl.message(
+      'the edit',
+      name: 'theEdit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `are you sure about edit`
+  String get areYouSureAboutEdit {
+    return Intl.message(
+      'are you sure about edit',
+      name: 'areYouSureAboutEdit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `added`
+  String get added {
+    return Intl.message(
+      'added',
+      name: 'added',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `to the calculated distance`
+  String get toTheCalculatedDistance {
+    return Intl.message(
+      'to the calculated distance',
+      name: 'toTheCalculatedDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `cline location updated to`
+  String get clientLocationUpdatedTo {
+    return Intl.message(
+      'cline location updated to',
+      name: 'clientLocationUpdatedTo',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

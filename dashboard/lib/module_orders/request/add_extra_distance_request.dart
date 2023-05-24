@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class AddExtraDistanceRequest {
   int? id;
   String? adminNote;
@@ -14,8 +15,7 @@ class AddExtraDistanceRequest {
   factory AddExtraDistanceRequest.fromJson(Map<String, dynamic> json) {
     return AddExtraDistanceRequest(
       id: json['orderId'] as int?,
-      adminNote:
-          json['adminNote'] as String?,
+      adminNote: json['adminNote'] as String?,
       destination: json['destination'],
     );
   }
@@ -55,4 +55,7 @@ class Destination {
         'lat': lat,
         'lon': lon,
       };
+
+  @override
+  String toString() => '$lat,$lon';
 }

@@ -16,9 +16,10 @@ class OrderDistanceConflict extends StatelessWidget {
   final String branchName;
   final String captain;
   final Color? background;
-  final double distance;
+  final String distance;
   final String? conflictReason;
   final Function() onEdit;
+
   OrderDistanceConflict({
     required this.orderNumber,
     this.background,
@@ -103,18 +104,41 @@ class OrderDistanceConflict extends StatelessWidget {
               ],
             ),
             SizedBox(height: 20),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  '${S.current.captain}: $captain',
-                  style: whiteText,
-                ),
-                Text(
-                  '${S.current.distance}: $distance ${S.current.km}',
-                  style: whiteText,
-                ),
-              ],
+            SizedBox(
+              height: 30,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      '${S.current.captain}: $captain',
+                      style: whiteText,
+                      maxLines: 1,
+                    ),
+                  ),
+                  Expanded(
+                    child: Visibility(
+                      visible: num.tryParse(distance) != null,
+                      child: Text(
+                        '${S.current.distance}: $distance ${S.current.km}',
+                        style: whiteText,
+                        overflow: TextOverflow.fade,
+                        maxLines: 1,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Visibility(
+                      visible: num.tryParse(distance) == null,
+                      child: Text(
+                        '${S.current.theEdit}: $distance',
+                        style: whiteText,
+                        maxLines: 1,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
             SizedBox(height: 20),
             ElevatedButton(
