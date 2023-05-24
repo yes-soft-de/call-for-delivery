@@ -13,10 +13,7 @@ class OrderByIdGetForAdminResponse
 
     public string $payment;
 
-    /**
-     * @var float|null
-     */
-    public $orderCost;
+    public ?float $orderCost;
 
     public int $orderType;
 
@@ -26,49 +23,28 @@ class OrderByIdGetForAdminResponse
      */
     public $orderLogs;
 
-    /**
-     * @var string|null $note
-     */
-    public $note;
+    public ?string $note;
 
     public DateTime $deliveryDate;
 
     public DateTime $createdAt;
 
-    /**
-     * @var DateTime|null $note
-     */
-    public $updatedAt;
+    public ?DateTime $updatedAt;
 
-    /**
-     * @var float|null $kilometer
-     */
-    public $kilometer;
+    public ?float $kilometer;
 
-    /**
-     * @var int|null $storeOrderDetailsId
-     */
-    public $storeOrderDetailsId;
+    public ?int $storeOrderDetailsId;
 
     /**
      * @OA\Property(type="object", property="destination")
      */
     public $destination;
 
-    /**
-     * @var string|null $recipientName
-     */
-    public $recipientName;
+    public ?string $recipientName;
 
-    /**
-     * @var string|null $recipientPhone
-     */
-    public $recipientPhone;
+    public ?string $recipientPhone;
 
-    /**
-     * @var string|null $detail
-     */
-    public $detail;
+    public ?string $detail;
 
     public int $storeOwnerBranchId;
 
@@ -85,42 +61,21 @@ class OrderByIdGetForAdminResponse
      */
     public $orderImage;
 
-    /**
-     * @var int|null $captainUserId
-     */
-    public $captainUserId;
+    public ?int $captainUserId;
 
-    /**
-     * @var string|null $captainName
-     */
-    public $captainName;
+    public ?string $captainName;
 
-    /**
-     * @var string|null $phone
-     */
-    public $phone;
+    public ?string $phone;
 
-    /**
-     * @var int|null
-     */
-    public $paidToProvider;
+    public ?int $paidToProvider;
 
     public int $storeOwnerId;
 
-    /**
-     * @var string|null
-     */
-    public $storeOwnerName;
+    public ?string $storeOwnerName;
 
-    /**
-     * @var float|null
-     */
-    public $captainOrderCost;
+    public ?float $captainOrderCost;
 
-    /**
-     * @var string|null
-     */
-    public $noteCaptainOrderCost;
+    public ?string $noteCaptainOrderCost;
 
     /**
      * @OA\Property(type="array", property="captain",
@@ -134,10 +89,7 @@ class OrderByIdGetForAdminResponse
      */
     public array|null $filePdf;
 
-    /**
-     * @var float|null
-     */
-    public $storeBranchToClientDistance;
+    public ?float $storeBranchToClientDistance;
 
     /**
      * @OA\Property(type="array", property="subOrder",
@@ -145,33 +97,17 @@ class OrderByIdGetForAdminResponse
      */
     public $subOrder;
 
-    /**
-     * @var int|null
-     */
-    public $isCashPaymentConfirmedByStore;
+    public ?int $isCashPaymentConfirmedByStore;
 
-    /**
-     * @var DateTime|null
-     */
-    public $isCashPaymentConfirmedByStoreUpdateDate;
+    public ?DateTime $isCashPaymentConfirmedByStoreUpdateDate;
 
-    /**
-     * @var int|null
-     */
-    public $primaryOrderId;
+    public ?int $primaryOrderId;
 
-    /**
-     * @var int|null
-     */
-    public $costType;
+    public ?int $costType;
 
-    /**
-     * @var int|null
-     */
-    public $packageId;
+    public ?int $packageId;
 
-    /**
-     * @var int|null
-     */
-    public $packageType;
+    public ?int $packageType;
+
+    public ?float $deliveryCost;
 }
