@@ -10,6 +10,7 @@ use App\Controller\BaseController;
 use App\Request\Admin\OrderDistanceConflict\OrderDistanceConflictFilterByAdminRequest;
 use App\Request\Admin\OrderDistanceConflict\OrderDistanceConflictRefuseByAdminRequest;
 use App\Service\Admin\OrderDistanceConflict\AdminOrderDistanceConflictService;
+use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -57,6 +58,37 @@ class AdminOrderDistanceConflictController extends BaseController
      *      @OA\JsonContent(
      *          @OA\Property(type="integer", property="id"),
      *          @OA\Property(type="string", property="adminNote")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns the refused order distance conflict info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Admin\OrderDistanceConflict\OrderDistanceConflictUpdateByAdminResponse")
+     *      )
+     *   )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Return error.",
+     *      @OA\JsonContent(
+     *          oneOf={
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9210"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9410"),
+     *                          @OA\Property(type="string", property="msg")
+     *                   )
+     *              }
      *      )
      * )
      *
@@ -114,6 +146,40 @@ class AdminOrderDistanceConflictController extends BaseController
      *          @OA\Property(type="string", property="fromDate"),
      *          @OA\Property(type="string", property="toDate"),
      *          @OA\Property(type="string", property="customizedTimezone", example="Asia/Riyadh")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns the filtered order distance conflict info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  @OA\Property(type="integer", property="id"),
+     *                  @OA\Property(type="integer", property="orderId"),
+     *                  @OA\Property(type="object", property="createdAt"),
+     *                  @OA\Property(type="object", property="updatedAt"),
+     *                  @OA\Property(type="integer", property="conflictResolvedBy"),
+     *                  @OA\Property(type="integer", property="conflictResolvedByUserType"),
+     *                  @OA\Property(type="object", property="resolvedAt"),
+     *                  @OA\Property(type="boolean", property="isResolved"),
+     *                  @OA\Property(type="string", property="conflictNote"),
+     *                  @OA\Property(type="string", property="adminNote"),
+     *                  @OA\Property(type="number", property="oldDistance"),
+     *                  @OA\Property(type="number", property="newDistance"),
+     *                  @OA\Property(type="array", property="oldDestination", @OA\Items()),
+     *                  @OA\Property(type="array", property="newDestination", @OA\Items()),
+     *                  @OA\Property(type="string", property="proposedDestinationOrDistance"),
+     *                  @OA\Property(type="integer", property="resolveType"),
+     *                  @OA\Property(type="string", property="captainName"),
+     *                  @OA\Property(type="integer", property="captainProfileId"),
+     *                  @OA\Property(type="string", property="storeOwnerName"),
+     *                  @OA\Property(type="integer", property="storeOwnerProfileId"),
+     *                  @OA\Property(type="string", property="storeBranchName")
+     *              )
+     *          )
      *      )
      * )
      *
