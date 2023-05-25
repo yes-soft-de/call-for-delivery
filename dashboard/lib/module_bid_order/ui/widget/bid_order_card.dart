@@ -14,7 +14,11 @@ class BidOrderCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Container(
-        foregroundDecoration: RotatedCornerDecoration(
+        foregroundDecoration: RotatedCornerDecoration.withGradient(
+          badgeSize:Size(80, 45),
+          badgePosition: BadgePosition.topEnd,
+          spanBaselineShift: 3,
+          spanHorizontalOffset: 1,
           gradient: isOpen
               ? LinearGradient(
                   begin: Alignment.topLeft,
@@ -28,9 +32,6 @@ class BidOrderCard extends StatelessWidget {
                 ),
           textSpan:
               TextSpan(text: isOpen ? S.of(context).open : S.of(context).close),
-          labelInsets: LabelInsets(baselineShift: 3, start: 1),
-          geometry: BadgeGeometry(
-              alignment: BadgeAlignment.topLeft, height: 45, width: 80),
         ),
         child: Card(
           color: Theme.of(context).cardColor,

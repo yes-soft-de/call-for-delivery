@@ -1,27 +1,16 @@
-import 'dart:io';
+// ignore_for_file: must_be_immutable
 import 'dart:typed_data';
-import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/di/di_config.dart';
-import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:c4d/module_stores/model/store_profile_model.dart';
-import 'package:c4d/module_stores/model/stores_model.dart';
 import 'package:c4d/module_stores/request/create_store_request.dart';
-import 'package:c4d/module_stores/ui/state/stores_lists/stores_loaded_state.dart';
-import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_map/flutter_map.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:latlong2/latlong.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/stacked_form.dart';
 import 'package:c4d/utils/effect/checked.dart';
-
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
-
-import '../../../abstracts/states/loading_state.dart';
 
 class UpdateStoreWidget extends StatefulWidget {
   final Function(UpdateStoreRequest, bool) updateStore;
@@ -204,7 +193,9 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                                   val = value as int;
                                   setState(() {});
                                 },
-                                activeColor: Theme.of(context).accentColor,
+                                activeColor: Theme.of(context)
+                                    .colorScheme
+                                    .primaryContainer,
                               ),
                             ),
                           ),
@@ -222,7 +213,9 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                                     val = value as int;
                                     setState(() {});
                                   },
-                                  activeColor: Theme.of(context).accentColor),
+                                  activeColor: Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer),
                             ),
                           ),
                         ],
@@ -398,6 +391,7 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                                           if (value == null) {
                                             return S.current.chooseYourSize;
                                           }
+                                          return null;
                                         },
                                         value: selectedSize,
                                         decoration: InputDecoration(
@@ -436,13 +430,11 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
             }
           } else if (imagePath == null) {
             CustomFlushBarHelper.createError(
-                    title: S.current.warnning, message: S.current.noImage)
-                .show(context);
+                title: S.current.warnning, message: S.current.noImage);
           } else {
             CustomFlushBarHelper.createError(
-                    title: S.current.warnning,
-                    message: S.current.pleaseCompleteTheForm)
-                .show(context);
+                title: S.current.warnning,
+                message: S.current.pleaseCompleteTheForm);
           }
         });
   }

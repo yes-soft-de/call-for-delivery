@@ -116,7 +116,7 @@ class PlanScreenStateManager {
         screenState.selectedPlan = null;
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
         stateSubject.add(InitCaptainPlanLoadedState(
           screenState,
           financeByHours: null,
@@ -138,7 +138,7 @@ class PlanScreenStateManager {
         screenState.selectedPlan = null;
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
         stateSubject.add(InitCaptainPlanLoadedState(
           screenState,
           financeByHours: null,

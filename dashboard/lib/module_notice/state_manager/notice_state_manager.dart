@@ -43,8 +43,7 @@ class NoticeStateManager {
     // _stateSubject.add(LoadingState(screenState));
 
     CustomFlushBarHelper.createSuccess(
-        title: S.current.warnning, message: S.current.inProcess)
-      ..show(screenState.context);
+        title: S.current.warnning, message: S.current.inProcess);
 
     request.images = await _uploadImages(request.images ?? []);
     bool imagesUploadSuccess = _hasNoUploadError(request.images ?? []);
@@ -54,19 +53,16 @@ class NoticeStateManager {
         if (value.hasError) {
           getNotice(screenState);
           CustomFlushBarHelper.createError(
-              title: S.current.warnning, message: value.error ?? '')
-            ..show(screenState.context);
+              title: S.current.warnning, message: value.error ?? '');
         } else {
           getNotice(screenState);
           CustomFlushBarHelper.createSuccess(
-              title: S.current.warnning, message: S.current.saveSuccess)
-            ..show(screenState.context);
+              title: S.current.warnning, message: S.current.saveSuccess);
         }
       });
     } else {
       CustomFlushBarHelper.createError(
-          title: S.current.warnning, message: S.current.failedToUploadSomeImage)
-        ..show(screenState.context);
+          title: S.current.warnning, message: S.current.failedToUploadSomeImage);
 
       await showDialog(
         barrierDismissible: false,
@@ -86,8 +82,7 @@ class NoticeStateManager {
     // _stateSubject.add(LoadingState(screenState));
 
     CustomFlushBarHelper.createSuccess(
-        title: S.current.warnning, message: S.current.inProcess)
-      ..show(screenState.context);
+        title: S.current.warnning, message: S.current.inProcess);
 
     request.images = await _uploadImages(request.images ?? []);
     bool imagesUploadSuccess = _hasNoUploadError(request.images ?? []);
@@ -99,20 +94,17 @@ class NoticeStateManager {
         if (value.hasError) {
           getNotice(screenState);
           CustomFlushBarHelper.createError(
-              title: S.current.warnning, message: value.error ?? '')
-            ..show(screenState.context);
+              title: S.current.warnning, message: value.error ?? '');
         } else {
           getNotice(screenState);
           CustomFlushBarHelper.createSuccess(
               title: S.current.warnning,
-              message: S.current.categoryUpdatedSuccessfully)
-            ..show(screenState.context);
+              message: S.current.categoryUpdatedSuccessfully);
         }
       });
     } else {
       CustomFlushBarHelper.createError(
-          title: S.current.warnning, message: S.current.failedToUploadSomeImage)
-        ..show(screenState.context);
+          title: S.current.warnning, message: S.current.failedToUploadSomeImage);
 
       await showDialog(
         barrierDismissible: false,
@@ -169,12 +161,12 @@ class NoticeStateManager {
 //        getCategories(screenState);
 //        CustomFlushBarHelper.createError(
 //                title: S.current.warnning, message: value.error ?? '')
-//            .show(screenState.context);
+//            ;
 //      } else {
 //        getCategories(screenState);
 //        CustomFlushBarHelper.createSuccess(
 //                title: S.current.warnning, message: S.current.deleteSuccess)
-//            .show(screenState.context);
+//            ;
 //      }
 //    });
 //  }

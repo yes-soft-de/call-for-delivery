@@ -3,7 +3,6 @@ import 'package:c4d/module_captain/model/captains_order_model.dart';
 import 'package:c4d/module_captain/request/assign_order_to_captain_request.dart';
 import 'package:c4d/module_captain/ui/screen/captains_assign_order_screen.dart';
 import 'package:c4d/module_captain/ui/state/captain_order_assign.dart';
-import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
@@ -12,7 +11,6 @@ import 'package:rxdart/rxdart.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_captain/service/captains_service.dart';
-import 'package:c4d/module_captain/ui/state/captain_list/captains_loaded_state.dart';
 
 @injectable
 class CaptainAssignOrderStateManager {
@@ -49,7 +47,7 @@ class CaptainAssignOrderStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
         getCaptains(screenState);
       } else {
         FireStoreHelper().backgroundThread('Trigger');
@@ -57,7 +55,7 @@ class CaptainAssignOrderStateManager {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.orderAssignedSuccessfully)
-            .show(screenState.context);
+            ;
       }
     });
   }

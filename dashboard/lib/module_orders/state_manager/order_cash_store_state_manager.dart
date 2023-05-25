@@ -56,13 +56,13 @@ class OrdersCashStoreStateManager {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: value.error ?? S.current.errorHappened)
-            .show(screenState.context);
+            ;
       } else {
         getOrdersFilters(screenState, screenState.ordersFilter);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: value.error ?? S.current.paymentSuccessfully)
-            .show(screenState.context);
+            ;
       }
     });
   }

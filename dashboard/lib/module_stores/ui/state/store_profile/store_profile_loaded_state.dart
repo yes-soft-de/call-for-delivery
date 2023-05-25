@@ -103,7 +103,7 @@ class StoreProfileLoadedState extends States {
                               profile?.phone != null ||
                                       profile!.phone.isNotEmpty
                                   ? Clipboard.setData(
-                                      ClipboardData(text: profile?.phone))
+                                      ClipboardData(text: profile?.phone ?? ''))
                                   : null;
                               Fluttertoast.showToast(msg: S.current.copied);
                             },

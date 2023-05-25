@@ -68,7 +68,6 @@ class InitBranchesScreenState extends State<InitBranchesScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var args = ModalRoute.of(context)?.settings.arguments;
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(context,
           title: S.current.store, canGoBack: false),

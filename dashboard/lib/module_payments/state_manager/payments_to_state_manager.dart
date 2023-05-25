@@ -47,14 +47,14 @@ class PaymentsToCaptainStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error.toString())
-            .show(screenState.context);
+            ;
         getCaptainPaymentsDetails(screenState, request.captainId ?? -1);
       } else {
         getCaptainPaymentsDetails(screenState, request.captainId ?? -1);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.paymentSuccessfully)
-            .show(screenState.context);
+            ;
       }
     });
   }
@@ -65,13 +65,13 @@ class PaymentsToCaptainStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error.toString())
-            .show(screenState.context);
+            ;
         getCaptainPaymentsDetails(screenState, screenState.captainId);
       } else {
         getCaptainPaymentsDetails(screenState, screenState.captainId);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning, message: S.current.deleteSuccess)
-            .show(screenState.context);
+            ;
       }
     });
   }

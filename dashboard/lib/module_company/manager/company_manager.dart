@@ -2,11 +2,7 @@ import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/module_company/repository/company_repository.dart';
 import 'package:c4d/module_company/request/create_company_profile.dart';
-import 'package:c4d/module_company/request/delivery_company_financial.dart';
-import 'package:c4d/module_company/request/financial_compensation_request.dart';
-import 'package:c4d/module_company/response/company_delivery_price_response.dart';
 import 'package:c4d/module_company/response/company_profile_response.dart';
-import 'package:c4d/module_company/response/financial_compensations_response.dart';
 
 @injectable
 class CompanyManager {

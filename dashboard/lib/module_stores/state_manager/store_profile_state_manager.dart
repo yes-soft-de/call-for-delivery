@@ -88,7 +88,7 @@ class StoreProfileStateManager {
       CustomFlushBarHelper.createSuccess(
               title: S.current.warnning,
               message: S.current.storeUpdatedSuccessfully)
-          .show(screenState.context);
+          ;
     } else {
       Fluttertoast.showToast(msg: message);
     }
@@ -104,7 +104,7 @@ class StoreProfileStateManager {
           CustomFlushBarHelper.createError(
                   title: S.current.warnning,
                   message: S.current.errorUploadingImages)
-              .show(screenState.context);
+              ;
           return;
         } else {
           request.image = image;
@@ -113,13 +113,13 @@ class StoreProfileStateManager {
               getStore(screenState, request.id);
               CustomFlushBarHelper.createError(
                   title: S.current.warnning, message: value.error ?? '')
-                ..show(screenState.context);
+                ;
             } else {
               getStore(screenState, request.id);
               CustomFlushBarHelper.createSuccess(
                   title: S.current.warnning,
                   message: S.current.storeUpdatedSuccessfully)
-                ..show(screenState.context);
+                ;
             }
           });
         }
@@ -130,13 +130,13 @@ class StoreProfileStateManager {
           getStore(screenState, request.id);
           CustomFlushBarHelper.createError(
               title: S.current.warnning, message: value.error ?? '')
-            ..show(screenState.context);
+            ;
         } else {
           getStore(screenState, request.id);
           CustomFlushBarHelper.createSuccess(
               title: S.current.warnning,
               message: S.current.storeUpdatedSuccessfully)
-            ..show(screenState.context);
+            ;
         }
       });
     }
@@ -147,7 +147,7 @@ class StoreProfileStateManager {
     if (loading) {
       CustomFlushBarHelper.createError(
               title: S.current.warnning, message: message)
-          .show(screenState.context);
+          ;
     } else {
       Fluttertoast.showToast(msg: message);
     }

@@ -29,12 +29,12 @@ class InitBranchesStateManager {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: value.error ?? S.current.errorHappened)
-            .show(screenState.context);
+            ;
       } else {
         screenState.moveToOrder();
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning, message: S.current.addBranchSuccess)
-            .show(screenState.context);
+            ;
       }
     });
   }

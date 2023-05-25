@@ -204,7 +204,7 @@ class PaymentModel {
 }
 
 class Total {
-  dynamic? advancePayment;
+  dynamic advancePayment;
   num packageCost;
   num sumPayments;
   num total;

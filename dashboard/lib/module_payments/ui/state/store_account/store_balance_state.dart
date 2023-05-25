@@ -1,11 +1,9 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_payments/model/store_balance_model.dart';
-import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
 import 'package:c4d/module_payments/ui/screen/store_balance_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
-import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
@@ -22,8 +20,6 @@ class StoreBalanceLoadedState extends States {
   final String? error;
   final StoreBalanceModel? model;
   final StoreBalanceScreenState screenState;
-  final _amount = TextEditingController();
-  final _note = TextEditingController();
   @override
   Widget getUI(BuildContext context) {
     if (error != null) {

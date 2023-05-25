@@ -100,8 +100,7 @@ class LoginScreenState extends State<LoginScreen> {
     Navigator.of(context)
         .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
     CustomFlushBarHelper.createSuccess(
-            title: S.current.warnning, message: S.current.loginSuccess)
-        .show(context);
+            title: S.current.warnning, message: S.current.loginSuccess);
   }
 
   void verifyFirst(String? userID, String? password) {
@@ -114,8 +113,7 @@ class LoginScreenState extends State<LoginScreen> {
       Navigator.pushNamed(context, AuthorizationRoutes.REGISTER_SCREEN,
           arguments: {'username': '$userID', 'password': '$password'});
       CustomFlushBarHelper.createError(
-              title: S.current.warnning, message: S.current.notVerifiedNumber)
-          .show(context);
+              title: S.current.warnning, message: S.current.notVerifiedNumber);
     }
   }
 

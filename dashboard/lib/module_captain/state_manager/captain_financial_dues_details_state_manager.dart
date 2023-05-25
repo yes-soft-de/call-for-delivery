@@ -51,7 +51,7 @@ class CaptainFinancialDuesDetailsStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error.toString())
-            .show(screenState.context);
+            ;
         getCaptainPaymentsDetails(screenState);
       } else {
         getIt<GlobalStateManager>().updateList();
@@ -59,7 +59,7 @@ class CaptainFinancialDuesDetailsStateManager {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.paymentSuccessfully)
-            .show(screenState.context);
+            ;
       }
     });
   }
@@ -71,14 +71,14 @@ class CaptainFinancialDuesDetailsStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error.toString())
-            .show(screenState.context);
+            ;
         getCaptainPaymentsDetails(screenState);
       } else {
         getIt<GlobalStateManager>().updateList();
         getCaptainPaymentsDetails(screenState);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning, message: S.current.deleteSuccess)
-            .show(screenState.context);
+            ;
       }
     });
   }

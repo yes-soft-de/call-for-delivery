@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
-import 'package:intl/intl.dart' as intl;
 
 class CaptainFinanceByOrderLoadedState extends States {
   CaptainFinanceByOrderLoadedState(this.screenState, this.model,

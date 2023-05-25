@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'dart:async';
 import 'dart:io' as p;
 import 'package:c4d/hive/util/argument_hive_helper.dart';
@@ -136,7 +138,7 @@ class MyApp extends StatefulWidget {
 
   final AuthorizationModule _authorizationModule;
   final BidOrderModule _bidOrderModule;
-  final BranchesModule _branchesModule;
+  final BranchesModule _branchesModule; 
   final CaptainsModule _captainsModule;
   final CarsModule _carsModule;
   final CategoriesModule _categoriesModule;

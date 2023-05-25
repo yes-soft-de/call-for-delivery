@@ -34,7 +34,6 @@ class DeepLinksService {
     Location location = new Location();
     bool _serviceEnabled;
     PermissionStatus _permissionGranted;
-    LocationData _locationData;
 
     _serviceEnabled = await location.serviceEnabled();
     if (!_serviceEnabled) {

@@ -77,7 +77,7 @@ class Data {
 }
 
 class Rating {
-  dynamic? rate;
+  dynamic rate;
 
   Rating({this.rate});
 
@@ -96,7 +96,7 @@ class Branches {
   int? id;
   int? storeOwnerProfileID;
   Location? location;
-  dynamic? city;
+  dynamic city;
   String? branchName;
   bool? free;
   String? storeOwnerName;

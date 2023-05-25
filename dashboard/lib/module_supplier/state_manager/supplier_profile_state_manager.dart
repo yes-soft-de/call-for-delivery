@@ -46,14 +46,14 @@ class SupplierProfileStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error.toString())
-            .show(screenState.context);
+            ;
         getSupplierProfile(screenState, captainId);
       } else {
         getSupplierProfile(screenState, captainId);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.supplierUpdatedSuccessfully)
-            .show(screenState.context);
+            ;
         getIt<GlobalStateManager>().updateList();
       }
     });

@@ -10,14 +10,10 @@ import 'package:c4d/module_dev/request/create_test_order_request.dart';
 import 'package:c4d/module_dev/service/orders/dev.service.dart';
 import 'package:c4d/module_dev/ui/screens/new_test_order/new_test_order_screen.dart';
 import 'package:c4d/module_dev/ui/state/new_order/new_test_order.state.dart';
-import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_stores/model/stores_model.dart';
 import 'package:c4d/module_stores/service/store_service.dart';
-import 'package:c4d/module_stores/stores_routes.dart';
-import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
-import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -51,7 +47,7 @@ class NewTestOrderStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
         _stateSubject
             .add(NewTestOrderStateBranchesLoaded(stores, [], screenState));
       } else if (value.isEmpty) {
@@ -74,14 +70,14 @@ class NewTestOrderStateManager {
         getStores(screenState);
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
       } else {
         screenState.clear();
         getStores(screenState);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.orderCreatedSuccessfully)
-            .show(screenState.context);
+            ;
         FireStoreHelper().backgroundThread('Trigger');
       }
     });

@@ -1,10 +1,8 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
-import 'package:c4d/module_orders/ui/widgets/owner_order_card/icon_info_button.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:url_launcher/url_launcher.dart';
 

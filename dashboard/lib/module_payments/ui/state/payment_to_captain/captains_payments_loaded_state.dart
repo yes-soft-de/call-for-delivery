@@ -22,9 +22,6 @@ class PaymentsToCaptainLoadedState extends States {
       screenState.refresh();
     }
   }
-
-  final _amount = TextEditingController();
-  final _note = TextEditingController();
   String? id;
 
   @override

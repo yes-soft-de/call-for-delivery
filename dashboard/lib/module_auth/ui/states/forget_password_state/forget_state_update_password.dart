@@ -101,13 +101,12 @@ class ForgotStateUpdatePassword extends States {
                         } else {
                           CustomFlushBarHelper.createError(
                                   title: S.current.warnning,
-                                  message: S.current.passwordNotMatch)
-                              .show(context);
+                                  message: S.current.passwordNotMatch);
                         }
                       },
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
-                        primary: Theme.of(context).accentColor,
+                        backgroundColor: Theme.of(context).colorScheme.primaryContainer,
                         textStyle: const TextStyle(color: Colors.white),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),

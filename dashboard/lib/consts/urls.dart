@@ -1,5 +1,5 @@
-// Developing Domain ===> 'http://134.209.241.49';
-// Production Domain ===> 'http://46.101.100.62';
+// Developing Domain ===> 'http://134.209.241.49'
+// Production Domain ===> 'http://46.101.100.62'
 
 const String devDomain = 'http://134.209.241.49';
 const String prodDomain = 'http://46.101.100.62';

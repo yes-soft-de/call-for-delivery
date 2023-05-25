@@ -7,12 +7,10 @@ import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/global/screen_type.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
-import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
-import 'package:intl/intl.dart' as intl;
 
 class CaptainFinanceByOrderCountLoadedState extends States {
   CaptainFinanceByOrderCountLoadedState(this.screenState, this.model,
@@ -23,8 +21,6 @@ class CaptainFinanceByOrderCountLoadedState extends States {
   final String? error;
   final List<CaptainFinanceByOrdersCountModel>? model;
   final CaptainFinanceByCountOrderScreenState screenState;
-  final _amount = TextEditingController();
-  final _note = TextEditingController();
   @override
   Widget getUI(BuildContext context) {
     if (error != null) {

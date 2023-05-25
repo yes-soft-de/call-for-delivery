@@ -35,7 +35,6 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 
 class OrderDetailsStateOwnerOrderLoaded extends States {
   OrderDetailsModel orderInfo;
-  final _distanceCalculator = TextEditingController();
   final OrderDetailsScreenState screenState;
   OrderDetailsStateOwnerOrderLoaded(
     this.screenState,

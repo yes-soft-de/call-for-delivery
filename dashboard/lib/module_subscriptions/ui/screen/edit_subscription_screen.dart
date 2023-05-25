@@ -39,8 +39,7 @@ class EditSubscriptionScreenState extends State<EditSubscriptionScreen> {
       Navigator.of(context).popUntil((route) =>
           route.settings.name == SubscriptionsRoutes.SUBSCRIPTIONS_MANAGEMENT);
       CustomFlushBarHelper.createSuccess(
-              title: S.current.warnning, message: S.current.successRenew)
-          .show(context);
+              title: S.current.warnning, message: S.current.successRenew);
     });
   }
 

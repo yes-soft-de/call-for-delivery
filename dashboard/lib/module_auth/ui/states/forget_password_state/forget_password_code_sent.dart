@@ -6,7 +6,6 @@ import 'package:c4d/module_auth/request/forget_password_request/verify_new_passw
 import 'package:c4d/module_auth/ui/screen/forget_password_screen/forget_password_screen.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/images/images.dart';
-import 'package:c4d/utils/text_style/text_style.dart';
 
 class ForgotStatePhoneCodeSent extends States {
   bool retryEnabled = false;
@@ -18,8 +17,7 @@ class ForgotStatePhoneCodeSent extends States {
     });
     if (error != null) {
       CustomFlushBarHelper.createError(
-              title: S.current.warnning, message: error)
-          .show(screen.context);
+              title: S.current.warnning, message: error);
     }
   }
 
@@ -79,6 +77,7 @@ class ForgotStatePhoneCodeSent extends States {
                         } else if (value.length < 6) {
                           return S.of(context).invalidCode;
                         }
+                        return null;
                       },
                       decoration: InputDecoration(
                         border: InputBorder.none,
@@ -107,7 +106,7 @@ class ForgotStatePhoneCodeSent extends States {
                       },
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
-                        primary: Theme.of(context).accentColor,
+                        primary: Theme.of(context).colorScheme.primaryContainer,
                         textStyle: const TextStyle(color: Colors.white),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -149,7 +148,7 @@ class ForgotStatePhoneCodeSent extends States {
                     child: Text(
                       S.of(context).resendCode,
                       style: retryEnabled
-                          ? TextStyle(color: Theme.of(context).accentColor)
+                          ? TextStyle(color: Theme.of(context).colorScheme.primaryContainer)
                           : TextStyle(color: Theme.of(context).disabledColor),
                     ),
                   ),

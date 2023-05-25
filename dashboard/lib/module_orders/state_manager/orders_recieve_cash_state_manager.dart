@@ -90,13 +90,13 @@ class OrdersReceiveCashStateManager {
                     CustomFlushBarHelper.createError(
                             title: S.current.warnning,
                             message: value.error ?? S.current.errorHappened)
-                        .show(screenState.context);
+                        ;
                     getOrdersFilters(screenState, request);
                   } else {
                     CustomFlushBarHelper.createSuccess(
                             title: S.current.warnning,
                             message: S.current.orderConflictedSuccessfully)
-                        .show(screenState.context);
+                        ;
                     getOrdersFilters(screenState, request);
                   }
                 });
@@ -121,13 +121,13 @@ class OrdersReceiveCashStateManager {
                     CustomFlushBarHelper.createError(
                             title: S.current.warnning,
                             message: value.error ?? S.current.errorHappened)
-                        .show(screenState.context);
+                        ;
                     getOrdersFilters(screenState, request);
                   } else {
                     CustomFlushBarHelper.createSuccess(
                             title: S.current.warnning,
                             message: S.current.updateStoreAnswerSuccessfully)
-                        .show(screenState.context);
+                        ;
                     getOrdersFilters(screenState, request);
                   }
                 });

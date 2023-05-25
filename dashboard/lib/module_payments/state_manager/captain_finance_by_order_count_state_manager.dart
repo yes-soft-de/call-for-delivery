@@ -52,13 +52,13 @@ class CaptainFinanceByOrderCountStateManager {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: value.error ?? S.current.errorHappened)
-            .show(screenState.context);
+            ;
       } else {
         getFinances(screenState);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: value.error ?? S.current.addPackageSuccessfully)
-            .show(screenState.context);
+            ;
       }
     });
   }
@@ -74,13 +74,13 @@ class CaptainFinanceByOrderCountStateManager {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: value.error ?? S.current.errorHappened)
-            .show(screenState.context);
+            ;
       } else {
         getFinances(screenState);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: value.error ?? S.current.updatePackageSuccessfully)
-            .show(screenState.context);
+            ;
       }
     });
   }
@@ -94,14 +94,14 @@ class CaptainFinanceByOrderCountStateManager {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: value.error ?? S.current.errorHappened)
-            .show(screenState.context);
+            ;
       } else {
         getFinances(screenState);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message:
                     value.error ?? S.current.financeCategoryDeletedSuccessfully)
-            .show(screenState.context);
+            ;
       }
     });
   }

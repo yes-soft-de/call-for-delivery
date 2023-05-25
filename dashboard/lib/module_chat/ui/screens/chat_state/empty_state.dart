@@ -1,6 +1,7 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:lottie/lottie.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';

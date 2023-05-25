@@ -1,4 +1,3 @@
-import 'package:c4d/consts/app_type.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_delivary_car/model/car_model.dart';
 import 'package:c4d/module_delivary_car/request/car_request.dart';
@@ -7,7 +6,6 @@ import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
 import 'package:c4d/utils/components/stacked_form.dart';
-import 'package:c4d/utils/helpers/app_type_helper.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -122,8 +120,7 @@ class _CategoryFormState extends State<CarsForm> {
             } else {
               CustomFlushBarHelper.createError(
                       title: S.current.warnning,
-                      message: S.current.pleaseCompleteTheForm)
-                  .show(context);
+                      message: S.current.pleaseCompleteTheForm);
             }
           }),
     );

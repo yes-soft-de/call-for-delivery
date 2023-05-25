@@ -24,7 +24,6 @@ class SubOrdersScreenState extends State<SubOrdersScreen> {
   int orderId = -1;
   late States currentState;
 
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   SubOrdersStateManager get manager => widget._stateManager;
 
   @override
@@ -81,7 +80,6 @@ class SubOrdersScreenState extends State<SubOrdersScreen> {
                     return CustomAlertDialog(
                       onPressed: () {
                         var getState = currentState as SubOrdersListStateLoaded;
-                        var order = getState.orders[0];
                         Navigator.of(context).pop();
                         Navigator.of(context).pushNamed(
                             OrdersRoutes.NEW_SUB_ORDER_SCREEN,

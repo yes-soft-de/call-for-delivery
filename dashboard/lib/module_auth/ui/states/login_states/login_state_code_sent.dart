@@ -54,7 +54,7 @@ class LoginStateCodeSent extends LoginState {
               ? Text(S.of(context).loading)
               : Container(
                   decoration:
-                      BoxDecoration(color: Theme.of(context).accentColor),
+                      BoxDecoration(color: Theme.of(context).colorScheme.primaryContainer),
                   child: InkWell(
                     splashColor: Colors.transparent,
                     onTap: () {

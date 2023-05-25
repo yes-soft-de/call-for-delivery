@@ -5,7 +5,6 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
@@ -23,13 +22,12 @@ import '../../../module_orders/model/order_details_model.dart';
 @injectable
 class OrderStatusStateManager {
   final StoresService _storeService;
-  final AuthService _authService;
 
   final PublishSubject<States> _stateSubject = new PublishSubject();
 
   Stream<States> get stateStream => _stateSubject.stream;
 
-  OrderStatusStateManager(this._storeService, this._authService);
+  OrderStatusStateManager(this._storeService);
   void getOrder(OrderDetailsScreenState screenState, int id,
       [bool loading = true]) {
     if (loading) {
@@ -62,12 +60,12 @@ class OrderStatusStateManager {
 //        getOrder(screenState, screenState.orderId);
 //        CustomFlushBarHelper.createError(
 //                title: S.current.warnning, message: value.error ?? '')
-//            .show(screenState.context);
+//            ;
 //      } else {
 //        getOrder(screenState, screenState.orderId);
 //        CustomFlushBarHelper.createSuccess(
 //                title: S.current.warnning, message: S.current.captainRated)
-//            .show(screenState.context);
+//            ;
 //      }
 //    });
   }
@@ -86,12 +84,12 @@ class OrderStatusStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
         getOrder(screenState, request.orderID ?? -1);
       } else {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning, message: S.current.deleteSuccess)
-            .show(screenState.context);
+            ;
         getOrder(screenState, request.orderID ?? -1);
         FireStoreHelper().backgroundThread('Trigger');
       }
@@ -105,13 +103,13 @@ class OrderStatusStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
         getOrder(screenState, request.id ?? -1);
       } else {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.updateOrderStatusSuccessfully)
-            .show(screenState.context);
+            ;
         getOrder(screenState, request.id ?? -1);
         FireStoreHelper().backgroundThread('Trigger').ignore();
       }
@@ -124,13 +122,13 @@ class OrderStatusStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
         getOrder(screenState, orderId);
       } else {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.orderUpdatedSuccessfully)
-            .show(screenState.context);
+            ;
         getOrder(screenState, orderId);
         FireStoreHelper().backgroundThread('Trigger');
       }
@@ -144,13 +142,13 @@ class OrderStatusStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
         getOrder(screenState, request.id!, false);
       } else {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.distanceUpdatedSuccessfully)
-            .show(screenState.context);
+            ;
         getOrder(screenState, request.id!, false);
       }
     });
@@ -163,14 +161,14 @@ class OrderStatusStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
         // screenState.getOrders();
         getOrder(screenState, request.id!, false);
       } else {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.distanceUpdatedSuccessfully)
-            .show(screenState.context);
+            ;
         // screenState.getOrders();
         getOrder(screenState, request.id!, false);
       }

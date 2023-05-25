@@ -1,3 +1,4 @@
+// ignore_for_file: must_be_immutable
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_subscriptions/model/store_subscriptions_financial.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';

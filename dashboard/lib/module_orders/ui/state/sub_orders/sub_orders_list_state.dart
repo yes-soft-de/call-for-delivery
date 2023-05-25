@@ -21,7 +21,6 @@ class SubOrdersListStateLoaded extends States {
   }
 
   List<Widget> getOrders() {
-    var context = screenState.context;
     List<Widget> widgets = [];
     orders.forEach((element) {
       widgets.add(Padding(

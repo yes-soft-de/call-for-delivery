@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:injectable/injectable.dart';
-import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/request/register_request/register_request.dart';
 import 'package:c4d/module_auth/request/register_request/verfy_code_request.dart';
@@ -123,26 +122,22 @@ class RegisterScreenState extends State<RegisterScreen> {
   void resentCodeSucc() {
     CustomFlushBarHelper.createSuccess(
             title: S.current.warnning,
-            message: S.current.resendCodeSuccessfully)
-        .show(context);
+            message: S.current.resendCodeSuccessfully);
   }
 
   void wrongCode() {
     CustomFlushBarHelper.createError(
-            title: S.current.warnning, message: S.current.invalidCode)
-        .show(context);
+            title: S.current.warnning, message: S.current.invalidCode);
   }
 
   void resendError() {
     CustomFlushBarHelper.createError(
-            title: S.current.warnning, message: S.current.errorHappened)
-        .show(context);
+            title: S.current.warnning, message: S.current.errorHappened);
   }
 
   void verifyFirst() {
     CustomFlushBarHelper.createError(
-            title: S.current.warnning, message: S.current.notVerifiedNumber)
-        .show(context);
+            title: S.current.warnning, message: S.current.notVerifiedNumber);
   }
 
   void moveToNext() {
@@ -163,16 +158,14 @@ class RegisterScreenState extends State<RegisterScreen> {
       //     .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
     }
     CustomFlushBarHelper.createSuccess(
-            title: S.current.warnning, message: S.current.loginSuccess)
-        .show(context);
+            title: S.current.warnning, message: S.current.loginSuccess);
   }
 
   Future<void> userRegistered() async {
-    await CustomFlushBarHelper.createSuccess(
+     CustomFlushBarHelper.createSuccess(
             title: S.current.warnning,
             message: S.current.registerSuccess,
-            timeout: 2)
-        .show(context);
+            timeout: 2);
   }
 
   @override

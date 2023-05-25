@@ -95,8 +95,7 @@ class ForgotPassScreenState extends State<ForgotPassScreen> {
     //     .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
     CustomFlushBarHelper.createSuccess(
             title: S.current.warnning,
-            message: S.current.passwordUpdatedSuccess)
-        .show(context);
+            message: S.current.passwordUpdatedSuccess);
   }
 
   void verifyCode(VerifyResetPassCodeRequest request) {

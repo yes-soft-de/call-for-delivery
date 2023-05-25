@@ -4,7 +4,6 @@ import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_stores/service/store_service.dart';
 import 'package:c4d/module_stores/ui/screen/order/order_time_line_screen.dart';
 import 'package:c4d/module_stores/ui/state/order/order_time_line.dart';
@@ -16,13 +15,12 @@ import '../../../module_orders/model/order_details_model.dart';
 @injectable
 class OrderTimeLineStateManager {
   final StoresService _ordersService;
-  final AuthService _authService;
 
   final PublishSubject<States> _stateSubject = new PublishSubject();
 
   Stream<States> get stateStream => _stateSubject.stream;
 
-  OrderTimeLineStateManager(this._ordersService, this._authService);
+  OrderTimeLineStateManager(this._ordersService);
   void getOrder(OrderTimeLineScreenState screenState, int id,
       [bool loading = true]) {
     if (loading) {

@@ -7,7 +7,6 @@ import 'package:flutter/scheduler.dart';
 import 'package:injectable/injectable.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:c4d/global_nav_key.dart';
-import 'package:c4d/module_notifications/preferences/notification_preferences/notification_preferences.dart';
 import 'package:c4d/module_notifications/repository/notification_repo.dart';
 import 'package:c4d/utils/logger/logger.dart';
 import 'package:rxdart/subjects.dart';
@@ -15,11 +14,9 @@ import 'package:flutter/material.dart';
 
 @injectable
 class FireNotificationService {
-  final NotificationsPrefHelper _prefHelper;
   final NotificationRepo _notificationRepo;
 
   FireNotificationService(
-    this._prefHelper,
     this._notificationRepo,
   );
 
