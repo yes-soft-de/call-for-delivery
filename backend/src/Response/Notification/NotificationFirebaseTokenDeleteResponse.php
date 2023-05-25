@@ -6,18 +6,9 @@ use DateTime;
 
 class NotificationFirebaseTokenDeleteResponse
 {
-    /**
-     * @var int
-     */
-    public $id;
+    public int $id;
 
-    /**
-     * @var string
-     */
-    public $token;
+    public string $token;
 
-    /**
-     * @var DateTime
-     */
-    public $createdAt;
+    public DateTime $createdAt;
 }

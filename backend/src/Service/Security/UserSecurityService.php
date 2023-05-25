@@ -2,12 +2,16 @@
 
 namespace App\Service\Security;
 
+use App\AutoMapping;
+use App\Constant\Notification\NotificationTokenConstant;
 use App\Response\Notification\NotificationFirebaseTokenDeleteResponse;
+use App\Response\Security\UserLogoutResponse;
 use App\Service\Notification\NotificationFirebaseService;
 
 class UserSecurityService
 {
     public function __construct(
+        private AutoMapping $autoMapping,
         private NotificationFirebaseService $notificationFirebaseService
     )
     {
@@ -24,11 +28,17 @@ class UserSecurityService
     /**
      * This suppose to do several procedures when user requires to logout:
      * Deletes firebase notification token of the user
-     *
      */
-    public function logout(int $userId)
+    public function logout(int $userId): string|UserLogoutResponse
     {
         // 1 delete firebase notification token
-        $this->deleteTokenByUserId($userId);
+        $deleteTokenResult = $this->deleteTokenByUserId($userId);
+
+        if ($deleteTokenResult === NotificationTokenConstant::TOKEN_NOT_FOUND) {
+            return NotificationTokenConstant::TOKEN_NOT_FOUND;
+        }
+
+        return $this->autoMapping->map(NotificationFirebaseTokenDeleteResponse::class, UserLogoutResponse::class,
+            $deleteTokenResult);
     }
 }
