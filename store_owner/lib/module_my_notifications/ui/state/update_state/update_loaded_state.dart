@@ -1,8 +1,7 @@
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_my_notifications/model/update_model.dart';
 import 'package:c4d/module_my_notifications/ui/screen/update_screen.dart';
-import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
+import 'package:c4d/module_my_notifications/ui/widget/update_card.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/effect/scaling.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -10,9 +9,6 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/text_style/text_style.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:flutter_linkify/flutter_linkify.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class UpdatesLoadedState extends States {
   UpdateScreenState screenState;
@@ -134,15 +130,19 @@ class UpdatesLoadedState extends States {
                     ),
                     child: Text(
                       '${getSelectedItem()}' + ' ' + S.current.selected,
-                      style: Theme.of(context).textTheme.headline6,
+                      style: Theme.of(context).textTheme.titleLarge,
                     ),
                   )),
               Padding(
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                child: ListView(
-                    shrinkWrap: true,
-                    physics: ScrollPhysics(),
-                    children: getNotification(context)),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const ScrollPhysics(),
+                  itemCount: model.length,
+                  itemBuilder: (context, index) {
+                    return UpdateCard(update: model[index]);
+                  },
+                ),
               ),
               SizedBox(
                 height: 75,
@@ -152,140 +152,6 @@ class UpdatesLoadedState extends States {
         ),
       ),
     );
-  }
-
-  List<Widget> getNotification(BuildContext context) {
-    bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
-    List<Widget> children = [];
-    int index = 0;
-    model.forEach((element) {
-      children.add(Padding(
-        padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-        child: InkWell(
-          // onLongPress: () {
-          //   screenState.markerMode = true;
-          //   element.marked = true;
-          //   screenState.refresh();
-          // },
-          onTap: () {
-            showDialog(
-                context: context,
-                builder: (context) {
-                  return AlertDialog(
-                    scrollable: true,
-                    shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(25)),
-                    title: Text(element.title),
-                    content: Container(
-                      child: Linkify(
-                        text: element.msg,
-                        onOpen: (link) async {
-                          if (await canLaunch(link.url)) {
-                            await launch(link.url);
-                          } else {
-                            throw 'Could not launch $link';
-                          }
-                        },
-                      ),
-                    ),
-                    actionsAlignment: MainAxisAlignment.center,
-                    actions: [
-                      TextButton(
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                          child: Text(S.current.cancel))
-                    ],
-                  );
-                });
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).scaffoldBackgroundColor,
-              borderRadius: BorderRadius.circular(25),
-              boxShadow: [
-                BoxShadow(
-                  blurRadius: 10,
-                  spreadRadius: 2,
-                  offset: Offset(-0.5, 0),
-                  color: isDark
-                      ? Theme.of(context)
-                          .colorScheme
-                          .background
-                          .withOpacity(0.5)
-                      : Theme.of(context).backgroundColor,
-                )
-              ],
-            ),
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Slidable(
-                key: ValueKey(element.id),
-                groupTag: '0',
-                // The start action pane is the one at the left or the top side.
-                child: Row(
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: Colors.amber[100]),
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.notifications_active_rounded,
-                          color: Colors.amber,
-                        ),
-                      ),
-                    ),
-                    SizedBox(
-                      width: 16,
-                    ),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            element.title,
-                            style: TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                          Text(
-                            element.msg,
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                          Text(
-                            element.date,
-                            style: TextStyle(
-                                color: Theme.of(context).disabledColor),
-                          ),
-                        ],
-                      ),
-                    ),
-                    Visibility(
-                      visible: screenState.markerMode,
-                      child: Checkbox(
-                          value: element.marked,
-                          onChanged: (bool? check) {
-                            element.marked = check ?? false;
-                            screenState.refresh();
-                          }),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-        ),
-      ));
-      index++;
-      if (index != model.length) {
-        children.add(Divider(
-          thickness: 2,
-          color: Theme.of(context).backgroundColor,
-        ));
-      }
-    });
-    return children;
   }
 
   int getSelectedItem() {

@@ -5,7 +5,7 @@
 
 
 const String devDomain = 'http://134.209.241.49';
-const String ProdDomain = 'http://46.101.100.62';
+const String prodDomain = 'http://46.101.100.62';
 
 class Urls {
   static const String DOMAIN = devDomain;

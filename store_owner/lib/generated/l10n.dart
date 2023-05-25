@@ -7050,6 +7050,16 @@ class S {
     );
   }
 
+  /// `go to offers`
+  String get goToOffers {
+    return Intl.message(
+      'go to offers',
+      name: 'goToOffers',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `distance has been edited by admin\ntap to more details`
   String get distanceEditedByAdmin {
     return Intl.message(

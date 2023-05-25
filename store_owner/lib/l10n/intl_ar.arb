@@ -700,6 +700,7 @@
     "id":"المعرف",
     "valueMustBeGreaterThanZero":"القيمة يجب ان تكون اكبر من 0",
     "unLimitedOrders":"عدد طلبات غير محدود",
+    "goToOffers": "اذهب الى العروض",
     "distanceEditedByAdmin":"المسافة عدلت من قبل الادارة\nيكنك الاطلاع على المزيد من التفاصيل هنا",
     "distanceUpdated":"مسافة معدلة",
     "adminNotes":"ملاحظات الادارة:",
