@@ -4,6 +4,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/manager/orders_manager/orders_manager.dart';
 import 'package:c4d/module_orders/model/captain_cash_orders_finance.dart';
+import 'package:c4d/module_orders/model/order/conflict_distance_order.dart';
 import 'package:c4d/module_orders/model/order/order_action_logs_model.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/model/order_captain_logs_model.dart';
@@ -15,6 +16,7 @@ import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
+import 'package:c4d/module_orders/request/order_conflict_distance_request/order_conflict_distance_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/request/resolve_conflects_order_request.dart';
@@ -77,7 +79,7 @@ class OrdersService {
 
   Future<DataModel> getOrdersConflictedDistance(
       FilterOrderRequest request) async {
-    OrdersResponse? response =
+    OrderConflictDistanceRequest? response =
         await _ordersManager.getOrdersConflictedDistance(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '200') {
@@ -85,7 +87,7 @@ class OrdersService {
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
     if (response.data == null) return DataModel.empty();
-    return OrderModel.withData(response);
+    return ConflictDistanceOrder.withData(response);
   }
 
   Future<DataModel> getCaptainOrdersFilter(FilterOrderRequest request) async {

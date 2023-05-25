@@ -473,16 +473,19 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                                                     ?.validate() ==
                                                 true) {
                                               Navigator.of(context).pop();
-                                              screenState.manager.addExtraDistance(
-                                                  screenState,
-                                                  AddExtraDistanceRequest(
-                                                      id: orderInfo.id,
-                                                      storeBranchToClientDistanceAdditionExplanation:
-                                                          reason.text.trim(),
-                                                      destination: null,
-                                                      additionalDistance:
-                                                          double.parse(
-                                                              distance.text)));
+                                              screenState.manager
+                                                  .addExtraDistance(
+                                                      screenState,
+                                                      AddExtraDistanceRequest(
+                                                          id: orderInfo.id,
+                                                          adminNote: reason
+                                                              .text
+                                                              .trim(),
+                                                          destination: null,
+                                                          additionalDistance:
+                                                              double.parse(
+                                                                  distance
+                                                                      .text)));
                                             } else {
                                               Fluttertoast.showToast(
                                                   msg: S.current
@@ -542,9 +545,9 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                                                         screenState,
                                                         AddExtraDistanceRequest(
                                                             id: orderInfo.id,
-                                                            storeBranchToClientDistanceAdditionExplanation:
-                                                                reason.text
-                                                                    .trim(),
+                                                            adminNote: reason
+                                                                .text
+                                                                .trim(),
                                                             destination:
                                                                 Destination(
                                                               lat: double

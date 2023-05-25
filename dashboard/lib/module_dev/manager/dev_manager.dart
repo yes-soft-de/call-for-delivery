@@ -10,6 +10,6 @@ class DevManager {
   DevManager(
     this._repository,
   );
-  Future<ActionResponse?> createOrder(CreateTestOrderRequest request) => _repository.createOrder(request);
-   
+  Future<ActionResponse?> createOrder(CreateTestOrderRequest request) =>
+      _repository.createOrder(request);
 }

@@ -14,7 +14,7 @@ class Urls {
     '552222225',
   ];
   /*--------BASES-------------------*/
-  static const String DOMAIN = prodDomain;
+  static const String DOMAIN = devDomain;
   static const String BASE_API = DOMAIN + '';
   static const String VERSION = '/v1';
   static const GEO_DISTANCE = DOMAIN + '/v1/geodistance/geodistance';
@@ -160,8 +160,10 @@ class Urls {
       BASE_API_ORDER + '/filterdifferentansweredcashorders';
   static const FILTER_CAPTAIN_ORDERS_API =
       BASE_API_ORDER + '/filtercaptainordersbyadmin';
-  static const FILTER_ORDERS_CONFLICTED_DISTANCE_API =
-      BASE_API_ORDER + '/filterdifferentdestinationsorders';
+  static const FILTER_ORDERS_CONFLICTED_DISTANCE_API = DOMAIN +
+      VERSION_ADMIN +
+      '/orderdistanceconflict' +
+      '/filterorderdistanceconflictbyadmin';
   static const GET_ORDER_LOGS_API =
       DOMAIN + '/v1/admin/orderlog' + '/orderlogsbyorderidforadmin';
   static const ORDERS_PENDING_API = BASE_API_ORDER + '/orderpending';
@@ -343,7 +345,8 @@ class Urls {
       BASE_API_ORDER + '/bidorderbyidforadmin/';
   /*-----------------------------order----------------------------*/
   static const CREATE_ORDER_API = BASE_API_ORDER + '/createorder';
-  static const CREATE_DEV_ORDER_API = DOMAIN + '/v1/dev/admin/order' + '/createorderbyadmin';
+  static const CREATE_DEV_ORDER_API =
+      DOMAIN + '/v1/dev/admin/order' + '/createorderbyadmin';
   static const ADD_EXTRA_DISTANCE_TO_ORDER_API =
       BASE_API_ORDER + '/addstorebranchtoclientdistanceviadestinationbyadmin';
   static const UPDATE_EXTRA_DISTANCE_TO_ORDER_API = BASE_API_ORDER +

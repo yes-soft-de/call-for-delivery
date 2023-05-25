@@ -1,5 +1,14 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/material.dart';
+
+enum ActionType {
+  addKiloMeter,
+  editCoordinates;
+
+  /// the value is [ActionType.addKiloMeter]
+  static ActionType get defaultValue => ActionType.addKiloMeter;
+}
 
 class OrderDistanceConflict extends StatelessWidget {
   final String orderNumber;
@@ -7,10 +16,10 @@ class OrderDistanceConflict extends StatelessWidget {
   final String branchName;
   final String captain;
   final Color? background;
-  final double distance;
+  final String distance;
   final String? conflictReason;
   final Function() onEdit;
-  final Function() onEditExtra;
+
   OrderDistanceConflict({
     required this.orderNumber,
     this.background,
@@ -20,15 +29,17 @@ class OrderDistanceConflict extends StatelessWidget {
     required this.branchName,
     required this.captain,
     required this.conflictReason,
-    required this.onEditExtra,
   });
 
   @override
   Widget build(BuildContext context) {
     var color = background ?? Theme.of(context).colorScheme.primary;
+    var whiteText =
+        Theme.of(context).textTheme.bodyMedium?.copyWith(color: Colors.white);
+    var radius = 10.0;
     return Container(
       decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(25),
+          borderRadius: BorderRadius.circular(radius),
           gradient: LinearGradient(colors: [
             color.withOpacity(0.85),
             color.withOpacity(0.85),
@@ -41,132 +52,162 @@ class OrderDistanceConflict extends StatelessWidget {
         padding: const EdgeInsets.all(12.0),
         child: Column(
           children: [
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                  ),
-                  child: IconButton(
-                      onPressed: onEdit,
-                      icon: Icon(
-                        Icons.edit_road_rounded,
-                        color: Theme.of(context).colorScheme.primary,
-                      )),
-                ),
-                SizedBox(
-                  width: 8,
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(15),
-                    color: Theme.of(context).colorScheme.primaryContainer,
-                  ),
-                  child: IconButton(
-                      onPressed: onEditExtra,
-                      icon: Icon(
-                        Icons.add_road_rounded,
-                        color: Theme.of(context).colorScheme.primary,
-                      )),
-                ),
-              ],
-            ),
             // order number & order status
             Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                verticalTile(context,
-                    title: S.current.orderNumber, subtitle: orderNumber),
-                verticalTile(context,
-                    title: S.current.storeOwner, subtitle: storeOwner),
-              ],
-            ),
-            // divider
-            divider(context),
-            // order date & create date
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                verticalTile(context,
-                    title: S.current.branch, subtitle: branchName),
-                verticalTile(context,
-                    title: S.current.captain, subtitle: captain),
-              ],
-            ),
-            // divider
-            divider(context),
-            // order cost
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                verticalTile(context,
-                    title: S.current.distance,
-                    subtitle: distance.toStringAsFixed(2) + ' ' + S.current.km),
-                Visibility(
-                  visible: conflictReason != null,
-                  child: Row(
+                Expanded(
+                  child: Column(
                     children: [
-                      Icon(
-                        Icons.info,
-                        color: Colors.amber,
-                      ),
-                      SizedBox(
-                        width: 4,
-                      ),
-                      Container(
-                          decoration: BoxDecoration(
-                            color: Colors.amber,
-                            borderRadius: BorderRadius.circular(25),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.all(4.0),
-                            child: Text(
-                              conflictReason ?? '',
-                              style: TextStyle(
-                                color: Colors.white,
-                              ),
+                      IntrinsicHeight(
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: [
+                            Text(
+                              storeOwner,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelLarge
+                                  ?.copyWith(fontWeight: FontWeight.normal),
                             ),
-                          ))
+                            VDivider(),
+                            Text(
+                              branchName,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .labelLarge
+                                  ?.copyWith(fontWeight: FontWeight.normal),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // divider
+                      HDivider(),
                     ],
                   ),
-                )
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(radius),
+                    color: Colors.white,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      '#$orderNumber',
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyLarge
+                          ?.copyWith(color: color),
+                    ),
+                  ),
+                ),
               ],
+            ),
+            SizedBox(height: 20),
+            SizedBox(
+              height: 30,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: Text(
+                      '${S.current.captain}: $captain',
+                      style: whiteText,
+                      maxLines: 1,
+                    ),
+                  ),
+                  Expanded(
+                    child: Visibility(
+                      visible: num.tryParse(distance) != null,
+                      child: Text(
+                        '${S.current.distance}: $distance ${S.current.km}',
+                        style: whiteText,
+                        overflow: TextOverflow.fade,
+                        maxLines: 1,
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Visibility(
+                      visible: num.tryParse(distance) == null,
+                      child: Text(
+                        '${S.current.theEdit}: $distance',
+                        style: whiteText,
+                        maxLines: 1,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              style: _elevatedButtonStyle(),
+              onPressed: () {
+                onEdit();
+              },
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.edit_note, color: color),
+                  SizedBox(width: 10),
+                  Text(
+                    S.current.caseDetailsAndMakeAction,
+                    style: TextStyle(color: color, fontSize: 16),
+                  ),
+                ],
+              ),
             ),
           ],
         ),
       ),
     );
   }
+}
 
-  Widget verticalTile(context,
-      {required String title, required String subtitle}) {
-    return Column(
-      children: [
-        Text(
-          title,
-          style: TextStyle(
-              fontWeight: FontWeight.bold,
-              color: Theme.of(context).textTheme.button?.color),
-        ),
-        Text(subtitle,
-            style: Theme.of(context)
-                .textTheme
-                .button
-                ?.copyWith(fontWeight: FontWeight.normal)),
-      ],
+class VDivider extends StatelessWidget {
+  const VDivider({
+    super.key,
+    this.dividerColor,
+  });
+
+  final Color? dividerColor;
+
+  @override
+  Widget build(BuildContext context) {
+    return VerticalDivider(
+      indent: 2,
+      endIndent: 2,
+      color: dividerColor ?? Theme.of(context).textTheme.labelLarge!.color!,
     );
   }
+}
 
-  Widget divider(context) {
-    Color dividerColor = Theme.of(context).textTheme.button!.color!;
+class HDivider extends StatelessWidget {
+  HDivider({
+    super.key,
+    this.dividerColor,
+  });
+
+  final Color? dividerColor;
+
+  @override
+  Widget build(BuildContext context) {
     return Divider(
-      thickness: 2,
-      indent: 16,
-      endIndent: 16,
-      color: dividerColor,
+      indent: 5,
+      endIndent: 5,
+      color: dividerColor ?? Theme.of(context).textTheme.labelLarge!.color!,
     );
   }
+}
+
+ButtonStyle _elevatedButtonStyle({Color color = Colors.amber}) {
+  return ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(color),
+    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+      RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10),
+      ),
+    ),
+  );
 }

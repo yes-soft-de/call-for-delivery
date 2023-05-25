@@ -6,6 +6,7 @@ import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
+import 'package:c4d/module_orders/request/order_conflict_distance_request/order_conflict_distance_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/order_non_sub_request.dart';
 import 'package:c4d/module_orders/request/resolve_conflects_order_request.dart';
@@ -90,7 +91,7 @@ class OrderRepository {
     return OrderCaptainLogsResponse.fromJson(response);
   }
 
-  Future<OrdersResponse?> getOrdersConflictedDistance(
+  Future<OrderConflictDistanceRequest?> getOrdersConflictedDistance(
       FilterOrderRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
@@ -99,7 +100,7 @@ class OrderRepository {
       headers: {'Authorization': 'Bearer ${token}'},
     );
     if (response == null) return null;
-    return OrdersResponse.fromJson(response);
+    return OrderConflictDistanceRequest.fromJson(response);
   }
 
   Future<ActionResponse?> updateExtraDistanceToOrder(

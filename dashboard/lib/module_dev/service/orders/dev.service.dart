@@ -21,5 +21,4 @@ class DevService {
     if (response.data == null) return DataModel.empty();
     return DataModel.empty();
   }
-
 }

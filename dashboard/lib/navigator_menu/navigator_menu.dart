@@ -274,18 +274,15 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.contactInfo, Icons.info, true),
                 ],
                 page: widget.currentPage),
-                 // dev
+            // dev
             Visibility(
               visible: 'http://134.209.241.49' == Urls.DOMAIN,
               child: customExpansionTile(
                   title: S.current.dev,
                   icon: FontAwesomeIcons.dev,
                   children: [
-                    customListTile(
-                        getIt<DevModule>().newTestOrderScreen,
-                        S.current.newOrder,
-                        FontAwesomeIcons.dev,
-                        true),
+                    customListTile(getIt<DevModule>().newTestOrderScreen,
+                        S.current.newOrder, FontAwesomeIcons.dev, true),
                   ],
                   page: widget.currentPage),
             ),

@@ -166,7 +166,7 @@ class NewTestOrderStateBranchesLoaded extends States {
                     ),
                   ],
                 ),
-                // order count 
+                // order count
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: CustomFormField(
@@ -175,7 +175,7 @@ class NewTestOrderStateBranchesLoaded extends States {
                     numbers: true,
                   ),
                 )
-               ],
+              ],
             ),
           ),
         ),
@@ -189,8 +189,8 @@ class NewTestOrderStateBranchesLoaded extends States {
                     if (screenState.storeID != null &&
                         screenState.branch != null &&
                         screenState.orderCountController.text.isNotEmpty) {
-                    Navigator.of(context).pop();
-                    createOrder();
+                      Navigator.of(context).pop();
+                      createOrder();
                     } else {
                       CustomFlushBarHelper.createError(
                               title: S.current.warnning,
