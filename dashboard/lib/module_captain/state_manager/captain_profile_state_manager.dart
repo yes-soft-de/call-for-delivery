@@ -68,14 +68,14 @@ class CaptainProfileStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error.toString())
-            .show(screenState.context);
+            ;
         getCaptainProfile(screenState, int.tryParse(captainID) ?? -1);
       } else {
         getCaptainProfile(screenState, int.tryParse(captainID) ?? -1);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.accountDeletedSuccessfully)
-            .show(screenState.context);
+            ;
         getIt<GlobalStateManager>().updateList();
       }
     });
@@ -88,14 +88,14 @@ class CaptainProfileStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error.toString())
-            .show(screenState.context);
+            ;
         getCaptainProfile(screenState, request.id);
       } else {
         getCaptainProfile(screenState, request.id);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.captainUpdatedSuccessfully)
-            .show(screenState.context);
+            ;
         getIt<GlobalStateManager>().updateList();
       }
     });
@@ -108,14 +108,14 @@ class CaptainProfileStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error.toString())
-            .show(screenState.context);
+            ;
         getCaptainProfile(screenState, captainId);
       } else {
         getCaptainProfile(screenState, captainId);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.captainUpdatedSuccessfully)
-            .show(screenState.context);
+            ;
         getIt<GlobalStateManager>().updateList();
       }
     });

@@ -20,7 +20,6 @@ class OrderTimeLineScreenState extends State<OrderTimeLineScreen> {
   int orderId = -1;
   late States currentState;
 
-  final _scaffoldKey = GlobalKey<ScaffoldState>();
   OrderTimeLineStateManager get manager => widget._stateManager;
 
   @override

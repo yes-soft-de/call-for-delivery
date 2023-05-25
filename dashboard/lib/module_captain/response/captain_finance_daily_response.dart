@@ -35,11 +35,11 @@ class CaptainData {
   int? amount;
   int? alreadyHadAmount;
   int? financialSystemType;
-  dynamic? financialSystemPlan;
+  dynamic financialSystemPlan;
   int? isPaid;
   bool? withBonus;
   int? bonus;
-  dynamic? captainFinancialDailyUpdatedAt;
+  dynamic captainFinancialDailyUpdatedAt;
 
   CaptainData(
       {this.id,

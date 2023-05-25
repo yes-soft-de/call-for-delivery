@@ -1,4 +1,3 @@
-import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_stores/request/active_store_request.dart';
 import 'package:c4d/module_stores/request/create_store_request.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -9,7 +8,6 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/model/stores_model.dart';
 import 'package:c4d/module_stores/state_manager/store_profile_state_manager.dart';
-import 'package:c4d/module_stores/stores_routes.dart';
 
 @injectable
 class StoreInfoScreen extends StatefulWidget {

@@ -5,10 +5,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_company/request/create_company_profile.dart';
-import 'package:c4d/module_company/request/delivery_company_financial.dart';
-import 'package:c4d/module_company/request/financial_compensation_request.dart';
 import 'package:c4d/module_company/state_manager/company_financial_state_manager.dart';
-import 'package:c4d/module_company/state_manager/company_profile_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 
 @injectable

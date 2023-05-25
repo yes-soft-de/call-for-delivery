@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
-import 'dart:math';
 
 class CaptainCardPayment extends StatelessWidget {
   final String captainId;

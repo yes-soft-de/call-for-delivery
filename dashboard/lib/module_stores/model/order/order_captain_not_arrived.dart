@@ -1,6 +1,5 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_stores/response/order/order_captain_not_arrived/data.dart';
 import 'package:c4d/module_stores/response/order/order_captain_not_arrived/orders_not_arrived_response.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:intl/intl.dart';

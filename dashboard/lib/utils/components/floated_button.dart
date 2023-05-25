@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:c4d/generated/l10n.dart';
 
 class FloatedIconButton extends StatelessWidget {
   final String text;

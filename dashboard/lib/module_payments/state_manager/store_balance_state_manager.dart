@@ -47,13 +47,13 @@ class StoreBalanceStateManager {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: value.error ?? S.current.errorHappened)
-            .show(screenState.context);
+            ;
       } else {
         getBalance(screenState, request.storeId ?? -1);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: value.error ?? S.current.paymentSuccessfully)
-            .show(screenState.context);
+            ;
       }
     });
   }
@@ -66,13 +66,13 @@ class StoreBalanceStateManager {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: value.error ?? S.current.errorHappened)
-            .show(screenState.context);
+            ;
       } else {
         getBalance(screenState, screenState.storeID);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: value.error ?? S.current.paymentsDeletedSuccessfully)
-            .show(screenState.context);
+            ;
       }
     });
   }

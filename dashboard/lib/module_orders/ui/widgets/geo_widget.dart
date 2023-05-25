@@ -1,5 +1,6 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_deep_links/model/deep_links_model.dart';
 import 'package:c4d/module_deep_links/model/geo_model.dart';
 import 'package:c4d/module_deep_links/request/geo_distance_request.dart';
 import 'package:c4d/module_deep_links/response/geo_distance_x/cost_delivery_order_response/cost_delivery_order.dart';

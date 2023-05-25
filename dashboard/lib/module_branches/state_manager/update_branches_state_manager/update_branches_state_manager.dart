@@ -1,7 +1,5 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_branches/request/create_branch_request/create_branch_request.dart';
 import 'package:c4d/module_branches/request/create_list_branches/create_list_branches.dart';
 import 'package:c4d/module_branches/request/update_branch/update_branch_request.dart';
 import 'package:c4d/module_branches/service/branches_list_service.dart';

@@ -1,6 +1,4 @@
 import 'dart:io';
-import 'dart:typed_data';
-import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
@@ -36,8 +34,7 @@ class NewOrderLinkStateLoaded extends States {
         branches.firstWhere((element) => element.id == screenState.branch);
     screenState.refresh();
   }
-  final List<String> _paymentMethods = ['online', 'cash'];
-  String _selectedPaymentMethod = 'online';
+
   DateTime? orderDate;
   DateTime dateTime = DateTime.now();
   TimeOfDay time = TimeOfDay.now();
@@ -393,8 +390,6 @@ class NewOrderLinkStateLoaded extends States {
                         child: InkWell(
                           borderRadius: BorderRadius.circular(18),
                           onTap: () {
-                            var isDark =
-                                getIt<ThemePreferencesHelper>().isDarkMode();
                             FilePicker.platform.pickFiles(
                                 allowedExtensions: ['pdf'],
                                 type: FileType.custom).then((result) async {
@@ -668,20 +663,17 @@ class NewOrderLinkStateLoaded extends States {
           } else if (screenState.payments == null) {
             CustomFlushBarHelper.createError(
                     title: S.current.warnning,
-                    message: S.current.pleaseProvidePaymentMethode)
-                .show(context);
+                    message: S.current.pleaseProvidePaymentMethode);
           } else if (screenState.costType == null &&
               screenState.payments == 'cash' &&
               screenState.packageType == 1) {
             CustomFlushBarHelper.createError(
                     title: S.current.warnning,
-                    message: S.current.pleaseProvideCostType)
-                .show(context);
+                    message: S.current.pleaseProvideCostType);
           } else {
             CustomFlushBarHelper.createError(
                     title: S.current.warnning,
-                    message: S.current.pleaseCompleteField)
-                .show(context);
+                    message: S.current.pleaseCompleteField);
           }
         });
   }
@@ -702,7 +694,7 @@ class NewOrderLinkStateLoaded extends States {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: S.current.errorUploadingImages)
-            .show(screenState.context);
+            ;
       }
       screenState.addNewOrder(CreateOrderRequest(
         storeId: screenState.storeID,
@@ -784,7 +776,7 @@ class NewOrderLinkStateLoaded extends States {
 
   void pickImageFromCamera() {
     Navigator.of(screenState.context).pop();
-    ImagePicker.platform
+    ImagePicker()
         .pickImage(source: ImageSource.camera, imageQuality: 80)
         .then((value) async {
       memoryBytes = await value?.readAsBytes();
@@ -795,7 +787,7 @@ class NewOrderLinkStateLoaded extends States {
 
   void pickImageFromGallery() {
     Navigator.of(screenState.context).pop();
-    ImagePicker.platform
+    ImagePicker()
         .pickImage(source: ImageSource.gallery)
         .then((value) async {
       memoryBytes = await value?.readAsBytes();

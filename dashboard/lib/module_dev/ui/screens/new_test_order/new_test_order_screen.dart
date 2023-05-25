@@ -67,6 +67,7 @@ class NewTestOrderScreenState extends State<NewTestOrderScreen>
   @override
   void dispose() {
     orderCountController.dispose();
+    _stateSubscription?.cancel();
     super.dispose();
   }
 

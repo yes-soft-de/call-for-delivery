@@ -1,7 +1,5 @@
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_categories/model/package_categories_model.dart';
 import 'package:c4d/module_categories/model/packages_model.dart';
-import 'package:c4d/module_categories/request/package_category_request.dart';
 import 'package:c4d/module_categories/request/package_request.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
@@ -240,8 +238,7 @@ class _CategoryFormState extends State<PackageForm> {
             } else {
               CustomFlushBarHelper.createError(
                       title: S.current.warnning,
-                      message: S.current.pleaseCompleteTheForm)
-                  .show(context);
+                      message: S.current.pleaseCompleteTheForm);
             }
           }),
     );

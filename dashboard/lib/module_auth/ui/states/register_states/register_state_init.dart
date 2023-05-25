@@ -1,4 +1,3 @@
-import 'package:flutter_svg/svg.dart';
 import 'package:c4d/consts/country_code.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
@@ -11,7 +10,6 @@ import 'package:c4d/utils/components/auth_buttons.dart';
 import 'package:c4d/utils/effect/hidder.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/images/images.dart';
-import 'package:scroll_to_index/scroll_to_index.dart';
 
 class RegisterStateInit extends RegisterState {
   RegisterScreenState screenState;
@@ -22,12 +20,12 @@ class RegisterStateInit extends RegisterState {
         screenState.userRegistered().whenComplete(() {
           CustomFlushBarHelper.createError(
                   title: S.current.warnning, message: error)
-              .show(screenState.context);
+              ;
         });
       } else {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: error)
-            .show(screenState.context);
+            ;
       }
     }
   }

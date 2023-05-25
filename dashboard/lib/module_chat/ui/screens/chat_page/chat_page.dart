@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:collection';
 import 'package:c4d/consts/urls.dart';
-import 'package:c4d/module_chat/ui/widget/chat_bubble/chat_list_filterd.dart';
 import 'package:c4d/utils/helpers/date_utilts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -173,8 +172,7 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
           widget._authService, sendSupport);
     } else if (currentState == ChatStateManager.STATUS_CODE_GOT_DATA &&
         chatsMessagesWidgets.isEmpty) {
-      return LoadingChatPage(
-          widget._chatStateManager, widget._uploadService, widget._authService);
+      return LoadingChatPage( widget._uploadService);
     }
     return WillPopScope(
       onWillPop: () async {

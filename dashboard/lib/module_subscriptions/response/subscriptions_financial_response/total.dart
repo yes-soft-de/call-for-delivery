@@ -3,7 +3,7 @@ class Total {
   num? extraCost;
   num? sumPayments;
   num? packageCost;
-  dynamic? advancePayment;
+  dynamic advancePayment;
   num? total;
   num? captainOfferPrice;
   num? requiredToPay;

@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/response/order_details_response/captain.dart';
 import 'package:c4d/module_orders/response/order_logs_response/data.dart';

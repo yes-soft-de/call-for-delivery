@@ -1,7 +1,6 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_order_count.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_count_order_request.dart';
-import 'package:c4d/module_payments/request/create_captain_finance_by_order_request.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
@@ -165,8 +164,7 @@ class _CategoryFormState extends State<FinanceByOrderCountForm> {
             } else {
               CustomFlushBarHelper.createError(
                       title: S.current.warnning,
-                      message: S.current.pleaseCompleteTheForm)
-                  .show(context);
+                      message: S.current.pleaseCompleteTheForm);
             }
           }),
     );

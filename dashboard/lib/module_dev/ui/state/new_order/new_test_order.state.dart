@@ -194,8 +194,7 @@ class NewTestOrderStateBranchesLoaded extends States {
                     } else {
                       CustomFlushBarHelper.createError(
                               title: S.current.warnning,
-                              message: S.current.pleaseCompleteField)
-                          .show(context);
+                              message: S.current.pleaseCompleteField);
                     }
                   },
                   content: S.current.confirmMakeOrder,

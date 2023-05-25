@@ -56,14 +56,14 @@ class NewOrderLinkStateManager {
         Navigator.pop(screenState.context);
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
       } else {
         getIt<GlobalStateManager>().updateList();
         Navigator.pop(screenState.context);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.orderCreatedSuccessfully)
-            .show(screenState.context);
+            ;
       }
     });
   }

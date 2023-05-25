@@ -3,9 +3,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_categories/model/package_categories_model.dart';
 import 'package:c4d/module_categories/model/packages_model.dart';
 import 'package:c4d/module_subscriptions/request/store_edit_subscribe_to_package.dart';
-import 'package:c4d/module_subscriptions/request/store_subscribe_to_package.dart';
 import 'package:c4d/module_subscriptions/ui/screen/edit_subscription_screen.dart';
-import 'package:c4d/module_subscriptions/ui/screen/init_subscription_screen.dart';
 import 'package:c4d/module_subscriptions/ui/widget/package_card/package_card.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/effect/scaling.dart';
@@ -187,9 +185,6 @@ class EditSubscriptionsLoadedState extends States {
   }
 
   List<Widget> _getPackages(String? city) {
-    if (packages == null) {
-      return [];
-    }
     if (packages.isEmpty) {
       return [];
     }

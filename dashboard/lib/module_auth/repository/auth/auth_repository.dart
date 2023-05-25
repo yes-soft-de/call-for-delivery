@@ -9,13 +9,11 @@ import 'package:c4d/module_auth/request/register_request/verfy_code_request.dart
 import 'package:c4d/module_auth/response/login_response/login_response.dart';
 import 'package:c4d/module_auth/response/regester_response/regester_response.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
-import 'package:c4d/utils/logger/logger.dart';
 
 @injectable
 class AuthRepository {
   final ApiClient _apiClient;
-  final Logger _logger;
-  AuthRepository(this._apiClient, this._logger);
+  AuthRepository(this._apiClient);
 
   Future<RegisterResponse?> createUser(RegisterRequest request) async {
     dynamic result = await _apiClient.post(

@@ -371,8 +371,7 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
           } else {
             CustomFlushBarHelper.createError(
                     title: S.current.warnning,
-                    message: S.current.pleaseCompleteTheForm)
-                .show(context);
+                    message: S.current.pleaseCompleteTheForm);
           }
         });
   }

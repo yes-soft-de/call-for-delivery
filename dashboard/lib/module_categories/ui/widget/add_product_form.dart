@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'dart:io';
 
 import 'package:c4d/module_categories/ui/state/packages/packages_loaded_state.dart';
@@ -140,8 +142,7 @@ class _AddProductsFormState extends State<AddProductsForm> {
             } else {
               CustomFlushBarHelper.createError(
                       title: S.current.warnning,
-                      message: S.current.pleaseCompleteTheForm)
-                  .show(context);
+                      message: S.current.pleaseCompleteTheForm);
             }
           }),
     );
@@ -255,8 +256,7 @@ class _UpdateProductsFormState extends State<UpdateProductsForm> {
             } else {
               CustomFlushBarHelper.createError(
                       title: S.current.warnning,
-                      message: S.current.pleaseCompleteTheForm)
-                  .show(context);
+                      message: S.current.pleaseCompleteTheForm);
             }
           }),
     );
@@ -337,8 +337,7 @@ class _UpdateProductsCommissionFormState
             } else {
               CustomFlushBarHelper.createError(
                       title: S.current.warnning,
-                      message: S.current.pleaseCompleteTheForm)
-                  .show(context);
+                      message: S.current.pleaseCompleteTheForm);
             }
           }),
     );

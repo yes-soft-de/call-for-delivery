@@ -53,13 +53,13 @@ class OrderDistanceConflictStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
         screenState.getOrders();
       } else {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.distanceUpdatedSuccessfully)
-            .show(screenState.context);
+            ;
         screenState.getOrders();
       }
     });
@@ -72,13 +72,13 @@ class OrderDistanceConflictStateManager {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+            ;
         screenState.getOrders();
       } else {
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.distanceUpdatedSuccessfully)
-            .show(screenState.context);
+            ;
         screenState.getOrders();
       }
     });

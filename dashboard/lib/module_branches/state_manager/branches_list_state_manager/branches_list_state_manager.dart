@@ -52,13 +52,13 @@ class BranchesListStateManager {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: value.error ?? S.current.errorHappened)
-            .show(screenState.context);
+            ;
       } else {
         getBranchesList(screenState, storeID);
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.deleteBranchSuccess)
-            .show(screenState.context);
+            ;
       }
     });
   }

@@ -30,13 +30,13 @@ class StoreSubscriptionManagementStateManager {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: value.error ?? S.current.errorHappened)
-            .show(screenState.context);
+            ;
       } else {
         _stateSubject.add(SubscriptionManagementStateLoaded(screenState));
 
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning, message: S.current.successRenew)
-            .show(screenState.context);
+            ;
       }
     });
   }
@@ -50,13 +50,13 @@ class StoreSubscriptionManagementStateManager {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: value.error ?? S.current.errorHappened)
-            .show(screenState.context);
+            ;
       } else {
         _stateSubject.add(SubscriptionManagementStateLoaded(screenState));
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.packageExtendedSuccessfully)
-            .show(screenState.context);
+            ;
       }
     });
   }
@@ -70,13 +70,13 @@ class StoreSubscriptionManagementStateManager {
         CustomFlushBarHelper.createError(
                 title: S.current.warnning,
                 message: value.error ?? S.current.errorHappened)
-            .show(screenState.context);
+            ;
       } else {
         _stateSubject.add(SubscriptionManagementStateLoaded(screenState));
         CustomFlushBarHelper.createSuccess(
                 title: S.current.warnning,
                 message: S.current.futureSubscriptionsDeletedSuccessfully)
-            .show(screenState.context);
+            ;
       }
     });
   }

@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
 
@@ -5,7 +7,7 @@ class CustomListTile extends StatelessWidget {
   final String title;
   String? subTitle;
   final IconData iconData;
-  Widget? leading;
+  final Widget? leading;
   @override
   Widget build(BuildContext context) {
     Widget? icon;

@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_hours_model.dart';
@@ -5,13 +6,11 @@ import 'package:c4d/module_payments/ui/screen/captain_finance_by_hours_screen.da
 import 'package:c4d/module_payments/ui/widget/finance_by_hours_form.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
-import 'package:c4d/utils/global/screen_type.dart';
-import 'package:c4d/utils/helpers/fixed_numbers.dart';
-import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
-import 'package:intl/intl.dart' as intl;
+import 'package:c4d/utils/global/screen_type.dart';
+import 'package:c4d/utils/helpers/fixed_numbers.dart';
 
 class CaptainFinanceByHoursLoadedState extends States {
   CaptainFinanceByHoursLoadedState(this.screenState, this.model,
@@ -22,8 +21,6 @@ class CaptainFinanceByHoursLoadedState extends States {
   final String? error;
   final List<CaptainFinanceByHoursModel>? model;
   final CaptainFinanceByHoursScreenState screenState;
-  final _amount = TextEditingController();
-  final _note = TextEditingController();
   @override
   Widget getUI(BuildContext context) {
     if (error != null) {

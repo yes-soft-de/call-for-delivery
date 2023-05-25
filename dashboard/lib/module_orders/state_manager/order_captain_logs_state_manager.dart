@@ -4,13 +4,11 @@ import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/model/order_captain_logs_model.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/ui/screens/orders_captain_screen.dart';
 import 'package:c4d/module_orders/ui/state/order_logs_state/order_captain_logs_loaded_state.dart';
-import 'package:c4d/module_orders/ui/state/order_logs_state/order_logs_loaded_state.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 

@@ -3,10 +3,6 @@ import 'package:c4d/module_captain/model/captain_need_support.dart';
 import 'package:c4d/module_captain/service/captains_service.dart';
 import 'package:c4d/module_captain/ui/screen/captain_needs_support_screen.dart';
 import 'package:c4d/module_captain/ui/state/captains_supports/stores_support_loaded_state.dart';
-import 'package:c4d/module_stores/model/store_need_support.dart';
-import 'package:c4d/module_stores/service/store_service.dart';
-import 'package:c4d/module_stores/ui/screen/stores_needs_support_screen.dart';
-import 'package:c4d/module_stores/ui/state/stores_supports/stores_support_loaded_state.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 

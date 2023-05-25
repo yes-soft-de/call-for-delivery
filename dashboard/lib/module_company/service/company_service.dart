@@ -3,15 +3,9 @@ import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_company/manager/company_manager.dart';
-import 'package:c4d/module_company/model/company_finance_model.dart';
 import 'package:c4d/module_company/model/company_model.dart';
-import 'package:c4d/module_company/model/company_price.dart';
 import 'package:c4d/module_company/request/create_company_profile.dart';
-import 'package:c4d/module_company/request/delivery_company_financial.dart';
-import 'package:c4d/module_company/request/financial_compensation_request.dart';
-import 'package:c4d/module_company/response/company_delivery_price_response.dart';
 import 'package:c4d/module_company/response/company_profile_response.dart';
-import 'package:c4d/module_company/response/financial_compensations_response.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
 
 @injectable

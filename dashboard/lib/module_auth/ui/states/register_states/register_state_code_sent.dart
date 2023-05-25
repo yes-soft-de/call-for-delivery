@@ -10,8 +10,6 @@ import 'package:c4d/module_auth/ui/states/register_states/register_state.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/images/images.dart';
-import 'package:c4d/utils/text_style/text_style.dart';
-
 class RegisterStatePhoneCodeSent extends RegisterState {
   bool retryEnabled = false;
   RegisterStatePhoneCodeSent(RegisterScreenState screen, {String? error})
@@ -22,8 +20,7 @@ class RegisterStatePhoneCodeSent extends RegisterState {
     });
     if (error != null) {
       CustomFlushBarHelper.createError(
-              title: S.current.warnning, message: error)
-          .show(screen.context);
+              title: S.current.warnning, message: error);
     }
   }
 
@@ -84,6 +81,7 @@ class RegisterStatePhoneCodeSent extends RegisterState {
                           } else if (value.length < 6) {
                             return S.of(context).invalidCode;
                           }
+                          return null;
                         },
                         decoration: InputDecoration(
                           border: InputBorder.none,
