@@ -6,7 +6,7 @@ use DateTime;
 
 class NotificationFirebaseTokenDeleteResponse
 {
-    public int $id;
+    public ?int $id;
 
     public string $token;
 
