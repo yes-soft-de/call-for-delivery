@@ -372,7 +372,7 @@ class SubscriptionService
 
         $packageBalance = $this->packageBalance($storeOwnerId);
     
-        if ($packageBalance !== SubscriptionConstant::UNSUBSCRIBED) {
+        if ($packageBalance->status !== SubscriptionConstant::UNSUBSCRIBED) {
             $item['subscriptionStatus'] = $packageBalance->status;
             // if subscription active
             if ($packageBalance->status === SubscriptionConstant::SUBSCRIBE_ACTIVE) {
