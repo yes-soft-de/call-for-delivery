@@ -528,6 +528,9 @@ class NotificationFirebaseService
         return $this->notificationFirebaseManager->deleteTokenByUserAndAppType($userId, $appType);
     }
 
+    /**
+     * Deletes firebase notification token of the user
+     */
     public function deleteTokenByUserId(int $userId): string|NotificationFirebaseTokenDeleteResponse
     {
         $tokenResult = $this->notificationFirebaseManager->deleteTokenByUserId($userId);

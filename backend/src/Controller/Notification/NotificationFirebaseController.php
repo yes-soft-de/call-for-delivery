@@ -206,43 +206,44 @@ class NotificationFirebaseController extends BaseController
         return $this->response($response, self::CREATE);
     }
 
-    /**
-     * user: delete firebase notification token by user when sign out
-     * @Route("firebasenotificationtoken", name="deleteFirebaseNotificationTokenByUser", methods={"DELETE"})
-     * @IsGranted("ROLE_USER")
-     * @return JsonResponse
-     *
-     * @OA\Tag(name="Notification Firebase")
-     *
-     * @OA\Parameter(
-     *      name="token",
-     *      in="header",
-     *      description="token to be passed as a header",
-     *      required=true
-     * )
-     *
-     * @OA\Response(
-     *      response=401,
-     *      description="Returns deleted token info",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *              ref=@Model(type="App\Response\Notification\NotificationFirebaseTokenDeleteResponse")
-     *          )
-     *      )
-     * )
-     *
-     * @Security(name="Bearer")
-     */
-    public function deleteTokenByUserId(): JsonResponse
-    {
-        $response = $this->notificationFirebaseService->deleteTokenByUserId($this->getUserId());
-
-        if ($response === NotificationTokenConstant::TOKEN_NOT_FOUND) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::NOTIFICATION_FIREBASE_TOKEN_NOT_FOUND_CONST);
-        }
-
-        return $this->response($response, self::DELETE);
-    }
+    // The functionality of this API had been included in the logout process
+//    /**
+//     * user: delete firebase notification token by user when sign out
+//     * @Route("firebasenotificationtoken", name="deleteFirebaseNotificationTokenByUser", methods={"DELETE"})
+//     * @IsGranted("ROLE_USER")
+//     * @return JsonResponse
+//     *
+//     * @OA\Tag(name="Notification Firebase")
+//     *
+//     * @OA\Parameter(
+//     *      name="token",
+//     *      in="header",
+//     *      description="token to be passed as a header",
+//     *      required=true
+//     * )
+//     *
+//     * @OA\Response(
+//     *      response=401,
+//     *      description="Returns deleted token info",
+//     *      @OA\JsonContent(
+//     *          @OA\Property(type="string", property="status_code"),
+//     *          @OA\Property(type="string", property="msg"),
+//     *          @OA\Property(type="object", property="Data",
+//     *              ref=@Model(type="App\Response\Notification\NotificationFirebaseTokenDeleteResponse")
+//     *          )
+//     *      )
+//     * )
+//     *
+//     * @Security(name="Bearer")
+//     */
+//    public function deleteTokenByUserId(): JsonResponse
+//    {
+//        $response = $this->notificationFirebaseService->deleteTokenByUserId($this->getUserId());
+//
+//        if ($response === NotificationTokenConstant::TOKEN_NOT_FOUND) {
+//            return $this->response(MainErrorConstant::ERROR_MSG, self::NOTIFICATION_FIREBASE_TOKEN_NOT_FOUND_CONST);
+//        }
+//
+//        return $this->response($response, self::DELETE);
+//    }
 }
