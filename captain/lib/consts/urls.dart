@@ -214,7 +214,7 @@ class Urls {
       '$DOMAIN/v1/orderchatroom/createneworderchatroom';
   static const ORDER_NONSUB_API_LINK = '$DOMAIN/v1/order/ordernonsub';
   static const UPDATE_EXTRA_DISTANCE_TO_ORDER_API =
-      '$DOMAIN/v1/order/destination/newdestinancebycaptain';
+      '$DOMAIN/v1/orderdistanceconflict/orderdistanceconflictbycaptain';
 
   /*------------------------------------------CAPTAIN FINANCE-------------------------------------------*/
   static const GET_CAPTAIN_FINANCE_BY_ORDER =

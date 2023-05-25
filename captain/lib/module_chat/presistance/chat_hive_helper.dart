@@ -7,6 +7,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ChatHiveHelper {
   var box = Hive.box('Chat');
 
+  void setDirectSupportRom(String room) {
+    box.put('DirectSupport', room);
+  }
+
+  String? getDirectSupport() {
+    return box.get('DirectSupport');
+  }
+
   void setChatIndex(String roomId, String sender, int index) {
     box.put(roomId + sender, index);
   }

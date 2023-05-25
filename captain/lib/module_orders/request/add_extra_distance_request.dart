@@ -1,26 +1,27 @@
 class AddExtraDistanceRequest {
   int? id;
-  String? storeBranchToClientDistanceAdditionExplanation;
+  String? conflictNote;
   Destination? destination;
-  double? additionalDistance;
+  String? additionalDistance;
 
   AddExtraDistanceRequest({
     this.id,
-    this.storeBranchToClientDistanceAdditionExplanation,
+    this.conflictNote,
     this.destination,
     this.additionalDistance,
   });
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> map = {};
-    map['id'] = id;
-    map['storeBranchToClientDistanceAdditionExplanation'] =
-        storeBranchToClientDistanceAdditionExplanation;
+    map['orderId'] = id;
+    map['conflictNote'] = conflictNote;
     if (destination != null) {
       map['destination'] = destination?.toJson();
+      map['proposedDestinationOrDistance'] = '${destination?.lat ?? 0},${destination?.lon ?? 0}';
     }
     if (additionalDistance != null) {
       map['additionalDistance'] = additionalDistance;
+      map['proposedDestinationOrDistance'] = additionalDistance;
     }
     return map;
   }
