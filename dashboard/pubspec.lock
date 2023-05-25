@@ -394,7 +394,7 @@ packages:
     source: hosted
     version: "1.3.1"
   feature_discovery:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: feature_discovery
       sha256: c4008f3d78515883354ab095cabaefbd5116fb7005b150d28cead306f03f4b30
@@ -627,6 +627,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.0"
+  flutter_lints:
+    dependency: "direct dev"
+    description:
+      name: flutter_lints
+      sha256: aeb0b80a8b3709709c9cc496cdc027c5b3216796bc0af0ce1007eaf24464fd4c
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   flutter_local_notifications:
     dependency: "direct main"
     description:
@@ -1024,7 +1032,7 @@ packages:
     source: hosted
     version: "0.8.2"
   lehttp_overrides:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: lehttp_overrides
       sha256: "9c54ada96cda6ff848aafa1608bf95c35377a0628e4a9a30d9af1500cfc4f04b"
@@ -1039,14 +1047,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
-  liquid_progress_indicator:
-    dependency: "direct main"
+  lints:
+    dependency: transitive
     description:
-      name: liquid_progress_indicator
-      sha256: ffd7eca3995e03ce0bd0e1f10ce11da3d8877c51e1270d1e8b9556dbbbbe6689
+      name: lints
+      sha256: "6b0206b0bf4f04961fc5438198ccb3a885685cd67d4d4a32cc20ad7f8adbe015"
       url: "https://pub.dev"
     source: hosted
-    version: "0.4.0"
+    version: "2.1.0"
+  liquid_progress_indicator_v2:
+    dependency: "direct main"
+    description:
+      name: liquid_progress_indicator_v2
+      sha256: "6bb2c675bab4936864a63ccd503be417e407974e11c62711917a4006bb9288b8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.0"
   list_tile_switch:
     dependency: "direct main"
     description:

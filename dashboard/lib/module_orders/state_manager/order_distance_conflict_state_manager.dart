@@ -5,7 +5,6 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/conflict_distance_order.dart';
-import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
