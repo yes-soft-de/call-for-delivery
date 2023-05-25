@@ -25,6 +25,7 @@ class Datum {
   int? captainProfileId;
   String? storeOwnerName;
   int? storeOwnerProfileId;
+  String? storeBranchName;
 
   Datum({
     this.id,
@@ -47,10 +48,12 @@ class Datum {
     this.captainProfileId,
     this.storeOwnerName,
     this.storeOwnerProfileId,
+    this.storeBranchName,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json['id'] as int?,
+        storeBranchName: json['storeBranchName'] as String?,
         orderId: json['orderId'] as int?,
         createdAt: json['createdAt'] == null
             ? null

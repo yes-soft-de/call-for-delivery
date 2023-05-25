@@ -10,6 +10,8 @@ class FilterOrderRequest {
   String? captainID;
   String? payment;
   String? orderId;
+  String? storeOwnerProfileId;
+  String? storeBranchId;
   bool? isResolved;
   FilterOrderRequest({
     this.isResolved,
@@ -18,10 +20,19 @@ class FilterOrderRequest {
     this.toDate,
     this.captainID,
     this.orderId,
+    this.storeBranchId,
+    this.storeOwnerProfileId,
   });
 
   Future<Map<String, dynamic>> toJson() async {
     final Map<String, dynamic> data = <String, dynamic>{};
+
+    if (this.storeOwnerProfileId != null) {
+      data['storeOwnerProfileId'] = this.storeOwnerProfileId;
+    }
+    if (this.isResolved != null) {
+      data['isResolved'] = this.isResolved;
+    }
     if (this.isResolved != null) {
       data['isResolved'] = this.isResolved;
     }

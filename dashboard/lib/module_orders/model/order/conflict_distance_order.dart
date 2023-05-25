@@ -21,6 +21,7 @@ class ConflictDistanceOrder extends DataModel {
   late String proposedDestinationOrDistance;
   late String captainName;
   late String storeOwnerName;
+  late String storeBranchName;
 
   ConflictDistanceOrder({
     required this.id,
@@ -40,6 +41,7 @@ class ConflictDistanceOrder extends DataModel {
     required this.captainProfileId,
     required this.storeOwnerName,
     required this.storeOwnerProfileId,
+    required this.storeBranchName,
   });
 
   ConflictDistanceOrder.withData(OrderConflictDistanceRequest request) {
@@ -72,6 +74,7 @@ class ConflictDistanceOrder extends DataModel {
           resolveType: element.resolveType ?? -1,
           storeOwnerName: element.storeOwnerName ?? S.current.unknown,
           storeOwnerProfileId: element.storeOwnerProfileId ?? -1,
+          storeBranchName: element.storeBranchName ?? S.current.unknown,
         ));
       },
     );

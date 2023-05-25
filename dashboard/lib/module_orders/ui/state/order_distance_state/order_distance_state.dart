@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 class OrderDistanceConflictLoadedState extends States {
   OrderDistanceConflictScreenState screenState;
   List<ConflictDistanceOrder> orders;
+
   OrderDistanceConflictLoadedState(this.screenState, this.orders)
       : super(screenState);
 
@@ -37,8 +38,7 @@ class OrderDistanceConflictLoadedState extends States {
             },
             child: OrderDistanceConflict(
               orderNumber: element.orderId.toString(),
-              // TODO:
-              branchName: '',
+              branchName: element.storeBranchName,
               captain: element.captainName,
               distance: element.proposedDestinationOrDistance,
               onEdit: () {
@@ -143,7 +143,7 @@ class OrderDistanceConflictLoadedState extends States {
                                   Navigator.pop(context);
                                   if (action == ActionType.addKiloMeter) {
                                     var request = AddExtraDistanceRequest(
-                                      id: element.id,
+                                      id: element.orderId,
                                       adminNote: reason.text.trim(),
                                       additionalDistance:
                                           double.tryParse(decision.text),

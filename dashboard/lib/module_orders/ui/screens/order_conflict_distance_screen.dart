@@ -3,14 +3,20 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/global_nav_key.dart';
+import 'package:c4d/module_branches/model/branches/branches_model.dart';
+import 'package:c4d/module_branches/service/branches_list_service.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/state_manager/order_distance_conflict_state_manager.dart';
+import 'package:c4d/module_orders/ui/widgets/label_text.dart';
+import 'package:c4d/module_stores/model/stores_model.dart';
+import 'package:c4d/module_stores/service/store_service.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:intl/intl.dart';
+import 'package:dropdown_search/dropdown_search.dart';
 
 @injectable
 class OrderDistanceConflictScreen extends StatefulWidget {
@@ -26,6 +32,12 @@ class OrderDistanceConflictScreen extends StatefulWidget {
 class OrderDistanceConflictScreenState
     extends State<OrderDistanceConflictScreen> {
   late States currentState;
+
+  ValueNotifier<List<StoresModel>> stores = ValueNotifier([]);
+  ValueNotifier<List<BranchesModel>> branches = ValueNotifier([]);
+  StoresModel? selectedStore;
+  BranchesModel? selectedBranch;
+
   int currentIndex = 0;
   StreamSubscription? _stateSubscription;
   OrderDistanceConflictStateManager get manager => widget._stateManager;
@@ -49,6 +61,28 @@ class OrderDistanceConflictScreenState
       currentState = event;
       if (mounted) {
         setState(() {});
+      }
+    });
+  }
+
+  _getStores() {
+    getIt<StoresService>().getStores().then((value) {
+      if (value.hasError) {
+      } else if (value.isEmpty) {
+      } else {
+        value as StoresModel;
+        stores.value = value.data;
+      }
+    });
+  }
+
+  _getBranches(int storeID) {
+    getIt<BranchesListService>().getBranches(storeID.toString()).then((value) {
+      if (value.hasError) {
+      } else if (value.isEmpty) {
+      } else {
+        value as BranchesModel;
+        branches.value = value.data;
       }
     });
   }
@@ -81,7 +115,10 @@ class OrderDistanceConflictScreenState
           CustomC4dAppBar.actionIcon(
             context,
             icon: Icons.search,
-            onTap: () {},
+            onTap: () {
+              _getStores();
+              _showSearchDialog(context);
+            },
           ),
           CustomC4dAppBar.actionIcon(
             context,
@@ -302,6 +339,200 @@ class OrderDistanceConflictScreenState
           ],
         ),
       ),
+    );
+  }
+
+  _showSearchDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  S.current.searchForStore,
+                  style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                ),
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  ListTile(
+                    title: LabelText(S.of(context).store),
+                    subtitle: Container(
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Theme.of(context).colorScheme.background),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16),
+                        child: ValueListenableBuilder(
+                          valueListenable: stores,
+                          builder: (context, value, child) {
+                            return DropdownSearch<StoresModel>(
+                              enabled: stores.value.isNotEmpty,
+                              dropdownBuilder: (context, model) {
+                                return Text(
+                                  model?.storeOwnerName ??
+                                      S.current.chooseStore,
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                );
+                              },
+                              dropdownDecoratorProps: DropDownDecoratorProps(
+                                  dropdownSearchDecoration: InputDecoration(
+                                      hintStyle: TextStyle(
+                                          fontWeight: FontWeight.bold),
+                                      border: InputBorder.none,
+                                      enabledBorder: InputBorder.none,
+                                      focusedBorder: InputBorder.none,
+                                      contentPadding:
+                                          EdgeInsets.fromLTRB(0, 12, 0, 0))),
+                              dropdownButtonProps: DropdownButtonProps(),
+                              popupProps: PopupProps.menu(
+                                  showSearchBox: true,
+                                  menuProps: MenuProps(
+                                    borderRadius: BorderRadius.circular(25),
+                                  ),
+                                  searchFieldProps: TextFieldProps(
+                                      decoration: InputDecoration(
+                                          hintText: S.current.chooseStore,
+                                          border: OutlineInputBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(25))))),
+                              items: stores.value,
+                              filterFn: (model, filter) {
+                                return model.storeOwnerName.contains(filter);
+                              },
+                              itemAsString: (model) => model.storeOwnerName,
+                              onChanged: (v) {
+                                v as StoresModel;
+                                selectedStore = v;
+                                selectedBranch = null;
+                                branches.value = [];
+                                _getBranches(v.id);
+                                ordersFilter.storeOwnerProfileId =
+                                    selectedStore?.id.toString() ?? null;
+                                ordersFilter.storeBranchId = null;
+                              },
+                              selectedItem: selectedStore,
+                            );
+                          },
+                        ), // stores
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              // branches
+              Column(
+                children: [
+                  ListTile(
+                    title: LabelText(S.of(context).branch),
+                    subtitle: Container(
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Theme.of(context).colorScheme.background),
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 16.0, right: 16),
+                        child: ValueListenableBuilder(
+                          valueListenable: branches,
+                          builder: (context, value, child) {
+                            return DropdownSearch<BranchesModel>(
+                                enabled: branches.value.isNotEmpty,
+                                dropdownBuilder: (context, model) {
+                                  return Text(
+                                    model?.branchName ?? S.current.chooseBranch,
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.bold),
+                                  );
+                                },
+                                dropdownDecoratorProps: DropDownDecoratorProps(
+                                    dropdownSearchDecoration: InputDecoration(
+                                        hintStyle: TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                        border: InputBorder.none,
+                                        enabledBorder: InputBorder.none,
+                                        focusedBorder: InputBorder.none,
+                                        contentPadding:
+                                            EdgeInsets.fromLTRB(0, 12, 0, 0))),
+                                dropdownButtonProps: DropdownButtonProps(),
+                                popupProps: PopupProps.menu(
+                                    showSearchBox: true,
+                                    menuProps: MenuProps(
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                    searchFieldProps: TextFieldProps(
+                                        decoration: InputDecoration(
+                                            hintText: S.current.chooseStore,
+                                            border: OutlineInputBorder(
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        25))))),
+                                items: branches.value,
+                                filterFn: (model, filter) {
+                                  return model.branchName.contains(filter);
+                                },
+                                itemAsString: (model) => model.branchName,
+                                onChanged: (v) {
+                                  v as BranchesModel;
+                                  selectedBranch = v;
+                                  ordersFilter.storeBranchId =
+                                      selectedBranch?.id.toString() ?? null;
+                                },
+                                selectedItem: selectedBranch);
+                          },
+                        ), // stores
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: SizedBox(
+                  height: 45,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          child: Text(S.current.confirm),
+                          onPressed: () {
+                            getOrders();
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                      SizedBox(width: 5),
+                      Expanded(
+                        child: ElevatedButton(
+                          child: Text(S.current.cancel),
+                          onPressed: () {
+                            ordersFilter.storeOwnerProfileId = null;
+                            ordersFilter.storeBranchId = null;
+                            selectedBranch = null;
+                            selectedStore = null;
+                            getOrders();
+                            Navigator.pop(context);
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 10)
+            ],
+          ),
+        );
+      },
     );
   }
 }
