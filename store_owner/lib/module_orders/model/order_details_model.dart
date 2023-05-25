@@ -40,6 +40,7 @@ class OrderDetailsModel extends DataModel {
   late String captainRating;
   PdfModel? pdf;
   String? storeBranchToClientDistance;
+  String? adminNote;
 
   /// this field to know if we can remove order
   late bool canRemove;
@@ -52,45 +53,46 @@ class OrderDetailsModel extends DataModel {
   late String? captainPhone;
   int? isCashPaymentConfirmedByStore;
   bool subOrder = false;
-  OrderDetailsModel(
-      {required this.id,
-      required this.branchName,
-      required this.customerName,
-      required this.customerPhone,
-      required this.destinationCoordinate,
-      required this.destinationLink,
-      required this.deliveryDateString,
-      required this.createdDate,
-      required this.note,
-      required this.orderCost,
-      required this.payment,
-      required this.state,
-      required this.roomID,
-      required this.canRemove,
-      required this.deliveryDate,
-      required this.image,
-      required this.captainID,
-      required this.distance,
-      required this.isCaptainArrived,
-      required this.branchPhone,
-      required this.attention,
-      required this.captainOrderCost,
-      required this.orderLogs,
-      required this.kilometer,
-      required this.paidToProvider,
-      required this.orderIsMain,
-      required this.subOrders,
-      required this.createDateTime,
-      required this.imagePath,
-      required this.branchID,
-      required this.captainName,
-      required this.captainPhone,
-      required this.captainRating,
-      this.pdf,
-      this.storeBranchToClientDistance,
-      this.isCashPaymentConfirmedByStore,
-      required this.subOrder,
-      });
+  OrderDetailsModel({
+    required this.id,
+    required this.branchName,
+    required this.customerName,
+    required this.customerPhone,
+    required this.destinationCoordinate,
+    required this.destinationLink,
+    required this.deliveryDateString,
+    required this.createdDate,
+    required this.note,
+    required this.orderCost,
+    required this.payment,
+    required this.state,
+    required this.roomID,
+    required this.canRemove,
+    required this.deliveryDate,
+    required this.image,
+    required this.captainID,
+    required this.distance,
+    required this.isCaptainArrived,
+    required this.branchPhone,
+    required this.attention,
+    required this.captainOrderCost,
+    required this.orderLogs,
+    required this.kilometer,
+    required this.paidToProvider,
+    required this.orderIsMain,
+    required this.subOrders,
+    required this.createDateTime,
+    required this.imagePath,
+    required this.branchID,
+    required this.captainName,
+    required this.captainPhone,
+    required this.captainRating,
+    this.pdf,
+    this.storeBranchToClientDistance,
+    this.isCashPaymentConfirmedByStore,
+    required this.subOrder,
+    required this.adminNote
+  });
 
   late OrderDetailsModel _orders;
 
@@ -156,7 +158,9 @@ class OrderDetailsModel extends DataModel {
               pdfBaseUrl: element?.pdf?.baseUrl)
           : null,
       captainRating:
-          FixedNumber.getFixedNumber(element?.captainDetails?.rating ?? 0), subOrder: element?.primaryOrder != null,
+          FixedNumber.getFixedNumber(element?.captainDetails?.rating ?? 0),
+      subOrder: element?.primaryOrder != null,
+      adminNote: element?.adminNote
     );
   }
   OrderTimeLine? _getOrderLogs(OrderLogsResponse? orderLogs) {

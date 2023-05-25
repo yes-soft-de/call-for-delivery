@@ -65,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تمت إضافة الفرع بنجاح"),
         "addProducts": MessageLookupByLibrary.simpleMessage("إضافة منتجات"),
         "address": MessageLookupByLibrary.simpleMessage("الموقع"),
+        "adminNotes": MessageLookupByLibrary.simpleMessage("ملاحظات الادارة:"),
         "adsAndOffers":
             MessageLookupByLibrary.simpleMessage("الإعلانات و العروض"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
@@ -315,6 +316,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "directSupport": MessageLookupByLibrary.simpleMessage("دعم مباشر"),
         "discount": MessageLookupByLibrary.simpleMessage("الخصم"),
         "distance": MessageLookupByLibrary.simpleMessage("المسافة"),
+        "distanceEditedByAdmin": MessageLookupByLibrary.simpleMessage(
+            "المسافة عدلت من قبل الادارة\nيكنك الاطلاع على المزيد من التفاصيل هنا"),
+        "distanceUpdated": MessageLookupByLibrary.simpleMessage("مسافة معدلة"),
         "distanceUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث المسافة بنجاح"),
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
@@ -553,6 +557,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "offerStatus": MessageLookupByLibrary.simpleMessage("حالة العرض"),
         "offerStatusUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث عرض السعر بنجاح"),
+        "ok": MessageLookupByLibrary.simpleMessage("حسنا"),
         "onGoingOrder": MessageLookupByLibrary.simpleMessage("الطلبات الجارية"),
         "onGoingOrderChatRooms":
             MessageLookupByLibrary.simpleMessage("محادثات الطلبات الجارية"),
@@ -1055,6 +1060,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "wrongOrderType":
             MessageLookupByLibrary.simpleMessage("خطأ في نوع الطلب"),
         "yes": MessageLookupByLibrary.simpleMessage("نعم"),
+        "youCanContactWithDirectSupportForMoreDetails":
+            MessageLookupByLibrary.simpleMessage(
+                "يمكنك التواصل مع الدعم المباشر ان اردت مراجعة الحالة"),
         "youCanResendAfter":
             MessageLookupByLibrary.simpleMessage("يمكنك طلب رمز جديد بعد مرور"),
         "youCannotDeleteOrder": MessageLookupByLibrary.simpleMessage(

@@ -45,6 +45,7 @@ class Data {
   String? storeBranchToClientDistance;
   int? isCashPaymentConfirmedByStore;
   int? primaryOrder;
+  String? adminNote;
   Data({
     this.id,
     this.state,
@@ -81,6 +82,7 @@ class Data {
     this.storeBranchToClientDistance,
     this.isCashPaymentConfirmedByStore,
     this.primaryOrder,
+    this.adminNote,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -140,6 +142,7 @@ class Data {
         subOrders: (json['subOrder'] as List<dynamic>?)
             ?.map((e) => SubOrder.fromJson(e as Map<String, dynamic>))
             .toList(),
+        adminNote: json['adminNote'] as String?,
       );
 
   Map<String, dynamic> toJson() => {
