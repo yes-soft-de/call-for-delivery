@@ -528,9 +528,13 @@ class NotificationFirebaseService
         return $this->notificationFirebaseManager->deleteTokenByUserAndAppType($userId, $appType);
     }
 
-    public function deleteTokenByUserId(int $userId): ?NotificationFirebaseTokenDeleteResponse
+    public function deleteTokenByUserId(int $userId): string|NotificationFirebaseTokenDeleteResponse
     {
         $tokenResult = $this->notificationFirebaseManager->deleteTokenByUserId($userId);
+
+        if (! $tokenResult) {
+            return NotificationTokenConstant::TOKEN_NOT_FOUND;
+        }
 
         return $this->autoMapping->map(NotificationFirebaseTokenEntity::class, NotificationFirebaseTokenDeleteResponse::class, $tokenResult);
     }

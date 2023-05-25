@@ -530,8 +530,8 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination',
                 'storeOrderDetails.recipientName', 'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
                 'imageEntity.imagePath as orderImage', 'captainEntity.captainName', 'captainEntity.phone', 'orderEntity.paidToProvider', 'orderEntity.noteCaptainOrderCost', 'orderEntity.captainOrderCost',
-                'storeOrderDetails.filePdf', 'orderEntity.storeBranchToClientDistance', 'orderEntity.isCashPaymentConfirmedByStore', 'orderEntity.isCashPaymentConfirmedByStoreUpdateDate',
-                'primaryOrderEntity.id as primaryOrderId', 'orderEntity.costType')
+                'orderEntity.deliveryCost', 'storeOrderDetails.filePdf', 'orderEntity.storeBranchToClientDistance', 'orderEntity.isCashPaymentConfirmedByStore',
+                'orderEntity.isCashPaymentConfirmedByStoreUpdateDate', 'primaryOrderEntity.id as primaryOrderId', 'orderEntity.costType')
             ->addSelect('storeOwnerProfileEntity.id as storeOwnerId')
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')
             ->addSelect('subscriptionEntity as storeSubscription')
@@ -1347,6 +1347,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')
             ->addSelect('bidDetailsEntity as bidDetailsInfo')
+//            ->addSelect('orderEntity.primaryOrder as primaryOrderId')
            
             ->leftJoin(StoreOrderDetailsEntity::class, 'storeOrderDetails', Join::WITH, 'orderEntity.id = storeOrderDetails.orderId')
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')            
@@ -1386,6 +1387,8 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('orderEntity.state != :cancelledState')
             ->setParameter('cancelledState', OrderStateConstant::ORDER_STATE_CANCEL)
 
+            ->orderBy('orderEntity.id', 'DESC')
+
             ->getQuery()
             ->getResult();
     }
@@ -1419,8 +1422,11 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->andWhere('orderEntity.state IN (:onGoingStatusArray)')
             ->setParameter('onGoingStatusArray', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)
 
-            ->andWhere('orderEntity.isHide = :show')
+            ->andWhere('orderEntity.isHide = :show OR orderEntity.isHide = :subOrderVisibility')
             ->setParameter('show', OrderIsHideConstant::ORDER_SHOW)
+            ->setParameter('subOrderVisibility', OrderIsHideConstant::ORDER_HIDE)
+
+            ->orderBy('orderEntity.id', 'DESC')
 
             ->getQuery()
             ->getResult();

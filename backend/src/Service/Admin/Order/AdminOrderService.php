@@ -729,7 +729,7 @@ class AdminOrderService
                     // 3. Create log
                     $this->createOrderLogViaOrderEntity($newUpdatedOrder);
 
-                    $this->createOrderLogMessageViaOrderEntityAndByAdmin($newUpdatedOrder, $userId);
+                    $this->createOrderLogMessageAboutOrderCancelViaOrderEntityAndByAdmin($newUpdatedOrder, $userId, []);
 
                     // 4. Send notifications
                     // local notification to store
@@ -771,7 +771,7 @@ class AdminOrderService
                     // 4. Create log
                     $this->createOrderLogViaOrderEntity($arrayResult[0]);
 
-                    $this->createOrderLogMessageViaOrderEntityAndByAdmin($arrayResult[0], $userId);
+                    $this->createOrderLogMessageAboutOrderCancelViaOrderEntityAndByAdmin($arrayResult[0], $userId, []);
 
                     // 5. Send notifications
                     // local notification to store
@@ -866,7 +866,7 @@ class AdminOrderService
                     // 7. Create log
                     $this->createOrderLogViaOrderEntity($arrayResult[0]);
 
-                    $this->createOrderLogMessageViaOrderEntityAndByAdmin($arrayResult[0], $userId);
+                    $this->createOrderLogMessageAboutOrderCancelViaOrderEntityAndByAdmin($arrayResult[0], $userId, []);
 
                     // 8. Send notifications
                     // local notification to store
@@ -1298,21 +1298,27 @@ class AdminOrderService
     /**
      * Calculates delivery cost of an order and updates it with the new value
      */
-    public function calculateAndUpdateOrderDeliveryCostByOrderIdAndStoreOwnerProfileIdAndDistance(int $orderId, int $storeOwnerProfileId, float $storeBranchToClientDistance): OrderEntity|string
+    public function calculateAndUpdateOrderDeliveryCostByOrderIdAndStoreOwnerProfileIdAndDistance(OrderEntity $orderEntity, int $adminUserId, int $action): OrderEntity|string
     {
+        $orderLogDetails = [];
+        $orderLogDetails['oldDeliverCost'] = $orderEntity->getDeliveryCost();
+
         // 1 calculate delivery cost
         $deliveryCostCalculateRequest = $this->getNewAdminCalculateCostDeliveryOrderRequestObject();
 
-        $deliveryCostCalculateRequest->setStoreOwnerProfileId($storeOwnerProfileId);
-        $deliveryCostCalculateRequest->setStoreBranchToClientDistance($storeBranchToClientDistance);
+        $deliveryCostCalculateRequest->setStoreOwnerProfileId($orderEntity->getStoreOwner()->getId());
+        $deliveryCostCalculateRequest->setStoreBranchToClientDistance($orderEntity->getStoreBranchToClientDistance());
 
         $deliveryCost = $this->calculateCostDeliveryOrder($deliveryCostCalculateRequest);
 
         // 2 update order delivery cost
         $orderDeliveryCostUpdateRequest = $this->getNewOrderDeliveryCostUpdateByAdminRequestObject();
 
-        $orderDeliveryCostUpdateRequest->setId($orderId);
+        $orderDeliveryCostUpdateRequest->setId($orderEntity->getId());
         $orderDeliveryCostUpdateRequest->setDeliveryCost($deliveryCost->total);
+
+        // save log of the action on order
+        $this->createOrderLogMessageViaOrderEntityAndByAdmin($orderEntity, $adminUserId, $action, $orderLogDetails);
 
         return $this->updateOrderDeliveryCost($orderDeliveryCostUpdateRequest);
     }
@@ -1350,8 +1356,8 @@ class AdminOrderService
                             $request->getDestination());
 
                         // 5. Update delivery cost
-                        $orderDeliveryCostUpdateResult = $this->calculateAndUpdateOrderDeliveryCostByOrderIdAndStoreOwnerProfileIdAndDistance($orderEntity->getId(),
-                            $orderEntity->getStoreOwner()->getId(), $orderEntity->getStoreBranchToClientDistance());
+                        $orderDeliveryCostUpdateResult = $this->calculateAndUpdateOrderDeliveryCostByOrderIdAndStoreOwnerProfileIdAndDistance($orderEntity,
+                            $userId, OrderLogActionTypeConstant::ORDER_DELIVERY_COST_UPDATED_BY_NEW_DESTINATION_BY_ADMIN_CONST);
 
                         if ($orderDeliveryCostUpdateResult instanceof OrderEntity) {
                             $this->entityManager->getConnection()->commit();
@@ -1553,8 +1559,8 @@ class AdminOrderService
                 // ******** ////
 
                 // 3 Update delivery cost
-                $orderDeliveryCostUpdateResult = $this->calculateAndUpdateOrderDeliveryCostByOrderIdAndStoreOwnerProfileIdAndDistance($order->getId(),
-                    $order->getStoreOwner()->getId(), $order->getStoreBranchToClientDistance());
+                $orderDeliveryCostUpdateResult = $this->calculateAndUpdateOrderDeliveryCostByOrderIdAndStoreOwnerProfileIdAndDistance($order,
+                    $userId, OrderLogActionTypeConstant::ORDER_DELIVERY_COST_UPDATED_BY_NEW_DISTANCE_BY_ADMIN_CONST);
 
                 if ($orderDeliveryCostUpdateResult instanceof OrderEntity) {
                     // 4 Re-calculate the financial dues of the captain who has the order (if exists)
@@ -1753,11 +1759,11 @@ class AdminOrderService
         return $this->orderTimeLineService->createOrderLogsRequest($orderEntity);
     }
 
-    public function createOrderLogMessageViaOrderEntityAndByAdmin(OrderEntity $orderEntity, int $userId)
+    public function createOrderLogMessageAboutOrderCancelViaOrderEntityAndByAdmin(OrderEntity $orderEntity, int $userId, array $details)
     {
         // save log of the action on order
         $this->orderLogService->createOrderLogMessage($orderEntity, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
-            OrderLogActionTypeConstant::CANCEL_ORDER_BY_ADMIN_ACTION_CONST, [], null, null);
+            OrderLogActionTypeConstant::CANCEL_ORDER_BY_ADMIN_ACTION_CONST, $details, null, null);
     }
 
     /**
@@ -1956,5 +1962,12 @@ class AdminOrderService
         }
 
         return $response;
+    }
+
+    public function createOrderLogMessageViaOrderEntityAndByAdmin(OrderEntity $orderEntity, int $userId, int $action, array $details)
+    {
+        // save log of the action on order
+        $this->orderLogService->createOrderLogMessage($orderEntity, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+            $action, $details, null, null);
     }
 }

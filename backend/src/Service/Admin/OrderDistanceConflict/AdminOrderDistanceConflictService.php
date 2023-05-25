@@ -96,6 +96,12 @@ class AdminOrderDistanceConflictService
                     $response[$key]->captainName = $captain->getCaptainName();
                     $response[$key]->captainProfileId = $captain->getId();
                 }
+                // set store's branch name
+                $storeOrderDetails = $value->getOrderId()->getStoreOrderDetailsEntity();
+
+                if ($storeOrderDetails) {
+                    $response[$key]->storeBranchName = $storeOrderDetails->getBranch()->getName();
+                }
             }
         }
 
