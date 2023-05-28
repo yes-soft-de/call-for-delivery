@@ -996,5 +996,6 @@
     "added": "added",
     "toTheCalculatedDistance": "to the calculated distance",
     "clientLocationUpdatedTo": "cline location updated to",
+    "adUpdatedSuccessfully": "ad updated successfully",
     "dev":"Dev"
 }
