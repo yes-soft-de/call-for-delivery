@@ -2,10 +2,10 @@
 
 namespace App\Controller\Admin\AnnouncementImage;
 
-use App\Constant\Admin\AnnouncementImage\AdminAnnouncementImageResultConstant;
+use App\Constant\Admin\AnnouncementImage\AnnouncementImageResultConstant;
 use App\Constant\Main\MainErrorConstant;
 use App\Controller\BaseController;
-use App\Service\Admin\AdminAnnouncementImage\AdminAnnouncementImageService;
+use App\Service\Admin\AnnouncementImage\AdminAnnouncementImageService;
 use Nelmio\ApiDocBundle\Annotation\Model;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
@@ -72,7 +72,7 @@ class AdminAnnouncementImageController extends BaseController
     {
         $result = $this->adminAnnouncementImageService->deleteAnnouncementImageById($id);
 
-        if ($result === AdminAnnouncementImageResultConstant::ANNOUNCEMENT_IMAGE_NOT_FOUND_CONST) {
+        if ($result === AnnouncementImageResultConstant::ANNOUNCEMENT_IMAGE_NOT_FOUND_CONST) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ANNOUNCEMENT_IMAGE_NOT_EXIST_CONST);
         }
 

@@ -264,7 +264,7 @@ class OrderService
     {
         $order = $this->orderManager->getSpecificOrderForStore($id);
 
-        if ($order) {//dd($order);
+        if ($order) {
             $order['attention'] = $order['noteCaptainOrderCost'];
 
             $order['images'] = $this->uploadFileHelperService->getImageParams($order['imagePath']);

@@ -275,7 +275,8 @@ class OrderController extends BaseController
      *                  ),
      *                  @OA\Property(type="integer", property="primaryOrderId"),
      *                  @OA\Property(type="integer", property="costType"),
-     *                  @OA\Property(type="string", property="adminNote")
+     *                  @OA\Property(type="string", property="adminNote"),
+     *                  @OA\Property(type="string", property="chatSupportRoomId")
      *              ),
      *          )
      *       )
