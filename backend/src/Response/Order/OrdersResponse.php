@@ -88,4 +88,6 @@ class OrdersResponse
      * admin note about order distance conflict
      */
     public ?string $adminNote = null;
+
+    public ?string $chatSupportRoomId;
 }

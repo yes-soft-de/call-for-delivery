@@ -113,6 +113,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->addSelect('captainEntity.captainName', 'captainEntity.phone')
             ->addSelect('primaryOrderEntity.id as primaryOrderId')
             ->addSelect('orderDistanceConflictEntity as orderDistanceConflict')
+            ->addSelect('storeOwnerProfileEntity.roomID as chatSupportRoomId')
 
             ->leftJoin(StoreOrderDetailsEntity::class, 'storeOrderDetails', Join::WITH, 'orderEntity.id = storeOrderDetails.orderId')
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')
@@ -133,13 +134,18 @@ class OrderEntityRepository extends ServiceEntityRepository
                 Join::WITH,
                 'primaryOrderEntity.id = orderEntity.primaryOrder'
             )
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+            )
             
             ->andWhere('orderEntity.id = :id')
-
             ->setParameter('id', $id)
 
             ->getQuery()
-            
             ->getOneOrNullResult();
     }
 
