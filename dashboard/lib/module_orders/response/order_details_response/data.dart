@@ -48,6 +48,8 @@ class Data {
   int? primaryOrderId;
   int? packageType;
   int? costType;
+  num? orderCostWithDeliveryCost;
+
   Data({
     this.id,
     this.state,
@@ -88,6 +90,7 @@ class Data {
     this.primaryOrderId,
     this.costType,
     this.packageType,
+    this.orderCostWithDeliveryCost,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -150,6 +153,7 @@ class Data {
             .toList(),
         costType: json['costType'] as int?,
         packageType: json['packageType'] as int?,
+        orderCostWithDeliveryCost: json['deliveryCost'] as num?
       );
 
   Map<String, dynamic> toJson() => {
