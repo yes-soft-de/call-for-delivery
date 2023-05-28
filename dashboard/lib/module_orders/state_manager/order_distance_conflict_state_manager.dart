@@ -5,7 +5,6 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/conflict_distance_order.dart';
-import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
@@ -53,14 +52,12 @@ class OrderDistanceConflictStateManager {
     _myOrdersService.updateExtraDistanceToOrder(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error ?? '')
-            ;
+            title: S.current.warnning, message: value.error ?? '');
         screenState.getOrders();
       } else {
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.distanceUpdatedSuccessfully)
-            ;
+            title: S.current.warnning,
+            message: S.current.distanceUpdatedSuccessfully);
         screenState.getOrders();
       }
     });
@@ -72,14 +69,12 @@ class OrderDistanceConflictStateManager {
     _myOrdersService.addExtraDistanceToOrder(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error ?? '')
-            ;
+            title: S.current.warnning, message: value.error ?? '');
         screenState.getOrders();
       } else {
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.distanceUpdatedSuccessfully)
-            ;
+            title: S.current.warnning,
+            message: S.current.distanceUpdatedSuccessfully);
         screenState.getOrders();
       }
     });
