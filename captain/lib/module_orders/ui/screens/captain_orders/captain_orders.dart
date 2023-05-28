@@ -9,6 +9,7 @@ import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_chat/presistance/chat_hive_helper.dart';
 import 'package:c4d/module_chat/repository/chat/chat_repository.dart';
+import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:c4d/module_notifications/preferences/notification_preferences/notification_preferences.dart';
 import 'package:c4d/module_notifications/service/fire_notification_service/fire_notification_service.dart';
@@ -30,7 +31,6 @@ import 'package:c4d/module_orders/response/company_info/company_info.dart';
 import 'package:c4d/module_orders/state_manager/captain_orders/captain_orders.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:location/location.dart' as loc;
 
 @injectable
 class CaptainOrdersScreen extends StatefulWidget {
@@ -128,7 +128,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   void initState() {
     super.initState();
     farOrders = NotificationsPrefHelper().getFarOrder();
-    canRequestLocation().then((value) async {
+    DeepLinksService.canRequestLocation().then((value) async {
       if (value) {
         Logger().info('Location enabled', '$value');
         Geolocator.getPositionStream(
@@ -344,33 +344,5 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
     _companySubscription?.cancel();
     widget._stateManager.newActionSubscription?.cancel();
     _supportMessages?.cancel();
-  }
-
-  Future<bool> canRequestLocation() async {
-    try {
-      bool serviceEnabled;
-      LocationPermission permission;
-      // Test if location services are enabled.
-      serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      if (!serviceEnabled) {
-        serviceEnabled = await loc.Location().requestService();
-        if (!serviceEnabled) {
-          return false;
-        }
-      }
-      permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-        if (permission == LocationPermission.denied) {
-          return false;
-        }
-      }
-      if (permission == LocationPermission.deniedForever) {
-        return false;
-      }
-      return true;
-    } catch (e) {
-      return false;
-    }
   }
 }

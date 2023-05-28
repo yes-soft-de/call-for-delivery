@@ -7,7 +7,6 @@ import 'package:c4d/module_deep_links/request/geo_distance_request.dart';
 import 'package:c4d/module_deep_links/response/geo_distance_x/geo_distance_x.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:location/location.dart' as loc;
 import 'package:uni_links/uni_links.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:c4d/utils/logger/logger.dart';
@@ -35,12 +34,15 @@ class DeepLinksService {
       LocationPermission permission;
       // Test if location services are enabled.
       serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      if (!serviceEnabled) {
-        serviceEnabled = await loc.Location().requestService();
-        if (!serviceEnabled) {
-          return null;
-        }
-      }
+      // if (!serviceEnabled) {
+      // serviceEnabled = await Geolocator.requestPermission();
+      //   serviceEnabled = await loc.Location().requestService();
+      //   if (!serviceEnabled) {
+      //     return null;
+      //   }
+      // }
+      LocationPermission checkPermission = await Geolocator.checkPermission();
+      // 
       permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
@@ -99,5 +101,24 @@ class DeepLinksService {
     GeoDistanceModel model =
         GeoDistanceModel(distance: response.data?.distance);
     return model;
+  }
+
+  static Future<bool> canRequestLocation() async {
+    try {
+      LocationPermission permission;
+      permission = await Geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        permission = await Geolocator.requestPermission();
+        if (permission == LocationPermission.denied) {
+          return false;
+        }
+      }
+      if (permission == LocationPermission.deniedForever) {
+        return false;
+      }
+      return true;
+    } catch (e) {
+      return false;
+    }
   }
 }

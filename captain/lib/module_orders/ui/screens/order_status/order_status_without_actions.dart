@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
+import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/state_manager/order_status/order_status_without_actions_state_manager.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/text_reader.dart';
@@ -12,7 +13,6 @@ import 'package:injectable/injectable.dart';
 import 'package:c4d/module_orders/request/order_invoice_request.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:location/location.dart' as loc;
 
 @injectable
 class OrderStatusWithoutActionsScreen extends StatefulWidget {
@@ -65,7 +65,7 @@ class OrderStatusWithoutActionsScreenState
     getIt<FlutterTextToSpeech>().init().then((value) {
       flutterTts = value;
     });
-    canRequestLocation().then((value) async {
+    DeepLinksService.canRequestLocation().then((value) async {
       if (value) {
         Logger().info('Location enabled', '$value');
         Geolocator.getPositionStream(
@@ -133,34 +133,5 @@ class OrderStatusWithoutActionsScreenState
         ));
   }
 
-  Future<bool> canRequestLocation() async {
-    try {
-      bool serviceEnabled;
-      LocationPermission permission;
-      // Test if location services are enabled.
-      serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      if (!serviceEnabled) {
-        serviceEnabled = await loc.Location().requestService();
-        if (!serviceEnabled) {
-          return false;
-        }
-      }
 
-      permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-        if (permission == LocationPermission.denied) {
-          return false;
-        }
-      }
-
-      if (permission == LocationPermission.deniedForever) {
-        return false;
-      }
-
-      return true;
-    } catch (e) {
-      return false;
-    }
-  }
 }
