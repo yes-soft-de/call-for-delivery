@@ -15,6 +15,7 @@ class Urls {
   static const SIGN_UP_API = '$BASE_API/v1/captain/captainregister';
   static const OWNER_PROFILE_API = '$BASE_API/userprofile';
   static const CREATE_TOKEN_API = '$BASE_API/login_check';
+  static const String LOGOUT = '$DOMAIN/v1/user/security/logout';
   static const VERIFY_CODE_API = '$BASE_API/v1/verification/verifycode';
   static const CHECK_USER_VERIFIED_API =
       '$BASE_API/v1/verification/checkverificationstatus';
