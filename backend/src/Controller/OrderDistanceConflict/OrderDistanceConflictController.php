@@ -97,6 +97,10 @@ class OrderDistanceConflictController extends BaseController
      *                   @OA\Schema(type="object",
      *                          @OA\Property(type="string", property="status_code", description="9240"),
      *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9215"),
+     *                          @OA\Property(type="string", property="msg")
      *                   )
      *              }
      *      )
@@ -131,6 +135,9 @@ class OrderDistanceConflictController extends BaseController
 
         } elseif ($result === OrderDistanceConflictResultConstant::ORDER_DISTANCE_ALREADY_EXIST_CONST) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ORDER_DISTANCE_CONFLICT_ALREADY_EXIST_CONST);
+
+        } elseif ($result === OrderResultConstant::ORDER_ALREADY_BEING_CANCELLED) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CANCEL);
         }
 
         return $this->response($result, self::CREATE);

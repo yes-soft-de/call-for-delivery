@@ -9,6 +9,7 @@ use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificat
 use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificationTitleConstant;
 use App\Constant\Notification\NotificationFirebaseConstant;
 use App\Constant\Order\OrderResultConstant;
+use App\Constant\Order\OrderStateConstant;
 use App\Constant\OrderDistanceConflict\OrderDistanceConflictResultConstant;
 use App\Constant\StoreOrderDetails\StoreOrderDetailsConstant;
 use App\Entity\OrderDistanceConflictEntity;
@@ -102,20 +103,25 @@ class OrderDistanceConflictService
      */
     public function createOrderDistanceConflictByCaptain(OrderDistanceConflictCreateByCaptainRequest $request, int $captainUserId): string|int|OrderDistanceConflictCreateByCaptainResponse
     {
-        // First, check if captain had created an order distance conflict for the same order before.
-        $orderDistanceConflict = $this->getOrderDistanceConflictByOrderId($request->getOrderId());
-
-        if ($orderDistanceConflict !== OrderDistanceConflictResultConstant::ORDER_DISTANCE_CONFLICT_NOT_EXIST_CONST) {
-            return OrderDistanceConflictResultConstant::ORDER_DISTANCE_ALREADY_EXIST_CONST;
-        }
-
-        // Get and set order entity
+        // First. Get and check order entity
         $orderEntity = $this->getOrderEntityById($request->getOrderId());
 
         if ($orderEntity === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
             return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
         }
 
+        if ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_CANCEL) {
+            return OrderResultConstant::ORDER_ALREADY_BEING_CANCELLED;
+        }
+
+        // Second, check if captain had created an order distance conflict for the same order before.
+        $orderDistanceConflict = $this->getOrderDistanceConflictByOrderId($request->getOrderId());
+
+        if ($orderDistanceConflict !== OrderDistanceConflictResultConstant::ORDER_DISTANCE_CONFLICT_NOT_EXIST_CONST) {
+            return OrderDistanceConflictResultConstant::ORDER_DISTANCE_ALREADY_EXIST_CONST;
+        }
+
+        // set order entity
         $request->setOrderId($orderEntity);
 
         // Set old distance
