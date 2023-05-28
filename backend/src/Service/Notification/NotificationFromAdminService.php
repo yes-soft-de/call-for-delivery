@@ -46,7 +46,7 @@ class NotificationFromAdminService
         foreach ($notifications as $key => $value) {
             $response[$key] = $this->autoMapping->map(AdminNotificationToUsersEntity::class, NotificationFromAdminResponse::class, $value);
 
-            $images = $value->getAdminAnnouncementImageEntities()->toArray();
+            $images = $value->getAnnouncementImageEntities()->toArray();
 
             if (count($images) > 0) {
                 foreach ($images as $adminAnnouncementImageEntity) {

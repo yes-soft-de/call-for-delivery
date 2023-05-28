@@ -17,6 +17,7 @@ use App\Constant\Payment\PaymentConstant;
 use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\CaptainFinancialDuesEntity;
+use App\Entity\ChatRoomEntity;
 use App\Entity\OrderDistanceConflictEntity;
 use App\Entity\OrderEntity;
 use App\Entity\CaptainEntity;
@@ -113,7 +114,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->addSelect('captainEntity.captainName', 'captainEntity.phone')
             ->addSelect('primaryOrderEntity.id as primaryOrderId')
             ->addSelect('orderDistanceConflictEntity as orderDistanceConflict')
-            ->addSelect('storeOwnerProfileEntity.roomID as chatSupportRoomId')
+            ->addSelect('chatRoomEntity.roomId as chatSupportRoomId')
 
             ->leftJoin(StoreOrderDetailsEntity::class, 'storeOrderDetails', Join::WITH, 'orderEntity.id = storeOrderDetails.orderId')
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')
@@ -140,6 +141,13 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'storeOwnerProfileEntity',
                 Join::WITH,
                 'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+            )
+
+            ->leftJoin(
+                ChatRoomEntity::class,
+                'chatRoomEntity',
+                Join::WITH,
+                'chatRoomEntity.userId = storeOwnerProfileEntity.storeOwnerId'
             )
             
             ->andWhere('orderEntity.id = :id')

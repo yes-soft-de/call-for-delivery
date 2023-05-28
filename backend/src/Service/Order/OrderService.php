@@ -275,6 +275,10 @@ class OrderService
                 $order['roomId'] = $order['roomId']->toBase32();
             }
 
+            if ($order['chatSupportRoomId']) {
+                $order['chatSupportRoomId'] = $order['chatSupportRoomId']->toBase32();
+            }
+
             $order['orderLogs'] = $this->orderTimeLineService->getOrderLogsByOrderId($id);
 
             $order['captain'] = null;
