@@ -3,6 +3,8 @@
 namespace App\Controller\Admin\Notification;
 
 use App\AutoMapping;
+use App\Constant\Announcement\AnnouncementResultConstant;
+use App\Constant\Main\MainErrorConstant;
 use App\Controller\BaseController;
 use App\Request\Admin\Notification\AdminNotificationCreateRequest;
 use App\Request\Admin\Notification\AdminNotificationUpdateRequest;
@@ -295,14 +297,29 @@ class AdminNotificationToUsersController extends BaseController
      *          @OA\Property(type="object", property="Data",
      *              ref=@Model(type="App\Response\Admin\Notification\AdminNotificationsResponse")
      *          )
-     *       )
-     *    )
+     *      )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Returns announcement not found string msg",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="9440"),
+     *          @OA\Property(type="string", property="msg")
+     *      )
+     * )
      *
      * @Security(name="Bearer")
      */
     public function getNotificationByIdForAdmin(int $id): JsonResponse
     {
         $result = $this->adminNotificationToUsersService->getNotificationByIdForAdmin($id);
+
+        if ($result === AnnouncementResultConstant::ANNOUNCEMENT_NOT_EXIST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ANNOUNCEMENT_NOT_EXIST);
+        }
 
         return $this->response($result, self::FETCH);
     }

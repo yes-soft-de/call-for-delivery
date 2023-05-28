@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Request\Admin\AdminAnnouncementImage;
+namespace App\Request\Admin\AnnouncementImage;
 
 use App\Entity\AdminNotificationToUsersEntity;
 
-class AdminAnnouncementImageCreateRequest
+class AnnouncementImageCreateByAdminRequest
 {
     private string $imagePath;
 

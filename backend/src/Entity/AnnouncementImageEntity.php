@@ -2,12 +2,12 @@
 
 namespace App\Entity;
 
-use App\Repository\AdminAnnouncementImageEntityRepository;
+use App\Repository\AnnouncementImageEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
-#[ORM\Entity(repositoryClass: AdminAnnouncementImageEntityRepository::class)]
-class AdminAnnouncementImageEntity
+#[ORM\Entity(repositoryClass: AnnouncementImageEntityRepository::class)]
+class AnnouncementImageEntity
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
