@@ -14,6 +14,7 @@ import 'package:c4d/module_orders/ui/widgets/order_widget/order_button.dart';
 import 'package:c4d/module_orders/ui/widgets/progress_order_status.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/components/rating_form.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/finance_status_helper.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:c4d/utils/request/rating_request.dart';
@@ -148,13 +149,21 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                                         backgroundColor: Colors.white),
                                     onPressed: () {
                                       Navigator.pop(context);
-                                      Navigator.of(context)
-                                          .pushNamed(ChatRoutes.chatRoute,
-                                              arguments: ChatArgument(
-                                                userType: 'admin',
-                                                support: true,
-                                                roomID: orderInfo.roomID ?? '',
-                                              ));
+                                      if (orderInfo.chatSupportRoomId != null) {
+                                        Navigator.of(context).pushNamed(
+                                          ChatRoutes.chatRoute,
+                                          arguments: ChatArgument(
+                                            userType: 'admin',
+                                            support: true,
+                                            roomID:
+                                                orderInfo.chatSupportRoomId!,
+                                          ),
+                                        );
+                                      } else {
+                                        CustomFlushBarHelper.createSuccess(
+                                            title: S.current.warnning,
+                                            message: S.current.unknown);
+                                      }
                                     },
                                     child: Text(
                                       S.current.directSupport,
