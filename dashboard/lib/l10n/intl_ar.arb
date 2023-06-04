@@ -995,5 +995,7 @@
     "added": "تمت اضافة",
     "toTheCalculatedDistance": "على المسافة المحتسبة",
     "clientLocationUpdatedTo": "تم تحديث موقع استلام الزيون الى الموقع",
+    "externalTriggers": "مشغلات خارجية",
+    "deliveryCompanies": "شركات التوصيل",
     "dev":"المطورين"
 }

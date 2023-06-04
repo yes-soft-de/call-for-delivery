@@ -10010,6 +10010,26 @@ class S {
     );
   }
 
+  /// `external triggers`
+  String get externalTriggers {
+    return Intl.message(
+      'external triggers',
+      name: 'externalTriggers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `delivery companies`
+  String get deliveryCompanies {
+    return Intl.message(
+      'delivery companies',
+      name: 'deliveryCompanies',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

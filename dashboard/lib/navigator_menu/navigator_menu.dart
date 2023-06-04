@@ -6,6 +6,7 @@ import 'package:c4d/module_categories/categories_module.dart';
 import 'package:c4d/module_company/company_module.dart';
 import 'package:c4d/module_delivary_car/cars_module.dart';
 import 'package:c4d/module_dev/dev_module.dart';
+import 'package:c4d/module_external_delivery_companies/external_delivery_companies_module.dart';
 import 'package:c4d/module_notice/notice_module.dart';
 import 'package:c4d/module_orders/orders_module.dart';
 import 'package:c4d/module_payments/payments_module.dart';
@@ -82,6 +83,19 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.orderedNotAccepted, FontAwesomeIcons.box, true),
                   customListTile(getIt<OrdersModule>().newOrderScreen,
                       S.current.newOrder, Icons.add_rounded, true)
+                ],
+                page: widget.currentPage),
+            // external delivery company's
+            customExpansionTile(
+                title: S.current.deliveryCompanies,
+                icon: FontAwesomeIcons.building,
+                children: [
+                  customListTile(
+                      getIt<ExternalDeliveryCompaniesModule>()
+                          .externalDeliveryCompaniesScreen,
+                      S.current.externalTriggers,
+                      FontAwesomeIcons.box,
+                      true),
                 ],
                 page: widget.currentPage),
             // report

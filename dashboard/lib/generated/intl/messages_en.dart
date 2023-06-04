@@ -491,6 +491,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliveryCars": MessageLookupByLibrary.simpleMessage("Delivery cars"),
         "deliveryCarsCost":
             MessageLookupByLibrary.simpleMessage("Delivery Cars Cost"),
+        "deliveryCompanies":
+            MessageLookupByLibrary.simpleMessage("delivery companies"),
         "deliveryCost": MessageLookupByLibrary.simpleMessage("Delivery cost"),
         "deliveryCostDetails":
             MessageLookupByLibrary.simpleMessage("Delivery cost details"),
@@ -580,6 +582,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "expiredSubscriptionsFinanceHint": MessageLookupByLibrary.simpleMessage(
             "Here you find all your expired subscriptions financial information with included all payments "),
         "externalOrder": MessageLookupByLibrary.simpleMessage("External Order"),
+        "externalTriggers":
+            MessageLookupByLibrary.simpleMessage("external triggers"),
         "extraCost": MessageLookupByLibrary.simpleMessage("Extra Cost"),
         "extraCostHint": MessageLookupByLibrary.simpleMessage(
             "Extra cost for every kilometer over geographical range"),

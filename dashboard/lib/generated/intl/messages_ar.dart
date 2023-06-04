@@ -487,6 +487,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliveryCars": MessageLookupByLibrary.simpleMessage("سيارات التوصيل"),
         "deliveryCarsCost":
             MessageLookupByLibrary.simpleMessage("أجرة التوصيل"),
+        "deliveryCompanies":
+            MessageLookupByLibrary.simpleMessage("شركات التوصيل"),
         "deliveryCost": MessageLookupByLibrary.simpleMessage("سعر التوصيل"),
         "deliveryCostDetails":
             MessageLookupByLibrary.simpleMessage("تفاصيل سعر التوصيل"),
@@ -575,6 +577,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "expiredSubscriptionsFinanceHint": MessageLookupByLibrary.simpleMessage(
             "هنا تجد قائمة بالاشتراكات المنتهية التي قام المتجر بالاشتراك فيها وتفاصيل عن النفقات التي يترتب عليها والدفعات التي تلقيها"),
         "externalOrder": MessageLookupByLibrary.simpleMessage("طلبية خارجية"),
+        "externalTriggers":
+            MessageLookupByLibrary.simpleMessage("مشغلات خارجية"),
         "extraCost": MessageLookupByLibrary.simpleMessage("التكلفة الإضافية"),
         "extraCostHint": MessageLookupByLibrary.simpleMessage(
             "قيمة الضريبة المضافة لكل كيلو فوق الحد الأعلى للنطاق الجغرافي"),

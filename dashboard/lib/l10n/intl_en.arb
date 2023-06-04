@@ -996,5 +996,7 @@
     "added": "added",
     "toTheCalculatedDistance": "to the calculated distance",
     "clientLocationUpdatedTo": "cline location updated to",
+    "externalTriggers": "external triggers",
+    "deliveryCompanies": "delivery companies",
     "dev":"Dev"
 }
