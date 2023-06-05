@@ -138,6 +138,9 @@ class OrderEntity
     #[ORM\OneToOne(mappedBy: 'orderId', targetEntity: StoreOrderDetailsEntity::class, cascade: ['persist', 'remove'])]
     private $storeOrderDetailsEntity;
 
+    #[ORM\OneToMany(mappedBy: 'orderId', targetEntity: ExternallyDeliveredOrderEntity::class)]
+    private $externallyDeliveredOrderEntities;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
@@ -146,6 +149,7 @@ class OrderEntity
         $this->orderEntities = new ArrayCollection();
         $this->orderLogEntities = new ArrayCollection();
         $this->dashboardLocalNotificationEntities = new ArrayCollection();
+        $this->externallyDeliveredOrderEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -726,6 +730,36 @@ class OrderEntity
         }
 
         $this->storeOrderDetailsEntity = $storeOrderDetailsEntity;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ExternallyDeliveredOrderEntity>
+     */
+    public function getExternallyDeliveredOrderEntities(): Collection
+    {
+        return $this->externallyDeliveredOrderEntities;
+    }
+
+    public function addExternallyDeliveredOrderEntity(ExternallyDeliveredOrderEntity $externallyDeliveredOrderEntity): self
+    {
+        if (!$this->externallyDeliveredOrderEntities->contains($externallyDeliveredOrderEntity)) {
+            $this->externallyDeliveredOrderEntities[] = $externallyDeliveredOrderEntity;
+            $externallyDeliveredOrderEntity->setOrderId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExternallyDeliveredOrderEntity(ExternallyDeliveredOrderEntity $externallyDeliveredOrderEntity): self
+    {
+        if ($this->externallyDeliveredOrderEntities->removeElement($externallyDeliveredOrderEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($externallyDeliveredOrderEntity->getOrderId() === $this) {
+                $externallyDeliveredOrderEntity->setOrderId(null);
+            }
+        }
 
         return $this;
     }

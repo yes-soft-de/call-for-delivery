@@ -21,6 +21,8 @@ class BaseController extends AbstractController
     const UPDATE = ["updated","204"];
     const DELETE = ["deleted","401"];
     const FETCH = ["fetched","200"];
+    // external delivery company
+    const EXTERNAL_DELIVERY_COMPANY_NOT_FOUND_CONST = ["external delivery company not found", "9050"];
     //error order
     const ERROR = ["error","9201"];
     const ERROR_ORDER_REMOVE_CAPTAIN_RECEIVE = ["can not remove it, The captain received the order","9202"];
@@ -47,8 +49,8 @@ class BaseController extends AbstractController
     const ERROR_ORDER_ALREADY_ONGOING_OR_DELIVERED_CONST = ["order is already ongoing or delivered", "9225"];
     const ORDER_PENDING_STATE_CONST = ["order is in pending state", "9226"];
     const ORDER_STATE_NOT_CORRECT_CONST = ["order is in pending state", "9227"];
-    //error related
-    const ERROR_RELATED= ["error related","9251"];
+    // external delivery company criteria
+    const EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST = ["external delivery company criteria not found", "9250"];
     // error users
     const ERROR_USER_CHECK = ["error user check","9000"];
     const ERROR_USER_FOUND = ["error user found","9001"];
