@@ -1,6 +1,6 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_external_delivery_companies/model/company.dart';
-import 'package:c4d/module_external_delivery_companies/service/module_external_delivery_companies_service.dart';
+import 'package:c4d/module_external_delivery_companies/service/external_delivery_companies_service.dart';
 import 'package:c4d/module_external_delivery_companies/ui/screen/external_delivery_companies_screen.dart';
 import 'package:c4d/module_external_delivery_companies/ui/state/external_delivery_companies_state_loaded.dart';
 import 'package:injectable/injectable.dart';

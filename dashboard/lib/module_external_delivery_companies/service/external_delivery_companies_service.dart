@@ -1,4 +1,4 @@
-import 'package:c4d/module_external_delivery_companies/manager/module_external_delivery_companies_manager.dart';
+import 'package:c4d/module_external_delivery_companies/manager/external_delivery_companies_manager.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable

@@ -1,4 +1,5 @@
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_external_delivery_companies/external_delivery_companies_routes.dart';
 import 'package:c4d/module_external_delivery_companies/model/company.dart';
 import 'package:flutter/material.dart';
 
@@ -49,6 +50,11 @@ class _CompanyCardState extends State<CompanyCard> {
                       child: Text(S.current.deliveryStandards),
                       onPressed: () {
                         // TODO: navigate to delivery stander setting screen
+                        Navigator.pushNamed(
+                            context,
+                            ExternalDeliveryCompaniesRoutes
+                                .Delivery_COMPANY_ALL_SETTINGS_SCREEN,
+                            arguments: widget._company);
                       },
                     ),
                   ),

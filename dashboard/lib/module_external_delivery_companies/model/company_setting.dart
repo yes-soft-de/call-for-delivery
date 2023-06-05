@@ -1,0 +1,40 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+class CompanySetting {
+  late int id;
+  late String name;
+  late bool isActive;
+  late FromTo<int> distance;
+  late FromTo<String> workingHours;
+  late StoreType storeType;
+  late List<String> stores;
+  late PaymentType paymentType;
+
+  CompanySetting({
+    required this.id,
+    required this.name,
+    required this.isActive,
+    required this.distance,
+    required this.workingHours,
+    required this.storeType,
+    required this.stores,
+    required this.paymentType,
+  });
+
+  late List<CompanySetting> _companySetting;
+}
+
+class FromTo<T> {
+  bool isFilterActive;
+  T from;
+  T to;
+
+  FromTo({
+    required this.isFilterActive,
+    required this.from,
+    required this.to,
+  });
+}
+
+enum StoreType { all, some }
+
+enum PaymentType { all, cash, card }
