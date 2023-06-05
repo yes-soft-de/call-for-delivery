@@ -92,6 +92,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "addExtraDestination":
             MessageLookupByLibrary.simpleMessage("Extra destination"),
         "addKiloMeter": MessageLookupByLibrary.simpleMessage("add kilo meters"),
+        "addNewCompany":
+            MessageLookupByLibrary.simpleMessage("add new company"),
         "addNote": MessageLookupByLibrary.simpleMessage("Add Note"),
         "addOffer": MessageLookupByLibrary.simpleMessage("Add offer"),
         "addOfferSuccessfully":
@@ -100,6 +102,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addPackageSuccessfully":
             MessageLookupByLibrary.simpleMessage("Package Added successfully"),
         "addProducts": MessageLookupByLibrary.simpleMessage("Add Products"),
+        "addSetting": MessageLookupByLibrary.simpleMessage("Add Setting"),
         "addStore": MessageLookupByLibrary.simpleMessage("Add Stores"),
         "addWorkPackage": MessageLookupByLibrary.simpleMessage("Add work plan"),
         "addaPayment": MessageLookupByLibrary.simpleMessage("add a payment"),
@@ -114,6 +117,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "allOrders": MessageLookupByLibrary.simpleMessage("all orders"),
         "allOrdersCount": MessageLookupByLibrary.simpleMessage("Orders count"),
         "allPaid": MessageLookupByLibrary.simpleMessage("all paid"),
+        "allStores": MessageLookupByLibrary.simpleMessage("all stores"),
         "alreadyCanceled":
             MessageLookupByLibrary.simpleMessage("Already canceled"),
         "amount": MessageLookupByLibrary.simpleMessage("Amount"),
@@ -314,6 +318,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "chooseBranch": MessageLookupByLibrary.simpleMessage("Choose Branch"),
         "chooseCategory":
             MessageLookupByLibrary.simpleMessage("Choose category"),
+        "chooseCompany": MessageLookupByLibrary.simpleMessage("choose company"),
         "chooseDestinationPoint":
             MessageLookupByLibrary.simpleMessage("Choose Destination Location"),
         "chooseFromDate":
@@ -498,6 +503,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Delivery cost details"),
         "deliveryDate": MessageLookupByLibrary.simpleMessage("delivery date"),
         "deliveryOnly": MessageLookupByLibrary.simpleMessage("Delivery only"),
+        "deliveryStandards":
+            MessageLookupByLibrary.simpleMessage("delivery standards"),
         "description": MessageLookupByLibrary.simpleMessage("Description"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("Destination Address"),
@@ -555,6 +562,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Ended subscriptions"),
         "enterCarsCountYouWantToAdd":
             MessageLookupByLibrary.simpleMessage("Enter extra cars count"),
+        "enterDeliveryCompanyName":
+            MessageLookupByLibrary.simpleMessage("enter delivery company name"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("Enter product information"),
         "errOc":
@@ -581,6 +590,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Expired Subscriptions"),
         "expiredSubscriptionsFinanceHint": MessageLookupByLibrary.simpleMessage(
             "Here you find all your expired subscriptions financial information with included all payments "),
+        "externalCompanySettings":
+            MessageLookupByLibrary.simpleMessage("external company settings"),
         "externalOrder": MessageLookupByLibrary.simpleMessage("External Order"),
         "externalTriggers":
             MessageLookupByLibrary.simpleMessage("external triggers"),
@@ -664,6 +675,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "firstSendMessage": MessageLookupByLibrary.simpleMessage(
             "Be the first one to send message"),
         "forgotPass": MessageLookupByLibrary.simpleMessage("Forgot password?"),
+        "from": MessageLookupByLibrary.simpleMessage("From"),
         "fromWhatsapp": MessageLookupByLibrary.simpleMessage("From WhatsApp"),
         "futureSubscriptionsDeletedSuccessfully":
             MessageLookupByLibrary.simpleMessage(
@@ -877,6 +889,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
         "onOrderPackage":
             MessageLookupByLibrary.simpleMessage("On order package"),
+        "oneStoreOrMore":
+            MessageLookupByLibrary.simpleMessage("oneStoreOrMore"),
         "ongoing": MessageLookupByLibrary.simpleMessage("Ongoing"),
         "online": MessageLookupByLibrary.simpleMessage("online"),
         "open": MessageLookupByLibrary.simpleMessage("Open"),
@@ -1093,6 +1107,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseDownloadmandob_moshtarayat":
             MessageLookupByLibrary.simpleMessage(
                 "Please Download mandob_moshtarayat"),
+        "pleaseEnterCompanyName":
+            MessageLookupByLibrary.simpleMessage("please enter company name"),
         "pleaseEnterValidCoord": MessageLookupByLibrary.simpleMessage(
             "Please enter valid coordinates"),
         "pleaseEnterValidCountryCode":
@@ -1256,6 +1272,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "send": MessageLookupByLibrary.simpleMessage("Send"),
         "sendMeCode": MessageLookupByLibrary.simpleMessage("Send me code"),
         "sendTo": MessageLookupByLibrary.simpleMessage("Send to"),
+        "settingName": MessageLookupByLibrary.simpleMessage("settings name"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
         "share": MessageLookupByLibrary.simpleMessage("Share"),
         "showAll": MessageLookupByLibrary.simpleMessage("Show All"),
@@ -1548,6 +1565,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Store Owner"),
         "withTaxes": MessageLookupByLibrary.simpleMessage("With taxes "),
         "withoutTax": MessageLookupByLibrary.simpleMessage("Without vat fee"),
+        "workHours": MessageLookupByLibrary.simpleMessage("work hours"),
         "workTime": MessageLookupByLibrary.simpleMessage("Store Shift"),
         "year": MessageLookupByLibrary.simpleMessage("year"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),

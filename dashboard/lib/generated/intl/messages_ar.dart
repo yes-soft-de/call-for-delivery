@@ -91,6 +91,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("مسافة زائدة"),
         "addKiloMeter":
             MessageLookupByLibrary.simpleMessage("اضافة كيلو مترات"),
+        "addNewCompany":
+            MessageLookupByLibrary.simpleMessage("اضافة مشغل جديد"),
         "addNote": MessageLookupByLibrary.simpleMessage("إضافة تحديث"),
         "addOffer": MessageLookupByLibrary.simpleMessage("إضافة عرض"),
         "addOfferSuccessfully":
@@ -99,6 +101,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addPackageSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إضافة الباقة بنجاح"),
         "addProducts": MessageLookupByLibrary.simpleMessage("إضافة منتجات"),
+        "addSetting": MessageLookupByLibrary.simpleMessage("اضافة الاعدادات"),
         "addStore": MessageLookupByLibrary.simpleMessage("أضف متجر"),
         "addWorkPackage":
             MessageLookupByLibrary.simpleMessage("إضافة باقة عمل"),
@@ -114,6 +117,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "allOrders": MessageLookupByLibrary.simpleMessage("كل الطلبات"),
         "allOrdersCount": MessageLookupByLibrary.simpleMessage("عدد الطلبات"),
         "allPaid": MessageLookupByLibrary.simpleMessage("مدفوع بالكامل"),
+        "allStores": MessageLookupByLibrary.simpleMessage("كل المتاجر"),
         "alreadyCanceled":
             MessageLookupByLibrary.simpleMessage("الطلب ملغي مسبقا"),
         "amount":
@@ -313,6 +317,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "يمكنك تعديل مكان التسليم الحالي على الخارطة"),
         "chooseBranch": MessageLookupByLibrary.simpleMessage("اختر فرع"),
         "chooseCategory": MessageLookupByLibrary.simpleMessage("أختر تصنيف"),
+        "chooseCompany": MessageLookupByLibrary.simpleMessage("اختر المشغل"),
         "chooseDestinationPoint":
             MessageLookupByLibrary.simpleMessage("اختر موقع التسليم"),
         "chooseFromDate": MessageLookupByLibrary.simpleMessage("من تاريخ"),
@@ -494,6 +499,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تفاصيل سعر التوصيل"),
         "deliveryDate": MessageLookupByLibrary.simpleMessage("تاريخ التسليم"),
         "deliveryOnly": MessageLookupByLibrary.simpleMessage("سعر التوصيل فقط"),
+        "deliveryStandards":
+            MessageLookupByLibrary.simpleMessage("معايير التوصيل"),
         "description": MessageLookupByLibrary.simpleMessage("وصف"),
         "destinationAddress":
             MessageLookupByLibrary.simpleMessage("التوصيل إلى"),
@@ -551,6 +558,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الاشتراكات المنتهية"),
         "enterCarsCountYouWantToAdd": MessageLookupByLibrary.simpleMessage(
             "ادخل سيارات للاضافة / للانقاص"),
+        "enterDeliveryCompanyName":
+            MessageLookupByLibrary.simpleMessage("ادخل اسم شركة التوصيل"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("ادخل معلومات المنتج"),
         "errOc": MessageLookupByLibrary.simpleMessage("حصلت المشاكل التالية"),
@@ -576,6 +585,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الاشتراك منتهي"),
         "expiredSubscriptionsFinanceHint": MessageLookupByLibrary.simpleMessage(
             "هنا تجد قائمة بالاشتراكات المنتهية التي قام المتجر بالاشتراك فيها وتفاصيل عن النفقات التي يترتب عليها والدفعات التي تلقيها"),
+        "externalCompanySettings":
+            MessageLookupByLibrary.simpleMessage("اعدادات المشغل الخارجي"),
         "externalOrder": MessageLookupByLibrary.simpleMessage("طلبية خارجية"),
         "externalTriggers":
             MessageLookupByLibrary.simpleMessage("مشغلات خارجية"),
@@ -661,6 +672,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("كن أول من يرسل رسالة"),
         "forgotPass":
             MessageLookupByLibrary.simpleMessage("هل نسيت كلمة المرور؟"),
+        "from": MessageLookupByLibrary.simpleMessage("الى"),
         "fromWhatsapp": MessageLookupByLibrary.simpleMessage("من واتساب"),
         "futureSubscriptionsDeletedSuccessfully":
             MessageLookupByLibrary.simpleMessage(
@@ -872,6 +884,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "ok": MessageLookupByLibrary.simpleMessage("حسناً"),
         "onOrderPackage":
             MessageLookupByLibrary.simpleMessage("باقة على الطلب"),
+        "oneStoreOrMore":
+            MessageLookupByLibrary.simpleMessage("خصص متجر او اكتر"),
         "ongoing": MessageLookupByLibrary.simpleMessage("جارية"),
         "online": MessageLookupByLibrary.simpleMessage("مدفوع"),
         "open": MessageLookupByLibrary.simpleMessage("مفتوح"),
@@ -1090,6 +1104,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pleaseDownloadmandob_moshtarayat":
             MessageLookupByLibrary.simpleMessage(
                 "الرجاء تحميل mandob_moshtarayat"),
+        "pleaseEnterCompanyName": MessageLookupByLibrary.simpleMessage(
+            "الرجاء ادخال اسم شركة التوصيل"),
         "pleaseEnterValidCoord":
             MessageLookupByLibrary.simpleMessage("من فضلك ادخل احداثيات صالحة"),
         "pleaseEnterValidCountryCode":
@@ -1216,7 +1232,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sar": MessageLookupByLibrary.simpleMessage("ر.س"),
         "saudiArabia": MessageLookupByLibrary.simpleMessage("السعودية"),
         "saudiRiyal": MessageLookupByLibrary.simpleMessage("ريال سعودي"),
-        "save": MessageLookupByLibrary.simpleMessage("الحفظ"),
+        "save": MessageLookupByLibrary.simpleMessage("حفظ"),
         "saveBranch": MessageLookupByLibrary.simpleMessage("حفظ الفرع"),
         "saveBranches": MessageLookupByLibrary.simpleMessage("حفظ الفروع"),
         "saveLocationAsBranch01":
@@ -1249,6 +1265,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "send": MessageLookupByLibrary.simpleMessage("إرسال"),
         "sendMeCode": MessageLookupByLibrary.simpleMessage("ارسل رمز التأكيد"),
         "sendTo": MessageLookupByLibrary.simpleMessage("إرسال إلى"),
+        "settingName": MessageLookupByLibrary.simpleMessage("اسم الاعدادات"),
         "settings": MessageLookupByLibrary.simpleMessage("الاعدادات"),
         "share": MessageLookupByLibrary.simpleMessage("المشاركة"),
         "showAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
@@ -1547,6 +1564,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("شامل القيمة المضافة"),
         "withoutTax": MessageLookupByLibrary.simpleMessage(
             "السعر غير شامل القيمة المضافة"),
+        "workHours": MessageLookupByLibrary.simpleMessage("ساعات العمل"),
         "workTime": MessageLookupByLibrary.simpleMessage("أوقات العمل"),
         "year": MessageLookupByLibrary.simpleMessage("السنة"),
         "yes": MessageLookupByLibrary.simpleMessage("نعم"),

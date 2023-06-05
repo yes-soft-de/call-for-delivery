@@ -87,13 +87,13 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 page: widget.currentPage),
             // external delivery company's
             customExpansionTile(
-                title: S.current.deliveryCompanies,
+                title: S.current.externalTriggers,
                 icon: FontAwesomeIcons.building,
                 children: [
                   customListTile(
                       getIt<ExternalDeliveryCompaniesModule>()
                           .externalDeliveryCompaniesScreen,
-                      S.current.externalTriggers,
+                      S.current.deliveryCompanies,
                       FontAwesomeIcons.box,
                       true),
                 ],

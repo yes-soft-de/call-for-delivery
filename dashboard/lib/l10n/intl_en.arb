@@ -998,5 +998,17 @@
     "clientLocationUpdatedTo": "cline location updated to",
     "externalTriggers": "external triggers",
     "deliveryCompanies": "delivery companies",
+    "addNewCompany": "add new company",
+    "deliveryStandards": "delivery standards",
+    "externalCompanySettings": "external company settings",
+    "settingName": "settings name",
+    "workHours": "work hours",
+    "allStores": "all stores",
+    "oneStoreOrMore": "oneStoreOrMore",
+    "from": "From",
+    "chooseCompany": "choose company",
+    "addSetting": "Add Setting",
+    "enterDeliveryCompanyName": "enter delivery company name",
+    "pleaseEnterCompanyName": "please enter company name",
     "dev":"Dev"
 }

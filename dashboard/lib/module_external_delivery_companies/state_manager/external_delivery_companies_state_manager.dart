@@ -1,8 +1,8 @@
-import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_external_delivery_companies/model/company.dart';
 import 'package:c4d/module_external_delivery_companies/service/module_external_delivery_companies_service.dart';
 import 'package:c4d/module_external_delivery_companies/ui/screen/external_delivery_companies_screen.dart';
+import 'package:c4d/module_external_delivery_companies/ui/state/external_delivery_companies_state_loaded.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -16,14 +16,16 @@ class ExternalDeliveryCompaniesStateManager {
   Stream<States> get stateStream => _stateSubject.stream;
 
   void getExternalCompanies(ExternalDeliveryCompaniesScreenState screenState) {
-    _stateSubject.add(EmptyState(
-      screenState,
-      onPressed: () {
-        getExternalCompanies(screenState);
-      },
-      hasAppbar: false,
-      title: '',
-      emptyMessage: S.current.homeDataEmpty,
-    ));
+    var companies = [
+      Company(id: 1, name: 'مرسول', isActive: true),
+      Company(id: 2, name: 'طلباتي', isActive: false),
+      Company(id: 3, name: 'وصللي', isActive: true),
+      Company(id: 4, name: 'مرسول', isActive: true),
+      Company(id: 5, name: 'طلباتي', isActive: false),
+      Company(id: 6, name: 'وصللي', isActive: true),
+    ];
+
+    _stateSubject
+        .add(ExternalDeliveryCompaniesStateLoaded(screenState, companies));
   }
 }

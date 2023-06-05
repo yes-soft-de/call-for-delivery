@@ -10030,6 +10030,126 @@ class S {
     );
   }
 
+  /// `add new company`
+  String get addNewCompany {
+    return Intl.message(
+      'add new company',
+      name: 'addNewCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `delivery standards`
+  String get deliveryStandards {
+    return Intl.message(
+      'delivery standards',
+      name: 'deliveryStandards',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `external company settings`
+  String get externalCompanySettings {
+    return Intl.message(
+      'external company settings',
+      name: 'externalCompanySettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `settings name`
+  String get settingName {
+    return Intl.message(
+      'settings name',
+      name: 'settingName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `work hours`
+  String get workHours {
+    return Intl.message(
+      'work hours',
+      name: 'workHours',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `all stores`
+  String get allStores {
+    return Intl.message(
+      'all stores',
+      name: 'allStores',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `oneStoreOrMore`
+  String get oneStoreOrMore {
+    return Intl.message(
+      'oneStoreOrMore',
+      name: 'oneStoreOrMore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `From`
+  String get from {
+    return Intl.message(
+      'From',
+      name: 'from',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `choose company`
+  String get chooseCompany {
+    return Intl.message(
+      'choose company',
+      name: 'chooseCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Setting`
+  String get addSetting {
+    return Intl.message(
+      'Add Setting',
+      name: 'addSetting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `enter delivery company name`
+  String get enterDeliveryCompanyName {
+    return Intl.message(
+      'enter delivery company name',
+      name: 'enterDeliveryCompanyName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `please enter company name`
+  String get pleaseEnterCompanyName {
+    return Intl.message(
+      'please enter company name',
+      name: 'pleaseEnterCompanyName',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

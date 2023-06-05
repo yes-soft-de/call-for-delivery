@@ -64,7 +64,7 @@ class ExternalDeliveryCompaniesScreenState
       },
       child: Scaffold(
         appBar: CustomC4dAppBar.appBar(context,
-            title: S.current.externalTriggers, icon: Icons.menu, onTap: () {
+            title: S.current.deliveryCompanies, icon: Icons.menu, onTap: () {
           GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
         }),
         key: _scaffoldKey,
