@@ -101,7 +101,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addPackageSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إضافة الباقة بنجاح"),
         "addProducts": MessageLookupByLibrary.simpleMessage("إضافة منتجات"),
-        "addSetting": MessageLookupByLibrary.simpleMessage("اضافة الاعدادات"),
+        "addSetting": MessageLookupByLibrary.simpleMessage("اضافة معايير"),
         "addStore": MessageLookupByLibrary.simpleMessage("أضف متجر"),
         "addWorkPackage":
             MessageLookupByLibrary.simpleMessage("إضافة باقة عمل"),
@@ -672,7 +672,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("كن أول من يرسل رسالة"),
         "forgotPass":
             MessageLookupByLibrary.simpleMessage("هل نسيت كلمة المرور؟"),
-        "from": MessageLookupByLibrary.simpleMessage("الى"),
+        "from": MessageLookupByLibrary.simpleMessage("من"),
         "fromWhatsapp": MessageLookupByLibrary.simpleMessage("من واتساب"),
         "futureSubscriptionsDeletedSuccessfully":
             MessageLookupByLibrary.simpleMessage(
@@ -882,6 +882,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "offerLog": MessageLookupByLibrary.simpleMessage("سجل العروض"),
         "offerStatus": MessageLookupByLibrary.simpleMessage("حالة العرض"),
         "ok": MessageLookupByLibrary.simpleMessage("حسناً"),
+        "onOff": MessageLookupByLibrary.simpleMessage("تشغيل / ايقاف"),
         "onOrderPackage":
             MessageLookupByLibrary.simpleMessage("باقة على الطلب"),
         "oneStoreOrMore":
@@ -1265,7 +1266,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "send": MessageLookupByLibrary.simpleMessage("إرسال"),
         "sendMeCode": MessageLookupByLibrary.simpleMessage("ارسل رمز التأكيد"),
         "sendTo": MessageLookupByLibrary.simpleMessage("إرسال إلى"),
-        "settingName": MessageLookupByLibrary.simpleMessage("اسم الاعدادات"),
+        "settingName": MessageLookupByLibrary.simpleMessage("عنوان المعيار"),
         "settings": MessageLookupByLibrary.simpleMessage("الاعدادات"),
         "share": MessageLookupByLibrary.simpleMessage("المشاركة"),
         "showAll": MessageLookupByLibrary.simpleMessage("عرض الكل"),
@@ -1280,6 +1281,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "socialMedia":
             MessageLookupByLibrary.simpleMessage("مواقع التواصل الاجتماعي"),
         "sold": MessageLookupByLibrary.simpleMessage("تم البيع"),
+        "someStores": MessageLookupByLibrary.simpleMessage("خصص متجر او اكتر"),
         "sortByEarlier":
             MessageLookupByLibrary.simpleMessage("من الأحدث للأقدم"),
         "sortByRate": MessageLookupByLibrary.simpleMessage("الأعلى تقييما"),

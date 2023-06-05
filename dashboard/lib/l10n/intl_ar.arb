@@ -1000,14 +1000,16 @@
     "addNewCompany": "اضافة مشغل جديد",
     "deliveryStandards": "معايير التوصيل",
     "externalCompanySettings": "اعدادات المشغل الخارجي",
-    "settingName": "اسم الاعدادات",
+    "settingName": "عنوان المعيار",
     "workHours": "ساعات العمل",
     "allStores": "كل المتاجر",
     "oneStoreOrMore": "خصص متجر او اكتر",
-    "from": "الى",
+    "from": "من",
     "chooseCompany": "اختر المشغل",
-    "addSetting": "اضافة الاعدادات",
+    "addSetting": "اضافة معايير",
     "enterDeliveryCompanyName": "ادخل اسم شركة التوصيل",
     "pleaseEnterCompanyName": "الرجاء ادخال اسم شركة التوصيل",
-    "dev":"المطورين"
+    "someStores": "خصص متجر او اكتر",
+    "onOff": "تشغيل / ايقاف",
+    "dev": "المطورين"
 }

@@ -1,4 +1,5 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:c4d/module_external_delivery_companies/external_delivery_companies_routes.dart';
 import 'package:c4d/module_external_delivery_companies/model/company_setting.dart';
 import 'package:flutter/material.dart';
 
@@ -29,7 +30,7 @@ class _CompanySettingCardState extends State<CompanySettingCard> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(widget.companySetting.name),
+                    Text(widget.companySetting.settingName),
                     Switch(
                       activeTrackColor: Color(0xff165177),
                       thumbColor: MaterialStateColor.resolveWith(
@@ -50,7 +51,11 @@ class _CompanySettingCardState extends State<CompanySettingCard> {
             backgroundColor: Colors.green,
             icon: Icons.edit_outlined,
             onPressed: () {
-              // TODO: navigate to edit company setting
+              Navigator.pushNamed(
+                  context,
+                  ExternalDeliveryCompaniesRoutes
+                      .EDIT_Delivery_COMPANY_SETTINGS_SCREEN,
+                  arguments: widget.companySetting);
             },
           ),
           CustomIconButton(

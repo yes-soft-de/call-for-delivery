@@ -20,8 +20,9 @@ class ExternalDeliveryCompaniesStateLoaded extends States {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.8,
+            Container(
+              constraints: BoxConstraints(
+                  maxHeight: MediaQuery.of(context).size.height * 0.8),
               child: ListView.builder(
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
@@ -31,16 +32,22 @@ class ExternalDeliveryCompaniesStateLoaded extends States {
               ),
             ),
             SizedBox(height: 10),
-            ElevatedButton(
-              child: Text(S.current.addNewCompany),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return AddCompanyDialog();
-                  },
-                );
-              },
+            SizedBox(
+              width: MediaQuery.sizeOf(context).width * 0.7,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xff024D92),
+                ),
+                child: Text(S.current.addNewCompany),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return AddCompanyDialog();
+                    },
+                  );
+                },
+              ),
             )
           ],
         ),

@@ -33,6 +33,8 @@ class NavigatorMenu extends StatefulWidget {
 }
 
 class _NavigatorMenuState extends State<NavigatorMenu> {
+  bool isExternalCompanyServiceActive = false;
+
   @override
   void initState() {
     getIt<GlobalStateManager>().stateStream.listen((event) {
@@ -42,6 +44,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
       }
     });
     super.initState();
+
+    // TODO: call the isExternalCompanyServiceActive endpoint
   }
 
   @override
@@ -90,6 +94,30 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.externalTriggers,
                 icon: FontAwesomeIcons.building,
                 children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(),
+                        Icon(Icons.stop_circle),
+                        Text(S.current.onOff),
+                        SizedBox(),
+                        SizedBox(),
+                        Switch(
+                          thumbColor: MaterialStateColor.resolveWith(
+                              (states) => Colors.white),
+                          activeColor: Colors.green,
+                          value: isExternalCompanyServiceActive,
+                          onChanged: (value) {
+                            isExternalCompanyServiceActive = value;
+                            setState(() {});
+                            // TODO: call update isExternalCompanyServiceActive endpoint
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
                   customListTile(
                       getIt<ExternalDeliveryCompaniesModule>()
                           .externalDeliveryCompaniesScreen,

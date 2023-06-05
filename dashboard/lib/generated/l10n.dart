@@ -10140,11 +10140,31 @@ class S {
     );
   }
 
+  /// `specifics stores`
+  String get someStores {
+    return Intl.message(
+      'specifics stores',
+      name: 'someStores',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `please enter company name`
   String get pleaseEnterCompanyName {
     return Intl.message(
       'please enter company name',
       name: 'pleaseEnterCompanyName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `on / off`
+  String get onOff {
+    return Intl.message(
+      'on / off',
+      name: 'onOff',
       desc: '',
       args: [],
     );

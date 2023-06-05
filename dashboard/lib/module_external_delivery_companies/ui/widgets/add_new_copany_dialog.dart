@@ -13,7 +13,7 @@ class AddCompanyDialog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Dialog(
-      backgroundColor: Color(0xff3E2477),
+      backgroundColor: Color(0xff024D92),
       child: Padding(
         padding: const EdgeInsets.all(20),
         child: Column(

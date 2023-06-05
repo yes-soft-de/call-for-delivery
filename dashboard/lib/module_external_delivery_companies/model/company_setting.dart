@@ -1,17 +1,21 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:flutter/material.dart';
+
 class CompanySetting {
   late int id;
-  late String name;
+  late String companyName;
+  late String settingName;
   late bool isActive;
   late FromTo<int> distance;
-  late FromTo<String> workingHours;
+  late FromTo<TimeOfDay> workingHours;
   late StoreType storeType;
   late List<String> stores;
   late PaymentType paymentType;
 
   CompanySetting({
     required this.id,
-    required this.name,
+    required this.companyName,
+    required this.settingName,
     required this.isActive,
     required this.distance,
     required this.workingHours,

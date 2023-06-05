@@ -887,6 +887,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "offerLog": MessageLookupByLibrary.simpleMessage("Offer log"),
         "offerStatus": MessageLookupByLibrary.simpleMessage("Offer status"),
         "ok": MessageLookupByLibrary.simpleMessage("OK"),
+        "onOff": MessageLookupByLibrary.simpleMessage("on / off"),
         "onOrderPackage":
             MessageLookupByLibrary.simpleMessage("On order package"),
         "oneStoreOrMore":
@@ -1286,6 +1287,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("1 - 20 Employee"),
         "socialMedia": MessageLookupByLibrary.simpleMessage("Social Media"),
         "sold": MessageLookupByLibrary.simpleMessage("Sold"),
+        "someStores": MessageLookupByLibrary.simpleMessage("specifics stores"),
         "sortByEarlier": MessageLookupByLibrary.simpleMessage("By Earlier"),
         "sortByRate": MessageLookupByLibrary.simpleMessage("highest rate"),
         "sortedByLatest":

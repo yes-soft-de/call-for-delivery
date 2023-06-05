@@ -1009,6 +1009,8 @@
     "chooseCompany": "choose company",
     "addSetting": "Add Setting",
     "enterDeliveryCompanyName": "enter delivery company name",
+    "someStores": "specifics stores",
     "pleaseEnterCompanyName": "please enter company name",
+    "onOff": "on / off",
     "dev":"Dev"
 }

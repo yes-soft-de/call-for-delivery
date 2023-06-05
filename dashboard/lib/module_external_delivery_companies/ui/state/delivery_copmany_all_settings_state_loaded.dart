@@ -19,8 +19,10 @@ class DeliveryCompanyAllSettingsStateLoaded extends States {
       child: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.height * 0.8,
+            Container(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.of(context).size.height * 0.8,
+              ),
               child: ListView.builder(
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
@@ -32,16 +34,17 @@ class DeliveryCompanyAllSettingsStateLoaded extends States {
               ),
             ),
             SizedBox(height: 10),
-            ElevatedButton(
-              child: Text(S.current.addNewCompany),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    return Placeholder();
-                  },
-                );
-              },
+            SizedBox(
+              width: MediaQuery.sizeOf(context).width * 0.7,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xff024D92),
+                ),
+                child: Text(S.current.addSetting),
+                onPressed: () {
+                  // TODO: add new setting (edit setting with empty values)
+                },
+              ),
             )
           ],
         ),
@@ -49,5 +52,3 @@ class DeliveryCompanyAllSettingsStateLoaded extends States {
     );
   }
 }
-
-
