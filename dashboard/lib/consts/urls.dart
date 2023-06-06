@@ -34,6 +34,8 @@ class Urls {
       DOMAIN + VERSION_ADMIN + '/supplierprofile';
   static const String BASE_API_ANNOUNCEMENT =
       DOMAIN + VERSION_ADMIN + '/announcement';
+  static const BASE_API_EXTERNAL_DELIVERY_COMPANY =
+      DOMAIN + VERSION + '/admin/externaldeliverycompany';
 
   static const String BASE_API_DELIVERY_CAR =
       DOMAIN + VERSION_ADMIN + '/deliverycar';
@@ -384,4 +386,12 @@ class Urls {
       BASE_API_SUBSCRIPTION + '/subscriptionremainingcars';
   static const DELETE_SUBSCRIPTION_TO_CAPTAIN_OFFER_API =
       BASE_API_SUBSCRIPTION_CAPTAIN_OFFER + '/deletesubscription';
+
+  /*-----------------------------external delivery company----------------------------*/
+  static const EXTERNAL_DELIVERY_COMPANY =
+      BASE_API_EXTERNAL_DELIVERY_COMPANY + '/externaldeliverycompany';
+  static const EXTERNAL_DELIVERY_COMPANY_STATUS =
+      BASE_API_EXTERNAL_DELIVERY_COMPANY + '/externaldeliverycompanystatus';
+  static const FETCH_EXTERNAL_DELIVERY_COMPANY =
+      BASE_API_EXTERNAL_DELIVERY_COMPANY + '/externaldeliverycompanies';
 }

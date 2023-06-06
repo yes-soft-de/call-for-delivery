@@ -10200,6 +10200,36 @@ class S {
     );
   }
 
+  /// `data updated successfully`
+  String get dataUpdatedSuccessfully {
+    return Intl.message(
+      'data updated successfully',
+      name: 'dataUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `company added successfully`
+  String get companyAddedSuccessfully {
+    return Intl.message(
+      'company added successfully',
+      name: 'companyAddedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `company deleted successfully`
+  String get companyDeletedSuccessfully {
+    return Intl.message(
+      'company deleted successfully',
+      name: 'companyDeletedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

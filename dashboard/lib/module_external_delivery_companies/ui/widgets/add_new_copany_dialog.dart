@@ -1,11 +1,15 @@
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_external_delivery_companies/request/create_new_delivery_company_request.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:flutter/material.dart';
 
 class AddCompanyDialog extends StatelessWidget {
   AddCompanyDialog({
     super.key,
+    required this.onAdded,
   });
+
+  final Function(CreateNewDeliveryCompanyRequest request) onAdded;
 
   final _companyNameController = TextEditingController();
   final _key = GlobalKey<FormState>();
@@ -49,7 +53,10 @@ class AddCompanyDialog extends StatelessWidget {
                     Text(S.current.save, style: TextStyle(color: Colors.black)),
                 onPressed: () {
                   if (_key.currentState?.validate() ?? false) {
-                    // TODO: call add comapny end point
+                    onAdded(
+                      CreateNewDeliveryCompanyRequest(
+                          companyName: _companyNameController.text),
+                    );
                     Navigator.pop(context);
                   }
                 },

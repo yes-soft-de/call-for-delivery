@@ -2,7 +2,7 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_external_delivery_companies/external_delivery_companies_routes.dart';
 import 'package:c4d/module_external_delivery_companies/model/company_setting.dart';
-import 'package:c4d/module_external_delivery_companies/ui/widgets/show_confirm_dialgo.dart';
+import 'package:c4d/module_external_delivery_companies/ui/widgets/show_confirm_dialog.dart';
 import 'package:flutter/material.dart';
 
 class CompanySettingCard extends StatefulWidget {

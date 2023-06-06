@@ -1015,5 +1015,8 @@
     "areYouSureForDelete": "are you sure for delete",
     "areYouSureForDeleteSetting": "are you sure for delete this setting?",
     "thisWillDeleteAllDataAndStanders": "this will delete all data and standers that has been entered",
+    "dataUpdatedSuccessfully": "data updated successfully",
+    "companyAddedSuccessfully": "company added successfully",
+    "companyDeletedSuccessfully": "company deleted successfully",
     "dev":"Dev"
 }

@@ -358,6 +358,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "collectedPaymentNote":
             MessageLookupByLibrary.simpleMessage("Collected payment note"),
         "community": MessageLookupByLibrary.simpleMessage("Community"),
+        "companyAddedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("company added successfully"),
+        "companyDeletedSuccessfully": MessageLookupByLibrary.simpleMessage(
+            "company deleted successfully"),
         "companyFinance":
             MessageLookupByLibrary.simpleMessage("Company finance"),
         "companyInfo":
@@ -464,6 +468,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
         "dataDecodeError":
             MessageLookupByLibrary.simpleMessage("Error with Decoding Data"),
+        "dataUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("data updated successfully"),
         "date": MessageLookupByLibrary.simpleMessage("Date"),
         "dateFinancialCycleEnds":
             MessageLookupByLibrary.simpleMessage("Date Financial cycle ends"),

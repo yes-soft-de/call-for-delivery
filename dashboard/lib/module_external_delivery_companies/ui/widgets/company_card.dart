@@ -2,14 +2,24 @@ import 'package:c4d/consts/navigator_assistant.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_external_delivery_companies/external_delivery_companies_routes.dart';
-import 'package:c4d/module_external_delivery_companies/model/company.dart';
-import 'package:c4d/module_external_delivery_companies/ui/widgets/show_confirm_dialgo.dart';
+import 'package:c4d/module_external_delivery_companies/model/company_model.dart';
+import 'package:c4d/module_external_delivery_companies/request/update_delivery_company_status_request.dart';
+import 'package:c4d/module_external_delivery_companies/ui/widgets/show_confirm_dialog.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:flutter/material.dart';
 
 class CompanyCard extends StatefulWidget {
-  final Company _company;
-  const CompanyCard({super.key, required Company company}) : _company = company;
+  final CompanyModel _company;
+  final Function(UpdateDeliveryCompanyStatusRequest request)
+      onCompanyStatusChange;
+  final Function() onCompanyDelete;
+
+  const CompanyCard({
+    super.key,
+    required CompanyModel company,
+    required this.onCompanyStatusChange,
+    required this.onCompanyDelete,
+  }) : _company = company;
 
   @override
   State<CompanyCard> createState() => _CompanyCardState();
@@ -34,7 +44,12 @@ class _CompanyCardState extends State<CompanyCard> {
                 onChanged: (value) {
                   widget._company.isActive = value;
                   setState(() {});
-                  // TODO: call active or disable endpoint
+                  widget.onCompanyStatusChange(
+                    UpdateDeliveryCompanyStatusRequest(
+                      id: widget._company.id,
+                      status: value,
+                    ),
+                  );
                 },
               ),
             ],
@@ -97,7 +112,7 @@ class _CompanyCardState extends State<CompanyCard> {
                               message:
                                   S.current.thisWillDeleteAllDataAndStanders,
                               onConfirm: () {
-                                // TODO: call delete company endpoint
+                                widget.onCompanyDelete();
                               },
                               title: S.current.areYouSureForDelete +
                                   ' ' +

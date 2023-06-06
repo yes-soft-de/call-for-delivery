@@ -1,6 +1,7 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_external_delivery_companies/model/company.dart';
+import 'package:c4d/module_external_delivery_companies/model/company_model.dart';
+import 'package:c4d/module_external_delivery_companies/request/delete_delivery_company_request.dart';
 import 'package:c4d/module_external_delivery_companies/ui/screen/external_delivery_companies_screen.dart';
 import 'package:c4d/module_external_delivery_companies/ui/widgets/add_new_copany_dialog.dart';
 import 'package:c4d/module_external_delivery_companies/ui/widgets/company_card.dart';
@@ -8,7 +9,7 @@ import 'package:flutter/material.dart';
 
 class ExternalDeliveryCompaniesStateLoaded extends States {
   final ExternalDeliveryCompaniesScreenState _screenState;
-  final List<Company> _companies;
+  final List<CompanyModel> _companies;
 
   ExternalDeliveryCompaniesStateLoaded(this._screenState, this._companies)
       : super(_screenState);
@@ -26,7 +27,20 @@ class ExternalDeliveryCompaniesStateLoaded extends States {
               child: ListView.builder(
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return CompanyCard(company: _companies[index]);
+                  return CompanyCard(
+                    company: _companies[index],
+                    onCompanyStatusChange: (request) {
+                      _screenState.updateCompanyStatus(request);
+                    },
+                    onCompanyDelete: () {
+                      Navigator.pop(context);
+                      _screenState.deleteCompany(
+                        DeleteDeliveryCompanyRequest(
+                          id: _companies[index].id,
+                        ),
+                      );
+                    },
+                  );
                 },
                 itemCount: _companies.length,
               ),
@@ -43,7 +57,11 @@ class ExternalDeliveryCompaniesStateLoaded extends States {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return AddCompanyDialog();
+                      return AddCompanyDialog(
+                        onAdded: (request) {
+                          _screenState.createNewCompany(request);
+                        },
+                      );
                     },
                   );
                 },

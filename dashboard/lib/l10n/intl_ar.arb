@@ -1014,5 +1014,8 @@
     "areYouSureForDelete": "هل انت متاكد من حذف",
     "areYouSureForDeleteSetting": "هل انت متاكد من حذف هذا الاعداد؟",
     "thisWillDeleteAllDataAndStanders": "سيؤدي هذا الى حذف كافة البيانات والمعايير التي تم قمت باعدادها",
+    "dataUpdatedSuccessfully": "تم تحديث البيانات بنجاح",
+    "companyAddedSuccessfully": "تم اضافة الشركة بنجاح",
+    "companyDeleteSuccessfully": "تم حذف الشركة بنجاح",
     "dev": "المطورين"
 }

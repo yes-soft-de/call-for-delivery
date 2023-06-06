@@ -356,6 +356,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "ملاحظات الكابتن حول سعر الطلبية"),
         "community":
             MessageLookupByLibrary.simpleMessage("مواقع التواصل الاجتماعي"),
+        "companyAddedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم اضافة الشركة بنجاح"),
         "companyFinance":
             MessageLookupByLibrary.simpleMessage("المعلومات المالية"),
         "companyInfo": MessageLookupByLibrary.simpleMessage("معلومات الشركة"),
@@ -461,6 +463,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "darkMode": MessageLookupByLibrary.simpleMessage("الوضع الليلي"),
         "dataDecodeError": MessageLookupByLibrary.simpleMessage(
             "هناك مشكلة في تفسير البيانات"),
+        "dataUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تحديث البيانات بنجاح"),
         "date": MessageLookupByLibrary.simpleMessage("التاريخ"),
         "dateFinancialCycleEnds":
             MessageLookupByLibrary.simpleMessage("تاريخ انتهاء الدورة المالية"),
