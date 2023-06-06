@@ -56,10 +56,14 @@ class EditDeliveryCompanySettingScreenState
   Widget build(BuildContext context) {
     if (flag) {
       flag = false;
-      companySetting =
-          ModalRoute.of(context)?.settings.arguments as CompanySetting;
-      currentState =
-          EditDeliveryCompanySettingScreenStateLoaded(this, companySetting);
+      var arg = ModalRoute.of(context)?.settings.arguments as List;
+      companySetting = arg[0] as CompanySetting;
+
+      bool isNewSetting = false;
+      if (arg.length > 1) isNewSetting = arg[1] as bool;
+
+      currentState = EditDeliveryCompanySettingScreenStateLoaded(
+          this, companySetting, isNewSetting);
     }
 
     return GestureDetector(

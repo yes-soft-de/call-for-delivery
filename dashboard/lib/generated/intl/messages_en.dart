@@ -155,6 +155,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("are you sure about edit"),
         "areYouSureAboutRependingOrder": MessageLookupByLibrary.simpleMessage(
             "Are you sure about reset this order and remove it form captain"),
+        "areYouSureForDelete":
+            MessageLookupByLibrary.simpleMessage("are you sure for delete"),
+        "areYouSureForDeleteSetting": MessageLookupByLibrary.simpleMessage(
+            "are you sure for delete this setting?"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete this payment"),
         "areYouWantToDeleteAllPayments": MessageLookupByLibrary.simpleMessage(
@@ -1431,6 +1435,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "This Might Take a while, please wait"),
         "thisOrderCanBeLinked": MessageLookupByLibrary.simpleMessage(
             "Order can contains a sub orders"),
+        "thisWillDeleteAllDataAndStanders":
+            MessageLookupByLibrary.simpleMessage(
+                "this will delete all data and standers that has been entered"),
         "time": MessageLookupByLibrary.simpleMessage("time"),
         "title": MessageLookupByLibrary.simpleMessage("title"),
         "to": MessageLookupByLibrary.simpleMessage("To"),

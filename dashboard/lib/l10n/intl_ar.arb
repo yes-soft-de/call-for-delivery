@@ -1011,5 +1011,8 @@
     "pleaseEnterCompanyName": "الرجاء ادخال اسم شركة التوصيل",
     "someStores": "خصص متجر او اكتر",
     "onOff": "تشغيل / ايقاف",
+    "areYouSureForDelete": "هل انت متاكد من حذف",
+    "areYouSureForDeleteSetting": "هل انت متاكد من حذف هذا الاعداد؟",
+    "thisWillDeleteAllDataAndStanders": "سيؤدي هذا الى حذف كافة البيانات والمعايير التي تم قمت باعدادها",
     "dev": "المطورين"
 }

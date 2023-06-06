@@ -14,8 +14,10 @@ import '../widgets/distance_card.dart';
 class EditDeliveryCompanySettingScreenStateLoaded extends States {
   final EditDeliveryCompanySettingScreenState _screenState;
   final CompanySetting companySetting;
+  final isNewSetting;
+
   EditDeliveryCompanySettingScreenStateLoaded(
-      this._screenState, this.companySetting)
+      this._screenState, this.companySetting, this.isNewSetting)
       : super(_screenState);
 
   final _settingNameController = TextEditingController();
@@ -23,7 +25,6 @@ class EditDeliveryCompanySettingScreenStateLoaded extends States {
 
   bool flag = true;
 
-  @override
   @override
   Widget getUI(BuildContext context) {
     if (flag) {

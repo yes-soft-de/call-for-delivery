@@ -1,6 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_external_delivery_companies/external_delivery_companies_routes.dart';
 import 'package:c4d/module_external_delivery_companies/model/company_setting.dart';
+import 'package:c4d/module_external_delivery_companies/ui/widgets/show_confirm_dialgo.dart';
 import 'package:flutter/material.dart';
 
 class CompanySettingCard extends StatefulWidget {
@@ -55,14 +57,29 @@ class _CompanySettingCardState extends State<CompanySettingCard> {
                   context,
                   ExternalDeliveryCompaniesRoutes
                       .EDIT_Delivery_COMPANY_SETTINGS_SCREEN,
-                  arguments: widget.companySetting);
+                  arguments: [widget.companySetting]);
             },
           ),
           CustomIconButton(
             backgroundColor: Colors.red,
             icon: Icons.delete,
             onPressed: () {
-              // TODO: show confirm dialgo fo delete this setting
+              showConfirmDialog(
+                context,
+                confirmButtonColor: Colors.red,
+                confirmButtonTitle: Text(
+                  S.current.delete,
+                  style: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.copyWith(color: Colors.white),
+                ),
+                message: S.current.thisWillDeleteAllDataAndStanders,
+                onConfirm: () {
+                  // TODO: call delete company endpoint
+                },
+                title: S.current.areYouSureForDeleteSetting,
+              );
             },
           ),
         ],

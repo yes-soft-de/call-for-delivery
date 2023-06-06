@@ -1,5 +1,6 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_external_delivery_companies/external_delivery_companies_routes.dart';
 import 'package:c4d/module_external_delivery_companies/model/company_setting.dart';
 import 'package:c4d/module_external_delivery_companies/ui/screen/delivery_company_all_settings_screen.dart';
 import 'package:c4d/module_external_delivery_companies/ui/widgets/company_setting_card.dart';
@@ -42,7 +43,16 @@ class DeliveryCompanyAllSettingsStateLoaded extends States {
                 ),
                 child: Text(S.current.addSetting),
                 onPressed: () {
-                  // TODO: add new setting (edit setting with empty values)
+                  Navigator.pushNamed(
+                      context,
+                      ExternalDeliveryCompaniesRoutes
+                          .EDIT_Delivery_COMPANY_SETTINGS_SCREEN,
+                      arguments: [
+                        CompanySetting.empty(
+                          companyName: _companySetting.first.companyName,
+                        ),
+                        true
+                      ]);
                 },
               ),
             )

@@ -10170,6 +10170,36 @@ class S {
     );
   }
 
+  /// `are you sure for delete`
+  String get areYouSureForDelete {
+    return Intl.message(
+      'are you sure for delete',
+      name: 'areYouSureForDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `are you sure for delete this setting?`
+  String get areYouSureForDeleteSetting {
+    return Intl.message(
+      'are you sure for delete this setting?',
+      name: 'areYouSureForDeleteSetting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `this will delete all data and standers that has been entered`
+  String get thisWillDeleteAllDataAndStanders {
+    return Intl.message(
+      'this will delete all data and standers that has been entered',
+      name: 'thisWillDeleteAllDataAndStanders',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

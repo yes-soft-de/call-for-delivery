@@ -1,6 +1,10 @@
+import 'package:c4d/consts/navigator_assistant.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_external_delivery_companies/external_delivery_companies_routes.dart';
 import 'package:c4d/module_external_delivery_companies/model/company.dart';
+import 'package:c4d/module_external_delivery_companies/ui/widgets/show_confirm_dialgo.dart';
+import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:flutter/material.dart';
 
 class CompanyCard extends StatefulWidget {
@@ -37,40 +41,76 @@ class _CompanyCardState extends State<CompanyCard> {
           ),
           SizedBox(height: 25),
           Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              height: 50,
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xff0360A1)),
-                      child: Text(S.current.deliveryStandards),
-                      onPressed: () {
-                        // TODO: navigate to delivery stander setting screen
-                        Navigator.pushNamed(
-                            context,
-                            ExternalDeliveryCompaniesRoutes
-                                .Delivery_COMPANY_ALL_SETTINGS_SCREEN,
-                            arguments: widget._company);
-                      },
-                    ),
+            padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 8),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 40,
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xff0360A1)),
+                    child: Text(S.current.deliveryStandards),
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        ExternalDeliveryCompaniesRoutes
+                            .Delivery_COMPANY_ALL_SETTINGS_SCREEN,
+                        arguments: widget._company,
+                      );
+                    },
                   ),
-                  SizedBox(width: 20),
-                  Expanded(
-                    child: ElevatedButton(
-                      style:
-                          ElevatedButton.styleFrom(backgroundColor: Colors.red),
-                      child: Text(S.current.delete),
-                      onPressed: () {
-                        // TODO: call delete this company endpoint
-                      },
-                    ),
+                ),
+                SizedBox(height: 10),
+                SizedBox(
+                  height: 50,
+                  child: Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xff0360A1)),
+                            child: Text(S.current.orders),
+                            onPressed: () {
+                              NavigatorAssistant.nonDeliveringIndex = 1;
+                              getIt<GlobalStateManager>()
+                                  .goToNonDeliveredOrder();
+                            }),
+                      ),
+                      SizedBox(width: 20),
+                      Expanded(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red),
+                          child: Text(S.current.delete),
+                          onPressed: () {
+                            showConfirmDialog(
+                              context,
+                              confirmButtonColor: Colors.red,
+                              confirmButtonTitle: Text(
+                                S.current.delete,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(color: Colors.white),
+                              ),
+                              message:
+                                  S.current.thisWillDeleteAllDataAndStanders,
+                              onConfirm: () {
+                                // TODO: call delete company endpoint
+                              },
+                              title: S.current.areYouSureForDelete +
+                                  ' ' +
+                                  widget._company.name +
+                                  '؟',
+                            );
+                          },
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ],

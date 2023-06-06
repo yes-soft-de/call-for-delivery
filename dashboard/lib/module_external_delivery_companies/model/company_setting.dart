@@ -24,6 +24,17 @@ class CompanySetting {
     required this.paymentType,
   });
 
+  CompanySetting.empty({required this.companyName})
+      : distance = FromTo<int>(isFilterActive: false, from: 0, to: 0),
+        id = -1,
+        isActive = false,
+        paymentType = PaymentType.all,
+        settingName = '',
+        storeType = StoreType.all,
+        stores = [],
+        workingHours = FromTo<TimeOfDay>(
+            from: TimeOfDay.now(), isFilterActive: false, to: TimeOfDay.now());
+
   late List<CompanySetting> _companySetting;
 }
 

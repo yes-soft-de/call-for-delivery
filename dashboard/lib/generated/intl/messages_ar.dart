@@ -157,6 +157,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("هل انت متاكد من التعديل؟"),
         "areYouSureAboutRependingOrder": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من رغبتك بإعادة هذا الطلب لحالة الانتظار وإلغاء اسناد الكابتن"),
+        "areYouSureForDelete":
+            MessageLookupByLibrary.simpleMessage("هل انت متاكد من حذف"),
+        "areYouSureForDeleteSetting": MessageLookupByLibrary.simpleMessage(
+            "هل انت متاكد من حذف هذا الاعداد؟"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد بإنك تريد حذف هذه الدفعة"),
         "areYouWantToDeleteAllPayments": MessageLookupByLibrary.simpleMessage(
@@ -1425,6 +1429,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "سوف يستغرق الامر دقيقة واحدة الرجاء الانتظار"),
         "thisOrderCanBeLinked": MessageLookupByLibrary.simpleMessage(
             "الطلب من الممكن أن يحتوي على طلبات فرعية"),
+        "thisWillDeleteAllDataAndStanders": MessageLookupByLibrary.simpleMessage(
+            "سيؤدي هذا الى حذف كافة البيانات والمعايير التي تم قمت باعدادها"),
         "time": MessageLookupByLibrary.simpleMessage("الوقت"),
         "title": MessageLookupByLibrary.simpleMessage("عنوان"),
         "to": MessageLookupByLibrary.simpleMessage("الى"),

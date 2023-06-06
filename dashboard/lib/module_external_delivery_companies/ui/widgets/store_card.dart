@@ -1,6 +1,7 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_external_delivery_companies/model/company_setting.dart';
 import 'package:c4d/module_external_delivery_companies/ui/widgets/selectable_item.dart';
+import 'package:c4d/module_external_delivery_companies/ui/widgets/show_pick_branches_dialog.dart';
 import 'package:flutter/material.dart';
 
 class StoresCard extends StatefulWidget {
@@ -24,13 +25,20 @@ class StoresCard extends StatefulWidget {
 
 class _StoresCardState extends State<StoresCard> {
   late StoreType storeType;
+  late List<String> branches;
   bool flag = true;
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     if (flag) {
       flag = false;
       storeType = widget.storeType;
+      branches = widget.Stores;
     }
     return Card(
       child: Padding(
@@ -50,18 +58,113 @@ class _StoresCardState extends State<StoresCard> {
               selectedValue: storeType,
               title: S.current.allStores,
             ),
-            SelectableItem<StoreType>(
-              onTap: () {
-                setState(() {
-                  storeType = StoreType.some;
-                });
-                widget.onStoreTypeChange(storeType);
-              },
-              value: StoreType.some,
-              selectedValue: storeType,
-              title: S.current.someStores,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                SelectableItem<StoreType>(
+                  onTap: () {
+                    setState(() {
+                      storeType = StoreType.some;
+                    });
+                    widget.onStoreTypeChange(storeType);
+                  },
+                  value: StoreType.some,
+                  selectedValue: storeType,
+                  title: S.current.someStores,
+                ),
+                Visibility(
+                  visible: storeType == StoreType.some,
+                  child: InkWell(
+                    onTap: () async {
+                      // show pick branch dialog
+                      var v = await showPickBranchDialog(context);
+                      branches
+                          .addAll(v?.map((e) => e.branchName).toList() ?? []);
+                      setState(() {});
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        color: Color(0xff024D92),
+                      ),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.add,
+                          color: Colors.white,
+                          size: 20,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Visibility(
+              visible: storeType == StoreType.some,
+              child: Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                ),
+                constraints: BoxConstraints(
+                  minHeight: 50,
+                  minWidth: double.infinity,
+                ),
+                child: Wrap(
+                  children: [
+                    for (var branch in branches)
+                      _BranchCard(
+                        branch: branch,
+                        onDelete: () {
+                          branches.remove(branch);
+                          setState(() {});
+                        },
+                      )
+                  ],
+                ),
+              ),
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class _BranchCard extends StatelessWidget {
+  const _BranchCard({
+    required this.branch,
+    required this.onDelete,
+  });
+
+  final Function() onDelete;
+  final String branch;
+
+  @override
+  Widget build(BuildContext context) {
+    return InkWell(
+      onTap: onDelete,
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                branch,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(color: Color(0xff024D92), fontSize: 16),
+              ),
+              SizedBox(width: 5),
+              Icon(
+                Icons.cancel,
+                color: Color(0xff024D92),
+              )
+            ],
+          ),
         ),
       ),
     );
