@@ -3,6 +3,7 @@
 namespace App\Service\Admin\AppFeature;
 
 use App\AutoMapping;
+use App\Constant\AppFeature\AppFeatureResultConstant;
 use App\Entity\AppFeatureEntity;
 use App\Manager\Admin\AppFeature\AdminAppFeatureManager;
 use App\Request\Admin\AppFeature\AppFeatureCreateRequest;
@@ -11,13 +12,11 @@ use App\Response\Admin\AppFeature\AppFeatureForAdminGetResponse;
 
 class AdminAppFeatureService
 {
-    private AutoMapping $autoMapping;
-    private AdminAppFeatureManager $adminAppFeatureManager;
-
-    public function __construct(AutoMapping $autoMapping, AdminAppFeatureManager $adminAppFeatureManager)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private AdminAppFeatureManager $adminAppFeatureManager
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->adminAppFeatureManager = $adminAppFeatureManager;
     }
 
     public function createAppFeatureBySuperAdmin(AppFeatureCreateRequest $request): AppFeatureForAdminGetResponse
@@ -45,5 +44,27 @@ class AdminAppFeatureService
         $appFeatureResult = $this->adminAppFeatureManager->updateAppFeatureStatusBySuperAdmin($request);
 
         return $this->autoMapping->map(AppFeatureEntity::class, AppFeatureForAdminGetResponse::class, $appFeatureResult);
+    }
+
+    public function fetchAppFeatureByNameForAdmin(string $appFeatureName): int|AppFeatureForAdminGetResponse
+    {
+        $appFeatureEntity = $this->adminAppFeatureManager->fetchAppFeatureByNameForAdmin($appFeatureName);
+
+        if (! $appFeatureEntity) {
+            return AppFeatureResultConstant::APP_FEATURE_NOT_FOUND_CONST;
+        }
+
+        return $this->autoMapping->map(AppFeatureEntity::class, AppFeatureForAdminGetResponse::class, $appFeatureEntity);
+    }
+
+    public function updateAppFeatureStatusByAdmin(AppFeatureStatusUpdateBySuperAdminRequest $request): int|AppFeatureForAdminGetResponse
+    {
+        $appFeatureEntity = $this->adminAppFeatureManager->updateAppFeatureStatusByAdmin($request);
+
+        if ($appFeatureEntity === AppFeatureResultConstant::APP_FEATURE_NOT_FOUND_CONST) {
+            return AppFeatureResultConstant::APP_FEATURE_NOT_FOUND_CONST;
+        }
+
+        return $this->autoMapping->map(AppFeatureEntity::class, AppFeatureForAdminGetResponse::class, $appFeatureEntity);
     }
 }

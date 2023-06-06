@@ -38,4 +38,6 @@ class ExternalDeliveryCompanyCriteriaUpdateByAdminResponse
     public DateTime $createdAt;
 
     public DateTime $updatedAt;
+
+    public ?float $cashLimit;
 }

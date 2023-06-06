@@ -36,6 +36,8 @@ class ExternalDeliveryCompanyCriteriaCreateByAdminRequest
 
     private bool $status = ExternalDeliveryCompanyCriteriaStatusConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_STATUS_FALSE_CONST;
 
+    private ?float $cashLimit;
+
     public function getFromDate(): null|string|DateTime
     {
         return $this->fromDate;
