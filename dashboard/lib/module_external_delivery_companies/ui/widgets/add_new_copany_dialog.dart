@@ -1,5 +1,5 @@
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_external_delivery_companies/request/create_new_delivery_company_request.dart';
+import 'package:c4d/module_external_delivery_companies/request/company_request/create_new_delivery_company_request.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:flutter/material.dart';
 

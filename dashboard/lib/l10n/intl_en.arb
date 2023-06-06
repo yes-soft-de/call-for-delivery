@@ -1018,5 +1018,8 @@
     "dataUpdatedSuccessfully": "data updated successfully",
     "companyAddedSuccessfully": "company added successfully",
     "companyDeletedSuccessfully": "company deleted successfully",
+    "companyCriterialAddedSuccessfully": "company criterial added successfully",
+    "companyCriterialUpdatedSuccessfully": "company criterial updated successfully",
+    "companyCriterialDeletedSuccessfully": "company criterial deleted successfully",
     "dev":"Dev"
 }

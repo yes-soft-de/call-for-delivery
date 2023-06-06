@@ -10230,6 +10230,36 @@ class S {
     );
   }
 
+  /// `company criterial added successfully`
+  String get companyCriterialAddedSuccessfully {
+    return Intl.message(
+      'company criterial added successfully',
+      name: 'companyCriterialAddedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `company criterial updated successfully`
+  String get companyCriterialUpdatedSuccessfully {
+    return Intl.message(
+      'company criterial updated successfully',
+      name: 'companyCriterialUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `company criterial deleted successfully`
+  String get companyCriterialDeletedSuccessfully {
+    return Intl.message(
+      'company criterial deleted successfully',
+      name: 'companyCriterialDeletedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

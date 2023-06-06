@@ -360,6 +360,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "community": MessageLookupByLibrary.simpleMessage("Community"),
         "companyAddedSuccessfully":
             MessageLookupByLibrary.simpleMessage("company added successfully"),
+        "companyCriterialAddedSuccessfully":
+            MessageLookupByLibrary.simpleMessage(
+                "company criterial added successfully"),
+        "companyCriterialDeletedSuccessfully":
+            MessageLookupByLibrary.simpleMessage(
+                "company criterial deleted successfully"),
+        "companyCriterialUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage(
+                "company criterial updated successfully"),
         "companyDeletedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "company deleted successfully"),
         "companyFinance":

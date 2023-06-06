@@ -1,14 +1,24 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_external_delivery_companies/external_delivery_companies_routes.dart';
+import 'package:c4d/module_external_delivery_companies/model/company_model.dart';
 import 'package:c4d/module_external_delivery_companies/model/company_setting.dart';
 import 'package:c4d/module_external_delivery_companies/ui/widgets/show_confirm_dialog.dart';
 import 'package:flutter/material.dart';
 
 class CompanySettingCard extends StatefulWidget {
   final CompanySetting companySetting;
+  final CompanyModel company;
+  final Function() onStatusChange;
+  final Function() onDelete;
 
-  const CompanySettingCard({super.key, required this.companySetting});
+  const CompanySettingCard({
+    super.key,
+    required this.companySetting,
+    required this.company,
+    required this.onStatusChange,
+    required this.onDelete,
+  });
 
   @override
   State<CompanySettingCard> createState() => _CompanySettingCardState();
@@ -41,8 +51,8 @@ class _CompanySettingCardState extends State<CompanySettingCard> {
                       onChanged: (value) {
                         widget.companySetting.isActive = value;
                         setState(() {});
+                        widget.onStatusChange();
                       },
-                      // TODO: call active disable settings endpoint
                     ),
                   ],
                 ),
@@ -57,7 +67,10 @@ class _CompanySettingCardState extends State<CompanySettingCard> {
                   context,
                   ExternalDeliveryCompaniesRoutes
                       .EDIT_Delivery_COMPANY_SETTINGS_SCREEN,
-                  arguments: [widget.companySetting]);
+                  arguments: [
+                    widget.companySetting,
+                    widget.company,
+                  ]);
             },
           ),
           CustomIconButton(
@@ -76,7 +89,7 @@ class _CompanySettingCardState extends State<CompanySettingCard> {
                 ),
                 message: S.current.thisWillDeleteAllDataAndStanders,
                 onConfirm: () {
-                  // TODO: call delete company endpoint
+                  widget.onDelete();
                 },
                 title: S.current.areYouSureForDeleteSetting,
               );

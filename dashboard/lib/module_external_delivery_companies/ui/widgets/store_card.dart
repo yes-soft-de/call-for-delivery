@@ -1,4 +1,5 @@
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_branches/model/branches/branches_model.dart';
 import 'package:c4d/module_external_delivery_companies/model/company_setting.dart';
 import 'package:c4d/module_external_delivery_companies/ui/widgets/selectable_item.dart';
 import 'package:c4d/module_external_delivery_companies/ui/widgets/show_pick_branches_dialog.dart';
@@ -6,10 +7,10 @@ import 'package:flutter/material.dart';
 
 class StoresCard extends StatefulWidget {
   final StoreType storeType;
-  final List<String> Stores;
+  final List<BranchesModel> Stores;
 
   final Function(StoreType storeType) onStoreTypeChange;
-  final Function(List<String> stores) onStoresChange;
+  final Function(List<BranchesModel> stores) onStoresChange;
 
   const StoresCard({
     super.key,
@@ -25,7 +26,7 @@ class StoresCard extends StatefulWidget {
 
 class _StoresCardState extends State<StoresCard> {
   late StoreType storeType;
-  late List<String> branches;
+  late List<BranchesModel> branches;
   bool flag = true;
 
   @override
@@ -78,8 +79,10 @@ class _StoresCardState extends State<StoresCard> {
                     onTap: () async {
                       // show pick branch dialog
                       var v = await showPickBranchDialog(context);
-                      branches
-                          .addAll(v?.map((e) => e.branchName).toList() ?? []);
+                      if (v != null)
+                        branches.addAll(v.map((e) {
+                          return e;
+                        }));
                       setState(() {});
                     },
                     child: Container(
@@ -115,7 +118,7 @@ class _StoresCardState extends State<StoresCard> {
                   children: [
                     for (var branch in branches)
                       _BranchCard(
-                        branch: branch,
+                        branch: branch.branchName,
                         onDelete: () {
                           branches.remove(branch);
                           setState(() {});

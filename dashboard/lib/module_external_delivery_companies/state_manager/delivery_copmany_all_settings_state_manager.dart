@@ -1,9 +1,15 @@
+import 'package:c4d/abstracts/states/empty_state.dart';
+import 'package:c4d/abstracts/states/error_state.dart';
+import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_external_delivery_companies/model/company_setting.dart';
+import 'package:c4d/module_external_delivery_companies/request/company_criterial_request/delete_company_criteria_request.dart';
+import 'package:c4d/module_external_delivery_companies/request/company_criterial_request/update_company_criterial_status_request.dart';
 import 'package:c4d/module_external_delivery_companies/service/external_delivery_companies_service.dart';
 import 'package:c4d/module_external_delivery_companies/ui/screen/delivery_company_all_settings_screen.dart';
 import 'package:c4d/module_external_delivery_companies/ui/state/delivery_copmany_all_settings_state_loaded.dart';
-import 'package:flutter/material.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -14,58 +20,71 @@ class DeliveryCompanyAllSettingsStateManager {
 
   DeliveryCompanyAllSettingsStateManager(this._service);
 
+  Stream<States> get stateStream => _stateSubject.stream;
+
   void getCompanySetting(
       DeliveryCompanyAllSettingsScreenState screenState, int companyId) {
-    var companySetting = [
-      CompanySetting(
-          companyName: '',
-          isActive: true,
-          id: 1,
-          distance: FromTo(from: 1, to: 10, isFilterActive: true),
-          settingName: 'setting 1',
-          paymentType: PaymentType.all,
-          storeType: StoreType.all,
-          stores: [],
-          workingHours:
-              FromTo(from: TimeOfDay(hour: 10, minute: 30), to: TimeOfDay(hour: 11, minute: 30), isFilterActive: false)),
-      CompanySetting(
-          companyName: '',
-          isActive: false,
-          id: 2,
-          distance: FromTo(from: 10, to: 100, isFilterActive: true),
-          settingName: 'setting 2',
-          paymentType: PaymentType.card,
-          storeType: StoreType.some,
-          stores: ['hi'],
-          workingHours:
-              FromTo(from: TimeOfDay(hour: 10, minute: 30), to: TimeOfDay(hour: 11, minute: 30), isFilterActive: true)),
-      CompanySetting(
-          companyName: '',
-          isActive: true,
-          id: 3,
-          distance: FromTo(from: 1, to: 10, isFilterActive: false),
-          settingName: 'setting 3',
-          paymentType: PaymentType.cash,
-          storeType: StoreType.all,
-          stores: [],
-          workingHours:
-              FromTo(from: TimeOfDay(hour: 10, minute: 30), to: TimeOfDay(hour: 11, minute: 30), isFilterActive: false)),
-      CompanySetting(
-          companyName: '',
-          isActive: false,
-          id: 4,
-          distance: FromTo(from: 1, to: 10, isFilterActive: true),
-          settingName: 'setting 4',
-          paymentType: PaymentType.all,
-          storeType: StoreType.some,
-          stores: ['hi', 'bey'],
-          workingHours:
-              FromTo(from: TimeOfDay(hour: 10, minute: 30), to: TimeOfDay(hour: 11, minute: 30), isFilterActive: true)),
-    ];
+    _stateSubject.add(LoadingState(screenState));
 
-    _stateSubject.add(
-        DeliveryCompanyAllSettingsStateLoaded(screenState, companySetting));
+    _service.getCompanyCriterial(companyId).then(
+      (value) {
+        if (value.hasError) {
+          _stateSubject.add(ErrorState(screenState, onPressed: () {
+            getCompanySetting(screenState, companyId);
+          }, title: '', error: value.error, hasAppbar: false, size: 200));
+        } else if (value.isEmpty) {
+          _stateSubject.add(EmptyState(screenState, size: 200, onPressed: () {
+            getCompanySetting(screenState, companyId);
+          },
+              title: '',
+              emptyMessage: S.current.homeDataEmpty,
+              hasAppbar: false));
+        } else {
+          value as CompanySetting;
+          _stateSubject.add(
+            DeliveryCompanyAllSettingsStateLoaded(screenState, value.data),
+          );
+        }
+      },
+    );
   }
 
-  Stream<States> get stateStream => _stateSubject.stream;
+  void deleteCompanyCriterial(DeliveryCompanyAllSettingsScreenState screenState,
+      DeleteCompanyCriterialRequest request) {
+    _stateSubject.add(LoadingState(screenState));
+
+    _service.deleteCompanyCriterial(request).then(
+      (value) {
+        if (value.hasError) {
+          CustomFlushBarHelper.createError(
+              title: S.current.warnning, message: value.error ?? '');
+        } else {
+          CustomFlushBarHelper.createSuccess(
+            title: S.current.warnning,
+            message: S.current.companyCriterialDeletedSuccessfully,
+          );
+        }
+        screenState.getCompanySetting();
+      },
+    );
+  }
+
+  void updateCompanyCriterialStatus(
+      DeliveryCompanyAllSettingsScreenState screenState,
+      UpdateCompanyCriterialStatusRequest request) {
+    _service.updateCompanyCriterialStatus(request).then(
+      (value) {
+        if (value.hasError) {
+          CustomFlushBarHelper.createError(
+              title: S.current.warnning, message: value.error ?? '');
+          screenState.getCompanySetting();
+        } else {
+          CustomFlushBarHelper.createSuccess(
+            title: S.current.warnning,
+            message: S.current.companyCriterialUpdatedSuccessfully,
+          );
+        }
+      },
+    );
+  }
 }

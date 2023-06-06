@@ -1,7 +1,7 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_external_delivery_companies/model/company_model.dart';
-import 'package:c4d/module_external_delivery_companies/request/delete_delivery_company_request.dart';
+import 'package:c4d/module_external_delivery_companies/request/company_request/delete_delivery_company_request.dart';
 import 'package:c4d/module_external_delivery_companies/ui/screen/external_delivery_companies_screen.dart';
 import 'package:c4d/module_external_delivery_companies/ui/widgets/add_new_copany_dialog.dart';
 import 'package:c4d/module_external_delivery_companies/ui/widgets/company_card.dart';
@@ -33,7 +33,6 @@ class ExternalDeliveryCompaniesStateLoaded extends States {
                       _screenState.updateCompanyStatus(request);
                     },
                     onCompanyDelete: () {
-                      Navigator.pop(context);
                       _screenState.deleteCompany(
                         DeleteDeliveryCompanyRequest(
                           id: _companies[index].id,

@@ -358,6 +358,14 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("مواقع التواصل الاجتماعي"),
         "companyAddedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم اضافة الشركة بنجاح"),
+        "companyCriterialAddedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم اضافة المعايير بنجاح"),
+        "companyCriterialDeletedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم حذف المعايير بنجاح"),
+        "companyCriterialUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تحديث المعايير بنجاح"),
+        "companyDeletedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم حذف الشركة بنجاح"),
         "companyFinance":
             MessageLookupByLibrary.simpleMessage("المعلومات المالية"),
         "companyInfo": MessageLookupByLibrary.simpleMessage("معلومات الشركة"),

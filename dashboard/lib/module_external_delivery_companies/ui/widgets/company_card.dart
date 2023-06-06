@@ -3,7 +3,7 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_external_delivery_companies/external_delivery_companies_routes.dart';
 import 'package:c4d/module_external_delivery_companies/model/company_model.dart';
-import 'package:c4d/module_external_delivery_companies/request/update_delivery_company_status_request.dart';
+import 'package:c4d/module_external_delivery_companies/request/company_request/update_delivery_company_status_request.dart';
 import 'package:c4d/module_external_delivery_companies/ui/widgets/show_confirm_dialog.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:flutter/material.dart';

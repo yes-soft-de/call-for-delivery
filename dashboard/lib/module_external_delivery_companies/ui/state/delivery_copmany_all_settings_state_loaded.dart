@@ -2,6 +2,8 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_external_delivery_companies/external_delivery_companies_routes.dart';
 import 'package:c4d/module_external_delivery_companies/model/company_setting.dart';
+import 'package:c4d/module_external_delivery_companies/request/company_criterial_request/delete_company_criteria_request.dart';
+import 'package:c4d/module_external_delivery_companies/request/company_criterial_request/update_company_criterial_status_request.dart';
 import 'package:c4d/module_external_delivery_companies/ui/screen/delivery_company_all_settings_screen.dart';
 import 'package:c4d/module_external_delivery_companies/ui/widgets/company_setting_card.dart';
 import 'package:flutter/material.dart';
@@ -28,6 +30,21 @@ class DeliveryCompanyAllSettingsStateLoaded extends States {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return CompanySettingCard(
+                    onDelete: () {
+                      _screenState
+                          .deleteCompanyCriterial(DeleteCompanyCriterialRequest(
+                        id: _companySetting[index].id,
+                      ));
+                    },
+                    onStatusChange: () {
+                      _screenState.updateCompanyCriterialStatus(
+                        UpdateCompanyCriterialStatusRequest(
+                          id: _companySetting[index].id,
+                          status: _companySetting[index].isActive,
+                        ),
+                      );
+                    },
+                    company: _screenState.company,
                     companySetting: _companySetting[index],
                   );
                 },
@@ -48,11 +65,15 @@ class DeliveryCompanyAllSettingsStateLoaded extends States {
                       ExternalDeliveryCompaniesRoutes
                           .EDIT_Delivery_COMPANY_SETTINGS_SCREEN,
                       arguments: [
-                        CompanySetting.empty(
-                          companyName: _companySetting.first.companyName,
-                        ),
-                        true
-                      ]);
+                        CompanySetting.empty(),
+                        _screenState.company,
+                        true,
+                      ]).then(
+                    (value) {
+                      if (value is bool && value)
+                        _screenState.getCompanySetting();
+                    },
+                  );
                 },
               ),
             )
