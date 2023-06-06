@@ -16,13 +16,15 @@ use App\Response\Admin\ExternalDeliveryCompany\ExternalDeliveryCompanyFetchRespo
 use App\Response\Admin\ExternalDeliveryCompany\ExternalDeliveryCompanyStatusUpdateByAdminResponse;
 use App\Response\Admin\ExternalDeliveryCompany\ExternalDeliveryCompanyUpdateByAdminResponse;
 use App\Service\Admin\ExternalDeliveryCompanyCriteria\AdminExternalDeliveryCompanyCriteriaService;
+use App\Service\Admin\ExternallyDeliveredOrder\AdminExternallyDeliveredOrderGetService;
 
 class AdminExternalDeliveryCompanyService
 {
     public function __construct(
         private AutoMapping $autoMapping,
         private AdminExternalDeliveryCompanyManager $adminExternalDeliveryCompanyManager,
-        private AdminExternalDeliveryCompanyCriteriaService $adminExternalDeliveryCompanyCriteriaService
+        private AdminExternalDeliveryCompanyCriteriaService $adminExternalDeliveryCompanyCriteriaService,
+        private AdminExternallyDeliveredOrderGetService $adminExternallyDeliveredOrderGetService
     )
     {
     }
@@ -83,12 +85,25 @@ class AdminExternalDeliveryCompanyService
         $this->adminExternalDeliveryCompanyCriteriaService->deleteExternalDeliveryCompanyCriteriaByExternalCompanyId($externalDeliveryCompanyId);
     }
 
+    public function getExternallyDeliveredOrdersByExternalDeliveryCompanyId(int $externallyDeliveryCompanyId): array
+    {
+        return $this->adminExternallyDeliveredOrderGetService->getExternallyDeliveredOrdersByExternalDeliveryCompanyId($externallyDeliveryCompanyId);
+    }
+
     /**
      * deletes External Delivery Company by external company id
      */
     public function deleteExternalDeliveryCompanyById(ExternalDeliveryCompanyDeleteByIdRequest $request): int|ExternalDeliveryCompanyDeleteResponse
     {
-        // First, delete company criteria
+        // First, check if there are orders already had been sent to the company
+        $externallyDeliveredOrders = $this->getExternallyDeliveredOrdersByExternalDeliveryCompanyId($request->getId());
+
+        if (count($externallyDeliveredOrders) > 0) {
+            return ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_HAS_ORDERS_CONST;
+        }
+
+        // As long as there are no orders, then we can move forward in the deleting process
+        // delete company criteria
         $this->deleteExternalDeliveryCompanyCriteriaByExternalCompanyId($request->getId());
 
         // Now we can continue deleting the external delivery company

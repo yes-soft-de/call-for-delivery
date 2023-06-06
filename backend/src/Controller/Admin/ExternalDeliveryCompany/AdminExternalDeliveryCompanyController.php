@@ -343,8 +343,12 @@ class AdminExternalDeliveryCompanyController extends BaseController
      *                   @OA\Schema(type="object",
      *                       @OA\Property(type="string", property="status_code", description="9050"),
      *                       @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                       @OA\Property(type="string", property="status_code", description="9051"),
+     *                       @OA\Property(type="string", property="msg")
      *                   )
-     *              }
+     *                }
      *      )
      *
      * )
@@ -370,6 +374,9 @@ class AdminExternalDeliveryCompanyController extends BaseController
 
         if ($result === ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_NOT_FOUND_CONST) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::EXTERNAL_DELIVERY_COMPANY_NOT_FOUND_CONST);
+
+        } elseif ($result === ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_HAS_ORDERS_CONST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::EXTERNAL_DELIVERY_COMPANY_HAS_ORDERS_CONST);
         }
 
         return $this->response($result, self::DELETE);
