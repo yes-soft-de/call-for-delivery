@@ -64,6 +64,9 @@ class ExternalDeliveryCompanyCriteriaEntity
     #[ORM\Column(type: 'boolean', options: ["default" => false])]
     private $status;
 
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $cashLimit;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -245,6 +248,18 @@ class ExternalDeliveryCompanyCriteriaEntity
     public function setStatus(bool $status): self
     {
         $this->status = $status;
+
+        return $this;
+    }
+
+    public function getCashLimit(): ?float
+    {
+        return $this->cashLimit;
+    }
+
+    public function setCashLimit(?float $cashLimit): self
+    {
+        $this->cashLimit = $cashLimit;
 
         return $this;
     }

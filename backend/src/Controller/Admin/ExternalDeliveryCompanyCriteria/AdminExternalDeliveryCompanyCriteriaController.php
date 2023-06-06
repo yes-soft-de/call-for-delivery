@@ -70,7 +70,8 @@ class AdminExternalDeliveryCompanyCriteriaController extends BaseController
      *          ),
      *          @OA\Property(type="integer", property="externalDeliveryCompany", description="external delivery company profile id"),
      *          @OA\Property(type="string", property="criteriaName"),
-     *          @OA\Property(type="boolean", property="status")
+     *          @OA\Property(type="boolean", property="status"),
+     *          @OA\Property(type="number", property="cashLimit")
      *      )
      * )
      *
@@ -158,7 +159,8 @@ class AdminExternalDeliveryCompanyCriteriaController extends BaseController
      *          @OA\Property(type="array", property="fromStoresBranches",
      *              @OA\Items(type="integer")
      *          ),
-     *          @OA\Property(type="string", property="criteriaName")
+     *          @OA\Property(type="string", property="criteriaName"),
+     *          @OA\Property(type="number", property="cashLimit")
      *      )
      * )
      *

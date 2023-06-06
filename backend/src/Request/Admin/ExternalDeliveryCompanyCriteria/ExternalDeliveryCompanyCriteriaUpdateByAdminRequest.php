@@ -29,7 +29,7 @@ class ExternalDeliveryCompanyCriteriaUpdateByAdminRequest
 
     private string $criteriaName;
 
-//    private bool $status;
+    private ?float $cashLimit;
 
     private int|AdminProfileEntity $updatedBy;
 

@@ -40,4 +40,6 @@ class ExternalDeliveryCompanyGetByExternalCompanyForAdminResponse
     public DateTime $updatedAt;
 
     public ?string $updatedByAdminName;
+
+    public ?float $cashLimit;
 }
