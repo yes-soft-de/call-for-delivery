@@ -23,6 +23,9 @@ class BaseController extends AbstractController
     const FETCH = ["fetched","200"];
     // external delivery company
     const EXTERNAL_DELIVERY_COMPANY_NOT_FOUND_CONST = ["external delivery company not found", "9050"];
+    const EXTERNAL_DELIVERY_COMPANY_HAS_ORDERS_CONST = ["external delivery company has orders", "9051"];
+    // app feature
+    const APP_FEATURE_NOT_FOUND_CONST = ["app feature not found", "9076"];
     //error order
     const ERROR = ["error","9201"];
     const ERROR_ORDER_REMOVE_CAPTAIN_RECEIVE = ["can not remove it, The captain received the order","9202"];
