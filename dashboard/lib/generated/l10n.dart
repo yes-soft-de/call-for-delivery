@@ -10290,6 +10290,16 @@ class S {
     );
   }
 
+  /// `only external`
+  String get onlyExternal {
+    return Intl.message(
+      'only external',
+      name: 'onlyExternal',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

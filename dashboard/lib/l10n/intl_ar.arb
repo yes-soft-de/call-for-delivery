@@ -1023,5 +1023,6 @@
     "ifNoValuesSetAllOrderWillBeSent": "(في حال عدم تحديد قيمة سيتم ارسال كافة الطلبات)",
     "featureWillBeOffAfterConfirm": "سيتم اطفاء الميزة بعد التاكيد",
     "featureWillBeOnAfterConfirm": "سيتم تشغيل الميزة بعد التاكيد",    
+    "onlyExternal": "خارجي فقط",
     "dev": "المطورين"
 }

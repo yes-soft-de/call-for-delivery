@@ -911,6 +911,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("خصص متجر او اكتر"),
         "ongoing": MessageLookupByLibrary.simpleMessage("جارية"),
         "online": MessageLookupByLibrary.simpleMessage("مدفوع"),
+        "onlyExternal": MessageLookupByLibrary.simpleMessage("خارجي فقط"),
         "open": MessageLookupByLibrary.simpleMessage("مفتوح"),
         "openChatRoom":
             MessageLookupByLibrary.simpleMessage("افتح غرفة المحادثة"),

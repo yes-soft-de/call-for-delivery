@@ -1024,5 +1024,6 @@
     "ifNoValuesSetAllOrderWillBeSent": "if no value set all order will be sent",
     "featureWillBeOffAfterConfirm": "feature will be off after confirm",
     "featureWillBeOnAfterConfirm": "feature will be on after confirm",
+    "onlyExternal": "only external",
     "dev":"Dev"
 }
