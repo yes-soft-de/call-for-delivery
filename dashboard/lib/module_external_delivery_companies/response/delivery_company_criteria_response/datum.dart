@@ -1,3 +1,5 @@
+import 'package:c4d/utils/helpers/date_converter.dart';
+
 import 'from_stores_branch.dart';
 
 class Datum {
@@ -40,12 +42,10 @@ class Datum {
       isSpecificDate: json['isSpecificDate'] as bool?,
       fromDate: json['fromDate']['timestamp'] == null
           ? null
-          : DateTime.fromMicrosecondsSinceEpoch(
-              json['fromDate']['timestamp'] as int),
+          : DateHelper.convert(json['fromDate']['timestamp'] as int),
       toDate: json['toDate']['timestamp'] == null
           ? null
-          : DateTime.fromMicrosecondsSinceEpoch(
-              json['toDate']['timestamp'] as int),
+          : DateHelper.convert(json['toDate']['timestamp'] as int),
       isDistance: json['isDistance'] as int?,
       fromDistance: json['fromDistance'] as int?,
       toDistance: json['toDistance'] as int?,

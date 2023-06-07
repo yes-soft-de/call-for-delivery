@@ -40,9 +40,9 @@ class CompanySetting extends DataModel {
         branches = [],
         cashLimit = null,
         workingHours = FromTo<TimeOfDay>(
-          from: TimeOfDay.now(),
+          from: TimeOfDay(hour: 10, minute: 00),
           isFilterActive: false,
-          to: TimeOfDay.now(),
+          to: TimeOfDay(hour: 12, minute: 30),
         );
 
   CompanySetting.withData(DeliveryCompanyCriteriaResponse response) {
