@@ -7,15 +7,19 @@ use App\Repository\AppFeatureEntityRepository;
 
 class AppFeatureManager
 {
-    private AppFeatureEntityRepository $appFeatureEntityRepository;
-
-    public function __construct(AppFeatureEntityRepository $appFeatureEntityRepository)
+    public function __construct(
+        private AppFeatureEntityRepository $appFeatureEntityRepository
+    )
     {
-        $this->appFeatureEntityRepository = $appFeatureEntityRepository;
     }
 
-    public function getAppFeatureByAppFeatureName(string $featureName): ?array
+    public function getAppFeatureStatusByAppFeatureName(string $featureName): ?array
     {
         return $this->appFeatureEntityRepository->getAppFeatureStatusByAppFeatureName($featureName);
+    }
+
+    public function getAppFeatureEntityByAppFeatureName(string $featureName): ?AppFeatureEntity
+    {
+        return $this->appFeatureEntityRepository->findOneBy(['featureName' => $featureName]);
     }
 }

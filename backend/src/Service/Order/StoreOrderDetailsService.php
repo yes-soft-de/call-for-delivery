@@ -9,11 +9,10 @@ use App\Request\Order\Destination\StoreOrderDetailsDifferentReceiverDestinationU
 
 class StoreOrderDetailsService
 {
-    private StoreOrderDetailsManager $storeOrderDetailsManager;
-
-    public function __construct(StoreOrderDetailsManager $storeOrderDetailsManager)
+    public function __construct(
+        private StoreOrderDetailsManager $storeOrderDetailsManager
+    )
     {
-        $this->storeOrderDetailsManager = $storeOrderDetailsManager;
     }
 
     public function getStoreBranchByOrderId(int $orderId): ?StoreOwnerBranchEntity
@@ -32,13 +31,13 @@ class StoreOrderDetailsService
         return $this->storeOrderDetailsManager->updateCaptainToStoreBranchDistanceByOrderId($orderId, $captainToStoreBranchDistance);
     }
 
-    public function updateStoreOrderDetailsDestinationAndDifferentReceiverDestination(StoreOrderDetailsDifferentReceiverDestinationUpdateByOrderIdRequest $request): int|StoreOrderDetailsEntity
-    {
-        return $this->storeOrderDetailsManager->updateStoreOrderDetailsDestinationAndDifferentReceiverDestination($request);
-    }
-
     public function getNormalOrderDestinationByOrderId(int $orderId): array|int
     {
         return $this->storeOrderDetailsManager->getNormalOrderDestinationByOrderId($orderId);
+    }
+
+    public function getStoreOrderDetailsEntityByOrderId(int $orderId): ?StoreOrderDetailsEntity
+    {
+        return $this->storeOrderDetailsManager->getOrderDetailsByOrderId($orderId);
     }
 }

@@ -21,13 +21,14 @@ use App\Request\Order\UpdateOrderRequest;
 
 class StoreOrderDetailsManager
 {
-    private $imageManager;
-    private StoreOrderDetailsEntityRepository $storeOrderDetailsEntityRepository;
-    
-    public function __construct(private AutoMapping $autoMapping, private EntityManagerInterface $entityManager, StoreOrderDetailsEntityRepository $storeOrderDetailsEntityRepository, private StoreOwnerBranchManager $storeOwnerBranchManager, ImageManager $imageManager)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private EntityManagerInterface $entityManager,
+        private StoreOrderDetailsEntityRepository $storeOrderDetailsEntityRepository,
+        private StoreOwnerBranchManager $storeOwnerBranchManager,
+        private ImageManager $imageManager
+    )
     {
-        $this->imageManager = $imageManager;
-        $this->storeOrderDetailsEntityRepository = $storeOrderDetailsEntityRepository;
     }
     
     /**
@@ -156,29 +157,30 @@ class StoreOrderDetailsManager
         return $storeOrderDetailsEntity;
     }
 
-    public function updateStoreOrderDetailsDestinationAndDifferentReceiverDestination(StoreOrderDetailsDifferentReceiverDestinationUpdateByOrderIdRequest $request): int|StoreOrderDetailsEntity
-    {
-        $storeOrderDetails = $this->storeOrderDetailsEntityRepository->findOneBy(['orderId' => $request->getOrderId()]);
-
-        if (! $storeOrderDetails) {
-            return StoreOrderDetailsConstant::STORE_ORDER_DETAILS_NOT_FOUND;
-        }
-
-        $orderEntity = $storeOrderDetails->getOrderId();
-
-        $storeOrderDetails = $this->autoMapping->mapToObject(
-            StoreOrderDetailsDifferentReceiverDestinationUpdateByOrderIdRequest::class,
-            StoreOrderDetailsEntity::class,
-            $request,
-            $storeOrderDetails
-        );
-
-        $storeOrderDetails->setOrderId($orderEntity);
-
-        $this->entityManager->flush();
-
-        return $storeOrderDetails;
-    }
+    // This had been commented out because isn't being used anywhere
+//    public function updateStoreOrderDetailsDestinationAndDifferentReceiverDestination(StoreOrderDetailsDifferentReceiverDestinationUpdateByOrderIdRequest $request): int|StoreOrderDetailsEntity
+//    {
+//        $storeOrderDetails = $this->storeOrderDetailsEntityRepository->findOneBy(['orderId' => $request->getOrderId()]);
+//
+//        if (! $storeOrderDetails) {
+//            return StoreOrderDetailsConstant::STORE_ORDER_DETAILS_NOT_FOUND;
+//        }
+//
+//        $orderEntity = $storeOrderDetails->getOrderId();
+//
+//        $storeOrderDetails = $this->autoMapping->mapToObject(
+//            StoreOrderDetailsDifferentReceiverDestinationUpdateByOrderIdRequest::class,
+//            StoreOrderDetailsEntity::class,
+//            $request,
+//            $storeOrderDetails
+//        );
+//
+//        $storeOrderDetails->setOrderId($orderEntity);
+//
+//        $this->entityManager->flush();
+//
+//        return $storeOrderDetails;
+//    }
 
     public function getNormalOrderDestinationByOrderId(int $orderId): array|int
     {

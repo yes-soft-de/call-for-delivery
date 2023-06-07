@@ -18,6 +18,7 @@ use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Entity\ChatRoomEntity;
+use App\Entity\ExternallyDeliveredOrderEntity;
 use App\Entity\OrderDistanceConflictEntity;
 use App\Entity\OrderEntity;
 use App\Entity\CaptainEntity;
