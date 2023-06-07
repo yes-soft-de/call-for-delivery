@@ -42,6 +42,7 @@ class FilterOrderLoadedState extends States {
               }
             },
             child: OwnerOrderCard(
+              externalCompanyName: element.externalCompanyName,
               kilometer: element.kilometer > 0
                   ? FixedNumber.getFixedNumber(element.kilometer) +
                       ' ' +

@@ -222,7 +222,7 @@ class OrderPendingLoadedState extends States {
     );
     for (var element in ordersIndex[screenState.currentIndex]) {
       if (screenState.isExternalFilterOn &&
-          element.externalCompanyName.notNullOrEmpty()) continue;
+          !element.externalCompanyName.notNullOrEmpty()) continue;
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: Material(

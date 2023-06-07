@@ -25,8 +25,8 @@ class OrderLogsLoadedState extends States {
   List<Widget> getOrders(BuildContext context) {
     List<Widget> widgets = [];
     for (var element in orders) {
-      if (screenState.isExternalFilterOn && element.externalCompanyName.notNullOrEmpty())
-        continue;
+      if (screenState.isExternalFilterOn &&
+          !element.externalCompanyName.notNullOrEmpty()) continue;
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: Material(
@@ -45,6 +45,7 @@ class OrderLogsLoadedState extends States {
               }
             },
             child: OwnerOrderCard(
+              externalCompanyName: element.externalCompanyName,
               kilometer: element.kilometer > 0
                   ? FixedNumber.getFixedNumber(element.kilometer) +
                       ' ' +

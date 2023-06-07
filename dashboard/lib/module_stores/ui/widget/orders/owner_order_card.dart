@@ -1,5 +1,6 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/ui/widget/orders/icon_info_button.dart';
+import 'package:c4d/utils/extension/string_extensions.dart';
 import 'package:flutter/material.dart';
 
 class OwnerOrderCard extends StatelessWidget {
@@ -11,7 +12,7 @@ class OwnerOrderCard extends StatelessWidget {
   final String note;
   final String? kilometer;
   final String? storeBranchToClientDistance;
-  final String externalCompanyName;
+  final String? externalCompanyName;
   OwnerOrderCard({
     required this.orderNumber,
     required this.orderStatus,
@@ -21,7 +22,7 @@ class OwnerOrderCard extends StatelessWidget {
     required this.note,
     this.storeBranchToClientDistance,
     this.kilometer,
-    this.externalCompanyName = 'مرسول',
+    required this.externalCompanyName,
   });
 
   @override
@@ -77,7 +78,7 @@ class OwnerOrderCard extends StatelessWidget {
                 ),
                 Spacer(),
                 Visibility(
-                  visible: externalCompanyName.isNotEmpty,
+                  visible: externalCompanyName.notNullOrEmpty(),
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(20),
@@ -89,7 +90,7 @@ class OwnerOrderCard extends StatelessWidget {
                         vertical: 8,
                       ),
                       child: Text(
-                        externalCompanyName,
+                        externalCompanyName ?? '',
                       ),
                     ),
                   ),
