@@ -647,6 +647,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "favoriteStores":
             MessageLookupByLibrary.simpleMessage("Favorite Stores"),
         "fax": MessageLookupByLibrary.simpleMessage("Fax"),
+        "featureWillBeOffAfterConfirm": MessageLookupByLibrary.simpleMessage(
+            "feature will be off after confirm"),
+        "featureWillBeOnAfterConfirm": MessageLookupByLibrary.simpleMessage(
+            "feature will be on after confirm"),
         "female": MessageLookupByLibrary.simpleMessage("Female"),
         "filter": MessageLookupByLibrary.simpleMessage("Filter"),
         "financeByHours":

@@ -40,6 +40,9 @@ class Urls {
   static const BASE_API_EXTERNAL_DELIVERY_COMPANY_CRITERIA =
       DOMAIN + VERSION + '/admin/externaldeliverycompanycriteria';
 
+  static const BASE_API_APP_FEATURE = DOMAIN + VERSION + '/admin/appfeature';
+  static const APP_FEATURE_BY_NAME = BASE_API_APP_FEATURE + '/appfeaturebyname';
+
   static const String BASE_API_DELIVERY_CAR =
       DOMAIN + VERSION_ADMIN + '/deliverycar';
 
@@ -399,9 +402,16 @@ class Urls {
       BASE_API_EXTERNAL_DELIVERY_COMPANY + '/externaldeliverycompanies';
 
   static const EXTERNAL_DELIVERY_COMPANY_CRITERIA =
-      BASE_API_EXTERNAL_DELIVERY_COMPANY_CRITERIA + '/externaldeliverycompanycriteria';
+      BASE_API_EXTERNAL_DELIVERY_COMPANY_CRITERIA +
+          '/externaldeliverycompanycriteria';
 
   static const EXTERNAL_DELIVERY_COMPANY_CRITERIA_STATUS =
-      BASE_API_EXTERNAL_DELIVERY_COMPANY_CRITERIA + '/externaldeliverycompanycriteriastatus';
+      BASE_API_EXTERNAL_DELIVERY_COMPANY_CRITERIA +
+          '/externaldeliverycompanycriteriastatus';
 
+  static const SEND_ORDER_TO_EXTERNAL_PARTY =
+      APP_FEATURE_BY_NAME + '/sendOrderToExternalParty';
+
+  static const APP_FEATURE_STATUS_BY_ADMIN =
+      BASE_API_APP_FEATURE + '/appfeaturestatusbyadmin';
 }

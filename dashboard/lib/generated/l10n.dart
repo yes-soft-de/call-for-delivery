@@ -10270,6 +10270,26 @@ class S {
     );
   }
 
+  /// `feature will be off after confirm`
+  String get featureWillBeOffAfterConfirm {
+    return Intl.message(
+      'feature will be off after confirm',
+      name: 'featureWillBeOffAfterConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `feature will be on after confirm`
+  String get featureWillBeOnAfterConfirm {
+    return Intl.message(
+      'feature will be on after confirm',
+      name: 'featureWillBeOnAfterConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

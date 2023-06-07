@@ -1,3 +1,4 @@
+import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/material.dart';
 
 void showConfirmDialog(
@@ -5,6 +6,7 @@ void showConfirmDialog(
   required String title,
   required String message,
   required Widget confirmButtonTitle,
+  bool? hasCancelButton,
   required Color confirmButtonColor,
   required Function() onConfirm,
 }) {
@@ -44,16 +46,36 @@ void showConfirmDialog(
               ),
               SizedBox(height: 20),
               SizedBox(
-                width: MediaQuery.sizeOf(context).width * 0.5,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: confirmButtonColor,
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                    onConfirm();
-                  },
-                  child: confirmButtonTitle,
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: confirmButtonColor,
+                        ),
+                        onPressed: () {
+                          Navigator.pop(context);
+                          onConfirm();
+                        },
+                        child: confirmButtonTitle,
+                      ),
+                    ),
+                    SizedBox(width: 10),
+                    Visibility(
+                      visible: hasCancelButton != null && hasCancelButton,
+                      child: Expanded(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.red,
+                          ),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(S.current.cancel),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
               ),
               SizedBox(height: 10),
