@@ -79,6 +79,7 @@ Future<List<BranchesModel>?> showPickBranchDialog(BuildContext context) async {
                                     EdgeInsets.fromLTRB(0, 12, 0, 0))),
                         dropdownButtonProps: DropdownButtonProps(),
                         popupProps: PopupProps.menu(
+                            searchDelay: Duration(milliseconds: 100),
                             showSearchBox: true,
                             menuProps: MenuProps(
                               borderRadius: BorderRadius.circular(25),
@@ -144,6 +145,7 @@ Future<List<BranchesModel>?> showPickBranchDialog(BuildContext context) async {
                           Navigator.pop(context, selectedBranches);
                         },
                         popupProps: PopupPropsMultiSelection.menu(
+                          searchDelay: Duration(milliseconds: 100),
                           showSearchBox: true,
                           menuProps: MenuProps(
                             borderRadius: BorderRadius.circular(25),
