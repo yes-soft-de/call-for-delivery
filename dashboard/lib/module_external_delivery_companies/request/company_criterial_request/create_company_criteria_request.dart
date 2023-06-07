@@ -9,6 +9,7 @@ class CreateCompanyCriteria {
   List<int> fromStoresBranches;
   bool isFromAllStores;
   int externalDeliveryCompany;
+  int? cashLimit;
 
   /// 207: off. 208: card. 209: cash. 210: both
   int payment;
@@ -24,6 +25,7 @@ class CreateCompanyCriteria {
 
   CreateCompanyCriteria({
     required this.status,
+    required this.cashLimit,
     required this.criteriaName,
     required this.fromStoresBranches,
     required this.isFromAllStores,
@@ -56,6 +58,7 @@ class CreateCompanyCriteria {
 
   factory CreateCompanyCriteria.fromMap(Map<String, dynamic> map) {
     return CreateCompanyCriteria(
+      cashLimit: map['cashLimit'] as int?,
       status: (map['status'] ?? false) as bool,
       criteriaName: (map['criteriaName'] ?? '') as String,
       fromStoresBranches: List<int>.from(

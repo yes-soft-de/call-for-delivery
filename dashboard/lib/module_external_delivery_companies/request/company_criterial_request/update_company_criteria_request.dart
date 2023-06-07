@@ -9,6 +9,7 @@ class UpdateCompanyCriterialRequest {
   bool isSpecificDate;
   TimeOfDay fromDate;
   TimeOfDay toDate;
+  int? cashLimit;
 
   /// 205: off. 206: storeBranchToClientDistance
   int isDistance;
@@ -22,6 +23,7 @@ class UpdateCompanyCriterialRequest {
 
   UpdateCompanyCriterialRequest({
     required this.id,
+    required this.cashLimit,
     required this.criteriaName,
     required this.isSpecificDate,
     required this.fromDate,
@@ -37,6 +39,7 @@ class UpdateCompanyCriterialRequest {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'id': id,
+      'cashLimit': cashLimit,
       'criteriaName': criteriaName,
       'isSpecificDate': isSpecificDate,
       'fromDate': _dateFormat(fromDate),
@@ -53,6 +56,7 @@ class UpdateCompanyCriterialRequest {
   factory UpdateCompanyCriterialRequest.fromMap(Map<String, dynamic> map) {
     return UpdateCompanyCriterialRequest(
       id: (map['id'] ?? 0) as int,
+      cashLimit: map['cashLimit'] as int? ,
       criteriaName: (map['criteriaName'] ?? '') as String,
       isSpecificDate: (map['isSpecificDate'] ?? false) as bool,
       fromDate: (map['fromDate'] ?? '') as TimeOfDay,

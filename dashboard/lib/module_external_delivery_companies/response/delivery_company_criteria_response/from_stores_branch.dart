@@ -1,14 +1,18 @@
-
 class FromStoresBranch {
-	FromStoresBranch();
+  int? branchId;
+  String? branchName;
 
-	factory FromStoresBranch.fromJson(Map<String, dynamic> json) {
-		// TODO: implement fromJson
-		throw UnimplementedError('FromStoresBranch.fromJson($json) is not implemented');
-	}
+  FromStoresBranch({
+    this.branchId,
+    this.branchName,
+  });
 
-	Map<String, dynamic> toJson() {
-		// TODO: implement toJson
-		throw UnimplementedError();
-	}
+  factory FromStoresBranch.fromJson(Map<String, dynamic> json) {
+    return FromStoresBranch(
+      branchId: json['branchId'],
+      branchName: json['branchName'],
+    );
+  }
+
+ 
 }

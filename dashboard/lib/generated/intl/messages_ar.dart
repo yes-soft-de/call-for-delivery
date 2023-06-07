@@ -731,6 +731,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "iSpeak": MessageLookupByLibrary.simpleMessage("اللغة المفضلة"),
         "id": MessageLookupByLibrary.simpleMessage("المعرف"),
         "identity": MessageLookupByLibrary.simpleMessage("الهوية"),
+        "ifNoValuesSetAllOrderWillBeSent": MessageLookupByLibrary.simpleMessage(
+            "(في حال عدم تحديد قيمة سيتم ارسال كافة الطلبات)"),
         "ignoreOrder": MessageLookupByLibrary.simpleMessage("تجاهل الطلب"),
         "image": MessageLookupByLibrary.simpleMessage("صورة"),
         "inActiveCaptains":

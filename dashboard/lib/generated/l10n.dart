@@ -10260,6 +10260,16 @@ class S {
     );
   }
 
+  /// `if no value set all order will be sent`
+  String get ifNoValuesSetAllOrderWillBeSent {
+    return Intl.message(
+      'if no value set all order will be sent',
+      name: 'ifNoValuesSetAllOrderWillBeSent',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

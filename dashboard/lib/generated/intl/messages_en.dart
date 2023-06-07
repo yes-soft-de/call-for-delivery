@@ -739,6 +739,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "iSpeak": MessageLookupByLibrary.simpleMessage("Preferred language"),
         "id": MessageLookupByLibrary.simpleMessage("id"),
         "identity": MessageLookupByLibrary.simpleMessage("Identity"),
+        "ifNoValuesSetAllOrderWillBeSent": MessageLookupByLibrary.simpleMessage(
+            "if no value set all order will be sent"),
         "ignoreOrder": MessageLookupByLibrary.simpleMessage("ignore order"),
         "illegalCommand":
             MessageLookupByLibrary.simpleMessage("Illegal Command"),

@@ -76,10 +76,14 @@ class EditDeliveryCompanySettingScreenStateLoaded extends States {
                     },
                   ),
                   PaymentCard(
-                    onChange: (paymentType) {
+                    onPaymentTypeChange: (paymentType) {
                       companySetting.paymentType = paymentType;
                     },
                     paymentType: companySetting.paymentType,
+                    onCashLimitChange: (int? cashLimit) {
+                      companySetting.cashLimit = cashLimit;
+                    },
+                    cashLimit: companySetting.cashLimit,
                   ),
                 ],
               ),
@@ -98,6 +102,7 @@ class EditDeliveryCompanySettingScreenStateLoaded extends States {
                   if (isNewSetting) {
                     _screenState.createCompanyCriterial(
                       CreateCompanyCriteria(
+                        cashLimit: companySetting.cashLimit,
                         externalDeliveryCompany: _screenState.company.id,
                         criteriaName: _settingNameController.text,
                         fromDate: companySetting.workingHours.from,
@@ -121,6 +126,7 @@ class EditDeliveryCompanySettingScreenStateLoaded extends States {
                   } else {
                     _screenState.updateCompanyCriterial(
                       UpdateCompanyCriterialRequest(
+                        cashLimit: companySetting.cashLimit,
                         id: companySetting.id,
                         criteriaName: _settingNameController.text,
                         fromDate: companySetting.workingHours.from,

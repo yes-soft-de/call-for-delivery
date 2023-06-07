@@ -123,6 +123,7 @@ class ExternalDeliveryCompaniesStateManager {
             title: S.current.warnning,
             message: S.current.dataUpdatedSuccessfully,
           );
+        screenState.getExternalCompanies();
         }
       },
     );

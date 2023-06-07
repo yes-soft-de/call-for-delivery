@@ -1019,6 +1019,7 @@
     "companyDeletedSuccessfully": "تم حذف الشركة بنجاح",
     "companyCriterialAddedSuccessfully": "تم اضافة المعايير بنجاح",
     "companyCriterialUpdatedSuccessfully": "تم تحديث المعايير بنجاح",
-    "companyCriterialDeletedSuccessfully": "تم حذف المعايير بنجاح",    
+    "companyCriterialDeletedSuccessfully": "تم حذف المعايير بنجاح",   
+    "ifNoValuesSetAllOrderWillBeSent": "(في حال عدم تحديد قيمة سيتم ارسال كافة الطلبات)",
     "dev": "المطورين"
 }

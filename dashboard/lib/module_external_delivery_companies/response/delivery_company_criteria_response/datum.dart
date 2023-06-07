@@ -14,6 +14,7 @@ class Datum {
   List<FromStoresBranch>? fromStoresBranches;
   String? updatedByAdminName;
   bool? status;
+  int? cashLimit;
 
   Datum({
     this.id,
@@ -29,10 +30,12 @@ class Datum {
     this.fromStoresBranches,
     this.updatedByAdminName,
     this.status,
+    this.cashLimit,
   });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
       id: json['id'] as int?,
+      cashLimit: json['cashLimit'] as int?,
       criteriaName: json['criteriaName'] as String?,
       isSpecificDate: json['isSpecificDate'] as bool?,
       fromDate: json['fromDate']['timestamp'] == null
@@ -49,8 +52,11 @@ class Datum {
       payment: json['payment'] as int?,
       isFromAllStores: json['isFromAllStores'] as bool?,
       fromStoresBranches: (json['fromStoresBranches'] as List<dynamic>?)
-          ?.map((e) => FromStoresBranch.fromJson(e as Map<String, dynamic>))
+          ?.map((e) => FromStoresBranch(branchId: e))
           .toList(),
+      // TODO: after backend edit (json['fromStoresBranches'] as List<dynamic>?)
+      //     ?.map((e) => FromStoresBranch.fromJson(e as Map<String, dynamic>))
+      //     .toList(),
       updatedByAdminName: json['updatedByAdminName'] as String?,
       status: json['status'] as bool?);
 
@@ -65,8 +71,8 @@ class Datum {
         'toDistance': toDistance,
         'payment': payment,
         'isFromAllStores': isFromAllStores,
-        'fromStoresBranches':
-            fromStoresBranches?.map((e) => e.toJson()).toList(),
+        // 'fromStoresBranches':
+        //     fromStoresBranches?.map((e) => e.toJson()).toList(),
         'updatedByAdminName': updatedByAdminName,
       };
 }

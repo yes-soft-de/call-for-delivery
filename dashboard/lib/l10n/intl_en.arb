@@ -1021,5 +1021,6 @@
     "companyCriterialAddedSuccessfully": "company criterial added successfully",
     "companyCriterialUpdatedSuccessfully": "company criterial updated successfully",
     "companyCriterialDeletedSuccessfully": "company criterial deleted successfully",
+    "ifNoValuesSetAllOrderWillBeSent": "if no value set all order will be sent",
     "dev":"Dev"
 }

@@ -127,7 +127,9 @@ class _Form extends StatelessWidget {
           backgroundColor: Colors.white,
           controller: textController,
           numbers: true,
-          onChanged: () {},
+          onChanged: () {
+            onChange(textController.text);
+          },
         ),
       ),
     );
