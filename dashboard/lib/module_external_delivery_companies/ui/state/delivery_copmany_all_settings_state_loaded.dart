@@ -30,6 +30,9 @@ class DeliveryCompanyAllSettingsStateLoaded extends States {
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
                   return CompanySettingCard(
+                    shouldRebuild: () {
+                      _screenState.getCompanySetting();
+                    },
                     onDelete: () {
                       _screenState
                           .deleteCompanyCriterial(DeleteCompanyCriterialRequest(

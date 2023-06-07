@@ -11,6 +11,7 @@ class CompanySettingCard extends StatefulWidget {
   final CompanyModel company;
   final Function() onStatusChange;
   final Function() onDelete;
+  final Function() shouldRebuild;
 
   const CompanySettingCard({
     super.key,
@@ -18,6 +19,7 @@ class CompanySettingCard extends StatefulWidget {
     required this.company,
     required this.onStatusChange,
     required this.onDelete,
+    required this.shouldRebuild,
   });
 
   @override
@@ -70,7 +72,11 @@ class _CompanySettingCardState extends State<CompanySettingCard> {
                   arguments: [
                     widget.companySetting,
                     widget.company,
-                  ]);
+                  ]).then(
+                (value) {
+                  if (value is bool && value) widget.shouldRebuild();
+                },
+              );
             },
           ),
           CustomIconButton(
