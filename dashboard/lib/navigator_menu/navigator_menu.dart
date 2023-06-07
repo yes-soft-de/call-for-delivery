@@ -128,67 +128,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.newOrder, Icons.add_rounded, true)
                 ],
                 page: widget.currentPage),
-            // external delivery company's
-            customExpansionTile(
-                title: S.current.externalTriggers,
-                icon: FontAwesomeIcons.building,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        SizedBox(),
-                        Icon(Icons.stop_circle),
-                        Text(S.current.onOff),
-                        SizedBox(),
-                        SizedBox(),
-                        ValueListenableBuilder(
-                          builder: (context, value, child) {
-                            return Switch(
-                              thumbColor: MaterialStateColor.resolveWith(
-                                  (states) => Colors.white),
-                              activeColor: Colors.green,
-                              value: isExternalCompanyServiceActive.value,
-                              onChanged: (value) {
-                                showConfirmDialog(
-                                  context,
-                                  hasCancelButton: true,
-                                  title: S.current.areYouSureAboutEdit,
-                                  confirmButtonColor: Colors.amber,
-                                  confirmButtonTitle: Text(
-                                    S.current.confirm,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.copyWith(color: Colors.black),
-                                  ),
-                                  message: value
-                                      ? S.current.featureWillBeOnAfterConfirm
-                                      : S.current.featureWillBeOffAfterConfirm,
-                                  onConfirm: () {
-                                    isExternalCompanyServiceActive.value =
-                                        value;
-                                    setState(() {});
-                                    _updateFeature(value);
-                                  },
-                                );
-                              },
-                            );
-                          },
-                          valueListenable: isExternalCompanyServiceActive,
-                        ),
-                      ],
-                    ),
-                  ),
-                  customListTile(
-                      getIt<ExternalDeliveryCompaniesModule>()
-                          .externalDeliveryCompaniesScreen,
-                      S.current.deliveryCompanies,
-                      FontAwesomeIcons.box,
-                      true),
-                ],
-                page: widget.currentPage),
+
             // report
             customExpansionTile(
                 title: S.current.reports,
@@ -248,6 +188,67 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       getIt<StoresModule>().storesInActiveScreen,
                       S.current.storesInActive,
                       FontAwesomeIcons.storeSlash,
+                      true),
+                ],
+                page: widget.currentPage),
+            // external delivery company's
+            customExpansionTile(
+                title: S.current.externalTriggers,
+                icon: FontAwesomeIcons.link,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(),
+                        Icon(Icons.stop_circle),
+                        Text(S.current.onOff),
+                        SizedBox(),
+                        SizedBox(),
+                        ValueListenableBuilder(
+                          builder: (context, value, child) {
+                            return Switch(
+                              thumbColor: MaterialStateColor.resolveWith(
+                                  (states) => Colors.white),
+                              activeColor: Colors.green,
+                              value: isExternalCompanyServiceActive.value,
+                              onChanged: (value) {
+                                showConfirmDialog(
+                                  context,
+                                  hasCancelButton: true,
+                                  title: S.current.areYouSureAboutEdit,
+                                  confirmButtonColor: Colors.amber,
+                                  confirmButtonTitle: Text(
+                                    S.current.confirm,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(color: Colors.black),
+                                  ),
+                                  message: value
+                                      ? S.current.featureWillBeOnAfterConfirm
+                                      : S.current.featureWillBeOffAfterConfirm,
+                                  onConfirm: () {
+                                    isExternalCompanyServiceActive.value =
+                                        value;
+                                    setState(() {});
+                                    _updateFeature(value);
+                                  },
+                                );
+                              },
+                            );
+                          },
+                          valueListenable: isExternalCompanyServiceActive,
+                        ),
+                      ],
+                    ),
+                  ),
+                  customListTile(
+                      getIt<ExternalDeliveryCompaniesModule>()
+                          .externalDeliveryCompaniesScreen,
+                      S.current.deliveryCompanies,
+                      FontAwesomeIcons.box,
                       true),
                 ],
                 page: widget.currentPage),

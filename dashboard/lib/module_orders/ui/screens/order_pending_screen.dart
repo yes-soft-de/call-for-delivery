@@ -21,7 +21,7 @@ class OrderPendingScreen extends StatefulWidget {
 }
 
 class OrderPendingScreenState extends State<OrderPendingScreen> {
-  bool isExternal = false;
+  bool isExternalFilterOn = false;
   late States currentState;
   int currentIndex = 0;
   StreamSubscription? _stateSubscription;
@@ -77,27 +77,19 @@ class OrderPendingScreenState extends State<OrderPendingScreen> {
             GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
           }, actions: [
             Card(
-              color: Color(0xff1B3C5A),
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 4),
                 child: Row(
                   children: [
                     Text(
                       S.current.onlyExternal,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium
-                          ?.copyWith(color: Colors.white),
                     ),
                     SizedBox(width: 5),
                     Switch(
                       activeTrackColor: Color(0xff60CF86),
-                      thumbColor: MaterialStateColor.resolveWith((states) {
-                        return Color(0xff1B3C5A);
-                      }),
-                      value: isExternal,
+                      value: isExternalFilterOn,
                       onChanged: (value) {
-                        isExternal = value;
+                        isExternalFilterOn = value;
                         setState(() {});
                       },
                     ),

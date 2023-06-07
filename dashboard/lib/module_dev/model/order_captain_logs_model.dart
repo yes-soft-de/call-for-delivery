@@ -36,6 +36,7 @@ class OrderCaptainLogsModel extends DataModel {
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       //
       orders.add(OrderModel(
+        externalCompanyName: null,
         branchName: element.branchName ?? S.current.unknown,
         createdDate: create,
         deliveryDate: delivery,
@@ -70,6 +71,7 @@ class OrderCaptainLogsModel extends DataModel {
           DateFormat.Md()
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       orders.add(OrderModel(
+        externalCompanyName: null,
         branchName: element.branchName ?? S.current.unknown,
         createdDate: create,
         deliveryDate: delivery,

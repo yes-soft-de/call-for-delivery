@@ -5,6 +5,7 @@ import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_stores/ui/screen/order/order_logs_screen.dart';
 import 'package:c4d/module_stores/ui/widget/orders/owner_order_card.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
+import 'package:c4d/utils/extension/string_extensions.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,8 @@ class OrderLogsLoadedState extends States {
   List<Widget> getOrders(BuildContext context) {
     List<Widget> widgets = [];
     for (var element in orders) {
+      if (screenState.isExternalFilterOn && element.externalCompanyName.notNullOrEmpty())
+        continue;
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: Material(

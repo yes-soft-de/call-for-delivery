@@ -8,6 +8,7 @@ import 'package:c4d/module_orders/ui/widgets/owner_order_card/owner_order_card.d
 import 'package:c4d/module_orders/ui/widgets/recycle_widgets/recycle_button_widget.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
+import 'package:c4d/utils/extension/string_extensions.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
@@ -220,6 +221,8 @@ class OrderPendingLoadedState extends States {
       // ),
     );
     for (var element in ordersIndex[screenState.currentIndex]) {
+      if (screenState.isExternalFilterOn &&
+          element.externalCompanyName.notNullOrEmpty()) continue;
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: Material(
