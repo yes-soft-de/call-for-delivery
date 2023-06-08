@@ -89,8 +89,10 @@ class _CompanyCardState extends State<CompanyCard> {
                               // getIt<GlobalStateManager>()
                               //     .goToNonDeliveredOrder();
                               Navigator.pushNamed(
-                                  context, OrdersRoutes.PENDING_ORDERS_SCREEN,
-                                  arguments: [widget._company.name]);
+                                context,
+                                OrdersRoutes.PENDING_ORDERS_SCREEN,
+                                arguments: [widget._company],
+                              );
                             }),
                       ),
                       SizedBox(width: 20),

@@ -1,7 +1,9 @@
 class PendingOrderRequest {
   PendingOrderRequestType type;
+  int externalCompanyId;
 
   PendingOrderRequest({
+    this.externalCompanyId = 0,
     required this.type,
   });
 }

@@ -40,7 +40,7 @@ class OrderPendingLoadedState extends States {
       orders.hiddenOrdersCount,
     ];
     List<Widget> widgets = [];
-    screenState.companyName.notNullOrEmpty()
+    screenState.company != null
         ? null
         : widgets.add(Padding(
             padding: const EdgeInsets.all(8.0),
@@ -180,7 +180,7 @@ class OrderPendingLoadedState extends States {
                   screenState.refresh();
                 },
                 child: Text(
-                  screenState.companyName.notNullOrEmpty()
+                  screenState.company != null
                       ? S.current.completed
                       : S.current.hidden,
                   style: TextStyle(
@@ -227,8 +227,7 @@ class OrderPendingLoadedState extends States {
     for (var element in ordersIndex[screenState.currentIndex]) {
       if (screenState.isExternalFilterOn &&
           !element.externalCompanyName.notNullOrEmpty()) continue;
-      if (screenState.companyName.notNullOrEmpty() &&
-          element.externalCompanyName != screenState.companyName) continue;
+
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: Material(
