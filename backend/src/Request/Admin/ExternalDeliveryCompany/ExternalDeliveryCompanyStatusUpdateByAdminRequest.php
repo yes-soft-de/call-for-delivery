@@ -12,4 +12,9 @@ class ExternalDeliveryCompanyStatusUpdateByAdminRequest
     {
         return $this->id;
     }
+
+    public function getStatus(): bool
+    {
+        return $this->status;
+    }
 }

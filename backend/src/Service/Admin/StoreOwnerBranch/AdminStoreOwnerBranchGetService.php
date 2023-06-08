@@ -32,4 +32,9 @@ class AdminStoreOwnerBranchGetService
 
         return $branchEntity;
     }
+
+    public function getStoreBranchesNamesByIdArray(array $branchesId): array
+    {
+        return $this->adminStoreOwnerBranchManager->getStoreBranchesNamesByIdArray($branchesId);
+    }
 }

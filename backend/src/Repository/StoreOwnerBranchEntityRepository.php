@@ -77,4 +77,16 @@ class StoreOwnerBranchEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getStoreBranchesNamesByIdArray(array $branchesId): array
+    {
+        return $this->createQueryBuilder('storeOwnerBranchEntity')
+            ->select('storeOwnerBranchEntity.id', 'storeOwnerBranchEntity.name')
+
+            ->where('storeOwnerBranchEntity.id IN (:branchesIdArray)')
+            ->setParameter('branchesIdArray', $branchesId)
+
+            ->getQuery()
+            ->getResult();
+    }
 }

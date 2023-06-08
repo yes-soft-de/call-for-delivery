@@ -44,4 +44,15 @@ class ExternalDeliveryCompanyEntityRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+
+    public function getAllExternalDeliveryCompaniesExceptSpecificOneById(int $externalDeliveryCompanyId): array
+    {
+        return $this->createQueryBuilder('externalDeliveryCompanyEntity')
+
+            ->andWhere('externalDeliveryCompanyEntity.id != :companyId')
+            ->setParameter('companyId', $externalDeliveryCompanyId)
+
+            ->getQuery()
+            ->getResult();
+    }
 }

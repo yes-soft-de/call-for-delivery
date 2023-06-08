@@ -54,4 +54,10 @@ class OrderPendingResponse
      * @var int|null
      */
     public $captainProfileId;
+
+    /**
+     * @OA\Property(type="array", property="externalDeliveredOrders",
+     *     @OA\Items(type="object"))
+     */
+    public array $externalDeliveredOrders = [];
 }

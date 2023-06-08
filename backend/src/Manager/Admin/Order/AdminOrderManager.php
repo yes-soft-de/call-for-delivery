@@ -87,22 +87,22 @@ class AdminOrderManager
         return $this->orderEntityRepository->getSpecificBidOrderByIdForAdmin($id);
     }
      
-    public function getPendingOrdersForAdmin(): ?array
+    public function getPendingOrdersForAdmin(?int $externalOrder): ?array
     {
-        return $this->orderEntityRepository->getPendingOrdersForAdmin();
+        return $this->orderEntityRepository->getPendingOrdersForAdmin($externalOrder);
     }
 
-    public function getHiddenOrdersForAdmin(): ?array
+    public function getHiddenOrdersForAdmin(?int $externalOrder): ?array
     {
-        return $this->orderEntityRepository->getHiddenOrdersForAdmin();
+        return $this->orderEntityRepository->getHiddenOrdersForAdmin($externalOrder);
     }
 
     /**
      * Not delivered orders are all orders which status = on way to pick order, in store, picked, or on going
      */
-    public function getNotDeliveredOrdersForAdmin(): ?array
+    public function getNotDeliveredOrdersForAdmin(?int $externalOrder): ?array
     {
-        return $this->orderEntityRepository->getNotDeliveredOrdersForAdmin();
+        return $this->orderEntityRepository->getNotDeliveredOrdersForAdmin($externalOrder);
     }
 
     public function getOrderByIdForAdmin(int $orderId): ?OrderEntity
