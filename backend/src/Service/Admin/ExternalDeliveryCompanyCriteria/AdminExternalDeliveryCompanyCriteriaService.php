@@ -20,6 +20,7 @@ use App\Response\Admin\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCr
 use App\Response\Admin\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyGetByExternalCompanyForAdminResponse;
 use App\Service\Admin\AdminProfile\AdminProfileGetService;
 use App\Service\Admin\ExternalDeliveryCompany\AdminExternalDeliveryCompanyGetService;
+use App\Service\Admin\StoreOwnerBranch\AdminStoreOwnerBranchGetService;
 
 class AdminExternalDeliveryCompanyCriteriaService
 {
@@ -27,9 +28,15 @@ class AdminExternalDeliveryCompanyCriteriaService
         private AutoMapping $autoMapping,
         private AdminExternalDeliveryCompanyCriteriaManager $adminExternalDeliveryCompanyCriteriaManager,
         private AdminExternalDeliveryCompanyGetService $adminExternalDeliveryCompanyGetService,
-        private AdminProfileGetService $adminProfileGetService
+        private AdminProfileGetService $adminProfileGetService,
+        private AdminStoreOwnerBranchGetService $adminStoreOwnerBranchGetService
     )
     {
+    }
+
+    public function getStoreBranchesNamesByIdArray(array $branchesId): array
+    {
+        return $this->adminStoreOwnerBranchGetService->getStoreBranchesNamesByIdArray($branchesId);
     }
 
     public function getExternalDeliveryCompanyEntityById(int $id): int|ExternalDeliveryCompanyEntity
@@ -124,7 +131,7 @@ class AdminExternalDeliveryCompanyCriteriaService
         $allExternalDeliveryCompanyCriteria = $this->adminExternalDeliveryCompanyCriteriaManager->fetchExternalDeliveryCompanyCriteriaByExternalDeliveryCompanyId($externalDeliveryCompanyId);
 
         if (count($allExternalDeliveryCompanyCriteria) > 0) {
-            foreach ($allExternalDeliveryCompanyCriteria as $key => $value) {
+            foreach ($allExternalDeliveryCompanyCriteria as $key => $value) {//dd($value);
                 $response[$key] = $this->autoMapping->map(ExternalDeliveryCompanyCriteriaEntity::class,
                     ExternalDeliveryCompanyGetByExternalCompanyForAdminResponse::class, $value);
                 // get and set admin name who update the criteria, if exist
@@ -135,6 +142,15 @@ class AdminExternalDeliveryCompanyCriteriaService
 
                 } else {
                     $response[$key]->updatedByAdminName = null;
+                }
+
+                // get and set branches names
+                $storesBranches = $value->getFromStoresBranches();
+
+                if ($storesBranches) {
+                    if (count($storesBranches) > 0) {
+                        $response[$key]->fromStoresBranches = $this->getStoreBranchesNamesByIdArray($storesBranches);
+                    }
                 }
             }
         }
