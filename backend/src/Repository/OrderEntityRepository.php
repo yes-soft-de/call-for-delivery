@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\ChatRoom\ChatRoomConstant;
+use App\Constant\ExternalDeliveryCompany\Mrsool\MrsoolCompanyConstant;
 use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\Image\ImageUseAsConstant;
 use App\Constant\Order\OrderCancelledByUserAndAtStateConstant;
@@ -1399,6 +1400,8 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'externallyDeliveredOrderEntity.orderId = orderEntity.id'
             )
 
+            ->andWhere('externallyDeliveredOrderEntity.orderId IS NULL')
+
             ->andWhere('orderEntity.state = :pending ')
             ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
 
@@ -1406,9 +1409,9 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->setParameter('show', OrderIsHideConstant::ORDER_SHOW);
 //            ->setParameter('hide', OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)
 
-        if ($externalOrder === 1) {
-            $query->andWhere('externallyDeliveredOrderEntity.orderId IS NOT NULL');
-        }
+//        if ($externalOrder === 1) {
+//            $query->andWhere('externallyDeliveredOrderEntity.orderId IS NOT NULL');
+//        }
 
         return $query->getQuery()->getResult();
     }
@@ -1436,6 +1439,8 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'externallyDeliveredOrderEntity.orderId = orderEntity.id'
             )
 
+            ->andWhere('externallyDeliveredOrderEntity.orderId IS NULL')
+
             ->andWhere('orderEntity.isHide = :hide')
             ->setParameter('hide', OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)
            
@@ -1444,9 +1449,9 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->orderBy('orderEntity.id', 'DESC');
 
-        if ($externalOrder === 1) {
-            $query->andWhere('externallyDeliveredOrderEntity.orderId IS NOT NULL');
-        }
+//        if ($externalOrder === 1) {
+//            $query->andWhere('externallyDeliveredOrderEntity.orderId IS NOT NULL');
+//        }
 
         return $query->getQuery()->getResult();
     }
@@ -1485,6 +1490,8 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'externallyDeliveredOrderEntity.orderId = orderEntity.id'
             )
 
+            ->andWhere('externallyDeliveredOrderEntity.orderId IS NULL')
+
             ->andWhere('orderEntity.state IN (:onGoingStatusArray)')
             ->setParameter('onGoingStatusArray', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)
 
@@ -1494,9 +1501,9 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->orderBy('orderEntity.id', 'DESC');
 
-        if ($externalOrder === 1) {
-            $query->andWhere('externallyDeliveredOrderEntity.orderId IS NOT NULL');
-        }
+//        if ($externalOrder === 1) {
+//            $query->andWhere('externallyDeliveredOrderEntity.orderId IS NOT NULL');
+//        }
 
         return $query->getQuery()->getResult();
     }
@@ -2904,5 +2911,31 @@ class OrderEntityRepository extends ServiceEntityRepository
         }
 
         return $filteredOrders;
+    }
+
+    public function getExternalOrdersOnly(?int $externalCompanyId): array
+    {
+        $query = $this->createQueryBuilder('orderEntity')
+
+            ->leftJoin(
+                ExternallyDeliveredOrderEntity::class,
+                'externallyDeliveredOrderEntity',
+                Join::WITH,
+                'externallyDeliveredOrderEntity.orderId = orderEntity.id'
+            )
+
+            ->andWhere('externallyDeliveredOrderEntity.orderId IS NOT NULL')
+
+            ->andWhere('externallyDeliveredOrderEntity.status IN (:notDeliveredStatus)')
+            ->setParameter('notDeliveredStatus', MrsoolCompanyConstant::NOT_CANCELLED_OR_DELIVERED_OR_EXPIRED_CONST)
+
+            ->orderBy('orderEntity.id', 'DESC');
+
+        if ($externalCompanyId) {
+            $query->andWhere('externallyDeliveredOrderEntity.externalDeliveryCompany = :companyId')
+                ->setParameter('companyId', $externalCompanyId);
+        }
+
+        return $query->getQuery()->getResult();
     }
 }

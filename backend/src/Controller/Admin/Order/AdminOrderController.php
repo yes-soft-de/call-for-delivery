@@ -303,9 +303,10 @@ class AdminOrderController extends BaseController
 
     /**
      * admin: Get pending, hidden, and not delivered orders for admin.
-     * @Route("orderpending/{externalOrder}", name="getPendingOrdersForAdmin", methods={"GET"})
+     * @Route("orderpending/{externalOrder}/{externalCompanyId}", name="getPendingOrdersForAdmin", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
-     * @param int|null $externalOrder
+     * @param int $externalOrder
+     * @param int $externalCompanyId
      * @return JsonResponse
      * *
      * @OA\Tag(name="Order")
@@ -350,9 +351,9 @@ class AdminOrderController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function getPendingOrdersForAdmin(?int $externalOrder): JsonResponse
+    public function getPendingOrdersForAdmin(int $externalOrder, int $externalCompanyId = 0): JsonResponse
     {
-        $response = $this->adminOrderService->getPendingOrdersForAdmin($this->getUserId(), $externalOrder);
+        $response = $this->adminOrderService->getPendingOrdersForAdmin($this->getUserId(), $externalOrder, $externalCompanyId);
         
         return $this->response($response, self::FETCH);
     }
@@ -2078,5 +2079,30 @@ class AdminOrderController extends BaseController
         }
 
         return $this->response($response, self::UPDATE);
+    }
+
+    /**
+     * admin:
+     * @Route("undeliveredexternalordersforadmin/{$externalDeliveryCompanyId}", name="getUnDeliveredExternalOrdersForAdmin", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param int|null $externalDeliveryCompanyId
+     * @return JsonResponse
+     * *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getUnDeliveredExternalOrdersForAdmin(?int $externalDeliveryCompanyId): JsonResponse
+    {
+        $response = $this->adminOrderService->getPendingOrdersForAdmin($this->getUserId(), $externalDeliveryCompanyId);
+
+        return $this->response($response, self::FETCH);
     }
 }
