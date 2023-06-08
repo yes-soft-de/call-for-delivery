@@ -4,6 +4,7 @@ namespace App\Manager\Admin\ExternalDeliveryCompany;
 
 use App\AutoMapping;
 use App\Constant\ExternalDeliveryCompany\ExternalDeliveryCompanyResultConstant;
+use App\Constant\ExternalDeliveryCompany\ExternalDeliveryCompanyStatusConstant;
 use App\Entity\ExternalDeliveryCompanyEntity;
 use App\Repository\ExternalDeliveryCompanyEntityRepository;
 use App\Request\Admin\ExternalDeliveryCompany\ExternalDeliveryCompanyCreateByAdminRequest;
@@ -91,5 +92,19 @@ class AdminExternalDeliveryCompanyManager
     public function getExternalDeliveryCompanyEntityById(int $id): ?ExternalDeliveryCompanyEntity
     {
         return $this->externalDeliveryCompanyEntityRepository->findOneBy(['id' => $id]);
+    }
+
+    public function updateExternalDeliveryCompaniesStatusToFalse(int $companyId): array
+    {
+        $externalDeliveryCompanyEntities = $this->externalDeliveryCompanyEntityRepository->getAllExternalDeliveryCompaniesExceptSpecificOneById($companyId);
+
+        if (count($externalDeliveryCompanyEntities) > 0) {
+            foreach ($externalDeliveryCompanyEntities as $externalDeliveryCompanyEntity) {
+                $externalDeliveryCompanyEntity->setStatus(ExternalDeliveryCompanyStatusConstant::STATUS_FALSE_CONST);
+                $this->entityManager->flush();
+            }
+        }
+
+        return $externalDeliveryCompanyEntities;
     }
 }
