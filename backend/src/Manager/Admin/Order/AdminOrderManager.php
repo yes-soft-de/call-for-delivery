@@ -650,4 +650,18 @@ class AdminOrderManager
 
         return $orderEntity;
     }
+
+    public function getExternalOrdersOnly(?int $externalCompanyId): array
+    {
+        return $this->orderEntityRepository->getExternalOrdersOnly($externalCompanyId);
+    }
+
+    public function updateOrderStatusByOrderEntityAndNewStatus(OrderEntity $orderEntity, string $status): OrderEntity
+    {
+        $orderEntity->setState($status);
+
+        $this->entityManager->flush();
+
+        return $orderEntity;
+    }
 }

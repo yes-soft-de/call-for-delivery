@@ -42,4 +42,6 @@ class ExternalDeliveryCompanyGetByExternalCompanyForAdminResponse
     public ?string $updatedByAdminName;
 
     public ?float $cashLimit;
+
+    public bool $status;
 }

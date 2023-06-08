@@ -131,7 +131,7 @@ class AdminExternalDeliveryCompanyCriteriaService
         $allExternalDeliveryCompanyCriteria = $this->adminExternalDeliveryCompanyCriteriaManager->fetchExternalDeliveryCompanyCriteriaByExternalDeliveryCompanyId($externalDeliveryCompanyId);
 
         if (count($allExternalDeliveryCompanyCriteria) > 0) {
-            foreach ($allExternalDeliveryCompanyCriteria as $key => $value) {//dd($value);
+            foreach ($allExternalDeliveryCompanyCriteria as $key => $value) {
                 $response[$key] = $this->autoMapping->map(ExternalDeliveryCompanyCriteriaEntity::class,
                     ExternalDeliveryCompanyGetByExternalCompanyForAdminResponse::class, $value);
                 // get and set admin name who update the criteria, if exist
