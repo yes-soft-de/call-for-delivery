@@ -15,6 +15,7 @@ import 'package:c4d/module_orders/model/store_cash_orders_finance.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
+import 'package:c4d/module_orders/request/order/pending_order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/request/order_conflict_distance_request/order_conflict_distance_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
@@ -128,8 +129,9 @@ class OrdersService {
     return CaptainCashOrdersFinanceModel.withData(response);
   }
 
-  Future<DataModel> getPendingOrder() async {
-    OrderPendingResponse? response = await _ordersManager.getPendingOrders();
+  Future<DataModel> getPendingOrder(PendingOrderRequest request) async {
+    OrderPendingResponse? response =
+        await _ordersManager.getPendingOrders(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '200') {
       return DataModel.withError(

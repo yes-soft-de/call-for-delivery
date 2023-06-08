@@ -9,10 +9,8 @@ class FromStoresBranch {
 
   factory FromStoresBranch.fromJson(Map<String, dynamic> json) {
     return FromStoresBranch(
-      branchId: json['branchId'],
-      branchName: json['branchName'],
+      branchId: json['id'],
+      branchName: json['name'],
     );
   }
-
- 
 }

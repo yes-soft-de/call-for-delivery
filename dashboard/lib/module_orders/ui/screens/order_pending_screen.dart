@@ -3,6 +3,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/navigator_assistant.dart';
 import 'package:c4d/global_nav_key.dart';
+import 'package:c4d/module_orders/request/order/pending_order_request.dart';
 import 'package:c4d/module_orders/state_manager/order_pending_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +44,14 @@ class OrderPendingScreenState extends State<OrderPendingScreen> {
     super.initState();
     currentIndex = NavigatorAssistant.nonDeliveringIndex;
     currentState = LoadingState(this);
-    widget._stateManager.getPendingOrders(this);
+    widget._stateManager.getPendingOrders(
+      this,
+      PendingOrderRequest(
+        type: isExternalFilterOn
+            ? PendingOrderRequestType.onlyExternal
+            : PendingOrderRequestType.all,
+      ),
+    );
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
@@ -59,7 +67,14 @@ class OrderPendingScreenState extends State<OrderPendingScreen> {
   }
 
   Future<void> getOrders([bool loading = true]) async {
-    widget._stateManager.getPendingOrders(this, loading);
+    widget._stateManager.getPendingOrders(
+        this,
+        PendingOrderRequest(
+          type: isExternalFilterOn
+              ? PendingOrderRequestType.onlyExternal
+              : PendingOrderRequestType.all,
+        ),
+        loading);
   }
 
   @override
@@ -90,6 +105,7 @@ class OrderPendingScreenState extends State<OrderPendingScreen> {
                       value: isExternalFilterOn,
                       onChanged: (value) {
                         isExternalFilterOn = value;
+                        getOrders();
                         setState(() {});
                       },
                     ),

@@ -52,11 +52,8 @@ class Datum {
       payment: json['payment'] as int?,
       isFromAllStores: json['isFromAllStores'] as bool?,
       fromStoresBranches: (json['fromStoresBranches'] as List<dynamic>?)
-          ?.map((e) => FromStoresBranch(branchId: e))
+          ?.map((e) => FromStoresBranch.fromJson(e as Map<String, dynamic>))
           .toList(),
-      // TODO: after backend edit (json['fromStoresBranches'] as List<dynamic>?)
-      //     ?.map((e) => FromStoresBranch.fromJson(e as Map<String, dynamic>))
-      //     .toList(),
       updatedByAdminName: json['updatedByAdminName'] as String?,
       status: json['status'] as bool?);
 

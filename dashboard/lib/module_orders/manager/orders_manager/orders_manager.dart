@@ -3,6 +3,7 @@ import 'package:c4d/module_orders/repository/order_repository/order_repository.d
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
+import 'package:c4d/module_orders/request/order/pending_order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/request/order_conflict_distance_request/order_conflict_distance_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
@@ -52,8 +53,8 @@ class OrdersManager {
   Future<OrdersCashFinancesForCaptainResponse?> getOrderCashFinancesForCaptain(
           CaptainCashFinanceRequest request) =>
       _repository.getOrderCashFinancesForCaptain(request);
-  Future<OrderPendingResponse?> getPendingOrders() =>
-      _repository.getPendingOrder();
+  Future<OrderPendingResponse?> getPendingOrders(PendingOrderRequest request) =>
+      _repository.getPendingOrder(request);
   Future<OrderDetailsResponse?> createOrder(CreateOrderRequest request) =>
       _repository.createOrder(request);
   Future<ActionResponse?> updateOrder(CreateOrderRequest request) =>

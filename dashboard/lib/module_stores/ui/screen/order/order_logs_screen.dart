@@ -94,7 +94,9 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                       value: isExternalFilterOn,
                       onChanged: (value) {
                         isExternalFilterOn = value;
-                        setState(() {});
+                        ordersFilter.externalOrder = isExternalFilterOn;
+                        getOrders();
+                        // setState(() {});
                       },
                     ),
                   ],
