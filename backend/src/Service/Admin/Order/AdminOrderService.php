@@ -27,6 +27,7 @@ use App\Constant\Subscription\SubscriptionConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\CaptainEntity;
 use App\Entity\CaptainFinancialDuesEntity;
+use App\Entity\ExternallyDeliveredOrderEntity;
 use App\Entity\OrderEntity;
 use App\Entity\PackageEntity;
 use App\Entity\StoreOrderDetailsEntity;
@@ -74,6 +75,7 @@ use App\Service\Admin\OrderDistanceConflict\AdminOrderDistanceConflictService;
 use App\Service\Admin\StoreCashOrder\AdminStoreCashOrderService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyService;
 use App\Service\ChatRoom\OrderChatRoomService;
+use App\Service\ExternallyDeliveredOrderHandle\ExternallyDeliveredOrderHandleService;
 use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\GeoDistance\GeoDistanceService;
 use App\Service\Notification\DashboardLocalNotification\DashboardLocalNotificationService;
@@ -144,6 +146,7 @@ class AdminOrderService
         private CaptainFinancialDailyService $captainFinancialDailyService,
         private AdminProfileGetService $adminProfileGetService,
         private AdminOrderDistanceConflictService $adminOrderDistanceConflictService,
+        private ExternallyDeliveredOrderHandleService $externallyDeliveredOrderHandleService
     )
     {
     }
@@ -596,6 +599,9 @@ class AdminOrderService
             $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
                 OrderLogActionTypeConstant::CREATE_ORDER_BY_ADMIN_ACTION_CONST, [], $branch->getId(),
                 null);
+
+            // send order to external delivery company
+            $this->sendOrderToExternalDeliveryCompany($order);
 
             //create firebase notification to store
             try{
@@ -1134,6 +1140,9 @@ class AdminOrderService
             $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
                 OrderLogActionTypeConstant::CREATE_SUB_ORDER_BY_ADMIN_ACTION_CONST, [], null,
                 null);
+
+            // send order to external delivery company
+            $this->sendOrderToExternalDeliveryCompany($order);
 
             try {
                 // create firebase notification to store
@@ -1969,5 +1978,18 @@ class AdminOrderService
         // save log of the action on order
         $this->orderLogService->createOrderLogMessage($orderEntity, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
             $action, $details, null, null);
+    }
+
+    public function getStoreOrderDetailsEntityByOrderId(int $orderId): ?StoreOrderDetailsEntity
+    {
+        return $this->storeOrderDetailsService->getStoreOrderDetailsEntityByOrderId($orderId);
+    }
+
+    public function sendOrderToExternalDeliveryCompany(OrderEntity $orderEntity): ExternallyDeliveredOrderEntity|int
+    {
+        $storeOrderDetailsEntity = $this->getStoreOrderDetailsEntityByOrderId($orderEntity->getId());
+
+        return $this->externallyDeliveredOrderHandleService->handleSendingOrderToExternalDeliveryCompany($orderEntity,
+            $storeOrderDetailsEntity);
     }
 }

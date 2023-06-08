@@ -18,6 +18,7 @@ use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Entity\ChatRoomEntity;
+use App\Entity\ExternallyDeliveredOrderEntity;
 use App\Entity\OrderDistanceConflictEntity;
 use App\Entity\OrderEntity;
 use App\Entity\CaptainEntity;
@@ -324,6 +325,15 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = orderEntity.storeOwner')
 
             ->leftJoin(BidDetailsEntity::class, 'bidDetailsEntity', Join::WITH, 'bidDetailsEntity.orderId = orderEntity.id')
+
+            ->leftJoin(
+                ExternallyDeliveredOrderEntity::class,
+                'externallyDeliveredOrderEntity',
+                Join::WITH,
+                'externallyDeliveredOrderEntity.orderId = orderEntity.id'
+            )
+
+            ->andWhere('externallyDeliveredOrderEntity.orderId IS NULL')
 
             ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
             ->setParameter('captainId', $captainId)
