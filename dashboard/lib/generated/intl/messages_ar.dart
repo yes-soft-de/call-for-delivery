@@ -604,6 +604,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "externalCompanySettings":
             MessageLookupByLibrary.simpleMessage("اعدادات المشغل الخارجي"),
         "externalOrder": MessageLookupByLibrary.simpleMessage("طلبية خارجية"),
+        "externalOrders":
+            MessageLookupByLibrary.simpleMessage("الطلبات الخارجية"),
         "externalTriggers":
             MessageLookupByLibrary.simpleMessage("مشغلات خارجية"),
         "extraCost": MessageLookupByLibrary.simpleMessage("التكلفة الإضافية"),

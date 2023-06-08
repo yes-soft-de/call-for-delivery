@@ -1025,5 +1025,6 @@
     "featureWillBeOffAfterConfirm": "feature will be off after confirm",
     "featureWillBeOnAfterConfirm": "feature will be on after confirm",
     "onlyExternal": "only external",
+    "externalOrders": "external orders",
     "dev":"Dev"
 }

@@ -612,6 +612,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "externalCompanySettings":
             MessageLookupByLibrary.simpleMessage("external company settings"),
         "externalOrder": MessageLookupByLibrary.simpleMessage("External Order"),
+        "externalOrders":
+            MessageLookupByLibrary.simpleMessage("external orders"),
         "externalTriggers":
             MessageLookupByLibrary.simpleMessage("external triggers"),
         "extraCost": MessageLookupByLibrary.simpleMessage("Extra Cost"),

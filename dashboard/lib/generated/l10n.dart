@@ -10300,6 +10300,16 @@ class S {
     );
   }
 
+  /// `external orders`
+  String get externalOrders {
+    return Intl.message(
+      'external orders',
+      name: 'externalOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

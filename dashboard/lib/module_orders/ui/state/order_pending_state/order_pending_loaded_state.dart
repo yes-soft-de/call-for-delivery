@@ -40,33 +40,35 @@ class OrderPendingLoadedState extends States {
       orders.hiddenOrdersCount,
     ];
     List<Widget> widgets = [];
-    widgets.add(Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ListTile(
-        leading: Icon(
-          FontAwesomeIcons.boxes,
-          color: Theme.of(context).disabledColor,
-        ),
-        title: Text(
-          S.current.countOrders +
-              ' ${(Localizations.localeOf(context).languageCode == 'ar' ? 'ال' : '')}' +
-              (screenState.currentIndex == 0
-                  ? S.current.pending
-                  : screenState.currentIndex == 2
-                      ? S.current.hidden
-                      : S.current.notAccepted),
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        horizontalTitleGap: 4,
-        trailing: Text(
-          countsOrder[screenState.currentIndex].toString(),
-          style: TextStyle(
-              fontSize: 18,
-              color: Theme.of(context).disabledColor,
-              fontWeight: FontWeight.bold),
-        ),
-      ),
-    ));
+    screenState.companyName.notNullOrEmpty()
+        ? null
+        : widgets.add(Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListTile(
+              leading: Icon(
+                FontAwesomeIcons.boxes,
+                color: Theme.of(context).disabledColor,
+              ),
+              title: Text(
+                S.current.countOrders +
+                    ' ${(Localizations.localeOf(context).languageCode == 'ar' ? 'ال' : '')}' +
+                    (screenState.currentIndex == 0
+                        ? S.current.pending
+                        : screenState.currentIndex == 2
+                            ? S.current.hidden
+                            : S.current.notAccepted),
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              horizontalTitleGap: 4,
+              trailing: Text(
+                countsOrder[screenState.currentIndex].toString(),
+                style: TextStyle(
+                    fontSize: 18,
+                    color: Theme.of(context).disabledColor,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ));
     widgets.add(
       // filter on state
       Padding(
@@ -178,7 +180,9 @@ class OrderPendingLoadedState extends States {
                   screenState.refresh();
                 },
                 child: Text(
-                  S.current.hidden,
+                  screenState.companyName.notNullOrEmpty()
+                      ? S.current.completed
+                      : S.current.hidden,
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -223,6 +227,8 @@ class OrderPendingLoadedState extends States {
     for (var element in ordersIndex[screenState.currentIndex]) {
       if (screenState.isExternalFilterOn &&
           !element.externalCompanyName.notNullOrEmpty()) continue;
+      if (screenState.companyName.notNullOrEmpty() &&
+          element.externalCompanyName != screenState.companyName) continue;
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: Material(

@@ -6,6 +6,7 @@ import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_orders/request/order/pending_order_request.dart';
 import 'package:c4d/module_orders/state_manager/order_pending_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/extension/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -26,6 +27,7 @@ class OrderPendingScreenState extends State<OrderPendingScreen> {
   late States currentState;
   int currentIndex = 0;
   StreamSubscription? _stateSubscription;
+  String? companyName;
 
   void refresh() {
     if (mounted) {
@@ -77,8 +79,19 @@ class OrderPendingScreenState extends State<OrderPendingScreen> {
         loading);
   }
 
+  bool flag = true;
+
   @override
   Widget build(BuildContext context) {
+    if (flag) {
+      flag = false;
+      var arg = ModalRoute.of(context)?.settings.arguments as List?;
+      if (arg != null && arg.length > 0) {
+        companyName = arg[0] as String;
+        print(companyName);
+      }
+    }
+
     return GestureDetector(
       onTap: () {
         var focus = FocusScope.of(context);
@@ -88,32 +101,42 @@ class OrderPendingScreenState extends State<OrderPendingScreen> {
       },
       child: Scaffold(
           appBar: CustomC4dAppBar.appBar(context,
-              title: S.current.orders, icon: Icons.menu, onTap: () {
-            GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
-          }, actions: [
-            Card(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 4),
-                child: Row(
-                  children: [
-                    Text(
-                      S.current.onlyExternal,
-                    ),
-                    SizedBox(width: 5),
-                    Switch(
-                      activeTrackColor: Color(0xff60CF86),
-                      value: isExternalFilterOn,
-                      onChanged: (value) {
-                        isExternalFilterOn = value;
-                        getOrders();
-                        setState(() {});
-                      },
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ]),
+              title: companyName.notNullOrEmpty()
+                  ? S.current.externalOrders
+                  : S.current.orders,
+              icon: companyName.notNullOrEmpty() ? null : Icons.menu,
+              onTap: companyName.notNullOrEmpty()
+                  ? null
+                  : () {
+                      GlobalVariable.mainScreenScaffold.currentState
+                          ?.openDrawer();
+                    },
+              actions: companyName.notNullOrEmpty()
+                  ? null
+                  : [
+                      Card(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 4),
+                          child: Row(
+                            children: [
+                              Text(
+                                S.current.onlyExternal,
+                              ),
+                              SizedBox(width: 5),
+                              Switch(
+                                activeTrackColor: Color(0xff60CF86),
+                                value: isExternalFilterOn,
+                                onChanged: (value) {
+                                  isExternalFilterOn = value;
+                                  getOrders();
+                                  setState(() {});
+                                },
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ]),
           body: currentState.getUI(context)),
     );
   }
