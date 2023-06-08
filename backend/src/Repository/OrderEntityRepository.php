@@ -326,6 +326,15 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->leftJoin(BidDetailsEntity::class, 'bidDetailsEntity', Join::WITH, 'bidDetailsEntity.orderId = orderEntity.id')
 
+            ->leftJoin(
+                ExternallyDeliveredOrderEntity::class,
+                'externallyDeliveredOrderEntity',
+                Join::WITH,
+                'externallyDeliveredOrderEntity.orderId = orderEntity.id'
+            )
+
+            ->andWhere('externallyDeliveredOrderEntity.orderId IS NULL')
+
             ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
             ->setParameter('captainId', $captainId)
 //            ->setParameter('orderTypeNormal', OrderTypeConstant::ORDER_TYPE_NORMAL)

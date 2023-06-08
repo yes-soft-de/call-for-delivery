@@ -380,7 +380,7 @@ class OrderService
 
         $orders = $this->orderManager->closestOrders($userId, $date);
 
-        foreach ($orders as $key => $value) {dd($value);
+        foreach ($orders as $key => $value) {
             $value['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderId($value['id']);
 
             // Get the financial value that the order will add to the financial dues of the captain if he/she accept the order
