@@ -55,6 +55,8 @@ class OrderFilterByAdminRequest
      */
     private $orderId;
 
+    private bool $externalOrder = false;
+
     /**
      * @return string|null
      */
@@ -121,5 +123,10 @@ class OrderFilterByAdminRequest
     public function getOrderId(): ?int
     {
         return $this->orderId;
+    }
+
+    public function getExternalOrder(): bool
+    {
+        return $this->externalOrder;
     }
 }

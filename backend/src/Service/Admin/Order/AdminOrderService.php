@@ -189,10 +189,30 @@ class AdminOrderService
 
         $orders = $this->adminOrderManager->filterStoreOrdersByAdmin($request);
 
-        foreach ($orders as $order) {
-            $order['images'] = $this->uploadFileHelperService->getImageParams($order['images']);
+        foreach ($orders as $key => $value) {
+            $value['images'] = $this->uploadFileHelperService->getImageParams($value['images']);
 
-            $response[] = $this->autoMapping->map("array", OrderGetForAdminResponse::class, $order);
+            $response[$key] = $this->autoMapping->map(OrderEntity::class, OrderGetForAdminResponse::class, $value[0]);
+
+            $response[$key]->storeOrderDetailsId = $value['storeOrderDetailsId'];
+            $response[$key]->destination = $value['destination'];
+            $response[$key]->recipientName = $value['recipientName'];
+            $response[$key]->recipientPhone = $value['recipientPhone'];
+            $response[$key]->branchName = $value['branchName'];
+            $response[$key]->location = $value['location'];
+            $response[$key]->storeOwnerBranchId = $value['storeOwnerBranchId'];
+            $response[$key]->detail = $value['detail'];
+            $response[$key]->imageId = $value['imageId'];
+            $response[$key]->captainProfileId = $value['captainProfileId'];
+
+            $externallyDeliveredOrders = $value[0]->getExternallyDeliveredOrderEntities()->toArray();
+
+            if (count($externallyDeliveredOrders) > 0) {
+                foreach ($externallyDeliveredOrders as $key2 => $value2) {
+                    $response[$key]->externalDeliveredOrders[$key2]['id'] = $value2->getId();
+                    $response[$key]->externalDeliveredOrders[$key2]['companyName'] = $value2->getExternalDeliveryCompany()->getCompanyName();
+                }
+            }
         }
 
         return $response;
@@ -328,16 +348,16 @@ class AdminOrderService
         }
     }
         
-    public function getPendingOrdersForAdmin(int $userId): array
+    public function getPendingOrdersForAdmin(int $userId, ?int $externalOrder): array
     {
         $response = [];
 
         $this->orderService->showSubOrderIfCarIsAvailable($userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST);
         $this->orderService->hideOrderExceededDeliveryTimeByHour($userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST);
 
-        $response['pendingOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->getPendingOrdersForAdmin());
-        $response['hiddenOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->getHiddenOrdersForAdmin());
-        $response['notDeliveredOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->getNotDeliveredOrdersForAdmin());
+        $response['pendingOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->getPendingOrdersForAdmin($externalOrder));
+        $response['hiddenOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->getHiddenOrdersForAdmin($externalOrder));
+        $response['notDeliveredOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->getNotDeliveredOrdersForAdmin($externalOrder));
 
         $response['pendingOrdersCount'] = count($response['pendingOrders']);
         $response['hiddenOrdersCount'] = count($response['hiddenOrders']);
@@ -353,18 +373,39 @@ class AdminOrderService
         $response = [];
 
         if (! empty($orders)) {
-            foreach ($orders as $key=>$value) {
-                $value['subOrder'] = $this->orderService->getSubOrdersByPrimaryOrderId($value['id']);
+            foreach ($orders as $key => $value) {
+                $value['subOrder'] = $this->orderService->getSubOrdersByPrimaryOrderId($value[0]->getId());
 
-                $response[$key] = $this->autoMapping->map('array', OrderPendingResponse::class, $value);
+                $response[$key] = $this->autoMapping->map(OrderEntity::class, OrderPendingResponse::class, $value[0]);
 
-                if ($value['bidDetailsInfo'] !== null) {
-                    if ($value['bidDetailsInfo']->getBranch() !== null) {
-                        $response[$key]->branchName = $value['bidDetailsInfo']->getBranch()->getName();
-                        $response[$key]->location = $value['bidDetailsInfo']->getBranch()->getLocation();
+                $response[$key]->location = $value['location'];
+                $response[$key]->storeOwnerBranchId = $value['storeOwnerBranchId'];
+                $response[$key]->branchName = $value['branchName'];
+                $response[$key]->storeOwnerName = $value['storeOwnerName'];
+
+                if ($value[0]->getCaptainId()) {
+                    $response[$key]->captainName = $value[0]->getCaptainId()->getCaptainName();
+                    $response[$key]->captainProfileId = $value[0]->getCaptainId()->getId();
+                }
+
+                $bidOrderDetailsEntity = $value[0]->getBidDetailsEntity();
+
+                if ($bidOrderDetailsEntity) {
+                    if ($bidOrderDetailsEntity->getBranch()) {
+                        $response[$key]->branchName = $bidOrderDetailsEntity->getBranch()->getName();
+                        $response[$key]->location = $bidOrderDetailsEntity->getBranch()->getLocation();
                     }
 
-                    $response[$key]->sourceDestination = $value['bidDetailsInfo']->getSourceDestination();
+                    $response[$key]->sourceDestination = $value->getBidDetailsEntity()->getSourceDestination();
+                }
+
+                $externallyDeliveredOrders = $value[0]->getExternallyDeliveredOrderEntities()->toArray();
+
+                if (count($externallyDeliveredOrders) > 0) {
+                    foreach ($externallyDeliveredOrders as $key2 => $value2) {
+                        $response[$key]->externalDeliveredOrders[$key2]['id'] = $value2->getId();
+                        $response[$key]->externalDeliveredOrders[$key2]['companyName'] = $value2->getExternalDeliveryCompany()->getCompanyName();
+                    }
                 }
             }
         }

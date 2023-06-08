@@ -300,11 +300,12 @@ class AdminOrderController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
-    
+
     /**
      * admin: Get pending, hidden, and not delivered orders for admin.
-     * @Route("orderpending", name="getPendingOrdersForAdmin", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN") 
+     * @Route("orderpending/{externalOrder}", name="getPendingOrdersForAdmin", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param int|null $externalOrder
      * @return JsonResponse
      * *
      * @OA\Tag(name="Order")
@@ -349,9 +350,9 @@ class AdminOrderController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function getPendingOrdersForAdmin(): JsonResponse
+    public function getPendingOrdersForAdmin(?int $externalOrder): JsonResponse
     {
-        $response = $this->adminOrderService->getPendingOrdersForAdmin($this->getUserId());
+        $response = $this->adminOrderService->getPendingOrdersForAdmin($this->getUserId(), $externalOrder);
         
         return $this->response($response, self::FETCH);
     }
