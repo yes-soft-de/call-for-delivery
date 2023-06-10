@@ -10310,6 +10310,26 @@ class S {
     );
   }
 
+  /// `assign to external company`
+  String get assignToExternalCompany {
+    return Intl.message(
+      'assign to external company',
+      name: 'assignToExternalCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `assign this order to external company`
+  String get assignThisOrderToExternalCompany {
+    return Intl.message(
+      'assign this order to external company',
+      name: 'assignThisOrderToExternalCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

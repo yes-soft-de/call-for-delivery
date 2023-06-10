@@ -172,6 +172,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "assignCaptain": MessageLookupByLibrary.simpleMessage("إسناد كابتن"),
         "assignCaptainHint": MessageLookupByLibrary.simpleMessage(
             "اسناد هذا الطلب لكابتن لتوصيله"),
+        "assignThisOrderToExternalCompany":
+            MessageLookupByLibrary.simpleMessage(
+                "ارسال هذا الطلب لشركة توصيل خارجية"),
+        "assignToExternalCompany":
+            MessageLookupByLibrary.simpleMessage("إسناد لمشغل خارجي"),
         "assignedOrderToCaptain":
             MessageLookupByLibrary.simpleMessage("تم إسناد الطلب لكابتن"),
         "attachFile": MessageLookupByLibrary.simpleMessage("إرفاق ملف"),

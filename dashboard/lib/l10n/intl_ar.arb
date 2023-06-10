@@ -1025,5 +1025,7 @@
     "featureWillBeOnAfterConfirm": "سيتم تشغيل الميزة بعد التاكيد",    
     "onlyExternal": "خارجي فقط",
     "externalOrders": "الطلبات الخارجية",
+    "assignToExternalCompany": "إسناد لمشغل خارجي",
+    "assignThisOrderToExternalCompany": "ارسال هذا الطلب لشركة توصيل خارجية",
     "dev": "المطورين"
 }

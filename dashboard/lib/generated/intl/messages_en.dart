@@ -170,6 +170,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "assignCaptain": MessageLookupByLibrary.simpleMessage("Assign Captain"),
         "assignCaptainHint": MessageLookupByLibrary.simpleMessage(
             "Assign captain to handle this order"),
+        "assignThisOrderToExternalCompany":
+            MessageLookupByLibrary.simpleMessage(
+                "assign this order to external company"),
+        "assignToExternalCompany":
+            MessageLookupByLibrary.simpleMessage("assign to external company"),
         "assignedOrderToCaptain":
             MessageLookupByLibrary.simpleMessage("Order assigned to captain"),
         "attachFile": MessageLookupByLibrary.simpleMessage("Attach file"),

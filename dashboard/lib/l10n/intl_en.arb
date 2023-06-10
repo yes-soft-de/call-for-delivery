@@ -1026,5 +1026,7 @@
     "featureWillBeOnAfterConfirm": "feature will be on after confirm",
     "onlyExternal": "only external",
     "externalOrders": "external orders",
+    "assignToExternalCompany": "assign to external company",
+    "assignThisOrderToExternalCompany": "assign this order to external company",
     "dev":"Dev"
 }
