@@ -995,5 +995,9 @@
     "added": "تمت اضافة",
     "toTheCalculatedDistance": "على المسافة المحتسبة",
     "clientLocationUpdatedTo": "تم تحديث موقع استلام الزيون الى الموقع",
-    "dev":"المطورين"
+    "pleasePickCompany":"الرجاء اختيار مشغل",
+    "hideOrderBecauseThereAreNoCaptainAvailable":"إخفاء الطلب لعدم توفر كباتن",
+    "updateDeliveryCostBecauseKMAddedDirectly":"تحديث كلفة التوصيل المحتسبة تلقائيا نتيجة إضافة كيلومترات بشكل مباشر",
+    "updateDeliveryCostBecauseClientLocationBeenUpdated":"تحديث كلفة التوصيل المحتسبة تلقائيا نتيجة تحديث موقع العميل",
+    "dev": "المطورين"
 }

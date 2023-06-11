@@ -71,6 +71,12 @@ class ActionTypeLogsHelper {
         return S.current.updateCustomerLocation;
       case 35:
         return S.current.captainRetreatOrder;
+      case 36:
+        return S.current.hideOrderBecauseThereAreNoCaptainAvailable;
+      case 37:
+        return S.current.updateDeliveryCostBecauseKMAddedDirectly;
+      case 38:
+        return S.current.updateDeliveryCostBecauseClientLocationBeenUpdated;
       default:
         return S.current.unknownAction + ' !${orderLog}';
     }

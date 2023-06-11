@@ -996,5 +996,8 @@
     "added": "added",
     "toTheCalculatedDistance": "to the calculated distance",
     "clientLocationUpdatedTo": "cline location updated to",
+    "hideOrderBecauseThereAreNoCaptainAvailable":"hide order because there are no captain available",
+    "updateDeliveryCostBecauseKMAddedDirectly":"update delivery cost because Kilo meters added directly",
+    "updateDeliveryCostBecauseClientLocationBeenUpdated":"update delivery cost because client location been updated",
     "dev":"Dev"
 }
