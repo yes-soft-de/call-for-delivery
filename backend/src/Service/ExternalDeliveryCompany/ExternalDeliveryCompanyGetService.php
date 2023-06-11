@@ -27,4 +27,18 @@ class ExternalDeliveryCompanyGetService
 
         return $externalDeliveryCompany[0];
     }
+
+    /**
+     * Get single external delivery company by id, if exist
+     */
+    public function getExternalDeliveryCompanyById(int $externalCompanyId): int|ExternalDeliveryCompanyEntity
+    {
+        $externalDeliveryCompany = $this->externalDeliveryCompanyManager->getExternalDeliveryCompanyById($externalCompanyId);
+
+        if (! $externalDeliveryCompany) {
+            return ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_NOT_FOUND_CONST;
+        }
+
+        return $externalDeliveryCompany;
+    }
 }

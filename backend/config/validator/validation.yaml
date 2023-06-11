@@ -1003,3 +1003,10 @@ App\Request\Admin\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteri
     properties:
         id:
             - NotBlank: ~
+
+App\Request\Admin\ExternallyDeliveredOrder\ExternallyDeliveredOrderCreateByAdminRequest:
+    properties:
+        orderId:
+            - NotBlank: ~
+        externalCompanyId:
+            - NotNull: ~

@@ -24,8 +24,10 @@ class BaseController extends AbstractController
     // external delivery company
     const EXTERNAL_DELIVERY_COMPANY_NOT_FOUND_CONST = ["external delivery company not found", "9050"];
     const EXTERNAL_DELIVERY_COMPANY_HAS_ORDERS_CONST = ["external delivery company has orders", "9051"];
+    const EXTERNAL_DELIVERY_COMPANY_NOT_REGISTERED_CONST = ["external delivery company has orders", "9052"];
     // app feature
     const APP_FEATURE_NOT_FOUND_CONST = ["app feature not found", "9076"];
+    const APP_FEATURE_NOT_ACTIVE_CONST = ["app feature not active", "9077"];
     //error order
     const ERROR = ["error","9201"];
     const ERROR_ORDER_REMOVE_CAPTAIN_RECEIVE = ["can not remove it, The captain received the order","9202"];
@@ -175,6 +177,9 @@ class BaseController extends AbstractController
     // captain financial daily
     const CAPTAIN_FINANCIAL_DAILY_NOT_EXIST_CONST = ["captain financial daily not exists", "9650"];
     const CAPTAIN_FINANCIAL_DAILY_CREATE_ERROR_CONST = ["problem in creating captain financial daily", "9651"];
+    // external order
+    const INVALID_CREDENTIALS_RESULT_CONST = ["invalid credentials", "9676"];
+    const INVALID_INPUT_RESULT_CONST = ["invalid input", "9677"];
 
     public function __construct(SerializerInterface $serializer)
     {
