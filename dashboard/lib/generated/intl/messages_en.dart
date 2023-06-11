@@ -159,6 +159,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("are you sure for delete"),
         "areYouSureForDeleteSetting": MessageLookupByLibrary.simpleMessage(
             "are you sure for delete this setting?"),
+        "areYouSureThatYouWantToAssignThisOrderTo":
+            MessageLookupByLibrary.simpleMessage(
+                "are you sure that you want to assign this order to"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete this payment"),
         "areYouWantToDeleteAllPayments": MessageLookupByLibrary.simpleMessage(

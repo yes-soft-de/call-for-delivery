@@ -227,23 +227,26 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
               ),
             )),
         SizedBox(height: 10),
-        OrderButton(
-          onTap: () {
-            Navigator.pushNamed(
-              context,
-              ExternalDeliveryCompaniesRoutes
-                  .ASSIGN_ORDER_TO_EXTERNAL_COMPANY_SCREEN,
-              arguments: [screenState.orderId],
-            ).then(
-              (value) {
-                // TODO: implement the refresh technique if nessury
-              },
-            );
-          },
-          backgroundColor: Color(0xffE34400),
-          icon: FontAwesomeIcons.box,
-          subtitle: S.current.assignThisOrderToExternalCompany,
-          title: S.current.assignToExternalCompany,
+        Visibility(
+          visible: orderInfo.state == OrderStatusEnum.WAITING,
+          child: OrderButton(
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                ExternalDeliveryCompaniesRoutes
+                    .ASSIGN_ORDER_TO_EXTERNAL_COMPANY_SCREEN,
+                arguments: [screenState.orderId],
+              ).then(
+                (value) {
+                  // TODO: implement the refresh technique if nessury
+                },
+              );
+            },
+            backgroundColor: Color(0xffE34400),
+            icon: FontAwesomeIcons.box,
+            subtitle: S.current.assignThisOrderToExternalCompany,
+            title: S.current.assignToExternalCompany,
+          ),
         ),
         // order status
         Padding(

@@ -3,6 +3,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_external_delivery_companies/model/company_model.dart';
 import 'package:c4d/module_external_delivery_companies/ui/screen/assign_order_to_external_company_screen.dart';
 import 'package:c4d/module_external_delivery_companies/ui/widgets/selectable_item.dart';
+import 'package:c4d/module_external_delivery_companies/ui/widgets/show_confirm_dialog.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:flutter/material.dart';
 
@@ -62,7 +63,25 @@ class AssignOrderToExternalCompanyStateLoaded extends States {
                 child: Text(S.current.send),
                 onPressed: () {
                   if (pikedCompany != null) {
-                    _screenState.assignOrderToExternalCompany(pikedCompany!.id);
+                    showConfirmDialog(
+                      context,
+                      title:
+                          '${S.current.areYouSureThatYouWantToAssignThisOrderTo} ${pikedCompany?.name} ؟',
+                      message: '',
+                      confirmButtonColor: Colors.amber,
+                      onConfirm: () {
+                        _screenState
+                            .assignOrderToExternalCompany(pikedCompany!.id);
+                      },
+                      confirmButtonTitle: Text(
+                        S.current.yes,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: Colors.black),
+                      ),
+                      hasCancelButton: true,
+                    );
                   } else {
                     CustomFlushBarHelper.createError(
                       title: S.current.warnning,
@@ -78,5 +97,3 @@ class AssignOrderToExternalCompanyStateLoaded extends States {
     );
   }
 }
-
-

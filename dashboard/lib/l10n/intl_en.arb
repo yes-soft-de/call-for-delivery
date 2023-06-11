@@ -1030,5 +1030,6 @@
     "assignThisOrderToExternalCompany": "assign this order to external company",
     "pickCompany":"pick company",
     "pleasePickCompany":"please pick company",
+    "areYouSureThatYouWantToAssignThisOrderTo":"are you sure that you want to assign this order to",
     "dev":"Dev"
 }

@@ -10350,6 +10350,16 @@ class S {
     );
   }
 
+  /// `are you sure that you want to assign this order to`
+  String get areYouSureThatYouWantToAssignThisOrderTo {
+    return Intl.message(
+      'are you sure that you want to assign this order to',
+      name: 'areYouSureThatYouWantToAssignThisOrderTo',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(
