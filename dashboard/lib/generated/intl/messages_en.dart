@@ -722,6 +722,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "help": MessageLookupByLibrary.simpleMessage("Help"),
         "helpMeMore": MessageLookupByLibrary.simpleMessage("Help me more"),
         "hidden": MessageLookupByLibrary.simpleMessage("Hidden"),
+        "hideOrderBecauseThereAreNoCaptainAvailable":
+            MessageLookupByLibrary.simpleMessage(
+                "hide order because there are no captain available"),
         "highestRate": MessageLookupByLibrary.simpleMessage("Highest Rate"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "homeDataEmpty": MessageLookupByLibrary.simpleMessage(
@@ -1525,6 +1528,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateCustomerLocation": MessageLookupByLibrary.simpleMessage(
             "The customer location field has been updated and the old location saved"),
         "updateDate": MessageLookupByLibrary.simpleMessage("Update date"),
+        "updateDeliveryCostBecauseClientLocationBeenUpdated":
+            MessageLookupByLibrary.simpleMessage(
+                "update delivery cost because client location been updated"),
+        "updateDeliveryCostBecauseKMAddedDirectly":
+            MessageLookupByLibrary.simpleMessage(
+                "update delivery cost because Kilo meters added directly"),
         "updateDistance":
             MessageLookupByLibrary.simpleMessage("Update distance"),
         "updateOfferSuccessfully":
