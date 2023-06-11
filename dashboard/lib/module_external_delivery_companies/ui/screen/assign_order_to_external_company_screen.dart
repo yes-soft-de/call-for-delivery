@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_external_delivery_companies/request/assign_order_to_external_company/assign_order_to_external_company_request.dart';
 import 'package:c4d/module_external_delivery_companies/state_manager/assign_order_to_external_company_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -22,6 +23,7 @@ class AssignOrderToExternalCompanyScreen extends StatefulWidget {
 class AssignOrderToExternalCompanyScreenState
     extends State<AssignOrderToExternalCompanyScreen> {
   late States currentState;
+  late int orderId;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   StreamSubscription? _stateSubscription;
 
@@ -42,6 +44,15 @@ class AssignOrderToExternalCompanyScreenState
     widget._stateManager.getExternalCompanies(this);
   }
 
+  assignOrderToExternalCompany(int companyId) {
+    widget._stateManager.assignOrderToExternalCompany(
+        this,
+        AssignOrderToExternalCompanyRequest(
+          companyId: companyId,
+          orderId: orderId,
+        ));
+  }
+
   void refresh() {
     setState(() {});
   }
@@ -52,8 +63,15 @@ class AssignOrderToExternalCompanyScreenState
     super.dispose();
   }
 
+  bool flag = true;
+
   @override
   Widget build(BuildContext context) {
+    if (flag) {
+      flag = false;
+      var arg = ModalRoute.of(context)?.settings.arguments as List;
+      if (arg.length > 1) orderId = arg[0] as int;
+    }
     return GestureDetector(
       onTap: () {
         var focus = FocusScope.of(context);

@@ -1,11 +1,14 @@
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_external_delivery_companies/model/company_model.dart';
 import 'package:c4d/module_external_delivery_companies/ui/screen/assign_order_to_external_company_screen.dart';
+import 'package:c4d/module_external_delivery_companies/ui/widgets/selectable_item.dart';
 import 'package:flutter/material.dart';
 
 class AssignOrderToExternalCompanyStateLoaded extends States {
   final AssignOrderToExternalCompanyScreenState _screenState;
   final List<CompanyModel> _companies;
+  CompanyModel? pikedCompany;
 
   AssignOrderToExternalCompanyStateLoaded(this._screenState, this._companies)
       : super(_screenState);
@@ -16,9 +19,83 @@ class AssignOrderToExternalCompanyStateLoaded extends States {
       padding: const EdgeInsets.all(8.0),
       child: SingleChildScrollView(
         child: Column(
-          children: [Placeholder()],
+          children: [
+            Text(S.current.pickCompany),
+            SizedBox(height: 10),
+            Container(
+              constraints: BoxConstraints(
+                maxHeight: MediaQuery.sizeOf(context).height * 0.7,
+              ),
+              child: Card(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 30,
+                    vertical: 30,
+                  ),
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      return SelectableItem<CompanyModel>(
+                        onTap: () {
+                          pikedCompany = _companies[index];
+                          _screenState.refresh();
+                        },
+                        selectedValue: pikedCompany ?? CompanyModel.empty(),
+                        title: _companies[index].name,
+                        value: _companies[index],
+                        selectedColor: Color(0xff60CF86),
+                      );
+                    },
+                    itemCount: _companies.length,
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(height: 30),
+            SizedBox(
+              width: MediaQuery.sizeOf(context).width * 0.75,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xff024D92),
+                ),
+                child: Text(S.current.send),
+                onPressed: () {
+                  if (pikedCompany != null) {
+                  } else {
+                    
+                  }
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
   }
 }
+
+// class _companyCard extends StatelessWidget {
+//   final CompanyModel company;
+//   final bool isPiked;
+//   final Function(CompanyModel company) onPiked;
+
+//   _companyCard({
+//     required this.company,
+//     required this.isPiked,
+//     required this.onPiked,
+//   });
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.all(8.0),
+//       child: SelectableItem(
+//         onTap: () {
+//         onPiked(company);
+//         },
+//         selectedValue: ,
+//         ,
+//       ),
+//     );
+//   }
+// }

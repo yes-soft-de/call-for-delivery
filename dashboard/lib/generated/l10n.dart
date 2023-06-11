@@ -10330,6 +10330,16 @@ class S {
     );
   }
 
+  /// `pick company`
+  String get pickCompany {
+    return Intl.message(
+      'pick company',
+      name: 'pickCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

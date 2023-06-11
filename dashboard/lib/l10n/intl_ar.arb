@@ -1027,5 +1027,6 @@
     "externalOrders": "الطلبات الخارجية",
     "assignToExternalCompany": "إسناد لمشغل خارجي",
     "assignThisOrderToExternalCompany": "ارسال هذا الطلب لشركة توصيل خارجية",
+    "pickCompany":"اختر احد المشغلات",
     "dev": "المطورين"
 }

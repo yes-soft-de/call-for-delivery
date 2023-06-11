@@ -4,6 +4,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_external_delivery_companies/model/company_model.dart';
+import 'package:c4d/module_external_delivery_companies/request/assign_order_to_external_company/assign_order_to_external_company_request.dart';
 import 'package:c4d/module_external_delivery_companies/service/external_delivery_companies_service.dart';
 import 'package:c4d/module_external_delivery_companies/ui/screen/assign_order_to_external_company_screen.dart';
 import 'package:c4d/module_external_delivery_companies/ui/state/assign_order_to_external_company_state_loaded.dart';
@@ -44,5 +45,12 @@ class AssignOrderToExternalCompanyStateManager {
         }
       },
     );
+  }
+
+  void assignOrderToExternalCompany(
+    AssignOrderToExternalCompanyScreenState screenState,
+    AssignOrderToExternalCompanyRequest request,
+  ) {
+    
   }
 }

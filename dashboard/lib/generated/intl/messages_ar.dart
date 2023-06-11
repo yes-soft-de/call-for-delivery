@@ -1119,6 +1119,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pickAJob": MessageLookupByLibrary.simpleMessage("اختار عملي"),
         "pickALanguage": MessageLookupByLibrary.simpleMessage("اختار لغتي"),
         "pickChoice": MessageLookupByLibrary.simpleMessage("يرجى اختيار اجراء"),
+        "pickCompany":
+            MessageLookupByLibrary.simpleMessage("اختر احد المشغلات"),
         "plan": MessageLookupByLibrary.simpleMessage("الخطة"),
         "planByHours":
             MessageLookupByLibrary.simpleMessage("وظيفية حسب الساعة"),

@@ -8,6 +8,11 @@ class CompanyModel extends DataModel {
 
   CompanyModel({required this.id, required this.name, required this.isActive});
 
+  CompanyModel.empty()
+      : id = -1,
+        name = '',
+        isActive = false;
+
   late List<CompanyModel> _companies = [];
 
   CompanyModel.withData(DeliveryCompaniesResponse response) {
