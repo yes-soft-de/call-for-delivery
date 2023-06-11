@@ -769,5 +769,11 @@
     "remainingOrdersNumber": "the count of remaining orders",
     "goToOffers": "go to offers",
     "toGetBouns": "for a bouns",
+    "cancelOrder": "cancel order",
+    "requestDistanceEdit": "request edit distance",
+    "informTheAdministration": "Inform the administration",
+    "youCantRequestEdit": "you can't request edit",
+    "youCanEditOnlyOneTimeIfNotSure": "you can edit only one time, if you are not sure then edit when order you complete the order",
+    "youCanEditOnlyOneTimeContactWith": "you can edit only one time, you can contact with direct support",
     "financeOverPaid": "Over paid"
 }

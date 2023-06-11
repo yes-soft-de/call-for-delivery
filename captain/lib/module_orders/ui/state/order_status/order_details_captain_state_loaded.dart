@@ -61,95 +61,35 @@ class OrderDetailsCaptainOrderLoadedState extends States {
   @override
   Widget getUI(BuildContext context) {
     return Scaffold(
-      appBar: CustomC4dAppBar
-          .appBar(context, title: S.current.orderDetails, actions: [
-        CustomC4dAppBar.actionIcon(context, onTap: () {
-          final reason = TextEditingController();
-          final coord = TextEditingController();
-          final formKey = GlobalKey<FormState>();
-          showDialog(
-              context: context,
-              builder: (ctx) {
-                return AlertDialog(
-                  title: Text(S.current.updateDistance),
-                  content: SizedBox(
-                    height: 175,
-                    child: Form(
-                      key: formKey,
-                      child: Column(
-                        children: [
-                          CustomFormField(
-                            controller: coord,
-                            hintText: '${S.current.coordinates} 12.4,15.8',
-                          ),
-                          const SizedBox(
-                            height: 8,
-                          ),
-                          CustomFormField(
-                            controller: reason,
-                            hintText: S.current.reason,
-                          ),
-                          const SizedBox(
-                            height: 16,
-                          ),
-                          ElevatedButton(
-                              onPressed: () {
-                                if (formKey.currentState?.validate() == true) {
-                                  if (coord.text.split(',').length == 2) {
-                                    Navigator.of(context).pop();
-                                    screenState.manager.updateDistance(
-                                        screenState,
-                                        AddExtraDistanceRequest(
-                                            id: int.tryParse(
-                                                screenState.orderId ?? ''),
-                                            storeBranchToClientDistanceAdditionExplanation:
-                                                reason.text.trim(),
-                                            destination: Destination(
-                                                lat: double.tryParse(coord.text
-                                                    .trim()
-                                                    .split(',')[0]
-                                                    .trim()),
-                                                lon: double.tryParse(coord.text
-                                                    .trim()
-                                                    .split(',')[1]
-                                                    .trim()))));
-                                  } else {
-                                    Fluttertoast.showToast(
-                                        msg: S.current.pleaseEnterValidCoord);
-                                  }
-                                }
-                              },
-                              child: Text(S.current.update)),
-                        ],
-                      ),
-                    ),
+      appBar: CustomC4dAppBar.appBar(context,
+          title: S.current.orderDetails,
+          actions: [
+            PopupMenuButton<String>(
+              color: const Color(0xff381D87),
+              onSelected: (value) {
+                if (value == S.current.requestDistanceEdit) {
+                  _showDistanceDialog(context);
+                } else if (value == S.current.cancelOrder) {
+                  _showCancelDialog(context);
+                }
+              },
+              itemBuilder: (ctx) {
+                return [
+                  PopupMenuItem(
+                    value: S.current.requestDistanceEdit,
+                    child: _CustomText(text: S.current.requestDistanceEdit),
                   ),
-                );
-              });
-        }, icon: Icons.warning_rounded),
-        Visibility(
-          visible: !(orderInfo.state == OrderStatusEnum.FINISHED ||
-              orderInfo.state == OrderStatusEnum.CANCELLED ||
-              orderInfo.state == OrderStatusEnum.WAITING),
-          child: CustomC4dAppBar.actionIcon(context, onTap: () {
-            showDialog(
-                context: context,
-                builder: (ctx) {
-                  return CustomAlertDialog(
-                    onPressed: () {
-                      Navigator.of(context).pop();
-                      screenState.manager.cancelOrder(
-                          screenState,
-                          CancelOrderRequest(
-                              id: int.tryParse(screenState.orderId ?? '')));
-                    },
-                    content: S.current.areSureYouWantToCancelThisOrder,
-                    title: S.current.warnning,
-                  );
-                });
-          }, icon: Icons.cancel_rounded),
-        ),
-      ]),
+                  if (!(orderInfo.state == OrderStatusEnum.FINISHED ||
+                      orderInfo.state == OrderStatusEnum.CANCELLED ||
+                      orderInfo.state == OrderStatusEnum.WAITING))
+                    PopupMenuItem(
+                      value: S.current.cancelOrder,
+                      child: _CustomText(text: S.current.cancelOrder),
+                    )
+                ];
+              },
+            )
+          ]),
       body: CustomListView.custom(
         children: [
           // svg picture
@@ -330,6 +270,86 @@ class OrderDetailsCaptainOrderLoadedState extends States {
           ),
         ],
       ),
+    );
+  }
+
+  void _showCancelDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (ctx) {
+          return CustomAlertDialog(
+            onPressed: () {
+              Navigator.of(context).pop();
+              screenState.manager.cancelOrder(
+                  screenState,
+                  CancelOrderRequest(
+                      id: int.tryParse(screenState.orderId ?? '')));
+            },
+            content: S.current.areSureYouWantToCancelThisOrder,
+            title: S.current.warnning,
+          );
+        });
+  }
+
+  void _showDistanceDialog(BuildContext context) {
+    final reason = TextEditingController();
+    final coord = TextEditingController();
+    final formKey = GlobalKey<FormState>();
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: const Color(0xff381D87),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    S.current.requestDistanceEdit,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleLarge
+                        ?.copyWith(color: Colors.white),
+                  ),
+                ),
+                const _YouCanEditOnlyOneTimeWidget(),
+                const SizedBox(height: 30),
+                Form(
+                  key: formKey,
+                  child: Column(
+                    children: [
+                      CustomFormField(
+                        controller: coord,
+                        hintText: '${S.current.coordinates} 12.4,15.8',
+                      ),
+                      const SizedBox(height: 20),
+                      CustomFormField(
+                        maxLines: 5,
+                        controller: reason,
+                        hintText: S.current.reason,
+                      ),
+                      const SizedBox(
+                        height: 16,
+                      ),
+                      _CancelOrConfirmButtons(
+                        captainId: orderInfo.captainID ?? 0,
+                        formKey: formKey,
+                        coord: coord,
+                        screenState: screenState,
+                        reason: reason,
+                      ),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 
@@ -1182,5 +1202,130 @@ class OrderDetailsCaptainOrderLoadedState extends States {
   String _orderCostCanBeZero() {
     if (orderInfo.orderCost == 0) return '0';
     return '';
+  }
+}
+
+class _CancelOrConfirmButtons extends StatelessWidget {
+  const _CancelOrConfirmButtons({
+    required this.formKey,
+    required this.coord,
+    required this.screenState,
+    required this.reason,
+    required this.captainId,
+  });
+
+  final int captainId;
+  final GlobalKey<FormState> formKey;
+  final TextEditingController coord;
+  final OrderStatusScreenState screenState;
+  final TextEditingController reason;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Expanded(
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Text(
+              S.current.cancel,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge
+                  ?.copyWith(color: const Color(0xff381D87)),
+            ),
+          ),
+        ),
+        const SizedBox(width: 20),
+        Expanded(
+          flex: 2,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xffFFCC15)),
+            onPressed: () {
+              if (formKey.currentState?.validate() == true) {
+                if (coord.text.split(',').length == 2) {
+                  Navigator.of(context).pop();
+                  screenState.manager.updateDistance(
+                      screenState,
+                      AddExtraDistanceRequest(
+                          id: int.tryParse(screenState.orderId ?? ''),
+                          conflictNote: reason.text.trim(),
+                          destination: Destination(
+                              lat: double.tryParse(
+                                  coord.text.trim().split(',')[0].trim()),
+                              lon: double.tryParse(
+                                  coord.text.trim().split(',')[1].trim()))));
+                } else if (coord.text.isNotEmpty) {
+                  Navigator.of(context).pop();
+                  screenState.manager.updateDistance(
+                      screenState,
+                      AddExtraDistanceRequest(
+                          id: int.tryParse(screenState.orderId ?? ''),
+                          conflictNote: reason.text.trim(),
+                          additionalDistance: coord.text,));
+                } else {
+                  Fluttertoast.showToast(msg: S.current.pleaseEnterValidCoord);
+                }
+              }
+            },
+            child: Text(
+              S.current.informTheAdministration,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge
+                  ?.copyWith(color: const Color(0xff381D87)),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class _YouCanEditOnlyOneTimeWidget extends StatelessWidget {
+  const _YouCanEditOnlyOneTimeWidget();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Container(
+        padding: const EdgeInsets.all(8),
+        decoration: const BoxDecoration(
+            color: Color(0xffFFCC15),
+            borderRadius: BorderRadius.all(Radius.circular(16))),
+        child: Text(
+          S.current.youCanEditOnlyOneTimeIfNotSure,
+          style: Theme.of(context)
+              .textTheme
+              .bodyLarge
+              ?.copyWith(color: const Color(0xff381D87)),
+        ),
+      ),
+    );
+  }
+}
+
+class _CustomText extends StatelessWidget {
+  final String text;
+
+  const _CustomText({
+    required this.text,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Text(
+      text,
+      style: Theme.of(context)
+          .textTheme
+          .titleMedium
+          ?.copyWith(color: Colors.white),
+    );
   }
 }

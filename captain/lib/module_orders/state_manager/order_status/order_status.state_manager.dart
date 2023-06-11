@@ -3,17 +3,15 @@ import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:c4d/module_chat/presistance/chat_hive_helper.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/model/roomId/room_id_model.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/cancel_order_request.dart';
 import 'package:c4d/module_orders/ui/state/order_status/order_details_captain_state_loaded.dart';
 import 'package:c4d/module_orders/ui/state/order_status/order_status_warning_state.dart';
-import 'package:c4d/utils/global/global_state_manager.dart';
-import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
@@ -148,9 +146,13 @@ class OrderStatusStateManager {
     _stateSubject.add(LoadingState(screenState));
     _ordersService.updateExtraDistanceToOrder(request).then((value) {
       if (value.hasError) {
-        CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error ?? '')
-            .show(screenState.context);
+        if (value.error == 'you can edit only once') {
+          _showCantEditDistanceDialog(screenState.context);
+        } else {
+          CustomFlushBarHelper.createError(
+                  title: S.current.warnning, message: value.error ?? '')
+              .show(screenState.context);
+        }
         screenState.getOrderDetails(request.id);
       } else {
         CustomFlushBarHelper.createSuccess(
@@ -161,8 +163,96 @@ class OrderStatusStateManager {
       }
     });
   }
+
+  void _showCantEditDistanceDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: const Color(0xff381D87),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 10),
+                    child: Text(
+                      S.current.requestDistanceEdit,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleLarge
+                          ?.copyWith(color: Colors.white),
+                    ),
+                  ),
+                  const SizedBox(height: 30),
+                  Row(
+                    children: [
+                      const Icon(
+                        Icons.warning_rounded,
+                        size: 40,
+                        color: Colors.amber,
+                      ),
+                      const SizedBox(width: 20),
+                      Text(
+                        S.current.youCantRequestEdit,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  Text(
+                    S.current.youCanEditOnlyOneTimeContactWith,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: Colors.white),
+                  ),
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    height: 45,
+                    width: double.maxFinite,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.amber),
+                      onPressed: () {
+                        var roomID = ChatHiveHelper().getDirectSupport();
+                        if (roomID != null) {
+                          Navigator.of(context).pushNamed(
+                            ChatRoutes.chatRoute,
+                            arguments:
+                                ChatArgument(roomID: roomID, userType: 'Admin'),
+                          );
+                        }
+                      },
+                      child: Text(
+                        S.current.directSupport,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(color: const Color(0xff381D87)),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
   void cancelOrder(
-      OrderStatusScreenState screenState, CancelOrderRequest  request) {
+      OrderStatusScreenState screenState, CancelOrderRequest request) {
     _stateSubject.add(LoadingState(screenState));
     _ordersService.cancelOrder(request).then((value) {
       if (value.hasError) {
@@ -179,6 +269,7 @@ class OrderStatusStateManager {
       }
     });
   }
+
   void dispose() {
     _updateStateListener?.cancel();
   }

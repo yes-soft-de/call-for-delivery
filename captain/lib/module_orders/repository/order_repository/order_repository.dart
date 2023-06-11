@@ -143,7 +143,7 @@ class OrderRepository {
   Future<ActionResponse?> updateExtraDistanceToOrder(
       AddExtraDistanceRequest request) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.put(
+    dynamic response = await _apiClient.post(
       Urls.UPDATE_EXTRA_DISTANCE_TO_ORDER_API,
       request.toJson(),
       headers: {'Authorization': 'Bearer ${token}'},
