@@ -160,6 +160,7 @@ class AuthService {
   }
 
   Future<void> logout() async {
+    await _authManager.logout();
     await _prefsHelper.cleanAll();
   }
 

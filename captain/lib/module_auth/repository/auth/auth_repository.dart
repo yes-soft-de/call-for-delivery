@@ -69,7 +69,7 @@ class AuthRepository {
   }
 
   Future<RegisterResponse?> checkUserType(String role, String token) async {
-    dynamic result = await _apiClient.post(Urls.CHECK_USER_ROLE + '/$role', {},
+    dynamic result = await _apiClient.post('${Urls.CHECK_USER_ROLE}/$role', {},
         headers: {'Authorization': 'Bearer $token'});
 
     if (result == null) return null;
@@ -109,7 +109,7 @@ class AuthRepository {
     var token = await getIt<AuthService>().getToken();
     dynamic result = await _apiClient.get(
       Urls.ACCOUNT_STATUS,
-      headers: {'Authorization': 'Bearer ' + '$token'},
+      headers: {'Authorization': 'Bearer ' '$token'},
     );
     if (result == null) return null;
     return ActionResponse.fromJson(result);
@@ -120,7 +120,17 @@ class AuthRepository {
     dynamic result = await _apiClient.put(
       Urls.DELETE_USER,
       {'status': 'maintenanceMood'},
-      headers: {'Authorization': 'Bearer ' + '$token'},
+      headers: {'Authorization': 'Bearer ' '$token'},
+    );
+    if (result == null) return null;
+    return ActionResponse.fromJson(result);
+  }
+
+  Future<ActionResponse?> logout() async {
+    var token = await getIt<AuthService>().getToken();
+    dynamic result = await _apiClient.get(
+      Urls.LOGOUT,
+      headers: {'Authorization': 'Bearer ' '$token'},
     );
     if (result == null) return null;
     return ActionResponse.fromJson(result);

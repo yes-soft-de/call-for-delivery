@@ -220,27 +220,25 @@ class OrderStatusStateManager {
                   SizedBox(
                     height: 45,
                     width: double.maxFinite,
-                    child: Expanded(
-                      child: ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.amber),
-                        onPressed: () {
-                          var roomID = ChatHiveHelper().getDirectSupport();
-                          if (roomID != null) {
-                            Navigator.of(context).pushNamed(
-                              ChatRoutes.chatRoute,
-                              arguments: ChatArgument(
-                                  roomID: roomID, userType: 'Admin'),
-                            );
-                          }
-                        },
-                        child: Text(
-                          S.current.directSupport,
-                          style: Theme.of(context)
-                              .textTheme
-                              .titleMedium
-                              ?.copyWith(color: const Color(0xff381D87)),
-                        ),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.amber),
+                      onPressed: () {
+                        var roomID = ChatHiveHelper().getDirectSupport();
+                        if (roomID != null) {
+                          Navigator.of(context).pushNamed(
+                            ChatRoutes.chatRoute,
+                            arguments:
+                                ChatArgument(roomID: roomID, userType: 'Admin'),
+                          );
+                        }
+                      },
+                      child: Text(
+                        S.current.directSupport,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(color: const Color(0xff381D87)),
                       ),
                     ),
                   )

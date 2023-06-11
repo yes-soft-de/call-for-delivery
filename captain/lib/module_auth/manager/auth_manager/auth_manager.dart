@@ -43,4 +43,6 @@ class AuthManager {
 
   Future<ActionResponse?> accountStatus() => _authRepository.accountStatus();
   Future<ActionResponse?> deleteUser() => _authRepository.deleteUser();
+
+  Future<ActionResponse?> logout() => _authRepository.logout();
 }
