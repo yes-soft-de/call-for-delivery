@@ -1152,6 +1152,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "من فضلك قم بتسجيل الدخول للمتابعة"),
         "pleaseLoginToMakeOrder": MessageLookupByLibrary.simpleMessage(
             "من فضلك قم بتسجيل الدخول لاستكمال طلبك"),
+        "pleasePickCompany":
+            MessageLookupByLibrary.simpleMessage("الرجاء اختيار مشغل"),
         "pleaseProvideCostType":
             MessageLookupByLibrary.simpleMessage("من فضلك اختر نوع التكلفة"),
         "pleaseProvidePaymentMethode":
