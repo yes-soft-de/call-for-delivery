@@ -995,5 +995,6 @@
     "added": "تمت اضافة",
     "toTheCalculatedDistance": "على المسافة المحتسبة",
     "clientLocationUpdatedTo": "تم تحديث موقع استلام الزيون الى الموقع",
+    "adUpdatedSuccessfully": "تم تحديث الاعلان بنجاح",
     "dev":"المطورين"
 }

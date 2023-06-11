@@ -10010,6 +10010,16 @@ class S {
     );
   }
 
+  /// `ad updated successfully`
+  String get adUpdatedSuccessfully {
+    return Intl.message(
+      'ad updated successfully',
+      name: 'adUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

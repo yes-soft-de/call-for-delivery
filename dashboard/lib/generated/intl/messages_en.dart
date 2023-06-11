@@ -81,6 +81,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "activeStores": MessageLookupByLibrary.simpleMessage("active stores"),
         "actives": MessageLookupByLibrary.simpleMessage("actives"),
         "activityLog": MessageLookupByLibrary.simpleMessage("Activity Log"),
+        "adUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("ad updated successfully"),
         "addAds": MessageLookupByLibrary.simpleMessage("Add Ads"),
         "addBranch": MessageLookupByLibrary.simpleMessage("Add Branch"),
         "addBranchFailure": MessageLookupByLibrary.simpleMessage(

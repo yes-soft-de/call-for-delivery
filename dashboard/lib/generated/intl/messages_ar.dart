@@ -79,6 +79,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "activeStores": MessageLookupByLibrary.simpleMessage("المتاجر المفعلة"),
         "actives": MessageLookupByLibrary.simpleMessage("فعالين"),
         "activityLog": MessageLookupByLibrary.simpleMessage("سجل الاستخدام"),
+        "adUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تحديث الاعلان بنجاح"),
         "addAds": MessageLookupByLibrary.simpleMessage("إضافة إعلان"),
         "addBranch": MessageLookupByLibrary.simpleMessage("إضافة فرع"),
         "addBranchFailure": MessageLookupByLibrary.simpleMessage(

@@ -99,7 +99,7 @@ class NoticeStateManager {
           getNotice(screenState);
           CustomFlushBarHelper.createSuccess(
               title: S.current.warnning,
-              message: S.current.categoryUpdatedSuccessfully);
+              message: S.current.adUpdatedSuccessfully);
         }
       });
     } else {
