@@ -195,6 +195,32 @@ class AdminOrderService
     public function filterStoreOrdersByAdmin(OrderFilterByAdminRequest $request): ?array
     {
         $response = [];
+        // 1 Get uncancelled and undelivered external orders from OrderEntity
+        $orders = $this->getNotCancelledNorDeliveredExternalOrdersOnly($request->getExternalCompanyId());
+
+        if (count($orders) > 0) {
+            foreach ($orders as $order) {
+                // 2 Get external order new info from their related external company
+                $externallyDeliveredOrders = $order->getExternallyDeliveredOrderEntities()->toArray();
+
+                if (count($externallyDeliveredOrders) > 0) {
+                    foreach ($externallyDeliveredOrders as $externallyDeliveredOrder) {
+                        $externalOrderInfo = $this->getExternalOrderByOrderIdAndExternalDeliveryCompanyId($externallyDeliveredOrder->getExternalOrderId(),
+                            $externallyDeliveredOrder->getExternalDeliveryCompany()->getId());
+
+                        if(($externalOrderInfo !== HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
+                            && ($externalOrderInfo !== HttpResponseConstant::ORDER_NOT_FOUND_RESULT_CONST)
+                            && ($externalOrderInfo !== HttpResponseConstant::UN_RECOGNIZED_STATUS_CODE_RESULT_CONST)) {
+                            // 3 Update external orders status (both in ExternallyDeliveredOrderEntity and OrderEntity)
+                            $this->updateExternallyDeliveredOrderStatus($externallyDeliveredOrder->getId(),
+                                $externalOrderInfo['data']['status']);
+                            // Update order status in OrderEntity
+                            $this->compareAndUpdateOrderState($order, $externalOrderInfo['data']['status']);
+                        }
+                    }
+                }
+            }
+        }
 
         $orders = $this->adminOrderManager->filterStoreOrdersByAdmin($request);
 
@@ -363,11 +389,17 @@ class AdminOrderService
             $externalDeliveryCompanyId);
     }
 
-    public function getExternalOrdersOnly(?int $externalCompanyId): array
+    /**
+     * Get uncancelled and undelivered external orders from OrderEntity
+     */
+    public function getNotCancelledNorDeliveredExternalOrdersOnly(?int $externalCompanyId): array
     {
-        return $this->adminOrderManager->getExternalOrdersOnly($externalCompanyId);
+        return $this->adminOrderManager->getNotCancelledNorDeliveredExternalOrdersOnly($externalCompanyId);
     }
 
+    /**
+     * Updates the status of the order in ExternallyDeliveredOrderEntity
+     */
     public function updateExternallyDeliveredOrderStatus(int $externallyDeliveredOrderId, string $status): int|ExternallyDeliveredOrderEntity
     {
         $externallyDeliveredOrderStatusUpdateRequest = new ExternallyDeliveredOrderStatusUpdateRequest();
@@ -436,12 +468,12 @@ class AdminOrderService
         return $response;
     }
 
-    public function updateOrderStatusByOrderEntityAndNewStatus(OrderEntity $orderEntity, string $status)
+    public function updateOrderStatusByOrderEntityAndNewStatus(OrderEntity $orderEntity, string $status): OrderEntity
     {
         return $this->adminOrderManager->updateOrderStatusByOrderEntityAndNewStatus($orderEntity, $status);
     }
 
-    public function compareAndUpdateOrderState(OrderEntity $orderEntity, string $externalStatus)
+    public function compareAndUpdateOrderState(OrderEntity $orderEntity, string $externalStatus): OrderEntity
     {
         // 1 compare status
         $orderStatus = $orderEntity->getState();
@@ -465,15 +497,17 @@ class AdminOrderService
         }
 
         // 2 update order status
-        $this->updateOrderStatusByOrderEntityAndNewStatus($orderEntity, $orderStatus);
+        return $this->updateOrderStatusByOrderEntityAndNewStatus($orderEntity, $orderStatus);
     }
         
     public function getPendingOrdersForAdmin(int $userId, int $externalOrder, ?int $externalCompanyId): array
     {
         $response = [];
+        $response['pendingOrders'] = [];
+        $response['notDeliveredOrders'] = [];
 
-        // 1 Get external orders
-        $orders = $this->getExternalOrdersOnly($externalCompanyId);
+        // 1 Get external orders (which are not cancelled nor delivered)
+        $orders = $this->getNotCancelledNorDeliveredExternalOrdersOnly($externalCompanyId);
 
         if (count($orders) > 0) {
             foreach ($orders as $order) {
@@ -494,7 +528,6 @@ class AdminOrderService
                                 $externalOrderInfo['data']['status']);
                             // 4 Update order status in OrderEntity
                             $this->compareAndUpdateOrderState($order, $externalOrderInfo['data']['status']);
-
                         }
                     }
                 }

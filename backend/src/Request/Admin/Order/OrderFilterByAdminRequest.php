@@ -57,41 +57,28 @@ class OrderFilterByAdminRequest
 
     private bool $externalOrder = false;
 
-    /**
-     * @return string|null
-     */
+    private ?int $externalCompanyId = null;
+
     public function getState(): ?string
     {
         return $this->state;
     }
 
-    /**
-     * @return string|null
-     */
     public function getFromDate(): ?string
     {
         return $this->fromDate;
     }
 
-    /**
-     * @return string|null
-     */
     public function getToDate(): ?string
     {
         return $this->toDate;
     }
 
-    /**
-     * @return int|null
-     */
     public function getStoreOwnerProfileId(): ?int
     {
         return $this->storeOwnerProfileId;
     }
 
-    /**
-     * @return bool|null
-     */
     public function getOpenToPriceOffer(): ?bool
     {
         return $this->openToPriceOffer;
@@ -112,9 +99,6 @@ class OrderFilterByAdminRequest
         return $this->storeBranchToClientDistance;
     }
 
-    /**
-     * @return string|null
-     */
     public function getCustomizedTimezone(): ?string
     {
         return $this->customizedTimezone;
@@ -128,5 +112,10 @@ class OrderFilterByAdminRequest
     public function getExternalOrder(): bool
     {
         return $this->externalOrder;
+    }
+
+    public function getExternalCompanyId(): ?int
+    {
+        return $this->externalCompanyId;
     }
 }
