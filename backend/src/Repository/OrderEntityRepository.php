@@ -2913,7 +2913,7 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $filteredOrders;
     }
 
-    public function getExternalOrdersOnly(?int $externalCompanyId): array
+    public function getNotCancelledNorDeliveredExternalOrdersOnly(?int $externalCompanyId): array
     {
         $query = $this->createQueryBuilder('orderEntity')
 

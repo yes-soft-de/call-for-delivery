@@ -651,9 +651,9 @@ class AdminOrderManager
         return $orderEntity;
     }
 
-    public function getExternalOrdersOnly(?int $externalCompanyId): array
+    public function getNotCancelledNorDeliveredExternalOrdersOnly(?int $externalCompanyId): array
     {
-        return $this->orderEntityRepository->getExternalOrdersOnly($externalCompanyId);
+        return $this->orderEntityRepository->getNotCancelledNorDeliveredExternalOrdersOnly($externalCompanyId);
     }
 
     public function updateOrderStatusByOrderEntityAndNewStatus(OrderEntity $orderEntity, string $status): OrderEntity
