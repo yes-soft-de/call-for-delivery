@@ -3,6 +3,7 @@
 namespace App\Manager\ExternalDeliveryCompany;
 
 use App\Constant\ExternalDeliveryCompany\ExternalDeliveryCompanyStatusConstant;
+use App\Entity\ExternalDeliveryCompanyEntity;
 use App\Repository\ExternalDeliveryCompanyEntityRepository;
 
 class ExternalDeliveryCompanyManager
@@ -20,5 +21,13 @@ class ExternalDeliveryCompanyManager
     {
         return $this->externalDeliveryCompanyEntityRepository->findBy(['status' => ExternalDeliveryCompanyStatusConstant::STATUS_TRUE_CONST],
             [], [1]);
+    }
+
+    /**
+     * Get single external delivery company by id, if exist
+     */
+    public function getExternalDeliveryCompanyById(int $externalCompanyId): ?ExternalDeliveryCompanyEntity
+    {
+        return $this->externalDeliveryCompanyEntityRepository->findOneBy(['id' => $externalCompanyId]);
     }
 }

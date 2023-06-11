@@ -13,15 +13,18 @@ use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteria
 use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaResultConstant;
 use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaStatusConstant;
 use App\Constant\HTTP\HttpResponseConstant;
+use App\Constant\Order\OrderResultConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Entity\ExternalDeliveryCompanyEntity;
 use App\Entity\ExternallyDeliveredOrderEntity;
 use App\Entity\OrderEntity;
 use App\Entity\StoreOrderDetailsEntity;
+use App\Request\Admin\ExternallyDeliveredOrder\ExternallyDeliveredOrderCreateByAdminRequest;
 use App\Request\ExternallyDeliveredOrder\ExternallyDeliveredOrderCreateRequest;
 use App\Service\AppFeature\AppFeatureGetService;
 use App\Service\ExternalDeliveryCompany\ExternalDeliveryCompanyGetService;
 use App\Service\ExternallyDeliveredOrder\ExternallyDeliveredOrderService;
+use App\Service\Order\OrderGetService;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 /**
@@ -33,7 +36,8 @@ class ExternallyDeliveredOrderHandleService
         private AppFeatureGetService $appFeatureGetService,
         private ExternalDeliveryCompanyGetService $externalDeliveryCompanyGetService,
         private MrsoolDeliveredOrderService $mrsoolDeliveredOrderService,
-        private ExternallyDeliveredOrderService $externallyDeliveredOrderService
+        private ExternallyDeliveredOrderService $externallyDeliveredOrderService,
+        private OrderGetService $orderGetService
     )
     {
     }
@@ -271,6 +275,69 @@ class ExternallyDeliveredOrderHandleService
         }
 
         // 6 Create externally delivered order
+        return $this->createExternallyDeliveredOrder($orderEntity, $externalDeliveryCompany, $arrayResponse);
+    }
+
+    /**
+     * Get single external delivery company by id, if exist
+     */
+    public function getExternalDeliveryCompanyById(int $externalCompanyId): int|ExternalDeliveryCompanyEntity
+    {
+        return $this->externalDeliveryCompanyGetService->getExternalDeliveryCompanyById($externalCompanyId);
+    }
+
+    public function getOrderEntityById(int $orderId): OrderEntity|string
+    {
+        return $this->orderGetService->getOrderEntityById($orderId);
+    }
+
+    /**
+     * Main function
+     * Responsible for handling the process of sending order to an external party by admin
+     * Note: because admin has different conditions for sending order externally
+     */
+    public function createExternallyDeliveredOrderByAdmin(ExternallyDeliveredOrderCreateByAdminRequest $request): int|ExternallyDeliveredOrderEntity|string
+    {
+        // 1 check if sending order feature is On.
+        $sendOrderExternallyFeatureStatus = $this->checkSendingOrderToExternalDeliveryCompanyFeatureStatus();
+
+        if ($sendOrderExternallyFeatureStatus === AppFeatureResultConstant::APP_FEATURE_NOT_FOUND_CONST) {
+            return AppFeatureResultConstant::APP_FEATURE_NOT_FOUND_CONST;
+
+        } elseif ($sendOrderExternallyFeatureStatus === AppFeatureStatusConstant::FEATURE_STATUS_FALSE_CONST) {
+            return AppFeatureResultConstant::APP_FEATURE_NOT_ACTIVATED_CONST;
+        }
+
+        // 2 check if external company is exist.
+        $externalDeliveryCompany = $this->getExternalDeliveryCompanyById($request->getExternalCompanyId());
+
+        if ($externalDeliveryCompany === ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_NOT_FOUND_CONST) {
+            return ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_NOT_FOUND_CONST;
+        }
+
+        // 3 Send order to the external company
+        $orderEntity = $this->getOrderEntityById($request->getOrderId());
+
+        if ($orderEntity === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+        }
+
+        $orderCreateResponse = $this->sendOrderToExternalDeliveryCompany($orderEntity, $externalDeliveryCompany,
+            $orderEntity->getStoreOrderDetailsEntity());
+
+        if ($orderCreateResponse === ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_IS_NOT_REGISTERED_CONST) {
+            return ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_IS_NOT_REGISTERED_CONST;
+        }
+
+        // 4 According to the response that being resulted from previous step, handle the situation
+        $arrayResponse = $this->handleResponseInterface($orderCreateResponse);
+
+        if (($arrayResponse === HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
+            || ($arrayResponse === HttpResponseConstant::INVALID_INPUT_RESULT_CODE_CONST)) {
+            return $arrayResponse;
+        }
+
+        // 5 Create externally delivered order
         return $this->createExternallyDeliveredOrder($orderEntity, $externalDeliveryCompany, $arrayResponse);
     }
 }
