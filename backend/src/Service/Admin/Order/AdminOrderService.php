@@ -436,7 +436,7 @@ class AdminOrderService
         return $response;
     }
 
-    public function updateOrderStatusByOrderEntityAndNewStatus(OrderEntity $orderEntity, string $status)
+    public function updateOrderStatusByOrderEntityAndNewStatus(OrderEntity $orderEntity, string $status): OrderEntity
     {
         return $this->adminOrderManager->updateOrderStatusByOrderEntityAndNewStatus($orderEntity, $status);
     }
@@ -471,6 +471,8 @@ class AdminOrderService
     public function getPendingOrdersForAdmin(int $userId, int $externalOrder, ?int $externalCompanyId): array
     {
         $response = [];
+        $response['pendingOrders'] = [];
+        $response['notDeliveredOrders'] = [];
 
         // 1 Get external orders
         $orders = $this->getExternalOrdersOnly($externalCompanyId);
