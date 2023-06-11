@@ -1,5 +1,6 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/module_my_notifications/model/update_model.dart';
+import 'package:c4d/module_my_notifications/presistance/my_notification_hive_helper.dart';
 import 'package:c4d/module_my_notifications/response/update_response/update_response.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
@@ -16,42 +17,68 @@ class MyNotificationsService {
   MyNotificationsService(this._myNotificationsManager);
 
   Future<DataModel> getNotification() async {
-    MyNotificationResponse? _myNotificationResponse =
+    MyNotificationResponse? myNotificationResponse =
         await _myNotificationsManager.getNotification();
-    if (_myNotificationResponse == null) {
+    if (myNotificationResponse == null) {
       return DataModel.withError(S.current.networkError);
     }
-    if (_myNotificationResponse.statusCode != '200') {
+    if (myNotificationResponse.statusCode != '200') {
       return DataModel.withError(StatusCodeHelper.getStatusCodeMessages(
-          _myNotificationResponse.statusCode));
+          myNotificationResponse.statusCode));
     }
-    if (_myNotificationResponse.data == null) return DataModel.empty();
-    return NotificationModel.withData(_myNotificationResponse);
+    if (myNotificationResponse.data == null) return DataModel.empty();
+    return NotificationModel.withData(myNotificationResponse);
   }
 
-  Future<DataModel> getUpdates() async {
-    UpdateResponse? _updateResponse =
-        await _myNotificationsManager.getUpdates();
-    if (_updateResponse == null) {
+  Future<DataModel> getUpdates({bool onlyNewUpdates = false}) async {
+    UpdateResponse? updateResponse =
+        await _myNotificationsManager.getUpdates(onlyNewUpdates);
+    if (updateResponse == null) {
       return DataModel.withError(S.current.networkError);
     }
-    if (_updateResponse.statusCode != '200') {
+    if (updateResponse.statusCode != '200') {
       return DataModel.withError(
-          StatusCodeHelper.getStatusCodeMessages(_updateResponse.statusCode));
+          StatusCodeHelper.getStatusCodeMessages(updateResponse.statusCode));
     }
-    if (_updateResponse.data == null) return DataModel.empty();
-    return UpdateModel.withData(_updateResponse);
+    if (updateResponse.data == null) return DataModel.empty();
+
+    UpdateModel updateModel = UpdateModel.withData(updateResponse);
+
+    if (onlyNewUpdates) {
+      updateModel = filterNewUpdate(updateModel);
+    }
+
+    return updateModel;
+  }
+
+  UpdateModel filterNewUpdate(UpdateModel updateModel) {
+    var hiveHelper = MyNotificationHiveHelper();
+
+    List<UpdateModel> newUpdate = updateModel.data.reversed.toList();
+    var tempList = [...newUpdate];
+
+    for (var update in tempList) {
+      if (update.id > (hiveHelper.getLastNotificationSeenId() ?? 0)) {
+        hiveHelper.setLastNotificationSeenId(update.id);
+      } else {
+        newUpdate.remove(update);
+      }
+    }
+
+    updateModel = UpdateModel.fromList(newUpdate);
+
+    return updateModel;
   }
 
   Future<DataModel> deleteNotification(String id) async {
-    ActionResponse? _myNotificationResponse =
+    ActionResponse? myNotificationResponse =
         await _myNotificationsManager.deleteNotification(id);
-    if (_myNotificationResponse == null) {
+    if (myNotificationResponse == null) {
       return DataModel.withError(S.current.networkError);
     }
-    if (_myNotificationResponse.statusCode != '401') {
+    if (myNotificationResponse.statusCode != '401') {
       return DataModel.withError(StatusCodeHelper.getStatusCodeMessages(
-          _myNotificationResponse.statusCode));
+          myNotificationResponse.statusCode));
     }
     return DataModel.empty();
   }

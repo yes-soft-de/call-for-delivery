@@ -7700,11 +7700,31 @@ class S {
     );
   }
 
+  /// `Are you sure you want to cancel this order`
+  String get areSureYouWantToCancelThisOrder {
+    return Intl.message(
+      'Are you sure you want to cancel this order',
+      name: 'areSureYouWantToCancelThisOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `the count of remaining orders`
   String get remainingOrdersNumber {
     return Intl.message(
       'the count of remaining orders',
       name: 'remainingOrdersNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `go to offers`
+  String get goToOffers {
+    return Intl.message(
+      'go to offers',
+      name: 'goToOffers',
       desc: '',
       args: [],
     );
@@ -7725,16 +7745,6 @@ class S {
     return Intl.message(
       'Over paid',
       name: 'financeOverPaid',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Are you sure you want to cancel this order`
-  String get areSureYouWantToCancelThisOrder {
-    return Intl.message(
-      'Are you sure you want to cancel this order',
-      name: 'areSureYouWantToCancelThisOrder',
       desc: '',
       args: [],
     );
