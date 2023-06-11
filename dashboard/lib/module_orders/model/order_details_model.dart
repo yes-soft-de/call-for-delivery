@@ -38,6 +38,7 @@ class OrderDetailsModel extends DataModel {
   String? imagePath;
   late bool orderIsMain;
   List<OrderModel> subOrders = [];
+  late num orderCostWithDeliveryCost;
 
   /// this field to know if we can remove order
   bool canRemove = false;
@@ -98,6 +99,7 @@ class OrderDetailsModel extends DataModel {
     required this.primaryOrderId,
     required this.packageType,
     required this.costType,
+    required this.orderCostWithDeliveryCost,
   });
 
   late OrderDetailsModel _orders;
@@ -169,6 +171,7 @@ class OrderDetailsModel extends DataModel {
       primaryOrderId: element?.primaryOrderId,
       costType: element?.costType,
       packageType: element?.packageType,
+      orderCostWithDeliveryCost: element?.orderCostWithDeliveryCost ?? 0,
     );
     _orders.canRemove = _canRemove(_orders.state);
     _orders.distance = _distance(_orders, location);
@@ -187,6 +190,7 @@ class OrderDetailsModel extends DataModel {
           DateFormat.Md()
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       orders.add(OrderModel(
+        externalCompanyName: null,
         branchName: element.branchName ?? S.current.unknown,
         createdDate: create,
         deliveryDate: delivery,

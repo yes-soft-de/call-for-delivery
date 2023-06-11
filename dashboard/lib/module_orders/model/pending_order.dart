@@ -54,6 +54,10 @@ class PendingOrder extends DataModel {
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       //
       ordersModels.add(OrderModel(
+        externalCompanyName:
+            (element.externalDeliveryOrder?.isNotEmpty ?? false)
+                ? element.externalDeliveryOrder?.first.companyName
+                : null,
         captainName: element.captainName ?? 'Unknown',
         storeId: element.storeOrderDetailsId ?? 0,
         branchName: element.branchName ?? '',
@@ -91,6 +95,7 @@ class PendingOrder extends DataModel {
           DateFormat.Md()
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       orders.add(OrderModel(
+        externalCompanyName: null,
         branchName: element.branchName ?? S.current.unknown,
         createdDate: create,
         deliveryDate: delivery,

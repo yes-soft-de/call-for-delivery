@@ -8,6 +8,7 @@ import 'package:c4d/module_orders/ui/widgets/owner_order_card/owner_order_card.d
 import 'package:c4d/module_orders/ui/widgets/recycle_widgets/recycle_button_widget.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
+import 'package:c4d/utils/extension/string_extensions.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
@@ -39,33 +40,35 @@ class OrderPendingLoadedState extends States {
       orders.hiddenOrdersCount,
     ];
     List<Widget> widgets = [];
-    widgets.add(Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: ListTile(
-        leading: Icon(
-          FontAwesomeIcons.boxes,
-          color: Theme.of(context).disabledColor,
-        ),
-        title: Text(
-          S.current.countOrders +
-              ' ${(Localizations.localeOf(context).languageCode == 'ar' ? 'ال' : '')}' +
-              (screenState.currentIndex == 0
-                  ? S.current.pending
-                  : screenState.currentIndex == 2
-                      ? S.current.hidden
-                      : S.current.notAccepted),
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        horizontalTitleGap: 4,
-        trailing: Text(
-          countsOrder[screenState.currentIndex].toString(),
-          style: TextStyle(
-              fontSize: 18,
-              color: Theme.of(context).disabledColor,
-              fontWeight: FontWeight.bold),
-        ),
-      ),
-    ));
+    screenState.company != null
+        ? null
+        : widgets.add(Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ListTile(
+              leading: Icon(
+                FontAwesomeIcons.boxes,
+                color: Theme.of(context).disabledColor,
+              ),
+              title: Text(
+                S.current.countOrders +
+                    ' ${(Localizations.localeOf(context).languageCode == 'ar' ? 'ال' : '')}' +
+                    (screenState.currentIndex == 0
+                        ? S.current.pending
+                        : screenState.currentIndex == 2
+                            ? S.current.hidden
+                            : S.current.notAccepted),
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ),
+              horizontalTitleGap: 4,
+              trailing: Text(
+                countsOrder[screenState.currentIndex].toString(),
+                style: TextStyle(
+                    fontSize: 18,
+                    color: Theme.of(context).disabledColor,
+                    fontWeight: FontWeight.bold),
+              ),
+            ),
+          ));
     widgets.add(
       // filter on state
       Padding(
@@ -177,7 +180,9 @@ class OrderPendingLoadedState extends States {
                   screenState.refresh();
                 },
                 child: Text(
-                  S.current.hidden,
+                  screenState.company != null
+                      ? S.current.completed
+                      : S.current.hidden,
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,
@@ -220,6 +225,9 @@ class OrderPendingLoadedState extends States {
       // ),
     );
     for (var element in ordersIndex[screenState.currentIndex]) {
+      if (screenState.isExternalFilterOn &&
+          !element.externalCompanyName.notNullOrEmpty()) continue;
+
       widgets.add(Padding(
         padding: const EdgeInsets.all(8.0),
         child: Material(

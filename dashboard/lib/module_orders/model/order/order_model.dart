@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -34,32 +35,35 @@ class OrderModel extends DataModel {
   late num storeBranchToClientDistance;
   int? packageType;
   int? costType;
+  late String? externalCompanyName;
+
   OrderModel({
-    required this.branchName,
+    required this.id,
     required this.state,
     required this.orderCost,
     required this.note,
     required this.deliveryDate,
     required this.createdDate,
-    required this.id,
+    this.created,
+    this.delivery,
+    required this.branchName,
     required this.storeName,
     required this.orderIsMain,
-    this.destinationLink,
     this.branchLocation,
+    this.destinationLink,
+    this.storeBranchToClientDistanceAdditionExplanation,
     this.isCashPaymentConfirmedByStore,
     this.paidToProvider,
     this.captainName,
     this.captainProfileId,
     this.storeId,
     this.branchID,
-    this.created,
-    this.delivery,
     required this.subOrders,
     required this.kilometer,
     required this.storeBranchToClientDistance,
-    this.storeBranchToClientDistanceAdditionExplanation,
     this.packageType,
     this.costType,
+    required this.externalCompanyName,
   });
   List<OrderModel> _orders = [];
   OrderModel.withData(OrdersResponse response) {
@@ -80,6 +84,10 @@ class OrderModel extends DataModel {
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       //
       _orders.add(OrderModel(
+        externalCompanyName:
+            (element.externalDeliveryOrder?.isNotEmpty ?? false)
+                ? element.externalDeliveryOrder?.first.companyName
+                : null,
         captainName: element.captainName,
         captainProfileId: element.captainProfileId,
         branchName: element.branchName ?? S.current.unknown,
@@ -124,6 +132,7 @@ class OrderModel extends DataModel {
           DateFormat.Md()
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       orders.add(OrderModel(
+        externalCompanyName: null,
         captainProfileId: element.captainProfileId,
         branchName: element.branchName ?? S.current.unknown,
         createdDate: create,

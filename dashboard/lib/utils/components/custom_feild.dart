@@ -28,29 +28,36 @@ class CustomFormField extends StatefulWidget {
   final int? maxLength;
   final int? minLines;
   final TextStyle? hintStyle;
+  final Color? backgroundColor;
+  final double? radius;
+  final TextStyle? textStyle;
   @override
   _CustomFormFieldState createState() => _CustomFormFieldState();
 
-  CustomFormField(
-      {this.height = 50,
-      this.contentPadding = const EdgeInsets.fromLTRB(16, 8, 16, 8),
-      this.hintText,
-      this.preIcon,
-      this.sufIcon,
-      this.controller,
-      this.readOnly = false,
-      this.onTap,
-      this.maxLines,
-      this.numbers = false,
-      this.last = false,
-      this.validator = true,
-      this.phone = false,
-      this.onChanged,
-      this.validatorFunction,
-      this.keyAction,
-      this.maxLength,
-      this.minLines,
-      this.hintStyle});
+  CustomFormField({
+    this.height = 50,
+    this.contentPadding = const EdgeInsets.fromLTRB(16, 8, 16, 8),
+    this.hintText,
+    this.preIcon,
+    this.sufIcon,
+    this.controller,
+    this.readOnly = false,
+    this.onTap,
+    this.maxLines,
+    this.numbers = false,
+    this.last = false,
+    this.validator = true,
+    this.phone = false,
+    this.onChanged,
+    this.validatorFunction,
+    this.keyAction,
+    this.maxLength,
+    this.minLines,
+    this.hintStyle,
+    this.backgroundColor,
+    this.radius,
+    this.textStyle,
+  });
 }
 
 class _CustomFormFieldState extends State<CustomFormField> {
@@ -61,8 +68,9 @@ class _CustomFormFieldState extends State<CustomFormField> {
     final node = FocusScope.of(context);
     return Container(
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
-        color: Theme.of(context).colorScheme.background,
+        borderRadius: BorderRadius.circular(widget.radius ?? 25),
+        color:
+            widget.backgroundColor ?? Theme.of(context).colorScheme.background,
       ),
       child: Padding(
           padding: !clean ? EdgeInsets.only(bottom: 8.0) : EdgeInsets.zero,
@@ -70,6 +78,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
             children: [
               Expanded(
                 child: TextFormField(
+                  style: widget.textStyle,
                   minLines: widget.minLines,
                   autovalidateMode: mode,
                   toolbarOptions: ToolbarOptions(

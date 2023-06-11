@@ -88,6 +88,7 @@ class StoreSubscriptionsFinanceModel extends DataModel {
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       //
       orders.add(OrderModel(
+        externalCompanyName: null,
         branchName: element.branchName ?? S.current.unknown,
         id: element.id ?? -1,
         createdDate: create,
@@ -120,6 +121,7 @@ class StoreSubscriptionsFinanceModel extends DataModel {
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       orders.add(
         OrderModel(
+          externalCompanyName: null,
           branchName: element.branchName ?? S.current.unknown,
           createdDate: create,
           deliveryDate: delivery,

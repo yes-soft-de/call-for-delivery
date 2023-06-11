@@ -1,4 +1,8 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 import 'package:c4d/module_orders/response/orders_response/sub_order_list/sub_order.dart';
+
 import 'created_at.dart';
 import 'delivery_date.dart';
 import 'destination.dart';
@@ -32,6 +36,8 @@ class DatumOrder {
   String? storeBranchToClientDistanceAdditionExplanation;
   int? costType;
   int? packageType;
+  List<ExternalDeliveryOrder>? externalDeliveryOrder;
+
   DatumOrder({
     this.id,
     this.state,
@@ -61,6 +67,7 @@ class DatumOrder {
     this.storeBranchToClientDistanceAdditionExplanation,
     this.costType,
     this.packageType,
+    this.externalDeliveryOrder,
   });
 
   factory DatumOrder.fromJson(Map<String, dynamic> json) => DatumOrder(
@@ -106,6 +113,11 @@ class DatumOrder {
         subOrders: (json['subOrder'] as List<dynamic>?)
             ?.map((e) => SubOrder.fromJson(e as Map<String, dynamic>))
             .toList(),
+        externalDeliveryOrder: (json['externalDeliveredOrders']
+                as List<dynamic>?)
+            ?.map(
+                (e) => ExternalDeliveryOrder.fromMap(e as Map<String, dynamic>))
+            .toList(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -125,4 +137,35 @@ class DatumOrder {
         'storeOwnerBranchId': storeOwnerBranchId,
         'branchName': branchName,
       };
+}
+
+class ExternalDeliveryOrder {
+  String? id;
+  String? companyName;
+
+  ExternalDeliveryOrder({
+    this.id,
+    this.companyName,
+  });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'companyName': companyName,
+    };
+  }
+
+  factory ExternalDeliveryOrder.fromMap(Map<String, dynamic> map) {
+    return ExternalDeliveryOrder(
+      id: map['id'] != null ? map['id'] as String : null,
+      companyName:
+          map['companyName'] != null ? map['companyName'] as String : null,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ExternalDeliveryOrder.fromJson(String source) =>
+      ExternalDeliveryOrder.fromMap(
+          json.decode(source) as Map<String, dynamic>);
 }
