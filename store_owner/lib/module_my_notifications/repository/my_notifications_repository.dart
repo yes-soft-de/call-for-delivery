@@ -20,10 +20,14 @@ class MyNotificationsRepository {
     return MyNotificationResponse.fromJson(response);
   }
 
-  Future<UpdateResponse?> getUpdates() async {
+  Future<UpdateResponse?> getUpdates(bool onlyNewUpdates) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(Urls.GET_UPDATES,
-        headers: {'Authorization': 'Bearer ' + token.toString()});
+
+    var url = Urls.GET_UPDATES;
+    if (onlyNewUpdates) url += '/199';
+
+    dynamic response = await _apiClient
+        .get(url, headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return UpdateResponse.fromJson(response);
   }

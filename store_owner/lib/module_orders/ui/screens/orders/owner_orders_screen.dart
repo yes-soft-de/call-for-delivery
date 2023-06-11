@@ -137,6 +137,8 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
             arguments: value);
       }
     });
+
+    widget._stateManager.getUpdates(this);
   }
 
   String? orderFilter;
@@ -194,7 +196,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
           ),
           child: ElevatedButton.icon(
               style: ElevatedButton.styleFrom(
-                  primary: currentIndex == 0
+                  backgroundColor: currentIndex == 0
                       ? null
                       : StatusHelper.getOrderStatusColor(
                           OrderStatusEnum.IN_STORE),
@@ -221,11 +223,11 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                     }
                   : null,
               icon: Icon(Icons.add_rounded,
-                  color: Theme.of(context).textTheme.button?.color),
+                  color: Theme.of(context).textTheme.labelLarge?.color),
               label: Padding(
                 padding: const EdgeInsets.all(10.0),
                 child: Text(S.current.newOrder,
-                    style: Theme.of(context).textTheme.button),
+                    style: Theme.of(context).textTheme.labelLarge),
               )),
         ),
       ),
@@ -270,7 +272,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
           FilterBar(
             cursorRadius: BorderRadius.circular(25),
             animationDuration: Duration(milliseconds: 350),
-            backgroundColor: Theme.of(context).backgroundColor,
+            backgroundColor: Theme.of(context).colorScheme.background,
             currentIndex: currentIndex,
             borderRadius: BorderRadius.circular(25),
             floating: true,
@@ -291,8 +293,8 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
               currentIndex = index;
               getMyOrdersFilter();
             },
-            selectedContent: Theme.of(context).textTheme.button!.color!,
-            unselectedContent: Theme.of(context).textTheme.headline6!.color!,
+            selectedContent: Theme.of(context).textTheme.labelLarge!.color!,
+            unselectedContent: Theme.of(context).textTheme.titleLarge!.color!,
           ),
           SizedBox(
             height: 16,
@@ -310,7 +312,8 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                             (ctx) {
                               return getOngoingChatRoom();
                             },
-                            backgroundColor: Theme.of(context).backgroundColor,
+                            backgroundColor:
+                                Theme.of(context).colorScheme.background,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.vertical(
                                     top: Radius.circular(25))),

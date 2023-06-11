@@ -700,5 +700,6 @@
     "id":"المعرف",
     "valueMustBeGreaterThanZero":"القيمة يجب ان تكون اكبر من 0",
     "unLimitedOrders":"عدد طلبات غير محدود",
+    "goToOffers": "اذهب الى العروض",
     "adsAndOffers": "الإعلانات و العروض"
 }

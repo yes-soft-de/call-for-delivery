@@ -700,5 +700,6 @@
     "id":"id",
     "valueMustBeGreaterThanZero":"your value must be greater than 0",
     "unLimitedOrders":"unlimited orders",
+    "goToOffers": "go to offers",
     "adsAndOffers":"Ads & offers"
 }
