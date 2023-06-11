@@ -14,6 +14,7 @@ use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteria
 use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaStatusConstant;
 use App\Constant\HTTP\HttpResponseConstant;
 use App\Constant\Order\OrderResultConstant;
+use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Entity\ExternalDeliveryCompanyEntity;
 use App\Entity\ExternallyDeliveredOrderEntity;
@@ -22,9 +23,11 @@ use App\Entity\StoreOrderDetailsEntity;
 use App\Request\Admin\ExternallyDeliveredOrder\ExternallyDeliveredOrderCreateByAdminRequest;
 use App\Request\ExternallyDeliveredOrder\ExternallyDeliveredOrderCreateRequest;
 use App\Service\AppFeature\AppFeatureGetService;
+use App\Service\DateFactory\DateFactoryService;
 use App\Service\ExternalDeliveryCompany\ExternalDeliveryCompanyGetService;
 use App\Service\ExternallyDeliveredOrder\ExternallyDeliveredOrderService;
 use App\Service\Order\OrderGetService;
+use DateTimeInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 /**
@@ -37,7 +40,8 @@ class ExternallyDeliveredOrderHandleService
         private ExternalDeliveryCompanyGetService $externalDeliveryCompanyGetService,
         private MrsoolDeliveredOrderService $mrsoolDeliveredOrderService,
         private ExternallyDeliveredOrderService $externallyDeliveredOrderService,
-        private OrderGetService $orderGetService
+        private OrderGetService $orderGetService,
+        private DateFactoryService $dateFactoryService
     )
     {
     }
@@ -56,6 +60,11 @@ class ExternallyDeliveredOrderHandleService
     public function checkAvailableExternalDeliveryCompany(): int|ExternalDeliveryCompanyEntity
     {
         return $this->externalDeliveryCompanyGetService->getSingleAvailableExternalDeliveryCompany();
+    }
+
+    public function checkIfTimeIsBetweenSpecificTwoTime(DateTimeInterface $fromDate, DateTimeInterface $toDate, DateTimeInterface $specificDate): bool
+    {
+        return $this->dateFactoryService->checkIfTimeIsBetweenSpecificTwoTime($fromDate, $toDate, $specificDate);
     }
 
     /**
@@ -93,8 +102,10 @@ class ExternallyDeliveredOrderHandleService
             }
             // first condition - check order creation date
             if ($externalDeliveryCompanyCriteriaEntity->getIsSpecificDate()) {
-                if (($orderCreatedAt > $externalDeliveryCompanyCriteriaEntity->getToDate())
-                    || ($orderCreatedAt < $externalDeliveryCompanyCriteriaEntity->getFromDate())) {
+                // ($orderCreatedAt > $externalDeliveryCompanyCriteriaEntity->getToDate())
+                //                    || ($orderCreatedAt < $externalDeliveryCompanyCriteriaEntity->getFromDate())
+                if ($this->checkIfTimeIsBetweenSpecificTwoTime($externalDeliveryCompanyCriteriaEntity->getFromDate(),
+                    $externalDeliveryCompanyCriteriaEntity->getToDate(), $orderCreatedAt) === false) {
                     // set the result of this criteria to false, and move to next criteria
                     $criteriaMatchArrayResult[] = false;
                     continue;
@@ -320,6 +331,10 @@ class ExternallyDeliveredOrderHandleService
 
         if ($orderEntity === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
             return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+        }
+
+        if ($orderEntity->getState() !== OrderStateConstant::ORDER_STATE_PENDING) {
+            return OrderResultConstant::ORDER_STATE_IS_NOT_PENDING_CONST;
         }
 
         $orderCreateResponse = $this->sendOrderToExternalDeliveryCompany($orderEntity, $externalDeliveryCompany,
