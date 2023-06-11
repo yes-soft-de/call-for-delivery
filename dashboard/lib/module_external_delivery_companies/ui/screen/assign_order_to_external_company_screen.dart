@@ -70,7 +70,7 @@ class AssignOrderToExternalCompanyScreenState
     if (flag) {
       flag = false;
       var arg = ModalRoute.of(context)?.settings.arguments as List;
-      if (arg.length > 1) orderId = arg[0] as int;
+      if (arg.length > 0) orderId = arg[0] as int;
     }
     return GestureDetector(
       onTap: () {

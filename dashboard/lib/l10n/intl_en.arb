@@ -1029,5 +1029,6 @@
     "assignToExternalCompany": "assign to external company",
     "assignThisOrderToExternalCompany": "assign this order to external company",
     "pickCompany":"pick company",
+    "pleasePickCompany":"please pick company",
     "dev":"Dev"
 }

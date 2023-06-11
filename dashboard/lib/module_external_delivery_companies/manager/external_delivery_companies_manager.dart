@@ -1,5 +1,6 @@
 import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/module_external_delivery_companies/repository/external_delivery_companies_repository.dart';
+import 'package:c4d/module_external_delivery_companies/request/assign_order_to_external_company/assign_order_to_external_company_request.dart';
 import 'package:c4d/module_external_delivery_companies/request/company_criterial_request/create_company_criteria_request.dart';
 import 'package:c4d/module_external_delivery_companies/request/company_criterial_request/delete_company_criteria_request.dart';
 import 'package:c4d/module_external_delivery_companies/request/company_criterial_request/update_company_criteria_request.dart';
@@ -60,4 +61,8 @@ class ExternalDeliveryCompaniesManager {
 
   Future<ActionResponse?> updateFeatureStatus(FeatureRequest request) =>
       _repository.updateFeatureStatus(request);
+
+  Future<ActionResponse?> assignOrderToExternalCompany(
+          AssignOrderToExternalCompanyRequest request) =>
+      _repository.assignOrderToExternalCompany(request);
 }

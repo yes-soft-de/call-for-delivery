@@ -1160,6 +1160,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Please login to continue"),
         "pleaseLoginToMakeOrder": MessageLookupByLibrary.simpleMessage(
             "Please login to resuming order sending"),
+        "pleasePickCompany":
+            MessageLookupByLibrary.simpleMessage("please pick company"),
         "pleaseProvideCostType":
             MessageLookupByLibrary.simpleMessage("Please provide cost type"),
         "pleaseProvidePaymentMethode": MessageLookupByLibrary.simpleMessage(

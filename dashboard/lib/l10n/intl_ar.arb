@@ -1028,5 +1028,6 @@
     "assignToExternalCompany": "إسناد لمشغل خارجي",
     "assignThisOrderToExternalCompany": "ارسال هذا الطلب لشركة توصيل خارجية",
     "pickCompany":"اختر احد المشغلات",
+    "pleasePickCompany":"الرجاء اختيار مشغل",
     "dev": "المطورين"
 }

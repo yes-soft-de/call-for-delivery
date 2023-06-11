@@ -234,6 +234,10 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
               ExternalDeliveryCompaniesRoutes
                   .ASSIGN_ORDER_TO_EXTERNAL_COMPANY_SCREEN,
               arguments: [screenState.orderId],
+            ).then(
+              (value) {
+                // TODO: implement the refresh technique if nessury
+              },
             );
           },
           backgroundColor: Color(0xffE34400),

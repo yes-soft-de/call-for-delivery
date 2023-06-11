@@ -1,6 +1,7 @@
 import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
+import 'package:c4d/module_external_delivery_companies/request/assign_order_to_external_company/assign_order_to_external_company_request.dart';
 import 'package:c4d/module_external_delivery_companies/request/company_criterial_request/create_company_criteria_request.dart';
 import 'package:c4d/module_external_delivery_companies/request/company_criterial_request/delete_company_criteria_request.dart';
 import 'package:c4d/module_external_delivery_companies/request/company_criterial_request/update_company_criteria_request.dart';
@@ -179,6 +180,21 @@ class ExternalDeliveryCompaniesRepository {
     var token = await _authService.getToken();
 
     dynamic response = await _apiClient.put(
+      Urls.APP_FEATURE_STATUS_BY_ADMIN,
+      request.toMap(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> assignOrderToExternalCompany(
+      AssignOrderToExternalCompanyRequest request) async {
+    var token = await _authService.getToken();
+
+    dynamic response = await _apiClient.put(
+      // TODO: change url and request.toMap()
       Urls.APP_FEATURE_STATUS_BY_ADMIN,
       request.toMap(),
       headers: {'Authorization': 'Bearer ${token}'},

@@ -5,6 +5,7 @@ import 'package:c4d/module_external_delivery_companies/manager/external_delivery
 import 'package:c4d/module_external_delivery_companies/model/company_model.dart';
 import 'package:c4d/module_external_delivery_companies/model/company_setting.dart';
 import 'package:c4d/module_external_delivery_companies/model/feature_model.dart';
+import 'package:c4d/module_external_delivery_companies/request/assign_order_to_external_company/assign_order_to_external_company_request.dart';
 import 'package:c4d/module_external_delivery_companies/request/company_criterial_request/create_company_criteria_request.dart';
 import 'package:c4d/module_external_delivery_companies/request/company_criterial_request/delete_company_criteria_request.dart';
 import 'package:c4d/module_external_delivery_companies/request/company_criterial_request/update_company_criteria_request.dart';
@@ -149,6 +150,17 @@ class ExternalDeliveryCompaniesService {
   Future<DataModel> updateFeatureStatus(FeatureRequest request) async {
     ActionResponse? response = await _manager.updateFeatureStatus(request);
     if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> assignOrderToExternalCompany(AssignOrderToExternalCompanyRequest request) async {
+    ActionResponse? response = await _manager.assignOrderToExternalCompany(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    // TODO: change stutus
     if (response.statusCode != '204') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));

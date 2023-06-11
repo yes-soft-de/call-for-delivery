@@ -3,6 +3,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_external_delivery_companies/model/company_model.dart';
 import 'package:c4d/module_external_delivery_companies/ui/screen/assign_order_to_external_company_screen.dart';
 import 'package:c4d/module_external_delivery_companies/ui/widgets/selectable_item.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:flutter/material.dart';
 
 class AssignOrderToExternalCompanyStateLoaded extends States {
@@ -61,8 +62,12 @@ class AssignOrderToExternalCompanyStateLoaded extends States {
                 child: Text(S.current.send),
                 onPressed: () {
                   if (pikedCompany != null) {
+                    _screenState.assignOrderToExternalCompany(pikedCompany!.id);
                   } else {
-                    
+                    CustomFlushBarHelper.createError(
+                      title: S.current.warnning,
+                      message: S.current.pleasePickCompany,
+                    );
                   }
                 },
               ),
@@ -74,28 +79,4 @@ class AssignOrderToExternalCompanyStateLoaded extends States {
   }
 }
 
-// class _companyCard extends StatelessWidget {
-//   final CompanyModel company;
-//   final bool isPiked;
-//   final Function(CompanyModel company) onPiked;
 
-//   _companyCard({
-//     required this.company,
-//     required this.isPiked,
-//     required this.onPiked,
-//   });
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.all(8.0),
-//       child: SelectableItem(
-//         onTap: () {
-//         onPiked(company);
-//         },
-//         selectedValue: ,
-//         ,
-//       ),
-//     );
-//   }
-// }

@@ -8,6 +8,8 @@ import 'package:c4d/module_external_delivery_companies/request/assign_order_to_e
 import 'package:c4d/module_external_delivery_companies/service/external_delivery_companies_service.dart';
 import 'package:c4d/module_external_delivery_companies/ui/screen/assign_order_to_external_company_screen.dart';
 import 'package:c4d/module_external_delivery_companies/ui/state/assign_order_to_external_company_state_loaded.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -51,6 +53,21 @@ class AssignOrderToExternalCompanyStateManager {
     AssignOrderToExternalCompanyScreenState screenState,
     AssignOrderToExternalCompanyRequest request,
   ) {
-    
+    _service.assignOrderToExternalCompany(request).then(
+      (value) {
+        if (value.hasError) {
+          CustomFlushBarHelper.createError(
+              title: S.current.warnning, message: value.error ?? '');
+        } else {
+          if (screenState.context.mounted) {
+            Navigator.pop(screenState.context, true);
+          }
+          CustomFlushBarHelper.createSuccess(
+            title: S.current.warnning,
+            message: S.current.dataUpdatedSuccessfully,
+          );
+        }
+      },
+    );
   }
 }
