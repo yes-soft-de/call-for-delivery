@@ -79,6 +79,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "activeStores": MessageLookupByLibrary.simpleMessage("المتاجر المفعلة"),
         "actives": MessageLookupByLibrary.simpleMessage("فعالين"),
         "activityLog": MessageLookupByLibrary.simpleMessage("سجل الاستخدام"),
+        "adUpdatedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تحديث الاعلان بنجاح"),
         "addAds": MessageLookupByLibrary.simpleMessage("إضافة إعلان"),
         "addBranch": MessageLookupByLibrary.simpleMessage("إضافة فرع"),
         "addBranchFailure": MessageLookupByLibrary.simpleMessage(
@@ -723,6 +725,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "help": MessageLookupByLibrary.simpleMessage("Help"),
         "helpMeMore": MessageLookupByLibrary.simpleMessage("تواصلوا معي"),
         "hidden": MessageLookupByLibrary.simpleMessage("مخفية"),
+        "hideOrderBecauseThereAreNoCaptainAvailable":
+            MessageLookupByLibrary.simpleMessage("إخفاء الطلب لعدم توفر كباتن"),
         "highestRate": MessageLookupByLibrary.simpleMessage("الأعلى تقييما"),
         "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
         "homeDataEmpty":
@@ -1524,6 +1528,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "updateCustomerLocation": MessageLookupByLibrary.simpleMessage(
             "تم تحديث حقل موقع العميل وحفظ الموقع القديم"),
         "updateDate": MessageLookupByLibrary.simpleMessage("تاريخ التعديل"),
+        "updateDeliveryCostBecauseClientLocationBeenUpdated":
+            MessageLookupByLibrary.simpleMessage(
+                "تحديث كلفة التوصيل المحتسبة تلقائيا نتيجة تحديث موقع العميل"),
+        "updateDeliveryCostBecauseKMAddedDirectly":
+            MessageLookupByLibrary.simpleMessage(
+                "تحديث كلفة التوصيل المحتسبة تلقائيا نتيجة إضافة كيلومترات بشكل مباشر"),
         "updateDistance": MessageLookupByLibrary.simpleMessage("تحديث المسافة"),
         "updateOfferSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تعديل العرض بنجاح"),

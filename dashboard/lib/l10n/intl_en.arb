@@ -1026,10 +1026,14 @@
     "featureWillBeOnAfterConfirm": "feature will be on after confirm",
     "onlyExternal": "only external",
     "externalOrders": "external orders",
+    "adUpdatedSuccessfully": "ad updated successfully",
+    "hideOrderBecauseThereAreNoCaptainAvailable": "hide order because there are no captain available",
+    "updateDeliveryCostBecauseKMAddedDirectly": "update delivery cost because Kilo meters added directly",
+    "updateDeliveryCostBecauseClientLocationBeenUpdated": "update delivery cost because client location been updated",
     "assignToExternalCompany": "assign to external company",
     "assignThisOrderToExternalCompany": "assign this order to external company",
-    "pickCompany":"pick company",
-    "pleasePickCompany":"please pick company",
-    "areYouSureThatYouWantToAssignThisOrderTo":"are you sure that you want to assign this order to",
-    "dev":"Dev"
+    "pickCompany": "pick company",
+    "pleasePickCompany": "please pick company",
+    "areYouSureThatYouWantToAssignThisOrderTo": "are you sure that you want to assign this order to",
+    "dev": "Dev"
 }

@@ -152,10 +152,12 @@ class OrderRepository {
     return OrdersCashFinancesForStoreResponse.fromJson(response);
   }
 
-  Future<OrderPendingResponse?> getPendingOrder(PendingOrderRequest request) async {
+  Future<OrderPendingResponse?> getPendingOrder(
+      PendingOrderRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(
-      Urls.ORDERS_PENDING_API + '/${request.type.value}',
+      Urls.ORDERS_PENDING_API +
+          '/${request.type.value}/${request.externalCompanyId}',
       headers: {'Authorization': 'Bearer ${token}'},
     );
     if (response == null) return null;

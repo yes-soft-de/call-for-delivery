@@ -10310,6 +10310,46 @@ class S {
     );
   }
 
+  /// `ad updated successfully`
+  String get adUpdatedSuccessfully {
+    return Intl.message(
+      'ad updated successfully',
+      name: 'adUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `hide order because there are no captain available`
+  String get hideOrderBecauseThereAreNoCaptainAvailable {
+    return Intl.message(
+      'hide order because there are no captain available',
+      name: 'hideOrderBecauseThereAreNoCaptainAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `update delivery cost because Kilo meters added directly`
+  String get updateDeliveryCostBecauseKMAddedDirectly {
+    return Intl.message(
+      'update delivery cost because Kilo meters added directly',
+      name: 'updateDeliveryCostBecauseKMAddedDirectly',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `update delivery cost because client location been updated`
+  String get updateDeliveryCostBecauseClientLocationBeenUpdated {
+    return Intl.message(
+      'update delivery cost because client location been updated',
+      name: 'updateDeliveryCostBecauseClientLocationBeenUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `assign to external company`
   String get assignToExternalCompany {
     return Intl.message(

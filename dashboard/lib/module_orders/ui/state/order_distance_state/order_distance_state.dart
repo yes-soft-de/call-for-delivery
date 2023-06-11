@@ -137,8 +137,6 @@ class OrderDistanceConflictLoadedState extends States {
                             child: ElevatedButton(
                               style: _elevatedButtonStyle(),
                               onPressed: () {
-                                // TODO: call the other dialog to confirm
-                                // should filter according to [action]
                                 if (formKey.currentState?.validate() == true) {
                                   Navigator.pop(context);
                                   if (action == ActionType.addKiloMeter) {
@@ -153,7 +151,7 @@ class OrderDistanceConflictLoadedState extends States {
                                   } else if (action ==
                                       ActionType.editCoordinates) {
                                     var request = AddExtraDistanceRequest(
-                                      id: element.id,
+                                      id: element.orderId,
                                       adminNote: reason.text.trim(),
                                       destination: Destination(
                                         lat: double.tryParse(decision.text

@@ -938,9 +938,10 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                 ListTile(
                   leading: Icon(Icons.price_change_rounded),
                   title: Text(S.current.orderCostWithDeliveryCost),
-                  subtitle: Text(orderInfo.orderCost.toStringAsFixed(1) +
-                      ' ' +
-                      S.current.sar),
+                  subtitle: Text(
+                      orderInfo.orderCostWithDeliveryCost.toStringAsFixed(1) +
+                          ' ' +
+                          S.current.sar),
                 ),
               ],
             ),

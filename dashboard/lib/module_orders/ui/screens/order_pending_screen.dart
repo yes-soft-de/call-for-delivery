@@ -3,10 +3,10 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/navigator_assistant.dart';
 import 'package:c4d/global_nav_key.dart';
+import 'package:c4d/module_external_delivery_companies/model/company_model.dart';
 import 'package:c4d/module_orders/request/order/pending_order_request.dart';
 import 'package:c4d/module_orders/state_manager/order_pending_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
-import 'package:c4d/utils/extension/string_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -27,7 +27,7 @@ class OrderPendingScreenState extends State<OrderPendingScreen> {
   late States currentState;
   int currentIndex = 0;
   StreamSubscription? _stateSubscription;
-  String? companyName;
+  CompanyModel? company;
 
   void refresh() {
     if (mounted) {
@@ -46,14 +46,6 @@ class OrderPendingScreenState extends State<OrderPendingScreen> {
     super.initState();
     currentIndex = NavigatorAssistant.nonDeliveringIndex;
     currentState = LoadingState(this);
-    widget._stateManager.getPendingOrders(
-      this,
-      PendingOrderRequest(
-        type: isExternalFilterOn
-            ? PendingOrderRequestType.onlyExternal
-            : PendingOrderRequestType.all,
-      ),
-    );
     _stateSubscription = widget._stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
@@ -72,11 +64,16 @@ class OrderPendingScreenState extends State<OrderPendingScreen> {
     widget._stateManager.getPendingOrders(
         this,
         PendingOrderRequest(
-          type: isExternalFilterOn
-              ? PendingOrderRequestType.onlyExternal
-              : PendingOrderRequestType.all,
+          externalCompanyId: company?.id ?? 0,
+          type: getPendingOrderRequest(),
         ),
         loading);
+  }
+
+  PendingOrderRequestType getPendingOrderRequest() {
+    if (company != null || isExternalFilterOn)
+      return PendingOrderRequestType.onlyExternal;
+    return PendingOrderRequestType.all;
   }
 
   bool flag = true;
@@ -87,9 +84,9 @@ class OrderPendingScreenState extends State<OrderPendingScreen> {
       flag = false;
       var arg = ModalRoute.of(context)?.settings.arguments as List?;
       if (arg != null && arg.length > 0) {
-        companyName = arg[0] as String;
-        print(companyName);
+        company = arg[0] as CompanyModel;
       }
+      getOrders();
     }
 
     return GestureDetector(
@@ -101,17 +98,16 @@ class OrderPendingScreenState extends State<OrderPendingScreen> {
       },
       child: Scaffold(
           appBar: CustomC4dAppBar.appBar(context,
-              title: companyName.notNullOrEmpty()
-                  ? S.current.externalOrders
-                  : S.current.orders,
-              icon: companyName.notNullOrEmpty() ? null : Icons.menu,
-              onTap: companyName.notNullOrEmpty()
+              title:
+                  company != null ? S.current.externalOrders : S.current.orders,
+              icon: company != null ? null : Icons.menu,
+              onTap: company != null
                   ? null
                   : () {
                       GlobalVariable.mainScreenScaffold.currentState
                           ?.openDrawer();
                     },
-              actions: companyName.notNullOrEmpty()
+              actions: company != null
                   ? null
                   : [
                       Card(
