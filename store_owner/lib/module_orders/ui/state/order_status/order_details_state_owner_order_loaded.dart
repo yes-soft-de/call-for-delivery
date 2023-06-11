@@ -14,6 +14,7 @@ import 'package:c4d/module_orders/ui/widgets/order_widget/order_button.dart';
 import 'package:c4d/module_orders/ui/widgets/progress_order_status.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/components/rating_form.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/finance_status_helper.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:c4d/utils/request/rating_request.dart';
@@ -80,6 +81,144 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
           ),
         ),
         // captain name
+        Visibility(
+          visible: (orderInfo.adminNote != null &&
+              (orderInfo.adminNote?.isNotEmpty ?? false)),
+          child: InkWell(
+            onTap: () {
+              showDialog(
+                context: context,
+                builder: (context) {
+                  return Dialog(
+                    backgroundColor: const Color(0xff341786),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Row(
+                            children: [
+                              Icon(
+                                Icons.notifications,
+                                size: 50,
+                                color: Colors.amber,
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                S.current.distanceUpdated,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .titleMedium
+                                    ?.copyWith(color: Colors.white),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            S.current.adminNotes,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            orderInfo.adminNote ?? '',
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          Text(
+                            S.current
+                                .youCanContactWithDirectSupportForMoreDetails,
+                            style: TextStyle(
+                              color: Colors.white,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          SizedBox(
+                            height: 40,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Expanded(
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.white),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                      if (orderInfo.chatSupportRoomId != null) {
+                                        Navigator.of(context).pushNamed(
+                                          ChatRoutes.chatRoute,
+                                          arguments: ChatArgument(
+                                            userType: 'admin',
+                                            support: true,
+                                            roomID:
+                                                orderInfo.chatSupportRoomId!,
+                                          ),
+                                        );
+                                      } else {
+                                        CustomFlushBarHelper.createSuccess(
+                                            title: S.current.warnning,
+                                            message: S.current.unknown);
+                                      }
+                                    },
+                                    child: Text(
+                                      S.current.directSupport,
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  ),
+                                ),
+                                SizedBox(width: 20),
+                                Expanded(
+                                  child: ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.amber),
+                                    onPressed: () {
+                                      Navigator.pop(context);
+                                    },
+                                    child: Text(
+                                      S.current.ok,
+                                      style: TextStyle(color: Colors.black),
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              );
+            },
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 75,
+                decoration: BoxDecoration(
+                    color: Colors.orange,
+                    borderRadius: BorderRadius.circular(25)),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 16,
+                    ),
+                    Icon(
+                      Icons.error,
+                      size: 33,
+                      color: Colors.black,
+                    ),
+                    Text(S.current.distanceEditedByAdmin),
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ),
         Visibility(
             visible: orderInfo.captainName != null,
             child: Padding(

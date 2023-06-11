@@ -79,13 +79,14 @@ class ForgotStatePhoneCodeSent extends States {
                         } else if (value.length < 6) {
                           return S.of(context).invalidCode;
                         }
+                        return null;
                       },
                       decoration: InputDecoration(
                         border: InputBorder.none,
                         hintText: S.of(context).codeNumber,
                         prefixIcon: const Icon(Icons.confirmation_num),
                         filled: true,
-                        fillColor: Theme.of(context).backgroundColor,
+                        fillColor: Theme.of(context).colorScheme.background,
                         enabledBorder: InputBorder.none,
                         focusedBorder: InputBorder.none,
                       ),
@@ -107,7 +108,7 @@ class ForgotStatePhoneCodeSent extends States {
                       },
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
-                        primary: Theme.of(context).accentColor,
+                        backgroundColor: Theme.of(context).colorScheme.secondary,
                         textStyle: const TextStyle(color: Colors.white),
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(12),
@@ -149,7 +150,8 @@ class ForgotStatePhoneCodeSent extends States {
                     child: Text(
                       S.of(context).resendCode,
                       style: retryEnabled
-                          ? TextStyle(color: Theme.of(context).accentColor)
+                          ? TextStyle(
+                              color: Theme.of(context).colorScheme.secondary)
                           : TextStyle(color: Theme.of(context).disabledColor),
                     ),
                   ),
