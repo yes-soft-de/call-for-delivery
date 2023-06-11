@@ -767,6 +767,7 @@
     "dontTakeMoneyThisOrderIsPaidAlready": "don't Take Money This Order Paid Already",
     "areSureYouWantToCancelThisOrder": "Are you sure you want to cancel this order",
     "remainingOrdersNumber": "the count of remaining orders",
+    "goToOffers": "go to offers",
     "toGetBouns": "for a bouns",
     "cancelOrder": "cancel order",
     "requestDistanceEdit": "request edit distance",

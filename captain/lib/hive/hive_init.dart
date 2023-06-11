@@ -17,6 +17,7 @@ class HiveSetUp {
     await Hive.openBox('Init');
     await Hive.openBox('Chat');
     await Hive.openBox('Notifications');
+    await Hive.openBox('My Notification');
     await Hive.openBox('Suggestions');
   }
 }

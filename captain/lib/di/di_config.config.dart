@@ -120,7 +120,7 @@ import 'package:c4d/module_plan/state_manager/daily_payments_state_manager.dart'
     as _i80;
 import 'package:c4d/module_plan/state_manager/plan_screen_state_manager.dart'
     as _i88;
-import 'package:c4d/module_plan/ui/screen/account_balance_screen.dart' as _i93;
+import 'package:c4d/module_plan/ui/screen/account_balance_screen.dart' as _i94;
 import 'package:c4d/module_plan/ui/screen/captain_financial_details_screen.dart'
     as _i6;
 import 'package:c4d/module_plan/ui/screen/captain_financial_dues_screen.dart'
@@ -141,7 +141,7 @@ import 'package:c4d/module_profile/state_manager/activity/activity_state_manager
 import 'package:c4d/module_profile/state_manager/edit_profile/edit_profile.dart'
     as _i82;
 import 'package:c4d/module_profile/ui/screen/account_balance_screen.dart'
-    as _i94;
+    as _i93;
 import 'package:c4d/module_profile/ui/screen/activity_screen/activity_screen.dart'
     as _i95;
 import 'package:c4d/module_profile/ui/screen/edit_profile/edit_profile.dart'
@@ -369,9 +369,9 @@ _i1.GetIt $initGetIt(_i1.GetIt getIt,
   gh.factory<_i92.AboutScreen>(
       () => _i92.AboutScreen(gh<_i71.AboutScreenStateManager>()));
   gh.factory<_i93.AccountBalanceScreen>(
-      () => _i93.AccountBalanceScreen(gh<_i73.AccountBalanceStateManager>()));
+      () => _i93.AccountBalanceScreen(gh<_i72.AccountBalanceStateManager>()));
   gh.factory<_i94.AccountBalanceScreen>(
-      () => _i94.AccountBalanceScreen(gh<_i72.AccountBalanceStateManager>()));
+      () => _i94.AccountBalanceScreen(gh<_i73.AccountBalanceStateManager>()));
   gh.factory<_i95.ActivityScreen>(
       () => _i95.ActivityScreen(gh<_i74.ActivityStateManager>()));
   gh.factory<_i96.CaptainFinancialDuesScreen>(() =>
@@ -397,12 +397,12 @@ _i1.GetIt $initGetIt(_i1.GetIt getIt,
   gh.factory<_i103.ProfileModule>(() => _i103.ProfileModule(
       gh<_i95.ActivityScreen>(),
       gh<_i98.EditProfileScreen>(),
-      gh<_i94.AccountBalanceScreen>()));
+      gh<_i93.AccountBalanceScreen>()));
   gh.factory<_i104.AboutModule>(
       () => _i104.AboutModule(gh<_i92.AboutScreen>()));
   gh.factory<_i105.PlanModule>(() => _i105.PlanModule(
       gh<_i102.PlanScreen>(),
-      gh<_i93.AccountBalanceScreen>(),
+      gh<_i94.AccountBalanceScreen>(),
       gh<_i6.CaptainFinancialDuesDetailsScreen>(),
       gh<_i96.CaptainFinancialDuesScreen>(),
       gh<_i81.DailyPaymentsScreen>()));

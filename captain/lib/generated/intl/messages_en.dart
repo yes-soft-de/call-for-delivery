@@ -488,6 +488,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "gender": MessageLookupByLibrary.simpleMessage("Gender"),
         "getDirection": MessageLookupByLibrary.simpleMessage("Get Direction"),
         "go": MessageLookupByLibrary.simpleMessage("Go"),
+        "goToOffers": MessageLookupByLibrary.simpleMessage("go to offers"),
         "goingBackToHome":
             MessageLookupByLibrary.simpleMessage("Going Back To Home"),
         "groupOrder": MessageLookupByLibrary.simpleMessage("Group Order"),
