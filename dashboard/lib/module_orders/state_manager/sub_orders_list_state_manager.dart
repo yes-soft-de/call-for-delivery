@@ -45,6 +45,7 @@ class SubOrdersStateManager {
         value as OrderDetailsModel;
         var order = value.data;
         OrderModel primaryOrder = OrderModel(
+          externalCompanyName: null,
           storeName: order.storeName,
           branchName: order.branchName,
           storeId: order.storeID,
@@ -84,14 +85,12 @@ class SubOrdersStateManager {
         getIt<GlobalStateManager>().updateList();
         getOrder(screenState, screenState.orderId);
         CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error ?? '')
-            ;
+            title: S.current.warnning, message: value.error ?? '');
       } else {
         getOrder(screenState, screenState.orderId);
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.orderRemovedSuccessfully)
-            ;
+            title: S.current.warnning,
+            message: S.current.orderRemovedSuccessfully);
         FireStoreHelper().backgroundThread('Trigger');
       }
     });

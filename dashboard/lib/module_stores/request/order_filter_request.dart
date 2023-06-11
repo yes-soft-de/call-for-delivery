@@ -11,15 +11,19 @@ class FilterOrderRequest {
   num? maxKiloFromDistance;
   int? chosenDistanceIndicator;
   int? orderId;
-  FilterOrderRequest(
-      {this.fromDate,
-      this.maxKilo,
-      this.maxKiloFromDistance,
-      this.state,
-      this.toDate,
-      this.storeOwnerProfileId,
-      this.chosenDistanceIndicator,
-      this.orderId});
+  bool? externalOrder;
+
+  FilterOrderRequest({
+    this.fromDate,
+    this.maxKilo,
+    this.maxKiloFromDistance,
+    this.state,
+    this.toDate,
+    this.storeOwnerProfileId,
+    this.chosenDistanceIndicator,
+    this.orderId,
+    this.externalOrder,
+  });
 
   Future<Map<String, dynamic>> toJson() async {
     final Map<String, dynamic> data = <String, dynamic>{};

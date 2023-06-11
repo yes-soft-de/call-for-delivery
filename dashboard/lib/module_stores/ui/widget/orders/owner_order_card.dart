@@ -1,5 +1,6 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/ui/widget/orders/icon_info_button.dart';
+import 'package:c4d/utils/extension/string_extensions.dart';
 import 'package:flutter/material.dart';
 
 class OwnerOrderCard extends StatelessWidget {
@@ -11,15 +12,18 @@ class OwnerOrderCard extends StatelessWidget {
   final String note;
   final String? kilometer;
   final String? storeBranchToClientDistance;
-  OwnerOrderCard(
-      {required this.orderNumber,
-      required this.orderStatus,
-      required this.createdDate,
-      required this.deliveryDate,
-      required this.orderCost,
-      required this.note,
-      this.storeBranchToClientDistance,
-      this.kilometer});
+  final String? externalCompanyName;
+  OwnerOrderCard({
+    required this.orderNumber,
+    required this.orderStatus,
+    required this.createdDate,
+    required this.deliveryDate,
+    required this.orderCost,
+    required this.note,
+    this.storeBranchToClientDistance,
+    this.kilometer,
+    required this.externalCompanyName,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +72,25 @@ class OwnerOrderCard extends StatelessWidget {
                       child: Text(
                         storeBranchToClientDistance.toString(),
                         style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+                Spacer(),
+                Visibility(
+                  visible: externalCompanyName.notNullOrEmpty(),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Colors.amber,
+                    ),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 15,
+                        vertical: 8,
+                      ),
+                      child: Text(
+                        externalCompanyName ?? '',
                       ),
                     ),
                   ),
@@ -130,7 +153,7 @@ class OwnerOrderCard extends StatelessWidget {
                     title: S.current.cost, subtitle: orderCost),
                 Icon(
                   Icons.arrow_circle_left_outlined,
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(context).colorScheme.background,
                 )
               ],
             ),
@@ -148,19 +171,19 @@ class OwnerOrderCard extends StatelessWidget {
           title,
           style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).backgroundColor),
+              color: Theme.of(context).colorScheme.background),
         ),
         Text(subtitle,
             style: Theme.of(context)
                 .textTheme
-                .button
+                .labelLarge
                 ?.copyWith(fontWeight: FontWeight.normal)),
       ],
     );
   }
 
   Widget divider(context) {
-    Color dividerColor = Theme.of(context).backgroundColor;
+    Color dividerColor = Theme.of(context).colorScheme.background;
     return Divider(
       thickness: 2,
       indent: 16,

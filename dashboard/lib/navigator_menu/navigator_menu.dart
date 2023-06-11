@@ -6,6 +6,11 @@ import 'package:c4d/module_categories/categories_module.dart';
 import 'package:c4d/module_company/company_module.dart';
 import 'package:c4d/module_delivary_car/cars_module.dart';
 import 'package:c4d/module_dev/dev_module.dart';
+import 'package:c4d/module_external_delivery_companies/external_delivery_companies_module.dart';
+import 'package:c4d/module_external_delivery_companies/model/feature_model.dart';
+import 'package:c4d/module_external_delivery_companies/request/feature_request/feature_request.dart';
+import 'package:c4d/module_external_delivery_companies/service/external_delivery_companies_service.dart';
+import 'package:c4d/module_external_delivery_companies/ui/widgets/show_confirm_dialog.dart';
 import 'package:c4d/module_notice/notice_module.dart';
 import 'package:c4d/module_orders/orders_module.dart';
 import 'package:c4d/module_payments/payments_module.dart';
@@ -15,6 +20,7 @@ import 'package:c4d/module_stores/stores_module.dart';
 import 'package:c4d/module_supplier/supplier_module.dart';
 import 'package:c4d/module_supplier_categories/categories_supplier_module.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/global_nav_key.dart';
@@ -32,6 +38,8 @@ class NavigatorMenu extends StatefulWidget {
 }
 
 class _NavigatorMenuState extends State<NavigatorMenu> {
+  ValueNotifier<bool> isExternalCompanyServiceActive = ValueNotifier(false);
+
   @override
   void initState() {
     getIt<GlobalStateManager>().stateStream.listen((event) {
@@ -41,6 +49,42 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
       }
     });
     super.initState();
+
+    _getFeatureStatus();
+  }
+
+  _updateFeature(bool newValue) {
+    getIt<ExternalDeliveryCompaniesService>()
+        .updateFeatureStatus(FeatureRequest(featureStatus: newValue))
+        .then(
+      (value) {
+        if (value.hasError) {
+          CustomFlushBarHelper.createError(
+            title: S.current.warnning,
+            message: value.error ?? '',
+          );
+        } else {
+          CustomFlushBarHelper.createSuccess(
+            title: S.current.warnning,
+            message: S.current.dataUpdatedSuccessfully,
+          );
+        }
+        _getFeatureStatus();
+      },
+    );
+  }
+
+  _getFeatureStatus() {
+    getIt<ExternalDeliveryCompaniesService>().getFeatureStatus().then(
+      (value) {
+        if (value.hasError) {
+        } else if (value.isEmpty) {
+        } else {
+          value as FeatureModel;
+          isExternalCompanyServiceActive.value = value.data.featureStatus;
+        }
+      },
+    );
   }
 
   @override
@@ -84,6 +128,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.newOrder, Icons.add_rounded, true)
                 ],
                 page: widget.currentPage),
+
             // report
             customExpansionTile(
                 title: S.current.reports,
@@ -143,6 +188,67 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       getIt<StoresModule>().storesInActiveScreen,
                       S.current.storesInActive,
                       FontAwesomeIcons.storeSlash,
+                      true),
+                ],
+                page: widget.currentPage),
+            // external delivery company's
+            customExpansionTile(
+                title: S.current.externalTriggers,
+                icon: FontAwesomeIcons.link,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SizedBox(),
+                        Icon(Icons.stop_circle),
+                        Text(S.current.onOff),
+                        SizedBox(),
+                        SizedBox(),
+                        ValueListenableBuilder(
+                          builder: (context, value, child) {
+                            return Switch(
+                              thumbColor: MaterialStateColor.resolveWith(
+                                  (states) => Colors.white),
+                              activeColor: Colors.green,
+                              value: isExternalCompanyServiceActive.value,
+                              onChanged: (value) {
+                                showConfirmDialog(
+                                  context,
+                                  hasCancelButton: true,
+                                  title: S.current.areYouSureAboutEdit,
+                                  confirmButtonColor: Colors.amber,
+                                  confirmButtonTitle: Text(
+                                    S.current.confirm,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyMedium
+                                        ?.copyWith(color: Colors.black),
+                                  ),
+                                  message: value
+                                      ? S.current.featureWillBeOnAfterConfirm
+                                      : S.current.featureWillBeOffAfterConfirm,
+                                  onConfirm: () {
+                                    isExternalCompanyServiceActive.value =
+                                        value;
+                                    setState(() {});
+                                    _updateFeature(value);
+                                  },
+                                );
+                              },
+                            );
+                          },
+                          valueListenable: isExternalCompanyServiceActive,
+                        ),
+                      ],
+                    ),
+                  ),
+                  customListTile(
+                      getIt<ExternalDeliveryCompaniesModule>()
+                          .externalDeliveryCompaniesScreen,
+                      S.current.deliveryCompanies,
+                      FontAwesomeIcons.box,
                       true),
                 ],
                 page: widget.currentPage),

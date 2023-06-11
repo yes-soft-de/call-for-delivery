@@ -190,6 +190,7 @@ class OrderDetailsModel extends DataModel {
           DateFormat.Md()
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       orders.add(OrderModel(
+        externalCompanyName: null,
         branchName: element.branchName ?? S.current.unknown,
         createdDate: create,
         deliveryDate: delivery,
