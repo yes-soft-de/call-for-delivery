@@ -10470,6 +10470,16 @@ class S {
     );
   }
 
+  /// `order assigned to company successfully`
+  String get orderAssignedToCompanySuccessfully {
+    return Intl.message(
+      'order assigned to company successfully',
+      name: 'orderAssignedToCompanySuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

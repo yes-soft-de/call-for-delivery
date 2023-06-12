@@ -952,6 +952,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "order": MessageLookupByLibrary.simpleMessage("Order"),
         "orderAssignedSuccessfully":
             MessageLookupByLibrary.simpleMessage("Order Assigned Successfully"),
+        "orderAssignedToCompanySuccessfully":
+            MessageLookupByLibrary.simpleMessage(
+                "order assigned to company successfully"),
         "orderCashStatus":
             MessageLookupByLibrary.simpleMessage("Order cost to store"),
         "orderCashWithCaptain":

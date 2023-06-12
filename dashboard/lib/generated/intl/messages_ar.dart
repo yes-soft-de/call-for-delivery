@@ -944,6 +944,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "order": MessageLookupByLibrary.simpleMessage("الطلب "),
         "orderAssignedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "تم إسناد الطلب للكابتن المختار بنجاح"),
+        "orderAssignedToCompanySuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم اسناد الطلب للشركة بنجاح"),
         "orderCashStatus":
             MessageLookupByLibrary.simpleMessage("سعر الطلبية للمتجر"),
         "orderCashWithCaptain":

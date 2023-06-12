@@ -1041,5 +1041,6 @@
     "companyCredentialNotCorrect": "معلومات الشركة غير صحيحة",
     "orderRequestInTheCompanyNotComplete": "الطلب غير مكتمل لدى الشركة",
     "orderStatusIsNotPending": "حالة الطلب ليست قيد \"قيد الانتاظار\"",
+    "orderAssignedToCompanySuccessfully": "تم اسناد الطلب للشركة بنجاح",
     "dev": "المطورين"
 }

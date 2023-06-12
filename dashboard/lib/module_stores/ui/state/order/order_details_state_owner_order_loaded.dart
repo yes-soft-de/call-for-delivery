@@ -74,7 +74,8 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
         Visibility(
             replacement: Visibility(
               visible: orderInfo.state != OrderStatusEnum.FINISHED &&
-                  orderInfo.state != OrderStatusEnum.CANCELLED,
+                  orderInfo.state != OrderStatusEnum.CANCELLED &&
+                  orderInfo.externalCompanyName == null,
               child: OrderButton(
                   onTap: () {
                     showDialog(
@@ -201,7 +202,8 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                     ),
                     Visibility(
                       visible: orderInfo.state != OrderStatusEnum.FINISHED &&
-                          orderInfo.state != OrderStatusEnum.CANCELLED,
+                          orderInfo.state != OrderStatusEnum.CANCELLED &&
+                          orderInfo.externalCompanyName == null,
                       child: IconButton(
                         icon: Icon(Icons.remove_circle),
                         onPressed: () {
@@ -228,7 +230,8 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
             )),
         SizedBox(height: 10),
         Visibility(
-          visible: orderInfo.state == OrderStatusEnum.WAITING,
+          visible: orderInfo.state == OrderStatusEnum.WAITING &&
+              orderInfo.externalCompanyName == null,
           child: OrderButton(
             onTap: () {
               Navigator.pushNamed(

@@ -1042,5 +1042,6 @@
     "companyCredentialNotCorrect": "company credential not correct",
     "orderRequestInTheCompanyNotComplete": "order request in the company not complete",
     "orderStatusIsNotPending": "order status is not pending",
+    "orderAssignedToCompanySuccessfully": "order assigned to company successfully",
     "dev": "Dev"
 }
