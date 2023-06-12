@@ -177,7 +177,7 @@ class ExternalDeliveryCompaniesService {
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '200') {
       return DataModel.withError(
-          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+          _getAssignOrderToExternalCompanyMessage(response.statusCode));
     }
     if (response.data == null) return DataModel.empty();
     return ExternalOrder.withData(response);
@@ -191,7 +191,7 @@ String _getAssignOrderToExternalCompanyMessage(String? statusCode) {
   if (statusCode == '9205') return S.current.orderNotFound;
   if (statusCode == '9052') return S.current.companyDoesntHaveSetting;
   if (statusCode == '9676') return S.current.companyCredentialNotCorrect;
-  if (statusCode == '9676')
+  if (statusCode == '9677')
     return S.current.orderRequestInTheCompanyNotComplete;
   if (statusCode == '9228') return S.current.orderStatusIsNotPending;
   return StatusCodeHelper.getStatusCodeMessages(statusCode);
