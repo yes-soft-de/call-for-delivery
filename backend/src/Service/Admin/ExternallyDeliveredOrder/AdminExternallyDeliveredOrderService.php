@@ -31,7 +31,8 @@ class AdminExternallyDeliveredOrderService
             || ($externallyDeliveredOrder === OrderResultConstant::ORDER_NOT_FOUND_RESULT)
             || ($externallyDeliveredOrder === ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_IS_NOT_REGISTERED_CONST)
             || ($externallyDeliveredOrder === HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
-            || ($externallyDeliveredOrder === HttpResponseConstant::INVALID_INPUT_RESULT_CODE_CONST)){
+            || ($externallyDeliveredOrder === HttpResponseConstant::INVALID_INPUT_RESULT_CODE_CONST)
+            || ($externallyDeliveredOrder === OrderResultConstant::ORDER_STATE_IS_NOT_PENDING_CONST)){
             return $externallyDeliveredOrder;
         }
 

@@ -151,6 +151,9 @@ class AdminExternallyDeliveredOrderController extends BaseController
 
         } elseif ($result === HttpResponseConstant::INVALID_INPUT_RESULT_CODE_CONST) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::INVALID_INPUT_RESULT_CONST);
+
+        } elseif ($result === OrderResultConstant::ORDER_STATE_IS_NOT_PENDING_CONST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ORDER_STATE_NOT_PENDING_CONST);
         }
 
         return $this->response($result, self::CREATE);
