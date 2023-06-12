@@ -1022,6 +1022,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderStatus": MessageLookupByLibrary.simpleMessage("order status"),
         "orderStatusDescription": MessageLookupByLibrary.simpleMessage(
             "You can know your order status in this interface"),
+        "orderStatusIsNotPending":
+            MessageLookupByLibrary.simpleMessage("order status is not pending"),
         "orderTime": MessageLookupByLibrary.simpleMessage("Order Time"),
         "orderTimeLine":
             MessageLookupByLibrary.simpleMessage("Order Time Line"),

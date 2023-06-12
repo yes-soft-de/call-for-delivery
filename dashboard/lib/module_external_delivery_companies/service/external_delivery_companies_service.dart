@@ -179,5 +179,6 @@ String _getAssignOrderToExternalCompanyMessage(String? statusCode) {
   if (statusCode == '9676') return S.current.companyCredentialNotCorrect;
   if (statusCode == '9676')
     return S.current.orderRequestInTheCompanyNotComplete;
+  if (statusCode == '9228') return S.current.orderStatusIsNotPending;
   return StatusCodeHelper.getStatusCodeMessages(statusCode);
 }

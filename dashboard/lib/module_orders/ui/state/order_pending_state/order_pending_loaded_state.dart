@@ -40,35 +40,33 @@ class OrderPendingLoadedState extends States {
       orders.hiddenOrdersCount,
     ];
     List<Widget> widgets = [];
-    screenState.company != null
-        ? null
-        : widgets.add(Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ListTile(
-              leading: Icon(
-                FontAwesomeIcons.boxes,
-                color: Theme.of(context).disabledColor,
-              ),
-              title: Text(
-                S.current.countOrders +
-                    ' ${(Localizations.localeOf(context).languageCode == 'ar' ? 'ال' : '')}' +
-                    (screenState.currentIndex == 0
-                        ? S.current.pending
-                        : screenState.currentIndex == 2
-                            ? S.current.hidden
-                            : S.current.notAccepted),
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              horizontalTitleGap: 4,
-              trailing: Text(
-                countsOrder[screenState.currentIndex].toString(),
-                style: TextStyle(
-                    fontSize: 18,
-                    color: Theme.of(context).disabledColor,
-                    fontWeight: FontWeight.bold),
-              ),
-            ),
-          ));
+    widgets.add(Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: ListTile(
+        leading: Icon(
+          FontAwesomeIcons.boxes,
+          color: Theme.of(context).disabledColor,
+        ),
+        title: Text(
+          S.current.countOrders +
+              ' ${(Localizations.localeOf(context).languageCode == 'ar' ? 'ال' : '')}' +
+              (screenState.currentIndex == 0
+                  ? S.current.pending
+                  : screenState.currentIndex == 2
+                      ? S.current.hidden
+                      : S.current.notAccepted),
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        horizontalTitleGap: 4,
+        trailing: Text(
+          countsOrder[screenState.currentIndex].toString(),
+          style: TextStyle(
+              fontSize: 18,
+              color: Theme.of(context).disabledColor,
+              fontWeight: FontWeight.bold),
+        ),
+      ),
+    ));
     widgets.add(
       // filter on state
       Padding(
@@ -180,9 +178,7 @@ class OrderPendingLoadedState extends States {
                   screenState.refresh();
                 },
                 child: Text(
-                  screenState.company != null
-                      ? S.current.completed
-                      : S.current.hidden,
+                  S.current.hidden,
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.bold,

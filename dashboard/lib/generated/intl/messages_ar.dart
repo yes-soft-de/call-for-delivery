@@ -1012,6 +1012,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderStatus": MessageLookupByLibrary.simpleMessage("حالة الطلب"),
         "orderStatusDescription": MessageLookupByLibrary.simpleMessage(
             "يمكنك التعرف على حالة الطلب من خلال النافذة الحالية"),
+        "orderStatusIsNotPending": MessageLookupByLibrary.simpleMessage(
+            "حالة الطلب ليست قيد \"قيد الانتاظار\""),
         "orderTime": MessageLookupByLibrary.simpleMessage("زمن التوصيل"),
         "orderTimeLine":
             MessageLookupByLibrary.simpleMessage("دورة حياة الطلب"),

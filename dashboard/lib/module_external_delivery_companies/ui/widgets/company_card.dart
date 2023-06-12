@@ -3,7 +3,6 @@ import 'package:c4d/module_external_delivery_companies/external_delivery_compani
 import 'package:c4d/module_external_delivery_companies/model/company_model.dart';
 import 'package:c4d/module_external_delivery_companies/request/company_request/update_delivery_company_status_request.dart';
 import 'package:c4d/module_external_delivery_companies/ui/widgets/show_confirm_dialog.dart';
-import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:flutter/material.dart';
 
 class CompanyCard extends StatefulWidget {
@@ -81,19 +80,18 @@ class _CompanyCardState extends State<CompanyCard> {
                     children: [
                       Expanded(
                         child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Color(0xff0360A1)),
-                            child: Text(S.current.orders),
-                            onPressed: () {
-                              // NavigatorAssistant.nonDeliveringIndex = 1;
-                              // getIt<GlobalStateManager>()
-                              //     .goToNonDeliveredOrder();
-                              Navigator.pushNamed(
-                                context,
-                                OrdersRoutes.PENDING_ORDERS_SCREEN,
-                                arguments: [widget._company],
-                              );
-                            }),
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Color(0xff0360A1)),
+                          child: Text(S.current.orders),
+                          onPressed: () {
+                            Navigator.pushNamed(
+                              context,
+                              ExternalDeliveryCompaniesRoutes
+                                  .EXTERNAL_ORDERS_SCREEN,
+                              arguments: [widget._company],
+                            );
+                          },
+                        ),
                       ),
                       SizedBox(width: 20),
                       Expanded(

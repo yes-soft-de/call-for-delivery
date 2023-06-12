@@ -10460,6 +10460,16 @@ class S {
     );
   }
 
+  /// `order status is not pending`
+  String get orderStatusIsNotPending {
+    return Intl.message(
+      'order status is not pending',
+      name: 'orderStatusIsNotPending',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

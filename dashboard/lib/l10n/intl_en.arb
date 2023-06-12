@@ -1041,5 +1041,6 @@
     "companyDoesntHaveSetting": "company doesn't have setting",
     "companyCredentialNotCorrect": "company credential not correct",
     "orderRequestInTheCompanyNotComplete": "order request in the company not complete",
+    "orderStatusIsNotPending": "order status is not pending",
     "dev": "Dev"
 }

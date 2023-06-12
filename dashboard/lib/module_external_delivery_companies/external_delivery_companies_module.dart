@@ -3,6 +3,7 @@ import 'package:c4d/module_external_delivery_companies/ui/screen/assign_order_to
 import 'package:c4d/module_external_delivery_companies/ui/screen/delivery_company_all_settings_screen.dart';
 import 'package:c4d/module_external_delivery_companies/ui/screen/edit_delivery_company_setting_screen.dart';
 import 'package:c4d/module_external_delivery_companies/ui/screen/external_delivery_companies_screen.dart';
+import 'package:c4d/module_external_delivery_companies/ui/screen/external_orders_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -14,12 +15,14 @@ class ExternalDeliveryCompaniesModule extends YesModule {
   final DeliveryCompanyAllSettingsScreen deliveryCompanyAllSettingsScreen;
   final EditDeliveryCompanySettingScreen editDeliveryCompanySettingScreen;
   final AssignOrderToExternalCompanyScreen assignOrderToExternalCompanyScreen;
+  final ExternalOrderScreen externalOrderScreen;
 
   ExternalDeliveryCompaniesModule(
     this.externalDeliveryCompaniesScreen,
     this.deliveryCompanyAllSettingsScreen,
     this.editDeliveryCompanySettingScreen,
     this.assignOrderToExternalCompanyScreen,
+    this.externalOrderScreen,
   ) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
@@ -33,7 +36,9 @@ class ExternalDeliveryCompaniesModule extends YesModule {
       ExternalDeliveryCompaniesRoutes.EDIT_Delivery_COMPANY_SETTINGS_SCREEN:
           (context) => editDeliveryCompanySettingScreen,
       ExternalDeliveryCompaniesRoutes.ASSIGN_ORDER_TO_EXTERNAL_COMPANY_SCREEN:
-          (context) => assignOrderToExternalCompanyScreen
+          (context) => assignOrderToExternalCompanyScreen,
+      ExternalDeliveryCompaniesRoutes.EXTERNAL_ORDERS_SCREEN: (context) =>
+          externalOrderScreen
     };
   }
 }

@@ -1040,5 +1040,6 @@
     "companyDoesntHaveSetting": "لا يوجد اعدادات للشركة",
     "companyCredentialNotCorrect": "معلومات الشركة غير صحيحة",
     "orderRequestInTheCompanyNotComplete": "الطلب غير مكتمل لدى الشركة",
+    "orderStatusIsNotPending": "حالة الطلب ليست قيد \"قيد الانتاظار\"",
     "dev": "المطورين"
 }
