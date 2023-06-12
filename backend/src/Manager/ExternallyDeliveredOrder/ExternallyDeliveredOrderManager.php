@@ -54,4 +54,9 @@ class ExternallyDeliveredOrderManager
     {
         return $this->externallyDeliveredOrderEntityRepository->findBy(['status' => MrsoolCompanyConstant::ONGOING_ORDER_CONST]);
     }
+
+    public function getAllExternallyDeliveredOrdersByOrderId(int $orderId): array
+    {
+        return $this->externallyDeliveredOrderEntityRepository->findBy(['orderId' => $orderId]);
+    }
 }

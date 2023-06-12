@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\Admin\AdminProfileConstant;
 use App\Constant\Admin\Report\Statistics\StatisticsConstant;
 use App\Constant\ExternalDeliveryCompany\Mrsool\MrsoolCompanyConstant;
+use App\Constant\ExternallyDeliveredOrder\ExternallyDeliveredOrderConstant;
 use App\Constant\HTTP\HttpResponseConstant;
 use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificationAppTypeConstant;
 use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificationMessageConstant;
@@ -253,6 +254,17 @@ class AdminOrderService
         return $response;
     }
 
+    public function getAllExternallyDeliveredOrdersByOrderId(int $orderId): int|array
+    {
+        $externallyDeliveredOrders = $this->externallyDeliveredOrderGetService->getAllExternallyDeliveredOrdersByOrderId($orderId);
+
+        if (count($externallyDeliveredOrders) === 0) {
+            return ExternallyDeliveredOrderConstant::EXTERNALLY_DELIVERED_ORDER_NOT_EXIST_CONST;
+        }
+
+        return $externallyDeliveredOrders;
+    }
+
     /**
      * Gets specific order details with store and captain info by order id for admin
      */
@@ -282,6 +294,15 @@ class AdminOrderService
                 if ($order['storeSubscription']->getPackage() instanceof PackageEntity) {
                     $order['packageId'] = $order['storeSubscription']->getPackage()->getId();
                     $order['packageType'] = $order['storeSubscription']->getPackage()->getType();
+                }
+            }
+
+            $externallyDeliveredOrders = $this->getAllExternallyDeliveredOrdersByOrderId($order['id']);
+
+            if ($externallyDeliveredOrders !== ExternallyDeliveredOrderConstant::EXTERNALLY_DELIVERED_ORDER_NOT_EXIST_CONST) {
+                foreach ($externallyDeliveredOrders as $key => $value) {
+                    $order['externalDeliveredOrders'][$key]['id'] = $value->getId();
+                    $order['externalDeliveredOrders'][$key]['companyName'] = $value->getExternalDeliveryCompany()->getCompanyName();
                 }
             }
         }
