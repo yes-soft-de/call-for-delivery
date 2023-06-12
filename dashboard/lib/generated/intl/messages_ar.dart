@@ -368,6 +368,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("مواقع التواصل الاجتماعي"),
         "companyAddedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم اضافة الشركة بنجاح"),
+        "companyCredentialNotCorrect":
+            MessageLookupByLibrary.simpleMessage("معلومات الشركة غير صحيحة"),
         "companyCriterialAddedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم اضافة المعايير بنجاح"),
         "companyCriterialDeletedSuccessfully":
@@ -376,6 +378,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تحديث المعايير بنجاح"),
         "companyDeletedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم حذف الشركة بنجاح"),
+        "companyDoesntHaveSetting":
+            MessageLookupByLibrary.simpleMessage("لا يوجد اعدادات للشركة"),
         "companyFinance":
             MessageLookupByLibrary.simpleMessage("المعلومات المالية"),
         "companyInfo": MessageLookupByLibrary.simpleMessage("معلومات الشركة"),
@@ -611,6 +615,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الاشتراك منتهي"),
         "expiredSubscriptionsFinanceHint": MessageLookupByLibrary.simpleMessage(
             "هنا تجد قائمة بالاشتراكات المنتهية التي قام المتجر بالاشتراك فيها وتفاصيل عن النفقات التي يترتب عليها والدفعات التي تلقيها"),
+        "externalCompanyNotExist":
+            MessageLookupByLibrary.simpleMessage("المشغل الخارجي غير موجود"),
         "externalCompanySettings":
             MessageLookupByLibrary.simpleMessage("اعدادات المشغل الخارجي"),
         "externalOrder": MessageLookupByLibrary.simpleMessage("طلبية خارجية"),
@@ -653,6 +659,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "favoriteStores":
             MessageLookupByLibrary.simpleMessage("المتاجر المفضلة"),
         "fax": MessageLookupByLibrary.simpleMessage("الفاكس"),
+        "featureNotActive":
+            MessageLookupByLibrary.simpleMessage("الميزة غير مفعلة"),
+        "featureNotAvailable":
+            MessageLookupByLibrary.simpleMessage("الميزة غير متوفرة"),
         "featureWillBeOffAfterConfirm": MessageLookupByLibrary.simpleMessage(
             "سيتم اطفاء الميزة بعد التاكيد"),
         "featureWillBeOnAfterConfirm": MessageLookupByLibrary.simpleMessage(
@@ -997,6 +1007,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم اعادة الطلب"),
         "orderRemovedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم فك الارتباط بنجاح"),
+        "orderRequestInTheCompanyNotComplete":
+            MessageLookupByLibrary.simpleMessage("الطلب غير مكتمل لدى الشركة"),
         "orderStatus": MessageLookupByLibrary.simpleMessage("حالة الطلب"),
         "orderStatusDescription": MessageLookupByLibrary.simpleMessage(
             "يمكنك التعرف على حالة الطلب من خلال النافذة الحالية"),

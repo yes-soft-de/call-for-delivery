@@ -193,9 +193,8 @@ class ExternalDeliveryCompaniesRepository {
       AssignOrderToExternalCompanyRequest request) async {
     var token = await _authService.getToken();
 
-    dynamic response = await _apiClient.put(
-      // TODO: change url and request.toMap()
-      Urls.APP_FEATURE_STATUS_BY_ADMIN,
+    dynamic response = await _apiClient.post(
+      Urls.EXTERNAL_DELIVERY_ODER_BY_ADMIN,
       request.toMap(),
       headers: {'Authorization': 'Bearer ${token}'},
     );

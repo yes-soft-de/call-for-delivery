@@ -48,7 +48,7 @@ class AssignOrderToExternalCompanyScreenState
     widget._stateManager.assignOrderToExternalCompany(
         this,
         AssignOrderToExternalCompanyRequest(
-          companyId: companyId,
+          externalCompanyId: companyId,
           orderId: orderId,
         ));
   }

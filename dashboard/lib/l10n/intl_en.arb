@@ -1035,5 +1035,11 @@
     "pickCompany": "pick company",
     "pleasePickCompany": "please pick company",
     "areYouSureThatYouWantToAssignThisOrderTo": "are you sure that you want to assign this order to",
+    "featureNotAvailable": "feature not available",
+    "featureNotActive": "feature not activate",
+    "externalCompanyNotExist": "external company not exist",
+    "companyDoesntHaveSetting": "company doesn't have setting",
+    "companyCredentialNotCorrect": "company credential not correct",
+    "orderRequestInTheCompanyNotComplete": "order request in the company not complete",
     "dev": "Dev"
 }

@@ -157,14 +157,28 @@ class ExternalDeliveryCompaniesService {
     return DataModel.empty();
   }
 
-  Future<DataModel> assignOrderToExternalCompany(AssignOrderToExternalCompanyRequest request) async {
-    ActionResponse? response = await _manager.assignOrderToExternalCompany(request);
+  Future<DataModel> assignOrderToExternalCompany(
+      AssignOrderToExternalCompanyRequest request) async {
+    ActionResponse? response =
+        await _manager.assignOrderToExternalCompany(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     // TODO: change stutus
-    if (response.statusCode != '204') {
+    if (response.statusCode != '201') {
       return DataModel.withError(
-          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+          _getAssignOrderToExternalCompanyMessage(response.statusCode));
     }
     return DataModel.empty();
   }
+}
+
+String _getAssignOrderToExternalCompanyMessage(String? statusCode) {
+  if (statusCode == '9076') return S.current.featureNotAvailable;
+  if (statusCode == '9077') return S.current.featureNotActive;
+  if (statusCode == '9055') return S.current.externalCompanyNotExist;
+  if (statusCode == '9205') return S.current.orderNotFound;
+  if (statusCode == '9052') return S.current.companyDoesntHaveSetting;
+  if (statusCode == '9676') return S.current.companyCredentialNotCorrect;
+  if (statusCode == '9676')
+    return S.current.orderRequestInTheCompanyNotComplete;
+  return StatusCodeHelper.getStatusCodeMessages(statusCode);
 }

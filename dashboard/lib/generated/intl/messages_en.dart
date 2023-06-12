@@ -370,6 +370,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "community": MessageLookupByLibrary.simpleMessage("Community"),
         "companyAddedSuccessfully":
             MessageLookupByLibrary.simpleMessage("company added successfully"),
+        "companyCredentialNotCorrect": MessageLookupByLibrary.simpleMessage(
+            "company credential not correct"),
         "companyCriterialAddedSuccessfully":
             MessageLookupByLibrary.simpleMessage(
                 "company criterial added successfully"),
@@ -381,6 +383,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "company criterial updated successfully"),
         "companyDeletedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "company deleted successfully"),
+        "companyDoesntHaveSetting": MessageLookupByLibrary.simpleMessage(
+            "company doesn\'t have setting"),
         "companyFinance":
             MessageLookupByLibrary.simpleMessage("Company finance"),
         "companyInfo":
@@ -619,6 +623,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Expired Subscriptions"),
         "expiredSubscriptionsFinanceHint": MessageLookupByLibrary.simpleMessage(
             "Here you find all your expired subscriptions financial information with included all payments "),
+        "externalCompanyNotExist":
+            MessageLookupByLibrary.simpleMessage("external company not exist"),
         "externalCompanySettings":
             MessageLookupByLibrary.simpleMessage("external company settings"),
         "externalOrder": MessageLookupByLibrary.simpleMessage("External Order"),
@@ -659,6 +665,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "favoriteStores":
             MessageLookupByLibrary.simpleMessage("Favorite Stores"),
         "fax": MessageLookupByLibrary.simpleMessage("Fax"),
+        "featureNotActive":
+            MessageLookupByLibrary.simpleMessage("feature not activate"),
+        "featureNotAvailable":
+            MessageLookupByLibrary.simpleMessage("feature not available"),
         "featureWillBeOffAfterConfirm": MessageLookupByLibrary.simpleMessage(
             "feature will be off after confirm"),
         "featureWillBeOnAfterConfirm": MessageLookupByLibrary.simpleMessage(
@@ -1006,6 +1016,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Order updated successfully"),
         "orderRemovedSuccessfully":
             MessageLookupByLibrary.simpleMessage("Order Removed Successfully"),
+        "orderRequestInTheCompanyNotComplete":
+            MessageLookupByLibrary.simpleMessage(
+                "order request in the company not complete"),
         "orderStatus": MessageLookupByLibrary.simpleMessage("order status"),
         "orderStatusDescription": MessageLookupByLibrary.simpleMessage(
             "You can know your order status in this interface"),

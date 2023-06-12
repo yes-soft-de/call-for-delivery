@@ -10400,6 +10400,66 @@ class S {
     );
   }
 
+  /// `feature not available`
+  String get featureNotAvailable {
+    return Intl.message(
+      'feature not available',
+      name: 'featureNotAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `feature not activate`
+  String get featureNotActive {
+    return Intl.message(
+      'feature not activate',
+      name: 'featureNotActive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `external company not exist`
+  String get externalCompanyNotExist {
+    return Intl.message(
+      'external company not exist',
+      name: 'externalCompanyNotExist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `company doesn't have setting`
+  String get companyDoesntHaveSetting {
+    return Intl.message(
+      'company doesn\'t have setting',
+      name: 'companyDoesntHaveSetting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `company credential not correct`
+  String get companyCredentialNotCorrect {
+    return Intl.message(
+      'company credential not correct',
+      name: 'companyCredentialNotCorrect',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order request in the company not complete`
+  String get orderRequestInTheCompanyNotComplete {
+    return Intl.message(
+      'order request in the company not complete',
+      name: 'orderRequestInTheCompanyNotComplete',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

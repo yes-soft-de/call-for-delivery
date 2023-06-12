@@ -1034,5 +1034,11 @@
     "pickCompany": "اختر احد المشغلات",
     "pleasePickCompany": "الرجاء اختيار مشغل",
     "areYouSureThatYouWantToAssignThisOrderTo": "هل انت متاكد من اسناد هذا  الطلب الى ",
+    "featureNotAvailable": "الميزة غير متوفرة",
+    "featureNotActive": "الميزة غير مفعلة",
+    "externalCompanyNotExist": "المشغل الخارجي غير موجود",
+    "companyDoesntHaveSetting": "لا يوجد اعدادات للشركة",
+    "companyCredentialNotCorrect": "معلومات الشركة غير صحيحة",
+    "orderRequestInTheCompanyNotComplete": "الطلب غير مكتمل لدى الشركة",
     "dev": "المطورين"
 }

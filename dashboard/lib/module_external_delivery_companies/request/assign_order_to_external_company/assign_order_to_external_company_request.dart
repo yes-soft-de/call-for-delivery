@@ -3,17 +3,17 @@ import 'dart:convert';
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 
 class AssignOrderToExternalCompanyRequest {
-  final int companyId;
+  final int externalCompanyId;
   final int orderId;
 
   AssignOrderToExternalCompanyRequest({
-    required this.companyId,
+    required this.externalCompanyId,
     required this.orderId,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'companyId': companyId,
+      'externalCompanyId': externalCompanyId,
       'orderId': orderId,
     };
   }
@@ -21,7 +21,7 @@ class AssignOrderToExternalCompanyRequest {
   factory AssignOrderToExternalCompanyRequest.fromMap(
       Map<String, dynamic> map) {
     return AssignOrderToExternalCompanyRequest(
-      companyId: (map['companyId'] ?? 0) as int,
+      externalCompanyId: (map['externalCompanyId'] ?? 0) as int,
       orderId: (map['orderId'] ?? 0) as int,
     );
   }

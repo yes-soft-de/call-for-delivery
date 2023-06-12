@@ -64,7 +64,7 @@ class AssignOrderToExternalCompanyStateManager {
           }
           CustomFlushBarHelper.createSuccess(
             title: S.current.warnning,
-            message: S.current.dataUpdatedSuccessfully,
+            message: S.current.orderAssignedSuccessfully,
           );
         }
       },
