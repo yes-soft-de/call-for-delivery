@@ -2085,12 +2085,12 @@ class AdminOrderController extends BaseController
     }
 
     /**
-     * admin:
-     * @Route("undeliveredexternalordersforadmin/{$externalDeliveryCompanyId}", name="getUnDeliveredExternalOrdersForAdmin", methods={"GET"})
+     * admin: filter externally delivered orders by admin
+     * @Route("filterexternallydeliveredordersbyadmin", name="filterExternallyDeliveredOrdersByAdmin", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
-     * @param int|null $externalDeliveryCompanyId
+     * @param Request $request
      * @return JsonResponse
-     * *
+     *
      * @OA\Tag(name="Order")
      *
      * @OA\Parameter(
@@ -2100,12 +2100,48 @@ class AdminOrderController extends BaseController
      *      required=true
      * )
      *
+     * @OA\RequestBody(
+     *      description="Post a request with filtering orders options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="state"),
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="integer", property="storeOwnerProfileId"),
+     *          @OA\Property(type="integer", property="chosenDistanceIndicator", description="1 refers to use Kilometer,
+     *              2 refers to use storeBranchToClientDistance"),
+     *          @OA\Property(type="number", property="kilometer", description="if there is value, send it as float, not string"),
+     *          @OA\Property(type="number", property="storeBranchToClientDistance"),
+     *          @OA\Property(type="string", property="customizedTimezone", example="Asia/Riyadh"),
+     *          @OA\Property(type="integer", property="orderId"),
+     *          @OA\Property(type="integer", property="externalCompanyId"),
+     *          @OA\Property(type="integer", property="storeBranchId")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns orders that accomodate with the filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Admin\Order\OrderPendingResponse")
+     *              )
+     *      )
+     *   )
+     * )
+     *
      * @Security(name="Bearer")
      */
-    public function getUnDeliveredExternalOrdersForAdmin(?int $externalDeliveryCompanyId): JsonResponse
+    public function filterExternalOrdersByAdmin(Request $request): JsonResponse
     {
-        $response = $this->adminOrderService->getPendingOrdersForAdmin($this->getUserId(), $externalDeliveryCompanyId);
+        $data = json_decode($request->getContent(), true);
 
-        return $this->response($response, self::FETCH);
+        $request = $this->autoMapping->map(stdClass::class, OrderFilterByAdminRequest::class, (object)$data);
+
+        $result = $this->adminOrderService->filterExternallyDeliveredOrdersByAdmin($request, $this->getUserId());
+
+        return $this->response($result, self::FETCH);
     }
 }

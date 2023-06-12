@@ -531,10 +531,10 @@ class AdminOrderService
                         }
                     }
                 }
-                // 4 Return external orders according to their external status
-                $response['pendingOrders'] = $this->prepareOrderResponseObjectFromExternallyDeliveredOrders($this->getExternallyDeliveredOrdersByStatus(MrsoolCompanyConstant::COURIER_PENDING_ORDER_STATUS_CONST));
-                $response['notDeliveredOrders'] = $this->prepareOrderResponseObjectFromExternallyDeliveredOrders($this->getOnGoingExternallyDeliveredOrders());
             }
+            // 4 Return external orders according to their external status
+            $response['pendingOrders'] = $this->prepareOrderResponseObjectFromExternallyDeliveredOrders($this->getExternallyDeliveredOrdersByStatus(MrsoolCompanyConstant::COURIER_PENDING_ORDER_STATUS_CONST));
+            $response['notDeliveredOrders'] = $this->prepareOrderResponseObjectFromExternallyDeliveredOrders($this->getOnGoingExternallyDeliveredOrders());
         }
 
         $response['pendingOrdersCount'] = count($response['pendingOrders']);
@@ -595,7 +595,7 @@ class AdminOrderService
                 $response[$key]->location = $value['location'];
                 $response[$key]->storeOwnerBranchId = $value['storeOwnerBranchId'];
                 $response[$key]->branchName = $value['branchName'];
-                $response[$key]->storeOwnerName = $value['storeOwnerName'];
+                $response[$key]->storeOwnerName = $value[0]->getStoreOwner()->getStoreOwnerName();
 
                 if ($value[0]->getCaptainId()) {
                     $response[$key]->captainName = $value[0]->getCaptainId()->getCaptainName();
@@ -2248,11 +2248,61 @@ class AdminOrderService
             $storeOrderDetailsEntity);
     }
 
-    public function getUnDeliveredExternalOrdersForAdmin(?int $externalDeliveryCompanyId)
+    public function filterExternallyDeliveredOrdersByAdmin(OrderFilterByAdminRequest $request, int $userId): ?array
     {
-        // 1 Get external orders
-        // 2 Foreach order get its external status
-        // 3 Update order status
-        // 4 Return external orders according to their external status
+        $response = [];
+        $response['pendingOrders'] = [];
+        $response['notDeliveredOrders'] = [];
+        $response['hiddenOrders'] = [];
+
+        $this->orderService->showSubOrderIfCarIsAvailable($userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST);
+        $this->orderService->hideOrderExceededDeliveryTimeByHour($userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST);
+
+        $request->setExternalOrder(true);
+
+        // 1 Get uncancelled and undelivered external orders from OrderEntity
+        $orders = $this->getNotCancelledNorDeliveredExternalOrdersOnly($request->getExternalCompanyId());
+
+        if (count($orders) > 0) {
+            foreach ($orders as $order) {
+                // 2 Get external order new info from their related external company
+                $externallyDeliveredOrders = $order->getExternallyDeliveredOrderEntities()->toArray();
+
+                if (count($externallyDeliveredOrders) > 0) {
+                    foreach ($externallyDeliveredOrders as $externallyDeliveredOrder) {
+                        $externalOrderInfo = $this->getExternalOrderByOrderIdAndExternalDeliveryCompanyId($externallyDeliveredOrder->getExternalOrderId(),
+                            $externallyDeliveredOrder->getExternalDeliveryCompany()->getId());
+
+                        if(($externalOrderInfo !== HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
+                            && ($externalOrderInfo !== HttpResponseConstant::ORDER_NOT_FOUND_RESULT_CONST)
+                            && ($externalOrderInfo !== HttpResponseConstant::UN_RECOGNIZED_STATUS_CODE_RESULT_CONST)) {
+                            // 3 Update external orders status (both in ExternallyDeliveredOrderEntity and OrderEntity)
+                            $this->updateExternallyDeliveredOrderStatus($externallyDeliveredOrder->getId(),
+                                $externalOrderInfo['data']['status']);
+                            // Update order status in OrderEntity
+                            $this->compareAndUpdateOrderState($order, $externalOrderInfo['data']['status']);
+                        }
+                    }
+                }
+            }
+        }
+
+        // 4 Return external orders according to their status
+        $request->setState(OrderStateConstant::ORDER_STATE_PENDING);
+        $response['pendingOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->filterStoreOrdersByAdmin($request));
+
+        $request->setState(OrderStateConstant::ORDER_STATE_DELIVERED);
+        $response['hiddenOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->filterStoreOrdersByAdmin($request));
+
+        $request->setState(OrderStateConstant::ORDER_STATE_ONGOING);
+        $response['notDeliveredOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->filterStoreOrdersByAdmin($request));
+
+        $response['pendingOrdersCount'] = count($response['pendingOrders']);
+        $response['hiddenOrdersCount'] = count($response['hiddenOrders']);
+        $response['notDeliveredOrdersCount'] = count($response['notDeliveredOrders']);
+
+        $response['totalOrderCount'] = $response['pendingOrdersCount'] + $response['notDeliveredOrdersCount'] + $response['hiddenOrdersCount'];
+
+        return $response;
     }
 }
