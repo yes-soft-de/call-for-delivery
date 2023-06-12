@@ -22,8 +22,8 @@ class ExternalOrderRequest {
       if (storeOwnerProfileId != null)
         'storeOwnerProfileId': storeOwnerProfileId,
       if (storeBranchId != null) 'storeBranchId': storeBranchId,
-      if (toDate != null) 'toDate': toDate?.millisecondsSinceEpoch,
-      if (fromDate != null) 'fromDate': fromDate?.millisecondsSinceEpoch,
+      if (toDate != null) 'toDate': toDate.toString(),
+      if (fromDate != null) 'fromDate': fromDate.toString(),
     };
   }
 
