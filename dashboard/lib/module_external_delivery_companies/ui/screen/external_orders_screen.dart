@@ -7,8 +7,8 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_branches/model/branches/branches_model.dart';
 import 'package:c4d/module_branches/service/branches_list_service.dart';
 import 'package:c4d/module_external_delivery_companies/model/company_model.dart';
+import 'package:c4d/module_external_delivery_companies/request/external_order_request/external_orders_request.dart';
 import 'package:c4d/module_external_delivery_companies/state_manager/external_orders_state_manager.dart';
-import 'package:c4d/module_orders/request/order/pending_order_request.dart';
 import 'package:c4d/module_orders/ui/widgets/label_text.dart';
 import 'package:c4d/module_stores/model/stores_model.dart';
 import 'package:c4d/module_stores/service/store_service.dart';
@@ -33,9 +33,7 @@ class ExternalOrderScreenState extends State<ExternalOrderScreen> {
   late States currentState;
   late CompanyModel company;
   int currentIndex = 0;
-  final PendingOrderRequest filter = PendingOrderRequest(
-    type: PendingOrderRequestType.onlyExternal,
-  );
+  final ExternalOrderRequest filter = ExternalOrderRequest();
 
   ValueNotifier<List<StoresModel>> stores = ValueNotifier([]);
   ValueNotifier<List<BranchesModel>> branches = ValueNotifier([]);
@@ -135,119 +133,119 @@ class ExternalOrderScreenState extends State<ExternalOrderScreen> {
           child: Column(
             mainAxisSize: MainAxisSize.max,
             children: [
-                        // filter date
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8),
-            // date picker
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: Theme.of(context).colorScheme.background,
-                    ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: ListTile(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25)),
-                        onTap: () {
-                          showDatePicker(
-                                  context: context,
-                                  builder: (context, widget) {
-                                    bool isDark =
-                                        getIt<ThemePreferencesHelper>()
-                                            .isDarkMode();
+              // filter date
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8),
+                // date picker
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Theme.of(context).colorScheme.background,
+                        ),
+                        child: Material(
+                          color: Colors.transparent,
+                          child: ListTile(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25)),
+                            onTap: () {
+                              showDatePicker(
+                                      context: context,
+                                      builder: (context, widget) {
+                                        bool isDark =
+                                            getIt<ThemePreferencesHelper>()
+                                                .isDarkMode();
 
-                                    if (isDark == false)
-                                      return widget ?? SizedBox();
-                                    return Theme(
-                                        data: ThemeData.dark().copyWith(
-                                            primaryColor: Colors.indigo),
-                                        child: widget ?? SizedBox());
-                                  },
-                                  initialDate: DateTime.now(),
-                                  firstDate: DateTime(2021),
-                                  lastDate: DateTime.now())
-                              .then((value) {
-                            if (value != null) {
-                              filter.fromDate = value;
-                              setState(() {});
-                              getOrders();
-                            }
-                          });
-                        },
-                        title: Text(S.current.firstDate),
-                        subtitle: Text(filter.fromDate != null
-                            ? DateFormat('yyyy/M/d')
-                                .format(filter.fromDate ?? DateTime.now())
-                            : '0000/00/00'),
+                                        if (isDark == false)
+                                          return widget ?? SizedBox();
+                                        return Theme(
+                                            data: ThemeData.dark().copyWith(
+                                                primaryColor: Colors.indigo),
+                                            child: widget ?? SizedBox());
+                                      },
+                                      initialDate: DateTime.now(),
+                                      firstDate: DateTime(2021),
+                                      lastDate: DateTime.now())
+                                  .then((value) {
+                                if (value != null) {
+                                  filter.fromDate = value;
+                                  setState(() {});
+                                  getOrders();
+                                }
+                              });
+                            },
+                            title: Text(S.current.firstDate),
+                            subtitle: Text(filter.fromDate != null
+                                ? DateFormat('yyyy/M/d')
+                                    .format(filter.fromDate ?? DateTime.now())
+                                : '0000/00/00'),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Container(
-                    width: 32,
-                    height: 2.5,
-                    color: Theme.of(context).colorScheme.background,
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: Theme.of(context).colorScheme.background,
-                    ),
-                    child: Material(
-                      color: Colors.transparent,
-                      child: ListTile(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25)),
-                        onTap: () {
-                          showDatePicker(
-                                  context: context,
-                                  initialDate: DateTime.now(),
-                                  builder: (context, widget) {
-                                    bool isDark =
-                                        getIt<ThemePreferencesHelper>()
-                                            .isDarkMode();
-                                    if (isDark == false)
-                                      return widget ?? SizedBox();
-                                    return Theme(
-                                        data: ThemeData.dark().copyWith(
-                                            primaryColor: Colors.indigo),
-                                        child: widget ?? SizedBox());
-                                  },
-                                  firstDate: DateTime(2021),
-                                  lastDate: DateTime.now())
-                              .then((value) {
-                            if (value != null) {
-                              filter.toDate = DateTime(
-                                value.year,
-                                value.month,
-                                value.day,
-                              );
-                              setState(() {});
-                              getOrders();
-                            }
-                          });
-                        },
-                        title: Text(S.current.endDate),
-                        subtitle: Text(filter.toDate != null
-                            ? DateFormat('yyyy/M/d')
-                                .format(filter.toDate ?? DateTime.now())
-                            : '0000/00/00'),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        width: 32,
+                        height: 2.5,
+                        color: Theme.of(context).colorScheme.background,
                       ),
                     ),
-                  ),
+                    Expanded(
+                      child: Container(
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Theme.of(context).colorScheme.background,
+                        ),
+                        child: Material(
+                          color: Colors.transparent,
+                          child: ListTile(
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(25)),
+                            onTap: () {
+                              showDatePicker(
+                                      context: context,
+                                      initialDate: DateTime.now(),
+                                      builder: (context, widget) {
+                                        bool isDark =
+                                            getIt<ThemePreferencesHelper>()
+                                                .isDarkMode();
+                                        if (isDark == false)
+                                          return widget ?? SizedBox();
+                                        return Theme(
+                                            data: ThemeData.dark().copyWith(
+                                                primaryColor: Colors.indigo),
+                                            child: widget ?? SizedBox());
+                                      },
+                                      firstDate: DateTime(2021),
+                                      lastDate: DateTime.now())
+                                  .then((value) {
+                                if (value != null) {
+                                  filter.toDate = DateTime(
+                                    value.year,
+                                    value.month,
+                                    value.day,
+                                  );
+                                  setState(() {});
+                                  getOrders();
+                                }
+                              });
+                            },
+                            title: Text(S.current.endDate),
+                            subtitle: Text(filter.toDate != null
+                                ? DateFormat('yyyy/M/d')
+                                    .format(filter.toDate ?? DateTime.now())
+                                : '0000/00/00'),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
-          ),
+              ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(

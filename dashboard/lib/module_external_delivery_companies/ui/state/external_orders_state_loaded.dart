@@ -1,8 +1,8 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_external_delivery_companies/model/external_order.dart';
 import 'package:c4d/module_external_delivery_companies/ui/screen/external_orders_screen.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
-import 'package:c4d/module_orders/model/pending_order.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/widgets/owner_order_card/owner_order_card.dart';
 import 'package:c4d/module_orders/ui/widgets/recycle_widgets/recycle_button_widget.dart';
@@ -17,7 +17,7 @@ import 'package:simple_moment/simple_moment.dart';
 
 class ExternalOrdersLoadedState extends States {
   ExternalOrderScreenState screenState;
-  PendingOrder orders;
+  ExternalOrder orders;
 
   ExternalOrdersLoadedState(this.screenState, this.orders)
       : super(screenState) {

@@ -422,4 +422,7 @@ class Urls {
 
   static const APP_FEATURE_STATUS_BY_ADMIN =
       BASE_API_APP_FEATURE + '/appfeaturestatusbyadmin';
+
+  static const FILTER_EXTERNAL_ORDERS_BY_ADMIN =
+      BASE_API_ORDER + '/filterexternallydeliveredordersbyadmin';
 }

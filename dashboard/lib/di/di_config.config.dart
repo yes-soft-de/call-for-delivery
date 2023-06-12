@@ -140,7 +140,7 @@ import '../module_delivary_car/service/cars_service.dart' as _i70;
 import '../module_delivary_car/state_manager/cars_state_manager.dart' as _i71;
 import '../module_delivary_car/ui/screen/cars_screen.dart' as _i166;
 import '../module_dev/dev_module.dart' as _i249;
-import '../module_dev/hive/order_hive_helper.dart' as _i14;
+import '../module_dev/hive/order_hive_helper.dart' as _i15;
 import '../module_dev/manager/dev_manager.dart' as _i79;
 import '../module_dev/repository/dev_repository.dart' as _i34;
 import '../module_dev/service/orders/dev.service.dart' as _i80;
@@ -215,7 +215,7 @@ import '../module_notifications/service/fire_notification_service/fire_notificat
     as _i85;
 import '../module_notifications/service/local_notification_service/local_notification_service.dart'
     as _i9;
-import '../module_orders/hive/order_hive_helper.dart' as _i15;
+import '../module_orders/hive/order_hive_helper.dart' as _i14;
 import '../module_orders/manager/orders_manager/orders_manager.dart' as _i44;
 import '../module_orders/orders_module.dart' as _i262;
 import '../module_orders/repository/order_repository/order_repository.dart'
@@ -630,8 +630,9 @@ _i1.GetIt $initGetIt(
   gh.factory<_i83.ExternalDeliveryCompaniesStateManager>(() =>
       _i83.ExternalDeliveryCompaniesStateManager(
           gh<_i82.ExternalDeliveryCompaniesService>()));
-  gh.factory<_i84.ExternalOrdersStateManager>(
-      () => _i84.ExternalOrdersStateManager(gh<_i45.OrdersService>()));
+  gh.factory<_i84.ExternalOrdersStateManager>(() =>
+      _i84.ExternalOrdersStateManager(
+          gh<_i82.ExternalDeliveryCompaniesService>()));
   gh.factory<_i85.FireNotificationService>(
       () => _i85.FireNotificationService(gh<_i42.NotificationRepo>()));
   gh.factory<_i86.ForgotPassScreen>(
