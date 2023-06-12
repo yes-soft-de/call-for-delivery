@@ -92,7 +92,8 @@ class AdminOrderController extends BaseController
      *          @OA\Property(type="string", property="customizedTimezone", example="Asia/Riyadh"),
      *          @OA\Property(type="integer", property="orderId"),
      *          @OA\Property(type="boolean", property="externalOrder"),
-     *          @OA\Property(type="integer", property="externalCompanyId")
+     *          @OA\Property(type="integer", property="externalCompanyId"),
+     *          @OA\Property(type="integer", property="storeBranchId")
      *      )
      * )
      *

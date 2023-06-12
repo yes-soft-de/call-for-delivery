@@ -541,6 +541,11 @@ class OrderEntityRepository extends ServiceEntityRepository
             }
         }
 
+        if ($request->getStoreBranchId()) {
+            $query->andWhere('storeOwnerBranch.id = :storeBranchId')
+                ->setParameter('storeBranchId', $request->getStoreBranchId());
+        }
+
         if (($request->getExternalOrder() !== null) && ($request->getExternalOrder() === true)) {
             $query->andWhere('externallyDeliveredOrderEntity.orderId IS NOT NULL');
         }

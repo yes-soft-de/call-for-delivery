@@ -59,6 +59,8 @@ class OrderFilterByAdminRequest
 
     private ?int $externalCompanyId = null;
 
+    private ?int $storeBranchId = null;
+
     public function getState(): ?string
     {
         return $this->state;
@@ -117,5 +119,10 @@ class OrderFilterByAdminRequest
     public function getExternalCompanyId(): ?int
     {
         return $this->externalCompanyId;
+    }
+
+    public function getStoreBranchId(): ?int
+    {
+        return $this->storeBranchId;
     }
 }
