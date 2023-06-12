@@ -208,7 +208,7 @@ class ExternallyDeliveredOrderHandleService
 
         } elseif ($statusCode === HttpResponseConstant::SUCCESSFULLY_CREATED_STATUS_CODE_CONST) {
             // While the create post request done successfully, then return the response content
-            return $arrayResponse;
+            return json_decode($response->getContent(), true);
         }
 
         return HttpResponseConstant::UN_RECOGNIZED_STATUS_CODE_RESULT_CONST;
