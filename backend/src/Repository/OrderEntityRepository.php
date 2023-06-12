@@ -541,8 +541,18 @@ class OrderEntityRepository extends ServiceEntityRepository
             }
         }
 
+        if ($request->getStoreBranchId()) {
+            $query->andWhere('storeOwnerBranch.id = :storeBranchId')
+                ->setParameter('storeBranchId', $request->getStoreBranchId());
+        }
+
         if (($request->getExternalOrder() !== null) && ($request->getExternalOrder() === true)) {
             $query->andWhere('externallyDeliveredOrderEntity.orderId IS NOT NULL');
+        }
+
+        if ($request->getExternalCompanyId()) {
+            $query->andWhere('externallyDeliveredOrderEntity.externalDeliveryCompany = :externalDeliveryCompanyId')
+                ->setParameter('externalDeliveryCompanyId', $request->getExternalCompanyId());
         }
 
         if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))

@@ -59,9 +59,16 @@ class OrderFilterByAdminRequest
 
     private ?int $externalCompanyId = null;
 
+    private ?int $storeBranchId = null;
+
     public function getState(): ?string
     {
         return $this->state;
+    }
+
+    public function setState(?string $state): void
+    {
+        $this->state = $state;
     }
 
     public function getFromDate(): ?string
@@ -114,8 +121,18 @@ class OrderFilterByAdminRequest
         return $this->externalOrder;
     }
 
+    public function setExternalOrder(bool $externalOrder): void
+    {
+        $this->externalOrder = $externalOrder;
+    }
+
     public function getExternalCompanyId(): ?int
     {
         return $this->externalCompanyId;
+    }
+
+    public function getStoreBranchId(): ?int
+    {
+        return $this->storeBranchId;
     }
 }
