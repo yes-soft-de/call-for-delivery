@@ -162,7 +162,6 @@ class ExternalDeliveryCompaniesService {
     ActionResponse? response =
         await _manager.assignOrderToExternalCompany(request);
     if (response == null) return DataModel.withError(S.current.networkError);
-    // TODO: change stutus
     if (response.statusCode != '201') {
       return DataModel.withError(
           _getAssignOrderToExternalCompanyMessage(response.statusCode));
