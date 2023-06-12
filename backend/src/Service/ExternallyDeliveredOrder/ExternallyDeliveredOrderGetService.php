@@ -12,9 +12,9 @@ class ExternallyDeliveredOrderGetService
     {
     }
 
-    public function getAllExternallyDeliveredOrders()
+    public function getAllExternallyDeliveredOrdersByOrderId(int $orderId): array
     {
-
+        return $this->externallyDeliveredOrderManager->getAllExternallyDeliveredOrdersByOrderId($orderId);
     }
 
     public function getExternallyDeliveredOrdersByStatus(string $status): array

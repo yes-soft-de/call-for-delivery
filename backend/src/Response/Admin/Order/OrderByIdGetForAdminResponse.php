@@ -110,4 +110,10 @@ class OrderByIdGetForAdminResponse
     public ?int $packageType;
 
     public ?float $deliveryCost;
+
+    /**
+     * @OA\Property(type="array", property="externalDeliveredOrders",
+     *     @OA\Items(type="object"))
+     */
+    public array $externalDeliveredOrders = [];
 }

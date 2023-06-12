@@ -135,8 +135,10 @@ class ExternallyDeliveredOrderHandleService
                     $criteriaMatchArrayResult[] = false;
                     continue;
 
-                } elseif (($conditionPayment === ExternalDeliveryCompanyCriteriaPaymentConstant::PAYMENT_CASH_CONST)
-                    && ($orderPayment === OrderTypeConstant::ORDER_PAYMENT_CASH)) {
+                } elseif ((($conditionPayment === ExternalDeliveryCompanyCriteriaPaymentConstant::PAYMENT_CASH_CONST)
+                    && ($orderPayment === OrderTypeConstant::ORDER_PAYMENT_CASH))
+                    || (($conditionPayment === ExternalDeliveryCompanyCriteriaPaymentConstant::PAYMENT_BOTH_CARD_AND_CASH_CONST)
+                        && ($orderPayment === OrderTypeConstant::ORDER_PAYMENT_CASH))) {
                     if (($externalDeliveryCompanyCriteriaEntity->getCashLimit())
                         && ($orderCost > $externalDeliveryCompanyCriteriaEntity->getCashLimit())) {
                         // set the result of this criteria to false, and move to next criteria
