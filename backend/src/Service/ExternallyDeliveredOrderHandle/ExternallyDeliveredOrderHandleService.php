@@ -198,7 +198,6 @@ class ExternallyDeliveredOrderHandleService
     public function handleResponseInterface(ResponseInterface $response): int|array
     {
         $statusCode = $response->getStatusCode();
-        $arrayResponse = json_decode($response->getContent(), true);
 
         if ($statusCode === HttpResponseConstant::INVALID_CREDENTIALS_STATUS_CODE_CONST) {
             return HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST;
