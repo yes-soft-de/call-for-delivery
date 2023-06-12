@@ -5,6 +5,9 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
+import 'package:c4d/module_my_notifications/model/update_model.dart';
+import 'package:c4d/module_my_notifications/service/my_notification_service.dart';
+import 'package:c4d/module_my_notifications/ui/widget/update_dialog.dart';
 import 'package:c4d/module_orders/model/company_info_model.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
@@ -62,6 +65,30 @@ class OwnerOrdersStateManager {
         value as OrderModel;
         _stateSubject
             .add(OrdersListStateOrdersLoaded(screenState, orders: value.data));
+      }
+    });
+  }
+
+  void getUpdates(OwnerOrdersScreenState screenState) {
+    getIt<MyNotificationsService>()
+        .getUpdates(onlyNewUpdates: true)
+        .then((value) {
+      if (value.hasError) {
+        // do nothing
+      } else if (value.isEmpty) {
+        // do nothing
+      } else if (value is UpdateModel && value.data.isEmpty) {
+        // do nothing
+      } else {
+        value as UpdateModel;
+        showDialog(
+          context: screenState.context,
+          builder: (context) {
+            return UpdateDialog(
+              updateModel: value.data,
+            );
+          },
+        );
       }
     });
   }

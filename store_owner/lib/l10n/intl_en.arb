@@ -699,5 +699,12 @@
     "yourBalance":"your balance",
     "id":"id",
     "valueMustBeGreaterThanZero":"your value must be greater than 0",
+    "unLimitedOrders":"unlimited orders",
+    "goToOffers": "go to offers",
+    "distanceEditedByAdmin":"distance has been edited by admin\ntap to more details",
+    "distanceUpdated":"distance updated",
+    "adminNotes":"admin notes:",
+    "ok":"ok",
+    "youCanContactWithDirectSupportForMoreDetails":"you can contact with direct support for more detail's",
     "adsAndOffers":"Ads & offers"
 }

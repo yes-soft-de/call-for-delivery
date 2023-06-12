@@ -646,7 +646,7 @@ class UpdateOrderLoaded extends States {
                 ),
                 // payment method
                 Visibility(
-                    visible: screenState.payments == 'cash' &&
+                    visible: screenState.payments == 'card' &&
                         screenState.priceController.text.isNotEmpty,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
@@ -725,7 +725,8 @@ class UpdateOrderLoaded extends States {
 
                 /// cost type
                 Visibility(
-                  visible: AppConfig.packageType == 1 || screenState.payments == 'cash',
+                  visible: AppConfig.packageType == 1 &&
+                      screenState.payments == 'cash',
                   child: ListTile(
                     title: Padding(
                       padding: const EdgeInsets.all(8.0),

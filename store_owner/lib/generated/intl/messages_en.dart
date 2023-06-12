@@ -67,6 +67,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Branch has been added successfully"),
         "addProducts": MessageLookupByLibrary.simpleMessage("Add Products"),
         "address": MessageLookupByLibrary.simpleMessage("Address"),
+        "adminNotes": MessageLookupByLibrary.simpleMessage("admin notes:"),
         "adsAndOffers": MessageLookupByLibrary.simpleMessage("Ads & offers"),
         "age": MessageLookupByLibrary.simpleMessage("Age"),
         "all": MessageLookupByLibrary.simpleMessage("All"),
@@ -322,6 +323,10 @@ class MessageLookup extends MessageLookupByLibrary {
         "directSupport": MessageLookupByLibrary.simpleMessage("Direct Support"),
         "discount": MessageLookupByLibrary.simpleMessage("Discount"),
         "distance": MessageLookupByLibrary.simpleMessage("Distance"),
+        "distanceEditedByAdmin": MessageLookupByLibrary.simpleMessage(
+            "distance has been edited by admin\ntap to more details"),
+        "distanceUpdated":
+            MessageLookupByLibrary.simpleMessage("distance updated"),
         "distanceUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Distance updated successfully"),
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
@@ -410,6 +415,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Geographical range"),
         "getDirection": MessageLookupByLibrary.simpleMessage("Get Direction"),
         "go": MessageLookupByLibrary.simpleMessage("Go"),
+        "goToOffers": MessageLookupByLibrary.simpleMessage("go to offers"),
         "groupOrder": MessageLookupByLibrary.simpleMessage("Group Order"),
         "help": MessageLookupByLibrary.simpleMessage("Help"),
         "helpMeMore": MessageLookupByLibrary.simpleMessage("Help me more"),
@@ -562,6 +568,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "offerStatus": MessageLookupByLibrary.simpleMessage("offerStatus"),
         "offerStatusUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Offer Status Updated Successfully"),
+        "ok": MessageLookupByLibrary.simpleMessage("ok"),
         "onGoingOrder": MessageLookupByLibrary.simpleMessage("Ongoing Order"),
         "onGoingOrderChatRooms":
             MessageLookupByLibrary.simpleMessage("Ongoing chat rooms"),
@@ -971,6 +978,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Transportation Count"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("Try again"),
         "unActiveOffer": MessageLookupByLibrary.simpleMessage("Inactive offer"),
+        "unLimitedOrders":
+            MessageLookupByLibrary.simpleMessage("unlimited orders"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "Your request not accepted from administration you can contact us to get info"),
         "unavailable": MessageLookupByLibrary.simpleMessage("Unavailable"),
@@ -1060,6 +1069,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "wrongOrderType":
             MessageLookupByLibrary.simpleMessage("Wrong order type"),
         "yes": MessageLookupByLibrary.simpleMessage("Yes"),
+        "youCanContactWithDirectSupportForMoreDetails":
+            MessageLookupByLibrary.simpleMessage(
+                "you can contact with direct support for more detail\'s"),
         "youCanResendAfter": MessageLookupByLibrary.simpleMessage(
             "You can resend verification after"),
         "youCannotDeleteOrder": MessageLookupByLibrary.simpleMessage(

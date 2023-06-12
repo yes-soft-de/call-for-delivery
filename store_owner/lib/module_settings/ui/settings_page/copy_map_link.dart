@@ -18,7 +18,7 @@ class _CopyMapLinkScreenState extends State<CopyMapLinkScreen> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       var argument =
           ModalRoute.of(context)?.settings.arguments as DeepLinksModel?;
-      Clipboard.setData(ClipboardData(text: argument?.link.toString()));
+      Clipboard.setData(ClipboardData(text: argument?.link.toString() ?? ''));
       Fluttertoast.showToast(msg: S.current.copyFinished);
       SystemNavigator.pop();
       Fluttertoast.showToast(msg: S.current.copyFinished);
@@ -63,7 +63,7 @@ class _CopyMapLinkScreenState extends State<CopyMapLinkScreen> {
                   style: ElevatedButton.styleFrom(shape: StadiumBorder()),
                   onPressed: () {
                     Clipboard.setData(
-                        ClipboardData(text: argument?.link.toString()));
+                        ClipboardData(text: argument?.link.toString() ?? ''));
                   },
                   child: Text(S.current.copy)),
               SizedBox(

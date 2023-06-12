@@ -65,6 +65,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تمت إضافة الفرع بنجاح"),
         "addProducts": MessageLookupByLibrary.simpleMessage("إضافة منتجات"),
         "address": MessageLookupByLibrary.simpleMessage("الموقع"),
+        "adminNotes": MessageLookupByLibrary.simpleMessage("ملاحظات الادارة:"),
         "adsAndOffers":
             MessageLookupByLibrary.simpleMessage("الإعلانات و العروض"),
         "age": MessageLookupByLibrary.simpleMessage("العمر"),
@@ -315,6 +316,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "directSupport": MessageLookupByLibrary.simpleMessage("دعم مباشر"),
         "discount": MessageLookupByLibrary.simpleMessage("الخصم"),
         "distance": MessageLookupByLibrary.simpleMessage("المسافة"),
+        "distanceEditedByAdmin": MessageLookupByLibrary.simpleMessage(
+            "المسافة عدلت من قبل الادارة\nيكنك الاطلاع على المزيد من التفاصيل هنا"),
+        "distanceUpdated": MessageLookupByLibrary.simpleMessage("مسافة معدلة"),
         "distanceUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث المسافة بنجاح"),
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
@@ -402,6 +406,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "getDirection":
             MessageLookupByLibrary.simpleMessage("موقع المحل (الاستلام)"),
         "go": MessageLookupByLibrary.simpleMessage("انطلق"),
+        "goToOffers": MessageLookupByLibrary.simpleMessage("اذهب الى العروض"),
         "groupOrder": MessageLookupByLibrary.simpleMessage("طلب مجمع"),
         "help": MessageLookupByLibrary.simpleMessage("Help"),
         "helpMeMore": MessageLookupByLibrary.simpleMessage("تواصلوا معي"),
@@ -553,6 +558,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "offerStatus": MessageLookupByLibrary.simpleMessage("حالة العرض"),
         "offerStatusUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث عرض السعر بنجاح"),
+        "ok": MessageLookupByLibrary.simpleMessage("حسنا"),
         "onGoingOrder": MessageLookupByLibrary.simpleMessage("الطلبات الجارية"),
         "onGoingOrderChatRooms":
             MessageLookupByLibrary.simpleMessage("محادثات الطلبات الجارية"),
@@ -965,6 +971,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "transCount": MessageLookupByLibrary.simpleMessage("عدد النقلات"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
         "unActiveOffer": MessageLookupByLibrary.simpleMessage("عرض غير فعال"),
+        "unLimitedOrders":
+            MessageLookupByLibrary.simpleMessage("عدد طلبات غير محدود"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "لم يتم الموافقة على اشتراكك من قبل الإدارة يمكنك التواصل معنا للحصول على المزيد من التفاصيل"),
         "unavailable": MessageLookupByLibrary.simpleMessage("غير معروفة"),
@@ -1053,6 +1061,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "wrongOrderType":
             MessageLookupByLibrary.simpleMessage("خطأ في نوع الطلب"),
         "yes": MessageLookupByLibrary.simpleMessage("نعم"),
+        "youCanContactWithDirectSupportForMoreDetails":
+            MessageLookupByLibrary.simpleMessage(
+                "يمكنك التواصل مع الدعم المباشر ان اردت مراجعة الحالة"),
         "youCanResendAfter":
             MessageLookupByLibrary.simpleMessage("يمكنك طلب رمز جديد بعد مرور"),
         "youCannotDeleteOrder": MessageLookupByLibrary.simpleMessage(

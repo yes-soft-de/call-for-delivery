@@ -15,10 +15,10 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 2.0.45+238
+version: 2.1.51+238
 
 environment:
-  sdk: ">=2.16.0 <3.0.0"
+  sdk: ">=2.17.0 <3.0.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -66,7 +66,10 @@ dependencies:
   analyzer_plugin: ^0.11.2
   # Time Ago Generator
   timeago: ^3.0.2
-  simple_moment: ^1.1.1
+  simple_moment: 
+    git:
+      url: https://github.com/Yazan99sh/simple_moment
+      ref: master
   # String Validators
   validators: ^3.0.0
   # Svg Loader
@@ -81,7 +84,7 @@ dependencies:
   firebase_messaging: ^14.2.1
   firebase_crashlytics: ^3.0.11
   # Internationalization
-  intl: ^0.17.0
+  intl: ^0.18.0
   intl_utils: ^2.3.0
   # UUID
   uuid: ^3.0.4
@@ -125,6 +128,8 @@ dependencies:
   file_picker: ^5.2.5
   flutter_swipe_detector: ^2.0.0
   flutter_native_timezone: ^2.0.0
+  flutter_linkify: ^5.0.2
+  card_swiper: ^2.0.4
 
 
 dev_dependencies:
@@ -147,8 +152,7 @@ dev_dependencies:
   # contacts_service: ^0.6.3
   permission_handler: ^10.0.0
   internet_connection_checker: ^1.0.0+1
-  package_info_plus: ^3.0.2
-  flutter_linkify: ^5.0.2
+  package_info_plus: ^4.0.1
   new_version_plus: ^0.0.9
 
   

@@ -32,7 +32,8 @@ class SubscriptionBalanceLoadedState extends States {
       appBar: CustomC4dAppBar
           .appBar(context, title: S.current.mySubscription, actions: [
         Visibility(
-          visible: balanceStatusEnum == BalanceStatus.EXPIRED || balanceStatusEnum == BalanceStatus.ORDERS_FINISHED,
+          visible: balanceStatusEnum == BalanceStatus.EXPIRED ||
+              balanceStatusEnum == BalanceStatus.ORDERS_FINISHED,
           child: CustomC4dAppBar.actionIcon(context, onTap: () {
             showModalBottomSheet(
                 backgroundColor: Colors.transparent,
@@ -63,7 +64,8 @@ class SubscriptionBalanceLoadedState extends States {
                                 Divider(
                                   indent: 16,
                                   endIndent: 16,
-                                  color: Theme.of(context).backgroundColor,
+                                  color:
+                                      Theme.of(context).colorScheme.background,
                                   thickness: 2.5,
                                 ),
                                 // renew new subscription
@@ -80,7 +82,8 @@ class SubscriptionBalanceLoadedState extends States {
                                 Divider(
                                   indent: 16,
                                   endIndent: 16,
-                                  color: Theme.of(context).backgroundColor,
+                                  color:
+                                      Theme.of(context).colorScheme.background,
                                   thickness: 2.5,
                                 ),
                                 // renew current subscription
@@ -112,7 +115,7 @@ class SubscriptionBalanceLoadedState extends States {
                                 padding: const EdgeInsets.all(10.0),
                                 child: Text(
                                   S.current.close,
-                                  style: Theme.of(context).textTheme.button,
+                                  style: Theme.of(context).textTheme.labelLarge,
                                 ),
                               )),
                         ),
@@ -154,6 +157,7 @@ class SubscriptionBalanceLoadedState extends States {
             ),
             // package card
             SinglePackageCard(
+              packageType: balance.packageType,
               carsCount: balance.packageCarsCount.toString(),
               ordersCount: balance.packageOrdersCount.toString(),
               packageInfo: '',
@@ -173,13 +177,13 @@ class SubscriptionBalanceLoadedState extends States {
                       ? []
                       : [
                           BoxShadow(
-                              color: Theme.of(context).backgroundColor,
+                              color: Theme.of(context).colorScheme.background,
                               spreadRadius: 1,
                               blurRadius: 10,
                               offset: Offset(-0.2, 0)),
                         ],
                   borderRadius: BorderRadius.circular(25),
-                  color: Theme.of(context).backgroundColor,
+                  color: Theme.of(context).colorScheme.background,
                 ),
                 child: Column(
                   children: [
@@ -235,8 +239,10 @@ class SubscriptionBalanceLoadedState extends States {
                                     balanceStatusEnum != BalanceStatus.EXPIRED,
                                 child: Icon(
                                   Icons.check_rounded,
-                                  color:
-                                      Theme.of(context).textTheme.button?.color,
+                                  color: Theme.of(context)
+                                      .textTheme
+                                      .labelLarge
+                                      ?.color,
                                 ),
                               ),
                             ),
@@ -281,7 +287,7 @@ class SubscriptionBalanceLoadedState extends States {
                                     Icons.check_rounded,
                                     color: Theme.of(context)
                                         .textTheme
-                                        .button
+                                        .labelLarge
                                         ?.color,
                                   ),
                                 )),
@@ -351,12 +357,13 @@ class SubscriptionBalanceLoadedState extends States {
               ),
             ),
             // capacity bar
-            _getOrderRow(
-              context,
-              balance.remainingOrders,
-              (balance.packageOrdersCount - balance.remainingOrders).abs(),
-              (balance.remainingOrders / balance.packageOrdersCount < 0.7),
-            ),
+            if (balance.packageType != 1)
+              _getOrderRow(
+                context,
+                balance.remainingOrders,
+                (balance.packageOrdersCount - balance.remainingOrders).abs(),
+                (balance.remainingOrders / balance.packageOrdersCount < 0.7),
+              ),
             _getCarsRow(
                 context,
                 balance.remainingCars,
@@ -375,7 +382,7 @@ class SubscriptionBalanceLoadedState extends States {
                     leading: Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(12),
-                            color: Theme.of(context).backgroundColor),
+                            color: Theme.of(context).colorScheme.background),
                         child: Padding(
                           padding: const EdgeInsets.all(10.0),
                           child: Icon(Icons.local_taxi_rounded),

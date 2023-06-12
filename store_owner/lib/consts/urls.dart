@@ -3,8 +3,12 @@
 // Named Domain ===> ''
 // Named Domain ===> ''
 
+
+const String devDomain = 'http://134.209.241.49';
+const String prodDomain = 'http://46.101.100.62';
+
 class Urls {
-  static const String DOMAIN = 'http://134.209.241.49';
+  static const String DOMAIN = devDomain;
   static const String BASE_API = DOMAIN + '/v1/store';
   static const String BASE_API_USER = DOMAIN + '/v1/user';
   static const String IMAGES_ROOT =
@@ -24,7 +28,8 @@ class Urls {
   static const VERIFY_RESET_PASSWORD_CODE =
       DOMAIN + '/v1/resetpassword/verifyresetpasswordcode';
   static const UPDATE_PASSWORD = DOMAIN + '/v1/resetpassword/updatepassword';
-  static const EASY_UPDATE_PASSWORD = DOMAIN + '/v1/resetpassword/updatepasswordbyloggedinuser';
+  static const EASY_UPDATE_PASSWORD =
+      DOMAIN + '/v1/resetpassword/updatepasswordbyloggedinuser';
   static const REPORT_API = BASE_API + '/report';
   static const CREATE_CUSTOM_PRODUCT_API = BASE_API + '/customproductnotfound';
   static const NOTIFICATION_API =

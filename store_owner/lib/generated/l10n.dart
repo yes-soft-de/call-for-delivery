@@ -7040,6 +7040,76 @@ class S {
     );
   }
 
+  /// `unlimited orders`
+  String get unLimitedOrders {
+    return Intl.message(
+      'unlimited orders',
+      name: 'unLimitedOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `go to offers`
+  String get goToOffers {
+    return Intl.message(
+      'go to offers',
+      name: 'goToOffers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `distance has been edited by admin\ntap to more details`
+  String get distanceEditedByAdmin {
+    return Intl.message(
+      'distance has been edited by admin\ntap to more details',
+      name: 'distanceEditedByAdmin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `distance updated`
+  String get distanceUpdated {
+    return Intl.message(
+      'distance updated',
+      name: 'distanceUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `admin notes:`
+  String get adminNotes {
+    return Intl.message(
+      'admin notes:',
+      name: 'adminNotes',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ok`
+  String get ok {
+    return Intl.message(
+      'ok',
+      name: 'ok',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `you can contact with direct support for more detail's`
+  String get youCanContactWithDirectSupportForMoreDetails {
+    return Intl.message(
+      'you can contact with direct support for more detail\'s',
+      name: 'youCanContactWithDirectSupportForMoreDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Ads & offers`
   String get adsAndOffers {
     return Intl.message(

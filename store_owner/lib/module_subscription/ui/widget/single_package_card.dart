@@ -1,12 +1,12 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_subscription/ui/widget/package_card/info_button.dart';
-import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:dotted_line/dotted_line.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class SinglePackageCard extends StatelessWidget {
   final String packageName;
+  final int packageType;
   final String packageInfo;
   final String ordersCount;
   final String carsCount;
@@ -24,7 +24,7 @@ class SinglePackageCard extends StatelessWidget {
       required this.expired,
       required this.geographicalRange,
       required this.packageExtraCost,
-      this.unPaidCashOrdersSum});
+      this.unPaidCashOrdersSum, required this.packageType});
 
   @override
   Widget build(BuildContext context) {
@@ -49,7 +49,7 @@ class SinglePackageCard extends StatelessWidget {
                 BoxShadow(
                     color: active
                         ? Theme.of(context).colorScheme.primary.withOpacity(0.5)
-                        : Theme.of(context).backgroundColor,
+                        : Theme.of(context).colorScheme.background,
                     spreadRadius: 1,
                     blurRadius: 10,
                     offset: Offset(-0.2, 0)),
@@ -102,7 +102,7 @@ class SinglePackageCard extends StatelessWidget {
                   packageName,
                   style: TextStyle(
                       color: active
-                          ? Theme.of(context).textTheme.button?.color
+                          ? Theme.of(context).textTheme.labelLarge?.color
                           : null,
                       fontWeight: FontWeight.bold),
                 ),
@@ -112,7 +112,7 @@ class SinglePackageCard extends StatelessWidget {
                 padding: const EdgeInsets.only(
                     right: 16.0, left: 16, top: 16, bottom: 16),
                 child: DottedLine(
-                  dashColor: Theme.of(context).backgroundColor,
+                  dashColor: Theme.of(context).colorScheme.background,
                   lineThickness: 2.5,
                   dashRadius: 25,
                 ),
@@ -124,7 +124,7 @@ class SinglePackageCard extends StatelessWidget {
                   S.current.packageInfo,
                   style: TextStyle(
                       color: active
-                          ? Theme.of(context).textTheme.button?.color
+                          ? Theme.of(context).textTheme.labelLarge?.color
                           : null,
                       fontSize: 14,
                       fontWeight: FontWeight.bold),
@@ -144,7 +144,7 @@ class SinglePackageCard extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          color: Theme.of(context).backgroundColor),
+                          color: Theme.of(context).colorScheme.background),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Icon(Icons.sync_alt_rounded,
@@ -157,12 +157,14 @@ class SinglePackageCard extends StatelessWidget {
                       width: 16,
                     ),
                     SizedBox(
-                      width: 105,
+                      // width: 105,
                       child: Text(
-                        '${ordersCount} ' + S.of(context).sOrder,
+                        (packageType == 1
+                            ? S.current.unLimitedOrders
+                            : '${ordersCount} ' + S.of(context).sOrder),
                         style: TextStyle(
                           color: active
-                              ? Theme.of(context).textTheme.button?.color
+                              ? Theme.of(context).textTheme.labelLarge?.color
                               : null,
                         ),
                         overflow: TextOverflow.ellipsis,
@@ -185,7 +187,7 @@ class SinglePackageCard extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          color: Theme.of(context).backgroundColor),
+                          color: Theme.of(context).colorScheme.background),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: FaIcon(FontAwesomeIcons.car,
@@ -204,7 +206,10 @@ class SinglePackageCard extends StatelessWidget {
                               '${carsCount} ' + S.of(context).car,
                               style: TextStyle(
                                 color: active
-                                    ? Theme.of(context).textTheme.button?.color
+                                    ? Theme.of(context)
+                                        .textTheme
+                                        .labelLarge
+                                        ?.color
                                     : null,
                               ),
                             )
@@ -212,7 +217,10 @@ class SinglePackageCard extends StatelessWidget {
                               '∞ ' + S.of(context).car,
                               style: TextStyle(
                                 color: active
-                                    ? Theme.of(context).textTheme.button?.color
+                                    ? Theme.of(context)
+                                        .textTheme
+                                        .labelLarge
+                                        ?.color
                                     : null,
                               ),
                             ),
@@ -233,7 +241,7 @@ class SinglePackageCard extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          color: Theme.of(context).backgroundColor),
+                          color: Theme.of(context).colorScheme.background),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Icon(Icons.date_range_rounded,
@@ -255,7 +263,7 @@ class SinglePackageCard extends StatelessWidget {
                             S.current.validation,
                         style: TextStyle(
                           color: active
-                              ? Theme.of(context).textTheme.button?.color
+                              ? Theme.of(context).textTheme.labelLarge?.color
                               : null,
                         ),
                       ),
@@ -277,7 +285,7 @@ class SinglePackageCard extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          color: Theme.of(context).backgroundColor),
+                          color: Theme.of(context).colorScheme.background),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Icon(Icons.attach_money_rounded,
@@ -292,7 +300,7 @@ class SinglePackageCard extends StatelessWidget {
                       child: Text(
                         '$packageExtraCost' + ' ' + S.current.sar,
                         style: TextStyle(
-                          color: Theme.of(context).textTheme.button?.color,
+                          color: Theme.of(context).textTheme.labelLarge?.color,
                         ),
                       ),
                     ),
@@ -313,7 +321,7 @@ class SinglePackageCard extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          color: Theme.of(context).backgroundColor),
+                          color: Theme.of(context).colorScheme.background),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Icon(Icons.add_road_rounded,
@@ -328,7 +336,7 @@ class SinglePackageCard extends StatelessWidget {
                       child: Text(
                         '$geographicalRange' + ' ' + S.current.km,
                         style: TextStyle(
-                          color: Theme.of(context).textTheme.button?.color,
+                          color: Theme.of(context).textTheme.labelLarge?.color,
                         ),
                       ),
                     ),
@@ -349,7 +357,7 @@ class SinglePackageCard extends StatelessWidget {
                     Container(
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(12),
-                          color: Theme.of(context).backgroundColor),
+                          color: Theme.of(context).colorScheme.background),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Icon(FontAwesomeIcons.moneyCheck,
@@ -367,7 +375,7 @@ class SinglePackageCard extends StatelessWidget {
                           '$unPaidCashOrdersSum' + ' ' + S.current.sar,
                           style: TextStyle(
                             color: active
-                                ? Theme.of(context).textTheme.button?.color
+                                ? Theme.of(context).textTheme.labelLarge?.color
                                 : null,
                           ),
                         ),
@@ -378,7 +386,7 @@ class SinglePackageCard extends StatelessWidget {
                           '${S.current.unpaidOrders}',
                           style: TextStyle(
                             color: active
-                                ? Theme.of(context).textTheme.button?.color
+                                ? Theme.of(context).textTheme.labelLarge?.color
                                 : null,
                           ),
                         ),
