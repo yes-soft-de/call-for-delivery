@@ -59,4 +59,10 @@ class ExternallyDeliveredOrderManager
     {
         return $this->externallyDeliveredOrderEntityRepository->findBy(['orderId' => $orderId]);
     }
+
+    public function getExternallyDeliveredOrderByExternalOrderId(int $externalOrderId): ?ExternallyDeliveredOrderEntity
+    {
+        return $this->externallyDeliveredOrderEntityRepository->findOneBy(['externalOrderId' => $externalOrderId,
+            'externalDeliveryCompany' => 1]);
+    }
 }

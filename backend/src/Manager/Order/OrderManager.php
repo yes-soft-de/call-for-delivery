@@ -823,4 +823,13 @@ class OrderManager
         return $this->orderRepository->findBy(['state' => OrderStateConstant::ORDER_STATE_PENDING,
             'orderType' => OrderTypeConstant::ORDER_TYPE_NORMAL, 'isHide' => OrderIsHideConstant::ORDER_SHOW]);
     }
+
+    public function updateOrderStateByOrderEntityAndNewState(OrderEntity $orderEntity, string $state): OrderEntity
+    {
+        $orderEntity->setState($state);
+
+        $this->entityManager->flush();
+
+        return $orderEntity;
+    }
 }

@@ -12,6 +12,7 @@ use Symfony\Contracts\HttpClient\ResponseInterface;
 
 /**
  * Responsible for sending order externally to be delivered by Mrsool
+ * ////todo to be moved to Service\Mrsool path
  */
 class MrsoolDeliveredOrderService
 {
