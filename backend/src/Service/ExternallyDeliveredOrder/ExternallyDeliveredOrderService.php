@@ -8,6 +8,9 @@ use App\Manager\ExternallyDeliveredOrder\ExternallyDeliveredOrderManager;
 use App\Request\ExternallyDeliveredOrder\ExternallyDeliveredOrderCreateRequest;
 use App\Request\ExternallyDeliveredOrder\ExternallyDeliveredOrderStatusUpdateRequest;
 
+/**
+ * Responsible for create/update objects of ExternallyDeliveredOrderEntity
+ */
 class ExternallyDeliveredOrderService
 {
     public function __construct(

@@ -7,7 +7,7 @@ use App\Service\Mrsool\MrsoolOrderGetService;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
 /**
- * Responsible for get external order info (status)
+ * Responsible for get external order info (like status)
  */
 class ExternalOrderGetHandlerService
 {
@@ -15,11 +15,6 @@ class ExternalOrderGetHandlerService
         private MrsoolOrderGetService $mrsoolOrderGetService
     )
     {
-    }
-
-    public function handleUpdateExternalOrders()
-    {
-
     }
 
     public function getOrderByIdFromMrsool(int $orderId): ResponseInterface
@@ -33,7 +28,6 @@ class ExternalOrderGetHandlerService
     public function handleResponseInterface(ResponseInterface $response): int|array
     {
         $statusCode = $response->getStatusCode();
-        //$arrayResponse = json_decode($response->getContent(), true);
 
         if ($statusCode === HttpResponseConstant::INVALID_CREDENTIALS_STATUS_CODE_CONST) {
             return HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST;
@@ -43,7 +37,6 @@ class ExternalOrderGetHandlerService
 
         } elseif ($statusCode === HttpResponseConstant::ORDER_FOUND_STATUS_CODE_CONST) {
             // While the create post request done successfully, then return the response content
-            //return $arrayResponse;
             return json_decode($response->getContent(), true);
         }
 

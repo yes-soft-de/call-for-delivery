@@ -2230,4 +2230,9 @@ class OrderService
         return $this->externallyDeliveredOrderHandleService->handleSendingOrderToExternalDeliveryCompany($orderEntity,
             $storeOrderDetailsEntity);
     }
+
+    public function updateOrderStateByOrderEntityAndNewState(OrderEntity $orderEntity, string $state): OrderEntity
+    {
+        return $this->orderManager->updateOrderStateByOrderEntityAndNewState($orderEntity, $state);
+    }
 }

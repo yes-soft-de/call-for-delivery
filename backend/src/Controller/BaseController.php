@@ -181,6 +181,7 @@ class BaseController extends AbstractController
     // external order
     const INVALID_CREDENTIALS_RESULT_CONST = ["invalid credentials", "9676"];
     const INVALID_INPUT_RESULT_CONST = ["invalid input", "9677"];
+    const EXTERNAL_ORDER_NOT_FOUND_CONST = ["external order not found", "9678"];
 
     public function __construct(SerializerInterface $serializer)
     {

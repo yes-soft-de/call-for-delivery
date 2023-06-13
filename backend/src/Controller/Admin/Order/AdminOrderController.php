@@ -354,7 +354,7 @@ class AdminOrderController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function getPendingOrdersForAdmin(int $externalOrder, int $externalCompanyId = 0): JsonResponse
+    public function getPendingOrdersForAdmin(int $externalOrder = 0, int $externalCompanyId = 0): JsonResponse
     {
         $response = $this->adminOrderService->getPendingOrdersForAdmin($this->getUserId(), $externalOrder, $externalCompanyId);
         
