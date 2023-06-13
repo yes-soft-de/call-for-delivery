@@ -117,7 +117,7 @@ class ExternalOrdersLoadedState extends States {
         ),
       ));
     }
-    if (widgets.length == 1) {
+    if (widgets.length == 0) {
       widgets.add(SizedBox(
         height: 400,
         child: Column(
