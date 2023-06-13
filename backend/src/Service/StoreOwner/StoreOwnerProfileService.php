@@ -10,30 +10,33 @@ use App\Request\Account\CompleteAccountStatusUpdateRequest;
 use App\Request\Admin\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest;
 use App\Request\Admin\StoreOwner\StoreOwnerProfileUpdateByAdminRequest;
 use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
+use App\Request\StoreOwnerBranch\StoreOwnerBranchCreateRequest;
 use App\Request\Verification\VerificationCreateRequest;
 use App\Response\Admin\StoreOwner\StoreOwnerProfileByIdGetByAdminResponse;
 use App\Response\Admin\StoreOwner\StoreOwnerProfileGetByAdminResponse;
 use App\Response\StoreOwner\StoreOwnerProfileResponse;
 use App\Entity\UserEntity;
 use App\Request\User\UserRegisterRequest;
+use App\Response\StoreOwnerBranch\StoreOwnerBranchResponse;
 use App\Response\User\UserRegisterResponse;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
+use App\Service\StoreOwnerBranch\StoreOwnerBranchService;
 use App\Service\Verification\VerificationService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class StoreOwnerProfileService
 {
-    private AutoMapping $autoMapping;
     private $params;
-    private StoreOwnerProfileManager $storeOwnerProfileManager;
-    private VerificationService $verificationService;
 
-    public function __construct(AutoMapping $autoMapping, StoreOwnerProfileManager $storeOwnerProfileManager, ParameterBagInterface $params, VerificationService $verificationService)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private StoreOwnerProfileManager $storeOwnerProfileManager,
+        ParameterBagInterface $params,
+        private VerificationService $verificationService,
+        private StoreOwnerBranchService $storeOwnerBranchService
+    )
     {
         $this->params = $params->get('upload_base_url') . '/';
-        $this->autoMapping = $autoMapping;
-        $this->storeOwnerProfileManager = $storeOwnerProfileManager;
-        $this->verificationService = $verificationService;
     }
 
     public function storeOwnerRegister(UserRegisterRequest $request): UserRegisterResponse
@@ -60,9 +63,44 @@ class StoreOwnerProfileService
         $this->verificationService->createVerificationCode($verificationCodeRequest);
     }
 
+    public function createStoreOwnerBranch(StoreOwnerProfileUpdateRequest $request, StoreOwnerProfileEntity $storeOwnerProfileEntity): ?StoreOwnerBranchResponse
+    {
+        $branchCreateRequest = $this->autoMapping->map(StoreOwnerProfileUpdateRequest::class,
+            StoreOwnerBranchCreateRequest::class, $request);
+
+        if (($request->getStoreOwnerName() === "0")) {
+            $branchCreateRequest->setName("الرئيسي");
+
+        } else {
+            $branchCreateRequest->setName($request->getStoreOwnerName());
+        }
+
+        $branchCreateRequest->setStoreOwner($storeOwnerProfileEntity);
+        $branchCreateRequest->setIsActive(true);
+
+        if (! $request->getCity()) {
+            $branchCreateRequest->setCity("");
+        }
+
+        if (! $request->getPhone()) {
+            $branchCreateRequest->setBranchPhone("");
+        }
+
+        return $this->storeOwnerBranchService->createDefaultBranch($branchCreateRequest);
+    }
+
     public function storeOwnerProfileUpdate(StoreOwnerProfileUpdateRequest $request): StoreOwnerProfileResponse
     {
         $item = $this->storeOwnerProfileManager->storeOwnerProfileUpdate($request);
+
+        if ($item instanceof StoreOwnerProfileEntity) {//dd($item);
+            // If store owner profile updates for the first time, then create a default branch for it
+            if ($item->getCompleteAccountStatus() === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED) {//dd(1);
+                // create store branch as long as profileCompleted
+                $this->createStoreOwnerBranch($request, $item);
+                // update completeAccountStatus to branchCreated
+            }
+        }
 
         return $this->autoMapping->map(StoreOwnerProfileEntity::class, StoreOwnerProfileResponse::class, $item);
     }

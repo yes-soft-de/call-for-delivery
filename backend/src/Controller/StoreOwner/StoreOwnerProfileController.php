@@ -28,16 +28,15 @@ use App\Request\StoreOwner\StoreOwnerProfileUpdateRequest;
  */
 class StoreOwnerProfileController extends BaseController
 {
-    private AutoMapping $autoMapping;
-    private ValidatorInterface $validator;
-    private StoreOwnerProfileService $storeOwnerProfileService;
-
-    public function __construct( AutoMapping $autoMapping, SerializerInterface $serializer, ValidatorInterface $validator, StoreOwnerProfileService $storeOwnerProfileService)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        SerializerInterface $serializer,
+        private ValidatorInterface $validator,
+        private StoreOwnerProfileService $storeOwnerProfileService
+    )
     {
         parent::__construct($serializer);
-        $this->storeOwnerProfileService = $storeOwnerProfileService;
-        $this->validator = $validator;
-        $this->autoMapping = $autoMapping;
+
     }
 
     /**
@@ -157,17 +156,19 @@ class StoreOwnerProfileController extends BaseController
         $data = json_decode($request->getContent(), true);
 
         $request = $this->autoMapping->map(stdClass::class, StoreOwnerProfileUpdateRequest::class, (object)$data);
+
         $request->setUserID($this->getUserId());
 
         $violations = $this->validator->validate($request);
-        if(\count($violations) > 0)
-        {
+
+        if(\count($violations) > 0) {
             $violationsString = (string) $violations;
 
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
         $response = $this->storeOwnerProfileService->storeOwnerProfileUpdate($request);
+
         return $this->response($response, self::UPDATE);
     }
 
