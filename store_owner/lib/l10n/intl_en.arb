@@ -705,6 +705,9 @@
     "distanceUpdated":"distance updated",
     "adminNotes":"admin notes:",
     "ok":"ok",
+    "arabic":"Arabic",
+    "english":"English",
+    "continueWord":"Continue",
     "youCanContactWithDirectSupportForMoreDetails":"you can contact with direct support for more detail's",
     "adsAndOffers":"Ads & offers"
 }

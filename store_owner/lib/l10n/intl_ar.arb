@@ -705,6 +705,9 @@
     "distanceUpdated":"مسافة معدلة",
     "adminNotes":"ملاحظات الادارة:",
     "ok":"حسنا",
+    "arabic":"العربية",
+    "english":"الانكليزية",
+    "continueWord":"متابعة",
     "youCanContactWithDirectSupportForMoreDetails":"يمكنك التواصل مع الدعم المباشر ان اردت مراجعة الحالة",
     "adsAndOffers": "الإعلانات و العروض"
 }

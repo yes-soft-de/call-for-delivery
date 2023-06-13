@@ -7100,6 +7100,36 @@ class S {
     );
   }
 
+  /// `Arabic`
+  String get arabic {
+    return Intl.message(
+      'Arabic',
+      name: 'arabic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `English`
+  String get english {
+    return Intl.message(
+      'English',
+      name: 'english',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Continue`
+  String get continueWord {
+    return Intl.message(
+      'Continue',
+      name: 'continueWord',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `you can contact with direct support for more detail's`
   String get youCanContactWithDirectSupportForMoreDetails {
     return Intl.message(

@@ -79,6 +79,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "and": MessageLookupByLibrary.simpleMessage(" & "),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
         "apply": MessageLookupByLibrary.simpleMessage("APPLY"),
+        "arabic": MessageLookupByLibrary.simpleMessage("Arabic"),
         "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
             "Are you sure about deleting your account , you won\'t be able to login with this credential any more"),
         "areYouSureAboutCreatingSubOrder": MessageLookupByLibrary.simpleMessage(
@@ -264,6 +265,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
         "contacts": MessageLookupByLibrary.simpleMessage("Contacts"),
+        "continueWord": MessageLookupByLibrary.simpleMessage("Continue"),
         "copy": MessageLookupByLibrary.simpleMessage("Copy"),
         "copyFinished":
             MessageLookupByLibrary.simpleMessage("Link Copied Successfully"),
@@ -348,6 +350,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "emptyPackagesCategory": MessageLookupByLibrary.simpleMessage(
             "There is no packages in this category"),
         "endDate": MessageLookupByLibrary.simpleMessage("To date"),
+        "english": MessageLookupByLibrary.simpleMessage("English"),
         "enquiries": MessageLookupByLibrary.simpleMessage("Orders Enquiries"),
         "enquiryAboutOrder":
             MessageLookupByLibrary.simpleMessage("Enquiry about order number"),

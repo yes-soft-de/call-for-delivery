@@ -77,6 +77,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "and": MessageLookupByLibrary.simpleMessage(" و "),
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
+        "arabic": MessageLookupByLibrary.simpleMessage("العربية"),
         "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد من رغبتك في حذف حسابك ، لن تتمكن من استخدام هذه البيانات في تسجيل الدخول بعد الآن"),
         "areYouSureAboutCreatingSubOrder": MessageLookupByLibrary.simpleMessage(
@@ -259,6 +260,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف للتواصل"),
         "contacts": MessageLookupByLibrary.simpleMessage("جهات الاتصال"),
+        "continueWord": MessageLookupByLibrary.simpleMessage("متابعة"),
         "copy": MessageLookupByLibrary.simpleMessage("نسخ"),
         "copyFinished": MessageLookupByLibrary.simpleMessage("تم النسخ بنجاح"),
         "cost": MessageLookupByLibrary.simpleMessage("التكلفة"),
@@ -340,6 +342,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "emptyPackagesCategory": MessageLookupByLibrary.simpleMessage(
             "لايوجد اشتراكات متوفرة ضمن هذا التصنيف"),
         "endDate": MessageLookupByLibrary.simpleMessage("إلى تاريخ"),
+        "english": MessageLookupByLibrary.simpleMessage("الانكليزية"),
         "enquiries": MessageLookupByLibrary.simpleMessage("استفسارات الطلبات"),
         "enquiryAboutOrder":
             MessageLookupByLibrary.simpleMessage("استفسار بخصوص الطلب رقم"),
