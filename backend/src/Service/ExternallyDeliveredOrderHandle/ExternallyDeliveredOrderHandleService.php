@@ -282,7 +282,8 @@ class ExternallyDeliveredOrderHandleService
         $arrayResponse = $this->handleResponseInterface($orderCreateResponse);
 
         if (($arrayResponse === HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
-            || ($arrayResponse === HttpResponseConstant::INVALID_INPUT_RESULT_CODE_CONST)) {
+            || ($arrayResponse === HttpResponseConstant::INVALID_INPUT_RESULT_CODE_CONST)
+            || ($arrayResponse === HttpResponseConstant::UN_RECOGNIZED_STATUS_CODE_RESULT_CONST)) {
             return $arrayResponse;
         }
 
