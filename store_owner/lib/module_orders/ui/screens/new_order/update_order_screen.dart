@@ -3,6 +3,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
@@ -12,12 +13,14 @@ import 'package:c4d/utils/helpers/link_cleaner.dart';
 import 'package:c4d/utils/helpers/phone_number_detection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 
 @injectable
 class UpdateOrderScreen extends StatefulWidget {
   final UpdateOrderStateManager _stateManager;
+
   UpdateOrderScreen(
     this._stateManager,
   );
@@ -52,8 +55,10 @@ class UpdateOrderScreenState extends State<UpdateOrderScreen>
   int? branch;
   LatLng? customerLocation;
   int? costType;
+
   //
   late OrderDetailsModel orderInfo;
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     Clipboard.hasStrings().asStream().listen((event) async {
@@ -90,10 +95,14 @@ class UpdateOrderScreenState extends State<UpdateOrderScreen>
         old = toController.text;
         locationParsing();
       }
+      if (!toController.text.contains('http')) {
+        toController.clear();
+        Fluttertoast.showToast(msg: S.current.invalidMapLink);
+      }
     });
   }
 
-  void locationParsing() {
+  void locationParsing() async {
     if (toController.text.isNotEmpty && toController.text != '') {
       if (toController.text.contains(' ') || toController.text.contains('\n')) {
         toController.text = Cleaner.clean(toController.text);
@@ -105,6 +114,10 @@ class UpdateOrderScreenState extends State<UpdateOrderScreen>
           double.parse(link.queryParameters['q']!.split(',')[0]),
           double.parse(link.queryParameters['q']!.split(',')[1]),
         );
+        setState(() {});
+      } else if (link != null) {
+        toController.text =
+            await DeepLinksService.getFirebaseDynamicLinkData(data);
         setState(() {});
       } else {
         customerLocation = null;
@@ -131,6 +144,7 @@ class UpdateOrderScreenState extends State<UpdateOrderScreen>
 
   void saveInfo(String info) {}
   bool hideFlag = true;
+
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;

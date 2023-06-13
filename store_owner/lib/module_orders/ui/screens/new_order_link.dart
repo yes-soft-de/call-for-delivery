@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/state_manager/new_order_link_state_manager.dart';
@@ -89,10 +90,14 @@ class NewOrderLinkScreenState extends State<NewOrderLinkScreen>
         old = toController.text;
         locationParsing();
       }
+      if (!toController.text.contains('http')) {
+        toController.clear();
+        Fluttertoast.showToast(msg: S.current.invalidMapLink);
+      }
     });
   }
 
-  void locationParsing() {
+  void locationParsing() async {
     if (toController.text.isNotEmpty && toController.text != '') {
       if (toController.text.contains(' ') || toController.text.contains('\n')) {
         toController.text = Cleaner.clean(toController.text);
@@ -105,6 +110,10 @@ class NewOrderLinkScreenState extends State<NewOrderLinkScreen>
           double.parse(link.queryParameters['q']!.split(',')[1]),
         );
         setState(() {});
+      } else if (link != null) {
+        toController.text = await DeepLinksService.getFirebaseDynamicLinkData(data);
+        setState(() {
+        });
       } else {
         customerLocation = null;
         setState(() {});

@@ -1,6 +1,7 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/state_manager/order_recycling_state_manager.dart';
 import 'package:c4d/module_orders/ui/state/order_recycling_loaded_state.dart';
@@ -11,12 +12,14 @@ import 'package:c4d/utils/helpers/link_cleaner.dart';
 import 'package:c4d/utils/helpers/phone_number_detection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 
 @injectable
 class OrderRecyclingScreen extends StatefulWidget {
   final OrderRecyclingStateManager _stateManager;
+
   OrderRecyclingScreen(this._stateManager);
 
   @override
@@ -29,6 +32,7 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
   late States currentState;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
+
   OrderRecyclingStateManager get manager => widget._stateManager;
 
   // New Order state controller
@@ -43,6 +47,7 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
   int? branch;
   LatLng? customerLocation;
   int? costType;
+
   //
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -84,11 +89,15 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
         old = toController.text;
         locationParsing();
       }
+      if (!toController.text.contains('http')) {
+        toController.clear();
+        Fluttertoast.showToast(msg: S.current.invalidMapLink);
+      }
     });
     super.initState();
   }
 
-  void locationParsing() {
+  void locationParsing() async {
     if (toController.text.isNotEmpty && toController.text != '') {
       if (toController.text.contains(' ') || toController.text.contains('\n')) {
         toController.text = Cleaner.clean(toController.text);
@@ -100,6 +109,10 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
           double.parse(link.queryParameters['q']!.split(',')[0]),
           double.parse(link.queryParameters['q']!.split(',')[1]),
         );
+        setState(() {});
+      } else if (link != null) {
+        toController.text =
+            await DeepLinksService.getFirebaseDynamicLinkData(data);
         setState(() {});
       } else {
         customerLocation = null;
@@ -119,6 +132,7 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
 
   bool canRemoveIt = false;
   bool flag = true;
+
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
@@ -147,7 +161,10 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
                           onPressed: () {
                             Navigator.of(context).pop();
                             CreateOrderRequest request = CreateOrderRequest(
-                                order: orderId, cancel: 1, deliveryCost: null, costType: null);
+                                order: orderId,
+                                cancel: 1,
+                                deliveryCost: null,
+                                costType: null);
                             if (currentState is OrderRecyclingLoaded) {
                               var orderInfo =
                                   (currentState as OrderRecyclingLoaded)
@@ -156,7 +173,8 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
                                   order: orderId,
                                   fromBranch: orderInfo.branchID,
                                   cancel: 1,
-                                  deliveryCost: null, costType: null);
+                                  deliveryCost: null,
+                                  costType: null);
                             }
                             manager.recycle(this, request);
                           },

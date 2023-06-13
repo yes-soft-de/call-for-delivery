@@ -8,11 +8,24 @@ import 'package:c4d/module_deep_links/request/geo_distance_request.dart';
 import 'package:c4d/module_deep_links/response/geo_distance_x/geo_distance_x.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
 import 'package:c4d/utils/logger/logger.dart';
+import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:uni_links/uni_links.dart';
 
 class DeepLinksService {
+  static Future<String> getFirebaseDynamicLinkData(String link) async {
+    try {
+      final dio = Dio();
+      final response = await dio.get(link);
+      print(response.headers);
+      print(response.redirects.first.location.toString());
+      return response.redirects.first.location.toString();
+    } catch (e) {
+      return link;
+    }
+  }
+
   static Future<DeepLinksModel?> checkForGeoLink() async {
     var uri = await getInitialUri();
     if (uri == null) {
