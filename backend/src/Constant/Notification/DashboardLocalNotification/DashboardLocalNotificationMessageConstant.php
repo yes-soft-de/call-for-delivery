@@ -21,4 +21,6 @@ final class DashboardLocalNotificationMessageConstant
     const UN_LINK_ORDERS_BY_STORE_TEXT_CONST = "تم فك ارتباط الطلب ذو الرقم التالي من قبل المتجر ";
 
     const UN_ACCEPT_ORDER_BY_CAPTAIN_TEXT_CONST = "قام الكابتن بالتراجع عن تسليم الطلب ذو الرقم التالي ";
+
+    const ORDER_DISTANCE_CONFLICT_CREATED_BY_CAPTAIN_TEXT_CONST = "تم إنشاء طلب وجود تعارض حول المسافة من أجل الطلب ذو الرقم التالي من قبل الكابتن";
 }

@@ -46,11 +46,15 @@ class AdminProfileEntity
     #[ORM\OneToMany(mappedBy: 'adminProfile', targetEntity: DashboardLocalNotificationEntity::class)]
     private $dashboardLocalNotificationEntities;
 
+    #[ORM\OneToMany(mappedBy: 'updatedBy', targetEntity: ExternalDeliveryCompanyCriteriaEntity::class)]
+    private $externalDeliveryCompanyCriteriaEntities;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->directSupportScriptEntities = new ArrayCollection();
         $this->dashboardLocalNotificationEntities = new ArrayCollection();
+        $this->externalDeliveryCompanyCriteriaEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -214,6 +218,36 @@ class AdminProfileEntity
             // set the owning side to null (unless already changed)
             if ($dashboardLocalNotificationEntity->getAdminProfile() === $this) {
                 $dashboardLocalNotificationEntity->setAdminProfile(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ExternalDeliveryCompanyCriteriaEntity>
+     */
+    public function getExternalDeliveryCompanyCriteriaEntities(): Collection
+    {
+        return $this->externalDeliveryCompanyCriteriaEntities;
+    }
+
+    public function addExternalDeliveryCompanyCriteriaEntity(ExternalDeliveryCompanyCriteriaEntity $externalDeliveryCompanyCriteriaEntity): self
+    {
+        if (!$this->externalDeliveryCompanyCriteriaEntities->contains($externalDeliveryCompanyCriteriaEntity)) {
+            $this->externalDeliveryCompanyCriteriaEntities[] = $externalDeliveryCompanyCriteriaEntity;
+            $externalDeliveryCompanyCriteriaEntity->setUpdatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeExternalDeliveryCompanyCriteriaEntity(ExternalDeliveryCompanyCriteriaEntity $externalDeliveryCompanyCriteriaEntity): self
+    {
+        if ($this->externalDeliveryCompanyCriteriaEntities->removeElement($externalDeliveryCompanyCriteriaEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($externalDeliveryCompanyCriteriaEntity->getUpdatedBy() === $this) {
+                $externalDeliveryCompanyCriteriaEntity->setUpdatedBy(null);
             }
         }
 

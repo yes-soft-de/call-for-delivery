@@ -36,12 +36,12 @@ class AdminNotificationToUsersEntity
     #[ORM\Column(type: 'datetime')]
     private $updatedAt;
 
-    #[ORM\OneToMany(mappedBy: 'AdminNotificationToUser', targetEntity: AdminAnnouncementImageEntity::class)]
-    private $adminAnnouncementImageEntities;
+    #[ORM\OneToMany(mappedBy: 'AdminNotificationToUser', targetEntity: AnnouncementImageEntity::class)]
+    private $announcementImageEntities;
 
     public function __construct()
     {
-        $this->adminAnnouncementImageEntities = new ArrayCollection();
+        $this->announcementImageEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -122,29 +122,29 @@ class AdminNotificationToUsersEntity
     }
 
     /**
-     * @return Collection<int, AdminAnnouncementImageEntity>
+     * @return Collection<int, AnnouncementImageEntity>
      */
-    public function getAdminAnnouncementImageEntities(): Collection
+    public function getAnnouncementImageEntities(): Collection
     {
-        return $this->adminAnnouncementImageEntities;
+        return $this->announcementImageEntities;
     }
 
-    public function addAdminAnnouncementImageEntity(AdminAnnouncementImageEntity $adminAnnouncementImageEntity): self
+    public function addAdminAnnouncementImageEntity(AnnouncementImageEntity $announcementImageEntity): self
     {
-        if (!$this->adminAnnouncementImageEntities->contains($adminAnnouncementImageEntity)) {
-            $this->adminAnnouncementImageEntities[] = $adminAnnouncementImageEntity;
-            $adminAnnouncementImageEntity->setAdminNotificationToUser($this);
+        if (!$this->announcementImageEntities->contains($announcementImageEntity)) {
+            $this->announcementImageEntities[] = $announcementImageEntity;
+            $announcementImageEntity->setAdminNotificationToUser($this);
         }
 
         return $this;
     }
 
-    public function removeAdminAnnouncementImageEntity(AdminAnnouncementImageEntity $adminAnnouncementImageEntity): self
+    public function removeAdminAnnouncementImageEntity(AnnouncementImageEntity $announcementImageEntity): self
     {
-        if ($this->adminAnnouncementImageEntities->removeElement($adminAnnouncementImageEntity)) {
+        if ($this->announcementImageEntities->removeElement($announcementImageEntity)) {
             // set the owning side to null (unless already changed)
-            if ($adminAnnouncementImageEntity->getAdminNotificationToUser() === $this) {
-                $adminAnnouncementImageEntity->setAdminNotificationToUser(null);
+            if ($announcementImageEntity->getAdminNotificationToUser() === $this) {
+                $announcementImageEntity->setAdminNotificationToUser(null);
             }
         }
 

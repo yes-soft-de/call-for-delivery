@@ -224,7 +224,7 @@ class AdminOrderDevService
                     SubscriptionConstant::OPERATION_TYPE_SUBTRACTION, 1);
 
                 // 10 create local notification for the store
-                $this->createLocalNotificationForStore($storeOwnerProfile->getId(), NotificationConstant::NEW_ORDER_TITLE,
+                $this->createLocalNotificationForStore($storeOwnerProfile->getStoreOwnerId(), NotificationConstant::NEW_ORDER_TITLE,
                     NotificationConstant::CREATE_ORDER_SUCCESS, $order->getId());
 
                 // 11 create order timeline

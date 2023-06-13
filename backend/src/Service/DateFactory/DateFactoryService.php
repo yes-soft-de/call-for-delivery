@@ -191,4 +191,18 @@ class DateFactoryService
     {
         return (new DateTime(date("Y-m-d", strtotime($dateTime))));
     }
+
+    public function checkIfTimeIsBetweenSpecificTwoTime(DateTimeInterface $fromDate, DateTimeInterface $toDate, DateTimeInterface $specificDate, string $timeZone = null): bool
+    {
+        $fromTime = new DateTime(strftime('%T', $fromDate->getTimestamp()));
+        $toTime = new DateTime(strftime('%T', $toDate->getTimestamp()));
+        $specificTime = new DateTime(strftime('%T', $specificDate->getTimestamp()));
+
+        if ((date_timestamp_get($specificTime) >= date_timestamp_get($fromTime))
+            && (date_timestamp_get($specificTime) <= date_timestamp_get($toTime))) {
+            return true;
+        }
+
+        return false;
+    }
 }

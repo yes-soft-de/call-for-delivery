@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\ChatRoom\ChatRoomConstant;
+use App\Constant\ExternalDeliveryCompany\Mrsool\MrsoolCompanyConstant;
 use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\Image\ImageUseAsConstant;
 use App\Constant\Order\OrderCancelledByUserAndAtStateConstant;
@@ -17,6 +18,9 @@ use App\Constant\Payment\PaymentConstant;
 use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\CaptainFinancialDuesEntity;
+use App\Entity\ChatRoomEntity;
+use App\Entity\ExternallyDeliveredOrderEntity;
+use App\Entity\OrderDistanceConflictEntity;
 use App\Entity\OrderEntity;
 use App\Entity\CaptainEntity;
 use App\Entity\OrderTimeLineEntity;
@@ -111,6 +115,8 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->addSelect('imageEntity.imagePath')
             ->addSelect('captainEntity.captainName', 'captainEntity.phone')
             ->addSelect('primaryOrderEntity.id as primaryOrderId')
+            ->addSelect('orderDistanceConflictEntity as orderDistanceConflict')
+            ->addSelect('chatRoomEntity.roomId as chatSupportRoomId')
 
             ->leftJoin(StoreOrderDetailsEntity::class, 'storeOrderDetails', Join::WITH, 'orderEntity.id = storeOrderDetails.orderId')
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')
@@ -119,18 +125,37 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.id = orderEntity.captainId')
 
             ->leftJoin(
+                OrderDistanceConflictEntity::class,
+                'orderDistanceConflictEntity',
+                Join::WITH,
+                'orderDistanceConflictEntity.orderId = orderEntity.id'
+            )
+
+            ->leftJoin(
                 OrderEntity::class,
                 'primaryOrderEntity',
                 Join::WITH,
                 'primaryOrderEntity.id = orderEntity.primaryOrder'
             )
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+            )
+
+            ->leftJoin(
+                ChatRoomEntity::class,
+                'chatRoomEntity',
+                Join::WITH,
+                'chatRoomEntity.userId = storeOwnerProfileEntity.storeOwnerId'
+            )
             
             ->andWhere('orderEntity.id = :id')
-
             ->setParameter('id', $id)
 
             ->getQuery()
-            
             ->getOneOrNullResult();
     }
 
@@ -302,6 +327,15 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->leftJoin(BidDetailsEntity::class, 'bidDetailsEntity', Join::WITH, 'bidDetailsEntity.orderId = orderEntity.id')
 
+            ->leftJoin(
+                ExternallyDeliveredOrderEntity::class,
+                'externallyDeliveredOrderEntity',
+                Join::WITH,
+                'externallyDeliveredOrderEntity.orderId = orderEntity.id'
+            )
+
+            ->andWhere('externallyDeliveredOrderEntity.orderId IS NULL')
+
             ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
             ->setParameter('captainId', $captainId)
 //            ->setParameter('orderTypeNormal', OrderTypeConstant::ORDER_TYPE_NORMAL)
@@ -434,11 +468,11 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function filterStoreOrdersByAdmin(OrderFilterByAdminRequest $request): ?array
     {
         $query = $this->createQueryBuilder('orderEntity')
-            ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate',
-                'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.storeBranchToClientDistance', 'storeOrderDetails.id as storeOrderDetailsId',
-                'storeOrderDetails.destination', 'storeOrderDetails.recipientName', 'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId',
-                'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName', 'imageEntity.id as imageId', 'imageEntity.imagePath as images',
-                'captainEntity.id as captainProfileId')
+//            ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate',
+//                'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.storeBranchToClientDistance',
+               ->addSelect('storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName', 'storeOrderDetails.recipientPhone',
+                'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
+                'imageEntity.id as imageId', 'imageEntity.imagePath as images', 'captainEntity.id as captainProfileId')
 
             ->leftJoin(
                 StoreOrderDetailsEntity::class,
@@ -463,6 +497,13 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'captainEntity',
                 Join::WITH,
                 'captainEntity.id = orderEntity.captainId'
+            )
+
+            ->leftJoin(
+                ExternallyDeliveredOrderEntity::class,
+                'externallyDeliveredOrderEntity',
+                Join::WITH,
+                'externallyDeliveredOrderEntity.orderId = orderEntity.id'
             )
 
             ->orderBy('orderEntity.id', 'DESC');
@@ -500,12 +541,27 @@ class OrderEntityRepository extends ServiceEntityRepository
             }
         }
 
+        if ($request->getStoreBranchId()) {
+            $query->andWhere('storeOwnerBranch.id = :storeBranchId')
+                ->setParameter('storeBranchId', $request->getStoreBranchId());
+        }
+
+        if (($request->getExternalOrder() !== null) && ($request->getExternalOrder() === true)) {
+            $query->andWhere('externallyDeliveredOrderEntity.orderId IS NOT NULL');
+        }
+
+        if ($request->getExternalCompanyId()) {
+            $query->andWhere('externallyDeliveredOrderEntity.externalDeliveryCompany = :externalDeliveryCompanyId')
+                ->setParameter('externalDeliveryCompanyId', $request->getExternalCompanyId());
+        }
+
         if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
          || ($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")
          || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
             $tempQuery = $query->getQuery()->getResult();
 
-            return $this->filterOrdersByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
+            return $this->filterOrdersEntitiesByOptionalDates($tempQuery, $request->getFromDate(), $request->getToDate(),
+                $request->getCustomizedTimezone());
         }
 
         return $query->getQuery()->getResult();
@@ -521,8 +577,8 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination',
                 'storeOrderDetails.recipientName', 'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
                 'imageEntity.imagePath as orderImage', 'captainEntity.captainName', 'captainEntity.phone', 'orderEntity.paidToProvider', 'orderEntity.noteCaptainOrderCost', 'orderEntity.captainOrderCost',
-                'storeOrderDetails.filePdf', 'orderEntity.storeBranchToClientDistance', 'orderEntity.isCashPaymentConfirmedByStore', 'orderEntity.isCashPaymentConfirmedByStoreUpdateDate',
-                'primaryOrderEntity.id as primaryOrderId', 'orderEntity.costType')
+                'orderEntity.deliveryCost', 'storeOrderDetails.filePdf', 'orderEntity.storeBranchToClientDistance', 'orderEntity.isCashPaymentConfirmedByStore',
+                'orderEntity.isCashPaymentConfirmedByStoreUpdateDate', 'primaryOrderEntity.id as primaryOrderId', 'orderEntity.costType')
             ->addSelect('storeOwnerProfileEntity.id as storeOwnerId')
             ->addSelect('storeOwnerProfileEntity.storeOwnerName')
             ->addSelect('subscriptionEntity as storeSubscription')
@@ -1330,40 +1386,55 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $orders;
     }
 
-    public function getPendingOrdersForAdmin(): ?array
+    public function getPendingOrdersForAdmin(?int $externalOrder): ?array
     {
-        return $this->createQueryBuilder('orderEntity')
-            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
-            'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state', 'orderEntity.orderIsMain', 'orderEntity.isHide')
-            ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
-            ->addSelect('storeOwnerProfileEntity.storeOwnerName')
-            ->addSelect('bidDetailsEntity as bidDetailsInfo')
+        $query = $this->createQueryBuilder('orderEntity')
+//            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
+//            'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state', 'orderEntity.orderIsMain', 'orderEntity.isHide')
+            ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
+                'storeOwnerProfileEntity.storeOwnerName')
+//            ->addSelect('storeOwnerProfileEntity.storeOwnerName')
+//            ->addSelect('bidDetailsEntity as bidDetailsInfo')
+//            ->addSelect('orderEntity.primaryOrder as primaryOrderId')
            
             ->leftJoin(StoreOrderDetailsEntity::class, 'storeOrderDetails', Join::WITH, 'orderEntity.id = storeOrderDetails.orderId')
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')            
             ->leftJoin(StoreOwnerProfileEntity::class, 'storeOwnerProfileEntity', Join::WITH, 'storeOwnerProfileEntity.id = orderEntity.storeOwner')
 
             ->leftJoin(BidDetailsEntity::class, 'bidDetailsEntity', Join::WITH, 'bidDetailsEntity.orderId = orderEntity.id')
-           
+
+            ->leftJoin(
+                ExternallyDeliveredOrderEntity::class,
+                'externallyDeliveredOrderEntity',
+                Join::WITH,
+                'externallyDeliveredOrderEntity.orderId = orderEntity.id'
+            )
+
+            ->andWhere('externallyDeliveredOrderEntity.orderId IS NULL')
+
             ->andWhere('orderEntity.state = :pending ')
             ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
 
             ->andWhere('orderEntity.isHide = :show')
-            ->setParameter('show', OrderIsHideConstant::ORDER_SHOW)
+            ->setParameter('show', OrderIsHideConstant::ORDER_SHOW);
 //            ->setParameter('hide', OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)
 
-            ->getQuery()
-            ->getResult();
+//        if ($externalOrder === 1) {
+//            $query->andWhere('externallyDeliveredOrderEntity.orderId IS NOT NULL');
+//        }
+
+        return $query->getQuery()->getResult();
     }
 
-    public function getHiddenOrdersForAdmin(): ?array
+    public function getHiddenOrdersForAdmin(?int $externalOrder): ?array
     {
-        return $this->createQueryBuilder('orderEntity')
-            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
-                'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state', 'orderEntity.orderIsMain', 'orderEntity.isHide')
-            ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
-            ->addSelect('storeOwnerProfileEntity.storeOwnerName')
-            ->addSelect('bidDetailsEntity as bidDetailsInfo')
+        $query = $this->createQueryBuilder('orderEntity')
+//            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
+//                'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state', 'orderEntity.orderIsMain', 'orderEntity.isHide')
+            ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
+                'storeOwnerProfileEntity.storeOwnerName')
+//            ->addSelect('storeOwnerProfileEntity.storeOwnerName')
+//            ->addSelect('bidDetailsEntity as bidDetailsInfo')
 
             ->leftJoin(StoreOrderDetailsEntity::class, 'storeOrderDetails', Join::WITH, 'orderEntity.id = storeOrderDetails.orderId')
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')
@@ -1371,28 +1442,43 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->leftJoin(BidDetailsEntity::class, 'bidDetailsEntity', Join::WITH, 'bidDetailsEntity.orderId = orderEntity.id')
 
+            ->leftJoin(
+                ExternallyDeliveredOrderEntity::class,
+                'externallyDeliveredOrderEntity',
+                Join::WITH,
+                'externallyDeliveredOrderEntity.orderId = orderEntity.id'
+            )
+
+            ->andWhere('externallyDeliveredOrderEntity.orderId IS NULL')
+
             ->andWhere('orderEntity.isHide = :hide')
             ->setParameter('hide', OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)
            
             ->andWhere('orderEntity.state != :cancelledState')
             ->setParameter('cancelledState', OrderStateConstant::ORDER_STATE_CANCEL)
 
-            ->getQuery()
-            ->getResult();
+            ->orderBy('orderEntity.id', 'DESC');
+
+//        if ($externalOrder === 1) {
+//            $query->andWhere('externallyDeliveredOrderEntity.orderId IS NOT NULL');
+//        }
+
+        return $query->getQuery()->getResult();
     }
 
     /**
      * Not delivered orders are all orders which status = on way to pick order, in store, picked, or on going
      */
-    public function getNotDeliveredOrdersForAdmin(): ?array
+    public function getNotDeliveredOrdersForAdmin(?int $externalOrder): ?array
     {
-        return $this->createQueryBuilder('orderEntity')
-            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
-                'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state', 'orderEntity.orderIsMain', 'orderEntity.isHide')
-            ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
-            ->addSelect('storeOwnerProfileEntity.storeOwnerName')
-            ->addSelect('bidDetailsEntity as bidDetailsInfo')
-            ->addSelect('captainEntity.id as captainProfileId', 'captainEntity.captainName')
+        $query = $this->createQueryBuilder('orderEntity')
+//            ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
+//                'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state', 'orderEntity.orderIsMain', 'orderEntity.isHide')
+            ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
+                'storeOwnerProfileEntity.storeOwnerName', 'captainEntity.id as captainProfileId', 'captainEntity.captainName')
+//            ->addSelect('storeOwnerProfileEntity.storeOwnerName')
+//            ->addSelect('bidDetailsEntity as bidDetailsInfo')
+//            ->addSelect('captainEntity.id as captainProfileId', 'captainEntity.captainName')
 
             ->leftJoin(StoreOrderDetailsEntity::class, 'storeOrderDetails', Join::WITH, 'orderEntity.id = storeOrderDetails.orderId')
             ->leftJoin(StoreOwnerBranchEntity::class, 'storeOwnerBranch', Join::WITH, 'storeOrderDetails.branch = storeOwnerBranch.id')
@@ -1407,14 +1493,29 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'captainEntity.id = orderEntity.captainId'
             )
 
+            ->leftJoin(
+                ExternallyDeliveredOrderEntity::class,
+                'externallyDeliveredOrderEntity',
+                Join::WITH,
+                'externallyDeliveredOrderEntity.orderId = orderEntity.id'
+            )
+
+            ->andWhere('externallyDeliveredOrderEntity.orderId IS NULL')
+
             ->andWhere('orderEntity.state IN (:onGoingStatusArray)')
             ->setParameter('onGoingStatusArray', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)
 
-            ->andWhere('orderEntity.isHide = :show')
+            ->andWhere('orderEntity.isHide = :show OR orderEntity.isHide = :subOrderVisibility')
             ->setParameter('show', OrderIsHideConstant::ORDER_SHOW)
+            ->setParameter('subOrderVisibility', OrderIsHideConstant::ORDER_HIDE)
 
-            ->getQuery()
-            ->getResult();
+            ->orderBy('orderEntity.id', 'DESC');
+
+//        if ($externalOrder === 1) {
+//            $query->andWhere('externallyDeliveredOrderEntity.orderId IS NOT NULL');
+//        }
+
+        return $query->getQuery()->getResult();
     }
 
     public function getOrdersByCaptainId(int $captainId): array
@@ -2784,5 +2885,67 @@ class OrderEntityRepository extends ServiceEntityRepository
         }
 
         return $filteredOrders;
+    }
+
+    public function filterOrdersEntitiesByOptionalDates(array $tempOrders, ?string $fromDate, ?string $toDate, ?string $timeZone): array
+    {
+        $filteredOrders = [];
+
+        if (count($tempOrders) > 0) {
+            if (($fromDate != null || $fromDate != "") && ($toDate === null || $toDate === "")) {
+                foreach ($tempOrders as $key => $value) {
+                    if ($value[0]->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) >=
+                        new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) {
+                        $filteredOrders[$key] = $value;
+                    }
+                }
+
+            } elseif (($fromDate === null || $fromDate === "") && ($toDate != null || $toDate != "")) {
+                foreach ($tempOrders as $key => $value) {
+                    if ($value[0]->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) <=
+                        new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59'))) {
+                        $filteredOrders[$key] = $value;
+                    }
+                }
+
+            } elseif (($fromDate != null || $fromDate != "") && ($toDate != null || $toDate != "")) {
+                foreach ($tempOrders as $key => $value) {
+                    if (($value[0]->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) >=
+                            new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) &&
+                        ($value[0]->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) <=
+                            new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59')))) {
+                        $filteredOrders[$key] = $value;
+                    }
+                }
+            }
+        }
+
+        return $filteredOrders;
+    }
+
+    public function getNotCancelledNorDeliveredExternalOrdersOnly(?int $externalCompanyId): array
+    {
+        $query = $this->createQueryBuilder('orderEntity')
+
+            ->leftJoin(
+                ExternallyDeliveredOrderEntity::class,
+                'externallyDeliveredOrderEntity',
+                Join::WITH,
+                'externallyDeliveredOrderEntity.orderId = orderEntity.id'
+            )
+
+            ->andWhere('externallyDeliveredOrderEntity.orderId IS NOT NULL')
+
+            ->andWhere('externallyDeliveredOrderEntity.status IN (:notDeliveredStatus)')
+            ->setParameter('notDeliveredStatus', MrsoolCompanyConstant::NOT_CANCELLED_OR_DELIVERED_OR_EXPIRED_CONST)
+
+            ->orderBy('orderEntity.id', 'DESC');
+
+        if ($externalCompanyId) {
+            $query->andWhere('externallyDeliveredOrderEntity.externalDeliveryCompany = :companyId')
+                ->setParameter('companyId', $externalCompanyId);
+        }
+
+        return $query->getQuery()->getResult();
     }
 }

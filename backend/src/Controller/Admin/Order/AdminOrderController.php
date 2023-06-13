@@ -90,7 +90,10 @@ class AdminOrderController extends BaseController
      *          @OA\Property(type="number", property="kilometer", description="if there is value, send it as float, not string"),
      *          @OA\Property(type="number", property="storeBranchToClientDistance"),
      *          @OA\Property(type="string", property="customizedTimezone", example="Asia/Riyadh"),
-     *          @OA\Property(type="integer", property="orderId")
+     *          @OA\Property(type="integer", property="orderId"),
+     *          @OA\Property(type="boolean", property="externalOrder"),
+     *          @OA\Property(type="integer", property="externalCompanyId"),
+     *          @OA\Property(type="integer", property="storeBranchId")
      *      )
      * )
      *
@@ -300,11 +303,13 @@ class AdminOrderController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
-    
+
     /**
      * admin: Get pending, hidden, and not delivered orders for admin.
-     * @Route("orderpending", name="getPendingOrdersForAdmin", methods={"GET"})
-     * @IsGranted("ROLE_ADMIN") 
+     * @Route("orderpending/{externalOrder}/{externalCompanyId}", name="getPendingOrdersForAdmin", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param int $externalOrder
+     * @param int $externalCompanyId
      * @return JsonResponse
      * *
      * @OA\Tag(name="Order")
@@ -349,9 +354,9 @@ class AdminOrderController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function getPendingOrdersForAdmin(): JsonResponse
+    public function getPendingOrdersForAdmin(int $externalOrder = 0, int $externalCompanyId = 0): JsonResponse
     {
-        $response = $this->adminOrderService->getPendingOrdersForAdmin($this->getUserId());
+        $response = $this->adminOrderService->getPendingOrdersForAdmin($this->getUserId(), $externalOrder, $externalCompanyId);
         
         return $this->response($response, self::FETCH);
     }
@@ -797,88 +802,88 @@ class AdminOrderController extends BaseController
         return $this->response($response, self::UPDATE);
     }
 
-    /**
-     * to be replaced by normalordercancelbyadmin when the new api works correctly
-     * admin: cancel normal order by admin
-     * @Route("ordercancelbyadmin/{id}", name="orderCancelByAdmin", methods={"PUT"})
-     * @IsGranted("ROLE_ADMIN")
-     * @param int $id
-     * @return JsonResponse
-     *
-     * @OA\Tag(name="Order")
-     *
-     * @OA\Parameter(
-     *      name="token",
-     *      in="header",
-     *      description="token to be passed as a header",
-     *      required=true
-     * )
-     *
-     * @OA\Response(
-     *      response=204,
-     *      description="Return updated order info",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *                  ref=@Model(type="App\Response\Admin\Order\OrderCancelByAdminResponse")
-     *          )
-     *      )
-     * )
-     *
-     * or
-     *
-     * @OA\Response(
-     *      response=200,
-     *      description="Return error according to situation.",
-     *      @OA\JsonContent(
-     *          oneOf={
-     *                   @OA\Schema(type="object",
-     *                          @OA\Property(type="string", property="status_code", description="9213"),
-     *                          @OA\Property(type="string", property="msg")
-     *                   ),
-     *                   @OA\Schema(type="object",
-     *                          @OA\Property(type="string", property="status_code", description="9215"),
-     *                          @OA\Property(type="string", property="msg")
-     *                   ),
-     *                   @OA\Schema(type="object",
-     *                          @OA\Property(type="string", property="status_code", description="9203"),
-     *                          @OA\Property(type="string", property="msg")
-     *                   ),
-     *                   @OA\Schema(type="object",
-     *                          @OA\Property(type="string", property="status_code", description="9205"),
-     *                          @OA\Property(type="string", property="msg")
-     *                   )
-     *              }
-     *      )
-     *
-     * )
-     *
-     * @Security(name="Bearer")
-     */
-    public function orderCancelByAdmin(int $id): JsonResponse
-    {
-        $response = $this->adminOrderService->cancelOrderByAdmin($id, $this->getUserId());
-
-        if ($response === OrderResultConstant::ORDER_TYPE_BID) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_WRONG_ORDER_TYPE);
-
-        } elseif ($response === OrderResultConstant::ORDER_UPDATE_PROBLEM) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_UPDATE);
-
-        } elseif ($response === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_NOT_FOUND);
-
-        } elseif ($response === OrderResultConstant::ORDER_ALREADY_BEING_CANCELLED) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CANCEL);
-        }
-
-        // elseif ($response === OrderResultConstant::ORDER_ALREADY_IS_BEING_ACCEPTED) {
-        // return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_REMOVE_CAPTAIN_RECEIVE);
-        // }
-
-        return $this->response($response, self::UPDATE);
-    }
+//    /**
+//     * to be replaced by normalordercancelbyadmin when the new api works correctly
+//     * admin: cancel normal order by admin
+//     * @Route("ordercancelbyadmin/{id}", name="orderCancelByAdmin", methods={"PUT"})
+//     * @IsGranted("ROLE_ADMIN")
+//     * @param int $id
+//     * @return JsonResponse
+//     *
+//     * @OA\Tag(name="Order")
+//     *
+//     * @OA\Parameter(
+//     *      name="token",
+//     *      in="header",
+//     *      description="token to be passed as a header",
+//     *      required=true
+//     * )
+//     *
+//     * @OA\Response(
+//     *      response=204,
+//     *      description="Return updated order info",
+//     *      @OA\JsonContent(
+//     *          @OA\Property(type="string", property="status_code"),
+//     *          @OA\Property(type="string", property="msg"),
+//     *          @OA\Property(type="object", property="Data",
+//     *                  ref=@Model(type="App\Response\Admin\Order\OrderCancelByAdminResponse")
+//     *          )
+//     *      )
+//     * )
+//     *
+//     * or
+//     *
+//     * @OA\Response(
+//     *      response=200,
+//     *      description="Return error according to situation.",
+//     *      @OA\JsonContent(
+//     *          oneOf={
+//     *                   @OA\Schema(type="object",
+//     *                          @OA\Property(type="string", property="status_code", description="9213"),
+//     *                          @OA\Property(type="string", property="msg")
+//     *                   ),
+//     *                   @OA\Schema(type="object",
+//     *                          @OA\Property(type="string", property="status_code", description="9215"),
+//     *                          @OA\Property(type="string", property="msg")
+//     *                   ),
+//     *                   @OA\Schema(type="object",
+//     *                          @OA\Property(type="string", property="status_code", description="9203"),
+//     *                          @OA\Property(type="string", property="msg")
+//     *                   ),
+//     *                   @OA\Schema(type="object",
+//     *                          @OA\Property(type="string", property="status_code", description="9205"),
+//     *                          @OA\Property(type="string", property="msg")
+//     *                   )
+//     *              }
+//     *      )
+//     *
+//     * )
+//     *
+//     * @Security(name="Bearer")
+//     */
+//    public function orderCancelByAdmin(int $id): JsonResponse
+//    {
+//        $response = $this->adminOrderService->cancelOrderByAdmin($id, $this->getUserId());
+//
+//        if ($response === OrderResultConstant::ORDER_TYPE_BID) {
+//            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_WRONG_ORDER_TYPE);
+//
+//        } elseif ($response === OrderResultConstant::ORDER_UPDATE_PROBLEM) {
+//            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_UPDATE);
+//
+//        } elseif ($response === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+//            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_NOT_FOUND);
+//
+//        } elseif ($response === OrderResultConstant::ORDER_ALREADY_BEING_CANCELLED) {
+//            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CANCEL);
+//        }
+//
+//        // elseif ($response === OrderResultConstant::ORDER_ALREADY_IS_BEING_ACCEPTED) {
+//        // return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_REMOVE_CAPTAIN_RECEIVE);
+//        // }
+//
+//        return $this->response($response, self::UPDATE);
+//    }
 
     /**
      * Admin: update order state by admin. 
@@ -2077,5 +2082,66 @@ class AdminOrderController extends BaseController
         }
 
         return $this->response($response, self::UPDATE);
+    }
+
+    /**
+     * admin: filter externally delivered orders by admin
+     * @Route("filterexternallydeliveredordersbyadmin", name="filterExternallyDeliveredOrdersByAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Order")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Post a request with filtering orders options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="state"),
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="integer", property="storeOwnerProfileId"),
+     *          @OA\Property(type="integer", property="chosenDistanceIndicator", description="1 refers to use Kilometer,
+     *              2 refers to use storeBranchToClientDistance"),
+     *          @OA\Property(type="number", property="kilometer", description="if there is value, send it as float, not string"),
+     *          @OA\Property(type="number", property="storeBranchToClientDistance"),
+     *          @OA\Property(type="string", property="customizedTimezone", example="Asia/Riyadh"),
+     *          @OA\Property(type="integer", property="orderId"),
+     *          @OA\Property(type="integer", property="externalCompanyId"),
+     *          @OA\Property(type="integer", property="storeBranchId")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns orders that accomodate with the filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Admin\Order\OrderPendingResponse")
+     *              )
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterExternalOrdersByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, OrderFilterByAdminRequest::class, (object)$data);
+
+        $result = $this->adminOrderService->filterExternallyDeliveredOrdersByAdmin($request, $this->getUserId());
+
+        return $this->response($result, self::FETCH);
     }
 }

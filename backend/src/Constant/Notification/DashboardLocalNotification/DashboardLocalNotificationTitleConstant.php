@@ -21,4 +21,6 @@ final class DashboardLocalNotificationTitleConstant
     const UN_LINK_ORDERS_BY_STORE_TITLE_CONST = "فك ارتباط طلب من قبل المتجر";
 
     const UN_ACCEPT_ORDER_BY_CAPTAIN_TITLE_CONST = "التراجع عن تسليم طلب";
+
+    const ORDER_DISTANCE_CONFLICT_CREATED_BY_CAPTAIN_TITLE_CONST = "طلب وجود تعارض حول المسافة من قبل الكابتن";
 }

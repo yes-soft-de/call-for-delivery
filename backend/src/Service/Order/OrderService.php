@@ -21,6 +21,7 @@ use App\Constant\Subscription\SubscriptionDetailsConstant;
 use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\CaptainEntity;
+use App\Entity\ExternallyDeliveredOrderEntity;
 use App\Entity\OrderEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Entity\StoreOwnerProfileEntity;
@@ -57,6 +58,7 @@ use App\Constant\Subscription\SubscriptionConstant;
 use App\Service\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyService;
 use App\Service\CaptainOrderFinancialService\OrderFinancialValueGetService;
 use App\Service\DateFactory\DateFactoryService;
+use App\Service\ExternallyDeliveredOrderHandle\ExternallyDeliveredOrderHandleService;
 use App\Service\Notification\DashboardLocalNotification\DashboardLocalNotificationService;
 use App\Service\OrderLog\OrderLogGetService;
 use App\Service\OrderLog\OrderLogService;
@@ -126,7 +128,8 @@ class OrderService
         private OrderFinancialValueGetService $orderFinancialValueGetService,
         private StoreOrderDetailsService $storeOrderDetailsService,
         private DashboardLocalNotificationService $dashboardLocalNotificationService,
-        private CaptainFinancialDailyService $captainFinancialDailyService
+        private CaptainFinancialDailyService $captainFinancialDailyService,
+        private ExternallyDeliveredOrderHandleService $externallyDeliveredOrderHandleService
     )
     {
     }
@@ -162,8 +165,8 @@ class OrderService
                 NotificationConstant::CREATE_ORDER_SUCCESS, NotificationTokenConstant::APP_TYPE_STORE, $order->getId());
 
             // create dashboard local notification
-            $this->createDashboardLocalNotificationByStore(DashboardLocalNotificationTitleConstant::CREATE_NEW_ORDER_BY_STORE_TITLE_CONST,
-                ["text" => DashboardLocalNotificationMessageConstant::CREATE_ORDER_BY_STORE_TEXT_CONST.$order->getId()], null, $order->getId());
+            // $this->createDashboardLocalNotificationByStore(DashboardLocalNotificationTitleConstant::CREATE_NEW_ORDER_BY_STORE_TITLE_CONST,
+              // ["text" => DashboardLocalNotificationMessageConstant::CREATE_ORDER_BY_STORE_TEXT_CONST.$order->getId()], null, $order->getId());
 
             $this->orderTimeLineService->createOrderLogsRequest($order);
 
@@ -171,6 +174,10 @@ class OrderService
             $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
                 OrderLogActionTypeConstant::CREATE_ORDER_BY_STORE_ACTION_CONST, [], null,
                 null);
+
+            // send order to external delivery company
+            $this->sendOrderToExternalDeliveryCompany($order);
+
             //create firebase notification to store
             try {
                 $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
@@ -275,6 +282,10 @@ class OrderService
                 $order['roomId'] = $order['roomId']->toBase32();
             }
 
+            if ($order['chatSupportRoomId']) {
+                $order['chatSupportRoomId'] = $order['chatSupportRoomId']->toBase32();
+            }
+
             $order['orderLogs'] = $this->orderTimeLineService->getOrderLogsByOrderId($id);
 
             $order['captain'] = null;
@@ -284,6 +295,11 @@ class OrderService
             }
 
             $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderIdForStore($order['id']);
+
+            // If there is a note from admin about order distance conflict then return it in the response
+            if ($order['orderDistanceConflict']) {
+                $order['adminNote'] = $order['orderDistanceConflict']->getAdminNote();
+            }
         }
 
         return $this->autoMapping->map("array", OrdersResponse::class, $order);
@@ -1201,7 +1217,6 @@ class OrderService
         $order = $this->orderManager->createSubOrder($request);
 
         if ($order) {
-
             $this->subscriptionService->updateRemainingOrders($request->getStoreOwner()->getStoreOwnerId(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION);
             //notification to store
             $this->notificationLocalService->createNotificationLocal($request->getStoreOwner()->getStoreOwnerId(), NotificationConstant::NEW_SUB_ORDER_TITLE,
@@ -1223,6 +1238,9 @@ class OrderService
             $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
                 OrderLogActionTypeConstant::CREATE_SUB_ORDER_BY_STORE_ACTION_CONST, [], null,
                 null);
+
+            // send order to external delivery company
+            $this->sendOrderToExternalDeliveryCompany($order);
 
             try {
                 // create firebase notification to store
@@ -2198,5 +2216,23 @@ class OrderService
     {
         $this->notificationLocalService->createNotificationLocalForOrderState($userId, $title, $state, $userType,
             $orderId, $captainProfileId);
+    }
+
+    public function getStoreOrderDetailsEntityByOrderId(int $orderId): ?StoreOrderDetailsEntity
+    {
+        return $this->storeOrderDetailsService->getStoreOrderDetailsEntityByOrderId($orderId);
+    }
+
+    public function sendOrderToExternalDeliveryCompany(OrderEntity $orderEntity): ExternallyDeliveredOrderEntity|int
+    {
+        $storeOrderDetailsEntity = $this->getStoreOrderDetailsEntityByOrderId($orderEntity->getId());
+
+        return $this->externallyDeliveredOrderHandleService->handleSendingOrderToExternalDeliveryCompany($orderEntity,
+            $storeOrderDetailsEntity);
+    }
+
+    public function updateOrderStateByOrderEntityAndNewState(OrderEntity $orderEntity, string $state): OrderEntity
+    {
+        return $this->orderManager->updateOrderStateByOrderEntityAndNewState($orderEntity, $state);
     }
 }

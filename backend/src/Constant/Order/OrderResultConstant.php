@@ -61,4 +61,6 @@ final class OrderResultConstant
     const ORDER_STATE_PENDING_CONST = 188;
 
     const ORDER_STATE_NOT_CORRECT_CONST = 189;
+
+    const ORDER_STATE_IS_NOT_PENDING_CONST = 224;
 }

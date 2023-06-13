@@ -5,4 +5,6 @@ namespace App\Constant\HTTP;
 final class HttpMethodConstant
 {
     const POST_METHOD_CONST = 'POST';
+
+    const GET_METHOD_CONST = 'GET';
 }

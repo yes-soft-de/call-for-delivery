@@ -83,4 +83,11 @@ class OrdersResponse
      * @var int|null
      */
     public $costType;
+
+    /**
+     * admin note about order distance conflict
+     */
+    public ?string $adminNote = null;
+
+    public ?string $chatSupportRoomId;
 }

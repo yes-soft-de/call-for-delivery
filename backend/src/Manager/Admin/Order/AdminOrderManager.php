@@ -13,6 +13,7 @@ use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\Dev\OrderDevCreateByAdminRequest;
 use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
 use App\Request\Admin\Order\OrderCreateByAdminRequest;
+use App\Request\Admin\Order\OrderDeliveryCostUpdateByAdminRequest;
 use App\Request\Admin\Order\OrderDifferentDestinationFilterByAdminRequest;
 use App\Request\Admin\Order\OrderFilterByAdminRequest;
 use App\Request\Admin\Order\OrderHasPayConflictAnswersUpdateByAdminRequest;
@@ -86,22 +87,22 @@ class AdminOrderManager
         return $this->orderEntityRepository->getSpecificBidOrderByIdForAdmin($id);
     }
      
-    public function getPendingOrdersForAdmin(): ?array
+    public function getPendingOrdersForAdmin(?int $externalOrder): ?array
     {
-        return $this->orderEntityRepository->getPendingOrdersForAdmin();
+        return $this->orderEntityRepository->getPendingOrdersForAdmin($externalOrder);
     }
 
-    public function getHiddenOrdersForAdmin(): ?array
+    public function getHiddenOrdersForAdmin(?int $externalOrder): ?array
     {
-        return $this->orderEntityRepository->getHiddenOrdersForAdmin();
+        return $this->orderEntityRepository->getHiddenOrdersForAdmin($externalOrder);
     }
 
     /**
      * Not delivered orders are all orders which status = on way to pick order, in store, picked, or on going
      */
-    public function getNotDeliveredOrdersForAdmin(): ?array
+    public function getNotDeliveredOrdersForAdmin(?int $externalOrder): ?array
     {
-        return $this->orderEntityRepository->getNotDeliveredOrdersForAdmin();
+        return $this->orderEntityRepository->getNotDeliveredOrdersForAdmin($externalOrder);
     }
 
     public function getOrderByIdForAdmin(int $orderId): ?OrderEntity
@@ -581,13 +582,14 @@ class AdminOrderManager
         return $this->orderEntityRepository->filterDifferentDestinationOrdersByAdmin($request);
     }
 
-    /**
-     * Update differentReceiverDestination field of store order details
-     */
-    public function updateStoreOrderDetailsDifferentReceiverDestinationByOrderId(int $orderId, int $differentReceiverDestination): int|StoreOrderDetailsEntity
-    {
-        return $this->adminStoreOrderDetailsManager->updateStoreOrderDetailsDifferentReceiverDestinationByOrderId($orderId, $differentReceiverDestination);
-    }
+    ///todo to be removed after OrderDistanceConflict works correctly
+//    /**
+//     * Update differentReceiverDestination field of store order details
+//     */
+//    public function updateStoreOrderDetailsDifferentReceiverDestinationByOrderId(int $orderId, int $differentReceiverDestination): int|StoreOrderDetailsEntity
+//    {
+//        return $this->adminStoreOrderDetailsManager->updateStoreOrderDetailsDifferentReceiverDestinationByOrderId($orderId, $differentReceiverDestination);
+//    }
 
     /**
      * Gets last five delivered orders with captains' images
@@ -628,6 +630,37 @@ class AdminOrderManager
         $this->entityManager->flush();
 
         $this->adminStoreOrderDetailsManager->createOrderDevDetailsByAdmin($orderEntity, $request);
+
+        return $orderEntity;
+    }
+
+    /**
+     * Updates delivery cost of an order by order id
+     */
+    public function updateOrderDeliveryCost(OrderDeliveryCostUpdateByAdminRequest $request): ?OrderEntity
+    {
+        $orderEntity = $this->orderEntityRepository->findOneBy(['id' => 1]);
+
+        if ($orderEntity) {
+            $orderEntity = $this->autoMapping->mapToObject(OrderDeliveryCostUpdateByAdminRequest::class, OrderEntity::class,
+                $request, $orderEntity);
+
+            $this->entityManager->flush();
+        }
+
+        return $orderEntity;
+    }
+
+    public function getNotCancelledNorDeliveredExternalOrdersOnly(?int $externalCompanyId): array
+    {
+        return $this->orderEntityRepository->getNotCancelledNorDeliveredExternalOrdersOnly($externalCompanyId);
+    }
+
+    public function updateOrderStatusByOrderEntityAndNewStatus(OrderEntity $orderEntity, string $status): OrderEntity
+    {
+        $orderEntity->setState($status);
+
+        $this->entityManager->flush();
 
         return $orderEntity;
     }

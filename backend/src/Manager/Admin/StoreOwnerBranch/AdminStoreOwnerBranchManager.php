@@ -50,4 +50,9 @@ class AdminStoreOwnerBranchManager
     {
         return $this->storeOwnerBranchEntityRepository->getBranchesForAdmin();
     }
+
+    public function getStoreBranchesNamesByIdArray(array $branchesId): array
+    {
+        return $this->storeOwnerBranchEntityRepository->getStoreBranchesNamesByIdArray($branchesId);
+    }
 }

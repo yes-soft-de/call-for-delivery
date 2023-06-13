@@ -21,6 +21,13 @@ class BaseController extends AbstractController
     const UPDATE = ["updated","204"];
     const DELETE = ["deleted","401"];
     const FETCH = ["fetched","200"];
+    // external delivery company
+    const EXTERNAL_DELIVERY_COMPANY_NOT_FOUND_CONST = ["external delivery company not found", "9050"];
+    const EXTERNAL_DELIVERY_COMPANY_HAS_ORDERS_CONST = ["external delivery company has orders", "9051"];
+    const EXTERNAL_DELIVERY_COMPANY_NOT_REGISTERED_CONST = ["external delivery company has orders", "9052"];
+    // app feature
+    const APP_FEATURE_NOT_FOUND_CONST = ["app feature not found", "9076"];
+    const APP_FEATURE_NOT_ACTIVE_CONST = ["app feature not active", "9077"];
     //error order
     const ERROR = ["error","9201"];
     const ERROR_ORDER_REMOVE_CAPTAIN_RECEIVE = ["can not remove it, The captain received the order","9202"];
@@ -47,8 +54,9 @@ class BaseController extends AbstractController
     const ERROR_ORDER_ALREADY_ONGOING_OR_DELIVERED_CONST = ["order is already ongoing or delivered", "9225"];
     const ORDER_PENDING_STATE_CONST = ["order is in pending state", "9226"];
     const ORDER_STATE_NOT_CORRECT_CONST = ["order is in pending state", "9227"];
-    //error related
-    const ERROR_RELATED= ["error related","9251"];
+    const ORDER_STATE_NOT_PENDING_CONST = ["order is not in pending state", "9228"];
+    // external delivery company criteria
+    const EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST = ["external delivery company criteria not found", "9250"];
     // error users
     const ERROR_USER_CHECK = ["error user check","9000"];
     const ERROR_USER_FOUND = ["error user found","9001"];
@@ -81,8 +89,9 @@ class BaseController extends AbstractController
     const STORE_OWNER_BRANCH_CREATED = ["store owner branch created", "9160"];
     const STORE_OWNER_PROFILE_COMPLETED = ["store owner profile completed", "9161"];
     const STORE_BRANCH_NOT_EXIST = ["store branch is not exist", "9162"];
-    // client
-    const CLIENT_PROFILE_NOT_EXIST = ["client profile not exist!", "9210"];
+    // order distance conflict
+    const ORDER_DISTANCE_CONFLICT_NOT_EXIST_CONST = ["order distance conflict not exist!", "9210"];
+    const ORDER_DISTANCE_CONFLICT_ALREADY_EXIST_CONST = ["order distance already exist!", "9240"];
     // subscription
     const SUBSCRIPTION_WAITE_ACTIVE = ["You have a subscription waiting to be activated", "9301"];
     const SUBSCRIPTION_UNSUBSCRIBED = ["You do not have a subscription", "9302"];
@@ -111,6 +120,7 @@ class BaseController extends AbstractController
     const ERROR_YOU_HAVE_SUBSCRIPTION_ = ["you have subscription with captain offer","9454"];
     // notification
     const NOTIFICATION_NOT_FOUND = ["notification not exist", "9401"];
+    const NOTIFICATION_FIREBASE_TOKEN_NOT_FOUND_CONST = ["firebase notification token not exist", "9402"];
     // admin
     const ADMIN_PROFILE_NOT_EXIST = ["admin profile does not exist", "9410"];
     // verification
@@ -168,6 +178,10 @@ class BaseController extends AbstractController
     // captain financial daily
     const CAPTAIN_FINANCIAL_DAILY_NOT_EXIST_CONST = ["captain financial daily not exists", "9650"];
     const CAPTAIN_FINANCIAL_DAILY_CREATE_ERROR_CONST = ["problem in creating captain financial daily", "9651"];
+    // external order
+    const INVALID_CREDENTIALS_RESULT_CONST = ["invalid credentials", "9676"];
+    const INVALID_INPUT_RESULT_CONST = ["invalid input", "9677"];
+    const EXTERNAL_ORDER_NOT_FOUND_CONST = ["external order not found", "9678"];
 
     public function __construct(SerializerInterface $serializer)
     {

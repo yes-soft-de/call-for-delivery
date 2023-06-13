@@ -919,3 +919,94 @@ App\Request\Admin\Order\TestingOrderCreateByAdminRequest:
             - NotBlank: ~
         branch:
             - NotBlank: ~
+
+App\Request\OrderDistanceConflict\OrderDistanceConflictCreateByCaptainRequest:
+    properties:
+        orderId:
+            - NotBlank: ~
+        conflictNote:
+            - NotBlank: ~
+
+App\Request\Admin\OrderDistanceConflict\OrderDistanceConflictRefuseByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        adminNote:
+            - NotBlank: ~
+
+App\Request\Admin\ExternalDeliveryCompany\ExternalDeliveryCompanyCreateByAdminRequest:
+    properties:
+        companyName:
+            - NotBlank: ~
+        status:
+            - NotNull: ~
+
+App\Request\Admin\ExternalDeliveryCompany\ExternalDeliveryCompanyStatusUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        status:
+            - NotNull: ~
+
+App\Request\Admin\ExternalDeliveryCompany\ExternalDeliveryCompanyUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        companyName:
+            - NotNull: ~
+
+App\Request\Admin\ExternalDeliveryCompany\ExternalDeliveryCompanyDeleteByIdRequest:
+    properties:
+        id:
+            - NotBlank: ~
+
+App\Request\Admin\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaCreateByAdminRequest:
+    properties:
+        isSpecificDate:
+            - NotNull: ~
+        isDistance:
+            - NotNull: ~
+        payment:
+            - NotBlank: ~
+        isFromAllStores:
+            - NotNull: ~
+        externalDeliveryCompany:
+            - NotBlank: ~
+        criteriaName:
+            - NotBlank: ~
+        status:
+            - NotNull: ~
+
+App\Request\Admin\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        isSpecificDate:
+            - NotNull: ~
+        isDistance:
+            - NotNull: ~
+        payment:
+            - NotBlank: ~
+        isFromAllStores:
+            - NotNull: ~
+        criteriaName:
+            - NotBlank: ~
+
+App\Request\Admin\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaStatusUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        status:
+            - NotNull: ~
+
+App\Request\Admin\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaDeleteByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
+
+App\Request\Admin\ExternallyDeliveredOrder\ExternallyDeliveredOrderCreateByAdminRequest:
+    properties:
+        orderId:
+            - NotBlank: ~
+        externalCompanyId:
+            - NotNull: ~

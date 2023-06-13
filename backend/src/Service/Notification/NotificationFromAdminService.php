@@ -3,6 +3,7 @@
 namespace App\Service\Notification;
 
 use App\AutoMapping;
+use App\Constant\Announcement\AnnouncementLimitConstant;
 use App\Entity\AdminNotificationToUsersEntity;
 use App\Manager\Notification\NotificationFromAdminManager;
 use App\Response\Notification\NotificationFromAdminResponse;
@@ -27,18 +28,25 @@ class NotificationFromAdminService
     }
 
     /**
-     * Get all notifications from admin according to user type, or user id
+     * Get notifications from admin according to user type, or user id, and limit number (if entered)
      */
-    public function getAllNotificationsFromAdmin(int $userId, string $appType): array
+    public function getAllNotificationsFromAdmin(int $userId, string $appType, int $limit= null): array
     {
         $response = [];
+        $notifications = [];
 
-        $notifications = $this->notificationFromAdminManager->getAllNotificationsFromAdmin($userId, $appType);
+        if ((! $limit) || ($limit === AnnouncementLimitConstant::ANNOUNCEMENT_GET_ALL_CONST)) {
+            $notifications = $this->notificationFromAdminManager->getAllNotificationsFromAdmin($userId, $appType);
+
+        } elseif ($limit === AnnouncementLimitConstant::ANNOUNCEMENT_GET_LAST_SEVEN_CONST) {
+            $notifications = $this->notificationFromAdminManager->getLastNotificationsFromAdminByLimit($userId, $appType,
+                AnnouncementLimitConstant::ANNOUNCEMENT_LIMIT_SEVEN_CONST);
+        }
      
         foreach ($notifications as $key => $value) {
             $response[$key] = $this->autoMapping->map(AdminNotificationToUsersEntity::class, NotificationFromAdminResponse::class, $value);
 
-            $images = $value->getAdminAnnouncementImageEntities()->toArray();
+            $images = $value->getAnnouncementImageEntities()->toArray();
 
             if (count($images) > 0) {
                 foreach ($images as $adminAnnouncementImageEntity) {

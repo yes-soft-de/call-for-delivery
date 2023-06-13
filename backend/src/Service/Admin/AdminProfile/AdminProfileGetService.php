@@ -30,4 +30,18 @@ class AdminProfileGetService
 
         return $adminProfileEntity;
     }
+
+    /**
+     * Get admin profile id if admin profile exists
+     */
+    public function getAdminProfileIdByAdminUserId(int $adminUserId): int|string
+    {
+        $adminProfileEntity = $this->adminProfileManager->getAdminProfileByAdminUserId($adminUserId);
+
+        if (! $adminProfileEntity) {
+            return AdminProfileConstant::ADMIN_PROFILE_NOT_EXIST;
+        }
+
+        return $adminProfileEntity->getId();
+    }
 }

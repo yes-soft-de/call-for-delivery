@@ -34,7 +34,7 @@ class NotificationFirebaseManager
     {
         $tokenEntity = $this->notificationFirebaseTokenEntityRepository->getTokenByUserId($userId);
 
-        if ($tokenEntity !== null) {
+        if ($tokenEntity) {
             $this->entityManager->remove($tokenEntity);
             $this->entityManager->flush();
         }
