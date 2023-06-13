@@ -17,23 +17,13 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class StoreOwnerBranchManager
 {
-    private AutoMapping $autoMapping;
-    private EntityManagerInterface $entityManager;
-    private StoreOwnerBranchEntityRepository $storeOwnerBranchEntityRepository;
-    private StoreOwnerProfileManager $storeOwnerProfileManager;
-
-    /**
-     * @param AutoMapping $autoMapping
-     * @param EntityManagerInterface $entityManager
-     * @param StoreOwnerBranchEntityRepository $storeOwnerBranchEntityRepository
-     * @param StoreOwnerProfileManager $storeOwnerProfileManager
-     */
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, StoreOwnerBranchEntityRepository $storeOwnerBranchEntityRepository, StoreOwnerProfileManager $storeOwnerProfileManager)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private EntityManagerInterface $entityManager,
+        private StoreOwnerBranchEntityRepository $storeOwnerBranchEntityRepository,
+        private StoreOwnerProfileManager $storeOwnerProfileManager
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->entityManager = $entityManager;
-        $this->storeOwnerBranchEntityRepository = $storeOwnerBranchEntityRepository;
-        $this->storeOwnerProfileManager = $storeOwnerProfileManager;
     }
 
     /**
@@ -51,6 +41,18 @@ class StoreOwnerBranchManager
         $this->entityManager->persist($entity);
         $this->entityManager->flush();
         
+        return $entity;
+    }
+
+    public function createDefaultBranch(StoreOwnerBranchCreateRequest $request):?StoreOwnerBranchEntity
+    {
+        $entity = $this->autoMapping->map(StoreOwnerBranchCreateRequest::class, StoreOwnerBranchEntity::class, $request);
+
+        $entity->setIsActive(StoreOwnerBranch::BRANCH_IS_ACTIVE);
+
+        $this->entityManager->persist($entity);
+        $this->entityManager->flush();
+
         return $entity;
     }
 

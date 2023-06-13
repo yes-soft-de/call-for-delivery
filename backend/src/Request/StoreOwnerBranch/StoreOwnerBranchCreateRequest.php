@@ -31,4 +31,29 @@ class StoreOwnerBranchCreateRequest
     {
         return $this->storeOwner;
     }
+
+    public function setLocation(array $location): void
+    {
+        $this->location = $location;
+    }
+
+    public function setCity($city): void
+    {
+        $this->city = $city;
+    }
+
+    public function setName($name): void
+    {
+        $this->name = $name;
+    }
+
+    public function setIsActive($isActive): void
+    {
+        $this->isActive = $isActive;
+    }
+
+    public function setBranchPhone(?string $branchPhone): void
+    {
+        $this->branchPhone = $branchPhone;
+    }
 }
