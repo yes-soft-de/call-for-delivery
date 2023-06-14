@@ -36,7 +36,7 @@ class ProfileService {
 
     ProfileModel profile = ProfileModel.withData(response);
 
-    _preferencesHelper.setProfileId(profile.data.id ?? -1);
+    _preferencesHelper.setProfileId(profile.data.id);
 
     return profile;
   }
