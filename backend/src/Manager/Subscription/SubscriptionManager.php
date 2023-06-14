@@ -5,6 +5,7 @@ namespace App\Manager\Subscription;
 use App\AutoMapping;
 use App\Constant\Subscription\SubscriptionCaptainOffer;
 use App\Constant\Subscription\SubscriptionDetailsConstant;
+use App\Entity\PackageEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionEntity;
 use App\Entity\SubscriptionDetailsEntity;
@@ -433,5 +434,42 @@ class SubscriptionManager
         }
 
         return $subscriptionEntity->getSubscriptionCaptainOffer();
+    }
+
+    public function getPackageEntityById(int $id): ?PackageEntity
+    {
+        return $this->packageManager->getPackageEntityById($id);
+    }
+
+    public function createSubscriptionWithFreePackage(SubscriptionCreateRequest $request): ?SubscriptionEntity
+    {
+        // change to SUBSCRIBE_INACTIVE
+        $request->setStatus(SubscriptionConstant::SUBSCRIBE_ACTIVE);
+
+        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreOwnerId($request->getStoreOwner());
+
+        $request->setStoreOwner($storeOwner);
+
+        $storeOwnerProfile = $this->storeOwnerProfileManager->getStoreOwnerProfile($request->getStoreOwner());
+        $request->setStoreOwner($storeOwnerProfile);
+
+        $subscriptionEntity = $this->autoMapping->map(SubscriptionCreateRequest::class, SubscriptionEntity::class,
+            $request);
+
+        $subscriptionEntity->setStartDate(new DateTime('now'));
+
+        $subscriptionEntity->setEndDate($this->calculatingSubscriptionExpiryDate($subscriptionEntity->getStartDate(),
+            $request->getPackage()->getExpired()));
+
+        $this->entityManager->persist($subscriptionEntity);
+        $this->entityManager->flush();
+
+        if ($subscriptionEntity->getIsFuture() === false) {
+            $this->subscriptionDetailsManager->createSubscriptionDetails($subscriptionEntity, $request->getHasExtra());
+        }
+
+        $this->subscriptionHistoryManager->createSubscriptionHistory($subscriptionEntity, $request->getType());
+
+        return $subscriptionEntity;
     }
 }

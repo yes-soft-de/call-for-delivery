@@ -176,7 +176,8 @@ class StoreOwnerProfileManager
     public function checkCompleteAccountStatusValidity(string $completeAccountStatus): bool
     {
         if ($completeAccountStatus !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED && $completeAccountStatus !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED &&
-            $completeAccountStatus !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED && $completeAccountStatus !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED) {
+            $completeAccountStatus !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED && $completeAccountStatus !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED
+            && $completeAccountStatus !== StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_FREE_SUBSCRIPTION_CREATED) {
             return false;
         }
 

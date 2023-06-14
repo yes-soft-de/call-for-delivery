@@ -2,6 +2,7 @@
 
 namespace App\Manager\Package;
 
+use App\Entity\PackageEntity;
 use App\Repository\PackageEntityRepository;
 
 class PackageManager
@@ -36,6 +37,11 @@ class PackageManager
     public function getPackageActiveById($id)
     {
         return $this->packageRepository->getPackageActiveById($id);
+    }
+
+    public function getPackageEntityById(int $id): ?PackageEntity
+    {
+        return $this->packageRepository->findOneBy(['id' => $id]);
     }
 
 }

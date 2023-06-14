@@ -1010,3 +1010,8 @@ App\Request\Admin\ExternallyDeliveredOrder\ExternallyDeliveredOrderCreateByAdmin
             - NotBlank: ~
         externalCompanyId:
             - NotNull: ~
+
+App\Request\EPayment\EPaymentCreateByStoreOwnerRequest:
+    properties:
+        status:
+            - NotBlank: ~
