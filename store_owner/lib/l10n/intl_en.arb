@@ -709,5 +709,9 @@
     "english":"English",
     "continueWord":"Continue",
     "youCanContactWithDirectSupportForMoreDetails":"you can contact with direct support for more detail's",
+    "useYourCurrentLocation":"use your current location",
+    "enterYourStoreName": "enter your store name",
+    "startWork": "start work",
+    "pleaseSelectYourStoreLocation": "please select your store location",
     "adsAndOffers":"Ads & offers"
 }

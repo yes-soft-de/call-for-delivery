@@ -358,6 +358,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enter verification code"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("Enter product information"),
+        "enterYourStoreName":
+            MessageLookupByLibrary.simpleMessage("enter your store name"),
         "errOc":
             MessageLookupByLibrary.simpleMessage("The next problems occurred"),
         "errorDownloadingImage":
@@ -758,6 +760,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please provide your address on our map"),
         "pleaseSelectABranch":
             MessageLookupByLibrary.simpleMessage("Please Select a Branch"),
+        "pleaseSelectYourStoreLocation": MessageLookupByLibrary.simpleMessage(
+            "please select your store location"),
         "prayerMessage": MessageLookupByLibrary.simpleMessage(
             "This order may take some extra time to be delivered due prayer period"),
         "preferredLanguage":
@@ -900,6 +904,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sortedByLatest":
             MessageLookupByLibrary.simpleMessage("Sorted by latest"),
         "specification": MessageLookupByLibrary.simpleMessage("Specification"),
+        "startWork": MessageLookupByLibrary.simpleMessage("start work"),
         "startWriting": MessageLookupByLibrary.simpleMessage("Start Writing"),
         "statusCodeBadRequest": MessageLookupByLibrary.simpleMessage(
             "The server could not understand the request due to invalid syntax"),
@@ -1026,6 +1031,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Uploading Images"),
         "uploadingImagesPleaseWait": MessageLookupByLibrary.simpleMessage(
             "Uploading Image, Please Wait"),
+        "useYourCurrentLocation":
+            MessageLookupByLibrary.simpleMessage("use your current location"),
         "userDeleted":
             MessageLookupByLibrary.simpleMessage("User deleted successfully"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),

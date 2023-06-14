@@ -1,7 +1,6 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
-import 'package:c4d/module_profile/profile_routes.dart';
 import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
@@ -270,7 +269,9 @@ class AuthService {
           break;
         // account not filled
         case '9158':
-          _prefsHelper.setUserCompetedProfile(ProfileRoutes.INIT_ACCOUNT);
+          _prefsHelper.setUserCompetedProfile(BranchesRoutes.INIT_BRANCHES);
+          // not used after refactoring 6/14/2023
+          // _prefsHelper.setUserCompetedProfile(ProfileRoutes.INIT_ACCOUNT);
           break;
         // account deleted
         case '9013':

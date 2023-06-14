@@ -709,5 +709,9 @@
     "english":"الانكليزية",
     "continueWord":"متابعة",
     "youCanContactWithDirectSupportForMoreDetails":"يمكنك التواصل مع الدعم المباشر ان اردت مراجعة الحالة",
+    "useYourCurrentLocation":"استخدم موقعك الحالي",
+    "enterYourStoreName": "ادخل اسم متجرك",
+    "startWork": "ابدا العمل",
+    "pleaseSelectYourStoreLocation": "الرجاء تحديد موقع متجرك",
     "adsAndOffers": "الإعلانات و العروض"
 }

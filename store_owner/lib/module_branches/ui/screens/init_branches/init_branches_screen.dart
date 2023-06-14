@@ -1,12 +1,11 @@
 import 'dart:async';
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_branches/model/branch/branch_model.dart';
 import 'package:c4d/module_branches/request/create_list_branches/create_list_branches.dart';
 import 'package:c4d/module_branches/state_manager/init_branches_state_manager.dart';
 import 'package:c4d/module_branches/ui/state/init_branches_state/init_branches_loaded_state.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
-import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/module_profile/request/profile/profile_request.dart';
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -58,8 +57,13 @@ class InitBranchesScreenState extends State<InitBranchesScreen> {
     setState(() {});
   }
 
+  // not used
   void createBranch(CreateListBranchesRequest request) {
     widget._manager.createBranch(this, request);
+  }
+
+  void createStoreProfile(ProfileRequest  request) {
+    widget._manager.createProfile(request, this);
   }
 
   void moveToOrder() {
@@ -71,8 +75,6 @@ class InitBranchesScreenState extends State<InitBranchesScreen> {
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context,
-          title: S.current.storeAccountInit, canGoBack: false),
       body: currentState?.getUI(context),
     );
   }

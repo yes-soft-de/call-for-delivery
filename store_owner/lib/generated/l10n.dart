@@ -7140,6 +7140,46 @@ class S {
     );
   }
 
+  /// `use your current location`
+  String get useYourCurrentLocation {
+    return Intl.message(
+      'use your current location',
+      name: 'useYourCurrentLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `enter your store name`
+  String get enterYourStoreName {
+    return Intl.message(
+      'enter your store name',
+      name: 'enterYourStoreName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `start work`
+  String get startWork {
+    return Intl.message(
+      'start work',
+      name: 'startWork',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `please select your store location`
+  String get pleaseSelectYourStoreLocation {
+    return Intl.message(
+      'please select your store location',
+      name: 'pleaseSelectYourStoreLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Ads & offers`
   String get adsAndOffers {
     return Intl.message(

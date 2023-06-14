@@ -218,8 +218,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "closeOrder": MessageLookupByLibrary.simpleMessage("مغلق"),
         "closingTime": MessageLookupByLibrary.simpleMessage("وقت الإغلاق"),
         "codeNumber": MessageLookupByLibrary.simpleMessage("رمز التحقق"),
-        "codeSendToYou":
-            MessageLookupByLibrary.simpleMessage("رمز التحقق المرسل لجوالك"),
+        "codeSendToYou": MessageLookupByLibrary.simpleMessage(
+            "ادخل رمز التحقق المرسل لجوالك"),
         "codeTimeOut":
             MessageLookupByLibrary.simpleMessage("انتهت صلاحية رمز التحقق"),
         "comment": MessageLookupByLibrary.simpleMessage("تعليقك"),
@@ -350,6 +350,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ادخل رمز التحقق"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("ادخل معلومات المنتج"),
+        "enterYourStoreName":
+            MessageLookupByLibrary.simpleMessage("ادخل اسم متجرك"),
         "errOc": MessageLookupByLibrary.simpleMessage("حصلت المشاكل التالية"),
         "errorDownloadingImage":
             MessageLookupByLibrary.simpleMessage("لم نستطع تحميل الصورة"),
@@ -750,6 +752,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "من فضلك قم بتزويدنا بموقع التسليم على الخارطة"),
         "pleaseSelectABranch":
             MessageLookupByLibrary.simpleMessage("الرجاء اختيار فرع تجاري"),
+        "pleaseSelectYourStoreLocation":
+            MessageLookupByLibrary.simpleMessage("الرجاء تحديد موقع متجرك"),
         "prayerMessage": MessageLookupByLibrary.simpleMessage(
             "قد يستغرق قبول هذا الطلب وقت اطول من المعتاد نظرا لقرب موعد الصلاة"),
         "preferredLanguage":
@@ -893,6 +897,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sortedByLatest":
             MessageLookupByLibrary.simpleMessage("من الأقدم للأحدث"),
         "specification": MessageLookupByLibrary.simpleMessage("المواصفات"),
+        "startWork": MessageLookupByLibrary.simpleMessage("ابدا العمل"),
         "startWriting": MessageLookupByLibrary.simpleMessage("ابدأ الكتابة"),
         "statusCodeBadRequest":
             MessageLookupByLibrary.simpleMessage("تعذر على الخادم فهم الطلب"),
@@ -1019,6 +1024,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("جار رفع الصور"),
         "uploadingImagesPleaseWait":
             MessageLookupByLibrary.simpleMessage("يتم رفع الصورة"),
+        "useYourCurrentLocation":
+            MessageLookupByLibrary.simpleMessage("استخدم موقعك الحالي"),
         "userDeleted":
             MessageLookupByLibrary.simpleMessage("تم حذف الحساب بنجاح"),
         "username": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
