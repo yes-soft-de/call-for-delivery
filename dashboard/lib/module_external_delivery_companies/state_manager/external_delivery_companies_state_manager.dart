@@ -1,4 +1,3 @@
-import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
@@ -34,12 +33,9 @@ class ExternalDeliveryCompaniesStateManager {
             getExternalCompanies(screenState);
           }, title: '', error: value.error, hasAppbar: false, size: 200));
         } else if (value.isEmpty) {
-          _stateSubject.add(EmptyState(screenState, size: 200, onPressed: () {
-            getExternalCompanies(screenState);
-          },
-              title: '',
-              emptyMessage: S.current.homeDataEmpty,
-              hasAppbar: false));
+          _stateSubject.add(
+            ExternalDeliveryCompaniesStateLoaded(screenState, []),
+          );
         } else {
           value as CompanyModel;
           _stateSubject.add(
@@ -123,7 +119,7 @@ class ExternalDeliveryCompaniesStateManager {
             title: S.current.warnning,
             message: S.current.dataUpdatedSuccessfully,
           );
-        screenState.getExternalCompanies();
+          screenState.getExternalCompanies();
         }
       },
     );
