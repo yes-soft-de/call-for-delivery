@@ -3,7 +3,7 @@ class ImageAsset {
   static const WELCOME_IMAGES = ROOT + 'welcome_page_images/';
   static const C4D_LOGO = ROOT + 'c4d_stores_logo.png';
   static const SPLASH_SCREEN_BACKGROUND =
-      ROOT + 'spalsh_screen_back_greound.jpg';
+      ROOT + 'spalsh_screen_back_greound.png';
   static const LANGUAGE_BACKGROUND = ROOT + 'language_backgraound.png';
   static const AUTH_BACKGROUND = ROOT + 'auth_backgorund.png';
   static const WORLD_LANGUAGE = ROOT + 'world_language.png';

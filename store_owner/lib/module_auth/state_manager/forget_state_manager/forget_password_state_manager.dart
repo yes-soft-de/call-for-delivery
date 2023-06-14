@@ -43,7 +43,6 @@ class ForgotPassStateManager {
       _loadingStateSubject.add(const AsyncSnapshot.nothing());
       CustomFlushBarHelper.createError(title: S.current.warnning, message: err)
           .show(_screenState.context);
-      _forgotStateSubject.add(ForgotStateUpdatePassword(_screenState));
     });
   }
 
@@ -73,14 +72,17 @@ class ForgotPassStateManager {
       ..onError(
         (error, stackTrace) {
           // TODO: must show error message
-          throw error!;
+          _screenState = _forgotScreenState;
+          _loadingStateSubject
+              .add(AsyncSnapshot.withError(ConnectionState.done, error!));
+
+          throw error;
         },
       )
       ..whenComplete(
         () {
           // TODO: remove this line after finish test
-          _screenState = _forgotScreenState;
-          _loadingStateSubject.add(const AsyncSnapshot.nothing());
+          // _loadingStateSubject.add(const AsyncSnapshot.nothing());
         },
       );
   }

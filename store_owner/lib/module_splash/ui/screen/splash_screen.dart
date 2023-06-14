@@ -95,6 +95,7 @@ class _SplashScreenState extends State<SplashScreen> {
     return Stack(children: [
       Image.asset(
         ImageAsset.SPLASH_SCREEN_BACKGROUND,
+        fit: BoxFit.cover,
       ),
       Scaffold(
         backgroundColor: Colors.transparent,
