@@ -32,7 +32,7 @@ class MrsoolOrderController extends BaseController
 
     /**
      * MRSOOL:
-     * @Route("mrsoolorderstatus", name="updateOrderStatusByMrsool", methods={"PUT"})
+     * @Route("mrsoolorderstatus", name="updateOrderStatusByMrsool", methods={"POST"})
      * @param Request $request
      * @return JsonResponse
      *
@@ -48,7 +48,7 @@ class MrsoolOrderController extends BaseController
      * @OA\RequestBody(
      *      description="update external order status request",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="state"),
+     *          @OA\Property(type="string", property="status"),
      *          @OA\Property(type="integer", property="id")
      *      )
      * )
