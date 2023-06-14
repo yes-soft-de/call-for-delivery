@@ -64,9 +64,25 @@ class ForgotPassStateManager {
   void verifyResetPassCodeRequest(VerifyResetPassCodeRequest request,
       ForgotPassScreenState _forgotScreenState) {
     _loadingStateSubject.add(const AsyncSnapshot.waiting());
-    _screenState = _forgotScreenState;
-    _authService.verifyResetPassCodeRequest(request).whenComplete(
-        () => _loadingStateSubject.add(const AsyncSnapshot.nothing()));
+    _authService.verifyResetPassCodeRequest(request)
+      ..then(
+        (isVerified) {
+          if (isVerified) _screenState = _forgotScreenState;
+        },
+      )
+      ..onError(
+        (error, stackTrace) {
+          // TODO: must show error message
+          throw error!;
+        },
+      )
+      ..whenComplete(
+        () {
+          // TODO: remove this line after finish test
+          _screenState = _forgotScreenState;
+          _loadingStateSubject.add(const AsyncSnapshot.nothing());
+        },
+      );
   }
 
   void updatePassword(

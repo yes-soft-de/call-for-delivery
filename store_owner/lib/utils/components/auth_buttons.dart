@@ -17,20 +17,6 @@ class AuthButtons extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 150,
-      decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [
-              Theme.of(context).scaffoldBackgroundColor.withOpacity(0.2),
-              Theme.of(context).scaffoldBackgroundColor,
-              Theme.of(context).scaffoldBackgroundColor,
-              Theme.of(context).scaffoldBackgroundColor,
-              Theme.of(context).scaffoldBackgroundColor,
-              Theme.of(context).scaffoldBackgroundColor,
-            ]),
-      ),
       child: Flex(
         mainAxisAlignment: MainAxisAlignment.end,
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -53,14 +39,17 @@ class AuthButtons extends StatelessWidget {
                     child: loading!
                         ? CircularProgressIndicator(
                             valueColor: AlwaysStoppedAnimation<Color>(
-                                Theme.of(context).textTheme.button?.color ??
+                                Theme.of(context).textTheme.labelLarge?.color ??
                                     Colors.white),
                           )
                         : Text(
                             firstButtonTitle,
                             style: TextStyle(
                               color: firstButtonTab != null
-                                  ? Theme.of(context).textTheme.button?.color
+                                  ? Theme.of(context)
+                                      .textTheme
+                                      .labelLarge
+                                      ?.color
                                   : Theme.of(context).disabledColor,
                             ),
                           ),
@@ -73,19 +62,27 @@ class AuthButtons extends StatelessWidget {
             child: Container(
               width: double.maxFinite,
               height: 50,
-              child: ElevatedButton(
+              child: OutlinedButton(
                   onPressed: secondButtonTab,
-                  style: ElevatedButton.styleFrom(
-                    elevation: 1,
-                    primary: Theme.of(context).colorScheme.secondaryContainer,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25),
+                  style: ButtonStyle(
+                    shape: MaterialStateProperty.all(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(40),
+                      ),
+                    ),
+                    side: MaterialStateProperty.all(
+                      BorderSide(
+                          color: Color(0xff03816A),
+                          width: 3,
+                          style: BorderStyle.solid),
                     ),
                   ),
                   child: Center(
                     child: Text(
                       secondButtonTitle,
-                      style: Theme.of(context).textTheme.button,
+                      style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                            color: Color(0xff03816A),
+                          ),
                     ),
                   )),
             ),

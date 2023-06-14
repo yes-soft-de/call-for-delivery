@@ -128,10 +128,10 @@ class _SplashScreenState extends State<SplashScreen> {
           await getIt<AuthService>().accountStatus();
           return AuthPrefsHelper().getAccountStatusPhase();
         } catch (e) {
-          return AuthorizationRoutes.LOGIN_SCREEN;
+          return AuthorizationRoutes.REGISTER_SCREEN;
         }
       } else if (AboutHiveHelper().getWelcome()) {
-        return AuthorizationRoutes.LOGIN_SCREEN;
+        return AuthorizationRoutes.REGISTER_SCREEN;
       } else {
         return welcomePage();
       }

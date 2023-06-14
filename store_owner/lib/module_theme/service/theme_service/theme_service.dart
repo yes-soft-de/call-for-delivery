@@ -22,6 +22,7 @@ class AppThemeDataService {
   ThemeData getActiveTheme() {
     var dark = _preferencesHelper.isDarkMode();
     final lightScheme = ColorScheme.fromSeed(
+      primary: Color(0xff03816A),
       seedColor: PrimaryColor,
       background: Color.fromRGBO(236, 239, 241, 1),
     );
@@ -78,39 +79,37 @@ class AppThemeDataService {
           cardColor: Colors.grey[150],
           fontFamily: 'Dubai',
           textTheme: TextTheme(
-            button: TextStyle(
+            labelLarge: TextStyle(
               color: Colors.white,
             ),
           ));
     }
     mapStyle(dark);
     return ThemeData(
-        scaffoldBackgroundColor: Colors.grey[50],
-        brightness: Brightness.light,
-        //       primaryColor: PrimaryColor,
-        colorScheme: lightScheme,
-        useMaterial3: true,
-        //    colorScheme: lightScheme,
-        focusColor: PrimaryColor,
-        primarySwatch: Colors.indigo,
-        cardColor: Color.fromRGBO(245, 245, 245, 1),
-        backgroundColor: Color.fromRGBO(236, 239, 241, 1),
-        textTheme: TextTheme(button: TextStyle(color: Colors.white)),
-        fontFamily: 'Dubai',
-        elevatedButtonTheme: ElevatedButtonThemeData(
-            style: ElevatedButton.styleFrom(
-          backgroundColor: lightScheme.primary,
-          foregroundColor: Colors.white,
-          textStyle: const TextStyle(color: Colors.white),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(25),
-          ),
-        )),
-        timePickerTheme: TimePickerThemeData(
-          dialBackgroundColor: Color.fromRGBO(235, 235, 235, 1),
-          dayPeriodBorderSide:
-              BorderSide(color: Color.fromRGBO(235, 235, 235, 1)),
-        ));
+      scaffoldBackgroundColor: Colors.grey[50],
+      brightness: Brightness.light,
+      useMaterial3: true,
+      //    colorScheme: lightScheme,
+      focusColor: PrimaryColor,
+      cardColor: Color.fromRGBO(245, 245, 245, 1),
+      textTheme: TextTheme(labelLarge: TextStyle(color: Colors.white)),
+      fontFamily: 'Dubai',
+      elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ElevatedButton.styleFrom(
+        backgroundColor: lightScheme.primary,
+        foregroundColor: Colors.white,
+        textStyle: const TextStyle(color: Colors.white),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(25),
+        ),
+      )),
+      timePickerTheme: TimePickerThemeData(
+        dialBackgroundColor: Color.fromRGBO(235, 235, 235, 1),
+        dayPeriodBorderSide:
+            BorderSide(color: Color.fromRGBO(235, 235, 235, 1)),
+      ),
+      colorScheme: lightScheme,
+    );
   }
 
   void switchDarkMode(bool darkMode) async {

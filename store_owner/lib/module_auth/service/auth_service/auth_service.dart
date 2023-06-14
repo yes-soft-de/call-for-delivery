@@ -2,11 +2,9 @@ import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_profile/profile_routes.dart';
-import 'package:c4d/module_splash/splash_routes.dart';
 import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
-import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/enums/auth_status.dart';
 import 'package:c4d/module_auth/exceptions/auth_exception.dart';
@@ -201,7 +199,7 @@ class AuthService {
     }
   }
 
-  Future<void> verifyResetPassCodeRequest(
+  Future<bool> verifyResetPassCodeRequest(
       VerifyResetPassCodeRequest request) async {
     // Create the profile in our database
     RegisterResponse? registerResponse =
@@ -216,6 +214,7 @@ class AuthService {
           registerResponse.statusCode ?? '0'));
     } else {
       _authSubject.add(AuthStatus.VERIFIED);
+      return true;
     }
   }
 
