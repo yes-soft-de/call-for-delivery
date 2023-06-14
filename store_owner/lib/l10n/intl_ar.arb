@@ -713,5 +713,8 @@
     "enterYourStoreName": "ادخل اسم متجرك",
     "startWork": "ابدا العمل",
     "pleaseSelectYourStoreLocation": "الرجاء تحديد موقع متجرك",
+    "welcome" : "اهلا وسهلا",
+    "getItNow" : "احصل عليها الان",
+    "welcomePlanOffer" : "مبروك  لقد حصلت على باقة ترحيبية \n لتوصيل طلب واحد \n مقابل 1 ريال فقط",
     "adsAndOffers": "الإعلانات و العروض"
 }

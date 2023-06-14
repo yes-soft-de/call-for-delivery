@@ -7,6 +7,20 @@ import 'package:c4d/module_auth/exceptions/auth_exception.dart';
 class AuthPrefsHelper {
   var box = Hive.box('Authorization');
   var suggestion = Hive.box('Suggestions');
+
+  void setNewAccount(bool isNewAccount) {
+    box.put('isNewAccount', isNewAccount);
+  }
+
+  bool getIsNewAccount() {
+    var v = box.get('isNewAccount');
+    if (v is bool) {
+      return v;
+    }
+
+    return false;
+  }
+
   void setUsername(String username) {
     box.put('username', username);
   }

@@ -250,6 +250,7 @@ class Urls {
   static const CONFIRM_CAPTAIN_LOCATION_API =
       DOMAIN + '/v1/order/orderupdatecaptainarrived';
   static const GET_STORE_PAYMENTS = DOMAIN + '/v1/storepayment/storepayment';
+  static const PAYMENTS_BY_STORE = DOMAIN + '/v1/epayment/epaymentbystore';
   static const UPDATE_ORDER_API = DOMAIN + '/v1/order/orderupdate';
   static const UPDATE_ORDER_CASH_FINANCE =
       DOMAIN + '/v1/order/confirmcashpaymentbystore';

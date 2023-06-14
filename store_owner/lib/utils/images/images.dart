@@ -5,6 +5,7 @@ class ImageAsset {
   static const SPLASH_SCREEN_BACKGROUND =
       ROOT + 'spalsh_screen_back_greound.png';
   static const LANGUAGE_BACKGROUND = ROOT + 'language_backgraound.png';
+  static const WELCOME_IMAGE = ROOT + 'welcome_image.png';
   static const AUTH_BACKGROUND = ROOT + 'auth_backgorund.png';
   static const WORLD_LANGUAGE = ROOT + 'world_language.png';
   static const LOGO = ROOT + 'logo.png';

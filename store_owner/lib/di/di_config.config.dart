@@ -485,6 +485,7 @@ _i1.GetIt $initGetIt(
   gh.factory<_i89.OrdersService>(() => _i89.OrdersService(
         gh<_i41.OrdersManager>(),
         gh<_i66.ProfileService>(),
+        gh<_i5.AuthPrefsHelper>(),
       ));
   gh.factory<_i90.OwnerOrdersStateManager>(() => _i90.OwnerOrdersStateManager(
         gh<_i89.OrdersService>(),

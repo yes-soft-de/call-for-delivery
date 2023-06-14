@@ -7180,6 +7180,36 @@ class S {
     );
   }
 
+  /// `welcome`
+  String get welcome {
+    return Intl.message(
+      'welcome',
+      name: 'welcome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `get it now`
+  String get getItNow {
+    return Intl.message(
+      'get it now',
+      name: 'getItNow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Congratulations, you have received a welcome package for delivering one order for only 1 riyal`
+  String get welcomePlanOffer {
+    return Intl.message(
+      'Congratulations, you have received a welcome package for delivering one order for only 1 riyal',
+      name: 'welcomePlanOffer',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Ads & offers`
   String get adsAndOffers {
     return Intl.message(

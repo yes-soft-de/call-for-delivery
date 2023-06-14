@@ -419,6 +419,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "geographicalRange":
             MessageLookupByLibrary.simpleMessage("Geographical range"),
         "getDirection": MessageLookupByLibrary.simpleMessage("Get Direction"),
+        "getItNow": MessageLookupByLibrary.simpleMessage("get it now"),
         "go": MessageLookupByLibrary.simpleMessage("Go"),
         "goToOffers": MessageLookupByLibrary.simpleMessage("go to offers"),
         "groupOrder": MessageLookupByLibrary.simpleMessage("Group Order"),
@@ -1058,6 +1059,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "We need  your image in order to sign up"),
         "weWillContactYouSoon":
             MessageLookupByLibrary.simpleMessage("We will contact you soon"),
+        "welcome": MessageLookupByLibrary.simpleMessage("welcome"),
+        "welcomePlanOffer": MessageLookupByLibrary.simpleMessage(
+            "Congratulations, you have received a welcome package for delivering one order for only 1 riyal"),
         "welcomeToOrdersScreen":
             MessageLookupByLibrary.simpleMessage("Welcome to Orders Screen"),
         "welcomeToOurApp":

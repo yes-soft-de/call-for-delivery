@@ -713,5 +713,8 @@
     "enterYourStoreName": "enter your store name",
     "startWork": "start work",
     "pleaseSelectYourStoreLocation": "please select your store location",
+    "welcome" : "welcome",
+    "getItNow" : "get it now",
+    "welcomePlanOffer" : "Congratulations, you have received a welcome package for delivering one order for only 1 riyal",
     "adsAndOffers":"Ads & offers"
 }

@@ -410,6 +410,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("نطاق الباقة الجغرافي"),
         "getDirection":
             MessageLookupByLibrary.simpleMessage("موقع المحل (الاستلام)"),
+        "getItNow": MessageLookupByLibrary.simpleMessage("احصل عليها الان"),
         "go": MessageLookupByLibrary.simpleMessage("انطلق"),
         "goToOffers": MessageLookupByLibrary.simpleMessage("اذهب الى العروض"),
         "groupOrder": MessageLookupByLibrary.simpleMessage("طلب مجمع"),
@@ -1050,6 +1051,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("نحتاج صورتك للتسجيل"),
         "weWillContactYouSoon": MessageLookupByLibrary.simpleMessage(
             "تم تسجيل الطلب، سنتواصل معك بأقرب وقت ممكن"),
+        "welcome": MessageLookupByLibrary.simpleMessage("اهلا وسهلا"),
+        "welcomePlanOffer": MessageLookupByLibrary.simpleMessage(
+            "مبروك  لقد حصلت على باقة ترحيبية \n لتوصيل طلب واحد \n مقابل 1 ريال فقط"),
         "welcomeToOrdersScreen":
             MessageLookupByLibrary.simpleMessage("اهلا في قسم الطلبات"),
         "welcomeToOurApp":

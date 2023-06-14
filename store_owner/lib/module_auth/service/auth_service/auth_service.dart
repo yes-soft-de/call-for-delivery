@@ -1,7 +1,6 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
-import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -254,18 +253,14 @@ class AuthService {
     var response = await _authManager.accountStatus();
     if (response?.statusCode != '200') {
       switch (response?.statusCode) {
-        // account didn't subscript yet
+        // account  subscript with free plan
         case '9161':
-          _prefsHelper.setUserCompetedProfile(
-              SubscriptionsRoutes.INIT_SUBSCRIPTIONS_SCREEN);
+          _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
+
           break;
         // account didn't created any branch
         case '9159':
           _prefsHelper.setUserCompetedProfile(BranchesRoutes.INIT_BRANCHES);
-          break;
-        // account created
-        case '9160':
-          _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
           break;
         // account not filled
         case '9158':
@@ -277,6 +272,12 @@ class AuthService {
         case '9013':
           await logout();
           _prefsHelper.setUserCompetedProfile('userDeleted');
+          break;
+        // new account (to show init sub dialog)
+        case '9160':
+          _prefsHelper.setNewAccount(true);
+          _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
+
           break;
         default:
           _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
