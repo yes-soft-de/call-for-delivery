@@ -8,6 +8,7 @@ use App\Constant\Order\OrderResultConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\StoreOwnerPayment\StoreOwnerPaymentConstant;
 use App\Constant\Subscription\SubscriptionDetailsConstant;
+use App\Entity\PackageEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionDetailsEntity;
 use App\Entity\SubscriptionEntity;
@@ -1100,6 +1101,83 @@ class SubscriptionService
         // After applying the updating process, check the subscription status (ex: if remaining cars are finished)
         //$this->checkSubscriptionValidation();
         return $result;
+    }
+
+    public function getPackageEntityById(int $id): ?PackageEntity
+    {
+        return $this->subscriptionManager->getPackageEntityById($id);
+    }
+
+    public function createSubscriptionWithFreePackage(int $storeOwnerUserId)
+    {
+        $freePackage = $this->getPackageEntityById(18);
+
+        if (! $freePackage) {
+            return PackageConstant::PACKAGE_NOT_EXIST;
+        }
+
+        $createRequest = new SubscriptionCreateRequest();
+
+        $createRequest->setPackage($freePackage);
+
+        $activateExistingSubscription = $this->checkSubscription($storeOwnerUserId);
+
+        $isFuture = $this->getIsFutureState($storeOwnerUserId);
+
+        $createRequest->setIsFuture($isFuture);
+        $createRequest->setHasExtra(SubscriptionConstant::IS_HAS_EXTRA_FALSE);
+        $createRequest->setType(SubscriptionConstant::POSSIBLE_TO_EXTRA_FALSE);
+        $createRequest->setStoreOwner($storeOwnerUserId);
+
+        $subscription = $this->subscriptionManager->createSubscriptionWithFreePackage($createRequest);
+
+        //--check and update completeAccountStatus for the store owner profile
+        if ($subscription) {
+            $this->updateCompleteAccountStatusOfStoreOwnerProfileAfterSubscriptionWithFreePackage($subscription->getStoreOwner());
+
+            if ($activateExistingSubscription === SubscriptionConstant::NEW_SUBSCRIPTION_ACTIVATED) {
+                $this->checkWhetherThereIsActiveCaptainsOfferAndUpdateSubscription($createRequest->getStoreOwner()->getId());
+
+                return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
+            }
+
+            $this->checkWhetherThereIsActiveCaptainsOfferAndUpdateSubscription($subscription->getStoreOwner()->getId());
+
+            // Send firebase notification to admin
+            $this->sendFirebaseNotificationToAdmin(SubscriptionFirebaseNotificationConstant::STORE_CREATE_NEW_SUBSCRIPTION_CONST,
+                $subscription->getStoreOwner()->getStoreOwnerName(), $storeOwnerUserId);
+
+            return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
+        }
+
+        return SubscriptionConstant::SUBSCRIPTION_DOES_NOT_EXIST_CONST;
+    }
+
+    /**
+     * This function checks completeAccountStatus of the store owner profile and updates it when necessary
+     */
+    public function updateCompleteAccountStatusOfStoreOwnerProfileAfterSubscriptionWithFreePackage(StoreOwnerProfileEntity $storeOwner)
+    {
+        // First, check if there is a subscription
+        $subscriptionHistory = $this->subscriptionManager->getSubscriptionHistoryByStoreOwner($storeOwner);
+
+        if ($subscriptionHistory != null) {
+            // subscription is exist, then check completeAccountStatus field.
+            $storeOwnerProfileResult = $this->subscriptionManager->getStoreOwnerProfileByStoreOwnerId($storeOwner->getStoreOwnerId());
+
+            if ($storeOwnerProfileResult) {
+                if ($storeOwnerProfileResult->getCompleteAccountStatus() === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED) {
+                    // then we can update completeAccountStatus to subscriptionCreated
+
+                    $completeAccountStatusUpdateRequest = new CompleteAccountStatusUpdateRequest();
+
+                    $completeAccountStatusUpdateRequest->setUserId($storeOwner->getStoreOwnerId());
+                    $completeAccountStatusUpdateRequest->setCompleteAccountStatus(StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_FREE_SUBSCRIPTION_CREATED);
+
+                    $this->subscriptionManager->storeOwnerProfileCompleteAccountStatusUpdate($completeAccountStatusUpdateRequest);
+                }
+            }
+        }
     }
 }
  
