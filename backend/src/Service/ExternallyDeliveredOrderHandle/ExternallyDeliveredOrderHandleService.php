@@ -317,9 +317,10 @@ class ExternallyDeliveredOrderHandleService
         if ($sendOrderExternallyFeatureStatus === AppFeatureResultConstant::APP_FEATURE_NOT_FOUND_CONST) {
             return AppFeatureResultConstant::APP_FEATURE_NOT_FOUND_CONST;
 
-        } elseif ($sendOrderExternallyFeatureStatus === AppFeatureStatusConstant::FEATURE_STATUS_FALSE_CONST) {
-            return AppFeatureResultConstant::APP_FEATURE_NOT_ACTIVATED_CONST;
         }
+//        elseif ($sendOrderExternallyFeatureStatus === AppFeatureStatusConstant::FEATURE_STATUS_FALSE_CONST) {
+//            return AppFeatureResultConstant::APP_FEATURE_NOT_ACTIVATED_CONST;
+//        }
 
         // 2 check if external company is exist.
         $externalDeliveryCompany = $this->getExternalDeliveryCompanyById($request->getExternalCompanyId());

@@ -29,8 +29,38 @@ class MrsoolDeliveredOrderService
     public function initializeCreateOrderRequest(OrderEntity $orderEntity, StoreOrderDetailsEntity $storeOrderDetailsEntity): array
     {
         // fields can not be null
-        $description = $storeOrderDetailsEntity->getDetail() ? : MrsoolCompanyConstant::ORDER_DEFAULT_DESCRIPTION_CONST;
-        $orderCost = $orderEntity->getOrderCost() ? : 0;
+//        $description = $storeOrderDetailsEntity->getDetail() ? : MrsoolCompanyConstant::ORDER_DEFAULT_DESCRIPTION_CONST;
+//        $orderCost = $orderEntity->getOrderCost() ? : 0;
+
+        if ((! $storeOrderDetailsEntity->getDetail()) || ($storeOrderDetailsEntity->getDetail() === "")) {
+            if ($orderEntity->getStoreOwner()->getId() === 42) {
+                $description = "واحد سويتز بوكس";
+
+            } elseif ($orderEntity->getStoreOwner()->getId() === 2) {
+                $description = "باقة ورد";
+
+            } elseif ($orderEntity->getStoreOwner()->getId() === 111) {
+                $description = "وجبة سكرت رول";
+
+            } elseif ($orderEntity->getStoreOwner()->getId() === 282) {
+                $description = "نص كيلوا كباب";
+            }
+        }
+
+        if ((! $orderEntity->getOrderCost()) || ($orderEntity->getOrderCost() === 0)) {
+            if ($orderEntity->getStoreOwner()->getId() === 42) {
+                $orderCost = 49;
+
+            } elseif ($orderEntity->getStoreOwner()->getId() === 2) {
+                $orderCost = 60;
+
+            } elseif ($orderEntity->getStoreOwner()->getId() === 111) {
+                $orderCost = 115;
+
+            } elseif ($orderEntity->getStoreOwner()->getId() === 282) {
+                $orderCost = 70;
+            }
+        }
 
         return [
             MrsoolCompanyConstant::PICKUP_FIELD_CONST => [

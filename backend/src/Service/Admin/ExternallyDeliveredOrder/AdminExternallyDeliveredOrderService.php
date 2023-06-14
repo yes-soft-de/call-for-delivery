@@ -25,8 +25,7 @@ class AdminExternallyDeliveredOrderService
     {
         $externallyDeliveredOrder = $this->externallyDeliveredOrderHandleService->createExternallyDeliveredOrderByAdmin($request);
 
-        if (($externallyDeliveredOrder === AppFeatureResultConstant::APP_FEATURE_NOT_FOUND_CONST)
-            || ($externallyDeliveredOrder === AppFeatureResultConstant::APP_FEATURE_NOT_ACTIVATED_CONST)
+        if (($externallyDeliveredOrder === AppFeatureResultConstant::APP_FEATURE_NOT_ACTIVATED_CONST)
             || ($externallyDeliveredOrder === ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_NOT_FOUND_CONST)
             || ($externallyDeliveredOrder === OrderResultConstant::ORDER_NOT_FOUND_RESULT)
             || ($externallyDeliveredOrder === ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_IS_NOT_REGISTERED_CONST)
