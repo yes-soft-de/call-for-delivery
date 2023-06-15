@@ -274,6 +274,7 @@ class AuthService {
           _prefsHelper.setUserCompetedProfile('userDeleted');
           break;
         // new account (to show init sub dialog)
+        // TODO: its return in old stores to so cant relay on it 
         case '9160':
           _prefsHelper.setNewAccount(true);
           _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
