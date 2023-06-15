@@ -31,8 +31,10 @@ class MrsoolDeliveredOrderService
         // fields can not be null
 //        $description = $storeOrderDetailsEntity->getDetail() ? : MrsoolCompanyConstant::ORDER_DEFAULT_DESCRIPTION_CONST;
 //        $orderCost = $orderEntity->getOrderCost() ? : 0;
+        $description = $storeOrderDetailsEntity->getDetail();
+        $orderCost = $orderEntity->getOrderCost();
 
-        if ((! $storeOrderDetailsEntity->getDetail()) || ($storeOrderDetailsEntity->getDetail() === "")) {
+        if ((! $description) || ($description === "")) {
             if ($orderEntity->getStoreOwner()->getId() === 42) {
                 $description = "واحد سويتز بوكس";
 
@@ -47,7 +49,7 @@ class MrsoolDeliveredOrderService
             }
         }
 
-        if ((! $orderEntity->getOrderCost()) || ($orderEntity->getOrderCost() === 0)) {
+        if ((! $orderCost) || ($orderCost == 0)) {
             if ($orderEntity->getStoreOwner()->getId() === 42) {
                 $orderCost = 49;
 
