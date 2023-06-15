@@ -1,4 +1,7 @@
 import 'dart:async';
+import 'package:c4d/module_subscription/hive/subscription_pref.dart';
+import 'package:c4d/module_subscription/model/subscription_balance_model.dart';
+import 'package:c4d/module_subscription/service/subscription_service.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
@@ -149,6 +152,22 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     widget._stateManager.getUpdates(this);
 
     showWelcomeDialog = _authPrefsHelper.getIsNewAccount();
+
+    getIt<SubscriptionService>().getSubscriptionBalance().then(
+      (value) {
+        if (value.hasError) {
+        } else if (value.isEmpty) {
+        } else {
+          value as SubscriptionBalanceModel;
+          var packageId = value.data.packageID;
+          if (packageId == 18 || packageId == 19) {
+            getIt<SubscriptionPref>().setIsOldSubscriptionPlan(false);
+          } else {
+            getIt<SubscriptionPref>().setIsOldSubscriptionPlan(true);
+          }
+        }
+      },
+    );
   }
 
   String? orderFilter;
