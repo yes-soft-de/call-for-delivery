@@ -715,6 +715,15 @@
     "pleaseSelectYourStoreLocation": "please select your store location",
     "welcome" : "welcome",
     "getItNow" : "get it now",
+    "toBePayed" : "to be payed",
+    "numberOfOrder" : "number of order",
+    "payNow" : "pay now",
+    "planDetails" : "plan details",
+    "openedPrice" : "opened price order",
+    "subscriptionIsActivate" : "subscription is active",
+    "youHaveNotExceededTheLimitYet" : "you have not exceeded the limit yet",
+    "every1KM" : "every 1 km",
+    "youHaveToPayWhen" : "you have to pay when you reach 100 sar",
     "welcomePlanOffer" : "Congratulations, you have received a welcome package for delivering one order for only 1 riyal",
     "adsAndOffers":"Ads & offers"
 }

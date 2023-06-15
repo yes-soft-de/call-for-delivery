@@ -7200,6 +7200,96 @@ class S {
     );
   }
 
+  /// `to be payed`
+  String get toBePayed {
+    return Intl.message(
+      'to be payed',
+      name: 'toBePayed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `number of order`
+  String get numberOfOrder {
+    return Intl.message(
+      'number of order',
+      name: 'numberOfOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `pay now`
+  String get payNow {
+    return Intl.message(
+      'pay now',
+      name: 'payNow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `plan details`
+  String get planDetails {
+    return Intl.message(
+      'plan details',
+      name: 'planDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `opened price order`
+  String get openedPrice {
+    return Intl.message(
+      'opened price order',
+      name: 'openedPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `subscription is active`
+  String get subscriptionIsActivate {
+    return Intl.message(
+      'subscription is active',
+      name: 'subscriptionIsActivate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `you have not exceeded the limit yet`
+  String get youHaveNotExceededTheLimitYet {
+    return Intl.message(
+      'you have not exceeded the limit yet',
+      name: 'youHaveNotExceededTheLimitYet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `every 1 km`
+  String get every1KM {
+    return Intl.message(
+      'every 1 km',
+      name: 'every1KM',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `you have to pay when you reach 100 sar`
+  String get youHaveToPayWhen {
+    return Intl.message(
+      'you have to pay when you reach 100 sar',
+      name: 'youHaveToPayWhen',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Congratulations, you have received a welcome package for delivering one order for only 1 riyal`
   String get welcomePlanOffer {
     return Intl.message(

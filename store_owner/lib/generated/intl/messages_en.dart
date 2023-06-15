@@ -374,6 +374,7 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Error logging in, firebase account not found"),
         "errorUploadingImages":
             MessageLookupByLibrary.simpleMessage("Error Uploading Images!!"),
+        "every1KM": MessageLookupByLibrary.simpleMessage("every 1 km"),
         "exceededAllowedTime": MessageLookupByLibrary.simpleMessage(
             "Can not remove it, Exceeded time allowed"),
         "expirationData":
@@ -567,6 +568,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "notificationsDeletedSuccess": MessageLookupByLibrary.simpleMessage(
             "Notifications deleted successfully"),
         "now": MessageLookupByLibrary.simpleMessage("Now"),
+        "numberOfOrder":
+            MessageLookupByLibrary.simpleMessage("number of order"),
         "offerNotFoundRenew": MessageLookupByLibrary.simpleMessage(
             "This offer not available to renew any more"),
         "offerNumber": MessageLookupByLibrary.simpleMessage("offerNumber"),
@@ -586,6 +589,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "openChatRoom": MessageLookupByLibrary.simpleMessage("Open Chat Room"),
         "openOrder": MessageLookupByLibrary.simpleMessage("Open order"),
         "openTheApp": MessageLookupByLibrary.simpleMessage("Open the app"),
+        "openedPrice":
+            MessageLookupByLibrary.simpleMessage("opened price order"),
         "openingTime": MessageLookupByLibrary.simpleMessage("Opening Time"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
         "orderAlreadyAccepted": MessageLookupByLibrary.simpleMessage(
@@ -695,6 +700,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "passwordUpdatedSuccess": MessageLookupByLibrary.simpleMessage(
             "Password updated successfully"),
         "pay": MessageLookupByLibrary.simpleMessage("Pay"),
+        "payNow": MessageLookupByLibrary.simpleMessage("pay now"),
         "paySubscription":
             MessageLookupByLibrary.simpleMessage("Pay Subscription"),
         "paymentAmount": MessageLookupByLibrary.simpleMessage("Payment amount"),
@@ -725,6 +731,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pickAJob": MessageLookupByLibrary.simpleMessage("Pick a Job"),
         "pickALanguage":
             MessageLookupByLibrary.simpleMessage("Pick a Language"),
+        "planDetails": MessageLookupByLibrary.simpleMessage("plan details"),
         "pleaseCheckYourInternetConnection":
             MessageLookupByLibrary.simpleMessage(
                 "Please check your internet connection , and try again"),
@@ -939,6 +946,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "You subscribed with captain offer with a success"),
         "subscriptionDate":
             MessageLookupByLibrary.simpleMessage("Subscription date"),
+        "subscriptionIsActivate":
+            MessageLookupByLibrary.simpleMessage("subscription is active"),
         "subscriptionStatus":
             MessageLookupByLibrary.simpleMessage("Subscription status"),
         "successCreateOrder":
@@ -973,6 +982,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Order can contains a sub orders"),
         "title": MessageLookupByLibrary.simpleMessage("title"),
         "to": MessageLookupByLibrary.simpleMessage("To"),
+        "toBePayed": MessageLookupByLibrary.simpleMessage("to be payed"),
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
             MessageLookupByLibrary.simpleMessage(
                 "To find out more, please leave your phone.\nand we will contact you personally"),
@@ -1095,8 +1105,12 @@ class MessageLookup extends MessageLookupByLibrary {
                 "You can\'t delete order, captain accepted this order"),
         "youConsumed":
             MessageLookupByLibrary.simpleMessage("You have consumed"),
+        "youHaveNotExceededTheLimitYet": MessageLookupByLibrary.simpleMessage(
+            "you have not exceeded the limit yet"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "You have products from other store , Do you want to clear your cart and add the new ones"),
+        "youHaveToPayWhen": MessageLookupByLibrary.simpleMessage(
+            "you have to pay when you reach 100 sar"),
         "youSubscribedWithOffer": MessageLookupByLibrary.simpleMessage(
             "You already subscribed with captain offer , You can subscribe again when your subscription expired"),
         "yourBalance": MessageLookupByLibrary.simpleMessage("your balance"),

@@ -11,7 +11,7 @@ import 'package:c4d/module_subscription/model/subscription_balance_model.dart';
 import 'package:c4d/module_subscription/service/subscription_service.dart';
 import 'package:c4d/module_subscription/ui/screens/new_subscription_balance_screen/new_subscription_balance_screen.dart';
 import 'package:c4d/module_subscription/ui/screens/subscription_balance_screen/subscription_balance_screen.dart';
-import 'package:c4d/module_subscription/ui/state/new_subscription_balance/subcriptions_balance_loaded_state.dart';
+import 'package:c4d/module_subscription/ui/state/new_subscription_balance/subscriptions_balance_loaded_state.dart';
 import 'package:c4d/module_subscription/ui/state/subscription_balance/subcriptions_balance_loaded_state.dart';
 import 'package:c4d/module_subscription/ui/state/subscription_balance/subscription_balance_error.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';

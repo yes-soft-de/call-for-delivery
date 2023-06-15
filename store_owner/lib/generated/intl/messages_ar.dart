@@ -365,6 +365,7 @@ class MessageLookup extends MessageLookupByLibrary {
                 "خطا في تسجيل الدخول, لم يتم العثور على حساب فايربيز"),
         "errorUploadingImages":
             MessageLookupByLibrary.simpleMessage("حدث خطأ عند رفع الصور!!"),
+        "every1KM": MessageLookupByLibrary.simpleMessage("كل 1 كم"),
         "exceededAllowedTime": MessageLookupByLibrary.simpleMessage(
             "لقد تجاوزت الوقت المسموح لإزالة الطلب"),
         "expirationData":
@@ -557,6 +558,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "notificationsDeletedSuccess":
             MessageLookupByLibrary.simpleMessage("تم حذف الإشعارات بنجاح"),
         "now": MessageLookupByLibrary.simpleMessage("الآن"),
+        "numberOfOrder": MessageLookupByLibrary.simpleMessage("عدد الطلبات"),
         "offerNotFoundRenew": MessageLookupByLibrary.simpleMessage(
             "هذا العرض لم يعد متاح بعد الآن للتجديد"),
         "offerNumber": MessageLookupByLibrary.simpleMessage("رقم العرض"),
@@ -577,6 +579,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("افتح غرفة المحادثة"),
         "openOrder": MessageLookupByLibrary.simpleMessage("الطلبات المفتوحة"),
         "openTheApp": MessageLookupByLibrary.simpleMessage("افتح التطبيق"),
+        "openedPrice":
+            MessageLookupByLibrary.simpleMessage("السعر الافتتاحي للطلب"),
         "openingTime": MessageLookupByLibrary.simpleMessage("وقت الافتتاح"),
         "order": MessageLookupByLibrary.simpleMessage("الطلب "),
         "orderAlreadyAccepted": MessageLookupByLibrary.simpleMessage(
@@ -687,6 +691,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "passwordUpdatedSuccess":
             MessageLookupByLibrary.simpleMessage("تم تحديث كلمة المرور بنجاح"),
         "pay": MessageLookupByLibrary.simpleMessage("ادفع"),
+        "payNow": MessageLookupByLibrary.simpleMessage("ادفع الان"),
         "paySubscription": MessageLookupByLibrary.simpleMessage("دفع الاشتراك"),
         "paymentAmount": MessageLookupByLibrary.simpleMessage("قيمة الدفعة"),
         "paymentFailed": MessageLookupByLibrary.simpleMessage(
@@ -717,6 +722,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("رقم الهاتف المدخل قصير"),
         "pickAJob": MessageLookupByLibrary.simpleMessage("اختار عملي"),
         "pickALanguage": MessageLookupByLibrary.simpleMessage("اختار لغتي"),
+        "planDetails": MessageLookupByLibrary.simpleMessage("تفاصيل خطة العمل"),
         "pleaseCheckYourInternetConnection":
             MessageLookupByLibrary.simpleMessage(
                 "من فضلك تحقق من اتصالك بالانترنت ثم قم بإعادة المحاولة لاحقا"),
@@ -933,6 +939,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "تم الاشتراك بباقة كابتن إضافية بنجاح"),
         "subscriptionDate":
             MessageLookupByLibrary.simpleMessage("تاريخ الاشتراك"),
+        "subscriptionIsActivate":
+            MessageLookupByLibrary.simpleMessage("الاشتراك فعال"),
         "subscriptionStatus":
             MessageLookupByLibrary.simpleMessage("حالة الاشتراك"),
         "successCreateOrder":
@@ -967,6 +975,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "الطلب من الممكن أن يحتوي على طلبات فرعية"),
         "title": MessageLookupByLibrary.simpleMessage("عنوان الطلب"),
         "to": MessageLookupByLibrary.simpleMessage("الى"),
+        "toBePayed": MessageLookupByLibrary.simpleMessage("المترتب للدفع"),
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
             MessageLookupByLibrary.simpleMessage(
                 "للمزيد من المعلومات خذ موعدا بترك رقم هاتفك، وسيتم التواصل معك"),
@@ -1086,8 +1095,12 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "لايمكنك حذف الطلب ، تم استلام الطلب من قبل الكابتن"),
         "youConsumed": MessageLookupByLibrary.simpleMessage("لقد استهلكت"),
+        "youHaveNotExceededTheLimitYet":
+            MessageLookupByLibrary.simpleMessage("لم تتخطى الحد المسموح بعد"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "السلة تحتوي على أصناف من متجر آخر , هل تريد حذف أصناف السلة وإضافة الأصناف الجديدة"),
+        "youHaveToPayWhen": MessageLookupByLibrary.simpleMessage(
+            "سيتوجب عليك الدفع عند بلوغ استهلاكك 100 ريال"),
         "youSubscribedWithOffer": MessageLookupByLibrary.simpleMessage(
             "لديك اشتراك في عرض الكابتن مفعل ، سيمكنك الاشتراك مرة أخرى بعد انتهاء مدة الاشتراك"),
         "yourBalance": MessageLookupByLibrary.simpleMessage("رصيدك"),
