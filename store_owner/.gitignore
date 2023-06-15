@@ -30,6 +30,7 @@
 .pub-cache/
 .pub/
 /build/
+/lib/consts/secret_payments_keys.dart
 .vscode/
 
 # Web related

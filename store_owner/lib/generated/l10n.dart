@@ -7119,6 +7119,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Store fee`
+  String get storeFee {
+    return Intl.message(
+      'Store fee',
+      name: 'storeFee',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

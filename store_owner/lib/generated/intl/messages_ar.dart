@@ -903,6 +903,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "store": MessageLookupByLibrary.simpleMessage("المتجر"),
         "storeAccountInit":
             MessageLookupByLibrary.simpleMessage("تهيئة الحساب"),
+        "storeFee": MessageLookupByLibrary.simpleMessage("المستحقات عالمتجر"),
         "storeName": MessageLookupByLibrary.simpleMessage("اسم المحل التجاري"),
         "storeNameIsToShort": MessageLookupByLibrary.simpleMessage(
             "اسم المتجر يجب ألا يقل عن ثلاث حروف"),
