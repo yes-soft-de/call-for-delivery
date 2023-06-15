@@ -55,7 +55,7 @@ class StoreOwnerBranchService
         }
     }
 
-    public function createDefaultBranch(StoreOwnerBranchCreateRequest $request): ?StoreOwnerBranchResponse
+    public function createDefaultBranch(StoreOwnerBranchCreateRequest $request): StoreOwnerBranchResponse
     {
         $branch = $this->storeOwnerBranchManager->createDefaultBranch($request);
 

@@ -44,7 +44,7 @@ class StoreOwnerBranchManager
         return $entity;
     }
 
-    public function createDefaultBranch(StoreOwnerBranchCreateRequest $request):?StoreOwnerBranchEntity
+    public function createDefaultBranch(StoreOwnerBranchCreateRequest $request): StoreOwnerBranchEntity
     {
         $entity = $this->autoMapping->map(StoreOwnerBranchCreateRequest::class, StoreOwnerBranchEntity::class, $request);
 
