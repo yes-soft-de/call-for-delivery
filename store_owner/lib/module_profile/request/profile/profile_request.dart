@@ -1,3 +1,5 @@
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 class ProfileRequest {
   String? name;
   String? phone;
@@ -8,18 +10,22 @@ class ProfileRequest {
   String? employeeSize;
   String? openingTime;
   String? closingTime;
+  LatLng? location;
+
   ProfileRequest.empty();
 
-  ProfileRequest(
-      {this.name,
-      this.phone,
-      this.image,
-      this.city,
-      this.bankName,
-      this.employeeSize,
-      this.bankAccountNumber,
-      this.closingTime,
-      this.openingTime});
+  ProfileRequest({
+    this.name,
+    this.phone,
+    this.image,
+    this.city,
+    this.bankName,
+    this.employeeSize,
+    this.bankAccountNumber,
+    this.closingTime,
+    this.openingTime,
+    this.location,
+  });
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
@@ -34,6 +40,8 @@ class ProfileRequest {
     data['employeeCount'] = this.employeeSize;
     data['closingTime'] = this.closingTime;
     data['openingTime'] = this.openingTime;
+    data['location'] = {'lat': this.location?.latitude, 'lon': this.location?.longitude};
+
     return data;
   }
 }

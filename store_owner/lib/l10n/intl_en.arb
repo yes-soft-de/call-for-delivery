@@ -705,6 +705,16 @@
     "distanceUpdated":"distance updated",
     "adminNotes":"admin notes:",
     "ok":"ok",
+    "arabic":"Arabic",
+    "english":"English",
+    "continueWord":"Continue",
     "youCanContactWithDirectSupportForMoreDetails":"you can contact with direct support for more detail's",
+    "useYourCurrentLocation":"use your current location",
+    "enterYourStoreName": "enter your store name",
+    "startWork": "start work",
+    "pleaseSelectYourStoreLocation": "please select your store location",
+    "welcome" : "welcome",
+    "getItNow" : "get it now",
+    "welcomePlanOffer" : "Congratulations, you have received a welcome package for delivering one order for only 1 riyal",
     "adsAndOffers":"Ads & offers"
 }

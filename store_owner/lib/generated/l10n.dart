@@ -7100,11 +7100,111 @@ class S {
     );
   }
 
+  /// `Arabic`
+  String get arabic {
+    return Intl.message(
+      'Arabic',
+      name: 'arabic',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `English`
+  String get english {
+    return Intl.message(
+      'English',
+      name: 'english',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Continue`
+  String get continueWord {
+    return Intl.message(
+      'Continue',
+      name: 'continueWord',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `you can contact with direct support for more detail's`
   String get youCanContactWithDirectSupportForMoreDetails {
     return Intl.message(
       'you can contact with direct support for more detail\'s',
       name: 'youCanContactWithDirectSupportForMoreDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `use your current location`
+  String get useYourCurrentLocation {
+    return Intl.message(
+      'use your current location',
+      name: 'useYourCurrentLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `enter your store name`
+  String get enterYourStoreName {
+    return Intl.message(
+      'enter your store name',
+      name: 'enterYourStoreName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `start work`
+  String get startWork {
+    return Intl.message(
+      'start work',
+      name: 'startWork',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `please select your store location`
+  String get pleaseSelectYourStoreLocation {
+    return Intl.message(
+      'please select your store location',
+      name: 'pleaseSelectYourStoreLocation',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `welcome`
+  String get welcome {
+    return Intl.message(
+      'welcome',
+      name: 'welcome',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `get it now`
+  String get getItNow {
+    return Intl.message(
+      'get it now',
+      name: 'getItNow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Congratulations, you have received a welcome package for delivering one order for only 1 riyal`
+  String get welcomePlanOffer {
+    return Intl.message(
+      'Congratulations, you have received a welcome package for delivering one order for only 1 riyal',
+      name: 'welcomePlanOffer',
       desc: '',
       args: [],
     );

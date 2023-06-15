@@ -28,25 +28,28 @@ class SplashScreen extends StatefulWidget {
 class _SplashScreenState extends State<SplashScreen> {
   Future<void> someChecks() async {
     bool result = await InternetConnectionChecker().hasConnection;
+
     if (result) {
       _getNextRoute().then((route) {
         Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
       });
     } else {
       showDialog(
-          context: context,
-          barrierDismissible: false,
-          builder: (ctx) {
-            return CustomAlertDialog(
-                forceQuit: true,
-                primaryButton: S.current.tryAgain,
-                onPressed: () {
-                  Navigator.of(context).pop();
-                  someChecks();
-                },
-                title: S.current.warnning,
-                content: S.current.pleaseCheckYourInternetConnection);
-          });
+        context: context,
+        barrierDismissible: false,
+        builder: (ctx) {
+          return CustomAlertDialog(
+            forceQuit: true,
+            primaryButton: S.current.tryAgain,
+            onPressed: () {
+              Navigator.of(context).pop();
+              someChecks();
+            },
+            title: S.current.warnning,
+            content: S.current.pleaseCheckYourInternetConnection,
+          );
+        },
+      );
     }
   }
 
@@ -61,17 +64,17 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
   }
 
-  String _statusText = "Waiting...";
-  final String _finished = "Finished creating channel";
-  final String _error = "Error while creating channel";
+  String _statusText = 'Waiting...';
+  final String _finished = 'Finished creating channel';
+  final String _error = 'Error while creating channel';
 
   static const MethodChannel _channel =
       MethodChannel('yessoft.de/channel_test');
 
   Map<String, String> channelMap = {
-    "id": "C4d_Notifications_custom_sound_test",
-    "name": "C4d Notifications",
-    "description": "C4d Notifications with custom sounds",
+    'id': 'C4d_Notifications_custom_sound_test',
+    'name': 'C4d Notifications',
+    'description': 'C4d Notifications with custom sounds',
   };
 
   void _createNewChannel() async {
@@ -89,22 +92,26 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SizedBox(
-        child: Center(
+    return Stack(children: [
+      // Image.asset(
+      //   ImageAsset.SPLASH_SCREEN_BACKGROUND,
+      //   fit: BoxFit.cover,
+      // ),
+      Scaffold(
+        backgroundColor: Color.fromARGB(255, 238, 180, 54),
+        body: Center(
           child: Image.asset(
-            ImageAsset.LOGO,
-            height: 150,
-            width: 150,
+            ImageAsset.C4D_LOGO,
+            width: MediaQuery.sizeOf(context).width * 0.7,
           ),
         ),
       ),
-    );
+    ]);
   }
 
   Future<String> _getNextRoute() async {
     try {
-      if (getIt<LocalizationService>().choosed()) {
+      if (getIt<LocalizationService>().languageHasBeenChosen()) {
         return needForLogging(widget._authService.isLoggedIn);
       } else {
         return SettingRoutes.CHOOSE_LANGUAGE;
@@ -122,10 +129,10 @@ class _SplashScreenState extends State<SplashScreen> {
           await getIt<AuthService>().accountStatus();
           return AuthPrefsHelper().getAccountStatusPhase();
         } catch (e) {
-          return AuthorizationRoutes.LOGIN_SCREEN;
+          return AuthorizationRoutes.REGISTER_SCREEN;
         }
       } else if (AboutHiveHelper().getWelcome()) {
-        return AuthorizationRoutes.LOGIN_SCREEN;
+        return AuthorizationRoutes.REGISTER_SCREEN;
       } else {
         return welcomePage();
       }
