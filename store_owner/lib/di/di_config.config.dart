@@ -5,8 +5,8 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:c4d/main.dart' as _i144;
-import 'package:c4d/module_about/about_module.dart' as _i142;
+import 'package:c4d/main.dart' as _i145;
+import 'package:c4d/module_about/about_module.dart' as _i143;
 import 'package:c4d/module_about/hive/about_hive_helper.dart' as _i3;
 import 'package:c4d/module_about/manager/about_manager.dart' as _i48;
 import 'package:c4d/module_about/repository/about_repository.dart' as _i29;
@@ -106,7 +106,7 @@ import 'package:c4d/module_localization/service/localization_service/localizatio
 import 'package:c4d/module_my_notifications/manager/my_notifications_manager.dart'
     as _i60;
 import 'package:c4d/module_my_notifications/my_notifications_module.dart'
-    as _i143;
+    as _i144;
 import 'package:c4d/module_my_notifications/presistance/my_notification_hive_helper.dart'
     as _i14;
 import 'package:c4d/module_my_notifications/repository/my_notifications_repository.dart'
@@ -133,7 +133,7 @@ import 'package:c4d/module_notifications/service/local_notification_service/loca
 import 'package:c4d/module_orders/hive/order_hive_helper.dart' as _i16;
 import 'package:c4d/module_orders/manager/orders_manager/orders_manager.dart'
     as _i42;
-import 'package:c4d/module_orders/orders_module.dart' as _i138;
+import 'package:c4d/module_orders/orders_module.dart' as _i139;
 import 'package:c4d/module_orders/repository/order_repository/order_repository.dart'
     as _i41;
 import 'package:c4d/module_orders/service/orders/orders.service.dart' as _i90;
@@ -167,15 +167,15 @@ import 'package:c4d/module_orders/ui/screens/new_order/update_order_screen.dart'
     as _i125;
 import 'package:c4d/module_orders/ui/screens/new_order_link.dart' as _i131;
 import 'package:c4d/module_orders/ui/screens/order_details/order_details_screen.dart'
-    as _i133;
-import 'package:c4d/module_orders/ui/screens/order_logs_screen.dart' as _i134;
+    as _i134;
+import 'package:c4d/module_orders/ui/screens/order_logs_screen.dart' as _i135;
 import 'package:c4d/module_orders/ui/screens/order_recylcing_screen.dart'
-    as _i135;
-import 'package:c4d/module_orders/ui/screens/order_time_line_screen.dart'
     as _i136;
+import 'package:c4d/module_orders/ui/screens/order_time_line_screen.dart'
+    as _i137;
 import 'package:c4d/module_orders/ui/screens/orders/owner_orders_screen.dart'
     as _i119;
-import 'package:c4d/module_orders/ui/screens/orders_cash_screen.dart' as _i137;
+import 'package:c4d/module_orders/ui/screens/orders_cash_screen.dart' as _i138;
 import 'package:c4d/module_orders/ui/screens/sub_orders_screen.dart' as _i122;
 import 'package:c4d/module_profile/manager/profile/profile.manager.dart'
     as _i66;
@@ -221,15 +221,17 @@ import 'package:c4d/module_subscription/state_manager/store_subscriptions_financ
     as _i121;
 import 'package:c4d/module_subscription/state_manager/subscription_balance_state_manager.dart'
     as _i123;
-import 'package:c4d/module_subscription/subscriptions_module.dart' as _i141;
+import 'package:c4d/module_subscription/subscriptions_module.dart' as _i142;
 import 'package:c4d/module_subscription/ui/screens/init_subscription_screen/init_subscription_screen.dart'
     as _i129;
+import 'package:c4d/module_subscription/ui/screens/new_subscription_balance_screen/new_subscription_balance_screen.dart'
+    as _i133;
 import 'package:c4d/module_subscription/ui/screens/store_subscriptions_details_screen.dart'
     as _i19;
 import 'package:c4d/module_subscription/ui/screens/store_subscriptions_screen.dart'
-    as _i139;
-import 'package:c4d/module_subscription/ui/screens/subscription_balance_screen/subscription_balance_screen.dart'
     as _i140;
+import 'package:c4d/module_subscription/ui/screens/subscription_balance_screen/subscription_balance_screen.dart'
+    as _i141;
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart'
     as _i22;
 import 'package:c4d/module_theme/service/theme_service/theme_service.dart'
@@ -624,51 +626,55 @@ _i1.GetIt $initGetIt(
       () => _i131.NewOrderLinkScreen(gh<_i112.NewOrderLinkStateManager>()));
   gh.factory<_i132.NewOrderScreen>(
       () => _i132.NewOrderScreen(gh<_i113.NewOrderStateManager>()));
-  gh.factory<_i133.OrderDetailsScreen>(
-      () => _i133.OrderDetailsScreen(gh<_i116.OrderStatusStateManager>()));
-  gh.factory<_i134.OrderLogsScreen>(
-      () => _i134.OrderLogsScreen(gh<_i114.OrderLogsStateManager>()));
-  gh.factory<_i135.OrderRecyclingScreen>(
-      () => _i135.OrderRecyclingScreen(gh<_i115.OrderRecyclingStateManager>()));
-  gh.factory<_i136.OrderTimeLineScreen>(
-      () => _i136.OrderTimeLineScreen(gh<_i117.OrderTimeLineStateManager>()));
-  gh.factory<_i137.OrdersCashScreen>(
-      () => _i137.OrdersCashScreen(gh<_i118.OrdersCashStateManager>()));
-  gh.factory<_i138.OrdersModule>(() => _i138.OrdersModule(
+  gh.factory<_i133.NewSubscriptionBalanceScreen>(() =>
+      _i133.NewSubscriptionBalanceScreen(
+          gh<_i123.SubscriptionBalanceStateManager>()));
+  gh.factory<_i134.OrderDetailsScreen>(
+      () => _i134.OrderDetailsScreen(gh<_i116.OrderStatusStateManager>()));
+  gh.factory<_i135.OrderLogsScreen>(
+      () => _i135.OrderLogsScreen(gh<_i114.OrderLogsStateManager>()));
+  gh.factory<_i136.OrderRecyclingScreen>(
+      () => _i136.OrderRecyclingScreen(gh<_i115.OrderRecyclingStateManager>()));
+  gh.factory<_i137.OrderTimeLineScreen>(
+      () => _i137.OrderTimeLineScreen(gh<_i117.OrderTimeLineStateManager>()));
+  gh.factory<_i138.OrdersCashScreen>(
+      () => _i138.OrdersCashScreen(gh<_i118.OrdersCashStateManager>()));
+  gh.factory<_i139.OrdersModule>(() => _i139.OrdersModule(
         gh<_i132.NewOrderScreen>(),
-        gh<_i133.OrderDetailsScreen>(),
+        gh<_i134.OrderDetailsScreen>(),
         gh<_i119.OwnerOrdersScreen>(),
         gh<_i122.SubOrdersScreen>(),
         gh<_i131.NewOrderLinkScreen>(),
-        gh<_i136.OrderTimeLineScreen>(),
-        gh<_i134.OrderLogsScreen>(),
+        gh<_i137.OrderTimeLineScreen>(),
+        gh<_i135.OrderLogsScreen>(),
         gh<_i128.HiddenOrdersScreen>(),
-        gh<_i135.OrderRecyclingScreen>(),
+        gh<_i136.OrderRecyclingScreen>(),
         gh<_i125.UpdateOrderScreen>(),
-        gh<_i137.OrdersCashScreen>(),
+        gh<_i138.OrdersCashScreen>(),
       ));
-  gh.factory<_i139.StoreSubscriptionsFinanceScreen>(() =>
-      _i139.StoreSubscriptionsFinanceScreen(
+  gh.factory<_i140.StoreSubscriptionsFinanceScreen>(() =>
+      _i140.StoreSubscriptionsFinanceScreen(
           gh<_i121.StoreSubscriptionsFinanceStateManager>()));
-  gh.factory<_i140.SubscriptionBalanceScreen>(() =>
-      _i140.SubscriptionBalanceScreen(
+  gh.factory<_i141.SubscriptionBalanceScreen>(() =>
+      _i141.SubscriptionBalanceScreen(
           gh<_i123.SubscriptionBalanceStateManager>()));
-  gh.factory<_i141.SubscriptionsModule>(() => _i141.SubscriptionsModule(
+  gh.factory<_i142.SubscriptionsModule>(() => _i142.SubscriptionsModule(
         gh<_i129.InitSubscriptionScreen>(),
-        gh<_i140.SubscriptionBalanceScreen>(),
-        gh<_i139.StoreSubscriptionsFinanceScreen>(),
+        gh<_i141.SubscriptionBalanceScreen>(),
+        gh<_i140.StoreSubscriptionsFinanceScreen>(),
         gh<_i19.StoreSubscriptionsFinanceDetailsScreen>(),
+        gh<_i133.NewSubscriptionBalanceScreen>(),
       ));
-  gh.factory<_i142.AboutModule>(() => _i142.AboutModule(
+  gh.factory<_i143.AboutModule>(() => _i143.AboutModule(
         gh<_i99.AboutScreen>(),
         gh<_i127.CompanyInfoScreen>(),
       ));
-  gh.factory<_i143.MyNotificationsModule>(() => _i143.MyNotificationsModule(
+  gh.factory<_i144.MyNotificationsModule>(() => _i144.MyNotificationsModule(
         gh<_i130.MyNotificationsScreen>(),
         gh<_i98.UpdateScreen>(),
       ));
-  gh.factory<_i144.MyApp>(() => _i144.MyApp(
-        gh<_i138.OrdersModule>(),
+  gh.factory<_i145.MyApp>(() => _i145.MyApp(
+        gh<_i139.OrdersModule>(),
         gh<_i25.AppThemeDataService>(),
         gh<_i12.LocalizationService>(),
         gh<_i57.FireNotificationService>(),
@@ -677,11 +683,11 @@ _i1.GetIt $initGetIt(
         gh<_i77.AuthorizationModule>(),
         gh<_i105.ChatModule>(),
         gh<_i93.SettingsModule>(),
-        gh<_i142.AboutModule>(),
+        gh<_i143.AboutModule>(),
         gh<_i120.ProfileModule>(),
         gh<_i126.BranchesModule>(),
-        gh<_i141.SubscriptionsModule>(),
-        gh<_i143.MyNotificationsModule>(),
+        gh<_i142.SubscriptionsModule>(),
+        gh<_i144.MyNotificationsModule>(),
         gh<_i103.BidOrdersModule>(),
       ));
   return getIt;

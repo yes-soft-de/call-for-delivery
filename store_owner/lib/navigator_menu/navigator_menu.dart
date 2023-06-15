@@ -119,9 +119,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                   Navigator.of(context)
                       .pushNamed(SubscriptionsRoutes.SUBSCRIPTIONS_DUES_SCREEN);
                 } else {
-                  // TODO: navigate to new screen
                   Navigator.of(context)
-                      .pushNamed(SubscriptionsRoutes.SUBSCRIPTIONS_DUES_SCREEN);
+                      .pushNamed(SubscriptionsRoutes.NEW_SUBSCRIPTIONS_SCREEN);
                 }
               },
               title: S.current.myBalance,
