@@ -12,6 +12,7 @@ class AuthPrefsHelper {
     box.put('isNewAccount', isNewAccount);
   }
 
+  /// default is false
   bool getIsNewAccount() {
     var v = box.get('isNewAccount');
     if (v is bool) {
