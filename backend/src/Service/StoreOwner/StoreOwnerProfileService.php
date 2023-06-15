@@ -63,7 +63,7 @@ class StoreOwnerProfileService
         $this->verificationService->createVerificationCode($verificationCodeRequest);
     }
 
-    public function createStoreOwnerBranch(StoreOwnerProfileUpdateRequest $request, StoreOwnerProfileEntity $storeOwnerProfileEntity): ?StoreOwnerBranchResponse
+    public function createStoreOwnerBranch(StoreOwnerProfileUpdateRequest $request, StoreOwnerProfileEntity $storeOwnerProfileEntity): StoreOwnerBranchResponse
     {
         $branchCreateRequest = $this->autoMapping->map(StoreOwnerProfileUpdateRequest::class,
             StoreOwnerBranchCreateRequest::class, $request);
@@ -89,16 +89,37 @@ class StoreOwnerProfileService
         return $this->storeOwnerBranchService->createDefaultBranch($branchCreateRequest);
     }
 
+    public function updateStoreOwnerProfileCompleteAccountStatusAfterBranchCreation($userId, string $completeAccountStatus): StoreOwnerProfileEntity|string
+    {
+        $updateRequest = new CompleteAccountStatusUpdateRequest();
+
+        $updateRequest->setCompleteAccountStatus($completeAccountStatus);
+        $updateRequest->setUserId($userId);
+
+        return $this->storeOwnerProfileManager->storeOwnerProfileCompleteAccountStatusUpdate($updateRequest);
+    }
+
     public function storeOwnerProfileUpdate(StoreOwnerProfileUpdateRequest $request): StoreOwnerProfileResponse
     {
         $item = $this->storeOwnerProfileManager->storeOwnerProfileUpdate($request);
 
-        if ($item instanceof StoreOwnerProfileEntity) {//dd($item);
+        if ($item instanceof StoreOwnerProfileEntity) {
             // If store owner profile updates for the first time, then create a default branch for it
-            if ($item->getCompleteAccountStatus() === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED) {//dd(1);
+            if ($item->getCompleteAccountStatus() === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED) {
                 // create store branch as long as profileCompleted
-                $this->createStoreOwnerBranch($request, $item);
-                // update completeAccountStatus to branchCreated
+                $branchCreateResult = $this->createStoreOwnerBranch($request, $item);
+
+                if ($branchCreateResult) {
+                    //if ($branchCreateResult instanceof StoreOwnerBranchResponse) {
+                        // update completeAccountStatus to requiredFreeSubscription
+                        $completeAccountStatus = $this->getCompleteAccountStatusByStoreOwnerId($request->getUserId());
+
+                        if ($completeAccountStatus['completeAccountStatus'] === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED) {
+                            $this->updateStoreOwnerProfileCompleteAccountStatusAfterBranchCreation($request->getUserId(),
+                                StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_BEFORE_FREE_SUBSCRIPTION_CONST);
+                        }
+                    //}
+                }
             }
         }
 

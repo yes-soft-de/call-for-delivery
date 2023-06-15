@@ -57,8 +57,8 @@ class SubscriptionService
     public function createSubscription(SubscriptionCreateRequest $request): SubscriptionResponse|SubscriptionErrorResponse
     {
         $isPackageReady = $this->isPackageReadyForSubscription($request->getPackage());
-        if($isPackageReady->packageState === PackageConstant::PACKAGE_NOT_EXIST) {
-        
+
+        if ($isPackageReady->packageState === PackageConstant::PACKAGE_NOT_EXIST) {
             return $isPackageReady;
         }
         
@@ -73,7 +73,6 @@ class SubscriptionService
         $subscription = $this->subscriptionManager->createSubscription($request);
 
         //--check and update completeAccountStatus for the store owner profile
-
         if ($subscription) {
             $this->checkCompleteAccountStatusOfStoreOwnerProfile($subscription->getStoreOwner());
         }
@@ -82,7 +81,6 @@ class SubscriptionService
             $this->checkWhetherThereIsActiveCaptainsOfferAndUpdateSubscription($request->getStoreOwner()->getId());
 
             return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
-
         }
 
         if($subscription) {
@@ -113,30 +111,33 @@ class SubscriptionService
 
     public function packageBalance(int $storeOwnerId): RemainingOrdersResponse|string
     {
-       $this->checkSubscription($storeOwnerId);
-      
-       $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwnerId);
-    
-       if ($subscription) {
-           if ($subscription['subscriptionCaptainOfferCarStatus'] === CaptainOfferConstant::STATUS_ACTIVE) {
-              $subscription['packageCarCount'] += $subscription['subscriptionCaptainOfferCarCount'];
-           }
+        $this->checkSubscription($storeOwnerId);
 
-           $subscription['canSubscriptionExtra'] = $this->canSubscriptionExtra($subscription["status"], $subscription["type"]);
-           
-           if ($subscription['hasExtra'] === true) {
-               $subscription['endDate'] = new \DateTime($subscription['startDate']->format('Y-m-d h:i:s').'1 day');
-           }
+        $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwnerId);
 
-           // get the sum of unpaid cash orders
-           $subscription['unPaidCashOrdersSum'] = $this->getUnPaidStoreOwnerDuesFromCashOrderSumByStoreSubscriptionId($subscription['id']);
+        if ($subscription) {
+//            if (($subscription['packageId'] != 18) && ($subscription['packageId'] != 19)) {
+                if ($subscription['subscriptionCaptainOfferCarStatus'] === CaptainOfferConstant::STATUS_ACTIVE) {
+                    $subscription['packageCarCount'] += $subscription['subscriptionCaptainOfferCarCount'];
+                }
 
-           return $this->autoMapping->map("array", RemainingOrdersResponse::class, $subscription);
-       }
+                $subscription['canSubscriptionExtra'] = $this->canSubscriptionExtra($subscription["status"], $subscription["type"]);
 
-       $subscription['status'] = SubscriptionConstant::UNSUBSCRIBED;
-      
-       return $this->autoMapping->map("array", RemainingOrdersResponse::class, $subscription);
+                if ($subscription['hasExtra'] === true) {
+                    $subscription['endDate'] = new \DateTime($subscription['startDate']->format('Y-m-d h:i:s') . '1 day');
+                }
+
+                // get the sum of unpaid cash orders
+                $subscription['unPaidCashOrdersSum'] = $this->getUnPaidStoreOwnerDuesFromCashOrderSumByStoreSubscriptionId($subscription['id']);
+
+                return $this->autoMapping->map("array", RemainingOrdersResponse::class, $subscription);
+
+//            }
+        }
+
+        $subscription['status'] = SubscriptionConstant::UNSUBSCRIBED;
+
+        return $this->autoMapping->map("array", RemainingOrdersResponse::class, $subscription);
     }
 
     public function checkSubscription(int $storeOwnerId): string
@@ -374,6 +375,36 @@ class SubscriptionService
         $packageBalance = $this->packageBalance($storeOwnerId);
     
         if ($packageBalance->status !== SubscriptionConstant::UNSUBSCRIBED) {
+            if ($packageBalance->status === SubscriptionConstant::ORDERS_FINISHED) {
+                if (($packageBalance->packageId === 18)) {
+                    // new subscription system.
+                    // while the free subscription it is over then update it automatically
+                    $createSubscriptionRequest = new SubscriptionCreateRequest();
+
+                    $createSubscriptionRequest->setStoreOwner($storeOwnerId);
+                    $createSubscriptionRequest->setPackage(19);
+
+                    $createSubscriptionResult = $this->createSubscription($createSubscriptionRequest);
+
+                    if ($createSubscriptionResult) {
+                        if ($createSubscriptionResult instanceof SubscriptionResponse) {
+                            // subscription created successfully
+                            $item['subscriptionStatus'] = $createSubscriptionResult->status;
+
+                            $packageBalance = $this->packageBalance($storeOwnerId);
+
+                            $item['percentageOfOrdersConsumed'] = $this->getPercentageOfOrdersConsumed($packageBalance->packageOrderCount,
+                                $packageBalance->remainingOrders);
+
+                            $item['packageName'] = $packageBalance->packageName;
+                            $item['packageType'] = $packageBalance->packageType;
+
+                            return $this->autoMapping->map("array", CanCreateOrderResponse::class, $item);
+                        }
+                    }
+                }
+            }
+
             $item['subscriptionStatus'] = $packageBalance->status;
             // if subscription active
             if ($packageBalance->status === SubscriptionConstant::SUBSCRIBE_ACTIVE) {
@@ -394,12 +425,14 @@ class SubscriptionService
             $item['packageType'] = $packageBalance->packageType;
 
             return $this->autoMapping->map("array", CanCreateOrderResponse::class, $item);
+
         }
 
         $item['subscriptionStatus'] = SubscriptionConstant::UNSUBSCRIBED;
         $item['canCreateOrder'] = SubscriptionConstant::CAN_NOT_CREATE_ORDER;
 
         return $this->autoMapping->map("array", CanCreateOrderResponse::class, $item);
+
     }
     
     public function subscriptionForOneDay(int $storeOwnerId): SubscriptionExtendResponse|SubscriptionResponse|SubscriptionErrorResponse
@@ -1166,7 +1199,8 @@ class SubscriptionService
             $storeOwnerProfileResult = $this->subscriptionManager->getStoreOwnerProfileByStoreOwnerId($storeOwner->getStoreOwnerId());
 
             if ($storeOwnerProfileResult) {
-                if ($storeOwnerProfileResult->getCompleteAccountStatus() === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED) {
+                if ($storeOwnerProfileResult->getCompleteAccountStatus() === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED
+                    || ($storeOwnerProfileResult->getCompleteAccountStatus() === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_BEFORE_FREE_SUBSCRIPTION_CONST)) {
                     // then we can update completeAccountStatus to subscriptionCreated
 
                     $completeAccountStatusUpdateRequest = new CompleteAccountStatusUpdateRequest();

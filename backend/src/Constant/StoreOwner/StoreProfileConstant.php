@@ -23,6 +23,8 @@ final class StoreProfileConstant
 
     const COMPLETE_ACCOUNT_STATUS_PROFILE_VERIFIED = "profileVerified";
     // after creating new subscription with free package
+    const COMPLETE_ACCOUNT_STATUS_BEFORE_FREE_SUBSCRIPTION_CONST = "beforeSubscription";
+    // after creating new subscription with free package
     const COMPLETE_ACCOUNT_STATUS_FREE_SUBSCRIPTION_CREATED = "freeSubscription";
     // after creating new subscription
     const COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED = "subscriptionCreated";
