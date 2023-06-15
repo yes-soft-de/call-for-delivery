@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
     if (result) {
       _getNextRoute().then((route) {
-        Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
+        // Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
       });
     } else {
       showDialog(
@@ -93,12 +93,12 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      Image.asset(
-        ImageAsset.SPLASH_SCREEN_BACKGROUND,
-        fit: BoxFit.cover,
-      ),
+      // Image.asset(
+      //   ImageAsset.SPLASH_SCREEN_BACKGROUND,
+      //   fit: BoxFit.cover,
+      // ),
       Scaffold(
-        backgroundColor: Colors.transparent,
+        backgroundColor: Color.fromARGB(255, 238, 180, 54),
         body: Center(
           child: Image.asset(
             ImageAsset.C4D_LOGO,
