@@ -1,6 +1,6 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_deep_links/service/deep_links_service.dart';
+import 'package:c4d/module_auth/presistance/auth_prefs_helper.dart';
 import 'package:c4d/module_orders/hive/order_hive_helper.dart';
 import 'package:c4d/module_orders/manager/orders_manager/orders_manager.dart';
 import 'package:c4d/module_orders/model/company_info_model.dart';
@@ -11,6 +11,7 @@ import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order_cash_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/order_non_sub_request.dart';
+import 'package:c4d/module_orders/request/payment/paymnet_status_request.dart';
 import 'package:c4d/module_orders/response/company_info_response/company_info_response.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
@@ -25,8 +26,10 @@ import 'package:injectable/injectable.dart';
 class OrdersService {
   final OrdersManager _ordersManager;
   final ProfileService _profileService;
+  final AuthPrefsHelper _authPrefsHelper;
 
-  OrdersService(this._ordersManager, this._profileService);
+  OrdersService(
+      this._ordersManager, this._profileService, this._authPrefsHelper);
 
   Future<DataModel> getMyOrders() async {
     OrdersResponse? response = await _ordersManager.getMyOrders();
@@ -205,5 +208,14 @@ class OrdersService {
     FireStoreHelper().backgroundThread('Trigger');
     return DataModel.empty();
   }
-  
+
+  Future<DataModel> setPayment(PaymentStatusRequest request) async {
+    ActionResponse? response = await _ordersManager.setPayment(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError('');
+    }
+    _authPrefsHelper.setNewAccount(false);
+    return DataModel.empty();
+  }
 }

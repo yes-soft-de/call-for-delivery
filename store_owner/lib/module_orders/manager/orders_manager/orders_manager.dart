@@ -4,6 +4,7 @@ import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order_cash_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/order_non_sub_request.dart';
+import 'package:c4d/module_orders/request/payment/paymnet_status_request.dart';
 import 'package:c4d/module_orders/response/company_info_response/company_info_response.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/orders_response/orders_response.dart';
@@ -60,4 +61,7 @@ class OrdersManager {
 
   Future<ActionResponse?> hideOrder(int orderID) =>
       _repository.hideOrder(orderID);
+
+  Future<ActionResponse?> setPayment(PaymentStatusRequest request) =>
+      _repository.setPayment(request);
 }

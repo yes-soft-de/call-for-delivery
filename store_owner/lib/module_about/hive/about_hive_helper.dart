@@ -10,6 +10,8 @@ class AboutHiveHelper {
   }
 
   bool getWelcome() {
-    return box.get('welcomed') ?? false;
+    // TODO: there is no need to welcome screen any more delete it (:
+    // return box.get('welcomed') ?? false;
+    return true;
   }
 }

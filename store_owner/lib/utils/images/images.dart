@@ -1,6 +1,13 @@
 class ImageAsset {
   static const ROOT = 'assets/images/';
   static const WELCOME_IMAGES = ROOT + 'welcome_page_images/';
+  static const C4D_LOGO = ROOT + 'c4d_stores_logo.png';
+  static const SPLASH_SCREEN_BACKGROUND =
+      ROOT + 'spalsh_screen_back_greound.png';
+  static const LANGUAGE_BACKGROUND = ROOT + 'language_backgraound.png';
+  static const WELCOME_IMAGE = ROOT + 'welcome_image.png';
+  static const AUTH_BACKGROUND = ROOT + 'auth_backgorund.png';
+  static const WORLD_LANGUAGE = ROOT + 'world_language.png';
   static const LOGO = ROOT + 'logo.png';
   static const PLACEHOLDER = ROOT + 'place.png';
   static const SEND_ON_ME = ROOT + 'send_on_me.jpg';
@@ -37,6 +44,7 @@ class SvgAsset {
   static const EARN_CASH = ROOT + 'earn_cash.svg';
   static const RATE_SVG = ROOT + 'rating.svg';
   static const ID_SVG = ROOT + 'id.svg';
+  static const LanguageSVG = ROOT + 'language_sign.svg';
 }
 
 class LottieAsset {

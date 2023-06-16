@@ -43,7 +43,6 @@ class ForgotPassStateManager {
       _loadingStateSubject.add(const AsyncSnapshot.nothing());
       CustomFlushBarHelper.createError(title: S.current.warnning, message: err)
           .show(_screenState.context);
-      _forgotStateSubject.add(ForgotStateUpdatePassword(_screenState));
     });
   }
 
@@ -64,9 +63,28 @@ class ForgotPassStateManager {
   void verifyResetPassCodeRequest(VerifyResetPassCodeRequest request,
       ForgotPassScreenState _forgotScreenState) {
     _loadingStateSubject.add(const AsyncSnapshot.waiting());
-    _screenState = _forgotScreenState;
-    _authService.verifyResetPassCodeRequest(request).whenComplete(
-        () => _loadingStateSubject.add(const AsyncSnapshot.nothing()));
+    _authService.verifyResetPassCodeRequest(request)
+      ..then(
+        (isVerified) {
+          if (isVerified) _screenState = _forgotScreenState;
+        },
+      )
+      ..onError(
+        (error, stackTrace) {
+          // TODO: must show error message
+          _screenState = _forgotScreenState;
+          _loadingStateSubject
+              .add(AsyncSnapshot.withError(ConnectionState.done, error!));
+
+          throw error;
+        },
+      )
+      ..whenComplete(
+        () {
+          // TODO: remove this line after finish test
+          // _loadingStateSubject.add(const AsyncSnapshot.nothing());
+        },
+      );
   }
 
   void updatePassword(
