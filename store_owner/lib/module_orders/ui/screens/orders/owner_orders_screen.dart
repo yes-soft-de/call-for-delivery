@@ -147,8 +147,11 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     });
 
     widget._stateManager.getUpdates(this);
+    widget._stateManager.accountStatus(this);
+  }
 
-    showWelcomeDialog = _authPrefsHelper.getIsNewAccount();
+  refresh() {
+    if (mounted) setState(() {});
   }
 
   String? orderFilter;
