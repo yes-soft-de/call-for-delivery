@@ -15,6 +15,7 @@ import 'package:c4d/module_settings/setting_routes.dart';
 import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/navigator_menu/custom_nav_tile.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
+import 'package:c4d/utils/helpers/in_app_purchase.dart';
 import 'package:c4d/utils/helpers/payment_gateway.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:c4d/utils/models/payment_gateway_model.dart';
@@ -117,6 +118,9 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                     });
               },
               child: Text('PAY')),
+          InAppPurchaseButton(callBack: (s) {
+            print('------------------------------------------$s');
+          }),
           CustomNavTile(
               icon: Icons.person,
               onTap: () {

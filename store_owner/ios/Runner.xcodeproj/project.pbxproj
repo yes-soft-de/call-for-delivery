@@ -11,6 +11,7 @@
 		3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3B3967151E833CAA004F5970 /* AppFrameworkInfo.plist */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		7EC4B65656A1C73E704BFD93 /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DC5F952507798D614A4609F1 /* Pods_Runner.framework */; };
+		80004FEB2A3B9B9B0080B3B1 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 80004FEA2A3B9B9B0080B3B1 /* StoreKit.framework */; };
 		801EEE032855FBF500DCAEDB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 801EEE022855FBF100DCAEDB /* GoogleService-Info.plist */; };
 		8078A09528553D7A00353142 /* ringtone1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8078A09428553D7A00353142 /* ringtone1.wav */; };
 		8078A09728553D8A00353142 /* ringtone2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8078A09628553D8A00353142 /* ringtone2.wav */; };
@@ -41,6 +42,7 @@
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
+		80004FEA2A3B9B9B0080B3B1 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		801EEE022855FBF100DCAEDB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		8078A09428553D7A00353142 /* ringtone1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ringtone1.wav; sourceTree = "<group>"; };
 		8078A09628553D8A00353142 /* ringtone2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ringtone2.wav; sourceTree = "<group>"; };
@@ -64,6 +66,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7EC4B65656A1C73E704BFD93 /* Pods_Runner.framework in Frameworks */,
+				80004FEB2A3B9B9B0080B3B1 /* StoreKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +86,7 @@
 		6C0436F07CAA5A4B6495E418 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				80004FEA2A3B9B9B0080B3B1 /* StoreKit.framework */,
 				DC5F952507798D614A4609F1 /* Pods_Runner.framework */,
 			);
 			name = Frameworks;
@@ -240,6 +244,7 @@
 			files = (
 			);
 			inputPaths = (
+				"${TARGET_BUILD_DIR}/${INFOPLIST_PATH}",
 			);
 			name = "Thin Binary";
 			outputPaths = (

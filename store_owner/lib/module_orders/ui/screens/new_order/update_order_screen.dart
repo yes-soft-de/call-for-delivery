@@ -95,7 +95,7 @@ class UpdateOrderScreenState extends State<UpdateOrderScreen>
         old = toController.text;
         locationParsing();
       }
-      if (!toController.text.contains('http')) {
+      if (!toController.text.contains('http') && !toController.text.contains('geo')) {
         toController.clear();
         Fluttertoast.showToast(msg: S.current.invalidMapLink);
       }
