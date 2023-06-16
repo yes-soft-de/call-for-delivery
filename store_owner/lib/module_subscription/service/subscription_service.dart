@@ -3,12 +3,14 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_subscription/manager/subscription_manager.dart';
 import 'package:c4d/module_subscription/model/can_make_order_model.dart';
 import 'package:c4d/module_subscription/model/captain_offers_model.dart';
+import 'package:c4d/module_subscription/model/new_subscription_balance_model.dart';
 import 'package:c4d/module_subscription/model/packages.model.dart';
 import 'package:c4d/module_subscription/model/packages_categories_model.dart';
 import 'package:c4d/module_subscription/model/store_subscriptions_financial.dart';
 import 'package:c4d/module_subscription/model/subscription_balance_model.dart';
 import 'package:c4d/module_subscription/response/can_make_order_response/can_make_order_response.dart';
 import 'package:c4d/module_subscription/response/captain_offers_response/captain_offers_response.dart';
+import 'package:c4d/module_subscription/response/new_subscription_balance_response/new_subscription_balance_response.dart';
 import 'package:c4d/module_subscription/response/package_categories_response/package_categories_response.dart';
 import 'package:c4d/module_subscription/response/packages/packages_response.dart';
 import 'package:c4d/module_subscription/response/subscription_balance_response/subscription_balance_response.dart';
@@ -64,6 +66,20 @@ class SubscriptionService {
       return DataModel.empty();
     }
     return SubscriptionBalanceModel.withData(response);
+  }
+
+  Future<DataModel> getNewSubscriptionBalance() async {
+    NewSubscriptionBalanceResponse? response =
+        await _manager.getNewSubscriptionBalance();
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) {
+      return DataModel.empty();
+    }
+    return NewSubscriptionBalanceModel.withData(response);
   }
 
   Future<DataModel> getCaptainsOffers() async {

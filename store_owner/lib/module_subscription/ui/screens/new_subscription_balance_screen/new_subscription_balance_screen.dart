@@ -1,13 +1,13 @@
 import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/module_subscription/state_manager/subscription_balance_state_manager.dart';
+import 'package:c4d/module_subscription/state_manager/new_subscription_balance_state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
 class NewSubscriptionBalanceScreen extends StatefulWidget {
-  final SubscriptionBalanceStateManager _stateManager;
+  final NewSubscriptionBalanceStateManager _stateManager;
 
   NewSubscriptionBalanceScreen(
     this._stateManager,

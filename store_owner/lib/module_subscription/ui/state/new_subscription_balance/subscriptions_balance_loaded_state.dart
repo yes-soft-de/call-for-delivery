@@ -1,13 +1,13 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_subscription/model/subscription_balance_model.dart';
+import 'package:c4d/module_subscription/model/new_subscription_balance_model.dart';
 import 'package:c4d/module_subscription/ui/screens/new_subscription_balance_screen/new_subscription_balance_screen.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 
 class NewSubscriptionBalanceLoadedState extends States {
-  SubscriptionBalanceModel balance;
+  NewSubscriptionBalanceModel balance;
   final NewSubscriptionBalanceScreenState screenState;
   NewSubscriptionBalanceLoadedState(this.screenState, this.balance)
       : super(screenState) {}
@@ -25,11 +25,16 @@ class NewSubscriptionBalanceLoadedState extends States {
             children: [
               PaymentCard(
                 onPayNowButtonPressed: () {},
+                balance: balance,
               ),
               SizedBox(height: 10),
-              PlanDetailsCard(),
+              PlanDetailsCard(
+                balance: balance,
+              ),
               SizedBox(height: 10),
-              PlanStatusCard()
+              PlanStatusCard(
+                balance: balance,
+              )
             ],
           ),
         ),
@@ -40,10 +45,12 @@ class NewSubscriptionBalanceLoadedState extends States {
 
 class PaymentCard extends StatelessWidget {
   final void Function()? onPayNowButtonPressed;
+  final NewSubscriptionBalanceModel balance;
 
   const PaymentCard({
     super.key,
     required this.onPayNowButtonPressed,
+    required this.balance,
   });
 
   @override
@@ -87,9 +94,8 @@ class PaymentCard extends StatelessWidget {
                               style: greenLargeText(context),
                             ),
                             SizedBox(height: 10),
-                            // TODO: but the actual value
                             Text(
-                              '00',
+                              balance.orderCount.toString(),
                               style: greenLargeText(context),
                             ),
                           ],
@@ -113,7 +119,7 @@ class PaymentCard extends StatelessWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  '00.00',
+                                  balance.toBePayed.toString(),
                                   style: Theme.of(context)
                                       .textTheme
                                       .titleLarge
@@ -181,7 +187,12 @@ class PaymentCard extends StatelessWidget {
 }
 
 class PlanDetailsCard extends StatelessWidget {
-  const PlanDetailsCard({super.key});
+  final NewSubscriptionBalanceModel balance;
+
+  const PlanDetailsCard({
+    super.key,
+    required this.balance,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -203,7 +214,7 @@ class PlanDetailsCard extends StatelessWidget {
                     RowItem(
                       icon: Icons.shopping_cart_outlined,
                       title: S.current.openedPrice,
-                      value: '14 ريال',
+                      value: '${balance.openPriceOrder} ريال',
                     ),
                     SizedBox(height: 10),
                     Divider(),
@@ -211,10 +222,11 @@ class PlanDetailsCard extends StatelessWidget {
                     RowItem(
                       icon: Icons.local_shipping_outlined,
                       title: S.current.every1KM,
-                      value: '1 ريال',
+                      value: '${balance.costPerKM} ريال',
                     ),
                     SizedBox(height: 10),
                     Divider(),
+                    // TODO: you must edit this if it was from backend
                     Text(S.current.youHaveToPayWhen),
                   ],
                 ),
@@ -294,7 +306,12 @@ class RowItem extends StatelessWidget {
 }
 
 class PlanStatusCard extends StatelessWidget {
-  const PlanStatusCard({super.key});
+  final NewSubscriptionBalanceModel balance;
+
+  const PlanStatusCard({
+    super.key,
+    required this.balance,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -317,6 +334,7 @@ class PlanStatusCard extends StatelessWidget {
                       S.current.subscriptionIsActivate,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
+                    // TODO: but plan status message here
                     Text(S.current.youHaveNotExceededTheLimitYet),
                   ],
                 ),

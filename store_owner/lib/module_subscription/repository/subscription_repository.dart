@@ -3,6 +3,7 @@ import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
 import 'package:c4d/module_subscription/response/can_make_order_response/can_make_order_response.dart';
 import 'package:c4d/module_subscription/response/captain_offers_response/captain_offers_response.dart';
+import 'package:c4d/module_subscription/response/new_subscription_balance_response/new_subscription_balance_response.dart';
 import 'package:c4d/module_subscription/response/package_categories_response/package_categories_response.dart';
 import 'package:c4d/module_subscription/response/packages/packages_response.dart';
 import 'package:c4d/module_subscription/response/subscription_balance_response/subscription_balance_response.dart';
@@ -43,6 +44,16 @@ class SubscriptionsRepository {
     );
     if (response == null) return null;
     return SubscriptionBalanceResponse.fromJson(response);
+  }
+
+  Future<NewSubscriptionBalanceResponse?> getNewSubscriptionBalance() async {
+    var token = await _authService.getToken();
+    var response = await _apiClient.get(
+      Urls.GET_SUBSCRIPTION_BALANCE,
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (response == null) return null;
+    return NewSubscriptionBalanceResponse.fromJson(response);
   }
 
   Future<ActionResponse?> subscribePackage(int packageId) async {
@@ -118,4 +129,6 @@ class SubscriptionsRepository {
     if (response == null) return null;
     return SubscriptionsFinancialResponse.fromJson(response);
   }
+
+ 
 }

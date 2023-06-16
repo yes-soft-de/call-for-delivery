@@ -9,9 +9,7 @@ import 'package:c4d/module_profile/service/profile/profile.service.dart';
 import 'package:c4d/module_subscription/model/captain_offers_model.dart';
 import 'package:c4d/module_subscription/model/subscription_balance_model.dart';
 import 'package:c4d/module_subscription/service/subscription_service.dart';
-import 'package:c4d/module_subscription/ui/screens/new_subscription_balance_screen/new_subscription_balance_screen.dart';
 import 'package:c4d/module_subscription/ui/screens/subscription_balance_screen/subscription_balance_screen.dart';
-import 'package:c4d/module_subscription/ui/state/new_subscription_balance/subscriptions_balance_loaded_state.dart';
 import 'package:c4d/module_subscription/ui/state/subscription_balance/subcriptions_balance_loaded_state.dart';
 import 'package:c4d/module_subscription/ui/state/subscription_balance/subscription_balance_error.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
@@ -65,35 +63,6 @@ class SubscriptionBalanceStateManager {
         value as SubscriptionBalanceModel;
         _stateSubject
             .add(SubscriptionBalanceLoadedState(screenState, value.data));
-      }
-    });
-  }
-
-  void getNewBalance(NewSubscriptionBalanceScreenState screenState) {
-    _stateSubject.add(LoadingState(screenState));
-    _subscriptionService.getSubscriptionBalance().then((value) {
-      if (value.hasError) {
-        _stateSubject.add(ErrorState(
-          screenState,
-          onPressed: () {
-            getNewBalance(screenState);
-          },
-          title: S.current.mySubscription,
-          error: value.error,
-        ));
-      } else if (value.isEmpty) {
-        _stateSubject.add(EmptyState(
-          screenState,
-          onPressed: () {
-            getNewBalance(screenState);
-          },
-          title: S.current.mySubscription,
-          emptyMessage: S.current.homeDataEmpty,
-        ));
-      } else {
-        value as SubscriptionBalanceModel;
-        _stateSubject
-            .add(NewSubscriptionBalanceLoadedState(screenState, value.data));
       }
     });
   }
