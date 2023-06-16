@@ -93,12 +93,17 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      // Image.asset(
-      //   ImageAsset.SPLASH_SCREEN_BACKGROUND,
-      //   fit: BoxFit.cover,
-      // ),
+      Positioned.fill(
+        child: Container(
+          color: Color.fromARGB(255, 233, 195, 113),
+        ),
+      ),
+      Image.asset(
+        ImageAsset.SPLASH_SCREEN_BACKGROUND,
+        fit: BoxFit.cover,
+      ),
       Scaffold(
-        backgroundColor: Color.fromARGB(255, 238, 180, 54),
+        backgroundColor: Colors.transparent,
         body: Center(
           child: Image.asset(
             ImageAsset.C4D_LOGO,
