@@ -156,6 +156,9 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     getIt<SubscriptionService>().getSubscriptionBalance().then(
       (value) {
         if (value.hasError) {
+          if ((value.error?.contains('لم تشترك بباقة') ?? false) ||
+              (value.error?.contains('You dont have a subscription') ?? false))
+            getIt<SubscriptionPref>().setIsOldSubscriptionPlan(false);
         } else if (value.isEmpty) {
         } else {
           value as SubscriptionBalanceModel;
