@@ -77,6 +77,11 @@ class LoginScreenState extends State<LoginScreen> {
       },
       child: Stack(
         children: [
+          Positioned.fill(
+        child: Container(
+          color: Color.fromARGB(255, 233, 195, 113),
+        ),
+      ),
           Image.asset(
             ImageAsset.AUTH_BACKGROUND,
           ),

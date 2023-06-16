@@ -65,6 +65,8 @@ class AuthButtons extends StatelessWidget {
               child: OutlinedButton(
                   onPressed: secondButtonTab,
                   style: ButtonStyle(
+                    backgroundColor: MaterialStateColor.resolveWith(
+                        (states) => Color.fromARGB(111, 255, 255, 255)),
                     shape: MaterialStateProperty.all(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(40),

@@ -7290,10 +7290,10 @@ class S {
     );
   }
 
-  /// `Congratulations, you have received a welcome package for delivering one order for only 1 riyal`
+  /// `Congratulations, you have received a welcome package for delivering one order for only 2.99 riyal`
   String get welcomePlanOffer {
     return Intl.message(
-      'Congratulations, you have received a welcome package for delivering one order for only 1 riyal',
+      'Congratulations, you have received a welcome package for delivering one order for only 2.99 riyal',
       name: 'welcomePlanOffer',
       desc: '',
       args: [],

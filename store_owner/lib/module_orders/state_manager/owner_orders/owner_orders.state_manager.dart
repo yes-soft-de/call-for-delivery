@@ -4,6 +4,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_auth/presistance/auth_prefs_helper.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_my_notifications/model/update_model.dart';
 import 'package:c4d/module_my_notifications/service/my_notification_service.dart';
@@ -81,16 +82,27 @@ class OwnerOrdersStateManager {
         // do nothing
       } else {
         value as UpdateModel;
-        showDialog(
-          context: screenState.context,
-          builder: (context) {
-            return UpdateDialog(
-              updateModel: value.data,
-            );
-          },
-        );
+        if (!screenState.showWelcomeDialog)
+          showDialog(
+            context: screenState.context,
+            builder: (context) {
+              return UpdateDialog(
+                updateModel: value.data,
+              );
+            },
+          );
       }
     });
+  }
+
+  /// to show welcome package if needed (9162)
+  void accountStatus(OwnerOrdersScreenState screenState) async {
+    _authService.accountStatus().whenComplete(
+      () {
+        screenState.showWelcomeDialog = getIt<AuthPrefsHelper>().getIsNewAccount();
+        screenState.refresh();
+      },
+    );
   }
 
   void getOrdersFilters(

@@ -150,8 +150,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     });
 
     widget._stateManager.getUpdates(this);
-
-    showWelcomeDialog = _authPrefsHelper.getIsNewAccount();
+    widget._stateManager.accountStatus(this);
 
     getIt<SubscriptionService>().getSubscriptionBalance().then(
       (value) {
@@ -171,6 +170,10 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
         }
       },
     );
+  }
+
+  refresh() {
+    if (mounted) setState(() {});
   }
 
   String? orderFilter;

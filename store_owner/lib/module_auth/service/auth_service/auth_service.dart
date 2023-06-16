@@ -273,13 +273,17 @@ class AuthService {
           await logout();
           _prefsHelper.setUserCompetedProfile('userDeleted');
           break;
-        // new account (to show init sub dialog)
-        // TODO: its return in old stores to so cant relay on it 
+        // account  created
         case '9160':
+          _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
+          break;
+
+        // new account haven't subscribe with free plan yet 
+        case '9162':
           _prefsHelper.setNewAccount(true);
           _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
-
           break;
+
         default:
           _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
           break;
