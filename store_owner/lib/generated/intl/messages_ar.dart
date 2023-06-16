@@ -1053,7 +1053,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "تم تسجيل الطلب، سنتواصل معك بأقرب وقت ممكن"),
         "welcome": MessageLookupByLibrary.simpleMessage("اهلا وسهلا"),
         "welcomePlanOffer": MessageLookupByLibrary.simpleMessage(
-            "مبروك  لقد حصلت على باقة ترحيبية \n لتوصيل طلب واحد \n مقابل 1 ريال فقط"),
+            "مبروك  لقد حصلت على باقة ترحيبية \n لتوصيل طلب واحد \n مقابل 2.99 ريال فقط"),
         "welcomeToOrdersScreen":
             MessageLookupByLibrary.simpleMessage("اهلا في قسم الطلبات"),
         "welcomeToOurApp":
