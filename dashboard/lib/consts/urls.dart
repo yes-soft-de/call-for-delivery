@@ -14,7 +14,7 @@ class Urls {
     '552222225',
   ];
   /*--------BASES-------------------*/
-  static const String DOMAIN = devDomain;
+  static const String DOMAIN = prodDomain;
   static const String BASE_API = DOMAIN + '';
   static const String VERSION = '/v1';
   static const GEO_DISTANCE = DOMAIN + '/v1/geodistance/geodistance';
@@ -36,6 +36,9 @@ class Urls {
       DOMAIN + VERSION_ADMIN + '/announcement';
   static const BASE_API_EXTERNAL_DELIVERY_COMPANY =
       DOMAIN + VERSION + '/admin/externaldeliverycompany';
+
+  static const BASE_API_EXTERNAL_DELIVERY_ORDER =
+      DOMAIN + VERSION + '/admin/externallydeliveredorder';
 
   static const BASE_API_EXTERNAL_DELIVERY_COMPANY_CRITERIA =
       DOMAIN + VERSION + '/admin/externaldeliverycompanycriteria';
@@ -396,8 +399,13 @@ class Urls {
   /*-----------------------------external delivery company----------------------------*/
   static const EXTERNAL_DELIVERY_COMPANY =
       BASE_API_EXTERNAL_DELIVERY_COMPANY + '/externaldeliverycompany';
+
+  static const EXTERNAL_DELIVERY_ODER_BY_ADMIN =
+      BASE_API_EXTERNAL_DELIVERY_ORDER + '/externallydeliveredorderbyadmin';
+
   static const EXTERNAL_DELIVERY_COMPANY_STATUS =
       BASE_API_EXTERNAL_DELIVERY_COMPANY + '/externaldeliverycompanystatus';
+
   static const FETCH_EXTERNAL_DELIVERY_COMPANY =
       BASE_API_EXTERNAL_DELIVERY_COMPANY + '/externaldeliverycompanies';
 
@@ -414,4 +422,7 @@ class Urls {
 
   static const APP_FEATURE_STATUS_BY_ADMIN =
       BASE_API_APP_FEATURE + '/appfeaturestatusbyadmin';
+
+  static const FILTER_EXTERNAL_ORDERS_BY_ADMIN =
+      BASE_API_ORDER + '/filterexternallydeliveredordersbyadmin';
 }

@@ -5,12 +5,15 @@ class SelectableItem<T> extends StatelessWidget {
   final T value;
   final T selectedValue;
   final String title;
+  final Color? selectedColor;
 
-  const SelectableItem(
-      {required this.onTap,
-      required this.value,
-      required this.selectedValue,
-      required this.title});
+  const SelectableItem({
+    required this.onTap,
+    required this.value,
+    required this.selectedValue,
+    required this.title,
+    this.selectedColor,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +29,9 @@ class SelectableItem<T> extends StatelessWidget {
               width: 20,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: value == selectedValue ? Color(0xff024D92) : Colors.grey,
+                color: value == selectedValue
+                    ? (selectedColor ?? Color(0xff024D92))
+                    : Colors.grey,
               ),
             ),
             SizedBox(width: 10),

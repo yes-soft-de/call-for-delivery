@@ -3,7 +3,6 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/navigator_assistant.dart';
 import 'package:c4d/global_nav_key.dart';
-import 'package:c4d/module_external_delivery_companies/model/company_model.dart';
 import 'package:c4d/module_orders/request/order/pending_order_request.dart';
 import 'package:c4d/module_orders/state_manager/order_pending_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -27,7 +26,6 @@ class OrderPendingScreenState extends State<OrderPendingScreen> {
   late States currentState;
   int currentIndex = 0;
   StreamSubscription? _stateSubscription;
-  CompanyModel? company;
 
   void refresh() {
     if (mounted) {
@@ -52,6 +50,7 @@ class OrderPendingScreenState extends State<OrderPendingScreen> {
         setState(() {});
       }
     });
+    getOrders();
   }
 
   @override
@@ -62,33 +61,21 @@ class OrderPendingScreenState extends State<OrderPendingScreen> {
 
   Future<void> getOrders([bool loading = true]) async {
     widget._stateManager.getPendingOrders(
-        this,
-        PendingOrderRequest(
-          externalCompanyId: company?.id ?? 0,
-          type: getPendingOrderRequest(),
-        ),
-        loading);
+      this,
+      PendingOrderRequest(
+        type: getPendingOrderRequest(),
+      ),
+      loading,
+    );
   }
 
   PendingOrderRequestType getPendingOrderRequest() {
-    if (company != null || isExternalFilterOn)
-      return PendingOrderRequestType.onlyExternal;
+    if (isExternalFilterOn) return PendingOrderRequestType.onlyExternal;
     return PendingOrderRequestType.all;
   }
 
-  bool flag = true;
-
   @override
   Widget build(BuildContext context) {
-    if (flag) {
-      flag = false;
-      var arg = ModalRoute.of(context)?.settings.arguments as List?;
-      if (arg != null && arg.length > 0) {
-        company = arg[0] as CompanyModel;
-      }
-      getOrders();
-    }
-
     return GestureDetector(
       onTap: () {
         var focus = FocusScope.of(context);
@@ -98,41 +85,32 @@ class OrderPendingScreenState extends State<OrderPendingScreen> {
       },
       child: Scaffold(
           appBar: CustomC4dAppBar.appBar(context,
-              title:
-                  company != null ? S.current.externalOrders : S.current.orders,
-              icon: company != null ? null : Icons.menu,
-              onTap: company != null
-                  ? null
-                  : () {
-                      GlobalVariable.mainScreenScaffold.currentState
-                          ?.openDrawer();
-                    },
-              actions: company != null
-                  ? null
-                  : [
-                      Card(
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 4),
-                          child: Row(
-                            children: [
-                              Text(
-                                S.current.onlyExternal,
-                              ),
-                              SizedBox(width: 5),
-                              Switch(
-                                activeTrackColor: Color(0xff60CF86),
-                                value: isExternalFilterOn,
-                                onChanged: (value) {
-                                  isExternalFilterOn = value;
-                                  getOrders();
-                                  setState(() {});
-                                },
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ]),
+              title: S.current.orders, icon: Icons.menu, onTap: () {
+            GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
+          }, actions: [
+            Card(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: Row(
+                  children: [
+                    Text(
+                      S.current.onlyExternal,
+                    ),
+                    SizedBox(width: 5),
+                    Switch(
+                      activeTrackColor: Color(0xff60CF86),
+                      value: isExternalFilterOn,
+                      onChanged: (value) {
+                        isExternalFilterOn = value;
+                        getOrders();
+                        setState(() {});
+                      },
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ]),
           body: currentState.getUI(context)),
     );
   }

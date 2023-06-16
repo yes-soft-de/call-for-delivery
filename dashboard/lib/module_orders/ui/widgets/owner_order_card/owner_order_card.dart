@@ -1,5 +1,6 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/ui/widgets/owner_order_card/icon_info_button.dart';
+import 'package:c4d/utils/extension/string_extensions.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -19,6 +20,7 @@ class OwnerOrderCard extends StatelessWidget {
   final int? captainProfileId;
   final String? storeOwner;
   final String? branchName;
+  final String? externalCompanyName;
   OwnerOrderCard({
     required this.orderNumber,
     required this.orderStatus,
@@ -34,6 +36,7 @@ class OwnerOrderCard extends StatelessWidget {
     required this.captainProfileId,
     this.storeOwner,
     this.branchName,
+    this.externalCompanyName,
   });
 
   @override
@@ -84,6 +87,24 @@ class OwnerOrderCard extends StatelessWidget {
                       ),
                       Spacer(),
                       Visibility(
+                        visible: externalCompanyName.notNullOrEmpty(),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.amber,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 15,
+                              vertical: 8,
+                            ),
+                            child: Text(
+                              externalCompanyName ?? '',
+                            ),
+                          ),
+                        ),
+                      ),
+                      Visibility(
                         visible: note != null,
                         child: InfoButtonOrder(
                           onTap: () {
@@ -111,31 +132,56 @@ class OwnerOrderCard extends StatelessWidget {
                       ),
                     ],
                   ),
-                  replacement: Visibility(
-                    visible: note != null,
-                    child: InfoButtonOrder(
-                      onTap: () {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                title: Text(S.current.note),
-                                content: Container(child: Text(note ?? '')),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(10),
-                                ),
-                                actionsAlignment: MainAxisAlignment.center,
-                                actions: [
-                                  TextButton(
-                                      onPressed: () {
-                                        Navigator.of(context).pop();
-                                      },
-                                      child: Text(S.current.close)),
-                                ],
-                              );
-                            });
-                      },
-                    ),
+                  replacement: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      SizedBox(),
+                      SizedBox(),
+                      Visibility(
+                        visible: externalCompanyName.notNullOrEmpty(),
+                        child: Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: Colors.amber,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 15,
+                              vertical: 8,
+                            ),
+                            child: Text(
+                              externalCompanyName ?? '',
+                            ),
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                        visible: note != null,
+                        child: InfoButtonOrder(
+                          onTap: () {
+                            showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return AlertDialog(
+                                    title: Text(S.current.note),
+                                    content: Container(child: Text(note ?? '')),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    actionsAlignment: MainAxisAlignment.center,
+                                    actions: [
+                                      TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: Text(S.current.close)),
+                                    ],
+                                  );
+                                });
+                          },
+                        ),
+                      ),
+                    ],
                   ),
                 ),
 

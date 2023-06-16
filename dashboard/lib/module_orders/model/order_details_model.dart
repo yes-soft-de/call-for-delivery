@@ -57,6 +57,8 @@ class OrderDetailsModel extends DataModel {
   int? primaryOrderId;
   int? packageType;
   int? costType;
+  String? externalCompanyName;
+
   OrderDetailsModel({
     required this.id,
     required this.branchName,
@@ -100,6 +102,7 @@ class OrderDetailsModel extends DataModel {
     required this.packageType,
     required this.costType,
     required this.orderCostWithDeliveryCost,
+    required this.externalCompanyName,
   });
 
   late OrderDetailsModel _orders;
@@ -121,6 +124,9 @@ class OrderDetailsModel extends DataModel {
             .format(DateHelper.convert(element?.deliveryDate?.timestamp));
     //
     _orders = OrderDetailsModel(
+      externalCompanyName: (element?.externalDeliveryOrder?.isNotEmpty ?? false)
+          ? element?.externalDeliveryOrder?.first.companyName
+          : null,
       image: element?.image?.image,
       canRemove: false,
       isCaptainArrived: element?.isCaptainArrived,

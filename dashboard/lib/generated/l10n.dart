@@ -10010,6 +10010,476 @@ class S {
     );
   }
 
+  /// `external triggers`
+  String get externalTriggers {
+    return Intl.message(
+      'external triggers',
+      name: 'externalTriggers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `delivery companies`
+  String get deliveryCompanies {
+    return Intl.message(
+      'delivery companies',
+      name: 'deliveryCompanies',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `add new company`
+  String get addNewCompany {
+    return Intl.message(
+      'add new company',
+      name: 'addNewCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `delivery standards`
+  String get deliveryStandards {
+    return Intl.message(
+      'delivery standards',
+      name: 'deliveryStandards',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `external company settings`
+  String get externalCompanySettings {
+    return Intl.message(
+      'external company settings',
+      name: 'externalCompanySettings',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `settings name`
+  String get settingName {
+    return Intl.message(
+      'settings name',
+      name: 'settingName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `work hours`
+  String get workHours {
+    return Intl.message(
+      'work hours',
+      name: 'workHours',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `all stores`
+  String get allStores {
+    return Intl.message(
+      'all stores',
+      name: 'allStores',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `oneStoreOrMore`
+  String get oneStoreOrMore {
+    return Intl.message(
+      'oneStoreOrMore',
+      name: 'oneStoreOrMore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `From`
+  String get from {
+    return Intl.message(
+      'From',
+      name: 'from',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `choose company`
+  String get chooseCompany {
+    return Intl.message(
+      'choose company',
+      name: 'chooseCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Add Setting`
+  String get addSetting {
+    return Intl.message(
+      'Add Setting',
+      name: 'addSetting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `enter delivery company name`
+  String get enterDeliveryCompanyName {
+    return Intl.message(
+      'enter delivery company name',
+      name: 'enterDeliveryCompanyName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `specifics stores`
+  String get someStores {
+    return Intl.message(
+      'specifics stores',
+      name: 'someStores',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `please enter company name`
+  String get pleaseEnterCompanyName {
+    return Intl.message(
+      'please enter company name',
+      name: 'pleaseEnterCompanyName',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `on / off`
+  String get onOff {
+    return Intl.message(
+      'on / off',
+      name: 'onOff',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `are you sure for delete`
+  String get areYouSureForDelete {
+    return Intl.message(
+      'are you sure for delete',
+      name: 'areYouSureForDelete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `are you sure for delete this setting?`
+  String get areYouSureForDeleteSetting {
+    return Intl.message(
+      'are you sure for delete this setting?',
+      name: 'areYouSureForDeleteSetting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `this will delete all data and standers that has been entered`
+  String get thisWillDeleteAllDataAndStanders {
+    return Intl.message(
+      'this will delete all data and standers that has been entered',
+      name: 'thisWillDeleteAllDataAndStanders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `data updated successfully`
+  String get dataUpdatedSuccessfully {
+    return Intl.message(
+      'data updated successfully',
+      name: 'dataUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `company added successfully`
+  String get companyAddedSuccessfully {
+    return Intl.message(
+      'company added successfully',
+      name: 'companyAddedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `company deleted successfully`
+  String get companyDeletedSuccessfully {
+    return Intl.message(
+      'company deleted successfully',
+      name: 'companyDeletedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `company criterial added successfully`
+  String get companyCriterialAddedSuccessfully {
+    return Intl.message(
+      'company criterial added successfully',
+      name: 'companyCriterialAddedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `company criterial updated successfully`
+  String get companyCriterialUpdatedSuccessfully {
+    return Intl.message(
+      'company criterial updated successfully',
+      name: 'companyCriterialUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `company criterial deleted successfully`
+  String get companyCriterialDeletedSuccessfully {
+    return Intl.message(
+      'company criterial deleted successfully',
+      name: 'companyCriterialDeletedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `if no value set all order will be sent`
+  String get ifNoValuesSetAllOrderWillBeSent {
+    return Intl.message(
+      'if no value set all order will be sent',
+      name: 'ifNoValuesSetAllOrderWillBeSent',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `feature will be off after confirm`
+  String get featureWillBeOffAfterConfirm {
+    return Intl.message(
+      'feature will be off after confirm',
+      name: 'featureWillBeOffAfterConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `feature will be on after confirm`
+  String get featureWillBeOnAfterConfirm {
+    return Intl.message(
+      'feature will be on after confirm',
+      name: 'featureWillBeOnAfterConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `only external`
+  String get onlyExternal {
+    return Intl.message(
+      'only external',
+      name: 'onlyExternal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `external orders`
+  String get externalOrders {
+    return Intl.message(
+      'external orders',
+      name: 'externalOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `ad updated successfully`
+  String get adUpdatedSuccessfully {
+    return Intl.message(
+      'ad updated successfully',
+      name: 'adUpdatedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `hide order because there are no captain available`
+  String get hideOrderBecauseThereAreNoCaptainAvailable {
+    return Intl.message(
+      'hide order because there are no captain available',
+      name: 'hideOrderBecauseThereAreNoCaptainAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `update delivery cost because Kilo meters added directly`
+  String get updateDeliveryCostBecauseKMAddedDirectly {
+    return Intl.message(
+      'update delivery cost because Kilo meters added directly',
+      name: 'updateDeliveryCostBecauseKMAddedDirectly',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `update delivery cost because client location been updated`
+  String get updateDeliveryCostBecauseClientLocationBeenUpdated {
+    return Intl.message(
+      'update delivery cost because client location been updated',
+      name: 'updateDeliveryCostBecauseClientLocationBeenUpdated',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `assign to external company`
+  String get assignToExternalCompany {
+    return Intl.message(
+      'assign to external company',
+      name: 'assignToExternalCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `assign this order to external company`
+  String get assignThisOrderToExternalCompany {
+    return Intl.message(
+      'assign this order to external company',
+      name: 'assignThisOrderToExternalCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `pick company`
+  String get pickCompany {
+    return Intl.message(
+      'pick company',
+      name: 'pickCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `please pick company`
+  String get pleasePickCompany {
+    return Intl.message(
+      'please pick company',
+      name: 'pleasePickCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `are you sure that you want to assign this order to`
+  String get areYouSureThatYouWantToAssignThisOrderTo {
+    return Intl.message(
+      'are you sure that you want to assign this order to',
+      name: 'areYouSureThatYouWantToAssignThisOrderTo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `feature not available`
+  String get featureNotAvailable {
+    return Intl.message(
+      'feature not available',
+      name: 'featureNotAvailable',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `feature not activate`
+  String get featureNotActive {
+    return Intl.message(
+      'feature not activate',
+      name: 'featureNotActive',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `external company not exist`
+  String get externalCompanyNotExist {
+    return Intl.message(
+      'external company not exist',
+      name: 'externalCompanyNotExist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `company doesn't have setting`
+  String get companyDoesntHaveSetting {
+    return Intl.message(
+      'company doesn\'t have setting',
+      name: 'companyDoesntHaveSetting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `company credential not correct`
+  String get companyCredentialNotCorrect {
+    return Intl.message(
+      'company credential not correct',
+      name: 'companyCredentialNotCorrect',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order request in the company not complete`
+  String get orderRequestInTheCompanyNotComplete {
+    return Intl.message(
+      'order request in the company not complete',
+      name: 'orderRequestInTheCompanyNotComplete',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order status is not pending`
+  String get orderStatusIsNotPending {
+    return Intl.message(
+      'order status is not pending',
+      name: 'orderStatusIsNotPending',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order assigned to company successfully`
+  String get orderAssignedToCompanySuccessfully {
+    return Intl.message(
+      'order assigned to company successfully',
+      name: 'orderAssignedToCompanySuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

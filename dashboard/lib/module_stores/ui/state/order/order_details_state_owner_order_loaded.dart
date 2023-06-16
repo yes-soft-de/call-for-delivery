@@ -7,6 +7,7 @@ import 'package:c4d/module_captain/ui/screen/captains_assign_order_screen.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
+import 'package:c4d/module_external_delivery_companies/external_delivery_companies_routes.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/ui/widgets/order_widget/order_button.dart';
@@ -73,7 +74,8 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
         Visibility(
             replacement: Visibility(
               visible: orderInfo.state != OrderStatusEnum.FINISHED &&
-                  orderInfo.state != OrderStatusEnum.CANCELLED,
+                  orderInfo.state != OrderStatusEnum.CANCELLED &&
+                  orderInfo.externalCompanyName == null,
               child: OrderButton(
                   onTap: () {
                     showDialog(
@@ -200,7 +202,8 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                     ),
                     Visibility(
                       visible: orderInfo.state != OrderStatusEnum.FINISHED &&
-                          orderInfo.state != OrderStatusEnum.CANCELLED,
+                          orderInfo.state != OrderStatusEnum.CANCELLED &&
+                          orderInfo.externalCompanyName == null,
                       child: IconButton(
                         icon: Icon(Icons.remove_circle),
                         onPressed: () {
@@ -225,6 +228,29 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                 ),
               ),
             )),
+        SizedBox(height: 10),
+        Visibility(
+          visible: orderInfo.state == OrderStatusEnum.WAITING &&
+              orderInfo.externalCompanyName == null,
+          child: OrderButton(
+            onTap: () {
+              Navigator.pushNamed(
+                context,
+                ExternalDeliveryCompaniesRoutes
+                    .ASSIGN_ORDER_TO_EXTERNAL_COMPANY_SCREEN,
+                arguments: [screenState.orderId],
+              ).then(
+                (value) {
+                  // TODO: implement the refresh technique if nessury
+                },
+              );
+            },
+            backgroundColor: Color(0xffE34400),
+            icon: FontAwesomeIcons.box,
+            subtitle: S.current.assignThisOrderToExternalCompany,
+            title: S.current.assignToExternalCompany,
+          ),
+        ),
         // order status
         Padding(
           padding:

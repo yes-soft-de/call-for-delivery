@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:c4d/module_orders/response/order_details_response/captain.dart';
 import 'package:c4d/module_orders/response/order_details_response/images.dart';
 import 'package:c4d/module_orders/response/order_logs_response/data.dart';
@@ -49,6 +51,7 @@ class Data {
   int? packageType;
   int? costType;
   num? orderCostWithDeliveryCost;
+  List<ExternalDeliveryOrder>? externalDeliveryOrder;
 
   Data({
     this.id,
@@ -91,6 +94,7 @@ class Data {
     this.costType,
     this.packageType,
     this.orderCostWithDeliveryCost,
+    this.externalDeliveryOrder,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -153,7 +157,12 @@ class Data {
             .toList(),
         costType: json['costType'] as int?,
         packageType: json['packageType'] as int?,
-        orderCostWithDeliveryCost: json['deliveryCost'] as num?
+        orderCostWithDeliveryCost: json['deliveryCost'] as num?,
+        externalDeliveryOrder: (json['externalDeliveredOrders']
+                as List<dynamic>?)
+            ?.map(
+                (e) => ExternalDeliveryOrder.fromMap(e as Map<String, dynamic>))
+            .toList(),
       );
 
   Map<String, dynamic> toJson() => {
@@ -173,4 +182,35 @@ class Data {
         'storeOwnerBranchId': storeOwnerBranchId,
         'branchName': branchName,
       };
+}
+
+class ExternalDeliveryOrder {
+  String? id;
+  String? companyName;
+
+  ExternalDeliveryOrder({
+    this.id,
+    this.companyName,
+  });
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'id': id,
+      'companyName': companyName,
+    };
+  }
+
+  factory ExternalDeliveryOrder.fromMap(Map<String, dynamic> map) {
+    return ExternalDeliveryOrder(
+      id: map['id'] != null ? map['id'] as String : null,
+      companyName:
+          map['companyName'] != null ? map['companyName'] as String : null,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory ExternalDeliveryOrder.fromJson(String source) =>
+      ExternalDeliveryOrder.fromMap(
+          json.decode(source) as Map<String, dynamic>);
 }
