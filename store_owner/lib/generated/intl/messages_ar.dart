@@ -77,6 +77,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "and": MessageLookupByLibrary.simpleMessage(" و "),
         "andIAm": MessageLookupByLibrary.simpleMessage("من أنا"),
         "apply": MessageLookupByLibrary.simpleMessage("حفظ"),
+        "arabic": MessageLookupByLibrary.simpleMessage("العربية"),
         "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد من رغبتك في حذف حسابك ، لن تتمكن من استخدام هذه البيانات في تسجيل الدخول بعد الآن"),
         "areYouSureAboutCreatingSubOrder": MessageLookupByLibrary.simpleMessage(
@@ -217,8 +218,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "closeOrder": MessageLookupByLibrary.simpleMessage("مغلق"),
         "closingTime": MessageLookupByLibrary.simpleMessage("وقت الإغلاق"),
         "codeNumber": MessageLookupByLibrary.simpleMessage("رمز التحقق"),
-        "codeSendToYou":
-            MessageLookupByLibrary.simpleMessage("رمز التحقق المرسل لجوالك"),
+        "codeSendToYou": MessageLookupByLibrary.simpleMessage(
+            "ادخل رمز التحقق المرسل لجوالك"),
         "codeTimeOut":
             MessageLookupByLibrary.simpleMessage("انتهت صلاحية رمز التحقق"),
         "comment": MessageLookupByLibrary.simpleMessage("تعليقك"),
@@ -259,6 +260,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("رقم الهاتف للتواصل"),
         "contacts": MessageLookupByLibrary.simpleMessage("جهات الاتصال"),
+        "continueWord": MessageLookupByLibrary.simpleMessage("متابعة"),
         "copy": MessageLookupByLibrary.simpleMessage("نسخ"),
         "copyFinished": MessageLookupByLibrary.simpleMessage("تم النسخ بنجاح"),
         "cost": MessageLookupByLibrary.simpleMessage("التكلفة"),
@@ -340,6 +342,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "emptyPackagesCategory": MessageLookupByLibrary.simpleMessage(
             "لايوجد اشتراكات متوفرة ضمن هذا التصنيف"),
         "endDate": MessageLookupByLibrary.simpleMessage("إلى تاريخ"),
+        "english": MessageLookupByLibrary.simpleMessage("الانكليزية"),
         "enquiries": MessageLookupByLibrary.simpleMessage("استفسارات الطلبات"),
         "enquiryAboutOrder":
             MessageLookupByLibrary.simpleMessage("استفسار بخصوص الطلب رقم"),
@@ -347,6 +350,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ادخل رمز التحقق"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("ادخل معلومات المنتج"),
+        "enterYourStoreName":
+            MessageLookupByLibrary.simpleMessage("ادخل اسم متجرك"),
         "errOc": MessageLookupByLibrary.simpleMessage("حصلت المشاكل التالية"),
         "errorDownloadingImage":
             MessageLookupByLibrary.simpleMessage("لم نستطع تحميل الصورة"),
@@ -405,6 +410,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("نطاق الباقة الجغرافي"),
         "getDirection":
             MessageLookupByLibrary.simpleMessage("موقع المحل (الاستلام)"),
+        "getItNow": MessageLookupByLibrary.simpleMessage("احصل عليها الان"),
         "go": MessageLookupByLibrary.simpleMessage("انطلق"),
         "goToOffers": MessageLookupByLibrary.simpleMessage("اذهب الى العروض"),
         "groupOrder": MessageLookupByLibrary.simpleMessage("طلب مجمع"),
@@ -747,6 +753,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "من فضلك قم بتزويدنا بموقع التسليم على الخارطة"),
         "pleaseSelectABranch":
             MessageLookupByLibrary.simpleMessage("الرجاء اختيار فرع تجاري"),
+        "pleaseSelectYourStoreLocation":
+            MessageLookupByLibrary.simpleMessage("الرجاء تحديد موقع متجرك"),
         "prayerMessage": MessageLookupByLibrary.simpleMessage(
             "قد يستغرق قبول هذا الطلب وقت اطول من المعتاد نظرا لقرب موعد الصلاة"),
         "preferredLanguage":
@@ -890,6 +898,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sortedByLatest":
             MessageLookupByLibrary.simpleMessage("من الأقدم للأحدث"),
         "specification": MessageLookupByLibrary.simpleMessage("المواصفات"),
+        "startWork": MessageLookupByLibrary.simpleMessage("ابدا العمل"),
         "startWriting": MessageLookupByLibrary.simpleMessage("ابدأ الكتابة"),
         "statusCodeBadRequest":
             MessageLookupByLibrary.simpleMessage("تعذر على الخادم فهم الطلب"),
@@ -1017,6 +1026,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("جار رفع الصور"),
         "uploadingImagesPleaseWait":
             MessageLookupByLibrary.simpleMessage("يتم رفع الصورة"),
+        "useYourCurrentLocation":
+            MessageLookupByLibrary.simpleMessage("استخدم موقعك الحالي"),
         "userDeleted":
             MessageLookupByLibrary.simpleMessage("تم حذف الحساب بنجاح"),
         "username": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
@@ -1041,6 +1052,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("نحتاج صورتك للتسجيل"),
         "weWillContactYouSoon": MessageLookupByLibrary.simpleMessage(
             "تم تسجيل الطلب، سنتواصل معك بأقرب وقت ممكن"),
+        "welcome": MessageLookupByLibrary.simpleMessage("اهلا وسهلا"),
+        "welcomePlanOffer": MessageLookupByLibrary.simpleMessage(
+            "مبروك  لقد حصلت على باقة ترحيبية \n لتوصيل طلب واحد \n مقابل 2.99 ريال فقط"),
         "welcomeToOrdersScreen":
             MessageLookupByLibrary.simpleMessage("اهلا في قسم الطلبات"),
         "welcomeToOurApp":

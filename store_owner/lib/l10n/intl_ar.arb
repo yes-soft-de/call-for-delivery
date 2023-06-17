@@ -678,7 +678,7 @@
     "prayerMessage": "قد يستغرق قبول هذا الطلب وقت اطول من المعتاد نظرا لقرب موعد الصلاة",
     "confirmOrderCash": "تأكيد استلام المبلغ الكاش",
     "rememberMe": "تذكرني",
-    "codeSendToYou": "رمز التحقق المرسل لجوالك",
+    "codeSendToYou": "ادخل رمز التحقق المرسل لجوالك",
     "enterCodeSentToYou": "ادخل رمز التحقق",
     "youCanResendAfter": "يمكنك طلب رمز جديد بعد مرور",
     "credentialsBagHint": "هنا تجد محفظة سريعة للوصول لبيانات دخولك المحفوظة مسبقا ",
@@ -705,7 +705,18 @@
     "distanceUpdated":"مسافة معدلة",
     "adminNotes":"ملاحظات الادارة:",
     "ok":"حسنا",
+    "arabic":"العربية",
+    "english":"الانكليزية",
+    "continueWord":"متابعة",
     "youCanContactWithDirectSupportForMoreDetails":"يمكنك التواصل مع الدعم المباشر ان اردت مراجعة الحالة",
     "adsAndOffers": "الإعلانات و العروض",
-    "storeFee":"المستحقات عالمتجر"
+    "storeFee":"المستحقات عالمتجر",
+    "useYourCurrentLocation":"استخدم موقعك الحالي",
+    "enterYourStoreName": "ادخل اسم متجرك",
+    "startWork": "ابدا العمل",
+    "pleaseSelectYourStoreLocation": "الرجاء تحديد موقع متجرك",
+    "welcome" : "اهلا وسهلا",
+    "getItNow" : "احصل عليها الان",
+    "welcomePlanOffer" : "مبروك  لقد حصلت على باقة ترحيبية \n لتوصيل طلب واحد \n مقابل 2.99 ريال فقط",
+    "adsAndOffers": "الإعلانات و العروض"
 }

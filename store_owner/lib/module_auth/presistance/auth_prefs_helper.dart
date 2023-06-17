@@ -2,12 +2,26 @@ import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/module_auth/exceptions/auth_exception.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 @injectable
 class AuthPrefsHelper {
   var box = Hive.box('Authorization');
   var suggestion = Hive.box('Suggestions');
+
+  void setNewAccount(bool isNewAccount) {
+    box.put('isNewAccount', isNewAccount);
+  }
+
+  /// default is false
+  bool getIsNewAccount() {
+    var v = box.get('isNewAccount');
+    if (v is bool) {
+      return v;
+    }
+
+    return false;
+  }
+
   void setUsername(String username) {
     box.put('username', username);
   }

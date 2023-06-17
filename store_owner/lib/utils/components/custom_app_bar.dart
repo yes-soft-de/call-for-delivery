@@ -4,15 +4,18 @@ import 'package:flutter/material.dart';
 import 'package:c4d/utils/global/screen_type.dart';
 
 class CustomC4dAppBar {
-  static PreferredSizeWidget appBar(BuildContext context,
-      {required title,
-      GestureTapCallback? onTap,
-      Color? colorIcon,
-      Color? buttonBackground,
-      IconData? icon,
-      Widget? widget,
-      bool canGoBack = true,
-      List<Widget>? actions}) {
+  static PreferredSizeWidget appBar(
+    BuildContext context, {
+    String? title,
+    GestureTapCallback? onTap,
+    Color? colorIcon,
+    Color? buttonBackground,
+    Color? backgroundColor,
+    IconData? icon,
+    Widget? widget,
+    bool canGoBack = true,
+    List<Widget>? actions,
+  }) {
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
     if (icon == Icons.menu && ScreenType.isDesktop(context)) {
       icon = null;
@@ -20,11 +23,15 @@ class CustomC4dAppBar {
       canGoBack = false;
     }
     return AppBar(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor:
+          backgroundColor ?? Theme.of(context).scaffoldBackgroundColor,
       centerTitle: true,
-      title: Text(
-        title,
-        style: Theme.of(context).textTheme.headline6,
+      title: Visibility(
+        visible: title != null,
+        child: Text(
+          title ?? '',
+          style: Theme.of(context).textTheme.titleLarge,
+        ),
       ),
       leading: canGoBack
           ? Padding(
@@ -45,7 +52,7 @@ class CustomC4dAppBar {
                                         .colorScheme
                                         .background
                                         .withOpacity(0.5)
-                                    : Theme.of(context).backgroundColor,
+                                    : Theme.of(context).colorScheme.background,
                                 spreadRadius: 1.5,
                                 blurRadius: 6,
                                 offset: Offset(-0.2, 0))
@@ -95,7 +102,7 @@ class CustomC4dAppBar {
                             .colorScheme
                             .background
                             .withOpacity(0.5)
-                        : Theme.of(context).backgroundColor,
+                        : Theme.of(context).colorScheme.background,
                     spreadRadius: 1.5,
                     blurRadius: 6,
                     offset: Offset(-0.2, 0))

@@ -6,9 +6,9 @@ import 'package:c4d/module_auth/request/register_request/verfy_code_request.dart
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_auth/ui/screen/register_screen/register_screen.dart';
 import 'package:c4d/module_auth/ui/states/register_states/register_state.dart';
+import 'package:c4d/module_auth/ui/widget/custom_auth_filed.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
-import 'package:c4d/utils/images/images.dart';
 
 class RegisterStatePhoneCodeSent extends RegisterState {
   bool retryEnabled = false;
@@ -47,69 +47,36 @@ class RegisterStatePhoneCodeSent extends RegisterState {
   @override
   Widget getUI(BuildContext context) {
     return Scaffold(
-      body: Form(
-        key: _verifyKey,
-        child: ListView(
-          physics: const BouncingScrollPhysics(
-              parent: AlwaysScrollableScrollPhysics()),
-          children: [
-            Image.asset(
-              ImageAsset.LOGO,
-              height: 200,
-              width: 150,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  bottom: 8.0, left: 32, right: 32, top: 8),
-              child: Text(
-                S.of(context).codeSendToYou,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            ListTile(
-              title: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: TextFormField(
-                    autovalidateMode: mode,
-                    toolbarOptions: const ToolbarOptions(
-                        copy: true, paste: true, selectAll: true, cut: true),
-                    controller: codeController,
-                    keyboardType: TextInputType.number,
-                    maxLength: 6,
-                    validator: (value) {
-                      if (mode == AutovalidateMode.disabled) {
-                        mode = AutovalidateMode.onUserInteraction;
-                        screen.refresh();
-                      }
-                      if (value == null) {
-                        return S.of(context).pleaseCompleteField;
-                      } else if (value.length < 6) {
-                        return S.of(context).invalidCode;
-                      }
-                    },
-                    decoration: InputDecoration(
-                      border: InputBorder.none,
-                      hintText: S.of(context).enterCodeSentToYou,
-                      prefixIcon: const Icon(Icons.confirmation_num),
-                      filled: true,
-                      fillColor: Theme.of(context).backgroundColor,
-                      enabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                    ),
+      backgroundColor: Colors.transparent,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: Form(
+          key: _verifyKey,
+          child: ListView(
+            physics: const BouncingScrollPhysics(
+                parent: AlwaysScrollableScrollPhysics()),
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(30),
+                child: Center(
+                  child: Text(
+                    S.current.register,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          color: Color(0xff03816A),
+                          fontWeight: FontWeight.bold,
+                        ),
                   ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                  right: 16.0, left: 16, bottom: 8.0, top: 8.0),
-              child: Container(
+              SizedBox(height: 50),
+              CustomAuthFiled(
+                controller: codeController,
+                title: S.current.codeSendToYou,
+                icon: Icons.qr_code_scanner,
+                maxLength: 6,
+              ),
+              SizedBox(height: 40),
+              Container(
                 width: double.maxFinite,
                 height: 50,
                 child: ElevatedButton(
@@ -140,51 +107,51 @@ class RegisterStatePhoneCodeSent extends RegisterState {
                             ),
                     )),
               ),
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Center(
-              child: Text(
-                S.current.youCanResendAfter +
-                    ' ' +
-                    '00:${_start < 10 ? '0$_start' : _start}',
-                style: TextStyle(color: Theme.of(context).disabledColor),
+              const SizedBox(
+                height: 20,
               ),
-            ),
-            SizedBox(
-              child: SizedBox(
-                width: 75,
-                child: Center(
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25))),
-                    onPressed: retryEnabled
-                        ? () {
-                            _start = 59;
-                            startTimer();
-                            retryEnabled = false;
-                            Future.delayed(const Duration(seconds: 60), () {
-                              retryEnabled = true;
+              Center(
+                child: Text(
+                  S.current.youCanResendAfter +
+                      ' ' +
+                      '00:${_start < 10 ? '0$_start' : _start}',
+                  style: TextStyle(color: Theme.of(context).disabledColor),
+                ),
+              ),
+              SizedBox(
+                child: SizedBox(
+                  width: 75,
+                  child: Center(
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(25))),
+                      onPressed: retryEnabled
+                          ? () {
+                              _start = 59;
+                              startTimer();
+                              retryEnabled = false;
+                              Future.delayed(const Duration(seconds: 60), () {
+                                retryEnabled = true;
+                                screen.refresh();
+                              });
                               screen.refresh();
-                            });
-                            screen.refresh();
-                            screen.resendCode(VerifyCodeRequest(
-                                userID: getIt<AuthService>().username));
-                          }
-                        : null,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: Text(
-                        S.of(context).resendCode,
+                              screen.resendCode(VerifyCodeRequest(
+                                  userID: getIt<AuthService>().username));
+                            }
+                          : null,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Text(
+                          S.of(context).resendCode,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

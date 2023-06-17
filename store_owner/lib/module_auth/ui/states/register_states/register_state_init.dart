@@ -1,17 +1,15 @@
-import 'package:c4d/consts/country_code.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:c4d/module_auth/request/register_request/register_request.dart';
 import 'package:c4d/module_auth/ui/screen/register_screen/register_screen.dart';
 import 'package:c4d/module_auth/ui/states/register_states/register_state.dart';
-import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
+import 'package:c4d/module_auth/ui/widget/custom_auth_filed.dart';
 import 'package:c4d/module_settings/setting_routes.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/auth_buttons.dart';
 import 'package:c4d/utils/effect/hidder.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
-import 'package:c4d/utils/images/images.dart';
 
 class RegisterStateInit extends RegisterState {
   RegisterScreenState screenState;
@@ -33,7 +31,6 @@ class RegisterStateInit extends RegisterState {
     }
   }
 
-  TextEditingController nameController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController password2Controller = TextEditingController();
@@ -42,267 +39,206 @@ class RegisterStateInit extends RegisterState {
   bool agreed = false;
   @override
   Widget getUI(BuildContext context) {
-    return Stack(
-      children: [
-        Form(
-          key: _registerKey,
-          child: ListView(
-            physics: const BouncingScrollPhysics(
-                parent: AlwaysScrollableScrollPhysics()),
-            children: [
-              Visibility(
-                visible: MediaQuery.of(context).viewInsets.bottom == 0,
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Image.asset(
-                    ImageAsset.LOGO,
-                    width: 100,
-                    height: 100,
-                  ),
-                ),
-              ),
-              // phone number
-              Padding(
-                padding: const EdgeInsets.only(left: 80, right: 80, top: 8),
+    return Form(
+      key: _registerKey,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 30),
+        child: ListView(
+          physics: const BouncingScrollPhysics(),
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(30),
+              child: Center(
                 child: Text(
-                  S.of(context).phoneNumber,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
+                  S.current.register,
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                        color: Color(0xff03816A),
+                        fontWeight: FontWeight.bold,
+                      ),
                 ),
               ),
-              Row(
+            ),
+            SizedBox(height: 30),
+            // phone number
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                Expanded(
+                  flex: 6,
+                  child: CustomAuthFiled(
+                    title: S.current.phoneNumber,
+                    controller: usernameController,
+                    hintText: '55xxxxxxx',
+                    isPhone: true,
+                    maxLength: 9,
+                  ),
+                ),
+                Expanded(
+                  flex: 2,
+                  child: CustomAuthFiled(
+                    controller: countryController,
+                    hintText: '966',
+                    maxLength: 3,
+                    icon: Icons.phone,
+                  ),
+                ),
+              ],
+            ),
+            // password
+            _PassWordFields(
+              passwordController: passwordController,
+              password2Controller: password2Controller,
+            ),
+            // policy agreement
+            Padding(
+              padding: const EdgeInsets.only(top: 16.0),
+              child: Row(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(
-                        bottom: 26.0, right: 16.0, left: 16.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Theme.of(context).backgroundColor,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.phone,
-                          color: Theme.of(context).disabledColor,
-                        ),
-                      ),
-                    ),
-                  ),
                   Expanded(
-                    child: CustomLoginFormField(
-                      controller: usernameController,
-                      hintText: '5xxxxxxxxx',
-                      phone: true,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(bottom: 28.0),
-                    child: SizedBox(
-                      width: 125,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: CustomLoginFormField(
-                          halfField: true,
-                          contentPadding:
-                              EdgeInsets.only(left: 8.0, right: 8.0),
-                          controller: countryController,
-                          numbers: true,
-                          phoneHint: false,
-                          maxLength: 3,
-                          hintText: S.current.countryCode,
-                          sufIcon: Padding(
-                            padding:
-                                const EdgeInsets.only(right: 4.0, left: 4.0),
-                            child: Container(
-                              width: 30,
-                              decoration: BoxDecoration(
-                                  shape: BoxShape.circle,
-                                  color: Theme.of(context).primaryColor),
-                              child: Center(
-                                child: Text(
-                                  '+',
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .button
-                                      ?.copyWith(color: Colors.white),
-                                ),
+                    child: ListTile(
+                      title: Text.rich(
+                        style: Theme.of(context).textTheme.bodyMedium,
+                        TextSpan(
+                          children: [
+                            TextSpan(text: S.current.iAgreeOn + ' '),
+                            TextSpan(
+                              text: S.current.terms,
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.of(context)
+                                      .pushNamed(SettingRoutes.TERMS);
+                                },
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff03816A),
                               ),
                             ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-              // password
-              Padding(
-                padding: const EdgeInsets.only(left: 80, right: 80),
-                child: Text(
-                  S.of(context).password,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Theme.of(context).backgroundColor,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.lock,
-                          color: Theme.of(context).disabledColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: CustomLoginFormField(
-                      controller: passwordController,
-                      confirmationPassword: password2Controller.text,
-                      password: true,
-                      onChanged: (s) {
-                        screenState.refresh();
-                      },
-                      hintText: S.of(context).password,
-                    ),
-                  ),
-                  SizedBox(
-                    width: 8.0,
-                  )
-                ],
-              ),
-              // confirmation password
-              Padding(
-                padding: const EdgeInsets.only(left: 80, right: 80, top: 8),
-                child: Text(
-                  S.of(context).confirmPasswordAgain,
-                  style: const TextStyle(fontWeight: FontWeight.bold),
-                ),
-              ),
-              Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Theme.of(context).backgroundColor,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(8.0),
-                        child: Icon(
-                          Icons.lock,
-                          color: Theme.of(context).disabledColor,
-                        ),
-                      ),
-                    ),
-                  ),
-                  Expanded(
-                    child: CustomLoginFormField(
-                      last: true,
-                      controller: password2Controller,
-                      confirmationPassword: passwordController.text,
-                      password: true,
-                      onChanged: (s) {
-                        screenState.refresh();
-                      },
-                      hintText: S.of(context).writePasswordAgain,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 8.0,
-                  )
-                ],
-              ),
-              Padding(
-                  padding: const EdgeInsets.only(top: 16.0),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: ListTile(
-                          title: Text.rich(
-                            TextSpan(children: [
-                              TextSpan(text: S.current.iAgreeOn + ' '),
-                              TextSpan(
-                                text: S.current.terms,
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Navigator.of(context)
-                                        .pushNamed(SettingRoutes.TERMS);
-                                  },
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blue,
-                                ),
+                            TextSpan(text: S.current.and),
+                            TextSpan(
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  Navigator.of(context)
+                                      .pushNamed(SettingRoutes.PRIVECY);
+                                },
+                              text: S.current.privacy,
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Color(0xff03816A),
                               ),
-                              TextSpan(text: S.current.and),
-                              TextSpan(
-                                recognizer: TapGestureRecognizer()
-                                  ..onTap = () {
-                                    Navigator.of(context)
-                                        .pushNamed(SettingRoutes.PRIVECY);
-                                  },
-                                text: S.current.privacy,
-                                style: const TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.blue,
-                                ),
-                              ),
-                            ]),
-                          ),
+                            ),
+                          ],
                         ),
                       ),
-                      Checkbox(
-                          value: agreed,
-                          onChanged: (v) {
-                            agreed = v ?? false;
-                            screen.refresh();
-                          })
-                    ],
-                  )),
-              Container(
-                height: 175,
+                    ),
+                  ),
+                  Checkbox(
+                    value: agreed,
+                    onChanged: (v) {
+                      agreed = v ?? false;
+                      screen.refresh();
+                    },
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
-        Hider(
-          active: MediaQuery.of(context).viewInsets.bottom == 0,
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: AuthButtons(
-              firstButtonTitle: S.of(context).register,
-              secondButtonTitle: S.of(context).iHaveAnAccount,
-              loading: screen.loadingSnapshot.connectionState ==
-                  ConnectionState.waiting,
-              secondButtonTab: () => Navigator.of(context).pushReplacementNamed(
-                  AuthorizationRoutes.LOGIN_SCREEN,
-                  arguments: screen.args),
-              firstButtonTab: agreed
-                  ? () {
-                      if (_registerKey.currentState!.validate()) {
-                        if (usernameController.text.trim().startsWith('0')) {
-                          CustomFlushBarHelper.createError(
-                                  title: S.current.warnning, message: S.current.yourNumberStartWithZero)
-                              .show(context);
-                        } else {
-                          screen.registerClient(RegisterRequest(
-                            userID: countryController.text.trim() +
-                                usernameController.text.trim(),
-                            password: passwordController.text,
-                          ));
-                        }
-                      }
-                    }
-                  : null,
             ),
-          ),
+            Hider(
+              active: MediaQuery.of(context).viewInsets.bottom == 0,
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: AuthButtons(
+                  firstButtonTitle: S.of(context).register,
+                  secondButtonTitle: S.of(context).iHaveAnAccount,
+                  loading: screen.loadingSnapshot.connectionState ==
+                      ConnectionState.waiting,
+                  secondButtonTab: () => Navigator.of(context)
+                      .pushReplacementNamed(AuthorizationRoutes.LOGIN_SCREEN,
+                          arguments: screen.args),
+                  firstButtonTab: agreed
+                      ? () {
+                          if (_registerKey.currentState!.validate()) {
+                            if (usernameController.text
+                                .trim()
+                                .startsWith('0')) {
+                              CustomFlushBarHelper.createError(
+                                      title: S.current.warnning,
+                                      message:
+                                          S.current.yourNumberStartWithZero)
+                                  .show(context);
+                            } else {
+                              screen.registerClient(RegisterRequest(
+                                userID: countryController.text.trim() +
+                                    usernameController.text.trim(),
+                                password: passwordController.text,
+                              ));
+                            }
+                          }
+                        }
+                      : null,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _PassWordFields extends StatefulWidget {
+  const _PassWordFields({
+    required this.passwordController,
+    required this.password2Controller,
+  });
+
+  final TextEditingController passwordController;
+  final TextEditingController password2Controller;
+
+  @override
+  State<_PassWordFields> createState() => _PassWordFieldsState();
+}
+
+class _PassWordFieldsState extends State<_PassWordFields> {
+  bool hidePassword = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        CustomAuthFiled(
+          title: S.current.password,
+          controller: widget.passwordController,
+          confirmPassword: widget.password2Controller.text,
+          isPassword: true,
+          icon: Icons.lock,
+          hintText: S.current.password,
+          hidePassword: hidePassword,
+          onChanged: (value) {
+            setState(() {});
+          },
+          onHidePassWordChange: (value) {
+            setState(() {
+              hidePassword = value;
+            });
+          },
+        ),
+        // confirm password
+        CustomAuthFiled(
+          title: S.current.confirmPasswordAgain,
+          controller: widget.password2Controller,
+          confirmPassword: widget.passwordController.text,
+          isPassword: true,
+          icon: Icons.lock,
+          isLastFiled: true,
+          hintText: S.current.confirmPasswordAgain,
+          hidePassword: hidePassword,
+          onChanged: (value) {
+            setState(() {});
+          },
+          onHidePassWordChange: (value) {
+            setState(() {
+              hidePassword = value;
+            });
+          },
         ),
       ],
     );

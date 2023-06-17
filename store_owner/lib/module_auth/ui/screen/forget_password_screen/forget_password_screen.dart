@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/states/state.dart';
@@ -64,23 +65,40 @@ class ForgotPassScreenState extends State<ForgotPassScreen> {
           focus.unfocus();
         }
       },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        appBar: CustomC4dAppBar.appBar(context,
-            title: S.of(context).forgotPass, canGoBack: canPop),
-        body: FixedContainer(
-          child: loadingSnapshot.connectionState != ConnectionState.waiting
-              ? _currentStates.getUI(context)
-              : Stack(
-                  children: [
-                    _currentStates.getUI(context),
-                    Container(
-                      width: double.maxFinite,
-                      color: Colors.transparent.withOpacity(0.0),
-                    ),
-                  ],
-                ),
+      child: Stack(
+        children: [
+          Positioned.fill(
+        child: Container(
+          color: Color.fromARGB(255, 233, 195, 113),
         ),
+      ),
+          Image.asset(
+            ImageAsset.AUTH_BACKGROUND,
+          ),
+          Scaffold(
+            backgroundColor: Colors.transparent,
+            resizeToAvoidBottomInset: false,
+            appBar: CustomC4dAppBar.appBar(
+              context,
+              backgroundColor: Colors.transparent,
+              title: S.of(context).forgotPass,
+              canGoBack: canPop,
+            ),
+            body: FixedContainer(
+              child: loadingSnapshot.connectionState != ConnectionState.waiting
+                  ? _currentStates.getUI(context)
+                  : Stack(
+                      children: [
+                        _currentStates.getUI(context),
+                        Container(
+                          width: double.maxFinite,
+                          color: Colors.transparent.withOpacity(0.0),
+                        ),
+                      ],
+                    ),
+            ),
+          ),
+        ],
       ),
     );
   }

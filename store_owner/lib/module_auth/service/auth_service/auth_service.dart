@@ -1,12 +1,8 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
-import 'package:c4d/module_profile/profile_routes.dart';
-import 'package:c4d/module_splash/splash_routes.dart';
-import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
-import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/enums/auth_status.dart';
 import 'package:c4d/module_auth/exceptions/auth_exception.dart';
@@ -201,7 +197,7 @@ class AuthService {
     }
   }
 
-  Future<void> verifyResetPassCodeRequest(
+  Future<bool> verifyResetPassCodeRequest(
       VerifyResetPassCodeRequest request) async {
     // Create the profile in our database
     RegisterResponse? registerResponse =
@@ -216,6 +212,7 @@ class AuthService {
           registerResponse.statusCode ?? '0'));
     } else {
       _authSubject.add(AuthStatus.VERIFIED);
+      return true;
     }
   }
 
@@ -256,28 +253,37 @@ class AuthService {
     var response = await _authManager.accountStatus();
     if (response?.statusCode != '200') {
       switch (response?.statusCode) {
-        // account didn't subscript yet
+        // account  subscript with free plan
         case '9161':
-          _prefsHelper.setUserCompetedProfile(
-              SubscriptionsRoutes.INIT_SUBSCRIPTIONS_SCREEN);
+          _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
+
           break;
         // account didn't created any branch
         case '9159':
           _prefsHelper.setUserCompetedProfile(BranchesRoutes.INIT_BRANCHES);
           break;
-        // account created
-        case '9160':
-          _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
-          break;
         // account not filled
         case '9158':
-          _prefsHelper.setUserCompetedProfile(ProfileRoutes.INIT_ACCOUNT);
+          _prefsHelper.setUserCompetedProfile(BranchesRoutes.INIT_BRANCHES);
+          // not used after refactoring 6/14/2023
+          // _prefsHelper.setUserCompetedProfile(ProfileRoutes.INIT_ACCOUNT);
           break;
         // account deleted
         case '9013':
           await logout();
           _prefsHelper.setUserCompetedProfile('userDeleted');
           break;
+        // account  created
+        case '9160':
+          _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
+          break;
+
+        // new account haven't subscribe with free plan yet 
+        case '9162':
+          _prefsHelper.setNewAccount(true);
+          _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
+          break;
+
         default:
           _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
           break;

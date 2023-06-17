@@ -79,6 +79,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "and": MessageLookupByLibrary.simpleMessage(" & "),
         "andIAm": MessageLookupByLibrary.simpleMessage("And I am"),
         "apply": MessageLookupByLibrary.simpleMessage("APPLY"),
+        "arabic": MessageLookupByLibrary.simpleMessage("Arabic"),
         "areSureAboutDeletingYourAccount": MessageLookupByLibrary.simpleMessage(
             "Are you sure about deleting your account , you won\'t be able to login with this credential any more"),
         "areYouSureAboutCreatingSubOrder": MessageLookupByLibrary.simpleMessage(
@@ -264,6 +265,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "contactPhoneNumber":
             MessageLookupByLibrary.simpleMessage("Contact Phone Number"),
         "contacts": MessageLookupByLibrary.simpleMessage("Contacts"),
+        "continueWord": MessageLookupByLibrary.simpleMessage("Continue"),
         "copy": MessageLookupByLibrary.simpleMessage("Copy"),
         "copyFinished":
             MessageLookupByLibrary.simpleMessage("Link Copied Successfully"),
@@ -348,6 +350,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "emptyPackagesCategory": MessageLookupByLibrary.simpleMessage(
             "There is no packages in this category"),
         "endDate": MessageLookupByLibrary.simpleMessage("To date"),
+        "english": MessageLookupByLibrary.simpleMessage("English"),
         "enquiries": MessageLookupByLibrary.simpleMessage("Orders Enquiries"),
         "enquiryAboutOrder":
             MessageLookupByLibrary.simpleMessage("Enquiry about order number"),
@@ -355,6 +358,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enter verification code"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("Enter product information"),
+        "enterYourStoreName":
+            MessageLookupByLibrary.simpleMessage("enter your store name"),
         "errOc":
             MessageLookupByLibrary.simpleMessage("The next problems occurred"),
         "errorDownloadingImage":
@@ -414,6 +419,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "geographicalRange":
             MessageLookupByLibrary.simpleMessage("Geographical range"),
         "getDirection": MessageLookupByLibrary.simpleMessage("Get Direction"),
+        "getItNow": MessageLookupByLibrary.simpleMessage("get it now"),
         "go": MessageLookupByLibrary.simpleMessage("Go"),
         "goToOffers": MessageLookupByLibrary.simpleMessage("go to offers"),
         "groupOrder": MessageLookupByLibrary.simpleMessage("Group Order"),
@@ -755,6 +761,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Please provide your address on our map"),
         "pleaseSelectABranch":
             MessageLookupByLibrary.simpleMessage("Please Select a Branch"),
+        "pleaseSelectYourStoreLocation": MessageLookupByLibrary.simpleMessage(
+            "please select your store location"),
         "prayerMessage": MessageLookupByLibrary.simpleMessage(
             "This order may take some extra time to be delivered due prayer period"),
         "preferredLanguage":
@@ -897,6 +905,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "sortedByLatest":
             MessageLookupByLibrary.simpleMessage("Sorted by latest"),
         "specification": MessageLookupByLibrary.simpleMessage("Specification"),
+        "startWork": MessageLookupByLibrary.simpleMessage("start work"),
         "startWriting": MessageLookupByLibrary.simpleMessage("Start Writing"),
         "statusCodeBadRequest": MessageLookupByLibrary.simpleMessage(
             "The server could not understand the request due to invalid syntax"),
@@ -1024,6 +1033,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Uploading Images"),
         "uploadingImagesPleaseWait": MessageLookupByLibrary.simpleMessage(
             "Uploading Image, Please Wait"),
+        "useYourCurrentLocation":
+            MessageLookupByLibrary.simpleMessage("use your current location"),
         "userDeleted":
             MessageLookupByLibrary.simpleMessage("User deleted successfully"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
@@ -1049,6 +1060,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "We need  your image in order to sign up"),
         "weWillContactYouSoon":
             MessageLookupByLibrary.simpleMessage("We will contact you soon"),
+        "welcome": MessageLookupByLibrary.simpleMessage("welcome"),
+        "welcomePlanOffer": MessageLookupByLibrary.simpleMessage(
+            "Congratulations, you have received a welcome package for delivering one order for only 2.99 riyal"),
         "welcomeToOrdersScreen":
             MessageLookupByLibrary.simpleMessage("Welcome to Orders Screen"),
         "welcomeToOurApp":

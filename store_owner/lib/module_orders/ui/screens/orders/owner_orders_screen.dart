@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/app_config.dart';
@@ -6,6 +7,7 @@ import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
+import 'package:c4d/module_auth/presistance/auth_prefs_helper.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/ui/screens/ongoing_chat_rooms_screen.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
@@ -14,6 +16,8 @@ import 'package:c4d/module_notifications/service/fire_notification_service/fire_
 import 'package:c4d/module_orders/model/company_info_model.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
+import 'package:c4d/module_orders/request/payment/paymnet_status_request.dart';
+import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/state_manager/new_order/new_order.state_manager.dart';
 import 'package:c4d/module_orders/state_manager/owner_orders/owner_orders.state_manager.dart';
 import 'package:c4d/module_orders/ui/state/owner_orders/orders.state.dart';
@@ -28,7 +32,8 @@ import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:c4d/utils/helpers/subscription_status_helper.dart';
-import 'package:flutter/material.dart';
+import 'package:c4d/utils/images/images.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:injectable/injectable.dart';
@@ -58,6 +63,9 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
   StreamSubscription? _companySubscription;
   StreamSubscription? _statusSubscription;
   StreamSubscription? _globalStateManager;
+  AuthPrefsHelper _authPrefsHelper = getIt<AuthPrefsHelper>();
+  OrdersService _ordersService = getIt<OrdersService>();
+  bool showWelcomeDialog = false;
 
   Future<void> getMyOrdersFilter([loading = true]) async {
     widget._stateManager.getOrdersFilters(
@@ -139,6 +147,11 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     });
 
     widget._stateManager.getUpdates(this);
+    widget._stateManager.accountStatus(this);
+  }
+
+  refresh() {
+    if (mounted) setState(() {});
   }
 
   String? orderFilter;
@@ -146,6 +159,9 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
 
   @override
   Widget build(BuildContext context) {
+    if (showWelcomeDialog) {
+      welcomeDialog(context);
+    }
     return Scaffold(
       key: GlobalVariable.mainScreenScaffold,
       appBar: CustomC4dAppBar.appBar(context,
@@ -332,6 +348,67 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                   child: _currentState.getUI(context)))
         ],
       ),
+    );
+  }
+
+  welcomeDialog(BuildContext context) {
+    showWelcomeDialog = false;
+    SchedulerBinding.instance.addPostFrameCallback(
+      (_) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return Dialog(
+              backgroundColor: Color.fromARGB(237, 2, 96, 79),
+              child: Padding(
+                padding: const EdgeInsets.all(30),
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        S.current.welcome,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(color: Colors.white),
+                      ),
+                      SizedBox(height: 10),
+                      Image.asset(
+                        ImageAsset.WELCOME_IMAGE,
+                        height: 120,
+                        width: 120,
+                      ),
+                      Text(
+                        S.current.welcomePlanOffer,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(color: Colors.white),
+                        textAlign: TextAlign.center,
+                      ),
+                      SizedBox(height: 20),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                          _ordersService.setPayment(
+                            PaymentStatusRequest(status: 1),
+                          );
+                        },
+                        child: Text(S.current.getItNow),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xffFF6F42),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      },
     );
   }
 

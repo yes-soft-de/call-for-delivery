@@ -28,7 +28,7 @@ class LocalizationService {
     return lang;
   }
 
-  bool choosed() {
+  bool languageHasBeenChosen() {
     String? lang = _preferencesHelper.getLanguage();
     return lang != null;
   }
