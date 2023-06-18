@@ -28,4 +28,6 @@ class CanCreateOrderResponse
      * @var int|null
      */
     public $packageType;
+
+    public bool $hasToPay = false;
 }
