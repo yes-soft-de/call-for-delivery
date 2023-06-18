@@ -209,7 +209,7 @@ class OrdersService {
     return DataModel.empty();
   }
 
-  Future<DataModel> setPayment(PaymentStatusRequest request) async {
+  Future<DataModel> makePayment(PaymentStatusRequest request) async {
     ActionResponse? response = await _ordersManager.setPayment(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {

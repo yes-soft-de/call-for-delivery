@@ -423,7 +423,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                       ElevatedButton(
                         onPressed: () {
                           Navigator.pop(context);
-                          _ordersService.setPayment(
+                          _ordersService.makePayment(
                             PaymentStatusRequest(status: 1),
                           );
                         },
