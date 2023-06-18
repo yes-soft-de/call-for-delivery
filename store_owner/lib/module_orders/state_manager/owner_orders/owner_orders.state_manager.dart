@@ -96,13 +96,12 @@ class OwnerOrdersStateManager {
   }
 
   /// to show welcome package if needed (9162)
-  void accountStatus(OwnerOrdersScreenState screenState) async {
-    _authService.accountStatus().whenComplete(
-      () {
-        screenState.showWelcomeDialog = getIt<AuthPrefsHelper>().getIsNewAccount();
-        screenState.refresh();
-      },
-    );
+  void showWelcomeDialogIfNeeded(OwnerOrdersScreenState screenState) async {
+    await _authService.accountStatus();
+    screenState.showWelcomeDialog = getIt<AuthPrefsHelper>().getIsNewAccount();
+    if (screenState.showWelcomeDialog)
+      screenState.welcomeDialog(screenState.context);
+    screenState.refresh();
   }
 
   void getOrdersFilters(
@@ -122,6 +121,8 @@ class OwnerOrdersStateManager {
         }, title: '', error: value.error, hasAppbar: false, size: 200));
       } else if (value.isEmpty) {
         _stateSubject.add(EmptyState(screenState, size: 200, onPressed: () {
+          showWelcomeDialogIfNeeded(screenState);
+
           getOrdersFilters(screenState, request);
         }, title: '', emptyMessage: S.current.homeDataEmpty, hasAppbar: false));
       } else {

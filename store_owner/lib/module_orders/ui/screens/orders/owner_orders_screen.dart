@@ -150,7 +150,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     });
 
     widget._stateManager.getUpdates(this);
-    widget._stateManager.accountStatus(this);
+    widget._stateManager.showWelcomeDialogIfNeeded(this);
 
     getIt<SubscriptionService>().getSubscriptionBalance().then(
       (value) {
@@ -181,9 +181,6 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
 
   @override
   Widget build(BuildContext context) {
-    if (showWelcomeDialog) {
-      welcomeDialog(context);
-    }
     return Scaffold(
       key: GlobalVariable.mainScreenScaffold,
       appBar: CustomC4dAppBar.appBar(context,
@@ -243,6 +240,9 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                   )),
               onPressed: status != null
                   ? () {
+                      if (showWelcomeDialog) {
+                        widget._stateManager.showWelcomeDialogIfNeeded(this);
+                      }
                       if (status?.canCreateOrder == true) {
                         Navigator.of(context)
                             .pushNamed(OrdersRoutes.NEW_ORDER_SCREEN);
@@ -297,6 +297,10 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                           color: Colors.white,
                         ),
                         onPressed: () {
+                          if (showWelcomeDialog) {
+                            widget._stateManager
+                                .showWelcomeDialogIfNeeded(this);
+                          }
                           getInitData();
                         },
                       ),
@@ -323,6 +327,9 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
               FilterItem(label: S.current.onGoingOrder),
             ],
             onItemSelected: (index) {
+              if (showWelcomeDialog) {
+                widget._stateManager.showWelcomeDialogIfNeeded(this);
+              }
               if (index == 0) {
                 orderFilter = 'pending';
               } else {
@@ -338,43 +345,44 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
             height: 16,
           ),
           Expanded(
-              child: SwipeDetector(
-                  onSwipe: (dir, offset) {
-                    if (dir == SwipeDirection.left ||
-                        dir == SwipeDirection.right ||
-                        dir == SwipeDirection.up) {
-                      openedBottom = true;
-                      setState(() {});
-                      GlobalVariable.mainScreenScaffold.currentState
-                          ?.showBottomSheet(
-                            (ctx) {
-                              return getOngoingChatRoom();
-                            },
-                            backgroundColor:
-                                Theme.of(context).colorScheme.background,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(25))),
-                            constraints: BoxConstraints(
-                              minHeight: 150,
-                              maxHeight: 500,
-                            ),
-                          )
-                          .closed
-                          .whenComplete(() {
-                            openedBottom = false;
-                            setState(() {});
-                          });
-                    }
-                  },
-                  child: _currentState.getUI(context)))
+            child: SwipeDetector(
+              onSwipe: (dir, offset) {
+                if (dir == SwipeDirection.left ||
+                    dir == SwipeDirection.right ||
+                    dir == SwipeDirection.up) {
+                  openedBottom = true;
+                  setState(() {});
+                  GlobalVariable.mainScreenScaffold.currentState
+                      ?.showBottomSheet(
+                        (ctx) {
+                          return getOngoingChatRoom();
+                        },
+                        backgroundColor:
+                            Theme.of(context).colorScheme.background,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(25))),
+                        constraints: BoxConstraints(
+                          minHeight: 150,
+                          maxHeight: 500,
+                        ),
+                      )
+                      .closed
+                      .whenComplete(() {
+                        openedBottom = false;
+                        setState(() {});
+                      });
+                }
+              },
+              child: _currentState.getUI(context),
+            ),
+          )
         ],
       ),
     );
   }
 
   welcomeDialog(BuildContext context) {
-    showWelcomeDialog = false;
     SchedulerBinding.instance.addPostFrameCallback(
       (_) {
         showDialog(
