@@ -123,7 +123,9 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       .pushNamed(SubscriptionsRoutes.NEW_SUBSCRIPTIONS_SCREEN);
                 }
               },
-              title: S.current.myBalance,
+              title: isOldStorePlan
+                  ? S.current.myBalance
+                  : S.current.accountBalance,
             ),
           ),
           Divider(
