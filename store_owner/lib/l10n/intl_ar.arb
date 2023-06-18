@@ -729,5 +729,6 @@
     "welcomePlanOffer" : "مبروك  لقد حصلت على باقة ترحيبية \n لتوصيل طلب واحد \n مقابل 2.99 ريال فقط",
     "currentCycleDetails" : "معلومات الدورة الحالية",
     "packageStartDate" : "تاريخ بدء الباقة",
+    "thereIsNoUserWithThisNumber" : "لا يوجد مستخدم بهذا الرقم",
     "adsAndOffers": "الإعلانات و العروض"
 }

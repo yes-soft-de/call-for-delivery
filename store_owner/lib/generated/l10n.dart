@@ -7140,6 +7140,26 @@ class S {
     );
   }
 
+  /// `Ads & offers`
+  String get adsAndOffers {
+    return Intl.message(
+      'Ads & offers',
+      name: 'adsAndOffers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store fee`
+  String get storeFee {
+    return Intl.message(
+      'Store fee',
+      name: 'storeFee',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `use your current location`
   String get useYourCurrentLocation {
     return Intl.message(
@@ -7320,21 +7340,11 @@ class S {
     );
   }
 
-  /// `Ads & offers`
-  String get adsAndOffers {
+  /// `there is no user with this number`
+  String get thereIsNoUserWithThisNumber {
     return Intl.message(
-      'Ads & offers',
-      name: 'adsAndOffers',
-      desc: '',
-      args: [],
-    );
-  }
-
-  /// `Store fee`
-  String get storeFee {
-    return Intl.message(
-      'Store fee',
-      name: 'storeFee',
+      'there is no user with this number',
+      name: 'thereIsNoUserWithThisNumber',
       desc: '',
       args: [],
     );

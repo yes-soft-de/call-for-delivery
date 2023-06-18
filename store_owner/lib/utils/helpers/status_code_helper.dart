@@ -39,6 +39,8 @@ class StatusCodeHelper {
         return S.current.invalidCredentials;
       case '9001':
         return S.current.accountAlreadyExist;
+      case '9005':
+        return S.current.thereIsNoUserWithThisNumber;
       case '9302':
         return S.current.notSubscription;
       case '9204':
