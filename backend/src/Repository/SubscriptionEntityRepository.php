@@ -441,4 +441,39 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleColumnResult();
     }
+
+    public function getDeliveredOrdersDeliveryCostFromSubscriptionStartDateTillNow(int $storeOwnerUserId, int $subscriptionId): array
+    {
+        return $this->createQueryBuilder('subscriptionEntity')
+            ->select('orderEntity.deliveryCost')
+
+                ->andWhere('subscriptionEntity.id = :subscriptionId')
+            ->setParameter('subscriptionId', $subscriptionId)
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = subscriptionEntity.storeOwner'
+            )
+
+            ->andWhere('storeOwnerProfileEntity.storeOwnerId = :storeOwnerUserId')
+            ->setParameter('storeOwnerUserId', $storeOwnerUserId)
+
+            ->leftJoin(
+                OrderEntity::class,
+                'orderEntity',
+                Join::WITH,
+                'orderEntity.storeOwner = storeOwnerProfileEntity.id'
+            )
+
+            ->andWhere('orderEntity.state = :deliveredStatus')
+            ->setParameter('deliveredStatus', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+            ->andWhere('orderEntity.createdAt BETWEEN subscriptionEntity.startDate AND :toDate')
+            ->setParameter('toDate', new \DateTime('now'))
+
+            ->getQuery()
+            ->getSingleColumnResult();
+    }
 }
