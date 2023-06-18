@@ -4,6 +4,9 @@ namespace App\Controller\EPayment;
 
 use App\AutoMapping;
 use App\Constant\Main\MainErrorConstant;
+use App\Constant\Package\PackageConstant;
+use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Constant\Subscription\SubscriptionConstant;
 use App\Controller\BaseController;
 use App\Request\EPayment\EPaymentCreateByStoreOwnerRequest;
 use App\Service\EPayment\EPaymentService;
@@ -46,7 +49,7 @@ class EPaymentController extends BaseController
         $request = $this->autoMapping->map(\stdClass::class, EPaymentCreateByStoreOwnerRequest::class,
             (object) $data);
 
-        $request->setStoreOwner($this->getUserId());
+        $request->setStoreOwnerProfile($this->getUserId());
 
         $violations = $this->validator->validate($request);
 
@@ -59,6 +62,15 @@ class EPaymentController extends BaseController
         $result = $this->ePaymentService->createEPaymentByStoreOwner($request);
 
         if ($result === 0) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::E_PAYMENT_HAD_NOT_CREATED_SUCCESSFULLY_CONST);
+
+        } elseif ($result === PackageConstant::PACKAGE_NOT_EXIST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::E_PAYMENT_HAD_NOT_CREATED_SUCCESSFULLY_CONST);
+
+        } elseif ($result === SubscriptionConstant::SUBSCRIPTION_DOES_NOT_EXIST_CONST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::E_PAYMENT_HAD_NOT_CREATED_SUCCESSFULLY_CONST);
+
+        } elseif ($result === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::E_PAYMENT_HAD_NOT_CREATED_SUCCESSFULLY_CONST);
         }
 
