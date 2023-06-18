@@ -15,6 +15,7 @@ use App\Entity\SubscriptionEntity;
 use App\Manager\Subscription\SubscriptionManager;
 use App\Request\Account\CompleteAccountStatusUpdateRequest;
 use App\Request\Subscription\SubscriptionCreateRequest;
+use App\Response\Subscription\CurrentStoreSubscriptionBalanceGetResponse;
 use App\Response\Subscription\SubscriptionResponse;
 use App\Response\Subscription\MySubscriptionsResponse;
 use App\Response\Subscription\RemainingOrdersResponse;
@@ -1274,6 +1275,11 @@ class SubscriptionService
 
         return $this->subscriptionManager->updateSubscriptionPaidFlagBySubscriptionEntity($subscriptionDetailsEntity->getLastSubscription(),
             $paidFlag);
+    }
+
+    public function getCurrentSubscriptionBalanceByStoreOwner(int $storeOwnerUserId)
+    {
+        return $this->autoMapping->map('array', CurrentStoreSubscriptionBalanceGetResponse::class, []);
     }
 }
  
