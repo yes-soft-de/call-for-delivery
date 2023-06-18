@@ -11,6 +11,7 @@ use App\Controller\BaseController;
 use App\Request\EPayment\EPaymentCreateByStoreOwnerRequest;
 use App\Service\EPayment\EPaymentService;
 use Nelmio\ApiDocBundle\Annotation\Security;
+use OpenApi\Annotations as OA;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -40,6 +41,43 @@ class EPaymentController extends BaseController
      * @param Request $request
      * @return JsonResponse
      *
+     * @OA\Tag(name="E-Payment")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="create payment by store request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="status"),
+     *          @OA\Property(type="integer", property="paymentFor"),
+     *          @OA\Property(type="integer", property="paymentGetaway"),
+     *          @OA\Property(type="number", property="amount"),
+     *          @OA\Property(type="string", property="clientAddress"),
+     *          @OA\Property(type="string", property="paymentId")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=201,
+     *      description="Returns succeded updating message",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              @OA\Property(type="integer", property="id"),
+     *              @OA\Property(type="object", property="startDate"),
+     *              @OA\Property(type="object", property="endDate"),
+     *              @OA\Property(type="string", property="status"),
+     *              @OA\Property(type="string", property="note")
+     *          )
+     *      )
+     * )
+     *
      * @Security(name="Bearer")
      */
     public function createEPaymentByStoreOwner(Request $request): JsonResponse
@@ -65,15 +103,15 @@ class EPaymentController extends BaseController
             return $this->response(MainErrorConstant::ERROR_MSG, self::E_PAYMENT_HAD_NOT_CREATED_SUCCESSFULLY_CONST);
 
         } elseif ($result === PackageConstant::PACKAGE_NOT_EXIST) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::E_PAYMENT_HAD_NOT_CREATED_SUCCESSFULLY_CONST);
+            return $this->response(MainErrorConstant::ERROR_MSG, self::PACKAGE_NOT_EXIST);
 
         } elseif ($result === SubscriptionConstant::SUBSCRIPTION_DOES_NOT_EXIST_CONST) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::E_PAYMENT_HAD_NOT_CREATED_SUCCESSFULLY_CONST);
+            return $this->response(MainErrorConstant::ERROR_MSG, self::SUBSCRIPTION_NOT_FOUND);
 
         } elseif ($result === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::E_PAYMENT_HAD_NOT_CREATED_SUCCESSFULLY_CONST);
+            return $this->response(MainErrorConstant::ERROR_MSG, self::STORE_OWNER_PROFILE_NOT_EXIST);
         }
 
-        return $this->response($result, self::UPDATE);
+        return $this->response($result, self::CREATE);
     }
 }
