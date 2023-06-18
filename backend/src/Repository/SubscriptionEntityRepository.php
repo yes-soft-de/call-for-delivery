@@ -65,7 +65,8 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->addSelect ('IDENTITY( subscription.subscriptionCaptainOffer) as subscriptionCaptainOfferId')
             ->addSelect('subscription.id ', 'subscription.startDate', 'subscription.endDate', 'subscription.status as subscriptionStatus')
             ->addSelect('packageEntity.id as packageId', 'packageEntity.name as packageName', 'packageEntity.carCount as packageCarCount',
-             'packageEntity.orderCount as packageOrderCount', 'packageEntity.expired, packageEntity.type as packageType, packageEntity.geographicalRange, packageEntity.extraCost as packageExtraCost, packageEntity.cost as packageCost')
+             'packageEntity.orderCount as packageOrderCount', 'packageEntity.expired, packageEntity.type as packageType, packageEntity.geographicalRange, packageEntity.extraCost as packageExtraCost, packageEntity.cost as packageCost',
+                'packageEntity.openingOrderCost', 'packageEntity.oneKilometerCost')
             ->addSelect('subscriptionDetailsEntity.id as subscriptionDetailsId', 'subscriptionDetailsEntity.remainingOrders',
              'subscriptionDetailsEntity.remainingCars', 'subscriptionDetailsEntity.remainingTime', 
              'subscriptionDetailsEntity.status', 'subscriptionDetailsEntity.hasExtra')
@@ -407,5 +408,37 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getOneOrNullResult();
+    }
+
+    public function checkDeliveredOrdersCostTillNow(int $storeOwnerUserId): array
+    {
+        return $this->createQueryBuilder('subscriptionEntity')
+            ->select('SUM(orderEntity.deliveryCost)')
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = subscriptionEntity.storeOwner'
+            )
+
+            ->andWhere('storeOwnerProfileEntity.storeOwnerId = :storeOwnerUserId')
+            ->setParameter('storeOwnerUserId', $storeOwnerUserId)
+
+            ->leftJoin(
+                OrderEntity::class,
+                'orderEntity',
+                Join::WITH,
+                'orderEntity.storeOwner = storeOwnerProfileEntity.id'
+            )
+
+            ->andWhere('orderEntity.state = :deliveredStatus')
+            ->setParameter('deliveredStatus', OrderStateConstant::ORDER_STATE_DELIVERED)
+
+            ->andWhere('orderEntity.createdAt BETWEEN subscriptionEntity.startDate AND :toDate')
+            ->setParameter('toDate', new \DateTime('now'))
+
+            ->getQuery()
+            ->getSingleColumnResult();
     }
 }
