@@ -4,9 +4,9 @@ namespace App\Service\Subscription;
 
 use App\AutoMapping;
 use App\Constant\Notification\SubscriptionFirebaseNotificationConstant;
+use App\Constant\Order\OrderCostDefaultValueConstant;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
-use App\Constant\StoreOwnerPayment\StoreOwnerPaymentConstant;
 use App\Constant\Subscription\SubscriptionDetailsConstant;
 use App\Entity\PackageEntity;
 use App\Entity\StoreOwnerProfileEntity;
@@ -15,6 +15,7 @@ use App\Entity\SubscriptionEntity;
 use App\Manager\Subscription\SubscriptionManager;
 use App\Request\Account\CompleteAccountStatusUpdateRequest;
 use App\Request\Subscription\SubscriptionCreateRequest;
+use App\Response\Subscription\CurrentStoreSubscriptionBalanceGetResponse;
 use App\Response\Subscription\SubscriptionResponse;
 use App\Response\Subscription\MySubscriptionsResponse;
 use App\Response\Subscription\RemainingOrdersResponse;
@@ -403,6 +404,38 @@ class SubscriptionService
                         }
                     }
                 }
+
+            }
+            elseif ($packageBalance->status === SubscriptionConstant::SUBSCRIBE_ACTIVE) {
+                if ($packageBalance->packageId === 19) {
+                    // check how much does store make orders
+                    $ordersCostSum = $this->checkDeliveredOrdersCostTillNow($storeOwnerId);
+
+                    if ($ordersCostSum > OrderCostDefaultValueConstant::ORDER_COST_LIMIT_CONST) {
+                        // de-activate the subscription till the store make the required payment
+                        $subscriptionUpdateResult = $this->deActivateCurrentSubscriptionByStoreOwnerUserId($storeOwnerId);
+
+                        if ($subscriptionUpdateResult !== SubscriptionConstant::SUBSCRIPTION_NOT_FOUND) {
+                            // re-check balance after ending subscription
+                            $packageBalance = $this->packageBalance($storeOwnerId);
+
+                            $item['hasToPay'] = true;
+                        }
+                    }
+                }
+
+            } elseif ($packageBalance->status === SubscriptionConstant::DATE_FINISHED) {
+                if ($packageBalance->packageId === 19) {
+                    // check how much does store make orders
+                    $ordersCostSum = $this->checkDeliveredOrdersCostTillNow($storeOwnerId);
+
+                    if ($ordersCostSum > OrderCostDefaultValueConstant::ORDER_COST_LIMIT_CONST) {
+                        // re-check balance after ending subscription
+                        $packageBalance = $this->packageBalance($storeOwnerId);
+
+                        $item['hasToPay'] = true;
+                    }
+                }
             }
 
             $item['subscriptionStatus'] = $packageBalance->status;
@@ -630,35 +663,6 @@ class SubscriptionService
          
         return $percentage . SubscriptionConstant::PERCENT ;
     }
-    
-    // public function getPercentageOfOrdersConsumed(int $packageOrderCount, int $remainingOrders): string|null
-    // {
-    //     if($remainingOrders === 0) {
-            // return SubscriptionConstant::CONSUMED_100_PERCENT ;
-    //     }
-
-    //     if($remainingOrders === (100 * $packageOrderCount) / 100) {
-    //         return SubscriptionConstant::CONSUMED_0_PERCENT ;
-    //     }
-         
-    //     if($remainingOrders <= (20 * $packageOrderCount) / 100 && $remainingOrders >= (1 * $packageOrderCount) / 100) {
-    //         return SubscriptionConstant::CONSUMED_LESS_THAN_20_PERCENT ;
-    //     } 
-
-    //     if($remainingOrders <= (50 * $packageOrderCount) / 100 && $remainingOrders >= (21 * $packageOrderCount) / 100) {
-    //         return SubscriptionConstant::CONSUMED_LESS_THAN_50_PERCENT ;
-    //     }
-
-    //     if($remainingOrders <= (80 * $packageOrderCount) / 100 && $remainingOrders >= (51 * $packageOrderCount) / 100) {
-    //         return SubscriptionConstant::CONSUMED_LESS_THAN_80_PERCENT ;
-    //     }
-
-    //     if($remainingOrders <= (99 * $packageOrderCount) / 100 && $remainingOrders >= (81 * $packageOrderCount) / 100) {
-    //         return SubscriptionConstant::CONSUMED_MORE_THAN_80_PERCENT ;
-    //     }
-        
-    //     return null;
-    // }
 
     public function getStoreOwnerProfileStatus(int $storeOwnerId): string
     {
@@ -819,20 +823,39 @@ class SubscriptionService
         $item['extraOrderDeliveryCost'] = 0;
 
         $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($request->getStoreOwner());
-        if($subscription) {
-           
-            $item['extraDistance'] = $this->getExtraDistance($subscription['geographicalRange'], $request->getStoreBranchToClientDistance());
-            
-            if($subscription['packageType'] === PackageConstant::PACKAGE_TYPE_ON_ORDER) {
-                $item['orderDeliveryCost'] = $subscription['packageCost'];
-            }
-            else{
-                $item['orderDeliveryCost'] = round($subscription['packageCost'] / $subscription['packageOrderCount'], 2);
-            }
 
-            $item['extraOrderDeliveryCost'] = ($item['extraDistance'] * $subscription['packageExtraCost']);
-            
-            $item['total'] = $item['orderDeliveryCost'] + $item['extraOrderDeliveryCost'];
+        if ($subscription) {
+            if (($subscription['packageId'] === 18) || ($subscription['packageId'] === 19)) {
+                if ($subscription['openingOrderCost']) {
+                    $item['orderDeliveryCost'] = $subscription['openingOrderCost'];
+
+                } else {
+                    $item['orderDeliveryCost'] = 14;
+                }
+
+                if ($subscription['oneKilometerCost']) {
+                    $item['extraOrderDeliveryCost'] = $request->getStoreBranchToClientDistance() * $subscription['oneKilometerCost'];
+
+                } else {
+                    $item['extraOrderDeliveryCost'] = $request->getStoreBranchToClientDistance() * 1;
+                }
+
+                $item['total'] = $item['orderDeliveryCost'] + $item['extraOrderDeliveryCost'];
+
+            } else {
+                $item['extraDistance'] = $this->getExtraDistance($subscription['geographicalRange'], $request->getStoreBranchToClientDistance());
+
+                if ($subscription['packageType'] === PackageConstant::PACKAGE_TYPE_ON_ORDER) {
+                    $item['orderDeliveryCost'] = $subscription['packageCost'];
+
+                } else {
+                    $item['orderDeliveryCost'] = round($subscription['packageCost'] / $subscription['packageOrderCount'], 2);
+                }
+
+                $item['extraOrderDeliveryCost'] = ($item['extraDistance'] * $subscription['packageExtraCost']);
+
+                $item['total'] = $item['orderDeliveryCost'] + $item['extraOrderDeliveryCost'];
+            }
         }
      
         return $this->autoMapping->map("array", CalculateCostDeliveryOrderResponse::class, $item);
@@ -956,16 +979,16 @@ class SubscriptionService
     }
 
     // This function only checks remaining cars without any updating operations
-    public function checkRemainingCarsOnlyByOrderId(int $orderId): string|int
-    {
-        $subscription = $this->subscriptionManager->getSubscriptionCurrentByOrderId($orderId);
-
-        if($subscription) {
-            return $subscription['remainingCars'];
-        }
-
-        return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
-    }
+//    public function checkRemainingCarsOnlyByOrderId(int $orderId): string|int
+//    {
+//        $subscription = $this->subscriptionManager->getSubscriptionCurrentByOrderId($orderId);
+//
+//        if($subscription) {
+//            return $subscription['remainingCars'];
+//        }
+//
+//        return SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED;
+//    }
 
     public function checkRemainingCarsAndInformStore(int $currentRemainingCars, int $newRemainingCars, $subscription): void
     {
@@ -1141,7 +1164,7 @@ class SubscriptionService
         return $this->subscriptionManager->getPackageEntityById($id);
     }
 
-    public function createSubscriptionWithFreePackage(int $storeOwnerUserId)
+    public function createSubscriptionWithFreePackage(int $storeOwnerUserId): string|int|SubscriptionEntity
     {
         $freePackage = $this->getPackageEntityById(18);
 
@@ -1180,7 +1203,8 @@ class SubscriptionService
             $this->sendFirebaseNotificationToAdmin(SubscriptionFirebaseNotificationConstant::STORE_CREATE_NEW_SUBSCRIPTION_CONST,
                 $subscription->getStoreOwner()->getStoreOwnerName(), $storeOwnerUserId);
 
-            return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
+            //return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
+            return $subscription;
         }
 
         return SubscriptionConstant::SUBSCRIPTION_DOES_NOT_EXIST_CONST;
@@ -1212,6 +1236,50 @@ class SubscriptionService
                 }
             }
         }
+    }
+
+    public function checkDeliveredOrdersCostTillNow(int $storeOwnerUserId): float
+    {
+        $ordersCostSum = $this->subscriptionManager->checkDeliveredOrdersCostTillNow($storeOwnerUserId);
+
+        if (count($ordersCostSum) === 0) {
+            return 0.0;
+        }
+
+        return $ordersCostSum[0];
+    }
+
+    public function getSubscriptionDetailsEntityByStoreOwnerUserId(int $storeOwnerId): ?SubscriptionDetailsEntity
+    {
+        return $this->subscriptionManager->getSubscriptionCurrent($storeOwnerId);
+    }
+
+    private function deActivateCurrentSubscriptionByStoreOwnerUserId(int $storeOwnerId): SubscriptionDetailsEntity|string
+    {
+        $subscriptionDetailsEntity = $this->getSubscriptionDetailsEntityByStoreOwnerUserId($storeOwnerId);
+
+        if ($subscriptionDetailsEntity) {
+            return $this->subscriptionManager->updateSubscriptionStatusToDateFinishedBySubscriptionDetailsEntity($subscriptionDetailsEntity);
+        }
+
+        return SubscriptionConstant::SUBSCRIPTION_NOT_FOUND;
+    }
+
+    public function updateCurrentSubscriptionPaidFlagByStoreOwnerUserId(int $storeOwnerUserId, int $paidFlag): SubscriptionEntity|string
+    {
+        $subscriptionDetailsEntity = $this->getSubscriptionDetailsEntityByStoreOwnerUserId($storeOwnerUserId);
+
+        if (! $subscriptionDetailsEntity) {
+            return SubscriptionConstant::SUBSCRIPTION_NOT_FOUND;
+        }
+
+        return $this->subscriptionManager->updateSubscriptionPaidFlagBySubscriptionEntity($subscriptionDetailsEntity->getLastSubscription(),
+            $paidFlag);
+    }
+
+    public function getCurrentSubscriptionBalanceByStoreOwner(int $storeOwnerUserId)
+    {
+        return $this->autoMapping->map('array', CurrentStoreSubscriptionBalanceGetResponse::class, []);
     }
 }
  

@@ -27,17 +27,14 @@ use App\Request\Subscription\SubscriptionUpdateByAdminRequest;
  */
 class SubscriptionController extends BaseController
 {
-    private AutoMapping $autoMapping;
-    private ValidatorInterface $validator;
-    private SubscriptionService $subscriptionService;
-   
-    public function __construct( SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface  $validator, SubscriptionService $subscriptionService)
+    public function __construct(
+        SerializerInterface $serializer,
+        private AutoMapping $autoMapping,
+        private ValidatorInterface  $validator,
+        private SubscriptionService $subscriptionService
+    )
     {
         parent::__construct($serializer);
-       
-        $this->autoMapping = $autoMapping;
-        $this->validator = $validator;
-        $this->subscriptionService = $subscriptionService;
     }
 
     /**
@@ -416,5 +413,29 @@ class SubscriptionController extends BaseController
         $result = $this->subscriptionService->updateSubscription($request);
 
         return $this->response($result, self::UPDATE);
+    }
+
+    /**
+     * store: get current subscription balance by store owner
+     * @Route("currentstoresubscriptionbalance", name="getCurrentSubscriptionBalanceByStoreOwner", methods={"GET"})
+     * @IsGranted("ROLE_OWNER")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Subscription")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getCurrentSubscriptionBalanceByStoreOwner(): JsonResponse
+    {
+        $result = $this->subscriptionService->getCurrentSubscriptionBalanceByStoreOwner($this->getUserId());
+
+        return $this->response($result, self::FETCH);
     }
 }

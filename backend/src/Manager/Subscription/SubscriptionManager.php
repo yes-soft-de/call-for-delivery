@@ -87,7 +87,6 @@ class SubscriptionManager
        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwnerId);
 
        return $this->subscribeRepository->getSubscriptionCurrentWithRelation($storeOwner);
-       
     }
 
     public function isThereSubscription(int $storeOwnerId): ?array
@@ -95,7 +94,6 @@ class SubscriptionManager
        $storeOwner = $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId($storeOwnerId);
 
        return $this->subscriptionDetailsManager->getSubscriptionCurrentActive($storeOwner);
-       
     }
 
     public function getSubscriptionForNextTime(int $storeOwner): ?array
@@ -266,13 +264,11 @@ class SubscriptionManager
     
     public function getSubscriptionsByUserID(int $userId): ?array
     {
-
         return $this->subscribeRepository->getSubscriptionsByUserID($userId);
     }
     
     public function getCaptainOfferFirstTimeBySubscriptionId(int $subscriptionId): ?array
     {
-
         return $this->subscribeRepository->getCaptainOfferFirstTimeBySubscriptionId($subscriptionId);
     }
     
@@ -469,6 +465,34 @@ class SubscriptionManager
         }
 
         $this->subscriptionHistoryManager->createSubscriptionHistory($subscriptionEntity, $request->getType());
+
+        return $subscriptionEntity;
+    }
+
+    public function checkDeliveredOrdersCostTillNow(int $storeOwnerUserId): array
+    {
+        return $this->subscribeRepository->checkDeliveredOrdersCostTillNow($storeOwnerUserId);
+    }
+
+    public function updateSubscriptionStatusToDateFinishedBySubscriptionDetailsEntity(SubscriptionDetailsEntity $subscriptionDetailsEntity): SubscriptionDetailsEntity
+    {
+        $subscriptionDetailsEntityUpdateResult = $this->subscriptionDetailsManager->updateSubscriptionDetailsStatusToDateFinished($subscriptionDetailsEntity);
+
+        $subscription = $subscriptionDetailsEntityUpdateResult->getLastSubscription();
+
+        $subscription->setStatus(SubscriptionConstant::DATE_FINISHED);
+        $subscription->setEndDate(new DateTime('now'));
+
+        $this->entityManager->flush();
+
+        return $subscriptionDetailsEntityUpdateResult;
+    }
+
+    public function updateSubscriptionPaidFlagBySubscriptionEntity(SubscriptionEntity $subscriptionEntity, int $paidFlag): SubscriptionEntity
+    {
+        $subscriptionEntity->setFlag($paidFlag);
+
+        $this->entityManager->flush();
 
         return $subscriptionEntity;
     }

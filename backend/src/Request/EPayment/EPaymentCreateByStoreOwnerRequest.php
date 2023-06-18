@@ -2,30 +2,44 @@
 
 namespace App\Request\EPayment;
 
+use App\Entity\StoreOwnerProfileEntity;
+use App\Entity\SubscriptionEntity;
+
 class EPaymentCreateByStoreOwnerRequest
 {
     private int $status;
 
-    private int $storeOwner;
+    private int|StoreOwnerProfileEntity $storeOwnerProfile;
+
+    private ?int $paymentFor;
+
+    private ?int $paymentGetaway;
+
+    private ?float $amount;
+
+    private ?string $clientAddress = null;
+
+    private ?string $paymentId;
+
+    private int|null|SubscriptionEntity $subscription = null;
 
     public function getStatus(): int
     {
         return $this->status;
     }
 
-    /**
-     * @return int
-     */
-    public function getStoreOwner(): int
+    public function getStoreOwnerProfile(): int|StoreOwnerProfileEntity
     {
-        return $this->storeOwner;
+        return $this->storeOwnerProfile;
     }
 
-    /**
-     * @param int $storeOwner
-     */
-    public function setStoreOwner(int $storeOwner): void
+    public function setStoreOwnerProfile(int|StoreOwnerProfileEntity $storeOwnerProfile): void
     {
-        $this->storeOwner = $storeOwner;
+        $this->storeOwnerProfile = $storeOwnerProfile;
+    }
+
+    public function setSubscription(SubscriptionEntity|int|null $subscription): void
+    {
+        $this->subscription = $subscription;
     }
 }
