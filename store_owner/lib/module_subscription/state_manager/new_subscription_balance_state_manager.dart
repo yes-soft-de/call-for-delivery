@@ -6,7 +6,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_subscription/model/new_subscription_balance_model.dart';
 import 'package:c4d/module_subscription/service/subscription_service.dart';
 import 'package:c4d/module_subscription/ui/screens/new_subscription_balance_screen/new_subscription_balance_screen.dart';
-import 'package:c4d/module_subscription/ui/state/new_subscription_balance/subscriptions_balance_loaded_state.dart';
+import 'package:c4d/module_subscription/ui/state/new_subscription_balance/new_subscriptions_balance_loaded_state.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';

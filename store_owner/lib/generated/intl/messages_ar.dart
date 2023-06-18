@@ -276,6 +276,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "credentialsBagHint": MessageLookupByLibrary.simpleMessage(
             "هنا تجد محفظة سريعة للوصول لبيانات دخولك المحفوظة مسبقا "),
         "currentBalance": MessageLookupByLibrary.simpleMessage("الرصيد الحالي"),
+        "currentCycleDetails":
+            MessageLookupByLibrary.simpleMessage("معلومات الدورة الحالية"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("طلباتي"),
         "dangerZone": MessageLookupByLibrary.simpleMessage("منطقة خطرة"),
         "darkMode": MessageLookupByLibrary.simpleMessage("الوضع الليلي"),
@@ -675,6 +677,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "packageInfo": MessageLookupByLibrary.simpleMessage("معلومات الحزمة"),
         "packageNotFoundRenew": MessageLookupByLibrary.simpleMessage(
             "هذه الباقة لم تعد متاحة بعد الآن للتجديد"),
+        "packageStartDate":
+            MessageLookupByLibrary.simpleMessage("تاريخ بدء الباقة"),
         "packageSubscriptionSuccess":
             MessageLookupByLibrary.simpleMessage("تم الاشتراك بنجاح"),
         "packageType": MessageLookupByLibrary.simpleMessage("نوع الباقة"),

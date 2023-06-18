@@ -7300,6 +7300,26 @@ class S {
     );
   }
 
+  /// `current cycle details`
+  String get currentCycleDetails {
+    return Intl.message(
+      'current cycle details',
+      name: 'currentCycleDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `package start date`
+  String get packageStartDate {
+    return Intl.message(
+      'package start date',
+      name: 'packageStartDate',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Ads & offers`
   String get adsAndOffers {
     return Intl.message(

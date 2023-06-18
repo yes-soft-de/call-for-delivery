@@ -3,8 +3,8 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_subscription/model/new_subscription_balance_model.dart';
 import 'package:c4d/module_subscription/ui/screens/new_subscription_balance_screen/new_subscription_balance_screen.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
-import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class NewSubscriptionBalanceLoadedState extends States {
   NewSubscriptionBalanceModel balance;
@@ -31,7 +31,7 @@ class NewSubscriptionBalanceLoadedState extends States {
               PlanDetailsCard(
                 balance: balance,
               ),
-              SizedBox(height: 10),
+              SizedBox(height: 20),
               PlanStatusCard(
                 balance: balance,
               )
@@ -59,7 +59,7 @@ class PaymentCard extends StatelessWidget {
       margin: EdgeInsets.zero,
       color: green,
       child: Padding(
-        padding: const EdgeInsets.all(20),
+        padding: const EdgeInsets.all(15),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -75,6 +75,7 @@ class PaymentCard extends StatelessWidget {
             Row(
               children: [
                 Expanded(
+                  flex: 6,
                   child: SizedBox(
                     height: MediaQuery.sizeOf(context).height * 0.22,
                     child: Card(
@@ -85,18 +86,41 @@ class PaymentCard extends StatelessWidget {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
-                            Image.asset(
-                              ImageAsset.DELIVERY_MOTOR_MAP,
+                            Row(
+                              children: [
+                                Icon(Icons.error_outline),
+                                Expanded(
+                                  child: Text(
+                                    S.current.currentCycleDetails,
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ],
                             ),
-                            SizedBox(height: 10),
+                            SizedBox(height: 25),
+                            Text(S.current.packageStartDate),
                             Text(
-                              S.current.numberOfOrder,
-                              style: greenLargeText(context),
+                              DateFormat('dd, MMMM').format(balance.startDate),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                    color: green,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                             ),
                             SizedBox(height: 10),
+                            Divider(endIndent: 10, indent: 10),
+                            Text(S.current.numberOfOrder),
                             Text(
                               balance.orderCount.toString(),
-                              style: greenLargeText(context),
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyMedium
+                                  ?.copyWith(
+                                    color: green,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                             ),
                           ],
                         ),
@@ -106,6 +130,7 @@ class PaymentCard extends StatelessWidget {
                 ),
                 SizedBox(width: 10),
                 Expanded(
+                  flex: 5,
                   child: SizedBox(
                     height: MediaQuery.sizeOf(context).height * 0.22,
                     child: Column(
@@ -142,6 +167,7 @@ class PaymentCard extends StatelessWidget {
                                             color: Colors.white,
                                           ),
                                     ),
+                                    SizedBox(),
                                   ],
                                 ),
                               ],
@@ -197,12 +223,12 @@ class PlanDetailsCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: MediaQuery.sizeOf(context).height * 0.33,
+      height: MediaQuery.sizeOf(context).height * 0.3,
       width: double.infinity,
       child: Stack(
         children: [
           Positioned.fill(
-            top: 30,
+            top: 10,
             child: Card(
               color: Color(0xffF2F4E6),
               margin: EdgeInsets.zero,
@@ -217,7 +243,7 @@ class PlanDetailsCard extends StatelessWidget {
                       value: '${balance.openPriceOrder} ريال',
                     ),
                     SizedBox(height: 10),
-                    Divider(),
+                    Divider(indent: 20, endIndent: 20),
                     SizedBox(height: 10),
                     RowItem(
                       icon: Icons.local_shipping_outlined,
@@ -225,32 +251,18 @@ class PlanDetailsCard extends StatelessWidget {
                       value: '${balance.costPerKM} ريال',
                     ),
                     SizedBox(height: 10),
-                    Divider(),
+                    Divider(indent: 20, endIndent: 20),
+                    SizedBox(height: 10),
+
                     // TODO: you must edit this if it was from backend
-                    Text(S.current.youHaveToPayWhen),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Positioned(
-            child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 40),
-              child: Card(
-                margin: EdgeInsets.zero,
-                color: green,
-                child: SizedBox(
-                  width: MediaQuery.sizeOf(context).width * 0.6,
-                  height: 56,
-                  child: Center(
-                    child: Text(
-                      S.current.planDetails,
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            color: Colors.white,
-                            fontSize: 18,
-                          ),
+                    Text(
+                      S.current.youHaveToPayWhen,
+                      style: Theme.of(context)
+                          .textTheme
+                          .bodyMedium
+                          ?.copyWith(color: green),
                     ),
-                  ),
+                  ],
                 ),
               ),
             ),
@@ -352,7 +364,7 @@ class PlanStatusCard extends StatelessWidget {
                   height: 56,
                   child: Center(
                     child: Text(
-                      S.current.planDetails,
+                      S.current.subscriptionStatus,
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
                             color: Colors.white,
                             fontSize: 18,

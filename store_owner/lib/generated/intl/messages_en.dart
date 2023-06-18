@@ -284,6 +284,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Here you can find saved credentials "),
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("Current Balance"),
+        "currentCycleDetails":
+            MessageLookupByLibrary.simpleMessage("current cycle details"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("Current Orders"),
         "dangerZone": MessageLookupByLibrary.simpleMessage("Danger Zone"),
         "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
@@ -686,6 +688,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "packageInfo": MessageLookupByLibrary.simpleMessage("Package Info"),
         "packageNotFoundRenew": MessageLookupByLibrary.simpleMessage(
             "This Package not available to renew any more"),
+        "packageStartDate":
+            MessageLookupByLibrary.simpleMessage("package start date"),
         "packageSubscriptionSuccess": MessageLookupByLibrary.simpleMessage(
             "You subscripted with the package successfully"),
         "packageType": MessageLookupByLibrary.simpleMessage("Package type"),

@@ -2,6 +2,7 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_subscription/response/new_subscription_balance_response/new_subscription_balance_response.dart';
+import 'package:c4d/utils/helpers/date_converter.dart';
 
 class NewSubscriptionBalanceModel extends DataModel {
   late int id;
@@ -16,6 +17,7 @@ class NewSubscriptionBalanceModel extends DataModel {
   late num openPriceOrder;
   late num costPerKM;
   late num whenToPay;
+  late DateTime startDate;
 
   NewSubscriptionBalanceModel({
     required this.id,
@@ -30,10 +32,12 @@ class NewSubscriptionBalanceModel extends DataModel {
     required this.openPriceOrder,
     required this.costPerKM,
     required this.whenToPay,
+    required this.startDate,
   });
   late NewSubscriptionBalanceModel _balance;
 
-  NewSubscriptionBalanceModel.withData(NewSubscriptionBalanceResponse response) {
+  NewSubscriptionBalanceModel.withData(
+      NewSubscriptionBalanceResponse response) {
     var data = response.data;
     _balance = NewSubscriptionBalanceModel(
       id: data?.id ?? -1,
@@ -48,6 +52,7 @@ class NewSubscriptionBalanceModel extends DataModel {
       packageId: data?.packageId ?? -1,
       toBePayed: data?.toBePayed ?? -1,
       whenToPay: data?.whenToPay ?? -1,
+      startDate: DateHelper.convert(data?.startDate?.timestamp),
     );
   }
   NewSubscriptionBalanceModel get data => _balance;
