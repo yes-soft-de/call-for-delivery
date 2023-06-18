@@ -101,6 +101,9 @@ class StoreOwnerProfileEntity
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $updatedAt;
 
+    #[ORM\OneToMany(mappedBy: 'storeOwnerProfile', targetEntity: EPaymentFromStoreEntity::class)]
+    private $ePaymentFromStoreEntities;
+
     public function __construct()
     {
         $this->subscriptionEntities = new ArrayCollection();
@@ -112,6 +115,7 @@ class StoreOwnerProfileEntity
         $this->storeOwnerPaymentFromCompanyEntity = new ArrayCollection();
         $this->storeOwnerDuesFromCashOrders = new ArrayCollection();
         $this->orderLogEntities = new ArrayCollection();
+        $this->ePaymentFromStoreEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -614,6 +618,36 @@ class StoreOwnerProfileEntity
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EPaymentFromStoreEntity>
+     */
+    public function getEPaymentFromStoreEntities(): Collection
+    {
+        return $this->ePaymentFromStoreEntities;
+    }
+
+    public function addEPaymentFromStoreEntity(EPaymentFromStoreEntity $ePaymentFromStoreEntity): self
+    {
+        if (!$this->ePaymentFromStoreEntities->contains($ePaymentFromStoreEntity)) {
+            $this->ePaymentFromStoreEntities[] = $ePaymentFromStoreEntity;
+            $ePaymentFromStoreEntity->setStoreOwnerProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEPaymentFromStoreEntity(EPaymentFromStoreEntity $ePaymentFromStoreEntity): self
+    {
+        if ($this->ePaymentFromStoreEntities->removeElement($ePaymentFromStoreEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($ePaymentFromStoreEntity->getStoreOwnerProfile() === $this) {
+                $ePaymentFromStoreEntity->setStoreOwnerProfile(null);
+            }
+        }
 
         return $this;
     }
