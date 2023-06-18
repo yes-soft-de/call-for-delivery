@@ -930,6 +930,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "store": MessageLookupByLibrary.simpleMessage("Store"),
         "storeAccountInit":
             MessageLookupByLibrary.simpleMessage("Setup Account"),
+        "storeFee": MessageLookupByLibrary.simpleMessage("Store fee"),
         "storeName": MessageLookupByLibrary.simpleMessage("Store Name"),
         "storeNameIsToShort": MessageLookupByLibrary.simpleMessage(
             "Store name must not be less than 3 character"),

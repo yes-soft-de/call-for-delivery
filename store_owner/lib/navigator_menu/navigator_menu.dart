@@ -17,7 +17,10 @@ import 'package:c4d/module_subscription/hive/subscription_pref.dart';
 import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/navigator_menu/custom_nav_tile.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
+import 'package:c4d/utils/helpers/in_app_purchase.dart';
+import 'package:c4d/utils/helpers/payment_gateway.dart';
 import 'package:c4d/utils/images/images.dart';
+import 'package:c4d/utils/models/payment_gateway_model.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -104,6 +107,24 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
         child: CustomListView.custom(children: [
           // personal info
           drawerHeader,
+          ElevatedButton(
+              onPressed: () {
+                showDialog(
+                    barrierDismissible: false,
+                    context: context,
+                    builder: (context) {
+                      return PaymentsPortal(
+                          paymentModel: PaymentGatewayModel(amount: 10),
+                          callback: (success, resID, trxID, err) {
+                            print(
+                                '------------------------------------------$success');
+                          });
+                    });
+              },
+              child: Text('PAY')),
+          InAppPurchaseButton(callBack: (s) {
+            print('------------------------------------------$s');
+          }),
           CustomNavTile(
               icon: Icons.person,
               onTap: () {
