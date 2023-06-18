@@ -378,6 +378,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     SchedulerBinding.instance.addPostFrameCallback(
       (_) {
         showDialog(
+          barrierDismissible: false,
           context: context,
           builder: (context) {
             return Dialog(
