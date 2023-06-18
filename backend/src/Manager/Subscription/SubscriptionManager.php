@@ -496,4 +496,10 @@ class SubscriptionManager
 
         return $subscriptionEntity;
     }
+
+    public function getDeliveredOrdersDeliveryCostFromSubscriptionStartDateTillNow(int $storeOwnerUserId, int $subscriptionId): array
+    {
+        return $this->subscribeRepository->getDeliveredOrdersDeliveryCostFromSubscriptionStartDateTillNow($storeOwnerUserId,
+            $subscriptionId);
+    }
 }

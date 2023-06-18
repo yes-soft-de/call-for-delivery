@@ -8,6 +8,7 @@ use App\Constant\Order\OrderCostDefaultValueConstant;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\Subscription\SubscriptionDetailsConstant;
+use App\Constant\Subscription\SubscriptionFlagConstant;
 use App\Entity\PackageEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionDetailsEntity;
@@ -117,23 +118,20 @@ class SubscriptionService
         $subscription = $this->subscriptionManager->getSubscriptionCurrentWithRelation($storeOwnerId);
 
         if ($subscription) {
-//            if (($subscription['packageId'] != 18) && ($subscription['packageId'] != 19)) {
-                if ($subscription['subscriptionCaptainOfferCarStatus'] === CaptainOfferConstant::STATUS_ACTIVE) {
-                    $subscription['packageCarCount'] += $subscription['subscriptionCaptainOfferCarCount'];
-                }
+            if ($subscription['subscriptionCaptainOfferCarStatus'] === CaptainOfferConstant::STATUS_ACTIVE) {
+                $subscription['packageCarCount'] += $subscription['subscriptionCaptainOfferCarCount'];
+            }
 
-                $subscription['canSubscriptionExtra'] = $this->canSubscriptionExtra($subscription["status"], $subscription["type"]);
+            $subscription['canSubscriptionExtra'] = $this->canSubscriptionExtra($subscription["status"], $subscription["type"]);
 
-                if ($subscription['hasExtra'] === true) {
-                    $subscription['endDate'] = new \DateTime($subscription['startDate']->format('Y-m-d h:i:s') . '1 day');
-                }
+            if ($subscription['hasExtra'] === true) {
+                $subscription['endDate'] = new \DateTime($subscription['startDate']->format('Y-m-d h:i:s') . '1 day');
+            }
 
-                // get the sum of unpaid cash orders
-                $subscription['unPaidCashOrdersSum'] = $this->getUnPaidStoreOwnerDuesFromCashOrderSumByStoreSubscriptionId($subscription['id']);
+            // get the sum of unpaid cash orders
+            $subscription['unPaidCashOrdersSum'] = $this->getUnPaidStoreOwnerDuesFromCashOrderSumByStoreSubscriptionId($subscription['id']);
 
-                return $this->autoMapping->map("array", RemainingOrdersResponse::class, $subscription);
-
-//            }
+            return $this->autoMapping->map("array", RemainingOrdersResponse::class, $subscription);
         }
 
         $subscription['status'] = SubscriptionConstant::UNSUBSCRIBED;
@@ -411,7 +409,7 @@ class SubscriptionService
                     // check how much does store make orders
                     $ordersCostSum = $this->checkDeliveredOrdersCostTillNow($storeOwnerId);
 
-                    if ($ordersCostSum > OrderCostDefaultValueConstant::ORDER_COST_LIMIT_CONST) {
+                    if ($ordersCostSum >= OrderCostDefaultValueConstant::ORDER_COST_LIMIT_CONST) {
                         // de-activate the subscription till the store make the required payment
                         $subscriptionUpdateResult = $this->deActivateCurrentSubscriptionByStoreOwnerUserId($storeOwnerId);
 
@@ -429,7 +427,7 @@ class SubscriptionService
                     // check how much does store make orders
                     $ordersCostSum = $this->checkDeliveredOrdersCostTillNow($storeOwnerId);
 
-                    if ($ordersCostSum > OrderCostDefaultValueConstant::ORDER_COST_LIMIT_CONST) {
+                    if ($ordersCostSum >= OrderCostDefaultValueConstant::ORDER_COST_LIMIT_CONST) {
                         // re-check balance after ending subscription
                         $packageBalance = $this->packageBalance($storeOwnerId);
 
@@ -1277,9 +1275,49 @@ class SubscriptionService
             $paidFlag);
     }
 
-    public function getCurrentSubscriptionBalanceByStoreOwner(int $storeOwnerUserId)
+    public function getDeliveredOrdersDeliveryCostFromSubscriptionStartDateTillNow(int $storeOwnerUserId, int $subscriptionId): array
     {
-        return $this->autoMapping->map('array', CurrentStoreSubscriptionBalanceGetResponse::class, []);
+        return $this->subscriptionManager->getDeliveredOrdersDeliveryCostFromSubscriptionStartDateTillNow($storeOwnerUserId,
+            $subscriptionId);
+    }
+
+    public function getCurrentSubscriptionBalanceByStoreOwner(int $storeOwnerUserId): string|CurrentStoreSubscriptionBalanceGetResponse
+    {
+        $response = [];
+        $response['deliveredOrdersCount'] = 0;
+        $response['deliveredOrdersCostsSum'] = 0.0;
+        $response['hasToPay'] = false;
+
+        $subscriptionDetailsEntity = $this->getSubscriptionDetailsEntityByStoreOwnerUserId($storeOwnerUserId);
+
+        if (! $subscriptionDetailsEntity) {
+            return SubscriptionConstant::SUBSCRIPTION_NOT_FOUND;
+        }
+
+        $subscription = $subscriptionDetailsEntity->getLastSubscription();
+
+        $response['openingOrderCost'] = $subscription->getPackage()->getOpeningOrderCost();
+        $response['oneKilometerCost'] = $subscription->getPackage()->getOneKilometerCost();
+        $response['subscriptionStatus'] = $subscription->getStatus();
+        $response['subscriptionStartDate'] = $subscription->getStartDate();
+
+        $orders = $this->getDeliveredOrdersDeliveryCostFromSubscriptionStartDateTillNow($storeOwnerUserId,
+            $subscription->getId());
+
+        $ordersCount = count($orders);
+
+        if ($ordersCount > 0) {
+
+            $response['deliveredOrdersCount'] = $ordersCount;
+            $response['deliveredOrdersCostsSum'] = array_sum($orders);
+
+            if (($response['deliveredOrdersCostsSum'] >= OrderCostDefaultValueConstant::ORDER_COST_LIMIT_CONST)
+                && ($subscription->getFlag() === SubscriptionFlagConstant::SUBSCRIPTION_FLAG_UNPAID)) {
+                $response['hasToPay'] = true;
+            }
+        }
+
+        return $this->autoMapping->map('array', CurrentStoreSubscriptionBalanceGetResponse::class, $response);
     }
 }
  
