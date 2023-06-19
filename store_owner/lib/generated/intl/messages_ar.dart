@@ -1082,6 +1082,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "welcome": MessageLookupByLibrary.simpleMessage("اهلا وسهلا"),
         "welcomePlanOffer": MessageLookupByLibrary.simpleMessage(
             "مبروك  لقد حصلت على باقة ترحيبية \n لتوصيل طلب واحد \n مقابل 2.99 ريال فقط"),
+        "welcomePlanOfferWithoutPayment": MessageLookupByLibrary.simpleMessage(
+            "مبروك  لقد حصلت على باقة ترحيبية \n لتوصيل طلب واحد \n مجانا"),
         "welcomeToOrdersScreen":
             MessageLookupByLibrary.simpleMessage("اهلا في قسم الطلبات"),
         "welcomeToOurApp":

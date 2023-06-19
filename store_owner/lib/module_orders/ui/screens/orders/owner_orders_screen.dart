@@ -69,6 +69,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
   AuthPrefsHelper _authPrefsHelper = getIt<AuthPrefsHelper>();
   OrdersService _ordersService = getIt<OrdersService>();
   bool showWelcomeDialog = false;
+  bool welcomeDialogWithoutPayment = false;
 
   Future<void> getMyOrdersFilter([loading = true]) async {
     widget._stateManager.getOrdersFilters(
@@ -412,7 +413,9 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                         width: 120,
                       ),
                       Text(
-                        S.current.welcomePlanOffer,
+                        welcomeDialogWithoutPayment
+                            ? S.current.welcomePlanOfferWithoutPayment
+                            : S.current.welcomePlanOffer,
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium
@@ -422,10 +425,20 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                       SizedBox(height: 20),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.pop(context);
-                          _ordersService.makePayment(
-                            PaymentStatusRequest(status: 1),
-                          );
+                          if (welcomeDialogWithoutPayment) {
+                            Navigator.pop(context);
+                            _ordersService.makePayment(
+                              PaymentStatusRequest(
+                                status: 1,
+                                paymentFor: 228,
+                                amount: 0,
+                                paymentId: 0,
+                              ),
+                            );
+                          } else {
+                            print('with Payment');
+                            // TODO: make payment here (ammount 2.99, in app parches, 228)
+                          }
                         },
                         child: Text(S.current.getItNow),
                         style: ElevatedButton.styleFrom(

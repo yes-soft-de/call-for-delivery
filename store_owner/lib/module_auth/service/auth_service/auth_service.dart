@@ -77,6 +77,7 @@ class AuthService {
     _prefsHelper.setUsername(username);
     _prefsHelper.setPassword(password);
     _prefsHelper.setToken(loginResult.token);
+
     await accountStatus();
     if (_prefsHelper.getAccountStatusPhase() == 'userDeleted') {
       _authSubject.addError(S.current.invalidCredentials);
@@ -253,7 +254,7 @@ class AuthService {
     var response = await _authManager.accountStatus();
     if (response?.statusCode != '200') {
       switch (response?.statusCode) {
-        // account  subscript with free plan
+        // account  subscript with free plan  
         case '9161':
           _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
 
@@ -278,9 +279,10 @@ class AuthService {
           _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
           break;
 
-        // new account haven't subscribe with free plan yet 
+        // new account haven't subscribe with free plan yet
         case '9162':
           _prefsHelper.setNewAccount(true);
+          _prefsHelper.setOpenWelcomeDialogWithoutPayment(response?.data['openingSubscriptionWithoutPayment'] as bool? ?? false );
           _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
           break;
 

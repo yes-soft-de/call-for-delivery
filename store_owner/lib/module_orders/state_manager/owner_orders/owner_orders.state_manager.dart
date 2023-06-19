@@ -99,6 +99,7 @@ class OwnerOrdersStateManager {
   void showWelcomeDialogIfNeeded(OwnerOrdersScreenState screenState) async {
     await _authService.accountStatus();
     screenState.showWelcomeDialog = getIt<AuthPrefsHelper>().getIsNewAccount();
+    screenState.welcomeDialogWithoutPayment = getIt<AuthPrefsHelper>().getOpenWelcomeDialogWithoutPayment();
     if (screenState.showWelcomeDialog)
       screenState.welcomeDialog(screenState.context);
     screenState.refresh();

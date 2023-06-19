@@ -7340,6 +7340,16 @@ class S {
     );
   }
 
+  /// `Congratulations, you have received a welcome package for delivering one order for free`
+  String get welcomePlanOfferWithoutPayment {
+    return Intl.message(
+      'Congratulations, you have received a welcome package for delivering one order for free',
+      name: 'welcomePlanOfferWithoutPayment',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `current cycle details`
   String get currentCycleDetails {
     return Intl.message(

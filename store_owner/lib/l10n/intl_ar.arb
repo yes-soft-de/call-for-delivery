@@ -729,6 +729,7 @@
     "every1KM" : "كل 1 كم",
     "youHaveToPayWhen" : "سيتوجب عليك الدفع عند بلوغ استهلاكك 100 ريال",
     "welcomePlanOffer" : "مبروك  لقد حصلت على باقة ترحيبية \n لتوصيل طلب واحد \n مقابل 2.99 ريال فقط",
+    "welcomePlanOfferWithoutPayment" : "مبروك  لقد حصلت على باقة ترحيبية \n لتوصيل طلب واحد \n مجانا",
     "currentCycleDetails" : "معلومات الدورة الحالية",
     "packageStartDate" : "تاريخ بدء الباقة",
     "thereIsNoUserWithThisNumber" : "لا يوجد مستخدم بهذا الرقم",

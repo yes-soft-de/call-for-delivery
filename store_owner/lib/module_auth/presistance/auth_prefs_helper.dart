@@ -22,6 +22,21 @@ class AuthPrefsHelper {
     return false;
   }
 
+  void setOpenWelcomeDialogWithoutPayment(
+      bool openWelcomeDialogWithoutPayment) {
+    box.put('openWelcomeDialogWithoutPayment', openWelcomeDialogWithoutPayment);
+  }
+
+  /// default is false
+  bool getOpenWelcomeDialogWithoutPayment() {
+    var v = box.get('openWelcomeDialogWithoutPayment');
+    if (v is bool) {
+      return v;
+    }
+
+    return false;
+  }
+
   void setUsername(String username) {
     box.put('username', username);
   }

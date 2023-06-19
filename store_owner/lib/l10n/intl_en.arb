@@ -729,6 +729,7 @@
     "every1KM" : "every 1 km",
     "youHaveToPayWhen" : "you have to pay when you reach 100 sar",
     "welcomePlanOffer" : "Congratulations, you have received a welcome package for delivering one order for only 2.99 riyal",
+    "welcomePlanOfferWithoutPayment" : "Congratulations, you have received a welcome package for delivering one order for free",
     "currentCycleDetails" : "current cycle details",
     "packageStartDate" : "package start date",
     "thereIsNoUserWithThisNumber" : "there is no user with this number",
