@@ -1015,3 +1015,10 @@ App\Request\EPayment\EPaymentCreateByStoreOwnerRequest:
     properties:
         status:
             - NotBlank: ~
+
+App\Request\Admin\StoreOwner\StoreOwnerProfileOpeningSubscriptionWithoutPaymentUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        openingSubscriptionWithoutPayment:
+            - NotNull: ~

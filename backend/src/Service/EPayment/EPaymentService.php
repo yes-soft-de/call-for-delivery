@@ -46,22 +46,19 @@ class EPaymentService
             // create new subscription
             $subscription = $this->subscriptionService->createSubscriptionWithFreePackage($request->getStoreOwnerProfile());
 
-            if (($subscription === PackageConstant::PACKAGE_NOT_EXIST)
-                || ($subscription === SubscriptionConstant::SUBSCRIPTION_DOES_NOT_EXIST_CONST)) {
-                return $subscription;
-            }
-
-            // create the payment
+            // create the payment if the store needs to pay to subscribe
             $storeOwnerProfile = $this->getStoreOwnerProfileByStoreId($request->getStoreOwnerProfile());
 
             if (! $storeOwnerProfile) {
                 return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
             }
 
-            $request->setStoreOwnerProfile($storeOwnerProfile);
-            $request->setSubscription($subscription);
+            if ($storeOwnerProfile->getOpeningSubscriptionWithoutPayment() === false) {
+                $request->setStoreOwnerProfile($storeOwnerProfile);
+                $request->setSubscription($subscription);
 
-            $this->ePaymentFromStoreManager->createEPaymentFromStore($request);
+                $this->ePaymentFromStoreManager->createEPaymentFromStore($request);
+            }
 
             return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
             //return $subscription;

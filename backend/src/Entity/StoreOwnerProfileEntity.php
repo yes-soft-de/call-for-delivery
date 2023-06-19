@@ -104,6 +104,9 @@ class StoreOwnerProfileEntity
     #[ORM\OneToMany(mappedBy: 'storeOwnerProfile', targetEntity: EPaymentFromStoreEntity::class)]
     private $ePaymentFromStoreEntities;
 
+    #[ORM\Column(type: 'boolean', options: ["default" => false])]
+    private $openingSubscriptionWithoutPayment;
+
     public function __construct()
     {
         $this->subscriptionEntities = new ArrayCollection();
@@ -648,6 +651,18 @@ class StoreOwnerProfileEntity
                 $ePaymentFromStoreEntity->setStoreOwnerProfile(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getOpeningSubscriptionWithoutPayment(): ?bool
+    {
+        return $this->openingSubscriptionWithoutPayment;
+    }
+
+    public function setOpeningSubscriptionWithoutPayment(bool $openingSubscriptionWithoutPayment): self
+    {
+        $this->openingSubscriptionWithoutPayment = $openingSubscriptionWithoutPayment;
 
         return $this;
     }

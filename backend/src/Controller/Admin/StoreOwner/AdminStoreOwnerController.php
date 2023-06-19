@@ -8,6 +8,7 @@ use App\Constant\Main\MainErrorConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Controller\BaseController;
 use App\Request\Admin\StoreOwner\DeleteStoreOwnerAccountAndProfileByAdminRequest;
+use App\Request\Admin\StoreOwner\StoreOwnerProfileOpeningSubscriptionWithoutPaymentUpdateRequest;
 use App\Request\Admin\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest;
 use App\Request\Admin\StoreOwner\StoreOwnerProfileUpdateByAdminRequest;
 use App\Service\Admin\StoreOwner\AdminStoreOwnerService;
@@ -376,5 +377,78 @@ class AdminStoreOwnerController extends BaseController
         }
 
         return $this->response($response, self::DELETE);
+    }
+
+    /**
+     * admin: Update the ability to subscribe with opening package without payment.
+     * @Route("storeownerprofileopeningsubscriptionwithoutpayment", name="updateStoreOwnerProfileOpeningSubscriptionWithoutPaymentByAdmin", methods={"PUT"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Admin Store Owner")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="Update openingSubscriptionWithoutPayment of a store owner profile request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="int", property="id"),
+     *          @OA\Property(type="boolean", property="openingSubscriptionWithoutPayment")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns the store owner's profile",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Admin\StoreOwner\StoreOwnerProfileByIdGetByAdminResponse")
+     *          )
+     *      )
+     * )
+     *
+     * or
+     *
+     * @OA\Response(
+     *      response="default",
+     *      description="Returns that store owner profile not exists",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code", example="9157"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data", example="store owner profile not exists!")
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function updateStoreOwnerProfileOpeningSubscriptionWithoutPayment(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, StoreOwnerProfileOpeningSubscriptionWithoutPaymentUpdateRequest::class, (object)$data);
+
+        $violations = $this->validator->validate($request);
+
+        if(\count($violations) > 0) {
+            $violationsString = (string) $violations;
+
+            return new JsonResponse($violationsString, Response::HTTP_OK);
+        }
+
+        $response = $this->adminStoreOwnerService->updateStoreOwnerProfileOpeningSubscriptionWithoutPayment($request);
+
+        if ($response === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS) {
+            return $this->response($response, self::STORE_OWNER_PROFILE_NOT_EXIST);
+        }
+
+        return $this->response($response, self::UPDATE);
     }
 }
