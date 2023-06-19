@@ -6,7 +6,7 @@ class PaymentStatusRequest {
   int status;
 
   /// 228 for welcome subscription
-  /// 228 for standard (unified) subscription
+  /// 229 for standard (unified) subscription
   int? paymentFor;
 
   /// PAYMENT_GETAWAY_IN_APP_PURCHASE_APPLE_CONST = 225
@@ -14,7 +14,7 @@ class PaymentStatusRequest {
   /// PAYMENT_GETAWAY_TAP_PAYMENT_CONST = 227
   int? paymentGetaway;
 
-  int? amount;
+  num? amount;
 
   /// id, token or key that related to the payment
   int? paymentId;

@@ -7280,11 +7280,31 @@ class S {
     );
   }
 
+  /// `subscription is not active`
+  String get subscriptionIsNotActivate {
+    return Intl.message(
+      'subscription is not active',
+      name: 'subscriptionIsNotActivate',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `you have not exceeded the limit yet`
   String get youHaveNotExceededTheLimitYet {
     return Intl.message(
       'you have not exceeded the limit yet',
       name: 'youHaveNotExceededTheLimitYet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `have exceeded the limit`
+  String get youHaveExceededTheLimit {
+    return Intl.message(
+      'have exceeded the limit',
+      name: 'youHaveExceededTheLimit',
       desc: '',
       args: [],
     );
@@ -7345,6 +7365,26 @@ class S {
     return Intl.message(
       'there is no user with this number',
       name: 'thereIsNoUserWithThisNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `payment process completed successfully`
+  String get paymentSuccess {
+    return Intl.message(
+      'payment process completed successfully',
+      name: 'paymentSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `you dont have to pay yet`
+  String get youDontHaveToPayYet {
+    return Intl.message(
+      'you dont have to pay yet',
+      name: 'youDontHaveToPayYet',
       desc: '',
       args: [],
     );

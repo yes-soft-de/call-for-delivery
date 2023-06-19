@@ -1,8 +1,12 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_orders/request/payment/paymnet_status_request.dart';
 import 'package:c4d/module_subscription/model/new_subscription_balance_model.dart';
 import 'package:c4d/module_subscription/ui/screens/new_subscription_balance_screen/new_subscription_balance_screen.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:c4d/utils/helpers/payment_gateway.dart';
+import 'package:c4d/utils/models/payment_gateway_model.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -24,7 +28,43 @@ class NewSubscriptionBalanceLoadedState extends States {
           child: Column(
             children: [
               PaymentCard(
-                onPayNowButtonPressed: () {},
+                onPayNowButtonPressed: () {
+                  if (balance.hasToPay) {
+                    showDialog(
+                        barrierDismissible: false,
+                        context: context,
+                        builder: (context) {
+                          return PaymentsPortal(
+                              paymentModel: PaymentGatewayModel(
+                                amount: balance.toBePayed,
+                              ),
+                              callback: (success, resID, trxID, err) {
+                                if (success) {
+                                  screenState.makePayment(PaymentStatusRequest(
+                                    status: 1,
+                                    amount: balance.toBePayed,
+                                    paymentFor: 229,
+                                    paymentGetaway: 227,
+                                  ));
+                                  CustomFlushBarHelper.createSuccess(
+                                    title: S.current.warnning,
+                                    message: S.current.paymentSuccess,
+                                  ).show(screenState.context);
+                                } else {
+                                  CustomFlushBarHelper.createError(
+                                    title: S.current.warnning,
+                                    message: S.current.paymentFailed,
+                                  ).show(screenState.context);
+                                }
+                              });
+                        });
+                  } else {
+                    CustomFlushBarHelper.createError(
+                      title: S.current.warnning,
+                      message: S.current.youDontHaveToPayYet,
+                    ).show(screenState.context);
+                  }
+                },
                 balance: balance,
               ),
               SizedBox(height: 10),
@@ -343,11 +383,10 @@ class PlanStatusCard extends StatelessWidget {
                   children: [
                     SizedBox(height: 40),
                     Text(
-                      S.current.subscriptionIsActivate,
+                      balance.status.getTitle,
                       style: Theme.of(context).textTheme.bodyLarge,
                     ),
-                    // TODO: but plan status message here
-                    Text(S.current.youHaveNotExceededTheLimitYet),
+                    Text(balance.status.getDescription),
                   ],
                 ),
               ),

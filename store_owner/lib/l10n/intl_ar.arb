@@ -723,12 +723,16 @@
     "planDetails" : "تفاصيل خطة العمل",
     "openedPrice" : "السعر الافتتاحي للطلب",
     "subscriptionIsActivate" : "الاشتراك فعال",
+    "subscriptionIsNotActivate" : "الاشتراك غير فعال",
     "youHaveNotExceededTheLimitYet" : "لم تتخطى الحد المسموح بعد",
+    "youHaveExceededTheLimit" : "لقد تخطيت الحد المسموح",
     "every1KM" : "كل 1 كم",
     "youHaveToPayWhen" : "سيتوجب عليك الدفع عند بلوغ استهلاكك 100 ريال",
     "welcomePlanOffer" : "مبروك  لقد حصلت على باقة ترحيبية \n لتوصيل طلب واحد \n مقابل 2.99 ريال فقط",
     "currentCycleDetails" : "معلومات الدورة الحالية",
     "packageStartDate" : "تاريخ بدء الباقة",
     "thereIsNoUserWithThisNumber" : "لا يوجد مستخدم بهذا الرقم",
+    "paymentSuccess" : "عملية الدفع تمت بنجاح",
+    "youDontHaveToPayYet" : "لست بحاجة للدفع بعد",
     "adsAndOffers": "الإعلانات و العروض"
 }

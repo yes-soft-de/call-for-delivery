@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/module_orders/request/payment/paymnet_status_request.dart';
 import 'package:c4d/module_subscription/state_manager/new_subscription_balance_state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -20,10 +21,7 @@ class NewSubscriptionBalanceScreen extends StatefulWidget {
 class NewSubscriptionBalanceScreenState
     extends State<NewSubscriptionBalanceScreen> {
   late StreamSubscription _streamSubscription;
-  late StreamSubscription _globalStreamSubscription;
-  late StreamSubscription _captainsOffersStreamSubscription;
   late States currentState;
-  late AsyncSnapshot snapshot = const AsyncSnapshot.nothing();
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
   void refresh() {
@@ -42,12 +40,15 @@ class NewSubscriptionBalanceScreenState
       }
     });
     getBalance();
-
     super.initState();
   }
 
   void getBalance() {
     widget._stateManager.getNewBalance(this);
+  }
+
+  void makePayment(PaymentStatusRequest request) {
+    widget._stateManager.makePayment(request);
   }
 
   @override
@@ -61,8 +62,6 @@ class NewSubscriptionBalanceScreenState
   @override
   void dispose() {
     _streamSubscription.cancel();
-    _globalStreamSubscription.cancel();
-    _captainsOffersStreamSubscription.cancel();
     super.dispose();
   }
 }

@@ -3,6 +3,8 @@ import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_orders/request/payment/paymnet_status_request.dart';
+import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_subscription/model/new_subscription_balance_model.dart';
 import 'package:c4d/module_subscription/service/subscription_service.dart';
 import 'package:c4d/module_subscription/ui/screens/new_subscription_balance_screen/new_subscription_balance_screen.dart';
@@ -14,6 +16,7 @@ import 'package:rxdart/rxdart.dart';
 @injectable
 class NewSubscriptionBalanceStateManager {
   final SubscriptionService _subscriptionService;
+  final OrdersService _ordersService;
 
   final PublishSubject<States> _stateSubject = PublishSubject<States>();
 
@@ -24,7 +27,8 @@ class NewSubscriptionBalanceStateManager {
   Stream<AsyncSnapshot<Object?>> get captainOffersStream =>
       _captainOffersSubject.stream;
 
-  NewSubscriptionBalanceStateManager(this._subscriptionService);
+  NewSubscriptionBalanceStateManager(
+      this._subscriptionService, this._ordersService);
 
   void getNewBalance(NewSubscriptionBalanceScreenState screenState) {
     _stateSubject.add(LoadingState(screenState));
@@ -53,5 +57,9 @@ class NewSubscriptionBalanceStateManager {
             .add(NewSubscriptionBalanceLoadedState(screenState, value.data));
       }
     });
+  }
+
+  void makePayment(PaymentStatusRequest request) {
+    _ordersService.makePayment(request);
   }
 }

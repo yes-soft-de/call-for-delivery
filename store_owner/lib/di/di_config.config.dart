@@ -568,8 +568,11 @@ _i1.GetIt $initGetIt(
       () => _i112.NewOrderLinkStateManager(gh<_i90.OrdersService>()));
   gh.factory<_i113.NewOrderStateManager>(
       () => _i113.NewOrderStateManager(gh<_i90.OrdersService>()));
-  gh.factory<_i114.NewSubscriptionBalanceStateManager>(() =>
-      _i114.NewSubscriptionBalanceStateManager(gh<_i95.SubscriptionService>()));
+  gh.factory<_i114.NewSubscriptionBalanceStateManager>(
+      () => _i114.NewSubscriptionBalanceStateManager(
+            gh<_i95.SubscriptionService>(),
+            gh<_i90.OrdersService>(),
+          ));
   gh.factory<_i115.OrderLogsStateManager>(
       () => _i115.OrderLogsStateManager(gh<_i90.OrdersService>()));
   gh.factory<_i116.OrderRecyclingStateManager>(

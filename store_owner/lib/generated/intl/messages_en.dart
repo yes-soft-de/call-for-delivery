@@ -717,6 +717,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentPortalHint": MessageLookupByLibrary.simpleMessage(
             "All prices in payments portal are included with 15% vat"),
         "paymentResume": MessageLookupByLibrary.simpleMessage("Payment Resume"),
+        "paymentSuccess": MessageLookupByLibrary.simpleMessage(
+            "payment process completed successfully"),
         "payments": MessageLookupByLibrary.simpleMessage("Payments"),
         "paymentsVia": MessageLookupByLibrary.simpleMessage("Payments via"),
         "pending": MessageLookupByLibrary.simpleMessage("Pending"),
@@ -953,6 +955,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Subscription date"),
         "subscriptionIsActivate":
             MessageLookupByLibrary.simpleMessage("subscription is active"),
+        "subscriptionIsNotActivate":
+            MessageLookupByLibrary.simpleMessage("subscription is not active"),
         "subscriptionStatus":
             MessageLookupByLibrary.simpleMessage("Subscription status"),
         "successCreateOrder":
@@ -1112,6 +1116,10 @@ class MessageLookup extends MessageLookupByLibrary {
                 "You can\'t delete order, captain accepted this order"),
         "youConsumed":
             MessageLookupByLibrary.simpleMessage("You have consumed"),
+        "youDontHaveToPayYet":
+            MessageLookupByLibrary.simpleMessage("you dont have to pay yet"),
+        "youHaveExceededTheLimit":
+            MessageLookupByLibrary.simpleMessage("have exceeded the limit"),
         "youHaveNotExceededTheLimitYet": MessageLookupByLibrary.simpleMessage(
             "you have not exceeded the limit yet"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(

@@ -706,6 +706,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentPortalHint": MessageLookupByLibrary.simpleMessage(
             "المبلغ النهائي في بوابة الدفع شاملة للقيمة المضافة %15"),
         "paymentResume": MessageLookupByLibrary.simpleMessage("استكمال الدفع"),
+        "paymentSuccess":
+            MessageLookupByLibrary.simpleMessage("عملية الدفع تمت بنجاح"),
         "payments": MessageLookupByLibrary.simpleMessage("الدفعات"),
         "paymentsVia":
             MessageLookupByLibrary.simpleMessage("إيصال المدفوعات عبر"),
@@ -946,6 +948,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تاريخ الاشتراك"),
         "subscriptionIsActivate":
             MessageLookupByLibrary.simpleMessage("الاشتراك فعال"),
+        "subscriptionIsNotActivate":
+            MessageLookupByLibrary.simpleMessage("الاشتراك غير فعال"),
         "subscriptionStatus":
             MessageLookupByLibrary.simpleMessage("حالة الاشتراك"),
         "successCreateOrder":
@@ -1102,6 +1106,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "لايمكنك حذف الطلب ، تم استلام الطلب من قبل الكابتن"),
         "youConsumed": MessageLookupByLibrary.simpleMessage("لقد استهلكت"),
+        "youDontHaveToPayYet":
+            MessageLookupByLibrary.simpleMessage("لست بحاجة للدفع بعد"),
+        "youHaveExceededTheLimit":
+            MessageLookupByLibrary.simpleMessage("لقد تخطيت الحد المسموح"),
         "youHaveNotExceededTheLimitYet":
             MessageLookupByLibrary.simpleMessage("لم تتخطى الحد المسموح بعد"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
