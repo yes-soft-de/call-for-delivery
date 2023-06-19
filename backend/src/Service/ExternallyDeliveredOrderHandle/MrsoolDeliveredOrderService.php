@@ -90,7 +90,7 @@ class MrsoolDeliveredOrderService
      * Execute a create order post request to Mrsool
      */
     public function createOrderPostRequest(string $url, array $body): ResponseInterface
-    {dd($url);
+    {
         return $this->client->request(
             HttpMethodConstant::POST_METHOD_CONST,
             $url,
