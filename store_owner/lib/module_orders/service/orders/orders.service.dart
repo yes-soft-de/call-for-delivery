@@ -213,7 +213,8 @@ class OrdersService {
     ActionResponse? response = await _ordersManager.setPayment(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
-      return DataModel.withError('');
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
     _authPrefsHelper.setNewAccount(false);
     return DataModel.empty();

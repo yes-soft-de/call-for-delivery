@@ -538,6 +538,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "no": MessageLookupByLibrary.simpleMessage("لا"),
         "noImage": MessageLookupByLibrary.simpleMessage(
             "لا يوجد صورة ، الرجاء اختيار صورة لإرفاقها مع الطلب"),
+        "noPaymentHadBeenMade":
+            MessageLookupByLibrary.simpleMessage("لم يتم اجراء المعاملة"),
         "notAllowedCaptainInStore": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك تعديل الطلب لأن الكابتن في المتجر"),
         "notAllowedCaptainReceived": MessageLookupByLibrary.simpleMessage(
@@ -675,6 +677,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "packageExtendedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تمديد الاشتراك بنجاح"),
         "packageInfo": MessageLookupByLibrary.simpleMessage("معلومات الحزمة"),
+        "packageNotExist":
+            MessageLookupByLibrary.simpleMessage("الباقة غير موجودة"),
         "packageNotFoundRenew": MessageLookupByLibrary.simpleMessage(
             "هذه الباقة لم تعد متاحة بعد الآن للتجديد"),
         "packageStartDate":
@@ -929,6 +933,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeNameIsToShort": MessageLookupByLibrary.simpleMessage(
             "اسم المتجر يجب ألا يقل عن ثلاث حروف"),
         "storeOwner": MessageLookupByLibrary.simpleMessage("محل تجاري"),
+        "storeOwnerProfileNotExist":
+            MessageLookupByLibrary.simpleMessage("بروفايل المتجر غير موجود"),
         "storePhone": MessageLookupByLibrary.simpleMessage("رقم هاتف المحل"),
         "storeProducts":
             MessageLookupByLibrary.simpleMessage("المنتجات المتاحة"),
@@ -940,6 +946,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("جار حفظ الملف"),
         "suborder": MessageLookupByLibrary.simpleMessage("طلب فرعي"),
         "subscribe": MessageLookupByLibrary.simpleMessage("اشترك"),
+        "subscribeNotExist":
+            MessageLookupByLibrary.simpleMessage("الاشتراك غير موجود"),
         "subscribeWithPackage":
             MessageLookupByLibrary.simpleMessage("الاشتراك بباقة"),
         "subscribedToOfferSuccess": MessageLookupByLibrary.simpleMessage(

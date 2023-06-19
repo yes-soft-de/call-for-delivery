@@ -548,6 +548,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "no": MessageLookupByLibrary.simpleMessage("No"),
         "noImage": MessageLookupByLibrary.simpleMessage(
             "No Image , Please provide one"),
+        "noPaymentHadBeenMade":
+            MessageLookupByLibrary.simpleMessage("no payment had been made"),
         "notAllowedCaptainInStore": MessageLookupByLibrary.simpleMessage(
             "You can\'t edit, captain in the store."),
         "notAllowedCaptainReceived": MessageLookupByLibrary.simpleMessage(
@@ -686,6 +688,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "packageExtendedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Your subscription extended successfully"),
         "packageInfo": MessageLookupByLibrary.simpleMessage("Package Info"),
+        "packageNotExist":
+            MessageLookupByLibrary.simpleMessage("package not exist"),
         "packageNotFoundRenew": MessageLookupByLibrary.simpleMessage(
             "This Package not available to renew any more"),
         "packageStartDate":
@@ -937,6 +941,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "storeNameIsToShort": MessageLookupByLibrary.simpleMessage(
             "Store name must not be less than 3 character"),
         "storeOwner": MessageLookupByLibrary.simpleMessage("Store Owner"),
+        "storeOwnerProfileNotExist": MessageLookupByLibrary.simpleMessage(
+            "store owner profile not exist"),
         "storePhone": MessageLookupByLibrary.simpleMessage("Store Phone"),
         "storeProducts": MessageLookupByLibrary.simpleMessage("Store Products"),
         "storeRated":
@@ -947,6 +953,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Submitting Profile"),
         "suborder": MessageLookupByLibrary.simpleMessage("Suborder"),
         "subscribe": MessageLookupByLibrary.simpleMessage("Subscribe"),
+        "subscribeNotExist":
+            MessageLookupByLibrary.simpleMessage("subscribe not exist"),
         "subscribeWithPackage":
             MessageLookupByLibrary.simpleMessage("Subscription packages"),
         "subscribedToOfferSuccess": MessageLookupByLibrary.simpleMessage(

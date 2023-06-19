@@ -734,5 +734,9 @@
     "thereIsNoUserWithThisNumber" : "there is no user with this number",
     "paymentSuccess" : "payment process completed successfully",
     "youDontHaveToPayYet" : "you dont have to pay yet",
+    "noPaymentHadBeenMade" : "no payment had been made",
+    "packageNotExist" : "package not exist",
+    "subscribeNotExist" : "subscribe not exist",
+    "storeOwnerProfileNotExist" : "store owner profile not exist",
     "adsAndOffers":"Ads & offers"
 }

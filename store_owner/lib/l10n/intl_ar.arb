@@ -734,5 +734,9 @@
     "thereIsNoUserWithThisNumber" : "لا يوجد مستخدم بهذا الرقم",
     "paymentSuccess" : "عملية الدفع تمت بنجاح",
     "youDontHaveToPayYet" : "لست بحاجة للدفع بعد",
+    "noPaymentHadBeenMade" : "لم يتم اجراء المعاملة",
+    "packageNotExist" : "الباقة غير موجودة",
+    "subscribeNotExist" : "الاشتراك غير موجود",
+    "storeOwnerProfileNotExist" : "بروفايل المتجر غير موجود",
     "adsAndOffers": "الإعلانات و العروض"
 }

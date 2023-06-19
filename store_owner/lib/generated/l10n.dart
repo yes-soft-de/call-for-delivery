@@ -7389,6 +7389,46 @@ class S {
       args: [],
     );
   }
+
+  /// `no payment had been made`
+  String get noPaymentHadBeenMade {
+    return Intl.message(
+      'no payment had been made',
+      name: 'noPaymentHadBeenMade',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `package not exist`
+  String get packageNotExist {
+    return Intl.message(
+      'package not exist',
+      name: 'packageNotExist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `subscribe not exist`
+  String get subscribeNotExist {
+    return Intl.message(
+      'subscribe not exist',
+      name: 'subscribeNotExist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `store owner profile not exist`
+  String get storeOwnerProfileNotExist {
+    return Intl.message(
+      'store owner profile not exist',
+      name: 'storeOwnerProfileNotExist',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
