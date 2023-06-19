@@ -90,7 +90,7 @@ class MrsoolDeliveredOrderService
      * Execute a create order post request to Mrsool
      */
     public function createOrderPostRequest(string $url, array $body): ResponseInterface
-    {
+    {dd($url);
         return $this->client->request(
             HttpMethodConstant::POST_METHOD_CONST,
             $url,
@@ -108,7 +108,7 @@ class MrsoolDeliveredOrderService
         $createOrderJsonRequest = $this->initializeCreateOrderRequest($orderEntity, $storeOrderDetailsEntity);
 
         return $this->createOrderPostRequest(
-            MrsoolCompanyConstant::BASE_URL_PROD_CONST . MrsoolCompanyConstant::CREATE_ORDER_PROD_URL_CONST,
+            $this->params->get('mrsool_base_url') . $this->params->get('mrsool_create_order_url'),
             $createOrderJsonRequest
         );
     }

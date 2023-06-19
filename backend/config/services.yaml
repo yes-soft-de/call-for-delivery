@@ -17,6 +17,9 @@ parameters:
     msegat_username: '%env(MSEGAT_USERNAME)%'
     msegat_api_key: '%env(MSEGAT_API_KEY)%'
     mrsool_token: '%env(MRSOOL_TOKEN)%'
+    mrsool_base_url: '%env(MRSOOL_BASE_URL)%'
+    mrsool_create_order_url: '%env(MRSOO_CREATE_ORDER_URL)%'
+    mrsool_get_order_url: '%env(MRSOO_GET_ORDER_URL)%'
 
 services:
     # default configuration for services in *this* file
