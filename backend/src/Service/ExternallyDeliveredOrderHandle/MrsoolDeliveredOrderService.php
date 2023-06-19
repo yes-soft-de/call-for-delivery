@@ -108,7 +108,7 @@ class MrsoolDeliveredOrderService
         $createOrderJsonRequest = $this->initializeCreateOrderRequest($orderEntity, $storeOrderDetailsEntity);
 
         return $this->createOrderPostRequest(
-            MrsoolCompanyConstant::BASE_URL_CONST . MrsoolCompanyConstant::CREATE_ORDER_URL_CONST,
+            $this->params->get('mrsool_base_url') . $this->params->get('mrsool_create_order_url'),
             $createOrderJsonRequest
         );
     }
