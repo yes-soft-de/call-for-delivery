@@ -74,12 +74,12 @@ class MrsoolDeliveredOrderService
                 MrsoolCompanyConstant::LONGITUDE_FIELD_CONST => (string) $storeOrderDetailsEntity->getDestination()['lon']
             ],
             MrsoolCompanyConstant::BUYER_FIELD_CONST => [
-                MrsoolCompanyConstant::PHONE_FIELD_CONST => $storeOrderDetailsEntity->getRecipientPhone(),
+                MrsoolCompanyConstant::PHONE_FIELD_CONST => '+'.$storeOrderDetailsEntity->getRecipientPhone(),
                 MrsoolCompanyConstant::FULL_NAME_FIELD_CONST => $storeOrderDetailsEntity->getRecipientName()
             ],
             MrsoolCompanyConstant::STORE_FIELD_CONST => [
                 MrsoolCompanyConstant::NAME_FIELD_CONST => $orderEntity->getStoreOwner()->getStoreOwnerName(),
-                MrsoolCompanyConstant::PHONE_FIELD_CONST => $orderEntity->getStoreOwner()->getPhone()
+                MrsoolCompanyConstant::PHONE_FIELD_CONST => '+'.$orderEntity->getStoreOwner()->getPhone()
             ],
             MrsoolCompanyConstant::SHIPMENT_VALUE_FIELD_CONST => $orderCost,
             MrsoolCompanyConstant::DESCRIPTION_FIELD_CONST => $description
@@ -90,7 +90,7 @@ class MrsoolDeliveredOrderService
      * Execute a create order post request to Mrsool
      */
     public function createOrderPostRequest(string $url, array $body): ResponseInterface
-    {
+    {dd($body);
         return $this->client->request(
             HttpMethodConstant::POST_METHOD_CONST,
             $url,
