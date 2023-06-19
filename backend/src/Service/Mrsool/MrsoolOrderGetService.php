@@ -33,8 +33,8 @@ class MrsoolOrderGetService
     public function getOrderById(int $orderId): ResponseInterface
     {
         return $this->executeGetOrderRequest(
-            MrsoolCompanyConstant::BASE_URL_CONST
-            .MrsoolCompanyConstant::GET_ORDER_URL_CONST
+            MrsoolCompanyConstant::BASE_URL_PROD_CONST
+            .MrsoolCompanyConstant::GET_ORDER_PROD_URL_CONST
             .$orderId);
     }
 }
