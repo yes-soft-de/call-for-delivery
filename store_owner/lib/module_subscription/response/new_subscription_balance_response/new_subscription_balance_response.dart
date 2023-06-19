@@ -16,10 +16,4 @@ class NewSubscriptionBalanceResponse {
           : Data.fromJson(json['Data'] as Map<String, dynamic>),
     );
   }
-
-  Map<String, dynamic> toJson() => {
-        'status_code': statusCode,
-        'msg': msg,
-        'Data': data?.toJson(),
-      };
 }

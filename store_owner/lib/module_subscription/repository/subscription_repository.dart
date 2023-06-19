@@ -49,7 +49,7 @@ class SubscriptionsRepository {
   Future<NewSubscriptionBalanceResponse?> getNewSubscriptionBalance() async {
     var token = await _authService.getToken();
     var response = await _apiClient.get(
-      Urls.GET_SUBSCRIPTION_BALANCE,
+      Urls.GET_NEW_SUBSCRIPTION_BALANCE,
       headers: {'Authorization': 'Bearer ' + '$token'},
     );
     if (response == null) return null;
