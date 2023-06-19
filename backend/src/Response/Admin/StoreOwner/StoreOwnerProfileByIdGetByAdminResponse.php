@@ -109,4 +109,6 @@ class StoreOwnerProfileByIdGetByAdminResponse
     public int $verificationStatus;
 
     public string $completeAccountStatus;
+
+    public bool $openingSubscriptionWithoutPayment;
 }
