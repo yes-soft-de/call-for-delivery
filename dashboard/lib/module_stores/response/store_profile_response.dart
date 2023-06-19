@@ -36,6 +36,7 @@ class Data {
   num? profitMargin;
   String? storeId;
   String? roomId;
+  bool? openingSubscriptionWithoutPayment;
 
   Data({
     this.id,
@@ -73,6 +74,7 @@ class Data {
     bankName = json['bankName'];
     employeeCount = json['employeeCount'];
     profitMargin = json['profitMargin'];
+    openingSubscriptionWithoutPayment  = json['openingSubscriptionWithoutPayment '];
   }
 }
 

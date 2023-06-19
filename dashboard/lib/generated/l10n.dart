@@ -10480,6 +10480,16 @@ class S {
     );
   }
 
+  /// `skip Payment stage for welcome package`
+  String get skipPaymentStageForWelcomePackage {
+    return Intl.message(
+      'skip Payment stage for welcome package',
+      name: 'skipPaymentStageForWelcomePackage',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

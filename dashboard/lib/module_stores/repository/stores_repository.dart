@@ -5,6 +5,7 @@ import 'package:c4d/module_stores/request/filter_store_activity_request.dart';
 import 'package:c4d/module_stores/request/order_filter_request.dart';
 import 'package:c4d/module_stores/request/store_dues_request.dart';
 import 'package:c4d/module_stores/request/stores_dues_request.dart';
+import 'package:c4d/module_stores/request/welcome_package_payment_request.dart';
 import 'package:c4d/module_stores/response/order/order_captain_not_arrived/orders_not_arrived_response.dart';
 import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
 import 'package:c4d/module_stores/response/stores_dues_response/store_dues_response/store_dues_response.dart';
@@ -75,6 +76,17 @@ class StoresRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
         Urls.UPDATE_STORE_INFO, request.toJson(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> updateWelcomePackageWithoutPayment(
+      WelcomePackagePaymentRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+        Urls.UPDATE_STORE_WELCOME_PACKAGE_WITHOUT_PAYMENT_INFO,
+        request.toJson(),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ActionResponse.fromJson(response);

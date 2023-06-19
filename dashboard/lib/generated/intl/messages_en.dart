@@ -1345,6 +1345,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "similarProducts":
             MessageLookupByLibrary.simpleMessage("Similar Products"),
         "skip": MessageLookupByLibrary.simpleMessage("Skip"),
+        "skipPaymentStageForWelcomePackage":
+            MessageLookupByLibrary.simpleMessage(
+                "skip Payment stage for welcome package"),
         "smallLessThan20Employee":
             MessageLookupByLibrary.simpleMessage("1 - 20 Employee"),
         "socialMedia": MessageLookupByLibrary.simpleMessage("Social Media"),

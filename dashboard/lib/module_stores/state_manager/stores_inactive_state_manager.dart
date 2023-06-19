@@ -1,4 +1,5 @@
 import 'package:c4d/module_stores/request/create_store_request.dart';
+import 'package:c4d/module_stores/request/welcome_package_payment_request.dart';
 import 'package:c4d/module_stores/ui/state/stores_lists/stores_inactive_state_loaded.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
@@ -19,8 +20,7 @@ class StoresInActiveStateManager {
 
   Stream<States> get stateStream => _stateSubject.stream;
 
-  StoresInActiveStateManager(
-      this._storesService, this._uploadService);
+  StoresInActiveStateManager(this._storesService, this._uploadService);
 
   void getStores(StoresInActiveScreenState screenState) {
     _storesService.getStoresInActive().then((value) {
@@ -44,9 +44,8 @@ class StoresInActiveStateManager {
         if (image == null) {
           screenState.getStores();
           CustomFlushBarHelper.createError(
-                  title: S.current.warnning,
-                  message: S.current.errorUploadingImages)
-              ;
+              title: S.current.warnning,
+              message: S.current.errorUploadingImages);
           return;
         } else {
           request.image = image;
@@ -54,14 +53,12 @@ class StoresInActiveStateManager {
             if (value.hasError) {
               getStores(screenState);
               CustomFlushBarHelper.createError(
-                  title: S.current.warnning, message: value.error ?? '')
-                ;
+                  title: S.current.warnning, message: value.error ?? '');
             } else {
               getStores(screenState);
               CustomFlushBarHelper.createSuccess(
                   title: S.current.warnning,
-                  message: S.current.storeUpdatedSuccessfully)
-                ;
+                  message: S.current.storeUpdatedSuccessfully);
             }
           });
         }
@@ -71,16 +68,33 @@ class StoresInActiveStateManager {
         if (value.hasError) {
           getStores(screenState);
           CustomFlushBarHelper.createError(
-              title: S.current.warnning, message: value.error ?? '')
-            ;
+              title: S.current.warnning, message: value.error ?? '');
         } else {
           getStores(screenState);
           CustomFlushBarHelper.createSuccess(
               title: S.current.warnning,
-              message: S.current.storeUpdatedSuccessfully)
-            ;
+              message: S.current.storeUpdatedSuccessfully);
         }
       });
     }
+  }
+
+  void updateWelcomePackagePayment(StoresInActiveScreenState screenState,
+      WelcomePackagePaymentRequest request, int storeID,
+      [bool loading = true]) {
+    if (loading) {
+      _stateSubject.add(LoadingState(screenState));
+    }
+    _storesService.updateWelcomePackageWithoutPayment(request).then((value) {
+      if (value.hasError) {
+        getStores(screenState);
+        CustomFlushBarHelper.createError(
+            title: S.current.warnning, message: value.error ?? '');
+      } else {
+        getStores(screenState);
+        CustomFlushBarHelper.createError(
+            title: S.current.warnning, message: S.current.updateSuccess);
+      }
+    });
   }
 }
