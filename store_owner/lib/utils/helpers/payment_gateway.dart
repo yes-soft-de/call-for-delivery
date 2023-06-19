@@ -20,7 +20,8 @@ import 'package:go_sell_sdk_flutter/model/models.dart';
 
 class PaymentsPortal extends StatefulWidget {
   final PaymentGatewayModel paymentModel;
-  final Function(bool, String, String, String) callback;
+  final Function(bool succeeded, String responseID, String transactionID, String sdkErrorMessage) callback;
+
   const PaymentsPortal({Key? key, required this.paymentModel, required this.callback})
       : super(key: key);
   @override
