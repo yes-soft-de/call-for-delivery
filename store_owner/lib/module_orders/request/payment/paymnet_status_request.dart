@@ -5,7 +5,8 @@ class PaymentStatusRequest {
   /// 0 not paid, 1 paid success
   int status;
 
-  /// currently we only have payment for subscriptions so the value only can be 228
+  /// 228 for welcome subscription
+  /// 228 for standard (unified) subscription
   int? paymentFor;
 
   /// PAYMENT_GETAWAY_IN_APP_PURCHASE_APPLE_CONST = 225
@@ -23,7 +24,7 @@ class PaymentStatusRequest {
 
   PaymentStatusRequest({
     required this.status,
-    this.paymentFor = 228,
+    this.paymentFor,
     this.paymentGetaway,
     this.amount,
     this.paymentId,
