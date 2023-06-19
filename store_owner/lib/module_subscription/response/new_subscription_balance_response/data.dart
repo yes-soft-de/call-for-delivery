@@ -23,7 +23,8 @@ class Data {
         status: json['subscriptionStatus'] as String?,
         startDate: json['subscriptionStartDate'] == null
             ? null
-            : StartDate.fromJson(json['startDate'] as Map<String, dynamic>),
+            : StartDate.fromJson(
+                json['subscriptionStartDate'] as Map<String, dynamic>),
         costPerKM: json['oneKilometerCost'] as num?,
         openPriceOrder: json['openingOrderCost'] as num?,
         orderCount: json['deliveredOrdersCount'] as num?,
