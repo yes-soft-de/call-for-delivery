@@ -4,9 +4,11 @@ import 'package:c4d/hive/util/argument_hive_helper.dart';
 import 'package:c4d/module_branches/branches_routes.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:c4d/module_external_delivery_companies/ui/widgets/show_confirm_dialog.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_stores/model/store_profile_model.dart';
 import 'package:c4d/module_stores/request/active_store_request.dart';
+import 'package:c4d/module_stores/request/welcome_package_payment_request.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_stores/ui/screen/store_info_screen.dart';
 import 'package:c4d/module_stores/ui/widget/add_store_widget.dart';
@@ -202,6 +204,37 @@ class StoreProfileLoadedState extends States {
               }
               screenState.refresh();
             }),
+      ),
+      Container(
+        width: double.infinity,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8),
+          child: ElevatedButton(
+            child: Text(S.current.skipPaymentStageForWelcomePackage),
+            onPressed: () {
+              showConfirmDialog(
+                context,
+                hasCancelButton: true,
+                title: S.current.attention,
+                message:
+                    '${S.current.areYouSureAboutSkipPaymentStageFor} ${profile?.storeOwnerName}',
+                confirmButtonTitle: Text(S.current.confirm,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.copyWith(color: Colors.black)),
+                confirmButtonColor: Colors.amber,
+                onConfirm: () {
+                  screenState
+                      .updateWelcomePackagePayment(WelcomePackagePaymentRequest(
+                    id: profile?.id ?? -1,
+                    openingSubscriptionWithoutPayment: true,
+                  ));
+                },
+              );
+            },
+          ),
+        ),
       ),
       Container(
           color: Colors.grey.shade200,

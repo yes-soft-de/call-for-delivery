@@ -1044,5 +1044,7 @@
     "orderStatusIsNotPending": "order status is not pending",
     "orderAssignedToCompanySuccessfully": "order assigned to company successfully",
     "skipPaymentStageForWelcomePackage": "skip Payment stage for welcome package",
+    "areYouSureAboutSkipPaymentStageFor": "are you sure about skip payment stage for",
+    "attention": "attention",
     "dev": "Dev"
 }

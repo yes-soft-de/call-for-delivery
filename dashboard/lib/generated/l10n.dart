@@ -10490,6 +10490,26 @@ class S {
     );
   }
 
+  /// `are you sure about skip payment stage for`
+  String get areYouSureAboutSkipPaymentStageFor {
+    return Intl.message(
+      'are you sure about skip payment stage for',
+      name: 'areYouSureAboutSkipPaymentStageFor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `attention`
+  String get attention {
+    return Intl.message(
+      'attention',
+      name: 'attention',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

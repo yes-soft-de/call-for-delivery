@@ -1043,5 +1043,7 @@
     "orderStatusIsNotPending": "حالة الطلب ليست قيد \"قيد الانتاظار\"",
     "orderAssignedToCompanySuccessfully": "تم اسناد الطلب للشركة بنجاح",
     "skipPaymentStageForWelcomePackage": "تخطي خطوة الدفع للباقة الترحيبة",
+    "areYouSureAboutSkipPaymentStageFor": "هل انت متاكد من انك تريد تخطي خطوة الدفع من اجل المتجر ",
+    "attention": "تنبيه",
     "dev": "المطورين"
 }

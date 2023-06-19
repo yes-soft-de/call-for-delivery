@@ -157,6 +157,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("are you sure about edit"),
         "areYouSureAboutRependingOrder": MessageLookupByLibrary.simpleMessage(
             "Are you sure about reset this order and remove it form captain"),
+        "areYouSureAboutSkipPaymentStageFor":
+            MessageLookupByLibrary.simpleMessage(
+                "are you sure about skip payment stage for"),
         "areYouSureForDelete":
             MessageLookupByLibrary.simpleMessage("are you sure for delete"),
         "areYouSureForDeleteSetting": MessageLookupByLibrary.simpleMessage(
@@ -185,6 +188,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "attachFile": MessageLookupByLibrary.simpleMessage("Attach file"),
         "attachedFile": MessageLookupByLibrary.simpleMessage(
             "This order has attached file"),
+        "attention": MessageLookupByLibrary.simpleMessage("attention"),
         "bankAccountNumber":
             MessageLookupByLibrary.simpleMessage("Bank Account Number"),
         "bankName": MessageLookupByLibrary.simpleMessage("Bank Name"),
