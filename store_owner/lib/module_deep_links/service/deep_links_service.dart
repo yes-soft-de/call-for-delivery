@@ -12,9 +12,10 @@ import 'package:dio/dio.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:uni_links/uni_links.dart';
+import 'package:uri/uri.dart';
 
 class DeepLinksService {
-  static Future<String> getFirebaseDynamicLinkData(String link) async {
+  static Future<String> _getFirebaseDynamicLinkData(String link) async {
     try {
       final dio = Dio();
       final response = await dio.get(link);
@@ -23,6 +24,20 @@ class DeepLinksService {
       return response.redirects.first.location.toString();
     } catch (e) {
       return link;
+    }
+  }
+
+  static Future<String> extractCoordinatesFromUrl(String url) async {
+    Uri uri = Uri.parse(url);
+
+    if (uri.host == 'www.google.com' && uri.path.startsWith('/maps/place/')) {
+      return _extractCoordinatesFromGoogleMapsUrl(uri);
+    } else if (uri.scheme == 'comgooglemaps' &&
+        uri.queryParameters.containsKey('daddr')) {
+      return _extractCoordinatesFromComGoogleMapsUrl(uri);
+    } else {
+      print('Invalid URL format.');
+      return _getFirebaseDynamicLinkData(url);
     }
   }
 
@@ -141,5 +156,40 @@ class DeepLinksService {
         distance: response.data?.distance,
         costDeliveryOrder: response.data?.costDeliveryOrder);
     return model;
+  }
+
+  static String _extractCoordinatesFromGoogleMapsUrl(Uri uri) {
+    UriTemplate template = UriTemplate('/maps/place/{latitude},{longitude}');
+    UriParser parser = UriParser(template);
+    UriMatch? match = parser.match(uri);
+
+    if (match != null) {
+      String latitude = match.parameters['latitude']!;
+      String longitude = match.parameters['longitude']!;
+
+      print('Latitude: $latitude');
+      print('Longitude: $longitude');
+      return 'https://maps.google.com?q=$latitude,$longitude';
+    } else {
+      print('URL does not contain latitude and longitude.');
+    }
+    return uri.toString();
+  }
+
+  static String _extractCoordinatesFromComGoogleMapsUrl(Uri uri) {
+    String daddr = uri.queryParameters['daddr']!;
+    List<String> coordinates = daddr.split(',');
+
+    if (coordinates.length == 2) {
+      String latitude = coordinates[0];
+      String longitude = coordinates[1];
+
+      print('Latitude: $latitude');
+      print('Longitude: $longitude');
+      return 'https://maps.google.com?q=$latitude,$longitude';
+    } else {
+      print('Invalid coordinates format.');
+    }
+    return uri.toString();
   }
 }

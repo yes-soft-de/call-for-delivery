@@ -130,6 +130,7 @@ dependencies:
   flutter_native_timezone: ^2.0.0
   flutter_linkify: ^5.0.2
   card_swiper: ^2.0.4
+  uri: ^1.0.0
 
 
 dev_dependencies:
