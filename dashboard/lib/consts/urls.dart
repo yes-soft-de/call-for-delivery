@@ -149,6 +149,8 @@ class Urls {
       BASE_API_STORE + '/storeowner/deletestoreownerprofilebyadmin';
   static const UPDATE_STORE_INFO =
       BASE_API_STORE + '/storeowner/updatestoreownerprofilebyadmin';
+  static const UPDATE_STORE_WELCOME_PACKAGE_WITHOUT_PAYMENT_INFO =
+      BASE_API_STORE + '/storeowner/storeownerprofileopeningsubscriptionwithoutpayment';
   static const UPDATE_ORDER_API = BASE_API_ORDER + '/orderupdatebyadmin';
   static const UPDATE_DISTANCE_API = BASE_API_ORDER +
       '/updatestorebranchtoclientdistanceanddestinationbyadmin';

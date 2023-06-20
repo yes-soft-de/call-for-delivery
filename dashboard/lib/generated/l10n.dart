@@ -10480,6 +10480,36 @@ class S {
     );
   }
 
+  /// `skip Payment stage for welcome package`
+  String get skipPaymentStageForWelcomePackage {
+    return Intl.message(
+      'skip Payment stage for welcome package',
+      name: 'skipPaymentStageForWelcomePackage',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `are you sure about skip payment stage for`
+  String get areYouSureAboutSkipPaymentStageFor {
+    return Intl.message(
+      'are you sure about skip payment stage for',
+      name: 'areYouSureAboutSkipPaymentStageFor',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `attention`
+  String get attention {
+    return Intl.message(
+      'attention',
+      name: 'attention',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `order number in the external order`
   String get orderNumberInExternalCompany {
     return Intl.message(

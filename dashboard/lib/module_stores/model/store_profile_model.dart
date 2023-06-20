@@ -20,6 +20,7 @@ class StoreProfileModel extends DataModel {
   num profitMargin = 0;
   late int storeId;
   String? roomId;
+  late bool openingSubscriptionWithoutPayment;
 
   StoreProfileModel? _models;
 
@@ -39,6 +40,7 @@ class StoreProfileModel extends DataModel {
     this.imageUrl,
     required this.storeId,
     required this.roomId,
+    required this.openingSubscriptionWithoutPayment,
   });
 
   StoreProfileModel.withData(Data data) : super.withData() {
@@ -58,6 +60,7 @@ class StoreProfileModel extends DataModel {
       profitMargin: data.profitMargin ?? 0,
       storeId: int.tryParse(data.storeId.toString()) ?? -1,
       roomId: data.roomId,
+      openingSubscriptionWithoutPayment : data.openingSubscriptionWithoutPayment ?? false,
     );
   }
 

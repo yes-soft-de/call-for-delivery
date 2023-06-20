@@ -159,6 +159,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("هل انت متاكد من التعديل؟"),
         "areYouSureAboutRependingOrder": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من رغبتك بإعادة هذا الطلب لحالة الانتظار وإلغاء اسناد الكابتن"),
+        "areYouSureAboutSkipPaymentStageFor":
+            MessageLookupByLibrary.simpleMessage(
+                "هل انت متاكد من انك تريد تخطي خطوة الدفع من اجل المتجر "),
         "areYouSureForDelete":
             MessageLookupByLibrary.simpleMessage("هل انت متاكد من حذف"),
         "areYouSureForDeleteSetting": MessageLookupByLibrary.simpleMessage(
@@ -187,6 +190,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "attachFile": MessageLookupByLibrary.simpleMessage("إرفاق ملف"),
         "attachedFile": MessageLookupByLibrary.simpleMessage(
             "هذا الطلب يحتوي على ملف مرفق"),
+        "attention": MessageLookupByLibrary.simpleMessage("تنبيه"),
         "bankAccountNumber":
             MessageLookupByLibrary.simpleMessage("رقم الآيبان للحساب البنكي"),
         "bankName": MessageLookupByLibrary.simpleMessage("اسم البنك"),
@@ -1335,6 +1339,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "similarProducts":
             MessageLookupByLibrary.simpleMessage("المنتجات المتشابهة"),
         "skip": MessageLookupByLibrary.simpleMessage("تخطي"),
+        "skipPaymentStageForWelcomePackage":
+            MessageLookupByLibrary.simpleMessage(
+                "تخطي خطوة الدفع للباقة الترحيبة"),
         "smallLessThan20Employee":
             MessageLookupByLibrary.simpleMessage("1 - 20 موظف"),
         "socialMedia":

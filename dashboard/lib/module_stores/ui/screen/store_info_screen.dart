@@ -1,5 +1,6 @@
 import 'package:c4d/module_stores/request/active_store_request.dart';
 import 'package:c4d/module_stores/request/create_store_request.dart';
+import 'package:c4d/module_stores/request/welcome_package_payment_request.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -30,6 +31,14 @@ class StoreInfoScreenState extends State<StoreInfoScreen> {
 
   void enableStore(ActiveStoreRequest request, [bool loading = true]) {
     widget.stateManager.enableStore(this, request, loading);
+  }
+
+  void updateWelcomePackagePayment(
+    WelcomePackagePaymentRequest request, [
+    bool loading = false,
+  ]) {
+    widget.stateManager
+        .updateWelcomePackagePayment(this, request, model?.id ?? -1, loading);
   }
 
   @override

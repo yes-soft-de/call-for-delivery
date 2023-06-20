@@ -2,6 +2,7 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/request/active_store_request.dart';
 import 'package:c4d/module_stores/request/create_store_request.dart';
+import 'package:c4d/module_stores/request/welcome_package_payment_request.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
@@ -82,13 +83,30 @@ class StoreProfileStateManager {
     });
   }
 
+  void updateWelcomePackagePayment(StoreInfoScreenState screenState,
+      WelcomePackagePaymentRequest request, int storeID,
+      [bool loading = true]) {
+    if (loading) {
+      _stateSubject.add(LoadingState(screenState));
+    }
+    _storesService.updateWelcomePackageWithoutPayment(request).then((value) {
+      if (value.hasError) {
+        getStore(screenState, storeID, loading);
+        showSnackFailed(
+            screenState, value.error ?? S.current.errorHappened, loading);
+      } else {
+        getStore(screenState, storeID, loading);
+        showSnackSuccess(screenState, S.current.dataUpdatedSuccessfully, loading);
+      }
+    });
+  }
+
   void showSnackSuccess(
       StoreInfoScreenState screenState, String message, bool loading) {
     if (loading) {
       CustomFlushBarHelper.createSuccess(
-              title: S.current.warnning,
-              message: S.current.storeUpdatedSuccessfully)
-          ;
+          title: S.current.warnning,
+          message: S.current.storeUpdatedSuccessfully);
     } else {
       Fluttertoast.showToast(msg: message);
     }
@@ -102,9 +120,8 @@ class StoreProfileStateManager {
         if (image == null) {
           getStore(screenState, request.id);
           CustomFlushBarHelper.createError(
-                  title: S.current.warnning,
-                  message: S.current.errorUploadingImages)
-              ;
+              title: S.current.warnning,
+              message: S.current.errorUploadingImages);
           return;
         } else {
           request.image = image;
@@ -112,14 +129,12 @@ class StoreProfileStateManager {
             if (value.hasError) {
               getStore(screenState, request.id);
               CustomFlushBarHelper.createError(
-                  title: S.current.warnning, message: value.error ?? '')
-                ;
+                  title: S.current.warnning, message: value.error ?? '');
             } else {
               getStore(screenState, request.id);
               CustomFlushBarHelper.createSuccess(
                   title: S.current.warnning,
-                  message: S.current.storeUpdatedSuccessfully)
-                ;
+                  message: S.current.storeUpdatedSuccessfully);
             }
           });
         }
@@ -129,14 +144,12 @@ class StoreProfileStateManager {
         if (value.hasError) {
           getStore(screenState, request.id);
           CustomFlushBarHelper.createError(
-              title: S.current.warnning, message: value.error ?? '')
-            ;
+              title: S.current.warnning, message: value.error ?? '');
         } else {
           getStore(screenState, request.id);
           CustomFlushBarHelper.createSuccess(
               title: S.current.warnning,
-              message: S.current.storeUpdatedSuccessfully)
-            ;
+              message: S.current.storeUpdatedSuccessfully);
         }
       });
     }
@@ -146,8 +159,7 @@ class StoreProfileStateManager {
       StoreInfoScreenState screenState, String message, bool loading) {
     if (loading) {
       CustomFlushBarHelper.createError(
-              title: S.current.warnning, message: message)
-          ;
+          title: S.current.warnning, message: message);
     } else {
       Fluttertoast.showToast(msg: message);
     }

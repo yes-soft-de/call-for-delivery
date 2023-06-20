@@ -5,6 +5,7 @@ import 'package:c4d/module_stores/request/filter_store_activity_request.dart';
 import 'package:c4d/module_stores/request/order_filter_request.dart';
 import 'package:c4d/module_stores/request/store_dues_request.dart';
 import 'package:c4d/module_stores/request/stores_dues_request.dart';
+import 'package:c4d/module_stores/request/welcome_package_payment_request.dart';
 import 'package:c4d/module_stores/response/order/order_captain_not_arrived/orders_not_arrived_response.dart';
 import 'package:c4d/module_stores/response/store_need_support_response/store_need_support_response.dart';
 import 'package:c4d/module_stores/response/stores_dues_response/store_dues_response/store_dues_response.dart';
@@ -33,6 +34,9 @@ class StoreManager {
       _storesRepository.getStoreProfile(id);
   Future<ActionResponse?> updateStore(UpdateStoreRequest request) =>
       _storesRepository.updateStore(request);
+  Future<ActionResponse?> updateWelcomePackageWithoutPayment(
+          WelcomePackagePaymentRequest request) =>
+      _storesRepository.updateWelcomePackageWithoutPayment(request);
   Future<StoreBalanceResponse?> getStoreAccountBalance(int id) =>
       _storesRepository.getStoreAccountBalance(id);
 
