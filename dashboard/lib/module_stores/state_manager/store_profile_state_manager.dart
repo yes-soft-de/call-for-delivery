@@ -96,7 +96,7 @@ class StoreProfileStateManager {
             screenState, value.error ?? S.current.errorHappened, loading);
       } else {
         getStore(screenState, storeID, loading);
-        showSnackSuccess(screenState, S.current.updateSuccess, loading);
+        showSnackSuccess(screenState, S.current.dataUpdatedSuccessfully, loading);
       }
     });
   }
