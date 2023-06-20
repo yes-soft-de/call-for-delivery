@@ -3,6 +3,7 @@
 namespace App\Service\EPayment;
 
 use App\AutoMapping;
+use App\Constant\EPaymentFromStore\EPaymentFromStoreConstant;
 use App\Constant\Package\PackageConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\Subscription\SubscriptionConstant;
@@ -56,6 +57,12 @@ class EPaymentService
             if ($storeOwnerProfile->getOpeningSubscriptionWithoutPayment() === false) {
                 $request->setStoreOwnerProfile($storeOwnerProfile);
                 $request->setSubscription($subscription);
+
+                if (($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_ADMIN_CONST)
+                    || ($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_STORE_CONST)
+                    || ($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_SUPER_ADMIN_CONST)) {
+                    $request->setPaymentId(uniqid("mock"));
+                }
 
                 $this->ePaymentFromStoreManager->createEPaymentFromStore($request);
             }

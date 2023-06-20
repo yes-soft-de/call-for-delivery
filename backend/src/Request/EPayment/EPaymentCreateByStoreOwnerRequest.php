@@ -23,6 +23,8 @@ class EPaymentCreateByStoreOwnerRequest
 
     private int|null|SubscriptionEntity $subscription = null;
 
+    private int $paymentType;
+
     public function getStatus(): int
     {
         return $this->status;
@@ -41,5 +43,20 @@ class EPaymentCreateByStoreOwnerRequest
     public function setSubscription(SubscriptionEntity|int|null $subscription): void
     {
         $this->subscription = $subscription;
+    }
+
+    public function setPaymentId(?string $paymentId): void
+    {
+        $this->paymentId = $paymentId;
+    }
+
+    public function getPaymentType(): int
+    {
+        return $this->paymentType;
+    }
+
+    public function setPaymentType(int $paymentType): void
+    {
+        $this->paymentType = $paymentType;
     }
 }

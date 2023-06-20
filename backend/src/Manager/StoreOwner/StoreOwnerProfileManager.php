@@ -19,17 +19,13 @@ use App\Constant\ChatRoom\ChatRoomConstant;
 
 class StoreOwnerProfileManager
 {
-    private $autoMapping;
-    private $entityManager;
-    private $userManager;
-    private $storeOwnerProfileEntityRepository;
-
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserManager $userManager, StoreOwnerProfileEntityRepository $storeOwnerProfileEntityRepository)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private EntityManagerInterface $entityManager,
+        private UserManager $userManager,
+        private StoreOwnerProfileEntityRepository $storeOwnerProfileEntityRepository
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->entityManager = $entityManager;
-        $this->userManager = $userManager;
-        $this->storeOwnerProfileEntityRepository = $storeOwnerProfileEntityRepository;
     }
 
     public function storeOwnerRegister(UserRegisterRequest $request): mixed
@@ -72,6 +68,7 @@ class StoreOwnerProfileManager
             // $storeProfile->setStoreOwnerName($request->getUserName());
             $storeProfile->setStoreOwnerName(0);
             $storeProfile->setCompleteAccountStatus(StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED);
+            $storeProfile->setOpeningSubscriptionWithoutPayment(false);
 
             $this->entityManager->persist($storeProfile);
             $this->entityManager->flush();
@@ -91,6 +88,7 @@ class StoreOwnerProfileManager
             $storeProfile->setStoreOwnerId($user['id']);
             $storeProfile->setStoreOwnerName($request->getUserName());
             $storeProfile->setCompleteAccountStatus(StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED);
+            $storeProfile->setOpeningSubscriptionWithoutPayment(false);
 
             $this->entityManager->persist($storeProfile);
             $this->entityManager->flush();

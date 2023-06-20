@@ -47,6 +47,10 @@ class EPaymentFromStoreEntity
     #[ORM\Column(type: 'datetime')]
     private $updatedAt;
 
+    // indicates who did the payment, and it is real or mock payment
+    #[ORM\Column(type: 'smallint', nullable: true)]
+    private $paymentType;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -168,6 +172,18 @@ class EPaymentFromStoreEntity
     public function setUpdatedAt(\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getPaymentType(): ?int
+    {
+        return $this->paymentType;
+    }
+
+    public function setPaymentType(int $paymentType): self
+    {
+        $this->paymentType = $paymentType;
 
         return $this;
     }

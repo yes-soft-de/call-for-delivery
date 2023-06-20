@@ -7,6 +7,7 @@ use App\Constant\Main\MainErrorConstant;
 use App\Constant\Package\PackageConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\Subscription\SubscriptionConstant;
+use App\Constant\User\UserRoleConstant;
 use App\Controller\BaseController;
 use App\Request\EPayment\EPaymentCreateByStoreOwnerRequest;
 use App\Service\EPayment\EPaymentService;
@@ -18,6 +19,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
+use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -37,7 +39,6 @@ class EPaymentController extends BaseController
 
     /**
      * @Route("epaymentbystore", name="createEPaymentByStoreOwner", methods={"POST"})
-     * @IsGranted("ROLE_OWNER")
      * @param Request $request
      * @return JsonResponse
      *
@@ -82,6 +83,12 @@ class EPaymentController extends BaseController
      */
     public function createEPaymentByStoreOwner(Request $request): JsonResponse
     {
+        // prevent captain and supplier from using this api
+        if (in_array(UserRoleConstant::ROLE_CAPTAIN, $this->getUser()->getRoles())
+            || in_array(UserRoleConstant::ROLE_SUPPLIER, $this->getUser()->getRoles())) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_USER_TYPE);
+        }
+
         $data = json_decode($request->getContent(), true);
 
         $request = $this->autoMapping->map(\stdClass::class, EPaymentCreateByStoreOwnerRequest::class,
