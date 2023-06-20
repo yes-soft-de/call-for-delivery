@@ -54,7 +54,14 @@ class ExternalOrder extends DataModel {
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       //
       ordersModels.add(OrderModel(
-        externalCompanyName: null,
+        externalCompanyName:
+            (element.externalDeliveryOrder?.isNotEmpty ?? false)
+                ? element.externalDeliveryOrder?.first.companyName
+                : null,
+        orderIdInExternalCompany:
+            (element.externalDeliveryOrder?.isNotEmpty ?? false)
+                ? element.externalDeliveryOrder?.first.externalOrderId
+                : null,
         captainName: element.captainName ?? 'Unknown',
         storeId: element.storeOrderDetailsId ?? 0,
         branchName: element.branchName ?? '',

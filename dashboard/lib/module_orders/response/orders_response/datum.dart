@@ -142,10 +142,12 @@ class DatumOrder {
 class ExternalDeliveryOrder {
   String? id;
   String? companyName;
+  String? externalOrderId;
 
   ExternalDeliveryOrder({
     this.id,
     this.companyName,
+    this.externalOrderId,
   });
 
   Map<String, dynamic> toMap() {
@@ -160,6 +162,9 @@ class ExternalDeliveryOrder {
       id: map['id'] != null ? map['id'] as String : null,
       companyName:
           map['companyName'] != null ? map['companyName'] as String : null,
+      externalOrderId: map['externalOrderId'] != null
+          ? map['externalOrderId'] as String
+          : null,
     );
   }
 

@@ -14,7 +14,7 @@ class Urls {
     '552222225',
   ];
   /*--------BASES-------------------*/
-  static const String DOMAIN = prodDomain;
+  static const String DOMAIN = devDomain;
   static const String BASE_API = DOMAIN + '';
   static const String VERSION = '/v1';
   static const GEO_DISTANCE = DOMAIN + '/v1/geodistance/geodistance';

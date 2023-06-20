@@ -244,6 +244,7 @@ class OrderPendingLoadedState extends States {
                   }
                 },
                 child: OwnerOrderCard(
+                  orderIdInExternalCompany: element.orderIdInExternalCompany,
                   externalCompanyName: element.externalCompanyName,
                   captainProfileId: element.captainProfileId,
                   isDelivered: screenState.currentIndex == 1,

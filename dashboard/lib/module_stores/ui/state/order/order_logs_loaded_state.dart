@@ -46,6 +46,7 @@ class OrderLogsLoadedState extends States {
             },
             child: OwnerOrderCard(
               externalCompanyName: element.externalCompanyName,
+              orderIdInExternalCompany: element.orderIdInExternalCompany,
               kilometer: element.kilometer > 0
                   ? FixedNumber.getFixedNumber(element.kilometer) +
                       ' ' +

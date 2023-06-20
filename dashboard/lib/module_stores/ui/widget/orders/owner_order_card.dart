@@ -13,6 +13,8 @@ class OwnerOrderCard extends StatelessWidget {
   final String? kilometer;
   final String? storeBranchToClientDistance;
   final String? externalCompanyName;
+  final String? orderIdInExternalCompany;
+
   OwnerOrderCard({
     required this.orderNumber,
     required this.orderStatus,
@@ -23,6 +25,7 @@ class OwnerOrderCard extends StatelessWidget {
     this.storeBranchToClientDistance,
     this.kilometer,
     required this.externalCompanyName,
+    this.orderIdInExternalCompany,
   });
 
   @override
@@ -151,9 +154,17 @@ class OwnerOrderCard extends StatelessWidget {
               children: [
                 verticalTile(context,
                     title: S.current.cost, subtitle: orderCost),
-                Icon(
-                  Icons.arrow_circle_left_outlined,
-                  color: Theme.of(context).colorScheme.background,
+                Visibility(
+                  visible: orderIdInExternalCompany == null,
+                  child: Icon(
+                    Icons.arrow_circle_left_outlined,
+                    color: Theme.of(context).colorScheme.background,
+                  ),
+                  replacement: verticalTile(
+                    context,
+                    title: S.current.orderNumberInExternalCompany,
+                    subtitle: orderIdInExternalCompany ?? '',
+                  ),
                 )
               ],
             ),

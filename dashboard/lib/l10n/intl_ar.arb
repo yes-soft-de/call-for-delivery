@@ -1042,5 +1042,6 @@
     "orderRequestInTheCompanyNotComplete": "الطلب غير مكتمل لدى الشركة",
     "orderStatusIsNotPending": "حالة الطلب ليست قيد \"قيد الانتاظار\"",
     "orderAssignedToCompanySuccessfully": "تم اسناد الطلب للشركة بنجاح",
+    "orderNumberInExternalCompany": "الرقم عند المشغل",
     "dev": "المطورين"
 }
