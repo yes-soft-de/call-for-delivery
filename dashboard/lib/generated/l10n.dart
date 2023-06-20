@@ -10480,6 +10480,16 @@ class S {
     );
   }
 
+  /// `order number in the external order`
+  String get orderNumberInExternalCompany {
+    return Intl.message(
+      'order number in the external order',
+      name: 'orderNumberInExternalCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

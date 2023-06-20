@@ -1043,5 +1043,6 @@
     "orderRequestInTheCompanyNotComplete": "order request in the company not complete",
     "orderStatusIsNotPending": "order status is not pending",
     "orderAssignedToCompanySuccessfully": "order assigned to company successfully",
+    "orderNumberInExternalCompany": "order number in the external order",
     "dev": "Dev"
 }

@@ -58,6 +58,8 @@ class ExternalOrdersLoadedState extends States {
                   }
                 },
                 child: OwnerOrderCard(
+                  externalCompanyName: element.externalCompanyName,
+                  orderIdInExternalCompany: element.orderIdInExternalCompany,
                   captainProfileId: element.captainProfileId,
                   isDelivered: screenState.currentIndex == 1,
                   orderNumber: element.id.toString(),

@@ -36,6 +36,7 @@ class OrderModel extends DataModel {
   int? packageType;
   int? costType;
   late String? externalCompanyName;
+  late String? orderIdInExternalCompany;
 
   OrderModel({
     required this.id,
@@ -64,6 +65,7 @@ class OrderModel extends DataModel {
     this.packageType,
     this.costType,
     required this.externalCompanyName,
+    this.orderIdInExternalCompany,
   });
   List<OrderModel> _orders = [];
   OrderModel.withData(OrdersResponse response) {
@@ -87,6 +89,10 @@ class OrderModel extends DataModel {
         externalCompanyName:
             (element.externalDeliveryOrder?.isNotEmpty ?? false)
                 ? element.externalDeliveryOrder?.first.companyName
+                : null,
+        orderIdInExternalCompany:
+            (element.externalDeliveryOrder?.isNotEmpty ?? false)
+                ? element.externalDeliveryOrder?.first.externalOrderId
                 : null,
         captainName: element.captainName,
         captainProfileId: element.captainProfileId,
@@ -133,6 +139,7 @@ class OrderModel extends DataModel {
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       orders.add(OrderModel(
         externalCompanyName: null,
+        orderIdInExternalCompany: null,
         captainProfileId: element.captainProfileId,
         branchName: element.branchName ?? S.current.unknown,
         createdDate: create,

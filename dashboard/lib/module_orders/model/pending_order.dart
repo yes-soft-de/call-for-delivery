@@ -58,6 +58,10 @@ class PendingOrder extends DataModel {
             (element.externalDeliveryOrder?.isNotEmpty ?? false)
                 ? element.externalDeliveryOrder?.first.companyName
                 : null,
+        orderIdInExternalCompany:
+            (element.externalDeliveryOrder?.isNotEmpty ?? false)
+                ? element.externalDeliveryOrder?.first.externalOrderId
+                : null,
         captainName: element.captainName ?? 'Unknown',
         storeId: element.storeOrderDetailsId ?? 0,
         branchName: element.branchName ?? '',

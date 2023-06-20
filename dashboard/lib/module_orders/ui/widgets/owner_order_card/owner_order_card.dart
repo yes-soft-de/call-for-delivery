@@ -21,6 +21,8 @@ class OwnerOrderCard extends StatelessWidget {
   final String? storeOwner;
   final String? branchName;
   final String? externalCompanyName;
+  final String? orderIdInExternalCompany;
+
   OwnerOrderCard({
     required this.orderNumber,
     required this.orderStatus,
@@ -37,6 +39,7 @@ class OwnerOrderCard extends StatelessWidget {
     this.storeOwner,
     this.branchName,
     this.externalCompanyName,
+    this.orderIdInExternalCompany,
   });
 
   @override
@@ -246,10 +249,18 @@ class OwnerOrderCard extends StatelessWidget {
                         subtitle: FixedNumber.getFixedNumber(orderCost) +
                             ' ' +
                             S.current.sar),
-                    Icon(
-                      icon ?? Icons.arrow_circle_left_outlined,
-                      color: Theme.of(context).textTheme.labelLarge?.color,
-                    )
+                    Visibility(
+                      visible: orderIdInExternalCompany == null,
+                      child: Icon(
+                        icon ?? Icons.arrow_circle_left_outlined,
+                        color: Theme.of(context).textTheme.labelLarge?.color,
+                      ),
+                      replacement: verticalTile(
+                        context,
+                        title: S.current.orderNumberInExternalCompany,
+                        subtitle: orderIdInExternalCompany ?? '',
+                      ),
+                    ),
                   ],
                 ),
               ],
