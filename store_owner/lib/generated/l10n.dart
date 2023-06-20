@@ -7439,6 +7439,26 @@ class S {
       args: [],
     );
   }
+
+  /// `payment information`
+  String get paymentInfo {
+    return Intl.message(
+      'payment information',
+      name: 'paymentInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `you have to fill the form first`
+  String get youHaveToFillTheFormFirst {
+    return Intl.message(
+      'you have to fill the form first',
+      name: 'youHaveToFillTheFormFirst',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

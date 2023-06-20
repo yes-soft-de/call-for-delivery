@@ -30,33 +30,29 @@ class NewSubscriptionBalanceLoadedState extends States {
               PaymentCard(
                 onPayNowButtonPressed: () {
                   if (balance.hasToPay) {
-                    showDialog(
-                        barrierDismissible: false,
+                    showTapPayment(
                         context: context,
-                        builder: (context) {
-                          return PaymentsPortal(
-                              paymentModel: PaymentGatewayModel(
-                                amount: balance.toBePayed,
-                              ),
-                              callback: (success, resID, trxID, err) {
-                                if (success) {
-                                  screenState.makePayment(PaymentStatusRequest(
-                                    status: 1,
-                                    amount: balance.toBePayed,
-                                    paymentFor: 229,
-                                    paymentGetaway: 227,
-                                  ));
-                                  CustomFlushBarHelper.createSuccess(
-                                    title: S.current.warnning,
-                                    message: S.current.paymentSuccess,
-                                  ).show(screenState.context);
-                                } else {
-                                  CustomFlushBarHelper.createError(
-                                    title: S.current.warnning,
-                                    message: S.current.paymentFailed,
-                                  ).show(screenState.context);
-                                }
-                              });
+                        paymentModel: PaymentGatewayModel(
+                          amount: balance.toBePayed,
+                        ),
+                        callback: (success, resID, trxID, err) {
+                          if (success) {
+                            screenState.makePayment(PaymentStatusRequest(
+                              status: 1,
+                              amount: balance.toBePayed,
+                              paymentFor: 229,
+                              paymentGetaway: 227,
+                            ));
+                            CustomFlushBarHelper.createSuccess(
+                              title: S.current.warnning,
+                              message: S.current.paymentSuccess,
+                            ).show(screenState.context);
+                          } else {
+                            CustomFlushBarHelper.createError(
+                              title: S.current.warnning,
+                              message: S.current.paymentFailed,
+                            ).show(screenState.context);
+                          }
                         });
                   } else {
                     CustomFlushBarHelper.createError(

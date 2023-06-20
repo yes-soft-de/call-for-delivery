@@ -109,17 +109,25 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
           drawerHeader,
           ElevatedButton(
               onPressed: () {
-                showDialog(
-                    barrierDismissible: false,
-                    context: context,
-                    builder: (context) {
-                      return PaymentsPortal(
-                          paymentModel: PaymentGatewayModel(amount: 10),
-                          callback: (success, resID, trxID, err) {
-                            print(
-                                '------------------------------------------$success');
-                          });
-                    });
+                showTapPayment(
+                  context: context,
+                  paymentModel: PaymentGatewayModel(amount: 10),
+                  callback:
+                      (succeeded, responseID, transactionID, sdkErrorMessage) {
+                    print(
+                        '------------------------------------------$succeeded');
+                  },
+                );
+                // showDialog(
+                //     barrierDismissible: false,
+                //     context: context,
+                //     builder: (context) {
+                //       return PaymentsPortal(
+                //           paymentModel: PaymentGatewayModel(amount: 10),
+                //           callback: (success, resID, trxID, err) {
+
+                //           });
+                //     });
               },
               child: Text('PAY')),
           InAppPurchaseButton(callBack: (s) {

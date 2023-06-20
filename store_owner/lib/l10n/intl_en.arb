@@ -739,5 +739,7 @@
     "packageNotExist" : "package not exist",
     "subscribeNotExist" : "subscribe not exist",
     "storeOwnerProfileNotExist" : "store owner profile not exist",
+    "paymentInfo" : "payment information",
+    "youHaveToFillTheFormFirst" : "you have to fill the form first",
     "adsAndOffers":"Ads & offers"
 }

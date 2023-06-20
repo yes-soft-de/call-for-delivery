@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:c4d/module_subscription/hive/subscription_pref.dart';
 import 'package:c4d/module_subscription/model/subscription_balance_model.dart';
 import 'package:c4d/module_subscription/service/subscription_service.dart';
+import 'package:c4d/utils/logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
@@ -426,18 +427,29 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                       ElevatedButton(
                         onPressed: () {
                           if (welcomeDialogWithoutPayment) {
+                            Logger().info('payment test', 'without Payment');
                             Navigator.pop(context);
                             _ordersService.makePayment(
                               PaymentStatusRequest(
                                 status: 1,
                                 paymentFor: 228,
-                                amount: 0,
-                                paymentId: 0,
                               ),
                             );
                           } else {
-                            print('with Payment');
+                            Logger().info('payment test', 'with Payment');
                             // TODO: make payment here (ammount 2.99, in app parches, 228)
+                            CustomFlushBarHelper.createError(
+                                    title: S.current.warnning,
+                                    message:
+                                        'الدفع غير مطبق هنا بعد, سيتم ارسال دفعة فارغة')
+                                .show(context);
+                            // Navigator.pop(context);
+                            // _ordersService.makePayment(
+                            //   PaymentStatusRequest(
+                            //     status: 1,
+                            //     paymentFor: 228,
+                            //   ),
+                            // );
                           }
                         },
                         child: Text(S.current.getItNow),

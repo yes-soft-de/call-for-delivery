@@ -705,6 +705,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentFailed": MessageLookupByLibrary.simpleMessage(
             "للأسف فشلت عملية الدفع الرجاء ، إعادة المحاولة"),
         "paymentHistory": MessageLookupByLibrary.simpleMessage("تاريخ الدفعات"),
+        "paymentInfo": MessageLookupByLibrary.simpleMessage("معلومات الدفع"),
         "paymentMethod": MessageLookupByLibrary.simpleMessage("طريقة الدفع"),
         "paymentMethodHint": MessageLookupByLibrary.simpleMessage("اختر"),
         "paymentPortalHint": MessageLookupByLibrary.simpleMessage(
@@ -1124,6 +1125,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("لم تتخطى الحد المسموح بعد"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "السلة تحتوي على أصناف من متجر آخر , هل تريد حذف أصناف السلة وإضافة الأصناف الجديدة"),
+        "youHaveToFillTheFormFirst": MessageLookupByLibrary.simpleMessage(
+            "يتوجب ادخال البيانات التالية:"),
         "youHaveToPayWhen": MessageLookupByLibrary.simpleMessage(
             "سيتوجب عليك الدفع عند بلوغ استهلاكك 100 ريال"),
         "youSubscribedWithOffer": MessageLookupByLibrary.simpleMessage(

@@ -739,5 +739,7 @@
     "packageNotExist" : "الباقة غير موجودة",
     "subscribeNotExist" : "الاشتراك غير موجود",
     "storeOwnerProfileNotExist" : "بروفايل المتجر غير موجود",
+    "paymentInfo" : "معلومات الدفع",
+    "youHaveToFillTheFormFirst" : "يتوجب ادخال البيانات التالية:",
     "adsAndOffers": "الإعلانات و العروض"
 }

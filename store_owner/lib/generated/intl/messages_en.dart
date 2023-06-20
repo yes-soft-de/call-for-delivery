@@ -716,6 +716,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Payment process has been failed , please try again later"),
         "paymentHistory":
             MessageLookupByLibrary.simpleMessage("Payment History"),
+        "paymentInfo":
+            MessageLookupByLibrary.simpleMessage("payment information"),
         "paymentMethod": MessageLookupByLibrary.simpleMessage("Payment Method"),
         "paymentMethodHint": MessageLookupByLibrary.simpleMessage("Choose"),
         "paymentPortalHint": MessageLookupByLibrary.simpleMessage(
@@ -1134,6 +1136,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "you have not exceeded the limit yet"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "You have products from other store , Do you want to clear your cart and add the new ones"),
+        "youHaveToFillTheFormFirst": MessageLookupByLibrary.simpleMessage(
+            "you have to fill the form first"),
         "youHaveToPayWhen": MessageLookupByLibrary.simpleMessage(
             "you have to pay when you reach 100 sar"),
         "youSubscribedWithOffer": MessageLookupByLibrary.simpleMessage(

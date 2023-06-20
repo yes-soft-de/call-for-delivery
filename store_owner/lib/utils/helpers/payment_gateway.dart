@@ -1,34 +1,97 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
+
 import 'package:c4d/consts/country_code.dart';
 import 'package:c4d/consts/secret_payments_keys.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:c4d/module_localization/service/localization_service/localization_service.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
-import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/tap_payment_loader.dart';
 import 'package:c4d/utils/logger/logger.dart';
 import 'package:c4d/utils/models/payment_gateway_model.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:go_sell_sdk_flutter/go_sell_sdk_flutter.dart';
 import 'package:go_sell_sdk_flutter/model/models.dart';
+import 'package:hive/hive.dart';
+import 'package:injectable/injectable.dart';
 
-class PaymentsPortal extends StatefulWidget {
+void showTapPayment({
+  required BuildContext context,
+  required PaymentGatewayModel paymentModel,
+  required Function(
+    bool succeeded,
+    String responseID,
+    String transactionID,
+    String sdkErrorMessage,
+  ) callback,
+}) {
+  final TextEditingController firstNameController = TextEditingController();
+  final TextEditingController middleNameController = TextEditingController();
+  final TextEditingController lastNameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController phoneNumberController = TextEditingController();
+
+  var tapPaymentInfo = getIt<PaymentHiveHelper>().getTapPaymentInfo();
+  firstNameController.text = tapPaymentInfo.firstName;
+  middleNameController.text = tapPaymentInfo.middleName;
+  lastNameController.text = tapPaymentInfo.lastName;
+  emailController.text = tapPaymentInfo.email;
+  phoneNumberController.text = tapPaymentInfo.phoneNumber;
+
+  showModalBottomSheet(
+    context: context,
+    isDismissible: false,
+    isScrollControlled: true,
+    builder: (context) {
+      return SizedBox(
+        height: MediaQuery.sizeOf(context).height * 0.5 +
+            MediaQuery.of(context).viewInsets.bottom,
+        child: _PaymentsPortal(
+          paymentModel: paymentModel,
+          callback: callback,
+          emailController: emailController,
+          firstNameController: firstNameController,
+          lastNameController: lastNameController,
+          middleNameController: middleNameController,
+          phoneNumberController: phoneNumberController,
+        ),
+      );
+    },
+  );
+}
+
+class _PaymentsPortal extends StatefulWidget {
   final PaymentGatewayModel paymentModel;
-  final Function(bool succeeded, String responseID, String transactionID, String sdkErrorMessage) callback;
+  final Function(bool succeeded, String responseID, String transactionID,
+      String sdkErrorMessage) callback;
 
-  const PaymentsPortal({Key? key, required this.paymentModel, required this.callback})
+  final TextEditingController firstNameController;
+  final TextEditingController middleNameController;
+  final TextEditingController lastNameController;
+  final TextEditingController emailController;
+  final TextEditingController phoneNumberController;
+
+  _PaymentsPortal(
+      {Key? key,
+      required this.paymentModel,
+      required this.callback,
+      required this.firstNameController,
+      required this.middleNameController,
+      required this.lastNameController,
+      required this.emailController,
+      required this.phoneNumberController})
       : super(key: key);
   @override
   _PaymentsPortalState createState() => _PaymentsPortalState();
 }
 
-class _PaymentsPortalState extends State<PaymentsPortal> {
+class _PaymentsPortalState extends State<_PaymentsPortal> {
   late Map<dynamic, dynamic> tapSDKResult;
   String responseID = '';
   String sdkStatus = '';
@@ -44,8 +107,7 @@ class _PaymentsPortalState extends State<PaymentsPortal> {
   void initState() {
     super.initState();
     _buttonColor = Color(0xff2ace00);
-    transactionID =
-        'trans_${widget.paymentModel.amount}';
+    transactionID = 'trans_${widget.paymentModel.amount}';
     configureSDK();
   }
 
@@ -60,9 +122,8 @@ class _PaymentsPortalState extends State<PaymentsPortal> {
   // configure app key and bundle-id (You must get those keys from tap)
   Future<void> configureApp() async {
     GoSellSdkFlutter.configureApp(
-        bundleId: Platform.isAndroid
-            ? 'de.yessoft.c4d_store'
-            : 'de.yessoft.c4d',
+        bundleId:
+            Platform.isAndroid ? 'de.yessoft.c4d_store' : 'de.yessoft.c4d',
         productionSecreteKey: Platform.isAndroid
             ? SecretPaymentsKeys.production
             : SecretPaymentsKeys.productionIOS,
@@ -79,17 +140,16 @@ class _PaymentsPortalState extends State<PaymentsPortal> {
           trxMode: TransactionMode.PURCHASE,
           paymentMetaData: {},
           taxes: [],
-          shippings: [
-          ],
+          shippings: [],
           customer: Customer(
               customerId:
                   '', // customer id is important to retrieve cards saved for this customer
-              email: emailController.text,
+              email: widget.emailController.text,
               isdNumber: CountryCode.COUNTRY_CODE_KSA,
-              number: phoneNumberController.text,
-              firstName: firstNameController.text,
-              middleName: middleNameController.text,
-              lastName: lastNameController.text,
+              number: widget.phoneNumberController.text,
+              firstName: widget.firstNameController.text,
+              middleName: widget.middleNameController.text,
+              lastName: widget.lastNameController.text,
               metaData: null),
           transactionCurrency: 'sar',
           amount: widget.paymentModel.amount.toStringAsFixed(2),
@@ -98,9 +158,8 @@ class _PaymentsPortalState extends State<PaymentsPortal> {
           // Payment description
           paymentDescription: S.current.storeFee,
           // Payment Reference
-          paymentReference: Reference(
-              transaction: transactionID,
-              gosellID: '97tap23'),
+          paymentReference:
+              Reference(transaction: transactionID, gosellID: '97tap23'),
           // payment Descriptor
           paymentStatementDescriptor: 'C4d Client payments',
           // Save Card Switch
@@ -122,13 +181,14 @@ class _PaymentsPortalState extends State<PaymentsPortal> {
           allowsToSaveSameCardMoreThanOnce: false,
           // pass the card holder name to the SDK
           cardHolderName:
-              '${firstNameController.text} ${middleNameController.text} ${lastNameController.text}',
+              '${widget.firstNameController.text} ${widget.middleNameController.text} ${widget.lastNameController.text}',
           // disable changing the card holder name by the user
           allowsToEditCardHolderName: false,
           // select payments you need to show [Default is all, and you can choose between WEB-CARD-APPLEPAY ]
           paymentType: PaymentType.ALL,
           // Transaction mode
-          sdkMode: SDKMode.Sandbox, paymentItems: []);
+          sdkMode: SDKMode.Sandbox,
+          paymentItems: []);
     } on PlatformException {
       // platformVersion = 'Failed to get platform version.';
     }
@@ -249,12 +309,8 @@ class _PaymentsPortalState extends State<PaymentsPortal> {
     responseID = tapSDKResult['charge_id'] ?? '';
   }
 
-  TextEditingController firstNameController = TextEditingController();
-  TextEditingController middleNameController = TextEditingController();
-  TextEditingController lastNameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController phoneNumberController = TextEditingController();
   List<PaymentItem> payments = [];
+
   final GlobalKey<FormState> _details = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
@@ -265,203 +321,309 @@ class _PaymentsPortalState extends State<PaymentsPortal> {
         return false;
       },
       child: Scaffold(
-          appBar: CustomC4dAppBar.appBar(context, title: 'Taps Payments',
+          appBar: CustomC4dAppBar.appBar(context, title: S.current.paymentInfo,
               onTap: () {
             Navigator.of(context).pop();
             Navigator.of(context).pop();
           }),
-          body: SafeArea(
-            child: Form(
-              key: _details,
-              child: Column(
-                children: <Widget>[
-                  Expanded(
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(
-                          parent: AlwaysScrollableScrollPhysics()),
+          body: Form(
+            key: _details,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Expanded(
+                  child: SingleChildScrollView(
+                    physics: const BouncingScrollPhysics(
+                        parent: AlwaysScrollableScrollPhysics()),
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 30),
                       child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ListTile(
-                            leading: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Theme.of(context).backgroundColor,
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Icon(Icons.person),
-                              ),
-                            ),
-                            title: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: CustomFormField(
-                                  controller: firstNameController,
-                                  hintText: S.current.firstName),
-                            ),
+                          Text(
+                            S.current.youHaveToFillTheFormFirst,
+                            style: Theme.of(context).textTheme.bodyLarge,
                           ),
-                          ListTile(
-                            leading: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Theme.of(context).backgroundColor,
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Icon(Icons.person),
-                              ),
-                            ),
-                            title: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: CustomFormField(
-                                controller: middleNameController,
-                                hintText: S.of(context).middleName,
-                              ),
-                            ),
+                          SizedBox(height: 20),
+                          PaymentFiled(
+                            title: S.current.firstName,
+                            controller: widget.firstNameController,
                           ),
-                          ListTile(
-                            leading: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Theme.of(context).backgroundColor,
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Icon(Icons.person),
-                              ),
-                            ),
-                            title: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: CustomFormField(
-                                controller: lastNameController,
-                                hintText: S.of(context).lastName,
-                              ),
-                            ),
+                          PaymentFiled(
+                            title: S.current.middleName,
+                            controller: widget.middleNameController,
                           ),
-                          ListTile(
-                            leading: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Theme.of(context).backgroundColor,
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Icon(Icons.email),
-                              ),
-                            ),
-                            title: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: CustomFormField(
-                                validator: false,
-                                controller: emailController,
-                                hintText: S.of(context).email,
-                              ),
-                            ),
+                          PaymentFiled(
+                            title: S.current.lastName,
+                            controller: widget.lastNameController,
                           ),
-                          ListTile(
-                            leading: Container(
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(10),
-                                color: Theme.of(context).backgroundColor,
-                              ),
-                              child: const Padding(
-                                padding: EdgeInsets.all(8.0),
-                                child: Icon(Icons.phone),
-                              ),
-                            ),
-                            title: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: CustomLoginFormField(
-                                  validator: false,
-                                  last: true,
-                                  phone: true,
-                                  controller: phoneNumberController,
-                                  hintText: S.of(context).phoneNumber,
-                                  borderRadius: 25),
-                            ),
+                          PaymentFiled(
+                            title: S.current.email,
+                            controller: widget.emailController,
+                            email: true,
+                          ),
+                          PaymentFiled(
+                            title: S.current.phoneNumber,
+                            controller: widget.phoneNumberController,
+                            maxLength: 9,
+                            isLast: true,
                           ),
                         ],
                       ),
                     ),
                   ),
-                  SizedBox(
-                    height: 60,
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Align(
-                        alignment: Alignment.bottomCenter,
-                        child: SizedBox(
-                            height: 45,
-                            child: ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                onPrimary: _buttonColor,
-                                shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadiusDirectional.all(
-                                        Radius.circular(30))),
-                              ),
-                              onPressed: () async {
-                                if (_details.currentState?.validate() == true &&
-                                    (emailController.text.isNotEmpty ||
-                                        phoneNumberController
-                                            .text.isNotEmpty)) {
-                                  if (kIsWeb) {
-                                    // var sdk = PaymentPortalWeb(
-                                    //     amount: widget.model.order.orderCost
-                                    //         .toStringAsFixed(2),
-                                    //     email: emailController.text,
-                                    //     firstName: firstNameController.text,
-                                    //     items: payments,
-                                    //     lastName: lastNameController.text,
-                                    //     middleName: middleNameController.text,
-                                    //     orderID:
-                                    //         widget.model.order.id.toString(),
-                                    //     phoneNumber: phoneNumberController.text,
-                                    //     transID: transactionID,
-                                    //     context: context);
-                                    // sdk.startSdk();
-                                  } else {
-                                    await setupSDKSession();
-                                    await startSDK();
-                                  }
+                ),
+                SizedBox(
+                  height: 60,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: SizedBox(
+                          height: 45,
+                          child: ElevatedButton(
+                            style: ElevatedButton.styleFrom(
+                              foregroundColor: _buttonColor,
+                              shape: const RoundedRectangleBorder(
+                                  borderRadius: BorderRadiusDirectional.all(
+                                      Radius.circular(30))),
+                            ),
+                            onPressed: () async {
+                              getIt<PaymentHiveHelper>()
+                                  .saveTapPaymentInfo(TapPaymentInfo(
+                                email: widget.emailController.text,
+                                firstName: widget.firstNameController.text,
+                                lastName: widget.lastNameController.text,
+                                middleName: widget.middleNameController.text,
+                                phoneNumber: widget.phoneNumberController.text,
+                              ));
+                              if (_details.currentState?.validate() == true &&
+                                  (widget.emailController.text.isNotEmpty ||
+                                      widget.phoneNumberController.text
+                                          .isNotEmpty)) {
+                                if (kIsWeb) {
+                                  // var sdk = PaymentPortalWeb(
+                                  //     amount: widget.model.order.orderCost
+                                  //         .toStringAsFixed(2),
+                                  //     email: emailController.text,
+                                  //     firstName: firstNameController.text,
+                                  //     items: payments,
+                                  //     lastName: lastNameController.text,
+                                  //     middleName: middleNameController.text,
+                                  //     orderID:
+                                  //         widget.model.order.id.toString(),
+                                  //     phoneNumber: phoneNumberController.text,
+                                  //     transID: transactionID,
+                                  //     context: context);
+                                  // sdk.startSdk();
                                 } else {
-                                  CustomFlushBarHelper.createError(
-                                          title: S.current.warnning,
-                                          message:
-                                              S.current.pleaseCompleteTheForm)
-                                      .show(context);
+                                  await setupSDKSession();
+                                  await startSDK();
                                 }
-                              },
-                              child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    SizedBox(
-                                      width: 25,
-                                      height: 25,
-                                      child: AwesomeLoader(
-                                        outerColor: Colors.white,
-                                        innerColor: Colors.white,
-                                        strokeWidth: 3.0,
-                                        controller: loaderController,
-                                      ),
+                              } else {
+                                CustomFlushBarHelper.createError(
+                                        title: S.current.warnning,
+                                        message:
+                                            S.current.pleaseCompleteTheForm)
+                                    .show(context);
+                              }
+                            },
+                            child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: 25,
+                                    height: 25,
+                                    child: AwesomeLoader(
+                                      outerColor: Colors.white,
+                                      innerColor: Colors.white,
+                                      strokeWidth: 3.0,
+                                      controller: loaderController,
                                     ),
-                                    const Spacer(),
-                                    Text(S.current.paymentResume,
-                                        style: const TextStyle(
-                                            color: Colors.white,
-                                            fontSize: 16.0)),
-                                    const Spacer(),
-                                    const Icon(
-                                      Icons.lock_outline,
-                                      color: Colors.white,
-                                    ),
-                                  ]),
-                            )),
-                      ),
+                                  ),
+                                  const Spacer(),
+                                  Text(S.current.paymentResume,
+                                      style: const TextStyle(
+                                          color: Colors.white, fontSize: 16.0)),
+                                  const Spacer(),
+                                  const Icon(
+                                    Icons.lock_outline,
+                                    color: Colors.white,
+                                  ),
+                                ]),
+                          )),
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           )),
     );
+  }
+}
+
+class PaymentFiled extends StatefulWidget {
+  final String title;
+  final TextEditingController controller;
+  final bool isLast;
+  final bool phone;
+  final bool email;
+  final int? maxLength;
+
+  const PaymentFiled({
+    super.key,
+    required this.title,
+    required this.controller,
+    this.isLast = false,
+    this.phone = false,
+    this.email = false,
+    this.maxLength,
+  });
+
+  @override
+  State<PaymentFiled> createState() => _PaymentFiledState();
+}
+
+class _PaymentFiledState extends State<PaymentFiled> {
+  AutovalidateMode mode = AutovalidateMode.disabled;
+  bool expand = false;
+  bool flag = true;
+  @override
+  Widget build(BuildContext context) {
+    if (flag) {
+      flag = false;
+      expand = widget.maxLength != null;
+    }
+    final node = FocusScope.of(context);
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 8),
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            widget.title,
+            style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                  color: Color(0xFF767676),
+                ),
+          ),
+          SizedBox(
+            height: expand ? 70 : 50,
+            child: TextFormField(
+              autovalidateMode: mode,
+              maxLength: widget.maxLength,
+              validator: (v) {
+                var err = validator(v);
+                if (err != null) expand = true;
+                return err;
+              },
+              controller: widget.controller,
+              onEditingComplete: widget.isLast ? null : () => node.nextFocus(),
+              onFieldSubmitted: widget.isLast ? (_) => node.unfocus() : null,
+              keyboardType: keyboardType,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(
+                  borderSide: BorderSide(
+                    width: 2,
+                    color: Colors.grey,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  String? validator(value) {
+    if (mode == AutovalidateMode.disabled) {
+      setState(() {
+        mode = AutovalidateMode.onUserInteraction;
+      });
+    }
+    if (value == null) {
+      return S.current.pleaseCompleteField;
+    } else if (value.isEmpty) {
+      return S.of(context).pleaseCompleteField;
+    } else if (widget.phone && value.length < 9) {
+      return S.of(context).phoneNumbertooShort;
+    } else if (widget.phone && value.length > (widget.maxLength ?? 9)) {
+      return S.current.phoneNumberLong;
+    } else if (widget.phone &&
+        RegExp(r'[0-9]').allMatches(value).length != value.length) {
+      return S.current.pleaseEnterValidPhoneNumber;
+    } else {
+      return null;
+    }
+  }
+
+  TextInputType? get keyboardType {
+    if (widget.phone) return TextInputType.phone;
+    if (widget.email) return TextInputType.emailAddress;
+    return null;
+  }
+}
+
+class TapPaymentInfo {
+  String firstName;
+  String middleName;
+  String lastName;
+  String email;
+  String phoneNumber;
+
+  TapPaymentInfo({
+    required this.firstName,
+    required this.middleName,
+    required this.lastName,
+    required this.email,
+    required this.phoneNumber,
+  });
+
+  TapPaymentInfo.empty()
+      : firstName = '',
+        email = '',
+        lastName = '',
+        middleName = '',
+        phoneNumber = '';
+
+  Map<String, dynamic> toMap() {
+    return <String, dynamic>{
+      'firstName': firstName,
+      'middleName': middleName,
+      'lastName': lastName,
+      'email': email,
+      'phoneNumber': phoneNumber,
+    };
+  }
+
+  factory TapPaymentInfo.fromMap(Map<String, dynamic> map) {
+    return TapPaymentInfo(
+      firstName: (map['firstName'] ?? '') as String,
+      middleName: (map['middleName'] ?? '') as String,
+      lastName: (map['lastName'] ?? '') as String,
+      email: (map['email'] ?? '') as String,
+      phoneNumber: (map['phoneNumber'] ?? '') as String,
+    );
+  }
+
+  String toJson() => json.encode(toMap());
+
+  factory TapPaymentInfo.fromJson(String source) =>
+      TapPaymentInfo.fromMap(json.decode(source) as Map<String, dynamic>);
+}
+
+@injectable
+class PaymentHiveHelper {
+  var box = Hive.box('Payment');
+
+  void saveTapPaymentInfo(TapPaymentInfo info) {
+    box.put('tapPaymentInfo', info.toJson());
+  }
+
+  TapPaymentInfo getTapPaymentInfo() {
+    var v = box.get('tapPaymentInfo');
+    if (v == null) return TapPaymentInfo.empty();
+    return TapPaymentInfo.fromJson(v);
   }
 }

@@ -22,5 +22,6 @@ class HiveSetUp {
     await Hive.openBox('Suggestions');
     await Hive.openBox('Profile');
     await Hive.openBox('Subscription');
+    await Hive.openBox('Payment');
   }
 }
