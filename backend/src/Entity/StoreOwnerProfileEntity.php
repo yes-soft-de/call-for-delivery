@@ -107,6 +107,9 @@ class StoreOwnerProfileEntity
     #[ORM\Column(type: 'boolean', options: ["default" => false])]
     private $openingSubscriptionWithoutPayment;
 
+    #[ORM\OneToOne(mappedBy: 'storeOwnerProfile', targetEntity: StoreOwnerPreferenceEntity::class, cascade: ['persist', 'remove'])]
+    private $storeOwnerPreferenceEntity;
+
     public function __construct()
     {
         $this->subscriptionEntities = new ArrayCollection();
@@ -663,6 +666,23 @@ class StoreOwnerProfileEntity
     public function setOpeningSubscriptionWithoutPayment(bool $openingSubscriptionWithoutPayment): self
     {
         $this->openingSubscriptionWithoutPayment = $openingSubscriptionWithoutPayment;
+
+        return $this;
+    }
+
+    public function getStoreOwnerPreferenceEntity(): ?StoreOwnerPreferenceEntity
+    {
+        return $this->storeOwnerPreferenceEntity;
+    }
+
+    public function setStoreOwnerPreferenceEntity(StoreOwnerPreferenceEntity $storeOwnerPreferenceEntity): self
+    {
+        // set the owning side of the relation if necessary
+        if ($storeOwnerPreferenceEntity->getStoreOwnerProfile() !== $this) {
+            $storeOwnerPreferenceEntity->setStoreOwnerProfile($this);
+        }
+
+        $this->storeOwnerPreferenceEntity = $storeOwnerPreferenceEntity;
 
         return $this;
     }
