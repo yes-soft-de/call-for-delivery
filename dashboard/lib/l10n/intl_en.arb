@@ -1047,5 +1047,8 @@
     "areYouSureAboutSkipPaymentStageFor": "are you sure about skip payment stage for",
     "attention": "attention",
     "orderNumberInExternalCompany": "order number in the external order",
+    "editStoreSetting": "edit store setting",
+    "storeSetting": "store setting",
+    "enterTheMaxLimitThatAreAllowedToStoreDues": "enter the max limit that are allowed to store dues",
     "dev": "Dev"
 }

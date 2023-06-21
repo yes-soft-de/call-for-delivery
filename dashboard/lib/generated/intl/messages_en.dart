@@ -583,6 +583,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Edit store profile"),
         "editReason": MessageLookupByLibrary.simpleMessage(
             "edit reasons (captain notes)"),
+        "editStoreSetting":
+            MessageLookupByLibrary.simpleMessage("edit store setting"),
         "editSubscriptions":
             MessageLookupByLibrary.simpleMessage("Edit subscription"),
         "eg": MessageLookupByLibrary.simpleMessage("e.g :"),
@@ -603,6 +605,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("enter delivery company name"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("Enter product information"),
+        "enterTheMaxLimitThatAreAllowedToStoreDues":
+            MessageLookupByLibrary.simpleMessage(
+                "enter the max limit that are allowed to store dues"),
         "errOc":
             MessageLookupByLibrary.simpleMessage("The next problems occurred"),
         "errorDownloadingImage":
@@ -1414,6 +1419,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Store profit margin"),
         "storeRated":
             MessageLookupByLibrary.simpleMessage("stores has been rated"),
+        "storeSetting": MessageLookupByLibrary.simpleMessage("store setting"),
         "storeUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("Store Updated Successfully"),
         "stores": MessageLookupByLibrary.simpleMessage("Stores"),

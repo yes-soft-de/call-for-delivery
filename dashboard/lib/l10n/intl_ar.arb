@@ -1046,5 +1046,8 @@
     "areYouSureAboutSkipPaymentStageFor": "هل انت متاكد من انك تريد تخطي خطوة الدفع من اجل المتجر ",
     "attention": "تنبيه",
     "orderNumberInExternalCompany": "الرقم عند المشغل",
+    "editStoreSetting": "تعديل اعدادات المتجر",
+    "storeSetting": "اعدادات المتجر",
+    "enterTheMaxLimitThatAreAllowedToStoreDues": "ادخل الحد الاعلى للمستحقات المسموحة للمتجر",
     "dev": "المطورين"
 }

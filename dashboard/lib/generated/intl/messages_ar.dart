@@ -576,6 +576,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تعديل معلومات المتجر"),
         "editReason": MessageLookupByLibrary.simpleMessage(
             "اسباب التعديل (ملاحظات الكابتن)"),
+        "editStoreSetting":
+            MessageLookupByLibrary.simpleMessage("تعديل اعدادات المتجر"),
         "editSubscriptions":
             MessageLookupByLibrary.simpleMessage("تعديل الاشتراك"),
         "eg": MessageLookupByLibrary.simpleMessage("مثال :"),
@@ -596,6 +598,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ادخل اسم شركة التوصيل"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("ادخل معلومات المنتج"),
+        "enterTheMaxLimitThatAreAllowedToStoreDues":
+            MessageLookupByLibrary.simpleMessage(
+                "ادخل الحد الاعلى للمستحقات المسموحة للمتجر"),
         "errOc": MessageLookupByLibrary.simpleMessage("حصلت المشاكل التالية"),
         "errorDownloadingImage":
             MessageLookupByLibrary.simpleMessage("لم نستطع تحميل الصورة"),
@@ -1402,6 +1407,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("هامش الربح من المتجر"),
         "storeRated":
             MessageLookupByLibrary.simpleMessage("تمت تقييم المتجر بنجاح"),
+        "storeSetting": MessageLookupByLibrary.simpleMessage("اعدادات المتجر"),
         "storeUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تعديل المتجر بنجاح"),
         "stores": MessageLookupByLibrary.simpleMessage("متاجر"),
