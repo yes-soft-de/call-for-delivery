@@ -19,4 +19,6 @@ class CurrentStoreSubscriptionBalanceGetResponse
     public bool $hasToPay;
 
     public ?DateTime $subscriptionStartDate;
+
+    public ?float $subscriptionCostLimit = null;
 }

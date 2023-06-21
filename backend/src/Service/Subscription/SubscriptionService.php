@@ -1301,6 +1301,12 @@ class SubscriptionService
         $response['subscriptionStatus'] = $subscription->getStatus();
         $response['subscriptionStartDate'] = $subscription->getStartDate();
 
+        $storePreferences = $subscription->getStoreOwner()->getStoreOwnerPreferenceEntity();
+
+        if ($storePreferences) {
+            $response['subscriptionCostLimit'] = $storePreferences->getSubscriptionCostLimit();
+        }
+
         $orders = $this->getDeliveredOrdersDeliveryCostFromSubscriptionStartDateTillNow($storeOwnerUserId,
             $subscription->getId());
 
