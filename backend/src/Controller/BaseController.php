@@ -91,6 +91,7 @@ class BaseController extends AbstractController
     const STORE_OWNER_BEFORE_SUBSCRIPTION_CREATED_CONST = ["before free subscription", "9162"];
     const STORE_OWNER_PROFILE_COMPLETED = ["store owner profile completed", "9161"];
     const STORE_BRANCH_NOT_EXIST = ["store branch is not exist", "9162"];
+    const STORE_OWNER_PREFERENCE_NOT_EXIST_CONST = ["store preference is not exist", "9163"];
     // order distance conflict
     const ORDER_DISTANCE_CONFLICT_NOT_EXIST_CONST = ["order distance conflict not exist!", "9210"];
     const ORDER_DISTANCE_CONFLICT_ALREADY_EXIST_CONST = ["order distance already exist!", "9240"];
