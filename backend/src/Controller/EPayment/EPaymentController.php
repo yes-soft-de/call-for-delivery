@@ -3,6 +3,7 @@
 namespace App\Controller\EPayment;
 
 use App\AutoMapping;
+use App\Constant\EPaymentFromStore\EPaymentFromStoreConstant;
 use App\Constant\Main\MainErrorConstant;
 use App\Constant\Package\PackageConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
@@ -13,13 +14,11 @@ use App\Request\EPayment\EPaymentCreateByStoreOwnerRequest;
 use App\Service\EPayment\EPaymentService;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use OpenApi\Annotations as OA;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
-use Symfony\Component\Uid\Uuid;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
@@ -59,7 +58,8 @@ class EPaymentController extends BaseController
      *          @OA\Property(type="integer", property="paymentGetaway"),
      *          @OA\Property(type="number", property="amount"),
      *          @OA\Property(type="string", property="clientAddress"),
-     *          @OA\Property(type="string", property="paymentId")
+     *          @OA\Property(type="string", property="paymentId"),
+     *          @OA\Property(type="integer", property="storeOwnerProfile", description="takes value only when none-store user use this api")
      *      )
      * )
      *
@@ -94,7 +94,17 @@ class EPaymentController extends BaseController
         $request = $this->autoMapping->map(\stdClass::class, EPaymentCreateByStoreOwnerRequest::class,
             (object) $data);
 
-        $request->setStoreOwnerProfile($this->getUserId());
+        $request->setCreatedBy($this->getUserId());
+
+        if (($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_STORE_CONST)
+            || ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_STORE_CONST)) {
+            $request->setStoreOwnerProfile($this->getUserId());
+        }
+        //dd(1);
+//        elseif (($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_ADMIN_CONST)
+//            || ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_ADMIN_CONST)) {
+//
+//        }
 
         $violations = $this->validator->validate($request);
 

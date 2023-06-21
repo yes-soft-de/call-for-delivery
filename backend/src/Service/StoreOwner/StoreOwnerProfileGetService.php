@@ -17,4 +17,9 @@ class StoreOwnerProfileGetService
     {
         return $this->storeOwnerProfileManager->getStoreOwnerProfileByStoreId(["storeOwnerId"=>$storeOwnerId]);
     }
+
+    public function getStoreOwnerProfileById(int $storeOwnerProfile): ?StoreOwnerProfileEntity
+    {
+        return $this->storeOwnerProfileManager->getStoreOwnerProfile($storeOwnerProfile);
+    }
 }

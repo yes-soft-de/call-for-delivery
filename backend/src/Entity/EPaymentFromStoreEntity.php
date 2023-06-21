@@ -30,9 +30,6 @@ class EPaymentFromStoreEntity
     #[ORM\Column(type: 'smallint')]
     private $paymentFor;
 
-    #[ORM\Column(type: 'string', length: 255, nullable: true)]
-    private $clientAddress;
-
     #[ORM\ManyToOne(targetEntity: SubscriptionEntity::class, inversedBy: 'ePaymentFromStoreEntities')]
     private $subscription;
 
@@ -50,6 +47,9 @@ class EPaymentFromStoreEntity
     // indicates who did the payment, and it is real or mock payment
     #[ORM\Column(type: 'smallint', nullable: true)]
     private $paymentType;
+
+    #[ORM\Column(type: 'integer', options: ["default" => 0])]
+    private $createdBy;
 
     public function getId(): ?int
     {
@@ -116,18 +116,6 @@ class EPaymentFromStoreEntity
         return $this;
     }
 
-    public function getClientAddress(): ?string
-    {
-        return $this->clientAddress;
-    }
-
-    public function setClientAddress(?string $clientAddress): self
-    {
-        $this->clientAddress = $clientAddress;
-
-        return $this;
-    }
-
     public function getSubscription(): ?SubscriptionEntity
     {
         return $this->subscription;
@@ -184,6 +172,18 @@ class EPaymentFromStoreEntity
     public function setPaymentType(int $paymentType): self
     {
         $this->paymentType = $paymentType;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?int
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(int $createdBy): self
+    {
+        $this->createdBy = $createdBy;
 
         return $this;
     }

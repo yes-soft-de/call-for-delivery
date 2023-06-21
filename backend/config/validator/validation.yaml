@@ -1022,3 +1022,13 @@ App\Request\Admin\StoreOwner\StoreOwnerProfileOpeningSubscriptionWithoutPaymentU
             - NotBlank: ~
         openingSubscriptionWithoutPayment:
             - NotNull: ~
+
+App\Request\Admin\StoreOwnerPreference\StoreOwnerPreferenceCreateByAdminRequest:
+    properties:
+        storeOwnerProfile:
+            - NotBlank: ~
+
+App\Request\Admin\StoreOwnerPreference\StoreOwnerPreferenceUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~
