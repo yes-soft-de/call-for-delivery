@@ -2241,10 +2241,12 @@ class AdminOrderService
 
         if (count($orders) > 0) {
             foreach ($orders as $key => $value) {
-                $response[$key]['id'] = $value[0]->getCaptainId()->getId();
-                $response[$key]['captainName'] = $value[0]->getCaptainId()->getCaptainName();
-                $response[$key]['images'] = $this->uploadFileHelperService->getImageParams($value['captainProfileImage']);
-                $response[$key]['createdAt'] = $value[0]->getCaptainId()->getCreatedAt();
+                if ($value[0]->getCaptainId()) {
+                    $response[$key]['id'] = $value[0]->getCaptainId()->getId();
+                    $response[$key]['captainName'] = $value[0]->getCaptainId()->getCaptainName();
+                    $response[$key]['images'] = $this->uploadFileHelperService->getImageParams($value['captainProfileImage']);
+                    $response[$key]['createdAt'] = $value[0]->getCaptainId()->getCreatedAt();
+                }
                 $response[$key]['orderId'] = $value[0]->getId();
                 $response[$key]['orderDeliveredAt'] = $this->getDeliveredStateOrderLogCreatedAtForAdminByOrderId($response[$key]['orderId']);
             }
