@@ -1121,6 +1121,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("لست بحاجة للدفع بعد"),
         "youHaveExceededTheLimit":
             MessageLookupByLibrary.simpleMessage("لقد تخطيت الحد المسموح"),
+        "youHaveFinancialPaymentToMade": MessageLookupByLibrary.simpleMessage(
+            "يوجد مستحقات مالية متوجبة الدفع\nيمكنك دفعها من شاشة الحساب المالي"),
         "youHaveNotExceededTheLimitYet":
             MessageLookupByLibrary.simpleMessage("لم تتخطى الحد المسموح بعد"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(

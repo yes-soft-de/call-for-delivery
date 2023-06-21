@@ -99,7 +99,8 @@ class OwnerOrdersStateManager {
   void showWelcomeDialogIfNeeded(OwnerOrdersScreenState screenState) async {
     await _authService.accountStatus();
     screenState.showWelcomeDialog = getIt<AuthPrefsHelper>().getIsNewAccount();
-    screenState.welcomeDialogWithoutPayment = getIt<AuthPrefsHelper>().getOpenWelcomeDialogWithoutPayment();
+    screenState.welcomeDialogWithoutPayment =
+        getIt<AuthPrefsHelper>().getOpenWelcomeDialogWithoutPayment();
     if (screenState.showWelcomeDialog)
       screenState.welcomeDialog(screenState.context);
     screenState.refresh();
@@ -185,13 +186,17 @@ class OwnerOrdersStateManager {
           msg: status.error ?? S.current.errorHappened,
           backgroundColor: Colors.red,
         );
-        _subscriptionStatus.add(CanMakeOrderModel(
+        _subscriptionStatus.add(
+          CanMakeOrderModel(
             canCreateOrder: false,
             status: status.error ?? S.current.errorHappened,
             percentageOfOrdersConsumed: '0%',
             consumingAlert: false,
             unlimitedPackage: false,
-            packageType: -1));
+            packageType: -1,
+            hasToPay: false,
+          ),
+        );
       } else {
         status as CanMakeOrderModel;
         _subscriptionStatus.add(status.data);

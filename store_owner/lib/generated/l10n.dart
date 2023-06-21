@@ -7459,6 +7459,16 @@ class S {
       args: [],
     );
   }
+
+  /// `you have financial payment to pay\nyou can pay fot it in the financial account screen`
+  String get youHaveFinancialPaymentToMade {
+    return Intl.message(
+      'you have financial payment to pay\nyou can pay fot it in the financial account screen',
+      name: 'youHaveFinancialPaymentToMade',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

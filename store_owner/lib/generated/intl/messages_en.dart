@@ -1132,6 +1132,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("you dont have to pay yet"),
         "youHaveExceededTheLimit":
             MessageLookupByLibrary.simpleMessage("have exceeded the limit"),
+        "youHaveFinancialPaymentToMade": MessageLookupByLibrary.simpleMessage(
+            "you have financial payment to pay\nyou can pay fot it in the financial account screen"),
         "youHaveNotExceededTheLimitYet": MessageLookupByLibrary.simpleMessage(
             "you have not exceeded the limit yet"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(

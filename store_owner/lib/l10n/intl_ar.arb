@@ -741,5 +741,6 @@
     "storeOwnerProfileNotExist" : "بروفايل المتجر غير موجود",
     "paymentInfo" : "معلومات الدفع",
     "youHaveToFillTheFormFirst" : "يتوجب ادخال البيانات التالية:",
+    "youHaveFinancialPaymentToMade" : "يوجد مستحقات مالية متوجبة الدفع\nيمكنك دفعها من شاشة الحساب المالي",
     "adsAndOffers": "الإعلانات و العروض"
 }

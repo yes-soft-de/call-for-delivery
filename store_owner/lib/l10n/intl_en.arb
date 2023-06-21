@@ -741,5 +741,6 @@
     "storeOwnerProfileNotExist" : "store owner profile not exist",
     "paymentInfo" : "payment information",
     "youHaveToFillTheFormFirst" : "you have to fill the form first",
+    "youHaveFinancialPaymentToMade" : "you have financial payment to pay\nyou can pay fot it in the financial account screen",
     "adsAndOffers":"Ads & offers"
 }
