@@ -1,7 +1,10 @@
 import 'dart:async';
+import 'dart:io';
+import 'package:c4d/module_orders/request/payment/paymnet_status_request.dart';
 import 'package:c4d/module_subscription/hive/subscription_pref.dart';
 import 'package:c4d/module_subscription/model/subscription_balance_model.dart';
 import 'package:c4d/module_subscription/service/subscription_service.dart';
+import 'package:c4d/utils/helpers/in_app_purchase.dart';
 import 'package:c4d/utils/logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -20,7 +23,6 @@ import 'package:c4d/module_notifications/service/fire_notification_service/fire_
 import 'package:c4d/module_orders/model/company_info_model.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
-import 'package:c4d/module_orders/request/payment/paymnet_status_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/state_manager/new_order/new_order.state_manager.dart';
 import 'package:c4d/module_orders/state_manager/owner_orders/owner_orders.state_manager.dart';
@@ -424,37 +426,41 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          if (welcomeDialogWithoutPayment) {
-                            Logger().info('payment test', 'without Payment');
-                            Navigator.pop(context);
+                      Visibility(
+                        visible: !welcomeDialogWithoutPayment,
+                        child: InAppPurchaseButton(
+                          callBack: (succeeded) {
+                            Logger().info('payment test', 'with Payment');
+                            // TODO: uncomment this
                             _ordersService.makePayment(
                               PaymentStatusRequest(
                                 status: 1,
                                 paymentFor: 228,
+                                amount: 2.99,
+                                paymentType: 229,
+                                paymentGetaway: Platform.isAndroid ? 226 : 225,
+                                paymentId: null,
                               ),
                             );
-                          } else {
-                            Logger().info('payment test', 'with Payment');
-                            // TODO: make payment here (ammount 2.99, in app parches, 228)
-                            CustomFlushBarHelper.createError(
-                                    title: S.current.warnning,
-                                    message:
-                                        'الدفع غير مطبق هنا بعد, سيتم ارسال دفعة فارغة')
-                                .show(context);
-                            // Navigator.pop(context);
+                          },
+                        ),
+                        replacement: ElevatedButton(
+                          onPressed: () {
+                            Logger().info('payment test', 'without Payment');
+                            Navigator.pop(context);
+                            // TODO: uncomment this
                             // _ordersService.makePayment(
                             //   PaymentStatusRequest(
                             //     status: 1,
                             //     paymentFor: 228,
+                            //     paymentType: 231
                             //   ),
                             // );
-                          }
-                        },
-                        child: Text(S.current.getItNow),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xffFF6F42),
+                          },
+                          child: Text(S.current.getItNow),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xffFF6F42),
+                          ),
                         ),
                       ),
                     ],

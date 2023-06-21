@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:io';
+import 'package:c4d/generated/l10n.dart';
 import 'package:flutter/material.dart';
 import 'package:in_app_purchase/in_app_purchase.dart';
 import 'package:in_app_purchase_android/in_app_purchase_android.dart';
@@ -22,7 +23,7 @@ const List<String> _kProductIds = <String>[
 ];
 
 class InAppPurchaseButton extends StatefulWidget {
-  final Function(bool) callBack;
+  final Function(bool succeeded) callBack;
   @override
   State<InAppPurchaseButton> createState() => _InAppPurchaseButtonState();
   InAppPurchaseButton({required this.callBack});
@@ -126,7 +127,12 @@ class _InAppPurchaseButtonState extends State<InAppPurchaseButton> {
     final List<Widget> stack = <Widget>[];
     if (_queryProductError == null) {
       stack.add(ElevatedButton(
-          onPressed: () => _buyProducts(_products.first), child: Text('Buy')));
+        onPressed: () => _buyProducts(_products.first),
+        child: Text(S.current.getItNow),
+        style: ElevatedButton.styleFrom(
+          backgroundColor: Color(0xffFF6F42),
+        ),
+      ));
     } else {
       stack.add(Center(
         child: Text(_queryProductError!),

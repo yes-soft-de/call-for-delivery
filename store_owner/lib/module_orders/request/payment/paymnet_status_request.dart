@@ -19,10 +19,10 @@ class PaymentStatusRequest {
   num? amount;
 
   /// id, token or key that related to the payment
-  int? paymentId;
+  String? paymentId;
 
   /// optional
-  int? clientAddress;
+  String? clientAddress;
 
   /// for this app it will by 229 or 231
   /// 
@@ -39,22 +39,29 @@ class PaymentStatusRequest {
 
   PaymentStatusRequest({
     required this.status,
-    this.paymentFor,
-    this.paymentGetaway,
-    this.amount,
-    this.paymentId,
+    required this.paymentFor,
+    required this.paymentGetaway,
+    required this.amount,
+    required this.paymentId,
+    required this.paymentType,
     this.clientAddress,
-    this.paymentType = 229,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'status': status,
+      if(paymentFor != null)
       'paymentFor': paymentFor,
+      if(paymentGetaway != null)
       'paymentGetaway': paymentGetaway,
+      if(amount != null)
       'amount': amount,
+      if(paymentId != null)
       'paymentId': paymentId,
+      if(clientAddress != null)
       'clientAddress': clientAddress,
+      if(paymentType != null)
+      'paymentType': paymentType,
     };
   }
 
@@ -62,12 +69,11 @@ class PaymentStatusRequest {
     return PaymentStatusRequest(
       status: (map['status'] ?? 0) as int,
       paymentFor: map['paymentFor'] != null ? map['paymentFor'] as int : null,
-      paymentGetaway:
-          map['paymentGetaway'] != null ? map['paymentGetaway'] as int : null,
-      amount: map['amount'] != null ? map['amount'] as int : null,
-      paymentId: map['paymentId'] != null ? map['paymentId'] as int : null,
-      clientAddress:
-          map['clientAddress'] != null ? map['clientAddress'] as int : null,
+      paymentGetaway: map['paymentGetaway'] != null ? map['paymentGetaway'] as int : null,
+      amount: map['amount'] != null ? map['amount'] as num : null,
+      paymentId: map['paymentId'] != null ? map['paymentId'] as String : null,
+      clientAddress: map['clientAddress'] != null ? map['clientAddress'] as String : null,
+      paymentType: map['paymentType'] != null ? map['paymentType'] as int : null,
     );
   }
 
@@ -80,9 +86,10 @@ class PaymentStatusRequest {
     int? status,
     int? paymentFor,
     int? paymentGetaway,
-    int? amount,
-    int? paymentId,
-    int? clientAddress,
+    num? amount,
+    String? paymentId,
+    String? clientAddress,
+    int? paymentType,
   }) {
     return PaymentStatusRequest(
       status: status ?? this.status,
@@ -91,6 +98,7 @@ class PaymentStatusRequest {
       amount: amount ?? this.amount,
       paymentId: paymentId ?? this.paymentId,
       clientAddress: clientAddress ?? this.clientAddress,
+      paymentType: paymentType ?? this.paymentType,
     );
   }
 }
