@@ -2246,6 +2246,11 @@ class AdminOrderService
                     $response[$key]['captainName'] = $value[0]->getCaptainId()->getCaptainName();
                     $response[$key]['images'] = $this->uploadFileHelperService->getImageParams($value['captainProfileImage']);
                     $response[$key]['createdAt'] = $value[0]->getCaptainId()->getCreatedAt();
+
+                } else {
+                    $response[$key]['id'] = 1;
+                    $response[$key]['captainName'] = "مرسول";
+                    $response[$key]['createdAt'] = $value[0]->getCreatedAt();
                 }
                 $response[$key]['orderId'] = $value[0]->getId();
                 $response[$key]['orderDeliveredAt'] = $this->getDeliveredStateOrderLogCreatedAtForAdminByOrderId($response[$key]['orderId']);
