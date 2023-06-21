@@ -247,6 +247,7 @@ class AdminOrderService
                 foreach ($externallyDeliveredOrders as $key2 => $value2) {
                     $response[$key]->externalDeliveredOrders[$key2]['id'] = $value2->getId();
                     $response[$key]->externalDeliveredOrders[$key2]['companyName'] = $value2->getExternalDeliveryCompany()->getCompanyName();
+                    $response[$key]->externalDeliveredOrders[$key2]['externalOrderId'] = $value2->getExternalOrderId();
                 }
             }
         }
@@ -303,6 +304,7 @@ class AdminOrderService
                 foreach ($externallyDeliveredOrders as $key => $value) {
                     $order['externalDeliveredOrders'][$key]['id'] = $value->getId();
                     $order['externalDeliveredOrders'][$key]['companyName'] = $value->getExternalDeliveryCompany()->getCompanyName();
+                    $order['externalDeliveredOrders'][$key]['externalOrderId'] = $value->getExternalOrderId();
                 }
             }
         }
@@ -481,6 +483,7 @@ class AdminOrderService
                     foreach ($externallyDeliveredOrders as $key2 => $value2) {
                         $response[$key]->externalDeliveredOrders[$key2]['id'] = $value2->getId();
                         $response[$key]->externalDeliveredOrders[$key2]['companyName'] = $value2->getExternalDeliveryCompany()->getCompanyName();
+                        $response[$key]->externalDeliveredOrders[$key2]['externalOrderId'] = $value2->getExternalOrderId();
                     }
                 }
             }
@@ -640,6 +643,7 @@ class AdminOrderService
                     foreach ($externallyDeliveredOrders as $key2 => $value2) {
                         $response[$key]->externalDeliveredOrders[$key2]['id'] = $value2->getId();
                         $response[$key]->externalDeliveredOrders[$key2]['companyName'] = $value2->getExternalDeliveryCompany()->getCompanyName();
+                        $response[$key]->externalDeliveredOrders[$key2]['externalOrderId'] = $value2->getExternalOrderId();
                     }
                 }
             }
