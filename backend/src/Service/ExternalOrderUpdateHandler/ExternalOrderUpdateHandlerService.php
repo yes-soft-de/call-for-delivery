@@ -56,7 +56,8 @@ class ExternalOrderUpdateHandlerService
         // 1 compare status
         $orderStatus = $orderEntity->getState();
 
-        if ($externalStatus === MrsoolCompanyConstant::COURIER_PENDING_ORDER_STATUS_CONST) {
+        if (($externalStatus === MrsoolCompanyConstant::COURIER_PENDING_ORDER_STATUS_CONST)
+            || ($externalStatus === MrsoolCompanyConstant::EXPIRED_ORDER_STATUS_CONST)) {
             $orderStatus = OrderStateConstant::ORDER_STATE_PENDING;
 
         } elseif ($externalStatus === MrsoolCompanyConstant::COLLECTING_ORDER_STATUS_CONST) {
@@ -66,8 +67,7 @@ class ExternalOrderUpdateHandlerService
             || ($externalStatus === MrsoolCompanyConstant::DROPOFF_ARRIVED_ORDER_STATUS_CONST)) {
             $orderStatus = OrderStateConstant::ORDER_STATE_ONGOING;
 
-        } elseif (($externalStatus === MrsoolCompanyConstant::CANCELED_ORDER_STATUS_CONST)
-            || ($externalStatus === MrsoolCompanyConstant::EXPIRED_ORDER_STATUS_CONST)) {
+        } elseif ($externalStatus === MrsoolCompanyConstant::CANCELED_ORDER_STATUS_CONST) {
             $orderStatus = OrderStateConstant::ORDER_STATE_CANCEL;
 
         } elseif ($externalStatus === MrsoolCompanyConstant::DELIVERED_ORDER_STATUS_CONST) {
