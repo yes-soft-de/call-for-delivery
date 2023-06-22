@@ -12,15 +12,22 @@ use App\Request\Admin\StoreOwnerPreference\StoreOwnerPreferenceCreateByAdminRequ
 use App\Request\Admin\StoreOwnerPreference\StoreOwnerPreferenceUpdateByAdminRequest;
 use App\Response\Admin\StoreOwnerPreference\StoreOwnerPreferenceGetForAdminResponse;
 use App\Service\Admin\StoreOwner\AdminStoreOwnerProfileGetService;
+use App\Service\Subscription\SubscriptionDetailsGetService;
 
 class AdminStoreOwnerPreferenceService
 {
     public function __construct(
         private AutoMapping $autoMapping,
         private AdminStoreOwnerPreferenceManager $adminStoreOwnerPreferenceManager,
-        private AdminStoreOwnerProfileGetService $adminStoreOwnerProfileGetService
+        private AdminStoreOwnerProfileGetService $adminStoreOwnerProfileGetService,
+        private SubscriptionDetailsGetService $subscriptionDetailsGetService
     )
     {
+    }
+
+    public function getStoreSubscriptionCurrentPackageIdByStoreOwnerProfileId(int $storeOwnerProfileId): int
+    {
+        return $this->subscriptionDetailsGetService->getStoreSubscriptionCurrentPackageIdByStoreOwnerProfileId($storeOwnerProfileId);
     }
 
     public function getStoreOwnerProfileEntityByIdForAdmin(int $id): string|StoreOwnerProfileEntity
@@ -65,7 +72,21 @@ class AdminStoreOwnerPreferenceService
             return StoreOwnerPreferenceConstant::STORE_OWNER_PREFERENCE_NOT_EXIST_CONST;
         }
 
-        return $this->autoMapping->map(StoreOwnerPreferenceEntity::class, StoreOwnerPreferenceGetForAdminResponse::class,
+        $response = $this->autoMapping->map(StoreOwnerPreferenceEntity::class, StoreOwnerPreferenceGetForAdminResponse::class,
             $storeOwnerPreference);
+
+        // check if store passed the payment of the opening package subscription
+        // store pass the payment when it subscribed with the opening package or the uniform package
+        // or when the admin approve the pass
+        $storeOwnerProfile = $storeOwnerPreference->getStoreOwnerProfile();
+
+        $packageId = $this->getStoreSubscriptionCurrentPackageIdByStoreOwnerProfileId($storeOwnerProfile->getId());
+
+        if (($storeOwnerProfile->getOpeningSubscriptionWithoutPayment() === true)
+            || (($packageId === 18) || ($packageId === 19))) {
+            $response->openingPackagePaymentHasPassed = true;
+        }
+
+        return $response;
     }
 }
