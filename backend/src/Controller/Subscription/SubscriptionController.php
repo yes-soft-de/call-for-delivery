@@ -224,9 +224,7 @@ class SubscriptionController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *                @OA\Property(type="string", property="canCreateOrder"),
-     *                @OA\Property(type="string", property="subscriptionStatus"),
-     *                @OA\Property(type="number", property="percentageOfOrdersConsumed"),
+     *              ref=@Model(type="App\Response\Subscription\CanCreateOrderResponse")
      *        )
      *     )
      * )

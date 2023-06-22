@@ -7,6 +7,7 @@ use App\Constant\Notification\SubscriptionFirebaseNotificationConstant;
 use App\Constant\Order\OrderCostDefaultValueConstant;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
+use App\Constant\StoreOwnerPreference\StoreOwnerPreferenceConstant;
 use App\Constant\Subscription\SubscriptionDetailsConstant;
 use App\Constant\Subscription\SubscriptionFlagConstant;
 use App\Entity\PackageEntity;
@@ -397,19 +398,30 @@ class SubscriptionService
 
                             $item['packageName'] = $packageBalance->packageName;
                             $item['packageType'] = $packageBalance->packageType;
+                            $item['firstTimeSubscriptionWithUniformPackage'] = true;
 
                             return $this->autoMapping->map("array", CanCreateOrderResponse::class, $item);
                         }
                     }
                 }
 
-            }
-            elseif ($packageBalance->status === SubscriptionConstant::SUBSCRIBE_ACTIVE) {
+            } elseif ($packageBalance->status === SubscriptionConstant::SUBSCRIBE_ACTIVE) {
                 if ($packageBalance->packageId === 19) {
                     // check how much does store make orders
                     $ordersCostSum = $this->checkDeliveredOrdersCostTillNow($storeOwnerId);
 
-                    if ($ordersCostSum >= OrderCostDefaultValueConstant::ORDER_COST_LIMIT_CONST) {
+                    $subscriptionCostLimit = OrderCostDefaultValueConstant::ORDER_COST_LIMIT_CONST;
+
+                    $storeSubscriptionCostLimit = $this->getStoreOwnerPreferenceSubscriptionCostLimitByStoreOwnerUserId($storeOwnerId);
+
+                    if ($storeSubscriptionCostLimit) {
+                        if (($storeSubscriptionCostLimit !== StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS)
+                            && ($storeSubscriptionCostLimit !== StoreOwnerPreferenceConstant::STORE_OWNER_PREFERENCE_NOT_EXIST_CONST)) {
+                            $subscriptionCostLimit = $storeSubscriptionCostLimit;
+                        }
+                    }
+
+                    if ($ordersCostSum >= $subscriptionCostLimit) {
                         // de-activate the subscription till the store make the required payment
                         $subscriptionUpdateResult = $this->deActivateCurrentSubscriptionByStoreOwnerUserId($storeOwnerId);
 
@@ -427,7 +439,18 @@ class SubscriptionService
                     // check how much does store make orders
                     $ordersCostSum = $this->checkDeliveredOrdersCostTillNow($storeOwnerId);
 
-                    if ($ordersCostSum >= OrderCostDefaultValueConstant::ORDER_COST_LIMIT_CONST) {
+                    $subscriptionCostLimit = OrderCostDefaultValueConstant::ORDER_COST_LIMIT_CONST;
+
+                    $storeSubscriptionCostLimit = $this->getStoreOwnerPreferenceSubscriptionCostLimitByStoreOwnerUserId($storeOwnerId);
+
+                    if ($storeSubscriptionCostLimit) {
+                        if (($storeSubscriptionCostLimit !== StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS)
+                            && ($storeSubscriptionCostLimit !== StoreOwnerPreferenceConstant::STORE_OWNER_PREFERENCE_NOT_EXIST_CONST)) {
+                            $subscriptionCostLimit = $storeSubscriptionCostLimit;
+                        }
+                    }
+
+                    if ($ordersCostSum >= $subscriptionCostLimit) {
                         // re-check balance after ending subscription
                         $packageBalance = $this->packageBalance($storeOwnerId);
 
@@ -1301,6 +1324,12 @@ class SubscriptionService
         $response['subscriptionStatus'] = $subscription->getStatus();
         $response['subscriptionStartDate'] = $subscription->getStartDate();
 
+        $storePreferences = $subscription->getStoreOwner()->getStoreOwnerPreferenceEntity();
+
+        if ($storePreferences) {
+            $response['subscriptionCostLimit'] = $storePreferences->getSubscriptionCostLimit();
+        }
+
         $orders = $this->getDeliveredOrdersDeliveryCostFromSubscriptionStartDateTillNow($storeOwnerUserId,
             $subscription->getId());
 
@@ -1318,6 +1347,23 @@ class SubscriptionService
         }
 
         return $this->autoMapping->map('array', CurrentStoreSubscriptionBalanceGetResponse::class, $response);
+    }
+
+    public function getStoreOwnerPreferenceSubscriptionCostLimitByStoreOwnerUserId(int $storeOwnerUserId): float|int|string|null
+    {
+        $storeOwnerProfile = $this->getStoreOwnerProfileByStoreOwnerUserId($storeOwnerUserId);
+
+        if (! $storeOwnerProfile) {
+            return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
+        }
+
+        $storePreference = $storeOwnerProfile->getStoreOwnerPreferenceEntity();
+
+        if (! $storePreference) {
+            return StoreOwnerPreferenceConstant::STORE_OWNER_PREFERENCE_NOT_EXIST_CONST;
+        }
+
+        return $storePreference->getSubscriptionCostLimit();
     }
 }
  
