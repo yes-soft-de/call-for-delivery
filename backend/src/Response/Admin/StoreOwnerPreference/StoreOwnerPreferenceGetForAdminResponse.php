@@ -13,4 +13,6 @@ class StoreOwnerPreferenceGetForAdminResponse
     public DateTime $createdAt;
 
     public DateTime $updatedAt;
+
+    public bool $openingPackagePaymentHasPassed = false;
 }
