@@ -38,6 +38,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "لم يتمكن الخادم من العثور على طلبك"),
         "SubscriptionInactive": MessageLookupByLibrary.simpleMessage(
             "اشتراكك غير مفعل بعد الرجاء انتظار التفعيل من قبل الإدارة"),
+        "YouHaveUsedUpTheEntireWelcomePack":
+            MessageLookupByLibrary.simpleMessage(
+                "استهلكت كامل الباقة الترحيبية"),
         "about": MessageLookupByLibrary.simpleMessage("حول"),
         "accept": MessageLookupByLibrary.simpleMessage("اقبل"),
         "acceptOrder": MessageLookupByLibrary.simpleMessage("قبول الطلب"),
@@ -986,6 +989,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "terms": MessageLookupByLibrary.simpleMessage("الاستخدام"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
+        "theCostWillBe": MessageLookupByLibrary.simpleMessage(
+            "سيتم الآن احتساب التكلفة بناء على خطة العمل الحالية:\n\nسعر الطلب الافتتاحي: 14 ريال\nالتكلفة عن كل 1 كم: 1 ريال"),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك إنشاء طلب جديد لعدم وجود فروع خاصة بمتجرك"),
         "thereIsNoUserWithThisNumber":

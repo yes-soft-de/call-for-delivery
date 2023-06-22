@@ -7469,6 +7469,26 @@ class S {
       args: [],
     );
   }
+
+  /// `You have used up the entire welcome pack`
+  String get YouHaveUsedUpTheEntireWelcomePack {
+    return Intl.message(
+      'You have used up the entire welcome pack',
+      name: 'YouHaveUsedUpTheEntireWelcomePack',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The cost will now be calculated based on the current business plan:\nThe opening asking price is 14 riyals\nCost per 1 km. 1 riyal`
+  String get theCostWillBe {
+    return Intl.message(
+      'The cost will now be calculated based on the current business plan:\nThe opening asking price is 14 riyals\nCost per 1 km. 1 riyal',
+      name: 'theCostWillBe',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

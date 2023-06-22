@@ -37,6 +37,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Data not found"),
         "SubscriptionInactive": MessageLookupByLibrary.simpleMessage(
             "Your subscription not activate yet please wait"),
+        "YouHaveUsedUpTheEntireWelcomePack":
+            MessageLookupByLibrary.simpleMessage(
+                "You have used up the entire welcome pack"),
         "about": MessageLookupByLibrary.simpleMessage("About"),
         "accept": MessageLookupByLibrary.simpleMessage("Accept"),
         "acceptOrder": MessageLookupByLibrary.simpleMessage("Accept Order"),
@@ -993,6 +996,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "terms": MessageLookupByLibrary.simpleMessage("terms of use"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Terms of Service"),
+        "theCostWillBe": MessageLookupByLibrary.simpleMessage(
+            "The cost will now be calculated based on the current business plan:\nThe opening asking price is 14 riyals\nCost per 1 km. 1 riyal"),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
             "There is no branches available"),
         "thereIsNoUserWithThisNumber": MessageLookupByLibrary.simpleMessage(
