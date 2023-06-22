@@ -77,6 +77,14 @@ class ActionTypeLogsHelper {
         return S.current.updateDeliveryCostBecauseKMAddedDirectly;
       case 38:
         return S.current.updateDeliveryCostBecauseClientLocationBeenUpdated;
+      case 39:
+        return S.current.sendOrderAutomaticToTheExternalCompanyBecauseHeMeetWithCompanyStander;
+      case 40:
+        return S.current.sendOrderToExternalCompanyByAdmin;
+      case 41:
+        return S.current.NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST;
+      case 42:
+        return S.current.updateOrderStatusByMarsool;
       default:
         return S.current.unknownAction + ' !${orderLog}';
     }
