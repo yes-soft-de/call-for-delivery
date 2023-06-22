@@ -92,6 +92,10 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     widget._stateManager.initDrawerData();
   }
 
+  void makePayment(PaymentStatusRequest request) {
+    widget._stateManager.makePayment(this, request);
+  }
+
   bool featureFlag = true;
 
   bool openedBottom = false;
@@ -137,6 +141,9 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
         setState(() {});
         if (status?.hasToPay ?? false) {
           paymentDialog(context);
+        }
+        if (status?.firstTimeSubscriptionWithUniformPackage ?? false) {
+          subscribeInTheUniversalPackageDialog(context);
         }
       }
     });
@@ -432,7 +439,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                           callBack: (succeeded) {
                             Logger().info('payment test', 'with Payment');
                             // TODO: uncomment this
-                            _ordersService.makePayment(
+                            makePayment(
                               PaymentStatusRequest(
                                 status: 1,
                                 paymentFor: 228,
@@ -448,7 +455,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                           onPressed: () {
                             Logger().info('payment test', 'without Payment');
                             Navigator.pop(context);
-                            _ordersService.makePayment(
+                            makePayment(
                               PaymentStatusRequest(
                                 status: 1,
                                 paymentFor: 228,

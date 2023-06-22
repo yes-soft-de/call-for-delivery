@@ -12,12 +12,14 @@ import 'package:c4d/module_my_notifications/ui/widget/update_dialog.dart';
 import 'package:c4d/module_orders/model/company_info_model.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
+import 'package:c4d/module_orders/request/payment/paymnet_status_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/ui/screens/orders/owner_orders_screen.dart';
 import 'package:c4d/module_orders/ui/state/owner_orders/orders.state.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_subscription/model/can_make_order_model.dart';
 import 'package:c4d/module_subscription/service/subscription_service.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -195,6 +197,7 @@ class OwnerOrdersStateManager {
             unlimitedPackage: false,
             packageType: -1,
             hasToPay: false,
+            firstTimeSubscriptionWithUniformPackage: false,
           ),
         );
       } else {
@@ -204,6 +207,21 @@ class OwnerOrdersStateManager {
     } catch (e) {
       return;
     }
+  }
+
+  void makePayment(
+      OwnerOrdersScreenState screenState, PaymentStatusRequest request) {
+    _ordersService.makePayment(request).then(
+      (value) {
+        if (value.hasError) {
+          CustomFlushBarHelper.createError(
+                  title: S.current.warnning, message: value.error ?? '')
+              .show(screenState.context);
+        } else {
+          screenState.refresh();
+        }
+      },
+    );
   }
 
   void watcher(OwnerOrdersScreenState screenState, [bool loading = false]) {

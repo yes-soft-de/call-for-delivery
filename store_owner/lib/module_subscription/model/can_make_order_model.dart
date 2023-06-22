@@ -10,6 +10,7 @@ class CanMakeOrderModel extends DataModel {
   late bool consumingAlert;
   late bool unlimitedPackage;
   late bool hasToPay;
+  late bool firstTimeSubscriptionWithUniformPackage;
   late int packageType;
 
   CanMakeOrderModel({
@@ -20,6 +21,7 @@ class CanMakeOrderModel extends DataModel {
     required this.unlimitedPackage,
     required this.packageType,
     required this.hasToPay,
+    required this.firstTimeSubscriptionWithUniformPackage,
   });
 
   late CanMakeOrderModel _model;
@@ -35,6 +37,8 @@ class CanMakeOrderModel extends DataModel {
           data?.packageName == 'الباقة الذهبية Ultimate' ? true : false,
       packageType: data?.packageType ?? -1,
       hasToPay: data?.hasToPay ?? false,
+      firstTimeSubscriptionWithUniformPackage:
+          data?.firstTimeSubscriptionWithUniformPackage ?? false,
     );
     // alert detect
     var total = _model.percentageOfOrdersConsumed.replaceAll('%', ' ').trim();
