@@ -26,6 +26,8 @@ class StatusCodeHelper {
         return S.current.accountAlreadyExist;
       case '9106':
         return S.current.youCannotMakePaymentThereIsNoOrderCash;
+      case '9163':
+        return S.current.thereIsNoSettingFotThisStore;
       case '9603':
         return S.current.yourRequestToChangeCaptainPlanFailed;
       case '9355':

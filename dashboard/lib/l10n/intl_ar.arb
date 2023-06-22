@@ -1049,5 +1049,7 @@
     "editStoreSetting": "تعديل اعدادات المتجر",
     "storeSetting": "اعدادات المتجر",
     "enterTheMaxLimitThatAreAllowedToStoreDues": "ادخل الحد الاعلى للمستحقات المسموحة للمتجر",
+    "thereIsNoSettingFotThisStore": "لا يوجد اعدادات مسبقة لهذا المتجر",
+    "areYouSureThatYouWantToUpdateTheSettingOf": "هل انت متاكد من تعديل اعدادت ",
     "dev": "المطورين"
 }

@@ -3,8 +3,9 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/model/store_profile_model.dart';
 import 'package:c4d/module_stores/request/create_store_request.dart';
+import 'package:c4d/module_stores/request/edit_store_setting_request.dart';
+import 'package:c4d/module_stores/request/welcome_package_payment_request.dart';
 import 'package:c4d/module_stores/state_manager/edit_store_setting_state_manager.dart';
-import 'package:c4d/module_stores/ui/state/edit_store_setting_state_loaded.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -25,10 +26,17 @@ class EditStoreSettingScreenState extends State<EditStoreSettingScreen> {
   late StoreProfileModel model;
   int currentIndex = 0;
   bool refreshThePreviousScreen = false;
+  bool shouldCreateNewSetting = false;
 
   @override
   void initState() {
     currentState = LoadingState(this);
+    widget.stateManager.stateStream.listen((event) {
+      currentState = event;
+      if (mounted) {
+        setState(() {});
+      }
+    });
     super.initState();
   }
 
@@ -40,6 +48,18 @@ class EditStoreSettingScreenState extends State<EditStoreSettingScreen> {
     if (mounted) setState(() {});
   }
 
+  void updateWelcomePackagePayment(
+    WelcomePackagePaymentRequest request, [
+    bool loading = false,
+  ]) {
+    widget.stateManager
+        .updateWelcomePackagePayment(this, request, model.id, loading);
+  }
+
+  void createOrUpdateStoreSetting(EditStoreSettingRequest request) {
+    widget.stateManager.createOrEditStoreSetting(this, request);
+  }
+
   @override
   Widget build(BuildContext context) {
     if (flag) {
@@ -47,8 +67,9 @@ class EditStoreSettingScreenState extends State<EditStoreSettingScreen> {
       if (args.length > 0) {
         model = args[0] as StoreProfileModel;
         flag = false;
+        widget.stateManager.getStoreSetting(this);
       }
-      currentState = EditStoreSettingStateLoaded(this, model);
+      currentState = LoadingState(this);
     }
     return WillPopScope(
       onWillPop: () async {

@@ -169,6 +169,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "areYouSureThatYouWantToAssignThisOrderTo":
             MessageLookupByLibrary.simpleMessage(
                 "هل انت متاكد من اسناد هذا  الطلب الى "),
+        "areYouSureThatYouWantToUpdateTheSettingOf":
+            MessageLookupByLibrary.simpleMessage(
+                "هل انت متاكد من تعديل اعدادت "),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد بإنك تريد حذف هذه الدفعة"),
         "areYouWantToDeleteAllPayments": MessageLookupByLibrary.simpleMessage(
@@ -1489,6 +1492,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "لا يمكن اسناد هذا الطلب لهذا الكابتن , لأن الطلب مخفي"),
         "thereIsNoBranches":
             MessageLookupByLibrary.simpleMessage("لا يوجد أفرع متاحة"),
+        "thereIsNoSettingFotThisStore": MessageLookupByLibrary.simpleMessage(
+            "لا يوجد اعدادات مسبقة لهذا المتجر"),
         "thereIsNoValidSubscription":
             MessageLookupByLibrary.simpleMessage("لا يوجد اشتراك صالح للمتجر"),
         "thisErrorHappened":

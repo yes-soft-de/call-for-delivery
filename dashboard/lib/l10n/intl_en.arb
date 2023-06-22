@@ -1050,5 +1050,7 @@
     "editStoreSetting": "edit store setting",
     "storeSetting": "store setting",
     "enterTheMaxLimitThatAreAllowedToStoreDues": "enter the max limit that are allowed to store dues",
+    "thereIsNoSettingFotThisStore": "there is no setting for this store",
+    "areYouSureThatYouWantToUpdateTheSettingOf": "are you sure that you want to update the setting of",
     "dev": "Dev"
 }

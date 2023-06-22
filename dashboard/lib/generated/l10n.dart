@@ -10550,6 +10550,26 @@ class S {
     );
   }
 
+  /// `there is no setting for this store`
+  String get thereIsNoSettingFotThisStore {
+    return Intl.message(
+      'there is no setting for this store',
+      name: 'thereIsNoSettingFotThisStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `are you sure that you want to update the setting of`
+  String get areYouSureThatYouWantToUpdateTheSettingOf {
+    return Intl.message(
+      'are you sure that you want to update the setting of',
+      name: 'areYouSureThatYouWantToUpdateTheSettingOf',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

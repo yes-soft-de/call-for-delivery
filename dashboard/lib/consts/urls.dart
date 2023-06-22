@@ -162,8 +162,15 @@ class Urls {
 
   static const STORES_DUES =
       '$BASE_API_ORDER_CASH_FINANCE/filterstoreduesumfromcashorderbyadmin';
+
   static const STORE_DUES =
       '$BASE_API_ORDER_CASH_FINANCE/filterstoreduefromcashordermonthlybyadmin';
+
+  static const STORE_PREFERENCE_BY_ADMIN =
+      '$DOMAIN$VERSION_ADMIN/storeownerpreference/storeownerpreferencebyadmin';
+
+  static const STORE_PREFERENCE_FOR_ADMIN =
+      '$DOMAIN$VERSION_ADMIN/storeownerpreference/storeownerpreferenceforadmin';
 
   static const FILTER_OWNER_ORDERS_API =
       BASE_API_ORDER + '/filterordersbyadmin';

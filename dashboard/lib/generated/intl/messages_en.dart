@@ -167,6 +167,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "areYouSureThatYouWantToAssignThisOrderTo":
             MessageLookupByLibrary.simpleMessage(
                 "are you sure that you want to assign this order to"),
+        "areYouSureThatYouWantToUpdateTheSettingOf":
+            MessageLookupByLibrary.simpleMessage(
+                "are you sure that you want to update the setting of"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete this payment"),
         "areYouWantToDeleteAllPayments": MessageLookupByLibrary.simpleMessage(
@@ -1500,6 +1503,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "This order cannot be assigned to this captain because the request is hidden"),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
             "There is no branches available"),
+        "thereIsNoSettingFotThisStore": MessageLookupByLibrary.simpleMessage(
+            "there is no setting for this store"),
         "thereIsNoValidSubscription": MessageLookupByLibrary.simpleMessage(
             "There is no valid subscription"),
         "thisErrorHappened":
