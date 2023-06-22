@@ -152,7 +152,7 @@ class OrderController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $result = $this->orderService->createOrder($request);
+        $result = $this->orderService->createOrder($request, $this->getUserId());
       
         if ($result === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
       
@@ -1544,7 +1544,7 @@ class OrderController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $result = $this->orderService->createSubOrder($request);
+        $result = $this->orderService->createSubOrder($request, $this->getUserId());
     
         if ($result === SubscriptionConstant::CAN_NOT_CREATE_SUB_ORDER) {
       

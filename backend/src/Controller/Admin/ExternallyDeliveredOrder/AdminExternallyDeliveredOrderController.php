@@ -129,7 +129,7 @@ class AdminExternallyDeliveredOrderController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $result = $this->adminExternallyDeliveredOrderService->createExternallyDeliveredOrderByAdmin($request);
+        $result = $this->adminExternallyDeliveredOrderService->createExternallyDeliveredOrderByAdmin($request, $this->getUserId());
 
 //        if ($result === AppFeatureResultConstant::APP_FEATURE_NOT_FOUND_CONST) {
 //            return $this->response(MainErrorConstant::ERROR_MSG, self::APP_FEATURE_NOT_FOUND_CONST);
