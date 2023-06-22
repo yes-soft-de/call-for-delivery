@@ -256,8 +256,6 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                       } else if (status?.status == S.current.inactiveStore) {
                         Fluttertoast.showToast(msg: S.current.inactiveStore);
                       } else {
-                        Navigator.of(context).pushNamed(
-                            SubscriptionsRoutes.SUBSCRIPTIONS_SCREEN);
                         CustomFlushBarHelper.createError(
                                 title: S.current.warnning,
                                 message:

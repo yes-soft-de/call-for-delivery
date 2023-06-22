@@ -1,5 +1,7 @@
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/ui/widgets/owner_order_card/icon_info_button.dart';
+import 'package:c4d/module_subscription/hive/subscription_pref.dart';
 import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:flutter/material.dart';
@@ -166,7 +168,7 @@ class OwnerOrderCard extends StatelessWidget {
                         S.current.sar),
                 Icon(
                   icon ?? Icons.arrow_circle_left_outlined,
-                  color: Theme.of(context).textTheme.button?.color,
+                  color: Theme.of(context).textTheme.labelLarge?.color,
                 )
               ],
             ),
@@ -177,8 +179,12 @@ class OwnerOrderCard extends StatelessWidget {
                 visible: isHide == 3,
                 child: InkWell(
                   onTap: () {
-                    Navigator.of(context)
-                        .pushNamed(SubscriptionsRoutes.SUBSCRIPTIONS_SCREEN);
+                    var isOldStorePlan =
+                        getIt<SubscriptionPref>().getIsOldSubscriptionPlan();
+                    if (isOldStorePlan) {
+                      Navigator.of(context)
+                          .pushNamed(SubscriptionsRoutes.SUBSCRIPTIONS_SCREEN);
+                    }
                   },
                   child: Row(
                     children: [
@@ -246,19 +252,19 @@ class OwnerOrderCard extends StatelessWidget {
           title,
           style: TextStyle(
               fontWeight: FontWeight.bold,
-              color: Theme.of(context).textTheme.button?.color),
+              color: Theme.of(context).textTheme.labelLarge?.color),
         ),
         Text(subtitle,
             style: Theme.of(context)
                 .textTheme
-                .button
+                .labelLarge
                 ?.copyWith(fontWeight: FontWeight.normal)),
       ],
     );
   }
 
   Widget divider(context) {
-    Color dividerColor = Theme.of(context).textTheme.button!.color!;
+    Color dividerColor = Theme.of(context).textTheme.labelLarge!.color!;
     return Divider(
       thickness: 2,
       indent: 16,

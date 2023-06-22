@@ -216,7 +216,6 @@ class OrdersService {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
-    _authPrefsHelper.setNewAccount(false);
     return DataModel.empty();
   }
 }

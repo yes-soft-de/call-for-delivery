@@ -253,8 +253,9 @@ class AuthService {
   Future<void> accountStatus() async {
     var response = await _authManager.accountStatus();
     if (response?.statusCode != '200') {
+      _prefsHelper.setNewAccount(false);
       switch (response?.statusCode) {
-        // account  subscript with free plan  
+        // account  subscript with free plan
         case '9161':
           _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
 
@@ -282,7 +283,9 @@ class AuthService {
         // new account haven't subscribe with free plan yet
         case '9162':
           _prefsHelper.setNewAccount(true);
-          _prefsHelper.setOpenWelcomeDialogWithoutPayment(response?.data['openingSubscriptionWithoutPayment'] as bool? ?? false );
+          _prefsHelper.setOpenWelcomeDialogWithoutPayment(
+              response?.data['openingSubscriptionWithoutPayment'] as bool? ??
+                  false);
           _prefsHelper.setUserCompetedProfile(OrdersRoutes.OWNER_ORDERS_SCREEN);
           break;
 
