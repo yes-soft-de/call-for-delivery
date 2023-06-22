@@ -7320,13 +7320,13 @@ class S {
     );
   }
 
-  /// `you have to pay when you reach 100 sar`
-  String get youHaveToPayWhen {
+  /// `you have to pay when you reach {limit} sar`
+  String youHaveToPayWhen(String limit) {
     return Intl.message(
-      'you have to pay when you reach 100 sar',
+      'you have to pay when you reach $limit sar',
       name: 'youHaveToPayWhen',
-      desc: '',
-      args: [],
+      desc: 'The conventional newborn programmer greeting',
+      args: [limit],
     );
   }
 

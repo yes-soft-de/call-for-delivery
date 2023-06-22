@@ -20,6 +20,8 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(limit) => "you have to pay when you reach ${limit} sar";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "BestStores": MessageLookupByLibrary.simpleMessage("Best Stores"),
@@ -1140,8 +1142,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "You have products from other store , Do you want to clear your cart and add the new ones"),
         "youHaveToFillTheFormFirst": MessageLookupByLibrary.simpleMessage(
             "you have to fill the form first"),
-        "youHaveToPayWhen": MessageLookupByLibrary.simpleMessage(
-            "you have to pay when you reach 100 sar"),
+        "youHaveToPayWhen": m0,
         "youSubscribedWithOffer": MessageLookupByLibrary.simpleMessage(
             "You already subscribed with captain offer , You can subscribe again when your subscription expired"),
         "yourBalance": MessageLookupByLibrary.simpleMessage("your balance"),

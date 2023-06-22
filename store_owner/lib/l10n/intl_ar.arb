@@ -727,7 +727,15 @@
     "youHaveNotExceededTheLimitYet" : "لم تتخطى الحد المسموح بعد",
     "youHaveExceededTheLimit" : "لقد تخطيت الحد المسموح",
     "every1KM" : "كل 1 كم",
-    "youHaveToPayWhen" : "سيتوجب عليك الدفع عند بلوغ استهلاكك 100 ريال",
+    "youHaveToPayWhen" : "سيتوجب عليك الدفع عند بلوغ استهلاكك {limit} ريال",
+    "@youHaveToPayWhen": {
+        "description": "The conventional newborn programmer greeting",
+        "placeholders": {
+                    "limit": {
+                        "type": "String"
+                    }
+                }
+    },
     "welcomePlanOffer" : "مبروك  لقد حصلت على باقة ترحيبية \n لتوصيل طلب واحد \n مقابل 2.99 ريال فقط",
     "welcomePlanOfferWithoutPayment" : "مبروك  لقد حصلت على باقة ترحيبية \n لتوصيل طلب واحد \n مجانا",
     "currentCycleDetails" : "معلومات الدورة الحالية",

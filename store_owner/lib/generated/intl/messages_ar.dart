@@ -20,6 +20,9 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
+  static String m0(limit) =>
+      "سيتوجب عليك الدفع عند بلوغ استهلاكك ${limit} ريال";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "BestStores": MessageLookupByLibrary.simpleMessage("أفضل المتاجر"),
@@ -1129,8 +1132,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "السلة تحتوي على أصناف من متجر آخر , هل تريد حذف أصناف السلة وإضافة الأصناف الجديدة"),
         "youHaveToFillTheFormFirst": MessageLookupByLibrary.simpleMessage(
             "يتوجب ادخال البيانات التالية:"),
-        "youHaveToPayWhen": MessageLookupByLibrary.simpleMessage(
-            "سيتوجب عليك الدفع عند بلوغ استهلاكك 100 ريال"),
+        "youHaveToPayWhen": m0,
         "youSubscribedWithOffer": MessageLookupByLibrary.simpleMessage(
             "لديك اشتراك في عرض الكابتن مفعل ، سيمكنك الاشتراك مرة أخرى بعد انتهاء مدة الاشتراك"),
         "yourBalance": MessageLookupByLibrary.simpleMessage("رصيدك"),

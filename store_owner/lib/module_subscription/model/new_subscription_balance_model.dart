@@ -10,6 +10,7 @@ class NewSubscriptionBalanceModel extends DataModel {
   late num toBePayed;
   late num openPriceOrder;
   late num costPerKM;
+  late num subscriptionCostLimit;
   late bool hasToPay;
   late DateTime startDate;
 
@@ -21,6 +22,7 @@ class NewSubscriptionBalanceModel extends DataModel {
     required this.costPerKM,
     required this.hasToPay,
     required this.startDate,
+    required this.subscriptionCostLimit,
   });
   late NewSubscriptionBalanceModel _balance;
 
@@ -33,6 +35,7 @@ class NewSubscriptionBalanceModel extends DataModel {
       openPriceOrder: data?.openPriceOrder ?? -1,
       orderCount: data?.orderCount ?? -1,
       toBePayed: data?.toBePayed ?? -1,
+      subscriptionCostLimit: data?.subscriptionCostLimit ?? -1,
       hasToPay: data?.hasToPay ?? false,
       startDate: DateHelper.convert(data?.startDate?.timestamp),
     );

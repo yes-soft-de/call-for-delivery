@@ -44,7 +44,6 @@ class NewSubscriptionBalanceLoadedState extends States {
                               paymentFor: 229,
                               paymentGetaway: 227,
                               paymentType: 229,
-                               
                             ));
                             CustomFlushBarHelper.createSuccess(
                               title: S.current.warnning,
@@ -292,10 +291,9 @@ class PlanDetailsCard extends StatelessWidget {
                     SizedBox(height: 10),
                     Divider(indent: 20, endIndent: 20),
                     SizedBox(height: 10),
-
-                    // TODO: you must edit this if it was from backend
                     Text(
-                      S.current.youHaveToPayWhen,
+                      S.current.youHaveToPayWhen(
+                          balance.subscriptionCostLimit.toString()),
                       style: Theme.of(context)
                           .textTheme
                           .bodyMedium

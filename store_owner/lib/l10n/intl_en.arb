@@ -727,7 +727,15 @@
     "youHaveNotExceededTheLimitYet" : "you have not exceeded the limit yet",
     "youHaveExceededTheLimit" : "have exceeded the limit",
     "every1KM" : "every 1 km",
-    "youHaveToPayWhen" : "you have to pay when you reach 100 sar",
+    "youHaveToPayWhen" : "you have to pay when you reach {limit} sar",
+    "@youHaveToPayWhen": {
+        "description": "The conventional newborn programmer greeting",
+        "placeholders": {
+                    "limit": {
+                        "type": "String"
+                    }
+                }
+    },
     "welcomePlanOffer" : "Congratulations, you have received a welcome package for delivering one order for only 2.99 riyal",
     "welcomePlanOfferWithoutPayment" : "Congratulations, you have received a welcome package for delivering one order for free",
     "currentCycleDetails" : "current cycle details",

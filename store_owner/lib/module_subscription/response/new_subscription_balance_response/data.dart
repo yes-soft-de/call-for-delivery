@@ -7,6 +7,7 @@ class Data {
   num? toBePayed;
   num? openPriceOrder;
   num? costPerKM;
+  num? subscriptionCostLimit;
   bool? hasToPay;
 
   Data({
@@ -17,6 +18,7 @@ class Data {
     this.orderCount,
     this.toBePayed,
     this.hasToPay,
+    this.subscriptionCostLimit,
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
@@ -29,6 +31,7 @@ class Data {
         openPriceOrder: json['openingOrderCost'] as num?,
         orderCount: json['deliveredOrdersCount'] as num?,
         toBePayed: json['deliveredOrdersCostsSum'] as num?,
+        subscriptionCostLimit: json['subscriptionCostLimit'] as num?,
         hasToPay: json['hasToPay'] as bool?,
       );
 }
