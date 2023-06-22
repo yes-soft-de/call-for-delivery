@@ -31,7 +31,6 @@ import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_settings/setting_routes.dart';
 import 'package:c4d/module_subscription/model/can_make_order_model.dart';
-import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/navigator_menu/navigator_menu.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
@@ -449,14 +448,16 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                           onPressed: () {
                             Logger().info('payment test', 'without Payment');
                             Navigator.pop(context);
-                            // TODO: uncomment this
-                            // _ordersService.makePayment(
-                            //   PaymentStatusRequest(
-                            //     status: 1,
-                            //     paymentFor: 228,
-                            //     paymentType: 231
-                            //   ),
-                            // );
+                            _ordersService.makePayment(
+                              PaymentStatusRequest(
+                                status: 1,
+                                paymentFor: 228,
+                                paymentType: 231,
+                                amount: null,
+                                paymentGetaway: null,
+                                paymentId: null,
+                              ),
+                            );
                           },
                           child: Text(S.current.getItNow),
                           style: ElevatedButton.styleFrom(
