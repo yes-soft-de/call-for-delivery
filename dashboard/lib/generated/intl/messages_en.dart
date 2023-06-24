@@ -34,6 +34,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Last created delivery"),
         "LastDeliveredDelivery":
             MessageLookupByLibrary.simpleMessage("Last delivered delivery"),
+        "NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST":
+            MessageLookupByLibrary.simpleMessage(
+                "update order status in response to check it status from us"),
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("distance in KM"),
         "StatusCodeNotFound":
@@ -1348,6 +1351,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "seller": MessageLookupByLibrary.simpleMessage("Saller"),
         "send": MessageLookupByLibrary.simpleMessage("Send"),
         "sendMeCode": MessageLookupByLibrary.simpleMessage("Send me code"),
+        "sendOrderAutomaticToTheExternalCompanyBecauseHeMeetWithCompanyStander":
+            MessageLookupByLibrary.simpleMessage(
+                "send order automatic to the external company because he meet with company stander"),
+        "sendOrderToExternalCompanyByAdmin":
+            MessageLookupByLibrary.simpleMessage(
+                "send order to external company by admin"),
+        "sendSubOrderAutomaticToTheExternalCompanyBecauseHeMeetWithCompanyStander":
+            MessageLookupByLibrary.simpleMessage(
+                "send sub order automatic to the external company because he meet with company stander"),
         "sendTo": MessageLookupByLibrary.simpleMessage("Send to"),
         "settingName": MessageLookupByLibrary.simpleMessage("settings name"),
         "settings": MessageLookupByLibrary.simpleMessage("Settings"),
@@ -1591,6 +1603,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "You can update your order item from this interface"),
         "updateOrderState":
             MessageLookupByLibrary.simpleMessage("Update order state"),
+        "updateOrderStatusByMarsool": MessageLookupByLibrary.simpleMessage(
+            "update order status by marsool"),
         "updateOrderStatusSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Order status updated successfully"),
         "updateOrderSuccess":
