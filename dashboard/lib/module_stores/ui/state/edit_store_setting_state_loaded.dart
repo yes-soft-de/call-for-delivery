@@ -126,51 +126,54 @@ class EditStoreSettingStateLoaded extends States {
                   ),
                 ),
                 SizedBox(height: 30),
-                Card(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        SizedBox(width: double.infinity, height: 20),
-                        Text(
-                          S.current.skipPaymentStageForWelcomePackage,
-                          style:
-                              Theme.of(context).textTheme.titleMedium?.copyWith(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 15,
-                                  ),
-                        ),
-                        SizedBox(height: 20),
-                        SizedBox(
-                          width: MediaQuery.sizeOf(context).width * 0.6,
-                          child: ElevatedButton(
-                            child: Text(S.current.skip),
-                            onPressed: () {
-                              showConfirmDialog(
-                                context,
-                                hasCancelButton: true,
-                                title: S.current.attention,
-                                message:
-                                    '${S.current.areYouSureAboutSkipPaymentStageFor} ${profile.storeOwnerName}',
-                                confirmButtonTitle: Text(S.current.confirm,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyMedium
-                                        ?.copyWith(color: Colors.black)),
-                                confirmButtonColor: Colors.amber,
-                                onConfirm: () {
-                                  screenState.updateWelcomePackagePayment(
-                                      WelcomePackagePaymentRequest(
-                                    id: profile.id,
-                                    openingSubscriptionWithoutPayment: true,
-                                  ));
-                                },
-                              );
-                            },
+                Visibility(
+                  visible: !setting.openingPackagePaymentHasPassed,
+                  child: Card(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        children: [
+                          SizedBox(width: double.infinity, height: 20),
+                          Text(
+                            S.current.skipPaymentStageForWelcomePackage,
+                            style:
+                                Theme.of(context).textTheme.titleMedium?.copyWith(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 15,
+                                    ),
                           ),
-                        ),
-                        SizedBox(height: 20),
-                      ],
+                          SizedBox(height: 20),
+                          SizedBox(
+                            width: MediaQuery.sizeOf(context).width * 0.6,
+                            child: ElevatedButton(
+                              child: Text(S.current.skip),
+                              onPressed: () {
+                                showConfirmDialog(
+                                  context,
+                                  hasCancelButton: true,
+                                  title: S.current.attention,
+                                  message:
+                                      '${S.current.areYouSureAboutSkipPaymentStageFor} ${profile.storeOwnerName}',
+                                  confirmButtonTitle: Text(S.current.confirm,
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .bodyMedium
+                                          ?.copyWith(color: Colors.black)),
+                                  confirmButtonColor: Colors.amber,
+                                  onConfirm: () {
+                                    screenState.updateWelcomePackagePayment(
+                                        WelcomePackagePaymentRequest(
+                                      id: profile.id,
+                                      openingSubscriptionWithoutPayment: true,
+                                    ));
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                        ],
+                      ),
                     ),
                   ),
                 ),

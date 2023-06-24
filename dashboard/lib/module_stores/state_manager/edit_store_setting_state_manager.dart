@@ -36,7 +36,11 @@ class EditStoreSettingStateManager {
             screenState, value.error ?? S.current.errorHappened, loading);
       } else {
         showSnackSuccess(
-            screenState, S.current.dataUpdatedSuccessfully, loading);
+          screenState,
+          S.current.dataUpdatedSuccessfully,
+          false,
+        );
+        getStoreSetting(screenState, true);
       }
     });
   }
