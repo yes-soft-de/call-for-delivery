@@ -19,6 +19,7 @@ import 'package:c4d/module_orders/ui/state/owner_orders/orders.state.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_subscription/model/can_make_order_model.dart';
 import 'package:c4d/module_subscription/service/subscription_service.dart';
+import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
@@ -218,7 +219,8 @@ class OwnerOrdersStateManager {
                   title: S.current.warnning, message: value.error ?? '')
               .show(screenState.context);
         } else {
-          screenState.refresh();
+          getIt<GlobalStateManager>().update();
+          showWelcomeDialogIfNeeded(screenState);
         }
       },
     );
