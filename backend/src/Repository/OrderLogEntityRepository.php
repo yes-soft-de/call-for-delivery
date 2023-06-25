@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\Image\ImageUseAsConstant;
 use App\Constant\OrderLog\OrderLogCreatedByUserTypeConstant;
+use App\Entity\ExternalDeliveryCompanyEntity;
 use App\Entity\ImageEntity;
 use App\Entity\AdminProfileEntity;
 use App\Entity\CaptainEntity;
@@ -233,6 +234,29 @@ class OrderLogEntityRepository extends ServiceEntityRepository
                         'supplierProfileEntity',
                         Join::WITH,
                         'supplierProfileEntity.user = userEntity.id'
+                    )
+
+                    ->andWhere('orderLogEntity.id = :id')
+                    ->setParameter('id', $value['id'])
+
+                    ->getQuery()
+                    ->getSingleColumnResult();
+
+                if (count($createdByName) !== 0) {
+                    $orderLogs[$key]['createdBy'] = $createdByName[0];
+                }
+
+                $orderLogs[$key]['createdBy'] = (string) $orderLogs[$key]['createdBy'];
+
+            } elseif ($value['createdByUserType'] === OrderLogCreatedByUserTypeConstant::MARSOOL_EXTERNAL_DELIVERY_COMPANY_CONST) {
+                $createdByName = $this->createQueryBuilder('orderLogEntity')
+                    ->select('externalDeliveryCompanyEntity.companyName')
+
+                    ->leftJoin(
+                        ExternalDeliveryCompanyEntity::class,
+                        'externalDeliveryCompanyEntity',
+                        Join::WITH,
+                        'externalDeliveryCompanyEntity.id = orderLogEntity.createdBy'
                     )
 
                     ->andWhere('orderLogEntity.id = :id')

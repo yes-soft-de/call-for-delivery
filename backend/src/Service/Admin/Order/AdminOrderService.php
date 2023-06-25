@@ -5,7 +5,10 @@ namespace App\Service\Admin\Order;
 use App\AutoMapping;
 use App\Constant\Admin\AdminProfileConstant;
 use App\Constant\Admin\Report\Statistics\StatisticsConstant;
+use App\Constant\AppFeature\AppFeatureResultConstant;
+use App\Constant\ExternalDeliveryCompany\ExternalDeliveryCompanyResultConstant;
 use App\Constant\ExternalDeliveryCompany\Mrsool\MrsoolCompanyConstant;
+use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaResultConstant;
 use App\Constant\ExternallyDeliveredOrder\ExternallyDeliveredOrderConstant;
 use App\Constant\HTTP\HttpResponseConstant;
 use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificationAppTypeConstant;
@@ -193,7 +196,7 @@ class AdminOrderService
         return $this->adminOrderManager->getAllOrdersCountForAdmin();
     }
 
-    public function filterStoreOrdersByAdmin(OrderFilterByAdminRequest $request): ?array
+    public function filterStoreOrdersByAdmin(OrderFilterByAdminRequest $request, int $adminUserId): ?array
     {
         $response = [];
         // 1 Get uncancelled and undelivered external orders from OrderEntity
@@ -217,6 +220,11 @@ class AdminOrderService
                                 $externalOrderInfo['data']['status']);
                             // Update order status in OrderEntity
                             $this->compareAndUpdateOrderState($order, $externalOrderInfo['data']['status']);
+
+                            // save log of the action on order
+                            $this->createOrderLogMessageViaOrderEntityAndByAdmin($order, $adminUserId,
+                                OrderLogActionTypeConstant::NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST,
+                                ['externalCompanyName' => $externallyDeliveredOrder->getExternalDeliveryCompany()->getCompanyName()]);
                         }
                     }
                 }
@@ -552,6 +560,11 @@ class AdminOrderService
                                 $externalOrderInfo['data']['status']);
                             // 4 Update order status in OrderEntity
                             $this->compareAndUpdateOrderState($order, $externalOrderInfo['data']['status']);
+
+                            // save log of the action on order
+                            $this->createOrderLogMessageViaOrderEntityAndByAdmin($order, $userId,
+                                OrderLogActionTypeConstant::NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST,
+                                ['externalCompanyName' => $externallyDeliveredOrder->getExternalDeliveryCompany()->getCompanyName()]);
                         }
                     }
                 }
@@ -881,7 +894,22 @@ class AdminOrderService
                 null);
 
             // send order to external delivery company
-            $this->sendOrderToExternalDeliveryCompany($order);
+            $externalOrder = $this->sendOrderToExternalDeliveryCompany($order);
+
+            if (($externalOrder !== AppFeatureResultConstant::APP_FEATURE_NOT_FOUND_CONST)
+                && ($externalOrder !== AppFeatureResultConstant::APP_FEATURE_NOT_ACTIVATED_CONST)
+                && ($externalOrder !== ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_NOT_FOUND_CONST)
+                && ($externalOrder !== ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST)
+                && ($externalOrder !== ExternalDeliveryCompanyCriteriaResultConstant::ORDER_DOES_NOT_MATCH_CRITERIA_RESULT)
+                && ($externalOrder !== ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_IS_NOT_REGISTERED_CONST)
+                && ($externalOrder !== HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
+                && ($externalOrder !== HttpResponseConstant::INVALID_INPUT_RESULT_CODE_CONST)
+                && ($externalOrder !== HttpResponseConstant::UN_RECOGNIZED_STATUS_CODE_RESULT_CONST)) {
+                // save log of the action on order
+                $this->createOrderLogMessageViaOrderEntityAndByAdmin($order, $userId,
+                    OrderLogActionTypeConstant::AUTOMATIC_SENDING_NORMAL_ORDER_EXTERNALLY_CONST,
+                    ['externalCompanyName' => $externalOrder->getExternalDeliveryCompany()->getCompanyName()]);
+            }
 
             //create firebase notification to store
             try{
@@ -2313,6 +2341,11 @@ class AdminOrderService
                                 $externalOrderInfo['data']['status']);
                             // Update order status in OrderEntity
                             $this->compareAndUpdateOrderState($order, $externalOrderInfo['data']['status']);
+
+                            // save log of the action on order
+                            $this->createOrderLogMessageViaOrderEntityAndByAdmin($order, $userId,
+                                OrderLogActionTypeConstant::NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST,
+                                ['externalCompanyName' => $externallyDeliveredOrder->getExternalDeliveryCompany()->getCompanyName()]);
                         }
                     }
                 }

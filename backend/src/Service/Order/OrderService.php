@@ -3,7 +3,11 @@
 namespace App\Service\Order;
 
 use App\AutoMapping;
+use App\Constant\AppFeature\AppFeatureResultConstant;
 use App\Constant\Eraser\EraserResultConstant;
+use App\Constant\ExternalDeliveryCompany\ExternalDeliveryCompanyResultConstant;
+use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaResultConstant;
+use App\Constant\HTTP\HttpResponseConstant;
 use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificationAppTypeConstant;
 use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificationMessageConstant;
 use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificationTitleConstant;
@@ -134,7 +138,7 @@ class OrderService
     {
     }
 
-    public function createOrder(OrderCreateRequest $request): OrderResponse|CanCreateOrderResponse|string
+    public function createOrder(OrderCreateRequest $request, int $storeOwnerUserId): OrderResponse|CanCreateOrderResponse|string
     {
         if (new DateTime($request->getDeliveryDate()) < new DateTime('now')) {
             // we set the delivery date equals to current datetime + 3 minutes just for affording the late in persisting the order
@@ -176,7 +180,22 @@ class OrderService
                 null);
 
             // send order to external delivery company
-            $this->sendOrderToExternalDeliveryCompany($order);
+            $externalOrder = $this->sendOrderToExternalDeliveryCompany($order);
+
+            if (($externalOrder !== AppFeatureResultConstant::APP_FEATURE_NOT_FOUND_CONST)
+                && ($externalOrder !== AppFeatureResultConstant::APP_FEATURE_NOT_ACTIVATED_CONST)
+                && ($externalOrder !== ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_NOT_FOUND_CONST)
+                && ($externalOrder !== ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST)
+                && ($externalOrder !== ExternalDeliveryCompanyCriteriaResultConstant::ORDER_DOES_NOT_MATCH_CRITERIA_RESULT)
+                && ($externalOrder !== ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_IS_NOT_REGISTERED_CONST)
+                && ($externalOrder !== HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
+                && ($externalOrder !== HttpResponseConstant::INVALID_INPUT_RESULT_CODE_CONST)
+                && ($externalOrder !== HttpResponseConstant::UN_RECOGNIZED_STATUS_CODE_RESULT_CONST)) {
+                // save log of the action on order
+                $this->createOrderLogMessageByOrderEntityAndUser($order, $storeOwnerUserId, OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
+                    OrderLogActionTypeConstant::AUTOMATIC_SENDING_NORMAL_ORDER_EXTERNALLY_CONST,
+                    ['externalCompanyName' => $externalOrder->getExternalDeliveryCompany()->getCompanyName()]);
+            }
 
             //create firebase notification to store
             try {
@@ -1188,7 +1207,7 @@ class OrderService
         return $this->autoMapping->map(OrderEntity::class, OrderUpdatePaidToProviderResponse::class, $order);
     }
 
-    public function createSubOrder(SubOrderCreateRequest $request): OrderResponse|string
+    public function createSubOrder(SubOrderCreateRequest $request, int $storeOwnerUserId): OrderResponse|string
     {
         $packageBalance = $this->subscriptionService->packageBalance($request->getStoreOwner());
 
@@ -1240,7 +1259,22 @@ class OrderService
                 null);
 
             // send order to external delivery company
-            $this->sendOrderToExternalDeliveryCompany($order);
+            $externalOrder = $this->sendOrderToExternalDeliveryCompany($order);
+
+            if (($externalOrder !== AppFeatureResultConstant::APP_FEATURE_NOT_FOUND_CONST)
+                && ($externalOrder !== AppFeatureResultConstant::APP_FEATURE_NOT_ACTIVATED_CONST)
+                && ($externalOrder !== ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_NOT_FOUND_CONST)
+                && ($externalOrder !== ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST)
+                && ($externalOrder !== ExternalDeliveryCompanyCriteriaResultConstant::ORDER_DOES_NOT_MATCH_CRITERIA_RESULT)
+                && ($externalOrder !== ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_IS_NOT_REGISTERED_CONST)
+                && ($externalOrder !== HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
+                && ($externalOrder !== HttpResponseConstant::INVALID_INPUT_RESULT_CODE_CONST)
+                && ($externalOrder !== HttpResponseConstant::UN_RECOGNIZED_STATUS_CODE_RESULT_CONST)) {
+                // save log of the action on order
+                $this->createOrderLogMessageByOrderEntityAndUser($order, $storeOwnerUserId, OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
+                    OrderLogActionTypeConstant::AUTOMATIC_SENDING_NORMAL_SUB_ORDER_EXTERNALLY_CONST,
+                    ['externalCompanyName' => $externalOrder->getExternalDeliveryCompany()->getCompanyName()]);
+            }
 
             try {
                 // create firebase notification to store
