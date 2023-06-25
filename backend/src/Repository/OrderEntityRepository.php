@@ -162,8 +162,9 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function filterStoreOrders(OrderFilterRequest $request, $storeOwner): ?array
     {
         $query = $this->createQueryBuilder('orderEntity')
-            ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate',
-                'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.isHide', 'orderEntity.orderIsMain', 'storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
+//            ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate',
+//                'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.isHide', 'orderEntity.orderIsMain')
+            ->addSelect('storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
                 'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
 
             ->andWhere('orderEntity.storeOwner = :storeOwnerId')
@@ -203,9 +204,9 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             if ($orders) {
                 foreach ($orders as $order) {
-                    if ($order['state'] === OrderStateConstant::ORDER_STATE_DELIVERED) {
-                        if (! empty($this->checkIfMainOrderHasUnDeliveredSubOrders($order['id']))) {
-                            $response[] = $order['id'];
+                    if ($order[0]->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                        if (! empty($this->checkIfMainOrderHasUnDeliveredSubOrders($order[0]->getId()))) {
+                            $response[] = $order[0]->getId();
                         }
                     }
                 }
@@ -221,7 +222,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
             $tempQuery = $query->getQuery()->getResult();
 
-            return $this->filterOrdersByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
+            return $this->filterOrdersEntitiesByOptionalDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
         }
 
         return $query->getQuery()->getResult();
