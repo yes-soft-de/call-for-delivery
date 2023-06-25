@@ -66,6 +66,11 @@ class EPaymentCreateByStoreOwnerRequest
         $this->paymentFor = $paymentFor;
     }
 
+    public function getPaymentFor(): ?int
+    {
+        return $this->paymentFor;
+    }
+
     public function setPaymentGetaway(?int $paymentGetaway): void
     {
         $this->paymentGetaway = $paymentGetaway;

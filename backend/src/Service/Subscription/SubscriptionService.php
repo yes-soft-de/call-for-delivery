@@ -1185,7 +1185,7 @@ class SubscriptionService
         return $this->subscriptionManager->getPackageEntityById($id);
     }
 
-    public function createSubscriptionWithFreePackage(int $storeOwnerUserId): string|int|SubscriptionEntity
+    public function createSubscriptionWithFreePackage(int $storeOwnerUserId): string|int|SubscriptionEntity|SubscriptionResponse
     {
         $freePackage = $this->getPackageEntityById(18);
 
