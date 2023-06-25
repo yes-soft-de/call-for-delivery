@@ -21,6 +21,7 @@ final class OrderLogCreatedByUserTypeConstant
         self::SUPER_ADMIN_USER_TYPE_CONST => "سوبر أدمن ",
         self::CAPTAIN_USER_TYPE_CONST => "الكابتن ",
         self::STORE_OWNER_USER_TYPE_CONST => "صاحب المتجر ",
-        self::ADMIN_USER_TYPE_CONST => "المدير "
+        self::ADMIN_USER_TYPE_CONST => "المدير ",
+        self::MARSOOL_EXTERNAL_DELIVERY_COMPANY_CONST => "مرسول"
     ];
 }
