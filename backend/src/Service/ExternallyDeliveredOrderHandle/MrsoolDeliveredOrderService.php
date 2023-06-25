@@ -54,16 +54,34 @@ class MrsoolDeliveredOrderService
 
         if ((! $orderCost) || ($orderCost == 0)) {
             if ($orderEntity->getStoreOwner()->getId() === 42) {
-                $orderCost = 49;
+                $orderCostsArray = [49, 50, 60, 65, 70, 75, 80, 85, 90, 95, 100, 110, 120, 130];
+                $orderCost = $orderCostsArray[array_rand($orderCostsArray)];
 
             } elseif ($orderEntity->getStoreOwner()->getId() === 2) {
-                $orderCost = 60;
+                $orderCostsArray = [80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200];
+                $orderCost = $orderCostsArray[array_rand($orderCostsArray)];
 
             } elseif ($orderEntity->getStoreOwner()->getId() === 111) {
-                $orderCost = 115;
+                $orderCostsArray = [60, 65, 70, 75, 80, 85, 90, 95, 100, 150, 200];
+                $orderCost = $orderCostsArray[array_rand($orderCostsArray)];
 
             } elseif ($orderEntity->getStoreOwner()->getId() === 282) {
+                $orderCostsArray = [60, 65, 70, 75, 80, 85, 90, 95, 100];
+                $orderCost = $orderCostsArray[array_rand($orderCostsArray)];
+
+            } elseif ($orderEntity->getStoreOwner()->getId() === 29) {
                 $orderCost = 70;
+
+            } elseif (($orderEntity->getStoreOwner()->getId() === 73)
+                || ($orderEntity->getStoreOwner()->getId() === 89)
+                || ($orderEntity->getStoreOwner()->getId() === 173)
+                || ($orderEntity->getStoreOwner()->getId() === 193)
+                || ($orderEntity->getStoreOwner()->getId() === 203)
+                || ($orderEntity->getStoreOwner()->getId() === 207)
+                || ($orderEntity->getStoreOwner()->getId() === 283)
+                || ($orderEntity->getStoreOwner()->getId() === 291)) {
+                $orderCostsArray = [60, 65, 70, 75, 80, 85, 90, 95, 100];
+                $orderCost = $orderCostsArray[array_rand($orderCostsArray)];
             }
         }
 
