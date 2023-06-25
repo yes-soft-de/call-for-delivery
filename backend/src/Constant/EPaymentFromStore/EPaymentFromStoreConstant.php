@@ -12,7 +12,10 @@ final class EPaymentFromStoreConstant
     const PAYMENT_GETAWAY_TAP_PAYMENT_CONST = 227;
 
     // payment for what
+    // the payment is for opening package
     const PAYMENT_FOR_SUBSCRIPTION_CONST = 228;
+    // the payment is for uniform subscription
+    const PAYMENT_FOR_UNIFORM_SUBSCRIPTION_CONST = 229;
 
     // payment type
     const REAL_PAYMENT_BY_STORE_CONST = 229;

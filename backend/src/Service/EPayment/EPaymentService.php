@@ -7,11 +7,15 @@ use App\Constant\EPaymentFromStore\EPaymentFromStoreConstant;
 use App\Constant\Package\PackageConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\Subscription\SubscriptionConstant;
+use App\Constant\Subscription\SubscriptionDetailsConstant;
 use App\Constant\Subscription\SubscriptionFlagConstant;
 use App\Entity\StoreOwnerProfileEntity;
+use App\Entity\SubscriptionDetailsEntity;
 use App\Entity\SubscriptionEntity;
 use App\Manager\EPaymentFromStore\EPaymentFromStoreManager;
 use App\Request\EPayment\EPaymentCreateByStoreOwnerRequest;
+use App\Request\Subscription\SubscriptionCreateRequest;
+use App\Response\Subscription\SubscriptionErrorResponse;
 use App\Response\Subscription\SubscriptionResponse;
 use App\Service\StoreOwner\StoreOwnerProfileGetService;
 use App\Service\Subscription\SubscriptionService;
@@ -42,7 +46,7 @@ class EPaymentService
         return $this->storeOwnerProfileGetService->getStoreOwnerProfileById($getStoreOwnerProfile);
     }
 
-    public function createEPaymentByStoreOwner(EPaymentCreateByStoreOwnerRequest $request): SubscriptionResponse|int|string
+    public function createEPaymentByStoreOwner(EPaymentCreateByStoreOwnerRequest $request): SubscriptionResponse|int|string|SubscriptionErrorResponse
     {
         if ($request->getStatus() === 1) {
             // update the flag field of the last finished subscription to isPaid
@@ -63,28 +67,76 @@ class EPaymentService
                 SubscriptionFlagConstant::SUBSCRIPTION_FLAG_PAID);
 
             // create new subscription
-            $subscription = $this->subscriptionService->createSubscriptionWithFreePackage($storeOwnerProfile->getStoreOwnerId());
+            if ($request->getPaymentFor() === EPaymentFromStoreConstant::PAYMENT_FOR_SUBSCRIPTION_CONST) {
+                $subscription = $this->createSubscriptionWithFreePackage($storeOwnerProfile->getStoreOwnerId());
 
-            // create the payment if the store needs to pay to subscribe
-            if ($storeOwnerProfile->getOpeningSubscriptionWithoutPayment() === false) {
-                $request->setStoreOwnerProfile($storeOwnerProfile);
-                $request->setSubscription($subscription);
-
-                if (($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_ADMIN_CONST)
-                    || ($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_STORE_CONST)
-                    || ($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_SUPER_ADMIN_CONST)) {
-                    $request->setPaymentId("");
-                    $request->setAmount(0.0);
-                    $request->setPaymentGetaway(0);
-                    $request->setPaymentFor(0);
-                }
-
-                $this->ePaymentFromStoreManager->createEPaymentFromStore($request);
+            } elseif ($request->getPaymentFor() === EPaymentFromStoreConstant::PAYMENT_FOR_UNIFORM_SUBSCRIPTION_CONST) {
+                $subscription = $this->createSubscription($storeOwnerProfile->getStoreOwnerId(), 19);
             }
 
-            return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
+            if ($subscription) {
+                if (($subscription === SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND)
+                    || ($subscription instanceof SubscriptionErrorResponse)
+                    || ($subscription === PackageConstant::PACKAGE_NOT_EXIST)
+                    || ($subscription === SubscriptionConstant::SUBSCRIPTION_DOES_NOT_EXIST_CONST)) {
+                    return $subscription;
+                }
+
+                // create the payment if the store needs to pay to subscribe
+                if ($storeOwnerProfile->getOpeningSubscriptionWithoutPayment() === false) {
+                    $request->setStoreOwnerProfile($storeOwnerProfile);
+                    $request->setSubscription($subscription);
+
+                    if (($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_ADMIN_CONST)
+                        || ($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_STORE_CONST)
+                        || ($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_SUPER_ADMIN_CONST)) {
+                        $request->setPaymentId("");
+                        $request->setAmount(0.0);
+                        $request->setPaymentGetaway(0);
+                        $request->setPaymentFor(0);
+                    }
+
+                    $payment = $this->ePaymentFromStoreManager->createEPaymentFromStore($request);
+                }
+
+                return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
+            }
+
+            return SubscriptionConstant::SUBSCRIPTION_DOES_NOT_EXIST_CONST;
         }
 
         return 0;
+    }
+
+    public function createSubscriptionWithFreePackage(int $storeOwnerUserId)
+    {
+        return $this->subscriptionService->createSubscriptionWithFreePackage($storeOwnerUserId);
+    }
+
+    public function getSubscriptionDetailsEntityByStoreOwnerUserId(int $storeOwnerId): ?SubscriptionDetailsEntity
+    {
+        return $this->subscriptionService->getSubscriptionDetailsEntityByStoreOwnerUserId($storeOwnerId);
+    }
+
+    public function createSubscription(int $storeOwnerUserId, int $packageId): SubscriptionEntity|SubscriptionErrorResponse|int
+    {
+        $request = new SubscriptionCreateRequest();
+
+        $request->setStoreOwner($storeOwnerUserId);
+        $request->setPackage($packageId);
+
+        $subscription = $this->subscriptionService->createSubscription($request);
+
+        if ($subscription instanceof SubscriptionErrorResponse) {
+            return $subscription;
+        }
+
+        $currentSubscriptionDetails = $this->getSubscriptionDetailsEntityByStoreOwnerUserId($storeOwnerUserId);
+
+        if ($currentSubscriptionDetails) {
+            return $currentSubscriptionDetails->getLastSubscription();
+        }
+
+        return SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND;
     }
 }
