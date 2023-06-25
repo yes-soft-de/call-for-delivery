@@ -42,10 +42,10 @@ class Datum {
       isSpecificDate: json['isSpecificDate'] as bool?,
       fromDate: json['fromDate']['timestamp'] == null
           ? null
-          : DateHelper.convert(json['fromDate']['timestamp'] as int),
+          : DateHelper.convertUTC(json['fromDate']['timestamp'] as int),
       toDate: json['toDate']['timestamp'] == null
           ? null
-          : DateHelper.convert(json['toDate']['timestamp'] as int),
+          : DateHelper.convertUTC(json['toDate']['timestamp'] as int),
       isDistance: json['isDistance'] as int?,
       fromDistance: json['fromDistance'] as int?,
       toDistance: json['toDistance'] as int?,
