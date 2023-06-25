@@ -5,6 +5,7 @@ namespace App\Service\Admin\ExternallyDeliveredOrder;
 use App\AutoMapping;
 use App\Constant\AppFeature\AppFeatureResultConstant;
 use App\Constant\ExternalDeliveryCompany\ExternalDeliveryCompanyResultConstant;
+use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaResultConstant;
 use App\Constant\ExternalDeliveryCompany\Mrsool\MrsoolCompanyConstant;
 use App\Constant\HTTP\HttpResponseConstant;
 use App\Constant\Order\OrderResultConstant;
