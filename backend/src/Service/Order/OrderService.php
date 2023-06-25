@@ -330,11 +330,27 @@ class OrderService
 
         $orders = $this->orderManager->filterStoreOrders($request, $userId);
 
-        foreach ($orders as $order) {
+        foreach ($orders as $key => $value) {
+            $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderIdForStore($value[0]->getId());
 
-            $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderIdForStore($order['id']);
+            $response[$key] = $this->autoMapping->map(OrderEntity::class, OrdersResponse::class, $value[0]);
 
-            $response[] = $this->autoMapping->map("array", OrdersResponse::class, $order);
+            $response[$key]->storeOrderDetailsId = $value['storeOrderDetailsId'];
+            $response[$key]->destination = $value['destination'];
+            $response[$key]->recipientName = $value['recipientName'];
+            $response[$key]->recipientPhone = $value['recipientPhone'];
+            $response[$key]->detail = $value['detail'];
+            $response[$key]->storeOwnerBranchId = $value['storeOwnerBranchId'];
+            $response[$key]->location = $value['location'];
+            $response[$key]->branchName = $value['branchName'];
+
+            $externalOrders = $value[0]->getExternallyDeliveredOrderEntities()->toArray();
+
+            if (count($externalOrders) > 0) {
+                foreach ($externalOrders as $externalOrder) {
+                    $response[$key]->detail .= " - ".$externalOrder->getExternalOrderId();
+                }
+            }
         }
 
         return $response;
