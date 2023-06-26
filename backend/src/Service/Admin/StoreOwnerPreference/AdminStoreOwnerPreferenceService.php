@@ -64,22 +64,32 @@ class AdminStoreOwnerPreferenceService
             $storeOwnerPreference);
     }
 
-    public function getStoreOwnerPreferenceByStoreOwnerProfileId(int $storeOwnerProfileId): int|StoreOwnerPreferenceGetForAdminResponse
+    public function getStoreOwnerPreferenceGetForAdminResponseNewObject(): StoreOwnerPreferenceGetForAdminResponse
     {
-        $storeOwnerPreference = $this->adminStoreOwnerPreferenceManager->getStoreOwnerPreferenceByStoreOwnerProfileId($storeOwnerProfileId);
+        return new StoreOwnerPreferenceGetForAdminResponse();
+    }
 
-        if (! $storeOwnerPreference) {
-            return StoreOwnerPreferenceConstant::STORE_OWNER_PREFERENCE_NOT_EXIST_CONST;
+    public function getStoreOwnerPreferenceByStoreOwnerProfileId(int $storeOwnerProfileId): string|StoreOwnerPreferenceGetForAdminResponse
+    {
+        $storeOwnerProfile = $this->getStoreOwnerProfileEntityByIdForAdmin($storeOwnerProfileId);
+
+        if ($storeOwnerProfile === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS) {
+            return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
         }
 
-        $response = $this->autoMapping->map(StoreOwnerPreferenceEntity::class, StoreOwnerPreferenceGetForAdminResponse::class,
-            $storeOwnerPreference);
+        $storeOwnerPreference = $this->adminStoreOwnerPreferenceManager->getStoreOwnerPreferenceByStoreOwnerProfileId($storeOwnerProfileId);
+
+        if ($storeOwnerPreference) {
+            $response = $this->autoMapping->map(StoreOwnerPreferenceEntity::class, StoreOwnerPreferenceGetForAdminResponse::class,
+                $storeOwnerPreference);
+
+        } else {
+            $response = $this->getStoreOwnerPreferenceGetForAdminResponseNewObject();
+        }
 
         // check if store passed the payment of the opening package subscription
         // store pass the payment when it subscribed with the opening package or the uniform package
         // or when the admin approve the pass
-        $storeOwnerProfile = $storeOwnerPreference->getStoreOwnerProfile();
-
         $packageId = $this->getStoreSubscriptionCurrentPackageIdByStoreOwnerProfileId($storeOwnerProfile->getId());
 
         if (($storeOwnerProfile->getOpeningSubscriptionWithoutPayment() === true)
