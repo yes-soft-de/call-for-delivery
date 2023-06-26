@@ -144,7 +144,9 @@ class SubscriptionService
     {
        $checkSubscription = $this->checkValidityOfSubscription($storeOwnerId);
       
-       if($checkSubscription === SubscriptionConstant::UNSUBSCRIBED || $checkSubscription === SubscriptionConstant::ORDERS_FINISHED|| $checkSubscription === SubscriptionConstant::DATE_FINISHED) {
+       if($checkSubscription === SubscriptionConstant::UNSUBSCRIBED
+           || $checkSubscription === SubscriptionConstant::ORDERS_FINISHED
+           || $checkSubscription === SubscriptionConstant::DATE_FINISHED) {
 
         //Is subscription for next time? yes -> update subscription current.
          return $this->updateIsFutureAndSubscriptionCurrent($storeOwnerId);
@@ -408,7 +410,7 @@ class SubscriptionService
             } elseif ($packageBalance->status === SubscriptionConstant::SUBSCRIBE_ACTIVE) {
                 if ($packageBalance->packageId === 19) {
                     // check how much does store make orders
-                    $ordersCostSum = $this->checkDeliveredOrdersCostTillNow($storeOwnerId);
+                    $ordersCostSum = $this->checkDeliveredOrdersCostTillNow($storeOwnerId, $packageBalance->id);
 
                     $subscriptionCostLimit = OrderCostDefaultValueConstant::ORDER_COST_LIMIT_CONST;
 
@@ -437,7 +439,7 @@ class SubscriptionService
             } elseif ($packageBalance->status === SubscriptionConstant::DATE_FINISHED) {
                 if ($packageBalance->packageId === 19) {
                     // check how much does store make orders
-                    $ordersCostSum = $this->checkDeliveredOrdersCostTillNow($storeOwnerId);
+                    $ordersCostSum = $this->checkDeliveredOrdersCostTillNow($storeOwnerId, $packageBalance->id);
 
                     $subscriptionCostLimit = OrderCostDefaultValueConstant::ORDER_COST_LIMIT_CONST;
 
@@ -1259,9 +1261,9 @@ class SubscriptionService
         }
     }
 
-    public function checkDeliveredOrdersCostTillNow(int $storeOwnerUserId): float
+    public function checkDeliveredOrdersCostTillNow(int $storeOwnerUserId, int $subscriptionId): float
     {
-        $ordersCostSum = $this->subscriptionManager->checkDeliveredOrdersCostTillNow($storeOwnerUserId);
+        $ordersCostSum = $this->subscriptionManager->checkDeliveredOrdersCostTillNow($storeOwnerUserId, $subscriptionId);
 
         if (count($ordersCostSum) === 0) {
             return 0.0;

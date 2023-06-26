@@ -469,9 +469,9 @@ class SubscriptionManager
         return $subscriptionEntity;
     }
 
-    public function checkDeliveredOrdersCostTillNow(int $storeOwnerUserId): array
+    public function checkDeliveredOrdersCostTillNow(int $storeOwnerUserId, int $subscriptionId): array
     {
-        return $this->subscribeRepository->checkDeliveredOrdersCostTillNow($storeOwnerUserId);
+        return $this->subscribeRepository->checkDeliveredOrdersCostTillNow($storeOwnerUserId, $subscriptionId);
     }
 
     public function updateSubscriptionStatusToDateFinishedBySubscriptionDetailsEntity(SubscriptionDetailsEntity $subscriptionDetailsEntity): SubscriptionDetailsEntity
