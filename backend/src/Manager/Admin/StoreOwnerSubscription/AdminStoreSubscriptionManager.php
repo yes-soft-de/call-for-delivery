@@ -114,4 +114,10 @@ class AdminStoreSubscriptionManager
 
         return $subscriptionEntity;
     }
+
+    public function getDeliveredOrdersDeliveryCostFromSubscriptionStartDateTillNow(int $storeOwnerProfileId, int $subscriptionId)
+    {
+        return $this->subscribeRepository->getDeliveredOrdersDeliveryCostFromSubscriptionStartDateTillNowForAdmin($storeOwnerProfileId,
+            $subscriptionId);
+    }
 }
