@@ -12,28 +12,17 @@ class CashOrdersPaidOrNotFilterByStoreResponse
 
     public string $storeOwnerName;
 
-    /**
-     * @var string|null
-     */
-    public $branchName;
+    public ?string $branchName;
 
-    /**
-     * @var string|null
-     */
-    public $captainName;
+    public ?string $captainName;
 
-    /**
-     * @var int|null
-     */
-    public $paidToProvider;
+    public ?int $paidToProvider;
 
-    /**
-     * @var int|null
-     */
-    public $isCashPaymentConfirmedByStore;
+    public ?int $isCashPaymentConfirmedByStore;
 
-    /**
-     * @var DateTime|null
-     */
-    public $isCashPaymentConfirmedByStoreUpdateDate;
+    public ?DateTime $isCashPaymentConfirmedByStoreUpdateDate;
+
+    public ?float $orderCost;
+
+    public ?DateTime $deliveryDate;
 }

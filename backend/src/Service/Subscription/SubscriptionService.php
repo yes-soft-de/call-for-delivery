@@ -1338,9 +1338,11 @@ class SubscriptionService
         $ordersCount = count($orders);
 
         if ($ordersCount > 0) {
-
             $response['deliveredOrdersCount'] = $ordersCount;
-            $response['deliveredOrdersCostsSum'] = array_sum($orders);
+
+            foreach ($orders as $order) {
+                $response['deliveredOrdersCostsSum'] += $order['deliveryCost'];
+            }
 
             if (($response['deliveredOrdersCostsSum'] >= OrderCostDefaultValueConstant::ORDER_COST_LIMIT_CONST)
                 && ($subscription->getFlag() === SubscriptionFlagConstant::SUBSCRIPTION_FLAG_UNPAID)) {

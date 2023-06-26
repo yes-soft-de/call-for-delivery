@@ -87,15 +87,34 @@ class AdminStoreSubscriptionService
            $totalExtraDistance = $this->subscriptionService->getTotalExtraDistance($subscription['ordersExceedGeographicalRange'],
                (float)$subscription['packageGeographicalRange']);
 
-           //if package is on order
-           if ($subscription['packageType'] === PackageConstant::PACKAGE_TYPE_ON_ORDER) {
-               $subscription['total'] = $this->subscriptionService->getTotalWithPackageOnOrder($subscription['paymentsFromStore'],
-                   $subscription['packageCost'], $subscription['captainOffers'], (float)$subscription['packageExtraCost'],
-                   $totalExtraDistance, $subscription['id']);
+           if ($subscription['packageId'] === 18) {
+               $subscription['total'] = 0.0;
+
+           } elseif ($subscription['packageId'] === 19) {
+               $ordersCosts = $this->getDeliveredOrdersDeliveryCostFromSubscriptionStartDateTillNow($storeId, $subscription['id']);
+
+               if (count($ordersCosts) > 0) {
+                   $subscription['total'] = 0.0;
+
+                   foreach ($ordersCosts as $orderCost) {
+                       $subscription['total'] += $orderCost['deliveryCost'];
+                   }
+
+               } else {
+                   $subscription['total'] = 0.0;
+               }
 
            } else {
-               $subscription['total'] = $this->getTotal($subscription['paymentsFromStore'], $subscription['packageCost'],
-                   $subscription['captainOffers'], (float)$subscription['packageExtraCost'], $totalExtraDistance);
+               //if package is on order
+               if ($subscription['packageType'] === PackageConstant::PACKAGE_TYPE_ON_ORDER) {
+                   $subscription['total'] = $this->subscriptionService->getTotalWithPackageOnOrder($subscription['paymentsFromStore'],
+                       $subscription['packageCost'], $subscription['captainOffers'], (float)$subscription['packageExtraCost'],
+                       $totalExtraDistance, $subscription['id']);
+
+               } else {
+                   $subscription['total'] = $this->getTotal($subscription['paymentsFromStore'], $subscription['packageCost'],
+                       $subscription['captainOffers'], (float)$subscription['packageExtraCost'], $totalExtraDistance);
+               }
            }
 
            if (($subscription['isCurrent'] === 0)
@@ -529,5 +548,11 @@ class AdminStoreSubscriptionService
 
         return $this->autoMapping->map(SubscriptionDetailsEntity::class, SubscriptionRemainingCarsUpdateByAdminResponse::class,
             $subscriptionDetailsResult);
+    }
+
+    public function getDeliveredOrdersDeliveryCostFromSubscriptionStartDateTillNow(int $storeOwnerProfileId, int $subscriptionId): array
+    {
+        return $this->adminStoreSubscriptionManager->getDeliveredOrdersDeliveryCostFromSubscriptionStartDateTillNow($storeOwnerProfileId,
+            $subscriptionId);
     }
 }
