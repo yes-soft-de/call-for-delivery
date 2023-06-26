@@ -3,7 +3,7 @@ import 'package:c4d/module_stores/response/store_setting_response/store_setting_
 
 class StoreSettingModel extends DataModel {
   late int id;
-  late int subscriptionCostLimit;
+  late int? subscriptionCostLimit;
   late bool openingPackagePaymentHasPassed;
 
   StoreSettingModel? _models;
@@ -16,14 +16,14 @@ class StoreSettingModel extends DataModel {
 
   StoreSettingModel.empty()
       : id = -1,
-        subscriptionCostLimit = 100,
+        subscriptionCostLimit = null,
         openingPackagePaymentHasPassed = false;
 
   StoreSettingModel.withData(StoreSettingResponse response) : super.withData() {
     var data = response.data;
     _models = StoreSettingModel(
       id: data?.id ?? -1,
-      subscriptionCostLimit: data?.subscriptionCostLimit ?? 100,
+      subscriptionCostLimit: data?.subscriptionCostLimit,
       openingPackagePaymentHasPassed:
           data?.openingPackagePaymentHasPassed ?? false,
     );
