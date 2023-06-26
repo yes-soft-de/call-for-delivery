@@ -18,7 +18,7 @@ class EditStoreSettingStateLoaded extends States {
 
   EditStoreSettingStateLoaded(this.screenState, this.profile, this.setting)
       : super(screenState) {
-    maxLimitController.text = setting.subscriptionCostLimit.toString();
+    maxLimitController.text = setting.subscriptionCostLimit?.toString() ?? '';
   }
 
   @override
@@ -136,11 +136,13 @@ class EditStoreSettingStateLoaded extends States {
                           SizedBox(width: double.infinity, height: 20),
                           Text(
                             S.current.skipPaymentStageForWelcomePackage,
-                            style:
-                                Theme.of(context).textTheme.titleMedium?.copyWith(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 15,
-                                    ),
+                            style: Theme.of(context)
+                                .textTheme
+                                .titleMedium
+                                ?.copyWith(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 15,
+                                ),
                           ),
                           SizedBox(height: 20),
                           SizedBox(
