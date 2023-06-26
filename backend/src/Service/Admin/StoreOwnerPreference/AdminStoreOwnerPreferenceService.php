@@ -3,6 +3,7 @@
 namespace App\Service\Admin\StoreOwnerPreference;
 
 use App\AutoMapping;
+use App\Constant\Order\OrderCostDefaultValueConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\StoreOwnerPreference\StoreOwnerPreferenceConstant;
 use App\Entity\StoreOwnerPreferenceEntity;
@@ -64,11 +65,6 @@ class AdminStoreOwnerPreferenceService
             $storeOwnerPreference);
     }
 
-    public function getStoreOwnerPreferenceGetForAdminResponseNewObject(): StoreOwnerPreferenceGetForAdminResponse
-    {
-        return new StoreOwnerPreferenceGetForAdminResponse();
-    }
-
     public function getStoreOwnerPreferenceByStoreOwnerProfileId(int $storeOwnerProfileId): string|StoreOwnerPreferenceGetForAdminResponse
     {
         $storeOwnerProfile = $this->getStoreOwnerProfileEntityByIdForAdmin($storeOwnerProfileId);
@@ -79,12 +75,21 @@ class AdminStoreOwnerPreferenceService
 
         $storeOwnerPreference = $this->adminStoreOwnerPreferenceManager->getStoreOwnerPreferenceByStoreOwnerProfileId($storeOwnerProfileId);
 
-        if ($storeOwnerPreference) {
+        if (! $storeOwnerPreference) {
+            // create new preferences
+            $createRequest = new StoreOwnerPreferenceCreateByAdminRequest();
+
+            $createRequest->setStoreOwnerProfile($storeOwnerProfile);
+            $createRequest->setSubscriptionCostLimit(OrderCostDefaultValueConstant::ORDER_COST_LIMIT_CONST);
+
+            $storeOwnerPreference = $this->adminStoreOwnerPreferenceManager->createStoreOwnerPreferenceByAdmin($createRequest);
+
             $response = $this->autoMapping->map(StoreOwnerPreferenceEntity::class, StoreOwnerPreferenceGetForAdminResponse::class,
                 $storeOwnerPreference);
 
         } else {
-            $response = $this->getStoreOwnerPreferenceGetForAdminResponseNewObject();
+            $response = $this->autoMapping->map(StoreOwnerPreferenceEntity::class, StoreOwnerPreferenceGetForAdminResponse::class,
+                $storeOwnerPreference);
         }
 
         // check if store passed the payment of the opening package subscription
