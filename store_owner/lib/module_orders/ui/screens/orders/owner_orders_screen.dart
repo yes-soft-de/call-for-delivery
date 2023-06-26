@@ -114,12 +114,12 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
       }
       if (_currentState is OrdersListStateOrdersLoaded && featureFlag) {
         featureFlag = false;
-        FeatureDiscovery.discoverFeatures(
-          context,
-          const <String>{
-            'newOrder',
-          },
-        );
+        // FeatureDiscovery.discoverFeatures(
+        //   context,
+        //   const <String>{
+        //     'newOrder',
+        //   },
+        // );
       }
     });
     _profileSubscription = widget._stateManager.profileStream.listen((event) {
@@ -540,45 +540,50 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
       barrierDismissible: false,
       context: context,
       builder: (context) {
-        return Dialog(
-          backgroundColor: Color.fromARGB(237, 2, 96, 79),
-          child: Padding(
-            padding: const EdgeInsets.all(30),
-            child: SizedBox(
-              width: double.infinity,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  Text(
-                    S.current.YouHaveUsedUpTheEntireWelcomePack,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(color: Colors.white),
-                  ),
-                  SizedBox(height: 20),
-                  Text(
-                    S.current.theCostWillBe,
-                    style: Theme.of(context)
-                        .textTheme
-                        .titleMedium
-                        ?.copyWith(color: Colors.white),
-                    textAlign: TextAlign.start,
-                  ),
-                  SizedBox(height: 20),
-                  SizedBox(
-                    width: 150,
-                    child: ElevatedButton(
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                      child: Text(S.current.ok, textAlign: TextAlign.start),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xffFF6F42),
-                      ),
+        return WillPopScope(
+          onWillPop: () async {
+            return false;
+          },
+          child: Dialog(
+            backgroundColor: Color.fromARGB(237, 2, 96, 79),
+            child: Padding(
+              padding: const EdgeInsets.all(30),
+              child: SizedBox(
+                width: double.infinity,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      S.current.YouHaveUsedUpTheEntireWelcomePack,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(color: Colors.white),
                     ),
-                  )
-                ],
+                    SizedBox(height: 20),
+                    Text(
+                      S.current.theCostWillBe,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(color: Colors.white),
+                      textAlign: TextAlign.start,
+                    ),
+                    SizedBox(height: 20),
+                    SizedBox(
+                      width: 150,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text(S.current.ok, textAlign: TextAlign.start),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xffFF6F42),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ),
           ),
