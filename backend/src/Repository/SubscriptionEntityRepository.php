@@ -410,10 +410,13 @@ class SubscriptionEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function checkDeliveredOrdersCostTillNow(int $storeOwnerUserId): array
+    public function checkDeliveredOrdersCostTillNow(int $storeOwnerUserId, int $subscriptionId): array
     {
         return $this->createQueryBuilder('subscriptionEntity')
             ->select('SUM(orderEntity.deliveryCost)')
+
+            ->andWhere('subscriptionEntity.id = :subscriptionId')
+            ->setParameter('subscriptionId', $subscriptionId)
 
             ->leftJoin(
                 StoreOwnerProfileEntity::class,

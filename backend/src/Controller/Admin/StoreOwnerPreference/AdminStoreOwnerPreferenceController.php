@@ -215,8 +215,8 @@ class AdminStoreOwnerPreferenceController extends BaseController
      *      response="default",
      *      description="Return erorr.",
      *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code", description="9163"),
-     *          @OA\Property(type="string", property="msg", description="store owner preference not exist! Error."),
+     *          @OA\Property(type="string", property="status_code", description="9157"),
+     *          @OA\Property(type="string", property="msg", description="store owner profile not exist! Error."),
      *      )
      * )
      *
@@ -226,8 +226,8 @@ class AdminStoreOwnerPreferenceController extends BaseController
     {
         $result = $this->adminStoreOwnerPreferenceService->getStoreOwnerPreferenceByStoreOwnerProfileId($storeOwnerProfileId);
 
-        if ($result === StoreOwnerPreferenceConstant::STORE_OWNER_PREFERENCE_NOT_EXIST_CONST) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::STORE_OWNER_PREFERENCE_NOT_EXIST_CONST);
+        if ($result === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::STORE_OWNER_PROFILE_NOT_EXIST);
         }
 
         return $this->response($result, self::FETCH);
