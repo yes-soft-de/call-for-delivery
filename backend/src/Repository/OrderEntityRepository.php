@@ -335,7 +335,9 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'externallyDeliveredOrderEntity.orderId = orderEntity.id'
             )
 
-            ->andWhere('externallyDeliveredOrderEntity.orderId IS NULL')
+            ->andWhere('externallyDeliveredOrderEntity.orderId IS NULL '.
+                'OR (externallyDeliveredOrderEntity.orderId IS NOT NULL AND externallyDeliveredOrderEntity.status = :expiredStatus)')
+            ->setParameter('expiredStatus', MrsoolCompanyConstant::EXPIRED_ORDER_STATUS_CONST)
 
             ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
             ->setParameter('captainId', $captainId)
