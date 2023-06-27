@@ -76,6 +76,7 @@ class LoginScreenState extends State<LoginScreen> {
         }
       },
       child: Stack(
+        fit: StackFit.expand,
         children: [
           Positioned.fill(
         child: Container(
@@ -84,6 +85,7 @@ class LoginScreenState extends State<LoginScreen> {
       ),
           Image.asset(
             ImageAsset.AUTH_BACKGROUND,
+            fit: BoxFit.fill,
           ),
           Scaffold(
             floatingActionButton: Visibility(

@@ -117,7 +117,7 @@ class PaymentCard extends StatelessWidget {
                 child: Row(
                   children: [
                     Flexible(
-                      flex: 6,
+                      flex: 7,
                       fit: FlexFit.loose,
                       child: Card(
                         margin: EdgeInsets.zero,
