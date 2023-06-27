@@ -42,7 +42,7 @@ class PaymentStatusRequest {
     required this.paymentFor,
     required this.paymentGetaway,
     required this.amount,
-    required this.paymentId,
+     this.paymentId,
     required this.paymentType,
     this.clientAddress,
   });
