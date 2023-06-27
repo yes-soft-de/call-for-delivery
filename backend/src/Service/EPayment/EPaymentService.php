@@ -51,6 +51,11 @@ class EPaymentService
         if ($request->getStatus() === 1) {
             // update the flag field of the last finished subscription to isPaid
 
+            if (($request->getPaymentGetaway() === EPaymentFromStoreConstant::PAYMENT_GETAWAY_IN_APP_PURCHASE_APPLE_CONST) ||
+                ($request->getPaymentGetaway() === EPaymentFromStoreConstant::PAYMENT_GETAWAY_IN_APP_PURCHASE_GOOGLE_CONST)) {
+                $request->setPaymentId("");
+            }
+
             if (($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_STORE_CONST)
                 || ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_STORE_CONST)) {
                 $storeOwnerProfile = $this->getStoreOwnerProfileByStoreId($request->getStoreOwnerProfile());

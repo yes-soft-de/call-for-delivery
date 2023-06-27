@@ -421,7 +421,7 @@ class SubscriptionService
                             && ($storeSubscriptionCostLimit !== StoreOwnerPreferenceConstant::STORE_OWNER_PREFERENCE_NOT_EXIST_CONST)) {
                             $subscriptionCostLimit = $storeSubscriptionCostLimit;
                         }
-                    }
+                    }//dd($ordersCostSum, $subscriptionCostLimit);
 
                     if ($ordersCostSum >= $subscriptionCostLimit) {
                         // de-activate the subscription till the store make the required payment
@@ -1312,6 +1312,9 @@ class SubscriptionService
         $response['deliveredOrdersCount'] = 0;
         $response['deliveredOrdersCostsSum'] = 0.0;
         $response['hasToPay'] = false;
+        $response['subscriptionCostLimit'] = 100;
+        $response['openingOrderCost'] = 14;
+        $response['oneKilometerCost'] = 1;
 
         $subscriptionDetailsEntity = $this->getSubscriptionDetailsEntityByStoreOwnerUserId($storeOwnerUserId);
 
@@ -1321,8 +1324,11 @@ class SubscriptionService
 
         $subscription = $subscriptionDetailsEntity->getLastSubscription();
 
-        $response['openingOrderCost'] = $subscription->getPackage()->getOpeningOrderCost();
-        $response['oneKilometerCost'] = $subscription->getPackage()->getOneKilometerCost();
+        if ($subscription->getPackage()->getId() === 19) {
+            $response['openingOrderCost'] = $subscription->getPackage()->getOpeningOrderCost();
+            $response['oneKilometerCost'] = $subscription->getPackage()->getOneKilometerCost();
+        }
+
         $response['subscriptionStatus'] = $subscription->getStatus();
         $response['subscriptionStartDate'] = $subscription->getStartDate();
 
@@ -1344,7 +1350,7 @@ class SubscriptionService
                 $response['deliveredOrdersCostsSum'] += $order['deliveryCost'];
             }
 
-            if (($response['deliveredOrdersCostsSum'] >= OrderCostDefaultValueConstant::ORDER_COST_LIMIT_CONST)
+            if (($response['deliveredOrdersCostsSum'] >= $response['subscriptionCostLimit'])
                 && ($subscription->getFlag() === SubscriptionFlagConstant::SUBSCRIPTION_FLAG_UNPAID)) {
                 $response['hasToPay'] = true;
             }
