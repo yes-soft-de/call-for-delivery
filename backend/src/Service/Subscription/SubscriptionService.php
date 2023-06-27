@@ -1350,8 +1350,7 @@ class SubscriptionService
                 $response['deliveredOrdersCostsSum'] += $order['deliveryCost'];
             }
 
-            if (($response['deliveredOrdersCostsSum'] >= $response['subscriptionCostLimit'])
-                && ($subscription->getFlag() === SubscriptionFlagConstant::SUBSCRIPTION_FLAG_UNPAID)) {
+            if ($response['deliveredOrdersCostsSum'] >= $response['subscriptionCostLimit']) {
                 $response['hasToPay'] = true;
             }
         }
