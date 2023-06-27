@@ -437,23 +437,24 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                         visible: !welcomeDialogWithoutPayment,
                         child: InAppPurchaseButton(
                           callBack: (succeeded) {
-                            Logger().info('payment test', 'with Payment');
-                            // TODO: uncomment this
-                            makePayment(
-                              PaymentStatusRequest(
-                                status: 1,
-                                paymentFor: 228,
-                                amount: 2.99,
-                                paymentType: 229,
-                                paymentGetaway: Platform.isAndroid ? 226 : 225,
-                                paymentId: null,
-                              ),
-                            );
+                            if (succeeded) {
+                            Navigator.pop(context);
+                              makePayment(
+                                PaymentStatusRequest(
+                                  status: 1,
+                                  paymentFor: 228,
+                                  amount: 2.99,
+                                  paymentType: 229,
+                                  paymentGetaway:
+                                      Platform.isAndroid ? 226 : 225,
+                                  paymentId: null,
+                                ),
+                              );
+                            }
                           },
                         ),
                         replacement: ElevatedButton(
                           onPressed: () {
-                            Logger().info('payment test', 'without Payment');
                             Navigator.pop(context);
                             makePayment(
                               PaymentStatusRequest(
