@@ -100,11 +100,6 @@ class EPaymentController extends BaseController
             || ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_STORE_CONST)) {
             $request->setStoreOwnerProfile($this->getUserId());
         }
-        //dd(1);
-//        elseif (($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_ADMIN_CONST)
-//            || ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_ADMIN_CONST)) {
-//
-//        }
 
         $violations = $this->validator->validate($request);
 

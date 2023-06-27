@@ -85,4 +85,9 @@ class EPaymentCreateByStoreOwnerRequest
     {
         $this->createdBy = $createdBy;
     }
+
+    public function getPaymentGetaway(): ?int
+    {
+        return $this->paymentGetaway;
+    }
 }
