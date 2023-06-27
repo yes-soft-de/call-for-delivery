@@ -72,15 +72,8 @@ class MrsoolDeliveredOrderService
             } elseif ($orderEntity->getStoreOwner()->getId() === 29) {
                 $orderCost = 70;
 
-            } elseif (($orderEntity->getStoreOwner()->getId() === 73)
-                || ($orderEntity->getStoreOwner()->getId() === 89)
-                || ($orderEntity->getStoreOwner()->getId() === 173)
-                || ($orderEntity->getStoreOwner()->getId() === 193)
-                || ($orderEntity->getStoreOwner()->getId() === 203)
-                || ($orderEntity->getStoreOwner()->getId() === 207)
-                || ($orderEntity->getStoreOwner()->getId() === 283)
-                || ($orderEntity->getStoreOwner()->getId() === 291)) {
-                $orderCostsArray = [60, 65, 70, 75, 80, 85, 90, 95, 100];
+            } else {
+                $orderCostsArray = [50, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 150, 175, 200];
                 $orderCost = $orderCostsArray[array_rand($orderCostsArray)];
             }
         }
