@@ -22,10 +22,11 @@ class NewSubscriptionBalanceLoadedState extends States {
         context,
         title: S.current.accountBalance,
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
+        child: SingleChildScrollView(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               PaymentCard(
                 onPayNowButtonPressed: () {
@@ -110,132 +111,133 @@ class PaymentCard extends StatelessWidget {
                   ?.copyWith(color: Colors.white),
             ),
             SizedBox(height: 10),
-            Row(
-              children: [
-                Expanded(
-                  flex: 6,
-                  child: SizedBox(
-                    height: MediaQuery.sizeOf(context).height * 0.22,
-                    child: Card(
-                      margin: EdgeInsets.zero,
-                      color: Colors.white,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Row(
-                              children: [
-                                Icon(Icons.error_outline),
-                                Expanded(
-                                  child: Text(
+            Flexible(
+              fit: FlexFit.loose,
+              child: IntrinsicHeight(
+                child: Row(
+                  children: [
+                    Flexible(
+                      flex: 6,
+                      fit: FlexFit.loose,
+                      child: Card(
+                        margin: EdgeInsets.zero,
+                        color: Colors.white,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(Icons.error_outline),
+                                  Text(
                                     S.current.currentCycleDetails,
                                     textAlign: TextAlign.center,
                                   ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(height: 25),
-                            Text(S.current.packageStartDate),
-                            Text(
-                              DateFormat('dd, MMMM').format(balance.startDate),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    color: green,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                            SizedBox(height: 10),
-                            Divider(endIndent: 10, indent: 10),
-                            Text(S.current.numberOfOrder),
-                            Text(
-                              balance.orderCount.toString(),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyMedium
-                                  ?.copyWith(
-                                    color: green,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ],
+                                ],
+                              ),
+                              SizedBox(height: 25),
+                              Text(S.current.packageStartDate),
+                              Text(
+                                DateFormat('dd, MMMM')
+                                    .format(balance.startDate),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                      color: green,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                              SizedBox(height: 10),
+                              Divider(endIndent: 10, indent: 10),
+                              Text(S.current.numberOfOrder),
+                              Text(
+                                balance.orderCount.toString(),
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyMedium
+                                    ?.copyWith(
+                                      color: green,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                  ),
-                ),
-                SizedBox(width: 10),
-                Expanded(
-                  flex: 5,
-                  child: SizedBox(
-                    height: MediaQuery.sizeOf(context).height * 0.22,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Expanded(
-                          child: Card(
-                            margin: EdgeInsets.zero,
-                            color: Color.fromARGB(70, 255, 255, 255),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  balance.toBePayed.toString(),
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .titleLarge
-                                      ?.copyWith(
-                                        color: Colors.white,
-                                        fontSize: 30,
+                    SizedBox(width: 10),
+                    Flexible(
+                      fit: FlexFit.loose,
+                      flex: 5,
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Expanded(
+                            child: Card(
+                              margin: EdgeInsets.zero,
+                              color: Color.fromARGB(70, 255, 255, 255),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    balance.toBePayed.toString(),
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .titleLarge
+                                        ?.copyWith(
+                                          color: Colors.white,
+                                          fontSize: 30,
+                                        ),
+                                  ),
+                                  Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      SizedBox(),
+                                      Text(
+                                        S.current.saudiRiyal,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .bodyMedium
+                                            ?.copyWith(
+                                              color: Colors.white,
+                                            ),
                                       ),
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    SizedBox(),
-                                    Text(
-                                      S.current.saudiRiyal,
-                                      style: Theme.of(context)
-                                          .textTheme
-                                          .bodyMedium
-                                          ?.copyWith(
-                                            color: Colors.white,
-                                          ),
-                                    ),
-                                    SizedBox(),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        SizedBox(height: 5),
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.zero,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
+                                      SizedBox(),
+                                    ],
+                                  ),
+                                ],
                               ),
-                              backgroundColor:
-                                  Theme.of(context).colorScheme.background,
-                            ),
-                            onPressed: onPayNowButtonPressed,
-                            child: Text(
-                              S.current.payNow,
-                              style: greenLargeText(context),
                             ),
                           ),
-                        )
-                      ],
+                          SizedBox(height: 5),
+                          SizedBox(
+                            width: double.infinity,
+                            child: ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                padding: EdgeInsets.zero,
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                ),
+                                backgroundColor:
+                                    Theme.of(context).colorScheme.background,
+                              ),
+                              onPressed: onPayNowButtonPressed,
+                              child: Text(
+                                S.current.payNow,
+                                style: greenLargeText(context),
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                  ),
+                  ],
                 ),
-              ],
+              ),
             )
           ],
         ),
@@ -260,51 +262,43 @@ class PlanDetailsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: MediaQuery.sizeOf(context).height * 0.3,
-      width: double.infinity,
-      child: Stack(
-        children: [
-          Positioned.fill(
-            top: 10,
-            child: Card(
-              color: Color(0xffF2F4E6),
-              margin: EdgeInsets.zero,
-              child: Padding(
-                padding: const EdgeInsets.all(30),
-                child: Column(
-                  children: [
-                    SizedBox(height: 15),
-                    RowItem(
-                      icon: Icons.shopping_cart_outlined,
-                      title: S.current.openedPrice,
-                      value: '${balance.openPriceOrder} ريال',
-                    ),
-                    SizedBox(height: 10),
-                    Divider(indent: 20, endIndent: 20),
-                    SizedBox(height: 10),
-                    RowItem(
-                      icon: Icons.local_shipping_outlined,
-                      title: S.current.every1KM,
-                      value: '${balance.costPerKM} ريال',
-                    ),
-                    SizedBox(height: 10),
-                    Divider(indent: 20, endIndent: 20),
-                    SizedBox(height: 10),
-                    Text(
-                      S.current.youHaveToPayWhen(
-                          balance.subscriptionCostLimit.toString()),
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyMedium
-                          ?.copyWith(color: green),
-                    ),
-                  ],
-                ),
+    return Flexible(
+      child: Card(
+        color: Color(0xffF2F4E6),
+        margin: EdgeInsets.zero,
+        child: Padding(
+          padding: const EdgeInsets.all(30),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              SizedBox(height: 15),
+              RowItem(
+                icon: Icons.shopping_cart_outlined,
+                title: S.current.openedPrice,
+                value: '${balance.openPriceOrder} ريال',
               ),
-            ),
+              SizedBox(height: 10),
+              Divider(indent: 20, endIndent: 20),
+              SizedBox(height: 10),
+              RowItem(
+                icon: Icons.local_shipping_outlined,
+                title: S.current.every1KM,
+                value: '${balance.costPerKM} ريال',
+              ),
+              SizedBox(height: 10),
+              Divider(indent: 20, endIndent: 20),
+              SizedBox(height: 10),
+              Text(
+                S.current
+                    .youHaveToPayWhen(balance.subscriptionCostLimit.toString()),
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(color: green),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
@@ -364,30 +358,31 @@ class PlanStatusCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: double.maxFinite,
-      height: MediaQuery.sizeOf(context).height * 0.15,
+    return Flexible(
       child: Stack(
         children: [
-          Positioned.fill(
-            top: 30,
-            child: Card(
-              color: Color(0xffF2F4E6),
-              margin: EdgeInsets.zero,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Column(
-                  children: [
-                    SizedBox(height: 40),
-                    Text(
-                      balance.status.getTitle,
-                      style: Theme.of(context).textTheme.bodyLarge,
-                    ),
-                    Text(balance.status.getDescription),
-                  ],
+          Column(
+            children: [
+              SizedBox(height: 30),
+              Card(
+                color: Color(0xffF2F4E6),
+                margin: EdgeInsets.zero,
+                child: Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                  child: Column(
+                    children: [
+                      SizedBox(height: 25, width: double.maxFinite),
+                      Text(
+                        balance.status.getTitle,
+                        style: Theme.of(context).textTheme.bodyLarge,
+                      ),
+                      Text(balance.status.getDescription),
+                    ],
+                  ),
                 ),
               ),
-            ),
+            ],
           ),
           Positioned(
             child: Padding(
@@ -396,7 +391,6 @@ class PlanStatusCard extends StatelessWidget {
                 margin: EdgeInsets.zero,
                 color: green,
                 child: SizedBox(
-                  width: MediaQuery.sizeOf(context).width * 0.6,
                   height: 56,
                   child: Center(
                     child: Text(
