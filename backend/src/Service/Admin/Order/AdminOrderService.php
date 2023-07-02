@@ -200,7 +200,7 @@ class AdminOrderService
     {
         $response = [];
         // 1 Get uncancelled and undelivered external orders from OrderEntity
-        $orders = $this->getNotCancelledNorDeliveredExternalOrdersOnly($request->getExternalCompanyId());
+        $orders = $this->getNotCancelledNorDeliveredNorExpiredExternalOrdersOnly($request->getExternalCompanyId());
 
         if (count($orders) > 0) {
             foreach ($orders as $order) {
@@ -209,22 +209,24 @@ class AdminOrderService
 
                 if (count($externallyDeliveredOrders) > 0) {
                     foreach ($externallyDeliveredOrders as $externallyDeliveredOrder) {
-                        $externalOrderInfo = $this->getExternalOrderByOrderIdAndExternalDeliveryCompanyId($externallyDeliveredOrder->getExternalOrderId(),
-                            $externallyDeliveredOrder->getExternalDeliveryCompany()->getId());
+                        if (in_array($externallyDeliveredOrder->getStatus(), MrsoolCompanyConstant::NOT_CANCELLED_OR_DELIVERED_OR_EXPIRED_CONST)) {
+                            $externalOrderInfo = $this->getExternalOrderByOrderIdAndExternalDeliveryCompanyId($externallyDeliveredOrder->getExternalOrderId(),
+                                $externallyDeliveredOrder->getExternalDeliveryCompany()->getId());
 
-                        if(($externalOrderInfo !== HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
-                            && ($externalOrderInfo !== HttpResponseConstant::ORDER_NOT_FOUND_RESULT_CONST)
-                            && ($externalOrderInfo !== HttpResponseConstant::UN_RECOGNIZED_STATUS_CODE_RESULT_CONST)) {
-                            // 3 Update external orders status (both in ExternallyDeliveredOrderEntity and OrderEntity)
-                            $this->updateExternallyDeliveredOrderStatus($externallyDeliveredOrder->getId(),
-                                $externalOrderInfo['data']['status']);
-                            // Update order status in OrderEntity
-                            $this->compareAndUpdateOrderState($order, $externalOrderInfo['data']['status']);
+                            if (($externalOrderInfo !== HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
+                                && ($externalOrderInfo !== HttpResponseConstant::ORDER_NOT_FOUND_RESULT_CONST)
+                                && ($externalOrderInfo !== HttpResponseConstant::UN_RECOGNIZED_STATUS_CODE_RESULT_CONST)) {
+                                // 3 Update external orders status (both in ExternallyDeliveredOrderEntity and OrderEntity)
+                                $this->updateExternallyDeliveredOrderStatus($externallyDeliveredOrder->getId(),
+                                    $externalOrderInfo['data']['status']);
+                                // Update order status in OrderEntity
+                                $this->compareAndUpdateOrderState($order, $externalOrderInfo['data']['status']);
 
-                            // save log of the action on order
-                            $this->createOrderLogMessageViaOrderEntityAndByAdmin($order, $adminUserId,
-                                OrderLogActionTypeConstant::NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST,
-                                ['externalCompanyName' => $externallyDeliveredOrder->getExternalDeliveryCompany()->getCompanyName()]);
+                                // save log of the action on order
+                                $this->createOrderLogMessageViaOrderEntityAndByAdmin($order, $adminUserId,
+                                    OrderLogActionTypeConstant::NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST,
+                                    ['externalCompanyName' => $externallyDeliveredOrder->getExternalDeliveryCompany()->getCompanyName()]);
+                            }
                         }
                     }
                 }
@@ -251,12 +253,18 @@ class AdminOrderService
 
             $externallyDeliveredOrders = $value[0]->getExternallyDeliveredOrderEntities()->toArray();
 
-            if (count($externallyDeliveredOrders) > 0) {
-                foreach ($externallyDeliveredOrders as $key2 => $value2) {
-                    $response[$key]->externalDeliveredOrders[$key2]['id'] = $value2->getId();
-                    $response[$key]->externalDeliveredOrders[$key2]['companyName'] = $value2->getExternalDeliveryCompany()->getCompanyName();
-                    $response[$key]->externalDeliveredOrders[$key2]['externalOrderId'] = $value2->getExternalOrderId();
-                }
+            $externalOrdersArrayLength = count($externallyDeliveredOrders);
+
+            if ($externalOrdersArrayLength > 0) {
+                $lastOrder = $externallyDeliveredOrders[$externalOrdersArrayLength-1];
+
+                //foreach ($externallyDeliveredOrders as $key2 => $value2) {
+                $response[$key]->externalDeliveredOrders = [];
+
+                $response[$key]->externalDeliveredOrders[0]['id'] = $lastOrder->getId();
+                $response[$key]->externalDeliveredOrders[0]['companyName'] = $lastOrder->getExternalDeliveryCompany()->getCompanyName();
+                $response[$key]->externalDeliveredOrders[0]['externalOrderId'] = $lastOrder->getExternalOrderId();
+                //}
             }
         }
 
@@ -421,11 +429,11 @@ class AdminOrderService
     }
 
     /**
-     * Get uncancelled and undelivered external orders from OrderEntity
+     * Get uncancelled, undelivered, and not expired external orders from OrderEntity
      */
-    public function getNotCancelledNorDeliveredExternalOrdersOnly(?int $externalCompanyId): array
+    public function getNotCancelledNorDeliveredNorExpiredExternalOrdersOnly(?int $externalCompanyId): array
     {
-        return $this->adminOrderManager->getNotCancelledNorDeliveredExternalOrdersOnly($externalCompanyId);
+        return $this->adminOrderManager->getNotCancelledNorDeliveredNorExpiredExternalOrdersOnly($externalCompanyId);
     }
 
     /**
@@ -487,12 +495,26 @@ class AdminOrderService
 
                 $externallyDeliveredOrders = $orderEntity->getExternallyDeliveredOrderEntities()->toArray();
 
-                if (count($externallyDeliveredOrders) > 0) {
-                    foreach ($externallyDeliveredOrders as $key2 => $value2) {
-                        $response[$key]->externalDeliveredOrders[$key2]['id'] = $value2->getId();
-                        $response[$key]->externalDeliveredOrders[$key2]['companyName'] = $value2->getExternalDeliveryCompany()->getCompanyName();
-                        $response[$key]->externalDeliveredOrders[$key2]['externalOrderId'] = $value2->getExternalOrderId();
-                    }
+//                if (count($externallyDeliveredOrders) > 0) {
+//                    foreach ($externallyDeliveredOrders as $key2 => $value2) {
+//                        $response[$key]->externalDeliveredOrders[$key2]['id'] = $value2->getId();
+//                        $response[$key]->externalDeliveredOrders[$key2]['companyName'] = $value2->getExternalDeliveryCompany()->getCompanyName();
+//                        $response[$key]->externalDeliveredOrders[$key2]['externalOrderId'] = $value2->getExternalOrderId();
+//                    }
+//                }
+
+                $externalOrdersArrayLength = count($externallyDeliveredOrders);
+
+                if ($externalOrdersArrayLength > 0) {
+                    $lastOrder = $externallyDeliveredOrders[$externalOrdersArrayLength-1];
+
+                    //foreach ($externallyDeliveredOrders as $key2 => $value2) {
+                    $response[$key]->externalDeliveredOrders = [];
+
+                    $response[$key]->externalDeliveredOrders[0]['id'] = $lastOrder->getId();
+                    $response[$key]->externalDeliveredOrders[0]['companyName'] = $lastOrder->getExternalDeliveryCompany()->getCompanyName();
+                    $response[$key]->externalDeliveredOrders[0]['externalOrderId'] = $lastOrder->getExternalOrderId();
+                    //}
                 }
             }
         }
@@ -539,7 +561,7 @@ class AdminOrderService
         $response['notDeliveredOrders'] = [];
 
         // 1 Get external orders (which are not cancelled nor delivered)
-        $orders = $this->getNotCancelledNorDeliveredExternalOrdersOnly($externalCompanyId);
+        $orders = $this->getNotCancelledNorDeliveredNorExpiredExternalOrdersOnly($externalCompanyId);
 
         if (count($orders) > 0) {
             foreach ($orders as $order) {
@@ -548,23 +570,25 @@ class AdminOrderService
 
                 if (count($externallyDeliveredOrders) > 0) {
                     foreach ($externallyDeliveredOrders as $externallyDeliveredOrder) {
-                        $externalOrderInfo = $this->getExternalOrderByOrderIdAndExternalDeliveryCompanyId($externallyDeliveredOrder->getExternalOrderId(),
-                            $externallyDeliveredOrder->getExternalDeliveryCompany()->getId());
+                        if (in_array($externallyDeliveredOrder->getStatus(), MrsoolCompanyConstant::NOT_CANCELLED_OR_DELIVERED_OR_EXPIRED_CONST)) {
+                            $externalOrderInfo = $this->getExternalOrderByOrderIdAndExternalDeliveryCompanyId($externallyDeliveredOrder->getExternalOrderId(),
+                                $externallyDeliveredOrder->getExternalDeliveryCompany()->getId());
 
-                        if(($externalOrderInfo !== HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
-                            && ($externalOrderInfo !== HttpResponseConstant::ORDER_NOT_FOUND_RESULT_CONST)
-                            && ($externalOrderInfo !== HttpResponseConstant::UN_RECOGNIZED_STATUS_CODE_RESULT_CONST)) {
+                            if (($externalOrderInfo !== HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
+                                && ($externalOrderInfo !== HttpResponseConstant::ORDER_NOT_FOUND_RESULT_CONST)
+                                && ($externalOrderInfo !== HttpResponseConstant::UN_RECOGNIZED_STATUS_CODE_RESULT_CONST)) {
 
-                            // 3 Update order status in ExternallyDeliveredOrderEntity
-                            $this->updateExternallyDeliveredOrderStatus($externallyDeliveredOrder->getId(),
-                                $externalOrderInfo['data']['status']);
-                            // 4 Update order status in OrderEntity
-                            $this->compareAndUpdateOrderState($order, $externalOrderInfo['data']['status']);
+                                // 3 Update order status in ExternallyDeliveredOrderEntity
+                                $this->updateExternallyDeliveredOrderStatus($externallyDeliveredOrder->getId(),
+                                    $externalOrderInfo['data']['status']);
+                                // 4 Update order status in OrderEntity
+                                $this->compareAndUpdateOrderState($order, $externalOrderInfo['data']['status']);
 
-                            // save log of the action on order
-                            $this->createOrderLogMessageViaOrderEntityAndByAdmin($order, $userId,
-                                OrderLogActionTypeConstant::NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST,
-                                ['externalCompanyName' => $externallyDeliveredOrder->getExternalDeliveryCompany()->getCompanyName()]);
+                                // save log of the action on order
+                                $this->createOrderLogMessageViaOrderEntityAndByAdmin($order, $userId,
+                                    OrderLogActionTypeConstant::NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST,
+                                    ['externalCompanyName' => $externallyDeliveredOrder->getExternalDeliveryCompany()->getCompanyName()]);
+                            }
                         }
                     }
                 }
@@ -652,12 +676,26 @@ class AdminOrderService
 
                 $externallyDeliveredOrders = $value[0]->getExternallyDeliveredOrderEntities()->toArray();
 
-                if (count($externallyDeliveredOrders) > 0) {
-                    foreach ($externallyDeliveredOrders as $key2 => $value2) {
-                        $response[$key]->externalDeliveredOrders[$key2]['id'] = $value2->getId();
-                        $response[$key]->externalDeliveredOrders[$key2]['companyName'] = $value2->getExternalDeliveryCompany()->getCompanyName();
-                        $response[$key]->externalDeliveredOrders[$key2]['externalOrderId'] = $value2->getExternalOrderId();
-                    }
+//                if (count($externallyDeliveredOrders) > 0) {
+//                    foreach ($externallyDeliveredOrders as $key2 => $value2) {
+//                        $response[$key]->externalDeliveredOrders[$key2]['id'] = $value2->getId();
+//                        $response[$key]->externalDeliveredOrders[$key2]['companyName'] = $value2->getExternalDeliveryCompany()->getCompanyName();
+//                        $response[$key]->externalDeliveredOrders[$key2]['externalOrderId'] = $value2->getExternalOrderId();
+//                    }
+//                }
+
+                $externalOrdersArrayLength = count($externallyDeliveredOrders);
+
+                if ($externalOrdersArrayLength > 0) {
+                    $lastOrder = $externallyDeliveredOrders[$externalOrdersArrayLength-1];
+
+                    //foreach ($externallyDeliveredOrders as $key2 => $value2) {
+                    $response[$key]->externalDeliveredOrders = [];
+
+                    $response[$key]->externalDeliveredOrders[0]['id'] = $lastOrder->getId();
+                    $response[$key]->externalDeliveredOrders[0]['companyName'] = $lastOrder->getExternalDeliveryCompany()->getCompanyName();
+                    $response[$key]->externalDeliveredOrders[0]['externalOrderId'] = $lastOrder->getExternalOrderId();
+                    //}
                 }
             }
         }
@@ -2321,7 +2359,7 @@ class AdminOrderService
         $request->setExternalOrder(true);
 
         // 1 Get uncancelled and undelivered external orders from OrderEntity
-        $orders = $this->getNotCancelledNorDeliveredExternalOrdersOnly($request->getExternalCompanyId());
+        $orders = $this->getNotCancelledNorDeliveredNorExpiredExternalOrdersOnly($request->getExternalCompanyId());
 
         if (count($orders) > 0) {
             foreach ($orders as $order) {
@@ -2330,22 +2368,24 @@ class AdminOrderService
 
                 if (count($externallyDeliveredOrders) > 0) {
                     foreach ($externallyDeliveredOrders as $externallyDeliveredOrder) {
-                        $externalOrderInfo = $this->getExternalOrderByOrderIdAndExternalDeliveryCompanyId($externallyDeliveredOrder->getExternalOrderId(),
-                            $externallyDeliveredOrder->getExternalDeliveryCompany()->getId());
+                        if (in_array($externallyDeliveredOrder->getStatus(), MrsoolCompanyConstant::NOT_CANCELLED_OR_DELIVERED_OR_EXPIRED_CONST)) {
+                            $externalOrderInfo = $this->getExternalOrderByOrderIdAndExternalDeliveryCompanyId($externallyDeliveredOrder->getExternalOrderId(),
+                                $externallyDeliveredOrder->getExternalDeliveryCompany()->getId());
 
-                        if(($externalOrderInfo !== HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
-                            && ($externalOrderInfo !== HttpResponseConstant::ORDER_NOT_FOUND_RESULT_CONST)
-                            && ($externalOrderInfo !== HttpResponseConstant::UN_RECOGNIZED_STATUS_CODE_RESULT_CONST)) {
-                            // 3 Update external orders status (both in ExternallyDeliveredOrderEntity and OrderEntity)
-                            $this->updateExternallyDeliveredOrderStatus($externallyDeliveredOrder->getId(),
-                                $externalOrderInfo['data']['status']);
-                            // Update order status in OrderEntity
-                            $this->compareAndUpdateOrderState($order, $externalOrderInfo['data']['status']);
+                            if (($externalOrderInfo !== HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
+                                && ($externalOrderInfo !== HttpResponseConstant::ORDER_NOT_FOUND_RESULT_CONST)
+                                && ($externalOrderInfo !== HttpResponseConstant::UN_RECOGNIZED_STATUS_CODE_RESULT_CONST)) {
+                                // 3 Update external orders status (both in ExternallyDeliveredOrderEntity and OrderEntity)
+                                $this->updateExternallyDeliveredOrderStatus($externallyDeliveredOrder->getId(),
+                                    $externalOrderInfo['data']['status']);
+                                // Update order status in OrderEntity
+                                $this->compareAndUpdateOrderState($order, $externalOrderInfo['data']['status']);
 
-                            // save log of the action on order
-                            $this->createOrderLogMessageViaOrderEntityAndByAdmin($order, $userId,
-                                OrderLogActionTypeConstant::NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST,
-                                ['externalCompanyName' => $externallyDeliveredOrder->getExternalDeliveryCompany()->getCompanyName()]);
+                                // save log of the action on order
+                                $this->createOrderLogMessageViaOrderEntityAndByAdmin($order, $userId,
+                                    OrderLogActionTypeConstant::NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST,
+                                    ['externalCompanyName' => $externallyDeliveredOrder->getExternalDeliveryCompany()->getCompanyName()]);
+                            }
                         }
                     }
                 }
