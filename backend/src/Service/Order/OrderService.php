@@ -346,10 +346,16 @@ class OrderService
 
             $externalOrders = $value[0]->getExternallyDeliveredOrderEntities()->toArray();
 
-            if (count($externalOrders) > 0) {
-                foreach ($externalOrders as $externalOrder) {
-                    $response[$key]->detail .= " - ".$externalOrder->getExternalOrderId();
-                }
+            $externalOrderArrayLength = count($externalOrders);
+
+//            if (count($externalOrders) > 0) {
+//                foreach ($externalOrders as $externalOrder) {
+//                    $response[$key]->detail .= " - ".$externalOrder->getExternalOrderId();
+//                }
+//            }
+
+            if ($externalOrderArrayLength > 0) {
+                $response[$key]->detail .= " - ".$externalOrders[$externalOrderArrayLength-1]->getExternalOrderId();
             }
         }
 
