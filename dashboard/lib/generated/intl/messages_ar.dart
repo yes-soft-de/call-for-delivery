@@ -1336,6 +1336,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "seller": MessageLookupByLibrary.simpleMessage("البائع"),
         "send": MessageLookupByLibrary.simpleMessage("إرسال"),
         "sendMeCode": MessageLookupByLibrary.simpleMessage("ارسل رمز التأكيد"),
+        "sendOrderAutomaticToTheExternalCompanyBecauseHeMeetWithCompanyStander":
+            MessageLookupByLibrary.simpleMessage(
+                "ارسال طلب عادي بشكل تلقائي للمشغل الخارجي (نتيجة تطابقه مع معايير المشغل)"),
+        "sendOrderToExternalCompanyByAdmin":
+            MessageLookupByLibrary.simpleMessage(
+                "ارسال طلب لمشغل خارجي من قبل الادمن"),
+        "sendSubOrderAutomaticToTheExternalCompanyBecauseHeMeetWithCompanyStander":
+            MessageLookupByLibrary.simpleMessage(
+                "ارسال طلب فرعي بشكل تلقائي للمشغل الخارجي (نتيجة تطابقه مع معايير المشغل)"),
         "sendTo": MessageLookupByLibrary.simpleMessage("إرسال إلى"),
         "settingName": MessageLookupByLibrary.simpleMessage("عنوان المعيار"),
         "settings": MessageLookupByLibrary.simpleMessage("الاعدادات"),
@@ -1577,6 +1586,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "يمكنك تعديل الطلب من خلال النافذة الحالية"),
         "updateOrderState":
             MessageLookupByLibrary.simpleMessage("تحديث حالة الطلب"),
+        "updateOrderStatusByMarsool": MessageLookupByLibrary.simpleMessage(
+            "تحديث حالة الطلب من قبل مرسول"),
         "updateOrderStatusSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث حالة الطلب بنجاح"),
         "updateOrderSuccess":
