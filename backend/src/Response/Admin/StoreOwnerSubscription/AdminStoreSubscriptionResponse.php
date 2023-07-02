@@ -86,4 +86,7 @@ class AdminStoreSubscriptionResponse
     public $ordersExceedGeographicalRange;
 
     public int|null $packageType;
+
+    // Remaining cost of the new system subscriptio
+    public ?float $subscriptionCost = null;
 }

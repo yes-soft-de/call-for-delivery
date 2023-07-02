@@ -88,20 +88,20 @@ class AdminStoreSubscriptionService
                (float)$subscription['packageGeographicalRange']);
 
            if ($subscription['packageId'] === 18) {
-               $subscription['total'] = 0.0;
+               $subscription['subscriptionCost'] = 0.0;
 
            } elseif ($subscription['packageId'] === 19) {
                $ordersCosts = $this->getDeliveredOrdersDeliveryCostFromSubscriptionStartDateTillNow($storeId, $subscription['id']);
 
                if (count($ordersCosts) > 0) {
-                   $subscription['total'] = 0.0;
+                   $subscription['subscriptionCost'] = 0.0;
 
                    foreach ($ordersCosts as $orderCost) {
-                       $subscription['total'] += $orderCost['deliveryCost'];
+                       $subscription['subscriptionCost'] += $orderCost['deliveryCost'];
                    }
 
                } else {
-                   $subscription['total'] = 0.0;
+                   $subscription['subscriptionCost'] = 0.0;
                }
 
            } else {
