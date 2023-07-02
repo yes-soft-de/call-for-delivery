@@ -10520,6 +10520,62 @@ class S {
     );
   }
 
+  /// `send order automatic to the external company because he meet with company stander`
+  String
+      get sendOrderAutomaticToTheExternalCompanyBecauseHeMeetWithCompanyStander {
+    return Intl.message(
+      'send order automatic to the external company because he meet with company stander',
+      name:
+          'sendOrderAutomaticToTheExternalCompanyBecauseHeMeetWithCompanyStander',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `send sub order automatic to the external company because he meet with company stander`
+  String
+      get sendSubOrderAutomaticToTheExternalCompanyBecauseHeMeetWithCompanyStander {
+    return Intl.message(
+      'send sub order automatic to the external company because he meet with company stander',
+      name:
+          'sendSubOrderAutomaticToTheExternalCompanyBecauseHeMeetWithCompanyStander',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `send order to external company by admin`
+  String get sendOrderToExternalCompanyByAdmin {
+    return Intl.message(
+      'send order to external company by admin',
+      name: 'sendOrderToExternalCompanyByAdmin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `update order status in response to check it status from us`
+  String
+      get NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST {
+    return Intl.message(
+      'update order status in response to check it status from us',
+      name:
+          'NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `update order status by marsool`
+  String get updateOrderStatusByMarsool {
+    return Intl.message(
+      'update order status by marsool',
+      name: 'updateOrderStatusByMarsool',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(
