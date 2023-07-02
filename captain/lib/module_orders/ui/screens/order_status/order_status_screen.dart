@@ -1,9 +1,9 @@
 import 'dart:async';
 import 'package:c4d/consts/order_status.dart';
+import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/utils/logger/logger.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:location/location.dart' as loc;
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
@@ -67,7 +67,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
     getIt<FlutterTextToSpeech>().init().then((value) {
       flutterTts = value;
     });
-    canRequestLocation().then((value) async {
+    DeepLinksService.canRequestLocation().then((value) async {
       if (value) {
         Logger().info('Location enabled', '$value');
         Geolocator.getCurrentPosition().then((event) {
@@ -211,7 +211,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
   void goBack() {
     Navigator.of(context).pop();
   }
-  
+
   bool flag = true;
   @override
   Widget build(BuildContext context) {
@@ -232,36 +232,5 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
         child: Scaffold(
           body: currentState?.getUI(context),
         ));
-  }
-
-  Future<bool> canRequestLocation() async {
-    try {
-      bool serviceEnabled;
-      LocationPermission permission;
-      // Test if location services are enabled.
-      serviceEnabled = await Geolocator.isLocationServiceEnabled();
-      if (!serviceEnabled) {
-        serviceEnabled = await loc.Location().requestService();
-        if (!serviceEnabled) {
-          return false;
-        }
-      }
-
-      permission = await Geolocator.checkPermission();
-      if (permission == LocationPermission.denied) {
-        permission = await Geolocator.requestPermission();
-        if (permission == LocationPermission.denied) {
-          return false;
-        }
-      }
-
-      if (permission == LocationPermission.deniedForever) {
-        return false;
-      }
-
-      return true;
-    } catch (e) {
-      return false;
-    }
   }
 }
