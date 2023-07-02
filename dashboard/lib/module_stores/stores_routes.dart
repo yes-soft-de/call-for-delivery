@@ -12,4 +12,5 @@ class StoresRoutes {
   static const ORDER_CAPTAIN_SCREEN = '/captain_not_arrived';
   static const STORES_DUES_SCREEN = '/stores_dues';
   static const STORE_DUES_SCREEN = '/store_dues';
+  static const Edit_STORE_Setting_SCREEN = '/edit_store_setting_dues';
 }

@@ -1,3 +1,4 @@
+import 'package:c4d/module_stores/ui/screen/edit_store_setting_screen.dart';
 import 'package:c4d/module_stores/ui/screen/order/order_top_active_store.dart';
 import 'package:c4d/module_stores/ui/screen/order/order_time_line_screen.dart';
 import 'package:c4d/module_stores/ui/screen/stores_dues/store_dues_screen.dart';
@@ -32,21 +33,24 @@ class StoresModule extends YesModule {
   final OrdersTopActiveStoreScreen ordersTopActiveStoreScreen;
   final StoresDuesScreen storesDuesScreen;
   final StoreDuesScreen storeDuesScreen;
+  final EditStoreSettingScreen editStoreSettingScreen;
 
   StoresModule(
-      this.storesScreen,
-      this._storeInfoScreen,
-      this.storesInActiveScreen,
-      this.storeBalanceScreen,
-      this.supportScreen,
-      this._orderStatus,
-      this._logsScreen,
-      this.captainNotArrivedScreen,
-      this.orderTimeLineScreen,
-      this.topActiveStoreScreen,
-      this.ordersTopActiveStoreScreen,
-      this.storesDuesScreen,
-      this.storeDuesScreen) {
+    this.storesScreen,
+    this._storeInfoScreen,
+    this.storesInActiveScreen,
+    this.storeBalanceScreen,
+    this.supportScreen,
+    this._orderStatus,
+    this._logsScreen,
+    this.captainNotArrivedScreen,
+    this.orderTimeLineScreen,
+    this.topActiveStoreScreen,
+    this.ordersTopActiveStoreScreen,
+    this.storesDuesScreen,
+    this.storeDuesScreen,
+    this.editStoreSettingScreen,
+  ) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
@@ -64,7 +68,9 @@ class StoresModule extends YesModule {
       StoresRoutes.ORDERS_TOP_STORE_ACTIVE: (context) =>
           ordersTopActiveStoreScreen,
       StoresRoutes.STORES_DUES_SCREEN: (context) => storesDuesScreen,
-      StoresRoutes.STORE_DUES_SCREEN: (context) => storeDuesScreen
+      StoresRoutes.STORE_DUES_SCREEN: (context) => storeDuesScreen,
+      StoresRoutes.Edit_STORE_Setting_SCREEN: (context) =>
+          editStoreSettingScreen
     };
   }
 }

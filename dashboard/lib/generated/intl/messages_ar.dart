@@ -169,6 +169,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "areYouSureThatYouWantToAssignThisOrderTo":
             MessageLookupByLibrary.simpleMessage(
                 "هل انت متاكد من اسناد هذا  الطلب الى "),
+        "areYouSureThatYouWantToUpdateTheSettingOf":
+            MessageLookupByLibrary.simpleMessage(
+                "هل انت متاكد من تعديل اعدادت "),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد بإنك تريد حذف هذه الدفعة"),
         "areYouWantToDeleteAllPayments": MessageLookupByLibrary.simpleMessage(
@@ -576,6 +579,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تعديل معلومات المتجر"),
         "editReason": MessageLookupByLibrary.simpleMessage(
             "اسباب التعديل (ملاحظات الكابتن)"),
+        "editStoreSetting":
+            MessageLookupByLibrary.simpleMessage("تعديل اعدادات المتجر"),
         "editSubscriptions":
             MessageLookupByLibrary.simpleMessage("تعديل الاشتراك"),
         "eg": MessageLookupByLibrary.simpleMessage("مثال :"),
@@ -596,6 +601,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ادخل اسم شركة التوصيل"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("ادخل معلومات المنتج"),
+        "enterTheMaxLimitThatAreAllowedToStoreDues":
+            MessageLookupByLibrary.simpleMessage(
+                "ادخل الحد الاعلى للمستحقات المسموحة للمتجر"),
         "errOc": MessageLookupByLibrary.simpleMessage("حصلت المشاكل التالية"),
         "errorDownloadingImage":
             MessageLookupByLibrary.simpleMessage("لم نستطع تحميل الصورة"),
@@ -1411,6 +1419,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("هامش الربح من المتجر"),
         "storeRated":
             MessageLookupByLibrary.simpleMessage("تمت تقييم المتجر بنجاح"),
+        "storeSetting": MessageLookupByLibrary.simpleMessage("اعدادات المتجر"),
         "storeUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تعديل المتجر بنجاح"),
         "stores": MessageLookupByLibrary.simpleMessage("متاجر"),
@@ -1492,6 +1501,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "لا يمكن اسناد هذا الطلب لهذا الكابتن , لأن الطلب مخفي"),
         "thereIsNoBranches":
             MessageLookupByLibrary.simpleMessage("لا يوجد أفرع متاحة"),
+        "thereIsNoSettingFotThisStore": MessageLookupByLibrary.simpleMessage(
+            "لا يوجد اعدادات مسبقة لهذا المتجر"),
         "thereIsNoValidSubscription":
             MessageLookupByLibrary.simpleMessage("لا يوجد اشتراك صالح للمتجر"),
         "thisErrorHappened":

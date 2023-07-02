@@ -1052,5 +1052,10 @@
     "sendOrderToExternalCompanyByAdmin": "send order to external company by admin",
     "NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST": "update order status in response to check it status from us",
     "updateOrderStatusByMarsool": "update order status by marsool",
+    "editStoreSetting": "edit store setting",
+    "storeSetting": "store setting",
+    "enterTheMaxLimitThatAreAllowedToStoreDues": "enter the max limit that are allowed to store dues",
+    "thereIsNoSettingFotThisStore": "there is no setting for this store",
+    "areYouSureThatYouWantToUpdateTheSettingOf": "are you sure that you want to update the setting of",
     "dev": "Dev"
 }

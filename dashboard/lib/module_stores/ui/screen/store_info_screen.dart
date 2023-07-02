@@ -33,13 +33,7 @@ class StoreInfoScreenState extends State<StoreInfoScreen> {
     widget.stateManager.enableStore(this, request, loading);
   }
 
-  void updateWelcomePackagePayment(
-    WelcomePackagePaymentRequest request, [
-    bool loading = false,
-  ]) {
-    widget.stateManager
-        .updateWelcomePackagePayment(this, request, model?.id ?? -1, loading);
-  }
+
 
   @override
   void initState() {

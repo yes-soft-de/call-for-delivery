@@ -10576,6 +10576,56 @@ class S {
     );
   }
 
+  /// `edit store setting`
+  String get editStoreSetting {
+    return Intl.message(
+      'edit store setting',
+      name: 'editStoreSetting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `store setting`
+  String get storeSetting {
+    return Intl.message(
+      'store setting',
+      name: 'storeSetting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `enter the max limit that are allowed to store dues`
+  String get enterTheMaxLimitThatAreAllowedToStoreDues {
+    return Intl.message(
+      'enter the max limit that are allowed to store dues',
+      name: 'enterTheMaxLimitThatAreAllowedToStoreDues',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `there is no setting for this store`
+  String get thereIsNoSettingFotThisStore {
+    return Intl.message(
+      'there is no setting for this store',
+      name: 'thereIsNoSettingFotThisStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `are you sure that you want to update the setting of`
+  String get areYouSureThatYouWantToUpdateTheSettingOf {
+    return Intl.message(
+      'are you sure that you want to update the setting of',
+      name: 'areYouSureThatYouWantToUpdateTheSettingOf',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(
