@@ -1313,8 +1313,8 @@ class SubscriptionService
         $response['deliveredOrdersCostsSum'] = 0.0;
         $response['hasToPay'] = false;
         $response['subscriptionCostLimit'] = 100;
-        $response['openingOrderCost'] = 14;
-        $response['oneKilometerCost'] = 1;
+        $response['openingOrderCost'] = 0;
+        $response['oneKilometerCost'] = 0;
 
         $subscriptionDetailsEntity = $this->getSubscriptionDetailsEntityByStoreOwnerUserId($storeOwnerUserId);
 
@@ -1324,7 +1324,7 @@ class SubscriptionService
 
         $subscription = $subscriptionDetailsEntity->getLastSubscription();
 
-        if ($subscription->getPackage()->getId() === 19) {
+        if ($subscription) {
             $response['openingOrderCost'] = $subscription->getPackage()->getOpeningOrderCost();
             $response['oneKilometerCost'] = $subscription->getPackage()->getOneKilometerCost();
         }
