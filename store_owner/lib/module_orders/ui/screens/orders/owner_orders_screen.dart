@@ -462,7 +462,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                                 paymentFor: 228,
                                 paymentType: 231,
                                 amount: null,
-                                paymentGetaway: null,
+                                paymentGetaway: 235,
                                 paymentId: null,
                               ),
                             );

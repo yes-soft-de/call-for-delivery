@@ -14,6 +14,8 @@ class PaymentStatusRequest {
   /// PAYMENT_GETAWAY_IN_APP_PURCHASE_GOOGLE_CONST = 226
   /// 
   /// PAYMENT_GETAWAY_TAP_PAYMENT_CONST = 227
+  /// 
+  /// PAYMENT_GETAWAY_NOT_SPECIFIED_CONST = 235
   int? paymentGetaway;
 
   num? amount;
