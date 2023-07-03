@@ -1056,5 +1056,10 @@
     "enterTheMaxLimitThatAreAllowedToStoreDues": "ادخل الحد الاعلى للمستحقات المسموحة للمتجر",
     "thereIsNoSettingFotThisStore": "لا يوجد اعدادات مسبقة لهذا المتجر",
     "areYouSureThatYouWantToUpdateTheSettingOf": "هل انت متاكد من تعديل اعدادت ",
+    "sendOrderAutomaticToTheExternalCompanyBecauseHeMeetWithCompanyStander": "ارسال طلب عادي بشكل تلقائي للمشغل الخارجي (نتيجة تطابقه مع معايير المشغل)",
+    "sendSubOrderAutomaticToTheExternalCompanyBecauseHeMeetWithCompanyStander": "ارسال طلب فرعي بشكل تلقائي للمشغل الخارجي (نتيجة تطابقه مع معايير المشغل)",
+    "sendOrderToExternalCompanyByAdmin": "ارسال طلب لمشغل خارجي من قبل الادمن",
+    "NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST ": "تحديث حالة الطلب نتيجة التحقق من حالته من قبلنا",
+    "updateOrderStatusByMarsool": "تحديث حالة الطلب من قبل مرسول",
     "dev": "المطورين"
 }
