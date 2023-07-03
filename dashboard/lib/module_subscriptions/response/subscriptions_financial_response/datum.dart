@@ -25,26 +25,30 @@ class Datum {
   num? packageCarCount;
   bool? isFuture;
   bool? isCurrent;
-  Datum(
-      {this.id,
-      this.packageName,
-      this.startDate,
-      this.endDate,
-      this.status,
-      this.note,
-      this.flag,
-      this.paymentsFromStore,
-      this.total,
-      this.captainOffers,
-      this.packageCarCount,
-      this.packageOrderCount,
-      this.remainingCars,
-      this.remainingOrders,
-      this.isFuture,
-      this.ordersExceedGeographicalRange,
-      this.packageNote,
-      this.packageType,
-      this.isCurrent});
+  num? subscriptionCost;
+
+  Datum({
+    this.id,
+    this.packageName,
+    this.startDate,
+    this.endDate,
+    this.status,
+    this.note,
+    this.flag,
+    this.paymentsFromStore,
+    this.total,
+    this.captainOffers,
+    this.packageCarCount,
+    this.packageOrderCount,
+    this.remainingCars,
+    this.remainingOrders,
+    this.isFuture,
+    this.ordersExceedGeographicalRange,
+    this.packageNote,
+    this.packageType,
+    this.isCurrent,
+    this.subscriptionCost,
+  });
 
   factory Datum.fromJson(Map<String, dynamic> json) => Datum(
         id: json['id'] as int?,
@@ -79,6 +83,7 @@ class Datum {
         total: json['total'] == null
             ? null
             : Total.fromJson(json['total'] as Map<String, dynamic>),
+        subscriptionCost: json['subscriptionCost'] as num?,
       );
 
   Map<String, dynamic> toJson() => {
