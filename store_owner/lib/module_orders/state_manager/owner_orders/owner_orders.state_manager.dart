@@ -12,12 +12,15 @@ import 'package:c4d/module_my_notifications/ui/widget/update_dialog.dart';
 import 'package:c4d/module_orders/model/company_info_model.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
+import 'package:c4d/module_orders/request/payment/paymnet_status_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/ui/screens/orders/owner_orders_screen.dart';
 import 'package:c4d/module_orders/ui/state/owner_orders/orders.state.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_subscription/model/can_make_order_model.dart';
 import 'package:c4d/module_subscription/service/subscription_service.dart';
+import 'package:c4d/utils/global/global_state_manager.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -96,13 +99,14 @@ class OwnerOrdersStateManager {
   }
 
   /// to show welcome package if needed (9162)
-  void accountStatus(OwnerOrdersScreenState screenState) async {
-    _authService.accountStatus().whenComplete(
-      () {
-        screenState.showWelcomeDialog = getIt<AuthPrefsHelper>().getIsNewAccount();
-        screenState.refresh();
-      },
-    );
+  void showWelcomeDialogIfNeeded(OwnerOrdersScreenState screenState) async {
+    await _authService.accountStatus();
+    screenState.showWelcomeDialog = getIt<AuthPrefsHelper>().getIsNewAccount();
+    screenState.welcomeDialogWithoutPayment =
+        getIt<AuthPrefsHelper>().getOpenWelcomeDialogWithoutPayment();
+    if (screenState.showWelcomeDialog)
+      screenState.welcomeDialog(screenState.context);
+    screenState.refresh();
   }
 
   void getOrdersFilters(
@@ -122,6 +126,8 @@ class OwnerOrdersStateManager {
         }, title: '', error: value.error, hasAppbar: false, size: 200));
       } else if (value.isEmpty) {
         _stateSubject.add(EmptyState(screenState, size: 200, onPressed: () {
+          showWelcomeDialogIfNeeded(screenState);
+
           getOrdersFilters(screenState, request);
         }, title: '', emptyMessage: S.current.homeDataEmpty, hasAppbar: false));
       } else {
@@ -183,13 +189,18 @@ class OwnerOrdersStateManager {
           msg: status.error ?? S.current.errorHappened,
           backgroundColor: Colors.red,
         );
-        _subscriptionStatus.add(CanMakeOrderModel(
+        _subscriptionStatus.add(
+          CanMakeOrderModel(
             canCreateOrder: false,
             status: status.error ?? S.current.errorHappened,
             percentageOfOrdersConsumed: '0%',
             consumingAlert: false,
             unlimitedPackage: false,
-            packageType: -1));
+            packageType: -1,
+            hasToPay: false,
+            firstTimeSubscriptionWithUniformPackage: false,
+          ),
+        );
       } else {
         status as CanMakeOrderModel;
         _subscriptionStatus.add(status.data);
@@ -197,6 +208,22 @@ class OwnerOrdersStateManager {
     } catch (e) {
       return;
     }
+  }
+
+  void makePayment(
+      OwnerOrdersScreenState screenState, PaymentStatusRequest request) {
+    _ordersService.makePayment(request).then(
+      (value) {
+        if (value.hasError) {
+          CustomFlushBarHelper.createError(
+                  title: S.current.warnning, message: value.error ?? '')
+              .show(screenState.context);
+        } else {
+          getIt<GlobalStateManager>().update();
+          showWelcomeDialogIfNeeded(screenState);
+        }
+      },
+    );
   }
 
   void watcher(OwnerOrdersScreenState screenState, [bool loading = false]) {

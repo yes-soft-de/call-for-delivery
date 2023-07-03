@@ -1,9 +1,7 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
-import 'package:c4d/consts/balance_status.dart';
 import 'package:c4d/module_auth/presistance/auth_prefs_helper.dart';
 import 'package:c4d/module_orders/hive/order_hive_helper.dart';
 import 'package:c4d/module_subscription/response/can_make_order_response/can_make_order_response.dart';
-import 'package:c4d/utils/helpers/subscription_status_helper.dart';
 
 class CanMakeOrderModel extends DataModel {
   late bool canCreateOrder;
@@ -11,7 +9,10 @@ class CanMakeOrderModel extends DataModel {
   late String percentageOfOrdersConsumed;
   late bool consumingAlert;
   late bool unlimitedPackage;
+  late bool hasToPay;
+  late bool firstTimeSubscriptionWithUniformPackage;
   late int packageType;
+
   CanMakeOrderModel({
     required this.canCreateOrder,
     required this.status,
@@ -19,6 +20,8 @@ class CanMakeOrderModel extends DataModel {
     required this.consumingAlert,
     required this.unlimitedPackage,
     required this.packageType,
+    required this.hasToPay,
+    required this.firstTimeSubscriptionWithUniformPackage,
   });
 
   late CanMakeOrderModel _model;
@@ -26,13 +29,17 @@ class CanMakeOrderModel extends DataModel {
   CanMakeOrderModel.withData(CanMakeOrderResponse response) {
     var data = response.data;
     _model = CanMakeOrderModel(
-        canCreateOrder: data?.canCreateOrder ?? true,
-        status: data?.subscriptionStatus ?? 'inactive',
-        percentageOfOrdersConsumed: data?.percentageOfOrdersConsumed ?? '0%',
-        consumingAlert: false,
-        unlimitedPackage:
-            data?.packageName == 'الباقة الذهبية Ultimate' ? true : false,
-        packageType: data?.packageType ?? -1);
+      canCreateOrder: data?.canCreateOrder ?? true,
+      status: data?.subscriptionStatus ?? 'inactive',
+      percentageOfOrdersConsumed: data?.percentageOfOrdersConsumed ?? '0%',
+      consumingAlert: false,
+      unlimitedPackage:
+          data?.packageName == 'الباقة الذهبية Ultimate' ? true : false,
+      packageType: data?.packageType ?? -1,
+      hasToPay: data?.hasToPay ?? false,
+      firstTimeSubscriptionWithUniformPackage:
+          data?.firstTimeSubscriptionWithUniformPackage ?? false,
+    );
     // alert detect
     var total = _model.percentageOfOrdersConsumed.replaceAll('%', ' ').trim();
     var totalOrder = num.tryParse(total)?.toInt() ?? 0;

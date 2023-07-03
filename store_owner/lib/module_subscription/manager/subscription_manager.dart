@@ -1,6 +1,7 @@
 import 'package:c4d/module_subscription/repository/subscription_repository.dart';
 import 'package:c4d/module_subscription/response/can_make_order_response/can_make_order_response.dart';
 import 'package:c4d/module_subscription/response/captain_offers_response/captain_offers_response.dart';
+import 'package:c4d/module_subscription/response/new_subscription_balance_response/new_subscription_balance_response.dart';
 import 'package:c4d/module_subscription/response/package_categories_response/package_categories_response.dart';
 import 'package:c4d/module_subscription/response/packages/packages_response.dart';
 import 'package:c4d/module_subscription/response/subscription_balance_response/subscription_balance_response.dart';
@@ -18,6 +19,10 @@ class SubscriptionsManager {
       await _repository.getPackages();
   Future<SubscriptionBalanceResponse?> getSubscriptionBalance() async =>
       await _repository.getSubscriptionBalance();
+
+  Future<NewSubscriptionBalanceResponse?> getNewSubscriptionBalance() async =>
+      await _repository.getNewSubscriptionBalance();
+
   Future<PackageCategoriesResponse?> getPackagesCategories() async =>
       await _repository.getPackagesCategories();
 

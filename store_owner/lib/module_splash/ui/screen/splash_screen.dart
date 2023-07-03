@@ -61,6 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       someChecks();
     });
+
     super.initState();
   }
 
@@ -92,7 +93,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
+    return Stack(fit: StackFit.expand, children: [
       Positioned.fill(
         child: Container(
           color: Color.fromARGB(255, 233, 195, 113),
@@ -100,7 +101,7 @@ class _SplashScreenState extends State<SplashScreen> {
       ),
       Image.asset(
         ImageAsset.SPLASH_SCREEN_BACKGROUND,
-        fit: BoxFit.cover,
+        fit: BoxFit.fill,
       ),
       Scaffold(
         backgroundColor: Colors.transparent,

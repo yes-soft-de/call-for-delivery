@@ -74,6 +74,7 @@ class RegisterScreenState extends State<RegisterScreen> {
         }
       },
       child: Stack(
+        fit: StackFit.expand,
         children: [
           Positioned.fill(
             child: Container(
@@ -82,6 +83,7 @@ class RegisterScreenState extends State<RegisterScreen> {
           ),
           Image.asset(
             ImageAsset.AUTH_BACKGROUND,
+            fit: BoxFit.fill,
           ),
           Scaffold(
             appBar: CustomC4dAppBar.appBar(

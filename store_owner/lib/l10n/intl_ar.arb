@@ -709,12 +709,48 @@
     "english":"الانكليزية",
     "continueWord":"متابعة",
     "youCanContactWithDirectSupportForMoreDetails":"يمكنك التواصل مع الدعم المباشر ان اردت مراجعة الحالة",
+    "adsAndOffers": "الإعلانات و العروض",
+    "storeFee":"المستحقات عالمتجر",
     "useYourCurrentLocation":"استخدم موقعك الحالي",
     "enterYourStoreName": "ادخل اسم متجرك",
     "startWork": "ابدا العمل",
     "pleaseSelectYourStoreLocation": "الرجاء تحديد موقع متجرك",
     "welcome" : "اهلا وسهلا",
     "getItNow" : "احصل عليها الان",
+    "toBePayed" : "المترتب للدفع",
+    "numberOfOrder" : "عدد الطلبات",
+    "payNow" : "ادفع الان",
+    "planDetails" : "تفاصيل خطة العمل",
+    "openedPrice" : "السعر الافتتاحي للطلب",
+    "subscriptionIsActivate" : "الاشتراك فعال",
+    "subscriptionIsNotActivate" : "الاشتراك غير فعال",
+    "youHaveNotExceededTheLimitYet" : "لم تتخطى الحد المسموح بعد",
+    "youHaveExceededTheLimit" : "لقد تخطيت الحد المسموح",
+    "every1KM" : "كل 1 كم",
+    "youHaveToPayWhen" : "سيتوجب عليك الدفع عند بلوغ استهلاكك {limit} ريال",
+    "@youHaveToPayWhen": {
+        "description": "The conventional newborn programmer greeting",
+        "placeholders": {
+                    "limit": {
+                        "type": "String"
+                    }
+                }
+    },
     "welcomePlanOffer" : "مبروك  لقد حصلت على باقة ترحيبية \n لتوصيل طلب واحد \n مقابل 2.99 ريال فقط",
+    "welcomePlanOfferWithoutPayment" : "مبروك  لقد حصلت على باقة ترحيبية \n لتوصيل طلب واحد \n مجانا",
+    "currentCycleDetails" : "معلومات الدورة الحالية",
+    "packageStartDate" : "تاريخ بدء الباقة",
+    "thereIsNoUserWithThisNumber" : "لا يوجد مستخدم بهذا الرقم",
+    "paymentSuccess" : "عملية الدفع تمت بنجاح",
+    "youDontHaveToPayYet" : "لست بحاجة للدفع بعد",
+    "noPaymentHadBeenMade" : "لم يتم اجراء المعاملة",
+    "packageNotExist" : "الباقة غير موجودة",
+    "subscribeNotExist" : "الاشتراك غير موجود",
+    "storeOwnerProfileNotExist" : "بروفايل المتجر غير موجود",
+    "paymentInfo" : "معلومات الدفع",
+    "youHaveToFillTheFormFirst" : "يتوجب ادخال البيانات التالية:",
+    "youHaveFinancialPaymentToMade" : "يوجد مستحقات مالية متوجبة الدفع\nيمكنك دفعها من شاشة الحساب المالي",
+    "YouHaveUsedUpTheEntireWelcomePack" : "استهلكت كامل الباقة الترحيبية",
+    "theCostWillBe" : "سيتم الآن احتساب التكلفة بناء على خطة العمل الحالية:\n\nسعر الطلب الافتتاحي: 14 ريال\nالتكلفة عن كل 1 كم: 1 ريال",
     "adsAndOffers": "الإعلانات و العروض"
 }

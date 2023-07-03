@@ -7140,6 +7140,26 @@ class S {
     );
   }
 
+  /// `Ads & offers`
+  String get adsAndOffers {
+    return Intl.message(
+      'Ads & offers',
+      name: 'adsAndOffers',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Store fee`
+  String get storeFee {
+    return Intl.message(
+      'Store fee',
+      name: 'storeFee',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `use your current location`
   String get useYourCurrentLocation {
     return Intl.message(
@@ -7200,6 +7220,116 @@ class S {
     );
   }
 
+  /// `to be payed`
+  String get toBePayed {
+    return Intl.message(
+      'to be payed',
+      name: 'toBePayed',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `number of order`
+  String get numberOfOrder {
+    return Intl.message(
+      'number of order',
+      name: 'numberOfOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `pay now`
+  String get payNow {
+    return Intl.message(
+      'pay now',
+      name: 'payNow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `plan details`
+  String get planDetails {
+    return Intl.message(
+      'plan details',
+      name: 'planDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `opened price order`
+  String get openedPrice {
+    return Intl.message(
+      'opened price order',
+      name: 'openedPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `subscription is active`
+  String get subscriptionIsActivate {
+    return Intl.message(
+      'subscription is active',
+      name: 'subscriptionIsActivate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `subscription is not active`
+  String get subscriptionIsNotActivate {
+    return Intl.message(
+      'subscription is not active',
+      name: 'subscriptionIsNotActivate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `you have not exceeded the limit yet`
+  String get youHaveNotExceededTheLimitYet {
+    return Intl.message(
+      'you have not exceeded the limit yet',
+      name: 'youHaveNotExceededTheLimitYet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `have exceeded the limit`
+  String get youHaveExceededTheLimit {
+    return Intl.message(
+      'have exceeded the limit',
+      name: 'youHaveExceededTheLimit',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `every 1 km`
+  String get every1KM {
+    return Intl.message(
+      'every 1 km',
+      name: 'every1KM',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `you have to pay when you reach {limit} sar`
+  String youHaveToPayWhen(String limit) {
+    return Intl.message(
+      'you have to pay when you reach $limit sar',
+      name: 'youHaveToPayWhen',
+      desc: 'The conventional newborn programmer greeting',
+      args: [limit],
+    );
+  }
+
   /// `Congratulations, you have received a welcome package for delivering one order for only 2.99 riyal`
   String get welcomePlanOffer {
     return Intl.message(
@@ -7210,11 +7340,151 @@ class S {
     );
   }
 
-  /// `Ads & offers`
-  String get adsAndOffers {
+  /// `Congratulations, you have received a welcome package for delivering one order for free`
+  String get welcomePlanOfferWithoutPayment {
     return Intl.message(
-      'Ads & offers',
-      name: 'adsAndOffers',
+      'Congratulations, you have received a welcome package for delivering one order for free',
+      name: 'welcomePlanOfferWithoutPayment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `current cycle details`
+  String get currentCycleDetails {
+    return Intl.message(
+      'current cycle details',
+      name: 'currentCycleDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `package start date`
+  String get packageStartDate {
+    return Intl.message(
+      'package start date',
+      name: 'packageStartDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `there is no user with this number`
+  String get thereIsNoUserWithThisNumber {
+    return Intl.message(
+      'there is no user with this number',
+      name: 'thereIsNoUserWithThisNumber',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `payment process completed successfully`
+  String get paymentSuccess {
+    return Intl.message(
+      'payment process completed successfully',
+      name: 'paymentSuccess',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `you dont have to pay yet`
+  String get youDontHaveToPayYet {
+    return Intl.message(
+      'you dont have to pay yet',
+      name: 'youDontHaveToPayYet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `no payment had been made`
+  String get noPaymentHadBeenMade {
+    return Intl.message(
+      'no payment had been made',
+      name: 'noPaymentHadBeenMade',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `package not exist`
+  String get packageNotExist {
+    return Intl.message(
+      'package not exist',
+      name: 'packageNotExist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `subscribe not exist`
+  String get subscribeNotExist {
+    return Intl.message(
+      'subscribe not exist',
+      name: 'subscribeNotExist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `store owner profile not exist`
+  String get storeOwnerProfileNotExist {
+    return Intl.message(
+      'store owner profile not exist',
+      name: 'storeOwnerProfileNotExist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `payment information`
+  String get paymentInfo {
+    return Intl.message(
+      'payment information',
+      name: 'paymentInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `you have to fill the form first`
+  String get youHaveToFillTheFormFirst {
+    return Intl.message(
+      'you have to fill the form first',
+      name: 'youHaveToFillTheFormFirst',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `you have financial payment to pay\nyou can pay fot it in the financial account screen`
+  String get youHaveFinancialPaymentToMade {
+    return Intl.message(
+      'you have financial payment to pay\nyou can pay fot it in the financial account screen',
+      name: 'youHaveFinancialPaymentToMade',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `You have used up the entire welcome pack`
+  String get YouHaveUsedUpTheEntireWelcomePack {
+    return Intl.message(
+      'You have used up the entire welcome pack',
+      name: 'YouHaveUsedUpTheEntireWelcomePack',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `The cost will now be calculated based on the current business plan:\nThe opening asking price is 14 riyals\nCost per 1 km. 1 riyal`
+  String get theCostWillBe {
+    return Intl.message(
+      'The cost will now be calculated based on the current business plan:\nThe opening asking price is 14 riyals\nCost per 1 km. 1 riyal',
+      name: 'theCostWillBe',
       desc: '',
       args: [],
     );

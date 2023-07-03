@@ -66,6 +66,7 @@ class ForgotPassScreenState extends State<ForgotPassScreen> {
         }
       },
       child: Stack(
+        fit: StackFit.expand,
         children: [
           Positioned.fill(
         child: Container(
@@ -74,6 +75,7 @@ class ForgotPassScreenState extends State<ForgotPassScreen> {
       ),
           Image.asset(
             ImageAsset.AUTH_BACKGROUND,
+            fit: BoxFit.fill,
           ),
           Scaffold(
             backgroundColor: Colors.transparent,

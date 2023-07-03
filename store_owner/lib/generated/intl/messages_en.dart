@@ -20,6 +20,8 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(limit) => "you have to pay when you reach ${limit} sar";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "BestStores": MessageLookupByLibrary.simpleMessage("Best Stores"),
@@ -35,6 +37,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Data not found"),
         "SubscriptionInactive": MessageLookupByLibrary.simpleMessage(
             "Your subscription not activate yet please wait"),
+        "YouHaveUsedUpTheEntireWelcomePack":
+            MessageLookupByLibrary.simpleMessage(
+                "You have used up the entire welcome pack"),
         "about": MessageLookupByLibrary.simpleMessage("About"),
         "accept": MessageLookupByLibrary.simpleMessage("Accept"),
         "acceptOrder": MessageLookupByLibrary.simpleMessage("Accept Order"),
@@ -284,6 +289,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Here you can find saved credentials "),
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("Current Balance"),
+        "currentCycleDetails":
+            MessageLookupByLibrary.simpleMessage("current cycle details"),
         "currentOrders": MessageLookupByLibrary.simpleMessage("Current Orders"),
         "dangerZone": MessageLookupByLibrary.simpleMessage("Danger Zone"),
         "darkMode": MessageLookupByLibrary.simpleMessage("Dark Mode"),
@@ -374,6 +381,7 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Error logging in, firebase account not found"),
         "errorUploadingImages":
             MessageLookupByLibrary.simpleMessage("Error Uploading Images!!"),
+        "every1KM": MessageLookupByLibrary.simpleMessage("every 1 km"),
         "exceededAllowedTime": MessageLookupByLibrary.simpleMessage(
             "Can not remove it, Exceeded time allowed"),
         "expirationData":
@@ -545,6 +553,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "no": MessageLookupByLibrary.simpleMessage("No"),
         "noImage": MessageLookupByLibrary.simpleMessage(
             "No Image , Please provide one"),
+        "noPaymentHadBeenMade":
+            MessageLookupByLibrary.simpleMessage("no payment had been made"),
         "notAllowedCaptainInStore": MessageLookupByLibrary.simpleMessage(
             "You can\'t edit, captain in the store."),
         "notAllowedCaptainReceived": MessageLookupByLibrary.simpleMessage(
@@ -567,6 +577,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "notificationsDeletedSuccess": MessageLookupByLibrary.simpleMessage(
             "Notifications deleted successfully"),
         "now": MessageLookupByLibrary.simpleMessage("Now"),
+        "numberOfOrder":
+            MessageLookupByLibrary.simpleMessage("number of order"),
         "offerNotFoundRenew": MessageLookupByLibrary.simpleMessage(
             "This offer not available to renew any more"),
         "offerNumber": MessageLookupByLibrary.simpleMessage("offerNumber"),
@@ -586,6 +598,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "openChatRoom": MessageLookupByLibrary.simpleMessage("Open Chat Room"),
         "openOrder": MessageLookupByLibrary.simpleMessage("Open order"),
         "openTheApp": MessageLookupByLibrary.simpleMessage("Open the app"),
+        "openedPrice":
+            MessageLookupByLibrary.simpleMessage("opened price order"),
         "openingTime": MessageLookupByLibrary.simpleMessage("Opening Time"),
         "order": MessageLookupByLibrary.simpleMessage("Order"),
         "orderAlreadyAccepted": MessageLookupByLibrary.simpleMessage(
@@ -679,8 +693,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "packageExtendedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Your subscription extended successfully"),
         "packageInfo": MessageLookupByLibrary.simpleMessage("Package Info"),
+        "packageNotExist":
+            MessageLookupByLibrary.simpleMessage("package not exist"),
         "packageNotFoundRenew": MessageLookupByLibrary.simpleMessage(
             "This Package not available to renew any more"),
+        "packageStartDate":
+            MessageLookupByLibrary.simpleMessage("package start date"),
         "packageSubscriptionSuccess": MessageLookupByLibrary.simpleMessage(
             "You subscripted with the package successfully"),
         "packageType": MessageLookupByLibrary.simpleMessage("Package type"),
@@ -695,6 +713,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "passwordUpdatedSuccess": MessageLookupByLibrary.simpleMessage(
             "Password updated successfully"),
         "pay": MessageLookupByLibrary.simpleMessage("Pay"),
+        "payNow": MessageLookupByLibrary.simpleMessage("pay now"),
         "paySubscription":
             MessageLookupByLibrary.simpleMessage("Pay Subscription"),
         "paymentAmount": MessageLookupByLibrary.simpleMessage("Payment amount"),
@@ -702,11 +721,15 @@ class MessageLookup extends MessageLookupByLibrary {
             "Payment process has been failed , please try again later"),
         "paymentHistory":
             MessageLookupByLibrary.simpleMessage("Payment History"),
+        "paymentInfo":
+            MessageLookupByLibrary.simpleMessage("payment information"),
         "paymentMethod": MessageLookupByLibrary.simpleMessage("Payment Method"),
         "paymentMethodHint": MessageLookupByLibrary.simpleMessage("Choose"),
         "paymentPortalHint": MessageLookupByLibrary.simpleMessage(
             "All prices in payments portal are included with 15% vat"),
         "paymentResume": MessageLookupByLibrary.simpleMessage("Payment Resume"),
+        "paymentSuccess": MessageLookupByLibrary.simpleMessage(
+            "payment process completed successfully"),
         "payments": MessageLookupByLibrary.simpleMessage("Payments"),
         "paymentsVia": MessageLookupByLibrary.simpleMessage("Payments via"),
         "pending": MessageLookupByLibrary.simpleMessage("Pending"),
@@ -725,6 +748,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "pickAJob": MessageLookupByLibrary.simpleMessage("Pick a Job"),
         "pickALanguage":
             MessageLookupByLibrary.simpleMessage("Pick a Language"),
+        "planDetails": MessageLookupByLibrary.simpleMessage("plan details"),
         "pleaseCheckYourInternetConnection":
             MessageLookupByLibrary.simpleMessage(
                 "Please check your internet connection , and try again"),
@@ -919,10 +943,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "store": MessageLookupByLibrary.simpleMessage("Store"),
         "storeAccountInit":
             MessageLookupByLibrary.simpleMessage("Setup Account"),
+        "storeFee": MessageLookupByLibrary.simpleMessage("Store fee"),
         "storeName": MessageLookupByLibrary.simpleMessage("Store Name"),
         "storeNameIsToShort": MessageLookupByLibrary.simpleMessage(
             "Store name must not be less than 3 character"),
         "storeOwner": MessageLookupByLibrary.simpleMessage("Store Owner"),
+        "storeOwnerProfileNotExist": MessageLookupByLibrary.simpleMessage(
+            "store owner profile not exist"),
         "storePhone": MessageLookupByLibrary.simpleMessage("Store Phone"),
         "storeProducts": MessageLookupByLibrary.simpleMessage("Store Products"),
         "storeRated":
@@ -933,12 +960,18 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Submitting Profile"),
         "suborder": MessageLookupByLibrary.simpleMessage("Suborder"),
         "subscribe": MessageLookupByLibrary.simpleMessage("Subscribe"),
+        "subscribeNotExist":
+            MessageLookupByLibrary.simpleMessage("subscribe not exist"),
         "subscribeWithPackage":
             MessageLookupByLibrary.simpleMessage("Subscription packages"),
         "subscribedToOfferSuccess": MessageLookupByLibrary.simpleMessage(
             "You subscribed with captain offer with a success"),
         "subscriptionDate":
             MessageLookupByLibrary.simpleMessage("Subscription date"),
+        "subscriptionIsActivate":
+            MessageLookupByLibrary.simpleMessage("subscription is active"),
+        "subscriptionIsNotActivate":
+            MessageLookupByLibrary.simpleMessage("subscription is not active"),
         "subscriptionStatus":
             MessageLookupByLibrary.simpleMessage("Subscription status"),
         "successCreateOrder":
@@ -963,8 +996,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "terms": MessageLookupByLibrary.simpleMessage("terms of use"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Terms of Service"),
+        "theCostWillBe": MessageLookupByLibrary.simpleMessage(
+            "The cost will now be calculated based on the current business plan:\nThe opening asking price is 14 riyals\nCost per 1 km. 1 riyal"),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
             "There is no branches available"),
+        "thereIsNoUserWithThisNumber": MessageLookupByLibrary.simpleMessage(
+            "there is no user with this number"),
         "thisErrorHappened":
             MessageLookupByLibrary.simpleMessage("This Error happened"),
         "thisMightTakeAWhilePleaseWait": MessageLookupByLibrary.simpleMessage(
@@ -973,6 +1010,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Order can contains a sub orders"),
         "title": MessageLookupByLibrary.simpleMessage("title"),
         "to": MessageLookupByLibrary.simpleMessage("To"),
+        "toBePayed": MessageLookupByLibrary.simpleMessage("to be payed"),
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
             MessageLookupByLibrary.simpleMessage(
                 "To find out more, please leave your phone.\nand we will contact you personally"),
@@ -1062,6 +1100,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "welcome": MessageLookupByLibrary.simpleMessage("welcome"),
         "welcomePlanOffer": MessageLookupByLibrary.simpleMessage(
             "Congratulations, you have received a welcome package for delivering one order for only 2.99 riyal"),
+        "welcomePlanOfferWithoutPayment": MessageLookupByLibrary.simpleMessage(
+            "Congratulations, you have received a welcome package for delivering one order for free"),
         "welcomeToOrdersScreen":
             MessageLookupByLibrary.simpleMessage("Welcome to Orders Screen"),
         "welcomeToOurApp":
@@ -1095,8 +1135,19 @@ class MessageLookup extends MessageLookupByLibrary {
                 "You can\'t delete order, captain accepted this order"),
         "youConsumed":
             MessageLookupByLibrary.simpleMessage("You have consumed"),
+        "youDontHaveToPayYet":
+            MessageLookupByLibrary.simpleMessage("you dont have to pay yet"),
+        "youHaveExceededTheLimit":
+            MessageLookupByLibrary.simpleMessage("have exceeded the limit"),
+        "youHaveFinancialPaymentToMade": MessageLookupByLibrary.simpleMessage(
+            "you have financial payment to pay\nyou can pay fot it in the financial account screen"),
+        "youHaveNotExceededTheLimitYet": MessageLookupByLibrary.simpleMessage(
+            "you have not exceeded the limit yet"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "You have products from other store , Do you want to clear your cart and add the new ones"),
+        "youHaveToFillTheFormFirst": MessageLookupByLibrary.simpleMessage(
+            "you have to fill the form first"),
+        "youHaveToPayWhen": m0,
         "youSubscribedWithOffer": MessageLookupByLibrary.simpleMessage(
             "You already subscribed with captain offer , You can subscribe again when your subscription expired"),
         "yourBalance": MessageLookupByLibrary.simpleMessage("your balance"),

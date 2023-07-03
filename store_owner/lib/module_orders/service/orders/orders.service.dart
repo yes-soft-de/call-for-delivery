@@ -209,13 +209,13 @@ class OrdersService {
     return DataModel.empty();
   }
 
-  Future<DataModel> setPayment(PaymentStatusRequest request) async {
+  Future<DataModel> makePayment(PaymentStatusRequest request) async {
     ActionResponse? response = await _ordersManager.setPayment(request);
     if (response == null) return DataModel.withError(S.current.networkError);
-    if (response.statusCode != '204') {
-      return DataModel.withError('');
+    if (response.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
-    _authPrefsHelper.setNewAccount(false);
     return DataModel.empty();
   }
 }

@@ -1,4 +1,11 @@
 import 'dart:async';
+import 'dart:io';
+import 'package:c4d/module_orders/request/payment/paymnet_status_request.dart';
+import 'package:c4d/module_subscription/hive/subscription_pref.dart';
+import 'package:c4d/module_subscription/model/subscription_balance_model.dart';
+import 'package:c4d/module_subscription/service/subscription_service.dart';
+import 'package:c4d/utils/helpers/in_app_purchase.dart';
+import 'package:c4d/utils/logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
@@ -16,7 +23,6 @@ import 'package:c4d/module_notifications/service/fire_notification_service/fire_
 import 'package:c4d/module_orders/model/company_info_model.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
-import 'package:c4d/module_orders/request/payment/paymnet_status_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/state_manager/new_order/new_order.state_manager.dart';
 import 'package:c4d/module_orders/state_manager/owner_orders/owner_orders.state_manager.dart';
@@ -25,7 +31,6 @@ import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_settings/setting_routes.dart';
 import 'package:c4d/module_subscription/model/can_make_order_model.dart';
-import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/navigator_menu/navigator_menu.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
@@ -66,6 +71,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
   AuthPrefsHelper _authPrefsHelper = getIt<AuthPrefsHelper>();
   OrdersService _ordersService = getIt<OrdersService>();
   bool showWelcomeDialog = false;
+  bool welcomeDialogWithoutPayment = false;
 
   Future<void> getMyOrdersFilter([loading = true]) async {
     widget._stateManager.getOrdersFilters(
@@ -86,6 +92,10 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     widget._stateManager.initDrawerData();
   }
 
+  void makePayment(PaymentStatusRequest request) {
+    widget._stateManager.makePayment(this, request);
+  }
+
   bool featureFlag = true;
 
   bool openedBottom = false;
@@ -104,12 +114,12 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
       }
       if (_currentState is OrdersListStateOrdersLoaded && featureFlag) {
         featureFlag = false;
-        FeatureDiscovery.discoverFeatures(
-          context,
-          const <String>{
-            'newOrder',
-          },
-        );
+        // FeatureDiscovery.discoverFeatures(
+        //   context,
+        //   const <String>{
+        //     'newOrder',
+        //   },
+        // );
       }
     });
     _profileSubscription = widget._stateManager.profileStream.listen((event) {
@@ -129,6 +139,12 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
       AppConfig.packageType = status?.packageType ?? -1;
       if (mounted) {
         setState(() {});
+        if (status?.hasToPay ?? false) {
+          paymentDialog(context);
+        }
+        if (status?.firstTimeSubscriptionWithUniformPackage ?? false) {
+          subscribeInTheUniversalPackageDialog(context);
+        }
       }
     });
     _globalStateManager =
@@ -147,7 +163,26 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     });
 
     widget._stateManager.getUpdates(this);
-    widget._stateManager.accountStatus(this);
+    widget._stateManager.showWelcomeDialogIfNeeded(this);
+
+    getIt<SubscriptionService>().getSubscriptionBalance().then(
+      (value) {
+        if (value.hasError) {
+          if ((value.error?.contains('لم تشترك بباقة') ?? false) ||
+              (value.error?.contains('You dont have a subscription') ?? false))
+            getIt<SubscriptionPref>().setIsOldSubscriptionPlan(false);
+        } else if (value.isEmpty) {
+        } else {
+          value as SubscriptionBalanceModel;
+          var packageId = value.data.packageID;
+          if (packageId == 18 || packageId == 19) {
+            getIt<SubscriptionPref>().setIsOldSubscriptionPlan(false);
+          } else {
+            getIt<SubscriptionPref>().setIsOldSubscriptionPlan(true);
+          }
+        }
+      },
+    );
   }
 
   refresh() {
@@ -159,9 +194,6 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
 
   @override
   Widget build(BuildContext context) {
-    if (showWelcomeDialog) {
-      welcomeDialog(context);
-    }
     return Scaffold(
       key: GlobalVariable.mainScreenScaffold,
       appBar: CustomC4dAppBar.appBar(context,
@@ -221,14 +253,15 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                   )),
               onPressed: status != null
                   ? () {
+                      if (showWelcomeDialog) {
+                        widget._stateManager.showWelcomeDialogIfNeeded(this);
+                      }
                       if (status?.canCreateOrder == true) {
                         Navigator.of(context)
                             .pushNamed(OrdersRoutes.NEW_ORDER_SCREEN);
                       } else if (status?.status == S.current.inactiveStore) {
                         Fluttertoast.showToast(msg: S.current.inactiveStore);
                       } else {
-                        Navigator.of(context).pushNamed(
-                            SubscriptionsRoutes.SUBSCRIPTIONS_SCREEN);
                         CustomFlushBarHelper.createError(
                                 title: S.current.warnning,
                                 message:
@@ -275,6 +308,10 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                           color: Colors.white,
                         ),
                         onPressed: () {
+                          if (showWelcomeDialog) {
+                            widget._stateManager
+                                .showWelcomeDialogIfNeeded(this);
+                          }
                           getInitData();
                         },
                       ),
@@ -301,6 +338,9 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
               FilterItem(label: S.current.onGoingOrder),
             ],
             onItemSelected: (index) {
+              if (showWelcomeDialog) {
+                widget._stateManager.showWelcomeDialogIfNeeded(this);
+              }
               if (index == 0) {
                 orderFilter = 'pending';
               } else {
@@ -316,46 +356,48 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
             height: 16,
           ),
           Expanded(
-              child: SwipeDetector(
-                  onSwipe: (dir, offset) {
-                    if (dir == SwipeDirection.left ||
-                        dir == SwipeDirection.right ||
-                        dir == SwipeDirection.up) {
-                      openedBottom = true;
-                      setState(() {});
-                      GlobalVariable.mainScreenScaffold.currentState
-                          ?.showBottomSheet(
-                            (ctx) {
-                              return getOngoingChatRoom();
-                            },
-                            backgroundColor:
-                                Theme.of(context).colorScheme.background,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(25))),
-                            constraints: BoxConstraints(
-                              minHeight: 150,
-                              maxHeight: 500,
-                            ),
-                          )
-                          .closed
-                          .whenComplete(() {
-                            openedBottom = false;
-                            setState(() {});
-                          });
-                    }
-                  },
-                  child: _currentState.getUI(context)))
+            child: SwipeDetector(
+              onSwipe: (dir, offset) {
+                if (dir == SwipeDirection.left ||
+                    dir == SwipeDirection.right ||
+                    dir == SwipeDirection.up) {
+                  openedBottom = true;
+                  setState(() {});
+                  GlobalVariable.mainScreenScaffold.currentState
+                      ?.showBottomSheet(
+                        (ctx) {
+                          return getOngoingChatRoom();
+                        },
+                        backgroundColor:
+                            Theme.of(context).colorScheme.background,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.vertical(
+                                top: Radius.circular(25))),
+                        constraints: BoxConstraints(
+                          minHeight: 150,
+                          maxHeight: 500,
+                        ),
+                      )
+                      .closed
+                      .whenComplete(() {
+                        openedBottom = false;
+                        setState(() {});
+                      });
+                }
+              },
+              child: _currentState.getUI(context),
+            ),
+          )
         ],
       ),
     );
   }
 
   welcomeDialog(BuildContext context) {
-    showWelcomeDialog = false;
     SchedulerBinding.instance.addPostFrameCallback(
       (_) {
         showDialog(
+          barrierDismissible: false,
           context: context,
           builder: (context) {
             return Dialog(
@@ -381,7 +423,9 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                         width: 120,
                       ),
                       Text(
-                        S.current.welcomePlanOffer,
+                        welcomeDialogWithoutPayment
+                            ? S.current.welcomePlanOfferWithoutPayment
+                            : S.current.welcomePlanOffer,
                         style: Theme.of(context)
                             .textTheme
                             .titleMedium
@@ -389,16 +433,44 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(height: 20),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.pop(context);
-                          _ordersService.setPayment(
-                            PaymentStatusRequest(status: 1),
-                          );
-                        },
-                        child: Text(S.current.getItNow),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: Color(0xffFF6F42),
+                      Visibility(
+                        visible: !welcomeDialogWithoutPayment,
+                        child: InAppPurchaseButton(
+                          callBack: (succeeded) {
+                            if (succeeded) {
+                            Navigator.pop(context);
+                              makePayment(
+                                PaymentStatusRequest(
+                                  status: 1,
+                                  paymentFor: 228,
+                                  amount: 2.99,
+                                  paymentType: 229,
+                                  paymentGetaway:
+                                      Platform.isAndroid ? 226 : 225,
+                                  paymentId: null,
+                                ),
+                              );
+                            }
+                          },
+                        ),
+                        replacement: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            makePayment(
+                              PaymentStatusRequest(
+                                status: 1,
+                                paymentFor: 228,
+                                paymentType: 231,
+                                amount: null,
+                                paymentGetaway: 235,
+                                paymentId: null,
+                              ),
+                            );
+                          },
+                          child: Text(S.current.getItNow),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Color(0xffFF6F42),
+                          ),
                         ),
                       ),
                     ],
@@ -407,6 +479,115 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
               ),
             );
           },
+        );
+      },
+    );
+  }
+
+  paymentDialog(BuildContext context) {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: Color.fromARGB(237, 2, 96, 79),
+          child: Padding(
+            padding: const EdgeInsets.all(30),
+            child: SizedBox(
+              width: double.infinity,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    S.current.warnning,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(color: Colors.white),
+                  ),
+                  SizedBox(height: 20),
+                  Text(
+                    S.current.youHaveFinancialPaymentToMade,
+                    style: Theme.of(context)
+                        .textTheme
+                        .titleMedium
+                        ?.copyWith(color: Colors.white),
+                    textAlign: TextAlign.center,
+                  ),
+                  SizedBox(height: 20),
+                  SizedBox(
+                    width: 150,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: Text(S.current.ok),
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Color(0xffFF6F42),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  subscribeInTheUniversalPackageDialog(BuildContext context) {
+    showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (context) {
+        return WillPopScope(
+          onWillPop: () async {
+            return false;
+          },
+          child: Dialog(
+            backgroundColor: Color.fromARGB(237, 2, 96, 79),
+            child: Padding(
+              padding: const EdgeInsets.all(30),
+              child: SizedBox(
+                width: double.infinity,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      S.current.YouHaveUsedUpTheEntireWelcomePack,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(color: Colors.white),
+                    ),
+                    SizedBox(height: 20),
+                    Text(
+                      S.current.theCostWillBe,
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(color: Colors.white),
+                      textAlign: TextAlign.start,
+                    ),
+                    SizedBox(height: 20),
+                    SizedBox(
+                      width: 150,
+                      child: ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: Text(S.current.ok, textAlign: TextAlign.start),
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Color(0xffFF6F42),
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+            ),
+          ),
         );
       },
     );

@@ -1,3 +1,4 @@
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_about/about_routes.dart';
@@ -12,6 +13,7 @@ import 'package:c4d/module_orders/ui/screens/orders/owner_orders_screen.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_profile/profile_routes.dart';
 import 'package:c4d/module_settings/setting_routes.dart';
+import 'package:c4d/module_subscription/hive/subscription_pref.dart';
 import 'package:c4d/module_subscription/subscriptions_routes.dart';
 import 'package:c4d/navigator_menu/custom_nav_tile.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
@@ -45,6 +47,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
 
   @override
   Widget build(BuildContext context) {
+    var isOldStorePlan = getIt<SubscriptionPref>().getIsOldSubscriptionPlan();
+
     var drawerHeader = SizedBox(
       height: 230,
       child: Padding(
@@ -100,6 +104,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
         child: CustomListView.custom(children: [
           // personal info
           drawerHeader,
+
           CustomNavTile(
               icon: Icons.person,
               onTap: () {
@@ -107,14 +112,26 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
               },
               title: S.current.myProfile),
           Visibility(
-            visible: widget.isUnlimitedPackage == false,
+            visible: (widget.isUnlimitedPackage == false),
             child: CustomNavTile(
-                icon: Icons.account_balance_rounded,
-                onTap: () {
+              icon: Icons.account_balance_rounded,
+              onTap: () {
+                if (isOldStorePlan) {
                   Navigator.of(context)
                       .pushNamed(SubscriptionsRoutes.SUBSCRIPTIONS_DUES_SCREEN);
-                },
-                title: S.current.myBalance),
+                } else {
+                  if (widget.screenState.showWelcomeDialog) {
+                    widget.screenState.welcomeDialog(context);
+                  } else {
+                    Navigator.of(context).pushNamed(
+                        SubscriptionsRoutes.NEW_SUBSCRIPTIONS_SCREEN);
+                  }
+                }
+              },
+              title: isOldStorePlan
+                  ? S.current.myBalance
+                  : S.current.accountBalance,
+            ),
           ),
           Divider(
             indent: 32,
@@ -124,7 +141,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
           ),
           // my work info
           Visibility(
-            visible: widget.isUnlimitedPackage == false,
+            visible: (isOldStorePlan && widget.isUnlimitedPackage == false),
             child: CustomNavTile(
                 icon: Icons.subscriptions_rounded,
                 onTap: () {

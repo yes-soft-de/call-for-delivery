@@ -22,6 +22,7 @@ class InitAccountStateSelectBranch extends States {
     _getMarkers(branchLocation).then((value) {
       screenState.refresh();
     });
+    getMyLocation();
   }
 
   bool window = false;
@@ -93,16 +94,7 @@ class InitAccountStateSelectBranch extends States {
                       ).show(screenState.context);
                     }
                   },
-                  onUseMyLocationButtonPressed: () async {
-                    var myLocation = await DeepLinksService.defaultLocation();
-                    LatLng myPos = LatLng(
-                        myLocation?.latitude ?? 0, myLocation?.longitude ?? 0);
-                    screenState.customInfoWindowController.googleMapController
-                        ?.animateCamera(CameraUpdate.newCameraPosition(
-                            CameraPosition(target: myPos, zoom: 15)));
-                    saveMarker(myPos);
-                    screenState.refresh();
-                  },
+                  onUseMyLocationButtonPressed: getMyLocation,
                 ),
               ),
             ],
@@ -112,30 +104,42 @@ class InitAccountStateSelectBranch extends States {
     );
   }
 
-  void saveMarker(LatLng location) {
-    if (markers.isEmpty) {
-      showDialog(
-        context: screenState.context,
-        builder: (context) {
-          return AlertDialog(
-            title: Text(S.current.note),
-            content: Container(child: Text(S.current.saveBranchAlert)),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            actionsAlignment: MainAxisAlignment.center,
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text(S.current.close),
-              ),
-            ],
-          );
-        },
-      );
+  getMyLocation() async {
+    var myLocation = await DeepLinksService.defaultLocation();
+    if (myLocation != null) {
+      LatLng myPos = LatLng(myLocation.latitude, myLocation.longitude);
+      screenState.customInfoWindowController.googleMapController?.animateCamera(
+          CameraUpdate.newCameraPosition(
+              CameraPosition(target: myPos, zoom: 15)));
+      saveMarker(myPos);
+      screenState.refresh();
     }
+  }
+
+  void saveMarker(LatLng location) {
+    // if (markers.isEmpty) {
+    //   showDialog(
+    //     context: screenState.context,
+    //     builder: (context) {
+    //       return AlertDialog(
+    //         title: Text(S.current.note),
+    //         content: Container(child: Text(S.current.saveBranchAlert)),
+    //         shape: RoundedRectangleBorder(
+    //           borderRadius: BorderRadius.circular(10),
+    //         ),
+    //         actionsAlignment: MainAxisAlignment.center,
+    //         actions: [
+    //           TextButton(
+    //             onPressed: () {
+    //               Navigator.of(context).pop();
+    //             },
+    //             child: Text(S.current.close),
+    //           ),
+    //         ],
+    //       );
+    //     },
+    //   );
+    // }
     branchLocation.clear();
     branchLocation.add(BranchModel(
         location: location, name: '${branchLocation.length + 1}', phone: null));
@@ -184,115 +188,114 @@ class BottomWidgets extends StatelessWidget {
       key: _Key,
       child: Container(
         constraints: BoxConstraints(maxWidth: MediaQuery.sizeOf(context).width),
-        child: Padding(
-          padding: const EdgeInsets.all(50),
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  // location button
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100),
+        child: Card(
+          margin: EdgeInsets.zero,
+          color: Color.fromARGB(118, 255, 255, 255),
+          child: Padding(
+            padding: const EdgeInsets.all(40),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                // location button
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.share_location,
+                            size: 35,
+                          ),
                         ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(
-                              Icons.share_location,
-                              size: 35,
-                            ),
-                          ),
-                          Text(
-                            S.current.useYourCurrentLocation,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge
-                                ?.copyWith(color: Colors.white),
-                          ),
-                          SizedBox()
-                        ],
-                      ),
-                      onPressed: onUseMyLocationButtonPressed,
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  // store name filed
-                  Text(
-                    S.current.enterYourStoreName,
-                    style: Theme.of(context).textTheme.bodyLarge,
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(100),
-                      color: Color.fromARGB(144, 255, 172, 47),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 3),
-                      child: TextFormField(
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (value) {
-                          if (value == null || value.isEmpty)
-                            return S.current.pleaseCompleteField;
-                          return null;
-                        },
-                        controller: storeController,
-                        decoration: InputDecoration(border: InputBorder.none),
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: 10),
-                  // start work button
-                  SizedBox(
-                    width: double.infinity,
-                    child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xffFFAC2F),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(100),
+                        Text(
+                          S.current.useYourCurrentLocation,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
+                              ?.copyWith(color: Colors.white),
                         ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Icon(
-                              Icons.touch_app,
-                              size: 35,
-                            ),
-                          ),
-                          Text(
-                            S.current.startWork,
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyLarge
-                                ?.copyWith(color: Colors.white),
-                          ),
-                          SizedBox()
-                        ],
-                      ),
-                      onPressed: () {
-                        if (_Key.currentState?.validate() ?? false) {
-                          if (onStartWorkButtonPressed != null) {
-                            onStartWorkButtonPressed!();
-                          }
-                        }
+                        SizedBox()
+                      ],
+                    ),
+                    onPressed: onUseMyLocationButtonPressed,
+                  ),
+                ),
+                SizedBox(height: 10),
+                // store name filed
+                Text(
+                  S.current.enterYourStoreName,
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+                Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(100),
+                    color: Color.fromARGB(144, 255, 172, 47),
+                  ),
+                  child: Padding(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 20, vertical: 3),
+                    child: TextFormField(
+                      autovalidateMode: AutovalidateMode.onUserInteraction,
+                      validator: (value) {
+                        if (value == null || value.isEmpty)
+                          return S.current.pleaseCompleteField;
+                        return null;
                       },
+                      controller: storeController,
+                      decoration: InputDecoration(border: InputBorder.none),
                     ),
                   ),
-                ],
-              ),
+                ),
+                SizedBox(height: 10),
+                // start work button
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Color(0xffFFAC2F),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(100),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.touch_app,
+                            size: 35,
+                          ),
+                        ),
+                        Text(
+                          S.current.startWork,
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodyLarge
+                              ?.copyWith(color: Colors.white),
+                        ),
+                        SizedBox()
+                      ],
+                    ),
+                    onPressed: () {
+                      if (_Key.currentState?.validate() ?? false) {
+                        if (onStartWorkButtonPressed != null) {
+                          onStartWorkButtonPressed!();
+                        }
+                      }
+                    },
+                  ),
+                ),
+              ],
             ),
           ),
         ),

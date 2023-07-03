@@ -709,12 +709,48 @@
     "english":"English",
     "continueWord":"Continue",
     "youCanContactWithDirectSupportForMoreDetails":"you can contact with direct support for more detail's",
+    "adsAndOffers":"Ads & offers",
+    "storeFee":"Store fee",
     "useYourCurrentLocation":"use your current location",
     "enterYourStoreName": "enter your store name",
     "startWork": "start work",
     "pleaseSelectYourStoreLocation": "please select your store location",
     "welcome" : "welcome",
     "getItNow" : "get it now",
+    "toBePayed" : "to be payed",
+    "numberOfOrder" : "number of order",
+    "payNow" : "pay now",
+    "planDetails" : "plan details",
+    "openedPrice" : "opened price order",
+    "subscriptionIsActivate" : "subscription is active",
+    "subscriptionIsNotActivate" : "subscription is not active",
+    "youHaveNotExceededTheLimitYet" : "you have not exceeded the limit yet",
+    "youHaveExceededTheLimit" : "have exceeded the limit",
+    "every1KM" : "every 1 km",
+    "youHaveToPayWhen" : "you have to pay when you reach {limit} sar",
+    "@youHaveToPayWhen": {
+        "description": "The conventional newborn programmer greeting",
+        "placeholders": {
+                    "limit": {
+                        "type": "String"
+                    }
+                }
+    },
     "welcomePlanOffer" : "Congratulations, you have received a welcome package for delivering one order for only 2.99 riyal",
+    "welcomePlanOfferWithoutPayment" : "Congratulations, you have received a welcome package for delivering one order for free",
+    "currentCycleDetails" : "current cycle details",
+    "packageStartDate" : "package start date",
+    "thereIsNoUserWithThisNumber" : "there is no user with this number",
+    "paymentSuccess" : "payment process completed successfully",
+    "youDontHaveToPayYet" : "you dont have to pay yet",
+    "noPaymentHadBeenMade" : "no payment had been made",
+    "packageNotExist" : "package not exist",
+    "subscribeNotExist" : "subscribe not exist",
+    "storeOwnerProfileNotExist" : "store owner profile not exist",
+    "paymentInfo" : "payment information",
+    "youHaveToFillTheFormFirst" : "you have to fill the form first",
+    "youHaveFinancialPaymentToMade" : "you have financial payment to pay\nyou can pay fot it in the financial account screen",
+    "YouHaveUsedUpTheEntireWelcomePack" : "You have used up the entire welcome pack",
+    "theCostWillBe" : "The cost will now be calculated based on the current business plan:\nThe opening asking price is 14 riyals\nCost per 1 km. 1 riyal",
     "adsAndOffers":"Ads & offers"
 }
