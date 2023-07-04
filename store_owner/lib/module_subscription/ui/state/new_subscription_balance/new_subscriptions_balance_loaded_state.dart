@@ -39,12 +39,12 @@ class NewSubscriptionBalanceLoadedState extends States {
                         callback: (success, resID, trxID, err) {
                           if (success) {
                             screenState.makePayment(PaymentStatusRequest(
-                              status: 1,
+                              status: PaymentStatus.paidSuccess,
                               paymentId: trxID,
                               amount: balance.toBePayed,
-                              paymentFor: 229,
-                              paymentGetaway: 227,
-                              paymentType: 229,
+                              paymentFor: PaymentFor.unifiedSubscription,
+                              paymentGetaway: PaymentGetaway.tapPayment,
+                              paymentType: PaymentType.realPaymentByStore,
                             ));
                             CustomFlushBarHelper.createSuccess(
                               title: S.current.warnning,
