@@ -1163,9 +1163,11 @@ class OrderService
 
             $deliveredDate = $pendingOrder->getDeliveryDate();
 
-            $deliveredDate->diff(date_modify($deliveredDate, '+1 hours'));
+            $deliveredDateCopy = clone $deliveredDate;
 
-            if (new DateTime('now') >= $deliveredDate) {
+            $deliveredDateCopy->diff(date_modify($deliveredDateCopy, '+1 hours'));
+
+            if (new DateTime('now') >= $deliveredDateCopy) {
 
                 $order = $this->orderManager->updateIsHide($pendingOrder, OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE);
 
