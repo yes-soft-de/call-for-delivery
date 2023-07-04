@@ -835,10 +835,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_sell_sdk_flutter
-      sha256: "5be8c696b257aca541077c2bde3142a2431581ea8c347b70b709d0b52ad098b3"
+      sha256: a907b9640171fedac34fa229b49e1e5cbd6b63334dc3e252f1101413adc805c5
       url: "https://pub.dev"
     source: hosted
-    version: "2.2.2"
+    version: "2.2.3"
   google_fonts:
     dependency: "direct main"
     description:
@@ -1011,10 +1011,10 @@ packages:
     dependency: transitive
     description:
       name: in_app_purchase_android
-      sha256: c1b8eba009db6002c6dd5ae1110d2445297dfd83b9c11e8f9ddb7411cb9dbee6
+      sha256: "722457508b004c219a5421198b483f4aead510e6bf588678c500ac4fa4a6eb7a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.0+5"
+    version: "0.3.0+8"
   in_app_purchase_platform_interface:
     dependency: transitive
     description:
