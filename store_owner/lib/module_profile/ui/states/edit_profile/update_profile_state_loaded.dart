@@ -471,22 +471,27 @@ class UpdateProfileStateLoaded extends States {
               ),
               label: S.current.updateProfile,
               onTap: () {
-                if (key.currentState?.validate() == true && imagePath != null) {
-                  if (imageBytes == null && imagePath != null) {
-                    saveWithoutImageUpload();
-                  } else {
-                    saveWithUploadImage();
-                  }
-                } else if (imagePath == null) {
-                  CustomFlushBarHelper.createError(
-                          title: S.current.warnning, message: S.current.noImage)
-                      .show(context);
+                if (imageBytes != null && imagePath != null) {
+                  saveWithUploadImage();
                 } else {
-                  CustomFlushBarHelper.createError(
-                          title: S.current.warnning,
-                          message: S.current.pleaseCompleteTheForm)
-                      .show(context);
+                  saveWithoutImageUpload();
                 }
+                // if (key.currentState?.validate() == true && imagePath != null) {
+                // if (imageBytes == null && imagePath != null) {
+                //   saveWithoutImageUpload();
+                // } else {
+                //   saveWithUploadImage();
+                // }
+                //   } else if (imagePath == null) {
+                //     CustomFlushBarHelper.createError(
+                //             title: S.current.warnning, message: S.current.noImage)
+                //         .show(context);
+                //   } else {
+                //     CustomFlushBarHelper.createError(
+                //             title: S.current.warnning,
+                //             message: S.current.pleaseCompleteTheForm)
+                //         .show(context);
+                //   }
               })),
     );
   }
