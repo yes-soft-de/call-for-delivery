@@ -285,8 +285,12 @@ class AdminOrderService
     /**
      * Gets specific order details with store and captain info by order id for admin
      */
-    public function getSpecificOrderByIdForAdmin(int $id): ?OrderByIdGetForAdminResponse
+    public function getSpecificOrderByIdForAdmin(int $id, ?string $timeZone = null): ?OrderByIdGetForAdminResponse
     {
+        if (($timeZone) && ($timeZone !== "")) {
+            $timeZone = str_replace("-", "/", $timeZone);
+        }
+
         $order = $this->adminOrderManager->getSpecificOrderByIdForAdmin($id);
 
         if ($order) {
@@ -323,6 +327,10 @@ class AdminOrderService
                     $order['externalDeliveredOrders'][$key]['externalOrderId'] = $value->getExternalOrderId();
                 }
             }
+
+            $order['deliveryDate']->setTimeZone(new \DateTimeZone($timeZone ? : 'Asia/Riyadh'));
+            $order['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? : 'Asia/Riyadh'));
+            $order['updatedAt']->setTimeZone(new \DateTimeZone($timeZone ? : 'Asia/Riyadh'));
         }
 
         return $this->autoMapping->map("array", OrderByIdGetForAdminResponse::class, $order);
@@ -459,7 +467,7 @@ class AdminOrderService
         return $this->externallyDeliveredOrderGetService->getOnGoingExternallyDeliveredOrders();
     }
 
-    public function prepareOrderResponseObjectFromExternallyDeliveredOrders(array $orders): array
+    public function prepareOrderResponseObjectFromExternallyDeliveredOrders(array $orders, ?string $timeZone = null): array
     {
         $response = [];
 
@@ -471,6 +479,8 @@ class AdminOrderService
                 $response[$key] = $this->autoMapping->map(OrderEntity::class, OrderPendingResponse::class,
                     $orderEntity);
 
+                $response[$key]->deliveryDate->setTimeZone(new \DateTimeZone($timeZone ? : 'Asia/Riyadh'));
+                $response[$key]->createdAt->setTimeZone(new \DateTimeZone($timeZone ? : 'Asia/Riyadh'));
                 //$response[$key]->state = $value->getStatus();
                 $response[$key]->location = $storeOrderDetails->getBranch()->getLocation();
                 $response[$key]->storeOwnerBranchId = $storeOrderDetails->getBranch()->getId();
@@ -554,8 +564,12 @@ class AdminOrderService
         return $this->updateOrderStatusByOrderEntityAndNewStatus($orderEntity, $orderStatus);
     }
         
-    public function getPendingOrdersForAdmin(int $userId, int $externalOrder, ?int $externalCompanyId): array
+    public function getPendingOrdersForAdmin(int $userId, int $externalOrder, ?int $externalCompanyId, ?string $timeZone = null): array
     {
+        if (($timeZone) && ($timeZone !== "")) {
+            $timeZone = str_replace("-", "/", $timeZone);
+        }
+
         $response = [];
         $response['pendingOrders'] = [];
         $response['notDeliveredOrders'] = [];
@@ -594,8 +608,10 @@ class AdminOrderService
                 }
             }
             // 4 Return external orders according to their external status
-            $response['pendingOrders'] = $this->prepareOrderResponseObjectFromExternallyDeliveredOrders($this->getExternallyDeliveredOrdersByStatus(MrsoolCompanyConstant::COURIER_PENDING_ORDER_STATUS_CONST));
-            $response['notDeliveredOrders'] = $this->prepareOrderResponseObjectFromExternallyDeliveredOrders($this->getOnGoingExternallyDeliveredOrders());
+            $response['pendingOrders'] = $this->prepareOrderResponseObjectFromExternallyDeliveredOrders($this->getExternallyDeliveredOrdersByStatus(MrsoolCompanyConstant::COURIER_PENDING_ORDER_STATUS_CONST),
+                $timeZone);
+            $response['notDeliveredOrders'] = $this->prepareOrderResponseObjectFromExternallyDeliveredOrders($this->getOnGoingExternallyDeliveredOrders(),
+                $timeZone);
         }
 
         $response['pendingOrdersCount'] = count($response['pendingOrders']);
@@ -608,12 +624,15 @@ class AdminOrderService
             $this->orderService->hideOrderExceededDeliveryTimeByHour($userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST);
 
             $response['pendingOrders'] = array_merge($response['pendingOrders'],
-                $this->prepareOrderResponseObject($this->adminOrderManager->getPendingOrdersForAdmin($externalOrder)));
+                $this->prepareOrderResponseObject($this->adminOrderManager->getPendingOrdersForAdmin($externalOrder),
+                    $timeZone));
 
-            $response['hiddenOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->getHiddenOrdersForAdmin($externalOrder));
+            $response['hiddenOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->getHiddenOrdersForAdmin($externalOrder),
+                $timeZone);
 
             $response['notDeliveredOrders'] = array_merge($response['notDeliveredOrders'],
-                $this->prepareOrderResponseObject($this->adminOrderManager->getNotDeliveredOrdersForAdmin($externalOrder)));
+                $this->prepareOrderResponseObject($this->adminOrderManager->getNotDeliveredOrdersForAdmin($externalOrder),
+                    $timeZone));
 
             $response['pendingOrdersCount'] = count($response['pendingOrders']);
             $response['hiddenOrdersCount'] = count($response['hiddenOrders']);
@@ -623,27 +642,9 @@ class AdminOrderService
         }
 
         return $response;
-
-        //////////////////////////////////////////////////////////
-//        $response = [];
-//
-//        $this->orderService->showSubOrderIfCarIsAvailable($userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST);
-//        $this->orderService->hideOrderExceededDeliveryTimeByHour($userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST);
-//
-//        $response['pendingOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->getPendingOrdersForAdmin($externalOrder));
-//        $response['hiddenOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->getHiddenOrdersForAdmin($externalOrder));
-//        $response['notDeliveredOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->getNotDeliveredOrdersForAdmin($externalOrder));
-//
-//        $response['pendingOrdersCount'] = count($response['pendingOrders']);
-//        $response['hiddenOrdersCount'] = count($response['hiddenOrders']);
-//        $response['notDeliveredOrdersCount'] = count($response['notDeliveredOrders']);
-//
-//        $response['totalOrderCount'] = $response['pendingOrdersCount'] + $response['hiddenOrdersCount'] + $response['notDeliveredOrdersCount'];
-//
-//        return $response;
     }
 
-    public function prepareOrderResponseObject(array $orders): array
+    public function prepareOrderResponseObject(array $orders, ?string $timeZone = null): array
     {
         $response = [];
 
@@ -652,6 +653,9 @@ class AdminOrderService
                 $value['subOrder'] = $this->orderService->getSubOrdersByPrimaryOrderId($value[0]->getId());
 
                 $response[$key] = $this->autoMapping->map(OrderEntity::class, OrderPendingResponse::class, $value[0]);
+
+                $response[$key]->deliveryDate->setTimeZone(new \DateTimeZone($timeZone ? : 'Asia/Riyadh'));
+                $response[$key]->createdAt->setTimeZone(new \DateTimeZone($timeZone ? : 'Asia/Riyadh'));
 
                 $response[$key]->location = $value['location'];
                 $response[$key]->storeOwnerBranchId = $value['storeOwnerBranchId'];
@@ -2394,13 +2398,16 @@ class AdminOrderService
 
         // 4 Return external orders according to their status
         $request->setState(OrderStateConstant::ORDER_STATE_PENDING);
-        $response['pendingOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->filterStoreOrdersByAdmin($request));
+        $response['pendingOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->filterStoreOrdersByAdmin($request),
+            $request->getCustomizedTimezone());
 
         $request->setState(OrderStateConstant::ORDER_STATE_DELIVERED);
-        $response['hiddenOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->filterStoreOrdersByAdmin($request));
+        $response['hiddenOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->filterStoreOrdersByAdmin($request),
+            $request->getCustomizedTimezone());
 
         $request->setState(OrderStateConstant::ORDER_STATE_ONGOING);
-        $response['notDeliveredOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->filterStoreOrdersByAdmin($request));
+        $response['notDeliveredOrders'] = $this->prepareOrderResponseObject($this->adminOrderManager->filterStoreOrdersByAdmin($request),
+            $request->getCustomizedTimezone());
 
         $response['pendingOrdersCount'] = count($response['pendingOrders']);
         $response['hiddenOrdersCount'] = count($response['hiddenOrders']);
