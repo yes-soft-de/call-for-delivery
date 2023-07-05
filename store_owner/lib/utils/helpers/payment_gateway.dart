@@ -54,7 +54,10 @@ void showTapPayment({
             MediaQuery.of(context).viewInsets.bottom,
         child: _PaymentsPortal(
           paymentModel: paymentModel,
-          callback: callback,
+          callback: (succeeded, responseID, transactionID, sdkErrorMessage) {
+            Navigator.pop(context);
+            callback(succeeded, responseID, transactionID, sdkErrorMessage);
+          },
           emailController: emailController,
           firstNameController: firstNameController,
           lastNameController: lastNameController,
