@@ -7,80 +7,38 @@ use DateTime;
 class RemainingOrdersResponse
 {
     /**
-     * @var int|null
+     * current subscription id
      */
-    public $id;
+    public ?int $id;
 
-    /**
-     * @var int|null
-     */
-    public $packageId;
+    public ?int $packageId;
 
-    /**
-     * @var string|null
-     */
-    public $packageName;
+    public ?string $packageName;
 
-    /**
-     * @var int|null
-     */
-    public $remainingOrders;
+    public ?int $remainingOrders;
 
-    /**
-     * @var int|null
-     */
-    public $remainingCars;
+    public ?int $remainingCars;
 
-    /**
-     * @var string|null
-     */
-    public $status;
+    public ?string $status;
 
-    /**
-     * @var DateTime|null
-     */
-    public $startDate;
+    public ?DateTime $startDate;
 
-    /**
-     * @var DateTime|null
-     */
-    public $endDate;
+    public ?DateTime $endDate;
 
-    /**
-     * @var int|null
-     */
-    public $packageCarCount;
+    public ?int $packageCarCount;
 
-    /**
-     * @var int|null
-     */
-    public $packageOrderCount;
+    public ?int $packageOrderCount;
 
-    /**
-     * @var int|null
-     */
-    public $expired;
+    public ?int $expired;
 
-    /**
-     * @var bool|null
-     */
-    public $canSubscriptionExtra;
+    public ?bool $canSubscriptionExtra;
 
     // The sum of unpaid cash orders
     public float $unPaidCashOrdersSum;
 
-    /**
-     * @var int|null
-     */
-    public $packageType;
+    public ?int $packageType;
 
-    /**
-     * @var float|null
-     */
-    public $geographicalRange;
+    public ?float $geographicalRange;
 
-    /**
-     * @var float|null
-     */
-    public $packageExtraCost;
+    public ?float $packageExtraCost;
 }

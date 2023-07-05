@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\StoreOwnerBranch\StoreOwnerBranch;
 use App\Entity\StoreOwnerBranchEntity;
+use App\Entity\StoreOwnerProfileEntity;
 use App\Manager\StoreOwnerBranch\StoreOwnerBranchManager;
 use App\Request\Account\CompleteAccountStatusUpdateRequest;
 use App\Request\StoreOwnerBranch\StoreOwnerBranchCreateRequest;
@@ -15,13 +16,11 @@ use App\Response\StoreOwnerBranch\StoreOwnerBranchResponse;
 
 class StoreOwnerBranchService
 {
-    private $autoMapping;
-    private $storeOwnerBranchManager;
-
-    public function __construct(AutoMapping $autoMapping, StoreOwnerBranchManager $storeOwnerBranchManager)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private StoreOwnerBranchManager $storeOwnerBranchManager
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->storeOwnerBranchManager = $storeOwnerBranchManager;
     }
 
     /**
@@ -34,6 +33,34 @@ class StoreOwnerBranchService
 
         //--check and update completeAccountStatus for the store owner profile
         $this->checkCompleteAccountStatusOfStoreOwnerProfile($request->getStoreOwner());
+
+        return $this->autoMapping->map(StoreOwnerBranchEntity::class, StoreOwnerBranchResponse::class, $branch);
+    }
+
+    public function checkCompleteAccountStatusOfStoreOwnerProfileByStoreOwnerProfileEntity(StoreOwnerProfileEntity $storeOwnerProfileEntity)
+    {
+        $storeOwnerProfileResult = $this->storeOwnerBranchManager->getStoreOwnerProfileByStoreOwnerId($storeOwnerProfileEntity->getStoreOwnerId());
+
+        if($storeOwnerProfileResult) {
+//            if($storeOwnerProfileResult->getCompleteAccountStatus() === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED) {
+                // then we can update completeAccountStatus to subscriptionCreated
+
+                $completeAccountStatusUpdateRequest = new CompleteAccountStatusUpdateRequest();
+
+                $completeAccountStatusUpdateRequest->setUserId($storeOwnerProfileEntity->getStoreOwnerId());
+                $completeAccountStatusUpdateRequest->setCompleteAccountStatus(StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED);
+
+                $this->storeOwnerBranchManager->storeOwnerProfileCompleteAccountStatusUpdate($completeAccountStatusUpdateRequest);
+//            }
+        }
+    }
+
+    public function createDefaultBranch(StoreOwnerBranchCreateRequest $request): StoreOwnerBranchResponse
+    {
+        $branch = $this->storeOwnerBranchManager->createDefaultBranch($request);
+
+        //--check and update completeAccountStatus for the store owner profile
+        $this->checkCompleteAccountStatusOfStoreOwnerProfileByStoreOwnerProfileEntity($request->getStoreOwner());
 
         return $this->autoMapping->map(StoreOwnerBranchEntity::class, StoreOwnerBranchResponse::class, $branch);
     }

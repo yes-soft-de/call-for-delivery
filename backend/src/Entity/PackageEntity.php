@@ -55,6 +55,14 @@ class PackageEntity
     #[ORM\Column(type: 'float', nullable: true)]
     private $extraCost;
 
+    // The opening order price (cost)
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $openingOrderCost;
+
+    // The price (cost) of each single kilometer of the order distance
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $oneKilometerCost;
+
     public function __construct()
     {
         $this->subscriptionEntities = new ArrayCollection();
@@ -235,6 +243,30 @@ class PackageEntity
     public function setExtraCost(?float $extraCost): self
     {
         $this->extraCost = $extraCost;
+
+        return $this;
+    }
+
+    public function getOpeningOrderCost(): ?float
+    {
+        return $this->openingOrderCost;
+    }
+
+    public function setOpeningOrderCost(?float $openingOrderCost): self
+    {
+        $this->openingOrderCost = $openingOrderCost;
+
+        return $this;
+    }
+
+    public function getOneKilometerCost(): ?float
+    {
+        return $this->oneKilometerCost;
+    }
+
+    public function setOneKilometerCost(?float $oneKilometerCost): self
+    {
+        $this->oneKilometerCost = $oneKilometerCost;
 
         return $this;
     }

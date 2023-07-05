@@ -4,28 +4,17 @@ namespace App\Response\Subscription;
 
 class CanCreateOrderResponse
 {
-    /**
-     * @var bool|null
-     */
-    public $canCreateOrder;
+    public ?bool $canCreateOrder;
 
-    /**
-     * @var string|null
-     */
-    public $subscriptionStatus;
+    public ?string $subscriptionStatus;
 
-    /**
-     * @var string|null
-     */
-    public $percentageOfOrdersConsumed;
+    public ?string $percentageOfOrdersConsumed;
 
-    /**
-     * @var string|null
-     */
-    public $packageName;
+    public ?string $packageName;
 
-    /**
-     * @var int|null
-     */
-    public $packageType;
+    public ?int $packageType;
+
+    public bool $hasToPay = false;
+
+    public bool $firstTimeSubscriptionWithUniformPackage = false;
 }

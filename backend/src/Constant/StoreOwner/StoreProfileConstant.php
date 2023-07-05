@@ -16,12 +16,17 @@ final class StoreProfileConstant
 
     const HAS_PRODUCT_OR_PRIVATE_ORDER_NULL = "select hasProducts or privateOrders or two";
 
+    // after registering new store owner user
     const COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED = "profileCreated";
-
+    // after updating store owner profile (after profileCreated)
     const COMPLETE_ACCOUNT_STATUS_PROFILE_COMPLETED = "profileCompleted";
 
     const COMPLETE_ACCOUNT_STATUS_PROFILE_VERIFIED = "profileVerified";
-
+    // after creating new subscription with free package
+    const COMPLETE_ACCOUNT_STATUS_BEFORE_FREE_SUBSCRIPTION_CONST = "beforeSubscription";
+    // after creating new subscription with free package
+    const COMPLETE_ACCOUNT_STATUS_FREE_SUBSCRIPTION_CREATED = "freeSubscription";
+    // after creating new subscription
     const COMPLETE_ACCOUNT_STATUS_SUBSCRIPTION_CREATED = "subscriptionCreated";
 
     const COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED = "branchCreated";

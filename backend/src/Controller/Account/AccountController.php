@@ -108,7 +108,13 @@ class AccountController extends BaseController
                 } elseif ($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED) {
                     return $this->response($response, self::STORE_OWNER_BRANCH_CREATED);
 
+                } elseif ($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_FREE_SUBSCRIPTION_CREATED) {
+                    return $this->response($response, self::STORE_OWNER_FREE_SUBSCRIPTION_CREATED_CONST);
+
+                } elseif ($response->completeAccountStatus === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_BEFORE_FREE_SUBSCRIPTION_CONST) {
+                    return $this->response($response, self::STORE_OWNER_BEFORE_SUBSCRIPTION_CREATED_CONST);
                 }
+
             } elseif ($response->completeAccountStatus === null) {
                 $response->completeAccountStatus = StoreProfileConstant::COMPLETE_ACCOUNT_IS_EMPTY;
                 return $this->response($response, self::FETCH);

@@ -162,8 +162,9 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function filterStoreOrders(OrderFilterRequest $request, $storeOwner): ?array
     {
         $query = $this->createQueryBuilder('orderEntity')
-            ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate',
-                'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.isHide', 'orderEntity.orderIsMain', 'storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
+//            ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate',
+//                'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.isHide', 'orderEntity.orderIsMain')
+            ->addSelect('storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
                 'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName')
 
             ->andWhere('orderEntity.storeOwner = :storeOwnerId')
@@ -203,9 +204,9 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             if ($orders) {
                 foreach ($orders as $order) {
-                    if ($order['state'] === OrderStateConstant::ORDER_STATE_DELIVERED) {
-                        if (! empty($this->checkIfMainOrderHasUnDeliveredSubOrders($order['id']))) {
-                            $response[] = $order['id'];
+                    if ($order[0]->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                        if (! empty($this->checkIfMainOrderHasUnDeliveredSubOrders($order[0]->getId()))) {
+                            $response[] = $order[0]->getId();
                         }
                     }
                 }
@@ -221,7 +222,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
             $tempQuery = $query->getQuery()->getResult();
 
-            return $this->filterOrdersByDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
+            return $this->filterOrdersEntitiesByOptionalDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
         }
 
         return $query->getQuery()->getResult();
@@ -334,7 +335,9 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'externallyDeliveredOrderEntity.orderId = orderEntity.id'
             )
 
-            ->andWhere('externallyDeliveredOrderEntity.orderId IS NULL')
+            ->andWhere('externallyDeliveredOrderEntity.orderId IS NULL '.
+                'OR (externallyDeliveredOrderEntity.orderId IS NOT NULL AND externallyDeliveredOrderEntity.status = :expiredStatus)')
+            ->setParameter('expiredStatus', MrsoolCompanyConstant::EXPIRED_ORDER_STATUS_CONST)
 
             ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
             ->setParameter('captainId', $captainId)
@@ -2129,7 +2132,8 @@ class OrderEntityRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('orderEntity')
             ->select('orderEntity.id', 'orderEntity.createdAt', 'orderEntity.isCashPaymentConfirmedByStore', 'orderEntity.isCashPaymentConfirmedByStoreUpdateDate',
-                'orderEntity.paidToProvider', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.name as branchName', 'captainEntity.captainName', 'storeOwnerProfileEntity.storeOwnerName')
+                'orderEntity.paidToProvider', 'orderEntity.deliveryDate',  'orderEntity.orderCost', 'storeOwnerBranch.id as storeOwnerBranchId',
+                'storeOwnerBranch.name as branchName', 'captainEntity.captainName', 'storeOwnerProfileEntity.storeOwnerName')
 
             ->leftJoin(
                 StoreOrderDetailsEntity::class,
@@ -2923,7 +2927,7 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $filteredOrders;
     }
 
-    public function getNotCancelledNorDeliveredExternalOrdersOnly(?int $externalCompanyId): array
+    public function getNotCancelledNorDeliveredNorExpiredExternalOrdersOnly(?int $externalCompanyId): array
     {
         $query = $this->createQueryBuilder('orderEntity')
 

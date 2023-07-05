@@ -50,9 +50,13 @@ class SubscriptionEntity
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $captainOfferFirstTime;
 
+    #[ORM\OneToMany(mappedBy: 'subscription', targetEntity: EPaymentFromStoreEntity::class)]
+    private $ePaymentFromStoreEntities;
+
     public function __construct()
     {
         $this->storeOwnerPaymentEntities = new ArrayCollection();
+        $this->ePaymentFromStoreEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -206,6 +210,36 @@ class SubscriptionEntity
     public function setCaptainOfferFirstTime(?bool $captainOfferFirstTime): self
     {
         $this->captainOfferFirstTime = $captainOfferFirstTime;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EPaymentFromStoreEntity>
+     */
+    public function getEPaymentFromStoreEntities(): Collection
+    {
+        return $this->ePaymentFromStoreEntities;
+    }
+
+    public function addEPaymentFromStoreEntity(EPaymentFromStoreEntity $ePaymentFromStoreEntity): self
+    {
+        if (!$this->ePaymentFromStoreEntities->contains($ePaymentFromStoreEntity)) {
+            $this->ePaymentFromStoreEntities[] = $ePaymentFromStoreEntity;
+            $ePaymentFromStoreEntity->setSubscription($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEPaymentFromStoreEntity(EPaymentFromStoreEntity $ePaymentFromStoreEntity): self
+    {
+        if ($this->ePaymentFromStoreEntities->removeElement($ePaymentFromStoreEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($ePaymentFromStoreEntity->getSubscription() === $this) {
+                $ePaymentFromStoreEntity->setSubscription(null);
+            }
+        }
 
         return $this;
     }

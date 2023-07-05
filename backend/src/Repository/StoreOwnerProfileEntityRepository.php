@@ -71,7 +71,7 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
     public function getCompleteAccountStatusByStoreOwnerId($storeOwnerId): ?array
     {
         return $this->createQueryBuilder('storeOwnerProfile')
-            ->select('storeOwnerProfile.completeAccountStatus')
+            ->select('storeOwnerProfile.completeAccountStatus', 'storeOwnerProfile.openingSubscriptionWithoutPayment')
             ->addSelect('userEntity.status')
 
             ->andWhere('storeOwnerProfile.storeOwnerId = :storeOwnerId')
@@ -128,9 +128,11 @@ class StoreOwnerProfileEntityRepository extends ServiceEntityRepository
     public function getStoreOwnerProfileByIdForAdmin(int $storeOwnerProfileId): ?array
     {
         return $this->createQueryBuilder('storeOwnerProfile')
-            ->select('storeOwnerProfile.id', 'storeOwnerProfile.storeOwnerName', 'storeOwnerProfile.storeOwnerId', 'storeOwnerProfile.completeAccountStatus', 'storeOwnerProfile.storeCategoryId', 'storeOwnerProfile.bankAccountNumber',
-                'storeOwnerProfile.bankName', 'storeOwnerProfile.city', 'storeOwnerProfile.openingTime', 'storeOwnerProfile.closingTime', 'storeOwnerProfile.commission', 'storeOwnerProfile.employeeCount', 'storeOwnerProfile.phone', 'storeOwnerProfile.roomID',
-                'storeOwnerProfile.stcPay', 'storeOwnerProfile.status', 'storeOwnerProfile.images', 'storeOwnerProfile.profitMargin', 'storeOwnerProfile.completeAccountStatus')
+            ->select('storeOwnerProfile.id', 'storeOwnerProfile.storeOwnerName', 'storeOwnerProfile.storeOwnerId', 'storeOwnerProfile.completeAccountStatus',
+                'storeOwnerProfile.storeCategoryId', 'storeOwnerProfile.bankAccountNumber', 'storeOwnerProfile.bankName', 'storeOwnerProfile.city', 'storeOwnerProfile.openingTime',
+                'storeOwnerProfile.closingTime', 'storeOwnerProfile.commission', 'storeOwnerProfile.employeeCount', 'storeOwnerProfile.phone', 'storeOwnerProfile.roomID',
+                'storeOwnerProfile.stcPay', 'storeOwnerProfile.status', 'storeOwnerProfile.images', 'storeOwnerProfile.profitMargin', 'storeOwnerProfile.completeAccountStatus',
+                'storeOwnerProfile.openingSubscriptionWithoutPayment')
             ->addSelect('chatRoomEntity.roomId')
             ->addSelect('userEntity.userId', 'userEntity.verificationStatus')
 

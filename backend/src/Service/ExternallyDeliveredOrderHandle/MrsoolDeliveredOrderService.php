@@ -29,8 +29,54 @@ class MrsoolDeliveredOrderService
     public function initializeCreateOrderRequest(OrderEntity $orderEntity, StoreOrderDetailsEntity $storeOrderDetailsEntity): array
     {
         // fields can not be null
-        $description = $storeOrderDetailsEntity->getDetail() ? : MrsoolCompanyConstant::ORDER_DEFAULT_DESCRIPTION_CONST;
-        $orderCost = $orderEntity->getOrderCost() ? : 0;
+//        $description = $storeOrderDetailsEntity->getDetail() ? : MrsoolCompanyConstant::ORDER_DEFAULT_DESCRIPTION_CONST;
+//        $orderCost = $orderEntity->getOrderCost() ? : 0;
+        $description = "الطلب جاهز بإسم" . " " . $storeOrderDetailsEntity->getRecipientName() . "\n".
+            "رقم الجوال" . " +" . $storeOrderDetailsEntity->getRecipientPhone() . "\n".
+            "من" . " " . $orderEntity->getStoreOwner()->getStoreOwnerName();
+
+        $orderCost = $orderEntity->getOrderCost();
+
+//        if ((! $description) || ($description === "")) {
+//            if ($orderEntity->getStoreOwner()->getId() === 42) {
+//                $description = "واحد سويتز بوكس";
+//
+//            } elseif ($orderEntity->getStoreOwner()->getId() === 2) {
+//                $description = "باقة ورد";
+//
+//            } elseif ($orderEntity->getStoreOwner()->getId() === 111) {
+//                $description = "وجبة سكرت رول";
+//
+//            } elseif ($orderEntity->getStoreOwner()->getId() === 282) {
+//                $description = "نص كيلوا كباب";
+//            }
+//        }
+
+        if ((! $orderCost) || ($orderCost == 0)) {
+            if ($orderEntity->getStoreOwner()->getId() === 42) {
+                $orderCostsArray = [49, 50, 60, 65, 70, 75, 80, 85, 90, 95, 100, 110, 120, 130];
+                $orderCost = $orderCostsArray[array_rand($orderCostsArray)];
+
+            } elseif ($orderEntity->getStoreOwner()->getId() === 2) {
+                $orderCostsArray = [80, 90, 100, 110, 120, 130, 140, 150, 160, 170, 180, 190, 200];
+                $orderCost = $orderCostsArray[array_rand($orderCostsArray)];
+
+            } elseif ($orderEntity->getStoreOwner()->getId() === 111) {
+                $orderCostsArray = [60, 65, 70, 75, 80, 85, 90, 95, 100, 150, 200];
+                $orderCost = $orderCostsArray[array_rand($orderCostsArray)];
+
+            } elseif ($orderEntity->getStoreOwner()->getId() === 282) {
+                $orderCostsArray = [60, 65, 70, 75, 80, 85, 90, 95, 100];
+                $orderCost = $orderCostsArray[array_rand($orderCostsArray)];
+
+            } elseif ($orderEntity->getStoreOwner()->getId() === 29) {
+                $orderCost = 70;
+
+            } else {
+                $orderCostsArray = [50, 60, 65, 70, 75, 80, 85, 90, 95, 100, 105, 110, 115, 120, 125, 150, 175, 200];
+                $orderCost = $orderCostsArray[array_rand($orderCostsArray)];
+            }
+        }
 
         return [
             MrsoolCompanyConstant::PICKUP_FIELD_CONST => [
@@ -42,12 +88,12 @@ class MrsoolDeliveredOrderService
                 MrsoolCompanyConstant::LONGITUDE_FIELD_CONST => (string) $storeOrderDetailsEntity->getDestination()['lon']
             ],
             MrsoolCompanyConstant::BUYER_FIELD_CONST => [
-                MrsoolCompanyConstant::PHONE_FIELD_CONST => $storeOrderDetailsEntity->getRecipientPhone(),
+                MrsoolCompanyConstant::PHONE_FIELD_CONST => '+'.$storeOrderDetailsEntity->getRecipientPhone(),
                 MrsoolCompanyConstant::FULL_NAME_FIELD_CONST => $storeOrderDetailsEntity->getRecipientName()
             ],
             MrsoolCompanyConstant::STORE_FIELD_CONST => [
                 MrsoolCompanyConstant::NAME_FIELD_CONST => $orderEntity->getStoreOwner()->getStoreOwnerName(),
-                MrsoolCompanyConstant::PHONE_FIELD_CONST => $orderEntity->getStoreOwner()->getPhone()
+                MrsoolCompanyConstant::PHONE_FIELD_CONST => '+'.$orderEntity->getStoreOwner()->getPhone()
             ],
             MrsoolCompanyConstant::SHIPMENT_VALUE_FIELD_CONST => $orderCost,
             MrsoolCompanyConstant::DESCRIPTION_FIELD_CONST => $description
@@ -76,7 +122,7 @@ class MrsoolDeliveredOrderService
         $createOrderJsonRequest = $this->initializeCreateOrderRequest($orderEntity, $storeOrderDetailsEntity);
 
         return $this->createOrderPostRequest(
-            MrsoolCompanyConstant::BASE_URL_CONST . MrsoolCompanyConstant::CREATE_ORDER_URL_CONST,
+            $this->params->get('mrsool_base_url') . $this->params->get('mrsool_create_order_url'),
             $createOrderJsonRequest
         );
     }

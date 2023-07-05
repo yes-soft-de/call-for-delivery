@@ -267,4 +267,13 @@ class SubscriptionDetailsManager
 
         return $subscriptionDetailsEntity;
     }
+
+    public function updateSubscriptionDetailsStatusToDateFinished(SubscriptionDetailsEntity $subscriptionDetailsEntity): SubscriptionDetailsEntity
+    {
+        $subscriptionDetailsEntity->setStatus(SubscriptionConstant::DATE_FINISHED);
+
+        $this->entityManager->flush();
+
+        return $subscriptionDetailsEntity;
+    }
 }

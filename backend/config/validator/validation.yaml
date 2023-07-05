@@ -1010,3 +1010,25 @@ App\Request\Admin\ExternallyDeliveredOrder\ExternallyDeliveredOrderCreateByAdmin
             - NotBlank: ~
         externalCompanyId:
             - NotNull: ~
+
+App\Request\EPayment\EPaymentCreateByStoreOwnerRequest:
+    properties:
+        status:
+            - NotBlank: ~
+
+App\Request\Admin\StoreOwner\StoreOwnerProfileOpeningSubscriptionWithoutPaymentUpdateRequest:
+    properties:
+        id:
+            - NotBlank: ~
+        openingSubscriptionWithoutPayment:
+            - NotNull: ~
+
+App\Request\Admin\StoreOwnerPreference\StoreOwnerPreferenceCreateByAdminRequest:
+    properties:
+        storeOwnerProfile:
+            - NotBlank: ~
+
+App\Request\Admin\StoreOwnerPreference\StoreOwnerPreferenceUpdateByAdminRequest:
+    properties:
+        id:
+            - NotBlank: ~

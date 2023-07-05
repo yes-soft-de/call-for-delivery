@@ -129,12 +129,14 @@ class AdminExternallyDeliveredOrderController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $result = $this->adminExternallyDeliveredOrderService->createExternallyDeliveredOrderByAdmin($request);
+        $result = $this->adminExternallyDeliveredOrderService->createExternallyDeliveredOrderByAdmin($request, $this->getUserId());
 
-        if ($result === AppFeatureResultConstant::APP_FEATURE_NOT_FOUND_CONST) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::APP_FEATURE_NOT_FOUND_CONST);
+//        if ($result === AppFeatureResultConstant::APP_FEATURE_NOT_FOUND_CONST) {
+//            return $this->response(MainErrorConstant::ERROR_MSG, self::APP_FEATURE_NOT_FOUND_CONST);
+//
+//        }
 
-        } elseif ($result === AppFeatureResultConstant::APP_FEATURE_NOT_ACTIVATED_CONST) {
+        if ($result === AppFeatureResultConstant::APP_FEATURE_NOT_ACTIVATED_CONST) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::APP_FEATURE_NOT_ACTIVE_CONST);
 
         } elseif ($result === ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_NOT_FOUND_CONST) {

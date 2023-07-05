@@ -87,8 +87,11 @@ class BaseController extends AbstractController
     const STORE_OWNER_PROFILE_CREATED = ["store owner profile created", "9158"];
     const STORE_OWNER_SUBSCRIPTION_CREATED = ["store owner profile created", "9159"];
     const STORE_OWNER_BRANCH_CREATED = ["store owner branch created", "9160"];
+    const STORE_OWNER_FREE_SUBSCRIPTION_CREATED_CONST = ["free subscription created", "9161"];
+    const STORE_OWNER_BEFORE_SUBSCRIPTION_CREATED_CONST = ["before free subscription", "9162"];
     const STORE_OWNER_PROFILE_COMPLETED = ["store owner profile completed", "9161"];
     const STORE_BRANCH_NOT_EXIST = ["store branch is not exist", "9162"];
+    const STORE_OWNER_PREFERENCE_NOT_EXIST_CONST = ["store preference is not exist", "9163"];
     // order distance conflict
     const ORDER_DISTANCE_CONFLICT_NOT_EXIST_CONST = ["order distance conflict not exist!", "9210"];
     const ORDER_DISTANCE_CONFLICT_ALREADY_EXIST_CONST = ["order distance already exist!", "9240"];
@@ -182,6 +185,8 @@ class BaseController extends AbstractController
     const INVALID_CREDENTIALS_RESULT_CONST = ["invalid credentials", "9676"];
     const INVALID_INPUT_RESULT_CONST = ["invalid input", "9677"];
     const EXTERNAL_ORDER_NOT_FOUND_CONST = ["external order not found", "9678"];
+    // epayment
+    const E_PAYMENT_HAD_NOT_CREATED_SUCCESSFULLY_CONST = ["e-payment had not done successfully", "9700"];
 
     public function __construct(SerializerInterface $serializer)
     {

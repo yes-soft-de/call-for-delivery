@@ -101,6 +101,15 @@ class StoreOwnerProfileEntity
     #[ORM\Column(type: 'datetime', nullable: true)]
     private $updatedAt;
 
+    #[ORM\OneToMany(mappedBy: 'storeOwnerProfile', targetEntity: EPaymentFromStoreEntity::class)]
+    private $ePaymentFromStoreEntities;
+
+    #[ORM\Column(type: 'boolean', options: ["default" => false])]
+    private $openingSubscriptionWithoutPayment;
+
+    #[ORM\OneToOne(mappedBy: 'storeOwnerProfile', targetEntity: StoreOwnerPreferenceEntity::class, cascade: ['persist', 'remove'])]
+    private $storeOwnerPreferenceEntity;
+
     public function __construct()
     {
         $this->subscriptionEntities = new ArrayCollection();
@@ -112,6 +121,7 @@ class StoreOwnerProfileEntity
         $this->storeOwnerPaymentFromCompanyEntity = new ArrayCollection();
         $this->storeOwnerDuesFromCashOrders = new ArrayCollection();
         $this->orderLogEntities = new ArrayCollection();
+        $this->ePaymentFromStoreEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -614,6 +624,65 @@ class StoreOwnerProfileEntity
     public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
     {
         $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EPaymentFromStoreEntity>
+     */
+    public function getEPaymentFromStoreEntities(): Collection
+    {
+        return $this->ePaymentFromStoreEntities;
+    }
+
+    public function addEPaymentFromStoreEntity(EPaymentFromStoreEntity $ePaymentFromStoreEntity): self
+    {
+        if (!$this->ePaymentFromStoreEntities->contains($ePaymentFromStoreEntity)) {
+            $this->ePaymentFromStoreEntities[] = $ePaymentFromStoreEntity;
+            $ePaymentFromStoreEntity->setStoreOwnerProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEPaymentFromStoreEntity(EPaymentFromStoreEntity $ePaymentFromStoreEntity): self
+    {
+        if ($this->ePaymentFromStoreEntities->removeElement($ePaymentFromStoreEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($ePaymentFromStoreEntity->getStoreOwnerProfile() === $this) {
+                $ePaymentFromStoreEntity->setStoreOwnerProfile(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getOpeningSubscriptionWithoutPayment(): ?bool
+    {
+        return $this->openingSubscriptionWithoutPayment;
+    }
+
+    public function setOpeningSubscriptionWithoutPayment(bool $openingSubscriptionWithoutPayment): self
+    {
+        $this->openingSubscriptionWithoutPayment = $openingSubscriptionWithoutPayment;
+
+        return $this;
+    }
+
+    public function getStoreOwnerPreferenceEntity(): ?StoreOwnerPreferenceEntity
+    {
+        return $this->storeOwnerPreferenceEntity;
+    }
+
+    public function setStoreOwnerPreferenceEntity(StoreOwnerPreferenceEntity $storeOwnerPreferenceEntity): self
+    {
+        // set the owning side of the relation if necessary
+        if ($storeOwnerPreferenceEntity->getStoreOwnerProfile() !== $this) {
+            $storeOwnerPreferenceEntity->setStoreOwnerProfile($this);
+        }
+
+        $this->storeOwnerPreferenceEntity = $storeOwnerPreferenceEntity;
 
         return $this;
     }

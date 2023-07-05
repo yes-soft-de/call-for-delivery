@@ -5,11 +5,19 @@ namespace App\Constant\ExternalDeliveryCompany\Mrsool;
 final class MrsoolCompanyConstant
 {
     // URL constant
-    const BASE_URL_CONST = "https://api.staging.mrsool.co/";
+    // dev
+//    const BASE_URL_CONST = "https://api.staging.mrsool.co/";
+//
+//    const CREATE_ORDER_URL_CONST = "laas/v1/orders";
+//
+//    const GET_ORDER_URL_CONST = "laas/v1/orders/";
 
-    const CREATE_ORDER_URL_CONST = "laas/v1/orders";
-
-    const GET_ORDER_URL_CONST = "laas/v1/orders/";
+    // prod
+//    const BASE_URL_PROD_CONST = "https://logistics.mrsool.co/";
+//
+//    const CREATE_ORDER_PROD_URL_CONST = "api/v1/orders";
+//
+//    const GET_ORDER_PROD_URL_CONST = "api/v1/orders/";
 
     // Post order request
     const PICKUP_FIELD_CONST = "pickup";

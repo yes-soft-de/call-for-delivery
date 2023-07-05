@@ -27,17 +27,14 @@ use App\Request\Subscription\SubscriptionUpdateByAdminRequest;
  */
 class SubscriptionController extends BaseController
 {
-    private AutoMapping $autoMapping;
-    private ValidatorInterface $validator;
-    private SubscriptionService $subscriptionService;
-   
-    public function __construct( SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface  $validator, SubscriptionService $subscriptionService)
+    public function __construct(
+        SerializerInterface $serializer,
+        private AutoMapping $autoMapping,
+        private ValidatorInterface  $validator,
+        private SubscriptionService $subscriptionService
+    )
     {
         parent::__construct($serializer);
-       
-        $this->autoMapping = $autoMapping;
-        $this->validator = $validator;
-        $this->subscriptionService = $subscriptionService;
     }
 
     /**
@@ -227,9 +224,7 @@ class SubscriptionController extends BaseController
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *                @OA\Property(type="string", property="canCreateOrder"),
-     *                @OA\Property(type="string", property="subscriptionStatus"),
-     *                @OA\Property(type="number", property="percentageOfOrdersConsumed"),
+     *              ref=@Model(type="App\Response\Subscription\CanCreateOrderResponse")
      *        )
      *     )
      * )
@@ -252,7 +247,6 @@ class SubscriptionController extends BaseController
         $result = $this->subscriptionService->canCreateOrder($this->getUserId());
        
         if ($result === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS) {
-      
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_STORE_INACTIVE);
         }
 
@@ -312,23 +306,19 @@ class SubscriptionController extends BaseController
      
         if (isset($result->state)) {
             if($result->state === SubscriptionConstant::NOT_POSSIBLE) {
-          
                 return $this->response($result, self::NOT_POSSIBLE);
             }
     
             if($result->state === SubscriptionConstant::YOU_HAVE_SUBSCRIBED) {
-              
                 return $this->response($result, self::YOU_HAVE_SUBSCRIBED);
             }
     
             if($result->state === SubscriptionConstant::YOU_DO_NOT_HAVE_SUBSCRIBED) {
-              
                 return $this->response($result, self::SUBSCRIPTION_UNSUBSCRIBED);
             }
         }
         
         if(isset($result->packageState)){
-
             return $this->response($result, self::PACKAGE_NOT_EXIST);
         }
         
@@ -416,5 +406,45 @@ class SubscriptionController extends BaseController
         $result = $this->subscriptionService->updateSubscription($request);
 
         return $this->response($result, self::UPDATE);
+    }
+
+    /**
+     * store: get current subscription balance by store owner
+     * @Route("currentstoresubscriptionbalance", name="getCurrentSubscriptionBalanceByStoreOwner", methods={"GET"})
+     * @IsGranted("ROLE_OWNER")
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Subscription")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Returns current subscription balance",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *             ref=@Model(type="App\Response\Subscription\CurrentStoreSubscriptionBalanceGetResponse")
+     *      )
+     *    )
+     *  )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getCurrentSubscriptionBalanceByStoreOwner(): JsonResponse
+    {
+        $result = $this->subscriptionService->getCurrentSubscriptionBalanceByStoreOwner($this->getUserId());
+
+        if ($result === SubscriptionConstant::SUBSCRIPTION_NOT_FOUND) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::SUBSCRIPTION_NOT_FOUND);
+        }
+
+        return $this->response($result, self::FETCH);
     }
 }

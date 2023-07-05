@@ -8,6 +8,7 @@ use App\Entity\StoreOwnerProfileEntity;
 use App\Manager\Admin\StoreOwner\AdminStoreOwnerManager;
 use App\Request\Admin\Report\StoresAndOrdersCountDuringSpecificTimeFilterByAdminRequest;
 use App\Request\Admin\StoreOwner\DeleteStoreOwnerAccountAndProfileByAdminRequest;
+use App\Request\Admin\StoreOwner\StoreOwnerProfileOpeningSubscriptionWithoutPaymentUpdateRequest;
 use App\Request\Admin\StoreOwner\StoreOwnerProfileStatusUpdateByAdminRequest;
 use App\Request\Admin\StoreOwner\StoreOwnerProfileUpdateByAdminRequest;
 use App\Response\Admin\StoreOwner\StoreOwnerProfileByIdGetByAdminResponse;
@@ -136,5 +137,17 @@ class AdminStoreOwnerService
     public function filterTopStoresAccordingOnOrdersByAdmin(StoresAndOrdersCountDuringSpecificTimeFilterByAdminRequest $request): array
     {
         return $this->adminStoreOwnerManager->filterTopStoresAccordingOnOrdersByAdmin($request);
+    }
+
+    public function updateStoreOwnerProfileOpeningSubscriptionWithoutPayment(StoreOwnerProfileOpeningSubscriptionWithoutPaymentUpdateRequest $request)
+    {
+        $storeOwnerProfile = $this->adminStoreOwnerManager->updateStoreOwnerProfileOpeningSubscriptionWithoutPayment($request);
+
+        if (! $storeOwnerProfile) {
+            return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
+        }
+
+        return $this->autoMapping->map(StoreOwnerProfileEntity::class, StoreOwnerProfileByIdGetByAdminResponse::class,
+            $storeOwnerProfile);
     }
 }

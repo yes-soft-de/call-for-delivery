@@ -28,6 +28,12 @@ class StoreOwnerProfileUpdateRequest
 
     private $employeeCount;
 
+    // branch info
+    private $location = [];
+
+//    private $isActive;
+//
+//    private string|null $branchPhone;
 
     /**
      * Get the value of userID
@@ -81,7 +87,6 @@ class StoreOwnerProfileUpdateRequest
         $this->image = $image;
     }
 
-
     /**
      * Get the value of storeCategoryId
      */
@@ -100,5 +105,21 @@ class StoreOwnerProfileUpdateRequest
         $this->storeCategoryId = $storeCategoryId;
 
         return $this;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPhone()
+    {
+        return $this->phone;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
     }
 }
