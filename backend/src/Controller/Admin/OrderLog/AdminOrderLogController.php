@@ -17,19 +17,19 @@ use Symfony\Component\Serializer\SerializerInterface;
  */
 class AdminOrderLogController extends BaseController
 {
-    private AdminOrderLogService $adminOrderLogService;
-
-    public function __construct(SerializerInterface $serializer, AdminOrderLogService $adminOrderLogService)
+    public function __construct(
+        SerializerInterface $serializer,
+        private AdminOrderLogService $adminOrderLogService)
     {
         parent::__construct($serializer);
-        $this->adminOrderLogService = $adminOrderLogService;
     }
 
     /**
      * admin: get order logs by order id for admin
-     * @Route("orderlogsbyorderidforadmin/{orderId}", name="fetchOrderLogsByOrderIdForAdmin", methods={"GET"})
+     * @Route("orderlogsbyorderidforadmin/{orderId}/{timeZone}", name="fetchOrderLogsByOrderIdForAdmin", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @param int $orderId
+     * @param string|null $timeZone
      * @return JsonResponse
      *
      * @OA\Tag(name="Order Log")
@@ -57,9 +57,9 @@ class AdminOrderLogController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function filterStoreOrdersByAdmin(int $orderId): JsonResponse
+    public function filterStoreOrdersByAdmin(int $orderId, ?string $timeZone = null): JsonResponse
     {
-        $result = $this->adminOrderLogService->getOrderLogsByOrderIdForAdmin($orderId);
+        $result = $this->adminOrderLogService->getOrderLogsByOrderIdForAdmin($orderId, $timeZone);
 
         return $this->response($result, self::FETCH);
     }
