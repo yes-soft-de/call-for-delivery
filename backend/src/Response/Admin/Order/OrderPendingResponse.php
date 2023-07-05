@@ -45,15 +45,9 @@ class OrderPendingResponse
 
     public int $isHide;
 
-    /**
-     * @var string|null
-     */
-    public $captainName;
+    public ?string $captainName;
 
-    /**
-     * @var int|null
-     */
-    public $captainProfileId;
+    public ?int $captainProfileId;
 
     /**
      * @OA\Property(type="array", property="externalDeliveredOrders",
