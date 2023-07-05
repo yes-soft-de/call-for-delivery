@@ -48,7 +48,7 @@ class NewSubscriptionBalanceScreenState
   }
 
   void makePayment(PaymentStatusRequest request) {
-    widget._stateManager.makePayment(request);
+    widget._stateManager.makePayment(this,request);
   }
 
   @override

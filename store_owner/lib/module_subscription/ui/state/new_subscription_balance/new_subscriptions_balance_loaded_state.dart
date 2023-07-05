@@ -38,6 +38,7 @@ class NewSubscriptionBalanceLoadedState extends States {
                         ),
                         callback: (success, resID, trxID, err) {
                           if (success) {
+                            Navigator.of(context).pop();
                             screenState.makePayment(PaymentStatusRequest(
                               status: 1,
                               paymentId: trxID,
@@ -46,10 +47,6 @@ class NewSubscriptionBalanceLoadedState extends States {
                               paymentGetaway: 227,
                               paymentType: 229,
                             ));
-                            CustomFlushBarHelper.createSuccess(
-                              title: S.current.warnning,
-                              message: S.current.paymentSuccess,
-                            ).show(screenState.context);
                           } else {
                             CustomFlushBarHelper.createError(
                               title: S.current.warnning,

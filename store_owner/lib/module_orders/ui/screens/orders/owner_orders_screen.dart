@@ -436,7 +436,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                       Visibility(
                         visible: !welcomeDialogWithoutPayment,
                         child: InAppPurchaseButton(
-                          callBack: (succeeded) {
+                          callBack: (succeeded,purchaseID) {
                             if (succeeded) {
                             Navigator.pop(context);
                               makePayment(
@@ -447,7 +447,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                                   paymentType: 229,
                                   paymentGetaway:
                                       Platform.isAndroid ? 226 : 225,
-                                  paymentId: null,
+                                  paymentId: purchaseID,
                                 ),
                               );
                             }
