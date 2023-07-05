@@ -59,7 +59,7 @@ class NewSubscriptionBalanceStateManager {
     });
   }
 
-  void makePayment(PaymentStatusRequest request) {
-    _ordersService.makePayment(request);
+  void makePayment(PaymentStatusRequest request, {Function? onFinish}) {
+    _ordersService.makePayment(request, onFinish: onFinish);
   }
 }

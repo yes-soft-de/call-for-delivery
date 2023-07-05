@@ -40,14 +40,18 @@ class NewSubscriptionBalanceLoadedState extends States {
                         ),
                         callback: (success, resID, trxID, err) {
                           if (success) {
-                            screenState.makePayment(PaymentStatusRequest(
-                              status: PaymentStatus.paidSuccess,
-                              paymentId: trxID,
-                              amount: balance.toBePayed,
-                              paymentFor: PaymentFor.unifiedSubscription,
-                              paymentGetaway: PaymentGetaway.tapPayment,
-                              paymentType: PaymentType.realPaymentByStore,
-                            ));
+                            screenState.makePayment(
+                                PaymentStatusRequest(
+                                  status: PaymentStatus.paidSuccess,
+                                  paymentId: trxID,
+                                  amount: balance.toBePayed,
+                                  paymentFor: PaymentFor.unifiedSubscription,
+                                  paymentGetaway: PaymentGetaway.tapPayment,
+                                  paymentType: PaymentType.realPaymentByStore,
+                                ), onFinish: () {
+                              getIt<GlobalStateManager>().update();
+                              screenState.getBalance();
+                            });
                             CustomFlushBarHelper.createSuccess(
                               title: S.current.warnning,
                               message: S.current.paymentSuccess,
@@ -58,8 +62,6 @@ class NewSubscriptionBalanceLoadedState extends States {
                               message: S.current.paymentFailed,
                             ).show(screenState.context);
                           }
-                          getIt<GlobalStateManager>().update();
-                          screenState.getBalance();
                         });
                   } else {
                     CustomFlushBarHelper.createError(
