@@ -990,7 +990,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
         "theCostWillBe": MessageLookupByLibrary.simpleMessage(
-            "سيتم الآن احتساب التكلفة بناء على خطة العمل الحالية:\n\nسعر الطلب الافتتاحي: 14 ريال\nالتكلفة عن كل 1 كم: 1 ريال"),
+            "سيتم الآن احتساب التكلفة بناء على خطة العمل الحالية:\n\nسعر الطلب الافتتاحي: 12 ريال\nالتكلفة عن كل 1 كم: 1 ريال"),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك إنشاء طلب جديد لعدم وجود فروع خاصة بمتجرك"),
         "thereIsNoUserWithThisNumber":
