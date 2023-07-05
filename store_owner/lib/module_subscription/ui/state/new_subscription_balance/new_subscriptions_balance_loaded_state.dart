@@ -40,14 +40,18 @@ class NewSubscriptionBalanceLoadedState extends States {
                         ),
                         callback: (success, resID, trxID, err) {
                           if (success) {
-                            screenState.makePayment(PaymentStatusRequest(
-                              status: 1,
-                              paymentId: trxID,
-                              amount: balance.toBePayed,
-                              paymentFor: 229,
-                              paymentGetaway: 227,
-                              paymentType: 229,
-                            ));
+                            screenState.makePayment(
+                                PaymentStatusRequest(
+                                  status: 1,
+                                  paymentId: trxID,
+                                  amount: balance.toBePayed,
+                                  paymentFor: 229,
+                                  paymentGetaway: 227,
+                                  paymentType: 229,
+                                ), onFinish: () {
+                              getIt<GlobalStateManager>().update();
+                              screenState.getBalance();
+                            });
                             CustomFlushBarHelper.createSuccess(
                               title: S.current.warnning,
                               message: S.current.paymentSuccess,
@@ -58,8 +62,6 @@ class NewSubscriptionBalanceLoadedState extends States {
                               message: S.current.paymentFailed,
                             ).show(screenState.context);
                           }
-                          getIt<GlobalStateManager>().update();
-                          screenState.getBalance();
                         });
                   } else {
                     CustomFlushBarHelper.createError(
