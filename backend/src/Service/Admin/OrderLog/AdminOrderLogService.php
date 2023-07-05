@@ -10,19 +10,20 @@ use App\Service\FileUpload\UploadFileHelperService;
 
 class AdminOrderLogService
 {
-    private AutoMapping $autoMapping;
-    private OrderLogManager $orderLogManager;
-    private UploadFileHelperService $uploadFileHelperService;
-
-    public function __construct(AutoMapping $autoMapping, OrderLogManager $orderLogManager, UploadFileHelperService $uploadFileHelperService)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private OrderLogManager $orderLogManager,
+        private UploadFileHelperService $uploadFileHelperService
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->orderLogManager = $orderLogManager;
-        $this->uploadFileHelperService = $uploadFileHelperService;
     }
 
-    public function getOrderLogsByOrderIdForAdmin(int $orderId): array
+    public function getOrderLogsByOrderIdForAdmin(int $orderId, ?string $timeZone = null): array
     {
+        if (($timeZone) && ($timeZone !== "")) {
+            $timeZone = str_replace("-", "/", $timeZone);
+        }
+
         $response = [];
 
         $orderLogs = $this->orderLogManager->getOrderLogsByOrderIdForAdmin($orderId);
@@ -34,6 +35,10 @@ class AdminOrderLogService
                 $value['images'] = $this->uploadFileHelperService->getImageParams($value['imagePath']);
 
                 $response[$key] = $this->autoMapping->map('array', OrderLogByOrderIdGetForAdminResponse::class, $value);
+
+                if ($response[$key]->createdAt) {
+                    $response[$key]->createdAt->setTimeZone(new \DateTimeZone($timeZone ? : 'Asia/Riyadh'));
+                }
             }
         }
 

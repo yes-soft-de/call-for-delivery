@@ -16,46 +16,25 @@ class OrderLogByOrderIdGetForAdminResponse
 
     public \DateTime $createdAt;
 
-    /**
-     * @var string|int
-     */
-    public $createdBy;
+    public string|int $createdBy;
 
     public int $createdByUserType;
 
-    /**
-     * @var bool|null
-     */
-    public $isCaptainArrivedConfirmation;
+    public ?bool $isCaptainArrivedConfirmation;
 
     public int $storeOwnerBranchId;
 
     public int $storeOwnerProfileId;
 
-    /**
-     * @var null|int
-     */
-    public $captainProfileId;
+    public ?int $captainProfileId;
 
-    /**
-     * @var null|int
-     */
-    public $supplierProfileId;
+    public ?int $supplierProfileId;
 
-    /**
-     * @var null|int
-     */
-    public $isHide;
+    public ?int $isHide;
 
-    /**
-     * @var bool|int
-     */
-    public $orderIsMain;
+    public int|bool $orderIsMain;
 
-    /**
-     * @var int|null
-     */
-    public $primaryOrderId;
+    public ?int $primaryOrderId;
 
     /**
      * @OA\Property(type="array", property="images",
