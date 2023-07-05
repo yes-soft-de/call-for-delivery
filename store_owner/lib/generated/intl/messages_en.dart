@@ -997,7 +997,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Terms of Service"),
         "theCostWillBe": MessageLookupByLibrary.simpleMessage(
-            "The cost will now be calculated based on the current business plan:\nThe opening asking price is 14 riyals\nCost per 1 km. 1 riyal"),
+            "The cost will now be calculated based on the current business plan:\nThe opening asking price is 12 riyals\nCost per 1 km. 1 riyal"),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
             "There is no branches available"),
         "thereIsNoUserWithThisNumber": MessageLookupByLibrary.simpleMessage(

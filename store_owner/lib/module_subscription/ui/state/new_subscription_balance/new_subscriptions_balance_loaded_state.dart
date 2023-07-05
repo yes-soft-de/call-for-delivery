@@ -1,9 +1,11 @@
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/request/payment/paymnet_status_request.dart';
 import 'package:c4d/module_subscription/model/new_subscription_balance_model.dart';
 import 'package:c4d/module_subscription/ui/screens/new_subscription_balance_screen/new_subscription_balance_screen.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/payment_gateway.dart';
 import 'package:c4d/utils/models/payment_gateway_model.dart';
@@ -38,15 +40,19 @@ class NewSubscriptionBalanceLoadedState extends States {
                         ),
                         callback: (success, resID, trxID, err) {
                           if (success) {
-                            Navigator.of(context).pop();
-                            screenState.makePayment(PaymentStatusRequest(
-                              status: 1,
-                              paymentId: trxID,
-                              amount: balance.toBePayed,
-                              paymentFor: 229,
-                              paymentGetaway: 227,
-                              paymentType: 229,
-                            ));
+                            screenState.makePayment(
+                                PaymentStatusRequest(
+                                  status: PaymentStatus.paidSuccess,
+                                  paymentId: trxID,
+                                  amount: balance.toBePayed,
+                                  paymentFor: PaymentFor.unifiedSubscription,
+                                  paymentGetaway: PaymentGetaway.tapPayment,
+                                  paymentType: PaymentType.realPaymentByStore,
+                                ));
+                            CustomFlushBarHelper.createSuccess(
+                              title: S.current.warnning,
+                              message: S.current.paymentSuccess,
+                            ).show(screenState.context);
                           } else {
                             CustomFlushBarHelper.createError(
                               title: S.current.warnning,

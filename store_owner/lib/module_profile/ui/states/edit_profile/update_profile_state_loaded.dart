@@ -36,7 +36,6 @@ class UpdateProfileStateLoaded extends States {
     }
     openingTime = profileModel.openingTime;
     closingTime = profileModel.closingTime;
-    _nameController.text = profileModel.name;
     _bankNameController.text = profileModel.bankName;
     _bankNumberController.text = profileModel.bankNumber;
     _cityController.text = profileModel.city;
@@ -44,7 +43,6 @@ class UpdateProfileStateLoaded extends States {
     networkImage = profileModel.image;
     imagePath = profileModel.imageUrl;
   }
-  final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _countryController = TextEditingController();
   final _cityController = TextEditingController();
@@ -127,20 +125,18 @@ class UpdateProfileStateLoaded extends States {
                         ),
                       ),
                       // store name
-                      InitField(
-                        icon: Icons.storefront_outlined,
-                        controller: _nameController,
-                        title: S.current.storeName,
-                        hint: S.current.eg + ' : ' + S.current.store,
-                        onChanged: () {
-                          screenState.refresh();
-                        },
-                        validator: (String? v) {
-                          if (v == null) return S.current.pleaseCompleteField;
-                          if (v.length < 3) {
-                            return S.current.storeNameIsToShort;
-                          }
-                        },
+                      Center(
+                        child: Padding(
+                          padding: const EdgeInsets.all(15),
+                          child: Text(
+                            '${profileModel.name} \n${profileModel.id}',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
                       ),
                       // phone number
                       Padding(
@@ -161,7 +157,7 @@ class UpdateProfileStateLoaded extends States {
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Theme.of(context).backgroundColor,
+                                color: Theme.of(context).colorScheme.background,
                               ),
                               child: Padding(
                                 padding: EdgeInsets.all(8.0),
@@ -208,7 +204,7 @@ class UpdateProfileStateLoaded extends States {
                                           '+',
                                           style: Theme.of(context)
                                               .textTheme
-                                              .button
+                                              .labelLarge
                                               ?.copyWith(color: Colors.white),
                                         ),
                                       ),
@@ -229,7 +225,7 @@ class UpdateProfileStateLoaded extends States {
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Theme.of(context).backgroundColor,
+                                color: Theme.of(context).colorScheme.background,
                               ),
                               child: Padding(
                                 padding: EdgeInsets.all(8.0),
@@ -244,7 +240,7 @@ class UpdateProfileStateLoaded extends States {
                             child: Material(
                               borderRadius: BorderRadius.circular(25),
                               elevation: 0.0,
-                              color: Theme.of(context).backgroundColor,
+                              color: Theme.of(context).colorScheme.background,
                               child: ListTile(
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(25),
@@ -286,8 +282,9 @@ class UpdateProfileStateLoaded extends States {
                                       child: Text(
                                         DateFormat.jm().format(
                                             openingTime ?? DateTime.now()),
-                                        style:
-                                            Theme.of(context).textTheme.button,
+                                        style: Theme.of(context)
+                                            .textTheme
+                                            .labelLarge,
                                       ),
                                     )),
                               ),
@@ -309,7 +306,7 @@ class UpdateProfileStateLoaded extends States {
                             child: Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(10),
-                                color: Theme.of(context).backgroundColor,
+                                color: Theme.of(context).colorScheme.background,
                               ),
                               child: Padding(
                                 padding: EdgeInsets.all(8.0),
@@ -324,7 +321,7 @@ class UpdateProfileStateLoaded extends States {
                             child: Material(
                               borderRadius: BorderRadius.circular(25),
                               elevation: 0.0,
-                              color: Theme.of(context).backgroundColor,
+                              color: Theme.of(context).colorScheme.background,
                               child: ListTile(
                                   onTap: () {
                                     showTimePicker(
@@ -366,7 +363,7 @@ class UpdateProfileStateLoaded extends States {
                                               closingTime ?? DateTime.now()),
                                           style: Theme.of(context)
                                               .textTheme
-                                              .button),
+                                              .labelLarge),
                                     ),
                                   )),
                             ),
@@ -408,7 +405,9 @@ class UpdateProfileStateLoaded extends States {
                                   const EdgeInsets.only(right: 16.0, left: 16),
                               child: Container(
                                 decoration: BoxDecoration(
-                                    color: Theme.of(context).backgroundColor,
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background,
                                     borderRadius: BorderRadius.circular(10)),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
@@ -423,7 +422,8 @@ class UpdateProfileStateLoaded extends States {
                               child: Container(
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(25),
-                                  color: Theme.of(context).backgroundColor,
+                                  color:
+                                      Theme.of(context).colorScheme.background,
                                 ),
                                 child: Padding(
                                   padding: const EdgeInsets.only(
@@ -438,6 +438,7 @@ class UpdateProfileStateLoaded extends States {
                                             return S.current
                                                 .chooseYourCompanyCapacity;
                                           }
+                                          return null;
                                         },
                                         value: selectedSize,
                                         decoration: InputDecoration(
@@ -470,22 +471,27 @@ class UpdateProfileStateLoaded extends States {
               ),
               label: S.current.updateProfile,
               onTap: () {
-                if (key.currentState?.validate() == true && imagePath != null) {
-                  if (imageBytes == null && imagePath != null) {
-                    saveWithoutImageUpload();
-                  } else {
-                    saveWithUploadImage();
-                  }
-                } else if (imagePath == null) {
-                  CustomFlushBarHelper.createError(
-                          title: S.current.warnning, message: S.current.noImage)
-                      .show(context);
+                if (imageBytes != null && imagePath != null) {
+                  saveWithUploadImage();
                 } else {
-                  CustomFlushBarHelper.createError(
-                          title: S.current.warnning,
-                          message: S.current.pleaseCompleteTheForm)
-                      .show(context);
+                  saveWithoutImageUpload();
                 }
+                // if (key.currentState?.validate() == true && imagePath != null) {
+                // if (imageBytes == null && imagePath != null) {
+                //   saveWithoutImageUpload();
+                // } else {
+                //   saveWithUploadImage();
+                // }
+                //   } else if (imagePath == null) {
+                //     CustomFlushBarHelper.createError(
+                //             title: S.current.warnning, message: S.current.noImage)
+                //         .show(context);
+                //   } else {
+                //     CustomFlushBarHelper.createError(
+                //             title: S.current.warnning,
+                //             message: S.current.pleaseCompleteTheForm)
+                //         .show(context);
+                //   }
               })),
     );
   }
@@ -510,7 +516,7 @@ class UpdateProfileStateLoaded extends States {
 
   void saveWithoutImageUpload() {
     ProfileRequest profileRequest = ProfileRequest(
-      name: _nameController.text,
+      name: profileModel.name,
       phone: _countryController.text + _phoneController.text,
       city: _cityController.text,
       image: imagePath,
@@ -537,7 +543,7 @@ class UpdateProfileStateLoaded extends States {
         return;
       }
       ProfileRequest profileRequest = ProfileRequest(
-        name: _nameController.text,
+        name: profileModel.name,
         phone: _countryController.text + _phoneController.text,
         city: _cityController.text,
         image: image,

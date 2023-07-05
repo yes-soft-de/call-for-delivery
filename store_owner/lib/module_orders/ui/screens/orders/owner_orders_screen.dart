@@ -5,7 +5,6 @@ import 'package:c4d/module_subscription/hive/subscription_pref.dart';
 import 'package:c4d/module_subscription/model/subscription_balance_model.dart';
 import 'package:c4d/module_subscription/service/subscription_service.dart';
 import 'package:c4d/utils/helpers/in_app_purchase.dart';
-import 'package:c4d/utils/logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
@@ -436,17 +435,18 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                       Visibility(
                         visible: !welcomeDialogWithoutPayment,
                         child: InAppPurchaseButton(
-                          callBack: (succeeded,purchaseID) {
+                          callBack: (succeeded, purchaseID) {
                             if (succeeded) {
-                            Navigator.pop(context);
+                              Navigator.pop(context);
                               makePayment(
                                 PaymentStatusRequest(
-                                  status: 1,
-                                  paymentFor: 228,
+                                  status: PaymentStatus.paidSuccess,
+                                  paymentFor: PaymentFor.welcomeSubscription,
                                   amount: 2.99,
-                                  paymentType: 229,
-                                  paymentGetaway:
-                                      Platform.isAndroid ? 226 : 225,
+                                  paymentType: PaymentType.realPaymentByStore,
+                                  paymentGetaway: Platform.isAndroid
+                                      ? PaymentGetaway.inAppPurchaseGoogle
+                                      : PaymentGetaway.inAppPurchaseApple,
                                   paymentId: purchaseID,
                                 ),
                               );
@@ -458,11 +458,11 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                             Navigator.pop(context);
                             makePayment(
                               PaymentStatusRequest(
-                                status: 1,
-                                paymentFor: 228,
-                                paymentType: 231,
+                                status: PaymentStatus.paidSuccess,
+                                paymentFor: PaymentFor.welcomeSubscription,
+                                paymentType: PaymentType.mockPaymentByStore,
                                 amount: null,
-                                paymentGetaway: null,
+                                paymentGetaway: PaymentGetaway.notSpecified,
                                 paymentId: null,
                               ),
                             );

@@ -7480,10 +7480,10 @@ class S {
     );
   }
 
-  /// `The cost will now be calculated based on the current business plan:\nThe opening asking price is 14 riyals\nCost per 1 km. 1 riyal`
+  /// `The cost will now be calculated based on the current business plan:\nThe opening asking price is 12 riyals\nCost per 1 km. 1 riyal`
   String get theCostWillBe {
     return Intl.message(
-      'The cost will now be calculated based on the current business plan:\nThe opening asking price is 14 riyals\nCost per 1 km. 1 riyal',
+      'The cost will now be calculated based on the current business plan:\nThe opening asking price is 12 riyals\nCost per 1 km. 1 riyal',
       name: 'theCostWillBe',
       desc: '',
       args: [],

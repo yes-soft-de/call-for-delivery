@@ -17,7 +17,16 @@ class ProfileStateInit extends States {
   @override
   Widget getUI(BuildContext context) {
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context, title: S.current.myProfile),
+      appBar:
+          CustomC4dAppBar.appBar(context, title: S.current.myProfile, actions: [
+        CustomC4dAppBar.actionIcon(
+          context,
+          icon: Icons.edit,
+          onTap: () {
+            screenState.goToEditProfileScreen(profileModel);
+          },
+        )
+      ]),
       body: CustomListView.custom(
         children: [
           Padding(
