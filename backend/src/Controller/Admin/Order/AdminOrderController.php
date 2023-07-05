@@ -126,9 +126,10 @@ class AdminOrderController extends BaseController
 
     /**
      * admin: get specific order by id
-     * @Route("orderbyidforadmin/{id}", name="getSpecificOrderByIdForAdmin", methods={"GET"})
+     * @Route("orderbyidforadmin/{id}/{timeZone}", name="getSpecificOrderByIdForAdmin", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @param int $id
+     * @param string|null $timeZone
      * @return JsonResponse
      *
      * @OA\Tag(name="Order")
@@ -154,9 +155,9 @@ class AdminOrderController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function getSpecificOrderByIdForAdmin(int $id): JsonResponse
+    public function getSpecificOrderByIdForAdmin(int $id, ?string $timeZone = null): JsonResponse
     {
-        $result = $this->adminOrderService->getSpecificOrderByIdForAdmin($id);
+        $result = $this->adminOrderService->getSpecificOrderByIdForAdmin($id, $timeZone);
 
         return $this->response($result, self::FETCH);
     }
@@ -306,10 +307,11 @@ class AdminOrderController extends BaseController
 
     /**
      * admin: Get pending, hidden, and not delivered orders for admin.
-     * @Route("orderpending/{externalOrder}/{externalCompanyId}", name="getPendingOrdersForAdmin", methods={"GET"})
+     * @Route("orderpending/{externalOrder}/{externalCompanyId}/{timeZone}", name="getPendingOrdersForAdmin", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
      * @param int $externalOrder
      * @param int $externalCompanyId
+     * @param string|null $timeZone
      * @return JsonResponse
      * *
      * @OA\Tag(name="Order")
@@ -354,7 +356,7 @@ class AdminOrderController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function getPendingOrdersForAdmin(int $externalOrder = 0, int $externalCompanyId = 0): JsonResponse
+    public function getPendingOrdersForAdmin(int $externalOrder = 0, int $externalCompanyId = 0, ?string $timeZone = null): JsonResponse
     {
         $response = $this->adminOrderService->getPendingOrdersForAdmin($this->getUserId(), $externalOrder, $externalCompanyId);
         
