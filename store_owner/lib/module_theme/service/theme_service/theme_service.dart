@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:c4d/module_theme/map_style.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -24,12 +26,13 @@ class AppThemeDataService {
     final lightScheme = ColorScheme.fromSeed(
       primary: Color(0xff03816A),
       seedColor: PrimaryColor,
+      error: Platform.isIOS ? Colors.deepPurple : null,
       background: Color.fromRGBO(236, 239, 241, 1),
     );
     final darkScheme = ColorScheme.fromSeed(
         seedColor: PrimaryColor,
         brightness: Brightness.dark,
-        error: Colors.red[900],
+        error:Platform.isIOS ? Colors.deepPurple : Colors.red[900],
         errorContainer: Colors.red[100],
         primary: Colors.grey[900]);
     if (dark == true) {

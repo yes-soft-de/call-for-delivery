@@ -450,6 +450,9 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                                   paymentId: purchaseID,
                                 ),
                               );
+                              getInitData();
+                            } else {
+                              Navigator.pop(context);
                             }
                           },
                         ),
