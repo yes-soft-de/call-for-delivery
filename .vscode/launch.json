@@ -5,21 +5,21 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "store_owner",
-            "cwd": "store_owner",
+            "name": "store web",
+            "cwd": "store web",
             "request": "launch",
             "type": "dart"
         },
         {
-            "name": "store_owner (profile mode)",
-            "cwd": "store_owner",
+            "name": "store web (profile mode)",
+            "cwd": "store web",
             "request": "launch",
             "type": "dart",
             "flutterMode": "profile"
         },
         {
-            "name": "store_owner (release mode)",
-            "cwd": "store_owner",
+            "name": "store web (release mode)",
+            "cwd": "store web",
             "request": "launch",
             "type": "dart",
             "flutterMode": "release"
