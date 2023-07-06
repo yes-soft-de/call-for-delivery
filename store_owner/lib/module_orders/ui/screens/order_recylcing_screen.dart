@@ -112,7 +112,7 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
         setState(() {});
       } else if (link != null) {
         toController.text =
-            await DeepLinksService.getFirebaseDynamicLinkData(data);
+            await DeepLinksService.extractCoordinatesFromUrl(data);
         setState(() {});
       } else {
         customerLocation = null;
