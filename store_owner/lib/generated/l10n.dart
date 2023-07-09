@@ -7480,13 +7480,13 @@ class S {
     );
   }
 
-  /// `The cost will now be calculated based on the current business plan:\nThe opening asking price is 12 riyals\nCost per 1 km. 1 riyal`
-  String get theCostWillBe {
+  /// `The cost will now be calculated based on the current business plan:\nThe opening asking price is {openOrderPrice} riyals\nCost per 1 km {oneKilometerCost} riyal.`
+  String theCostWillBe(String openOrderPrice, String oneKilometerCost) {
     return Intl.message(
-      'The cost will now be calculated based on the current business plan:\nThe opening asking price is 12 riyals\nCost per 1 km. 1 riyal',
+      'The cost will now be calculated based on the current business plan:\nThe opening asking price is $openOrderPrice riyals\nCost per 1 km $oneKilometerCost riyal.',
       name: 'theCostWillBe',
-      desc: '',
-      args: [],
+      desc: 'The conventional newborn programmer greeting',
+      args: [openOrderPrice, oneKilometerCost],
     );
   }
 }

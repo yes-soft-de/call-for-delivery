@@ -20,7 +20,10 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(limit) => "you have to pay when you reach ${limit} sar";
+  static String m0(openOrderPrice, oneKilometerCost) =>
+      "The cost will now be calculated based on the current business plan:\nThe opening asking price is ${openOrderPrice} riyals\nCost per 1 km ${oneKilometerCost} riyal.";
+
+  static String m1(limit) => "you have to pay when you reach ${limit} sar";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -996,8 +999,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "terms": MessageLookupByLibrary.simpleMessage("terms of use"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Terms of Service"),
-        "theCostWillBe": MessageLookupByLibrary.simpleMessage(
-            "The cost will now be calculated based on the current business plan:\nThe opening asking price is 12 riyals\nCost per 1 km. 1 riyal"),
+        "theCostWillBe": m0,
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
             "There is no branches available"),
         "thereIsNoUserWithThisNumber": MessageLookupByLibrary.simpleMessage(
@@ -1147,7 +1149,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "You have products from other store , Do you want to clear your cart and add the new ones"),
         "youHaveToFillTheFormFirst": MessageLookupByLibrary.simpleMessage(
             "you have to fill the form first"),
-        "youHaveToPayWhen": m0,
+        "youHaveToPayWhen": m1,
         "youSubscribedWithOffer": MessageLookupByLibrary.simpleMessage(
             "You already subscribed with captain offer , You can subscribe again when your subscription expired"),
         "yourBalance": MessageLookupByLibrary.simpleMessage("your balance"),

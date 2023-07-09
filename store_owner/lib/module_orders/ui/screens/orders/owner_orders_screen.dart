@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:io';
 import 'package:c4d/module_orders/request/payment/paymnet_status_request.dart';
 import 'package:c4d/module_subscription/hive/subscription_pref.dart';
+import 'package:c4d/module_subscription/model/new_subscription_balance_model.dart';
 import 'package:c4d/module_subscription/model/subscription_balance_model.dart';
 import 'package:c4d/module_subscription/service/subscription_service.dart';
 import 'package:c4d/utils/helpers/in_app_purchase.dart';
@@ -142,7 +143,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
           paymentDialog(context);
         }
         if (status?.firstTimeSubscriptionWithUniformPackage ?? false) {
-          subscribeInTheUniversalPackageDialog(context);
+          widget._stateManager.showSubscribeInTheUniversalPackageDialog(this);
         }
       }
     });
@@ -539,7 +540,8 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     );
   }
 
-  subscribeInTheUniversalPackageDialog(BuildContext context) {
+  subscribeInTheUniversalPackageDialog(
+      BuildContext context, NewSubscriptionBalanceModel subscriptionDetails) {
     showDialog(
       barrierDismissible: false,
       context: context,
@@ -566,7 +568,9 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                     ),
                     SizedBox(height: 20),
                     Text(
-                      S.current.theCostWillBe,
+                      S.current.theCostWillBe(
+                          subscriptionDetails.openPriceOrder.toString(),
+                          subscriptionDetails.costPerKM.toString()),
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium

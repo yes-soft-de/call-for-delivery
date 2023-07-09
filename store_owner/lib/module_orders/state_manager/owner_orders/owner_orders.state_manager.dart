@@ -18,6 +18,7 @@ import 'package:c4d/module_orders/ui/screens/orders/owner_orders_screen.dart';
 import 'package:c4d/module_orders/ui/state/owner_orders/orders.state.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_subscription/model/can_make_order_model.dart';
+import 'package:c4d/module_subscription/model/new_subscription_balance_model.dart';
 import 'package:c4d/module_subscription/service/subscription_service.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
@@ -233,6 +234,24 @@ class OwnerOrdersStateManager {
             screenState,
             FilterOrderRequest(state: screenState.orderFilter ?? 'pending'),
             false);
+      }
+    });
+  }
+
+  void showSubscribeInTheUniversalPackageDialog(
+      OwnerOrdersScreenState screenState) {
+    getIt<SubscriptionService>().getNewSubscriptionBalance().then((value) {
+      if (value.hasError || value.isEmpty) {
+        CustomFlushBarHelper.createError(
+                title: S.current.warnning,
+                message: value.error ?? S.current.errorLoadingData)
+            .show(screenState.context);
+      } else {
+        value as NewSubscriptionBalanceModel;
+        screenState.subscribeInTheUniversalPackageDialog(
+          screenState.context,
+          value.data,
+        );
       }
     });
   }
