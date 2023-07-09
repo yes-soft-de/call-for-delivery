@@ -751,6 +751,17 @@
     "youHaveToFillTheFormFirst" : "you have to fill the form first",
     "youHaveFinancialPaymentToMade" : "you have financial payment to pay\nyou can pay fot it in the financial account screen",
     "YouHaveUsedUpTheEntireWelcomePack" : "You have used up the entire welcome pack",
-    "theCostWillBe" : "The cost will now be calculated based on the current business plan:\nThe opening asking price is 12 riyals\nCost per 1 km. 1 riyal",
+    "theCostWillBe": "The cost will now be calculated based on the current business plan:\nThe opening asking price is {openOrderPrice} riyals\nCost per 1 km {oneKilometerCost} riyal.",
+    "@theCostWillBe": {
+        "description": "The conventional newborn programmer greeting",
+        "placeholders": {
+            "openOrderPrice": {
+                "type": "String"
+            },
+            "oneKilometerCost": {
+                "type": "String"
+            }
+        }
+    },
     "adsAndOffers":"Ads & offers"
 }
