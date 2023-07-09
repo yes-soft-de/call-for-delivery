@@ -29,10 +29,15 @@ class AdminEPaymentFromStoreService
         $response = [];
         $response['subscriptionCost'] = 0.0;
         $response['ePayments'] = [];
+        $response['hasToPay'] = false;
 
         // if store owner profile had been entered, then get the last subscription cost
         if ($request->getStoreOwnerProfileId()) {
             $response['subscriptionCost'] = $this->getLastStoreSubscriptionCostForAdmin($request->getStoreOwnerProfileId());
+
+            if ($response['subscriptionCost'] > 0.0) {
+                $response['hasToPay'] = true;
+            }
         }
 
         $ePaymentsFromStore = $this->adminEPaymentFromStoreManager->filterEPaymentFromStoreByAdmin($request);
