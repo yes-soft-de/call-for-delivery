@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\CaptainFinancialDefaultSystemEntity;
 use App\Entity\CaptainFinancialSystemDetailEntity;
 use App\Entity\CaptainFinancialSystemAccordingToCountOfHoursEntity;
 use App\Entity\CaptainFinancialSystemAccordingOnOrderEntity;
@@ -192,6 +193,19 @@ class CaptainFinancialSystemDetailEntityRepository extends ServiceEntityReposito
                     'systemTwo',
                     Join::WITH,
                     'systemTwo.id = captainFinancialSystemDetailEntity.captainFinancialSystemId'
+                );
+
+                return $query->getQuery()->getOneOrNullResult();
+
+            } elseif ($tempQuery['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST) {
+                $query->addSelect('captainFinancialDefaultSystemEntity.openingOrderCost', 'captainFinancialDefaultSystemEntity.distanceLimit',
+                    'captainFinancialDefaultSystemEntity.firstOneKilometerCost', 'captainFinancialDefaultSystemEntity.secondOneKilometerCost');
+
+                $query->leftJoin(
+                    CaptainFinancialDefaultSystemEntity::class,
+                    'captainFinancialDefaultSystemEntity',
+                    Join::WITH,
+                    'captainFinancialDefaultSystemEntity.id = captainFinancialSystemDetailEntity.captainFinancialSystemId'
                 );
 
                 return $query->getQuery()->getOneOrNullResult();

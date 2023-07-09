@@ -573,8 +573,8 @@ class OrderService
 
         // check captain profile status
         $captain = $this->captainService->captainIsActive($request->getCaptainId());
-        if ($captain->status === CaptainConstant::CAPTAIN_INACTIVE) {
 
+        if ($captain->status === CaptainConstant::CAPTAIN_INACTIVE) {
             return CaptainConstant::CAPTAIN_INACTIVE;
         }
         // end check captain profile status
@@ -582,6 +582,7 @@ class OrderService
         $this->captainFinancialDuesService->updateCaptainFinancialSystemDetail($request->getCaptainId());
 
         $captainFinancialSystemStatus = $this->captainService->getCaptainFinancialSystemStatus($request->getCaptainId());
+
         if ($captainFinancialSystemStatus->status === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_INACTIVE) {
             return CaptainFinancialSystem::FINANCIAL_SYSTEM_INACTIVE;
         }
@@ -597,7 +598,6 @@ class OrderService
         }
 
         if ($request->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
-
             //not show orders for captain because not online
             if ($captain->isOnline === CaptainConstant::CAPTAIN_ONLINE_FALSE) {
                 return CaptainConstant::ERROR_CAPTAIN_ONLINE_FALSE;
@@ -650,7 +650,6 @@ class OrderService
             }
 
             if ($order->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
-
                 $this->captainFinancialDuesService->captainFinancialDues($request->getCaptainId()->getCaptainId());
 
                 //Save the price of the order in cash in case the captain does not pay the store

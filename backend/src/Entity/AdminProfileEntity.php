@@ -49,12 +49,16 @@ class AdminProfileEntity
     #[ORM\OneToMany(mappedBy: 'updatedBy', targetEntity: ExternalDeliveryCompanyCriteriaEntity::class)]
     private $externalDeliveryCompanyCriteriaEntities;
 
+    #[ORM\OneToMany(mappedBy: 'updatedBy', targetEntity: CaptainFinancialDefaultSystemEntity::class)]
+    private $captainFinancialDefaultSystemEntities;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->directSupportScriptEntities = new ArrayCollection();
         $this->dashboardLocalNotificationEntities = new ArrayCollection();
         $this->externalDeliveryCompanyCriteriaEntities = new ArrayCollection();
+        $this->captainFinancialDefaultSystemEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -248,6 +252,36 @@ class AdminProfileEntity
             // set the owning side to null (unless already changed)
             if ($externalDeliveryCompanyCriteriaEntity->getUpdatedBy() === $this) {
                 $externalDeliveryCompanyCriteriaEntity->setUpdatedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CaptainFinancialDefaultSystemEntity>
+     */
+    public function getCaptainFinancialDefaultSystemEntities(): Collection
+    {
+        return $this->captainFinancialDefaultSystemEntities;
+    }
+
+    public function addCaptainFinancialDefaultSystemEntity(CaptainFinancialDefaultSystemEntity $captainFinancialDefaultSystemEntity): self
+    {
+        if (!$this->captainFinancialDefaultSystemEntities->contains($captainFinancialDefaultSystemEntity)) {
+            $this->captainFinancialDefaultSystemEntities[] = $captainFinancialDefaultSystemEntity;
+            $captainFinancialDefaultSystemEntity->setUpdatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCaptainFinancialDefaultSystemEntity(CaptainFinancialDefaultSystemEntity $captainFinancialDefaultSystemEntity): self
+    {
+        if ($this->captainFinancialDefaultSystemEntities->removeElement($captainFinancialDefaultSystemEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($captainFinancialDefaultSystemEntity->getUpdatedBy() === $this) {
+                $captainFinancialDefaultSystemEntity->setUpdatedBy(null);
             }
         }
 

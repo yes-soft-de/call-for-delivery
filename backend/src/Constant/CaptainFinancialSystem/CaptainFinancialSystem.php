@@ -9,14 +9,18 @@ final class CaptainFinancialSystem
     const CAPTAIN_FINANCIAL_SYSTEM_ACTIVE= true;
 
     const CAPTAIN_FINANCIAL_SYSTEM_INACTIVE= false;
-//CaptainFinancialSystemAccordingToCountOfHours
+
+    // CaptainFinancialSystemAccordingToCountOfHours
     const CAPTAIN_FINANCIAL_SYSTEM_ONE = 1;
 
-//CaptainFinancialSystemAccordingToCountOfOrders
+    // CaptainFinancialSystemAccordingToCountOfOrders
     const CAPTAIN_FINANCIAL_SYSTEM_TWO = 2;
     
-///CaptainFinancialSystemAccordingOnOrderEntity
+    // CaptainFinancialSystemAccordingOnOrderEntity
     const CAPTAIN_FINANCIAL_SYSTEM_THREE = 3;
+
+    // CaptainFinancialDefaultSystemEntity
+    const CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST = 4;
 
     const YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM = "youNotHaveCaptainFinancialSystem";
     
