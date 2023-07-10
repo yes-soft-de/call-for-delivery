@@ -135,4 +135,7 @@ final class NotificationFirebaseConstant
     const ORDER_UPDATE_STATE_BEFORE_TIME_BY_CAPTAIN_COST = " قام بمحاولة تحديث حالة الطلب ذو الرقم التالي قبل مرور الوقت المحدد ";
 
     const UN_ACCEPT_ORDER_BY_CAPTAIN_CONST = "قام الكابتن بالتراجع عن تسليم الطلب ";
+
+    // e-payment
+    const PAYMENT_FOR_STORE_SUBSCRIPTION_BY_ADMIN_CONST = "دفعة من الإدارة نيابة عن متجرك مقابل الاشتراك";
 }

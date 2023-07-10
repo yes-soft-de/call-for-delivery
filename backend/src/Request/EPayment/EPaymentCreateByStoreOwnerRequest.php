@@ -90,4 +90,9 @@ class EPaymentCreateByStoreOwnerRequest
     {
         return $this->paymentGetaway;
     }
+
+    public function getPaymentId(): ?string
+    {
+        return $this->paymentId;
+    }
 }
