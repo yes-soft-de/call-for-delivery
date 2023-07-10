@@ -45,8 +45,8 @@ class ReceiptsScreenState extends State<ReceiptsScreen> {
     );
   }
 
-  void makePayment(PaymentStatusRequest request) {
-    widget._stateManager.makePayment(this, request);
+  void makePayment(PaymentStatusRequest request, Function onSuccess) {
+    widget._stateManager.makePayment(this, request, onSuccess);
   }
 
   @override

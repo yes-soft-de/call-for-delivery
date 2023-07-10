@@ -1,6 +1,10 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
 class PaymentStatusRequest {
+
+  int storeOwnerProfile;
+
   /// 0 not paid, 1 paid success
   PaymentStatus status;
 
@@ -15,7 +19,7 @@ class PaymentStatusRequest {
   /// PAYMENT_GETAWAY_TAP_PAYMENT_CONST = 227
   ///
   /// PAYMENT_GETAWAY_NOT_SPECIFIED_CONST = 235
-  /// 
+  ///
   /// PAYMENT_GETAWAY_MANUAL_CONST = 236
   PaymentGetaway? paymentGetaway;
 
@@ -41,17 +45,19 @@ class PaymentStatusRequest {
   PaymentType? paymentType;
 
   PaymentStatusRequest({
+    required this.storeOwnerProfile,
     required this.status,
     required this.paymentFor,
     required this.paymentGetaway,
     required this.amount,
     this.paymentId,
-    required this.paymentType,
     this.clientAddress,
+    required this.paymentType,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      'storeOwnerProfile': storeOwnerProfile,
       'status': status.value,
       if (paymentFor != null) 'paymentFor': paymentFor!.value,
       if (paymentGetaway != null) 'paymentGetaway': paymentGetaway!.value,
