@@ -51,8 +51,8 @@ class ReceiptsStateManager {
     });
   }
 
-  void makePayment(
-      ReceiptsScreenState screenState, PaymentStatusRequest request) {
+  void makePayment(ReceiptsScreenState screenState,
+      PaymentStatusRequest request, Function onSuccess) {
     _subscriptionService.makePayment(request).then(
       (value) {
         if (value.hasError) {
@@ -60,7 +60,9 @@ class ReceiptsStateManager {
               title: S.current.warnning, message: value.error ?? '');
         } else {
           CustomFlushBarHelper.createSuccess(
-              title: S.current.warnning, message: S.current.paymentSuccessfully);
+              title: S.current.warnning,
+              message: S.current.paymentSuccessfully);
+          onSuccess();
         }
       },
     );

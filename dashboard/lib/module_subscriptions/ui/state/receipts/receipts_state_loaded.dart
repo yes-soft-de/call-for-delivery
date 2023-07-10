@@ -83,6 +83,8 @@ class ReceiptsStateLoaded extends States {
                                           Navigator.pop(context);
                                           screenState.makePayment(
                                             p.PaymentStatusRequest(
+                                              storeOwnerProfile: screenState
+                                                  .storeProfileModel.id,
                                               status:
                                                   p.PaymentStatus.paidSuccess,
                                               amount: model.subscriptionCost,
@@ -93,6 +95,9 @@ class ReceiptsStateLoaded extends States {
                                               paymentType: p.PaymentType
                                                   .realPaymentByAdmin,
                                             ),
+                                            () {
+                                              screenState.getReceipts(request);
+                                            },
                                           );
                                         },
                                       ),
