@@ -10626,6 +10626,106 @@ class S {
     );
   }
 
+  /// `receipts`
+  String get receipts {
+    return Intl.message(
+      'receipts',
+      name: 'receipts',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `to be paid`
+  String get toBePaid {
+    return Intl.message(
+      'to be paid',
+      name: 'toBePaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{value} Riyal`
+  String valueRiyal(String value) {
+    return Intl.message(
+      '$value Riyal',
+      name: 'valueRiyal',
+      desc: '',
+      args: [value],
+    );
+  }
+
+  /// `payment {value} Riyal`
+  String paymentValueRiyal(String value) {
+    return Intl.message(
+      'payment $value Riyal',
+      name: 'paymentValueRiyal',
+      desc: '',
+      args: [value],
+    );
+  }
+
+  /// `register payment`
+  String get registerPayment {
+    return Intl.message(
+      'register payment',
+      name: 'registerPayment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `payment records`
+  String get paymentsRecords {
+    return Intl.message(
+      'payment records',
+      name: 'paymentsRecords',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `skipped`
+  String get skipped {
+    return Intl.message(
+      'skipped',
+      name: 'skipped',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `there is no payment to made`
+  String get thereIsNoPaymentToMade {
+    return Intl.message(
+      'there is no payment to made',
+      name: 'thereIsNoPaymentToMade',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `are you sure about make payment`
+  String get areYouSureAboutMakePayment {
+    return Intl.message(
+      'are you sure about make payment',
+      name: 'areYouSureAboutMakePayment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `you cant edit or delete after confirm`
+  String get youCantEditOrDeleteAfterConfirm {
+    return Intl.message(
+      'you cant edit or delete after confirm',
+      name: 'youCantEditOrDeleteAfterConfirm',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

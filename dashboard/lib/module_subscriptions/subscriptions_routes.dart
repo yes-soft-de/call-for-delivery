@@ -10,4 +10,5 @@ class SubscriptionsRoutes {
   static const CREATE_NEW_SUBSCRIPTION_TO_CAPTAIN_OFFER_SCREEN =
       '/create_new_subscription_to_captain_offer_screen';
   static const EDIT_SUBSCRIPTION_SCREEN = '/edit_subscription_screen';
+  static const RECEIPTS_SCREEN = '/receipts_screen';
 }

@@ -1,15 +1,19 @@
 import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/module_subscriptions/request/delete_captain_offer_request.dart';
 import 'package:c4d/module_subscriptions/request/delete_subscription_request.dart';
+import 'package:c4d/module_subscriptions/request/payment/paymnet_status_request.dart';
+import 'package:c4d/module_subscriptions/request/receiptsRequest.dart';
 import 'package:c4d/module_subscriptions/request/store_captain_offer_request.dart';
 import 'package:c4d/module_subscriptions/request/store_edit_subscribe_to_package.dart';
 import 'package:c4d/module_subscriptions/request/store_subscribe_to_package.dart';
 import 'package:c4d/module_subscriptions/request/update_remaining_cars_request.dart';
+import 'package:c4d/module_subscriptions/response/receipts_response/receipts_response.dart';
 import 'package:c4d/module_subscriptions/response/subscriptions_financial_response/subscriptions_financial_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 @injectable
 class SubscriptionsRepository {
@@ -128,6 +132,32 @@ class SubscriptionsRepository {
       Urls.UPDATE_REMAINING_CAPTAIN,
       request.toJson(),
       headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ReceiptsResponse?> getReceipts(ReceiptsRequest request) async {
+    var token = await _authService.getToken();
+
+    var timezone = await FlutterNativeTimezone.getLocalTimezone();
+    request = request.copyWith(customizedTimezone: timezone);
+
+    var response = await _apiClient.post(
+      Urls.RECEIPTS,
+      request.toMap(),
+      headers: {'Authorization': 'Bearer ' + '$token'},
+    );
+    if (response == null) return null;
+    return ReceiptsResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> setPayment(PaymentStatusRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+      '${Urls.PAYMENTS_BY_STORE}',
+      request.toMap(),
+      headers: {'Authorization': 'Bearer ${token}'},
     );
     if (response == null) return null;
     return ActionResponse.fromJson(response);

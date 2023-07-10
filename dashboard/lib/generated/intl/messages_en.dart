@@ -20,6 +20,10 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(value) => "payment ${value} Riyal";
+
+  static String m1(value) => "${value} Riyal";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "BalanceHint": MessageLookupByLibrary.simpleMessage(
@@ -158,6 +162,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Are you sure about deleting this notification"),
         "areYouSureAboutEdit":
             MessageLookupByLibrary.simpleMessage("are you sure about edit"),
+        "areYouSureAboutMakePayment": MessageLookupByLibrary.simpleMessage(
+            "are you sure about make payment"),
         "areYouSureAboutRependingOrder": MessageLookupByLibrary.simpleMessage(
             "Are you sure about reset this order and remove it form captain"),
         "areYouSureAboutSkipPaymentStageFor":
@@ -1140,6 +1146,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Payment created successfully"),
         "paymentToCaptain":
             MessageLookupByLibrary.simpleMessage("Payment To Captain"),
+        "paymentValueRiyal": m0,
         "payments": MessageLookupByLibrary.simpleMessage("Payments"),
         "paymentsDeletedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Payment deleted successfully"),
@@ -1147,6 +1154,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Payments for store"),
         "paymentsFromCaptain":
             MessageLookupByLibrary.simpleMessage("Payments From Captain"),
+        "paymentsRecords":
+            MessageLookupByLibrary.simpleMessage("payment records"),
         "paymentsToCaptain":
             MessageLookupByLibrary.simpleMessage("Payments To Captain"),
         "paymentsToStore":
@@ -1266,6 +1275,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Reason is Required"),
         "reasonOfTheReport":
             MessageLookupByLibrary.simpleMessage("Reason of the report"),
+        "receipts": MessageLookupByLibrary.simpleMessage("receipts"),
         "receivedCash": MessageLookupByLibrary.simpleMessage("Cash Received"),
         "recipientName": MessageLookupByLibrary.simpleMessage("Recipient Name"),
         "recipientPhoneNumber":
@@ -1281,6 +1291,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "register": MessageLookupByLibrary.simpleMessage("Register"),
         "registerHint":
             MessageLookupByLibrary.simpleMessage("username or phone number"),
+        "registerPayment":
+            MessageLookupByLibrary.simpleMessage("register payment"),
         "registerSuccess": MessageLookupByLibrary.simpleMessage(
             "Your account has been registered successfully"),
         "registerSuccessSetupMyProfile": MessageLookupByLibrary.simpleMessage(
@@ -1374,6 +1386,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "skipPaymentStageForWelcomePackage":
             MessageLookupByLibrary.simpleMessage(
                 "skip Payment stage for welcome package"),
+        "skipped": MessageLookupByLibrary.simpleMessage("skipped"),
         "smallLessThan20Employee":
             MessageLookupByLibrary.simpleMessage("1 - 20 Employee"),
         "socialMedia": MessageLookupByLibrary.simpleMessage("Social Media"),
@@ -1515,6 +1528,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "This order cannot be assigned to this captain because the request is hidden"),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
             "There is no branches available"),
+        "thereIsNoPaymentToMade":
+            MessageLookupByLibrary.simpleMessage("there is no payment to made"),
         "thereIsNoSettingFotThisStore": MessageLookupByLibrary.simpleMessage(
             "there is no setting for this store"),
         "thereIsNoValidSubscription": MessageLookupByLibrary.simpleMessage(
@@ -1531,6 +1546,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "time": MessageLookupByLibrary.simpleMessage("time"),
         "title": MessageLookupByLibrary.simpleMessage("title"),
         "to": MessageLookupByLibrary.simpleMessage("To"),
+        "toBePaid": MessageLookupByLibrary.simpleMessage("to be paid"),
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
             MessageLookupByLibrary.simpleMessage(
                 "To find out more, please leave your phone.\nand we will contact you personally"),
@@ -1646,6 +1662,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Uploading Image, Please Wait"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "validation": MessageLookupByLibrary.simpleMessage("Validation"),
+        "valueRiyal": m1,
         "views": MessageLookupByLibrary.simpleMessage("views"),
         "waiting": MessageLookupByLibrary.simpleMessage("waiting"),
         "waitingDescription": MessageLookupByLibrary.simpleMessage(
@@ -1690,6 +1707,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "youCannotMakePaymentThereIsNoOrderCash":
             MessageLookupByLibrary.simpleMessage(
                 "There is no order cash deserved "),
+        "youCantEditOrDeleteAfterConfirm": MessageLookupByLibrary.simpleMessage(
+            "you cant edit or delete after confirm"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "You have products from other store , Do you want to clear your cart and add the new ones"),
         "youNeedToPayExclusively":
