@@ -582,15 +582,6 @@ class AdminOrderManager
         return $this->orderEntityRepository->filterDifferentDestinationOrdersByAdmin($request);
     }
 
-    ///todo to be removed after OrderDistanceConflict works correctly
-//    /**
-//     * Update differentReceiverDestination field of store order details
-//     */
-//    public function updateStoreOrderDetailsDifferentReceiverDestinationByOrderId(int $orderId, int $differentReceiverDestination): int|StoreOrderDetailsEntity
-//    {
-//        return $this->adminStoreOrderDetailsManager->updateStoreOrderDetailsDifferentReceiverDestinationByOrderId($orderId, $differentReceiverDestination);
-//    }
-
     /**
      * Gets last five delivered orders with captains' images
      */

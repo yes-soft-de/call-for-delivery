@@ -26,6 +26,7 @@ use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\CaptainEntity;
 use App\Entity\ExternallyDeliveredOrderEntity;
+use App\Entity\OrderDestinationEntity;
 use App\Entity\OrderEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Entity\StoreOwnerProfileEntity;
@@ -215,7 +216,7 @@ class OrderService
             }
 
             // check if receiver location is a valid one
-            $this->checkIfReceiverLocationIsValid($order->getId(), $request->getDestination(), $order->getStoreBranchToClientDistance());
+            $this->checkIfReceiverLocationIsValid($order, $request->getDestination(), $order->getStoreBranchToClientDistance());
         }
 
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
@@ -1300,6 +1301,9 @@ class OrderService
                     ['externalCompanyName' => $externalOrder->getExternalDeliveryCompany()->getCompanyName()]);
             }
 
+            // check if receiver location is a valid one
+            $this->checkIfReceiverLocationIsValid($order, $request->getDestination(), $order->getStoreBranchToClientDistance());
+
             try {
                 // create firebase notification to store
                 $this->notificationFirebaseService->notificationSubOrderForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), NotificationFirebaseConstant::CREATE_SUB_ORDER_SUCCESS);
@@ -1762,13 +1766,22 @@ class OrderService
         return $response;
     }
 
-    public function checkIfReceiverLocationIsValid(int $orderId, array $destination, ?float $storeBranchToClientDistance): void
+    public function checkIfReceiverLocationIsValid(OrderEntity $order, array $destination, ?float $storeBranchToClientDistance): void
     {
         if (count($destination) > 0) {
             if (((! $destination['lat']) || (! $destination['lon'])) && (! $storeBranchToClientDistance)) {
+                // save the order destination
+                $orderDestinationEntity = new OrderDestinationEntity();
+
+                $orderDestinationEntity->setOrderId($order);
+                $orderDestinationEntity->setLocation($destination);
+
+                $this->entityManager->persist($orderDestinationEntity);
+                $this->entityManager->flush();
+
                 // there is no lat or lon, so the location is not a valid one, send a firebase notification to admin
                 try {
-                    $this->notificationFirebaseService->notificationToAdmin($orderId,
+                    $this->notificationFirebaseService->notificationToAdmin($order->getId(),
                         NotificationFirebaseConstant::NOT_VALID_RECEIVER_LOCATION_OF_ORDER_CONST);
 
                 } catch (\Exception $e) {

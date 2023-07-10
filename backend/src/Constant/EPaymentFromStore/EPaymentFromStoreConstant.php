@@ -14,6 +14,8 @@ final class EPaymentFromStoreConstant
     // used when testing or payment pass by admin
     const PAYMENT_GETAWAY_NOT_SPECIFIED_CONST = 235;
 
+    const PAYMENT_GETAWAY_MANUAL_CONST = 236;
+
     // payment for what
     // the payment is for opening package
     const PAYMENT_FOR_SUBSCRIPTION_CONST = 228;

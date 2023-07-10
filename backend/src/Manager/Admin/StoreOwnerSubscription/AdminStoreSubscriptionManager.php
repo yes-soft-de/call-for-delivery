@@ -8,25 +8,17 @@ use App\Repository\SubscriptionEntityRepository;
 use App\Repository\SubscriptionHistoryEntityRepository;
 use App\Request\Subscription\SubscriptionStatusUpdateByAdminRequest;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Manager\Admin\StoreOwnerSubscription\AdminSubscriptionDetailsManager;
-use App\Manager\Admin\StoreOwnerSubscription\AdminSubscriptionHistoryManager;
 use App\Entity\SubscriptionEntity;
 
 class AdminStoreSubscriptionManager
 {
-    private EntityManagerInterface $entityManager;
-    private SubscriptionEntityRepository $subscribeRepository;
-    private SubscriptionHistoryEntityRepository $subscriptionHistoryEntityRepository;
-    private AdminSubscriptionDetailsManager $adminSubscriptionDetailsManager;
-    private AdminSubscriptionHistoryManager $adminSubscriptionHistoryManager;
-
-    public function __construct(EntityManagerInterface $entityManager, SubscriptionEntityRepository $subscribeRepository, SubscriptionHistoryEntityRepository $subscriptionHistoryEntityRepository, AdminSubscriptionDetailsManager $adminSubscriptionDetailsManager, AdminSubscriptionHistoryManager $adminSubscriptionHistoryManager)
+    public function __construct(
+        private EntityManagerInterface $entityManager,
+        private SubscriptionEntityRepository $subscribeRepository,
+        private SubscriptionHistoryEntityRepository $subscriptionHistoryEntityRepository,
+        private AdminSubscriptionDetailsManager $adminSubscriptionDetailsManager
+    )
     {
-        $this->entityManager = $entityManager;
-        $this->subscribeRepository = $subscribeRepository;
-        $this->subscriptionHistoryEntityRepository = $subscriptionHistoryEntityRepository;
-        $this->adminSubscriptionDetailsManager = $adminSubscriptionDetailsManager;
-        $this->adminSubscriptionHistoryManager = $adminSubscriptionHistoryManager;
     }
 
     public function getSubscriptionsSpecificStoreForAdmin(int $storeId): ?array
@@ -118,6 +110,17 @@ class AdminStoreSubscriptionManager
     public function getDeliveredOrdersDeliveryCostFromSubscriptionStartDateTillNow(int $storeOwnerProfileId, int $subscriptionId)
     {
         return $this->subscribeRepository->getDeliveredOrdersDeliveryCostFromSubscriptionStartDateTillNowForAdmin($storeOwnerProfileId,
+            $subscriptionId);
+    }
+
+    public function getLastStoreSubscriptionByStoreOwnerProfileIdForAdmin(int $storeOwnerProfileId): array
+    {
+        return $this->subscribeRepository->findBy(['storeOwner' => $storeOwnerProfileId], ['id' => 'DESC'], 1);
+    }
+
+    public function getDeliveredOrdersDeliveryCostAccordingToSubscriptionStartAndEndDatesForAdmin(int $storeOwnerProfileId, int $subscriptionId)
+    {
+        return $this->subscribeRepository->getDeliveredOrdersDeliveryCostAccordingToSubscriptionStartAndEndDatesForAdmin($storeOwnerProfileId,
             $subscriptionId);
     }
 }
