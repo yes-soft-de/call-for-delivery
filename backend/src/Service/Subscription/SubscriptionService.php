@@ -421,7 +421,7 @@ class SubscriptionService
                             && ($storeSubscriptionCostLimit !== StoreOwnerPreferenceConstant::STORE_OWNER_PREFERENCE_NOT_EXIST_CONST)) {
                             $subscriptionCostLimit = $storeSubscriptionCostLimit;
                         }
-                    }//dd($ordersCostSum, $subscriptionCostLimit);
+                    }
 
                     if ($ordersCostSum >= $subscriptionCostLimit) {
                         // de-activate the subscription till the store make the required payment

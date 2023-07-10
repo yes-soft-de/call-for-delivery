@@ -143,5 +143,10 @@ final class NotificationConstant
     const HIDE_ORDER_DUE_TO_UNAVAILABLE_CARS_TITLE_CONST = "إخفاء الطلب لعدم توفر سيارات";
 
     const HIDE_ORDER_DUE_TO_UNAVAILABLE_CARS_TEXT_CONST = "تم إخفاء الطلب الطلب بسبب استنفاذ سيارات اشتراك المتجر";
+
+    // e-payment
+    const PAYMENT_FOR_STORE_SUBSCRIPTION_BY_ADMIN_TITLE_CONST = "دفعة من الادارة نيابة عن المتجر";
+
+    const PAYMENT_FOR_STORE_SUBSCRIPTION_BY_ADMIN_TEXT_CONST = "قامت الادارة بالدفع نيابة عن متجرك مقابل الاشتراك";
 }
 

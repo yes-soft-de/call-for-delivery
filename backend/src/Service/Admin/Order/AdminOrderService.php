@@ -1906,17 +1906,6 @@ class AdminOrderService
                 // 2 Update related OrderDistanceConflict
                 $this->handleUpdateOrderDistanceConflictByAdminAfterDistanceAddition($request, $order, $userId);
 
-                // **** todo Following block to be removed after OrderDistanceConflict part works correctly **** ////
-                // Update differentReceiverDestination field of store order record in order to not show the order in
-                // the list of conflicted orders
-                // $differentReceiverDestinationUpdateResult = $this->updateStoreOrderDetailsDifferentReceiverDestinationByOrderId($order->getId(),
-                //     OrderDestinationConstant::ORDER_DESTINATION_IS_DIFFERENT_AND_UPDATED_BY_ADMIN_CONST);
-
-                // if ($differentReceiverDestinationUpdateResult === StoreOrderDetailsConstant::STORE_ORDER_DETAILS_NOT_FOUND) {
-                //     return StoreOrderDetailsConstant::STORE_ORDER_DETAILS_NOT_FOUND;
-                // }
-                // ******** ////
-
                 // 3 Update delivery cost
                 $orderDeliveryCostUpdateResult = $this->calculateAndUpdateOrderDeliveryCostByOrderIdAndStoreOwnerProfileIdAndDistance($order,
                     $userId, OrderLogActionTypeConstant::ORDER_DELIVERY_COST_UPDATED_BY_NEW_DISTANCE_BY_ADMIN_CONST);
@@ -2181,15 +2170,6 @@ class AdminOrderService
         $this->dashboardLocalNotificationService->createOrderLogMessage($title, $message,
             DashboardLocalNotificationAppTypeConstant::DASHBOARD_APP_TYPE_CONST, $adminUserId, $orderId);
     }
-
-    ///todo to be removed after OrderDistanceConflict works correctly
-    /**
-     * Update differentReceiverDestination field of store order details
-     */
-//    public function updateStoreOrderDetailsDifferentReceiverDestinationByOrderId(int $orderId, int $differentReceiverDestination): int|StoreOrderDetailsEntity
-//    {
-//        return $this->adminOrderManager->updateStoreOrderDetailsDifferentReceiverDestinationByOrderId($orderId, $differentReceiverDestination);
-//    }
 
     /**
      * Creates or Updates Daily Financial amount for captain
