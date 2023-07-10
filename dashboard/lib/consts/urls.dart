@@ -79,6 +79,15 @@ class Urls {
 
   static const String BASE_API_STORE_PAYMENTS =
       DOMAIN + VERSION_ADMIN + '/storeownerpayment';
+
+  static const String BASE_API_STORE_EPAYMENTS =
+      DOMAIN + VERSION_ADMIN + '/epaymentfromstore';
+
+  static const String RECEIPTS =
+      BASE_API_STORE_EPAYMENTS + '/filterepaymentfromstorebyadmin';
+
+  static const PAYMENTS_BY_STORE = DOMAIN + '/v1/epayment/epaymentbystore';
+
   static const String BASE_API_STORE_PAYMENTS_TO_STORE =
       DOMAIN + VERSION_ADMIN + '/storeownerpaymentfromcompany';
   static const String BASE_API_CAPTAIN_FINANCE_BY_ORDER =
@@ -150,7 +159,8 @@ class Urls {
   static const UPDATE_STORE_INFO =
       BASE_API_STORE + '/storeowner/updatestoreownerprofilebyadmin';
   static const UPDATE_STORE_WELCOME_PACKAGE_WITHOUT_PAYMENT_INFO =
-      BASE_API_STORE + '/storeowner/storeownerprofileopeningsubscriptionwithoutpayment';
+      BASE_API_STORE +
+          '/storeowner/storeownerprofileopeningsubscriptionwithoutpayment';
   static const UPDATE_ORDER_API = BASE_API_ORDER + '/orderupdatebyadmin';
   static const UPDATE_DISTANCE_API = BASE_API_ORDER +
       '/updatestorebranchtoclientdistanceanddestinationbyadmin';

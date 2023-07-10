@@ -1057,5 +1057,31 @@
     "sendOrderToExternalCompanyByAdmin": "send order to external company by admin",
     "NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST": "update order status in response to check it status from us",
     "updateOrderStatusByMarsool": "update order status by marsool",
+    "receipts": "receipts",
+    "toBePaid": "to be paid",
+    "valueRiyal": "{value} Riyal",
+    "@valueRiyal": {
+        "description": "",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "paymentValueRiyal": "payment {value} Riyal",
+    "@paymentValueRiyal": {
+        "description": "",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "registerPayment" : "register payment",
+    "paymentsRecords" : "payment records",
+    "skipped" : "skipped",
+    "thereIsNoPaymentToMade" : "there is no payment to made",
+    "areYouSureAboutMakePayment" : "are you sure about make payment",
+    "youCantEditOrDeleteAfterConfirm" : "you cant edit or delete after confirm",
     "dev": "Dev"
 }

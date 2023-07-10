@@ -73,6 +73,17 @@ class SubscriptionManagementStateLoaded extends States {
             title: S.current.createSubscription,
           ),
           ControlWidget(
+            title: S.current.receipts,
+            icon: Icons.attach_money,
+            onPressed: () {
+              Navigator.pushNamed(
+                context,
+                SubscriptionsRoutes.RECEIPTS_SCREEN,
+                arguments: screenState.profileId,
+              );
+            },
+          ),
+          ControlWidget(
             icon: Icons.delete_sweep_rounded,
             color: Theme.of(context).colorScheme.error,
             onPressed: () {

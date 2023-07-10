@@ -1,6 +1,7 @@
 import 'package:c4d/module_subscriptions/subscriptions_routes.dart';
 import 'package:c4d/module_subscriptions/ui/screen/edit_subscription_screen.dart';
 import 'package:c4d/module_subscriptions/ui/screen/init_subscription_screen.dart';
+import 'package:c4d/module_subscriptions/ui/screen/receipts_screen.dart';
 import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_details_screen.dart';
 import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_expired_screen.dart';
 import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_screen.dart';
@@ -22,6 +23,8 @@ class SubscriptionsModule extends YesModule {
   final CreateSubscriptionToCaptainOfferScreen
       createSubscriptionToCaptainOfferScreen;
   final EditSubscriptionScreen editSubscriptionScreen;
+  final ReceiptsScreen receiptsScreen;
+
   SubscriptionsModule(
     this.storeSubscriptionsFinanceDetailsScreen,
     this.storeSubscriptionsFinanceScreen,
@@ -30,6 +33,7 @@ class SubscriptionsModule extends YesModule {
     this.initSubscriptionScreen,
     this.createSubscriptionToCaptainOfferScreen,
     this.editSubscriptionScreen,
+    this.receiptsScreen,
   ) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
@@ -49,6 +53,8 @@ class SubscriptionsModule extends YesModule {
           editSubscriptionScreen,
       SubscriptionsRoutes.CREATE_NEW_SUBSCRIPTION_TO_CAPTAIN_OFFER_SCREEN:
           (context) => createSubscriptionToCaptainOfferScreen,
+      SubscriptionsRoutes.RECEIPTS_SCREEN: (context) =>
+          receiptsScreen,
     };
   }
 }
