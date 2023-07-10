@@ -156,7 +156,7 @@ class StoreSubscriptionsFinanceModel extends DataModel {
             advancePayment: element.total?.advancePayment,
             packageCost: element.total?.packageCost ?? 0,
             sumPayments: element.total?.sumPayments ?? 0,
-            total: element.total?.total ?? 0,
+            total: element.total?.total ?? element.subscriptionCost ?? 0,
             captainOffer: element.total?.captainOfferPrice ?? 0,
             requiredToPay: element.total?.requiredToPay ?? 0,
             extraCost: element.total?.extraCost ?? 0,
