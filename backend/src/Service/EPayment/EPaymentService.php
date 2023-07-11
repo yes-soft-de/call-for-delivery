@@ -105,17 +105,22 @@ class EPaymentService
 
                 // create the payment if the store needs to pay in order to subscribe:
                 // the store has to pay when: package is 19, or package is 18 and admin didn't approve the payment bypass
-                if (($subscription->getPackage()->getId() === 19)
-                    || (($subscription->getPackage()->getId() === 18) && ($storeOwnerProfile->getOpeningSubscriptionWithoutPayment() === false))) {
-                    // if the payment is mock, the reset all fields to Zero
-                    if (($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_ADMIN_CONST)
-                        || ($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_STORE_CONST)
-                        || ($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_SUPER_ADMIN_CONST)) {
-                        $request->setPaymentId("");
-                        $request->setAmount(0.0);
-                        $request->setPaymentGetaway(EPaymentFromStoreConstant::PAYMENT_GETAWAY_NOT_SPECIFIED_CONST);
-                        $request->setPaymentFor(0);
-                    }
+                // And when the payment is not a bypass payment, or mock one
+                if ((($subscription->getPackage()->getId() === 19)
+                    || (($subscription->getPackage()->getId() === 18) && ($storeOwnerProfile->getOpeningSubscriptionWithoutPayment() === false)))
+                    && ($request->getPaymentGetaway() !== EPaymentFromStoreConstant::PAYMENT_GETAWAY_NOT_SPECIFIED_CONST)
+                    && ($request->getPaymentType() !== EPaymentFromStoreConstant::MOCK_PAYMENT_BY_ADMIN_CONST)
+                    && ($request->getPaymentType() !== EPaymentFromStoreConstant::MOCK_PAYMENT_BY_STORE_CONST)
+                    && ($request->getPaymentType() !== EPaymentFromStoreConstant::MOCK_PAYMENT_BY_SUPER_ADMIN_CONST)) {
+//                    // if the payment is mock, the reset all fields to Zero
+//                    if (($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_ADMIN_CONST)
+//                        || ($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_STORE_CONST)
+//                        || ($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_SUPER_ADMIN_CONST)) {
+//                        $request->setPaymentId("");
+//                        $request->setAmount(0.0);
+//                        $request->setPaymentGetaway(EPaymentFromStoreConstant::PAYMENT_GETAWAY_NOT_SPECIFIED_CONST);
+//                        $request->setPaymentFor(0);
+//                    }
 
                     // if the payment is done manually by admin, or if it is for testing issues, then set payment id
                     // to empty string
@@ -139,6 +144,18 @@ class EPaymentService
                                 NotificationFirebaseConstant::PAYMENT_FOR_STORE_SUBSCRIPTION_BY_ADMIN_CONST);
                         }
                     }
+                }
+
+                // send firebase notification to store if the admin create the subscription
+                if ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_ADMIN_CONST) {
+                    // local notification to store
+                    $this->createLocalNotificationForStore($storeOwnerProfile->getStoreOwnerId(),
+                        NotificationConstant::STORE_SUBSCRIPTION_CREATE_BY_ADMIN_TITLE_CONST,
+                        NotificationConstant::STORE_SUBSCRIPTION_CREATE_BY_ADMIN_TEXT_CONST);
+
+                    // firebase notification to store
+                    $this->createFirebaseNotificationForUser($storeOwnerProfile->getStoreOwnerId(),
+                        NotificationFirebaseConstant::PAYMENT_FOR_STORE_SUBSCRIPTION_BY_ADMIN_CONST);
                 }
 
                 return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
