@@ -32,17 +32,14 @@ use App\Constant\Subscription\SubscriptionConstant;
  */
 class AdminStoreSubscriptionController extends BaseController
 {
-    private AdminStoreSubscriptionService $adminStoreSubscriptionService;
-    private ValidatorInterface $validator;
-    private AutoMapping $autoMapping;
-   
-    public function __construct( SerializerInterface $serializer, AdminStoreSubscriptionService $adminStoreSubscriptionService, ValidatorInterface $validator, AutoMapping $autoMapping)
+    public function __construct(
+        SerializerInterface $serializer,
+        private AdminStoreSubscriptionService $adminStoreSubscriptionService,
+        private ValidatorInterface $validator,
+        private AutoMapping $autoMapping
+    )
     {
         parent::__construct($serializer);
-       
-        $this->adminStoreSubscriptionService = $adminStoreSubscriptionService;
-        $this->validator = $validator;
-        $this->autoMapping = $autoMapping;
     }
 
     /**
@@ -185,6 +182,7 @@ class AdminStoreSubscriptionController extends BaseController
         $request = $this->autoMapping->map(stdClass::class, AdminCreateStoreSubscriptionRequest::class, (object)$data);
 
         $violations = $this->validator->validate($request);
+
         if (\count($violations) > 0) {
             $violationsString = (string) $violations;
 
@@ -193,12 +191,11 @@ class AdminStoreSubscriptionController extends BaseController
 
         $result = $this->adminStoreSubscriptionService->createSubscription($request);
 
-        if($result === StoreProfileConstant::STORE_NOT_FOUND){
+        if ($result === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::STORE_OWNER_PROFILE_NOT_EXIST);
         }
 
-        if(isset($result->packageState)){
-
+        if (isset($result->packageState)){
             return $this->response(MainErrorConstant::ERROR_MSG, self::PACKAGE_NOT_EXIST);
         }
 
