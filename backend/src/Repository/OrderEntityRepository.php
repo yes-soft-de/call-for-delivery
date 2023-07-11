@@ -2897,28 +2897,28 @@ class OrderEntityRepository extends ServiceEntityRepository
 
         if (count($tempOrders) > 0) {
             if (($fromDate != null || $fromDate != "") && ($toDate === null || $toDate === "")) {
-                foreach ($tempOrders as $key => $value) {
+                foreach ($tempOrders as $value) {
                     if ($value[0]->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) >=
                         new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) {
-                        $filteredOrders[$key] = $value;
+                        $filteredOrders[] = $value;
                     }
                 }
 
             } elseif (($fromDate === null || $fromDate === "") && ($toDate != null || $toDate != "")) {
-                foreach ($tempOrders as $key => $value) {
+                foreach ($tempOrders as $value) {
                     if ($value[0]->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) <=
                         new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59'))) {
-                        $filteredOrders[$key] = $value;
+                        $filteredOrders[] = $value;
                     }
                 }
 
             } elseif (($fromDate != null || $fromDate != "") && ($toDate != null || $toDate != "")) {
-                foreach ($tempOrders as $key => $value) {
+                foreach ($tempOrders as $value) {
                     if (($value[0]->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) >=
                             new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) &&
                         ($value[0]->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) <=
                             new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59')))) {
-                        $filteredOrders[$key] = $value;
+                        $filteredOrders[] = $value;
                     }
                 }
             }
