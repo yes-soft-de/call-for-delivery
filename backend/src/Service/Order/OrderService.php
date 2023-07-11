@@ -1774,7 +1774,7 @@ class OrderService
                 $orderDestinationEntity = new OrderDestinationEntity();
 
                 $orderDestinationEntity->setOrderId($order);
-                $orderDestinationEntity->setLocation($destination);
+                $orderDestinationEntity->setLocationLink($destination['link']);
 
                 $this->entityManager->persist($orderDestinationEntity);
                 $this->entityManager->flush();
