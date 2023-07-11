@@ -4,8 +4,13 @@ namespace App\Service\Admin\StoreOwnerSubscription;
 
 use App\AutoMapping;
 use App\Constant\Admin\Subscription\AdminStoreSubscriptionConstant;
+use App\Constant\Notification\NotificationConstant;
+use App\Constant\Notification\NotificationFirebaseConstant;
+use App\Constant\Notification\NotificationTokenConstant;
 use App\Constant\Order\OrderResultConstant;
+use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\Subscription\SubscriptionDetailsConstant;
+use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionDetailsEntity;
 use App\Entity\SubscriptionEntity;
 use App\Manager\Admin\StoreOwnerSubscription\AdminStoreSubscriptionManager;
@@ -16,9 +21,12 @@ use App\Response\Admin\StoreOwnerSubscription\AdminStoreSubscriptionResponse;
 use App\Response\Admin\StoreOwnerSubscription\StoreFutureSubscriptionGetForAdminResponse;
 use App\Response\Admin\StoreOwnerSubscription\SubscriptionRemainingCarsUpdateByAdminResponse;
 use App\Response\Subscription\RemainingOrdersResponse;
+use App\Service\Admin\StoreOwner\AdminStoreOwnerProfileGetService;
 use App\Service\Admin\StoreOwnerPayment\AdminStoreOwnerPaymentService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Service\Eraser\Subscription\StoreSubscriptionEraserService;
+use App\Service\Notification\NotificationFirebaseService;
+use App\Service\Notification\NotificationLocalService;
 use App\Service\Subscription\StoreSubscriptionCheckService;
 use App\Service\Subscription\StoreSubscription\StoreSubscriptionHandleService;
 use App\Service\Subscription\SubscriptionService;
@@ -47,7 +55,10 @@ class AdminStoreSubscriptionService
         private StoreSubscriptionEraserService $storeSubscriptionEraserService,
         private AdminStoreSubscriptionDetailsService $adminStoreSubscriptionDetailsService,
         private StoreSubscriptionCheckService $storeSubscriptionCheckService,
-        private StoreSubscriptionHandleService $storeSubscriptionHandleService
+        private StoreSubscriptionHandleService $storeSubscriptionHandleService,
+        private NotificationLocalService $notificationLocalService,
+        private NotificationFirebaseService $notificationFirebaseService,
+        private AdminStoreOwnerProfileGetService $adminStoreOwnerProfileGetService
     )
     {
     }
@@ -188,11 +199,34 @@ class AdminStoreSubscriptionService
 
     public function createSubscription(AdminCreateStoreSubscriptionRequest $requestByAdmin): SubscriptionResponse|SubscriptionErrorResponse|string|int
     {
-      $request = new SubscriptionCreateRequest(); 
-      $request->setPackage($requestByAdmin->getPackageId());
-      $request->setNote($requestByAdmin->getNote());
+        // first, check if store owner profile is exist
+        $storeOwnerProfile = $this->getStoreOwnerProfileEntityByIdForAdmin($requestByAdmin->getStoreProfileId());
 
-      return $this->subscriptionService->createSubscriptionByAdmin($request, $requestByAdmin->getStoreProfileId()); 
+        if ($storeOwnerProfile === StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS) {
+            return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
+        }
+
+        // now we can create the subscription
+        $request = new SubscriptionCreateRequest();
+        $request->setPackage($requestByAdmin->getPackageId());
+        $request->setNote($requestByAdmin->getNote());
+        $request->setStoreOwner($storeOwnerProfile->getStoreOwnerId());
+
+        $subscription = $this->subscriptionService->createSubscriptionByAdmin($request);
+
+        // send notifications to store if subscription created successfully
+        if ($subscription instanceof SubscriptionResponse) {
+            // local notification to store
+            $this->createLocalNotificationForStore($storeOwnerProfile->getStoreOwnerId(),
+                NotificationConstant::STORE_SUBSCRIPTION_CREATE_BY_ADMIN_TITLE_CONST,
+                NotificationConstant::STORE_SUBSCRIPTION_CREATE_BY_ADMIN_TEXT_CONST);
+
+            // firebase notification to store
+            $this->createFirebaseNotificationForUser($storeOwnerProfile->getStoreOwnerId(),
+                NotificationFirebaseConstant::PAYMENT_FOR_STORE_SUBSCRIPTION_BY_ADMIN_CONST);
+        }
+
+        return $subscription;
     }
 
     public function extraSubscriptionForDayByAdmin(AdminExtraSubscriptionForDayRequest $request): SubscriptionExtendResponse|SubscriptionResponse|SubscriptionErrorResponse|int
@@ -554,5 +588,21 @@ class AdminStoreSubscriptionService
     {
         return $this->adminStoreSubscriptionManager->getDeliveredOrdersDeliveryCostFromSubscriptionStartDateTillNow($storeOwnerProfileId,
             $subscriptionId);
+    }
+
+    public function createLocalNotificationForStore(int $storeOwnerUserId, string $title, string $text, int $orderId = null)
+    {
+        $this->notificationLocalService->createNotificationLocal($storeOwnerUserId, $title, $text,
+            NotificationTokenConstant::APP_TYPE_STORE, $orderId);
+    }
+
+    public function createFirebaseNotificationForUser(int $userId, string $text)
+    {
+        return $this->notificationFirebaseService->notificationToUserWithoutOrderByUserId($userId, $text);
+    }
+
+    public function getStoreOwnerProfileEntityByIdForAdmin(int $storeOwnerProfileId): string|StoreOwnerProfileEntity
+    {
+        return $this->adminStoreOwnerProfileGetService->getStoreOwnerProfileEntityByIdForAdmin($storeOwnerProfileId);
     }
 }

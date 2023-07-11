@@ -77,7 +77,12 @@ class SubscriptionService
 
         //--check and update completeAccountStatus for the store owner profile
         if ($subscription) {
-            $this->checkCompleteAccountStatusOfStoreOwnerProfile($subscription->getStoreOwner());
+            if ($subscription->getPackage()->getId() === 18) {
+                $this->updateCompleteAccountStatusOfStoreOwnerProfileAfterSubscriptionWithFreePackage($subscription->getStoreOwner());
+
+            } else {
+                $this->checkCompleteAccountStatusOfStoreOwnerProfile($subscription->getStoreOwner());
+            }
         }
 
         if ($activateExistingSubscription ===  SubscriptionConstant::NEW_SUBSCRIPTION_ACTIVATED) {
@@ -805,15 +810,8 @@ class SubscriptionService
         return $this->subscriptionManager->deleteStoreSubscriptionByStoreOwnerId($storeOwnerId);
     }
 
-    public function createSubscriptionByAdmin(SubscriptionCreateRequest $request ,int $storeOwnerProfileId): SubscriptionResponse|SubscriptionErrorResponse|string|int
-    {  
-        $store = $this->subscriptionManager->getStoreOwnerProfileByStoreOwnerProfileId($storeOwnerProfileId);
-        if (! $store) {
-            return StoreProfileConstant::STORE_NOT_FOUND;
-        }
-       
-        $request->setStoreOwner($store->getStoreOwnerId());
-
+    public function createSubscriptionByAdmin(SubscriptionCreateRequest $request): SubscriptionResponse|SubscriptionErrorResponse|string|int
+    {
         return $this->createSubscription($request);
     }
 

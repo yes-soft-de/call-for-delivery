@@ -148,5 +148,10 @@ final class NotificationConstant
     const PAYMENT_FOR_STORE_SUBSCRIPTION_BY_ADMIN_TITLE_CONST = "دفعة من الادارة نيابة عن المتجر";
 
     const PAYMENT_FOR_STORE_SUBSCRIPTION_BY_ADMIN_TEXT_CONST = "قامت الادارة بالدفع نيابة عن متجرك مقابل الاشتراك";
+
+    // store subscription
+    const STORE_SUBSCRIPTION_CREATE_BY_ADMIN_TITLE_CONST = "إنشاء اشتراك جديد من قبل الإدارة";
+
+    const STORE_SUBSCRIPTION_CREATE_BY_ADMIN_TEXT_CONST = "قامت الإدارة بإنشاء اشتراك جديد لمتجرك";
 }
 
