@@ -86,7 +86,10 @@ class StoresInActiveLoadedState extends States {
     }
     if (model!.isEmpty) return widgets;
     for (var element in model!) {
-      if (element.storeOwnerName.contains(search ?? '') == false) {
+      if (element.storeOwnerName
+              .toLowerCase()
+              .contains(search?.toLowerCase() ?? '') ==
+          false) {
         continue;
       }
       widgets.add(Padding(

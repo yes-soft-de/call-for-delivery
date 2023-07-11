@@ -66,7 +66,10 @@ class InCaptainActiveLoadedState extends States {
             itemBuilder: (context, index) {
               if (model != null) {
                 if (search != null &&
-                    !model![index].captainName.contains(search ?? '')) {
+                    !model![index]
+                        .captainName
+                        .toLowerCase()
+                        .contains(search?.toLowerCase() ?? '')) {
                   return SizedBox();
                 }
                 return CaptainCard(
