@@ -19,12 +19,12 @@ class OrderDestinationEntity
     #[ORM\JoinColumn(nullable: false)]
     private $orderId;
 
-    #[ORM\Column(type: 'array', nullable: true)]
-    private $location = [];
-
     #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'datetime')]
     private $createdAt;
+
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $locationLink;
 
     public function getId(): ?int
     {
@@ -43,18 +43,6 @@ class OrderDestinationEntity
         return $this;
     }
 
-    public function getLocation(): ?array
-    {
-        return $this->location;
-    }
-
-    public function setLocation(?array $location): self
-    {
-        $this->location = $location;
-
-        return $this;
-    }
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -63,6 +51,18 @@ class OrderDestinationEntity
     public function setCreatedAt(\DateTimeInterface $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getLocationLink(): ?string
+    {
+        return $this->locationLink;
+    }
+
+    public function setLocationLink(?string $locationLink): self
+    {
+        $this->locationLink = $locationLink;
 
         return $this;
     }
