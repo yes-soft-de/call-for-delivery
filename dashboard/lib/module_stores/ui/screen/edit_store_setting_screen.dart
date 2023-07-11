@@ -56,6 +56,10 @@ class EditStoreSettingScreenState extends State<EditStoreSettingScreen> {
         .updateWelcomePackagePayment(this, request, model.id, loading);
   }
 
+  void createSubscriptionWithWelcomePackage() {
+    widget.stateManager.createSubscriptionWithWelcomePackage(this, model.id);
+  }
+
   void createOrUpdateStoreSetting(EditStoreSettingRequest request) {
     widget.stateManager.createOrEditStoreSetting(this, request);
   }

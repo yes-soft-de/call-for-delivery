@@ -4,7 +4,6 @@ import 'package:c4d/module_external_delivery_companies/ui/widgets/show_confirm_d
 import 'package:c4d/module_stores/model/store_profile_model.dart';
 import 'package:c4d/module_stores/model/store_setting_model.dart';
 import 'package:c4d/module_stores/request/edit_store_setting_request.dart';
-import 'package:c4d/module_stores/request/welcome_package_payment_request.dart';
 import 'package:c4d/module_stores/ui/screen/edit_store_setting_screen.dart';
 import 'package:c4d/module_stores/ui/widget/add_store_widget.dart';
 import 'package:flutter/material.dart';
@@ -163,11 +162,13 @@ class EditStoreSettingStateLoaded extends States {
                                           ?.copyWith(color: Colors.black)),
                                   confirmButtonColor: Colors.amber,
                                   onConfirm: () {
-                                    screenState.updateWelcomePackagePayment(
-                                        WelcomePackagePaymentRequest(
-                                      id: profile.id,
-                                      openingSubscriptionWithoutPayment: true,
-                                    ));
+                                    // screenState.updateWelcomePackagePayment(
+                                    //     WelcomePackagePaymentRequest(
+                                    //   id: profile.id,
+                                    //   openingSubscriptionWithoutPayment: true,
+                                    // ));
+                                    screenState
+                                        .createSubscriptionWithWelcomePackage();
                                   },
                                 );
                               },

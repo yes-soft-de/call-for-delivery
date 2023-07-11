@@ -10,6 +10,7 @@ import 'package:c4d/module_stores/request/captain_not_arrived_request.dart';
 import 'package:c4d/module_stores/request/edit_store_setting_request.dart';
 import 'package:c4d/module_stores/request/filter_store_activity_request.dart';
 import 'package:c4d/module_stores/request/order_filter_request.dart';
+import 'package:c4d/module_stores/request/payment/paymnet_status_request.dart';
 import 'package:c4d/module_stores/request/store_dues_request.dart';
 import 'package:c4d/module_stores/request/stores_dues_request.dart';
 import 'package:c4d/module_stores/request/welcome_package_payment_request.dart';
@@ -286,6 +287,31 @@ class StoresService {
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
     if (response.data == null) return DataModel.empty();
+    return DataModel.empty();
+  }
+
+  Future<DataModel> createSubscriptionWithWelcomePackage(int storeId,
+      {Function? onFinish}) async {
+    var request = PaymentStatusRequest(
+      storeOwnerProfile: storeId,
+      status: PaymentStatus.paidSuccess,
+      paymentFor: PaymentFor.welcomeSubscription,
+      paymentType: PaymentType.mockPaymentByAdmin,
+      amount: null,
+      paymentGetaway: PaymentGetaway.notSpecified,
+      paymentId: null,
+    );
+
+    ActionResponse? response =
+        await _storeManager.createSubscriptionWithWelcomePackage(request);
+    if (onFinish != null) {
+      onFinish();
+    }
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '201') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
     return DataModel.empty();
   }
 }
