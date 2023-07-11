@@ -48,10 +48,7 @@ class NewSubscriptionBalanceLoadedState extends States {
                                   paymentFor: PaymentFor.unifiedSubscription,
                                   paymentGetaway: PaymentGetaway.tapPayment,
                                   paymentType: PaymentType.realPaymentByStore,
-                                ), onFinish: () {
-                              getIt<GlobalStateManager>().update();
-                              screenState.getBalance();
-                            });
+                                ));
                             CustomFlushBarHelper.createSuccess(
                               title: S.current.warnning,
                               message: S.current.paymentSuccess,

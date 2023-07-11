@@ -23,7 +23,7 @@ const List<String> _kProductIds = <String>[
 ];
 
 class InAppPurchaseButton extends StatefulWidget {
-  final Function(bool succeeded) callBack;
+  final Function(bool succeeded, String purchaseID) callBack;
   @override
   State<InAppPurchaseButton> createState() => _InAppPurchaseButtonState();
   InAppPurchaseButton({required this.callBack});
@@ -183,9 +183,11 @@ class _InAppPurchaseButtonState extends State<InAppPurchaseButton> {
       } else {
         if (purchaseDetails.status == PurchaseStatus.error) {
           handleError(purchaseDetails.error!);
+        } else if (purchaseDetails.status == PurchaseStatus.canceled) {
+         handleError(IAPError(code: '-1', message: '', source: ''));
         } else if (purchaseDetails.status == PurchaseStatus.purchased ||
             purchaseDetails.status == PurchaseStatus.restored) {
-          //
+          widget.callBack(true, purchaseDetails.purchaseID ?? 'unknown');
         }
         if (Platform.isAndroid) {
           if (!_kAutoConsume && purchaseDetails.productID == _kConsumableId) {
@@ -197,9 +199,6 @@ class _InAppPurchaseButtonState extends State<InAppPurchaseButton> {
         }
         if (purchaseDetails.pendingCompletePurchase) {
           await _inAppPurchase.completePurchase(purchaseDetails);
-        }
-        if (purchaseDetails.status == PurchaseStatus.purchased) {
-          widget.callBack(true);
         }
       }
     }

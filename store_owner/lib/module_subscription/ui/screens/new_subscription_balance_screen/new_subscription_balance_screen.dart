@@ -47,8 +47,8 @@ class NewSubscriptionBalanceScreenState
     widget._stateManager.getNewBalance(this);
   }
 
-  void makePayment(PaymentStatusRequest request, {Function? onFinish}) {
-    widget._stateManager.makePayment(request, onFinish: onFinish);
+  void makePayment(PaymentStatusRequest request) {
+    widget._stateManager.makePayment(this,request);
   }
 
   @override

@@ -169,7 +169,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
       (value) {
         if (value.hasError) {
           if ((value.error?.contains('لم تشترك بباقة') ?? false) ||
-              (value.error?.contains('You dont have a subscription') ?? false))
+              (value.error?.contains('You dont have PFa subscription') ?? false))
             getIt<SubscriptionPref>().setIsOldSubscriptionPlan(false);
         } else if (value.isEmpty) {
         } else {
@@ -397,7 +397,6 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     SchedulerBinding.instance.addPostFrameCallback(
       (_) {
         showDialog(
-          barrierDismissible: false,
           context: context,
           builder: (context) {
             return Dialog(
@@ -440,7 +439,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                           Visibility(
                             visible: !welcomeDialogWithoutPayment,
                             child: InAppPurchaseButton(
-                              callBack: (succeeded) {
+                              callBack: (succeeded, purchaseID) {
                                 if (succeeded) {
                                   Navigator.pop(context);
                                   makePayment(
@@ -454,9 +453,12 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                                       paymentGetaway: Platform.isAndroid
                                           ? PaymentGetaway.inAppPurchaseGoogle
                                           : PaymentGetaway.inAppPurchaseApple,
-                                      paymentId: null,
+                                      paymentId: purchaseID,
                                     ),
                                   );
+                              getInitData();
+                            } else {
+                              Navigator.pop(context);
                                 }
                               },
                             ),
@@ -505,7 +507,6 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
 
   paymentDialog(BuildContext context) {
     showDialog(
-      barrierDismissible: false,
       context: context,
       builder: (context) {
         return Dialog(

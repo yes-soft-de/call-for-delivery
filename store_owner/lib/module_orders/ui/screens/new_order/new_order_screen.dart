@@ -144,7 +144,7 @@ class NewOrderScreenState extends State<NewOrderScreen>
         );
         setState(() {});
       } else if (link != null) {
-        toController.text = await DeepLinksService.getFirebaseDynamicLinkData(data);
+        toController.text = await DeepLinksService.extractCoordinatesFromUrl(data);
         setState(() {
         });
       } else {
