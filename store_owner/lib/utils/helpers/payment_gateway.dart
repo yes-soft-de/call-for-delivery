@@ -190,7 +190,7 @@ class _PaymentsPortalState extends State<_PaymentsPortal> {
           // select payments you need to show [Default is all, and you can choose between WEB-CARD-APPLEPAY ]
           paymentType: PaymentType.ALL,
           // Transaction mode
-          sdkMode: SDKMode.Production,
+          sdkMode: SDKMode.Sandbox,
           paymentItems: []);
     } on PlatformException {
       // platformVersion = 'Failed to get platform version.';
