@@ -17,9 +17,12 @@ class OrderLogsStateManager {
   final StoresService _orderService;
   final PublishSubject<States> _stateSubject = PublishSubject<States>();
 
+  int lastGetStoreOrdersFilterRequestNumber;
+
   Stream<States> get stateStream => _stateSubject.stream;
 
-  OrderLogsStateManager(this._orderService);
+  OrderLogsStateManager(this._orderService)
+      : lastGetStoreOrdersFilterRequestNumber = 0;
 
   void getOrdersFilters(
       OrderLogsScreenState screenState, FilterOrderRequest request,
@@ -27,7 +30,9 @@ class OrderLogsStateManager {
     if (loading) {
       _stateSubject.add(LoadingState(screenState));
     }
+    int requestNumber = ++lastGetStoreOrdersFilterRequestNumber;
     _orderService.getStoreOrdersFilter(request).then((value) {
+      if (requestNumber != lastGetStoreOrdersFilterRequestNumber) return;
       if (value.hasError) {
         _stateSubject.add(ErrorState(screenState, onPressed: () {
           getOrdersFilters(screenState, request);
