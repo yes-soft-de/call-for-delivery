@@ -2350,28 +2350,28 @@ class OrderEntityRepository extends ServiceEntityRepository
 
         if (count($tempOrders) > 0) {
             if (($fromDate != null || $fromDate != "") && ($toDate === null || $toDate === "")) {
-                foreach ($tempOrders as $key => $value) {
-                    if ($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) >=
+                foreach ($tempOrders as $value) {
+                    if ($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) >=
                         new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) {
-                        $filteredOrders[$key] = $value;
+                        $filteredOrders[] = $value;
                     }
                 }
 
             } elseif (($fromDate === null || $fromDate === "") && ($toDate != null || $toDate != "")) {
-                foreach ($tempOrders as $key => $value) {
-                    if ($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) <=
+                foreach ($tempOrders as $value) {
+                    if ($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) <=
                         new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59'))) {
-                        $filteredOrders[$key] = $value;
+                        $filteredOrders[] = $value;
                     }
                 }
 
             } elseif (($fromDate != null || $fromDate != "") && ($toDate != null || $toDate != "")) {
-                foreach ($tempOrders as $key => $value) {
-                    if (($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) >=
+                foreach ($tempOrders as $value) {
+                    if (($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) >=
                         new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) &&
-                        ($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) <=
+                        ($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) <=
                             new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59')))) {
-                        $filteredOrders[$key] = $value;
+                        $filteredOrders[] = $value;
                     }
                 }
             }
