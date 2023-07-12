@@ -471,8 +471,8 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function filterStoreOrdersByAdmin(OrderFilterByAdminRequest $request): ?array
     {
         $query = $this->createQueryBuilder('orderEntity')
-//            ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate',
-//                'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.storeBranchToClientDistance',
+            ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate',
+                'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.storeBranchToClientDistance')
                ->addSelect('storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName', 'storeOrderDetails.recipientPhone',
                 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
                 'imageEntity.id as imageId', 'imageEntity.imagePath as images', 'captainEntity.id as captainProfileId')
@@ -502,12 +502,12 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'captainEntity.id = orderEntity.captainId'
             )
 
-            ->leftJoin(
-                ExternallyDeliveredOrderEntity::class,
-                'externallyDeliveredOrderEntity',
-                Join::WITH,
-                'externallyDeliveredOrderEntity.orderId = orderEntity.id'
-            )
+//            ->leftJoin(
+//                ExternallyDeliveredOrderEntity::class,
+//                'externallyDeliveredOrderEntity',
+//                Join::WITH,
+//                'externallyDeliveredOrderEntity.orderId = orderEntity.id'
+//            )
 
             ->orderBy('orderEntity.id', 'DESC');
 
@@ -563,7 +563,7 @@ class OrderEntityRepository extends ServiceEntityRepository
          || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
             $tempQuery = $query->getQuery()->getResult();
 
-            return $this->filterOrdersEntitiesByOptionalDates($tempQuery, $request->getFromDate(), $request->getToDate(),
+            return $this->filterOrdersByDates($tempQuery, $request->getFromDate(), $request->getToDate(),
                 $request->getCustomizedTimezone());
         }
 
