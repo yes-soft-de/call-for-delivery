@@ -502,12 +502,12 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'captainEntity.id = orderEntity.captainId'
             )
 
-//            ->leftJoin(
-//                ExternallyDeliveredOrderEntity::class,
-//                'externallyDeliveredOrderEntity',
-//                Join::WITH,
-//                'externallyDeliveredOrderEntity.orderId = orderEntity.id'
-//            )
+            ->leftJoin(
+                ExternallyDeliveredOrderEntity::class,
+                'externallyDeliveredOrderEntity',
+                Join::WITH,
+                'externallyDeliveredOrderEntity.orderId = orderEntity.id'
+            )
 
             ->orderBy('orderEntity.id', 'DESC');
 
