@@ -10,6 +10,7 @@ use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\StoreOwnerPreference\StoreOwnerPreferenceConstant;
 use App\Constant\Subscription\SubscriptionDetailsConstant;
 use App\Constant\Subscription\SubscriptionFlagConstant;
+use App\Entity\OrderEntity;
 use App\Entity\PackageEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionDetailsEntity;
@@ -1371,6 +1372,28 @@ class SubscriptionService
         }
 
         return $storePreference->getSubscriptionCostLimit();
+    }
+
+    /**
+     * ///todo to be used for Updating subscriptionCost field of the store
+     * Get last store subscription and not a future one (whatever its status)
+     */
+    public function getLastUnFutureStoreSubscriptionByStoreOwnerProfileId(int $storeOwnerProfileId): array
+    {
+        return $this->subscriptionManager->getLastUnFutureStoreSubscriptionByStoreOwnerProfileId($storeOwnerProfileId);
+    }
+
+    /**
+     * ///todo to be used for Updating subscriptionCost field of the store
+     * Updates subscriptionCost field of last store subscription
+     */
+    public function updateStoreSubscriptionCost(OrderEntity $orderEntity)
+    {
+        // 1. get LAST store subscription
+        // why LAST? because maybe the store created the order then the subscription had finished.
+        // 2. check if order belongs to the subscription
+        // 3. calculate order cost
+        // 4. add order cost to subscription cost
     }
 }
  
