@@ -124,7 +124,11 @@ class AdminOrderController extends BaseController
         return new JsonResponse(["status_code" => '200',
             "msg" => 'fetched' . " " . "Successfully.",
             "Data" => $result
-        ], 200);
+        ], 200, [
+            ['Access-Control-Allow-Headers', 'X-Header-One,X-Header-Two'],
+            ['Access-Control-Allow-Origin', '*'],
+            ['Access-Control-Allow-Methods', 'PUT']
+        ]);
 
         //return $this->response($result, self::FETCH);
     }
