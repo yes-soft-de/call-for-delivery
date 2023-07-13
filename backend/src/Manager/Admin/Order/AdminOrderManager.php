@@ -58,7 +58,7 @@ class AdminOrderManager
         return count($this->orderEntityRepository->findAll());
     }
 
-    public function filterStoreOrdersByAdmin(OrderFilterByAdminRequest $request): ?array
+    public function filterStoreOrdersByAdmin(OrderFilterByAdminRequest $request): array
     {
         return $this->orderEntityRepository->filterStoreOrdersByAdmin($request);
     }

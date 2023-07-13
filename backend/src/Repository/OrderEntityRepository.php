@@ -468,39 +468,41 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function filterStoreOrdersByAdmin(OrderFilterByAdminRequest $request): ?array
+    public function filterStoreOrdersByAdmin(OrderFilterByAdminRequest $request): array
     {
         $query = $this->createQueryBuilder('orderEntity')
-            ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate',
-                'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.storeBranchToClientDistance')
-               ->addSelect('storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName', 'storeOrderDetails.recipientPhone',
-                'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
-                'imageEntity.id as imageId', 'imageEntity.imagePath as images', 'captainEntity.id as captainProfileId')
+            ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.orderCost', 'orderEntity.note', 'orderEntity.deliveryDate',
+                'orderEntity.createdAt', 'orderEntity.kilometer', 'orderEntity.storeBranchToClientDistance', 'orderEntity.orderIsMain')
+//               ->addSelect('storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName', 'storeOrderDetails.recipientPhone',
+//                'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
+//                'imageEntity.id as imageId', 'imageEntity.imagePath as images',
+//                   'captainEntity.id as captainProfileId'
+//               )
 
-            ->leftJoin(
-                StoreOrderDetailsEntity::class,
-                'storeOrderDetails',
-                Join::WITH,
-                'orderEntity.id = storeOrderDetails.orderId')
+//            ->leftJoin(
+//                StoreOrderDetailsEntity::class,
+//                'storeOrderDetails',
+//                Join::WITH,
+//                'storeOrderDetails.orderId = orderEntity.id')
+//
+//            ->leftJoin(
+//                StoreOwnerBranchEntity::class,
+//                'storeOwnerBranch',
+//                Join::WITH,
+//                'storeOwnerBranch.id = storeOrderDetails.branch')
 
-            ->leftJoin(
-                StoreOwnerBranchEntity::class,
-                'storeOwnerBranch',
-                Join::WITH,
-                'storeOrderDetails.branch = storeOwnerBranch.id')
+//            ->leftJoin(
+//                ImageEntity::class,
+//                'imageEntity',
+//                Join::WITH,
+//                'imageEntity.id = storeOrderDetails.images')
 
-            ->leftJoin(
-                ImageEntity::class,
-                'imageEntity',
-                Join::WITH,
-                'imageEntity.id = storeOrderDetails.images')
-
-            ->leftJoin(
-                CaptainEntity::class,
-                'captainEntity',
-                Join::WITH,
-                'captainEntity.id = orderEntity.captainId'
-            )
+//            ->leftJoin(
+//                CaptainEntity::class,
+//                'captainEntity',
+//                Join::WITH,
+//                'captainEntity.id = orderEntity.captainId'
+//            )
 
             ->leftJoin(
                 ExternallyDeliveredOrderEntity::class,

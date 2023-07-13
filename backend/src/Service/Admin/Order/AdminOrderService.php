@@ -71,6 +71,7 @@ use App\Response\Admin\Order\OrderStateUpdateByAdminResponse;
 use App\Response\Admin\Order\OrderStoreBranchToClientDistanceUpdateByAdminResponse;
 use App\Response\Admin\Order\OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse;
 use App\Response\Admin\Order\OrderUpdateByAdminResponse;
+use App\Response\Admin\Order\StoreOrderFilterByAdminResponse;
 use App\Response\Admin\OrderDistanceConflict\OrderDistanceConflictUpdateByAdminResponse;
 use App\Response\Order\BidOrderByIdGetForAdminResponse;
 use App\Response\OrderTimeLine\OrderLogsResponse;
@@ -236,9 +237,9 @@ class AdminOrderService
         $orders = $this->adminOrderManager->filterStoreOrdersByAdmin($request);
 
         foreach ($orders as $key => $value) {
-            $value['images'] = $this->uploadFileHelperService->getImageParams($value['images']);
+            //$value['images'] = $this->uploadFileHelperService->getImageParams($value['images']);
 
-            $response[$key] = $this->autoMapping->map('array', OrderGetForAdminResponse::class, $value);
+            $response[$key] = $this->autoMapping->map('array', StoreOrderFilterByAdminResponse::class, $value);
 
 //            $response[$key]->storeOrderDetailsId = $value['storeOrderDetailsId'];
 //            $response[$key]->destination = $value['destination'];
