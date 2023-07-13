@@ -358,7 +358,7 @@ class BaseController extends AbstractController
             $response = new jsonResponse([
                     "status_code" => $status[1],
                     "msg" => $status[0] . " " . "successfully.",
-                    "data" => json_decode($result)
+                    "Data" => json_decode($result)
                 ]
                 , $status[1]);
 
