@@ -234,7 +234,7 @@ class AdminOrderService
 //            }
 //        }
 
-        $orders = $this->adminOrderManager->filterStoreOrdersByAdmin($request);//dd($orders);
+        $orders = $this->adminOrderManager->filterStoreOrdersByAdmin($request);
 
         foreach ($orders as $key => $value) {
             //$value['images'] = $this->uploadFileHelperService->getImageParams($value['images']);
@@ -276,7 +276,7 @@ class AdminOrderService
                 $response[$key]->externalDeliveredOrders[0]['externalOrderId'] = $externallyDeliveredOrder->getExternalOrderId();
             }
         }
-        //dd($response);
+
         return $response;
     }
 
