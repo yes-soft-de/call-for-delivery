@@ -473,36 +473,6 @@ class OrderEntityRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('orderEntity')
             ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.orderCost', 'orderEntity.note', 'orderEntity.deliveryDate',
                 'orderEntity.createdAt', 'orderEntity.kilometer', 'orderEntity.storeBranchToClientDistance', 'orderEntity.orderIsMain')
-//               ->addSelect('storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName', 'storeOrderDetails.recipientPhone',
-//                'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
-//                'imageEntity.id as imageId', 'imageEntity.imagePath as images',
-//                   'captainEntity.id as captainProfileId'
-//               )
-
-//            ->leftJoin(
-//                StoreOrderDetailsEntity::class,
-//                'storeOrderDetails',
-//                Join::WITH,
-//                'storeOrderDetails.orderId = orderEntity.id')
-//
-//            ->leftJoin(
-//                StoreOwnerBranchEntity::class,
-//                'storeOwnerBranch',
-//                Join::WITH,
-//                'storeOwnerBranch.id = storeOrderDetails.branch')
-
-//            ->leftJoin(
-//                ImageEntity::class,
-//                'imageEntity',
-//                Join::WITH,
-//                'imageEntity.id = storeOrderDetails.images')
-
-//            ->leftJoin(
-//                CaptainEntity::class,
-//                'captainEntity',
-//                Join::WITH,
-//                'captainEntity.id = orderEntity.captainId'
-//            )
 
             ->leftJoin(
                 ExternallyDeliveredOrderEntity::class,

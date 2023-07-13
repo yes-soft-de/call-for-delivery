@@ -315,37 +315,28 @@ class BaseController extends AbstractController
             return $response;
         }
         
-        if($result!=null)
-        {
+        if ($result != null) {
             $encoders = [new JsonEncoder()];
             $normalizers = [new ObjectNormalizer()];
 
-            //--->start update
-            //This modification represents a solution to this problem:
-            //A circular reference has been detected when serializing the object of class "Proxies\__CG__\App\Entity\NameEntity" (configured limit: 1).
-//            $defaultContext = [
-//                AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object, $format, $context) {
-//                    return $object->getId();
-//                },
-//            ];
-//            $normalizers = [new ObjectNormalizer(null, null, null, null, null, null, $defaultContext)];
-            //end update -------->
-
             $this->serializer = new Serializer($normalizers, $encoders);
+
             $result = $this->serializer->serialize($result, "json", [
                 'enable_max_depth' => true]);
+
             $response = new jsonResponse(["status_code" => $status[1],
                     "msg" => $status[0] . " " . "Successfully.",
                     "Data" => json_decode($result)
                 ]
                 , Response::HTTP_OK);
+
             $response->headers->set('Access-Control-Allow-Headers', 'X-Header-One,X-Header-Two');
             $response->headers->set('Access-Control-Allow-Origin', '*');
             $response->headers->set('Access-Control-Allow-Methods', 'PUT');
+
             return $response;
-        }      
-        else
-        {
+
+        } else {
             $response = new JsonResponse(["status_code"=>"200",
                  "msg"=>"Data not found!"],
              Response::HTTP_OK);
