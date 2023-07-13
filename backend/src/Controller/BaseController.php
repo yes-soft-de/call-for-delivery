@@ -344,4 +344,35 @@ class BaseController extends AbstractController
             return $response;
         }
     }
+
+    public function responseTwo($result, $status) :jsonResponse
+    {
+        if ($result != null) {
+//            $encoders = [new JsonEncoder()];
+//            $normalizers = [new ObjectNormalizer()];
+//            $this->serializer = new Serializer($normalizers, $encoders);
+
+            $result = $this->serializer->serialize($result, "json",
+                ['enable_max_depth' => true]);
+
+            $response = new jsonResponse([
+                    "status_code" => $status[1],
+                    "msg" => $status[0] . " " . "successfully.",
+                    "data" => json_decode($result)
+                ]
+                , $status[1]);
+
+            $response->headers->set('Access-Control-Allow-Headers', 'X-Header-One,X-Header-Two');
+            $response->headers->set('Access-Control-Allow-Origin', '*');
+            $response->headers->set('Access-Control-Allow-Methods', 'PUT');
+
+            return $response;
+        } else {
+            $response = new JsonResponse(["status_code"=>"200",
+                "msg"=>"data not found!"],
+                Response::HTTP_OK);
+
+            return $response;
+        }
+    }
 }
