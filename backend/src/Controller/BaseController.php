@@ -348,9 +348,9 @@ class BaseController extends AbstractController
     public function responseTwo($result, $status) :jsonResponse
     {
         if ($result != null) {
-//            $encoders = [new JsonEncoder()];
-//            $normalizers = [new ObjectNormalizer()];
-//            $this->serializer = new Serializer($normalizers, $encoders);
+            $encoders = [new JsonEncoder()];
+            $normalizers = [new ObjectNormalizer()];
+            $this->serializer = new Serializer($normalizers, $encoders);
 
             $result = $this->serializer->serialize($result, "json",
                 ['enable_max_depth' => true]);
