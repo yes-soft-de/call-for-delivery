@@ -6,6 +6,7 @@ use App\Repository\SubscriptionEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: SubscriptionEntityRepository::class)]
 class SubscriptionEntity
@@ -52,6 +53,13 @@ class SubscriptionEntity
 
     #[ORM\OneToMany(mappedBy: 'subscription', targetEntity: EPaymentFromStoreEntity::class)]
     private $ePaymentFromStoreEntities;
+
+    #[ORM\Column(type: 'float', options: ["default" => 0])]
+    private $subscriptionCost;
+
+    #[Gedmo\Timestampable(on: 'update')]
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private $updatedAt;
 
     public function __construct()
     {
@@ -240,6 +248,30 @@ class SubscriptionEntity
                 $ePaymentFromStoreEntity->setSubscription(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getSubscriptionCost(): ?float
+    {
+        return $this->subscriptionCost;
+    }
+
+    public function setSubscriptionCost(float $subscriptionCost): self
+    {
+        $this->subscriptionCost = $subscriptionCost;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
 
         return $this;
     }

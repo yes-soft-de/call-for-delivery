@@ -10,6 +10,7 @@ use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\StoreOwnerPreference\StoreOwnerPreferenceConstant;
 use App\Constant\Subscription\SubscriptionDetailsConstant;
 use App\Constant\Subscription\SubscriptionFlagConstant;
+use App\Entity\OrderEntity;
 use App\Entity\PackageEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionDetailsEntity;
@@ -38,6 +39,7 @@ use App\Request\Subscription\SubscriptionUpdateByAdminRequest;
 use App\Request\Subscription\CalculateCostDeliveryOrderRequest;
 use App\Response\Subscription\CalculateCostDeliveryOrderResponse;
 use App\Request\Admin\Subscription\AdminCalculateCostDeliveryOrderRequest;
+use DateTime;
 use DateTimeInterface;
 
 class SubscriptionService
@@ -77,7 +79,12 @@ class SubscriptionService
 
         //--check and update completeAccountStatus for the store owner profile
         if ($subscription) {
-            $this->checkCompleteAccountStatusOfStoreOwnerProfile($subscription->getStoreOwner());
+            if ($subscription->getPackage()->getId() === 18) {
+                $this->updateCompleteAccountStatusOfStoreOwnerProfileAfterSubscriptionWithFreePackage($subscription->getStoreOwner());
+
+            } else {
+                $this->checkCompleteAccountStatusOfStoreOwnerProfile($subscription->getStoreOwner());
+            }
         }
 
         if ($activateExistingSubscription ===  SubscriptionConstant::NEW_SUBSCRIPTION_ACTIVATED) {
@@ -421,7 +428,7 @@ class SubscriptionService
                             && ($storeSubscriptionCostLimit !== StoreOwnerPreferenceConstant::STORE_OWNER_PREFERENCE_NOT_EXIST_CONST)) {
                             $subscriptionCostLimit = $storeSubscriptionCostLimit;
                         }
-                    }//dd($ordersCostSum, $subscriptionCostLimit);
+                    }
 
                     if ($ordersCostSum >= $subscriptionCostLimit) {
                         // de-activate the subscription till the store make the required payment
@@ -805,15 +812,8 @@ class SubscriptionService
         return $this->subscriptionManager->deleteStoreSubscriptionByStoreOwnerId($storeOwnerId);
     }
 
-    public function createSubscriptionByAdmin(SubscriptionCreateRequest $request ,int $storeOwnerProfileId): SubscriptionResponse|SubscriptionErrorResponse|string|int
-    {  
-        $store = $this->subscriptionManager->getStoreOwnerProfileByStoreOwnerProfileId($storeOwnerProfileId);
-        if (! $store) {
-            return StoreProfileConstant::STORE_NOT_FOUND;
-        }
-       
-        $request->setStoreOwner($store->getStoreOwnerId());
-
+    public function createSubscriptionByAdmin(SubscriptionCreateRequest $request): SubscriptionResponse|SubscriptionErrorResponse|string|int
+    {
         return $this->createSubscription($request);
     }
 
@@ -1373,6 +1373,60 @@ class SubscriptionService
         }
 
         return $storePreference->getSubscriptionCostLimit();
+    }
+
+    /**
+     * ///todo to be used for Updating subscriptionCost field of the store
+     * Get last store subscription and not a future one (whatever its status)
+     */
+    public function getLastUnFutureStoreSubscriptionByStoreOwnerProfileId(int $storeOwnerProfileId): string|SubscriptionEntity
+    {
+        $subscriptionArrayResult = $this->subscriptionManager->getLastUnFutureStoreSubscriptionByStoreOwnerProfileId($storeOwnerProfileId);
+
+        if (count($subscriptionArrayResult) === 0) {
+            return SubscriptionConstant::SUBSCRIPTION_NOT_FOUND;
+        }
+
+        return $subscriptionArrayResult[0];
+    }
+
+    public function addNewSubscriptionCostToSpecificSubscription(SubscriptionEntity $subscriptionEntity, float $orderCost): SubscriptionEntity
+    {
+        $subscriptionCost = 0.0;
+
+        if (! $subscriptionEntity->getSubscriptionCost()) {
+            $subscriptionCost = $orderCost;
+
+        } else {
+            $subscriptionCost = $subscriptionEntity->getSubscriptionCost() + $orderCost;
+        }
+
+        return $this->subscriptionManager->updateSubscriptionCostBySubscriptionEntityAndNewSubscriptionCost($subscriptionEntity,
+            $subscriptionCost);
+    }
+
+    /**
+     * ///todo to be used for Updating subscriptionCost field of the store
+     * Updates subscriptionCost field of last store subscription
+     */
+    public function handleUpdatingStoreSubscriptionCost(int $storeOwnerProfileId, float $orderDeliveryCost, DateTimeInterface $orderCreatedAt): SubscriptionEntity|int|string
+    {
+        // 1. get LAST store subscription
+        // why LAST? because maybe the store created the order then the subscription had finished.
+        $subscription = $this->getLastUnFutureStoreSubscriptionByStoreOwnerProfileId($storeOwnerProfileId);
+
+        if ($subscription === SubscriptionConstant::SUBSCRIPTION_NOT_FOUND) {
+            return SubscriptionConstant::SUBSCRIPTION_NOT_FOUND;
+        }
+
+        // 2. check if order belongs to the subscription
+        if (($orderCreatedAt < $subscription->getStartDate())
+            || ($orderCreatedAt > $subscription->getEndDate())) {
+            return OrderResultConstant::ORDER_DOES_NOT_BELONG_TO_SUBSCRIPTION;
+        }
+
+        // 4. add order cost to subscription cost
+        return $this->addNewSubscriptionCostToSpecificSubscription($subscription, $orderDeliveryCost);
     }
 }
  

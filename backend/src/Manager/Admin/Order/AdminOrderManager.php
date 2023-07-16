@@ -58,7 +58,7 @@ class AdminOrderManager
         return count($this->orderEntityRepository->findAll());
     }
 
-    public function filterStoreOrdersByAdmin(OrderFilterByAdminRequest $request): ?array
+    public function filterStoreOrdersByAdmin(OrderFilterByAdminRequest $request): array
     {
         return $this->orderEntityRepository->filterStoreOrdersByAdmin($request);
     }
@@ -363,20 +363,20 @@ class AdminOrderManager
         return $this->orderEntityRepository->filterOrdersWhoseHasNotDistanceHasCalculated($request);
     }
    
-    public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request): ?OrderEntity
-    {
-        $orderEntity = $this->orderEntityRepository->find($request->getId());
-
-        if(! $orderEntity) {
-            return $orderEntity;
-        }
-
-        $orderEntity = $this->autoMapping->mapToObject(OrderStoreBranchToClientDistanceByAdminRequest::class, OrderEntity::class, $request, $orderEntity);
-        
-        $this->entityManager->flush();
-        
-        return $orderEntity;
-    }
+//    public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request): ?OrderEntity
+//    {
+//        $orderEntity = $this->orderEntityRepository->find($request->getId());
+//
+//        if(! $orderEntity) {
+//            return $orderEntity;
+//        }
+//
+//        $orderEntity = $this->autoMapping->mapToObject(OrderStoreBranchToClientDistanceByAdminRequest::class, OrderEntity::class, $request, $orderEntity);
+//
+//        $this->entityManager->flush();
+//
+//        return $orderEntity;
+//    }
 
     public function filterOrders(FilterOrdersWhoseHasNotDistanceHasCalculatedRequest $request): ?array
     {
@@ -581,15 +581,6 @@ class AdminOrderManager
     {
         return $this->orderEntityRepository->filterDifferentDestinationOrdersByAdmin($request);
     }
-
-    ///todo to be removed after OrderDistanceConflict works correctly
-//    /**
-//     * Update differentReceiverDestination field of store order details
-//     */
-//    public function updateStoreOrderDetailsDifferentReceiverDestinationByOrderId(int $orderId, int $differentReceiverDestination): int|StoreOrderDetailsEntity
-//    {
-//        return $this->adminStoreOrderDetailsManager->updateStoreOrderDetailsDifferentReceiverDestinationByOrderId($orderId, $differentReceiverDestination);
-//    }
 
     /**
      * Gets last five delivered orders with captains' images

@@ -26,10 +26,12 @@ use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\CaptainEntity;
 use App\Entity\ExternallyDeliveredOrderEntity;
+use App\Entity\OrderDestinationEntity;
 use App\Entity\OrderEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionDetailsEntity;
+use App\Entity\SubscriptionEntity;
 use App\Manager\Order\OrderManager;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\BidDetailsCreateRequest;
@@ -215,7 +217,7 @@ class OrderService
             }
 
             // check if receiver location is a valid one
-            $this->checkIfReceiverLocationIsValid($order->getId(), $request->getDestination(), $order->getStoreBranchToClientDistance());
+            $this->checkIfReceiverLocationIsValid($order, $request->getDestination(), $order->getStoreBranchToClientDistance());
         }
 
         return $this->autoMapping->map(OrderEntity::class, OrderResponse::class, $order);
@@ -617,11 +619,11 @@ class OrderService
                     return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE;
                 }
                 // end check
-
                 if ($orderEntity->getOrderType() === OrderTypeConstant::ORDER_TYPE_NORMAL) {
                     // Following if block will be executed only when the order is not sub-order,
                     // otherwise, we will move to update statement directly
-                    if ($orderEntity->getOrderIsMain() === OrderIsMainConstant::ORDER_MAIN || $orderEntity->getOrderIsMain() === OrderIsMainConstant::ORDER_MAIN_WITHOUT_SUBORDER) {
+                    if ($orderEntity->getOrderIsMain() === OrderIsMainConstant::ORDER_MAIN
+                        || $orderEntity->getOrderIsMain() === OrderIsMainConstant::ORDER_MAIN_WITHOUT_SUBORDER) {
                         $canAcceptOrder = $this->subscriptionService->checkRemainingCarsByOrderId($request->getId());
 
                         if ($canAcceptOrder === SubscriptionConstant::CARS_FINISHED) {
@@ -650,6 +652,7 @@ class OrderService
             }
 
             if ($order->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                // update captain financial due
                 $this->captainFinancialDuesService->captainFinancialDues($request->getCaptainId()->getCaptainId());
 
                 //Save the price of the order in cash in case the captain does not pay the store
@@ -660,6 +663,9 @@ class OrderService
 
                 // Create or update captain financial daily amount
                 $this->createOrUpdateCaptainFinancialDaily($order->getId());
+                // Update subscription cost of the store's subscription
+                $this->handleUpdatingStoreSubscriptionCost($order->getStoreOwner()->getId(), $order->getDeliveryCost(),
+                    $order->getCreatedAt());
             }
 
             // save log of the action on order
@@ -1299,6 +1305,9 @@ class OrderService
                     ['externalCompanyName' => $externalOrder->getExternalDeliveryCompany()->getCompanyName()]);
             }
 
+            // check if receiver location is a valid one
+            $this->checkIfReceiverLocationIsValid($order, $request->getDestination(), $order->getStoreBranchToClientDistance());
+
             try {
                 // create firebase notification to store
                 $this->notificationFirebaseService->notificationSubOrderForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), NotificationFirebaseConstant::CREATE_SUB_ORDER_SUCCESS);
@@ -1761,13 +1770,22 @@ class OrderService
         return $response;
     }
 
-    public function checkIfReceiverLocationIsValid(int $orderId, array $destination, ?float $storeBranchToClientDistance): void
+    public function checkIfReceiverLocationIsValid(OrderEntity $order, array $destination, ?float $storeBranchToClientDistance): void
     {
         if (count($destination) > 0) {
             if (((! $destination['lat']) || (! $destination['lon'])) && (! $storeBranchToClientDistance)) {
+                // save the order destination
+                $orderDestinationEntity = new OrderDestinationEntity();
+
+                $orderDestinationEntity->setOrderId($order);
+                $orderDestinationEntity->setLocationLink($destination['link']);
+
+                $this->entityManager->persist($orderDestinationEntity);
+                $this->entityManager->flush();
+
                 // there is no lat or lon, so the location is not a valid one, send a firebase notification to admin
                 try {
-                    $this->notificationFirebaseService->notificationToAdmin($orderId,
+                    $this->notificationFirebaseService->notificationToAdmin($order->getId(),
                         NotificationFirebaseConstant::NOT_VALID_RECEIVER_LOCATION_OF_ORDER_CONST);
 
                 } catch (\Exception $e) {
@@ -2291,5 +2309,14 @@ class OrderService
     public function updateOrderStateByOrderEntityAndNewState(OrderEntity $orderEntity, string $state): OrderEntity
     {
         return $this->orderManager->updateOrderStateByOrderEntityAndNewState($orderEntity, $state);
+    }
+
+    /**
+     * Handles the updating of the subscriptionCost field of last store subscription
+     */
+    public function handleUpdatingStoreSubscriptionCost(int $storeOwnerProfileId, float $orderDeliveryCost, DateTimeInterface $orderCreatedAt): SubscriptionEntity|int|string
+    {
+        return $this->subscriptionService->handleUpdatingStoreSubscriptionCost($storeOwnerProfileId, $orderDeliveryCost,
+            $orderCreatedAt);
     }
 }

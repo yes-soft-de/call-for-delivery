@@ -141,6 +141,9 @@ class OrderEntity
     #[ORM\OneToMany(mappedBy: 'orderId', targetEntity: ExternallyDeliveredOrderEntity::class)]
     private $externallyDeliveredOrderEntities;
 
+    #[ORM\OneToMany(mappedBy: 'orderId', targetEntity: OrderDestinationEntity::class)]
+    private $orderDestinationEntities;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
@@ -150,6 +153,7 @@ class OrderEntity
         $this->orderLogEntities = new ArrayCollection();
         $this->dashboardLocalNotificationEntities = new ArrayCollection();
         $this->externallyDeliveredOrderEntities = new ArrayCollection();
+        $this->orderDestinationEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -758,6 +762,36 @@ class OrderEntity
             // set the owning side to null (unless already changed)
             if ($externallyDeliveredOrderEntity->getOrderId() === $this) {
                 $externallyDeliveredOrderEntity->setOrderId(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, OrderDestinationEntity>
+     */
+    public function getOrderDestinationEntities(): Collection
+    {
+        return $this->orderDestinationEntities;
+    }
+
+    public function addOrderDestinationEntity(OrderDestinationEntity $orderDestinationEntity): self
+    {
+        if (!$this->orderDestinationEntities->contains($orderDestinationEntity)) {
+            $this->orderDestinationEntities[] = $orderDestinationEntity;
+            $orderDestinationEntity->setOrderId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrderDestinationEntity(OrderDestinationEntity $orderDestinationEntity): self
+    {
+        if ($this->orderDestinationEntities->removeElement($orderDestinationEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($orderDestinationEntity->getOrderId() === $this) {
+                $orderDestinationEntity->setOrderId(null);
             }
         }
 

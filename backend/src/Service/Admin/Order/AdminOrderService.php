@@ -38,6 +38,7 @@ use App\Entity\OrderEntity;
 use App\Entity\PackageEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Entity\SubscriptionDetailsEntity;
+use App\Entity\SubscriptionEntity;
 use App\Manager\Admin\Order\AdminOrderManager;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
@@ -71,6 +72,7 @@ use App\Response\Admin\Order\OrderStateUpdateByAdminResponse;
 use App\Response\Admin\Order\OrderStoreBranchToClientDistanceUpdateByAdminResponse;
 use App\Response\Admin\Order\OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse;
 use App\Response\Admin\Order\OrderUpdateByAdminResponse;
+use App\Response\Admin\Order\StoreOrderFilterByAdminResponse;
 use App\Response\Admin\OrderDistanceConflict\OrderDistanceConflictUpdateByAdminResponse;
 use App\Response\Order\BidOrderByIdGetForAdminResponse;
 use App\Response\OrderTimeLine\OrderLogsResponse;
@@ -199,75 +201,22 @@ class AdminOrderService
     public function filterStoreOrdersByAdmin(OrderFilterByAdminRequest $request, int $adminUserId): ?array
     {
         $response = [];
-        // 1 Get uncancelled and undelivered external orders from OrderEntity
-        $orders = $this->getNotCancelledNorDeliveredNorExpiredExternalOrdersOnly($request->getExternalCompanyId());
-
-        if (count($orders) > 0) {
-            foreach ($orders as $order) {
-                // 2 Get external order new info from their related external company
-                $externallyDeliveredOrders = $order->getExternallyDeliveredOrderEntities()->toArray();
-
-                if (count($externallyDeliveredOrders) > 0) {
-                    foreach ($externallyDeliveredOrders as $externallyDeliveredOrder) {
-                        if (in_array($externallyDeliveredOrder->getStatus(), MrsoolCompanyConstant::NOT_CANCELLED_OR_DELIVERED_OR_EXPIRED_CONST)) {
-                            $externalOrderInfo = $this->getExternalOrderByOrderIdAndExternalDeliveryCompanyId($externallyDeliveredOrder->getExternalOrderId(),
-                                $externallyDeliveredOrder->getExternalDeliveryCompany()->getId());
-
-                            if (($externalOrderInfo !== HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
-                                && ($externalOrderInfo !== HttpResponseConstant::ORDER_NOT_FOUND_RESULT_CONST)
-                                && ($externalOrderInfo !== HttpResponseConstant::UN_RECOGNIZED_STATUS_CODE_RESULT_CONST)) {
-                                // 3 Update external orders status (both in ExternallyDeliveredOrderEntity and OrderEntity)
-                                $this->updateExternallyDeliveredOrderStatus($externallyDeliveredOrder->getId(),
-                                    $externalOrderInfo['data']['status']);
-                                // Update order status in OrderEntity
-                                $this->compareAndUpdateOrderState($order, $externalOrderInfo['data']['status']);
-
-                                // save log of the action on order
-                                $this->createOrderLogMessageViaOrderEntityAndByAdmin($order, $adminUserId,
-                                    OrderLogActionTypeConstant::NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST,
-                                    ['externalCompanyName' => $externallyDeliveredOrder->getExternalDeliveryCompany()->getCompanyName()]);
-                            }
-                        }
-                    }
-                }
-            }
-        }
 
         $orders = $this->adminOrderManager->filterStoreOrdersByAdmin($request);
 
+        //dd($orders);
         foreach ($orders as $key => $value) {
-            $value['images'] = $this->uploadFileHelperService->getImageParams($value['images']);
+            $response[$key] = $this->autoMapping->map('array', StoreOrderFilterByAdminResponse::class, $value);
 
-            $response[$key] = $this->autoMapping->map(OrderEntity::class, OrderGetForAdminResponse::class, $value[0]);
-
-            $response[$key]->storeOrderDetailsId = $value['storeOrderDetailsId'];
-            $response[$key]->destination = $value['destination'];
-            $response[$key]->recipientName = $value['recipientName'];
-            $response[$key]->recipientPhone = $value['recipientPhone'];
-            $response[$key]->branchName = $value['branchName'];
-            $response[$key]->location = $value['location'];
-            $response[$key]->storeOwnerBranchId = $value['storeOwnerBranchId'];
-            $response[$key]->detail = $value['detail'];
-            $response[$key]->imageId = $value['imageId'];
-            $response[$key]->captainProfileId = $value['captainProfileId'];
-
-            $externallyDeliveredOrders = $value[0]->getExternallyDeliveredOrderEntities()->toArray();
-
-            $externalOrdersArrayLength = count($externallyDeliveredOrders);
-
-            if ($externalOrdersArrayLength > 0) {
-                $lastOrder = $externallyDeliveredOrders[$externalOrdersArrayLength-1];
-
-                //foreach ($externallyDeliveredOrders as $key2 => $value2) {
-                $response[$key]->externalDeliveredOrders = [];
-
-                $response[$key]->externalDeliveredOrders[0]['id'] = $lastOrder->getId();
-                $response[$key]->externalDeliveredOrders[0]['companyName'] = $lastOrder->getExternalDeliveryCompany()->getCompanyName();
-                $response[$key]->externalDeliveredOrders[0]['externalOrderId'] = $lastOrder->getExternalOrderId();
-                //}
-            }
+//            $externallyDeliveredOrder = $this->getLastExternallyDeliveredOrderByOrderId($value['id']);
+//
+//            if ($externallyDeliveredOrder !== ExternallyDeliveredOrderConstant::EXTERNALLY_DELIVERED_ORDER_NOT_EXIST_CONST) {
+//                $response[$key]->externalDeliveredOrders[0]['id'] = $externallyDeliveredOrder->getId();
+//                $response[$key]->externalDeliveredOrders[0]['companyName'] = $externallyDeliveredOrder->getExternalDeliveryCompany()->getCompanyName();
+//                $response[$key]->externalDeliveredOrders[0]['externalOrderId'] = $externallyDeliveredOrder->getExternalOrderId();
+//            }
         }
-
+        //dd($response);
         return $response;
     }
 
@@ -1309,6 +1258,9 @@ class AdminOrderService
 
                         // Create or update daily captain financial amount
                         $this->createOrUpdateCaptainFinancialDaily($orderResult[0]->getId());
+                        // Update subscription cost of the store's subscription
+                        $this->handleUpdatingStoreSubscriptionCost($orderResult[0]->getStoreOwner()->getId(),
+                            $orderResult[0]->getDeliveryCost(), $orderResult[0]->getCreatedAt());
                     }
 
                     // create firebase notification to captain
@@ -1402,26 +1354,26 @@ class AdminOrderService
         return $this->adminOrderManager->filterOrdersWhoseHasNotDistanceHasCalculated($request);  
     }
      
-    public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request, int $userId): OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse
-    {
-        $order = $this->adminOrderManager->updateStoreBranchToClientDistanceByAdmin($request);
-
-        if ($order) {
-            if ($order->getCaptainId()?->getCaptainId()) {
-                $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
-
-                // Create or update daily captain financial amount
-                $this->createOrUpdateCaptainFinancialDaily($order->getId());
-            }
-
-            // save log of the action on order
-            $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
-                OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_BY_ADMIN_ACTION_CONST, [], null,
-                null);
-        }
-
-        return $this->autoMapping->map(OrderEntity::class, OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse::class, $order);
-    }
+//    public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request, int $userId): OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse
+//    {
+//        $order = $this->adminOrderManager->updateStoreBranchToClientDistanceByAdmin($request);
+//
+//        if ($order) {
+//            if ($order->getCaptainId()?->getCaptainId()) {
+//                $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
+//
+//                // Create or update daily captain financial amount
+//                $this->createOrUpdateCaptainFinancialDaily($order->getId());
+//            }
+//
+//            // save log of the action on order
+//            $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+//                OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_BY_ADMIN_ACTION_CONST, [], null,
+//                null);
+//        }
+//
+//        return $this->autoMapping->map(OrderEntity::class, OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse::class, $order);
+//    }
 
     public function createSubOrderByAdmin(SubOrderCreateByAdminRequest $request, int $userId): string|OrderCreateByAdminResponse
     {
@@ -1906,17 +1858,6 @@ class AdminOrderService
                 // 2 Update related OrderDistanceConflict
                 $this->handleUpdateOrderDistanceConflictByAdminAfterDistanceAddition($request, $order, $userId);
 
-                // **** todo Following block to be removed after OrderDistanceConflict part works correctly **** ////
-                // Update differentReceiverDestination field of store order record in order to not show the order in
-                // the list of conflicted orders
-                // $differentReceiverDestinationUpdateResult = $this->updateStoreOrderDetailsDifferentReceiverDestinationByOrderId($order->getId(),
-                //     OrderDestinationConstant::ORDER_DESTINATION_IS_DIFFERENT_AND_UPDATED_BY_ADMIN_CONST);
-
-                // if ($differentReceiverDestinationUpdateResult === StoreOrderDetailsConstant::STORE_ORDER_DETAILS_NOT_FOUND) {
-                //     return StoreOrderDetailsConstant::STORE_ORDER_DETAILS_NOT_FOUND;
-                // }
-                // ******** ////
-
                 // 3 Update delivery cost
                 $orderDeliveryCostUpdateResult = $this->calculateAndUpdateOrderDeliveryCostByOrderIdAndStoreOwnerProfileIdAndDistance($order,
                     $userId, OrderLogActionTypeConstant::ORDER_DELIVERY_COST_UPDATED_BY_NEW_DISTANCE_BY_ADMIN_CONST);
@@ -2182,15 +2123,6 @@ class AdminOrderService
             DashboardLocalNotificationAppTypeConstant::DASHBOARD_APP_TYPE_CONST, $adminUserId, $orderId);
     }
 
-    ///todo to be removed after OrderDistanceConflict works correctly
-    /**
-     * Update differentReceiverDestination field of store order details
-     */
-//    public function updateStoreOrderDetailsDifferentReceiverDestinationByOrderId(int $orderId, int $differentReceiverDestination): int|StoreOrderDetailsEntity
-//    {
-//        return $this->adminOrderManager->updateStoreOrderDetailsDifferentReceiverDestinationByOrderId($orderId, $differentReceiverDestination);
-//    }
-
     /**
      * Creates or Updates Daily Financial amount for captain
      */
@@ -2416,5 +2348,19 @@ class AdminOrderService
         $response['totalOrderCount'] = $response['pendingOrdersCount'] + $response['notDeliveredOrdersCount'] + $response['hiddenOrdersCount'];
 
         return $response;
+    }
+
+    public function getLastExternallyDeliveredOrderByOrderId(int $orderId): ExternallyDeliveredOrderEntity|int
+    {
+        return $this->externallyDeliveredOrderGetService->getLastExternallyDeliveredOrderByOrderId($orderId);
+    }
+
+    /**
+     * Handles the updating of the subscriptionCost field of last store subscription
+     */
+    private function handleUpdatingStoreSubscriptionCost(int $storeOwnerProfileId, float $orderDeliveryCost, DateTimeInterface $orderCreatedAt): SubscriptionEntity|int|string
+    {
+        return $this->subscriptionService->handleUpdatingStoreSubscriptionCost($storeOwnerProfileId, $orderDeliveryCost,
+            $orderCreatedAt);
     }
 }
