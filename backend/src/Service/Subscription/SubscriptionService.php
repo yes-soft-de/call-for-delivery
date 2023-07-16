@@ -39,6 +39,7 @@ use App\Request\Subscription\SubscriptionUpdateByAdminRequest;
 use App\Request\Subscription\CalculateCostDeliveryOrderRequest;
 use App\Response\Subscription\CalculateCostDeliveryOrderResponse;
 use App\Request\Admin\Subscription\AdminCalculateCostDeliveryOrderRequest;
+use DateTime;
 use DateTimeInterface;
 
 class SubscriptionService
@@ -1378,22 +1379,54 @@ class SubscriptionService
      * ///todo to be used for Updating subscriptionCost field of the store
      * Get last store subscription and not a future one (whatever its status)
      */
-    public function getLastUnFutureStoreSubscriptionByStoreOwnerProfileId(int $storeOwnerProfileId): array
+    public function getLastUnFutureStoreSubscriptionByStoreOwnerProfileId(int $storeOwnerProfileId): string|SubscriptionEntity
     {
-        return $this->subscriptionManager->getLastUnFutureStoreSubscriptionByStoreOwnerProfileId($storeOwnerProfileId);
+        $subscriptionArrayResult = $this->subscriptionManager->getLastUnFutureStoreSubscriptionByStoreOwnerProfileId($storeOwnerProfileId);
+
+        if (count($subscriptionArrayResult) === 0) {
+            return SubscriptionConstant::SUBSCRIPTION_NOT_FOUND;
+        }
+
+        return $subscriptionArrayResult[0];
+    }
+
+    public function addNewSubscriptionCostToSpecificSubscription(SubscriptionEntity $subscriptionEntity, float $orderCost): SubscriptionEntity
+    {
+        $subscriptionCost = 0.0;
+
+        if (! $subscriptionEntity->getSubscriptionCost()) {
+            $subscriptionCost = $orderCost;
+
+        } else {
+            $subscriptionCost = $subscriptionEntity->getSubscriptionCost() + $orderCost;
+        }
+
+        return $this->subscriptionManager->updateSubscriptionCostBySubscriptionEntityAndNewSubscriptionCost($subscriptionEntity,
+            $subscriptionCost);
     }
 
     /**
      * ///todo to be used for Updating subscriptionCost field of the store
      * Updates subscriptionCost field of last store subscription
      */
-    public function updateStoreSubscriptionCost(OrderEntity $orderEntity)
+    public function handleUpdatingStoreSubscriptionCost(int $storeOwnerProfileId, float $orderDeliveryCost, DateTimeInterface $orderCreatedAt): SubscriptionEntity|int|string
     {
         // 1. get LAST store subscription
         // why LAST? because maybe the store created the order then the subscription had finished.
+        $subscription = $this->getLastUnFutureStoreSubscriptionByStoreOwnerProfileId($storeOwnerProfileId);
+
+        if ($subscription === SubscriptionConstant::SUBSCRIPTION_NOT_FOUND) {
+            return SubscriptionConstant::SUBSCRIPTION_NOT_FOUND;
+        }
+
         // 2. check if order belongs to the subscription
-        // 3. calculate order cost
+        if (($orderCreatedAt < $subscription->getStartDate())
+            || ($orderCreatedAt > $subscription->getEndDate())) {
+            return OrderResultConstant::ORDER_DOES_NOT_BELONG_TO_SUBSCRIPTION;
+        }
+
         // 4. add order cost to subscription cost
+        return $this->addNewSubscriptionCostToSpecificSubscription($subscription, $orderDeliveryCost);
     }
 }
  

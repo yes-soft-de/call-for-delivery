@@ -512,4 +512,13 @@ class SubscriptionManager
         return $this->subscribeRepository->findBy(['storeOwner' => $storeOwnerProfileId, 'isFuture' => false],
             ['id' => 'DESC'], 1);
     }
+
+    public function updateSubscriptionCostBySubscriptionEntityAndNewSubscriptionCost(SubscriptionEntity $subscriptionEntity, float $newSubscriptionCost): SubscriptionEntity
+    {
+        $subscriptionEntity->setSubscriptionCost($newSubscriptionCost);
+
+        $this->entityManager->flush();
+
+        return $subscriptionEntity;
+    }
 }

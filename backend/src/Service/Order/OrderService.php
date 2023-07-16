@@ -31,6 +31,7 @@ use App\Entity\OrderEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionDetailsEntity;
+use App\Entity\SubscriptionEntity;
 use App\Manager\Order\OrderManager;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\BidDetailsCreateRequest;
@@ -662,7 +663,9 @@ class OrderService
 
                 // Create or update captain financial daily amount
                 $this->createOrUpdateCaptainFinancialDaily($order->getId());
-                ///todo Update subscription cost of the store
+                // Update subscription cost of the store's subscription
+                $this->handleUpdatingStoreSubscriptionCost($order->getStoreOwner()->getId(), $order->getDeliveryCost(),
+                    $order->getCreatedAt());
             }
 
             // save log of the action on order
@@ -2306,5 +2309,14 @@ class OrderService
     public function updateOrderStateByOrderEntityAndNewState(OrderEntity $orderEntity, string $state): OrderEntity
     {
         return $this->orderManager->updateOrderStateByOrderEntityAndNewState($orderEntity, $state);
+    }
+
+    /**
+     * Handles the updating of the subscriptionCost field of last store subscription
+     */
+    public function handleUpdatingStoreSubscriptionCost(int $storeOwnerProfileId, float $orderDeliveryCost, DateTimeInterface $orderCreatedAt): SubscriptionEntity|int|string
+    {
+        return $this->subscriptionService->handleUpdatingStoreSubscriptionCost($storeOwnerProfileId, $orderDeliveryCost,
+            $orderCreatedAt);
     }
 }

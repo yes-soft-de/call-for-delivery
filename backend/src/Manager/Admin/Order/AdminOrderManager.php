@@ -363,20 +363,20 @@ class AdminOrderManager
         return $this->orderEntityRepository->filterOrdersWhoseHasNotDistanceHasCalculated($request);
     }
    
-    public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request): ?OrderEntity
-    {
-        $orderEntity = $this->orderEntityRepository->find($request->getId());
-
-        if(! $orderEntity) {
-            return $orderEntity;
-        }
-
-        $orderEntity = $this->autoMapping->mapToObject(OrderStoreBranchToClientDistanceByAdminRequest::class, OrderEntity::class, $request, $orderEntity);
-        
-        $this->entityManager->flush();
-        
-        return $orderEntity;
-    }
+//    public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request): ?OrderEntity
+//    {
+//        $orderEntity = $this->orderEntityRepository->find($request->getId());
+//
+//        if(! $orderEntity) {
+//            return $orderEntity;
+//        }
+//
+//        $orderEntity = $this->autoMapping->mapToObject(OrderStoreBranchToClientDistanceByAdminRequest::class, OrderEntity::class, $request, $orderEntity);
+//
+//        $this->entityManager->flush();
+//
+//        return $orderEntity;
+//    }
 
     public function filterOrders(FilterOrdersWhoseHasNotDistanceHasCalculatedRequest $request): ?array
     {
