@@ -1,9 +1,7 @@
 import 'package:badges/badges.dart' as badges;
-import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_profile/request/profile/profile_request.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
@@ -11,6 +9,8 @@ import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/stacked_form.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/images/images.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:the_country_number/the_country_number.dart';
 
 class ProfileFormWidget extends StatefulWidget {
@@ -21,7 +21,7 @@ class ProfileFormWidget extends StatefulWidget {
   @override
   _ProfileFormWidgetState createState() => _ProfileFormWidgetState();
 
-  ProfileFormWidget({
+  const ProfileFormWidget({
     required this.onProfileSaved,
     required this.onImageUpload,
     this.profileRequest,
@@ -54,7 +54,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
       if (widget.profileRequest?.phone != null) {
         try {
           final sNumber = TheCountryNumber().parseNumber(
-              internationalNumber: '+' + widget.profileRequest!.phone!);
+              internationalNumber: '+${widget.profileRequest!.phone!}');
           print(sNumber);
           print(sNumber.dialCode);
 
@@ -120,7 +120,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
             top: 8.0,
             bottom: 8.0,
           ),
-          child: Container(
+          child: SizedBox(
               width: double.maxFinite,
               height: 45,
               child: Center(
@@ -164,7 +164,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               }
             });
           },
-          child: Container(
+          child: SizedBox(
             height: 150,
             width: double.maxFinite,
             child: Stack(
@@ -176,7 +176,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                       placeholder: ImageAsset.PLACEHOLDER,
                       image: image.contains('http')
                           ? image
-                          : '${Urls.IMAGES_ROOT}${image}',
+                          : '${Urls.IMAGES_ROOT}$image',
                       fit: BoxFit.cover,
                       height: 150,
                       width: double.maxFinite,
@@ -387,7 +387,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                                 '+',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .button
+                                    .labelLarge
                                     ?.copyWith(color: Colors.white),
                               ),
                             ),
@@ -459,7 +459,6 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _bankNameController,
                 hintText: S.current.bankName,
-                validator: false,
                 preIcon: const Icon(Icons.monetization_on_rounded),
               ),
             ),
@@ -469,7 +468,6 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _bankAccountNumberController,
                 hintText: '123456789',
-                validator: false,
                 preIcon: const Icon(Icons.password_rounded),
                 numbers: true,
               ),
@@ -480,7 +478,6 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
               child: CustomFormField(
                 controller: _stcPayController,
                 hintText: 'XXXXXXXX',
-                validator: false,
                 preIcon: const Icon(Icons.credit_card_rounded),
                 last: true,
               ),

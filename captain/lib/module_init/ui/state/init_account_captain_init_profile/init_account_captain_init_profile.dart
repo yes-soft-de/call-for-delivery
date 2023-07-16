@@ -27,7 +27,7 @@ class InitAccountCaptainInitProfile extends States {
     var number = getIt<AuthService>().username;
     if (number.isNotEmpty) {
       final sNumber =
-          TheCountryNumber().parseNumber(internationalNumber: '+' + number);
+          TheCountryNumber().parseNumber(internationalNumber: '+$number');
       screen.countryCodeController.text = sNumber.dialCode.substring(1);
       screen.phoneController.text = sNumber.number;
       screen.refresh();
@@ -72,8 +72,8 @@ class InitAccountCaptainInitProfile extends States {
                               ),
                               child: Stack(
                                 children: [
-                                  Positioned.fill(
-                                      child: const Icon(Icons.person,
+                                  const Positioned.fill(
+                                      child: Icon(Icons.person,
                                           size: 45, color: Colors.white)),
                                   _getCaptainImageFG(),
                                 ],
@@ -90,21 +90,21 @@ class InitAccountCaptainInitProfile extends States {
                 InitField(
                   controller: screen.nameController,
                   icon: Icons.person,
-                  hint: S.current.eg + ' : ' + S.current.nameHint,
+                  hint: '${S.current.eg} : ${S.current.nameHint}',
                   title: S.current.captainName,
                 ),
                 // city
                 InitField(
                   controller: screen.cityController,
                   icon: Icons.location_city_rounded,
-                  hint: S.current.eg + ' : ' + S.current.jaddah,
+                  hint: '${S.current.eg} : ${S.current.jaddah}',
                   title: S.current.city,
                 ),
                 // address
                 InitField(
                   controller: screen.addressController,
                   icon: Icons.location_on,
-                  hint: S.current.eg + ' : ' + S.current.neighborhood,
+                  hint: '${S.current.eg} : ${S.current.neighborhood}',
                   title: S.current.neighborhood,
                 ),
 
@@ -112,9 +112,7 @@ class InitAccountCaptainInitProfile extends States {
                 Padding(
                   padding: const EdgeInsets.only(left: 80, right: 80, top: 32),
                   child: Text(
-                    S.of(context).phoneNumber +
-                        ' ' +
-                        '(${S.current.phoneNumberThatShowsForCaptain})',
+                    '${S.of(context).phoneNumber} (${S.current.phoneNumberThatShowsForCaptain})',
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 ),
@@ -172,7 +170,7 @@ class InitAccountCaptainInitProfile extends States {
                                     '+',
                                     style: Theme.of(context)
                                         .textTheme
-                                        .button
+                                        .labelLarge
                                         ?.copyWith(color: Colors.white),
                                   ),
                                 ),
@@ -188,8 +186,8 @@ class InitAccountCaptainInitProfile extends States {
                 InitField(
                   controller: screen.ageController,
                   icon: Icons.calendar_month_rounded,
-                  hint: S.current.eg + ' : ' + '36',
-                  title: S.current.age + ' (${S.current.optional}) ',
+                  hint: '${S.current.eg} : 36',
+                  title: '${S.current.age} (${S.current.optional}) ',
                   optional: true,
                   number: true,
                 ),
@@ -197,8 +195,8 @@ class InitAccountCaptainInitProfile extends States {
                 InitField(
                   controller: screen.carController,
                   icon: Icons.local_taxi_rounded,
-                  hint: S.current.eg + ' : ' + 'Kia Rio',
-                  title: S.current.car + ' (${S.current.optional}) ',
+                  hint: '${S.current.eg} : Kia Rio',
+                  title: '${S.current.car} (${S.current.optional}) ',
                   optional: true,
                   last: true,
                 ),
@@ -208,7 +206,7 @@ class InitAccountCaptainInitProfile extends States {
                   child: Container(
                     child: Center(
                       child: Text(
-                        S.of(context).identity + ' (${S.current.optional}) ',
+                        '${S.of(context).identity} (${S.current.optional}) ',
                         style: const TextStyle(fontWeight: FontWeight.w600),
                         textAlign: TextAlign.start,
                       ),
@@ -228,8 +226,7 @@ class InitAccountCaptainInitProfile extends States {
                   child: Container(
                     child: Center(
                       child: Text(
-                        S.of(context).driverLicence +
-                            ' (${S.current.optional}) ',
+                        '${S.of(context).driverLicence} (${S.current.optional}) ',
                         style: const TextStyle(fontWeight: FontWeight.w600),
                         textAlign: TextAlign.start,
                       ),
@@ -248,8 +245,7 @@ class InitAccountCaptainInitProfile extends States {
                   child: Container(
                     child: Center(
                       child: Text(
-                        S.of(context).mechanichLicence +
-                            ' (${S.current.optional}) ',
+                        '${S.of(context).mechanichLicence} (${S.current.optional}) ',
                         style: const TextStyle(fontWeight: FontWeight.w600),
                         textAlign: TextAlign.start,
                       ),
@@ -270,27 +266,24 @@ class InitAccountCaptainInitProfile extends States {
                 InitField(
                   controller: screen.bankNameController,
                   icon: Icons.account_balance_rounded,
-                  hint: S.current.eg + ' : ' + S.current.bankNameHint,
-                  optional: true,
-                  title: S.current.bankName + ' (${S.current.optional}) ',
+                  hint: '${S.current.eg} : ${S.current.bankNameHint}',
+                  title: S.current.bankName,
                 ),
                 // Bank Account Number
                 InitField(
                   controller: screen.bankAccountNumberController,
                   icon: Icons.password_rounded,
-                  hint: S.current.eg + ' : ' + '3123235145313',
-                  title:
-                      S.current.bankAccountNumber + ' (${S.current.optional}) ',
-                  optional: true,
+                  hint: '${S.current.eg} : 3123235145313',
+                  title: S.current.bankAccountNumber,
                 ),
                 // Stc Pay
                 InitField(
-                    controller: screen.stcPayController,
-                    icon: Icons.credit_card_rounded,
-                    hint: S.current.eg + ' : ' + '059796748',
-                    title: S.current.stcPayCode + ' (${S.current.optional}) ',
-                    optional: true,
-                    last: true),
+                  controller: screen.stcPayController,
+                  icon: Icons.credit_card_rounded,
+                  hint: '${S.current.eg} : 059796748',
+                  title: S.current.stcPayCode,
+                  last: true,
+                ),
                 const SizedBox(
                   height: 75,
                 ),
