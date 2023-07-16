@@ -2402,6 +2402,11 @@ class AdminOrderService
         return $response;
     }
 
+    public function getLastExternallyDeliveredOrderByOrderId(int $orderId): ExternallyDeliveredOrderEntity|int
+    {
+        return $this->externallyDeliveredOrderGetService->getLastExternallyDeliveredOrderByOrderId($orderId);
+    }
+
     /**
      * Handles the updating of the subscriptionCost field of last store subscription
      */
