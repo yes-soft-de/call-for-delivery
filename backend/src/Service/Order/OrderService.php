@@ -31,6 +31,7 @@ use App\Entity\OrderEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionDetailsEntity;
+use App\Entity\SubscriptionEntity;
 use App\Manager\Order\OrderManager;
 use App\Request\Order\BidOrderFilterBySupplierRequest;
 use App\Request\Order\BidDetailsCreateRequest;
@@ -574,8 +575,8 @@ class OrderService
 
         // check captain profile status
         $captain = $this->captainService->captainIsActive($request->getCaptainId());
-        if ($captain->status === CaptainConstant::CAPTAIN_INACTIVE) {
 
+        if ($captain->status === CaptainConstant::CAPTAIN_INACTIVE) {
             return CaptainConstant::CAPTAIN_INACTIVE;
         }
         // end check captain profile status
@@ -583,6 +584,7 @@ class OrderService
         $this->captainFinancialDuesService->updateCaptainFinancialSystemDetail($request->getCaptainId());
 
         $captainFinancialSystemStatus = $this->captainService->getCaptainFinancialSystemStatus($request->getCaptainId());
+
         if ($captainFinancialSystemStatus->status === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_INACTIVE) {
             return CaptainFinancialSystem::FINANCIAL_SYSTEM_INACTIVE;
         }
@@ -598,7 +600,6 @@ class OrderService
         }
 
         if ($request->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
-
             //not show orders for captain because not online
             if ($captain->isOnline === CaptainConstant::CAPTAIN_ONLINE_FALSE) {
                 return CaptainConstant::ERROR_CAPTAIN_ONLINE_FALSE;
@@ -618,11 +619,11 @@ class OrderService
                     return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE;
                 }
                 // end check
-
                 if ($orderEntity->getOrderType() === OrderTypeConstant::ORDER_TYPE_NORMAL) {
                     // Following if block will be executed only when the order is not sub-order,
                     // otherwise, we will move to update statement directly
-                    if ($orderEntity->getOrderIsMain() === OrderIsMainConstant::ORDER_MAIN || $orderEntity->getOrderIsMain() === OrderIsMainConstant::ORDER_MAIN_WITHOUT_SUBORDER) {
+                    if ($orderEntity->getOrderIsMain() === OrderIsMainConstant::ORDER_MAIN
+                        || $orderEntity->getOrderIsMain() === OrderIsMainConstant::ORDER_MAIN_WITHOUT_SUBORDER) {
                         $canAcceptOrder = $this->subscriptionService->checkRemainingCarsByOrderId($request->getId());
 
                         if ($canAcceptOrder === SubscriptionConstant::CARS_FINISHED) {
@@ -651,7 +652,7 @@ class OrderService
             }
 
             if ($order->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
-
+                // update captain financial due
                 $this->captainFinancialDuesService->captainFinancialDues($request->getCaptainId()->getCaptainId());
 
                 //Save the price of the order in cash in case the captain does not pay the store
@@ -662,6 +663,9 @@ class OrderService
 
                 // Create or update captain financial daily amount
                 $this->createOrUpdateCaptainFinancialDaily($order->getId());
+                // Update subscription cost of the store's subscription
+                $this->handleUpdatingStoreSubscriptionCost($order->getStoreOwner()->getId(), $order->getDeliveryCost(),
+                    $order->getCreatedAt());
             }
 
             // save log of the action on order
@@ -2305,5 +2309,14 @@ class OrderService
     public function updateOrderStateByOrderEntityAndNewState(OrderEntity $orderEntity, string $state): OrderEntity
     {
         return $this->orderManager->updateOrderStateByOrderEntityAndNewState($orderEntity, $state);
+    }
+
+    /**
+     * Handles the updating of the subscriptionCost field of last store subscription
+     */
+    public function handleUpdatingStoreSubscriptionCost(int $storeOwnerProfileId, float $orderDeliveryCost, DateTimeInterface $orderCreatedAt): SubscriptionEntity|int|string
+    {
+        return $this->subscriptionService->handleUpdatingStoreSubscriptionCost($storeOwnerProfileId, $orderDeliveryCost,
+            $orderCreatedAt);
     }
 }

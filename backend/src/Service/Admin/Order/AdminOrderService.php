@@ -38,6 +38,7 @@ use App\Entity\OrderEntity;
 use App\Entity\PackageEntity;
 use App\Entity\StoreOrderDetailsEntity;
 use App\Entity\SubscriptionDetailsEntity;
+use App\Entity\SubscriptionEntity;
 use App\Manager\Admin\Order\AdminOrderManager;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\FilterDifferentlyAnsweredCashOrdersByAdminRequest;
@@ -1257,6 +1258,9 @@ class AdminOrderService
 
                         // Create or update daily captain financial amount
                         $this->createOrUpdateCaptainFinancialDaily($orderResult[0]->getId());
+                        // Update subscription cost of the store's subscription
+                        $this->handleUpdatingStoreSubscriptionCost($orderResult[0]->getStoreOwner()->getId(),
+                            $orderResult[0]->getDeliveryCost(), $orderResult[0]->getCreatedAt());
                     }
 
                     // create firebase notification to captain
@@ -1350,26 +1354,26 @@ class AdminOrderService
         return $this->adminOrderManager->filterOrdersWhoseHasNotDistanceHasCalculated($request);  
     }
      
-    public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request, int $userId): OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse
-    {
-        $order = $this->adminOrderManager->updateStoreBranchToClientDistanceByAdmin($request);
-
-        if ($order) {
-            if ($order->getCaptainId()?->getCaptainId()) {
-                $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
-
-                // Create or update daily captain financial amount
-                $this->createOrUpdateCaptainFinancialDaily($order->getId());
-            }
-
-            // save log of the action on order
-            $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
-                OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_BY_ADMIN_ACTION_CONST, [], null,
-                null);
-        }
-
-        return $this->autoMapping->map(OrderEntity::class, OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse::class, $order);
-    }
+//    public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request, int $userId): OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse
+//    {
+//        $order = $this->adminOrderManager->updateStoreBranchToClientDistanceByAdmin($request);
+//
+//        if ($order) {
+//            if ($order->getCaptainId()?->getCaptainId()) {
+//                $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
+//
+//                // Create or update daily captain financial amount
+//                $this->createOrUpdateCaptainFinancialDaily($order->getId());
+//            }
+//
+//            // save log of the action on order
+//            $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
+//                OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_BY_ADMIN_ACTION_CONST, [], null,
+//                null);
+//        }
+//
+//        return $this->autoMapping->map(OrderEntity::class, OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse::class, $order);
+//    }
 
     public function createSubOrderByAdmin(SubOrderCreateByAdminRequest $request, int $userId): string|OrderCreateByAdminResponse
     {
@@ -2349,5 +2353,14 @@ class AdminOrderService
     public function getLastExternallyDeliveredOrderByOrderId(int $orderId): ExternallyDeliveredOrderEntity|int
     {
         return $this->externallyDeliveredOrderGetService->getLastExternallyDeliveredOrderByOrderId($orderId);
+    }
+
+    /**
+     * Handles the updating of the subscriptionCost field of last store subscription
+     */
+    private function handleUpdatingStoreSubscriptionCost(int $storeOwnerProfileId, float $orderDeliveryCost, DateTimeInterface $orderCreatedAt): SubscriptionEntity|int|string
+    {
+        return $this->subscriptionService->handleUpdatingStoreSubscriptionCost($storeOwnerProfileId, $orderDeliveryCost,
+            $orderCreatedAt);
     }
 }
