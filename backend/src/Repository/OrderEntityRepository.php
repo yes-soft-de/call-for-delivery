@@ -468,39 +468,11 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function filterStoreOrdersByAdmin(OrderFilterByAdminRequest $request): ?array
+    public function filterStoreOrdersByAdmin(OrderFilterByAdminRequest $request): array
     {
         $query = $this->createQueryBuilder('orderEntity')
-//            ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate',
-//                'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'orderEntity.storeBranchToClientDistance',
-               ->addSelect('storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName', 'storeOrderDetails.recipientPhone',
-                'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
-                'imageEntity.id as imageId', 'imageEntity.imagePath as images', 'captainEntity.id as captainProfileId')
-
-            ->leftJoin(
-                StoreOrderDetailsEntity::class,
-                'storeOrderDetails',
-                Join::WITH,
-                'orderEntity.id = storeOrderDetails.orderId')
-
-            ->leftJoin(
-                StoreOwnerBranchEntity::class,
-                'storeOwnerBranch',
-                Join::WITH,
-                'storeOrderDetails.branch = storeOwnerBranch.id')
-
-            ->leftJoin(
-                ImageEntity::class,
-                'imageEntity',
-                Join::WITH,
-                'imageEntity.id = storeOrderDetails.images')
-
-            ->leftJoin(
-                CaptainEntity::class,
-                'captainEntity',
-                Join::WITH,
-                'captainEntity.id = orderEntity.captainId'
-            )
+            ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.orderCost', 'orderEntity.note', 'orderEntity.deliveryDate',
+                'orderEntity.createdAt', 'orderEntity.kilometer', 'orderEntity.storeBranchToClientDistance', 'orderEntity.orderIsMain')
 
             ->leftJoin(
                 ExternallyDeliveredOrderEntity::class,
@@ -563,7 +535,7 @@ class OrderEntityRepository extends ServiceEntityRepository
          || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
             $tempQuery = $query->getQuery()->getResult();
 
-            return $this->filterOrdersEntitiesByOptionalDates($tempQuery, $request->getFromDate(), $request->getToDate(),
+            return $this->filterOrdersByDates($tempQuery, $request->getFromDate(), $request->getToDate(),
                 $request->getCustomizedTimezone());
         }
 
@@ -2350,28 +2322,28 @@ class OrderEntityRepository extends ServiceEntityRepository
 
         if (count($tempOrders) > 0) {
             if (($fromDate != null || $fromDate != "") && ($toDate === null || $toDate === "")) {
-                foreach ($tempOrders as $key => $value) {
-                    if ($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) >=
+                foreach ($tempOrders as $value) {
+                    if ($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) >=
                         new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) {
-                        $filteredOrders[$key] = $value;
+                        $filteredOrders[] = $value;
                     }
                 }
 
             } elseif (($fromDate === null || $fromDate === "") && ($toDate != null || $toDate != "")) {
-                foreach ($tempOrders as $key => $value) {
-                    if ($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) <=
+                foreach ($tempOrders as $value) {
+                    if ($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) <=
                         new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59'))) {
-                        $filteredOrders[$key] = $value;
+                        $filteredOrders[] = $value;
                     }
                 }
 
             } elseif (($fromDate != null || $fromDate != "") && ($toDate != null || $toDate != "")) {
-                foreach ($tempOrders as $key => $value) {
-                    if (($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) >=
+                foreach ($tempOrders as $value) {
+                    if (($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) >=
                         new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) &&
-                        ($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? $timeZone : 'UTC')) <=
+                        ($value['createdAt']->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) <=
                             new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59')))) {
-                        $filteredOrders[$key] = $value;
+                        $filteredOrders[] = $value;
                     }
                 }
             }
