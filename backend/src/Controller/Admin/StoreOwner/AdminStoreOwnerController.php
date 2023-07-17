@@ -119,7 +119,7 @@ class AdminStoreOwnerController extends BaseController
     /**
      * admin: Update status of the store owner profile by admin.
      * @Route("storeownerprofilestatusbyadmin", name="updateStatusOfExistingStoreOwnerProfileByAdmin", methods={"PUT"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_SUPER_ADMIN")
      * @param Request $request
      * @return JsonResponse
      *
@@ -211,7 +211,7 @@ class AdminStoreOwnerController extends BaseController
     /**
      * admin: Update store owner profile by admin.
      * @Route("updatestoreownerprofilebyadmin", name="updateExistingStoreOwnerProfileByAdmin", methods={"PUT"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_SUPER_ADMIN")
      * @param Request $request
      * @return JsonResponse
      *
@@ -312,7 +312,7 @@ class AdminStoreOwnerController extends BaseController
     /**
      * Admin: delete store owner account and profile by admin
      * @Route("deletestoreownerprofilebyadmin", name="deleteStoreOwnerAccountAndProfileByAdmin", methods={"DELETE"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_SUPER_ADMIN")
      *
      * @OA\Tag(name="Eraser")
      *
