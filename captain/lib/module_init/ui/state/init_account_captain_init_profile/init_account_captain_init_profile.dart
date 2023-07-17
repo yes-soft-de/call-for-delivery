@@ -267,21 +267,25 @@ class InitAccountCaptainInitProfile extends States {
                   controller: screen.bankNameController,
                   icon: Icons.account_balance_rounded,
                   hint: '${S.current.eg} : ${S.current.bankNameHint}',
-                  title: S.current.bankName,
+                  title: '${S.current.bankName} (${S.current.optional})',
+                  optional: true,
                 ),
                 // Bank Account Number
                 InitField(
                   controller: screen.bankAccountNumberController,
                   icon: Icons.password_rounded,
                   hint: '${S.current.eg} : 3123235145313',
-                  title: S.current.bankAccountNumber,
+                  title:
+                      '${S.current.bankAccountNumber} (${S.current.optional})',
+                  optional: true,
                 ),
                 // Stc Pay
                 InitField(
                   controller: screen.stcPayController,
                   icon: Icons.credit_card_rounded,
                   hint: '${S.current.eg} : 059796748',
-                  title: S.current.stcPayCode,
+                  title: '${S.current.stcPayCode} (${S.current.optional})',
+                  optional: true,
                   last: true,
                 ),
                 const SizedBox(

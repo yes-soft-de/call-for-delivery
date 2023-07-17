@@ -460,6 +460,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 controller: _bankNameController,
                 hintText: S.current.bankName,
                 preIcon: const Icon(Icons.monetization_on_rounded),
+                validator: false,
               ),
             ),
             titleField(S.of(context).bankAccountNumber),
@@ -470,6 +471,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 hintText: '123456789',
                 preIcon: const Icon(Icons.password_rounded),
                 numbers: true,
+                validator: false,
               ),
             ),
             titleField(S.of(context).stcPayCode),
@@ -480,6 +482,7 @@ class _ProfileFormWidgetState extends State<ProfileFormWidget> {
                 hintText: 'XXXXXXXX',
                 preIcon: const Icon(Icons.credit_card_rounded),
                 last: true,
+                validator: false,
               ),
             ),
             Padding(
