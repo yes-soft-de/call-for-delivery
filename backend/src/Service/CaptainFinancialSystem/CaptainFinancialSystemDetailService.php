@@ -9,6 +9,7 @@ use App\Response\CaptainFinancialSystem\CaptainFinancialSystemDetailResponse;
 use App\Request\CaptainFinancialSystem\CaptainFinancialSystemDetailRequest;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Response\CaptainFinancialSystem\CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse;
+use App\Service\CaptainFinancialSystem\CaptainFinancialDefaultSystem\CaptainFinancialDefaultSystemGetBalanceService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialSystemOne\CaptainFinancialSystemOneGetBalanceDetailsService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialSystemThree\CaptainFinancialSystemThreeGetBalanceDetailsService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialSystemTwo\CaptainFinancialSystemTwoGetBalanceDetailsService;
@@ -28,7 +29,8 @@ class CaptainFinancialSystemDetailService
         private CaptainFinancialDuesService $captainFinancialDuesService,
         private CaptainFinancialSystemTwoGetBalanceDetailsService $captainFinancialSystemTwoGetBalanceDetailsService,
         private CaptainFinancialSystemThreeGetBalanceDetailsService $captainFinancialSystemThreeGetBalanceDetailsService,
-        private CaptainFinancialSystemOneGetBalanceDetailsService $captainFinancialSystemOneGetBalanceDetailsService
+        private CaptainFinancialSystemOneGetBalanceDetailsService $captainFinancialSystemOneGetBalanceDetailsService,
+        private CaptainFinancialDefaultSystemGetBalanceService $captainFinancialDefaultSystemGetBalanceService
     )
     {
     }
@@ -78,10 +80,8 @@ class CaptainFinancialSystemDetailService
                 return $this->captainFinancialSystemOneGetBalanceDetailsService->getBalanceDetails($financialSystemDetail,
                     $financialSystemDetail['captainId'], $sumPayments, $date, $countWorkdays);
                 // *** End of Rami code ***
-            }
 
-            if ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
-
+            } elseif ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
                 // *** Habib code ***
                 // return $this->captainFinancialSystemTwoBalanceDetailService->getBalanceDetailWithSystemTwo($financialSystemDetail, $financialSystemDetail['captainId'], $sumPayments, $date, $countWorkdays);
                 // *** End of Habib code ***
@@ -90,10 +90,8 @@ class CaptainFinancialSystemDetailService
                 return $this->captainFinancialSystemTwoGetBalanceDetailsService->getBalanceDetails($financialSystemDetail['captainId'],
                     $date, $sumPayments, $financialSystemDetail);
                 // *** End of Rami code ***
-            }
 
-            if ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_THREE) {
-              
+            } elseif ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_THREE) {
                 $choseFinancialSystemDetails = $this->captainFinancialSystemAccordingOnOrderService->getCaptainFinancialSystemAccordingOnOrder();
 
                 // *** Habib code ***
@@ -104,6 +102,9 @@ class CaptainFinancialSystemDetailService
                 return $this->captainFinancialSystemThreeGetBalanceDetailsService->getBalanceDetails($choseFinancialSystemDetails,
                     $financialSystemDetail['captainId'], $sumPayments, $date);
                 // *** End of Rami code ***
+
+            } elseif ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST) {
+                return $this->captainFinancialDefaultSystemGetBalanceService->getCaptainBalanceDetails();
             }
         }
 

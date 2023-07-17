@@ -8,6 +8,18 @@ class CaptainFinancialDefaultSystemGetBalanceService
     {
     }
 
+    public function getCaptainBalanceDetails()
+    {
+        $response = [];
+
+        $response['todayOrdersCount'] = 0.0;
+        $response['todayFinancialAmount'] = 0.0;
+
+        $response['sinceLastPaymentOrdersCount'] = 0.0;
+        $response['sinceLastPaymentFinancialAmount'] = 0.0;
+
+    }
+
     /**
      * Get array which includes:
      * basic captain financial amount (due), bonus, and amount for store
