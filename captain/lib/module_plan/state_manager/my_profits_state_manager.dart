@@ -5,20 +5,20 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_plan/model/captain_balance_model.dart';
 import 'package:c4d/module_plan/service/plan_service.dart';
-import 'package:c4d/module_plan/ui/screen/new_account_balance_screen.dart';
-import 'package:c4d/module_plan/ui/state/new_account_balance/new_account_balance_loaded_state.dart';
+import 'package:c4d/module_plan/ui/screen/my_profits_screen.dart';
+import 'package:c4d/module_plan/ui/state/my_profits/my_profits_state_loaded.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
 @injectable
-class NewAccountBalanceStateManager {
+class MyProfitsStateManager {
   final stateSubject = PublishSubject<States>();
   final PlanService _planService;
 
-  NewAccountBalanceStateManager(this._planService);
+  MyProfitsStateManager(this._planService);
   Stream<States> get stateStream => stateSubject.stream;
 
-  void getAccountBalance(NewAccountBalanceScreenState screenState) {
+  void getAccountBalance(MyProfitsScreenState screenState) {
     stateSubject.add(LoadingState(screenState));
     _planService.getCaptainAccountBalance().then((value) {
       if (value.hasError) {
@@ -35,7 +35,7 @@ class NewAccountBalanceStateManager {
         }, hasAppbar: false));
       } else {
         value as CaptainAccountBalanceModel;
-        stateSubject.add(NewAccountBalanceStateLoaded(screenState, value.data));
+        stateSubject.add(MyProfitsStateLoaded(screenState, value.data));
       }
     });
   }

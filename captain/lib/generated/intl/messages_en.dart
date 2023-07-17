@@ -613,6 +613,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "myOrders": MessageLookupByLibrary.simpleMessage("My Orders"),
         "myPlan": MessageLookupByLibrary.simpleMessage("My Plan"),
         "myProfile": MessageLookupByLibrary.simpleMessage("My Profile"),
+        "myProfits": MessageLookupByLibrary.simpleMessage("my profits"),
         "myStatus": MessageLookupByLibrary.simpleMessage("My Status"),
         "mySubscription":
             MessageLookupByLibrary.simpleMessage("My Subscription"),

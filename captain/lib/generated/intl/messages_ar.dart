@@ -602,6 +602,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "myOrders": MessageLookupByLibrary.simpleMessage("طلباتي"),
         "myPlan": MessageLookupByLibrary.simpleMessage("باقتي"),
         "myProfile": MessageLookupByLibrary.simpleMessage("معلوماتي"),
+        "myProfits": MessageLookupByLibrary.simpleMessage("ارباحي"),
         "myStatus": MessageLookupByLibrary.simpleMessage("حالتي"),
         "mySubscription": MessageLookupByLibrary.simpleMessage("اشتراكي"),
         "name": MessageLookupByLibrary.simpleMessage("الاسم"),

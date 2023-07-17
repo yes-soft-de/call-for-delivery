@@ -7800,6 +7800,16 @@ class S {
     );
   }
 
+  /// `my profits`
+  String get myProfits {
+    return Intl.message(
+      'my profits',
+      name: 'myProfits',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Over paid`
   String get financeOverPaid {
     return Intl.message(

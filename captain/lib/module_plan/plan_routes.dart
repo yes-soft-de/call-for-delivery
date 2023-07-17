@@ -6,4 +6,5 @@ class PlanRoutes {
   static const CAPTAIN_FINANCIAL_DUES_DETAILS =
       '/captain_financial_dues_details';
   static const CAPTAIN_DAILY_PAYMENTS = '/captain_daily_payments';
+  static const MY_PROFIT = '/my_profit';
 }

@@ -1,13 +1,12 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_plan/model/captain_balance_model.dart';
-import 'package:c4d/module_plan/ui/screen/new_account_balance_screen.dart';
+import 'package:c4d/module_plan/ui/screen/my_profits_screen.dart';
 import 'package:flutter/material.dart';
 
-class NewAccountBalanceStateLoaded extends States {
+class MyProfitsStateLoaded extends States {
   CaptainAccountBalanceModel? balance;
-  final NewAccountBalanceScreenState screenState;
-  NewAccountBalanceStateLoaded(this.screenState, this.balance)
-      : super(screenState) {
+  final MyProfitsScreenState screenState;
+  MyProfitsStateLoaded(this.screenState, this.balance) : super(screenState) {
     try {
       _scrollController.addListener(() {
         first = false;

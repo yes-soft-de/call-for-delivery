@@ -1,22 +1,22 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_plan/state_manager/new_account_balance_state_manager.dart';
+import 'package:c4d/module_plan/state_manager/my_profits_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class NewAccountBalanceScreen extends StatefulWidget {
-  final NewAccountBalanceStateManager _manager;
+class MyProfitsScreen extends StatefulWidget {
+  final MyProfitsStateManager _manager;
 
-  const NewAccountBalanceScreen(this._manager);
+  const MyProfitsScreen(this._manager);
 
   @override
-  State<StatefulWidget> createState() => NewAccountBalanceScreenState();
+  State<StatefulWidget> createState() => MyProfitsScreenState();
 }
 
-class NewAccountBalanceScreenState extends State<NewAccountBalanceScreen> {
+class MyProfitsScreenState extends State<MyProfitsScreen> {
   States? _currentState;
   @override
   void initState() {
