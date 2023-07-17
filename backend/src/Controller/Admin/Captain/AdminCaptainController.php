@@ -117,7 +117,7 @@ class AdminCaptainController extends BaseController
     /**
      * admin: Update status of the captain profile.
      * @Route("captainprofilestatus", name="updateCaptainProfileStatusByAdmin", methods={"PUT"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_SUPER_ADMIN")
      * @param Request $request
      * @return JsonResponse
      *
@@ -189,7 +189,7 @@ class AdminCaptainController extends BaseController
     /**
      * admin: Update captain profile.
      * @Route("captainprofile", name="updateCaptainProfileByAdmin", methods={"PUT"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_SUPER_ADMIN")
      * @param Request $request
      * @return JsonResponse
      *
@@ -318,7 +318,7 @@ class AdminCaptainController extends BaseController
     /**
      * Admin: delete captain account and profile by admin
      * @Route("deletecaptainprofilebyadmin", name="deleteCaptainAccountAndProfileByAdmin", methods={"DELETE"})
-     * @IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_SUPER_ADMIN")
      *
      * @OA\Tag(name="Captain Profile")
      *

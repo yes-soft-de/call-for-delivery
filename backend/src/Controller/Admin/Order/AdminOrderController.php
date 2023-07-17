@@ -119,9 +119,18 @@ class AdminOrderController extends BaseController
 
         $request = $this->autoMapping->map(stdClass::class, OrderFilterByAdminRequest::class, (object)$data);
 
-        $result = $this->adminOrderService->filterStoreOrdersByAdmin($request, $this->getUserId());
+        $result = $this->adminOrderService->filterStoreOrdersByAdmin($request, $this->getUserId());//dd($result);
 
-        return $this->response($result, self::FETCH);
+//        return new JsonResponse(["status_code" => '200',
+//            "msg" => 'fetched' . " " . "Successfully.",
+//            "Data" => json_decode($result)
+//        ], 200, [
+//            ['Access-Control-Allow-Headers', 'X-Header-One,X-Header-Two'],
+//            ['Access-Control-Allow-Origin', '*'],
+//            ['Access-Control-Allow-Methods', 'PUT']
+//        ]);
+
+        return $this->responseTwo($result, self::FETCH);
     }
 
     /**
@@ -804,89 +813,6 @@ class AdminOrderController extends BaseController
         return $this->response($response, self::UPDATE);
     }
 
-//    /**
-//     * to be replaced by normalordercancelbyadmin when the new api works correctly
-//     * admin: cancel normal order by admin
-//     * @Route("ordercancelbyadmin/{id}", name="orderCancelByAdmin", methods={"PUT"})
-//     * @IsGranted("ROLE_ADMIN")
-//     * @param int $id
-//     * @return JsonResponse
-//     *
-//     * @OA\Tag(name="Order")
-//     *
-//     * @OA\Parameter(
-//     *      name="token",
-//     *      in="header",
-//     *      description="token to be passed as a header",
-//     *      required=true
-//     * )
-//     *
-//     * @OA\Response(
-//     *      response=204,
-//     *      description="Return updated order info",
-//     *      @OA\JsonContent(
-//     *          @OA\Property(type="string", property="status_code"),
-//     *          @OA\Property(type="string", property="msg"),
-//     *          @OA\Property(type="object", property="Data",
-//     *                  ref=@Model(type="App\Response\Admin\Order\OrderCancelByAdminResponse")
-//     *          )
-//     *      )
-//     * )
-//     *
-//     * or
-//     *
-//     * @OA\Response(
-//     *      response=200,
-//     *      description="Return error according to situation.",
-//     *      @OA\JsonContent(
-//     *          oneOf={
-//     *                   @OA\Schema(type="object",
-//     *                          @OA\Property(type="string", property="status_code", description="9213"),
-//     *                          @OA\Property(type="string", property="msg")
-//     *                   ),
-//     *                   @OA\Schema(type="object",
-//     *                          @OA\Property(type="string", property="status_code", description="9215"),
-//     *                          @OA\Property(type="string", property="msg")
-//     *                   ),
-//     *                   @OA\Schema(type="object",
-//     *                          @OA\Property(type="string", property="status_code", description="9203"),
-//     *                          @OA\Property(type="string", property="msg")
-//     *                   ),
-//     *                   @OA\Schema(type="object",
-//     *                          @OA\Property(type="string", property="status_code", description="9205"),
-//     *                          @OA\Property(type="string", property="msg")
-//     *                   )
-//     *              }
-//     *      )
-//     *
-//     * )
-//     *
-//     * @Security(name="Bearer")
-//     */
-//    public function orderCancelByAdmin(int $id): JsonResponse
-//    {
-//        $response = $this->adminOrderService->cancelOrderByAdmin($id, $this->getUserId());
-//
-//        if ($response === OrderResultConstant::ORDER_TYPE_BID) {
-//            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_WRONG_ORDER_TYPE);
-//
-//        } elseif ($response === OrderResultConstant::ORDER_UPDATE_PROBLEM) {
-//            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_UPDATE);
-//
-//        } elseif ($response === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
-//            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_NOT_FOUND);
-//
-//        } elseif ($response === OrderResultConstant::ORDER_ALREADY_BEING_CANCELLED) {
-//            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CANCEL);
-//        }
-//
-//        // elseif ($response === OrderResultConstant::ORDER_ALREADY_IS_BEING_ACCEPTED) {
-//        // return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_REMOVE_CAPTAIN_RECEIVE);
-//        // }
-//
-//        return $this->response($response, self::UPDATE);
-//    }
-
     /**
      * Admin: update order state by admin. 
      * @Route("orderstateupdatebyadmin", name="updateOrderStateByAdmin", methods={"PUT"})
@@ -1207,63 +1133,64 @@ class AdminOrderController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
-    
-    /**
-     * Admin: update storeBranchToClientDistance by admin. 
-     * @Route("updatestorebranchtoclientdistancebyadmin", name="updateStoreBranchToClientDistanceByAdmin", methods={"PUT"})
-     * @IsGranted("ROLE_ADMIN")
-     * @param Request $request
-     * @return JsonResponse
-     *
-     * @OA\Tag(name="Order")
-     *
-     * @OA\Parameter(
-     *      name="token",
-     *      in="header",
-     *      description="token to be passed as a header",
-     *      required=true
-     * )
-     *
-     * @OA\RequestBody(
-     *      description="update storeBranchToClientDistance by admin",
-     *      @OA\JsonContent(
-     *              @OA\Property(type="integer", property="id"),
-     *              @OA\Property(type="string", property="storeBranchToClientDistance"),
-     *      )
-     * )
-     * 
-     * @OA\Response(
-     *      response=204,
-     *      description="Returns the order info",
-     *      @OA\JsonContent(
-     *          @OA\Property(type="string", property="status_code"),
-     *          @OA\Property(type="string", property="msg"),
-     *          @OA\Property(type="object", property="Data",
-     *               ref=@Model(type="App\Response\Admin\Order\OrderStateUpdateByAdminResponse")
-     *      )
-     *   )
-     * )
-     *
-     * @Security(name="Bearer") 
-     */
-    public function updateStoreBranchToClientDistanceByAdmin(Request $request): JsonResponse
-    {
-        $data = json_decode($request->getContent(), true);
 
-        $request = $this->autoMapping->map(\stdClass::class, OrderStoreBranchToClientDistanceByAdminRequest::class, (object) $data);
-
-        $violations = $this->validator->validate($request);
-
-        if (\count($violations) > 0) {
-            $violationsString = (string) $violations;
-
-            return new JsonResponse($violationsString, Response::HTTP_OK);
-        }
-
-        $result = $this->adminOrderService->updateStoreBranchToClientDistanceByAdmin($request, $this->getUserId());
-
-        return $this->response($result, self::UPDATE);
-    }
+     // this api had been commented out because it isn't being used anywhere
+//    /**
+//     * Admin: update storeBranchToClientDistance by admin.
+//     * @Route("updatestorebranchtoclientdistancebyadmin", name="updateStoreBranchToClientDistanceByAdmin", methods={"PUT"})
+//     * @IsGranted("ROLE_ADMIN")
+//     * @param Request $request
+//     * @return JsonResponse
+//     *
+//     * @OA\Tag(name="Order")
+//     *
+//     * @OA\Parameter(
+//     *      name="token",
+//     *      in="header",
+//     *      description="token to be passed as a header",
+//     *      required=true
+//     * )
+//     *
+//     * @OA\RequestBody(
+//     *      description="update storeBranchToClientDistance by admin",
+//     *      @OA\JsonContent(
+//     *              @OA\Property(type="integer", property="id"),
+//     *              @OA\Property(type="string", property="storeBranchToClientDistance"),
+//     *      )
+//     * )
+//     *
+//     * @OA\Response(
+//     *      response=204,
+//     *      description="Returns the order info",
+//     *      @OA\JsonContent(
+//     *          @OA\Property(type="string", property="status_code"),
+//     *          @OA\Property(type="string", property="msg"),
+//     *          @OA\Property(type="object", property="Data",
+//     *               ref=@Model(type="App\Response\Admin\Order\OrderStateUpdateByAdminResponse")
+//     *      )
+//     *   )
+//     * )
+//     *
+//     * @Security(name="Bearer")
+//     */
+//    public function updateStoreBranchToClientDistanceByAdmin(Request $request): JsonResponse
+//    {
+//        $data = json_decode($request->getContent(), true);
+//
+//        $request = $this->autoMapping->map(\stdClass::class, OrderStoreBranchToClientDistanceByAdminRequest::class, (object) $data);
+//
+//        $violations = $this->validator->validate($request);
+//
+//        if (\count($violations) > 0) {
+//            $violationsString = (string) $violations;
+//
+//            return new JsonResponse($violationsString, Response::HTTP_OK);
+//        }
+//
+//        $result = $this->adminOrderService->updateStoreBranchToClientDistanceByAdmin($request, $this->getUserId());
+//
+//        return $this->response($result, self::UPDATE);
+//    }
 
     /**
      * Admin: Create new sub order by admin
