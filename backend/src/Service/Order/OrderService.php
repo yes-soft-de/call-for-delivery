@@ -664,8 +664,8 @@ class OrderService
                 // Create or update captain financial daily amount
                 $this->createOrUpdateCaptainFinancialDaily($order->getId());
                 // Update subscription cost of the store's subscription
-                $this->handleUpdatingStoreSubscriptionCost($order->getStoreOwner()->getId(), $order->getDeliveryCost(),
-                    $order->getCreatedAt());
+                $this->handleUpdatingStoreSubscriptionCost($order->getStoreOwner()->getId(), $order->getCreatedAt(),
+                    $order->getDeliveryCost());
             }
 
             // save log of the action on order
@@ -2314,9 +2314,9 @@ class OrderService
     /**
      * Handles the updating of the subscriptionCost field of last store subscription
      */
-    public function handleUpdatingStoreSubscriptionCost(int $storeOwnerProfileId, float $orderDeliveryCost, DateTimeInterface $orderCreatedAt): SubscriptionEntity|int|string
+    public function handleUpdatingStoreSubscriptionCost(int $storeOwnerProfileId, DateTimeInterface $orderCreatedAt, ?float $orderDeliveryCost = null): SubscriptionEntity|int|string
     {
-        return $this->subscriptionService->handleUpdatingStoreSubscriptionCost($storeOwnerProfileId, $orderDeliveryCost,
-            $orderCreatedAt);
+        return $this->subscriptionService->handleUpdatingStoreSubscriptionCost($storeOwnerProfileId, $orderCreatedAt,
+            $orderDeliveryCost);
     }
 }

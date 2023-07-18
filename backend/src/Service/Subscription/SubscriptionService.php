@@ -849,18 +849,20 @@ class SubscriptionService
 
         if ($subscription) {
             if (($subscription['packageId'] === 18) || ($subscription['packageId'] === 19)) {
-                if ($subscription['openingOrderCost']) {
-                    $item['orderDeliveryCost'] = $subscription['openingOrderCost'];
+                if ($request->getStoreBranchToClientDistance()) {
+                    if ($subscription['openingOrderCost']) {
+                        $item['orderDeliveryCost'] = $subscription['openingOrderCost'];
 
-                } else {
-                    $item['orderDeliveryCost'] = 14;
-                }
+                    } else {
+                        $item['orderDeliveryCost'] = 14;
+                    }
 
-                if ($subscription['oneKilometerCost']) {
-                    $item['extraOrderDeliveryCost'] = $request->getStoreBranchToClientDistance() * $subscription['oneKilometerCost'];
+                    if ($subscription['oneKilometerCost']) {
+                        $item['extraOrderDeliveryCost'] = $request->getStoreBranchToClientDistance() * $subscription['oneKilometerCost'];
 
-                } else {
-                    $item['extraOrderDeliveryCost'] = $request->getStoreBranchToClientDistance() * 1;
+                    } else {
+                        $item['extraOrderDeliveryCost'] = $request->getStoreBranchToClientDistance() * 1;
+                    }
                 }
 
                 $item['total'] = $item['orderDeliveryCost'] + $item['extraOrderDeliveryCost'];
@@ -1409,7 +1411,7 @@ class SubscriptionService
      * ///todo to be used for Updating subscriptionCost field of the store
      * Updates subscriptionCost field of last store subscription
      */
-    public function handleUpdatingStoreSubscriptionCost(int $storeOwnerProfileId, float $orderDeliveryCost, DateTimeInterface $orderCreatedAt): SubscriptionEntity|int|string
+    public function handleUpdatingStoreSubscriptionCost(int $storeOwnerProfileId, DateTimeInterface $orderCreatedAt, ?float $orderDeliveryCost = null): SubscriptionEntity|int|string
     {
         // 1. get LAST store subscription
         // why LAST? because maybe the store created the order then the subscription had finished.
@@ -1426,6 +1428,10 @@ class SubscriptionService
         }
 
         // 4. add order cost to subscription cost
+        if (! $orderDeliveryCost) {
+            $orderDeliveryCost = 0.0;
+        }
+
         return $this->addNewSubscriptionCostToSpecificSubscription($subscription, $orderDeliveryCost);
     }
 }
