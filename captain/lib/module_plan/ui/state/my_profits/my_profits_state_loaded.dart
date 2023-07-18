@@ -7,9 +7,11 @@ import 'package:c4d/module_plan/ui/screen/my_profits_screen.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 
-Color get blue => const Color(0xff2C5085);
-Color get lightBlue => const Color(0xffF2FAFD);
-Color get transparentBlue => const Color(0xff5E789D);
+Color get _blue => const Color(0xff2C5085);
+Color get _yellow => const Color(0xffFFF975);
+Color get _lightBlue => const Color(0xffF2FAFD);
+Color get _lightGreen => const Color(0xff46F4A1);
+Color get _transparentBlue => const Color(0xff5E789D);
 
 class MyProfitsStateLoaded extends States {
   final MyProfitsScreenState screenState;
@@ -27,7 +29,7 @@ class MyProfitsStateLoaded extends States {
           Text(
             S.current.today,
             style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: blue,
+                  color: _blue,
                 ),
           ),
           const SizedBox(height: 10),
@@ -73,7 +75,7 @@ class _CustomButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor: blue,
+          backgroundColor: _blue,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
@@ -96,7 +98,7 @@ class _SecondCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: blue,
+      color: _blue,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
         child: Column(
@@ -131,7 +133,11 @@ class _SecondCard extends StatelessWidget {
                 Flexible(
                   child: _TransparentCard(
                     title: S.current.saudiRiyal,
-                    value: model.profitSinceLastPayment.toStringAsFixed(2),
+                    value: model.profitSinceLastPayment == 0
+                        ? '00.00'
+                        : model.profitSinceLastPayment.toStringAsFixed(2),
+                    backgroundColor:
+                        model.profitSinceLastPayment == 0 ? null : _lightGreen,
                   ),
                 ),
               ],
@@ -147,7 +153,9 @@ class _SecondCard extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: transparentBlue,
+                  backgroundColor: model.profitSinceLastPayment == 0
+                      ? _transparentBlue
+                      : _yellow,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -155,7 +163,15 @@ class _SecondCard extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Text(S.current.duesClaim),
+                    Text(
+                      S.current.duesClaim,
+                      style: model.profitSinceLastPayment == 0
+                          ? null
+                          : Theme.of(context).textTheme.bodyLarge?.copyWith(
+                                color: _blue,
+                                fontWeight: FontWeight.bold,
+                              ),
+                    ),
                   ],
                 ),
               ),
@@ -181,7 +197,7 @@ class _SecondCard extends StatelessWidget {
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge
-                      ?.copyWith(color: blue),
+                      ?.copyWith(color: _blue),
                 ),
                 const SizedBox(height: 80),
                 SizedBox(
@@ -192,7 +208,7 @@ class _SecondCard extends StatelessWidget {
                       onConfirm();
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: blue,
+                      backgroundColor: _blue,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
@@ -215,13 +231,24 @@ class _SecondCard extends StatelessWidget {
 class _TransparentCard extends StatelessWidget {
   final String title;
   final String value;
+  late final Color backgroundColor;
 
-  const _TransparentCard({required this.title, required this.value});
+  _TransparentCard({
+    required this.title,
+    required this.value,
+    Color? backgroundColor,
+  }) {
+    if (backgroundColor != null) {
+      this.backgroundColor = backgroundColor;
+    } else {
+      this.backgroundColor = _transparentBlue;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: transparentBlue,
+      color: backgroundColor,
       child: Padding(
         padding: const EdgeInsets.symmetric(
           vertical: 30,
@@ -258,7 +285,7 @@ class _FirstCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      color: lightBlue,
+      color: _lightBlue,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(
@@ -305,14 +332,14 @@ class _CardDetail extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .bodyLarge
-                  ?.copyWith(color: blue, fontWeight: FontWeight.w600),
+                  ?.copyWith(color: _blue, fontWeight: FontWeight.w600),
             ),
           ),
         ),
         Text(
           title,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color: blue,
+                color: _blue,
               ),
         ),
       ],

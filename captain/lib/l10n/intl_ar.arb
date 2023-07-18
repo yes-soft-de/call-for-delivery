@@ -785,7 +785,7 @@
     "duesClaim": "المطالبة بالمستحقات",
     "historyOfPreviousPayments": "سجل الدفعات السابقة",
     "planDetails": "تفاصيل خطة العمل",
-    "areYouSureToAskTheAdministrationToPay": "هل انت متاكد من طالبة الادارة بالدفع؟",
+    "areYouSureToAskTheAdministrationToPay": "هل انت متاكد من مطالبة الادارة بالدفع؟",
     "valueRiyal": "{value} ريال",
     "@valueRiyal": {
         "description": "",

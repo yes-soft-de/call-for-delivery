@@ -109,7 +109,7 @@ class MessageLookup extends MessageLookupByLibrary {
                 "هل أنت متأكد في رغبتك في حذف هذا الإشعار"),
         "areYouSureToAskTheAdministrationToPay":
             MessageLookupByLibrary.simpleMessage(
-                "هل انت متاكد من طالبة الادارة بالدفع؟"),
+                "هل انت متاكد من مطالبة الادارة بالدفع؟"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد بإنك تريد حذف هذه الدفعة"),
         "areYouSureToDisposeThis": MessageLookupByLibrary.simpleMessage(
