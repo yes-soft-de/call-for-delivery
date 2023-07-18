@@ -783,7 +783,28 @@
     "duesClaim": "dues claim",
     "historyOfPreviousPayments": "history of previous payments",
     "planDetails": "plan details",
-    "theProfitRiyal": "the profit (Riyal)",
     "areYouSureToAskTheAdministrationToPay": "are you sure to ask the administration to pay?",
+    "valueRiyal": "{value} Riyal",
+    "@valueRiyal": {
+        "description": "",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "paymentValueRiyal": "payment {value} Riyal",
+    "@paymentValueRiyal": {
+        "description": "",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "theProfitRiyal": "the profit (Riyal)",
+    "from": "from",
+    "totalReceivedByTheSpecifiedDate": "total received by the specified date",
+    "bankTransfer": "bank transfer",
     "financeOverPaid": "Over paid"
 }

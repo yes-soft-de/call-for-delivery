@@ -2,6 +2,7 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_plan/model/my_profit_model.dart';
+import 'package:c4d/module_plan/plan_routes.dart';
 import 'package:c4d/module_plan/ui/screen/my_profits_screen.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
@@ -42,7 +43,7 @@ class MyProfitsStateLoaded extends States {
           _CustomButton(
             title: S.current.historyOfPreviousPayments,
             onPressed: () {
-              // TODO: navigate to previouse payment screen
+              Navigator.pushNamed(context, PlanRoutes.PAYMENT_HISTORY);
             },
           ),
           const SizedBox(height: 20),

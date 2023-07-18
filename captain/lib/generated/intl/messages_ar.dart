@@ -20,6 +20,10 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
+  static String m0(value) => "الدفعة ${value} ريال";
+
+  static String m1(value) => "${value} ريال";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "BestStores": MessageLookupByLibrary.simpleMessage("أفضل المتاجر"),
@@ -120,6 +124,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("رقم الآيبان للحساب البنكي"),
         "bankName": MessageLookupByLibrary.simpleMessage("اسم البنك"),
         "bankNameHint": MessageLookupByLibrary.simpleMessage("الراجحي"),
+        "bankTransfer": MessageLookupByLibrary.simpleMessage("تحويل بنكي"),
         "bestStore": MessageLookupByLibrary.simpleMessage("أفضل المتاجر"),
         "bill": MessageLookupByLibrary.simpleMessage("الفاتورة"),
         "birthDate": MessageLookupByLibrary.simpleMessage("تاريخ الميلاد"),
@@ -479,6 +484,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("كن أول من يرسل رسالة"),
         "forgotPass":
             MessageLookupByLibrary.simpleMessage("هل نسيت كلمة المرور؟"),
+        "from": MessageLookupByLibrary.simpleMessage("من"),
         "fromWhatsapp": MessageLookupByLibrary.simpleMessage("من واتساب"),
         "gallery": MessageLookupByLibrary.simpleMessage("المعرض"),
         "gender": MessageLookupByLibrary.simpleMessage("الجنس"),
@@ -769,12 +775,13 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentAmount": MessageLookupByLibrary.simpleMessage("قيمة الدفعة"),
         "paymentFailed": MessageLookupByLibrary.simpleMessage(
             "للأسف فشلت عملية الدفع الرجاء ، إعادة المحاولة"),
-        "paymentHistory": MessageLookupByLibrary.simpleMessage("تاريخ الدفعات"),
+        "paymentHistory": MessageLookupByLibrary.simpleMessage("سجل الدفعات"),
         "paymentMethod": MessageLookupByLibrary.simpleMessage("طريقة الدفع"),
         "paymentMethodHint": MessageLookupByLibrary.simpleMessage("اختر"),
         "paymentPortalHint": MessageLookupByLibrary.simpleMessage(
             "المبلغ النهائي في بوابة الدفع شاملة للقيمة المضافة %15"),
         "paymentResume": MessageLookupByLibrary.simpleMessage("استكمال الدفع"),
+        "paymentValueRiyal": m0,
         "payments": MessageLookupByLibrary.simpleMessage("الدفعات"),
         "paymentsVia":
             MessageLookupByLibrary.simpleMessage("إيصال المدفوعات عبر"),
@@ -1117,6 +1124,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المستحقات المقبوضة (سلفا)"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("المبلغ النهائي"),
         "totalProfit": MessageLookupByLibrary.simpleMessage("إجمالي الأرباح"),
+        "totalReceivedByTheSpecifiedDate": MessageLookupByLibrary.simpleMessage(
+            "اجمال المقبوض حسب التاريخ المحدد"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
         "unShow": MessageLookupByLibrary.simpleMessage("عدم إظهار"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
@@ -1165,6 +1174,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المستخدم يحتاج لتأكيد هويته"),
         "username": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
         "validation": MessageLookupByLibrary.simpleMessage("صلاحية"),
+        "valueRiyal": m1,
         "views": MessageLookupByLibrary.simpleMessage("مشاهدة"),
         "waiting": MessageLookupByLibrary.simpleMessage("في الانتظار"),
         "waitingDescription":

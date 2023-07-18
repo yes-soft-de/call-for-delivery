@@ -173,7 +173,7 @@
     "activePlan": "الباقة الحالية",
     "activeCars": "السيارات المشغولة",
     "ordersMonth": "طلب / الشهر",
-    "paymentHistory": "تاريخ الدفعات",
+    "paymentHistory": "سجل الدفعات",
     "completedOrders": " طلبات منتهية ",
     "latestUpdates": "اخر التحديثات",
     "myBalance": "الحساب المالي",
@@ -785,7 +785,28 @@
     "duesClaim": "المطالبة بالمستحقات",
     "historyOfPreviousPayments": "سجل الدفعات السابقة",
     "planDetails": "تفاصيل خطة العمل",
-    "theProfitRiyal": "الارباح (ريال)",
     "areYouSureToAskTheAdministrationToPay": "هل انت متاكد من طالبة الادارة بالدفع؟",
+    "valueRiyal": "{value} ريال",
+    "@valueRiyal": {
+        "description": "",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "paymentValueRiyal": "الدفعة {value} ريال",
+    "@paymentValueRiyal": {
+        "description": "",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "theProfitRiyal": "الارباح (ريال)",
+    "from": "من",
+    "totalReceivedByTheSpecifiedDate": "اجمال المقبوض حسب التاريخ المحدد",
+    "bankTransfer": "تحويل بنكي",
     "financeOverPaid": "دفعة زائدة"
 }

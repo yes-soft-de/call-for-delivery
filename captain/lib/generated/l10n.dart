@@ -7880,6 +7880,36 @@ class S {
     );
   }
 
+  /// `are you sure to ask the administration to pay?`
+  String get areYouSureToAskTheAdministrationToPay {
+    return Intl.message(
+      'are you sure to ask the administration to pay?',
+      name: 'areYouSureToAskTheAdministrationToPay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{value} Riyal`
+  String valueRiyal(String value) {
+    return Intl.message(
+      '$value Riyal',
+      name: 'valueRiyal',
+      desc: '',
+      args: [value],
+    );
+  }
+
+  /// `payment {value} Riyal`
+  String paymentValueRiyal(String value) {
+    return Intl.message(
+      'payment $value Riyal',
+      name: 'paymentValueRiyal',
+      desc: '',
+      args: [value],
+    );
+  }
+
   /// `the profit (Riyal)`
   String get theProfitRiyal {
     return Intl.message(
@@ -7890,11 +7920,31 @@ class S {
     );
   }
 
-  /// `are you sure to ask the administration to pay?`
-  String get areYouSureToAskTheAdministrationToPay {
+  /// `from`
+  String get from {
     return Intl.message(
-      'are you sure to ask the administration to pay?',
-      name: 'areYouSureToAskTheAdministrationToPay',
+      'from',
+      name: 'from',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `total received by the specified date`
+  String get totalReceivedByTheSpecifiedDate {
+    return Intl.message(
+      'total received by the specified date',
+      name: 'totalReceivedByTheSpecifiedDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `bank transfer`
+  String get bankTransfer {
+    return Intl.message(
+      'bank transfer',
+      name: 'bankTransfer',
       desc: '',
       args: [],
     );

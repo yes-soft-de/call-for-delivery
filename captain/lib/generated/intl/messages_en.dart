@@ -20,6 +20,10 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
+  static String m0(value) => "payment ${value} Riyal";
+
+  static String m1(value) => "${value} Riyal";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "BestStores": MessageLookupByLibrary.simpleMessage("Best Stores"),
@@ -120,6 +124,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Bank Account Number"),
         "bankName": MessageLookupByLibrary.simpleMessage("Bank Name"),
         "bankNameHint": MessageLookupByLibrary.simpleMessage("Bimo"),
+        "bankTransfer": MessageLookupByLibrary.simpleMessage("bank transfer"),
         "bestStore": MessageLookupByLibrary.simpleMessage("Best Store"),
         "bill": MessageLookupByLibrary.simpleMessage("Bill"),
         "birthDate": MessageLookupByLibrary.simpleMessage("Birth Date"),
@@ -487,6 +492,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "firstSendMessage": MessageLookupByLibrary.simpleMessage(
             "Be the first one to send message"),
         "forgotPass": MessageLookupByLibrary.simpleMessage("Forgot password?"),
+        "from": MessageLookupByLibrary.simpleMessage("from"),
         "fromWhatsapp": MessageLookupByLibrary.simpleMessage("From WhatsApp"),
         "gallery": MessageLookupByLibrary.simpleMessage("Gallery"),
         "gender": MessageLookupByLibrary.simpleMessage("Gender"),
@@ -786,6 +792,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentPortalHint": MessageLookupByLibrary.simpleMessage(
             "All prices in payments portal are included with 15% vat"),
         "paymentResume": MessageLookupByLibrary.simpleMessage("Payment Resume"),
+        "paymentValueRiyal": m0,
         "payments": MessageLookupByLibrary.simpleMessage("Payments"),
         "paymentsVia": MessageLookupByLibrary.simpleMessage("Payments via"),
         "pending": MessageLookupByLibrary.simpleMessage("Pending"),
@@ -1124,6 +1131,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Total Earned"),
         "totalPrice": MessageLookupByLibrary.simpleMessage("Total Price"),
         "totalProfit": MessageLookupByLibrary.simpleMessage("Total profit"),
+        "totalReceivedByTheSpecifiedDate": MessageLookupByLibrary.simpleMessage(
+            "total received by the specified date"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("Try again"),
         "unShow": MessageLookupByLibrary.simpleMessage("Un Show"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
@@ -1173,6 +1182,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("User not verified"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "validation": MessageLookupByLibrary.simpleMessage("Validation"),
+        "valueRiyal": m1,
         "views": MessageLookupByLibrary.simpleMessage("views"),
         "waiting": MessageLookupByLibrary.simpleMessage("waiting"),
         "waitingDescription": MessageLookupByLibrary.simpleMessage(
