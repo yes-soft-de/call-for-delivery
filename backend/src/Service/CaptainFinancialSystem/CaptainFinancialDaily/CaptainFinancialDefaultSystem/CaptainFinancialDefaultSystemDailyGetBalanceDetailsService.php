@@ -2,7 +2,6 @@
 
 namespace App\Service\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDefaultSystem;
 
-use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Service\CaptainFinancialSystem\CaptainFinancialDefaultSystem\CaptainFinancialDefaultSystemGetStoreAmountService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialDefaultSystem\CaptainFinancialDefaultSystemOrderGetService;
 
@@ -27,43 +26,43 @@ class CaptainFinancialDefaultSystemDailyGetBalanceDetailsService
     /**
      * Get the count of delivered orders by specific captain and among specific date
      */
-    public function getDeliveredOrdersCountByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): int
+    public function getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): array
     {
-        $ordersCountResult = $this->captainFinancialDefaultSystemOrderGetService->getDeliveredOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
+        return $this->captainFinancialDefaultSystemOrderGetService->getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
             $fromDate, $toDate);
 
-        if (count($ordersCountResult) > 0) {
-            return $ordersCountResult[0];
-        }
-
-        return 0;
+//        if (count($ordersCountResult) > 0) {
+//            return $ordersCountResult[0];
+//        }
+//
+//        return 0;
     }
 
-    /**
-     * Get the count of cancelled orders and related to a specific captain and among specific date
-     */
-    public function getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): int
-    {
-        $countOrdersResult = $this->captainFinancialDefaultSystemOrderGetService->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
-            $fromDate, $toDate);
+//    /**
+//     * Get the count of cancelled orders and related to a specific captain and among specific date
+//     */
+//    public function getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): int
+//    {
+//        $countOrdersResult = $this->captainFinancialDefaultSystemOrderGetService->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
+//            $fromDate, $toDate);
+//
+//        if (count($countOrdersResult) > 0) {
+//            return $countOrdersResult[0];
+//        }
+//
+//        return 0;
+//    }
 
-        if (count($countOrdersResult) > 0) {
-            return $countOrdersResult[0];
-        }
-
-        return 0;
-    }
-
-    /**
-     * orders count = (delivered orders count + (cancelled orders count / 2))
-     */
-    public function getDeliveredAndCancelledAndOverdueOrdersCount(int $captainProfileId, string $fromDate, string $toDate): float|int
-    {
-        return ((float) $this->getDeliveredOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId, $fromDate, $toDate)
-                +
-                ((float) $this->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId, $fromDate, $toDate)
-                    / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST));
-    }
+//    /**
+//     * orders count = (delivered orders count + (cancelled orders count / 2))
+//     */
+//    public function getDeliveredAndCancelledAndOverdueOrdersCount(int $captainProfileId, string $fromDate, string $toDate): float|int
+//    {
+//        return ((float) $this->getDeliveredOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId, $fromDate, $toDate)
+//                +
+//                ((float) $this->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId, $fromDate, $toDate)
+//                    / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST));
+//    }
 
     /**
      * Get array which includes:
@@ -93,10 +92,29 @@ class CaptainFinancialDefaultSystemDailyGetBalanceDetailsService
         $financialAccountDetails['amountForStore'] = $this->getUnPaidCashOrdersDueByCaptainProfileIdAndDuringSpecificTime($captainProfileId,
             $fromDate, $toDate);
 
-        $orders = $this->getDeliveredAndCancelledAndOverdueOrdersCount($captainProfileId,
-                $fromDate, $toDate);
+        $orders = $this->getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId, $fromDate, $toDate);
 
+        if (count($orders) > 0) {
+            foreach ($orders as $order) {
+                $financialAccountDetails['basicFinancialAmount'] += $captainFinancialSystemDetails['openingOrderCost'];
 
+                $distance = $order['storeBranchToClientDistance'];
+
+                if ($distance) {
+                    if ($distance <= $captainFinancialSystemDetails['firstSliceLimit']) {
+                        $financialAccountDetails['basicFinancialAmount'] += $captainFinancialSystemDetails['firstSliceCost'];
+
+                    } elseif (($distance >= $captainFinancialSystemDetails['secondSliceFromLimit'])
+                        && ($distance < $captainFinancialSystemDetails['secondSliceToLimit'])) {
+                        $financialAccountDetails['basicFinancialAmount'] += ($distance * $captainFinancialSystemDetails['secondSliceOneKilometerCost']);
+
+                    } elseif ($distance >= $captainFinancialSystemDetails['thirdSliceFromLimit']) {
+                        $financialAccountDetails['basicFinancialAmount'] += ($distance * $captainFinancialSystemDetails['thirdSliceOneKilometerCost']);
+
+                    }
+                }
+            }
+        }
 
         return $financialAccountDetails;
     }

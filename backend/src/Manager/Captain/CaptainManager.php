@@ -21,19 +21,14 @@ use App\Request\Captain\CaptainProfileIsOnlineUpdateByCaptainRequest;
 
 class CaptainManager
 {
-    private AutoMapping $autoMapping;
-    private EntityManagerInterface $entityManager;
-    private UserManager $userManager;
-    private CaptainEntityRepository $captainEntityRepository;
-    private ImageManager $imageManager;
-
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, UserManager $userManager, CaptainEntityRepository $captainEntityRepository, ImageManager $imageManager)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private EntityManagerInterface $entityManager,
+        private UserManager $userManager,
+        private CaptainEntityRepository $captainEntityRepository,
+        private ImageManager $imageManager
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->entityManager = $entityManager;
-        $this->userManager = $userManager;
-        $this->captainEntityRepository = $captainEntityRepository;
-        $this->imageManager = $imageManager;
     }
 
     public function captainRegister(UserRegisterRequest $request): mixed
@@ -111,7 +106,8 @@ class CaptainManager
 
         if ($item) {
             // Check if this second update to the captain profile, then denies the update of the captain name
-            if ($item->getCompleteAccountStatus() !== CaptainConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED || $request->getCaptainName() === null) {
+            if ($item->getCompleteAccountStatus() !== CaptainConstant::COMPLETE_ACCOUNT_STATUS_PROFILE_CREATED
+                || $request->getCaptainName() === null) {
                 $request->setCaptainName($item->getCaptainName());
 
             } else {

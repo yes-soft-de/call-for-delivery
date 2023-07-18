@@ -79,10 +79,10 @@ class CaptainFinancialSystemDetailEntityRepository extends ServiceEntityReposito
                 return $query->getQuery()->getOneOrNullResult();
 
             } elseif ($item['captainFinancialSystemType']  === CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST) {
-                $query->addSelect('captainFinancialDefaultSystemEntity.openingOrderCost', 'captainFinancialDefaultSystemEntity.distanceLimit',
-                    'captainFinancialDefaultSystemEntity.status', 'captainFinancialDefaultSystemEntity.firstSliceLimit', 'captainFinancialDefaultSystemEntity.firstSliceCost',
-                    'captainFinancialDefaultSystemEntity.secondSliceFromLimit', 'captainFinancialDefaultSystemEntity.secondSliceToLimit', 'captainFinancialDefaultSystemEntity.secondSliceOneKilometerCost',
-                    'captainFinancialDefaultSystemEntity.thirdSliceFromLimit', 'captainFinancialDefaultSystemEntity.thirdSliceToLimit', 'captainFinancialDefaultSystemEntity.thirdSliceOneKilometerCost');
+                $query->addSelect('captainFinancialDefaultSystemEntity.openingOrderCost', 'captainFinancialDefaultSystemEntity.status',
+                    'captainFinancialDefaultSystemEntity.firstSliceLimit', 'captainFinancialDefaultSystemEntity.firstSliceCost', 'captainFinancialDefaultSystemEntity.secondSliceFromLimit',
+                    'captainFinancialDefaultSystemEntity.secondSliceToLimit', 'captainFinancialDefaultSystemEntity.secondSliceOneKilometerCost', 'captainFinancialDefaultSystemEntity.thirdSliceFromLimit',
+                    'captainFinancialDefaultSystemEntity.thirdSliceToLimit', 'captainFinancialDefaultSystemEntity.thirdSliceOneKilometerCost');
 
                 $query->leftJoin(
                     CaptainFinancialDefaultSystemEntity::class,
@@ -210,10 +210,10 @@ class CaptainFinancialSystemDetailEntityRepository extends ServiceEntityReposito
                 return $query->getQuery()->getOneOrNullResult();
 
             } elseif ($tempQuery['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST) {
-                $query->addSelect('captainFinancialDefaultSystemEntity.openingOrderCost', 'captainFinancialDefaultSystemEntity.distanceLimit',
-                    'captainFinancialDefaultSystemEntity.status', 'captainFinancialDefaultSystemEntity.firstSliceLimit', 'captainFinancialDefaultSystemEntity.firstSliceCost',
-                    'captainFinancialDefaultSystemEntity.secondSliceFromLimit', 'captainFinancialDefaultSystemEntity.secondSliceToLimit', 'captainFinancialDefaultSystemEntity.secondSliceOneKilometerCost',
-                    'captainFinancialDefaultSystemEntity.thirdSliceFromLimit', 'captainFinancialDefaultSystemEntity.thirdSliceToLimit', 'captainFinancialDefaultSystemEntity.thirdSliceOneKilometerCost');
+                $query->addSelect('captainFinancialDefaultSystemEntity.openingOrderCost', 'captainFinancialDefaultSystemEntity.status', 'captainFinancialDefaultSystemEntity.firstSliceLimit',
+                    'captainFinancialDefaultSystemEntity.firstSliceCost', 'captainFinancialDefaultSystemEntity.secondSliceFromLimit', 'captainFinancialDefaultSystemEntity.secondSliceToLimit',
+                    'captainFinancialDefaultSystemEntity.secondSliceOneKilometerCost', 'captainFinancialDefaultSystemEntity.thirdSliceFromLimit', 'captainFinancialDefaultSystemEntity.thirdSliceToLimit',
+                    'captainFinancialDefaultSystemEntity.thirdSliceOneKilometerCost');
 
                 $query->leftJoin(
                     CaptainFinancialDefaultSystemEntity::class,

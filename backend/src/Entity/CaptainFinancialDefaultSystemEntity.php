@@ -18,9 +18,6 @@ class CaptainFinancialDefaultSystemEntity
     #[ORM\Column(type: 'float')]
     private $openingOrderCost;
 
-    #[ORM\Column(type: 'float', nullable: true)]
-    private $distanceLimit;
-
     #[ORM\Column(type: 'boolean', options: ["default" => CaptainFinancialDefaultSystemConstant::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_STATUS_FALSE_CONST])]
     private $status;
 
@@ -72,18 +69,6 @@ class CaptainFinancialDefaultSystemEntity
     public function setOpeningOrderCost(float $openingOrderCost): self
     {
         $this->openingOrderCost = $openingOrderCost;
-
-        return $this;
-    }
-
-    public function getDistanceLimit(): ?float
-    {
-        return $this->distanceLimit;
-    }
-
-    public function setDistanceLimit(?float $distanceLimit): self
-    {
-        $this->distanceLimit = $distanceLimit;
 
         return $this;
     }

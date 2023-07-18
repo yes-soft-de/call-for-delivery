@@ -202,4 +202,21 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    /**
+     * epic 13
+     */
+    public function filterCaptainPaymentByAdminV2(CaptainPaymentFilterByAdminRequest $request): array
+    {
+        $query = $this->createQueryBuilder('captainPaymentEntity')
+
+            ->orderBy('captainPaymentEntity.id', 'DESC');
+
+        if ($request->getCaptainProfileId()) {
+            $query->andWhere('captainPaymentEntity.captain = :captainProfileId')
+                ->setParameter('captainProfileId', $request->getCaptainProfileId());
+        }
+
+        return $query->getQuery()->getResult();
+    }
 }

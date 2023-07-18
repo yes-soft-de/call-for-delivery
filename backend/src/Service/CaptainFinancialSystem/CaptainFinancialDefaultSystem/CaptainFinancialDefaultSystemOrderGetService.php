@@ -12,15 +12,15 @@ class CaptainFinancialDefaultSystemOrderGetService
     {
     }
 
-    public function getDeliveredOrdersCountByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): array
+    public function getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): array
     {
-        return $this->captainFinancialDefaultSystemOrderManager->getDeliveredOrdersCountByCaptainIdAndBetweenTwoDates($captainProfileId,
+        return $this->captainFinancialDefaultSystemOrderManager->getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
             $fromDate, $toDate);
     }
 
-    public function getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): array
-    {
-        return $this->captainFinancialDefaultSystemOrderManager->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
-            $fromDate, $toDate);
-    }
+//    public function getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): array
+//    {
+//        return $this->captainFinancialDefaultSystemOrderManager->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
+//            $fromDate, $toDate);
+//    }
 }
