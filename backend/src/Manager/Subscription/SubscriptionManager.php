@@ -56,6 +56,7 @@ class SubscriptionManager
        $subscriptionEntity->setStartDate(new DateTime());
    
        $subscriptionEntity->setEndDate($this->calculatingSubscriptionExpiryDate($subscriptionEntity->getStartDate(), $package->getExpired()));
+        $subscriptionEntity->setSubscriptionCost(0.0);
 
        $this->entityManager->persist($subscriptionEntity);
        $this->entityManager->flush();
@@ -456,6 +457,7 @@ class SubscriptionManager
 
         $subscriptionEntity->setEndDate($this->calculatingSubscriptionExpiryDate($subscriptionEntity->getStartDate(),
             $request->getPackage()->getExpired()));
+        $subscriptionEntity->setSubscriptionCost(0.0);
 
         $this->entityManager->persist($subscriptionEntity);
         $this->entityManager->flush();
