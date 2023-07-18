@@ -23,6 +23,7 @@ use App\Constant\Payment\PaymentConstant;
 use App\Response\Admin\CaptainPayment\AdminCaptainPaymentDeleteResponse;
 use App\Response\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentAmountAndNoteUpdateByAdminResponse;
 use App\Response\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentFilterByAdminResponse;
+use App\Response\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentFilterByAdminV2Response;
 use App\Response\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentForCaptainFinancialDailyCreateByAdminResponse;
 use App\Service\Admin\CaptainFinancialSystem\AdminCaptainFinancialDuesService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
@@ -260,6 +261,27 @@ class AdminCaptainPaymentService
         if (count($captainsPayments) > 0) {
             foreach ($captainsPayments as $captainPayment) {
                 $response[] = $this->autoMapping->map(CaptainPaymentEntity::class, CaptainPaymentFilterByAdminResponse::class, $captainPayment);
+            }
+        }
+
+        return $response;
+    }
+
+    /**
+     * epic 13
+     */
+    public function filterCaptainPaymentByAdminV2(CaptainPaymentFilterByAdminRequest $request): array
+    {
+        $response = [];
+        $response['payments'] = [];
+        $response['paymentsTotalAmount'] = 0.0;
+
+        $captainsPayments = $this->adminCaptainPaymentManager->filterCaptainPaymentByAdminV2($request);
+
+        if (count($captainsPayments) > 0) {
+            foreach ($captainsPayments as $captainPayment) {
+                $response['paymentsTotalAmount'] += $captainPayment->getAmount();
+                $response['payments'][] = $this->autoMapping->map(CaptainPaymentEntity::class, CaptainPaymentFilterByAdminV2Response::class, $captainPayment);
             }
         }
 
