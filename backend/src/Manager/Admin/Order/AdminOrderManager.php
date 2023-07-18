@@ -630,7 +630,7 @@ class AdminOrderManager
      */
     public function updateOrderDeliveryCost(OrderDeliveryCostUpdateByAdminRequest $request): ?OrderEntity
     {
-        $orderEntity = $this->orderEntityRepository->findOneBy(['id' => 1]);
+        $orderEntity = $this->orderEntityRepository->findOneBy(['id' => $request->getId()]);
 
         if ($orderEntity) {
             $orderEntity = $this->autoMapping->mapToObject(OrderDeliveryCostUpdateByAdminRequest::class, OrderEntity::class,

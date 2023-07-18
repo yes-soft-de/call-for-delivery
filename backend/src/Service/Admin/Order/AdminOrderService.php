@@ -1260,7 +1260,7 @@ class AdminOrderService
                         $this->createOrUpdateCaptainFinancialDaily($orderResult[0]->getId());
                         // Update subscription cost of the store's subscription
                         $this->handleUpdatingStoreSubscriptionCost($orderResult[0]->getStoreOwner()->getId(),
-                            $orderResult[0]->getDeliveryCost(), $orderResult[0]->getCreatedAt());
+                            $orderResult[0]->getCreatedAt(), $orderResult[0]->getDeliveryCost());
                     }
 
                     // create firebase notification to captain
@@ -1528,6 +1528,16 @@ class AdminOrderService
             return $order;
         }
 
+        // 2 Update delivery cost
+        $orderEntity = $this->calculateAndUpdateOrderDeliveryCostByOrderIdAndStoreOwnerProfileIdAndDistance($order,
+            $userId, OrderLogActionTypeConstant::ORDER_DELIVERY_COST_UPDATED_BY_NEW_DISTANCE_BY_ADMIN_CONST);
+
+        if ($orderEntity !== OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+            // 3 Update subscription cost of the store's subscription
+            $this->handleUpdatingStoreSubscriptionCost($orderEntity->getStoreOwner()->getId(), $orderEntity->getCreatedAt(),
+                $orderEntity->getDeliveryCost());
+        }
+
         // save log of the action on order
         $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
             OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_AND_DESTINATION_BY_ADMIN_ACTION_CONST, [], null,
@@ -1670,10 +1680,14 @@ class AdminOrderService
                         $orderDeliveryCostUpdateResult = $this->calculateAndUpdateOrderDeliveryCostByOrderIdAndStoreOwnerProfileIdAndDistance($orderEntity,
                             $userId, OrderLogActionTypeConstant::ORDER_DELIVERY_COST_UPDATED_BY_NEW_DESTINATION_BY_ADMIN_CONST);
 
+                        // 6 Update subscription cost of the store's subscription
+                        $this->handleUpdatingStoreSubscriptionCost($orderDeliveryCostUpdateResult->getStoreOwner()->getId(),
+                            $orderDeliveryCostUpdateResult->getCreatedAt(), $orderDeliveryCostUpdateResult->getDeliveryCost());
+
                         if ($orderDeliveryCostUpdateResult instanceof OrderEntity) {
                             $this->entityManager->getConnection()->commit();
 
-                            // 6. Send notifications
+                            // 7. Send notifications
                             // local notification to store
                             $this->createLocalNotificationForStore($orderEntity->getStoreOwner()->getStoreOwnerId(),
                                 NotificationConstant::ORDER_NEW_DESTINATION_ADDED_BY_ADMIN_TITLE_CONST, NotificationConstant::ORDER_NEW_DESTINATION_ADDED_BY_ADMIN_MESSAGE_CONST,
@@ -1871,9 +1885,13 @@ class AdminOrderService
                         $this->createOrUpdateCaptainFinancialDaily($order->getId());
                     }
 
+                    // 5 Update subscription cost of the store's subscription
+                    $this->handleUpdatingStoreSubscriptionCost($orderDeliveryCostUpdateResult->getStoreOwner()->getId(),
+                        $orderDeliveryCostUpdateResult->getCreatedAt(), $orderDeliveryCostUpdateResult->getDeliveryCost());
+
                     $this->entityManager->getConnection()->commit();
 
-                    // 5 Send notifications
+                    // 6 Send notifications
                     // local notification to store
                     $this->createLocalNotificationForStore($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::ORDER_DISTANCE_ADDITION_BY_ADMIN_TITLE_CONST,
                         NotificationConstant::ORDER_DISTANCE_ADDITION_BY_ADMIN_MESSAGE_CONST, $order->getId());
@@ -2358,9 +2376,9 @@ class AdminOrderService
     /**
      * Handles the updating of the subscriptionCost field of last store subscription
      */
-    private function handleUpdatingStoreSubscriptionCost(int $storeOwnerProfileId, float $orderDeliveryCost, DateTimeInterface $orderCreatedAt): SubscriptionEntity|int|string
+    private function handleUpdatingStoreSubscriptionCost(int $storeOwnerProfileId, DateTimeInterface $orderCreatedAt, ?float $orderDeliveryCost = null): SubscriptionEntity|int|string
     {
-        return $this->subscriptionService->handleUpdatingStoreSubscriptionCost($storeOwnerProfileId, $orderDeliveryCost,
-            $orderCreatedAt);
+        return $this->subscriptionService->handleUpdatingStoreSubscriptionCost($storeOwnerProfileId, $orderCreatedAt,
+            $orderDeliveryCost);
     }
 }
