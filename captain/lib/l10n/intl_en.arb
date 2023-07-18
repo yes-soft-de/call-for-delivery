@@ -776,5 +776,14 @@
     "youCanEditOnlyOneTimeIfNotSure": "you can edit only one time, if you are not sure then edit when order you complete the order",
     "youCanEditOnlyOneTimeContactWith": "you can edit only one time, you can contact with direct support",
     "myProfits": "my profits",
+    "today": "today",
+    "yourFinancialDues": "Your financial dues",
+    "sinceTheLastPayment": "(since the last payment)",
+    "ordersTotal": "orders total",
+    "duesClaim": "dues claim",
+    "historyOfPreviousPayments": "history of previous payments",
+    "planDetails": "plan details",
+    "theProfitRiyal": "the profit (Riyal)",
+    "areYouSureToAskTheAdministrationToPay": "are you sure to ask the administration to pay?",
     "financeOverPaid": "Over paid"
 }

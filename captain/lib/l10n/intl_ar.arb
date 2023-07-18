@@ -778,5 +778,14 @@
     "youCanEditOnlyOneTimeContactWith": "يمكنك التعديل مرة واحدة فقط, بدلا من ذلك تواصل مع الدعم المباشر",
     "goToOffers": "اذهب الى العروض",
     "myProfits": "ارباحي",
+    "today": "الليوم",
+    "yourFinancialDues": "مستحقاتك المالية",
+    "sinceTheLastPayment": "(منذ اخر اخر دفعة حتى الان)",
+    "ordersTotal": "اجمالي الطلبات",
+    "duesClaim": "المطالبة بالمستحقات",
+    "historyOfPreviousPayments": "سجل الدفعات السابقة",
+    "planDetails": "تفاصيل خطة العمل",
+    "theProfitRiyal": "الارباح (ريال)",
+    "areYouSureToAskTheAdministrationToPay": "هل انت متاكد من طالبة الادارة بالدفع؟",
     "financeOverPaid": "دفعة زائدة"
 }

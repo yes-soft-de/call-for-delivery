@@ -103,6 +103,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "areYouSureAboutDeleteThisNotification":
             MessageLookupByLibrary.simpleMessage(
                 "Are you sure about deleting this notification"),
+        "areYouSureToAskTheAdministrationToPay":
+            MessageLookupByLibrary.simpleMessage(
+                "are you sure to ask the administration to pay?"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "Are you sure you want to delete this payment"),
         "areYouSureToDisposeThis": MessageLookupByLibrary.simpleMessage(
@@ -393,6 +396,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
             "Download Twaslna App on Play Store"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("Driver Licence"),
+        "duesClaim": MessageLookupByLibrary.simpleMessage("dues claim"),
         "earnCash": MessageLookupByLibrary.simpleMessage("Earn Cash"),
         "earnCashDescribtion": MessageLookupByLibrary.simpleMessage(
             "After you doing your job your effort will be rewarded by earning money"),
@@ -499,6 +503,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "hereOrdersWillBeShown":
             MessageLookupByLibrary.simpleMessage("Here orders will be shown"),
         "highestRate": MessageLookupByLibrary.simpleMessage("Highest Rate"),
+        "historyOfPreviousPayments": MessageLookupByLibrary.simpleMessage(
+            "history of previous payments"),
         "home": MessageLookupByLibrary.simpleMessage("Home"),
         "homeDataEmpty": MessageLookupByLibrary.simpleMessage(
             "There is no data to show you yet"),
@@ -734,6 +740,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "ordermonth": MessageLookupByLibrary.simpleMessage("Order/Month"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("Orders / Month"),
+        "ordersTotal": MessageLookupByLibrary.simpleMessage("orders total"),
         "ourBankAccountNumber":
             MessageLookupByLibrary.simpleMessage("Our Bank Account Number"),
         "ourBankName": MessageLookupByLibrary.simpleMessage("Our Bank Name"),
@@ -801,6 +808,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "planByOrderCount":
             MessageLookupByLibrary.simpleMessage("Plan on order count"),
         "planByOrders": MessageLookupByLibrary.simpleMessage("Plan by orders"),
+        "planDetails": MessageLookupByLibrary.simpleMessage("plan details"),
         "planHint": MessageLookupByLibrary.simpleMessage(
             "In this screen you can see our work planes "),
         "pleaseCheckYourInternetConnection":
@@ -1006,6 +1014,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "signOut": MessageLookupByLibrary.simpleMessage("Sign out"),
         "similarProducts":
             MessageLookupByLibrary.simpleMessage("Similar Products"),
+        "sinceTheLastPayment":
+            MessageLookupByLibrary.simpleMessage("(since the last payment)"),
         "skip": MessageLookupByLibrary.simpleMessage("Skip"),
         "smallLessThan20Employee":
             MessageLookupByLibrary.simpleMessage("1 - 20 Employee"),
@@ -1079,6 +1089,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "terms": MessageLookupByLibrary.simpleMessage("terms of use"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Terms of Service"),
+        "theProfitRiyal":
+            MessageLookupByLibrary.simpleMessage("the profit (Riyal)"),
         "thereIsFarawayOrder":
             MessageLookupByLibrary.simpleMessage("There is far away orders "),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
@@ -1099,6 +1111,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "To find out more, please leave your phone.\nand we will contact you personally"),
         "toGetBouns": MessageLookupByLibrary.simpleMessage("for a bouns"),
+        "today": MessageLookupByLibrary.simpleMessage("today"),
         "todayProfit": MessageLookupByLibrary.simpleMessage("Today Balance"),
         "took": MessageLookupByLibrary.simpleMessage("Took"),
         "total": MessageLookupByLibrary.simpleMessage("Total"),
@@ -1227,6 +1240,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "yourCurrentPlanStoppedSuccessfully":
             MessageLookupByLibrary.simpleMessage(
                 "Your current plan stopped successfully"),
+        "yourFinancialDues":
+            MessageLookupByLibrary.simpleMessage("Your financial dues"),
         "yourNumberStartWithZero": MessageLookupByLibrary.simpleMessage(
             "Your number start with zero please remove it and try again"),
         "yourRequestSent":

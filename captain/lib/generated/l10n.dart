@@ -7810,6 +7810,96 @@ class S {
     );
   }
 
+  /// `today`
+  String get today {
+    return Intl.message(
+      'today',
+      name: 'today',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your financial dues`
+  String get yourFinancialDues {
+    return Intl.message(
+      'Your financial dues',
+      name: 'yourFinancialDues',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `(since the last payment)`
+  String get sinceTheLastPayment {
+    return Intl.message(
+      '(since the last payment)',
+      name: 'sinceTheLastPayment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `orders total`
+  String get ordersTotal {
+    return Intl.message(
+      'orders total',
+      name: 'ordersTotal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `dues claim`
+  String get duesClaim {
+    return Intl.message(
+      'dues claim',
+      name: 'duesClaim',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `history of previous payments`
+  String get historyOfPreviousPayments {
+    return Intl.message(
+      'history of previous payments',
+      name: 'historyOfPreviousPayments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `plan details`
+  String get planDetails {
+    return Intl.message(
+      'plan details',
+      name: 'planDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `the profit (Riyal)`
+  String get theProfitRiyal {
+    return Intl.message(
+      'the profit (Riyal)',
+      name: 'theProfitRiyal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `are you sure to ask the administration to pay?`
+  String get areYouSureToAskTheAdministrationToPay {
+    return Intl.message(
+      'are you sure to ask the administration to pay?',
+      name: 'areYouSureToAskTheAdministrationToPay',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Over paid`
   String get financeOverPaid {
     return Intl.message(

@@ -1,7 +1,8 @@
-import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_plan/model/my_profit_model.dart';
 import 'package:c4d/module_plan/state_manager/my_profits_state_manager.dart';
+import 'package:c4d/module_plan/ui/state/my_profits/my_profits_state_loaded.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -20,7 +21,13 @@ class MyProfitsScreenState extends State<MyProfitsScreen> {
   States? _currentState;
   @override
   void initState() {
-    _currentState = LoadingState(this);
+    var model = MyProfitModel(
+      orderCountSinceLastPayment: 123,
+      ordersCountToday: 12,
+      profitSinceLastPayment: 123.45,
+      profitToday: 12.34
+    );
+    _currentState = MyProfitsStateLoaded(this, model);
     widget._manager.stateSubject.listen((value) {
       _currentState = value;
       if (mounted) setState(() {});
@@ -37,7 +44,7 @@ class MyProfitsScreenState extends State<MyProfitsScreen> {
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(
         context,
-        title: S.current.myBalance,
+        title: S.current.myProfits,
       ),
       body: _currentState?.getUI(context) ?? Container(),
     );

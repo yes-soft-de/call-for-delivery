@@ -103,6 +103,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "areYouSureAboutDeleteThisNotification":
             MessageLookupByLibrary.simpleMessage(
                 "هل أنت متأكد في رغبتك في حذف هذا الإشعار"),
+        "areYouSureToAskTheAdministrationToPay":
+            MessageLookupByLibrary.simpleMessage(
+                "هل انت متاكد من طالبة الادارة بالدفع؟"),
         "areYouSureToDeleteThisPayment": MessageLookupByLibrary.simpleMessage(
             "هل انت متأكد بإنك تريد حذف هذه الدفعة"),
         "areYouSureToDisposeThis": MessageLookupByLibrary.simpleMessage(
@@ -386,6 +389,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
             "حمل تطبيقنا على متجر غوغل عبر الرابط"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("رخصة القيادة"),
+        "duesClaim":
+            MessageLookupByLibrary.simpleMessage("المطالبة بالمستحقات"),
         "earnCash": MessageLookupByLibrary.simpleMessage("اكسب المال"),
         "earnCashDescribtion": MessageLookupByLibrary.simpleMessage(
             "بعد اتمامك المهمة ستكافئ جهودك بالمال"),
@@ -491,6 +496,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "hereOrdersWillBeShown":
             MessageLookupByLibrary.simpleMessage("هنا ستظهر الطلبات الجديدة "),
         "highestRate": MessageLookupByLibrary.simpleMessage("الأعلى تقييما"),
+        "historyOfPreviousPayments":
+            MessageLookupByLibrary.simpleMessage("سجل الدفعات السابقة"),
         "home": MessageLookupByLibrary.simpleMessage("الرئيسية"),
         "homeDataEmpty":
             MessageLookupByLibrary.simpleMessage("لايوجد بيانات حاليا لعرضها"),
@@ -724,6 +731,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "ordermonth": MessageLookupByLibrary.simpleMessage("طلب في الشهر"),
         "orders": MessageLookupByLibrary.simpleMessage("الطلبات"),
         "ordersMonth": MessageLookupByLibrary.simpleMessage("طلب / الشهر"),
+        "ordersTotal": MessageLookupByLibrary.simpleMessage("اجمالي الطلبات"),
         "ourBankAccountNumber":
             MessageLookupByLibrary.simpleMessage("رقم حسابنا"),
         "ourBankName": MessageLookupByLibrary.simpleMessage("اسم بنكنا"),
@@ -793,6 +801,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("وظيفة حرة على الطلب"),
         "planByOrders":
             MessageLookupByLibrary.simpleMessage("وظيفة حسب الطلبات"),
+        "planDetails": MessageLookupByLibrary.simpleMessage("تفاصيل خطة العمل"),
         "planHint": MessageLookupByLibrary.simpleMessage(
             "في هذه النافذة ستظهر شرائح خطط العمل المتاحة"),
         "pleaseCheckYourInternetConnection":
@@ -995,6 +1004,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "signOut": MessageLookupByLibrary.simpleMessage("تسجيل الخروج"),
         "similarProducts":
             MessageLookupByLibrary.simpleMessage("المنتجات المتشابهة"),
+        "sinceTheLastPayment":
+            MessageLookupByLibrary.simpleMessage("(منذ اخر اخر دفعة حتى الان)"),
         "skip": MessageLookupByLibrary.simpleMessage("تخطي"),
         "smallLessThan20Employee":
             MessageLookupByLibrary.simpleMessage("1 - 20 موظف"),
@@ -1071,6 +1082,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "terms": MessageLookupByLibrary.simpleMessage("الاستخدام"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
+        "theProfitRiyal":
+            MessageLookupByLibrary.simpleMessage("الارباح (ريال)"),
         "thereIsFarawayOrder":
             MessageLookupByLibrary.simpleMessage("هناك طلبات بعيدة متوفرة"),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
@@ -1091,6 +1104,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "للمزيد من المعلومات خذ موعدا بترك رقم هاتفك، وسيتم التواصل معك"),
         "toGetBouns": MessageLookupByLibrary.simpleMessage("للحصول على مكافأة"),
+        "today": MessageLookupByLibrary.simpleMessage("الليوم"),
         "todayProfit": MessageLookupByLibrary.simpleMessage("مستحقات اليوم"),
         "took": MessageLookupByLibrary.simpleMessage("استغرق"),
         "total": MessageLookupByLibrary.simpleMessage("إجمالي الأموال"),
@@ -1220,6 +1234,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "قائمة طلباتك فارغة من فضلك اختر ما تريد طلبه"),
         "yourCurrentPlanStoppedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إيقاف خطتك المالية بنجاح"),
+        "yourFinancialDues":
+            MessageLookupByLibrary.simpleMessage("مستحقاتك المالية"),
         "yourNumberStartWithZero": MessageLookupByLibrary.simpleMessage(
             "الرقم المدخل يبدأ بصفر الرجاء إدخال الرقم بدون الصفر"),
         "yourRequestSent": MessageLookupByLibrary.simpleMessage("تم إرسال طلبك")

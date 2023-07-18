@@ -35,7 +35,7 @@ class MyProfitsStateManager {
         }, hasAppbar: false));
       } else {
         value as CaptainAccountBalanceModel;
-        stateSubject.add(MyProfitsStateLoaded(screenState, value.data));
+        // stateSubject.add(MyProfitsStateLoaded(screenState, value.data));
       }
     });
   }
