@@ -15,7 +15,7 @@ class CaptainFinancialDefaultSystemDailyService
     {
     }
 
-    public function getDailyCaptainFinancialAmount(int $captainProfileId, string $fromDate, string $toDate): array
+    public function getDailyCaptainFinancialAmount(array $captainFinancialSystemDetail, int $captainProfileId, string $fromDate, string $toDate): array
     {
         return $this->captainFinancialDefaultSystemDailyGetBalanceDetailsService->calculateCaptainDuesAndStoreCashAmountOnly($captainFinancialSystemDetail,
             $captainProfileId, $fromDate, $toDate);

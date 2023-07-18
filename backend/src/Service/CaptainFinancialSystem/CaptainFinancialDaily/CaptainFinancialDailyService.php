@@ -84,8 +84,8 @@ class CaptainFinancialDailyService
 
         } elseif ($captainFinancialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST) {
             // Captain financial system is the default one
-            return $this->captainFinancialDefaultSystemDailyService->getDailyCaptainFinancialAmount($captainProfileId,
-                $fromDate, $toDate);
+            return $this->captainFinancialDefaultSystemDailyService->getDailyCaptainFinancialAmount($captainFinancialSystemDetail,
+                $captainProfileId, $fromDate, $toDate);
         }
 
         return $response;
