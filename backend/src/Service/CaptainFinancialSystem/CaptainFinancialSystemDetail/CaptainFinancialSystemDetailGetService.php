@@ -16,4 +16,12 @@ class CaptainFinancialSystemDetailGetService
     {
         return $this->captainFinancialSystemDetailGetManager->getLastCaptainFinancialSystemDetailByCaptainUserId($captainUserId);
     }
+
+    /**
+     * Get all captain financial system details except captainFinancialSystemType = 4
+     */
+    public function getAllCaptainFinancialSystemDetailsExceptFinancialDefaultSystem(): array
+    {
+        return $this->captainFinancialSystemDetailGetManager->getAllCaptainFinancialSystemDetailsExceptFinancialDefaultSystem();
+    }
 }
