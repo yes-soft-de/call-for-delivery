@@ -2925,6 +2925,9 @@ class OrderEntityRepository extends ServiceEntityRepository
         return $query->getQuery()->getResult();
     }
 
+    /**
+     * Get delivered (or cancelled under specific circumstances) orders by specific captain and among specific date
+     */
     public function getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): array
     {
         return $this->createQueryBuilder('orderEntity')

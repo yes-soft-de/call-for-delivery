@@ -5,6 +5,7 @@ namespace App\Service\CaptainFinancialSystem;
 use App\AutoMapping;
 use App\Entity\CaptainFinancialSystemDetailEntity;
 use App\Manager\CaptainFinancialSystem\CaptainFinancialSystemDetailManager;
+use App\Response\CaptainFinancialSystem\CaptainFinancialDefaultSystem\CaptainFinancialDefaultSystemBalanceDetailsGetResponse;
 use App\Response\CaptainFinancialSystem\CaptainFinancialSystemDetailResponse;
 use App\Request\CaptainFinancialSystem\CaptainFinancialSystemDetailRequest;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
@@ -46,7 +47,7 @@ class CaptainFinancialSystemDetailService
         return $this->autoMapping->map(CaptainFinancialSystemDetailEntity::class, CaptainFinancialSystemDetailResponse::class, $captainFinancialSystemDetailEntity);
     }
 
-    public function getBalanceDetailForCaptain(int $userId): CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse|string|CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse|array
+    public function getBalanceDetailForCaptain(int $userId): CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse|string|CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse|array|CaptainFinancialDefaultSystemBalanceDetailsGetResponse
     {
         $this->captainFinancialDuesService->updateCaptainFinancialSystemDetail($userId);
 
@@ -104,7 +105,8 @@ class CaptainFinancialSystemDetailService
                 // *** End of Rami code ***
 
             } elseif ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST) {
-                return $this->captainFinancialDefaultSystemGetBalanceService->getCaptainBalanceDetails();
+                return $this->captainFinancialDefaultSystemGetBalanceService->getCaptainBalanceDetails($financialSystemDetail['captainId'],
+                    $financialSystemDetail);
             }
         }
 

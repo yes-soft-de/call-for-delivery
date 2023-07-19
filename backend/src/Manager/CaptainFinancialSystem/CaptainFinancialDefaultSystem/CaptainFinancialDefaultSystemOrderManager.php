@@ -12,15 +12,12 @@ class CaptainFinancialDefaultSystemOrderManager
     {
     }
 
+    /**
+     * Get delivered (or cancelled under specific circumstances) orders by specific captain and among specific date
+     */
     public function getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainId, string $fromDate, string $toDate): array
     {
         return $this->orderEntityRepository->getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainId, $fromDate,
             $toDate);
     }
-
-//    public function getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): array
-//    {
-//        return $this->orderEntityRepository->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
-//            $fromDate, $toDate);
-//    }
 }

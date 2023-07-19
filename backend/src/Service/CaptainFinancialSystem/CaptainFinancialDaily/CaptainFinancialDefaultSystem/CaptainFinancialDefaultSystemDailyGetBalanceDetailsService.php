@@ -24,45 +24,13 @@ class CaptainFinancialDefaultSystemDailyGetBalanceDetailsService
     }
 
     /**
-     * Get the count of delivered orders by specific captain and among specific date
+     * Get delivered (or cancelled under specific circumstances) orders by specific captain and among specific date
      */
     public function getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): array
     {
         return $this->captainFinancialDefaultSystemOrderGetService->getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
             $fromDate, $toDate);
-
-//        if (count($ordersCountResult) > 0) {
-//            return $ordersCountResult[0];
-//        }
-//
-//        return 0;
     }
-
-//    /**
-//     * Get the count of cancelled orders and related to a specific captain and among specific date
-//     */
-//    public function getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): int
-//    {
-//        $countOrdersResult = $this->captainFinancialDefaultSystemOrderGetService->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
-//            $fromDate, $toDate);
-//
-//        if (count($countOrdersResult) > 0) {
-//            return $countOrdersResult[0];
-//        }
-//
-//        return 0;
-//    }
-
-//    /**
-//     * orders count = (delivered orders count + (cancelled orders count / 2))
-//     */
-//    public function getDeliveredAndCancelledAndOverdueOrdersCount(int $captainProfileId, string $fromDate, string $toDate): float|int
-//    {
-//        return ((float) $this->getDeliveredOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId, $fromDate, $toDate)
-//                +
-//                ((float) $this->getCancelledOrdersCountByCaptainProfileIdAndBetweenTwoDates($captainProfileId, $fromDate, $toDate)
-//                    / CaptainFinancialSystem::CANCELLED_ORDER_DIVISION_FACTOR_CONST));
-//    }
 
     /**
      * Get array which includes:
