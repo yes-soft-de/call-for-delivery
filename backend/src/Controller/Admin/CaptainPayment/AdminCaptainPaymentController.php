@@ -518,4 +518,55 @@ class AdminCaptainPaymentController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+
+    /**
+     * admin: filter captain payments by admin
+     * @Route("filtercaptainpaymentbyadmin", name="filterCaptainPaymentByAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Captain Payment")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="update payment to captain by admin request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="integer", property="captainProfileId"),
+     *          @OA\Property(type="string", property="customizedTimezone")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns updated payment info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentFilterByAdminResponse")
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterCaptainPaymentByAdminV2(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, CaptainPaymentFilterByAdminRequest::class, (object)$data);
+
+        $result = $this->adminCaptainPaymentService->filterCaptainPaymentByAdminV2($request);
+
+        return $this->response($result, self::FETCH);
+    }
 }

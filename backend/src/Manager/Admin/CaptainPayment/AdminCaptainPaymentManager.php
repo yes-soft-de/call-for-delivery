@@ -135,4 +135,12 @@ class AdminCaptainPaymentManager
     {
         return $this->captainPaymentEntityRepository->filterCaptainPaymentByAdmin($request);
     }
+
+    /**
+     * epic 13
+     */
+    public function filterCaptainPaymentByAdminV2(CaptainPaymentFilterByAdminRequest $request): array
+    {
+        return $this->captainPaymentEntityRepository->filterCaptainPaymentByAdminV2($request);
+    }
 }

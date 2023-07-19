@@ -3,20 +3,20 @@
 namespace App\Service\CaptainPayment;
 
 use App\AutoMapping;
+use App\Entity\CaptainPaymentEntity;
 use App\Manager\CaptainPayment\CaptainPaymentManager;
+use App\Response\CaptainPayment\CaptainPaymentFilterResponse;
 use App\Response\CaptainPayment\CaptainPaymentResponse;
 use App\Request\CaptainPayment\CaptainPaymentFilterRequest;
 use DateTime;
 
 class CaptainPaymentService
 {
-    private AutoMapping $autoMapping;
-    private CaptainPaymentManager $captainPaymentManager;
-
-    public function __construct(AutoMapping $autoMapping, CaptainPaymentManager $captainPaymentManager)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private CaptainPaymentManager $captainPaymentManager
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->captainPaymentManager = $captainPaymentManager;
     }
 
     public function getCaptainPayments(CaptainPaymentFilterRequest $request): array
@@ -56,5 +56,29 @@ class CaptainPaymentService
     public function getPaymentsByCaptainId(int $captainId): array
     {
         return $this->captainPaymentManager->getPaymentsByCaptainId($captainId);
+    }
+
+    /**
+     * epic 13
+     */
+    public function filterCaptainPaymentCaptain(CaptainPaymentFilterRequest $request): array
+    {
+        $response = [];
+
+        $response['payments'] = [];
+        $response['paymentsTotalAmount'] = 0.0;
+
+        $captainPayments = $this->captainPaymentManager->filterCaptainPaymentCaptain($request);
+
+        if (count($captainPayments) > 0) {
+            foreach ($captainPayments as $key => $value) {
+                $response['payments'][$key] = $this->autoMapping->map(CaptainPaymentEntity::class, CaptainPaymentFilterResponse::class,
+                    $value);
+
+                $response['paymentsTotalAmount'] += $value->getAmount();
+            }
+        }
+
+        return $response;
     }
 }

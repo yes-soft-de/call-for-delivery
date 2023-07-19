@@ -2,10 +2,12 @@
 
 namespace App\Entity;
 
+use App\Constant\CaptainPayment\PaymentToCaptain\CaptainPaymentConstant;
 use App\Repository\CaptainPaymentEntityRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
+// Payments from Company to Captains
 #[ORM\Entity(repositoryClass: CaptainPaymentEntityRepository::class)]
 class CaptainPaymentEntity
 {
@@ -33,6 +35,25 @@ class CaptainPaymentEntity
 
     #[ORM\ManyToOne(targetEntity: CaptainFinancialDailyEntity::class, inversedBy: 'captainPayment')]
     private $captainFinancialDailyEntity;
+
+    #[ORM\Column(type: 'text')]
+    private $paymentId;
+
+    #[ORM\Column(type: 'smallint', options: ["default" => CaptainPaymentConstant::PAYMENT_GETAWAY_NOT_SPECIFIED_CONST])]
+    private $paymentGetaway;
+
+    #[ORM\Column(type: 'smallint', options: ["default" => CaptainPaymentConstant::PAYMENT_FOR_ORDER_DELIVERY_CONST])]
+    private $paymentFor;
+
+    #[Gedmo\Timestampable(on: 'update')]
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private $updatedAt;
+
+    #[ORM\Column(type: 'smallint', nullable: true)]
+    private $paymentType;
+
+    #[ORM\Column(type: 'integer', options: ["default" => 0])]
+    private $createdBy;
 
     public function getId(): ?int
     {
@@ -107,6 +128,78 @@ class CaptainPaymentEntity
     public function setCaptainFinancialDailyEntity(?CaptainFinancialDailyEntity $captainFinancialDailyEntity): self
     {
         $this->captainFinancialDailyEntity = $captainFinancialDailyEntity;
+
+        return $this;
+    }
+
+    public function getPaymentId(): ?string
+    {
+        return $this->paymentId;
+    }
+
+    public function setPaymentId(string $paymentId): self
+    {
+        $this->paymentId = $paymentId;
+
+        return $this;
+    }
+
+    public function getPaymentGetaway(): ?int
+    {
+        return $this->paymentGetaway;
+    }
+
+    public function setPaymentGetaway(int $paymentGetaway): self
+    {
+        $this->paymentGetaway = $paymentGetaway;
+
+        return $this;
+    }
+
+    public function getPaymentFor(): ?int
+    {
+        return $this->paymentFor;
+    }
+
+    public function setPaymentFor(int $paymentFor): self
+    {
+        $this->paymentFor = $paymentFor;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getPaymentType(): ?int
+    {
+        return $this->paymentType;
+    }
+
+    public function setPaymentType(?int $paymentType): self
+    {
+        $this->paymentType = $paymentType;
+
+        return $this;
+    }
+
+    public function getCreatedBy(): ?int
+    {
+        return $this->createdBy;
+    }
+
+    public function setCreatedBy(int $createdBy): self
+    {
+        $this->createdBy = $createdBy;
 
         return $this;
     }

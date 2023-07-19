@@ -159,6 +159,13 @@ class CaptainFinancialSystemDetailController extends BaseController
      *                              @OA\Property(type="float", property="sumPayments"),
      *                              @OA\Property(type="string", property="totalIsMain")
      *                          )
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code"),
+     *                          @OA\Property(type="string", property="msg"),
+     *                          @OA\Property(type="object", property="Data",
+     *                              ref=@Model(type="App\Response\CaptainFinancialSystem\CaptainFinancialDefaultSystem\CaptainFinancialDefaultSystemBalanceDetailsGetResponse")
+     *                          )
      *                   )
      *              }
      *      )

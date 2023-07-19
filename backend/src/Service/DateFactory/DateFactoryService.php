@@ -205,4 +205,18 @@ class DateFactoryService
 
         return false;
     }
+
+    public function getStartAndEndDateTimeOfToday(string $timeZone = null): array
+    {
+        $today = new DateTime('today');
+
+        $startOfToday = clone $today;
+        $startOfToday->setTimezone(new \DateTimeZone($timeZone ? : 'UTC'));
+
+        $endOfToday = clone $today;
+        $endOfToday->setTime(23, 59, 59);
+        $endOfToday->setTimezone(new \DateTimeZone($timeZone ? : 'UTC'));
+
+        return [$startOfToday, $endOfToday];
+    }
 }

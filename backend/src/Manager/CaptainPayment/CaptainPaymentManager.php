@@ -8,11 +8,10 @@ use DateTime;
 
 class CaptainPaymentManager
 {
-    private CaptainPaymentEntityRepository $captainPaymentEntityRepository;
-
-    public function __construct(CaptainPaymentEntityRepository $captainPaymentEntityRepository)
+    public function __construct(
+        private CaptainPaymentEntityRepository $captainPaymentEntityRepository
+    )
     {
-        $this->captainPaymentEntityRepository = $captainPaymentEntityRepository;
     }
 
     public function getCaptainPaymentsFilter(CaptainPaymentFilterRequest $request): ?array
@@ -43,5 +42,18 @@ class CaptainPaymentManager
     public function getPaymentsByCaptainId(int $captainId): array
     {
         return $this->captainPaymentEntityRepository->getPaymentsByCaptainId($captainId);
+    }
+
+    public function getLastCaptainPaymentByCaptainProfileId(int $captainProfileId): array
+    {
+        return $this->captainPaymentEntityRepository->findBy(['captain' => $captainProfileId], ['id' => 'DESC'], 1);
+    }
+
+    /**
+     * epic 13
+     */
+    public function filterCaptainPaymentCaptain(CaptainPaymentFilterRequest $request): array
+    {
+        return $this->captainPaymentEntityRepository->filterCaptainPaymentCaptain($request);
     }
 }

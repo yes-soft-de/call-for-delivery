@@ -2924,4 +2924,31 @@ class OrderEntityRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    /**
+     * Get delivered (or cancelled under specific circumstances) orders by specific captain and among specific date
+     */
+    public function getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): array
+    {
+        return $this->createQueryBuilder('orderEntity')
+            ->select('orderEntity.id', 'orderEntity.storeBranchToClientDistance', 'orderEntity.kilometer')
+
+            ->andWhere('(orderEntity.state = :deliveredState) OR '
+                .'(orderEntity.state = :cancelledState AND orderEntity.orderCancelledByUserAndAtState IN (:orderCancelledByUserAndAtStateArray))')
+            ->setParameter('deliveredState', OrderStateConstant::ORDER_STATE_DELIVERED)
+            ->setParameter('cancelledState', OrderStateConstant::ORDER_STATE_CANCEL)
+            ->setParameter('orderCancelledByUserAndAtStateArray', OrderCancelledByUserAndAtStateConstant::ORDER_CANCEL_USER_AND_STATE_ARRAY)
+
+            ->andWhere('orderEntity.captainId = :captainId')
+            ->setParameter('captainId', $captainProfileId)
+
+            ->andWhere('orderEntity.createdAt >= :fromDate')
+            ->setParameter('fromDate', $fromDate)
+
+            ->andWhere('orderEntity.createdAt <= :toDate')
+            ->setParameter('toDate', $toDate)
+
+            ->getQuery()
+            ->getResult();
+    }
 }
