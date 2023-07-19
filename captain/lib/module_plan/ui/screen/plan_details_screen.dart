@@ -1,7 +1,7 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_plan/model/my_profit_model.dart';
+import 'package:c4d/module_plan/model/my_profits_model.dart';
 import 'package:c4d/module_plan/state_manager/my_profits_state_manager.dart';
 import 'package:c4d/module_plan/ui/state/plan_details/plan_details_state_loaded.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -41,7 +41,7 @@ class PlanDetailsScreenState extends State<PlanDetailsScreen> {
     if (flag) {
       flag = false;
       var args = ModalRoute.of(context)?.settings.arguments;
-      if (args is MyProfitModel) {
+      if (args is MyProfitsModel) {
         _currentState = PlanDetailsStateLoaded(this, args);
       }
     }

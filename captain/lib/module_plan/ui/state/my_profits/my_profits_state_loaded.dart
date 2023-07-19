@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_plan/model/my_profit_model.dart';
+import 'package:c4d/module_plan/model/my_profits_model.dart';
 import 'package:c4d/module_plan/plan_routes.dart';
 import 'package:c4d/module_plan/ui/screen/my_profits_screen.dart';
 import 'package:c4d/utils/images/images.dart';
@@ -16,7 +16,7 @@ Color get _transparentBlue => const Color(0xff5E789D);
 
 class MyProfitsStateLoaded extends States {
   final MyProfitsScreenState screenState;
-  final MyProfitModel model;
+  final MyProfitsModel model;
 
   MyProfitsStateLoaded(this.screenState, this.model) : super(screenState);
 
@@ -92,7 +92,7 @@ class _CustomButton extends StatelessWidget {
 }
 
 class _SecondCard extends StatelessWidget {
-  final MyProfitModel model;
+  final MyProfitsModel model;
   final void Function() onDuesClaimButtonPressed;
 
   const _SecondCard({
@@ -287,7 +287,7 @@ class _TransparentCard extends StatelessWidget {
 }
 
 class _FirstCard extends StatelessWidget {
-  final MyProfitModel model;
+  final MyProfitsModel model;
 
   const _FirstCard(this.model);
 

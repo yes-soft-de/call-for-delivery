@@ -24,9 +24,9 @@ class PaymentHistoryStateLoaded extends States {
           const SizedBox(height: 10),
           ListView.builder(
             shrinkWrap: true,
-            itemCount: model.ePayments.length,
+            itemCount: model.payments.length,
             itemBuilder: (context, index) {
-              var payment = model.ePayments[index];
+              var payment = model.payments[index];
               return PaymentCard(
                 paymentValue: S.current
                     .paymentValueRiyal(payment.amount.toStringAsFixed(2)),

@@ -2,7 +2,7 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_plan/model/my_profit_model.dart';
+import 'package:c4d/module_plan/model/my_profits_model.dart';
 import 'package:c4d/module_plan/service/plan_service.dart';
 import 'package:c4d/module_plan/ui/screen/plan_details_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ Color get _lightBlue2 => const Color(0xff00A1C5);
 
 class PlanDetailsStateLoaded extends States {
   final PlanDetailsScreenState screenState;
-  final MyProfitModel model;
+  final MyProfitsModel model;
 
   PlanDetailsStateLoaded(this.screenState, this.model) : super(screenState);
 
@@ -43,7 +43,7 @@ class PlanDetailsStateLoaded extends States {
 }
 
 class _PlanDetailsCard extends StatelessWidget {
-  final MyProfitModel model;
+  final MyProfitsModel model;
 
   const _PlanDetailsCard({required this.model});
 
@@ -157,7 +157,7 @@ class _DetailRow extends StatelessWidget {
 }
 
 class _CalculateEarningCard extends StatelessWidget {
-  final MyProfitModel model;
+  final MyProfitsModel model;
 
   final TextEditingController _kilometerTextController =
       TextEditingController();
@@ -254,7 +254,7 @@ class _CalculateEarningCard extends StatelessWidget {
 }
 
 class _FirstCard extends StatelessWidget {
-  final MyProfitModel model;
+  final MyProfitsModel model;
   const _FirstCard({required this.model});
 
   @override

@@ -1,32 +1,30 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:c4d/abstracts/data_model/data_model.dart';
-import 'package:c4d/module_plan/response/pyment_history_response/e_payment.dart';
-import 'package:c4d/module_plan/response/pyment_history_response/payment_history_response.dart';
+import 'package:c4d/module_plan/response/payment_history_response/payment.dart';
+import 'package:c4d/module_plan/response/payment_history_response/payment_history_response.dart';
+import 'package:c4d/utils/helpers/date_converter.dart';
 
 class PaymentHistoryModel extends DataModel {
-  late int subscriptionCost;
-  late List<EPaymentModel> ePayments;
-  late bool hasTpPay;
+  late int paymentsTotalAmount;
+  late List<EPaymentModel> payments;
 
   late PaymentHistoryModel _model;
 
   PaymentHistoryModel({
-    required this.subscriptionCost,
-    required this.ePayments,
-    required this.hasTpPay,
+    required this.paymentsTotalAmount,
+    required this.payments,
   });
 
   PaymentHistoryModel.withData(PaymentHistoryResponse response) {
     var data = response.data;
 
     _model = PaymentHistoryModel(
-      subscriptionCost: data?.subscriptionCost ?? 0,
-      ePayments: _getEPaymentModel(data?.ePayments),
-      hasTpPay: data?.hasToPay ?? false,
+      paymentsTotalAmount: data?.paymentsTotalAmount ?? 0,
+      payments: _getEPaymentModel(data?.payments),
     );
   }
 
-  List<EPaymentModel> _getEPaymentModel(List<EPayment?>? data) {
+  List<EPaymentModel> _getEPaymentModel(List<Payment?>? data) {
     List<EPaymentModel> list = [];
 
     data?.forEach(
@@ -35,12 +33,8 @@ class PaymentHistoryModel extends DataModel {
           EPaymentModel(
             id: element?.id ?? 0,
             amount: element?.amount ?? 0,
-            createdBy: element?.createdBy ?? 0,
-            details: element?.details ?? '',
-            paymentFor: element?.paymentFor ?? 0,
             paymentGetaway: element?.paymentGetaway ?? 0,
-            paymentType: element?.paymentType ?? 0,
-            createdAt: element?.createdAt ?? DateTime(2000),
+            createdAt: DateHelper.convert(element?.createdAt?.timestamp),
           ),
         );
       },
@@ -56,20 +50,12 @@ class EPaymentModel {
   late int id;
   late int paymentGetaway;
   late num amount;
-  late int paymentFor;
-  late String details;
   late DateTime createdAt;
-  late int paymentType;
-  late int createdBy;
 
   EPaymentModel({
     required this.id,
     required this.paymentGetaway,
     required this.amount,
-    required this.paymentFor,
-    required this.details,
     required this.createdAt,
-    required this.paymentType,
-    required this.createdBy,
   });
 }
