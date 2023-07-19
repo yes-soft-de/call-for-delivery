@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Repository\CaptainFinancialDuesEntityRepository;
 use App\Request\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueCreateRequest;
+use App\Request\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueStoppedFinancialCycleUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Request\CaptainFinancialSystem\CreateCaptainFinancialDuesRequest;
 use App\Manager\Captain\CaptainManager;
@@ -180,6 +181,20 @@ class CaptainFinancialDuesManager
 
         $this->entityManager->persist($captainFinancialDuesEntity);
         $this->entityManager->flush();
+
+        return $captainFinancialDuesEntity;
+    }
+
+    public function updateCaptainFinancialDueEndDateAndStateAndCaptainStoppedFinancialCycle(CaptainFinancialDueStoppedFinancialCycleUpdateRequest $request): ?CaptainFinancialDuesEntity
+    {
+        $captainFinancialDuesEntity = $this->captainFinancialDuesRepository->findOneBy(['id' => $request->getId()]);
+
+        if ($captainFinancialDuesEntity) {
+            $captainFinancialDuesEntity = $this->autoMapping->mapToObject(CaptainFinancialDueStoppedFinancialCycleUpdateRequest::class,
+                CaptainFinancialDuesEntity::class, $request, $captainFinancialDuesEntity);
+
+            $this->entityManager->flush();
+        }
 
         return $captainFinancialDuesEntity;
     }

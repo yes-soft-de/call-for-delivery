@@ -5,6 +5,7 @@ namespace App\Service\CaptainFinancialSystem;
 use App\AutoMapping;
 use App\Entity\CaptainFinancialSystemDetailEntity;
 use App\Manager\CaptainFinancialSystem\CaptainFinancialSystemDetailManager;
+use App\Request\CaptainFinancialSystem\CaptainFinancialSystemDetail\CaptainFinancialSystemDetailTypeAndIdUpdateRequest;
 use App\Response\CaptainFinancialSystem\CaptainFinancialDefaultSystem\CaptainFinancialDefaultSystemBalanceDetailsGetResponse;
 use App\Response\CaptainFinancialSystem\CaptainFinancialSystemDetailResponse;
 use App\Request\CaptainFinancialSystem\CaptainFinancialSystemDetailRequest;
@@ -130,5 +131,16 @@ class CaptainFinancialSystemDetailService
     public function deleteCaptainFinancialSystemDetailsByCaptainId(int $captainId): array
     {
         return $this->captainFinancialSystemDetailManager->deleteCaptainFinancialSystemDetailsByCaptainId($captainId);
+    }
+
+    public function updateCaptainFinancialSystemDetailCaptainFinancialSystemType(CaptainFinancialSystemDetailTypeAndIdUpdateRequest $request): string|CaptainFinancialSystemDetailEntity
+    {
+        $captainFinancialSystemDetail = $this->captainFinancialSystemDetailManager->updateCaptainFinancialSystemDetailCaptainFinancialSystemType($request);
+
+        if (! $captainFinancialSystemDetail) {
+            return CaptainFinancialSystem::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM;
+        }
+
+        return $captainFinancialSystemDetail;
     }
 }
