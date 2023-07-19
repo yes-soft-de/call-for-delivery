@@ -8,4 +8,5 @@ class PlanRoutes {
   static const CAPTAIN_DAILY_PAYMENTS = '/captain_daily_payments';
   static const MY_PROFIT = '/my_profit';
   static const PAYMENT_HISTORY = '/payment_history';
+  static const PLAN_DETAILS = '/plan_details';
 }

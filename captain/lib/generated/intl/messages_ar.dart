@@ -20,9 +20,20 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
-  static String m0(value) => "الدفعة ${value} ريال";
+  static String m0(limit) => "كل 1 كم (الطلبات من ${limit} كم واكثر)";
 
-  static String m1(value) => "${value} ريال";
+  static String m1(firstLimit, secondLimit) =>
+      "كل 1 كم (الطلبات اكبر من ${firstLimit} الى ${secondLimit} كم)";
+
+  static String m2(firstLimit, secondLimit) =>
+      "للطلبات من ${firstLimit} حتى ${secondLimit} كم";
+
+  static String m3(value) => "الدفعة ${value} ريال";
+
+  static String m4(openOrderPrince) =>
+      "تتم اضافة الارباح الى رصيدك عند التسليم الطلب\nالسعر الافتتاحي (${openOrderPrince} ريال) + الربح من الكيلومترات";
+
+  static String m5(value) => "${value} ريال";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -148,6 +159,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("إدارة الأفرع"),
         "branchPhone": MessageLookupByLibrary.simpleMessage("رقم هاتف الفرع"),
         "businessName": MessageLookupByLibrary.simpleMessage("الاسم التجاري"),
+        "calculateYourDues":
+            MessageLookupByLibrary.simpleMessage("احسب ارباحك"),
         "calculating": MessageLookupByLibrary.simpleMessage("جاري الحساب"),
         "camera": MessageLookupByLibrary.simpleMessage("الكاميرا"),
         "canConnect": MessageLookupByLibrary.simpleMessage("استفسار عن الطلب"),
@@ -416,6 +429,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("ادخل رمز التحقق"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("ادخل معلومات المنتج"),
+        "enterTheNumberOfKilometer":
+            MessageLookupByLibrary.simpleMessage("ادخل عدد الكيلو متر"),
         "errOc": MessageLookupByLibrary.simpleMessage("حصلت المشاكل التالية"),
         "error": MessageLookupByLibrary.simpleMessage("تحذير"),
         "errorDownloadingImage":
@@ -430,6 +445,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Error logging in, firebase account not found"),
         "errorUploadingImages":
             MessageLookupByLibrary.simpleMessage("حدث خطأ عند رفع الصور!!"),
+        "everyOneKMOrdersFromAndMore": m0,
+        "everyOneKMOrdersGreaterThenTo": m1,
         "exceededAllowedTime": MessageLookupByLibrary.simpleMessage(
             "لقد تجاوزت الوقت المسموح لإزالة الطلب"),
         "expectedOrderBill":
@@ -678,6 +695,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "online": MessageLookupByLibrary.simpleMessage("مدفوع"),
         "openChatRoom":
             MessageLookupByLibrary.simpleMessage("افتح غرفة المحادثة"),
+        "openOrderPrice":
+            MessageLookupByLibrary.simpleMessage("السعر الافتتاحي للطلب"),
         "openTheApp": MessageLookupByLibrary.simpleMessage("افتح التطبيق"),
         "openingTime": MessageLookupByLibrary.simpleMessage("وقت الافتتاح"),
         "optional": MessageLookupByLibrary.simpleMessage("اختياري"),
@@ -736,6 +755,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderWithoutDef": MessageLookupByLibrary.simpleMessage("طلب"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("طلب في الشهر"),
         "orders": MessageLookupByLibrary.simpleMessage("الطلبات"),
+        "ordersFromTo": m2,
         "ordersMonth": MessageLookupByLibrary.simpleMessage("طلب / الشهر"),
         "ordersTotal": MessageLookupByLibrary.simpleMessage("اجمالي الطلبات"),
         "ourBankAccountNumber":
@@ -781,7 +801,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentPortalHint": MessageLookupByLibrary.simpleMessage(
             "المبلغ النهائي في بوابة الدفع شاملة للقيمة المضافة %15"),
         "paymentResume": MessageLookupByLibrary.simpleMessage("استكمال الدفع"),
-        "paymentValueRiyal": m0,
+        "paymentValueRiyal": m3,
         "payments": MessageLookupByLibrary.simpleMessage("الدفعات"),
         "paymentsVia":
             MessageLookupByLibrary.simpleMessage("إيصال المدفوعات عبر"),
@@ -809,6 +829,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "planByOrders":
             MessageLookupByLibrary.simpleMessage("وظيفة حسب الطلبات"),
         "planDetails": MessageLookupByLibrary.simpleMessage("تفاصيل خطة العمل"),
+        "planDetailsDescription": m4,
         "planHint": MessageLookupByLibrary.simpleMessage(
             "في هذه النافذة ستظهر شرائح خطط العمل المتاحة"),
         "pleaseCheckYourInternetConnection":
@@ -1089,8 +1110,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "terms": MessageLookupByLibrary.simpleMessage("الاستخدام"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
+        "theHigherDeliveryDistance": MessageLookupByLibrary.simpleMessage(
+            "كلما زادت مسافة التوصيل سترتفع نسبة الربح"),
         "theProfitRiyal":
             MessageLookupByLibrary.simpleMessage("الارباح (ريال)"),
+        "theProfits": MessageLookupByLibrary.simpleMessage("الارباح"),
         "thereIsFarawayOrder":
             MessageLookupByLibrary.simpleMessage("هناك طلبات بعيدة متوفرة"),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
@@ -1174,7 +1198,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المستخدم يحتاج لتأكيد هويته"),
         "username": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
         "validation": MessageLookupByLibrary.simpleMessage("صلاحية"),
-        "valueRiyal": m1,
+        "valueRiyal": m5,
         "views": MessageLookupByLibrary.simpleMessage("مشاهدة"),
         "waiting": MessageLookupByLibrary.simpleMessage("في الانتظار"),
         "waitingDescription":

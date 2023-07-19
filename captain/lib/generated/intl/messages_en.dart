@@ -20,9 +20,20 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(value) => "payment ${value} Riyal";
+  static String m0(limit) => "every 1 KM (orders from ${limit} KM and more)";
 
-  static String m1(value) => "${value} Riyal";
+  static String m1(firstLimit, secondLimit) =>
+      "every 1 KM (orders greater then ${firstLimit} to ${secondLimit} KM)";
+
+  static String m2(firstLimit, secondLimit) =>
+      "order from ${firstLimit} to ${secondLimit}";
+
+  static String m3(value) => "payment ${value} Riyal";
+
+  static String m4(openOrderPrince) =>
+      "Profits are added to your balance upon delivery of the order.\n The opening price is (${openOrderPrince} riyals) + profit from kilometers";
+
+  static String m5(value) => "${value} Riyal";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -149,6 +160,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Branch management"),
         "branchPhone": MessageLookupByLibrary.simpleMessage("Branch Phone"),
         "businessName": MessageLookupByLibrary.simpleMessage("Business Name"),
+        "calculateYourDues":
+            MessageLookupByLibrary.simpleMessage("calculate your dues"),
         "calculating": MessageLookupByLibrary.simpleMessage("Calculating"),
         "camera": MessageLookupByLibrary.simpleMessage("Camera"),
         "canConnect":
@@ -422,6 +435,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enter verification code"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("Enter product information"),
+        "enterTheNumberOfKilometer": MessageLookupByLibrary.simpleMessage(
+            "enter  the number of kilometer"),
         "errOc":
             MessageLookupByLibrary.simpleMessage("The next problems occurred"),
         "error": MessageLookupByLibrary.simpleMessage("Error"),
@@ -437,6 +452,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Error logging in, firebase account not found"),
         "errorUploadingImages":
             MessageLookupByLibrary.simpleMessage("Error Uploading Images!!"),
+        "everyOneKMOrdersFromAndMore": m0,
+        "everyOneKMOrdersGreaterThenTo": m1,
         "exceededAllowedTime": MessageLookupByLibrary.simpleMessage(
             "Can not remove it, Exceeded time allowed"),
         "expectedOrderBill":
@@ -686,6 +703,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "ongoing": MessageLookupByLibrary.simpleMessage("Ongoing"),
         "online": MessageLookupByLibrary.simpleMessage("online"),
         "openChatRoom": MessageLookupByLibrary.simpleMessage("Open Chat Room"),
+        "openOrderPrice":
+            MessageLookupByLibrary.simpleMessage("open order price"),
         "openTheApp": MessageLookupByLibrary.simpleMessage("Open the app"),
         "openingTime": MessageLookupByLibrary.simpleMessage("Opening Time"),
         "optional": MessageLookupByLibrary.simpleMessage("Optional"),
@@ -745,6 +764,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderWithoutDef": MessageLookupByLibrary.simpleMessage("order"),
         "ordermonth": MessageLookupByLibrary.simpleMessage("Order/Month"),
         "orders": MessageLookupByLibrary.simpleMessage("Orders"),
+        "ordersFromTo": m2,
         "ordersMonth": MessageLookupByLibrary.simpleMessage("Orders / Month"),
         "ordersTotal": MessageLookupByLibrary.simpleMessage("orders total"),
         "ourBankAccountNumber":
@@ -792,7 +812,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentPortalHint": MessageLookupByLibrary.simpleMessage(
             "All prices in payments portal are included with 15% vat"),
         "paymentResume": MessageLookupByLibrary.simpleMessage("Payment Resume"),
-        "paymentValueRiyal": m0,
+        "paymentValueRiyal": m3,
         "payments": MessageLookupByLibrary.simpleMessage("Payments"),
         "paymentsVia": MessageLookupByLibrary.simpleMessage("Payments via"),
         "pending": MessageLookupByLibrary.simpleMessage("Pending"),
@@ -816,6 +836,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Plan on order count"),
         "planByOrders": MessageLookupByLibrary.simpleMessage("Plan by orders"),
         "planDetails": MessageLookupByLibrary.simpleMessage("plan details"),
+        "planDetailsDescription": m4,
         "planHint": MessageLookupByLibrary.simpleMessage(
             "In this screen you can see our work planes "),
         "pleaseCheckYourInternetConnection":
@@ -1096,8 +1117,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "terms": MessageLookupByLibrary.simpleMessage("terms of use"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Terms of Service"),
+        "theHigherDeliveryDistance": MessageLookupByLibrary.simpleMessage(
+            "The higher delivery distance, the higher profit rate"),
         "theProfitRiyal":
             MessageLookupByLibrary.simpleMessage("the profit (Riyal)"),
+        "theProfits": MessageLookupByLibrary.simpleMessage("the profits"),
         "thereIsFarawayOrder":
             MessageLookupByLibrary.simpleMessage("There is far away orders "),
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
@@ -1182,7 +1206,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("User not verified"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "validation": MessageLookupByLibrary.simpleMessage("Validation"),
-        "valueRiyal": m1,
+        "valueRiyal": m5,
         "views": MessageLookupByLibrary.simpleMessage("views"),
         "waiting": MessageLookupByLibrary.simpleMessage("waiting"),
         "waitingDescription": MessageLookupByLibrary.simpleMessage(

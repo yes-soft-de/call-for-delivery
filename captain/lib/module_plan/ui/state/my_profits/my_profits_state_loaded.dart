@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 
 Color get _blue => const Color(0xff2C5085);
 Color get _yellow => const Color(0xffFFF975);
+Color get _gray => Colors.grey;
 Color get _lightBlue => const Color(0xffF2FAFD);
 Color get _lightGreen => const Color(0xff46F4A1);
 Color get _transparentBlue => const Color(0xff5E789D);
@@ -52,7 +53,11 @@ class MyProfitsStateLoaded extends States {
           _CustomButton(
             title: S.current.planDetails,
             onPressed: () {
-              // TODO: navigate to plan ditailes screen
+              Navigator.pushNamed(
+                context,
+                PlanRoutes.PLAN_DETAILS,
+                arguments: model,
+              );
             },
           ),
         ],
@@ -146,12 +151,14 @@ class _SecondCard extends StatelessWidget {
             SizedBox(
               height: 56,
               child: ElevatedButton(
-                onPressed: () {
-                  _showConfirmDialog(
-                    context,
-                    onDuesClaimButtonPressed,
-                  );
-                },
+                onPressed: model.profitSinceLastPayment == 0
+                    ? null
+                    : () {
+                        _showConfirmDialog(
+                          context,
+                          onDuesClaimButtonPressed,
+                        );
+                      },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: model.profitSinceLastPayment == 0
                       ? _transparentBlue
@@ -166,7 +173,9 @@ class _SecondCard extends StatelessWidget {
                     Text(
                       S.current.duesClaim,
                       style: model.profitSinceLastPayment == 0
-                          ? null
+                          ? Theme.of(context).textTheme.bodySmall?.copyWith(
+                                color: _gray,
+                              )
                           : Theme.of(context).textTheme.bodyLarge?.copyWith(
                                 color: _blue,
                                 fontWeight: FontWeight.bold,

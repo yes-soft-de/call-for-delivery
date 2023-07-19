@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 Color get _blue => const Color(0xff2C5085);
 Color get _red => Colors.red;
+Color get _lightBlue => const Color(0xffF2FAFD);
 
 enum PaymentType {
   cash,
@@ -40,7 +41,7 @@ class PaymentCard extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(1.0),
       child: Card(
-        color: Theme.of(context).colorScheme.background,
+        color: _lightBlue,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Container(
           decoration: BoxDecoration(

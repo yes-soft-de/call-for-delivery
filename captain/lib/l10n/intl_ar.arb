@@ -807,6 +807,53 @@
     "theProfitRiyal": "الارباح (ريال)",
     "from": "من",
     "totalReceivedByTheSpecifiedDate": "اجمال المقبوض حسب التاريخ المحدد",
+    "planDetailsDescription": "تتم اضافة الارباح الى رصيدك عند التسليم الطلب\nالسعر الافتتاحي ({openOrderPrince} ريال) + الربح من الكيلومترات",
+    "@planDetailsDescription": {
+        "description": "",
+        "placeholders": {
+            "openOrderPrince": {
+                "type": "String"
+            }
+        }
+    },
+    "theHigherDeliveryDistance": "كلما زادت مسافة التوصيل سترتفع نسبة الربح",
     "bankTransfer": "تحويل بنكي",
+    "calculateYourDues": "احسب ارباحك",
+    "enterTheNumberOfKilometer": "ادخل عدد الكيلو متر",
+    "theProfits": "الارباح",
+    "openOrderPrice": "السعر الافتتاحي للطلب",
+    "ordersFromTo": "للطلبات من {firstLimit} حتى {secondLimit} كم",
+    "@ordersFromTo": {
+        "description": "",
+        "placeholders": {
+            "firstLimit": {
+                "type": "String"
+            },
+            "secondLimit": {
+                "type": "String"
+            }
+        }
+    },
+    "everyOneKMOrdersGreaterThenTo": "كل 1 كم (الطلبات اكبر من {firstLimit} الى {secondLimit} كم)",
+    "@everyOneKMOrdersGreaterThenTo": {
+        "description": "",
+        "placeholders": {
+            "firstLimit": {
+                "type": "String"
+            },
+            "secondLimit": {
+                "type": "String"
+            }
+        }
+    },
+    "everyOneKMOrdersFromAndMore": "كل 1 كم (الطلبات من {limit} كم واكثر)",
+    "@everyOneKMOrdersFromAndMore": {
+        "description": "",
+        "placeholders": {
+            "limit": {
+                "type": "String"
+            }
+        }
+    },
     "financeOverPaid": "دفعة زائدة"
 }

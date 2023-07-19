@@ -4,6 +4,7 @@ import 'package:c4d/module_plan/model/captain_finance_by_hours_model.dart';
 import 'package:c4d/module_plan/model/captain_finance_by_order_count.dart';
 import 'package:c4d/module_plan/model/captain_finance_by_order_model.dart';
 import 'package:c4d/module_plan/model/captain_financial_dues.dart';
+import 'package:c4d/module_plan/model/my_profit_model.dart';
 import 'package:c4d/module_plan/request/captain_finance_request.dart';
 import 'package:c4d/module_plan/response/captain_account_balance_response/captain_account_balance_response.dart';
 import 'package:c4d/module_plan/response/captain_account_balance_response/on_order/on_order_data.dart';
@@ -140,5 +141,22 @@ class PlanService {
     } catch (e) {
       return data.financialAccountDetails;
     }
+  }
+
+  num calculateProfit(MyProfitModel myProfitModel, num kilometer) {
+    if (kilometer == 0) return 0;
+
+    if (0 < kilometer && kilometer <= myProfitModel.firstSliceToLimit) {
+      return (myProfitModel.firstSliceCost) + myProfitModel.openOrderCost;
+    } else if (myProfitModel.secondSliceFromLimit < kilometer &&
+        kilometer < myProfitModel.secondSliceToLimit) {
+      return (kilometer * myProfitModel.secondSliceOneKilometerCost) +
+          myProfitModel.openOrderCost;
+    } else if (myProfitModel.thirdSliceFromLimit <= kilometer) {
+      return (kilometer * myProfitModel.thirdSliceOneKilometerCost) +
+          myProfitModel.openOrderCost;
+    }
+
+    return 0;
   }
 }

@@ -7940,6 +7940,26 @@ class S {
     );
   }
 
+  /// `Profits are added to your balance upon delivery of the order.\n The opening price is ({openOrderPrince} riyals) + profit from kilometers`
+  String planDetailsDescription(String openOrderPrince) {
+    return Intl.message(
+      'Profits are added to your balance upon delivery of the order.\n The opening price is ($openOrderPrince riyals) + profit from kilometers',
+      name: 'planDetailsDescription',
+      desc: '',
+      args: [openOrderPrince],
+    );
+  }
+
+  /// `The higher delivery distance, the higher profit rate`
+  String get theHigherDeliveryDistance {
+    return Intl.message(
+      'The higher delivery distance, the higher profit rate',
+      name: 'theHigherDeliveryDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `bank transfer`
   String get bankTransfer {
     return Intl.message(
@@ -7947,6 +7967,76 @@ class S {
       name: 'bankTransfer',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `calculate your dues`
+  String get calculateYourDues {
+    return Intl.message(
+      'calculate your dues',
+      name: 'calculateYourDues',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `enter  the number of kilometer`
+  String get enterTheNumberOfKilometer {
+    return Intl.message(
+      'enter  the number of kilometer',
+      name: 'enterTheNumberOfKilometer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `the profits`
+  String get theProfits {
+    return Intl.message(
+      'the profits',
+      name: 'theProfits',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `open order price`
+  String get openOrderPrice {
+    return Intl.message(
+      'open order price',
+      name: 'openOrderPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order from {firstLimit} to {secondLimit}`
+  String ordersFromTo(String firstLimit, String secondLimit) {
+    return Intl.message(
+      'order from $firstLimit to $secondLimit',
+      name: 'ordersFromTo',
+      desc: '',
+      args: [firstLimit, secondLimit],
+    );
+  }
+
+  /// `every 1 KM (orders greater then {firstLimit} to {secondLimit} KM)`
+  String everyOneKMOrdersGreaterThenTo(String firstLimit, String secondLimit) {
+    return Intl.message(
+      'every 1 KM (orders greater then $firstLimit to $secondLimit KM)',
+      name: 'everyOneKMOrdersGreaterThenTo',
+      desc: '',
+      args: [firstLimit, secondLimit],
+    );
+  }
+
+  /// `every 1 KM (orders from {limit} KM and more)`
+  String everyOneKMOrdersFromAndMore(String limit) {
+    return Intl.message(
+      'every 1 KM (orders from $limit KM and more)',
+      name: 'everyOneKMOrdersFromAndMore',
+      desc: '',
+      args: [limit],
     );
   }
 

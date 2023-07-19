@@ -22,11 +22,21 @@ class MyProfitsScreenState extends State<MyProfitsScreen> {
   @override
   void initState() {
     var model = MyProfitModel(
-      orderCountSinceLastPayment: 123,
-      ordersCountToday: 12,
-      profitSinceLastPayment: 123.45,
-      profitToday: 12.34
-    );
+        orderCountSinceLastPayment: 123,
+        ordersCountToday: 12,
+        profitSinceLastPayment: 123,
+        profitToday: 12.34,
+        firstSliceCost: 2.5, 
+        firstSliceFromLimit: 1,
+        firstSliceToLimit: 5,
+        openOrderCost: 10,
+        secondSliceFromLimit: 5,
+        secondSliceOneKilometerCost: 0.5,
+        secondSliceToLimit: 9,
+        thirdSliceFromLimit: 9,
+        thirdSliceOneKilometerCost: 0.75, 
+        thirdSliceToLimit: 9999999
+        );
     _currentState = MyProfitsStateLoaded(this, model);
     widget._manager.stateSubject.listen((value) {
       _currentState = value;

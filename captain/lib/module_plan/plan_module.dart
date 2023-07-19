@@ -6,6 +6,7 @@ import 'package:c4d/module_plan/ui/screen/captain_financial_dues_screen.dart';
 import 'package:c4d/module_plan/ui/screen/daily_payments_screen.dart';
 import 'package:c4d/module_plan/ui/screen/my_profits_screen.dart';
 import 'package:c4d/module_plan/ui/screen/payment_history_screen.dart';
+import 'package:c4d/module_plan/ui/screen/plan_details_screen.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -17,6 +18,7 @@ class PlanModule extends YesModule {
   final DailyPaymentsScreen paymentsScreen;
   final MyProfitsScreen myProfitsScreen;
   final PaymentHistoryScreen paymentHistoryScreen;
+  final PlanDetailsScreen planDetailsScreen;
 
   PlanModule(
     // this._planScreen,
@@ -26,6 +28,7 @@ class PlanModule extends YesModule {
     this.paymentsScreen,
     this.myProfitsScreen,
     this.paymentHistoryScreen,
+    this.planDetailsScreen,
   ) {
     YesModule.RoutesMap.addAll({
       // PlanRoutes.PLAN_ROUTE: (context) => _planScreen,
@@ -37,6 +40,7 @@ class PlanModule extends YesModule {
       PlanRoutes.CAPTAIN_DAILY_PAYMENTS: (context) => paymentsScreen,
       PlanRoutes.MY_PROFIT: (context) => myProfitsScreen,
       PlanRoutes.PAYMENT_HISTORY: (context) => paymentHistoryScreen,
+      PlanRoutes.PLAN_DETAILS: (context) => planDetailsScreen,
     });
   }
 }
