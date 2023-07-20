@@ -8040,6 +8040,36 @@ class S {
     );
   }
 
+  /// `profits net:`
+  String get profitsNet {
+    return Intl.message(
+      'profits net:',
+      name: 'profitsNet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `unpaid amounts from cash to stores`
+  String get unpaidAmountsFromCashToStores {
+    return Intl.message(
+      'unpaid amounts from cash to stores',
+      name: 'unpaidAmountsFromCashToStores',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `profits from orders`
+  String get profitsFromOrders {
+    return Intl.message(
+      'profits from orders',
+      name: 'profitsFromOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Over paid`
   String get financeOverPaid {
     return Intl.message(

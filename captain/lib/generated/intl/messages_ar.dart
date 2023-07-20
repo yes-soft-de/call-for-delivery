@@ -915,6 +915,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تحديث حالة الكابتن بنجاح"),
         "profileUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث الملف الشخصي بنجاح"),
+        "profitsFromOrders":
+            MessageLookupByLibrary.simpleMessage("الارباح من الطلبات"),
+        "profitsNet": MessageLookupByLibrary.simpleMessage("صافي الارباح:"),
         "rateCaptain": MessageLookupByLibrary.simpleMessage("قييم الكابتن"),
         "rateCaptainMessage":
             MessageLookupByLibrary.simpleMessage("قم بتقييم الكابتن من فضلك"),
@@ -1159,6 +1162,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "unknownNumberOfCar":
             MessageLookupByLibrary.simpleMessage("عدد السيارات غير محدود"),
         "unlinkSubOrders": MessageLookupByLibrary.simpleMessage("فك طلب فرعي"),
+        "unpaidAmountsFromCashToStores": MessageLookupByLibrary.simpleMessage(
+            "المبالغ من الكاش غير المسلمة للمتاجر"),
         "update": MessageLookupByLibrary.simpleMessage("تحديث"),
         "updateBranch": MessageLookupByLibrary.simpleMessage("تعديل الفرع"),
         "updateBranchFailure": MessageLookupByLibrary.simpleMessage(

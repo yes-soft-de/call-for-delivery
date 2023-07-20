@@ -24,43 +24,45 @@ class MyProfitsStateLoaded extends States {
   Widget getUI(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Text(
-            S.current.today,
-            style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                  color: _blue,
-                ),
-          ),
-          const SizedBox(height: 10),
-          _FirstCard(model),
-          const SizedBox(height: 30),
-          _SecondCard(
-            model: model,
-            onDuesClaimButtonPressed: () {
-              // TODO: call the dues claim api
-            },
-          ),
-          const SizedBox(height: 40),
-          _CustomButton(
-            title: S.current.historyOfPreviousPayments,
-            onPressed: () {
-              Navigator.pushNamed(context, PlanRoutes.PAYMENT_HISTORY);
-            },
-          ),
-          const SizedBox(height: 20),
-          _CustomButton(
-            title: S.current.planDetails,
-            onPressed: () {
-              Navigator.pushNamed(
-                context,
-                PlanRoutes.PLAN_DETAILS,
-                arguments: model,
-              );
-            },
-          ),
-        ],
+      child: SingleChildScrollView(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Text(
+              S.current.today,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: _blue,
+                  ),
+            ),
+            const SizedBox(height: 10),
+            _FirstCard(model),
+            const SizedBox(height: 20),
+            _SecondCard(
+              model: model,
+              onDuesClaimButtonPressed: () {
+                // TODO: call the dues claim api
+              },
+            ),
+            const SizedBox(height: 20),
+            _CustomButton(
+              title: S.current.historyOfPreviousPayments,
+              onPressed: () {
+                Navigator.pushNamed(context, PlanRoutes.PAYMENT_HISTORY);
+              },
+            ),
+            const SizedBox(height: 20),
+            _CustomButton(
+              title: S.current.planDetails,
+              onPressed: () {
+                Navigator.pushNamed(
+                  context,
+                  PlanRoutes.PLAN_DETAILS,
+                  arguments: model,
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -105,8 +107,9 @@ class _SecondCard extends StatelessWidget {
     return Card(
       color: _blue,
       child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+        padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Row(
               children: [
@@ -125,7 +128,24 @@ class _SecondCard extends StatelessWidget {
                 ),
               ],
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
+            _RowDetailCard(
+              title: S.current.unpaidAmountsFromCashToStores,
+              value: S.current
+                  .valueRiyal(model.unpaidAmountsFromCashToStores.toString()),
+            ),
+            _RowDetailCard(
+              title: S.current.profitsFromOrders,
+              value: S.current.valueRiyal(model.profitsFromOrders.toString()),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              S.current.profitsNet,
+              style: Theme.of(context).textTheme.titleMedium?.copyWith(
+                    color: Colors.white,
+                  ),
+            ),
+            const SizedBox(height: 10),
             Row(
               children: [
                 Flexible(
@@ -134,15 +154,16 @@ class _SecondCard extends StatelessWidget {
                     value: model.orderCountSinceLastPayment.toString(),
                   ),
                 ),
-                const SizedBox(width: 20),
+                const SizedBox(width: 5),
                 Flexible(
                   child: _TransparentCard(
                     title: S.current.saudiRiyal,
-                    value: model.profitSinceLastPayment == 0
+                    value: model.netProfitSinceLastPayment == 0
                         ? '00.00'
-                        : model.profitSinceLastPayment.toStringAsFixed(2),
-                    backgroundColor:
-                        model.profitSinceLastPayment == 0 ? null : _lightGreen,
+                        : model.netProfitSinceLastPayment.toStringAsFixed(2),
+                    backgroundColor: model.netProfitSinceLastPayment == 0
+                        ? null
+                        : _lightGreen,
                   ),
                 ),
               ],
@@ -151,7 +172,7 @@ class _SecondCard extends StatelessWidget {
             SizedBox(
               height: 56,
               child: ElevatedButton(
-                onPressed: model.profitSinceLastPayment == 0
+                onPressed: model.netProfitSinceLastPayment == 0
                     ? null
                     : () {
                         _showConfirmDialog(
@@ -160,7 +181,7 @@ class _SecondCard extends StatelessWidget {
                         );
                       },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: model.profitSinceLastPayment == 0
+                  backgroundColor: model.netProfitSinceLastPayment == 0
                       ? _transparentBlue
                       : _yellow,
                   shape: RoundedRectangleBorder(
@@ -172,7 +193,7 @@ class _SecondCard extends StatelessWidget {
                   children: [
                     Text(
                       S.current.duesClaim,
-                      style: model.profitSinceLastPayment == 0
+                      style: model.netProfitSinceLastPayment == 0
                           ? Theme.of(context).textTheme.bodySmall?.copyWith(
                                 color: _gray,
                               )
@@ -233,6 +254,42 @@ class _SecondCard extends StatelessWidget {
           ),
         );
       },
+    );
+  }
+}
+
+class _RowDetailCard extends StatelessWidget {
+  final String title;
+  final String value;
+
+  const _RowDetailCard({required this.title, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              title,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: _blue),
+            ),
+            Text(
+              value,
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: _blue),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

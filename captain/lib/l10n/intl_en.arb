@@ -853,5 +853,8 @@
             }
         }
     },
+    "profitsNet": "profits net:",
+    "unpaidAmountsFromCashToStores": "unpaid amounts from cash to stores",
+    "profitsFromOrders": "profits from orders",
     "financeOverPaid": "Over paid"
 }

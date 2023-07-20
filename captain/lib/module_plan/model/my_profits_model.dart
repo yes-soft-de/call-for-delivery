@@ -6,8 +6,9 @@ class MyProfitsModel extends DataModel {
   late int ordersCountToday;
   late num profitToday;
   late int orderCountSinceLastPayment;
-  late num profitSinceLastPayment;
+  late num netProfitSinceLastPayment;
   late num openOrderCost;
+
   /// must be 0
   late num firstSliceFromLimit;
   late num firstSliceToLimit;
@@ -18,6 +19,8 @@ class MyProfitsModel extends DataModel {
   late num thirdSliceFromLimit;
   late num thirdSliceToLimit;
   late num thirdSliceOneKilometerCost;
+  late num unpaidAmountsFromCashToStores;
+  late num profitsFromOrders;
 
   late MyProfitsModel _data;
 
@@ -25,7 +28,7 @@ class MyProfitsModel extends DataModel {
     required this.ordersCountToday,
     required this.profitToday,
     required this.orderCountSinceLastPayment,
-    required this.profitSinceLastPayment,
+    required this.netProfitSinceLastPayment,
     required this.openOrderCost,
     required this.firstSliceFromLimit,
     required this.firstSliceToLimit,
@@ -36,30 +39,36 @@ class MyProfitsModel extends DataModel {
     required this.thirdSliceFromLimit,
     required this.thirdSliceToLimit,
     required this.thirdSliceOneKilometerCost,
+    required this.unpaidAmountsFromCashToStores,
+    required this.profitsFromOrders,
   });
 
   MyProfitsModel.withData(MyProfitsResponse response) {
     var data = response.data;
 
     _data = MyProfitsModel(
-        firstSliceCost: data?.firstSliceCost ?? _nullNumber,
-        firstSliceFromLimit: 1,
-        firstSliceToLimit: data?.firstSliceLimit ?? _nullNumber,
-        openOrderCost: data?.openingOrderCost ?? _nullNumber,
-        orderCountSinceLastPayment:
-            (data?.sinceLastPaymentOrdersCount ?? _nullNumber).toInt(),
-        ordersCountToday: data?.todayOrdersCount ?? _nullNumber.toInt(),
-        profitSinceLastPayment:
-            data?.sinceLastPaymentFinancialAmount ?? _nullNumber,
-        profitToday: data?.todayFinancialAmount ?? _nullNumber,
-        secondSliceFromLimit: data?.secondSliceFromLimit ?? _nullNumber,
-        secondSliceOneKilometerCost:
-            data?.secondSliceOneKilometerCost ?? _nullNumber,
-        secondSliceToLimit: data?.secondSliceToLimit ?? _nullNumber,
-        thirdSliceFromLimit: data?.thirdSliceFromLimit ?? _nullNumber,
-        thirdSliceOneKilometerCost:
-            data?.thirdSliceOneKilometerCost ?? _nullNumber,
-        thirdSliceToLimit: data?.thirdSliceToLimit ?? _nullNumber);
+      firstSliceCost: data?.firstSliceCost ?? _nullNumber,
+      firstSliceFromLimit: 1,
+      firstSliceToLimit: data?.firstSliceLimit ?? _nullNumber,
+      openOrderCost: data?.openingOrderCost ?? _nullNumber,
+      orderCountSinceLastPayment:
+          (data?.sinceLastPaymentOrdersCount ?? _nullNumber).toInt(),
+      ordersCountToday: data?.todayOrdersCount ?? _nullNumber.toInt(),
+      profitToday: data?.todayFinancialAmount ?? _nullNumber,
+      secondSliceFromLimit: data?.secondSliceFromLimit ?? _nullNumber,
+      secondSliceOneKilometerCost:
+          data?.secondSliceOneKilometerCost ?? _nullNumber,
+      secondSliceToLimit: data?.secondSliceToLimit ?? _nullNumber,
+      thirdSliceFromLimit: data?.thirdSliceFromLimit ?? _nullNumber,
+      thirdSliceOneKilometerCost:
+          data?.thirdSliceOneKilometerCost ?? _nullNumber,
+      thirdSliceToLimit: data?.thirdSliceToLimit ?? _nullNumber,
+      unpaidAmountsFromCashToStores:
+          data?.sinceLastPaymentCashOrderAmount ?? _nullNumber,
+      profitsFromOrders: data?.sinceLastPaymentFinancialAmount ?? _nullNumber,
+      netProfitSinceLastPayment:
+          data?.sinceLastPaymentRemainFinancialAmount ?? _nullNumber,
+    );
   }
 
   num get _nullNumber => -1;

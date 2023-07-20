@@ -924,6 +924,9 @@ class MessageLookup extends MessageLookupByLibrary {
                 "Profile status updated successfully"),
         "profileUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Profile has been updated successfully"),
+        "profitsFromOrders":
+            MessageLookupByLibrary.simpleMessage("profits from orders"),
+        "profitsNet": MessageLookupByLibrary.simpleMessage("profits net:"),
         "rateCaptain": MessageLookupByLibrary.simpleMessage("Rate Captain"),
         "rateCaptainMessage": MessageLookupByLibrary.simpleMessage(
             "Rate this captain upon your opinion"),
@@ -1167,6 +1170,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("The number of cars unknown"),
         "unlinkSubOrders":
             MessageLookupByLibrary.simpleMessage("Unlink SubOrders"),
+        "unpaidAmountsFromCashToStores": MessageLookupByLibrary.simpleMessage(
+            "unpaid amounts from cash to stores"),
         "update": MessageLookupByLibrary.simpleMessage("Update"),
         "updateBranch": MessageLookupByLibrary.simpleMessage("Update Branch"),
         "updateBranchFailure": MessageLookupByLibrary.simpleMessage(

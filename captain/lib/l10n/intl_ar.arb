@@ -855,5 +855,8 @@
             }
         }
     },
+    "profitsNet": "صافي الارباح:",
+    "unpaidAmountsFromCashToStores": "المبالغ من الكاش غير المسلمة للمتاجر",
+    "profitsFromOrders": "الارباح من الطلبات",
     "financeOverPaid": "دفعة زائدة"
 }
