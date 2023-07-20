@@ -32,7 +32,7 @@ class AdminCaptainPaymentManager
     {
         $captain = $this->captainManager->getCaptainProfileById($request->getCaptain());
        
-        if(! $captain) {
+        if (! $captain) {
             return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
         }
 
@@ -46,7 +46,14 @@ class AdminCaptainPaymentManager
         $this->entityManager->persist($captainPaymentEntity);
         $this->entityManager->flush();
 
-        $this->adminCaptainFinancialDuesManager->updateCaptainFinancialDuesStatus($captainFinancialDuesEntity, $request->getStatus());
+        $differenceAmount = ($captainFinancialDuesEntity->getAmount() - $captainFinancialDuesEntity->getAmountForStore())
+            - $captainPaymentEntity->getAmount();
+
+        // End the captain financial due, in order to create a new one
+        $this->adminCaptainFinancialDuesManager->endCaptainFinancialDue($captainFinancialDuesEntity);
+
+        // Create new captain financial due
+        $this->adminCaptainFinancialDuesManager->createNewCaptainFinancialDueByAdmin($captain, $differenceAmount);
        
         return $captainPaymentEntity;
     }

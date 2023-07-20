@@ -52,8 +52,8 @@ class CaptainPaymentEntity
     #[ORM\Column(type: 'smallint', nullable: true)]
     private $paymentType;
 
-    #[ORM\Column(type: 'integer', options: ["default" => 0])]
-    private $createdBy;
+    #[ORM\ManyToOne(targetEntity: AdminProfileEntity::class, inversedBy: 'captainPaymentEntities')]
+    private $createdByAdmin;
 
     public function getId(): ?int
     {
@@ -192,14 +192,14 @@ class CaptainPaymentEntity
         return $this;
     }
 
-    public function getCreatedBy(): ?int
+    public function getCreatedByAdmin(): ?AdminProfileEntity
     {
-        return $this->createdBy;
+        return $this->createdByAdmin;
     }
 
-    public function setCreatedBy(int $createdBy): self
+    public function setCreatedByAdmin(?AdminProfileEntity $createdByAdmin): self
     {
-        $this->createdBy = $createdBy;
+        $this->createdByAdmin = $createdByAdmin;
 
         return $this;
     }
