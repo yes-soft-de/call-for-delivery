@@ -2,6 +2,8 @@
 
 namespace App\Service\CaptainFinancialSystem\CaptainFinancialDefaultSystem;
 
+use App\Constant\Order\OrderResultConstant;
+use App\Entity\OrderEntity;
 use App\Manager\CaptainFinancialSystem\CaptainFinancialDefaultSystem\CaptainFinancialDefaultSystemOrderManager;
 
 class CaptainFinancialDefaultSystemOrderGetService
@@ -19,5 +21,16 @@ class CaptainFinancialDefaultSystemOrderGetService
     {
         return $this->captainFinancialDefaultSystemOrderManager->getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
             $fromDate, $toDate);
+    }
+
+    public function getOrderEntityById(int $orderId): OrderEntity|string
+    {
+        $order = $this->captainFinancialDefaultSystemOrderManager->getOrderEntityById($orderId);
+
+        if (! $order) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+        }
+
+        return $order;
     }
 }

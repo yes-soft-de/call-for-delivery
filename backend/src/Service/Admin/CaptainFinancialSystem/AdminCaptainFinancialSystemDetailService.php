@@ -3,6 +3,7 @@
 namespace App\Service\Admin\CaptainFinancialSystem;
 
 use App\Constant\Captain\CaptainConstant;
+use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Entity\CaptainEntity;
 use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailManager;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
@@ -119,7 +120,13 @@ class AdminCaptainFinancialSystemDetailService implements AdminCaptainFinancialS
       
         if($result) {
             // Calculation of financial dues on the new system 
-            $this->captainFinancialDuesService->captainFinancialDues($result->getCaptain()->getCaptainId());
+            // $this->captainFinancialDuesService->captainFinancialDues($result->getCaptain()->getCaptainId());
+            // following part by Rami
+            // Just create captain financial due when admin approve the selected captain financial system and a last active
+            // captain financial system is not exist
+            if ($result->getStatus() === true) {
+                $this->captainFinancialDuesService->createCaptainFinancialDueByAdminIfNotAnActiveOneExist($result->getCaptain()->getId());
+            }
         }
 
         return $this->autoMapping->map(CaptainFinancialSystemDetailEntity::class, AdminCaptainFinancialSystemDetailUpdateResponse::class, $result);

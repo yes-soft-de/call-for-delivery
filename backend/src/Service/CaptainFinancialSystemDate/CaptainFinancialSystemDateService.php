@@ -48,8 +48,8 @@ class CaptainFinancialSystemDateService
     public function getStartAndEndDateOfFinancialCycle() {
         $date = new datetime('now');
         $fromDate = $date->format('y-m-d');
-        //The captain works for a full 30 days
-        $toDate = $date->modify('+30 day')->format('y-m-d');
+        // We set the financial cycle for a year just to not let the end date empty
+        $toDate = $date->modify('+365 day')->format('y-m-d');
 
         return ["fromDate" =>  new datetime($fromDate), "toDate" =>  new datetime($toDate)];
     }

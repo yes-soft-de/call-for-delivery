@@ -2,6 +2,7 @@
 
 namespace App\Manager\CaptainFinancialSystem\CaptainFinancialDefaultSystem;
 
+use App\Entity\OrderEntity;
 use App\Repository\OrderEntityRepository;
 
 class CaptainFinancialDefaultSystemOrderManager
@@ -19,5 +20,10 @@ class CaptainFinancialDefaultSystemOrderManager
     {
         return $this->orderEntityRepository->getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainId, $fromDate,
             $toDate);
+    }
+
+    public function getOrderEntityById(int $orderId): ?OrderEntity
+    {
+        return $this->orderEntityRepository->findOneBy(['id' => $orderId]);
     }
 }
