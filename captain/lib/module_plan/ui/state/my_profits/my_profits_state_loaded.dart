@@ -36,7 +36,32 @@ class MyProfitsStateLoaded extends States {
             ),
             const SizedBox(height: 10),
             _FirstCard(model),
-            const SizedBox(height: 20),
+            const SizedBox(height: 10),
+            Container(
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  color: _lightBlue,
+                  border: Border.all(
+                    color: _blue,
+                    width: 2,
+                  )),
+              child: Row(
+                children: [
+                  Flexible(
+                    child: Padding(
+                      padding: const EdgeInsets.all(10),
+                      child: Text(
+                        S.current.yourProfitsStart,
+                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                              color: _blue,
+                            ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+            const SizedBox(height: 10),
             _SecondCard(
               model: model,
               onDuesClaimButtonPressed: () {

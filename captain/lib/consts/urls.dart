@@ -236,7 +236,7 @@ class Urls {
   static const GET_PAYMENTS_HISTORY =
       '$DOMAIN/v1/captainpayment/filtercaptainpayment';
 
-  static const REQUEST_PAYMENT = '$DOMAIN/v1/captainpayment/requestPaumentStaus';
+  static const REQUEST_PAYMENT = '$DOMAIN/v1/captainpayment/requestpaymentstaus';
 
   static const DELETE_USER = '$DOMAIN/v1/userstatus/userstatus';
 }

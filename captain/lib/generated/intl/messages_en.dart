@@ -1286,6 +1286,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Your financial dues"),
         "yourNumberStartWithZero": MessageLookupByLibrary.simpleMessage(
             "Your number start with zero please remove it and try again"),
+        "yourProfitsStart": MessageLookupByLibrary.simpleMessage(
+            "your profits start from 12.5 to 33 riyal and more"),
         "yourRequestSent":
             MessageLookupByLibrary.simpleMessage("Your Request have been sent")
       };

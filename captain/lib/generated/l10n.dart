@@ -8090,6 +8090,16 @@ class S {
     );
   }
 
+  /// `your profits start from 12.5 to 33 riyal and more`
+  String get yourProfitsStart {
+    return Intl.message(
+      'your profits start from 12.5 to 33 riyal and more',
+      name: 'yourProfitsStart',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Over paid`
   String get financeOverPaid {
     return Intl.message(

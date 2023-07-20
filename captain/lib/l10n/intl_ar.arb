@@ -806,7 +806,7 @@
     },
     "theProfitRiyal": "الارباح (ريال)",
     "from": "من",
-    "totalReceivedByTheSpecifiedDate": "اجمالي المقبوض حسب التاريخ المحدد",
+    "totalReceivedByTheSpecifiedDate": "اجمالي الارباح المستلمة حسب التاريخ المحدد",
     "planDetailsDescription": "تتم اضافة الارباح الى رصيدك عند التسليم الطلب\nالسعر الافتتاحي ({openOrderPrince} ريال) + الربح من الكيلومترات",
     "@planDetailsDescription": {
         "description": "",
@@ -860,5 +860,6 @@
     "profitsFromOrders": "الارباح من الطلبات",
     "getProfits": "تحصيل الارباح",
     "thisFeatureNotAvailableYet": "هذه الميزة غير متوفرة بعد",
+    "yourProfitsStart": "ارباحك ستبدا من 12.5 حتى 33 ربال واكثر",
     "financeOverPaid": "دفعة زائدة"
 }

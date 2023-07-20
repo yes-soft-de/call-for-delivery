@@ -1155,7 +1155,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalPrice": MessageLookupByLibrary.simpleMessage("المبلغ النهائي"),
         "totalProfit": MessageLookupByLibrary.simpleMessage("إجمالي الأرباح"),
         "totalReceivedByTheSpecifiedDate": MessageLookupByLibrary.simpleMessage(
-            "اجمالي المقبوض حسب التاريخ المحدد"),
+            "اجمالي الارباح المستلمة حسب التاريخ المحدد"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
         "unShow": MessageLookupByLibrary.simpleMessage("عدم إظهار"),
         "unaccept": MessageLookupByLibrary.simpleMessage(
@@ -1280,6 +1280,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("مستحقاتك المالية"),
         "yourNumberStartWithZero": MessageLookupByLibrary.simpleMessage(
             "الرقم المدخل يبدأ بصفر الرجاء إدخال الرقم بدون الصفر"),
+        "yourProfitsStart": MessageLookupByLibrary.simpleMessage(
+            "ارباحك ستبدا من 12.5 حتى 33 ربال واكثر"),
         "yourRequestSent": MessageLookupByLibrary.simpleMessage("تم إرسال طلبك")
       };
 }
