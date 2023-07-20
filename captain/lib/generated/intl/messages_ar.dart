@@ -1152,7 +1152,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "totalPrice": MessageLookupByLibrary.simpleMessage("المبلغ النهائي"),
         "totalProfit": MessageLookupByLibrary.simpleMessage("إجمالي الأرباح"),
         "totalReceivedByTheSpecifiedDate": MessageLookupByLibrary.simpleMessage(
-            "اجمال المقبوض حسب التاريخ المحدد"),
+            "اجمالي المقبوض حسب التاريخ المحدد"),
         "tryAgain": MessageLookupByLibrary.simpleMessage("إعادة المحاولة"),
         "unShow": MessageLookupByLibrary.simpleMessage("عدم إظهار"),
         "unaccept": MessageLookupByLibrary.simpleMessage(

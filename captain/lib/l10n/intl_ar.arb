@@ -806,7 +806,7 @@
     },
     "theProfitRiyal": "الارباح (ريال)",
     "from": "من",
-    "totalReceivedByTheSpecifiedDate": "اجمال المقبوض حسب التاريخ المحدد",
+    "totalReceivedByTheSpecifiedDate": "اجمالي المقبوض حسب التاريخ المحدد",
     "planDetailsDescription": "تتم اضافة الارباح الى رصيدك عند التسليم الطلب\nالسعر الافتتاحي ({openOrderPrince} ريال) + الربح من الكيلومترات",
     "@planDetailsDescription": {
         "description": "",
