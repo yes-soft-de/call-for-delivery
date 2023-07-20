@@ -1141,7 +1141,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage(
                 "للمزيد من المعلومات خذ موعدا بترك رقم هاتفك، وسيتم التواصل معك"),
         "toGetBouns": MessageLookupByLibrary.simpleMessage("للحصول على مكافأة"),
-        "today": MessageLookupByLibrary.simpleMessage("الليوم"),
+        "today": MessageLookupByLibrary.simpleMessage("اليوم"),
         "todayProfit": MessageLookupByLibrary.simpleMessage("مستحقات اليوم"),
         "took": MessageLookupByLibrary.simpleMessage("استغرق"),
         "total": MessageLookupByLibrary.simpleMessage("إجمالي الأموال"),
@@ -1281,7 +1281,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "yourNumberStartWithZero": MessageLookupByLibrary.simpleMessage(
             "الرقم المدخل يبدأ بصفر الرجاء إدخال الرقم بدون الصفر"),
         "yourProfitsStart": MessageLookupByLibrary.simpleMessage(
-            "ارباحك ستبدا من 12.5 حتى 33 ربال واكثر"),
+            "ارباحك ستبدا من 12.5 حتى 33 ريال واكثر"),
         "yourRequestSent": MessageLookupByLibrary.simpleMessage("تم إرسال طلبك")
       };
 }
