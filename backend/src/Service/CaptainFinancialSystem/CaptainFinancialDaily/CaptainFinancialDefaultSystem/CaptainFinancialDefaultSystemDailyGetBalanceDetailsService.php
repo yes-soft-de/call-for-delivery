@@ -64,11 +64,11 @@ class CaptainFinancialDefaultSystemDailyGetBalanceDetailsService
 
         if (count($orders) > 0) {
             foreach ($orders as $order) {
-                $financialAccountDetails['basicFinancialAmount'] += $captainFinancialSystemDetails['openingOrderCost'];
-
                 $distance = $order['storeBranchToClientDistance'];
 
                 if ($distance) {
+                    $financialAccountDetails['basicFinancialAmount'] += $captainFinancialSystemDetails['openingOrderCost'];
+
                     if ($distance <= $captainFinancialSystemDetails['firstSliceLimit']) {
                         $financialAccountDetails['basicFinancialAmount'] += $captainFinancialSystemDetails['firstSliceCost'];
 

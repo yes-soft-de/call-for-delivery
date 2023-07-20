@@ -65,4 +65,10 @@ class CaptainFinancialDailyManager
     {
         return $this->captainFinancialDailyEntityRepository->filterCaptainFinancialDaily($request);
     }
+
+    public function getCaptainFinancialDailyByCaptainProfileIdAndSpecificDate(int $captainProfileId, DateTime $date): ?CaptainFinancialDailyEntity
+    {
+        return $this->captainFinancialDailyEntityRepository->findOneBy(['captainProfile' => $captainProfileId,
+            'createdAt' => $date]);
+    }
 }

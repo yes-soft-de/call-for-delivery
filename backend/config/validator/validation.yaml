@@ -339,7 +339,11 @@ App\Request\Admin\CaptainPayment\AdminCaptainPaymentCreateRequest:
             - NotBlank: ~
         captainFinancialDuesId:
             - NotBlank: ~
-        status:
+        paymentGetaway:
+            - NotBlank: ~
+        paymentType:
+            - NotBlank: ~
+        paymentFor:
             - NotBlank: ~
 
 App\Request\Admin\SupplierProfile\SupplierProfileStatusUpdateByAdminRequest:

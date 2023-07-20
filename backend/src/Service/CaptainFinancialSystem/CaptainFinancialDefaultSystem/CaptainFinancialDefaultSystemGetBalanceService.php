@@ -3,10 +3,20 @@
 namespace App\Service\CaptainFinancialSystem\CaptainFinancialDefaultSystem;
 
 use App\AutoMapping;
-use App\Constant\CaptainPayment\PaymentToCaptain\CaptainPaymentResultConstant;
+use App\Constant\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyResultConstant;
+use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
+use App\Constant\Order\OrderResultConstant;
+use App\Constant\StoreOwnerDueFromCashOrder\StoreOwnerDueFromCashOrderStoreAmountConstant;
+use App\Entity\CaptainFinancialDailyEntity;
+use App\Entity\CaptainFinancialDuesEntity;
+use App\Entity\OrderEntity;
+use App\Entity\StoreOwnerDuesFromCashOrdersEntity;
 use App\Response\CaptainFinancialSystem\CaptainFinancialDefaultSystem\CaptainFinancialDefaultSystemBalanceDetailsGetResponse;
+use App\Service\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyGetService;
+use App\Service\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueGetService;
 use App\Service\CaptainPayment\CaptainPaymentGetService;
 use App\Service\DateFactory\DateFactoryService;
+use DateTime;
 
 class CaptainFinancialDefaultSystemGetBalanceService
 {
@@ -15,28 +25,51 @@ class CaptainFinancialDefaultSystemGetBalanceService
         private CaptainFinancialDefaultSystemOrderGetService $captainFinancialDefaultSystemOrderGetService,
         private DateFactoryService $dateFactoryService,
         private CaptainPaymentGetService $captainPaymentGetService,
-        private CaptainFinancialDefaultSystemGetStoreAmountService $captainFinancialDefaultSystemGetStoreAmountService
+        private CaptainFinancialDefaultSystemGetStoreAmountService $captainFinancialDefaultSystemGetStoreAmountService,
+        private CaptainFinancialDailyGetService $captainFinancialDailyGetService,
+        private CaptainFinancialDueGetService $captainFinancialDueGetService
     )
     {
     }
 
-    /**
-     * Get the dues of unpaid cash orders (for group of orders)
-     */
-    public function getUnPaidCashOrdersDueByCaptainProfileIdAndDuringSpecificTime(int $captainId, string $fromDate, string $toDate): string
+    public function getCurrentAndActiveCaptainFinancialDueByCaptainProfileId(int $captainProfileId): CaptainFinancialDuesEntity|int
     {
-        return $this->captainFinancialDefaultSystemGetStoreAmountService->getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime($captainId,
-            $fromDate, $toDate);
+        return $this->captainFinancialDueGetService->getCurrentAndActiveCaptainFinancialDueByCaptainProfileId($captainProfileId);
     }
 
-    public function getLastCaptainPaymentDateByCaptainProfileId(int $captainProfileId): \DateTimeInterface|int
+    public function getCaptainFinancialDailyByCaptainProfileIdAndSpecificDate(int $captainProfileId, DateTime $date): CaptainFinancialDailyEntity|int
     {
-        return $this->captainPaymentGetService->getLastCaptainPaymentDateByCaptainProfileId($captainProfileId);
+        return $this->captainFinancialDailyGetService->getCaptainFinancialDailyByCaptainProfileIdAndSpecificDate($captainProfileId,
+            $date);
     }
+
+//    /**
+//     * Get the dues of unpaid cash orders (for group of orders)
+//     */
+//    public function getUnPaidCashOrdersDueByCaptainProfileIdAndDuringSpecificTime(int $captainId, string $fromDate, string $toDate): string
+//    {
+//        return $this->captainFinancialDefaultSystemGetStoreAmountService->getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime($captainId,
+//            $fromDate, $toDate);
+//    }
+
+    public function getUnPaidStoreOwnerDuesFromCashOrdersByOrderId(int $orderId): int|StoreOwnerDuesFromCashOrdersEntity
+    {
+        return $this->captainFinancialDefaultSystemGetStoreAmountService->getUnPaidStoreOwnerDuesFromCashOrdersByOrderId($orderId);
+    }
+
+//    public function getLastCaptainPaymentDateByCaptainProfileId(int $captainProfileId): \DateTimeInterface|int
+//    {
+//        return $this->captainPaymentGetService->getLastCaptainPaymentDateByCaptainProfileId($captainProfileId);
+//    }
 
     public function getStartAndEndDateTimeOfToday(string $timeZone = null): array
     {
         return $this->dateFactoryService->getStartAndEndDateTimeOfToday($timeZone);
+    }
+
+    public function getDateTimeOfToday(string $timeZone = null): DateTime
+    {
+        return $this->dateFactoryService->getDateTimeOfToday($timeZone);
     }
 
     /**
@@ -44,7 +77,8 @@ class CaptainFinancialDefaultSystemGetBalanceService
      */
     public function getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): array
     {
-        return $this->captainFinancialDefaultSystemOrderGetService->getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId, $fromDate, $toDate);
+        return $this->captainFinancialDefaultSystemOrderGetService->getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
+            $fromDate, $toDate);
     }
 
     public function initializeCaptainBalanceResponse(array $financialSystemDetail): array
@@ -78,8 +112,98 @@ class CaptainFinancialDefaultSystemGetBalanceService
         return $response;
     }
 
+//    /**
+//     * For each order:
+//     *      if order distance != null
+//     *          if order distance <= 5 k
+//     *              financial amount += (10 + 2.5)
+//     *
+//     *          else if order distance >= 6 AND order distance < 9
+//     *              financial amount += (10 + (0.5 * order distance))
+//     *
+//     *          else if order distance >= 9
+//     *              financial amount += (10 + (0.75 * order distance))
+//     *
+//     * final financial amount = financial amount - amount for store (which remains with the captain)
+//     */
+//    public function calculateCaptainFinancialAmountViaOrdersArray(array $orders, array $financialSystemDetail): float
+//    {
+//        $financialAmount = 0.0;
+//
+//        foreach ($orders as $order) {
+//            $distance = $order['storeBranchToClientDistance'];
+//
+//            if ($distance) {
+//                $financialAmount += $financialSystemDetail['openingOrderCost'];
+//
+//                if ($distance <= $financialSystemDetail['firstSliceLimit']) {
+//                    $financialAmount += $financialSystemDetail['firstSliceCost'];
+//
+//                } elseif (($distance >= $financialSystemDetail['secondSliceFromLimit'])
+//                    && ($distance < $financialSystemDetail['secondSliceToLimit'])) {
+//                    $financialAmount += ($distance * $financialSystemDetail['secondSliceOneKilometerCost']);
+//
+//                } elseif ($distance >= $financialSystemDetail['thirdSliceFromLimit']) {
+//                    $financialAmount += ($distance * $financialSystemDetail['thirdSliceOneKilometerCost']);
+//                }
+//            }
+//        }
+//
+//        return $financialAmount;
+//    }
+
+    public function getCaptainBalanceDetails(int $captainProfileId, array $financialSystemDetail): CaptainFinancialDefaultSystemBalanceDetailsGetResponse
+    {
+        $response = $this->initializeCaptainBalanceResponse($financialSystemDetail);
+
+        // today financial data
+        $todayDateWithoutTime = $this->getDateTimeOfToday();
+        $todayStartAndEndDates = $this->getStartAndEndDateTimeOfToday();
+
+        $orders = $this->getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates(
+            $captainProfileId,
+            ($todayStartAndEndDates[0])->format('Y-m-d H:i:s'),
+            ($todayStartAndEndDates[1])->format('Y-m-d H:i:s')
+        );
+
+        $response['todayOrdersCount'] = count($orders);
+
+        if ($response['todayOrdersCount'] > 0) {
+            $captainFinancialDaily = $this->getCaptainFinancialDailyByCaptainProfileIdAndSpecificDate($captainProfileId,
+                $todayDateWithoutTime);
+
+            if ($captainFinancialDaily !== CaptainFinancialDailyResultConstant::CAPTAIN_FINANCIAL_DAILY_NOT_EXIST_CONST) {
+                $response['todayFinancialAmount'] = $captainFinancialDaily->getAmount();
+            }
+        }
+
+        // since last payment financial data
+        $captainFinancialDue = $this->getCurrentAndActiveCaptainFinancialDueByCaptainProfileId($captainProfileId);
+
+        if ($captainFinancialDue !== CaptainFinancialDues::FINANCIAL_NOT_FOUND) {
+            $fromDate = $captainFinancialDue->getStartDate();
+
+            $sinceLastPaymentOrders = $this->getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
+                ($fromDate->modify('+1 day'))->format('Y-m-d H:i:s'), (new \DateTime('now'))->format('Y-m-d H:i:s'));
+
+            $sinceLastPaymentOrdersCount = count($sinceLastPaymentOrders);
+
+            $response['sinceLastPaymentOrdersCount'] = $sinceLastPaymentOrdersCount;
+
+            $response['sinceLastPaymentCashOrderAmount'] = $captainFinancialDue->getAmountForStore();
+
+            $response['sinceLastPaymentFinancialAmount'] = $captainFinancialDue->getAmount();
+
+            // ** sinceLastPaymentRemainFinancialAmount = sinceLastPaymentFinancialAmount - sinceLastPaymentCashOrderAmount
+            $response['sinceLastPaymentRemainFinancialAmount'] = $response['sinceLastPaymentFinancialAmount'] - $response['sinceLastPaymentCashOrderAmount'];
+
+        }
+
+        return $this->autoMapping->map('array', CaptainFinancialDefaultSystemBalanceDetailsGetResponse::class,
+            $response);
+    }
+
     /**
-     * For each order:
      *      if order distance != null
      *          if order distance <= 5 k
      *              financial amount += (10 + 2.5)
@@ -90,85 +214,72 @@ class CaptainFinancialDefaultSystemGetBalanceService
      *          else if order distance >= 9
      *              financial amount += (10 + (0.75 * order distance))
      *
-     * final financial amount = financial amount - amount for store (which remains with the captain)
      */
-    public function calculateCaptainFinancialAmountViaOrdersArray(array $orders, array $financialSystemDetail): float
+    public function calculateCaptainFinancialAmountForSingleOrder(OrderEntity $order, array $financialSystemDetail): float
     {
         $financialAmount = 0.0;
 
-        foreach ($orders as $order) {
-            $distance = $order['storeBranchToClientDistance'];
+        $distance = $order->getStoreBranchToClientDistance();
 
-            if ($distance) {
-                $financialAmount += $financialSystemDetail['openingOrderCost'];
+        if ($distance !== null) {
+            $financialAmount += $financialSystemDetail['openingOrderCost'];
 
-                if ($distance <= $financialSystemDetail['firstSliceLimit']) {
-                    $financialAmount += $financialSystemDetail['firstSliceCost'];
+            if ($distance <= $financialSystemDetail['firstSliceLimit']) {
+                $financialAmount += $financialSystemDetail['firstSliceCost'];
 
-                } elseif (($distance >= $financialSystemDetail['secondSliceFromLimit'])
-                    && ($distance < $financialSystemDetail['secondSliceToLimit'])) {
-                    $financialAmount += ($distance * $financialSystemDetail['secondSliceOneKilometerCost']);
+            } elseif (($distance >= $financialSystemDetail['secondSliceFromLimit'])
+                && ($distance < $financialSystemDetail['secondSliceToLimit'])) {
+                $financialAmount += ($distance * $financialSystemDetail['secondSliceOneKilometerCost']);
 
-                } elseif ($distance >= $financialSystemDetail['thirdSliceFromLimit']) {
-                    $financialAmount += ($distance * $financialSystemDetail['thirdSliceOneKilometerCost']);
-                }
+            } elseif ($distance >= $financialSystemDetail['thirdSliceFromLimit']) {
+                $financialAmount += ($distance * $financialSystemDetail['thirdSliceOneKilometerCost']);
             }
         }
 
         return $financialAmount;
     }
 
-    public function getCaptainBalanceDetails(int $captainProfileId, array $financialSystemDetail): CaptainFinancialDefaultSystemBalanceDetailsGetResponse
+    /**
+     * This function retrieve and initialize necessary fields for captain financial dues calculation
+     */
+    public function initializeNecessaryFieldsForDuesCalculation(array $financialSystemDetail): array
     {
-        $response = $this->initializeCaptainBalanceResponse($financialSystemDetail);
+        $response = [];
 
-        // today financial data
-        $todayStartAndEndDates = $this->getStartAndEndDateTimeOfToday();
+        $response['captainFinancialSystemType'] = $financialSystemDetail['captainFinancialSystemType'];
+        $response['financialDues'] = 0.0;
 
-        $orders = $this->getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates(
-            $captainProfileId,
-            ($todayStartAndEndDates[0])->format('Y-m-d h:m:s'),
-            ($todayStartAndEndDates[1])->format('Y-m-d h:m:s')
-        );
+        // cash orders sum (which will be forwarded from captain to administration
+        $response['amountForStore'] = 0.0;
 
-        $response['todayOrdersCount'] = count($orders);
+        return $response;
+    }
 
-        if ($response['todayOrdersCount'] > 0) {
-            $response['todayFinancialAmount'] = $this->calculateCaptainFinancialAmountViaOrdersArray($orders,
-                $financialSystemDetail);
+    public function getOrderEntityById(int $orderId): OrderEntity|string
+    {
+        return $this->captainFinancialDefaultSystemOrderGetService->getOrderEntityById($orderId);
+    }
+
+    /**
+     *  To prepare the financial details for the captain
+     */
+    public function calculateCaptainDues(array $financialSystemDetail, int $orderId): array
+    {
+        $response = $this->initializeNecessaryFieldsForDuesCalculation($financialSystemDetail);
+
+        $orders = $this->getOrderEntityById($orderId);
+
+        if ($orders !== OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+            $response['financialDues'] = $this->calculateCaptainFinancialAmountForSingleOrder($orders, $financialSystemDetail);
         }
 
-        // since last payment financial data
-        $captainPaymentCreationDate = $this->getLastCaptainPaymentDateByCaptainProfileId($captainProfileId);
+        // Get the amount of the due of unpaid cash order that the captain delivered
+        $storeDueFromCashOrder = $this->getUnPaidStoreOwnerDuesFromCashOrdersByOrderId($orderId);
 
-        if ($captainPaymentCreationDate === CaptainPaymentResultConstant::CAPTAIN_PAYMENT_NOT_EXIST) {
-            // no payment exist, so get the orders since 2023-07-18 until now
-            $fromDate = (new \DateTime('2023-07-18 00:00:00'))->format('Y-m-d h:m:s');
-
-        } else {
-            // get the orders since last payment date until now
-            $fromDate = ($captainPaymentCreationDate)->format('Y-m-d h:m:s');
+        if ($storeDueFromCashOrder !== StoreOwnerDueFromCashOrderStoreAmountConstant::STORE_DUE_FROM_CASH_ORDER_NOT_EXIST_CONST) {
+            $response['amountForStore'] = $storeDueFromCashOrder->getAmount();
         }
 
-        $sinceLastPaymentOrders = $this->getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId, $fromDate,
-            (new \DateTime('now'))->format('Y-m-d h:m:s'));
-
-        $sinceLastPaymentOrdersCount = count($sinceLastPaymentOrders);
-
-        $response['sinceLastPaymentOrdersCount'] = $sinceLastPaymentOrdersCount;
-
-        $response['sinceLastPaymentCashOrderAmount'] = $this->getUnPaidCashOrdersDueByCaptainProfileIdAndDuringSpecificTime($captainProfileId,
-            $fromDate, (new \DateTime('now'))->format('Y-m-d h:m:s'));
-
-        if ($sinceLastPaymentOrdersCount > 0) {
-            $response['sinceLastPaymentFinancialAmount'] = $this->calculateCaptainFinancialAmountViaOrdersArray($sinceLastPaymentOrders,
-                $financialSystemDetail);
-        }
-
-        // ** sinceLastPaymentRemainFinancialAmount = sinceLastPaymentFinancialAmount - sinceLastPaymentCashOrderAmount
-        $response['sinceLastPaymentRemainFinancialAmount'] = $response['sinceLastPaymentFinancialAmount'] - $response['sinceLastPaymentCashOrderAmount'];
-
-        return $this->autoMapping->map('array', CaptainFinancialDefaultSystemBalanceDetailsGetResponse::class,
-            $response);
+        return $response;
     }
 }

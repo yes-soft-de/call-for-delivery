@@ -162,9 +162,6 @@ class CaptainFinancialDuesManager
         return $financialDues;
     }
 
-    /**
-     * Get the start and end dates of the current active financial cycle of the captain
-     */
     public function getCurrentAndActiveCaptainFinancialDueByCaptainProfileId(int $captainProfileId): array
     {
         return $this->captainFinancialDuesRepository->findBy(['captain' => $captainProfileId, 'state' => CaptainFinancialDues::FINANCIAL_STATE_ACTIVE],

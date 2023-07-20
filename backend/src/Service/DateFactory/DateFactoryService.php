@@ -211,12 +211,17 @@ class DateFactoryService
         $today = new DateTime('today');
 
         $startOfToday = clone $today;
-        $startOfToday->setTimezone(new \DateTimeZone($timeZone ? : 'UTC'));
+        $startOfToday->setTimezone(new \DateTimeZone($timeZone ? : 'Asia/Riyadh'));
 
         $endOfToday = clone $today;
         $endOfToday->setTime(23, 59, 59);
-        $endOfToday->setTimezone(new \DateTimeZone($timeZone ? : 'UTC'));
+        $endOfToday->setTimezone(new \DateTimeZone($timeZone ? : 'Asia/Riyadh'));
 
         return [$startOfToday, $endOfToday];
+    }
+
+    public function getDateTimeOfToday(string $timeZone = null): DateTime
+    {
+        return (new DateTime('today'))->setTimezone(new \DateTimeZone($timeZone ? : 'Asia/Riyadh'));
     }
 }

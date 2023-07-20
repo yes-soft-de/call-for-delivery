@@ -2,6 +2,7 @@
 
 namespace App\Request\Admin\CaptainPayment;
 
+use App\Entity\AdminProfileEntity;
 use App\Entity\CaptainEntity;
 
 class AdminCaptainPaymentCreateRequest
@@ -14,7 +15,17 @@ class AdminCaptainPaymentCreateRequest
 
     private int $captainFinancialDuesId;
 
-    private int $status;
+//    private int $status;
+
+    private string $paymentId = "";
+
+    private int $paymentGetaway;
+
+    private int $paymentFor;
+
+    private int $paymentType;
+
+    private int|AdminProfileEntity $createdByAdmin;
 
     /**
      * Get the value of captain
@@ -56,23 +67,28 @@ class AdminCaptainPaymentCreateRequest
         return $this;
     }
 
-    /**
-     * Get the value of status
-     */ 
-    public function getStatus()
+//    public function getStatus()
+//    {
+//        return $this->status;
+//    }
+//
+//    public function setStatus($status)
+//    {
+//        $this->status = $status;
+//    }
+
+    public function setPaymentId(string $paymentId): void
     {
-        return $this->status;
+        $this->paymentId = $paymentId;
     }
 
-    /**
-     * Set the value of status
-     *
-     * @return  self
-     */ 
-    public function setStatus($status)
+    public function getCreatedByAdmin(): AdminProfileEntity|int
     {
-        $this->status = $status;
+        return $this->createdByAdmin;
+    }
 
-        return $this;
+    public function setCreatedByAdmin(int|AdminProfileEntity $createdByAdmin): void
+    {
+        $this->createdByAdmin = $createdByAdmin;
     }
 }

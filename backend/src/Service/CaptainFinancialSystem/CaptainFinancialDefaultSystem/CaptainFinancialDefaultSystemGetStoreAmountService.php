@@ -2,6 +2,7 @@
 
 namespace App\Service\CaptainFinancialSystem\CaptainFinancialDefaultSystem;
 
+use App\Entity\StoreOwnerDuesFromCashOrdersEntity;
 use App\Service\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersService;
 
 class CaptainFinancialDefaultSystemGetStoreAmountService
@@ -16,5 +17,10 @@ class CaptainFinancialDefaultSystemGetStoreAmountService
     public function getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime(int $captainId, string $fromDate, string $toDate): string
     {
         return $this->storeOwnerDuesFromCashOrdersService->getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime($captainId, $fromDate, $toDate);
+    }
+
+    public function getUnPaidStoreOwnerDuesFromCashOrdersByOrderId(int $orderId): int|StoreOwnerDuesFromCashOrdersEntity
+    {
+        return $this->storeOwnerDuesFromCashOrdersService->getUnPaidStoreOwnerDuesFromCashOrdersByOrderId($orderId);
     }
 }

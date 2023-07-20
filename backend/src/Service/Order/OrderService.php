@@ -653,7 +653,8 @@ class OrderService
 
             if ($order->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
                 // update captain financial due
-                $this->captainFinancialDuesService->captainFinancialDues($request->getCaptainId()->getCaptainId());
+                $this->captainFinancialDuesService->captainFinancialDues($request->getCaptainId()->getCaptainId(),
+                    $order->getId(), $order->getCreatedAt());
 
                 //Save the price of the order in cash in case the captain does not pay the store
                 if ($this->checkCashOrderCostPaidToStoreOrNotByOrderEntity($order)) {
@@ -1225,7 +1226,8 @@ class OrderService
             $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($order, $flag, $orderCost);
             $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($order, $flag, $orderCost);
 
-            $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId());
+            $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(),
+                $order->getCreatedAt());
         }
 
         // save log of the action on order

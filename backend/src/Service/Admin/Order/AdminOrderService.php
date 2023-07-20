@@ -1162,8 +1162,9 @@ class AdminOrderService
                     }
 
                     // 5. Update captain financial dues (re-calculate them actually)
-                    $this->createOrUpdateCaptainFinancialDues($arrayResult[1]->getCaptainId(), $arrayResult[0]->getId(),
-                        $arrayResult[0]->getCreatedAt());
+//                    $this->createOrUpdateCaptainFinancialDues($arrayResult[1]->getCaptainId(), $arrayResult[0]->getId(),
+//                        $arrayResult[0]->getCreatedAt());
+                    ///todo need function to delete order financial amount from captain financial due
 
                     // 6. Update daily captain financial amount
                     $this->createOrUpdateCaptainFinancialDaily($arrayResult[0]->getId(), $arrayResult[1]);
@@ -1245,7 +1246,8 @@ class AdminOrderService
                 if ($orderResult[0]->getCaptainId()) {
                     if ($orderResult[0]->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
                         //create or update captainFinancialDues
-                        $this->captainFinancialDuesService->captainFinancialDues($orderResult[0]->getCaptainId()->getCaptainId());
+                        $this->captainFinancialDuesService->captainFinancialDues($orderResult[0]->getCaptainId()->getCaptainId(),
+                            $orderResult[0]->getId(), $orderResult[0]->getCreatedAt());
 
                         //save the price of the order in cash in case the captain does not pay the store
                         if ($this->checkCashOrderCostPaidToStoreOrNotByOrderEntity($orderResult[0])) {
@@ -2084,13 +2086,13 @@ class AdminOrderService
             OrderLogActionTypeConstant::CANCEL_ORDER_BY_ADMIN_ACTION_CONST, $details, null, null);
     }
 
-    /**
-     * Create or update captain financial dues
-     */
-    public function createOrUpdateCaptainFinancialDues(int $userId, $orderId = null, $orderCreatedAt = null): CaptainFinancialDuesEntity|int|string
-    {
-        return $this->captainFinancialDuesService->captainFinancialDues($userId, $orderId, $orderCreatedAt);
-    }
+//    /**
+//     * Create or update captain financial dues
+//     */
+//    public function createOrUpdateCaptainFinancialDues(int $userId, $orderId = null, $orderCreatedAt = null): CaptainFinancialDuesEntity|int|string
+//    {
+//        return $this->captainFinancialDuesService->captainFinancialDues($userId, $orderId, $orderCreatedAt);
+//    }
 
     /**
      * Deletes all related records to a specific cash order of a captain and update related payment

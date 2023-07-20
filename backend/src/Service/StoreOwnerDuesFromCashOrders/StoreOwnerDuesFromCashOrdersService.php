@@ -2,6 +2,7 @@
 
 namespace App\Service\StoreOwnerDuesFromCashOrders;
 
+use App\Constant\StoreOwnerDueFromCashOrder\StoreOwnerDueFromCashOrderStoreAmountConstant;
 use App\Request\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersRequest;
 use App\Entity\StoreOwnerDuesFromCashOrdersEntity;
 use App\Entity\OrderEntity;
@@ -72,5 +73,16 @@ class StoreOwnerDuesFromCashOrdersService
         }
 
         return "0";
+    }
+
+    public function getUnPaidStoreOwnerDuesFromCashOrdersByOrderId(int $orderId): int|StoreOwnerDuesFromCashOrdersEntity
+    {
+        $storeOwnerDue = $this->storeOwnerDuesFromCashOrdersManager->getUnPaidStoreOwnerDuesFromCashOrdersByOrderId($orderId);
+
+        if (! $storeOwnerDue) {
+            return StoreOwnerDueFromCashOrderStoreAmountConstant::STORE_DUE_FROM_CASH_ORDER_NOT_EXIST_CONST;
+        }
+
+        return $storeOwnerDue;
     }
 }
