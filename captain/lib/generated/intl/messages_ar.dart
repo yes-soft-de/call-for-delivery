@@ -507,6 +507,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "gender": MessageLookupByLibrary.simpleMessage("الجنس"),
         "getDirection":
             MessageLookupByLibrary.simpleMessage("موقع المتجر (الاستلام)"),
+        "getProfits": MessageLookupByLibrary.simpleMessage("تحصيل الارباح"),
         "go": MessageLookupByLibrary.simpleMessage("انطلق"),
         "goToOffers": MessageLookupByLibrary.simpleMessage("اذهب الى العروض"),
         "goingBackToHome":
@@ -1128,6 +1129,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "هناك بعض الطلبات التي تحتاج للموافقة على ربطها أو فك ارتباطها بهذا الطلب، علما أن الطلب سيبقى معلقا في حالة عدم اتخاذ إجراء"),
         "thisErrorHappened":
             MessageLookupByLibrary.simpleMessage("حصلت المشكلة التالية"),
+        "thisFeatureNotAvailableYet":
+            MessageLookupByLibrary.simpleMessage("هذه الميزة غير متوفرة بعد"),
         "thisMightTakeAWhilePleaseWait": MessageLookupByLibrary.simpleMessage(
             "سوف يستغرق الامر دقيقة واحدة الرجاء الانتظار"),
         "thisOrderAcceptedByAnotherCaptain":

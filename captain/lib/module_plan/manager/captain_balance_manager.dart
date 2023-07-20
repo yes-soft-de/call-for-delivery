@@ -1,5 +1,6 @@
 import 'package:c4d/module_plan/request/captain_finance_request.dart';
 import 'package:c4d/module_plan/request/payment_history_request.dart';
+import 'package:c4d/module_plan/request/request_payment.dart';
 import 'package:c4d/module_plan/response/captain_account_balance_response/captain_account_balance_response.dart';
 import 'package:c4d/module_plan/response/captain_finance_by_hours_response/captain_finance_by_hours_response.dart';
 import 'package:c4d/module_plan/response/captain_finance_by_order_count_response/captain_finance_by_order_count_response.dart';
@@ -37,4 +38,7 @@ class CaptainBalanceManager {
 
   Future<MyProfitsResponse?> getMyProfits() =>
       _packageBalanceRepository.getMyProfits();
+
+  Future<ActionResponse?> requestPayment(RequestPayment request) =>
+      _packageBalanceRepository.requestPayment(request);
 }

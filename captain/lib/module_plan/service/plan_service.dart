@@ -23,6 +23,7 @@ import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_plan/manager/captain_balance_manager.dart';
 
+import '../request/request_payment.dart';
 import '../response/captain_account_balance_response/on_order/financial_account_detail.dart';
 
 @injectable
@@ -192,5 +193,20 @@ class PlanService {
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
     return MyProfitsModel.withData(response);
+  }
+
+  Future<DataModel> requestPayment(RequestPayment request) async {
+    ActionResponse? actionResponse = await _manager.requestPayment(request);
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '204') {
+      if (actionResponse.statusCode == '404') {
+        return DataModel.withError(S.current.thisFeatureNotAvailableYet);
+      }
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    return DataModel.empty();
   }
 }

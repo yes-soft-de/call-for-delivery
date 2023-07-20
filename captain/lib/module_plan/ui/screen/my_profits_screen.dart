@@ -1,6 +1,7 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_plan/request/request_payment.dart';
 import 'package:c4d/module_plan/state_manager/my_profits_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +32,10 @@ class MyProfitsScreenState extends State<MyProfitsScreen> {
 
   void getMyProfit() {
     widget._manager.getMyProfit(this);
+  }
+
+  void requestPayment() {
+    widget._manager.requestPayment(this, RequestPayment(status: 1));
   }
 
   void refresh() {

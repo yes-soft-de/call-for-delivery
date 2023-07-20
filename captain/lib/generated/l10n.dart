@@ -8070,6 +8070,26 @@ class S {
     );
   }
 
+  /// `get profits`
+  String get getProfits {
+    return Intl.message(
+      'get profits',
+      name: 'getProfits',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `this Feature Not Available Yet`
+  String get thisFeatureNotAvailableYet {
+    return Intl.message(
+      'this Feature Not Available Yet',
+      name: 'thisFeatureNotAvailableYet',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Over paid`
   String get financeOverPaid {
     return Intl.message(

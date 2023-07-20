@@ -1,5 +1,6 @@
 import 'package:c4d/module_plan/request/captain_finance_request.dart';
 import 'package:c4d/module_plan/request/payment_history_request.dart';
+import 'package:c4d/module_plan/request/request_payment.dart';
 import 'package:c4d/module_plan/response/captain_account_balance_response/captain_account_balance_response.dart';
 import 'package:c4d/module_plan/response/captain_finance_by_hours_response/captain_finance_by_hours_response.dart';
 import 'package:c4d/module_plan/response/captain_finance_by_order_count_response/captain_finance_by_order_count_response.dart';
@@ -102,5 +103,15 @@ class PackageBalanceRepository {
         headers: {'Authorization': 'Bearer $token'});
     if (response == null) return null;
     return MyProfitsResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> requestPayment(RequestPayment request) async {
+    var token = await _authService.getToken();
+
+    dynamic response = await _apiClient.post(
+        Urls.REQUEST_PAYMENT, request.toMap(),
+        headers: {'Authorization': 'Bearer $token'});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
   }
 }

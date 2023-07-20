@@ -8,10 +8,10 @@ import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 
 Color get _blue => const Color(0xff2C5085);
-Color get _yellow => const Color(0xffFFF975);
+Color get _yellow => const Color(0xffFFB800);
 Color get _gray => Colors.grey;
 Color get _lightBlue => const Color(0xffF2FAFD);
-Color get _lightGreen => const Color(0xff46F4A1);
+// Color get _lightGreen => const Color(0xff46F4A1);
 Color get _transparentBlue => const Color(0xff5E789D);
 
 class MyProfitsStateLoaded extends States {
@@ -40,7 +40,7 @@ class MyProfitsStateLoaded extends States {
             _SecondCard(
               model: model,
               onDuesClaimButtonPressed: () {
-                // TODO: call the dues claim api
+                screenState.requestPayment();
               },
             ),
             const SizedBox(height: 20),
@@ -50,17 +50,17 @@ class MyProfitsStateLoaded extends States {
                 Navigator.pushNamed(context, PlanRoutes.PAYMENT_HISTORY);
               },
             ),
-            const SizedBox(height: 20),
-            _CustomButton(
-              title: S.current.planDetails,
-              onPressed: () {
-                Navigator.pushNamed(
-                  context,
-                  PlanRoutes.PLAN_DETAILS,
-                  arguments: model,
-                );
-              },
-            ),
+            // const SizedBox(height: 20),
+            // _CustomButton(
+            //   title: S.current.planDetails,
+            //   onPressed: () {
+            //     Navigator.pushNamed(
+            //       context,
+            //       PlanRoutes.PLAN_DETAILS,
+            //       arguments: model,
+            //     );
+            //   },
+            // ),
           ],
         ),
       ),
@@ -163,7 +163,9 @@ class _SecondCard extends StatelessWidget {
                         : model.netProfitSinceLastPayment.toStringAsFixed(2),
                     backgroundColor: model.netProfitSinceLastPayment == 0
                         ? null
-                        : _lightGreen,
+                        : Colors.white,
+                    textColor:
+                        model.netProfitSinceLastPayment == 0 ? null : _blue,
                   ),
                 ),
               ],
@@ -192,13 +194,13 @@ class _SecondCard extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      S.current.duesClaim,
+                      S.current.getProfits,
                       style: model.netProfitSinceLastPayment == 0
                           ? Theme.of(context).textTheme.bodySmall?.copyWith(
                                 color: _gray,
                               )
                           : Theme.of(context).textTheme.bodyLarge?.copyWith(
-                                color: _blue,
+                                color: Colors.white,
                                 fontWeight: FontWeight.bold,
                               ),
                     ),
@@ -298,10 +300,12 @@ class _TransparentCard extends StatelessWidget {
   final String title;
   final String value;
   late final Color backgroundColor;
+  final Color? textColor;
 
   _TransparentCard({
     required this.title,
     required this.value,
+    this.textColor,
     Color? backgroundColor,
   }) {
     if (backgroundColor != null) {
@@ -326,14 +330,14 @@ class _TransparentCard extends StatelessWidget {
             Text(
               value,
               style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Colors.white,
+                    color: textColor ?? Colors.white,
                     fontSize: 32,
                   ),
             ),
             Text(
               title,
               style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                    color: Colors.white,
+                    color: textColor ?? Colors.white,
                   ),
             ),
           ],

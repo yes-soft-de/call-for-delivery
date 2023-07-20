@@ -514,6 +514,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "gallery": MessageLookupByLibrary.simpleMessage("Gallery"),
         "gender": MessageLookupByLibrary.simpleMessage("Gender"),
         "getDirection": MessageLookupByLibrary.simpleMessage("Get Direction"),
+        "getProfits": MessageLookupByLibrary.simpleMessage("get profits"),
         "go": MessageLookupByLibrary.simpleMessage("Go"),
         "goToOffers": MessageLookupByLibrary.simpleMessage("go to offers"),
         "goingBackToHome":
@@ -1135,6 +1136,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "There is some suborders need your action , reject it or accept it or it will remain pending"),
         "thisErrorHappened":
             MessageLookupByLibrary.simpleMessage("This Error happened"),
+        "thisFeatureNotAvailableYet": MessageLookupByLibrary.simpleMessage(
+            "this Feature Not Available Yet"),
         "thisMightTakeAWhilePleaseWait": MessageLookupByLibrary.simpleMessage(
             "This Might Take a while, please wait"),
         "thisOrderAcceptedByAnotherCaptain":

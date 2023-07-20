@@ -858,5 +858,7 @@
     "profitsNet": "صافي الارباح:",
     "unpaidAmountsFromCashToStores": "المبالغ من الكاش غير المسلمة للمتاجر",
     "profitsFromOrders": "الارباح من الطلبات",
+    "getProfits": "تحصيل الارباح",
+    "thisFeatureNotAvailableYet": "هذه الميزة غير متوفرة بعد",
     "financeOverPaid": "دفعة زائدة"
 }

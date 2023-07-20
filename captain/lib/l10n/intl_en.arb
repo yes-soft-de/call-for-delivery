@@ -856,5 +856,7 @@
     "profitsNet": "profits net:",
     "unpaidAmountsFromCashToStores": "unpaid amounts from cash to stores",
     "profitsFromOrders": "profits from orders",
+    "getProfits": "get profits",
+    "thisFeatureNotAvailableYet": "this Feature Not Available Yet",
     "financeOverPaid": "Over paid"
 }
