@@ -37,27 +37,26 @@ class Data {
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
         todayOrdersCount: json['todayOrdersCount'] as int?,
-        todayFinancialAmount: json['todayFinancialAmount'] as int?,
         sinceLastPaymentOrdersCount:
             json['sinceLastPaymentOrdersCount'] as int?,
-        sinceLastPaymentFinancialAmount:
-            json['sinceLastPaymentFinancialAmount'] as int?,
-        sinceLastPaymentCashOrderAmount:
-            json['sinceLastPaymentCashOrderAmount'] as int?,
-        sinceLastPaymentRemainFinancialAmount:
-            json['sinceLastPaymentRemainFinancialAmount'] as int?,
         captainFinancialSystemType: json['captainFinancialSystemType'] as int?,
-        openingOrderCost: json['openingOrderCost'] as int?,
-        firstSliceLimit: json['firstSliceLimit'] as int?,
-        firstSliceCost: (json['firstSliceCost'] as num?)?.toDouble(),
-        secondSliceFromLimit: json['secondSliceFromLimit'] as int?,
-        secondSliceToLimit: json['secondSliceToLimit'] as int?,
+        todayFinancialAmount: json['todayFinancialAmount'] as num?,
+        sinceLastPaymentFinancialAmount:
+            json['sinceLastPaymentFinancialAmount'] as num?,
+        sinceLastPaymentCashOrderAmount:
+            json['sinceLastPaymentCashOrderAmount'] as num?,
+        sinceLastPaymentRemainFinancialAmount:
+            json['sinceLastPaymentRemainFinancialAmount'] as num?,
+        openingOrderCost: json['openingOrderCost'] as num?,
+        firstSliceLimit: json['firstSliceLimit'] as num?,
+        firstSliceCost: json['firstSliceCost'] as num?,
+        secondSliceFromLimit: json['secondSliceFromLimit'] as num?,
+        secondSliceToLimit: json['secondSliceToLimit'] as num?,
         secondSliceOneKilometerCost:
-            (json['secondSliceOneKilometerCost'] as num?)?.toDouble(),
-        thirdSliceFromLimit: json['thirdSliceFromLimit'] as int?,
-        thirdSliceToLimit: json['thirdSliceToLimit'] as dynamic,
-        thirdSliceOneKilometerCost:
-            (json['thirdSliceOneKilometerCost'] as num?)?.toDouble(),
+            json['secondSliceOneKilometerCost'] as num?,
+        thirdSliceFromLimit: json['thirdSliceFromLimit'] as num?,
+        thirdSliceToLimit: json['thirdSliceToLimit'] as num?,
+        thirdSliceOneKilometerCost: json['thirdSliceOneKilometerCost'] as num?,
       );
 
   Map<String, dynamic> toJson() => {

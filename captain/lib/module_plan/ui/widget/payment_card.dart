@@ -9,8 +9,12 @@ enum PaymentType {
   cash,
   bankTransfer;
 
+  /// default value is [PaymentType.bankTransfer]
   static PaymentType fromInt(int paymentType) {
     if (paymentType == 236) return PaymentType.cash;
+    if (paymentType == 225 || paymentType == 226 || paymentType == 227) {
+      return PaymentType.bankTransfer;
+    }
     return PaymentType.bankTransfer;
   }
 
