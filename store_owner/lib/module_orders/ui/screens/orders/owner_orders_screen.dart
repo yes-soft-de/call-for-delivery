@@ -432,49 +432,67 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                         textAlign: TextAlign.center,
                       ),
                       SizedBox(height: 20),
-                      Visibility(
-                        visible: !welcomeDialogWithoutPayment,
-                        child: InAppPurchaseButton(
-                          callBack: (succeeded, purchaseID) {
-                            if (succeeded) {
-                              Navigator.pop(context);
-                              makePayment(
-                                PaymentStatusRequest(
-                                  status: PaymentStatus.paidSuccess,
-                                  paymentFor: PaymentFor.welcomeSubscription,
-                                  amount: 2.99,
-                                  paymentType: PaymentType.realPaymentByStore,
-                                  paymentGetaway: Platform.isAndroid
-                                      ? PaymentGetaway.inAppPurchaseGoogle
-                                      : PaymentGetaway.inAppPurchaseApple,
-                                  paymentId: purchaseID,
-                                ),
-                              );
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Visibility(
+                            visible: !welcomeDialogWithoutPayment,
+                            child: InAppPurchaseButton(
+                              callBack: (succeeded, purchaseID) {
+                                if (succeeded) {
+                                  Navigator.pop(context);
+                                  makePayment(
+                                    PaymentStatusRequest(
+                                      status: PaymentStatus.paidSuccess,
+                                      paymentFor:
+                                          PaymentFor.welcomeSubscription,
+                                      amount: 2.99,
+                                      paymentType:
+                                          PaymentType.realPaymentByStore,
+                                      paymentGetaway: Platform.isAndroid
+                                          ? PaymentGetaway.inAppPurchaseGoogle
+                                          : PaymentGetaway.inAppPurchaseApple,
+                                      paymentId: purchaseID,
+                                    ),
+                                  );
                               getInitData();
                             } else {
                               Navigator.pop(context);
-                            }
-                          },
-                        ),
-                        replacement: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                            makePayment(
-                              PaymentStatusRequest(
-                                status: PaymentStatus.paidSuccess,
-                                paymentFor: PaymentFor.welcomeSubscription,
-                                paymentType: PaymentType.mockPaymentByStore,
-                                amount: null,
-                                paymentGetaway: PaymentGetaway.notSpecified,
-                                paymentId: null,
+                                }
+                              },
+                            ),
+                            replacement: ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                                makePayment(
+                                  PaymentStatusRequest(
+                                    status: PaymentStatus.paidSuccess,
+                                    paymentFor: PaymentFor.welcomeSubscription,
+                                    paymentType: PaymentType.mockPaymentByStore,
+                                    amount: null,
+                                    paymentGetaway: PaymentGetaway.notSpecified,
+                                    paymentId: null,
+                                  ),
+                                );
+                              },
+                              child: Text(S.current.getItNow),
+                              style: ElevatedButton.styleFrom(
+                                backgroundColor: Color(0xffFF6F42),
                               ),
-                            );
-                          },
-                          child: Text(S.current.getItNow),
-                          style: ElevatedButton.styleFrom(
-                            backgroundColor: Color(0xffFF6F42),
+                            ),
                           ),
-                        ),
+                          SizedBox(width: 10),
+                          ElevatedButton(
+                            child: Text(S.current.cancel),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.red,
+                            ),
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                        ],
                       ),
                     ],
                   ),

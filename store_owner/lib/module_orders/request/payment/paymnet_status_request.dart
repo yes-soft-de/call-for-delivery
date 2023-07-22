@@ -15,6 +15,8 @@ class PaymentStatusRequest {
   /// PAYMENT_GETAWAY_TAP_PAYMENT_CONST = 227
   ///
   /// PAYMENT_GETAWAY_NOT_SPECIFIED_CONST = 235
+  /// 
+  /// PAYMENT_GETAWAY_MANUAL_CONST = 236
   PaymentGetaway? paymentGetaway;
 
   num? amount;
@@ -95,6 +97,7 @@ enum PaymentGetaway {
   inAppPurchaseApple,
   inAppPurchaseGoogle,
   tapPayment,
+  manual,
   notSpecified;
 
   int get value {
@@ -107,6 +110,8 @@ enum PaymentGetaway {
         return 227;
       case PaymentGetaway.notSpecified:
         return 235;
+      case PaymentGetaway.manual:
+        return 236;
     }
   }
 }
