@@ -2,10 +2,10 @@ import 'dart:async';
 import 'dart:io';
 import 'package:c4d/module_orders/request/payment/paymnet_status_request.dart';
 import 'package:c4d/module_subscription/hive/subscription_pref.dart';
+import 'package:c4d/module_subscription/model/new_subscription_balance_model.dart';
 import 'package:c4d/module_subscription/model/subscription_balance_model.dart';
 import 'package:c4d/module_subscription/service/subscription_service.dart';
 import 'package:c4d/utils/helpers/in_app_purchase.dart';
-import 'package:c4d/utils/logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
@@ -143,7 +143,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
           paymentDialog(context);
         }
         if (status?.firstTimeSubscriptionWithUniformPackage ?? false) {
-          subscribeInTheUniversalPackageDialog(context);
+          widget._stateManager.showSubscribeInTheUniversalPackageDialog(this);
         }
       }
     });
@@ -169,7 +169,7 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
       (value) {
         if (value.hasError) {
           if ((value.error?.contains('لم تشترك بباقة') ?? false) ||
-              (value.error?.contains('You dont have a subscription') ?? false))
+              (value.error?.contains('You dont have PFa subscription') ?? false))
             getIt<SubscriptionPref>().setIsOldSubscriptionPlan(false);
         } else if (value.isEmpty) {
         } else {
@@ -397,7 +397,6 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     SchedulerBinding.instance.addPostFrameCallback(
       (_) {
         showDialog(
-          barrierDismissible: false,
           context: context,
           builder: (context) {
             return Dialog(
@@ -436,20 +435,24 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                       Visibility(
                         visible: !welcomeDialogWithoutPayment,
                         child: InAppPurchaseButton(
-                          callBack: (succeeded) {
+                          callBack: (succeeded, purchaseID) {
                             if (succeeded) {
-                            Navigator.pop(context);
+                              Navigator.pop(context);
                               makePayment(
                                 PaymentStatusRequest(
-                                  status: 1,
-                                  paymentFor: 228,
+                                  status: PaymentStatus.paidSuccess,
+                                  paymentFor: PaymentFor.welcomeSubscription,
                                   amount: 2.99,
-                                  paymentType: 229,
-                                  paymentGetaway:
-                                      Platform.isAndroid ? 226 : 225,
-                                  paymentId: null,
+                                  paymentType: PaymentType.realPaymentByStore,
+                                  paymentGetaway: Platform.isAndroid
+                                      ? PaymentGetaway.inAppPurchaseGoogle
+                                      : PaymentGetaway.inAppPurchaseApple,
+                                  paymentId: purchaseID,
                                 ),
                               );
+                              getInitData();
+                            } else {
+                              Navigator.pop(context);
                             }
                           },
                         ),
@@ -458,11 +461,11 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                             Navigator.pop(context);
                             makePayment(
                               PaymentStatusRequest(
-                                status: 1,
-                                paymentFor: 228,
-                                paymentType: 231,
+                                status: PaymentStatus.paidSuccess,
+                                paymentFor: PaymentFor.welcomeSubscription,
+                                paymentType: PaymentType.mockPaymentByStore,
                                 amount: null,
-                                paymentGetaway: 235,
+                                paymentGetaway: PaymentGetaway.notSpecified,
                                 paymentId: null,
                               ),
                             );
@@ -486,7 +489,6 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
 
   paymentDialog(BuildContext context) {
     showDialog(
-      barrierDismissible: false,
       context: context,
       builder: (context) {
         return Dialog(
@@ -536,7 +538,8 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
     );
   }
 
-  subscribeInTheUniversalPackageDialog(BuildContext context) {
+  subscribeInTheUniversalPackageDialog(
+      BuildContext context, NewSubscriptionBalanceModel subscriptionDetails) {
     showDialog(
       barrierDismissible: false,
       context: context,
@@ -563,7 +566,9 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                     ),
                     SizedBox(height: 20),
                     Text(
-                      S.current.theCostWillBe,
+                      S.current.theCostWillBe(
+                          subscriptionDetails.openPriceOrder.toString(),
+                          subscriptionDetails.costPerKM.toString()),
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium

@@ -10,6 +10,7 @@ import 'package:c4d/module_profile/request/profile/profile_request.dart';
 import 'package:c4d/module_profile/service/profile/profile.service.dart';
 import 'package:c4d/module_profile/ui/screen/edit_profile/edit_profile.dart';
 import 'package:c4d/module_profile/ui/states/edit_profile/profile_state_loaded.dart';
+import 'package:c4d/module_profile/ui/states/edit_profile/update_profile_state_loaded.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
@@ -66,5 +67,10 @@ class EditProfileStateManager {
             .show(screenState.context);
       }
     });
+  }
+
+  void goToEditProfileScreen(
+      ProfileScreenState screenState, ProfileModel profileModel) {
+    _stateSubject.add(UpdateProfileStateLoaded(screenState, profileModel));
   }
 }

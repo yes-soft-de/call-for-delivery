@@ -1,7 +1,7 @@
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_profile/request/profile/profile_request.dart';
-import 'package:c4d/module_profile/state_manager/edit_profile/edit_profile.dart';
+import 'package:c4d/module_profile/state_manager/edit_profile/edit_profile_state_manager.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -24,6 +24,10 @@ class ProfileScreenState extends State<ProfileScreen> {
 
   void getProfile() {
     widget._stateManager.getProfile(this);
+  }
+
+  void goToEditProfileScreen(ProfileModel profileModel) {
+    widget._stateManager.goToEditProfileScreen(this, profileModel);
   }
 
   void refresh() {

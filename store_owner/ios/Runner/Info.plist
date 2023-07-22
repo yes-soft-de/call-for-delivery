@@ -43,6 +43,8 @@
 		<string>We need to access your camera to capture photo to your profile or order</string>
 		<key>NSLocationWhenInUseUsageDescription</key>
 		<string>We need to access your current location to calculate customer distance to you </string>
+		<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+		<string>We may requires to access your location while in use or always to be able to track your order and set your branch location correctly</string>
 		<key>NSPhotoLibraryUsageDescription</key>
 		<string>We need to access your gellary to pick photo to your profile or order</string>
 		<key>UIBackgroundModes</key>

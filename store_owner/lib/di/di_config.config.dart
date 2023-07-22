@@ -188,7 +188,7 @@ import 'package:c4d/module_profile/service/profile/profile.service.dart'
     as _i68;
 import 'package:c4d/module_profile/state_manager/account_balance_state_manager.dart'
     as _i76;
-import 'package:c4d/module_profile/state_manager/edit_profile/edit_profile.dart'
+import 'package:c4d/module_profile/state_manager/edit_profile/edit_profile_state_manager.dart'
     as _i84;
 import 'package:c4d/module_profile/state_manager/init_account.state_manager.dart'
     as _i85;

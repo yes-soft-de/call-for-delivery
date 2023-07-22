@@ -7,7 +7,7 @@ const String devDomain = 'http://134.209.241.49';
 const String prodDomain = 'http://46.101.100.62';
 
 class Urls {
-  static const String DOMAIN = devDomain;
+  static const String DOMAIN = prodDomain;
   static const String BASE_API = DOMAIN + '/v1/store';
   static const String BASE_API_USER = DOMAIN + '/v1/user';
   static const String IMAGES_ROOT =

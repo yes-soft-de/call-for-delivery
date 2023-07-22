@@ -20,7 +20,10 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
-  static String m0(limit) =>
+  static String m0(openOrderPrice, oneKilometerCost) =>
+      "سيتم الآن احتساب التكلفة بناء على خطة العمل الحالية:\n\nسعر الطلب الافتتاحي: ${openOrderPrice} ريال\nالتكلفة عن كل 1 كم: ${oneKilometerCost} ريال";
+
+  static String m1(limit) =>
       "سيتوجب عليك الدفع عند بلوغ استهلاكك ${limit} ريال";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
@@ -989,8 +992,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "terms": MessageLookupByLibrary.simpleMessage("الاستخدام"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
-        "theCostWillBe": MessageLookupByLibrary.simpleMessage(
-            "سيتم الآن احتساب التكلفة بناء على خطة العمل الحالية:\n\nسعر الطلب الافتتاحي: 14 ريال\nالتكلفة عن كل 1 كم: 1 ريال"),
+        "theCostWillBe": m0,
         "thereIsNoBranches": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك إنشاء طلب جديد لعدم وجود فروع خاصة بمتجرك"),
         "thereIsNoUserWithThisNumber":
@@ -1137,7 +1139,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "السلة تحتوي على أصناف من متجر آخر , هل تريد حذف أصناف السلة وإضافة الأصناف الجديدة"),
         "youHaveToFillTheFormFirst": MessageLookupByLibrary.simpleMessage(
             "يتوجب ادخال البيانات التالية:"),
-        "youHaveToPayWhen": m0,
+        "youHaveToPayWhen": m1,
         "youSubscribedWithOffer": MessageLookupByLibrary.simpleMessage(
             "لديك اشتراك في عرض الكابتن مفعل ، سيمكنك الاشتراك مرة أخرى بعد انتهاء مدة الاشتراك"),
         "yourBalance": MessageLookupByLibrary.simpleMessage("رصيدك"),
