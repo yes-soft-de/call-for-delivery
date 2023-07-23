@@ -5,7 +5,7 @@ import 'package:c4d/module_plan/response/payment_history_response/payment_histor
 import 'package:c4d/utils/helpers/date_converter.dart';
 
 class PaymentHistoryModel extends DataModel {
-  late int paymentsTotalAmount;
+  late num paymentsTotalAmount;
   late List<EPaymentModel> payments;
 
   late PaymentHistoryModel _model;

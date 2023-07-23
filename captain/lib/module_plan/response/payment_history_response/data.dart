@@ -2,7 +2,7 @@ import 'payment.dart';
 
 class Data {
   List<Payment>? payments;
-  int? paymentsTotalAmount;
+  num? paymentsTotalAmount;
 
   Data({this.payments, this.paymentsTotalAmount});
 
@@ -10,7 +10,7 @@ class Data {
         payments: (json['payments'] as List<dynamic>?)
             ?.map((e) => Payment.fromJson(e as Map<String, dynamic>))
             .toList(),
-        paymentsTotalAmount: json['paymentsTotalAmount'] as int?,
+        paymentsTotalAmount: json['paymentsTotalAmount'] as num?,
       );
 
   Map<String, dynamic> toJson() => {
