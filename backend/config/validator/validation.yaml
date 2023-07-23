@@ -1036,3 +1036,8 @@ App\Request\Admin\StoreOwnerPreference\StoreOwnerPreferenceUpdateByAdminRequest:
     properties:
         id:
             - NotBlank: ~
+
+App\Request\CaptainFinancialDemand\CaptainFinancialDemandCreateRequest:
+    properties:
+        captain:
+            - NotBlank: ~
