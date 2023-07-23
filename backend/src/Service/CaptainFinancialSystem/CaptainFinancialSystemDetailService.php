@@ -48,8 +48,12 @@ class CaptainFinancialSystemDetailService
         return $this->autoMapping->map(CaptainFinancialSystemDetailEntity::class, CaptainFinancialSystemDetailResponse::class, $captainFinancialSystemDetailEntity);
     }
 
-    public function getBalanceDetailForCaptain(int $userId): CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse|string|CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse|array|CaptainFinancialDefaultSystemBalanceDetailsGetResponse
+    public function getBalanceDetailForCaptain(int $userId, ?string $timeZone = null): CaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse|string|CaptainFinancialSystemAccordingToCountOfOrdersBalanceDetailResponse|array|CaptainFinancialDefaultSystemBalanceDetailsGetResponse
     {
+        if (($timeZone) && ($timeZone !== "")) {
+            $timeZone = str_replace("-", "/", $timeZone);
+        }
+
         $this->captainFinancialDuesService->updateCaptainFinancialSystemDetail($userId);
 
         //get Captain Financial System Detail current
@@ -107,7 +111,7 @@ class CaptainFinancialSystemDetailService
 
             } elseif ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST) {
                 return $this->captainFinancialDefaultSystemGetBalanceService->getCaptainBalanceDetails($financialSystemDetail['captainId'],
-                    $financialSystemDetail);
+                    $financialSystemDetail, $timeZone);
             }
         }
 

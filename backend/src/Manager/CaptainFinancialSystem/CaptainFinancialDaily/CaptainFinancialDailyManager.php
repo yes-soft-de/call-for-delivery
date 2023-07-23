@@ -66,9 +66,9 @@ class CaptainFinancialDailyManager
         return $this->captainFinancialDailyEntityRepository->filterCaptainFinancialDaily($request);
     }
 
-    public function getCaptainFinancialDailyByCaptainProfileIdAndSpecificDate(int $captainProfileId, DateTime $date): ?CaptainFinancialDailyEntity
+    public function getCaptainFinancialDailyByCaptainProfileIdAndSpecificDate(int $captainProfileId, DateTime $date, ?string $timeZone = null): array
     {
-        return $this->captainFinancialDailyEntityRepository->findOneBy(['captainProfile' => $captainProfileId,
-            'createdAt' => $date]);
+        return $this->captainFinancialDailyEntityRepository->getCaptainFinancialDailyByCaptainProfileIdAndSpecificDate($captainProfileId,
+            $date, $timeZone);
     }
 }
