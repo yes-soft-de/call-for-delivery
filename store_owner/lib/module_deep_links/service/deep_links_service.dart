@@ -192,4 +192,16 @@ class DeepLinksService {
     }
     return uri.toString();
   }
+
+  static LatLng? getCustomerLocationFromRedirectedUrl(String url) {
+    RegExp latLngPattern = RegExp(r'//@(-?\d+\.?\d*),(-?\d+\.?\d*)');
+    RegExpMatch? match = latLngPattern.firstMatch(url);
+    if (match != null) {
+      double latitude = double.tryParse(match.group(1) ?? '') ?? 0;
+      double longitude = double.tryParse(match.group(2) ?? '') ?? 0;
+      return LatLng(latitude, longitude);
+    } else {
+      return null;
+    }
+  }
 }

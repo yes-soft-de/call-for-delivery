@@ -14,6 +14,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 @injectable
 class NewOrderScreen extends StatefulWidget {
@@ -53,6 +54,7 @@ class NewOrderScreenState extends State<NewOrderScreen>
   int? costType;
   int? branch;
   LatLng? customerLocation;
+  late WebViewController controller;
   //
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -91,11 +93,34 @@ class NewOrderScreenState extends State<NewOrderScreen>
         old = toController.text;
         locationParsing();
       }
-      if (!toController.text.contains('http') && !toController.text.contains('geo')) {
+      if (!toController.text.contains('http') &&
+          !toController.text.contains('geo')) {
         toController.clear();
         Fluttertoast.showToast(msg: S.current.invalidMapLink);
       }
     });
+    controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            // Update loading bar.
+          },
+          onPageStarted: (String url) {
+            print('started ---------------------------> $url');
+          },
+          onPageFinished: (String url) {
+            print('finished ---------------------------> $url');
+            customerLocation =
+                DeepLinksService.getCustomerLocationFromRedirectedUrl(url);
+            if (customerLocation != null) {
+              setState(() {});
+            }
+          },
+          onWebResourceError: (WebResourceError error) {},
+        ),
+      );
   }
 
   void quickFillUp() async {
@@ -144,15 +169,23 @@ class NewOrderScreenState extends State<NewOrderScreen>
         );
         setState(() {});
       } else if (link != null) {
-        toController.text = await DeepLinksService.extractCoordinatesFromUrl(data);
-        setState(() {
-        });
+        toController.text =
+            await DeepLinksService.extractCoordinatesFromUrl(data);
+        setState(() {});
       } else {
         customerLocation = null;
         setState(() {});
       }
     } else {
       customerLocation = null;
+      setState(() {});
+    }
+    if (customerLocation == null) {
+      try {
+        controller.loadRequest(Uri.parse(toController.text));
+      } catch (e) {
+        //
+      }
       setState(() {});
     }
   }

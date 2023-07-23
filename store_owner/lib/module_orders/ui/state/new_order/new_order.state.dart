@@ -30,6 +30,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 class NewOrderStateBranchesLoaded extends States {
   List<BranchesModel> branches;
@@ -237,6 +238,15 @@ class NewOrderStateBranchesLoaded extends States {
                       icon: Icon(Icons.paste_rounded),
                       onPressed: getClipBoardData,
                     ),
+                  ),
+                ),
+                // map preview .
+                IgnorePointer(
+                  child: SizedBox(
+                    height: 16,
+                    child: Opacity(
+                        opacity: 0,
+                        child: WebViewWidget(controller: screenState.controller)),
                   ),
                 ),
                 Visibility(
