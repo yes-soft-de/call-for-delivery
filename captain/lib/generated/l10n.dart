@@ -8100,6 +8100,46 @@ class S {
     );
   }
 
+  /// `Requested Already You Will Receive Your Dues Soon`
+  String get requestedAlreadyYouWillReceiveYourDuesSoon {
+    return Intl.message(
+      'Requested Already You Will Receive Your Dues Soon',
+      name: 'requestedAlreadyYouWillReceiveYourDuesSoon',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Riyal`
+  String get Riyal {
+    return Intl.message(
+      'Riyal',
+      name: 'Riyal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain Not Exist`
+  String get captainNotExist {
+    return Intl.message(
+      'Captain Not Exist',
+      name: 'captainNotExist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There Is No Current Active Financial Cycle`
+  String get ThereIsNoCurrentActiveFinancialCycle {
+    return Intl.message(
+      'There Is No Current Active Financial Cycle',
+      name: 'ThereIsNoCurrentActiveFinancialCycle',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Over paid`
   String get financeOverPaid {
     return Intl.message(

@@ -859,5 +859,9 @@
     "getProfits": "get profits",
     "thisFeatureNotAvailableYet": "this Feature Not Available Yet",
     "yourProfitsStart": "your profits start from 12.5 to 33 riyal and more",
+    "requestedAlreadyYouWillReceiveYourDuesSoon": "Requested Already You Will Receive Your Dues Soon",
+    "Riyal": "Riyal",
+    "captainNotExist": "Captain Not Exist",
+    "ThereIsNoCurrentActiveFinancialCycle": "There Is No Current Active Financial Cycle",
     "financeOverPaid": "Over paid"
 }

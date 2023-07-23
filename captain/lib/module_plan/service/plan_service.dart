@@ -200,12 +200,10 @@ class PlanService {
     if (actionResponse == null) {
       return DataModel.withError(S.current.networkError);
     }
-    if (actionResponse.statusCode != '204') {
-      if (actionResponse.statusCode == '404') {
-        return DataModel.withError(S.current.thisFeatureNotAvailableYet);
-      }
+    if (actionResponse.statusCode != '201') {
       return DataModel.withError(
-          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+        StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode),
+      );
     }
     return DataModel.empty();
   }

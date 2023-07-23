@@ -46,8 +46,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "InvalidInput": MessageLookupByLibrary.simpleMessage("Invalid"),
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("distance in KM"),
+        "Riyal": MessageLookupByLibrary.simpleMessage("Riyal"),
         "StatusCodeNotFound":
             MessageLookupByLibrary.simpleMessage("Data not found"),
+        "ThereIsNoCurrentActiveFinancialCycle":
+            MessageLookupByLibrary.simpleMessage(
+                "There Is No Current Active Financial Cycle"),
         "about": MessageLookupByLibrary.simpleMessage("About"),
         "accept": MessageLookupByLibrary.simpleMessage("Accept"),
         "acceptOrder": MessageLookupByLibrary.simpleMessage("Accept Order"),
@@ -199,6 +203,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainName": MessageLookupByLibrary.simpleMessage("Captain Name"),
         "captainNotActive": MessageLookupByLibrary.simpleMessage(
             "Your account not activated yet please wait"),
+        "captainNotExist":
+            MessageLookupByLibrary.simpleMessage("Captain Not Exist"),
         "captainPackageExtra":
             MessageLookupByLibrary.simpleMessage("Captains Extra Offer"),
         "captainPayments":
@@ -988,6 +994,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("request edit distance"),
         "requestMeeting":
             MessageLookupByLibrary.simpleMessage("Request Meeting"),
+        "requestedAlreadyYouWillReceiveYourDuesSoon":
+            MessageLookupByLibrary.simpleMessage(
+                "Requested Already You Will Receive Your Dues Soon"),
         "resendCode": MessageLookupByLibrary.simpleMessage("Resend Code"),
         "resendCodeSuccessfully": MessageLookupByLibrary.simpleMessage(
             "The code has been successfully sent"),

@@ -35,12 +35,16 @@ class StatusCodeHelper {
         return S.current.accountAlreadyExist;
       case '9100':
         return S.current.captainAccountInActive;
+      case '9101':
+        return S.current.captainNotExist;
       case '9306':
         return S.current.storeCarsFinished;
       case '9602':
         return S.current.youCannotChoosePlan;
       case '9601':
         return S.current.youCannotChoosePlan;
+      case '9604':
+        return S.current.ThereIsNoCurrentActiveFinancialCycle;
       case '9207':
         return S.current.thisOrderAcceptedByAnotherCaptain;
       case '9105':
@@ -63,6 +67,8 @@ class StatusCodeHelper {
         return S.current.youCannotChangeYourAnswer;
       case '9223':
         return S.current.updateStatusForTimeLimitation;
+      case '9751':
+        return S.current.requestedAlreadyYouWillReceiveYourDuesSoon;
       case '-1':
         return S.current.dataDecodeError;
       default:

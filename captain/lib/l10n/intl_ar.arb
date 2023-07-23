@@ -765,7 +765,7 @@
     "todayProfit": "مستحقات اليوم",
     "plan": "الخطة",
     "addsAndOffers": "الاعلانات والعروض",
-    "yourBalanceToday": "رصيدك الليوم",
+    "yourBalanceToday": "رصيدك اليوم",
     "dontTakeMoneyThisOrderIsPaidAlready": "لا تستلم مبلغ من الزبون هذا الطلب مدفوع مسبقا",
     "areSureYouWantToCancelThisOrder": "هل أنت متأكد من رغبتك في إلغاء هذا الطلب",
     "remainingOrdersNumber": "عدد الطلبات المتبقية",
@@ -861,5 +861,9 @@
     "getProfits": "تحصيل الارباح",
     "thisFeatureNotAvailableYet": "هذه الميزة غير متوفرة بعد",
     "yourProfitsStart": "ارباحك ستبدا من 12.5 حتى 33 ريال واكثر",
+    "requestedAlreadyYouWillReceiveYourDuesSoon": "لقد تم الطلب مسبقا, ستستلم مستحقاتك قريبا",
+    "Riyal": "ريال",
+    "captainNotExist": "الكابتن غير موجود",
+    "ThereIsNoCurrentActiveFinancialCycle": "لا يوجد دورة مالية حالية وفعالة",
     "financeOverPaid": "دفعة زائدة"
 }

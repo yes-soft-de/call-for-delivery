@@ -119,19 +119,20 @@ class MenuScreen extends StatelessWidget {
                         ),
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Column(
+                          child: Row(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
                               Text(
                                 S.current.yourBalanceToday,
-                                style: const TextStyle(
+                                style: TextStyle(
                                   fontSize: 13,
+                                  color: Theme.of(context).colorScheme.primary,
                                 ),
                               ),
+                              const SizedBox(width: 20),
                               Text(
-                                dailyFinance.dailyTotal.toStringAsFixed(2) +
-                                    S.current.sar,
+                                '${dailyFinance.dailyTotal.toStringAsFixed(2)} ${S.current.Riyal}',
                                 style: TextStyle(
                                   color: dailyFinance.dailyTotal > 0
                                       ? Colors.red

@@ -46,8 +46,12 @@ class MessageLookup extends MessageLookupByLibrary {
         "InvalidInput": MessageLookupByLibrary.simpleMessage("غير صالح"),
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("المسافة المقطوعة بالكيلومتر"),
+        "Riyal": MessageLookupByLibrary.simpleMessage("ريال"),
         "StatusCodeNotFound": MessageLookupByLibrary.simpleMessage(
             "لم يتمكن الخادم من العثور على طلبك"),
+        "ThereIsNoCurrentActiveFinancialCycle":
+            MessageLookupByLibrary.simpleMessage(
+                "لا يوجد دورة مالية حالية وفعالة"),
         "about": MessageLookupByLibrary.simpleMessage("حول"),
         "accept": MessageLookupByLibrary.simpleMessage("اقبل"),
         "acceptOrder": MessageLookupByLibrary.simpleMessage("قبول الطلب"),
@@ -197,6 +201,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainName": MessageLookupByLibrary.simpleMessage("اسم الكابتن"),
         "captainNotActive": MessageLookupByLibrary.simpleMessage(
             "لم يتم تفعيل الكابتن من قبل الإدارة بعد الرجاء الانتظار"),
+        "captainNotExist":
+            MessageLookupByLibrary.simpleMessage("الكابتن غير موجود"),
         "captainPackageExtra":
             MessageLookupByLibrary.simpleMessage("عروض الكباتن الإضافية"),
         "captainPayments":
@@ -978,6 +984,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("طلب تعديل المسافة"),
         "requestMeeting":
             MessageLookupByLibrary.simpleMessage("اطلب موعدا للقاء"),
+        "requestedAlreadyYouWillReceiveYourDuesSoon":
+            MessageLookupByLibrary.simpleMessage(
+                "لقد تم الطلب مسبقا, ستستلم مستحقاتك قريبا"),
         "resendCode": MessageLookupByLibrary.simpleMessage("اعادة الارسال"),
         "resendCodeSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إرسال الرمز بنجاح"),
@@ -1270,8 +1279,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "youNeedToAcceptPrimaryOrderFirst": MessageLookupByLibrary.simpleMessage(
             "يتوجب عليك قبول الطلب الرئيسي قبل التفاعل مع الطلبات الفرعية وإدارتها"),
         "youReached": MessageLookupByLibrary.simpleMessage("لقد تجاوزت"),
-        "yourBalanceToday":
-            MessageLookupByLibrary.simpleMessage("رصيدك الليوم"),
+        "yourBalanceToday": MessageLookupByLibrary.simpleMessage("رصيدك اليوم"),
         "yourCartEmpty": MessageLookupByLibrary.simpleMessage(
             "قائمة طلباتك فارغة من فضلك اختر ما تريد طلبه"),
         "yourCurrentPlanStoppedSuccessfully":
