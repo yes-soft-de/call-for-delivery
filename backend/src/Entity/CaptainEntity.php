@@ -103,6 +103,9 @@ class CaptainEntity
     #[ORM\OneToMany(mappedBy: 'captainProfile', targetEntity: CaptainFinancialDailyEntity::class)]
     private $captainFinancialDailyEntities;
 
+    #[ORM\OneToMany(mappedBy: 'captain', targetEntity: CaptainFinancialDemandEntity::class)]
+    private $captainFinancialDemands;
+
     public function __construct()
     {
         $this->orderEntity = new ArrayCollection();
@@ -115,6 +118,7 @@ class CaptainEntity
         $this->captainAmountFromOrderCash = new ArrayCollection();
         $this->orderLogEntities = new ArrayCollection();
         $this->captainFinancialDailyEntities = new ArrayCollection();
+        $this->captainFinancialDemands = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -632,6 +636,36 @@ class CaptainEntity
             // set the owning side to null (unless already changed)
             if ($captainFinancialDailyEntity->getCaptainProfile() === $this) {
                 $captainFinancialDailyEntity->setCaptainProfile(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CaptainFinancialDemandEntity>
+     */
+    public function getCaptainFinancialDemands(): Collection
+    {
+        return $this->captainFinancialDemands;
+    }
+
+    public function addCaptainFinancialDemand(CaptainFinancialDemandEntity $captainFinancialDemand): self
+    {
+        if (!$this->captainFinancialDemands->contains($captainFinancialDemand)) {
+            $this->captainFinancialDemands[] = $captainFinancialDemand;
+            $captainFinancialDemand->setCaptain($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCaptainFinancialDemand(CaptainFinancialDemandEntity $captainFinancialDemand): self
+    {
+        if ($this->captainFinancialDemands->removeElement($captainFinancialDemand)) {
+            // set the owning side to null (unless already changed)
+            if ($captainFinancialDemand->getCaptain() === $this) {
+                $captainFinancialDemand->setCaptain(null);
             }
         }
 

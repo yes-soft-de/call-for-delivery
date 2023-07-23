@@ -38,4 +38,15 @@ class CaptainGetService
 
         return $captainProfile;
     }
+
+    public function getCaptainProfileByCaptainUserId(int $userId): CaptainEntity|string
+    {
+        $captainProfile = $this->captainManager->getCaptainProfileByUserId($userId);
+
+        if (! $captainProfile) {
+            return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
+        }
+
+        return $captainProfile;
+    }
 }

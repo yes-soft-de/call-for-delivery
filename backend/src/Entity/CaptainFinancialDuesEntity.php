@@ -46,9 +46,13 @@ class CaptainFinancialDuesEntity
     #[ORM\Column(type: 'boolean', nullable: true)]
     private $captainStoppedFinancialCycle;
 
+    #[ORM\OneToMany(mappedBy: 'captainFinancialDueId', targetEntity: CaptainFinancialDemandEntity::class)]
+    private $captainFinancialDemands;
+
     public function __construct()
     {
         $this->captainPaymentEntities = new ArrayCollection();
+        $this->captainFinancialDemands = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -190,6 +194,36 @@ class CaptainFinancialDuesEntity
     public function setCaptainStoppedFinancialCycle(?bool $captainStoppedFinancialCycle): self
     {
         $this->captainStoppedFinancialCycle = $captainStoppedFinancialCycle;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CaptainFinancialDemandEntity>
+     */
+    public function getCaptainFinancialDemands(): Collection
+    {
+        return $this->captainFinancialDemands;
+    }
+
+    public function addCaptainFinancialDemand(CaptainFinancialDemandEntity $captainFinancialDemand): self
+    {
+        if (!$this->captainFinancialDemands->contains($captainFinancialDemand)) {
+            $this->captainFinancialDemands[] = $captainFinancialDemand;
+            $captainFinancialDemand->setCaptainFinancialDueId($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCaptainFinancialDemand(CaptainFinancialDemandEntity $captainFinancialDemand): self
+    {
+        if ($this->captainFinancialDemands->removeElement($captainFinancialDemand)) {
+            // set the owning side to null (unless already changed)
+            if ($captainFinancialDemand->getCaptainFinancialDueId() === $this) {
+                $captainFinancialDemand->setCaptainFinancialDueId(null);
+            }
+        }
 
         return $this;
     }
