@@ -12,4 +12,9 @@ class CaptainProfileStatusUpdateByAdminRequest
     {
         return $this->id;
     }
+
+    public function getStatus(): string
+    {
+        return $this->status;
+    }
 }

@@ -48,83 +48,89 @@ class CaptainFinancialDuesService
        
         if ($financialSystemDetail) {
             //if not send order id get captain's active financial cycle 
-            if (! $orderId && ! $orderCreatedAt) {
-                //Get Captain's Active Financial Dues 
-                $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndState($userId, CaptainFinancialDues::FINANCIAL_STATE_ACTIVE);
-                /// todo we do not have to create a new captain financial due in this function at all
-                /// so when everything works correctly try to comment out the following IF block
-                if (! $captainFinancialDues) {
-                    // Create Captain Financial Dues
-                    $captainFinancialDues = $this->createCaptainFinancialDues($financialSystemDetail['captainId'], CaptainFinancialDues::FINANCIAL_DUES_UNPAID);
+//            if (! $orderId && ! $orderCreatedAt) {
+//                //Get Captain's Active Financial Dues
+//                $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndState($userId,
+//                    CaptainFinancialDues::FINANCIAL_STATE_ACTIVE);
+//                /// todo we do not have to create a new captain financial due in this function at all
+//                /// so when everything works correctly try to comment out the following IF block
+//                if (! $captainFinancialDues) {
+//                    // Create Captain Financial Dues
+//                    $captainFinancialDues = $this->createCaptainFinancialDues($financialSystemDetail['captainId'], CaptainFinancialDues::FINANCIAL_DUES_UNPAID);
+//                }
+//
+//            } else {
+//                //if send order id get the financial cycle to which the order belongs
+//               $orderCreatedAt = $orderCreatedAt->format('y-m-d 00:00:00');
+//                //Get financial dues by orderId and userId
+//                $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndOrderId($userId, $orderId, $orderCreatedAt);
+//
+//                if(! $captainFinancialDues) {
+//                    // Create Captain Financial Dues
+//                    return CaptainFinancialDues::FINANCIAL_NOT_FOUND;
+//                    // $captainFinancialDues = $this->createCaptainFinancialDues($financialSystemDetail['captainId'], CaptainFinancialDues::FINANCIAL_DUES_UNPAID);
+//                }
+//            }
+
+            $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndState($userId,
+                CaptainFinancialDues::FINANCIAL_STATE_ACTIVE);
+
+            if ($captainFinancialDues) {
+                $date = ['fromDate' => $captainFinancialDues->getStartDate()->format('y-m-d 00:00:00'), 'toDate' => $captainFinancialDues->getEndDate()->format('y-m-d 23:59:59')];
+
+                $countWorkdays = $this->captainFinancialSystemDateService->subtractTwoDates(new DateTime ($date ['fromDate']), new DateTime($date['toDate']));
+
+                if ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
+                    //Calculation of financial dues
+                    // *** Habib code ***
+                    // $financialDues = $this->captainFinancialSystemOneBalanceDetailService->getFinancialDuesWithSystemOne($financialSystemDetail, $financialSystemDetail['captainId'], $date, $countWorkdays);
+                    // *** End of Habib code ***
+
+                    // *** Rami code ***
+                    $financialDues = $this->captainFinancialSystemOneGetBalanceDetailsService->calculateCaptainDues($financialSystemDetail,
+                        $financialSystemDetail['captainId'], $date, $countWorkdays);
+                    // *** End of Rami code ***
+
+                    //update captain financial dues
+                    return $this->updateCaptainFinancialDuesAmount($captainFinancialDues, $financialDues);
+
+                } elseif ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
+                    // *** Habib code ***
+                    //Calculation of financial dues
+                    // $financialDues = $this->captainFinancialSystemTwoBalanceDetailService->getFinancialDuesWithSystemTwo($financialSystemDetail, $financialSystemDetail['captainId'], $date, $countWorkdays);
+                    // *** End of Habib code ***
+
+                    // *** Rami code ***
+                    $financialDues = $this->captainFinancialSystemTwoGetBalanceDetailsService->calculateCaptainDues($financialSystemDetail['captainId'], $financialSystemDetail, $date);
+                    // *** End of Rami code ***
+
+                    //update captain financial dues
+                    return $this->updateCaptainFinancialDuesAmount($captainFinancialDues, $financialDues);
+
+                } elseif ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_THREE) {
+                    $choseFinancialSystemDetails = $this->captainFinancialSystemAccordingOnOrderService->getCaptainFinancialSystemAccordingOnOrder();
+
+                    // *** Habib code ***
+                    //$financialDues = $this->captainFinancialSystemThreeBalanceDetailService->getFinancialDuesWithSystemThree($choseFinancialSystemDetails, $financialSystemDetail['captainId'], $date);
+                    // *** End of Habib code ***
+
+                    // *** Rami code ***
+                    $financialDues = $this->captainFinancialSystemThreeGetBalanceDetailsService->calculateCaptainDues($choseFinancialSystemDetails,
+                        $financialSystemDetail['captainId'], $date);
+                    // *** End of Rami code ***
+
+                    //update captain financial dues
+                    return $this->updateCaptainFinancialDuesAmount($captainFinancialDues, $financialDues);
+
+                } elseif ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST) {
+                    // *** Rami code ***
+                    $financialDues = $this->captainFinancialDefaultSystemGetBalanceService->calculateCaptainDues($financialSystemDetail,
+                        $orderId);
+                    // *** End of Rami code ***
+
+                    //update captain financial dues
+                    return $this->updateCaptainFinancialDuesAmountByNewAmountAddition($captainFinancialDues, $financialDues);
                 }
-
-            } else {
-                //if send order id get the financial cycle to which the order belongs
-               $orderCreatedAt = $orderCreatedAt->format('y-m-d 00:00:00'); 
-                //Get financial dues by orderId and userId
-                $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndOrderId($userId, $orderId, $orderCreatedAt);    
-              
-                if(! $captainFinancialDues) {
-                    // Create Captain Financial Dues
-                    return CaptainFinancialDues::FINANCIAL_NOT_FOUND;
-                    // $captainFinancialDues = $this->createCaptainFinancialDues($financialSystemDetail['captainId'], CaptainFinancialDues::FINANCIAL_DUES_UNPAID);
-                }           
-            }
-
-            $date = ['fromDate' => $captainFinancialDues->getStartDate()->format('y-m-d 00:00:00'), 'toDate' => $captainFinancialDues->getEndDate()->format('y-m-d 23:59:59')];
-           
-            $countWorkdays = $this->captainFinancialSystemDateService->subtractTwoDates(new DateTime ($date ['fromDate']), new DateTime($date['toDate']));
-
-            if ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
-               //Calculation of financial dues
-                // *** Habib code ***
-                // $financialDues = $this->captainFinancialSystemOneBalanceDetailService->getFinancialDuesWithSystemOne($financialSystemDetail, $financialSystemDetail['captainId'], $date, $countWorkdays);
-                // *** End of Habib code ***
-
-                // *** Rami code ***
-                $financialDues = $this->captainFinancialSystemOneGetBalanceDetailsService->calculateCaptainDues($financialSystemDetail,
-                    $financialSystemDetail['captainId'], $date, $countWorkdays);
-                // *** End of Rami code ***
-
-               //update captain financial dues
-               return $this->updateCaptainFinancialDuesAmount($captainFinancialDues, $financialDues);
-
-            } elseif ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
-                // *** Habib code ***
-                //Calculation of financial dues
-                // $financialDues = $this->captainFinancialSystemTwoBalanceDetailService->getFinancialDuesWithSystemTwo($financialSystemDetail, $financialSystemDetail['captainId'], $date, $countWorkdays);
-                // *** End of Habib code ***
-
-                // *** Rami code ***
-                $financialDues = $this->captainFinancialSystemTwoGetBalanceDetailsService->calculateCaptainDues($financialSystemDetail['captainId'], $financialSystemDetail, $date);
-                // *** End of Rami code ***
-
-                //update captain financial dues
-               return $this->updateCaptainFinancialDuesAmount($captainFinancialDues, $financialDues);
-
-            } elseif ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_THREE) {
-                $choseFinancialSystemDetails = $this->captainFinancialSystemAccordingOnOrderService->getCaptainFinancialSystemAccordingOnOrder();
-
-                // *** Habib code ***
-                //$financialDues = $this->captainFinancialSystemThreeBalanceDetailService->getFinancialDuesWithSystemThree($choseFinancialSystemDetails, $financialSystemDetail['captainId'], $date);
-                // *** End of Habib code ***
-
-                // *** Rami code ***
-                $financialDues = $this->captainFinancialSystemThreeGetBalanceDetailsService->calculateCaptainDues($choseFinancialSystemDetails,
-                    $financialSystemDetail['captainId'], $date);
-                // *** End of Rami code ***
-
-               //update captain financial dues
-               return $this->updateCaptainFinancialDuesAmount($captainFinancialDues, $financialDues);
-
-            } elseif ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST) {
-                // *** Rami code ***
-                $financialDues = $this->captainFinancialDefaultSystemGetBalanceService->calculateCaptainDues($financialSystemDetail,
-                    $orderId);
-                // *** End of Rami code ***
-
-                //update captain financial dues
-                return $this->updateCaptainFinancialDuesAmountByNewAmountAddition($captainFinancialDues, $financialDues);
             }
         }
 

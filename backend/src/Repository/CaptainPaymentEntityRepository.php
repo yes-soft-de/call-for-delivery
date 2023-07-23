@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Constant\CaptainPayment\PaymentToCaptain\CaptainPaymentConstant;
 use App\Entity\CaptainPaymentEntity;
 use App\Entity\CaptainEntity;
 use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentFilterByAdminRequest;
@@ -236,6 +237,10 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
 
             ->andWhere('captainEntity.captainId = :captainUserId')
             ->setParameter('captainUserId', $request->getUserId())
+
+            // this condition for preventing previous payments (before Epic 13) from returning
+            ->andWhere('captainPaymentEntity.paymentGetaway != :notSpecifiedPaymentGetaway')
+            ->setParameter('notSpecifiedPaymentGetaway', CaptainPaymentConstant::PAYMENT_GETAWAY_NOT_SPECIFIED_CONST)
 
             ->orderBy('captainPaymentEntity.id', 'DESC');
 

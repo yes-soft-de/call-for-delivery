@@ -109,6 +109,8 @@ class CaptainFinancialSystemDetailManager
             $captainFinancialSystemDetail = $this->autoMapping->mapToObject(CaptainFinancialSystemDetailTypeAndIdUpdateRequest::class,
                 CaptainFinancialSystemDetailEntity::class, $request, $captainFinancialSystemDetail);
 
+            $captainFinancialSystemDetail->setStatus(true);
+
             $this->entityManager->flush();
         }
 

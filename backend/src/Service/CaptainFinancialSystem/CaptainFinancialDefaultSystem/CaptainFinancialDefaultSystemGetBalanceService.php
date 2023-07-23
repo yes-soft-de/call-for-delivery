@@ -37,10 +37,10 @@ class CaptainFinancialDefaultSystemGetBalanceService
         return $this->captainFinancialDueGetService->getCurrentAndActiveCaptainFinancialDueByCaptainProfileId($captainProfileId);
     }
 
-    public function getCaptainFinancialDailyByCaptainProfileIdAndSpecificDate(int $captainProfileId, DateTime $date): CaptainFinancialDailyEntity|int
+    public function getCaptainFinancialDailyByCaptainProfileIdAndSpecificDate(int $captainProfileId, DateTime $date, ?string $timeZone = null): CaptainFinancialDailyEntity|int
     {
         return $this->captainFinancialDailyGetService->getCaptainFinancialDailyByCaptainProfileIdAndSpecificDate($captainProfileId,
-            $date);
+            $date, $timeZone);
     }
 
 //    /**
@@ -152,13 +152,13 @@ class CaptainFinancialDefaultSystemGetBalanceService
 //        return $financialAmount;
 //    }
 
-    public function getCaptainBalanceDetails(int $captainProfileId, array $financialSystemDetail): CaptainFinancialDefaultSystemBalanceDetailsGetResponse
+    public function getCaptainBalanceDetails(int $captainProfileId, array $financialSystemDetail, ?string $timeZone = null): CaptainFinancialDefaultSystemBalanceDetailsGetResponse
     {
         $response = $this->initializeCaptainBalanceResponse($financialSystemDetail);
 
         // today financial data
-        $todayDateWithoutTime = $this->getDateTimeOfToday();
-        $todayStartAndEndDates = $this->getStartAndEndDateTimeOfToday();
+        $todayDateWithoutTime = $this->getDateTimeOfToday($timeZone);
+        $todayStartAndEndDates = $this->getStartAndEndDateTimeOfToday($timeZone);
 
         $orders = $this->getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates(
             $captainProfileId,
@@ -170,7 +170,7 @@ class CaptainFinancialDefaultSystemGetBalanceService
 
         if ($response['todayOrdersCount'] > 0) {
             $captainFinancialDaily = $this->getCaptainFinancialDailyByCaptainProfileIdAndSpecificDate($captainProfileId,
-                $todayDateWithoutTime);
+                $todayDateWithoutTime, $timeZone);
 
             if ($captainFinancialDaily !== CaptainFinancialDailyResultConstant::CAPTAIN_FINANCIAL_DAILY_NOT_EXIST_CONST) {
                 $response['todayFinancialAmount'] = $captainFinancialDaily->getAmount();
