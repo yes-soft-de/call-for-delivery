@@ -173,4 +173,17 @@ class EditStoreSettingStateManager {
       );
     }
   }
+
+  void createSubscriptionWithWelcomePackage(
+      EditStoreSettingScreenState screenState, int storeId) {
+    _storesService.createSubscriptionWithWelcomePackage(storeId).then(
+      (value) {
+        if (value.hasError) {
+          CustomFlushBarHelper.createError(
+              title: S.current.warnning, message: value.error ?? '');
+        }
+        getStoreSetting(screenState, true);
+      },
+    );
+  }
 }
