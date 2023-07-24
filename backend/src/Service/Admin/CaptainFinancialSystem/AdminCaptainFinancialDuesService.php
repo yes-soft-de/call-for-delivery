@@ -3,6 +3,7 @@
 namespace App\Service\Admin\CaptainFinancialSystem;
 
 use App\AutoMapping;
+use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialDuesManager;
 use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialDuesResponse;
 use App\Service\CaptainPayment\CaptainPaymentService;
@@ -11,15 +12,12 @@ use App\Entity\CaptainFinancialDuesEntity;
 
 class AdminCaptainFinancialDuesService
 {
-    private AdminCaptainFinancialDuesManager $adminCaptainFinancialDuesManager;
-    private AutoMapping $autoMapping;
-    private CaptainPaymentService $captainPaymentService;
-
-    public function __construct(AutoMapping $autoMapping, AdminCaptainFinancialDuesManager $adminCaptainFinancialDuesManager, CaptainPaymentService $captainPaymentService)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private AdminCaptainFinancialDuesManager $adminCaptainFinancialDuesManager,
+        private CaptainPaymentService $captainPaymentService
+    )
     {
-        $this->adminCaptainFinancialDuesManager = $adminCaptainFinancialDuesManager;
-        $this->autoMapping = $autoMapping;
-        $this->captainPaymentService = $captainPaymentService;
     }
 
     public function getCaptainFinancialDues(int $captainId): array
@@ -72,5 +70,37 @@ class AdminCaptainFinancialDuesService
     public function stateToActive()
     {
         return $this->adminCaptainFinancialDuesManager->stateToActive(); 
+    }
+
+    public function getCaptainFinancialDueByCaptainProfileIdAndOrderCreationDate(int $captainProfileId, \DateTimeInterface $orderCreationDate): int|CaptainFinancialDuesEntity
+    {
+        $captainFinancialDue = $this->adminCaptainFinancialDuesManager->getCaptainFinancialDueByCaptainProfileIdAndOrderCreationDate($captainProfileId,
+            $orderCreationDate);
+
+        if (count($captainFinancialDue) === 0) {
+            return CaptainFinancialDues::FINANCIAL_NOT_FOUND;
+        }
+
+        return $captainFinancialDue[0];
+    }
+
+    public function subtractValueFromCaptainFinancialDueAmountForStore(CaptainFinancialDuesEntity $captainFinancialDuesEntity, float $value): CaptainFinancialDuesEntity
+    {
+        return $this->adminCaptainFinancialDuesManager->subtractValueFromCaptainFinancialDueAmountForStore($captainFinancialDuesEntity,
+            $value);
+    }
+
+    public function handleSubtractingValueFromCaptainFinancialDueAmountForStore(float $value, int $captainProfileId, \DateTimeInterface $orderCreatedAt): CaptainFinancialDuesEntity|int
+    {
+        // 1 Get captain financial due which order belongs to
+        $captainFinancialDue = $this->getCaptainFinancialDueByCaptainProfileIdAndOrderCreationDate($captainProfileId,
+            $orderCreatedAt);
+
+        if ($captainFinancialDue === CaptainFinancialDues::FINANCIAL_NOT_FOUND) {
+            return CaptainFinancialDues::FINANCIAL_NOT_FOUND;
+        }
+
+        // Update amountForStore field by subtracting "value" from it
+        return $this->subtractValueFromCaptainFinancialDueAmountForStore($captainFinancialDue, $value);
     }
 }

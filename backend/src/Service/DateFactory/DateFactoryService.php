@@ -224,4 +224,11 @@ class DateFactoryService
     {
         return (new DateTime('today'))->setTimezone(new \DateTimeZone($timeZone ? : 'Asia/Riyadh'));
     }
+
+    public function getDateTimeOnlyFromDateTimeInterface(DateTimeInterface $dateTimeInterface): DateTime
+    {
+        $dateTime = DateTime::createFromInterface($dateTimeInterface);
+
+        return new DateTime($dateTime->format('Y-m-d 00:00:00'));
+    }
 }

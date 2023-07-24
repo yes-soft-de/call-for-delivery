@@ -7,6 +7,7 @@ use App\Entity\CaptainFinancialDailyEntity;
 use App\Repository\CaptainFinancialDailyEntityRepository;
 use App\Request\Admin\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyFilterByAdminRequest;
 use App\Request\Admin\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyIsPaidUpdateByAdminRequest;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AdminCaptainFinancialDailyManager
@@ -49,5 +50,19 @@ class AdminCaptainFinancialDailyManager
     public function filterCaptainFinancialDailyWithImagesByAdmin(CaptainFinancialDailyFilterByAdminRequest $request): array
     {
         return $this->captainFinancialDailyEntityRepository->filterCaptainFinancialDailyWithImagesByAdmin($request);
+    }
+
+    public function subtractingValueFromCaptainFinancialDailyAlreadyHadAmount(float $value, int $captainProfileId, DateTime $orderCreationDate): ?CaptainFinancialDailyEntity
+    {
+        $captainFinancialDaily = $this->captainFinancialDailyEntityRepository->findOneBy(['captainProfile' => $captainProfileId,
+            'createdAt' => $orderCreationDate]);
+
+        if ($captainFinancialDaily) {
+            $captainFinancialDaily->setAlreadyHadAmount($captainFinancialDaily->getAlreadyHadAmount() - $value);
+
+            $this->entityManager->flush();
+        }
+
+        return $captainFinancialDaily;
     }
 }
