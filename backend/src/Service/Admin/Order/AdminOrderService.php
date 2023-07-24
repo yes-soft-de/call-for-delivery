@@ -20,6 +20,7 @@ use App\Constant\Order\OrderCancelledByUserAndAtStateConstant;
 use App\Constant\Order\OrderCostTypeConstant;
 use App\Constant\Order\OrderHasPayConflictAnswersConstant;
 use App\Constant\Order\OrderIsCancelConstant;
+use App\Constant\Order\OrderPaidToProviderConstant;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
@@ -1538,6 +1539,17 @@ class AdminOrderService
             // 3 Update subscription cost of the store's subscription
             $this->handleUpdatingStoreSubscriptionCost($orderEntity->getStoreOwner()->getId(), $orderEntity->getCreatedAt(),
                 $orderEntity->getDeliveryCost());
+
+            if ($orderEntity->getCaptainId()) {
+                // 4 Re-calculate the financial dues of the captain who has the order (if exists)
+                if ($order->getCaptainId()?->getCaptainId()) {
+                    $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(),
+                        $order->getId(), $order->getCreatedAt());
+
+                    // Re-calculate daily captain financial due
+                    $this->createOrUpdateCaptainFinancialDaily($order->getId());
+                }
+            }
         }
 
         // save log of the action on order
@@ -1565,6 +1577,11 @@ class AdminOrderService
             foreach ($ordersResult as $orderEntity) {
                 $response[] = $this->autoMapping->map(OrderEntity::class, OrderHasPayConflictAnswersUpdateByAdminResponse::class,
                     $orderEntity);
+
+                // update store owner due from cash order and captain financial due
+                if ($orderEntity->getPaidToProvider() === OrderPaidToProviderConstant::ORDER_PAID_TO_PROVIDER_NO_CONST) {
+
+                }
 
                 // save log of the action on order
                 $this->orderLogService->createOrderLogMessage($orderEntity, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
@@ -1697,6 +1714,17 @@ class AdminOrderService
                             // firebase notification to store
                             $this->sendFirebaseNotificationToUserByAdmin($orderEntity->getStoreOwner()->getStoreOwnerId(),
                                 $orderEntity->getId(), NotificationConstant::ORDER_NEW_DESTINATION_ADDED_BY_ADMIN_MESSAGE_CONST);
+                        }
+
+                        if ($orderEntity->getCaptainId()) {
+                            // 4 Re-calculate the financial dues of the captain who has the order (if exists)
+                            if ($order->getCaptainId()?->getCaptainId()) {
+                                $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(),
+                                    $order->getId(), $order->getCreatedAt());
+
+                                // Re-calculate daily captain financial due
+                                $this->createOrUpdateCaptainFinancialDaily($order->getId());
+                            }
                         }
                     }
 
@@ -1881,7 +1909,8 @@ class AdminOrderService
                 if ($orderDeliveryCostUpdateResult instanceof OrderEntity) {
                     // 4 Re-calculate the financial dues of the captain who has the order (if exists)
                     if ($order->getCaptainId()?->getCaptainId()) {
-                        $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
+                        $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(),
+                            $order->getId(), $order->getCreatedAt());
 
                         // Re-calculate daily captain financial due
                         $this->createOrUpdateCaptainFinancialDaily($order->getId());
