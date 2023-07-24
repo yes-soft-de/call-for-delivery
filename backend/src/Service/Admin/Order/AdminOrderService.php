@@ -1246,10 +1246,6 @@ class AdminOrderService
             if ($orderResult[0]) {
                 if ($orderResult[0]->getCaptainId()) {
                     if ($orderResult[0]->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
-                        //create or update captainFinancialDues
-                        $this->captainFinancialDuesService->captainFinancialDues($orderResult[0]->getCaptainId()->getCaptainId(),
-                            $orderResult[0]->getId(), $orderResult[0]->getCreatedAt());
-
                         //save the price of the order in cash in case the captain does not pay the store
                         if ($this->checkCashOrderCostPaidToStoreOrNotByOrderEntity($orderResult[0])) {
                             $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($orderResult[0],
@@ -1258,6 +1254,10 @@ class AdminOrderService
                             $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($orderResult[0],
                                 OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $orderResult[0]->getOrderCost());
                         }
+
+                        // update captainFinancialDues
+                        $this->captainFinancialDuesService->captainFinancialDues($orderResult[0]->getCaptainId()->getCaptainId(),
+                            $orderResult[0]->getId(), $orderResult[0]->getCreatedAt());
 
                         // Create or update daily captain financial amount
                         $this->createOrUpdateCaptainFinancialDaily($orderResult[0]->getId());
@@ -1578,7 +1578,8 @@ class AdminOrderService
                 $response[] = $this->autoMapping->map(OrderEntity::class, OrderHasPayConflictAnswersUpdateByAdminResponse::class,
                     $orderEntity);
 
-                // update store owner due from cash order and captain financial due
+                // If there is cash order amount for store, and admin confirmed there isn't, then update
+                // store owner due from cash order + captain financial due + captain financial daily
                 if ($orderEntity->getPaidToProvider() === OrderPaidToProviderConstant::ORDER_PAID_TO_PROVIDER_NO_CONST) {
 
                 }

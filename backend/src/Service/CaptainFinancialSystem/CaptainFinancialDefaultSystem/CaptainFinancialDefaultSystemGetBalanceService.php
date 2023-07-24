@@ -14,7 +14,6 @@ use App\Entity\StoreOwnerDuesFromCashOrdersEntity;
 use App\Response\CaptainFinancialSystem\CaptainFinancialDefaultSystem\CaptainFinancialDefaultSystemBalanceDetailsGetResponse;
 use App\Service\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyGetService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueGetService;
-use App\Service\CaptainPayment\CaptainPaymentGetService;
 use App\Service\DateFactory\DateFactoryService;
 use DateTime;
 
@@ -24,7 +23,6 @@ class CaptainFinancialDefaultSystemGetBalanceService
         private AutoMapping $autoMapping,
         private CaptainFinancialDefaultSystemOrderGetService $captainFinancialDefaultSystemOrderGetService,
         private DateFactoryService $dateFactoryService,
-        private CaptainPaymentGetService $captainPaymentGetService,
         private CaptainFinancialDefaultSystemGetStoreAmountService $captainFinancialDefaultSystemGetStoreAmountService,
         private CaptainFinancialDailyGetService $captainFinancialDailyGetService,
         private CaptainFinancialDueGetService $captainFinancialDueGetService
