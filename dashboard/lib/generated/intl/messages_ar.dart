@@ -20,6 +20,10 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'ar';
 
+  static String m0(value) => "الدفعة ${value} ريال";
+
+  static String m1(value) => "${value} ريال";
+
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
         "BalanceHint": MessageLookupByLibrary.simpleMessage(
@@ -157,6 +161,8 @@ class MessageLookup extends MessageLookupByLibrary {
                 "هل أنت متأكد في رغبتك في حذف هذا الإشعار"),
         "areYouSureAboutEdit":
             MessageLookupByLibrary.simpleMessage("هل انت متاكد من التعديل؟"),
+        "areYouSureAboutMakePayment": MessageLookupByLibrary.simpleMessage(
+            "هل انت متاكد من تسجيل الدفعة؟"),
         "areYouSureAboutRependingOrder": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من رغبتك بإعادة هذا الطلب لحالة الانتظار وإلغاء اسناد الكابتن"),
         "areYouSureAboutSkipPaymentStageFor":
@@ -1126,6 +1132,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تسجيل دفعة بنجاح"),
         "paymentToCaptain":
             MessageLookupByLibrary.simpleMessage("دفعة للكابتن"),
+        "paymentValueRiyal": m0,
         "payments": MessageLookupByLibrary.simpleMessage("الدفعات"),
         "paymentsDeletedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم حذف الدفعة بنجاح"),
@@ -1133,6 +1140,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("دفعات للمتجر"),
         "paymentsFromCaptain":
             MessageLookupByLibrary.simpleMessage("دفعة من الكابتن"),
+        "paymentsRecords": MessageLookupByLibrary.simpleMessage("سجل الدفعات"),
         "paymentsToCaptain":
             MessageLookupByLibrary.simpleMessage("دفعة للكابتن"),
         "paymentsToStore": MessageLookupByLibrary.simpleMessage("دفعة للمتجر"),
@@ -1255,6 +1263,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("الرجاء تزويدنا بسبب الابلاغ"),
         "reasonOfTheReport":
             MessageLookupByLibrary.simpleMessage("سبب طلب الدعم"),
+        "receipts": MessageLookupByLibrary.simpleMessage("المقبوضات"),
         "receivedCash": MessageLookupByLibrary.simpleMessage("تم الاستلام"),
         "recipientName": MessageLookupByLibrary.simpleMessage("اسم المستلم"),
         "recipientPhoneNumber":
@@ -1270,6 +1279,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "register": MessageLookupByLibrary.simpleMessage("انشاء حساب جديد"),
         "registerHint":
             MessageLookupByLibrary.simpleMessage("اسم مستخدم أو رقم هاتف"),
+        "registerPayment": MessageLookupByLibrary.simpleMessage("تسجيل دفعة"),
         "registerSuccess":
             MessageLookupByLibrary.simpleMessage("تم تسجيل حسابك بنجاح"),
         "registerSuccessSetupMyProfile": MessageLookupByLibrary.simpleMessage(
@@ -1359,6 +1369,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "skipPaymentStageForWelcomePackage":
             MessageLookupByLibrary.simpleMessage(
                 "تخطي خطوة الدفع للباقة الترحيبة"),
+        "skipped": MessageLookupByLibrary.simpleMessage("تم التخطي"),
         "smallLessThan20Employee":
             MessageLookupByLibrary.simpleMessage("1 - 20 موظف"),
         "socialMedia":
@@ -1501,6 +1512,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "لا يمكن اسناد هذا الطلب لهذا الكابتن , لأن الطلب مخفي"),
         "thereIsNoBranches":
             MessageLookupByLibrary.simpleMessage("لا يوجد أفرع متاحة"),
+        "thereIsNoPaymentToMade":
+            MessageLookupByLibrary.simpleMessage("لا يوجد دفعة لتسديدها"),
         "thereIsNoSettingFotThisStore": MessageLookupByLibrary.simpleMessage(
             "لا يوجد اعدادات مسبقة لهذا المتجر"),
         "thereIsNoValidSubscription":
@@ -1516,6 +1529,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "time": MessageLookupByLibrary.simpleMessage("الوقت"),
         "title": MessageLookupByLibrary.simpleMessage("عنوان"),
         "to": MessageLookupByLibrary.simpleMessage("الى"),
+        "toBePaid": MessageLookupByLibrary.simpleMessage("المتوجب دفعه"),
         "toFindOutMorePleaseLeaveYourPhonenandWeWill":
             MessageLookupByLibrary.simpleMessage(
                 "للمزيد من المعلومات خذ موعدا بترك رقم هاتفك، وسيتم التواصل معك"),
@@ -1633,6 +1647,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("يتم رفع الصورة"),
         "username": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
         "validation": MessageLookupByLibrary.simpleMessage("صلاحية"),
+        "valueRiyal": m1,
         "views": MessageLookupByLibrary.simpleMessage("مشاهدة"),
         "waiting": MessageLookupByLibrary.simpleMessage("في الانتظار"),
         "waitingDescription":
@@ -1680,6 +1695,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "youCannotMakePaymentThereIsNoOrderCash":
             MessageLookupByLibrary.simpleMessage(
                 "لايمكنك تسجيل دفعة لعدم وجود طلبات كاش تستحق الدفعات"),
+        "youCantEditOrDeleteAfterConfirm": MessageLookupByLibrary.simpleMessage(
+            "لن يمكنك التعديل او التراجع بعد تاكيد تسجيل دفعة"),
         "youHaveProductsFromDifferentStore": MessageLookupByLibrary.simpleMessage(
             "السلة تحتوي على أصناف من متجر آخر , هل تريد حذف أصناف السلة وإضافة الأصناف الجديدة"),
         "youNeedToPayExclusively":

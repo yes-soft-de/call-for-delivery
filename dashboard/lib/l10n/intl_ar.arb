@@ -1056,5 +1056,31 @@
     "enterTheMaxLimitThatAreAllowedToStoreDues": "ادخل الحد الاعلى للمستحقات المسموحة للمتجر",
     "thereIsNoSettingFotThisStore": "لا يوجد اعدادات مسبقة لهذا المتجر",
     "areYouSureThatYouWantToUpdateTheSettingOf": "هل انت متاكد من تعديل اعدادت ",
+    "receipts": "المقبوضات",
+    "toBePaid": "المتوجب دفعه",
+    "valueRiyal": "{value} ريال",
+    "@valueRiyal": {
+        "description": "",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "paymentValueRiyal": "الدفعة {value} ريال",
+    "@paymentValueRiyal": {
+        "description": "",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "registerPayment" : "تسجيل دفعة",
+    "paymentsRecords" : "سجل الدفعات",
+    "skipped" : "تم التخطي",
+    "thereIsNoPaymentToMade" : "لا يوجد دفعة لتسديدها",
+    "areYouSureAboutMakePayment" : "هل انت متاكد من تسجيل الدفعة؟",
+    "youCantEditOrDeleteAfterConfirm" : "لن يمكنك التعديل او التراجع بعد تاكيد تسجيل دفعة",
     "dev": "المطورين"
 }

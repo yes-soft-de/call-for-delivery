@@ -2,10 +2,13 @@ import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/module_subscriptions/repository/subscriptions_repository.dart';
 import 'package:c4d/module_subscriptions/request/delete_captain_offer_request.dart';
 import 'package:c4d/module_subscriptions/request/delete_subscription_request.dart';
+import 'package:c4d/module_subscriptions/request/payment/paymnet_status_request.dart';
+import 'package:c4d/module_subscriptions/request/receiptsRequest.dart';
 import 'package:c4d/module_subscriptions/request/store_captain_offer_request.dart';
 import 'package:c4d/module_subscriptions/request/store_edit_subscribe_to_package.dart';
 import 'package:c4d/module_subscriptions/request/store_subscribe_to_package.dart';
 import 'package:c4d/module_subscriptions/request/update_remaining_cars_request.dart';
+import 'package:c4d/module_subscriptions/response/receipts_response/receipts_response.dart';
 import 'package:c4d/module_subscriptions/response/subscriptions_financial_response/subscriptions_financial_response.dart';
 import 'package:injectable/injectable.dart';
 
@@ -40,4 +43,10 @@ class SubscriptionsManager {
   Future<ActionResponse?> updateRemainingCars(
           UpdateRemainingCarsRequest request) async =>
       await _storesRepository.updateRemainingCars(request);
+
+  Future<ReceiptsResponse?> getReceipts(ReceiptsRequest request) =>
+      _storesRepository.getReceipts(request);
+
+  Future<ActionResponse?> setPayment(PaymentStatusRequest request) =>
+      _storesRepository.setPayment(request);
 }

@@ -10520,6 +10520,56 @@ class S {
     );
   }
 
+  /// `edit store setting`
+  String get editStoreSetting {
+    return Intl.message(
+      'edit store setting',
+      name: 'editStoreSetting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `store setting`
+  String get storeSetting {
+    return Intl.message(
+      'store setting',
+      name: 'storeSetting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `enter the max limit that are allowed to store dues`
+  String get enterTheMaxLimitThatAreAllowedToStoreDues {
+    return Intl.message(
+      'enter the max limit that are allowed to store dues',
+      name: 'enterTheMaxLimitThatAreAllowedToStoreDues',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `there is no setting for this store`
+  String get thereIsNoSettingFotThisStore {
+    return Intl.message(
+      'there is no setting for this store',
+      name: 'thereIsNoSettingFotThisStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `are you sure that you want to update the setting of`
+  String get areYouSureThatYouWantToUpdateTheSettingOf {
+    return Intl.message(
+      'are you sure that you want to update the setting of',
+      name: 'areYouSureThatYouWantToUpdateTheSettingOf',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `send order automatic to the external company because he meet with company stander`
   String
       get sendOrderAutomaticToTheExternalCompanyBecauseHeMeetWithCompanyStander {
@@ -10576,51 +10626,101 @@ class S {
     );
   }
 
-  /// `edit store setting`
-  String get editStoreSetting {
+  /// `receipts`
+  String get receipts {
     return Intl.message(
-      'edit store setting',
-      name: 'editStoreSetting',
+      'receipts',
+      name: 'receipts',
       desc: '',
       args: [],
     );
   }
 
-  /// `store setting`
-  String get storeSetting {
+  /// `to be paid`
+  String get toBePaid {
     return Intl.message(
-      'store setting',
-      name: 'storeSetting',
+      'to be paid',
+      name: 'toBePaid',
       desc: '',
       args: [],
     );
   }
 
-  /// `enter the max limit that are allowed to store dues`
-  String get enterTheMaxLimitThatAreAllowedToStoreDues {
+  /// `{value} Riyal`
+  String valueRiyal(String value) {
     return Intl.message(
-      'enter the max limit that are allowed to store dues',
-      name: 'enterTheMaxLimitThatAreAllowedToStoreDues',
+      '$value Riyal',
+      name: 'valueRiyal',
+      desc: '',
+      args: [value],
+    );
+  }
+
+  /// `payment {value} Riyal`
+  String paymentValueRiyal(String value) {
+    return Intl.message(
+      'payment $value Riyal',
+      name: 'paymentValueRiyal',
+      desc: '',
+      args: [value],
+    );
+  }
+
+  /// `register payment`
+  String get registerPayment {
+    return Intl.message(
+      'register payment',
+      name: 'registerPayment',
       desc: '',
       args: [],
     );
   }
 
-  /// `there is no setting for this store`
-  String get thereIsNoSettingFotThisStore {
+  /// `payment records`
+  String get paymentsRecords {
     return Intl.message(
-      'there is no setting for this store',
-      name: 'thereIsNoSettingFotThisStore',
+      'payment records',
+      name: 'paymentsRecords',
       desc: '',
       args: [],
     );
   }
 
-  /// `are you sure that you want to update the setting of`
-  String get areYouSureThatYouWantToUpdateTheSettingOf {
+  /// `skipped`
+  String get skipped {
     return Intl.message(
-      'are you sure that you want to update the setting of',
-      name: 'areYouSureThatYouWantToUpdateTheSettingOf',
+      'skipped',
+      name: 'skipped',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `there is no payment to made`
+  String get thereIsNoPaymentToMade {
+    return Intl.message(
+      'there is no payment to made',
+      name: 'thereIsNoPaymentToMade',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `are you sure about make payment`
+  String get areYouSureAboutMakePayment {
+    return Intl.message(
+      'are you sure about make payment',
+      name: 'areYouSureAboutMakePayment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `you cant edit or delete after confirm`
+  String get youCantEditOrDeleteAfterConfirm {
+    return Intl.message(
+      'you cant edit or delete after confirm',
+      name: 'youCantEditOrDeleteAfterConfirm',
       desc: '',
       args: [],
     );

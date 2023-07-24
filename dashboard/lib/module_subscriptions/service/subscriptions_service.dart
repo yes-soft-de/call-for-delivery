@@ -1,12 +1,16 @@
 import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/module_subscriptions/manager/subscriptions_manager.dart';
+import 'package:c4d/module_subscriptions/model/receipts_model.dart';
 import 'package:c4d/module_subscriptions/model/store_subscriptions_financial.dart';
 import 'package:c4d/module_subscriptions/request/delete_captain_offer_request.dart';
 import 'package:c4d/module_subscriptions/request/delete_subscription_request.dart';
+import 'package:c4d/module_subscriptions/request/payment/paymnet_status_request.dart';
+import 'package:c4d/module_subscriptions/request/receiptsRequest.dart';
 import 'package:c4d/module_subscriptions/request/store_captain_offer_request.dart';
 import 'package:c4d/module_subscriptions/request/store_edit_subscribe_to_package.dart';
 import 'package:c4d/module_subscriptions/request/store_subscribe_to_package.dart';
 import 'package:c4d/module_subscriptions/request/update_remaining_cars_request.dart';
+import 'package:c4d/module_subscriptions/response/receipts_response/receipts_response.dart';
 import 'package:c4d/module_subscriptions/response/subscriptions_financial_response/subscriptions_financial_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/data_model/data_model.dart';
@@ -135,6 +139,31 @@ class SubscriptionsService {
     if (response == null) {
       return DataModel.withError(S.current.networkError);
     } else if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> getReceipts(ReceiptsRequest request) async {
+    ReceiptsResponse? response = await _storeManager.getReceipts(request);
+    if (response == null) {
+      return DataModel.withError(S.current.networkError);
+    } else if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return ReceiptsModel.withData(response);
+  }
+
+  Future<DataModel> makePayment(PaymentStatusRequest request,
+      {Function? onFinish}) async {
+    ActionResponse? response = await _storeManager.setPayment(request);
+    if (onFinish != null) {
+      onFinish();
+    }
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '201') {
       return DataModel.withError(
           StatusCodeHelper.getStatusCodeMessages(response.statusCode));
     }
