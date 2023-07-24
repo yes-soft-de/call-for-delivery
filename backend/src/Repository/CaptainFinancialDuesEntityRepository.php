@@ -298,4 +298,19 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function getCaptainFinancialDueByCaptainProfileIdAndOrderCreationDate(int $captainProfileId, \DateTimeInterface $orderCreationDate)
+    {
+        return $this->createQueryBuilder('captainFinancialDuesEntity')
+
+            ->andWhere('captainFinancialDuesEntity.captain = :captainProfileId')
+            ->setParameter('captainProfileId', $captainProfileId)
+
+            ->andWhere('captainFinancialDuesEntity.startDate <= :specificDate')
+            ->andWhere('captainFinancialDuesEntity.endDate >= :specificDate')
+            ->setParameter('specificDate', $orderCreationDate)
+
+            ->getQuery()
+            ->getResult();
+    }
 }

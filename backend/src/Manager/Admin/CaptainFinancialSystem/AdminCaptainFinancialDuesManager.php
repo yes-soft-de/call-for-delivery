@@ -88,4 +88,19 @@ class AdminCaptainFinancialDuesManager
 
         return $captainFinancialDue;
     }
+
+    public function getCaptainFinancialDueByCaptainProfileIdAndOrderCreationDate(int $captainProfileId, \DateTimeInterface $orderCreationDate): array
+    {
+        return $this->captainFinancialDuesRepository->getCaptainFinancialDueByCaptainProfileIdAndOrderCreationDate($captainProfileId,
+            $orderCreationDate);
+    }
+
+    public function subtractValueFromCaptainFinancialDueAmountForStore(CaptainFinancialDuesEntity $captainFinancialDuesEntity, float $value): CaptainFinancialDuesEntity
+    {
+        $captainFinancialDuesEntity->setAmountForStore($captainFinancialDuesEntity->getAmountForStore() - $value);
+
+        $this->entityManager->flush();
+
+        return $captainFinancialDuesEntity;
+    }
 }

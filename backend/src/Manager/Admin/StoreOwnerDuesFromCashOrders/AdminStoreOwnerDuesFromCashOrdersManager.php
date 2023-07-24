@@ -2,6 +2,7 @@
 
 namespace App\Manager\Admin\StoreOwnerDuesFromCashOrders;
 
+use App\Entity\StoreOwnerDuesFromCashOrdersEntity;
 use App\Repository\StoreOwnerDuesFromCashOrdersEntityRepository;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreDueSumFromCashOrderFilterByAdminRequest;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDueFromCashOrderFilterByAdminRequest;
@@ -148,5 +149,23 @@ class AdminStoreOwnerDuesFromCashOrdersManager
         }
 
         return $storeOwnerDueFromCashOrderArrayResult;
+    }
+
+    public function getUnPaidStoreOwnerDueFromCashOrderByOrderId(int $orderId): ?StoreOwnerDuesFromCashOrdersEntity
+    {
+        return $this->storeOwnerDuesFromCashOrdersEntityRepository->findOneBy(['orderId' => $orderId,
+            'flag' => OrderAmountCashConstant::ORDER_PAID_FLAG_NO]);
+    }
+
+    public function deleteStoreOwnerDueFromCashOrderById(int $id): ?StoreOwnerDuesFromCashOrdersEntity
+    {
+        $storeOwnerDueFromCashOrder = $this->storeOwnerDuesFromCashOrdersEntityRepository->findOneBy(['id' => $id]);
+
+        if ($storeOwnerDueFromCashOrder) {
+            $this->entityManager->remove($storeOwnerDueFromCashOrder);
+            $this->entityManager->flush();
+        }
+
+        return $storeOwnerDueFromCashOrder;
     }
 }
