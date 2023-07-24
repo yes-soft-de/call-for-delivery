@@ -274,7 +274,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                     onChanged: () {
                       changeDistanceIndicator();
                       if (geoController.text.isEmpty) clearDistanceFilter();
-                      getOrders(false);
+                      getOrders();
                     },
                   ),
                 ),
@@ -297,7 +297,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                               clearDistanceFilter();
                             }
                             refresh();
-                            getOrders(false);
+                            getOrders();
                           },
                           activeColor: Theme.of(context).colorScheme.primary,
                         ),
@@ -320,7 +320,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                               clearDistanceFilter();
                             }
                             refresh();
-                            getOrders(false);
+                            getOrders();
                           },
                           activeColor: Theme.of(context).colorScheme.primary,
                         ),
