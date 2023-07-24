@@ -2,6 +2,7 @@
 
 namespace App\Service\CaptainFinancialSystem\CaptainFinancialSystemCommand;
 
+use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Entity\CaptainFinancialSystemDetailEntity;
@@ -63,6 +64,10 @@ class CaptainFinancialSystemUpdateCommandService
                 $updateCaptainFinancialSystemDetailRequest->setUpdatedBy(0);
 
                 $this->updateCaptainFinancialSystemDetailCaptainFinancialSystemType($updateCaptainFinancialSystemDetailRequest);
+                // 4 create Captain Financial Due
+                 $this->captainFinancialDueHandleService->createCaptainFinancialDueForSpecificCaptain($captainFinancialSystemDetail->getCaptain()->getId(),
+                    0.0, 0.0, new \DateTime('now'), new \DateTime('+365 day'),
+                     CaptainFinancialDues::FINANCIAL_STATE_ACTIVE, CaptainFinancialDues::FINANCIAL_DUES_UNPAID);
             }
         }
 
