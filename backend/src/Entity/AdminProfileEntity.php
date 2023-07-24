@@ -49,12 +49,20 @@ class AdminProfileEntity
     #[ORM\OneToMany(mappedBy: 'updatedBy', targetEntity: ExternalDeliveryCompanyCriteriaEntity::class)]
     private $externalDeliveryCompanyCriteriaEntities;
 
+    #[ORM\OneToMany(mappedBy: 'updatedBy', targetEntity: CaptainFinancialDefaultSystemEntity::class)]
+    private $captainFinancialDefaultSystemEntities;
+
+    #[ORM\OneToMany(mappedBy: 'createdByAdmin', targetEntity: CaptainPaymentEntity::class)]
+    private $captainPaymentEntities;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
         $this->directSupportScriptEntities = new ArrayCollection();
         $this->dashboardLocalNotificationEntities = new ArrayCollection();
         $this->externalDeliveryCompanyCriteriaEntities = new ArrayCollection();
+        $this->captainFinancialDefaultSystemEntities = new ArrayCollection();
+        $this->captainPaymentEntities = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -248,6 +256,66 @@ class AdminProfileEntity
             // set the owning side to null (unless already changed)
             if ($externalDeliveryCompanyCriteriaEntity->getUpdatedBy() === $this) {
                 $externalDeliveryCompanyCriteriaEntity->setUpdatedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CaptainFinancialDefaultSystemEntity>
+     */
+    public function getCaptainFinancialDefaultSystemEntities(): Collection
+    {
+        return $this->captainFinancialDefaultSystemEntities;
+    }
+
+    public function addCaptainFinancialDefaultSystemEntity(CaptainFinancialDefaultSystemEntity $captainFinancialDefaultSystemEntity): self
+    {
+        if (!$this->captainFinancialDefaultSystemEntities->contains($captainFinancialDefaultSystemEntity)) {
+            $this->captainFinancialDefaultSystemEntities[] = $captainFinancialDefaultSystemEntity;
+            $captainFinancialDefaultSystemEntity->setUpdatedBy($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCaptainFinancialDefaultSystemEntity(CaptainFinancialDefaultSystemEntity $captainFinancialDefaultSystemEntity): self
+    {
+        if ($this->captainFinancialDefaultSystemEntities->removeElement($captainFinancialDefaultSystemEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($captainFinancialDefaultSystemEntity->getUpdatedBy() === $this) {
+                $captainFinancialDefaultSystemEntity->setUpdatedBy(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CaptainPaymentEntity>
+     */
+    public function getCaptainPaymentEntities(): Collection
+    {
+        return $this->captainPaymentEntities;
+    }
+
+    public function addCaptainPaymentEntity(CaptainPaymentEntity $captainPaymentEntity): self
+    {
+        if (!$this->captainPaymentEntities->contains($captainPaymentEntity)) {
+            $this->captainPaymentEntities[] = $captainPaymentEntity;
+            $captainPaymentEntity->setCreatedByAdmin($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCaptainPaymentEntity(CaptainPaymentEntity $captainPaymentEntity): self
+    {
+        if ($this->captainPaymentEntities->removeElement($captainPaymentEntity)) {
+            // set the owning side to null (unless already changed)
+            if ($captainPaymentEntity->getCreatedByAdmin() === $this) {
+                $captainPaymentEntity->setCreatedByAdmin(null);
             }
         }
 

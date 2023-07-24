@@ -2,19 +2,20 @@
 
 namespace App\Manager\Admin\CaptainFinancialSystem;
 
+use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
+use App\Entity\CaptainEntity;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Repository\CaptainFinancialDuesEntityRepository;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
 class AdminCaptainFinancialDuesManager
 {
-    private CaptainFinancialDuesEntityRepository $captainFinancialDuesRepository;
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(CaptainFinancialDuesEntityRepository $captainFinancialDuesRepository, EntityManagerInterface $entityManager)
+    public function __construct(
+        private CaptainFinancialDuesEntityRepository $captainFinancialDuesRepository,
+        private EntityManagerInterface $entityManager
+    )
     {
-        $this->captainFinancialDuesRepository = $captainFinancialDuesRepository;
-        $this->entityManager = $entityManager;
     }
     
     public function getCaptainFinancialDuesByCaptainId(int $captainId): array
@@ -55,5 +56,51 @@ class AdminCaptainFinancialDuesManager
        }
        
         return "ok";
-    }  
+    }
+
+    public function endCaptainFinancialDue(CaptainFinancialDuesEntity $captainFinancialDuesEntity): CaptainFinancialDuesEntity
+    {
+        $captainFinancialDuesEntity->setStatus(CaptainFinancialDues::FINANCIAL_DUES_PAID);
+        $captainFinancialDuesEntity->setEndDate((new DateTime('now'))->format('Y-m-d H:i:s'));
+        $captainFinancialDuesEntity->setState(CaptainFinancialDues::FINANCIAL_STATE_INACTIVE);
+        $captainFinancialDuesEntity->setCaptainStoppedFinancialCycle(CaptainFinancialDues::CAPTAIN_STOPPED_FINANCIAL_CYCLE_TRUE_CONST);
+
+        $this->entityManager->flush();
+
+        return $captainFinancialDuesEntity;
+    }
+
+    public function createNewCaptainFinancialDueByAdmin(CaptainEntity $captainEntity, float $amount): CaptainFinancialDuesEntity
+    {
+        $captainFinancialDue = new CaptainFinancialDuesEntity();
+
+        $captainFinancialDue->setCaptain($captainEntity);
+        $captainFinancialDue->setStartDate((new DateTime('now'))->format('Y-m-d H:i:s'));
+        $captainFinancialDue->setEndDate((new DateTime('+365 day'))->format('Y-m-d H:i:s'));
+        $captainFinancialDue->setState(CaptainFinancialDues::FINANCIAL_STATE_ACTIVE);
+        $captainFinancialDue->setStatus(CaptainFinancialDues::FINANCIAL_DUES_UNPAID);
+        $captainFinancialDue->setStatusAmountForStore(CaptainFinancialDues::FINANCIAL_DUES_UNPAID);
+        $captainFinancialDue->setAmount($amount);
+        $captainFinancialDue->setAmountForStore(0.0);
+
+        $this->entityManager->persist($captainFinancialDue);
+        $this->entityManager->flush();
+
+        return $captainFinancialDue;
+    }
+
+    public function getCaptainFinancialDueByCaptainProfileIdAndOrderCreationDate(int $captainProfileId, \DateTimeInterface $orderCreationDate): array
+    {
+        return $this->captainFinancialDuesRepository->getCaptainFinancialDueByCaptainProfileIdAndOrderCreationDate($captainProfileId,
+            $orderCreationDate);
+    }
+
+    public function subtractValueFromCaptainFinancialDueAmountForStore(CaptainFinancialDuesEntity $captainFinancialDuesEntity, float $value): CaptainFinancialDuesEntity
+    {
+        $captainFinancialDuesEntity->setAmountForStore($captainFinancialDuesEntity->getAmountForStore() - $value);
+
+        $this->entityManager->flush();
+
+        return $captainFinancialDuesEntity;
+    }
 }

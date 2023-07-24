@@ -4,17 +4,21 @@ namespace App\Service\Captain;
 
 use App\AutoMapping;
 use App\Constant\Captain\CaptainConstant;
+use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\User\UserReturnResultConstant;
 use App\Entity\CaptainEntity;
 use App\Request\Account\CompleteAccountStatusUpdateRequest;
 use App\Request\Captain\CaptainProfileUpdateRequest;
+use App\Request\CaptainFinancialSystem\CaptainFinancialSystemDetailRequest;
 use App\Request\Verification\VerificationCreateRequest;
 use App\Response\Captain\CaptainProfileResponse;
 use App\Response\Captain\CaptainStatusResponse;
 use App\Entity\UserEntity;
 use App\Request\User\UserRegisterRequest;
+use App\Response\CaptainFinancialSystem\CaptainFinancialSystemDetailResponse;
 use App\Response\User\UserRegisterResponse;
 use App\Manager\Captain\CaptainManager;
+use App\Service\CaptainFinancialSystem\CaptainFinancialSystemDetailService;
 use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\Rate\RatingService;
 use App\Request\Captain\CaptainProfileIsOnlineUpdateByCaptainRequest;
@@ -24,20 +28,26 @@ use App\Response\CaptainFinancialSystem\CaptainFinancialSystemDetailStatusRespon
 
 class CaptainService
 {
-    private AutoMapping $autoMapping;
-    private CaptainManager $captainManager;
-    private UploadFileHelperService $uploadFileHelperService;
-    private RatingService $ratingService;
-    private VerificationService $verificationService;
-
-    public function __construct(AutoMapping $autoMapping, CaptainManager $captainManager, UploadFileHelperService $uploadFileHelperService, RatingService $ratingService,
-                                VerificationService $verificationService)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private CaptainManager $captainManager,
+        private UploadFileHelperService $uploadFileHelperService,
+        private RatingService $ratingService,
+        private VerificationService $verificationService,
+        private CaptainFinancialSystemDetailService $captainFinancialSystemDetailService
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->captainManager = $captainManager;
-        $this->uploadFileHelperService = $uploadFileHelperService;
-        $this->ratingService = $ratingService;
-        $this->verificationService = $verificationService;
+    }
+
+    public function createCaptainFinancialSystemDetail(int $captainUserId): CaptainFinancialSystemDetailResponse|string
+    {
+        $request = new CaptainFinancialSystemDetailRequest();
+
+        $request->setCaptain($captainUserId);
+        $request->setCaptainFinancialSystemType(CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST);
+        $request->setCaptainFinancialSystemId(1);
+
+        return $this->captainFinancialSystemDetailService->createCaptainFinancialSystemDetail($request);
     }
 
     public function captainRegister(UserRegisterRequest $request): UserRegisterResponse
@@ -68,9 +78,20 @@ class CaptainService
 
     public function captainProfileUpdate(CaptainProfileUpdateRequest $request): CaptainProfileResponse
     {
-        $item = $this->captainManager->captainProfileUpdate($request);
+        $captainProfile = $this->captainManager->captainProfileUpdate($request);
 
-        return $this->autoMapping->map(CaptainEntity::class, CaptainProfileResponse::class, $item);
+        // if this first time of updating captain profile then subscribe with the financial default system
+        if ($captainProfile->getCompleteAccountStatus() !== CaptainConstant::COMPLETE_ACCOUNT_STATUS_SYSTEM_FINANCIAL_SELECTED) {
+            $captainFinancialSystem = $this->createCaptainFinancialSystemDetail($captainProfile->getCaptainId());
+
+            // if captain subscribed successfully with the financial system, then update completeAccountStatus
+            if ($captainFinancialSystem !== CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_CAN_NOT_CHOSE) {
+                $this->updateCaptainProfileCompleteAccountStatusByCaptainUserId($captainProfile->getCaptainId(),
+                    CaptainConstant::COMPLETE_ACCOUNT_STATUS_SYSTEM_FINANCIAL_SELECTED);
+            }
+        }
+
+        return $this->autoMapping->map(CaptainEntity::class, CaptainProfileResponse::class, $captainProfile);
     }
 
     public function getCaptainProfile($userId): CaptainProfileResponse
@@ -108,33 +129,33 @@ class CaptainService
     {
         $captainStatus = $this->captainManager->captainIsActive($captainId);
 
-        return $this->autoMapping->map('array',CaptainStatusResponse::class, $captainStatus);
-     }
+        return $this->autoMapping->map('array', CaptainStatusResponse::class, $captainStatus);
+    }
  
-    public function updateIsOnline(CaptainProfileIsOnlineUpdateByCaptainRequest $request): ?CaptainIsOnlineResponse 
+    public function updateIsOnline(CaptainProfileIsOnlineUpdateByCaptainRequest $request): ?CaptainIsOnlineResponse
     {
         $captainStatus = $this->captainManager->updateIsOnline($request);
 
-        return $this->autoMapping->map(CaptainEntity::class,CaptainIsOnlineResponse::class, $captainStatus);
-     }
+        return $this->autoMapping->map(CaptainEntity::class, CaptainIsOnlineResponse::class, $captainStatus);
+    }
  
     public function getCaptain(int $captainProfileId): ?array
     {
-       $captainResult = $this->captainManager->getCaptain($captainProfileId);
+        $captainResult = $this->captainManager->getCaptain($captainProfileId);
 
-       if (! empty($captainResult)) {
-           $captainResult['averageRating'] = $this->ratingService->getAverageRating($captainResult['captainId']);
-       }
+        if (!empty($captainResult)) {
+            $captainResult['averageRating'] = $this->ratingService->getAverageRating($captainResult['captainId']);
+        }
 
-       return $captainResult;
-     }
+        return $captainResult;
+    }
 
-     public function getCaptainFinancialSystemStatus(int $captainId): ?CaptainFinancialSystemDetailStatusResponse 
+     public function getCaptainFinancialSystemStatus(int $captainId): ?CaptainFinancialSystemDetailStatusResponse
      {
          $captainStatus = $this->captainManager->getCaptainFinancialSystemStatus($captainId);
- 
-         return $this->autoMapping->map('array',CaptainFinancialSystemDetailStatusResponse::class, $captainStatus);
-      }
+
+         return $this->autoMapping->map('array', CaptainFinancialSystemDetailStatusResponse::class, $captainStatus);
+     }
 
     public function deleteCaptainProfileByCaptainId(int $captainId): ?CaptainEntity
     {
@@ -180,5 +201,15 @@ class CaptainService
         }
 
         return $captainProfile->getId();
+    }
+
+    public function updateCaptainProfileCompleteAccountStatusByCaptainUserId(int $captainUserId, string $completeAccountStatus): CaptainEntity|string
+    {
+        $request = new CompleteAccountStatusUpdateRequest();
+
+        $request->setUserId($captainUserId);
+        $request->setCompleteAccountStatus($completeAccountStatus);
+
+        return $this->captainProfileCompleteAccountStatusUpdate($request);
     }
 }

@@ -187,6 +187,9 @@ class BaseController extends AbstractController
     const EXTERNAL_ORDER_NOT_FOUND_CONST = ["external order not found", "9678"];
     // epayment
     const E_PAYMENT_HAD_NOT_CREATED_SUCCESSFULLY_CONST = ["e-payment had not done successfully", "9700"];
+    // captain financial demand
+    const CAPTAIN_FINANCIAL_DEMAND_ALREADY_EXIST_CONST = ["captain financial demand already exist", "9751"];
+
 
     public function __construct(SerializerInterface $serializer)
     {

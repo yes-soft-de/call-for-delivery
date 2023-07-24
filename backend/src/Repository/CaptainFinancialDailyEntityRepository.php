@@ -295,4 +295,36 @@ class CaptainFinancialDailyEntityRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    public function getCaptainFinancialDailyByCaptainProfileIdAndSpecificDate(int $captainProfileId, DateTime $date, ?string $timeZone = null): array
+    {
+        $query = $this->createQueryBuilder('captainFinancialDailyEntity')
+
+            ->andWhere('captainFinancialDailyEntity.captainProfile = :captainProfileId')
+            ->setParameter('captainProfileId', $captainProfileId);
+
+        $tempQuery = $query->getQuery()->getResult();
+
+        if (count($tempQuery) > 0) {
+            return $this->filterCaptainFinancialDailyEntitiesArrayBySingleDate($tempQuery, $date, $timeZone);
+        }
+
+        return $tempQuery;
+    }
+
+    /**
+     * Filter captain financial daily array according on single date
+     */
+    public function filterCaptainFinancialDailyEntitiesArrayBySingleDate(array $captainFinancialDailyArray, DateTime $date, ?string $timeZone): array
+    {
+        $filteredCaptainFinancialDaily = [];
+
+        foreach ($captainFinancialDailyArray as $value) {
+            if ($value->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? : 'Asia/Riyadh')) == $date) {
+                $filteredCaptainFinancialDaily[] = $value;
+            }
+        }
+
+        return $filteredCaptainFinancialDaily;
+    }
 }

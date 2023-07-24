@@ -7,6 +7,7 @@ use App\Constant\Captain\CaptainConstant;
 use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\Image\ImageUseAsConstant;
 use App\Entity\CaptainEntity;
+use App\Entity\CaptainFinancialDuesEntity;
 use App\Entity\ImageEntity;
 use App\Manager\Admin\Captain\AdminCaptainManager;
 use App\Request\Admin\Account\CompleteAccountStatusUpdateByAdminRequest;
@@ -19,6 +20,7 @@ use App\Request\Image\ImageUpdateRequest;
 use App\Response\Admin\Captain\CaptainProfileGetForAdminResponse;
 use App\Response\Admin\Captain\DeleteCaptainAccountAndProfileByAdminResponse;
 use App\Service\Admin\CaptainFinancialSystem\AdminCaptainFinancialSystemDetailGetService;
+use App\Service\CaptainFinancialSystem\CaptainFinancialDuesService;
 use App\Service\Eraser\CaptainEraserService;
 use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\Image\ImageService;
@@ -27,26 +29,18 @@ use App\Service\Admin\Order\AdminOrderService;
 
 class AdminCaptainService
 {
-    private AutoMapping $autoMapping;
-    private AdminCaptainManager $adminCaptainManager;
-    private UploadFileHelperService $uploadFileHelperService;
-    private ImageService $imageService;
-    // private AdminCaptainFinancialSystemDetailService $adminCaptainFinancialSystemDetailService;
-    private AdminOrderService $adminOrderService;
-    private CaptainEraserService $captainEraserService;
-    private AdminCaptainFinancialSystemDetailGetService $adminCaptainFinancialSystemDetailGetService;
 
-    public function __construct(AutoMapping $autoMapping, AdminCaptainManager $adminCaptainManager, UploadFileHelperService $uploadFileHelperService, ImageService $imageService,
-                                AdminCaptainFinancialSystemDetailGetService $adminCaptainFinancialSystemDetailGetService, AdminOrderService $adminOrderService, CaptainEraserService $captainEraserService)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private AdminCaptainManager $adminCaptainManager,
+        private UploadFileHelperService $uploadFileHelperService,
+        private ImageService $imageService,
+        private AdminCaptainFinancialSystemDetailGetService $adminCaptainFinancialSystemDetailGetService,
+        private AdminOrderService $adminOrderService,
+        private CaptainEraserService $captainEraserService,
+        private CaptainFinancialDuesService $captainFinancialDuesService
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->adminCaptainManager = $adminCaptainManager;
-        $this->uploadFileHelperService = $uploadFileHelperService;
-        $this->imageService = $imageService;
-        // $this->adminCaptainFinancialSystemDetailService = $adminCaptainFinancialSystemDetailService;
-        $this->adminOrderService = $adminOrderService;
-        $this->captainEraserService = $captainEraserService;
-        $this->adminCaptainFinancialSystemDetailGetService = $adminCaptainFinancialSystemDetailGetService;
     }
 
     public function getCaptainsProfilesByStatusForAdmin(string $captainProfileStatus): array
@@ -110,6 +104,11 @@ class AdminCaptainService
             return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
 
         } else {
+            // If captain profile activated, then create a new captain financial cycle, if does not exist
+            if ($request->getStatus() === CaptainConstant::CAPTAIN_ACTIVE) {
+                $this->createCaptainFinancialDueByAdminIfNotAnActiveOneExist($captainProfile->getId());
+            }
+
             return $this->autoMapping->map(CaptainEntity::class, CaptainProfileGetForAdminResponse::class, $captainProfile);
         }
     }
@@ -281,5 +280,10 @@ class AdminCaptainService
     public function updateCaptainProfileCompleteAccountStatusByAdmin(CompleteAccountStatusUpdateByAdminRequest $request): CaptainEntity|string
     {
         return $this->adminCaptainManager->updateCaptainProfileCompleteAccountStatusByAdmin($request);
+    }
+
+    public function createCaptainFinancialDueByAdminIfNotAnActiveOneExist(int $captainProfileId): CaptainFinancialDuesEntity
+    {
+        return $this->captainFinancialDuesService->createCaptainFinancialDueByAdminIfNotAnActiveOneExist($captainProfileId);
     }
 }

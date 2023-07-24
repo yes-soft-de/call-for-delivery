@@ -8,12 +8,16 @@ use App\Entity\CaptainFinancialDailyEntity;
 use App\Manager\Admin\CaptainFinancialSystem\CaptainFinancialDaily\AdminCaptainFinancialDailyManager;
 use App\Request\Admin\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyIsPaidUpdateByAdminRequest;
 use App\Response\Admin\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyIsPaidUpdateByAdminResponse;
+use App\Service\DateFactory\DateFactoryService;
+use DateTime;
+use DateTimeInterface;
 
 class AdminCaptainFinancialDailyService
 {
     public function __construct(
         private AutoMapping $autoMapping,
-        private AdminCaptainFinancialDailyManager $adminCaptainFinancialDailyManager
+        private AdminCaptainFinancialDailyManager $adminCaptainFinancialDailyManager,
+        private DateFactoryService $dateFactoryService
     )
     {
     }
@@ -28,5 +32,18 @@ class AdminCaptainFinancialDailyService
 
         return $this->autoMapping->map(CaptainFinancialDailyEntity::class, CaptainFinancialDailyIsPaidUpdateByAdminResponse::class,
             $captainFinancialDaily);
+    }
+
+    public function getDateTimeOnlyFromDateTimeInterface(DateTimeInterface $dateTimeInterface): DateTime
+    {
+        return $this->dateFactoryService->getDateTimeOnlyFromDateTimeInterface($dateTimeInterface);
+    }
+
+    public function subtractingValueFromCaptainFinancialDailyAlreadyHadAmount(float $value, int $captainProfileId, DateTimeInterface $orderCreationDate): ?CaptainFinancialDailyEntity
+    {
+        $orderCreatedAt = $this->getDateTimeOnlyFromDateTimeInterface($orderCreationDate);
+
+        return $this->adminCaptainFinancialDailyManager->subtractingValueFromCaptainFinancialDailyAlreadyHadAmount($value,
+            $captainProfileId, $orderCreatedAt);
     }
 }

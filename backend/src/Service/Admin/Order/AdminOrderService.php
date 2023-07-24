@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\Admin\AdminProfileConstant;
 use App\Constant\Admin\Report\Statistics\StatisticsConstant;
 use App\Constant\AppFeature\AppFeatureResultConstant;
+use App\Constant\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyResultConstant;
 use App\Constant\ExternalDeliveryCompany\ExternalDeliveryCompanyResultConstant;
 use App\Constant\ExternalDeliveryCompany\Mrsool\MrsoolCompanyConstant;
 use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaResultConstant;
@@ -16,10 +17,12 @@ use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificat
 use App\Constant\Notification\DashboardLocalNotification\DashboardLocalNotificationTitleConstant;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Notification\NotificationTokenConstant;
+use App\Constant\Order\OrderAmountCashConstant;
 use App\Constant\Order\OrderCancelledByUserAndAtStateConstant;
 use App\Constant\Order\OrderCostTypeConstant;
 use App\Constant\Order\OrderHasPayConflictAnswersConstant;
 use App\Constant\Order\OrderIsCancelConstant;
+use App\Constant\Order\OrderPaidToProviderConstant;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
@@ -32,11 +35,13 @@ use App\Constant\StoreOwnerBranch\StoreOwnerBranch;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\CaptainEntity;
+use App\Entity\CaptainFinancialDailyEntity;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Entity\ExternallyDeliveredOrderEntity;
 use App\Entity\OrderEntity;
 use App\Entity\PackageEntity;
 use App\Entity\StoreOrderDetailsEntity;
+use App\Entity\StoreOwnerDuesFromCashOrdersEntity;
 use App\Entity\SubscriptionDetailsEntity;
 use App\Entity\SubscriptionEntity;
 use App\Manager\Admin\Order\AdminOrderManager;
@@ -79,9 +84,13 @@ use App\Response\OrderTimeLine\OrderLogsResponse;
 use App\Response\Subscription\CanCreateOrderResponse;
 use App\Service\Admin\AdminProfile\AdminProfileGetService;
 use App\Service\Admin\CaptainCashOrder\AdminCaptainCashOrderService;
+use App\Service\Admin\CaptainFinancialSystem\AdminCaptainFinancialDuesService;
+use App\Service\Admin\CaptainFinancialSystem\CaptainFinancialDaily\AdminCaptainFinancialDailyService;
 use App\Service\Admin\ChatRoom\OrderChatRoom\AdminOrderChatRoomService;
 use App\Service\Admin\OrderDistanceConflict\AdminOrderDistanceConflictService;
 use App\Service\Admin\StoreCashOrder\AdminStoreCashOrderService;
+use App\Service\Admin\StoreOwnerDuesFromCashOrders\AdminStoreOwnerDueFromCashOrderGetService;
+use App\Service\Admin\StoreOwnerDuesFromCashOrders\AdminStoreOwnerDuesFromCashOrdersService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyService;
 use App\Service\ChatRoom\OrderChatRoomService;
 use App\Service\ExternallyDeliveredOrder\ExternallyDeliveredOrderGetService;
@@ -161,7 +170,11 @@ class AdminOrderService
         private ExternallyDeliveredOrderHandleService $externallyDeliveredOrderHandleService,
         private ExternalOrderGetHandlerService $externalOrderGetHandlerService,
         private ExternallyDeliveredOrderService $externallyDeliveredOrderService,
-        private ExternallyDeliveredOrderGetService $externallyDeliveredOrderGetService
+        private ExternallyDeliveredOrderGetService $externallyDeliveredOrderGetService,
+        private AdminStoreOwnerDueFromCashOrderGetService $adminStoreOwnerDueFromCashOrderGetService,
+        private AdminCaptainFinancialDuesService $adminCaptainFinancialDuesService,
+        private AdminCaptainFinancialDailyService $adminCaptainFinancialDailyService,
+        private AdminStoreOwnerDuesFromCashOrdersService $adminStoreOwnerDuesFromCashOrdersService
     )
     {
     }
@@ -1162,8 +1175,9 @@ class AdminOrderService
                     }
 
                     // 5. Update captain financial dues (re-calculate them actually)
-                    $this->createOrUpdateCaptainFinancialDues($arrayResult[1]->getCaptainId(), $arrayResult[0]->getId(),
-                        $arrayResult[0]->getCreatedAt());
+//                    $this->createOrUpdateCaptainFinancialDues($arrayResult[1]->getCaptainId(), $arrayResult[0]->getId(),
+//                        $arrayResult[0]->getCreatedAt());
+                    ///todo need function to delete order financial amount from captain financial due
 
                     // 6. Update daily captain financial amount
                     $this->createOrUpdateCaptainFinancialDaily($arrayResult[0]->getId(), $arrayResult[1]);
@@ -1244,9 +1258,6 @@ class AdminOrderService
             if ($orderResult[0]) {
                 if ($orderResult[0]->getCaptainId()) {
                     if ($orderResult[0]->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
-                        //create or update captainFinancialDues
-                        $this->captainFinancialDuesService->captainFinancialDues($orderResult[0]->getCaptainId()->getCaptainId());
-
                         //save the price of the order in cash in case the captain does not pay the store
                         if ($this->checkCashOrderCostPaidToStoreOrNotByOrderEntity($orderResult[0])) {
                             $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($orderResult[0],
@@ -1255,6 +1266,10 @@ class AdminOrderService
                             $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($orderResult[0],
                                 OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $orderResult[0]->getOrderCost());
                         }
+
+                        // update captainFinancialDues
+                        $this->captainFinancialDuesService->captainFinancialDues($orderResult[0]->getCaptainId()->getCaptainId(),
+                            $orderResult[0]->getId(), $orderResult[0]->getCreatedAt());
 
                         // Create or update daily captain financial amount
                         $this->createOrUpdateCaptainFinancialDaily($orderResult[0]->getId());
@@ -1536,6 +1551,17 @@ class AdminOrderService
             // 3 Update subscription cost of the store's subscription
             $this->handleUpdatingStoreSubscriptionCost($orderEntity->getStoreOwner()->getId(), $orderEntity->getCreatedAt(),
                 $orderEntity->getDeliveryCost());
+
+            if ($orderEntity->getCaptainId()) {
+                // 4 Re-calculate the financial dues of the captain who has the order (if exists)
+                if ($order->getCaptainId()?->getCaptainId()) {
+                    $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(),
+                        $order->getId(), $order->getCreatedAt());
+
+                    // Re-calculate daily captain financial due
+                    $this->createOrUpdateCaptainFinancialDaily($order->getId());
+                }
+            }
         }
 
         // save log of the action on order
@@ -1563,6 +1589,12 @@ class AdminOrderService
             foreach ($ordersResult as $orderEntity) {
                 $response[] = $this->autoMapping->map(OrderEntity::class, OrderHasPayConflictAnswersUpdateByAdminResponse::class,
                     $orderEntity);
+
+                // If there is cash order amount for store, and admin confirmed there isn't, then delete it from
+                // store owner due from cash order + update captain financial due + captain financial daily
+                if ($orderEntity->getPaidToProvider() === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_YES) {
+                    $this->handleDeletingStoreOwnerDueFromCashOrder($orderEntity);
+                }
 
                 // save log of the action on order
                 $this->orderLogService->createOrderLogMessage($orderEntity, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
@@ -1695,6 +1727,17 @@ class AdminOrderService
                             // firebase notification to store
                             $this->sendFirebaseNotificationToUserByAdmin($orderEntity->getStoreOwner()->getStoreOwnerId(),
                                 $orderEntity->getId(), NotificationConstant::ORDER_NEW_DESTINATION_ADDED_BY_ADMIN_MESSAGE_CONST);
+                        }
+
+                        if ($orderEntity->getCaptainId()) {
+                            // 4 Re-calculate the financial dues of the captain who has the order (if exists)
+                            if ($order->getCaptainId()?->getCaptainId()) {
+                                $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(),
+                                    $order->getId(), $order->getCreatedAt());
+
+                                // Re-calculate daily captain financial due
+                                $this->createOrUpdateCaptainFinancialDaily($order->getId());
+                            }
                         }
                     }
 
@@ -1879,7 +1922,8 @@ class AdminOrderService
                 if ($orderDeliveryCostUpdateResult instanceof OrderEntity) {
                     // 4 Re-calculate the financial dues of the captain who has the order (if exists)
                     if ($order->getCaptainId()?->getCaptainId()) {
-                        $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
+                        $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(),
+                            $order->getId(), $order->getCreatedAt());
 
                         // Re-calculate daily captain financial due
                         $this->createOrUpdateCaptainFinancialDaily($order->getId());
@@ -2084,13 +2128,13 @@ class AdminOrderService
             OrderLogActionTypeConstant::CANCEL_ORDER_BY_ADMIN_ACTION_CONST, $details, null, null);
     }
 
-    /**
-     * Create or update captain financial dues
-     */
-    public function createOrUpdateCaptainFinancialDues(int $userId, $orderId = null, $orderCreatedAt = null): CaptainFinancialDuesEntity|int|string
-    {
-        return $this->captainFinancialDuesService->captainFinancialDues($userId, $orderId, $orderCreatedAt);
-    }
+//    /**
+//     * Create or update captain financial dues
+//     */
+//    public function createOrUpdateCaptainFinancialDues(int $userId, $orderId = null, $orderCreatedAt = null): CaptainFinancialDuesEntity|int|string
+//    {
+//        return $this->captainFinancialDuesService->captainFinancialDues($userId, $orderId, $orderCreatedAt);
+//    }
 
     /**
      * Deletes all related records to a specific cash order of a captain and update related payment
@@ -2368,10 +2412,10 @@ class AdminOrderService
         return $response;
     }
 
-    public function getLastExternallyDeliveredOrderByOrderId(int $orderId): ExternallyDeliveredOrderEntity|int
-    {
-        return $this->externallyDeliveredOrderGetService->getLastExternallyDeliveredOrderByOrderId($orderId);
-    }
+//    public function getLastExternallyDeliveredOrderByOrderId(int $orderId): ExternallyDeliveredOrderEntity|int
+//    {
+//        return $this->externallyDeliveredOrderGetService->getLastExternallyDeliveredOrderByOrderId($orderId);
+//    }
 
     /**
      * Handles the updating of the subscriptionCost field of last store subscription
@@ -2380,5 +2424,70 @@ class AdminOrderService
     {
         return $this->subscriptionService->handleUpdatingStoreSubscriptionCost($storeOwnerProfileId, $orderCreatedAt,
             $orderDeliveryCost);
+    }
+
+    public function getUnPaidStoreOwnerDueFromCashOrderByOrderId(int $orderId): int|StoreOwnerDuesFromCashOrdersEntity
+    {
+        return $this->adminStoreOwnerDueFromCashOrderGetService->getUnPaidStoreOwnerDueFromCashOrderByOrderId($orderId);
+    }
+
+    public function handleSubtractingValueFromCaptainFinancialDueAmountForStore(float $value, int $captainProfileId, \DateTimeInterface $orderCreatedAt): CaptainFinancialDuesEntity|int
+    {
+        return $this->adminCaptainFinancialDuesService->handleSubtractingValueFromCaptainFinancialDueAmountForStore($value,
+            $captainProfileId, $orderCreatedAt);
+    }
+
+    public function subtractingValueFromCaptainFinancialDailyAlreadyHadAmount(float $value, int $captainProfileId, DateTimeInterface $orderCreationDate): CaptainFinancialDailyEntity|int
+    {
+        $captainFinancialDaily = $this->adminCaptainFinancialDailyService->subtractingValueFromCaptainFinancialDailyAlreadyHadAmount($value,
+            $captainProfileId, $orderCreationDate);
+
+        if (! $captainFinancialDaily) {
+            return CaptainFinancialDailyResultConstant::CAPTAIN_FINANCIAL_DAILY_NOT_EXIST_CONST;
+        }
+
+        return $captainFinancialDaily;
+    }
+
+    public function deleteStoreOwnerDueFromCashOrderById(int $id): int|StoreOwnerDuesFromCashOrdersEntity
+    {
+        return $this->adminStoreOwnerDuesFromCashOrdersService->deleteStoreOwnerDueFromCashOrderById($id);
+    }
+
+    public function handleDeletingStoreOwnerDueFromCashOrder(OrderEntity $orderEntity): int|StoreOwnerDuesFromCashOrdersEntity
+    {
+        // start transaction commit ...
+        $this->entityManager->getConnection()->beginTransaction();
+
+        try {
+            // 1 Check if store owner due from cash order exist for specific order
+            $storeOwnerDue = $this->getUnPaidStoreOwnerDueFromCashOrderByOrderId($orderEntity->getId());
+
+            if ($storeOwnerDue === OrderAmountCashConstant::STORE_DUES_FROM_CASH_ORDER_NOT_EXIST_CONST) {
+                return OrderAmountCashConstant::STORE_DUES_FROM_CASH_ORDER_NOT_EXIST_CONST;
+            }
+
+            // 2 Update captain financial due by subtracting store owner due from cash order
+            $this->handleSubtractingValueFromCaptainFinancialDueAmountForStore($storeOwnerDue->getAmount(),
+                $orderEntity->getCaptainId()->getId(), $orderEntity->getCreatedAt());
+
+            // 3 Update captain financial daily by subtracting store owner due from cash order
+            $this->subtractingValueFromCaptainFinancialDailyAlreadyHadAmount($storeOwnerDue->getAmount(),
+                $orderEntity->getCaptainId()->getId(), $orderEntity->getCreatedAt());
+
+            // 4 Delete store owner due from cash order
+            $deletedStoreOwnerDue = $this->deleteStoreOwnerDueFromCashOrderById($storeOwnerDue->getId());
+
+            // ... commit the transaction
+            $this->entityManager->getConnection()->commit();
+
+            return $deletedStoreOwnerDue;
+
+        } catch (\Exception $e) {
+            // ... roll back the started transaction
+            $this->entityManager->getConnection()->rollBack();
+
+            throw $e;
+        }
     }
 }

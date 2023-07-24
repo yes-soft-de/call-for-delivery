@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Repository\CaptainFinancialDuesEntityRepository;
 use App\Request\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueCreateRequest;
+use App\Request\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueStoppedFinancialCycleUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Request\CaptainFinancialSystem\CreateCaptainFinancialDuesRequest;
 use App\Manager\Captain\CaptainManager;
@@ -106,10 +107,10 @@ class CaptainFinancialDuesManager
 //        return $this->captainFinancialDuesRepository->getLatestCaptainFinancialDuesByUserId($userId);
 //    }
 
-    public function getCaptainFinancialDuesByUserIDAndOrderId(int $userId, int $orderId, string $orderCreatedAt): ?CaptainFinancialDuesEntity
-    {  
-        return $this->captainFinancialDuesRepository->getCaptainFinancialDuesByUserIDAndOrderId($userId, $orderId, $orderCreatedAt);
-    } 
+//    public function getCaptainFinancialDuesByUserIDAndOrderId(int $userId, int $orderId, string $orderCreatedAt): ?CaptainFinancialDuesEntity
+//    {
+//        return $this->captainFinancialDuesRepository->getCaptainFinancialDuesByUserIDAndOrderId($userId, $orderId, $orderCreatedAt);
+//    }
 
     public function createCaptainFinancialDuesByOptionalDates(CreateCaptainFinancialDuesByOptionalDatesRequest $request): CaptainFinancialDuesEntity
     {
@@ -161,9 +162,6 @@ class CaptainFinancialDuesManager
         return $financialDues;
     }
 
-    /**
-     * Get the start and end dates of the current active financial cycle of the captain
-     */
     public function getCurrentAndActiveCaptainFinancialDueByCaptainProfileId(int $captainProfileId): array
     {
         return $this->captainFinancialDuesRepository->findBy(['captain' => $captainProfileId, 'state' => CaptainFinancialDues::FINANCIAL_STATE_ACTIVE],
@@ -180,6 +178,20 @@ class CaptainFinancialDuesManager
 
         $this->entityManager->persist($captainFinancialDuesEntity);
         $this->entityManager->flush();
+
+        return $captainFinancialDuesEntity;
+    }
+
+    public function updateCaptainFinancialDueEndDateAndStateAndCaptainStoppedFinancialCycle(CaptainFinancialDueStoppedFinancialCycleUpdateRequest $request): ?CaptainFinancialDuesEntity
+    {
+        $captainFinancialDuesEntity = $this->captainFinancialDuesRepository->findOneBy(['id' => $request->getId()]);
+
+        if ($captainFinancialDuesEntity) {
+            $captainFinancialDuesEntity = $this->autoMapping->mapToObject(CaptainFinancialDueStoppedFinancialCycleUpdateRequest::class,
+                CaptainFinancialDuesEntity::class, $request, $captainFinancialDuesEntity);
+
+            $this->entityManager->flush();
+        }
 
         return $captainFinancialDuesEntity;
     }

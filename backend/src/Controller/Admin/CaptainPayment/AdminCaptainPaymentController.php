@@ -3,6 +3,7 @@
 namespace App\Controller\Admin\CaptainPayment;
 
 use App\AutoMapping;
+use App\Constant\Admin\AdminProfileConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyResultConstant;
 use App\Constant\CaptainPayment\PaymentToCaptain\CaptainPaymentResultConstant;
 use App\Controller\BaseController;
@@ -65,6 +66,10 @@ class AdminCaptainPaymentController extends BaseController
      *          @OA\Property(type="number", property="amount"),
      *          @OA\Property(type="integer", property="captain"),
      *          @OA\Property(type="string", property="note"),
+     *          @OA\Property(type="integer", property="paymentGetaway"),
+     *          @OA\Property(type="integer", property="paymentFor"),
+     *          @OA\Property(type="integer", property="paymentType"),
+     *          @OA\Property(type="integer", property="captainFinancialDuesId")
      *      )
      * )
      *
@@ -104,6 +109,8 @@ class AdminCaptainPaymentController extends BaseController
 
         $request = $this->autoMapping->map(stdClass::class, AdminCaptainPaymentCreateRequest::class, (object)$data);
 
+        $request->setCreatedByAdmin($this->getUserId());
+
         $violations = $this->validator->validate($request);
 
         if (\count($violations) > 0) {
@@ -114,8 +121,11 @@ class AdminCaptainPaymentController extends BaseController
 
         $result = $this->adminCaptainPaymentService->createCaptainPayment($request);
         
-        if($result === CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST) {
+        if ($result === CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_PROFILE_NOT_EXIST);
+
+        } elseif ($result === AdminProfileConstant::ADMIN_PROFILE_NOT_EXIST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ADMIN_PROFILE_NOT_EXIST);
         }
 
         return $this->response($result, self::CREATE);
@@ -515,6 +525,57 @@ class AdminCaptainPaymentController extends BaseController
         $request = $this->autoMapping->map(stdClass::class, CaptainPaymentFilterByAdminRequest::class, (object)$data);
 
         $result = $this->adminCaptainPaymentService->filterCaptainPaymentByAdmin($request);
+
+        return $this->response($result, self::FETCH);
+    }
+
+    /**
+     * admin: filter captain payments by admin
+     * @Route("filtercaptainpaymentbyadmin", name="filterCaptainPaymentByAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Captain Payment")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="update payment to captain by admin request",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="fromDate"),
+     *          @OA\Property(type="string", property="toDate"),
+     *          @OA\Property(type="integer", property="captainProfileId"),
+     *          @OA\Property(type="string", property="customizedTimezone")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=204,
+     *      description="Returns updated payment info",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="object", property="Data",
+     *              ref=@Model(type="App\Response\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentFilterByAdminResponse")
+     *      )
+     *   )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterCaptainPaymentByAdminV2(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, CaptainPaymentFilterByAdminRequest::class, (object)$data);
+
+        $result = $this->adminCaptainPaymentService->filterCaptainPaymentByAdminV2($request);
 
         return $this->response($result, self::FETCH);
     }

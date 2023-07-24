@@ -3,6 +3,7 @@
 namespace App\Manager\StoreOwnerDuesFromCashOrders;
 
 use App\AutoMapping;
+use App\Constant\Order\OrderTypeConstant;
 use App\Entity\StoreOwnerDuesFromCashOrdersEntity;
 use App\Repository\StoreOwnerDuesFromCashOrdersEntityRepository;
 use App\Request\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersRequest;
@@ -59,5 +60,11 @@ class StoreOwnerDuesFromCashOrdersManager
     public function getUnPaidStoreOwnerDuesFromCashOrderSumByStoreSubscriptionId(int $subscriptionId): array
     {
         return $this->storeOwnerDuesFromCashOrdersEntityRepository->getUnPaidStoreOwnerDuesFromCashOrderSumByStoreSubscriptionId($subscriptionId);
+    }
+
+    public function getUnPaidStoreOwnerDuesFromCashOrdersByOrderId(int $orderId): ?StoreOwnerDuesFromCashOrdersEntity
+    {
+        return $this->storeOwnerDuesFromCashOrdersEntityRepository->findOneBy(["orderId" => $orderId,
+            'flag' => OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO]);
     }
 }

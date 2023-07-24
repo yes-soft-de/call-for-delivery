@@ -33,7 +33,8 @@ class CaptainFinancialDailyService
         private CaptainFinancialDailyManager $captainFinancialDailyManager,
         private CaptainFinancialSystemThreeDailyService $captainFinancialSystemThreeDailyService,
         private CaptainFinancialSystemOneDailyService $captainFinancialSystemOneDailyService,
-        private CaptainFinancialSystemTwoDailyService $captainFinancialSystemTwoDailyService
+        private CaptainFinancialSystemTwoDailyService $captainFinancialSystemTwoDailyService,
+        private CaptainFinancialDefaultSystemDailyService $captainFinancialDefaultSystemDailyService
     )
     {
     }
@@ -80,6 +81,11 @@ class CaptainFinancialDailyService
             // Captain financial system is the third one
             return $this->captainFinancialSystemThreeDailyService->getDailyCaptainFinancialAmount($captainProfileId,
                 $fromDate, $toDate);
+
+        } elseif ($captainFinancialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST) {
+            // Captain financial system is the default one
+            return $this->captainFinancialDefaultSystemDailyService->getDailyCaptainFinancialAmount($captainFinancialSystemDetail,
+                $captainProfileId, $fromDate, $toDate);
         }
 
         return $response;

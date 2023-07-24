@@ -339,7 +339,11 @@ App\Request\Admin\CaptainPayment\AdminCaptainPaymentCreateRequest:
             - NotBlank: ~
         captainFinancialDuesId:
             - NotBlank: ~
-        status:
+        paymentGetaway:
+            - NotBlank: ~
+        paymentType:
+            - NotBlank: ~
+        paymentFor:
             - NotBlank: ~
 
 App\Request\Admin\SupplierProfile\SupplierProfileStatusUpdateByAdminRequest:
@@ -1031,4 +1035,9 @@ App\Request\Admin\StoreOwnerPreference\StoreOwnerPreferenceCreateByAdminRequest:
 App\Request\Admin\StoreOwnerPreference\StoreOwnerPreferenceUpdateByAdminRequest:
     properties:
         id:
+            - NotBlank: ~
+
+App\Request\CaptainFinancialDemand\CaptainFinancialDemandCreateRequest:
+    properties:
+        captain:
             - NotBlank: ~

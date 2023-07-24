@@ -205,4 +205,30 @@ class DateFactoryService
 
         return false;
     }
+
+    public function getStartAndEndDateTimeOfToday(string $timeZone = null): array
+    {
+        $today = new DateTime('today');
+
+        $startOfToday = clone $today;
+        $startOfToday->setTimezone(new \DateTimeZone($timeZone ? : 'Asia/Riyadh'));
+
+        $endOfToday = clone $today;
+        $endOfToday->setTime(23, 59, 59);
+        $endOfToday->setTimezone(new \DateTimeZone($timeZone ? : 'Asia/Riyadh'));
+
+        return [$startOfToday, $endOfToday];
+    }
+
+    public function getDateTimeOfToday(string $timeZone = null): DateTime
+    {
+        return (new DateTime('today'))->setTimezone(new \DateTimeZone($timeZone ? : 'Asia/Riyadh'));
+    }
+
+    public function getDateTimeOnlyFromDateTimeInterface(DateTimeInterface $dateTimeInterface): DateTime
+    {
+        $dateTime = DateTime::createFromInterface($dateTimeInterface);
+
+        return new DateTime($dateTime->format('Y-m-d 00:00:00'));
+    }
 }

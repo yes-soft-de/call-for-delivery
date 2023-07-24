@@ -61,4 +61,16 @@ class CaptainFinancialDailyGetService
 
         return $response;
     }
+
+    public function getCaptainFinancialDailyByCaptainProfileIdAndSpecificDate(int $captainProfileId, DateTime $date, ?string $timeZone = null): CaptainFinancialDailyEntity|int
+    {
+        $captainFinancialDaily = $this->captainFinancialDailyManager->getCaptainFinancialDailyByCaptainProfileIdAndSpecificDate($captainProfileId,
+            $date, $timeZone);
+
+        if (count($captainFinancialDaily) === 0) {
+            return CaptainFinancialDailyResultConstant::CAPTAIN_FINANCIAL_DAILY_NOT_EXIST_CONST;
+        }
+
+        return $captainFinancialDaily[0];
+    }
 }

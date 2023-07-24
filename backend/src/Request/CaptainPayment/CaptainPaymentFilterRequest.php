@@ -4,69 +4,55 @@ namespace App\Request\CaptainPayment;
 
 class CaptainPaymentFilterRequest
 {
-    private string $userId;
-
-    private string|null $fromDate;
-
-    private string|null $toDate;
+    private int $userId;
 
     /**
-     * Get the value of fromDate
-     */ 
-    public function getFromDate()
+     * @var string|null
+     */
+    private $fromDate;
+
+    /**
+     * @var string|null
+     */
+    private $toDate;
+
+    /**
+     * @var null|string
+     */
+    private $customizedTimezone;
+
+    public function getFromDate(): ?string
     {
         return $this->fromDate;
     }
 
-    /**
-     * Set the value of fromDate
-     *
-     * @return  self
-     */ 
     public function setFromDate(string|null $fromDate)
     {
         $this->fromDate = $fromDate;
-
-        return $this;
     }
 
-    /**
-     * Get the value of toDate
-     */ 
-    public function getToDate()
+    public function getToDate(): ?string
     {
         return $this->toDate;
     }
 
-    /**
-     * Set the value of toDate
-     *
-     * @return  self
-     */ 
-    public function setToDate(string|null $toDate)
+    public function setToDate(string|null $toDate): void
     {
         $this->toDate = $toDate;
-
-        return $this;
     }
 
-    /**
-     * Get the value of userId
-     */ 
-    public function getUserId()
+    public function getUserId(): int
     {
         return $this->userId;
     }
 
-    /**
-     * Set the value of userId
-     *
-     * @return  self
-     */ 
-    public function setUserId($userId)
+    public function setUserId(int $userId): void
     {
         $this->userId = $userId;
+    }
 
-        return $this;
+    public function getCustomizedTimezone(): ?string
+    {
+        return $this->customizedTimezone;
     }
 }

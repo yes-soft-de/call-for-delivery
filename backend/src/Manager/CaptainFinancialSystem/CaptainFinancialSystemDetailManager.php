@@ -5,6 +5,7 @@ namespace App\Manager\CaptainFinancialSystem;
 use App\AutoMapping;
 use App\Entity\CaptainFinancialSystemDetailEntity;
 use App\Repository\CaptainFinancialSystemDetailEntityRepository;
+use App\Request\CaptainFinancialSystem\CaptainFinancialSystemDetail\CaptainFinancialSystemDetailTypeAndIdUpdateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Request\CaptainFinancialSystem\CaptainFinancialSystemDetailRequest;
 use App\Manager\Captain\CaptainManager;
@@ -99,4 +100,20 @@ class CaptainFinancialSystemDetailManager
 //
 //        return $financialSystemDetail;
 //    }
+
+    public function updateCaptainFinancialSystemDetailCaptainFinancialSystemType(CaptainFinancialSystemDetailTypeAndIdUpdateRequest $request)
+    {
+        $captainFinancialSystemDetail = $this->captainFinancialSystemDetailEntityRepository->findOneBy(['id' => $request->getId()]);
+
+        if ($captainFinancialSystemDetail) {
+            $captainFinancialSystemDetail = $this->autoMapping->mapToObject(CaptainFinancialSystemDetailTypeAndIdUpdateRequest::class,
+                CaptainFinancialSystemDetailEntity::class, $request, $captainFinancialSystemDetail);
+
+            $captainFinancialSystemDetail->setStatus(true);
+
+            $this->entityManager->flush();
+        }
+
+        return $captainFinancialSystemDetail;
+    }
 }

@@ -3,6 +3,8 @@
 namespace App\Service\Admin\StoreOwnerDuesFromCashOrders;
 
 use App\AutoMapping;
+use App\Constant\StoreOwnerDueFromCashOrder\StoreOwnerDueFromCashOrderStoreAmountConstant;
+use App\Entity\StoreOwnerDuesFromCashOrdersEntity;
 use App\Manager\Admin\StoreOwnerDuesFromCashOrders\AdminStoreOwnerDuesFromCashOrdersManager;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreDueSumFromCashOrderFilterByAdminRequest;
 use App\Request\Admin\StoreOwnerDuesFromCashOrders\StoreOwnerDueFromCashOrderFilterByAdminRequest;
@@ -271,5 +273,16 @@ class AdminStoreOwnerDuesFromCashOrdersService
         }
 
         return 0.0;
+    }
+
+    public function deleteStoreOwnerDueFromCashOrderById(int $id): int|StoreOwnerDuesFromCashOrdersEntity
+    {
+        $storeOwnerDue = $this->adminStoreOwnerDuesFromCashOrdersManager->deleteStoreOwnerDueFromCashOrderById($id);
+
+        if (! $storeOwnerDue) {
+            return StoreOwnerDueFromCashOrderStoreAmountConstant::STORE_DUE_FROM_CASH_ORDER_NOT_EXIST_CONST;
+        }
+
+        return $storeOwnerDue;
     }
 }

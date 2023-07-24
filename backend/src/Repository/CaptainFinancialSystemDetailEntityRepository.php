@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\CaptainFinancialDefaultSystemEntity;
 use App\Entity\CaptainFinancialSystemDetailEntity;
 use App\Entity\CaptainFinancialSystemAccordingToCountOfHoursEntity;
 use App\Entity\CaptainFinancialSystemAccordingOnOrderEntity;
@@ -62,23 +63,35 @@ class CaptainFinancialSystemDetailEntityRepository extends ServiceEntityReposito
         $query->setParameter('captainId', $captainId);
         $item = $query->addSelect('captainFinancialSystemDetailEntity.captainFinancialSystemType')->getQuery()->getOneOrNullResult();
        
-        if($item) {
+        if ($item) {
             if ($item['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
-            
                 $query->addSelect('systemOne.countHours', 'systemOne.compensationForEveryOrder', 'systemOne.salary');
                 
                 $query->leftJoin(CaptainFinancialSystemAccordingToCountOfHoursEntity::class, 'systemOne', Join::WITH, 'systemOne.id = captainFinancialSystemDetailEntity.captainFinancialSystemId');
 
                 return $query->getQuery()->getOneOrNullResult();
-            }
 
-            if ($item['captainFinancialSystemType']  === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
-
+            } elseif ($item['captainFinancialSystemType']  === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
                 $query->addSelect('systemTwo.countOrdersInMonth', 'systemTwo.salary', 'systemTwo.monthCompensation', 'systemTwo.bounceMaxCountOrdersInMonth', 'systemTwo.bounceMinCountOrdersInMonth');
                 
                 $query->leftJoin(CaptainFinancialSystemAccordingToCountOfOrdersEntity::class, 'systemTwo', Join::WITH, 'systemTwo.id = captainFinancialSystemDetailEntity.captainFinancialSystemId');
                       
-                return $query->getQuery()->getOneOrNullResult();     
+                return $query->getQuery()->getOneOrNullResult();
+
+            } elseif ($item['captainFinancialSystemType']  === CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST) {
+                $query->addSelect('captainFinancialDefaultSystemEntity.openingOrderCost', 'captainFinancialDefaultSystemEntity.status',
+                    'captainFinancialDefaultSystemEntity.firstSliceLimit', 'captainFinancialDefaultSystemEntity.firstSliceCost', 'captainFinancialDefaultSystemEntity.secondSliceFromLimit',
+                    'captainFinancialDefaultSystemEntity.secondSliceToLimit', 'captainFinancialDefaultSystemEntity.secondSliceOneKilometerCost', 'captainFinancialDefaultSystemEntity.thirdSliceFromLimit',
+                    'captainFinancialDefaultSystemEntity.thirdSliceToLimit', 'captainFinancialDefaultSystemEntity.thirdSliceOneKilometerCost');
+
+                $query->leftJoin(
+                    CaptainFinancialDefaultSystemEntity::class,
+                    'captainFinancialDefaultSystemEntity',
+                    Join::WITH,
+                    'captainFinancialDefaultSystemEntity.id = captainFinancialSystemDetailEntity.captainFinancialSystemId'
+                );
+
+                return $query->getQuery()->getOneOrNullResult();
             }
         }
 
@@ -192,6 +205,21 @@ class CaptainFinancialSystemDetailEntityRepository extends ServiceEntityReposito
                     'systemTwo',
                     Join::WITH,
                     'systemTwo.id = captainFinancialSystemDetailEntity.captainFinancialSystemId'
+                );
+
+                return $query->getQuery()->getOneOrNullResult();
+
+            } elseif ($tempQuery['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST) {
+                $query->addSelect('captainFinancialDefaultSystemEntity.openingOrderCost', 'captainFinancialDefaultSystemEntity.status', 'captainFinancialDefaultSystemEntity.firstSliceLimit',
+                    'captainFinancialDefaultSystemEntity.firstSliceCost', 'captainFinancialDefaultSystemEntity.secondSliceFromLimit', 'captainFinancialDefaultSystemEntity.secondSliceToLimit',
+                    'captainFinancialDefaultSystemEntity.secondSliceOneKilometerCost', 'captainFinancialDefaultSystemEntity.thirdSliceFromLimit', 'captainFinancialDefaultSystemEntity.thirdSliceToLimit',
+                    'captainFinancialDefaultSystemEntity.thirdSliceOneKilometerCost');
+
+                $query->leftJoin(
+                    CaptainFinancialDefaultSystemEntity::class,
+                    'captainFinancialDefaultSystemEntity',
+                    Join::WITH,
+                    'captainFinancialDefaultSystemEntity.id = captainFinancialSystemDetailEntity.captainFinancialSystemId'
                 );
 
                 return $query->getQuery()->getOneOrNullResult();

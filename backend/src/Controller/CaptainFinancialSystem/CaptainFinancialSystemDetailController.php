@@ -114,8 +114,9 @@ class CaptainFinancialSystemDetailController extends BaseController
 
     /**
      * captain: get Balance Detail.
-     * @Route("captainbalancedetail", name="getBalanceDetailForCaptain", methods={"GET"})
+     * @Route("captainbalancedetail/{timeZone}", name="getBalanceDetailForCaptain", methods={"GET"})
      * @IsGranted("ROLE_CAPTAIN")
+     * @param string|null $timeZone
      * @return JsonResponse
      *
      * @OA\Tag(name="Captain Financial System Detail")
@@ -159,6 +160,13 @@ class CaptainFinancialSystemDetailController extends BaseController
      *                              @OA\Property(type="float", property="sumPayments"),
      *                              @OA\Property(type="string", property="totalIsMain")
      *                          )
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code"),
+     *                          @OA\Property(type="string", property="msg"),
+     *                          @OA\Property(type="object", property="Data",
+     *                              ref=@Model(type="App\Response\CaptainFinancialSystem\CaptainFinancialDefaultSystem\CaptainFinancialDefaultSystemBalanceDetailsGetResponse")
+     *                          )
      *                   )
      *              }
      *      )
@@ -177,9 +185,9 @@ class CaptainFinancialSystemDetailController extends BaseController
      *
      * @Security(name="Bearer")
      */
-    public function getBalanceDetailForCaptain(): JsonResponse
+    public function getBalanceDetailForCaptain(?string $timeZone = null): JsonResponse
     {
-        $result = $this->captainFinancialSystemDetailService->getBalanceDetailForCaptain($this->getUserId());
+        $result = $this->captainFinancialSystemDetailService->getBalanceDetailForCaptain($this->getUserId(), $timeZone);
 
         if ($result === CaptainFinancialSystem::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM);

@@ -3,9 +3,11 @@
 namespace App\Service\Admin\CaptainPayment;
 
 use App\AutoMapping;
+use App\Constant\Admin\AdminProfileConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyIsPaidConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyResultConstant;
 use App\Constant\CaptainPayment\PaymentToCaptain\CaptainPaymentResultConstant;
+use App\Entity\AdminProfileEntity;
 use App\Entity\CaptainFinancialDailyEntity;
 use App\Entity\CaptainPaymentEntity;
 use App\Manager\Admin\CaptainPayment\AdminCaptainPaymentManager;
@@ -23,7 +25,9 @@ use App\Constant\Payment\PaymentConstant;
 use App\Response\Admin\CaptainPayment\AdminCaptainPaymentDeleteResponse;
 use App\Response\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentAmountAndNoteUpdateByAdminResponse;
 use App\Response\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentFilterByAdminResponse;
+use App\Response\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentFilterByAdminV2Response;
 use App\Response\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentForCaptainFinancialDailyCreateByAdminResponse;
+use App\Service\Admin\AdminProfile\AdminProfileGetService;
 use App\Service\Admin\CaptainFinancialSystem\AdminCaptainFinancialDuesService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Entity\CaptainFinancialDuesEntity;
@@ -39,16 +43,27 @@ class AdminCaptainPaymentService
         private AdminCaptainPaymentManager $adminCaptainPaymentManager,
         private AdminCaptainFinancialDuesService $adminCaptainFinancialDuesService,
         private AdminCaptainFinancialDailyGetService $adminCaptainFinancialDailyGetService,
-        private AdminCaptainFinancialDailyService $adminCaptainFinancialDailyService
+        private AdminCaptainFinancialDailyService $adminCaptainFinancialDailyService,
+        private AdminProfileGetService $adminProfileGetService
     )
     {
     }
 
     public function createCaptainPayment(AdminCaptainPaymentCreateRequest $request): AdminCaptainPaymentCreateResponse|string
     {
+        // first get and set admin
+        $adminProfileEntity = $this->getAdminProfileEntityByAdminUserId($request->getCreatedByAdmin());
+
+        if ($adminProfileEntity === AdminProfileConstant::ADMIN_PROFILE_NOT_EXIST) {
+            return AdminProfileConstant::ADMIN_PROFILE_NOT_EXIST;
+        }
+
+        $request->setCreatedByAdmin($adminProfileEntity);
+
+        // continue creating the payment
         $payment = $this->adminCaptainPaymentManager->createCaptainPayment($request);
        
-        if($payment === CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST) {
+        if ($payment === CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST) {
             return $payment;
         }
 
@@ -264,5 +279,34 @@ class AdminCaptainPaymentService
         }
 
         return $response;
+    }
+
+    /**
+     * epic 13
+     */
+    public function filterCaptainPaymentByAdminV2(CaptainPaymentFilterByAdminRequest $request): array
+    {
+        $response = [];
+        $response['payments'] = [];
+        $response['paymentsTotalAmount'] = 0.0;
+
+        $captainsPayments = $this->adminCaptainPaymentManager->filterCaptainPaymentByAdminV2($request);
+
+        if (count($captainsPayments) > 0) {
+            foreach ($captainsPayments as $captainPayment) {
+                $response['paymentsTotalAmount'] += $captainPayment->getAmount();
+                $response['payments'][] = $this->autoMapping->map(CaptainPaymentEntity::class, CaptainPaymentFilterByAdminV2Response::class, $captainPayment);
+            }
+        }
+
+        return $response;
+    }
+
+    /**
+     * Get admin profile entity if exists
+     */
+    public function getAdminProfileEntityByAdminUserId(int $adminUserId): AdminProfileEntity|string
+    {
+        return $this->adminProfileGetService->getAdminProfileEntityByAdminUserId($adminUserId);
     }
 }

@@ -2,25 +2,15 @@
 
 namespace App\Response\Admin\CaptainPayment;
 
+use DateTime;
+
 class AdminCaptainPaymentCreateResponse
 {
-    /**
-     * @var int
-     */
-    public $id;
+    public int $id;
 
-    /**
-     * @var float
-     */
-    public $amount;
+    public float $amount;
 
-    /**
-     * @var array
-     */
-    public $createdAt;
+    public DateTime $createdAt;
 
-    /**
-     * @var string|null
-     */
-    public $note;
+    public ?string $note;
 }

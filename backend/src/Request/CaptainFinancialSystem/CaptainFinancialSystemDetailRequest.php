@@ -31,4 +31,14 @@ class CaptainFinancialSystemDetailRequest
 
         return $this;
     }
+
+    public function setCaptainFinancialSystemType(int $captainFinancialSystemType): void
+    {
+        $this->captainFinancialSystemType = $captainFinancialSystemType;
+    }
+
+    public function setCaptainFinancialSystemId(int $captainFinancialSystemId): void
+    {
+        $this->captainFinancialSystemId = $captainFinancialSystemId;
+    }
 }

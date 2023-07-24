@@ -15,4 +15,6 @@ final class CaptainFinancialDues
     const FINANCIAL_STATE_ACTIVE = 1;
 
     const FINANCIAL_NOT_FOUND = 4;
+
+    const CAPTAIN_STOPPED_FINANCIAL_CYCLE_TRUE_CONST = true;
 }

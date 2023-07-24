@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Constant\CaptainPayment\PaymentToCaptain\CaptainPaymentConstant;
 use App\Entity\CaptainPaymentEntity;
 use App\Entity\CaptainEntity;
 use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentFilterByAdminRequest;
@@ -201,5 +202,92 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
         }
 
         return $query->getQuery()->getResult();
+    }
+
+    /**
+     * epic 13
+     */
+    public function filterCaptainPaymentByAdminV2(CaptainPaymentFilterByAdminRequest $request): array
+    {
+        $query = $this->createQueryBuilder('captainPaymentEntity')
+
+            ->orderBy('captainPaymentEntity.id', 'DESC');
+
+        if ($request->getCaptainProfileId()) {
+            $query->andWhere('captainPaymentEntity.captain = :captainProfileId')
+                ->setParameter('captainProfileId', $request->getCaptainProfileId());
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
+    /**
+     * epic 13
+     */
+    public function filterCaptainPaymentCaptain(CaptainPaymentFilterRequest $request): array
+    {
+        $query = $this->createQueryBuilder('captainPaymentEntity')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = captainPaymentEntity.captain'
+            )
+
+            ->andWhere('captainEntity.captainId = :captainUserId')
+            ->setParameter('captainUserId', $request->getUserId())
+
+            // this condition for preventing previous payments (before Epic 13) from returning
+            ->andWhere('captainPaymentEntity.paymentGetaway != :notSpecifiedPaymentGetaway')
+            ->setParameter('notSpecifiedPaymentGetaway', CaptainPaymentConstant::PAYMENT_GETAWAY_NOT_SPECIFIED_CONST)
+
+            ->orderBy('captainPaymentEntity.id', 'DESC');
+
+        if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
+            || ($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")
+            || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $tempQuery = $query->getQuery()->getResult();
+
+            return $this->filterCaptainPaymentEntitiesByOptionalStringDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
+        }
+
+        return $query->getQuery()->getResult();
+    }
+
+    public function filterCaptainPaymentEntitiesByOptionalStringDates(array $tempOrders, ?string $fromDate, ?string $toDate, ?string $timeZone): array
+    {
+        $filteredOrders = [];
+
+        if (count($tempOrders) > 0) {
+            if (($fromDate != null || $fromDate != "") && ($toDate === null || $toDate === "")) {
+                foreach ($tempOrders as $value) {
+                    if ($value->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) >=
+                        new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) {
+                        $filteredOrders[] = $value;
+                    }
+                }
+
+            } elseif (($fromDate === null || $fromDate === "") && ($toDate != null || $toDate != "")) {
+                foreach ($tempOrders as $value) {
+                    if ($value->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) <=
+                        new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59'))) {
+                        $filteredOrders[] = $value;
+                    }
+                }
+
+            } elseif (($fromDate != null || $fromDate != "") && ($toDate != null || $toDate != "")) {
+                foreach ($tempOrders as $value) {
+                    if (($value->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) >=
+                            new \DateTime((new \DateTime($fromDate))->format('Y-m-d 00:00:00'))) &&
+                        ($value->getCreatedAt()->setTimeZone(new \DateTimeZone($timeZone ? : 'UTC')) <=
+                            new \DateTime((new \DateTime($toDate))->format('Y-m-d 23:59:59')))) {
+                        $filteredOrders[] = $value;
+                    }
+                }
+            }
+        }
+
+        return $filteredOrders;
     }
 }

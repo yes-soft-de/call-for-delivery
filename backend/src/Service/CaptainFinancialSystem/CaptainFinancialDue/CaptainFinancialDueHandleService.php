@@ -9,7 +9,9 @@ use App\Entity\CaptainEntity;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Manager\CaptainFinancialSystem\CaptainFinancialDuesManager;
 use App\Request\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueCreateRequest;
+use App\Request\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueStoppedFinancialCycleUpdateRequest;
 use App\Service\Captain\CaptainGetService;
+use DateTime;
 
 /**
  * Responsible for handling captain financial due, like checking if exists and creating new one
@@ -96,5 +98,39 @@ class CaptainFinancialDueHandleService
         }
 
         return [$captainFinancialDueResult->getStartDate(), $captainFinancialDueResult->getEndDate()];
+    }
+
+    public function updateCaptainFinancialDueEndDateAndStateAndCaptainStoppedFinancialCycle(CaptainFinancialDueStoppedFinancialCycleUpdateRequest $request): ?CaptainFinancialDuesEntity
+    {
+        return $this->captainFinancialDuesManager->updateCaptainFinancialDueEndDateAndStateAndCaptainStoppedFinancialCycle($request);
+    }
+
+    /**
+     * Stops last active captain financial cycle
+     */
+    public function stopLastActiveCaptainFinancialDueByCaptainProfileId(int $captainProfileId): int|CaptainFinancialDuesEntity
+    {
+        // 1 Get last active captain financial due
+        $captainFinancialDue = $this->getCurrentAndActiveCaptainFinancialDueByCaptain($captainProfileId);
+
+        if ($captainFinancialDue === CaptainFinancialDueResultConstant::CAPTAIN_FINANCIAL_DUE_NOT_EXIST_CONST) {
+            return CaptainFinancialDueResultConstant::CAPTAIN_FINANCIAL_DUE_NOT_EXIST_CONST;
+        }
+
+        // 2 Stop the captain financial due (financial cycle)
+        $updateRequest = new CaptainFinancialDueStoppedFinancialCycleUpdateRequest();
+
+        $updateRequest->setId($captainFinancialDue->getId());
+        $updateRequest->setState(CaptainFinancialDues::FINANCIAL_STATE_INACTIVE);
+        $updateRequest->setEndDate(new DateTime('now'));
+        $updateRequest->setCaptainStoppedFinancialCycle(CaptainFinancialDues::CAPTAIN_STOPPED_FINANCIAL_CYCLE_TRUE_CONST);
+
+        $updatedCaptainFinancialDue = $this->updateCaptainFinancialDueEndDateAndStateAndCaptainStoppedFinancialCycle($updateRequest);
+
+        if (! $updatedCaptainFinancialDue) {
+            return CaptainFinancialDueResultConstant::CAPTAIN_FINANCIAL_DUE_NOT_EXIST_CONST;
+        }
+
+        return $updatedCaptainFinancialDue;
     }
 }
