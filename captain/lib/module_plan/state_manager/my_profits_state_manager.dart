@@ -51,9 +51,9 @@ class MyProfitsStateManager {
             .show(screenState.context);
       } else {
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.yourCurrentPlanStoppedSuccessfully)
-            .show(screenState.context);
+          title: S.current.warnning,
+          message: S.current.requestedSuccessfully,
+        ).show(screenState.context);
       }
     });
   }

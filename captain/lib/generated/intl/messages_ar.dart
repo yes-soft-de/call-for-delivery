@@ -987,6 +987,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "requestedAlreadyYouWillReceiveYourDuesSoon":
             MessageLookupByLibrary.simpleMessage(
                 "لقد تم الطلب مسبقا, ستستلم مستحقاتك قريبا"),
+        "requestedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تمت المطالبة بنجاح"),
         "resendCode": MessageLookupByLibrary.simpleMessage("اعادة الارسال"),
         "resendCodeSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم إرسال الرمز بنجاح"),

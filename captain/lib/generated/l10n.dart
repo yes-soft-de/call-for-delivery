@@ -8140,6 +8140,16 @@ class S {
     );
   }
 
+  /// `requested successfully`
+  String get requestedSuccessfully {
+    return Intl.message(
+      'requested successfully',
+      name: 'requestedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Over paid`
   String get financeOverPaid {
     return Intl.message(

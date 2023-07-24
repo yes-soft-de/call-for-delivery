@@ -865,5 +865,6 @@
     "Riyal": "ريال",
     "captainNotExist": "الكابتن غير موجود",
     "ThereIsNoCurrentActiveFinancialCycle": "لا يوجد دورة مالية حالية وفعالة",
+    "requestedSuccessfully": "تمت المطالبة بنجاح",
     "financeOverPaid": "دفعة زائدة"
 }

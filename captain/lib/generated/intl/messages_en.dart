@@ -997,6 +997,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "requestedAlreadyYouWillReceiveYourDuesSoon":
             MessageLookupByLibrary.simpleMessage(
                 "Requested Already You Will Receive Your Dues Soon"),
+        "requestedSuccessfully":
+            MessageLookupByLibrary.simpleMessage("requested successfully"),
         "resendCode": MessageLookupByLibrary.simpleMessage("Resend Code"),
         "resendCodeSuccessfully": MessageLookupByLibrary.simpleMessage(
             "The code has been successfully sent"),
