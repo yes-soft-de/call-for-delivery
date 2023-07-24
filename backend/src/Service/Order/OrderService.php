@@ -652,15 +652,15 @@ class OrderService
             }
 
             if ($order->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
-                // update captain financial due
-                $this->captainFinancialDuesService->captainFinancialDues($request->getCaptainId()->getCaptainId(),
-                    $order->getId(), $order->getCreatedAt());
-
                 //Save the price of the order in cash in case the captain does not pay the store
                 if ($this->checkCashOrderCostPaidToStoreOrNotByOrderEntity($order)) {
                     $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($order, OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $order->getOrderCost());
                     $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($order, OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $order->getOrderCost());
                 }
+
+                // update captain financial due
+                $this->captainFinancialDuesService->captainFinancialDues($request->getCaptainId()->getCaptainId(),
+                    $order->getId(), $order->getCreatedAt());
 
                 // Create or update captain financial daily amount
                 $this->createOrUpdateCaptainFinancialDaily($order->getId());
