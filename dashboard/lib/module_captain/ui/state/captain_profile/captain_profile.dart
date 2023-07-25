@@ -1,11 +1,11 @@
 import 'package:c4d/hive/util/argument_hive_helper.dart';
-import 'package:c4d/module_captain/captains_routes.dart';
 import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/ui/widget/captain_control_widget.dart';
 import 'package:c4d/module_captain/ui/widget/captain_profile/captain_finance_info.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/module_payments/payments_routes.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/state.dart';
@@ -456,8 +456,10 @@ class CaptainProfileLoadedState extends States {
         CaptainControlWidget(
           icon: Icons.balance,
           onPressed: () {
-            Navigator.of(context).pushNamed(CaptainsRoutes.CAPTAIN_BALANCE,
-                arguments: screenState.captainId);
+            Navigator.of(context).pushNamed(
+              PaymentsRoutes.CAPTAIN_PAYMENT,
+              arguments: [model?.captainId, model?.name],
+            );
           },
           title: S.of(context).accountBalance,
         ),
