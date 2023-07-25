@@ -247,6 +247,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainDaily": MessageLookupByLibrary.simpleMessage("يوميات الكباتن"),
         "captainDistance":
             MessageLookupByLibrary.simpleMessage("تقديرات الكابتن"),
+        "captainDues": MessageLookupByLibrary.simpleMessage("مستحقات الكباتن"),
         "captainFinance":
             MessageLookupByLibrary.simpleMessage("باقات عمل الكابتن"),
         "captainFinanceDaily":
@@ -921,6 +922,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("حساب غير مكتمل"),
         "notImplementedYet":
             MessageLookupByLibrary.simpleMessage("لم يتم تفعيل هذه الميزة بعد"),
+        "notPaid": MessageLookupByLibrary.simpleMessage("غير مدفوع"),
         "notReceivedCash":
             MessageLookupByLibrary.simpleMessage("لم يتم الاستلام"),
         "notSubscription": MessageLookupByLibrary.simpleMessage(
@@ -1127,6 +1129,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentMethodHint": MessageLookupByLibrary.simpleMessage("اختر"),
         "paymentPortalHint": MessageLookupByLibrary.simpleMessage(
             "المبلغ النهائي في بوابة الدفع شاملة للقيمة المضافة %15"),
+        "paymentRequests": MessageLookupByLibrary.simpleMessage("طلبات الدفع"),
         "paymentResume": MessageLookupByLibrary.simpleMessage("استكمال الدفع"),
         "paymentSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تسجيل دفعة بنجاح"),

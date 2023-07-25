@@ -10726,6 +10726,36 @@ class S {
     );
   }
 
+  /// `capitan dues`
+  String get captainDues {
+    return Intl.message(
+      'capitan dues',
+      name: 'captainDues',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment Requests`
+  String get paymentRequests {
+    return Intl.message(
+      'Payment Requests',
+      name: 'paymentRequests',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not Paid`
+  String get notPaid {
+    return Intl.message(
+      'Not Paid',
+      name: 'notPaid',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

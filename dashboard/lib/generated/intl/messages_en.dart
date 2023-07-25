@@ -250,6 +250,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainDaily": MessageLookupByLibrary.simpleMessage("captain daily"),
         "captainDistance":
             MessageLookupByLibrary.simpleMessage("Captain Distance"),
+        "captainDues": MessageLookupByLibrary.simpleMessage("capitan dues"),
         "captainFinance":
             MessageLookupByLibrary.simpleMessage("Captain Finance"),
         "captainFinanceDaily":
@@ -933,6 +934,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Not completed account"),
         "notImplementedYet":
             MessageLookupByLibrary.simpleMessage("Not implemented yet"),
+        "notPaid": MessageLookupByLibrary.simpleMessage("Not Paid"),
         "notReceivedCash":
             MessageLookupByLibrary.simpleMessage("Cash not Received"),
         "notSubscription": MessageLookupByLibrary.simpleMessage(
@@ -1141,6 +1143,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentMethodHint": MessageLookupByLibrary.simpleMessage("Choose"),
         "paymentPortalHint": MessageLookupByLibrary.simpleMessage(
             "All prices in payments portal are included with 15% vat"),
+        "paymentRequests":
+            MessageLookupByLibrary.simpleMessage("Payment Requests"),
         "paymentResume": MessageLookupByLibrary.simpleMessage("Payment Resume"),
         "paymentSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Payment created successfully"),

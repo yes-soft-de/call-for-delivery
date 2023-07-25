@@ -319,7 +319,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 children: [
                   customListTile(
                       getIt<CaptainsModule>().captainFinanceDailyScreen,
-                      S.current.captainDaily,
+                      S.current.captainDues,
                       FontAwesomeIcons.moneyBills,
                       true),
                   customListTile(
