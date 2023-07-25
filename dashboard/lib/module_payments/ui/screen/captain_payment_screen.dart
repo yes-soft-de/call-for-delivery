@@ -4,7 +4,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/request/captain_daily_finance_request.dart';
-import 'package:c4d/module_payments/state_manager/captain_daily_finance_state_manager.dart';
+import 'package:c4d/module_payments/state_manager/captain_payment_state_manager.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
@@ -12,18 +12,18 @@ import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 
 @injectable
-class DailyPaymentsScreen extends StatefulWidget {
-  final DailyBalanceStateManager _stateManager;
+class CaptainPaymentScreen extends StatefulWidget {
+  final CaptainPaymentStateManager _stateManager;
 
-  const DailyPaymentsScreen(
+  const CaptainPaymentScreen(
     this._stateManager,
   );
 
   @override
-  State<StatefulWidget> createState() => DailyPaymentsScreenState();
+  State<StatefulWidget> createState() => CaptainPaymentScreenState();
 }
 
-class DailyPaymentsScreenState extends State<DailyPaymentsScreen> {
+class CaptainPaymentScreenState extends State<CaptainPaymentScreen> {
   late StreamSubscription _streamSubscription;
   late States currentState;
 
@@ -33,7 +33,7 @@ class DailyPaymentsScreenState extends State<DailyPaymentsScreen> {
     }
   }
 
-  DailyBalanceStateManager get manager => widget._stateManager;
+  CaptainPaymentStateManager get manager => widget._stateManager;
   var today = DateTime.now();
   @override
   void initState() {

@@ -2,14 +2,14 @@ import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_captain/request/captain_daily_finance_request.dart';
-import 'package:c4d/module_payments/state_manager/captain_daily_finance_state_manager.dart';
+import 'package:c4d/module_payments/state_manager/captain_payment_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
 class AllAmountCaptainsScreen extends StatefulWidget {
-  final DailyBalanceStateManager _stateManager;
+  final CaptainPaymentStateManager _stateManager;
 
   const AllAmountCaptainsScreen(
     this._stateManager,
@@ -29,7 +29,7 @@ class AllAmountCaptainsScreenState extends State<AllAmountCaptainsScreen> {
     }
   }
 
-  DailyBalanceStateManager get manager => widget._stateManager;
+  CaptainPaymentStateManager get manager => widget._stateManager;
   var today = DateTime.now();
   @override
   void initState() {

@@ -14,7 +14,7 @@ class CaptainDuesWidget extends StatelessWidget {
     return InkWell(
       onTap: () {
         Navigator.of(context).pushNamed(
-          PaymentsRoutes.CAPTAIN_DAILY_PAYMENTS,
+          PaymentsRoutes.CAPTAIN_PAYMENT,
           arguments: [model?.captainProfileId, model?.captainName],
         );
       },

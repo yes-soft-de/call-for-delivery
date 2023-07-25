@@ -3,17 +3,17 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_payments/model/captain_daily_finance.dart';
 import 'package:c4d/module_payments/payments_routes.dart';
 import 'package:c4d/module_payments/request/captain_daily_payment_request.dart';
-import 'package:c4d/module_payments/ui/screen/daily_payments_screen.dart';
+import 'package:c4d/module_payments/ui/screen/captain_payment_screen.dart';
 import 'package:c4d/module_payments/ui/widget/daily_payments_widget.dart';
 import 'package:flutter/material.dart';
 
-class DailyPaymentsLoaded extends States {
-  final DailyPaymentsScreenState screenState;
+class CaptainPaymentStateLoaded extends States {
+  final CaptainPaymentScreenState screenState;
   final List<CaptainDailyFinanceModel> model;
   final String? error;
   final bool empty;
 
-  DailyPaymentsLoaded(this.screenState, this.model,
+  CaptainPaymentStateLoaded(this.screenState, this.model,
       {this.error, this.empty = false})
       : super(screenState);
 
