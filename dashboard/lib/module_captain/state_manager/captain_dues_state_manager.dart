@@ -1,7 +1,7 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_captain/model/captain_dues_model.dart';
-import 'package:c4d/module_captain/request/captain_daily_finance_request.dart';
+import 'package:c4d/module_captain/request/captain_payment_request.dart';
 import 'package:c4d/module_captain/service/captains_service.dart';
 import 'package:c4d/module_captain/ui/screen/captain_dues_screen.dart';
 import 'package:c4d/module_captain/ui/state/captain_dues_loaded_state.dart';
@@ -32,7 +32,7 @@ class CaptainDuesStateManager {
   //   });
   // }
   void getCaptainsFinanceDailyNew(
-      CaptainDuesScreenState screenState, CaptainDailyFinanceRequest request) {
+      CaptainDuesScreenState screenState, CaptainPaymentRequest request) {
     stateSubject.add(LoadingState(screenState));
     _planService.getCaptainFinanceDailyNew(request).then((value) {
       if (value.hasError) {

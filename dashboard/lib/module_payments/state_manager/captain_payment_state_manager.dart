@@ -3,7 +3,7 @@ import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_captain/request/captain_daily_finance_request.dart';
+import 'package:c4d/module_captain/request/captain_payment_request.dart';
 import 'package:c4d/module_payments/model/captain_all_amount_model.dart';
 import 'package:c4d/module_payments/model/captain_daily_finance.dart';
 import 'package:c4d/module_payments/request/captain_daily_payment_request.dart';
@@ -27,8 +27,8 @@ class CaptainPaymentStateManager {
   CaptainPaymentStateManager(
     this._profileService,
   );
-  void getAccountBalance(CaptainPaymentScreenState screenState,
-      CaptainDailyFinanceRequest request) {
+  void getAccountBalance(
+      CaptainPaymentScreenState screenState, CaptainPaymentRequest request) {
     _stateSubject.add(LoadingState(screenState));
     _profileService.getCaptainFinanceDaily(request).then((value) {
       if (value.hasError) {
@@ -99,8 +99,8 @@ class CaptainPaymentStateManager {
     });
   }
 
-  void getAllAmount(AllAmountCaptainsScreenState screenState,
-      CaptainDailyFinanceRequest request) {
+  void getAllAmount(
+      AllAmountCaptainsScreenState screenState, CaptainPaymentRequest request) {
     _stateSubject.add(LoadingState(screenState));
     _profileService.getAllAmountCaptains(request).then((value) {
       if (value.hasError) {

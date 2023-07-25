@@ -1,6 +1,6 @@
 import 'package:c4d/module_captain/request/assign_order_to_captain_request.dart';
 import 'package:c4d/module_captain/request/captain_activities_filter_request.dart';
-import 'package:c4d/module_captain/request/captain_daily_finance_request.dart';
+import 'package:c4d/module_captain/request/captain_payment_request.dart';
 import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/request/captain_offer_request.dart';
 import 'package:c4d/module_captain/request/enable_captain.dart';
@@ -247,7 +247,7 @@ class CaptainsRepository {
   }
 
   Future<CaptainFinanceDailyNewResponse?> getCaptainFinanceDailyNew(
-      CaptainDailyFinanceRequest request) async {
+      CaptainPaymentRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
         Urls.NEW_GET_CAPTAIN_FINANCE_DAILY, await request.toJson(),

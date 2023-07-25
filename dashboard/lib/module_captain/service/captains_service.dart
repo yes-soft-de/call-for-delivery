@@ -11,7 +11,7 @@ import 'package:c4d/module_captain/model/captain_dues_model.dart';
 import 'package:c4d/module_captain/model/porfile_model.dart';
 import 'package:c4d/module_captain/request/assign_order_to_captain_request.dart';
 import 'package:c4d/module_captain/request/captain_activities_filter_request.dart';
-import 'package:c4d/module_captain/request/captain_daily_finance_request.dart';
+import 'package:c4d/module_captain/request/captain_payment_request.dart';
 import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/request/captain_offer_request.dart';
 import 'package:c4d/module_captain/request/enable_captain.dart';
@@ -376,7 +376,7 @@ class CaptainsService {
   }
 
   Future<DataModel> getCaptainFinanceDailyNew(
-      CaptainDailyFinanceRequest request) async {
+      CaptainPaymentRequest request) async {
     CaptainFinanceDailyNewResponse? actionResponse =
         await _manager.getCaptainFinanceDailyNew(request);
     if (actionResponse == null) {

@@ -1,5 +1,5 @@
 import 'package:c4d/abstracts/response/action_response.dart';
-import 'package:c4d/module_captain/request/captain_daily_finance_request.dart';
+import 'package:c4d/module_captain/request/captain_payment_request.dart';
 import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_payments/repository/payments_repository.dart';
 import 'package:c4d/module_payments/request/captain_daily_payment_request.dart';
@@ -44,7 +44,7 @@ class PaymentsManager {
           CaptainDailyPaymentsRequest request) =>
       _paymentsRepository.payADailyFinance(request);
   Future<CaptainDailyFinanceResponse?> getCaptainDailyFinance(
-          CaptainDailyFinanceRequest request) =>
+          CaptainPaymentRequest request) =>
       _paymentsRepository.getCaptainDailyFinance(request);
   /* ---------------------------------- CAPTAIN FINANCE --------------------------------------- */
   /* GET */
@@ -100,6 +100,6 @@ class PaymentsManager {
   Future<ActionResponse?> deletePaymentFROMCaptain(String id) =>
       _paymentsRepository.deletePaymentFROMCaptain(id);
   Future<CaptainAllFinanceResponse?> getAllAmountCaptain(
-          CaptainDailyFinanceRequest request) =>
+          CaptainPaymentRequest request) =>
       _paymentsRepository.getAllAmountCaptain(request);
 }

@@ -1,7 +1,7 @@
 import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
-import 'package:c4d/module_captain/request/captain_daily_finance_request.dart';
+import 'package:c4d/module_captain/request/captain_payment_request.dart';
 import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
 import 'package:c4d/module_payments/request/captain_daily_payment_request.dart';
@@ -125,7 +125,7 @@ class PaymentsRepository {
   /* ---------------------------------- CAPTAIN DAILY PAYMENTS FINANCE --------------------------------------- */
 
   Future<CaptainDailyFinanceResponse?> getCaptainDailyFinance(
-      CaptainDailyFinanceRequest request) async {
+      CaptainPaymentRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
         Urls.GET_CAPTAIN_DAILY_FINANCE, await request.toJson(),
@@ -302,7 +302,7 @@ class PaymentsRepository {
   }
 
   Future<CaptainAllFinanceResponse?> getAllAmountCaptain(
-      CaptainDailyFinanceRequest request) async {
+      CaptainPaymentRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
         Urls.NEW_GET_CAPTAIN_FINANCE_ALL_AMOUNT, await request.toJson(),

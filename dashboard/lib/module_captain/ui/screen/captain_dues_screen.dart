@@ -2,7 +2,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
-import 'package:c4d/module_captain/request/captain_daily_finance_request.dart';
+import 'package:c4d/module_captain/request/captain_payment_request.dart';
 import 'package:c4d/module_captain/state_manager/captain_dues_state_manager.dart';
 import 'package:c4d/utils/components/costom_search.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -23,7 +23,7 @@ class CaptainDuesScreenState extends State<CaptainDuesScreen> {
   States? _currentState;
   int currentIndex = 0;
   String? search;
-  late CaptainDailyFinanceRequest filter;
+  late CaptainPaymentRequest filter;
   @override
   void initState() {
     _currentState = LoadingState(this);
@@ -32,7 +32,7 @@ class CaptainDuesScreenState extends State<CaptainDuesScreen> {
 
       if (mounted) setState(() {});
     });
-    filter = CaptainDailyFinanceRequest(isPaid: 176);
+    filter = CaptainPaymentRequest();
     widget._manager.getCaptainsFinanceDailyNew(this, filter);
     super.initState();
   }
@@ -85,7 +85,7 @@ class CaptainDuesScreenState extends State<CaptainDuesScreen> {
                         splashFactory: NoSplash.splashFactory,
                         onTap: () {
                           currentIndex = 0;
-                          filter = CaptainDailyFinanceRequest(isPaid: 176);
+                          filter = CaptainPaymentRequest();
                           refresh();
                           widget._manager
                               .getCaptainsFinanceDailyNew(this, filter);
@@ -129,7 +129,7 @@ class CaptainDuesScreenState extends State<CaptainDuesScreen> {
                         splashFactory: NoSplash.splashFactory,
                         onTap: () {
                           currentIndex = 1;
-                          filter = CaptainDailyFinanceRequest(isPaid: null);
+                          filter = CaptainPaymentRequest();
                           refresh();
                           widget._manager
                               .getCaptainsFinanceDailyNew(this, filter);
