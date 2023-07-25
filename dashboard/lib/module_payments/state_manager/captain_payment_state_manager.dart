@@ -11,7 +11,7 @@ import 'package:c4d/module_payments/service/payments_service.dart';
 import 'package:c4d/module_payments/ui/screen/all_amount_captains_screen.dart';
 import 'package:c4d/module_payments/ui/screen/captain_payment_screen.dart';
 import 'package:c4d/module_payments/ui/state/all_amount_captains_state.dart';
-import 'package:c4d/module_payments/ui/state/daily_payments_loaded_state.dart';
+import 'package:c4d/module_payments/ui/state/captain_payment_state_loaded.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';

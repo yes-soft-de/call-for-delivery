@@ -34,13 +34,11 @@ class CaptainPaymentScreenState extends State<CaptainPaymentScreen> {
   }
 
   CaptainPaymentStateManager get manager => widget._stateManager;
-  var today = DateTime.now();
+
   @override
   void initState() {
     currentState = LoadingState(this);
-    paymentsFilter = CaptainDailyFinanceRequest(
-        fromDate: DateTime(today.year, today.month, today.day, 0),
-        toDate: DateTime.now());
+    paymentsFilter = CaptainDailyFinanceRequest();
     _streamSubscription = widget._stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
