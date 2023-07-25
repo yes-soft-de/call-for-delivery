@@ -425,7 +425,7 @@ class NearbyOrdersCard extends StatelessWidget {
                       color: Colors.white,
                     ),
                   ),
-                  visible: (orderIsMain && containsSubs) || (!orderIsMain),
+                  visible: (orderIsMain && containsSubs) ,
                   child: Icon(
                     Icons.arrow_circle_left_outlined,
                     color: Theme.of(context).textTheme.button?.color,
