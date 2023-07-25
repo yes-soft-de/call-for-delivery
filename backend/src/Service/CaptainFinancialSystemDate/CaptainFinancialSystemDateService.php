@@ -45,14 +45,15 @@ class CaptainFinancialSystemDateService
     }
 
     //Fetch the start and end date of the financial cycle
-    public function getStartAndEndDateOfFinancialCycle() {
-        $date = new datetime('now');
-        $fromDate = $date->format('y-m-d');
-        // We set the financial cycle for a year just to not let the end date empty
-        $toDate = $date->modify('+365 day')->format('y-m-d');
+//    public function getStartAndEndDateOfFinancialCycle() {
+//        $date = new datetime('now');
+//        $fromDate = $date->format('y-m-d');
+//        // We set the financial cycle for a year just to not let the end date empty
+//        $toDate = $date->modify('+365 day')->format('y-m-d');
+//
+//        return ["fromDate" =>  new datetime($fromDate), "toDate" =>  new datetime($toDate)];
+//    }
 
-        return ["fromDate" =>  new datetime($fromDate), "toDate" =>  new datetime($toDate)];
-    }
     //Returns the number of days between two dates 
     public function subtractTwoDates(DateTime $firstDate, DateTime $lastDate) : int
     {
