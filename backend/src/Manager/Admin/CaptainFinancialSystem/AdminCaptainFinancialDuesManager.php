@@ -61,7 +61,7 @@ class AdminCaptainFinancialDuesManager
     public function endCaptainFinancialDue(CaptainFinancialDuesEntity $captainFinancialDuesEntity): CaptainFinancialDuesEntity
     {
         $captainFinancialDuesEntity->setStatus(CaptainFinancialDues::FINANCIAL_DUES_PAID);
-        $captainFinancialDuesEntity->setEndDate((new DateTime('now'))->format('Y-m-d H:i:s'));
+        $captainFinancialDuesEntity->setEndDate((new DateTime('now')));
         $captainFinancialDuesEntity->setState(CaptainFinancialDues::FINANCIAL_STATE_INACTIVE);
         $captainFinancialDuesEntity->setCaptainStoppedFinancialCycle(CaptainFinancialDues::CAPTAIN_STOPPED_FINANCIAL_CYCLE_TRUE_CONST);
 
@@ -75,8 +75,8 @@ class AdminCaptainFinancialDuesManager
         $captainFinancialDue = new CaptainFinancialDuesEntity();
 
         $captainFinancialDue->setCaptain($captainEntity);
-        $captainFinancialDue->setStartDate((new DateTime('now'))->format('Y-m-d H:i:s'));
-        $captainFinancialDue->setEndDate((new DateTime('+365 day'))->format('Y-m-d H:i:s'));
+        $captainFinancialDue->setStartDate((new DateTime('now')));
+        $captainFinancialDue->setEndDate((new DateTime('+365 day')));
         $captainFinancialDue->setState(CaptainFinancialDues::FINANCIAL_STATE_ACTIVE);
         $captainFinancialDue->setStatus(CaptainFinancialDues::FINANCIAL_DUES_UNPAID);
         $captainFinancialDue->setStatusAmountForStore(CaptainFinancialDues::FINANCIAL_DUES_UNPAID);
