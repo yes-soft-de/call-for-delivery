@@ -2,7 +2,7 @@ import 'package:c4d/module_captain/captains_routes.dart';
 import 'package:c4d/module_captain/ui/screen/captain_account_balance_screen.dart';
 import 'package:c4d/module_captain/ui/screen/captain_activity_details_screen.dart';
 import 'package:c4d/module_captain/ui/screen/captain_activity_model.dart';
-import 'package:c4d/module_captain/ui/screen/captain_finance_daily_screen.dart';
+import 'package:c4d/module_captain/ui/screen/captain_dues_screen.dart';
 import 'package:c4d/module_captain/ui/screen/captain_financial_details_screen.dart';
 import 'package:c4d/module_captain/ui/screen/captain_financial_dues_screen.dart';
 import 'package:c4d/module_captain/ui/screen/captain_needs_support_screen.dart';
@@ -35,23 +35,24 @@ class CaptainsModule extends YesModule {
   final CaptinRatingDetailsScreen captainsRatingsDetailsScreen;
   final CaptainsActivityScreen captainsActivityScreen;
   final CaptainActivityDetailsScreen captainsActivityDetailsScreen;
-  final CaptainFinanceDailyScreen captainFinanceDailyScreen;
+  final CaptainDuesScreen captainDuesScreen;
   CaptainsModule(
-      this.captainOffersScreen,
-      this.inActiveCaptains,
-      this.captainsScreen,
-      this.captainProfileScreen,
-      this.supportScreen,
-      this.captainAccountBalanceScreen,
-      this.captainFinancialDuesDetailsScreen,
-      this.captainFinancialDuesScreen,
-      this.planScreen,
-      this.captainAssignOrderScreen,
-      this.captainsRatingsScreen,
-      this.captainsRatingsDetailsScreen,
-      this.captainsActivityScreen,
-      this.captainsActivityDetailsScreen,
-      this.captainFinanceDailyScreen) {
+    this.captainOffersScreen,
+    this.inActiveCaptains,
+    this.captainsScreen,
+    this.captainProfileScreen,
+    this.supportScreen,
+    this.captainAccountBalanceScreen,
+    this.captainFinancialDuesDetailsScreen,
+    this.captainFinancialDuesScreen,
+    this.planScreen,
+    this.captainAssignOrderScreen,
+    this.captainsRatingsScreen,
+    this.captainsRatingsDetailsScreen,
+    this.captainsActivityScreen,
+    this.captainsActivityDetailsScreen,
+    this.captainDuesScreen,
+  ) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
@@ -62,7 +63,7 @@ class CaptainsModule extends YesModule {
       CaptainsRoutes.IN_ACTIVE_CAPTAINS: (context) => inActiveCaptains,
       CaptainsRoutes.CAPTAIN_SUPPORT: (context) => supportScreen,
       CaptainsRoutes.CAPTAIN_BALANCE: (context) => captainAccountBalanceScreen,
-      CaptainsRoutes.CAPTAIN_DUES: (context) => captainFinancialDuesScreen,
+      // CaptainsRoutes.CAPTAIN_DUES: (context) => captainFinancialDuesScreen,
       CaptainsRoutes.CAPTAIN_DUES_DETAILS: (context) =>
           captainFinancialDuesDetailsScreen,
       CaptainsRoutes.CAPTAIN_PLAN: (context) => planScreen,
@@ -73,8 +74,7 @@ class CaptainsModule extends YesModule {
       CaptainsRoutes.CAPTAIN_ACTIVITY: (context) => captainsActivityScreen,
       CaptainsRoutes.CAPTAIN_ACTIVITY_DETAILS: (context) =>
           captainsActivityDetailsScreen,
-      CaptainsRoutes.CAPTAIN_FINANCE_DAILY: (context) =>
-          captainFinanceDailyScreen,
+      CaptainsRoutes.CAPTAIN_DUES: (context) => captainDuesScreen,
     };
   }
 }

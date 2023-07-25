@@ -1,7 +1,7 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/module_captain/response/new_get_finance_daily_response.dart';
 
-class NewCaptainFinanceDailyModel extends DataModel {
+class CaptainDuesModel extends DataModel {
   int? id;
   int? captainProfileId;
   String? captainName;
@@ -9,17 +9,17 @@ class NewCaptainFinanceDailyModel extends DataModel {
   num? amountSum;
   num? toBePaid;
 
-  NewCaptainFinanceDailyModel(this.id, this.captainName, this.captainProfileId,
+  CaptainDuesModel(this.id, this.captainName, this.captainProfileId,
       this.image, this.amountSum, this.toBePaid);
 
-  List<NewCaptainFinanceDailyModel> _captainfinanceDaily = [];
+  List<CaptainDuesModel> _captainfinanceDaily = [];
 
-  NewCaptainFinanceDailyModel.withData(
+  CaptainDuesModel.withData(
       CaptainFinanceDailyNewResponse response) {
     var data = response.data;
 
     data?.forEach((element) {
-      _captainfinanceDaily.add(NewCaptainFinanceDailyModel(
+      _captainfinanceDaily.add(CaptainDuesModel(
           element.id,
           element.captainName,
           element.captainProfileId,
@@ -28,5 +28,5 @@ class NewCaptainFinanceDailyModel extends DataModel {
           element.toBePaid));
     });
   }
-  List<NewCaptainFinanceDailyModel> get data => _captainfinanceDaily;
+  List<CaptainDuesModel> get data => _captainfinanceDaily;
 }

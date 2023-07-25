@@ -7,7 +7,7 @@ import 'package:c4d/module_captain/model/captain_need_support.dart';
 import 'package:c4d/module_captain/model/captain_offer_model.dart';
 import 'package:c4d/module_captain/model/captains_order_model.dart';
 import 'package:c4d/module_captain/model/inActiveModel.dart';
-import 'package:c4d/module_captain/model/new_captain_finance_daily_model.dart';
+import 'package:c4d/module_captain/model/captain_dues_model.dart';
 import 'package:c4d/module_captain/model/porfile_model.dart';
 import 'package:c4d/module_captain/request/assign_order_to_captain_request.dart';
 import 'package:c4d/module_captain/request/captain_activities_filter_request.dart';
@@ -389,6 +389,6 @@ class CaptainsService {
     if (actionResponse.data == null) {
       return DataModel.empty();
     }
-    return NewCaptainFinanceDailyModel.withData(actionResponse);
+    return CaptainDuesModel.withData(actionResponse);
   }
 }

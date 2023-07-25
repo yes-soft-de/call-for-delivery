@@ -5,7 +5,7 @@ class CaptainsRoutes {
   static const CAPTAIN_PROFILE = '/captain_profile';
   static const CAPTAIN_SUPPORT = '/captains_support';
   static const CAPTAIN_BALANCE = '/captains_balance';
-  static const CAPTAIN_DUES = '/captains_dues';
+  // static const CAPTAIN_DUES = '/captains_dues';
   static const CAPTAIN_DUES_DETAILS = '/captains_dues_details';
   static const CAPTAIN_PLAN = '/captain_plan';
   static const ASSIGN_TO_CAPTAIN = '/assign_to_captain';
@@ -13,5 +13,5 @@ class CaptainsRoutes {
   static const CAPTAIN_RATING_DETAILS = '/captain_ratings_details';
   static const CAPTAIN_ACTIVITY = '/captain_activity';
   static const CAPTAIN_ACTIVITY_DETAILS = '/captain_activity_details';
-  static const CAPTAIN_FINANCE_DAILY = '/captain_finance_daily';
+  static const CAPTAIN_DUES = '/captains_dues';
 }

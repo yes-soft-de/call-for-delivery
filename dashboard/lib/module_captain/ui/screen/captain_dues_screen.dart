@@ -3,23 +3,23 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_captain/request/captain_daily_finance_request.dart';
-import 'package:c4d/module_captain/state_manager/captain_finance_daily_state_manager.dart';
+import 'package:c4d/module_captain/state_manager/captain_dues_state_manager.dart';
 import 'package:c4d/utils/components/costom_search.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class CaptainFinanceDailyScreen extends StatefulWidget {
-  final CaptainFinanceDailyStateManager _manager;
+class CaptainDuesScreen extends StatefulWidget {
+  final CaptainDuesStateManager _manager;
 
-  const CaptainFinanceDailyScreen(this._manager);
+  const CaptainDuesScreen(this._manager);
 
   @override
-  State<StatefulWidget> createState() => CaptainFinanceDailyScreenState();
+  State<StatefulWidget> createState() => CaptainDuesScreenState();
 }
 
-class CaptainFinanceDailyScreenState extends State<CaptainFinanceDailyScreen> {
+class CaptainDuesScreenState extends State<CaptainDuesScreen> {
   States? _currentState;
   int currentIndex = 0;
   String? search;
@@ -37,7 +37,7 @@ class CaptainFinanceDailyScreenState extends State<CaptainFinanceDailyScreen> {
     super.initState();
   }
 
-  CaptainFinanceDailyStateManager get manager => widget._manager;
+  CaptainDuesStateManager get manager => widget._manager;
   void refresh() {
     if (mounted) setState(() {});
   }
