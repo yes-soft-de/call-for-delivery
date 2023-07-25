@@ -182,7 +182,7 @@ class CaptainFinancialDefaultSystemGetBalanceService
             $fromDate = $captainFinancialDue->getStartDate();
 
             $sinceLastPaymentOrders = $this->getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
-                ($fromDate->modify('+1 day'))->format('Y-m-d H:i:s'), (new \DateTime('now'))->format('Y-m-d H:i:s'));
+                $fromDate->format('Y-m-d H:i:s'), (new \DateTime('now'))->format('Y-m-d H:i:s'));
 
             $sinceLastPaymentOrdersCount = count($sinceLastPaymentOrders);
 

@@ -22,10 +22,10 @@ class CaptainFinancialDuesEntity
     #[ORM\Column(type: 'float')]
     private $amount;
 
-    #[ORM\Column(type: 'date')]
+    #[ORM\Column(type: 'datetime')]
     private $startDate;
 
-    #[ORM\Column(type: 'date')]
+    #[ORM\Column(type: 'datetime')]
     private $endDate;
     
     #[ORM\Column(type: 'float', nullable: true)]
@@ -96,26 +96,26 @@ class CaptainFinancialDuesEntity
         return $this;
     }
 
-    public function getStartDate()
+    public function getStartDate(): ?\DateTimeInterface
     {
         return $this->startDate;
     }
 
-    public function setStartDate($startDate): self
+    public function setStartDate(\DateTimeInterface$startDate): self
     {
-        $this->startDate = new \DateTime($startDate);
+        $this->startDate = $startDate;
 
         return $this;
     }
 
-    public function getEndDate()
+    public function getEndDate(): ?\DateTimeInterface
     {
         return $this->endDate;
     }
 
-    public function setEndDate($endDate): self
+    public function setEndDate(\DateTimeInterface $endDate): self
     {
-        $this->endDate = new \DateTime($endDate);
+        $this->endDate = $endDate;
 
         return $this;
     }

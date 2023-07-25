@@ -33,12 +33,15 @@ class CaptainFinancialSystemDetailManager
             return CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_CAN_NOT_CHOSE;
         }
        
-        $captainFinancialSystemDetailEntity = $this->autoMapping->map(CaptainFinancialSystemDetailRequest::class, CaptainFinancialSystemDetailEntity::class, $request);
+        $captainFinancialSystemDetailEntity = $this->autoMapping->map(CaptainFinancialSystemDetailRequest::class,
+            CaptainFinancialSystemDetailEntity::class, $request);
       
-        $captainFinancialSystemDetailEntity->setStatus(CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_INACTIVE);
+        $captainFinancialSystemDetailEntity->setStatus(CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ACTIVE);
         $this->entityManager->persist($captainFinancialSystemDetailEntity);
         $this->entityManager->flush();
+
         $this->captainManager->captainProfileCompleteAccountStatusUpdateCreateRequest($request->getCaptain()->getCaptainId(), CaptainConstant::COMPLETE_ACCOUNT_STATUS_SYSTEM_FINANCIAL_SELECTED);
+
         return $captainFinancialSystemDetailEntity;
     }
 

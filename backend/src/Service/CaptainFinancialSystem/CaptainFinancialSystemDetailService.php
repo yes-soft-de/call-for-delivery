@@ -54,7 +54,8 @@ class CaptainFinancialSystemDetailService
             $timeZone = str_replace("-", "/", $timeZone);
         }
 
-        $this->captainFinancialDuesService->updateCaptainFinancialSystemDetail($userId);
+        // Following statement for ending the captain financial due (cycle) if it exceeded the end date
+        // $this->captainFinancialDuesService->updateCaptainFinancialSystemDetail($userId);
 
         //get Captain Financial System Detail current
         $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailCurrent($userId);
@@ -62,12 +63,16 @@ class CaptainFinancialSystemDetailService
         if ($financialSystemDetail) {
            $captainFinancialDues = $this->captainFinancialDuesService->getLatestCaptainFinancialDues($financialSystemDetail['captainId']);
 
+           // Following If - Else blocks for the three captain financial systems (old one)
            if ($captainFinancialDues ) {
-               $date = ["fromDate" => $captainFinancialDues['startDate']->format('Y-m-d 00:00:00'), "toDate" => $captainFinancialDues['endDate']->format('y-m-d 23:59:59')];
+               $date = ["fromDate" => $captainFinancialDues['startDate']->format('Y-m-d 00:00:00'),
+                   "toDate" => $captainFinancialDues['endDate']->format('y-m-d 23:59:59')];
 
-               $sumPayments = $this->getSumPayments($financialSystemDetail['captainId'], $captainFinancialDues['startDate'], $captainFinancialDues['endDate']);
+               $sumPayments = $this->getSumPayments($financialSystemDetail['captainId'], $captainFinancialDues['startDate'],
+                   $captainFinancialDues['endDate']);
 
-               $countWorkdays = $this->captainFinancialSystemDateService->subtractTwoDates(new DateTime ($date ['fromDate']), new DateTime($date['toDate']));
+               $countWorkdays = $this->captainFinancialSystemDateService->subtractTwoDates(new DateTime ($date ['fromDate']),
+                   new DateTime($date['toDate']));
 
            } else {
                $dateForPayments = $this->captainFinancialSystemDateService->getFromDateAndToDate();

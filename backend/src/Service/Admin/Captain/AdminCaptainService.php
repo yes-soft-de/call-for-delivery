@@ -29,7 +29,6 @@ use App\Service\Admin\Order\AdminOrderService;
 
 class AdminCaptainService
 {
-
     public function __construct(
         private AutoMapping $autoMapping,
         private AdminCaptainManager $adminCaptainManager,
