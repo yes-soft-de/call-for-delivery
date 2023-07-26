@@ -12,7 +12,7 @@ class CaptainFinancialDueSumFilterByAdminResponse
 
     public string $captainName;
 
-    public float $toBePaid = 0.0;
+    public float $toBePaid;
 
     /**
      * @OA\Property(type="array", property="image",

@@ -149,9 +149,18 @@ class AdminCaptainFinancialDuesService
 
                 $response[$key]->image = $this->uploadFileHelperService->getImageParams($value['imagePath']);
 
-                $paymentsSum = $this->getCaptainPaymentSumByCaptainProfileIdAndCaptainFinancialDemand($value['captainProfileId']);
+                // If it is required to get sum of financial due which captain demanded it, then calculate what have
+                // to be paid
+                if ($request->getHasCaptainFinancialDueDemanded() === true) {
+                    $paymentsSum = $this->getCaptainPaymentSumByCaptainProfileIdAndCaptainFinancialDemand($value['captainProfileId']);
 
-                $response[$key]->toBePaid = $response[$key]->financialDueAmount - $paymentsSum;
+                    $response[$key]->toBePaid = $response[$key]->financialDueAmount - $paymentsSum;
+                }
+                // But, if it is required the unpaid financial due, the what have to paid is equal to the financial due
+                // final net amount
+                if ($request->getStatus() === CaptainFinancialDues::FINANCIAL_DUES_UNPAID) {
+                    $response[$key]->toBePaid = $response[$key]->financialDueAmount;
+                }
             }
         }
 
