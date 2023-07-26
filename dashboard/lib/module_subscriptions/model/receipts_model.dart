@@ -4,7 +4,7 @@ import 'package:c4d/module_subscriptions/response/receipts_response/e_payment.da
 import 'package:c4d/module_subscriptions/response/receipts_response/receipts_response.dart';
 
 class ReceiptsModel extends DataModel {
-  late int subscriptionCost;
+  late num subscriptionCost;
   late List<EPaymentModel> ePayments;
   late bool hasTpPay;
 
