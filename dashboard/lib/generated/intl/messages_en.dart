@@ -20,9 +20,11 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(value) => "payment ${value} Riyal";
+  static String m0(value) => "are you sure about add payment ${value} Riyal?";
 
-  static String m1(value) => "${value} Riyal";
+  static String m1(value) => "payment ${value} Riyal";
+
+  static String m2(value) => "${value} Riyal";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -152,6 +154,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Are you sure about deleting your account , you won\'t be able to login with this credential any more"),
         "areSureAboutResolveThisOrder": MessageLookupByLibrary.simpleMessage(
             "Are sure about resolving this order finance conflict"),
+        "areYouSureAboutAddPayment": m0,
         "areYouSureAboutCreatingSubOrder": MessageLookupByLibrary.simpleMessage(
             "Are you sure about creating new sub order , you can split later if needed"),
         "areYouSureAboutDeleteOrder": MessageLookupByLibrary.simpleMessage(
@@ -1155,7 +1158,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Payment created successfully"),
         "paymentToCaptain":
             MessageLookupByLibrary.simpleMessage("Payment To Captain"),
-        "paymentValueRiyal": m0,
+        "paymentValueRiyal": m1,
         "payments": MessageLookupByLibrary.simpleMessage("Payments"),
         "paymentsDeletedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Payment deleted successfully"),
@@ -1679,7 +1682,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Uploading Image, Please Wait"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "validation": MessageLookupByLibrary.simpleMessage("Validation"),
-        "valueRiyal": m1,
+        "valueRiyal": m2,
         "views": MessageLookupByLibrary.simpleMessage("views"),
         "waiting": MessageLookupByLibrary.simpleMessage("waiting"),
         "waitingDescription": MessageLookupByLibrary.simpleMessage(

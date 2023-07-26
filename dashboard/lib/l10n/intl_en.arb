@@ -1077,6 +1077,15 @@
             }
         }
     },
+    "areYouSureAboutAddPayment": "are you sure about add payment {value} Riyal?",
+    "@areYouSureAboutAddPayment": {
+        "description": "",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
     "registerPayment" : "register payment",
     "paymentsRecords" : "payment records",
     "skipped" : "skipped",

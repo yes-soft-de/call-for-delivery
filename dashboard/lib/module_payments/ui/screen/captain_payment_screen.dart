@@ -34,6 +34,7 @@ class CaptainPaymentScreenState extends State<CaptainPaymentScreen> {
 
   void addPayment(AddPaymentToCaptainRequest request) {
     request = request.copyWith(captainId: captainID);
+    print(request);
     // TODO: call the api
   }
 

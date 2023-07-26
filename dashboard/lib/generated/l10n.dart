@@ -10666,6 +10666,16 @@ class S {
     );
   }
 
+  /// `are you sure about add payment {value} Riyal?`
+  String areYouSureAboutAddPayment(String value) {
+    return Intl.message(
+      'are you sure about add payment $value Riyal?',
+      name: 'areYouSureAboutAddPayment',
+      desc: '',
+      args: [value],
+    );
+  }
+
   /// `register payment`
   String get registerPayment {
     return Intl.message(

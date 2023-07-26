@@ -5,7 +5,9 @@ import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
-Color get _blue => Color(0xff4A51C9);
+// Color get _blue => Color(0xff4A51C9);
+Color get _primary => Color(0xff7E7ED4);
+Color get _red => Colors.red;
 
 class AddPaymentToCaptainDialog extends StatefulWidget {
   final Function(AddPaymentToCaptainRequest request) onConfirmed;
@@ -112,7 +114,7 @@ class _AddPaymentToCaptainDialogState extends State<AddPaymentToCaptainDialog> {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: _blue),
+                    style: ElevatedButton.styleFrom(backgroundColor: _primary),
                     onPressed: (_paymentController.text.isNotEmpty)
                         ? () {
                             var request = AddPaymentToCaptainRequest(
@@ -122,7 +124,72 @@ class _AddPaymentToCaptainDialogState extends State<AddPaymentToCaptainDialog> {
                               type: _type,
                               note: _noteController.text,
                             );
-                            widget.onConfirmed(request);
+                            Navigator.pop(context);
+                            showDialog(
+                              context: context,
+                              builder: (context) {
+                                return Dialog(
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(20),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        Text(
+                                          S.current.areYouSureAboutAddPayment(
+                                            request.amount.toStringAsFixed(2),
+                                          ),
+                                        ),
+                                        SizedBox(height: 50),
+                                        Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: _primary,
+                                              ),
+                                              onPressed: () {
+                                                var request =
+                                                    AddPaymentToCaptainRequest(
+                                                  amount: num.tryParse(
+                                                          _paymentController
+                                                              .text) ??
+                                                      0,
+                                                  captainId: -1,
+                                                  type: _type,
+                                                  note: _noteController.text,
+                                                );
+                                                Navigator.pop(context);
+
+                                                widget.onConfirmed(request);
+                                              },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(S.current.pay),
+                                              ),
+                                            ),
+                                            SizedBox(width: 20),
+                                            ElevatedButton(
+                                              style: ElevatedButton.styleFrom(
+                                                backgroundColor: _red,
+                                              ),
+                                              onPressed: () {
+                                                Navigator.pop(context);
+                                              },
+                                              child: Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Text(S.current.cancel),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
                           }
                         : null,
                     child: Padding(
@@ -132,7 +199,7 @@ class _AddPaymentToCaptainDialogState extends State<AddPaymentToCaptainDialog> {
                   ),
                   SizedBox(width: 20),
                   ElevatedButton(
-                    style: ElevatedButton.styleFrom(backgroundColor: _blue),
+                    style: ElevatedButton.styleFrom(backgroundColor: _red),
                     onPressed: () {
                       Navigator.pop(context);
                     },

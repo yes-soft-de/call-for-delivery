@@ -1076,6 +1076,15 @@
             }
         }
     },
+    "areYouSureAboutAddPayment": "هل انت متاكد من تسجيل دفعة {value} ريال؟",
+    "@areYouSureAboutAddPayment": {
+        "description": "",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
     "registerPayment" : "تسجيل دفعة",
     "paymentsRecords" : "سجل الدفعات",
     "skipped" : "تم التخطي",
