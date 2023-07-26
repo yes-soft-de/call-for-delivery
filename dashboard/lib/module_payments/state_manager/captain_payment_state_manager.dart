@@ -43,7 +43,8 @@ class CaptainPaymentStateManager {
         }, title: S.current.payments, emptyMessage: S.current.emptyStaff));
       } else {
         CaptainDailyFinanceModel captain = value as CaptainDailyFinanceModel;
-        _stateSubject.add(CaptainPaymentStateLoaded(screenState, captain.data));
+        // TODO this function api call need to change
+        // _stateSubject.add(CaptainPaymentStateLoaded(screenState, captain.data));
       }
     });
   }

@@ -1085,6 +1085,15 @@
     "youCantEditOrDeleteAfterConfirm" : "you cant edit or delete after confirm",
     "captainDues" : "capitan dues",
     "paymentRequests" : "Payment Requests",
+    "FinancialDues" : "financial dues",
+    "sinceLastPaymentUntilNow" : "since last payment until now",
+    "unpaidAmountsFromCashToStores": "unpaid amounts from cash to stores",
+    "profitsFromOrders": "profits from orders",
+    "lastPayment" : "last payment",
+    "showPreviousPayments" : "show previous payments",
+    "addPayment" : "add payment",
     "notPaid" : "Not Paid",
+    "byHand" : "by hand",
+    "bankTransfer" : "bank transfer",
     "dev": "Dev"
 }

@@ -33,6 +33,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "This area contain a very sensitive action may cause to loose all your data , and there is no going back in current time"),
         "FinanceRequest":
             MessageLookupByLibrary.simpleMessage("Finance request"),
+        "FinancialDues": MessageLookupByLibrary.simpleMessage("financial dues"),
         "InvalidInput": MessageLookupByLibrary.simpleMessage("Invalid"),
         "LastCreatedDelivery":
             MessageLookupByLibrary.simpleMessage("Last created delivery"),
@@ -110,6 +111,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addPackage": MessageLookupByLibrary.simpleMessage("Add package"),
         "addPackageSuccessfully":
             MessageLookupByLibrary.simpleMessage("Package Added successfully"),
+        "addPayment": MessageLookupByLibrary.simpleMessage("add payment"),
         "addProducts": MessageLookupByLibrary.simpleMessage("Add Products"),
         "addSetting": MessageLookupByLibrary.simpleMessage("Add Setting"),
         "addStore": MessageLookupByLibrary.simpleMessage("Add Stores"),
@@ -204,6 +206,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "bankAccountNumber":
             MessageLookupByLibrary.simpleMessage("Bank Account Number"),
         "bankName": MessageLookupByLibrary.simpleMessage("Bank Name"),
+        "bankTransfer": MessageLookupByLibrary.simpleMessage("bank transfer"),
         "bestStore": MessageLookupByLibrary.simpleMessage("Best Store"),
         "bidOrder": MessageLookupByLibrary.simpleMessage("Bid order"),
         "bill": MessageLookupByLibrary.simpleMessage("Bill"),
@@ -227,6 +230,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "branchManagement":
             MessageLookupByLibrary.simpleMessage("Branch management"),
         "businessName": MessageLookupByLibrary.simpleMessage("Business Name"),
+        "byHand": MessageLookupByLibrary.simpleMessage("by hand"),
         "calculating": MessageLookupByLibrary.simpleMessage("Calculating"),
         "camera": MessageLookupByLibrary.simpleMessage("Camera"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
@@ -851,6 +855,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Last 7 days orders"),
         "last7days": MessageLookupByLibrary.simpleMessage("last 7 days"),
         "lastName": MessageLookupByLibrary.simpleMessage("Last name"),
+        "lastPayment": MessageLookupByLibrary.simpleMessage("last payment"),
         "lastSeenMessage": MessageLookupByLibrary.simpleMessage("New Messages"),
         "lastSevenDays":
             MessageLookupByLibrary.simpleMessage("last seven days"),
@@ -1256,6 +1261,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "profileFetchedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Profile Data Fetched Successfully"),
         "profit": MessageLookupByLibrary.simpleMessage("Profit"),
+        "profitsFromOrders":
+            MessageLookupByLibrary.simpleMessage("profits from orders"),
         "provideClientCoordinations":
             MessageLookupByLibrary.simpleMessage("Delivery location"),
         "provideClientCoordinationsHint":
@@ -1382,10 +1389,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "share": MessageLookupByLibrary.simpleMessage("Share"),
         "showAll": MessageLookupByLibrary.simpleMessage("Show All"),
         "showPayments": MessageLookupByLibrary.simpleMessage("show payments"),
+        "showPreviousPayments":
+            MessageLookupByLibrary.simpleMessage("show previous payments"),
         "showingCart": MessageLookupByLibrary.simpleMessage("Cart"),
         "signOut": MessageLookupByLibrary.simpleMessage("Sign out"),
         "similarProducts":
             MessageLookupByLibrary.simpleMessage("Similar Products"),
+        "sinceLastPaymentUntilNow": MessageLookupByLibrary.simpleMessage(
+            "since last payment until now"),
         "skip": MessageLookupByLibrary.simpleMessage("Skip"),
         "skipPaymentStageForWelcomePackage":
             MessageLookupByLibrary.simpleMessage(
@@ -1596,6 +1607,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "unlinkedSubOrderFromGroupedOrder":
             MessageLookupByLibrary.simpleMessage(
                 "Unlinked order from group order"),
+        "unpaidAmountsFromCashToStores": MessageLookupByLibrary.simpleMessage(
+            "unpaid amounts from cash to stores"),
         "unpaidCaptainFinanceDaily":
             MessageLookupByLibrary.simpleMessage("Unpaid"),
         "update": MessageLookupByLibrary.simpleMessage("Update"),

@@ -1085,6 +1085,15 @@
     "captainDues" : "مستحقات الكباتن",
     "ClaimedDues" : "الكباتن الذين طالبو بمستحقاتهم",
     "paymentRequests" : "طلبات الدفع",
+    "FinancialDues" : "المستحقات المالية",
+    "sinceLastPaymentUntilNow" : "منذ اخر دفعة حتى الان",
+    "unpaidAmountsFromCashToStores": "المبالغ من الكاش غير المسلمة للمتاجر",
+    "profitsFromOrders": "الارباح من الطلبات",
+    "lastPayment" : "اخر دفعة",
+    "showPreviousPayments" : "عرض المدفوعات السابقة",
+    "addPayment" : "اضافة دفعة",
     "notPaid" : "غير مدفوع",
+    "byHand" : "باليد",
+    "bankTransfer" : "تحويل بنكي",
     "dev": "المطورين"
 }
