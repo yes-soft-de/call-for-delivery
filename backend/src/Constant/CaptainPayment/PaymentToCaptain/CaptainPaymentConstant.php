@@ -4,7 +4,7 @@ namespace App\Constant\CaptainPayment\PaymentToCaptain;
 
 final class CaptainPaymentConstant
 {
-// payment getaway
+    // payment getaway
     const PAYMENT_GETAWAY_IN_APP_PURCHASE_APPLE_CONST = 225;
 
     const PAYMENT_GETAWAY_IN_APP_PURCHASE_GOOGLE_CONST = 226;
@@ -23,4 +23,6 @@ final class CaptainPaymentConstant
     const REAL_PAYMENT_BY_ADMIN_CONST = 230;
 
     const MOCK_PAYMENT_BY_ADMIN_CONST = 232;
+    // --------------
+    const ZERO_PAYMENT_VALUE_CONST = 0.0;
 }

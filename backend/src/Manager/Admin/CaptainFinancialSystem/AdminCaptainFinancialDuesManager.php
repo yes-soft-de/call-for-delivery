@@ -6,6 +6,7 @@ use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Entity\CaptainEntity;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Repository\CaptainFinancialDuesEntityRepository;
+use App\Request\Admin\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueFilterByAdminRequest;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -102,5 +103,13 @@ class AdminCaptainFinancialDuesManager
         $this->entityManager->flush();
 
         return $captainFinancialDuesEntity;
+    }
+
+    /**
+     * Return Captain Financial Due Sum for each captain and according to filtering options
+     */
+    public function filterCaptainFinancialDueByAdmin(CaptainFinancialDueFilterByAdminRequest $request)
+    {
+        return $this->captainFinancialDuesRepository->filterCaptainFinancialDueByAdmin($request);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Controller\Admin\CaptainFinancialSystem;
 
 use App\Controller\BaseController;
+use App\Request\Admin\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueFilterByAdminRequest;
 use App\Service\Admin\CaptainFinancialSystem\AdminCaptainFinancialDuesService;
 use Nelmio\ApiDocBundle\Annotation\Security;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -25,18 +26,15 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
  */
 class AdminCaptainFinancialDuesController extends BaseController
 {
-    private AdminCaptainFinancialDuesService $adminCaptainFinancialDuesService;
-    private AdminStopFinancialSystemAndFinancialCycleService $adminStopFinancialSystemAndFinancialCycleService;
-    private AutoMapping $autoMapping;
-    private ValidatorInterface $validator;
-
-    public function __construct(SerializerInterface $serializer, AdminCaptainFinancialDuesService $adminCaptainFinancialDuesService, AdminStopFinancialSystemAndFinancialCycleService $adminStopFinancialSystemAndFinancialCycleService, AutoMapping $autoMapping, ValidatorInterface $validator)
+    public function __construct(
+        SerializerInterface $serializer,
+        private AdminCaptainFinancialDuesService $adminCaptainFinancialDuesService,
+        private AdminStopFinancialSystemAndFinancialCycleService $adminStopFinancialSystemAndFinancialCycleService,
+        private AutoMapping $autoMapping,
+        private ValidatorInterface $validator
+    )
     {
         parent::__construct($serializer);
-        $this->adminCaptainFinancialDuesService = $adminCaptainFinancialDuesService;
-        $this->adminStopFinancialSystemAndFinancialCycleService = $adminStopFinancialSystemAndFinancialCycleService;
-        $this->autoMapping = $autoMapping;
-        $this->validator = $validator;
     }
 
     /**
@@ -88,7 +86,6 @@ class AdminCaptainFinancialDuesController extends BaseController
         return $this->response($result, self::FETCH);
     }
 
-    
     /**
      * admin: (approval | Refusal) to stop the financial cycle and financial system
      * @Route("approvalorrefusalfinancialcycle", name="approvalOrRefusalFinancialSystemAndFinancialCycle", methods={"PUT"})
@@ -142,8 +139,60 @@ class AdminCaptainFinancialDuesController extends BaseController
             return new JsonResponse($violationsString, Response::HTTP_OK);
         }
 
-        $result = $this->adminStopFinancialSystemAndFinancialCycleService->approvalOrRefusalFinancialSystemAndFinancialCycle( $request);
+        $result = $this->adminStopFinancialSystemAndFinancialCycleService->approvalOrRefusalFinancialSystemAndFinancialCycle($request);
 
         return $this->response($result, self::UPDATE);
+    }
+
+    /**
+     * admin: filter captain financial due sum
+     * @Route("filtercaptainfinancialduesumbyadmin", name="filterCaptainFinancialDueSumByAdmin", methods={"POST"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param Request $request
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Captain Financial Dues")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\RequestBody(
+     *      description="filter captain financial due sum",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="integer", property="status"),
+     *          @OA\Property(type="boolean", property="hasCaptainFinancialDueDemanded")
+     *      )
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Return captain financial due sum according to filtering options",
+     *      @OA\JsonContent(
+     *          @OA\Property(type="string", property="status_code"),
+     *          @OA\Property(type="string", property="msg"),
+     *          @OA\Property(type="array", property="Data",
+     *              @OA\Items(
+     *                  ref=@Model(type="App\Response\Admin\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueSumFilterByAdminResponse")
+     *              )
+     *          )
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function filterCaptainFinancialDueByAdmin(Request $request): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+
+        $request = $this->autoMapping->map(stdClass::class, CaptainFinancialDueFilterByAdminRequest::class,
+            (object)$data);
+
+        $result = $this->adminCaptainFinancialDuesService->filterCaptainFinancialDueByAdmin($request);
+
+        return $this->response($result, self::FETCH);
     }
 }

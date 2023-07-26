@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Constant\CaptainPayment\PaymentToCaptain\CaptainPaymentConstant;
+use App\Entity\CaptainFinancialDemandEntity;
 use App\Entity\CaptainPaymentEntity;
 use App\Entity\CaptainEntity;
 use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentFilterByAdminRequest;
@@ -289,5 +290,33 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
         }
 
         return $filteredOrders;
+    }
+
+    public function getCaptainPaymentSumByCaptainProfileIdAndCaptainFinancialDemand(int $captainProfileId): array
+    {
+        return $this->createQueryBuilder('captainPaymentEntity')
+            ->select('SUM(captainPaymentEntity.amount)')
+
+            ->andWhere('captainPaymentEntity.captain = :captainProfileId')
+            ->setParameter('captainProfileId', $captainProfileId)
+
+            ->leftJoin(
+                CaptainFinancialDuesEntity::class,
+                'captainFinancialDueEntity',
+                Join::WITH,
+                'captainFinancialDueEntity.id = captainPaymentEntity.captainFinancialDues'
+            )
+
+            ->leftJoin(
+                CaptainFinancialDemandEntity::class,
+                'captainFinancialDemandEntity',
+                Join::WITH,
+                'captainFinancialDemandEntity.captainFinancialDueId = captainFinancialDueEntity.id'
+            )
+
+            ->andWhere('captainFinancialDemandEntity.id IS NOT NULL')
+
+            ->getQuery()
+            ->getSingleColumnResult();
     }
 }

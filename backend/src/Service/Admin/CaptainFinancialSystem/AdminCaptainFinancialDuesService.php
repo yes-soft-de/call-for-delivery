@@ -6,17 +6,23 @@ use App\AutoMapping;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Constant\Order\OrderAmountCashConstant;
 use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialDuesManager;
+use App\Request\Admin\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueFilterByAdminRequest;
 use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialDuesResponse;
+use App\Response\Admin\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueSumFilterByAdminResponse;
+use App\Service\Admin\CaptainPayment\AdminCaptainPaymentGetService;
 use App\Service\CaptainPayment\CaptainPaymentService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Entity\CaptainFinancialDuesEntity;
+use App\Service\FileUpload\UploadFileHelperService;
 
 class AdminCaptainFinancialDuesService
 {
     public function __construct(
         private AutoMapping $autoMapping,
         private AdminCaptainFinancialDuesManager $adminCaptainFinancialDuesManager,
-        private CaptainPaymentService $captainPaymentService
+        private CaptainPaymentService $captainPaymentService,
+        private AdminCaptainPaymentGetService $adminCaptainPaymentGetService,
+        private UploadFileHelperService $uploadFileHelperService
     )
     {
     }
@@ -119,5 +125,36 @@ class AdminCaptainFinancialDuesService
                     $captainAmountFromCashOrderEntity->getCaptain()->getId(), $captainAmountFromCashOrderEntity->getOrderId()->getCreatedAt());
             }
         }
+    }
+
+    public function getCaptainPaymentSumByCaptainProfileIdAndCaptainFinancialDemand(int $captainProfileId): float
+    {
+        return $this->adminCaptainPaymentGetService->getCaptainPaymentSumByCaptainProfileIdAndCaptainFinancialDemand($captainProfileId);
+    }
+
+    /**
+     * Return Captain Financial Due Sum for each captain and according to filtering options
+     * besides to be paid for each captain financial due
+     */
+    public function filterCaptainFinancialDueByAdmin(CaptainFinancialDueFilterByAdminRequest $request): array
+    {
+        $response = [];
+
+        $captainFinancialDues = $this->adminCaptainFinancialDuesManager->filterCaptainFinancialDueByAdmin($request);
+
+        if (count($captainFinancialDues) > 0) {
+            foreach ($captainFinancialDues as $key => $value) {
+                $response[$key] = $this->autoMapping->map('array', CaptainFinancialDueSumFilterByAdminResponse::class,
+                    $value);
+
+                $response[$key]->image = $this->uploadFileHelperService->getImageParams($value['imagePath']);
+
+                $paymentsSum = $this->getCaptainPaymentSumByCaptainProfileIdAndCaptainFinancialDemand($value['captainProfileId']);
+
+                $response[$key]->toBePaid = $response[$key]->financialDueAmount - $paymentsSum;
+            }
+        }
+
+        return $response;
     }
 }
