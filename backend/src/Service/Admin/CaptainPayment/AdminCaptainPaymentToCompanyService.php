@@ -5,7 +5,6 @@ namespace App\Service\Admin\CaptainPayment;
 use App\AutoMapping;
 use App\Entity\CaptainPaymentToCompanyEntity;
 use App\Manager\Admin\CaptainPayment\AdminCaptainPaymentToCompanyManager;
-use App\Request\Admin\CaptainPayment\AdminCaptainPaymentCreateRequest;
 use App\Request\Admin\CaptainPayment\CaptainPaymentToCompany\CaptainPaymentToCompanyUpdateAmountByAdminRequest;
 use App\Response\Admin\CaptainPayment\AdminCaptainPaymentCreateResponse;
 use App\Response\Admin\CaptainPayment\AdminCaptainPaymentResponse;
@@ -14,27 +13,37 @@ use App\Constant\Payment\PaymentConstant;
 use App\Response\Admin\CaptainPayment\AdminCaptainPaymentDeleteResponse;
 use App\Request\Admin\CaptainPayment\AdminCaptainPaymentToCompanyForOrderCashCreateRequest;
 use App\Constant\Order\OrderAmountCashConstant;
+use App\Service\Admin\CaptainFinancialSystem\AdminCaptainFinancialDuesService;
+use App\Service\Admin\CaptainFinancialSystem\CaptainFinancialDaily\AdminCaptainFinancialDailyService;
 
 class AdminCaptainPaymentToCompanyService
 {
-    private AutoMapping $autoMapping;
-    private AdminCaptainPaymentToCompanyManager $adminCaptainPaymentToCompanyManager;
-
-    public function __construct(AutoMapping $autoMapping, AdminCaptainPaymentToCompanyManager $adminCaptainPaymentToCompanyManager)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private AdminCaptainPaymentToCompanyManager $adminCaptainPaymentToCompanyManager,
+        private AdminCaptainFinancialDailyService $adminCaptainFinancialDailyService,
+        private AdminCaptainFinancialDuesService $adminCaptainFinancialDuesService
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->adminCaptainPaymentToCompanyManager = $adminCaptainPaymentToCompanyManager;
     }
 
     public function createCaptainPaymentToCompany(AdminCaptainPaymentToCompanyForOrderCashCreateRequest $request): AdminCaptainPaymentCreateResponse|string
     {
         $payment = $this->adminCaptainPaymentToCompanyManager->createCaptainPaymentToCompany($request);
-    
-        if($payment === CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST || $payment === OrderAmountCashConstant::NOT_ORDER_CASH) {
+
+        if ($payment === CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST || $payment === OrderAmountCashConstant::NOT_ORDER_CASH) {
             return $payment;
         }
 
-        return $this->autoMapping->map(CaptainPaymentToCompanyEntity::class, AdminCaptainPaymentCreateResponse::class, $payment);
+        // As long as a payment from captain to admin had been made, then update both Captain Financial Due and
+        // Captain Financial Daily
+        // 1 Update alreadyHadAmount in Captain Financial Daily
+        $this->updateCaptainFinancialDailyAlreadyHadAmountByGroup($payment[1]);
+        // 2 Update amountForStore in Captain Financial Due
+        $this->updateCaptainFinancialDueAmountForStoreByGroupOfCaptainAmountFromCashOrder($payment[1]);
+
+        return $this->autoMapping->map(CaptainPaymentToCompanyEntity::class, AdminCaptainPaymentCreateResponse::class,
+            $payment[0]);
     }
 
     public function deleteCaptainPaymentToCompany($id): AdminCaptainPaymentDeleteResponse|string
@@ -62,11 +71,6 @@ class AdminCaptainPaymentToCompanyService
         return $response;
     }
 
-    public function getSumPaymentsToCompany(int $captainId): array
-    {
-       return $this->adminCaptainPaymentToCompanyManager->getSumPaymentsToCompany($captainId);
-    }
-
     public function getSumPaymentsToCompanyInSpecificDate(int $captainId, string $fromDate, string $toDate): array
     {
        return $this->adminCaptainPaymentToCompanyManager->getSumPaymentsToCompanyInSpecificDate($captainId, $fromDate, $toDate);
@@ -75,5 +79,25 @@ class AdminCaptainPaymentToCompanyService
     public function updateCaptainPaymentToCompanyBySpecificAmount(CaptainPaymentToCompanyUpdateAmountByAdminRequest $request): CaptainPaymentToCompanyEntity|int
     {
         return $this->adminCaptainPaymentToCompanyManager->updateCaptainPaymentToCompanyBySpecificAmount($request);
+    }
+
+    /**
+     * Updates alreadyHadAmount field of Captain Financial Daily according to group of Captain Amount from Cash Orders
+     */
+    public function updateCaptainFinancialDailyAlreadyHadAmountByGroup(array $captainAmountFromCashOrders)
+    {
+        if (count($captainAmountFromCashOrders) > 0) {
+            $this->adminCaptainFinancialDailyService->updateCaptainFinancialDailyAlreadyHadAmountByGroup($captainAmountFromCashOrders);
+        }
+    }
+
+    /**
+     * Updates amountForStore field of Captain Financial Due according to group of Captain Amount from Cash Orders
+     */
+    public function updateCaptainFinancialDueAmountForStoreByGroupOfCaptainAmountFromCashOrder(array $captainAmountFromCashOrders)
+    {
+        if (count($captainAmountFromCashOrders) > 0) {
+            $this->adminCaptainFinancialDuesService->updateCaptainFinancialDueAmountForStoreByGroupOfCaptainAmountFromCashOrder($captainAmountFromCashOrders);
+        }
     }
 }

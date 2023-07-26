@@ -27,20 +27,18 @@ use App\Constant\Order\OrderAmountCashConstant;
  */
 class AdminCaptainPaymentToCompanyController extends BaseController
 {
-    private AutoMapping $autoMapping;
-    private ValidatorInterface $validator;
-    private AdminCaptainPaymentToCompanyService $adminCaptainPaymentToCompanyService;
-
-    public function __construct(SerializerInterface $serializer, AutoMapping $autoMapping, ValidatorInterface $validator, AdminCaptainPaymentToCompanyService $adminCaptainPaymentToCompanyService)
+    public function __construct(
+        SerializerInterface $serializer,
+        private AutoMapping $autoMapping,
+        private ValidatorInterface $validator,
+        private AdminCaptainPaymentToCompanyService $adminCaptainPaymentToCompanyService
+    )
     {
         parent::__construct($serializer);
-        $this->autoMapping = $autoMapping;
-        $this->validator = $validator;
-        $this->adminCaptainPaymentToCompanyService = $adminCaptainPaymentToCompanyService;
     }
 
     /**
-     * admin:Create new Payment from captain for order cash
+     * admin: Create new Payment from captain to company for order cash
      * @Route("captainpaymenttocompany", name="createCaptainPaymentToCompany", methods={"POST"})
      * @IsGranted("ROLE_ADMIN")
      * @param Request $request
@@ -110,11 +108,10 @@ class AdminCaptainPaymentToCompanyController extends BaseController
 
         $result = $this->adminCaptainPaymentToCompanyService->createCaptainPaymentToCompany($request);
         
-        if($result === CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST) {
+        if ($result === CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_PROFILE_NOT_EXIST);
-        }
-        
-        if($result === OrderAmountCashConstant::NOT_ORDER_CASH) {
+
+        } elseif ($result === OrderAmountCashConstant::NOT_ORDER_CASH) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_NOT_ORDER_CASH);
         }
 
@@ -125,7 +122,7 @@ class AdminCaptainPaymentToCompanyController extends BaseController
      * admin:delete Payment to captain
      * @Route("captainpaymenttocompnay/{id}", name="deleteCaptainPaymentToCompany", methods={"DELETE"})
      * @IsGranted("ROLE_ADMIN")
-     * @param Request $request
+     * @param $id
      * @return JsonResponse
      *
      * @OA\Tag(name="Captain Payment To Company")
@@ -161,7 +158,7 @@ class AdminCaptainPaymentToCompanyController extends BaseController
      *          @OA\Property(type="string", property="msg", description="payment not exist!"),
      *      )
      * )
-     * 
+     *
      * @Security(name="Bearer")
      */
     public function deleteCaptainPaymentToCompany($id): JsonResponse
@@ -179,6 +176,7 @@ class AdminCaptainPaymentToCompanyController extends BaseController
      * admin:Get all payments.
      * @Route("captainpaymentstocompany/{captainId}", name="getAllCaptainPaymentsToCompany", methods={"GET"})
      * @IsGranted("ROLE_ADMIN")
+     * @param int $captainId
      * @return JsonResponse
      *
      * @OA\Tag(name="Captain Payment To Company")

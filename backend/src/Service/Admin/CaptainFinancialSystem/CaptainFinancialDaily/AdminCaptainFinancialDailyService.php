@@ -4,6 +4,7 @@ namespace App\Service\Admin\CaptainFinancialSystem\CaptainFinancialDaily;
 
 use App\AutoMapping;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyResultConstant;
+use App\Constant\Order\OrderAmountCashConstant;
 use App\Entity\CaptainFinancialDailyEntity;
 use App\Manager\Admin\CaptainFinancialSystem\CaptainFinancialDaily\AdminCaptainFinancialDailyManager;
 use App\Request\Admin\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyIsPaidUpdateByAdminRequest;
@@ -45,5 +46,21 @@ class AdminCaptainFinancialDailyService
 
         return $this->adminCaptainFinancialDailyManager->subtractingValueFromCaptainFinancialDailyAlreadyHadAmount($value,
             $captainProfileId, $orderCreatedAt);
+    }
+
+    /**
+     * Updates alreadyHadAmount field of Captain Financial Daily according to group of Captain Amount from Cash Orders
+     */
+    public function updateCaptainFinancialDailyAlreadyHadAmountByGroup(array $captainAmountFromCashOrders)
+    {
+        foreach ($captainAmountFromCashOrders as $captainAmountFromCashOrderEntity) {
+            // Subtract amount field of the related captain financial daily, depending on captain and order creation date
+            // and only if the amount is paid from captain to admin
+            if (($captainAmountFromCashOrderEntity->getFlag() === OrderAmountCashConstant::ORDER_PAID_FLAG_YES)
+                && ($captainAmountFromCashOrderEntity->getEditingByCaptain() === false)) {
+                $this->subtractingValueFromCaptainFinancialDailyAlreadyHadAmount($captainAmountFromCashOrderEntity->getAmount(),
+                    $captainAmountFromCashOrderEntity->getCaptain()->getId(), $captainAmountFromCashOrderEntity->getOrderId()->getCreatedAt());
+            }
+        }
     }
 }
