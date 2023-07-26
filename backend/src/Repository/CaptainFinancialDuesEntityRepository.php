@@ -2,8 +2,13 @@
 
 namespace App\Repository;
 
+use App\Constant\Image\ImageEntityTypeConstant;
+use App\Constant\Image\ImageUseAsConstant;
+use App\Entity\CaptainFinancialDemandEntity;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Entity\CaptainEntity;
+use App\Entity\ImageEntity;
+use App\Request\Admin\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueFilterByAdminRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -172,30 +177,6 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * Following function had been commented out because it isn't being used anywhere
-     */
-//    public function getLatestCaptainFinancialDuesByUserId(int $userId): CaptainFinancialDuesEntity
-//    {
-//        return $this->createQueryBuilder('captainFinancialDuesEntity')
-//
-//            ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.captainId = :userId')
-//
-//            ->andWhere('captainFinancialDuesEntity.captain = captainEntity.id')
-//            ->setParameter('userId', $userId)
-//
-//            // ->andWhere('captainFinancialDuesEntity.state = :state')
-//            // ->setParameter('state', CaptainFinancialDues::FINANCIAL_STATE_ACTIVE)
-//
-//            ->orderBy('captainFinancialDuesEntity.id', 'DESC')
-//
-//            ->setMaxResults(1)
-//
-//            ->getQuery()
-//
-//            ->getOneOrNullResult();
-//    }
-
     //get the financial cycle to which the order belongs
 //    public function getCaptainFinancialDuesByUserIDAndOrderId(int $userId, int $orderId, string $orderCreatedAt): ?CaptainFinancialDuesEntity
 //    {
@@ -312,5 +293,54 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getResult();
+    }
+
+    /**
+     * Return Captain Financial Due Sum for each captain and according to filtering options
+     */
+    public function filterCaptainFinancialDueByAdmin(CaptainFinancialDueFilterByAdminRequest $request)
+    {
+        $query = $this->createQueryBuilder('captainFinancialDuesEntity')
+            ->select('SUM(captainFinancialDuesEntity.amount - captainFinancialDuesEntity.amountForStore) as financialDueAmount',
+                'captainEntity.id as captainProfileId', 'captainEntity.captainName', 'imageEntity.imagePath')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = captainFinancialDuesEntity.captain'
+            )
+
+            ->leftJoin(
+                ImageEntity::class,
+                'imageEntity',
+                Join::WITH,
+                'imageEntity.itemId = captainEntity.id AND imageEntity.entityType = :entityType'
+                .' AND imageEntity.usedAs = :profileImage'
+            )
+
+            ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
+            ->setParameter('profileImage', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+
+            ->groupBy('captainFinancialDuesEntity.captain')
+
+            ->orderBy('captainFinancialDuesEntity.id');
+
+        if ($request->getStatus() === CaptainFinancialDues::FINANCIAL_DUES_UNPAID) {
+            $query->andWhere('captainFinancialDuesEntity.status = :unpaidStatus')
+                ->setParameter('unpaidStatus', CaptainFinancialDues::FINANCIAL_DUES_UNPAID);
+        }
+
+        if ($request->getHasCaptainFinancialDueDemanded() === true) {
+            $query->leftJoin(
+                CaptainFinancialDemandEntity::class,
+                'captainFinancialDemandEntity',
+                Join::WITH,
+                'captainFinancialDemandEntity.captainFinancialDueId = captainFinancialDuesEntity.id'
+            )
+                ->andWhere('captainFinancialDemandEntity.id IS NOT NULL');
+        }
+
+        return $query->getQuery()->getResult();
     }
 }
