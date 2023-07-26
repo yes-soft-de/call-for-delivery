@@ -1104,5 +1104,6 @@
     "notPaid" : "غير مدفوع",
     "byHand" : "باليد",
     "bankTransfer" : "تحويل بنكي",
+    "previousPayments" : "المدفوعات السابقة",
     "dev": "المطورين"
 }

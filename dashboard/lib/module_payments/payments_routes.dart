@@ -9,4 +9,5 @@ class PaymentsRoutes {
   static const CAPTAIN_FINANCE_BY_HOURS = '/captain_finance_by_hours';
   static const CAPTAIN_FINANCE_BY_COUNT_ORDERS =
       '/captain_finance_by_count_orders';
+  static const CAPTAIN_PREVIOUS_PAYMENTS = '/captain_previous_payment';
 }

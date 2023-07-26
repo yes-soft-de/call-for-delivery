@@ -1247,6 +1247,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Preferred Language"),
         "pressHere": MessageLookupByLibrary.simpleMessage("Press here"),
         "previousOrder": MessageLookupByLibrary.simpleMessage("previous order"),
+        "previousPayments":
+            MessageLookupByLibrary.simpleMessage("previous payments"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
         "primaryOrder": MessageLookupByLibrary.simpleMessage("Primary order"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),

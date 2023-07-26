@@ -1104,5 +1104,6 @@
     "notPaid" : "Not Paid",
     "byHand" : "by hand",
     "bankTransfer" : "bank transfer",
+    "previousPayments" : "previous payments",
     "dev": "Dev"
 }

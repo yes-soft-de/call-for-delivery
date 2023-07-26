@@ -1236,6 +1236,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "pressHere": MessageLookupByLibrary.simpleMessage("اضغط هنا"),
         "previousOrder":
             MessageLookupByLibrary.simpleMessage("الطلبات السابقة"),
+        "previousPayments":
+            MessageLookupByLibrary.simpleMessage("المدفوعات السابقة"),
         "price": MessageLookupByLibrary.simpleMessage("السعر"),
         "primaryOrder": MessageLookupByLibrary.simpleMessage("طلب أساسي"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("شروط الخصوصية"),

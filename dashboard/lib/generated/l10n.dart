@@ -10856,6 +10856,16 @@ class S {
     );
   }
 
+  /// `previous payments`
+  String get previousPayments {
+    return Intl.message(
+      'previous payments',
+      name: 'previousPayments',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

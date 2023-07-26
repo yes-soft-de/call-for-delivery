@@ -1,6 +1,7 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_payments/model/captain_dues_model.dart';
+import 'package:c4d/module_payments/payments_routes.dart';
 import 'package:c4d/module_payments/ui/screen/captain_payment_screen.dart';
 import 'package:c4d/module_payments/ui/widget/add_payment_to_captain_dialog.dart';
 import 'package:flutter/material.dart';
@@ -48,7 +49,11 @@ class CaptainPaymentStateLoaded extends States {
             SizedBox(height: 15),
             _CustomButton(
               onPressed: () {
-                // TODO: navigate to previous payment screen
+                Navigator.pushNamed(
+                  context,
+                  PaymentsRoutes.CAPTAIN_PREVIOUS_PAYMENTS,
+                  arguments: [screenState.captainID],
+                );
               },
               title: S.current.showPreviousPayments,
             ),
