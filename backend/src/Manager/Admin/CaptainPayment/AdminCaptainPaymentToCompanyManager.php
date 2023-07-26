@@ -18,43 +18,41 @@ use App\Constant\Order\OrderAmountCashConstant;
 
 class AdminCaptainPaymentToCompanyManager
 {
-    private AutoMapping $autoMapping;
-    private EntityManagerInterface $entityManager;
-    private CaptainPaymentToCompanyEntityRepository $captainPaymentToCompanyEntityRepository;
-    private CaptainManager $captainManager;
-    private AdminCaptainAmountFromOrderCashManager $adminCaptainAmountFromOrderCashManager;
-
-    public function __construct(AutoMapping $autoMapping, EntityManagerInterface $entityManager, CaptainPaymentToCompanyEntityRepository $captainPaymentToCompanyEntityRepository, CaptainManager $captainManager, AdminCaptainAmountFromOrderCashManager $adminCaptainAmountFromOrderCashManager)
+    public function __construct(
+        private AutoMapping $autoMapping,
+        private EntityManagerInterface $entityManager,
+        private CaptainPaymentToCompanyEntityRepository $captainPaymentToCompanyEntityRepository,
+        private CaptainManager $captainManager,
+        private AdminCaptainAmountFromOrderCashManager $adminCaptainAmountFromOrderCashManager
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->entityManager = $entityManager;
-        $this->captainPaymentToCompanyEntityRepository = $captainPaymentToCompanyEntityRepository;
-        $this->captainManager = $captainManager;
-        $this->adminCaptainAmountFromOrderCashManager = $adminCaptainAmountFromOrderCashManager;
-
     }
 
-    public function createCaptainPaymentToCompany(AdminCaptainPaymentToCompanyForOrderCashCreateRequest $request): CaptainPaymentToCompanyEntity|string
+    public function createCaptainPaymentToCompany(AdminCaptainPaymentToCompanyForOrderCashCreateRequest $request): array|string
     {
         $captain = $this->captainManager->getCaptainProfileById($request->getCaptain());
        
-        if(! $captain) {
+        if (! $captain) {
             return CaptainConstant::CAPTAIN_PROFILE_NOT_EXIST;
         }
 
         $request->setCaptain($captain);
 
-        $amountFromOrderCash = $this->adminCaptainAmountFromOrderCashManager->getCaptainAmountFromOrderCashBySpecificDateOnUnpaidCondition($request->getFromDate(), $request->getToDate(), $request->getCaptain()->getId());
+        $amountFromOrderCash = $this->adminCaptainAmountFromOrderCashManager->getCaptainAmountFromOrderCashBySpecificDateOnUnpaidCondition($request->getFromDate(),
+            $request->getToDate(), $request->getCaptain()->getId());
 
-        if($amountFromOrderCash) {
-            $captainPaymentToCompanyEntity = $this->autoMapping->map(AdminCaptainPaymentToCompanyForOrderCashCreateRequest::class, CaptainPaymentToCompanyEntity::class, $request);
+        if ($amountFromOrderCash) {
+            $captainPaymentToCompanyEntity = $this->autoMapping->map(AdminCaptainPaymentToCompanyForOrderCashCreateRequest::class,
+                CaptainPaymentToCompanyEntity::class, $request);
 
             $this->entityManager->persist($captainPaymentToCompanyEntity);
             $this->entityManager->flush();
-    
-            $this->adminCaptainAmountFromOrderCashManager->updateFlagBySpecificDate($amountFromOrderCash, OrderAmountCashConstant::ORDER_PAID_FLAG_YES, $captainPaymentToCompanyEntity, false);
+
+            // While payment had been created, then update the flag of the related captain
+            $captainAmountFromOrderCashResultArray = $this->adminCaptainAmountFromOrderCashManager->updateFlagBySpecificDate($amountFromOrderCash,
+                OrderAmountCashConstant::ORDER_PAID_FLAG_YES, $captainPaymentToCompanyEntity, false);
          
-            return $captainPaymentToCompanyEntity;
+            return [$captainPaymentToCompanyEntity, $captainAmountFromOrderCashResultArray];
         }
   
         return OrderAmountCashConstant::NOT_ORDER_CASH;        
@@ -80,11 +78,6 @@ class AdminCaptainPaymentToCompanyManager
     public function getAllCaptainPaymentsToCompany(int $captainId): ?array
     {
         return $this->captainPaymentToCompanyEntityRepository->getAllCaptainPaymentsToCompany($captainId);
-    }
-
-    public function getSumPaymentsToCompany(int $captainId): ?array
-    {
-        return $this->captainPaymentToCompanyEntityRepository->getSumPayments($captainId);
     }
 
     public function  getSumPaymentsToCompanyInSpecificDate(int $captainId, string $fromDate, string $toDate): ?array
