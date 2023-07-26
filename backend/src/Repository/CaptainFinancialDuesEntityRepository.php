@@ -321,6 +321,13 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
 
             ->setParameter('entityType', ImageEntityTypeConstant::ENTITY_TYPE_CAPTAIN_PROFILE)
             ->setParameter('profileImage', ImageUseAsConstant::IMAGE_USE_AS_PROFILE_IMAGE)
+            // following conditions is just to retrieve the financial due (cycle) which started after merging
+            // Epic 13 on 2023-07-24
+            ->andWhere('captainFinancialDuesEntity.startDate >= :specificStartDate')
+            ->setParameter('specificStartDate', new DateTime('2023-07-23 00:00:00'))
+            ->andWhere('captainFinancialDuesEntity.endDate > :specificEndDate')
+            ->setParameter('specificEndDate', new DateTime('2023-07-25 23:59:59'))
+            // ----------------------------------------------------------------------------------------
 
             ->groupBy('captainFinancialDuesEntity.captain')
 
