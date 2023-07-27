@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 
 class CaptainPaymentRequest {
@@ -17,10 +16,8 @@ class CaptainPaymentRequest {
   Future<Map<String, dynamic>> toJson() async {
     final Map<String, dynamic> data = <String, dynamic>{};
 
-    if (!kIsWeb) {
-      data['customizedTimezone'] =
-          await FlutterNativeTimezone.getLocalTimezone();
-    }
+    data['customizedTimezone'] = await FlutterNativeTimezone.getLocalTimezone();
+
     if (captainProfileId != null) {
       data['captainProfileId'] = captainProfileId;
     }
