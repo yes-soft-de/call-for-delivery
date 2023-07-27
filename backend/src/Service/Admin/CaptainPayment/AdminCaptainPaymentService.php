@@ -289,6 +289,7 @@ class AdminCaptainPaymentService
         $response = [];
         $response['payments'] = [];
         $response['paymentsTotalAmount'] = 0.0;
+        $response['toBePaid'] = 0.0;
 
         $captainsPayments = $this->adminCaptainPaymentManager->filterCaptainPaymentByAdminV2($request);
 
@@ -297,6 +298,10 @@ class AdminCaptainPaymentService
                 $response['paymentsTotalAmount'] += $captainPayment->getAmount();
                 $response['payments'][] = $this->autoMapping->map(CaptainPaymentEntity::class, CaptainPaymentFilterByAdminV2Response::class, $captainPayment);
             }
+        }
+
+        if ($request->getCaptainProfileId()) {
+            $response['toBePaid'] = $this->getToBePaidToCaptain($request->getCaptainProfileId());
         }
 
         return $response;
@@ -308,5 +313,13 @@ class AdminCaptainPaymentService
     public function getAdminProfileEntityByAdminUserId(int $adminUserId): AdminProfileEntity|string
     {
         return $this->adminProfileGetService->getAdminProfileEntityByAdminUserId($adminUserId);
+    }
+
+    /**
+     * Returns what is final captain financial due for the current unpaid financial cycle
+     */
+    public function getToBePaidToCaptain(int $captainProfileId): float
+    {
+        return $this->adminCaptainFinancialDuesService->getUnpaidCaptainFinancialDueFinalAmount($captainProfileId);
     }
 }

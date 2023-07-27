@@ -204,4 +204,18 @@ class AdminCaptainFinancialDuesService
 
         return $response;
     }
+
+    /**
+     * Returns what is final captain financial due for the current unpaid financial cycle
+     */
+    public function getUnpaidCaptainFinancialDueFinalAmount(int $captainProfileId): float
+    {
+        $captainFinancialDue = $this->adminCaptainFinancialDuesManager->getUnPaidCaptainFinancialDueByCaptainProfileIdForAdmin($captainProfileId);
+
+        if (count($captainFinancialDue) === 0) {
+            return 0.0;
+        }
+
+        return ($captainFinancialDue[0]->getAmount() - $captainFinancialDue[0]->getAmountForStore());
+    }
 }
