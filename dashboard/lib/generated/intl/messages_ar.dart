@@ -587,8 +587,11 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تعديل اسم الفرع"),
         "editCoordinates":
             MessageLookupByLibrary.simpleMessage("تعديل الاحداثيات"),
+        "editDistance": MessageLookupByLibrary.simpleMessage("تعديل المسافة"),
         "editDistanceRequestDetails":
             MessageLookupByLibrary.simpleMessage("تفاصيل طلب تعديل المسافة"),
+        "editKilometer":
+            MessageLookupByLibrary.simpleMessage("تعديل كيلومترات"),
         "editOrder": MessageLookupByLibrary.simpleMessage("تعديل الطلب"),
         "editProfile":
             MessageLookupByLibrary.simpleMessage("تعديل معلومات المتجر"),
@@ -614,6 +617,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "ادخل سيارات للاضافة / للانقاص"),
         "enterDeliveryCompanyName":
             MessageLookupByLibrary.simpleMessage("ادخل اسم شركة التوصيل"),
+        "enterLink": MessageLookupByLibrary.simpleMessage("ادخال رابط"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("ادخل معلومات المنتج"),
         "enterTheMaxLimitThatAreAllowedToStoreDues":

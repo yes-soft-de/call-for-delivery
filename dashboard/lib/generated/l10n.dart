@@ -10736,6 +10736,36 @@ class S {
     );
   }
 
+  /// `edit distance`
+  String get editDistance {
+    return Intl.message(
+      'edit distance',
+      name: 'editDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `edit kilometer`
+  String get editKilometer {
+    return Intl.message(
+      'edit kilometer',
+      name: 'editKilometer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `enter link`
+  String get enterLink {
+    return Intl.message(
+      'enter link',
+      name: 'enterLink',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `capitan dues`
   String get captainDues {
     return Intl.message(

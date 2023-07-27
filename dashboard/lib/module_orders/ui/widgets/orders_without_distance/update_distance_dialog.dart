@@ -41,91 +41,89 @@ class _UpdateDistanceDialogState extends State<UpdateDistanceDialog> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: coordinations != null ? 215 : 130,
-      child: Column(
-        children: [
-          Container(
-            child: Column(
-              children: [
-                ListTile(
-                  title: Text(S.current.provideClientCoordinations),
-                  subtitle: CustomFormField(
-                    onChanged: () {
-                      setState(() {});
-                    },
-                    controller: _kilometer,
-                    hintText: S.current.provideClientCoordinationsHint,
-                  ),
-                ),
-                Visibility(
-                    visible: coordinations != null,
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Container(
-                        width: double.maxFinite,
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(25),
-                            color: Colors.amber),
-                        child: Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: GeoDistanceText(
-                              destination: coordinations ?? LatLng(0, 0),
-                              origin: widget.branchLocation,
-                              destance: (d, cost) {
-                                distance =
-                                    num.tryParse(d?.replaceAll(',', '') ?? '');
-                                setState(() {});
-                              },
-                              storeID: -1,
-                            )),
-                      ),
-                    )),
-              ],
-            ),
-          ),
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        Container(
+          child: Column(
             children: [
-              ElevatedButton(
-                  onPressed: distance == null || coordinations == null
-                      ? null
-                      : () {
-                          Navigator.of(context).pop();
-                          widget.callback(UpdateDistanceRequest(
-                            id: widget.id,
-                            storeBranchToClientDistance: distance,
-                            destination: Destination(
-                                lat: coordinations?.latitude,
-                                lon: coordinations?.longitude,
-                                link: LauncherLinkHelper.getMapsLink(
-                                  coordinations?.latitude ?? 0.0,
-                                  coordinations?.longitude ?? 0.0,
-                                )),
-                          ));
-                          _kilometer.clear();
-                        },
-                  child: Text(
-                    S.current.confirm,
-                    style: Theme.of(context).textTheme.button,
-                  )),
-              SizedBox(
-                width: 16,
-              ),
-              ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                    _kilometer.clear();
+              ListTile(
+                title: Text(S.current.provideClientCoordinations),
+                subtitle: CustomFormField(
+                  onChanged: () {
+                    setState(() {});
                   },
-                  child: Text(
-                    S.current.cancel,
-                    style: Theme.of(context).textTheme.button,
-                  ))
+                  controller: _kilometer,
+                  hintText: S.current.provideClientCoordinationsHint,
+                ),
+              ),
+              Visibility(
+                  visible: coordinations != null,
+                  child: Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Container(
+                      width: double.maxFinite,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Colors.amber),
+                      child: Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: GeoDistanceText(
+                            destination: coordinations ?? LatLng(0, 0),
+                            origin: widget.branchLocation,
+                            destance: (d, cost) {
+                              distance =
+                                  num.tryParse(d?.replaceAll(',', '') ?? '');
+                              setState(() {});
+                            },
+                            storeID: -1,
+                          )),
+                    ),
+                  )),
             ],
-          )
-        ],
-      ),
+          ),
+        ),
+        Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+                onPressed: distance == null || coordinations == null
+                    ? null
+                    : () {
+                        Navigator.of(context).pop();
+                        widget.callback(UpdateDistanceRequest(
+                          id: widget.id,
+                          storeBranchToClientDistance: distance,
+                          destination: Destination(
+                              lat: coordinations?.latitude,
+                              lon: coordinations?.longitude,
+                              link: LauncherLinkHelper.getMapsLink(
+                                coordinations?.latitude ?? 0.0,
+                                coordinations?.longitude ?? 0.0,
+                              )),
+                        ));
+                        _kilometer.clear();
+                      },
+                child: Text(
+                  S.current.confirm,
+                  style: Theme.of(context).textTheme.labelLarge,
+                )),
+            SizedBox(
+              width: 16,
+            ),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  _kilometer.clear();
+                },
+                child: Text(
+                  S.current.cancel,
+                  style: Theme.of(context).textTheme.labelLarge,
+                ))
+          ],
+        )
+      ],
     );
   }
 }

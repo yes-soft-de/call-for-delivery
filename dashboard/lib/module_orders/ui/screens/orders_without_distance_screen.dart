@@ -3,6 +3,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/global_nav_key.dart';
+import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/update_distance_request.dart';
 import 'package:c4d/module_orders/state_manager/orders_without_distance_state_manager.dart';
@@ -44,6 +45,14 @@ class OrdersWithoutDistanceScreenState
   void goToLogin() {
     Navigator.of(context)
         .pushNamed(AuthorizationRoutes.LOGIN_SCREEN, arguments: 1);
+  }
+
+  void addKilometer(AddExtraDistanceRequest request) {
+    widget._stateManager.addKilometer(this, request);
+  }
+
+  void addCoordinates(AddExtraDistanceRequest request) {
+    widget._stateManager.addCoordinates(this, request);
   }
 
   var today = DateTime.now();
@@ -110,7 +119,7 @@ class OrdersWithoutDistanceScreenState
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
-                        color: Theme.of(context).backgroundColor,
+                        color: Theme.of(context).colorScheme.background,
                       ),
                       child: Material(
                         color: Colors.transparent,
@@ -157,14 +166,14 @@ class OrdersWithoutDistanceScreenState
                     child: Container(
                       width: 32,
                       height: 2.5,
-                      color: Theme.of(context).backgroundColor,
+                      color: Theme.of(context).colorScheme.background,
                     ),
                   ),
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
-                        color: Theme.of(context).backgroundColor,
+                        color: Theme.of(context).colorScheme.background,
                       ),
                       child: Material(
                         color: Colors.transparent,
