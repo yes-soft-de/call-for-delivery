@@ -546,7 +546,7 @@ class AdminCaptainPaymentController extends BaseController
      * )
      *
      * @OA\RequestBody(
-     *      description="update payment to captain by admin request",
+     *      description="filter captain payments request",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="fromDate"),
      *          @OA\Property(type="string", property="toDate"),
@@ -557,14 +557,20 @@ class AdminCaptainPaymentController extends BaseController
      *
      * @OA\Response(
      *      response=204,
-     *      description="Returns updated payment info",
+     *      description="Returns filtered captain payments",
      *      @OA\JsonContent(
      *          @OA\Property(type="string", property="status_code"),
      *          @OA\Property(type="string", property="msg"),
      *          @OA\Property(type="object", property="Data",
-     *              ref=@Model(type="App\Response\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentFilterByAdminResponse")
+     *              @OA\Property(type="array", property="payments",
+     *                  @OA\Items(
+     *                      ref=@Model(type="App\Response\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentFilterByAdminResponse")
+     *                  )
+     *              ),
+     *              @OA\Property(type="number", property="paymentsTotalAmount"),
+     *              @OA\Property(type="number", property="toBePaid")
+     *          )
      *      )
-     *   )
      * )
      *
      * @Security(name="Bearer")

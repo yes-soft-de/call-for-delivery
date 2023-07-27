@@ -212,11 +212,24 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('captainPaymentEntity')
 
+            // following conditions is just to retrieve the payments which started after merging
+            // Epic 13 on 2023-07-24
+            ->andWhere('captainPaymentEntity.createdAt > :specificDate')
+            ->setParameter('specificDate', new DateTime('2023-07-04 00:00:00'))
+
             ->orderBy('captainPaymentEntity.id', 'DESC');
 
         if ($request->getCaptainProfileId()) {
             $query->andWhere('captainPaymentEntity.captain = :captainProfileId')
                 ->setParameter('captainProfileId', $request->getCaptainProfileId());
+        }
+
+        if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
+            || ($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")
+            || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $tempQuery = $query->getQuery()->getResult();
+
+            return $this->filterCaptainPaymentEntitiesByOptionalStringDates($tempQuery, $request->getFromDate(), $request->getToDate(), $request->getCustomizedTimezone());
         }
 
         return $query->getQuery()->getResult();
