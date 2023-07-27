@@ -1083,5 +1083,8 @@
     "thereIsNoPaymentToMade" : "there is no payment to made",
     "areYouSureAboutMakePayment" : "are you sure about make payment",
     "youCantEditOrDeleteAfterConfirm" : "you cant edit or delete after confirm",
+    "editDistance" : "edit distance",
+    "editKilometer" : "edit kilometer",
+    "enterLink" : "enter link",
     "dev": "Dev"
 }

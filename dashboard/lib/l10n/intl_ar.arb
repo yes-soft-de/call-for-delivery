@@ -1082,5 +1082,8 @@
     "thereIsNoPaymentToMade" : "لا يوجد دفعة لتسديدها",
     "areYouSureAboutMakePayment" : "هل انت متاكد من تسجيل الدفعة؟",
     "youCantEditOrDeleteAfterConfirm" : "لن يمكنك التعديل او التراجع بعد تاكيد تسجيل دفعة",
+    "editDistance" : "تعديل المسافة",
+    "editKilometer" : "تعديل كيلومترات",
+    "enterLink" : "ادخال رابط",
     "dev": "المطورين"
 }
