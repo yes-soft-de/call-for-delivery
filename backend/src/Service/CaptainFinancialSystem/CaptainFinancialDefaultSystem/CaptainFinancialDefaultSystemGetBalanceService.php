@@ -41,24 +41,10 @@ class CaptainFinancialDefaultSystemGetBalanceService
             $date, $timeZone);
     }
 
-//    /**
-//     * Get the dues of unpaid cash orders (for group of orders)
-//     */
-//    public function getUnPaidCashOrdersDueByCaptainProfileIdAndDuringSpecificTime(int $captainId, string $fromDate, string $toDate): string
-//    {
-//        return $this->captainFinancialDefaultSystemGetStoreAmountService->getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime($captainId,
-//            $fromDate, $toDate);
-//    }
-
     public function getUnPaidStoreOwnerDuesFromCashOrdersByOrderId(int $orderId): int|StoreOwnerDuesFromCashOrdersEntity
     {
         return $this->captainFinancialDefaultSystemGetStoreAmountService->getUnPaidStoreOwnerDuesFromCashOrdersByOrderId($orderId);
     }
-
-//    public function getLastCaptainPaymentDateByCaptainProfileId(int $captainProfileId): \DateTimeInterface|int
-//    {
-//        return $this->captainPaymentGetService->getLastCaptainPaymentDateByCaptainProfileId($captainProfileId);
-//    }
 
     public function getStartAndEndDateTimeOfToday(string $timeZone = null): array
     {
@@ -109,46 +95,6 @@ class CaptainFinancialDefaultSystemGetBalanceService
 
         return $response;
     }
-
-//    /**
-//     * For each order:
-//     *      if order distance != null
-//     *          if order distance <= 5 k
-//     *              financial amount += (10 + 2.5)
-//     *
-//     *          else if order distance >= 6 AND order distance < 9
-//     *              financial amount += (10 + (0.5 * order distance))
-//     *
-//     *          else if order distance >= 9
-//     *              financial amount += (10 + (0.75 * order distance))
-//     *
-//     * final financial amount = financial amount - amount for store (which remains with the captain)
-//     */
-//    public function calculateCaptainFinancialAmountViaOrdersArray(array $orders, array $financialSystemDetail): float
-//    {
-//        $financialAmount = 0.0;
-//
-//        foreach ($orders as $order) {
-//            $distance = $order['storeBranchToClientDistance'];
-//
-//            if ($distance) {
-//                $financialAmount += $financialSystemDetail['openingOrderCost'];
-//
-//                if ($distance <= $financialSystemDetail['firstSliceLimit']) {
-//                    $financialAmount += $financialSystemDetail['firstSliceCost'];
-//
-//                } elseif (($distance >= $financialSystemDetail['secondSliceFromLimit'])
-//                    && ($distance < $financialSystemDetail['secondSliceToLimit'])) {
-//                    $financialAmount += ($distance * $financialSystemDetail['secondSliceOneKilometerCost']);
-//
-//                } elseif ($distance >= $financialSystemDetail['thirdSliceFromLimit']) {
-//                    $financialAmount += ($distance * $financialSystemDetail['thirdSliceOneKilometerCost']);
-//                }
-//            }
-//        }
-//
-//        return $financialAmount;
-//    }
 
     public function getCaptainBalanceDetails(int $captainProfileId, array $financialSystemDetail, ?string $timeZone = null): CaptainFinancialDefaultSystemBalanceDetailsGetResponse
     {

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Constant\CaptainPayment\PaymentToCaptain\CaptainPaymentConstant;
+use App\Entity\CaptainFinancialDemandEntity;
 use App\Entity\CaptainPaymentEntity;
 use App\Entity\CaptainEntity;
 use App\Request\Admin\CaptainPayment\PaymentToCaptain\CaptainPaymentFilterByAdminRequest;
@@ -289,5 +290,40 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
         }
 
         return $filteredOrders;
+    }
+
+    public function getCaptainPaymentSumByCaptainProfileIdAndCaptainFinancialDemand(int $captainProfileId): array
+    {
+        return $this->createQueryBuilder('captainPaymentEntity')
+            ->select('SUM(captainPaymentEntity.amount)')
+
+            ->andWhere('captainPaymentEntity.captain = :captainProfileId')
+            ->setParameter('captainProfileId', $captainProfileId)
+
+            ->leftJoin(
+                CaptainFinancialDuesEntity::class,
+                'captainFinancialDueEntity',
+                Join::WITH,
+                'captainFinancialDueEntity.id = captainPaymentEntity.captainFinancialDues'
+            )
+
+            ->leftJoin(
+                CaptainFinancialDemandEntity::class,
+                'captainFinancialDemandEntity',
+                Join::WITH,
+                'captainFinancialDemandEntity.captainFinancialDueId = captainFinancialDueEntity.id'
+            )
+
+            ->andWhere('captainFinancialDemandEntity.id IS NOT NULL')
+            // following conditions is just to retrieve the financial due (cycle) which started after merging
+            // Epic 13 on 2023-07-24
+            ->andWhere('captainFinancialDueEntity.startDate >= :specificStartDate')
+            ->setParameter('specificStartDate', new DateTime('2023-07-23 00:00:00'))
+            ->andWhere('captainFinancialDueEntity.endDate > :specificEndDate')
+            ->setParameter('specificEndDate', new DateTime('2023-07-25 23:59:59'))
+            // ----------------------------------------------------------------------------------------
+
+            ->getQuery()
+            ->getSingleColumnResult();
     }
 }

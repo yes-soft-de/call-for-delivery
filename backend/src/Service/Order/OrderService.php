@@ -404,7 +404,10 @@ class OrderService
             return CaptainConstant::ERROR_CAPTAIN_ONLINE_FALSE;
         }
 
-        $this->captainFinancialDuesService->updateCaptainFinancialSystemDetail($userId);
+        // Following statement is for ending Captain Financial Due (Cycle) when end date is passed.
+        // Following statement had been commented out because ending Captain Financial Due is done by admin when creating
+        // new payment for captain
+        // $this->captainFinancialDuesService->updateCaptainFinancialSystemDetail($userId);
 
         $captainFinancialSystemStatus = $this->captainService->getCaptainFinancialSystemStatus($userId);
         if ($captainFinancialSystemStatus->status === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_INACTIVE) {

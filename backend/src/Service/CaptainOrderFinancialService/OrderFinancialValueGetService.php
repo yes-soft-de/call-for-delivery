@@ -3,6 +3,7 @@
 namespace App\Service\CaptainOrderFinancialService;
 
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
+use App\Service\CaptainFinancialSystem\CaptainFinancialDefaultSystem\OrderFinancialValueAccordingToDefaultSystemCalculationService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialSystemDetail\CaptainFinancialSystemDetailGetService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialSystemOne\OrderFinancialValueAccordingToSystemOneCalculationService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialSystemThree\OrderFinancialValueAccordingToSystemThreeCalculationService;
@@ -14,7 +15,8 @@ class OrderFinancialValueGetService
         private CaptainFinancialSystemDetailGetService $captainFinancialSystemDetailGetService,
         private OrderFinancialValueAccordingToSystemTwoCalculationService $orderFinancialValueAccordingToSystemTwoCalculationService,
         private OrderFinancialValueAccordingToSystemThreeCalculationService $orderFinancialValueAccordingToSystemThreeCalculationService,
-        private OrderFinancialValueAccordingToSystemOneCalculationService $orderFinancialValueAccordingToSystemOneCalculationService
+        private OrderFinancialValueAccordingToSystemOneCalculationService $orderFinancialValueAccordingToSystemOneCalculationService,
+        private OrderFinancialValueAccordingToDefaultSystemCalculationService $orderFinancialValueAccordingToDefaultSystemCalculationService
     )
     {
     }
@@ -39,6 +41,10 @@ class OrderFinancialValueGetService
                 $orderFinancialValuesArray = $this->getOrderFinancialValueAccordingOnOrders($captainProfileId, $orderDistance);
 
                 return array_sum($orderFinancialValuesArray);
+
+            } elseif ($captainFinancialSystemDetails['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST) {
+                // Captain financial system is the default system
+                return $this->getOrderFinancialValueAccordingOnDefaultFinancialSystem($captainFinancialSystemDetails, $orderDistance);
             }
         }
 
@@ -65,5 +71,10 @@ class OrderFinancialValueGetService
     {
         return $this->orderFinancialValueAccordingToSystemOneCalculationService->getOrderFinancialValueAccordingOnCountOfHours($compensationForEveryOrder,
             $orderDistance);
+    }
+
+    private function getOrderFinancialValueAccordingOnDefaultFinancialSystem(array $captainFinancialSystemDetails, ?float $orderDistance = null): float
+    {
+        return $this->orderFinancialValueAccordingToDefaultSystemCalculationService->getOrderFinancialValueAccordingToDefaultFinancialSystem($captainFinancialSystemDetails, $orderDistance);
     }
 }
