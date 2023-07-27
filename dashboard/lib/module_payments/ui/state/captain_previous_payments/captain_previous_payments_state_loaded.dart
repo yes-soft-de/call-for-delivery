@@ -2,8 +2,8 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_payments/model/captain_previous_payments_model.dart';
 import 'package:c4d/module_payments/request/captain_previous_payments_request.dart';
-import 'package:c4d/module_payments/request/payment/paymnet_status_request.dart';
 import 'package:c4d/module_payments/ui/screen/captain_previous_payments_screen.dart';
+import 'package:c4d/module_payments/ui/widget/add_payment_to_captain_dialog.dart';
 import 'package:c4d/module_payments/ui/widget/payment_card.dart' as p;
 import 'package:c4d/module_payments/ui/widget/payment_widget.dart';
 import 'package:c4d/module_payments/ui/widget/select_date_bar_widget.dart';
@@ -22,7 +22,8 @@ class CaptainPreviousPaymentsStateLoaded extends States {
   @override
   Widget getUI(BuildContext context) {
     return Scaffold(
-      appBar: CustomC4dAppBar.appBar(context, title: S.current.previousPayments),
+      appBar:
+          CustomC4dAppBar.appBar(context, title: S.current.previousPayments),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -34,79 +35,10 @@ class CaptainPreviousPaymentsStateLoaded extends States {
                   showDialog(
                     context: context,
                     builder: (context) {
-                      return Dialog(
-                        child: Container(
-                          constraints: BoxConstraints(
-                            maxWidth: MediaQuery.sizeOf(context).width * 0.5,
-                          ),
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Align(
-                                alignment: Alignment.topLeft,
-                                child: IconButton(
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                  },
-                                  icon: Icon(
-                                    Icons.cancel,
-                                    color: Colors.red,
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(horizontal: 30),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      S.current.areYouSureAboutMakePayment,
-                                      style:
-                                          Theme.of(context).textTheme.bodyLarge,
-                                    ),
-                                    SizedBox(height: 30),
-                                    Text(S.current
-                                        .youCantEditOrDeleteAfterConfirm),
-                                    SizedBox(height: 30),
-                                    Center(
-                                      child: ElevatedButton(
-                                        child: Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 20,
-                                          ),
-                                          child: Text(S.current.confirm),
-                                        ),
-                                        onPressed: () {
-                                          Navigator.pop(context);
-                                          screenState.makePayment(
-                                            PaymentStatusRequest(
-                                              storeOwnerProfile:
-                                                  screenState.captainId,
-                                              status: PaymentStatus.paidSuccess,
-                                              amount: model.subscriptionCost,
-                                              paymentFor: PaymentFor
-                                                  .unifiedSubscription,
-                                              paymentGetaway:
-                                                  PaymentGetaway.manual,
-                                              paymentType: PaymentType
-                                                  .realPaymentByAdmin,
-                                            ),
-                                            () {
-                                              screenState.getReceipts(request);
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                    SizedBox(height: 20),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                      return AddPaymentToCaptainDialog(
+                        onConfirmed: (request) {
+                          screenState.addPayment(request);
+                        },
                       );
                     },
                   );
@@ -127,7 +59,7 @@ class CaptainPreviousPaymentsStateLoaded extends States {
                     title: S.current.from,
                     selectedDate: request.fromDate,
                     onSelected: (selectedDate) {
-                      screenState.getReceipts(
+                      screenState.filterCaptainPayment(
                         request.copyWith(fromDate: selectedDate),
                       );
                     },
@@ -136,7 +68,7 @@ class CaptainPreviousPaymentsStateLoaded extends States {
                 Flexible(
                   child: SelectDataBar(
                     onSelected: (selectedDate) {
-                      screenState.getReceipts(
+                      screenState.filterCaptainPayment(
                         request.copyWith(toDate: selectedDate),
                       );
                     },
@@ -147,19 +79,21 @@ class CaptainPreviousPaymentsStateLoaded extends States {
               ],
             ),
             SizedBox(height: 10),
-            ListView.builder(
-              shrinkWrap: true,
-              itemCount: model.ePayments.length,
-              itemBuilder: (context, index) {
-                var payment = model.ePayments[index];
-                return p.PaymentCard(
-                  paymentValue: S.current
-                      .paymentValueRiyal(payment.amount.toStringAsFixed(2)),
-                  paymentType: p.PaymentType.fromInt(payment.paymentGetaway),
-                  date:
-                      '${DateFormat('yyyy/MM/dd', 'en').format(payment.createdAt)}',
-                );
-              },
+            Flexible(
+              child: ListView.builder(
+                shrinkWrap: true,
+                itemCount: model.ePayments.length,
+                itemBuilder: (context, index) {
+                  var payment = model.ePayments[index];
+                  return p.PaymentCard(
+                    paymentValue: S.current
+                        .paymentValueRiyal(payment.amount.toStringAsFixed(2)),
+                    paymentType: p.PaymentType.fromInt(payment.paymentGetaway),
+                    date:
+                        '${DateFormat('yyyy/MM/dd', 'en').format(payment.createdAt)}',
+                  );
+                },
+              ),
             ),
           ],
         ),

@@ -11,9 +11,11 @@ import 'package:c4d/module_payments/model/captain_dues_model.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_hours_model.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_order_count.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_order_model.dart';
+import 'package:c4d/module_payments/model/captain_previous_payments_model.dart';
 import 'package:c4d/module_payments/model/store_balance_model.dart';
 import 'package:c4d/module_payments/request/captain_daily_payment_request.dart';
 import 'package:c4d/module_payments/request/captain_payments_request.dart';
+import 'package:c4d/module_payments/request/captain_previous_payments_request.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_count_order_request.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_hours.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_order_request.dart';
@@ -25,6 +27,7 @@ import 'package:c4d/module_payments/response/captain_finance_by_order_counts_res
 import 'package:c4d/module_payments/response/captain_finance_by_order_response/captain_finance_by_order_response.dart';
 import 'package:c4d/module_payments/response/captain_finance_response/captain_finance_response.dart';
 import 'package:c4d/module_payments/response/captain_payments_response/captain_payments_response.dart';
+import 'package:c4d/module_payments/response/captain_previous_payment_response/captain_previous_payment_response.dart';
 import 'package:c4d/module_payments/response/store_payments_response/store_payments_response.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
 import 'package:injectable/injectable.dart';
@@ -105,6 +108,22 @@ class PaymentsService {
   }
 
   /*-----------------------------------CAPTAIN PAYMENTS----------------------------------------------- */
+
+  Future<DataModel> filterCaptainPayment(
+      CaptainPreviousPaymentRequest request) async {
+    CaptainPreviousPaymentResponse? response =
+        await _paymentsManager.filterCaptainPayment(request);
+    if (response == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    return CaptainPreviousPaymentsModel.withData(response);
+  }
+
   Future<DataModel> getCaptainBalance(int captainId) async {
     CaptainPaymentsResponse? _captainProfileResponse =
         await _paymentsManager.getAccountBalance(captainId);

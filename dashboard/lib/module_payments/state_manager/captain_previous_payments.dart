@@ -1,11 +1,14 @@
-import 'package:c4d/module_payments/model/store_balance_model.dart';
-import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
-import 'package:c4d/module_payments/service/payments_service.dart';
-import 'package:c4d/module_payments/ui/state/store_account/store_balance_state.dart';
-import 'package:injectable/injectable.dart';
+import 'package:c4d/abstracts/states/empty_state.dart';
+import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_payments/ui/screen/store_balance_screen.dart';
+import 'package:c4d/module_payments/model/captain_previous_payments_model.dart';
+import 'package:c4d/module_payments/request/captain_payments_request.dart';
+import 'package:c4d/module_payments/request/captain_previous_payments_request.dart';
+import 'package:c4d/module_payments/service/payments_service.dart';
+import 'package:c4d/module_payments/ui/screen/captain_previous_payments_screen.dart';
+import 'package:c4d/module_payments/ui/state/captain_previous_payments/captain_previous_payments_state_loaded.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
@@ -19,60 +22,51 @@ class CaptainPreviousPaymentsStateManager {
 
   CaptainPreviousPaymentsStateManager(this._storePaymentsService);
 
-  void getBalance(StoreBalanceScreenState screenState, int storeID) {
+  void filterCaptainPayment(CaptainPreviousPaymentsScreenState screenState,
+      CaptainPreviousPaymentRequest request) {
     _stateSubject.add(LoadingState(screenState));
-    _storePaymentsService.getStorePayments(storeID).then((value) {
+    _storePaymentsService.filterCaptainPayment(request).then((value) {
       if (value.hasError) {
-        _stateSubject.add(StoreBalanceLoadedState(
+        _stateSubject.add(ErrorState(
           screenState,
-          null,
           error: value.error,
+          onPressed: () {
+            filterCaptainPayment(screenState, request);
+          },
+          title: S.current.previousPayments,
         ));
       } else if (value.isEmpty) {
-        _stateSubject.add(
-            StoreBalanceLoadedState(screenState, null, empty: value.isEmpty));
+        _stateSubject.add(EmptyState(
+          screenState,
+          emptyMessage: S.current.emptyStaff,
+          title: S.current.previousPayments,
+          onPressed: () {
+            filterCaptainPayment(screenState, request);
+          },
+        ));
       } else {
-        StoreBalanceModel _balance = value as StoreBalanceModel;
-        _stateSubject.add(StoreBalanceLoadedState(screenState, _balance.data));
+        var _balance = value as CaptainPreviousPaymentsModel;
+        _stateSubject.add(CaptainPreviousPaymentsStateLoaded(
+          screenState,
+          _balance.data,
+          request,
+        ));
       }
     });
   }
 
-  void payForStore(
-      StoreBalanceScreenState screenState, CreateStorePaymentsRequest request) {
+  void addPayment(CaptainPreviousPaymentsScreenState screenState,
+      CaptainPaymentsRequest request, CaptainPreviousPaymentRequest filter) {
     _stateSubject.add(LoadingState(screenState));
-    _storePaymentsService.paymentToStore(request).then((value) {
+    _storePaymentsService.paymentToCaptain(request).then((value) {
       if (value.hasError) {
-        getBalance(screenState, request.storeId ?? -1);
         CustomFlushBarHelper.createError(
-                title: S.current.warnning,
-                message: value.error ?? S.current.errorHappened)
-            ;
+            title: S.current.warnning, message: value.error.toString());
+        filterCaptainPayment(screenState, filter);
       } else {
-        getBalance(screenState, request.storeId ?? -1);
+        filterCaptainPayment(screenState, filter);
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: value.error ?? S.current.paymentSuccessfully)
-            ;
-      }
-    });
-  }
-
-  void deletePayment(StoreBalanceScreenState screenState, String id) {
-    _stateSubject.add(LoadingState(screenState));
-    _storePaymentsService.deletePaymentFromStore(id).then((value) {
-      if (value.hasError) {
-        getBalance(screenState, screenState.storeID);
-        CustomFlushBarHelper.createError(
-                title: S.current.warnning,
-                message: value.error ?? S.current.errorHappened)
-            ;
-      } else {
-        getBalance(screenState, screenState.storeID);
-        CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: value.error ?? S.current.paymentsDeletedSuccessfully)
-            ;
+            title: S.current.warnning, message: S.current.paymentSuccessfully);
       }
     });
   }

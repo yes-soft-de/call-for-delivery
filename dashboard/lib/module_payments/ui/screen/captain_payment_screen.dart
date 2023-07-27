@@ -37,7 +37,9 @@ class CaptainPaymentScreenState extends State<CaptainPaymentScreen> {
       amount: request.amount,
       captainFinancialDuesId: request.captainFinancialDuesId,
       paymentFor: PaymentFor.captainDues,
-      paymentGetaway: PaymentGetaway.tapPayment,
+      paymentGetaway: request.type == CaptainPaymentType.bankTransfer
+          ? PaymentGetaway.tapPayment
+          : PaymentGetaway.manual,
       paymentType: PaymentType.realPaymentByAdmin,
     );
     widget._stateManager.addPayment(this, actualRequest);

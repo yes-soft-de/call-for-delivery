@@ -2,11 +2,10 @@ import 'dart:async';
 
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/module_payments/model/captain_previous_payments_model.dart';
+import 'package:c4d/module_payments/request/add_payment_to_captain_request.dart';
+import 'package:c4d/module_payments/request/captain_payments_request.dart';
 import 'package:c4d/module_payments/request/captain_previous_payments_request.dart';
-import 'package:c4d/module_payments/request/payment/paymnet_status_request.dart';
 import 'package:c4d/module_payments/state_manager/captain_previous_payments.dart';
-import 'package:c4d/module_payments/ui/state/captain_previous_payments/captain_previous_payments_state_loaded.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -27,6 +26,7 @@ class CaptainPreviousPaymentsScreenState
   late StreamSubscription _streamSubscription;
   late int captainId;
   late int captainFinancialDuesId;
+  late CaptainPreviousPaymentRequest filter;
 
   @override
   void initState() {
@@ -41,16 +41,26 @@ class CaptainPreviousPaymentsScreenState
     super.initState();
   }
 
-  void getReceipts(CaptainPreviousPaymentRequest request) {
+  void filterCaptainPayment(CaptainPreviousPaymentRequest request) {
     request.copyWith(captainId: captainId);
-    // widget._stateManager.getReceipts(
-    //   this,
-    //   request,
-    // );
+    widget._stateManager.filterCaptainPayment(
+      this,
+      request,
+    );
   }
 
-  void makePayment(PaymentStatusRequest request, Function onSuccess) {
-    // widget._stateManager.makePayment(this, request, onSuccess);
+  void addPayment(AddPaymentToCaptainRequest request) {
+    var actualRequest = CaptainPaymentsRequest(
+      captainId: captainId,
+      amount: request.amount,
+      captainFinancialDuesId: captainFinancialDuesId,
+      paymentFor: PaymentFor.captainDues,
+      paymentGetaway: request.type == CaptainPaymentType.bankTransfer
+          ? PaymentGetaway.tapPayment
+          : PaymentGetaway.manual,
+      paymentType: PaymentType.realPaymentByAdmin,
+    );
+    widget._stateManager.addPayment(this, actualRequest, filter);
   }
 
   @override
@@ -70,28 +80,12 @@ class CaptainPreviousPaymentsScreenState
         captainId = args[0];
         captainFinancialDuesId = args[1];
       }
-      var model = CaptainPreviousPaymentsModel(
-        ePayments: [
-          EPaymentModel(
-            amount: 10,
-            createdAt: DateTime.now(),
-            createdBy: 1,
-            details: 'no d',
-            id: 1,
-            paymentFor: 123,
-            paymentGetaway: 123,
-            paymentType: 123,
-          ),
-        ],
-        hasTpPay: true,
-        subscriptionCost: 123.45,
-      );
-      var request = CaptainPreviousPaymentRequest(
+
+      filter = CaptainPreviousPaymentRequest(
         captainId: captainId,
+        captainFinancialDuesId: captainFinancialDuesId,
       );
-      _currentState = CaptainPreviousPaymentsStateLoaded(this, model, request);
-      // TODO: call the api
-      // getReceipts(ReceiptsRequest(storeOwnerProfileId: storeProfileModel.id));
+      filterCaptainPayment(filter);
     }
     return Scaffold(body: _currentState.getUI(context));
   }

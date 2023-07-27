@@ -6,6 +6,7 @@ import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
 import 'package:c4d/module_payments/request/captain_daily_payment_request.dart';
 import 'package:c4d/module_payments/request/captain_payments_request.dart';
+import 'package:c4d/module_payments/request/captain_previous_payments_request.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_count_order_request.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_hours.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_order_request.dart';
@@ -17,6 +18,7 @@ import 'package:c4d/module_payments/response/captain_finance_by_order_counts_res
 import 'package:c4d/module_payments/response/captain_finance_by_order_response/captain_finance_by_order_response.dart';
 import 'package:c4d/module_payments/response/captain_finance_response/captain_finance_response.dart';
 import 'package:c4d/module_payments/response/captain_payments_response/captain_payments_response.dart';
+import 'package:c4d/module_payments/response/captain_previous_payment_response/captain_previous_payment_response.dart';
 import 'package:c4d/module_payments/response/store_payments_response/store_payments_response.dart';
 import 'package:injectable/injectable.dart';
 
@@ -75,6 +77,16 @@ class PaymentsRepository {
   }
 
   /* ---------------------------------- PAYMENT TO CAPTAIN --------------------------------------- */
+  Future<CaptainPreviousPaymentResponse?> filterCaptainPayment(
+      CaptainPreviousPaymentRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+        Urls.FILTER_CAPTAIN_PAYMENT, await request.toMap(),
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return CaptainPreviousPaymentResponse.fromJson(response);
+  }
+
   Future<ActionResponse?> paymentToCaptain(
       CaptainPaymentsRequest request) async {
     var token = await _authService.getToken();
@@ -167,10 +179,10 @@ class PaymentsRepository {
   }
 
   /* ---------------------------------- CAPTAIN FINANCE --------------------------------------- */
-  Future<CaptainFinanceResponse?> getCaptainFinance(
-      int captainId) async {
+  Future<CaptainFinanceResponse?> getCaptainFinance(int captainId) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get('${Urls.GET_CAPTAIN_FINCANCE_DUES}/${captainId}',
+    dynamic response = await _apiClient.get(
+        '${Urls.GET_CAPTAIN_FINCANCE_DUES}/${captainId}',
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return CaptainFinanceResponse.fromJson(response);

@@ -4,18 +4,18 @@ import 'package:flutter/material.dart';
 enum PaymentType {
   cash,
   notSpecified,
-  card;
-  
+  bankTransfer;
+
   static PaymentType fromInt(int paymentType) {
     if (paymentType == 236) return PaymentType.cash;
     if (paymentType == 235) return PaymentType.notSpecified;
-    return PaymentType.card;
+    return PaymentType.bankTransfer;
   }
 
   String get paymentTypeName {
     if (this == PaymentType.cash) return S.current.cash;
     if (this == PaymentType.notSpecified) return S.current.skipped;
-    return S.current.card;
+    return S.current.bankTransfer;
   }
 
   Color get paymentTypeColor {
@@ -23,7 +23,6 @@ enum PaymentType {
     if (this == PaymentType.notSpecified) return Colors.red;
     return Colors.amber;
   }
-
 }
 
 class PaymentCard extends StatelessWidget {

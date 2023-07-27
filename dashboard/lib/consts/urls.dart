@@ -303,6 +303,8 @@ class Urls {
       DOMAIN + '/v1/captainfinancialsystemdetail/captainfinancialsystemdetail';
 
   /*------------------------CAPTAIN FINANCE------------------------*/
+  static const FILTER_CAPTAIN_PAYMENT =
+      DOMAIN + VERSION_ADMIN + '/captainpayment/filtercaptainpaymentbyadmin';
   static const GET_CAPTAIN_FINANCE_BY_ORDERS =
       BASE_API_CAPTAIN_FINANCE_BY_ORDER +
           '/captainfinancialsystemaccordingonorderbyadmin';
