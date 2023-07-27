@@ -4,11 +4,14 @@ namespace App\Service\Admin\CaptainFinancialSystem;
 
 use App\AutoMapping;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
+use App\Constant\CaptainPayment\PaymentToCaptain\CaptainPaymentResultConstant;
 use App\Constant\Order\OrderAmountCashConstant;
+use App\Entity\CaptainPaymentEntity;
 use App\Manager\Admin\CaptainFinancialSystem\AdminCaptainFinancialDuesManager;
 use App\Request\Admin\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueFilterByAdminRequest;
 use App\Response\Admin\CaptainFinancialSystem\AdminCaptainFinancialDuesResponse;
 use App\Response\Admin\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueSumFilterByAdminResponse;
+use App\Response\Admin\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueUnpaidStatusGetForAdminResponse;
 use App\Service\Admin\CaptainPayment\AdminCaptainPaymentGetService;
 use App\Service\CaptainPayment\CaptainPaymentService;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
@@ -161,6 +164,41 @@ class AdminCaptainFinancialDuesService
                 if ($request->getStatus() === CaptainFinancialDues::FINANCIAL_DUES_UNPAID) {
                     $response[$key]->toBePaid = $response[$key]->financialDueAmount;
                 }
+            }
+        }
+
+        return $response;
+    }
+
+    public function getLastCaptainPaymentByCaptainProfileId(int $captainProfileId): int|CaptainPaymentEntity
+    {
+        return $this->adminCaptainPaymentGetService->getLastCaptainPaymentByCaptainProfileId($captainProfileId);
+    }
+
+    public function getUnPaidCaptainFinancialDueByCaptainProfileIdForAdmin(int $captainProfileId): array|CaptainFinancialDueUnpaidStatusGetForAdminResponse
+    {
+        $response = [];
+
+        $captainFinancialDue = $this->adminCaptainFinancialDuesManager->getUnPaidCaptainFinancialDueByCaptainProfileIdForAdmin($captainProfileId);
+        $captainPayment = $this->getLastCaptainPaymentByCaptainProfileId($captainProfileId);
+
+        if (count($captainFinancialDue) > 0) {
+            $response = $this->autoMapping->map(CaptainFinancialDuesEntity::class, CaptainFinancialDueUnpaidStatusGetForAdminResponse::class,
+                $captainFinancialDue[0]);
+
+            $response->finalAmount = $response->amount - $response->amountForStore;
+
+            if ($captainPayment !== CaptainPaymentResultConstant::CAPTAIN_PAYMENT_NOT_EXIST) {
+                $response->lastPaymentId = $captainPayment->getId();
+                $response->lastPaymentAmount = $captainPayment->getAmount();
+                $response->lastPaymentDate = $captainPayment->getCreatedAt();
+            }
+
+        } else {
+            if ($captainPayment !== CaptainPaymentResultConstant::CAPTAIN_PAYMENT_NOT_EXIST) {
+                $response['lastPaymentId'] = $captainPayment->getId();
+                $response['lastPaymentAmount'] = $captainPayment->getAmount();
+                $response['lastPaymentDate'] = $captainPayment->getCreatedAt();
             }
         }
 

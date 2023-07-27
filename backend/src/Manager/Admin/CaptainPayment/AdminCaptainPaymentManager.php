@@ -155,4 +155,9 @@ class AdminCaptainPaymentManager
     {
         return $this->captainPaymentEntityRepository->getCaptainPaymentSumByCaptainProfileIdAndCaptainFinancialDemand($captainProfileId);
     }
+
+    public function getLastCaptainPaymentByCaptainProfileId(int $captainProfileId): array
+    {
+        return $this->captainPaymentEntityRepository->findBy(['captain' => $captainProfileId], ['id' => 'DESC'], 1);
+    }
 }
