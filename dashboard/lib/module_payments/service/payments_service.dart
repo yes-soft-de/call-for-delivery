@@ -7,6 +7,7 @@ import 'package:c4d/module_payments/manager/payments_manager.dart';
 import 'package:c4d/module_payments/model/captain_all_amount_model.dart';
 import 'package:c4d/module_payments/model/captain_balance_model.dart';
 import 'package:c4d/module_payments/model/captain_daily_finance.dart';
+import 'package:c4d/module_payments/model/captain_dues_model.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_hours_model.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_order_count.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_order_model.dart';
@@ -22,6 +23,7 @@ import 'package:c4d/module_payments/response/captain_dialy_finance/captain_dialy
 import 'package:c4d/module_payments/response/captain_finance_by_hours_response/captain_finance_by_hours_response.dart';
 import 'package:c4d/module_payments/response/captain_finance_by_order_counts_response/captain_finance_by_order_counts_response.dart';
 import 'package:c4d/module_payments/response/captain_finance_by_order_response/captain_finance_by_order_response.dart';
+import 'package:c4d/module_payments/response/captain_finance_response/captain_finance_response.dart';
 import 'package:c4d/module_payments/response/captain_payments_response/captain_payments_response.dart';
 import 'package:c4d/module_payments/response/store_payments_response/store_payments_response.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
@@ -236,6 +238,22 @@ class PaymentsService {
   }
 
   /* ---------------------------------- CAPTAIN FINANCE --------------------------------------- */
+  Future<DataModel> getCaptainFinance(int captainId) async {
+    CaptainFinanceResponse? actionResponse =
+        await _paymentsManager.getCaptainFinance(captainId);
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    if (actionResponse.data == null) {
+      return DataModel.empty();
+    }
+    return CaptainPaymentModel.withData(actionResponse);
+  }
+
   /* GET */
   Future<DataModel> getCaptainFinanceByOrder() async {
     CaptainFinanceByOrderResponse? actionResponse =

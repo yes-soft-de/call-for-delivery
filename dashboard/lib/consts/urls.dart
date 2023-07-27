@@ -345,6 +345,10 @@ class Urls {
   static const NEW_GET_CAPTAIN_FINANCE_ALL_AMOUNT = DOMAIN +
       VERSION_ADMIN +
       '/captainpayment/filterpaymentsforcaptainfinancialdailybyadmin';
+
+  static const GET_CAPTAIN_FINCANCE_DUES = DOMAIN +
+      VERSION +
+      '/captainfinancialduesforadmin/unpaidcaptainfinancialduebyadmin';
   /*-----------------Supplier--Categories---------------*/
   static const GET_SUPPLIER_CATEGORIES =
       BASE_API_SUPPLIER_CATE + '/suppliercategories';

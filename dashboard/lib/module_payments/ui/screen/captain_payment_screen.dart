@@ -2,10 +2,9 @@ import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_captain/request/captain_payment_request.dart';
-import 'package:c4d/module_payments/model/captain_dues_model.dart';
 import 'package:c4d/module_payments/request/add_payment_to_captain_request.dart';
+import 'package:c4d/module_payments/request/captain_payments_request.dart';
 import 'package:c4d/module_payments/state_manager/captain_payment_state_manager.dart';
-import 'package:c4d/module_payments/ui/state/captain_payment_state_loaded.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -33,9 +32,19 @@ class CaptainPaymentScreenState extends State<CaptainPaymentScreen> {
   }
 
   void addPayment(AddPaymentToCaptainRequest request) {
-    request = request.copyWith(captainId: captainID);
-    print(request);
-    // TODO: call the api
+    var actualRequest = CaptainPaymentsRequest(
+      captainId: captainID,
+      amount: request.amount,
+      captainFinancialDuesId: request.captainFinancialDuesId,
+      paymentFor: PaymentFor.captainDues,
+      paymentGetaway: PaymentGetaway.tapPayment,
+      paymentType: PaymentType.realPaymentByAdmin,
+    );
+    widget._stateManager.addPayment(this, actualRequest);
+  }
+
+  void getCaptainPaymentsDetails() {
+    widget._stateManager.getCaptainPaymentsDetails(this, captainID);
   }
 
   CaptainPaymentStateManager get manager => widget._stateManager;
@@ -62,19 +71,10 @@ class CaptainPaymentScreenState extends State<CaptainPaymentScreen> {
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
     if (args != null && args is List && flag) {
+      flag = false;
       captainID = args[0];
       captainName = args[1];
-      flag = false;
-      paymentsFilter.captainProfileId = captainID;
-      var model = CaptainPaymentModel(
-          duesSinceLastPayment: 123.34,
-          lastPayment: 567.89,
-          lastPaymentDate: DateTime.now(),
-          profitsFromOrders: 123.45,
-          unpaidAmountsFromCashToStores: 321.54);
-      currentState = CaptainPaymentStateLoaded(this, model);
-      // TODO: make api call here
-      // widget._stateManager.getAccountBalance(this, paymentsFilter);
+      getCaptainPaymentsDetails();
     }
     return Scaffold(
       appBar: CustomC4dAppBar.appBar(

@@ -118,6 +118,7 @@ class _AddPaymentToCaptainDialogState extends State<AddPaymentToCaptainDialog> {
                     onPressed: (_paymentController.text.isNotEmpty)
                         ? () {
                             var request = AddPaymentToCaptainRequest(
+                              captainFinancialDuesId: -1,
                               amount:
                                   num.tryParse(_paymentController.text) ?? 0,
                               captainId: -1,
@@ -150,6 +151,7 @@ class _AddPaymentToCaptainDialogState extends State<AddPaymentToCaptainDialog> {
                                               onPressed: () {
                                                 var request =
                                                     AddPaymentToCaptainRequest(
+                                                  captainFinancialDuesId: -1,
                                                   amount: num.tryParse(
                                                           _paymentController
                                                               .text) ??

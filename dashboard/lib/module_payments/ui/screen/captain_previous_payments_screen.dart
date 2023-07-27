@@ -26,6 +26,7 @@ class CaptainPreviousPaymentsScreenState
   late States _currentState;
   late StreamSubscription _streamSubscription;
   late int captainId;
+  late int captainFinancialDuesId;
 
   @override
   void initState() {
@@ -67,6 +68,7 @@ class CaptainPreviousPaymentsScreenState
       var args = ModalRoute.of(context)?.settings.arguments;
       if (args is List) {
         captainId = args[0];
+        captainFinancialDuesId = args[1];
       }
       var model = CaptainPreviousPaymentsModel(
         ePayments: [

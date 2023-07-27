@@ -37,6 +37,9 @@ class CaptainPaymentStateLoaded extends States {
                   builder: (context) {
                     return AddPaymentToCaptainDialog(
                       onConfirmed: (request) {
+                        request = request.copyWith(
+                          captainFinancialDuesId: model.captainFinancialDuesId,
+                        );
                         screenState.addPayment(request);
                       },
                     );
@@ -52,7 +55,7 @@ class CaptainPaymentStateLoaded extends States {
                 Navigator.pushNamed(
                   context,
                   PaymentsRoutes.CAPTAIN_PREVIOUS_PAYMENTS,
-                  arguments: [screenState.captainID],
+                  arguments: [screenState.captainID, model.captainFinancialDuesId],
                 );
               },
               title: S.current.showPreviousPayments,

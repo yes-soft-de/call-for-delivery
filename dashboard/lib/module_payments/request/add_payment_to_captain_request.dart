@@ -17,12 +17,14 @@ enum CaptainPaymentType {
 
 class AddPaymentToCaptainRequest {
   int captainId;
+  int captainFinancialDuesId;
   num amount;
   String? note;
   CaptainPaymentType type;
 
   AddPaymentToCaptainRequest({
     required this.captainId,
+    required this.captainFinancialDuesId,
     required this.amount,
     this.note,
     required this.type,
@@ -30,12 +32,14 @@ class AddPaymentToCaptainRequest {
 
   AddPaymentToCaptainRequest copyWith({
     int? captainId,
+    int? captainFinancialDuesId,
     num? amount,
     String? note,
     CaptainPaymentType? type,
   }) {
     return AddPaymentToCaptainRequest(
       captainId: captainId ?? this.captainId,
+      captainFinancialDuesId: captainFinancialDuesId ?? this.captainFinancialDuesId,
       amount: amount ?? this.amount,
       note: note ?? this.note,
       type: type ?? this.type,
@@ -45,6 +49,7 @@ class AddPaymentToCaptainRequest {
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'captainId': captainId,
+      'captainFinancialDuesId': captainFinancialDuesId,
       'amount': amount,
       'note': note,
       'type': type.backendValue,

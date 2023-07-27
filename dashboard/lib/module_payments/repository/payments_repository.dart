@@ -15,6 +15,7 @@ import 'package:c4d/module_payments/response/captain_dialy_finance/captain_dialy
 import 'package:c4d/module_payments/response/captain_finance_by_hours_response/captain_finance_by_hours_response.dart';
 import 'package:c4d/module_payments/response/captain_finance_by_order_counts_response/captain_finance_by_order_counts_response.dart';
 import 'package:c4d/module_payments/response/captain_finance_by_order_response/captain_finance_by_order_response.dart';
+import 'package:c4d/module_payments/response/captain_finance_response/captain_finance_response.dart';
 import 'package:c4d/module_payments/response/captain_payments_response/captain_payments_response.dart';
 import 'package:c4d/module_payments/response/store_payments_response/store_payments_response.dart';
 import 'package:injectable/injectable.dart';
@@ -166,6 +167,15 @@ class PaymentsRepository {
   }
 
   /* ---------------------------------- CAPTAIN FINANCE --------------------------------------- */
+  Future<CaptainFinanceResponse?> getCaptainFinance(
+      int captainId) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.get('${Urls.GET_CAPTAIN_FINCANCE_DUES}/${captainId}',
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return CaptainFinanceResponse.fromJson(response);
+  }
+
   /* GET */
   Future<CaptainFinanceByOrderResponse?> getCaptainFinanceByOrder() async {
     var token = await _authService.getToken();
