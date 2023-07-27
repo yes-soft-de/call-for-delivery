@@ -339,9 +339,9 @@ class Urls {
   static const GET_CAPTAIN_FINANCE_DAILY = DOMAIN +
       VERSION_ADMIN +
       '/captainfinancialdaily/captainswithfinancialdailyoftoday';
-  static const NEW_GET_CAPTAIN_FINANCE_DAILY = DOMAIN +
-      VERSION_ADMIN +
-      '/captainfinancialdaily/filtercaptainfinancialdailysumbyadmin';
+  static const GET_CAPTAIN_DUES = DOMAIN +
+      VERSION +
+      '/captainfinancialduesforadmin/filtercaptainfinancialduesumbyadmin';
   static const NEW_GET_CAPTAIN_FINANCE_ALL_AMOUNT = DOMAIN +
       VERSION_ADMIN +
       '/captainpayment/filterpaymentsforcaptainfinancialdailybyadmin';

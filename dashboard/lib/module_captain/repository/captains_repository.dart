@@ -250,7 +250,7 @@ class CaptainsRepository {
       CaptainPaymentRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
-        Urls.NEW_GET_CAPTAIN_FINANCE_DAILY, await request.toJson(),
+        Urls.GET_CAPTAIN_DUES, await request.toMap(),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return CaptainFinanceDailyNewResponse.fromJson(response);

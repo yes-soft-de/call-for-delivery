@@ -32,7 +32,7 @@ class CaptainDuesScreenState extends State<CaptainDuesScreen> {
 
       if (mounted) setState(() {});
     });
-    filter = CaptainPaymentRequest();
+    filter = CaptainPaymentRequest(hasCaptainFinancialDueDemanded: true);
     widget._manager.getCaptainsFinanceDailyNew(this, filter);
     super.initState();
   }
@@ -85,7 +85,8 @@ class CaptainDuesScreenState extends State<CaptainDuesScreen> {
                         splashFactory: NoSplash.splashFactory,
                         onTap: () {
                           currentIndex = 0;
-                          filter = CaptainPaymentRequest();
+                          filter = CaptainPaymentRequest(
+                              hasCaptainFinancialDueDemanded: true);
                           refresh();
                           widget._manager
                               .getCaptainsFinanceDailyNew(this, filter);
@@ -129,7 +130,7 @@ class CaptainDuesScreenState extends State<CaptainDuesScreen> {
                         splashFactory: NoSplash.splashFactory,
                         onTap: () {
                           currentIndex = 1;
-                          filter = CaptainPaymentRequest();
+                          filter = CaptainPaymentRequest(status: 2);
                           refresh();
                           widget._manager
                               .getCaptainsFinanceDailyNew(this, filter);

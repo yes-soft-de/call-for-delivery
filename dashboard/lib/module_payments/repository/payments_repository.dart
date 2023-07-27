@@ -128,7 +128,7 @@ class PaymentsRepository {
       CaptainPaymentRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
-        Urls.GET_CAPTAIN_DAILY_FINANCE, await request.toJson(),
+        Urls.GET_CAPTAIN_DAILY_FINANCE, await request.toMap(),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return CaptainDailyFinanceResponse.fromJson(response);
@@ -305,7 +305,7 @@ class PaymentsRepository {
       CaptainPaymentRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
-        Urls.NEW_GET_CAPTAIN_FINANCE_ALL_AMOUNT, await request.toJson(),
+        Urls.NEW_GET_CAPTAIN_FINANCE_ALL_AMOUNT, await request.toMap(),
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return CaptainAllFinanceResponse.fromJson(response);
