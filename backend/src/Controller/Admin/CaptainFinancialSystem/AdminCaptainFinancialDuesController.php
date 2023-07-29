@@ -195,4 +195,57 @@ class AdminCaptainFinancialDuesController extends BaseController
 
         return $this->response($result, self::FETCH);
     }
+
+    /**
+     * admin: get last unpaid captain financial due for admin
+     * @Route("unpaidcaptainfinancialduebyadmin/{captainProfileId}", name="fetchLastUnpaidCaptainFinancialDueByAdmin", methods={"GET"})
+     * @IsGranted("ROLE_ADMIN")
+     * @param int $captainProfileId
+     * @return JsonResponse
+     *
+     * @OA\Tag(name="Captain Financial Dues")
+     *
+     * @OA\Parameter(
+     *      name="token",
+     *      in="header",
+     *      description="token to be passed as a header",
+     *      required=true
+     * )
+     *
+     * @OA\Response(
+     *      response=200,
+     *      description="Return captain financial due details beside last payment",
+     *      @OA\JsonContent(
+     *          oneOf={
+     *              @OA\Schema(type="object",
+     *                  @OA\Property(type="string", property="status_code"),
+     *                  @OA\Property(type="string", property="msg"),
+     *                  @OA\Property(type="object", property="Data",
+     *                      ref=@Model(type="App\Response\Admin\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueUnpaidStatusGetForAdminResponse")
+     *                  )
+     *              ),
+     *              @OA\Schema(type="object",
+     *                  @OA\Property(type="string", property="status_code"),
+     *                  @OA\Property(type="string", property="msg"),
+     *                  @OA\Property(type="array", property="Data",
+     *                      @OA\Items(
+     *                          @OA\Property(type="integer", property="lastPaymentId"),
+     *                          @OA\Property(type="number", property="lastPaymentAmount"),
+     *                          @OA\Property(type="object", property="lastPaymentDate")
+     *                      )
+     *                  )
+     *              )
+     *          }
+     *
+     *      )
+     * )
+     *
+     * @Security(name="Bearer")
+     */
+    public function getUnPaidCaptainFinancialDueByCaptainProfileIdForAdmin(int $captainProfileId): JsonResponse
+    {
+        $result = $this->adminCaptainFinancialDuesService->getUnPaidCaptainFinancialDueByCaptainProfileIdForAdmin($captainProfileId);
+
+        return $this->response($result, self::FETCH);
+    }
 }

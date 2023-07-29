@@ -112,4 +112,10 @@ class AdminCaptainFinancialDuesManager
     {
         return $this->captainFinancialDuesRepository->filterCaptainFinancialDueByAdmin($request);
     }
+
+    public function getUnPaidCaptainFinancialDueByCaptainProfileIdForAdmin(int $captainProfileId): array
+    {
+        return $this->captainFinancialDuesRepository->findBy(['captain' => $captainProfileId,
+            'status' => CaptainFinancialDues::FINANCIAL_DUES_UNPAID], ['id' => 'DESC'], 1);
+    }
 }
