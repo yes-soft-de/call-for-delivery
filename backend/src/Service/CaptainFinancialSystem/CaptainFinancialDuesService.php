@@ -412,7 +412,7 @@ class CaptainFinancialDuesService
         return $this->captainFinancialDuesManager->updateCaptainFinancialDues($captainFinancialDues);
     }
 
-    public function createCaptainOrderFinancial(int $orderId, array $financialDueArray): ?CaptainOrderFinancialEntity
+    public function createCaptainOrderFinancial(int $orderId, array $financialDueArray): CaptainOrderFinancialEntity|null|OrderEntity
     {
         $orderEntity = $this->entityManager->getRepository(OrderEntity::class)->findOneBy(['id' => $orderId]);
 
