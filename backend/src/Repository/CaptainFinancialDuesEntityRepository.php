@@ -304,6 +304,9 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
             ->select('SUM(captainFinancialDuesEntity.amount - captainFinancialDuesEntity.amountForStore) as financialDueAmount',
                 'captainEntity.id as captainProfileId', 'captainEntity.captainName', 'imageEntity.imagePath')
 
+            ->andWhere('captainFinancialDuesEntity.amount != :zeroValue')
+            ->setParameter('zeroValue', 0)
+
             ->leftJoin(
                 CaptainEntity::class,
                 'captainEntity',
