@@ -208,7 +208,7 @@ class CaptainProfileLoadedState extends States {
                                 title: S.of(context).name,
                                 subTitle: (model?.name ?? '') +
                                     ' ' +
-                                    '{${model?.captainId.toString() ?? ''}}',
+                                    '{${model?.profileId.toString() ?? ''}}',
                                 iconData: Icons.person_rounded),
                             CustomListTile(
                                 title: S.of(context).age,
@@ -406,7 +406,7 @@ class CaptainProfileLoadedState extends States {
                     appBar: CustomC4dAppBar.appBar(context,
                         title: S.current.FinanceRequest),
                     body: CaptainFinanceInfo(
-                      captainID: screenState.captainId,
+                      captainID: screenState.captainProfileId,
                       details: model!.captainFinance!,
                       requestStatus: (status) {
                         Navigator.of(context).pop();
@@ -429,7 +429,7 @@ class CaptainProfileLoadedState extends States {
           icon: Icons.money,
           onPressed: () {
             ArgumentHiveHelper()
-                .setCurrentCaptainID(screenState.captainId.toString());
+                .setCurrentCaptainID(screenState.captainProfileId.toString());
             Navigator.of(context).pushNamed(OrdersRoutes.ORDER_CASH_CAPTAINS);
           },
           title: S.of(context).cashOrders,
@@ -438,7 +438,7 @@ class CaptainProfileLoadedState extends States {
           icon: FontAwesomeIcons.boxes,
           onPressed: () {
             ArgumentHiveHelper()
-                .setCurrentCaptainID(screenState.captainId.toString());
+                .setCurrentCaptainID(screenState.captainProfileId.toString());
             Navigator.of(context).pushNamed(OrdersRoutes.CAPTAIN_ORDERS_SCREEN);
           },
           title: S.of(context).orderLog,
