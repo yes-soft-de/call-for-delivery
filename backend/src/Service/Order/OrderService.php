@@ -2329,7 +2329,7 @@ class OrderService
             $orderDeliveryCost);
     }
 
-    public function createOrUpdateCaptainOrderFinancial(int $orderId): ?CaptainOrderFinancialEntity
+    public function createOrUpdateCaptainOrderFinancial(int $orderId): CaptainOrderFinancialEntity|OrderEntity|null
     {
         return $this->captainFinancialDuesService->createOrUpdateCaptainOrderFinancial($orderId);
     }

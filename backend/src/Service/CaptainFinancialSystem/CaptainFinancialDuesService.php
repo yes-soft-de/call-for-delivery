@@ -440,7 +440,7 @@ class CaptainFinancialDuesService
         return $orderEntity;
     }
 
-    public function createOrUpdateCaptainOrderFinancial(int $orderId): ?CaptainOrderFinancialEntity
+    public function createOrUpdateCaptainOrderFinancial(int $orderId): CaptainOrderFinancialEntity|null|OrderEntity
     {
         $orderEntity = $this->entityManager->getRepository(OrderEntity::class)->findOneBy(['id' => $orderId]);
 
@@ -450,10 +450,10 @@ class CaptainFinancialDuesService
 
                 if ($financialSystemDetail) {
                     if (count($financialSystemDetail) > 0) {
-                        $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndState($orderEntity->getCaptainId()->getCaptainId(),
-                            CaptainFinancialDues::FINANCIAL_STATE_ACTIVE);
-
-                        if ($captainFinancialDues) {
+//                        $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndState($orderEntity->getCaptainId()->getCaptainId(),
+//                            CaptainFinancialDues::FINANCIAL_STATE_ACTIVE);
+//
+//                        if ($captainFinancialDues) {
                             if ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST) {
                                 $financialDues = $this->captainFinancialDefaultSystemGetBalanceService->calculateCaptainDues($financialSystemDetail,
                                     $orderId);
@@ -473,7 +473,6 @@ class CaptainFinancialDuesService
                                     return $captainOrderFinancial;
                                 }
                             }
-                        }
                     }
                 }
             }
