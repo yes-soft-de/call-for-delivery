@@ -37,6 +37,7 @@ use App\Entity\BidDetailsEntity;
 use App\Entity\CaptainEntity;
 use App\Entity\CaptainFinancialDailyEntity;
 use App\Entity\CaptainFinancialDuesEntity;
+use App\Entity\CaptainOrderFinancialEntity;
 use App\Entity\ExternallyDeliveredOrderEntity;
 use App\Entity\OrderEntity;
 use App\Entity\PackageEntity;
@@ -1560,6 +1561,8 @@ class AdminOrderService
 
                     // Re-calculate daily captain financial due
                     $this->createOrUpdateCaptainFinancialDaily($order->getId());
+
+                    $this->createOrUpdateCaptainOrderFinancial($order->getId());
                 }
             }
         }
@@ -1731,12 +1734,14 @@ class AdminOrderService
 
                         if ($orderEntity->getCaptainId()) {
                             // 4 Re-calculate the financial dues of the captain who has the order (if exists)
-                            if ($order->getCaptainId()?->getCaptainId()) {
-                                $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(),
-                                    $order->getId(), $order->getCreatedAt());
+                            if ($orderEntity->getCaptainId()?->getCaptainId()) {
+                                $this->captainFinancialDuesService->captainFinancialDues($orderEntity->getCaptainId()->getCaptainId(),
+                                    $orderEntity->getId(), $orderEntity->getCreatedAt());
 
                                 // Re-calculate daily captain financial due
-                                $this->createOrUpdateCaptainFinancialDaily($order->getId());
+                                $this->createOrUpdateCaptainFinancialDaily($orderEntity->getId());
+
+                                $this->createOrUpdateCaptainOrderFinancial($orderEntity->getId());
                             }
                         }
                     }
@@ -1927,6 +1932,8 @@ class AdminOrderService
 
                         // Re-calculate daily captain financial due
                         $this->createOrUpdateCaptainFinancialDaily($order->getId());
+
+                        $this->createOrUpdateCaptainOrderFinancial($order->getId());
                     }
 
                     // 5 Update subscription cost of the store's subscription
@@ -2489,5 +2496,10 @@ class AdminOrderService
 
             throw $e;
         }
+    }
+
+    private function createOrUpdateCaptainOrderFinancial(int $orderId): ?CaptainOrderFinancialEntity
+    {
+        return $this->captainFinancialDuesService->createOrUpdateCaptainOrderFinancial($orderId);
     }
 }

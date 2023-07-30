@@ -144,6 +144,9 @@ class OrderEntity
     #[ORM\OneToMany(mappedBy: 'orderId', targetEntity: OrderDestinationEntity::class)]
     private $orderDestinationEntities;
 
+    #[ORM\OneToOne(mappedBy: 'orderId', targetEntity: CaptainOrderFinancialEntity::class, cascade: ['persist', 'remove'])]
+    private $captainOrderFinancialEntity;
+
     public function __construct()
     {
         $this->orderChatRoomEntities = new ArrayCollection();
@@ -794,6 +797,23 @@ class OrderEntity
                 $orderDestinationEntity->setOrderId(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCaptainOrderFinancialEntity(): ?CaptainOrderFinancialEntity
+    {
+        return $this->captainOrderFinancialEntity;
+    }
+
+    public function setCaptainOrderFinancialEntity(CaptainOrderFinancialEntity $captainOrderFinancialEntity): self
+    {
+        // set the owning side of the relation if necessary
+        if ($captainOrderFinancialEntity->getOrderId() !== $this) {
+            $captainOrderFinancialEntity->setOrderId($this);
+        }
+
+        $this->captainOrderFinancialEntity = $captainOrderFinancialEntity;
 
         return $this;
     }

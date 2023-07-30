@@ -2,22 +2,17 @@
 
 namespace App\Service\CaptainAmountFromOrderCash;
 
-use App\AutoMapping;
 use App\Entity\CaptainAmountFromOrderCashEntity;
 use App\Entity\OrderEntity;
 use App\Request\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashRequest;
 use App\Manager\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashManager;
-use App\Constant\Order\OrderTypeConstant;
 
 class CaptainAmountFromOrderCashService
 {
-    private AutoMapping $autoMapping;
-    private CaptainAmountFromOrderCashManager $captainAmountFromOrderCashManager;
-
-    public function __construct(AutoMapping $autoMapping, CaptainAmountFromOrderCashManager $captainAmountFromOrderCashManager)
+    public function __construct(
+        private CaptainAmountFromOrderCashManager $captainAmountFromOrderCashManager
+    )
     {
-        $this->autoMapping = $autoMapping;
-        $this->captainAmountFromOrderCashManager = $captainAmountFromOrderCashManager;
     }
 
     public function createCaptainAmountFromOrderCash(OrderEntity $orderEntity, int $flag, float $orderCost): ?CaptainAmountFromOrderCashEntity
