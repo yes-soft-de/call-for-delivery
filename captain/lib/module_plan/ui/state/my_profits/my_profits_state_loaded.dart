@@ -250,7 +250,7 @@ class _SecondCard extends StatelessWidget {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Text(
-                  S.current.areYouSureToAskTheAdministrationToPay,
+                  S.current.doYouWantToDoThisAction,
                   style: Theme.of(context)
                       .textTheme
                       .bodyLarge

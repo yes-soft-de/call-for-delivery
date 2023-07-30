@@ -866,5 +866,6 @@
     "captainNotExist": "الكابتن غير موجود",
     "ThereIsNoCurrentActiveFinancialCycle": "لا يوجد دورة مالية حالية وفعالة",
     "requestedSuccessfully": "تمت المطالبة بنجاح",
-    "financeOverPaid": "دفعة زائدة"
+    "financeOverPaid": "دفعة زائدة",
+    "doYouWantToDoThisAction":"هل أنت متأكد من القيام بهذا الإجراء ؟"
 }

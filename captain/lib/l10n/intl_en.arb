@@ -864,5 +864,7 @@
     "captainNotExist": "Captain Not Exist",
     "ThereIsNoCurrentActiveFinancialCycle": "There Is No Current Active Financial Cycle",
     "requestedSuccessfully": "requested successfully",
-    "financeOverPaid": "Over paid"
+    "financeOverPaid": "Over paid",
+    "doYouWantToDoThisAction":"Do you want to do this action ?"
+
 }

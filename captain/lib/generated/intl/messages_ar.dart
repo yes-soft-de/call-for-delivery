@@ -407,6 +407,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "directSupport": MessageLookupByLibrary.simpleMessage("دعم مباشر"),
         "discount": MessageLookupByLibrary.simpleMessage("الخصم"),
         "distance": MessageLookupByLibrary.simpleMessage("يبعد عنك"),
+        "doYouWantToDoThisAction": MessageLookupByLibrary.simpleMessage(
+            "هل أنت متأكد من القيام بهذا الإجراء ؟"),
         "dontTakeMoneyThisOrderIsPaidAlready":
             MessageLookupByLibrary.simpleMessage(
                 "لا تستلم مبلغ من الزبون هذا الطلب مدفوع مسبقا"),

@@ -414,6 +414,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "directSupport": MessageLookupByLibrary.simpleMessage("Direct Support"),
         "discount": MessageLookupByLibrary.simpleMessage("Discount"),
         "distance": MessageLookupByLibrary.simpleMessage("Distance"),
+        "doYouWantToDoThisAction": MessageLookupByLibrary.simpleMessage(
+            "Do you want to do this action ?"),
         "dontTakeMoneyThisOrderIsPaidAlready":
             MessageLookupByLibrary.simpleMessage(
                 "don\'t Take Money This Order Paid Already"),

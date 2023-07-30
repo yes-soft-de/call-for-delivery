@@ -8159,6 +8159,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Do you want to do this action ?`
+  String get doYouWantToDoThisAction {
+    return Intl.message(
+      'Do you want to do this action ?',
+      name: 'doYouWantToDoThisAction',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {
