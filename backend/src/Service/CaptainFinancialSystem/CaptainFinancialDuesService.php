@@ -3,6 +3,8 @@
 namespace App\Service\CaptainFinancialSystem;
 
 use App\AutoMapping;
+use App\Entity\CaptainOrderFinancialEntity;
+use App\Entity\OrderEntity;
 use App\Manager\CaptainFinancialSystem\CaptainFinancialSystemDetailManager;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Service\CaptainFinancialSystem\CaptainFinancialDefaultSystem\CaptainFinancialDefaultSystemGetBalanceService;
@@ -18,6 +20,7 @@ use App\Response\CaptainFinancialSystem\CaptainFinancialDuesResponse;
 use App\Service\CaptainPayment\CaptainPaymentService;
 use DateTime;
 use App\Request\CaptainFinancialSystem\CreateCaptainFinancialDuesByOptionalDatesRequest;
+use Doctrine\ORM\EntityManagerInterface;
 
 class CaptainFinancialDuesService
 {
@@ -33,7 +36,8 @@ class CaptainFinancialDuesService
         //private DateFactoryService $dateFactoryService,
         //private CaptainFinancialSystemDetailGetService $captainFinancialSystemDetailGetService
         private CaptainFinancialSystemOneGetBalanceDetailsService $captainFinancialSystemOneGetBalanceDetailsService,
-        private CaptainFinancialDefaultSystemGetBalanceService $captainFinancialDefaultSystemGetBalanceService
+        private CaptainFinancialDefaultSystemGetBalanceService $captainFinancialDefaultSystemGetBalanceService,
+        private EntityManagerInterface $entityManager
     )
     {
     }
@@ -127,6 +131,9 @@ class CaptainFinancialDuesService
                     $financialDues = $this->captainFinancialDefaultSystemGetBalanceService->calculateCaptainDues($financialSystemDetail,
                         $orderId);
                     // *** End of Rami code ***
+
+                    // create or update Captain Order Financial
+                    $this->createCaptainOrderFinancial($orderId, $financialDues);
 
                     //update captain financial dues
                     return $this->updateCaptainFinancialDuesAmountByNewAmountAddition($captainFinancialDues, $financialDues);
@@ -403,5 +410,74 @@ class CaptainFinancialDuesService
         $captainFinancialDues->setAmountForStore($captainFinancialDues->getAmountForStore() + $financialDues['amountForStore']);
 
         return $this->captainFinancialDuesManager->updateCaptainFinancialDues($captainFinancialDues);
+    }
+
+    public function createCaptainOrderFinancial(int $orderId, array $financialDueArray): CaptainOrderFinancialEntity|null|OrderEntity
+    {
+        $orderEntity = $this->entityManager->getRepository(OrderEntity::class)->findOneBy(['id' => $orderId]);
+
+        if ($orderEntity) {
+            $captainOrderFinancial = $this->entityManager->getRepository(CaptainOrderFinancialEntity::class)
+                ->findOneBy(['orderId' => $orderEntity->getId()]);
+
+            if (! $captainOrderFinancial) {
+                if ($orderEntity->getCaptainId()) {
+                    $captainOrderFinancial = new CaptainOrderFinancialEntity();
+
+                    $captainOrderFinancial->setOrderId($orderEntity);
+                    $captainOrderFinancial->setCaptain($orderEntity->getCaptainId());
+                    $captainOrderFinancial->setAmount($financialDueArray['financialDues']);
+                    $captainOrderFinancial->setCashAmount($financialDueArray['amountForStore']);
+
+                    $this->entityManager->persist($captainOrderFinancial);
+                    $this->entityManager->flush();
+
+                    return $captainOrderFinancial;
+                }
+            }
+        }
+
+        return $orderEntity;
+    }
+
+    public function createOrUpdateCaptainOrderFinancial(int $orderId): CaptainOrderFinancialEntity|null|OrderEntity
+    {
+        $orderEntity = $this->entityManager->getRepository(OrderEntity::class)->findOneBy(['id' => $orderId]);
+
+        if ($orderEntity) {
+            if ($orderEntity->getCaptainId()) {
+                $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailCurrent($orderEntity->getCaptainId()->getCaptainId());
+
+                if ($financialSystemDetail) {
+                    if (count($financialSystemDetail) > 0) {
+//                        $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndState($orderEntity->getCaptainId()->getCaptainId(),
+//                            CaptainFinancialDues::FINANCIAL_STATE_ACTIVE);
+//
+//                        if ($captainFinancialDues) {
+                            if ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST) {
+                                $financialDues = $this->captainFinancialDefaultSystemGetBalanceService->calculateCaptainDues($financialSystemDetail,
+                                    $orderId);
+
+                                $captainOrderFinancial = $this->entityManager->getRepository(CaptainOrderFinancialEntity::class)
+                                    ->findOneBy(['orderId' => $orderId]);
+
+                                if (! $captainOrderFinancial) {
+                                    $this->createCaptainOrderFinancial($orderId, $financialDues);
+
+                                } else {
+                                    $captainOrderFinancial->setAmount($financialDues['financialDues']);
+                                    $captainOrderFinancial->setCashAmount($financialDues['amountForStore']);
+
+                                    $this->entityManager->flush();
+
+                                    return $captainOrderFinancial;
+                                }
+                            }
+                    }
+                }
+            }
+        }
+
+        return $orderEntity;
     }
 }

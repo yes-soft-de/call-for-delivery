@@ -19,9 +19,9 @@ class CaptainFinancialDueUnpaidStatusGetForAdminResponse
     //active = 1, inactive = 0
     public int $state;
 
-    public int $lastPaymentId;
+    public ?int $lastPaymentId;
 
-    public float $lastPaymentAmount;
+    public ?float $lastPaymentAmount;
 
     public ?DateTime $lastPaymentDate;
 }

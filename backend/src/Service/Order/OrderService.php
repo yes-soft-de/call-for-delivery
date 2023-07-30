@@ -25,6 +25,7 @@ use App\Constant\Subscription\SubscriptionDetailsConstant;
 use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\CaptainEntity;
+use App\Entity\CaptainOrderFinancialEntity;
 use App\Entity\ExternallyDeliveredOrderEntity;
 use App\Entity\OrderDestinationEntity;
 use App\Entity\OrderEntity;
@@ -906,8 +907,8 @@ class OrderService
 
                 // If the captain had reached the store, then we would count half of the order financial value for the captain
                 // A. Update captain financial due
-                $this->createOrUpdateCaptainFinancialDue($updatedOrder->getCaptainId()->getCaptainId(), $updatedOrder->getId(),
-                    $updatedOrder->getCreatedAt());
+//                $this->createOrUpdateCaptainFinancialDue($updatedOrder->getCaptainId()->getCaptainId(), $updatedOrder->getId(),
+//                    $updatedOrder->getCreatedAt());
 
                 // B. Update captain financial daily
                 $this->createOrUpdateCaptainFinancialDaily($updatedOrder->getId(), $updatedOrder->getCaptainId());
@@ -1227,10 +1228,13 @@ class OrderService
             }
 
             $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($order, $flag, $orderCost);
+
             $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($order, $flag, $orderCost);
 
-            $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(),
-                $order->getCreatedAt());
+//            $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(),
+//                $order->getCreatedAt());
+
+            $this->createOrUpdateCaptainOrderFinancial($orderId);
         }
 
         // save log of the action on order
@@ -2323,5 +2327,10 @@ class OrderService
     {
         return $this->subscriptionService->handleUpdatingStoreSubscriptionCost($storeOwnerProfileId, $orderCreatedAt,
             $orderDeliveryCost);
+    }
+
+    public function createOrUpdateCaptainOrderFinancial(int $orderId): CaptainOrderFinancialEntity|OrderEntity|null
+    {
+        return $this->captainFinancialDuesService->createOrUpdateCaptainOrderFinancial($orderId);
     }
 }
