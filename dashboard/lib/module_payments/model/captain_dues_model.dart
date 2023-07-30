@@ -8,7 +8,7 @@ class CaptainPaymentModel extends DataModel {
   late num unpaidAmountsFromCashToStores;
   late num profitsFromOrders;
   late num lastPayment;
-  late DateTime lastPaymentDate;
+  late DateTime? lastPaymentDate;
 
   late CaptainPaymentModel _data;
 
@@ -28,7 +28,7 @@ class CaptainPaymentModel extends DataModel {
       captainFinancialDuesId: data?.id ?? _nullNumber,
       duesSinceLastPayment: data?.finalAmount ?? _nullNumber,
       lastPayment: data?.lastPaymentAmount ?? _nullNumber,
-      lastPaymentDate: data?.lastPaymentDate ?? DateTime.now(),
+      lastPaymentDate: data?.lastPaymentDate,
       profitsFromOrders: data?.amount ?? _nullNumber,
       unpaidAmountsFromCashToStores: data?.amountForStore ?? _nullNumber,
     );

@@ -55,7 +55,10 @@ class CaptainPaymentStateLoaded extends States {
                 Navigator.pushNamed(
                   context,
                   PaymentsRoutes.CAPTAIN_PREVIOUS_PAYMENTS,
-                  arguments: [screenState.captainID, model.captainFinancialDuesId],
+                  arguments: [
+                    screenState.captainID,
+                    model.captainFinancialDuesId
+                  ],
                 );
               },
               title: S.current.showPreviousPayments,
@@ -181,13 +184,17 @@ class _DuesCard extends StatelessWidget {
                 model.profitsFromOrders.toStringAsFixed(2),
               ),
             ),
-            _RowDetailCard(
-              title: S.current.lastPayment,
-              centerValue: S.current.valueRiyal(
-                model.lastPayment.toStringAsFixed(2),
+            Visibility(
+              visible: model.lastPaymentDate != null,
+              child: _RowDetailCard(
+                title: S.current.lastPayment,
+                centerValue: S.current.valueRiyal(
+                  model.lastPayment.toStringAsFixed(2),
+                ),
+                value: DateFormat('yyy-MM-dd', 'en').format(
+                  model.lastPaymentDate ?? DateTime(0),
+                ),
               ),
-              value:
-                  DateFormat('yyy-MM-dd', 'en').format(model.lastPaymentDate),
             ),
           ],
         ),
