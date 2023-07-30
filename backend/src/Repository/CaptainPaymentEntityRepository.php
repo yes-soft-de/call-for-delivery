@@ -339,4 +339,21 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
             ->getQuery()
             ->getSingleColumnResult();
     }
+
+    public function getLastCaptainPaymentByCaptainProfileId(int $captainProfileId): array
+    {
+        return $this->createQueryBuilder('captainPaymentEntity')
+
+            ->andWhere('captainPaymentEntity.captain = :captainProfileId')
+            ->setParameter('captainProfileId', $captainProfileId)
+
+            ->andWhere('captainPaymentEntity.createdAt >= :date')
+            ->setParameter('date', new DateTime('2023-07-24 00:00:00'))
+
+            ->orderBy('captainPaymentEntity.id', 'DESC')
+            ->setMaxResults(1)
+
+            ->getQuery()
+            ->getResult();
+    }
 }
