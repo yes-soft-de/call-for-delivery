@@ -78,4 +78,8 @@ final class CaptainFinancialSystem
         self::CAPTAIN_FINANCIAL_SYSTEM_TWO,
         self::CAPTAIN_FINANCIAL_SYSTEM_THREE,
     ];
+
+    const CAPTAIN_ORDER_PROFIT_EXIST_CONST = 242;
+
+    const CAPTAIN_FINANCIAL_SYSTEM_IS_NOT_THE_DEFAULT_SYSTEM_CONST = 244;
 }
