@@ -195,4 +195,10 @@ class CaptainFinancialDuesManager
 
         return $captainFinancialDuesEntity;
     }
+
+    public function getCaptainFinancialDueByCaptainProfileIdAndOrderCreationDate(int $captainProfileId, \DateTimeInterface $orderCreationDate)
+    {
+        return $this->captainFinancialDuesRepository->getCaptainFinancialDueByCaptainProfileIdAndOrderCreationDate($captainProfileId,
+            $orderCreationDate);
+    }
 }

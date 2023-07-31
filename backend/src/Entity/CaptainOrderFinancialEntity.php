@@ -23,7 +23,7 @@ class CaptainOrderFinancialEntity
     private $captain;
 
     #[ORM\Column(type: 'float')]
-    private $amount;
+    private $profit;
 
     #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'datetime')]
@@ -31,6 +31,16 @@ class CaptainOrderFinancialEntity
 
     #[ORM\Column(type: 'float', nullable: true)]
     private $cashAmount;
+
+    #[Gedmo\Timestampable(on: 'update')]
+    #[ORM\Column(type: 'datetime', nullable: true)]
+    private $updatedAt;
+
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $finalProfit;
+
+    #[ORM\ManyToOne(targetEntity: CaptainFinancialDuesEntity::class, inversedBy: 'captainOrderFinancialEntities')]
+    private $captainFinancialDue;
 
     public function getId(): ?int
     {
@@ -61,14 +71,14 @@ class CaptainOrderFinancialEntity
         return $this;
     }
 
-    public function getAmount(): ?float
+    public function getProfit(): ?float
     {
-        return $this->amount;
+        return $this->profit;
     }
 
-    public function setAmount(float $amount): self
+    public function setProfit(float $profit): self
     {
-        $this->amount = $amount;
+        $this->profit = $profit;
 
         return $this;
     }
@@ -93,6 +103,42 @@ class CaptainOrderFinancialEntity
     public function setCashAmount(?float $cashAmount): self
     {
         $this->cashAmount = $cashAmount;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    public function getFinalProfit(): ?float
+    {
+        return $this->finalProfit;
+    }
+
+    public function setFinalProfit(?float $finalProfit): self
+    {
+        $this->finalProfit = $finalProfit;
+
+        return $this;
+    }
+
+    public function getCaptainFinancialDue(): ?CaptainFinancialDuesEntity
+    {
+        return $this->captainFinancialDue;
+    }
+
+    public function setCaptainFinancialDue(?CaptainFinancialDuesEntity $captainFinancialDue): self
+    {
+        $this->captainFinancialDue = $captainFinancialDue;
 
         return $this;
     }

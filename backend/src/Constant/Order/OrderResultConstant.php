@@ -63,4 +63,6 @@ final class OrderResultConstant
     const ORDER_STATE_NOT_CORRECT_CONST = 189;
 
     const ORDER_STATE_IS_NOT_PENDING_CONST = 224;
+
+    const ORDER_HAS_NO_CAPTAIN_CONST = 243;
 }
