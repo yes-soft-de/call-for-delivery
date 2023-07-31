@@ -2498,7 +2498,7 @@ class AdminOrderService
         }
     }
 
-    private function createOrUpdateCaptainOrderFinancial(int $orderId): CaptainOrderFinancialEntity|OrderEntity|null
+    private function createOrUpdateCaptainOrderFinancial(int $orderId): CaptainOrderFinancialEntity|int|string
     {
         return $this->captainFinancialDuesService->createOrUpdateCaptainOrderFinancial($orderId);
     }
