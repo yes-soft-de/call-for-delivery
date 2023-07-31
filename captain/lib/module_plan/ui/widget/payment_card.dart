@@ -1,9 +1,12 @@
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:flutter/material.dart';
 
 Color get _blue => const Color(0xff2C5085);
 Color get _red => Colors.red;
 Color get _lightBlue => const Color(0xffF2FAFD);
+Color get _lightGrey => Colors.grey;
 
 enum PaymentType {
   cash,
@@ -42,10 +45,11 @@ class PaymentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var darkMode = getIt<ThemePreferencesHelper>().isDarkMode();
     return Padding(
       padding: const EdgeInsets.all(1.0),
       child: Card(
-        color: _lightBlue,
+        color: darkMode ? _lightGrey : _lightBlue,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Container(
           decoration: BoxDecoration(

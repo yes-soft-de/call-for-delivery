@@ -1,15 +1,18 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_plan/model/my_profits_model.dart';
 import 'package:c4d/module_plan/plan_routes.dart';
 import 'package:c4d/module_plan/ui/screen/my_profits_screen.dart';
+import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 
 Color get _blue => const Color(0xff2C5085);
 Color get _yellow => const Color(0xffFFB800);
 Color get _gray => Colors.grey;
+Color get _white => Colors.white;
 Color get _lightBlue => const Color(0xffF2FAFD);
 // Color get _lightGreen => const Color(0xff46F4A1);
 Color get _transparentBlue => const Color(0xff5E789D);
@@ -22,6 +25,7 @@ class MyProfitsStateLoaded extends States {
 
   @override
   Widget getUI(BuildContext context) {
+    var darkMode = getIt<ThemePreferencesHelper>().isDarkMode();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SingleChildScrollView(
@@ -31,7 +35,7 @@ class MyProfitsStateLoaded extends States {
             Text(
               S.current.today,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: _blue,
+                    color: darkMode ? _white : _blue,
                   ),
             ),
             const SizedBox(height: 10),
@@ -101,6 +105,7 @@ class _CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var darkMode = getIt<ThemePreferencesHelper>().isDarkMode();
     return SizedBox(
       height: 56,
       width: MediaQuery.sizeOf(context).width * 0.75,
@@ -112,7 +117,14 @@ class _CustomButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(12),
           ),
         ),
-        child: Text(title),
+        child: Text(
+          title,
+          style: darkMode
+              ? const TextStyle(
+                  color: Colors.white,
+                )
+              : null,
+        ),
       ),
     );
   }
@@ -129,6 +141,7 @@ class _SecondCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var darkMode = getIt<ThemePreferencesHelper>().isDarkMode();
     return Card(
       color: _blue,
       child: Padding(
@@ -240,6 +253,7 @@ class _SecondCard extends StatelessWidget {
   }
 
   void _showConfirmDialog(BuildContext context, void Function() onConfirm) {
+    var darkMode = getIt<ThemePreferencesHelper>().isDarkMode();
     showDialog(
       context: context,
       builder: (context) {
@@ -251,10 +265,9 @@ class _SecondCard extends StatelessWidget {
               children: [
                 Text(
                   S.current.doYouWantToDoThisAction,
-                  style: Theme.of(context)
-                      .textTheme
-                      .bodyLarge
-                      ?.copyWith(color: _blue),
+                  style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                        color: darkMode ? _white : _blue,
+                      ),
                 ),
                 const SizedBox(height: 80),
                 SizedBox(
@@ -272,7 +285,12 @@ class _SecondCard extends StatelessWidget {
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child: Text(S.current.confirm),
+                      child: Text(
+                        S.current.confirm,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: darkMode ? _white : null,
+                            ),
+                      ),
                     ),
                   ),
                 ),
