@@ -17,4 +17,6 @@ final class CaptainFinancialDues
     const FINANCIAL_NOT_FOUND = 4;
 
     const CAPTAIN_STOPPED_FINANCIAL_CYCLE_TRUE_CONST = true;
+
+    const AMOUNT_FOR_STORE_NO_NEED_TO_BE_UPDATED_CONST = 247;
 }

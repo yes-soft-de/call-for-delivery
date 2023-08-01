@@ -229,4 +229,22 @@ class CaptainFinancialDuesManager
 
         return $captainFinancialDuesEntity;
     }
+
+    public function subtractValueFromCaptainFinancialDueAmountForStoreByCaptainFinancialDueEntity(CaptainFinancialDuesEntity $captainFinancialDuesEntity, float $value): CaptainFinancialDuesEntity
+    {
+        $captainFinancialDuesEntity->setAmountForStore($captainFinancialDuesEntity->getAmountForStore() - $value);
+
+        $this->entityManager->flush();
+
+        return $captainFinancialDuesEntity;
+    }
+
+    public function addValueToCaptainFinancialDueAmountForStoreByCaptainFinancialDueEntity(CaptainFinancialDuesEntity $captainFinancialDuesEntity, float $value): CaptainFinancialDuesEntity
+    {
+        $captainFinancialDuesEntity->setAmountForStore($captainFinancialDuesEntity->getAmountForStore() + $value);
+
+        $this->entityManager->flush();
+
+        return $captainFinancialDuesEntity;
+    }
 }

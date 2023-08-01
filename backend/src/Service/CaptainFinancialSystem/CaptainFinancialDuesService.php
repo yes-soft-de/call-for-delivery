@@ -586,4 +586,32 @@ class CaptainFinancialDuesService
 
         return CaptainFinancialSystem::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM;
     }
+
+    public function subtractValueFromCaptainFinancialDueAmountForStore(int $captainUserId, DateTimeInterface $orderCreatedAt, float $value): CaptainFinancialDuesEntity|int
+    {
+        // 1 get captain financial due
+        $captainFinancialDue = $this->getCaptainFinancialDuesByCaptainUserIdAndOrderCreationDate($captainUserId, $orderCreatedAt);
+
+        if ($captainFinancialDue === CaptainFinancialDues::FINANCIAL_NOT_FOUND) {
+            return CaptainFinancialDues::FINANCIAL_NOT_FOUND;
+        }
+
+        // 2 update amountForStore of the captain financial due
+        return $this->captainFinancialDuesManager->subtractValueFromCaptainFinancialDueAmountForStoreByCaptainFinancialDueEntity($captainFinancialDue,
+            $value);
+    }
+
+    public function addValueToCaptainFinancialDueAmountForStore(int $captainUserId, DateTimeInterface $orderCreatedAt, float $value): CaptainFinancialDuesEntity|int
+    {
+        // 1 get captain financial due
+        $captainFinancialDue = $this->getCaptainFinancialDuesByCaptainUserIdAndOrderCreationDate($captainUserId, $orderCreatedAt);
+
+        if ($captainFinancialDue === CaptainFinancialDues::FINANCIAL_NOT_FOUND) {
+            return CaptainFinancialDues::FINANCIAL_NOT_FOUND;
+        }
+
+        // 2 update amountForStore of the captain financial due
+        return $this->captainFinancialDuesManager->addValueToCaptainFinancialDueAmountForStoreByCaptainFinancialDueEntity($captainFinancialDue,
+            $value);
+    }
 }
