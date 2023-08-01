@@ -180,7 +180,7 @@ class CaptainFinancialDefaultSystemGetBalanceService
             }
         }
 
-        return $financialAmount;
+        return round($financialAmount, 1);
     }
 
     /**
