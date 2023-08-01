@@ -40,6 +40,6 @@ class OrderFinancialValueAccordingToDefaultSystemCalculationService
             }
         }
 
-        return $financialAmount;
+        return round($financialAmount, 1);
     }
 }
