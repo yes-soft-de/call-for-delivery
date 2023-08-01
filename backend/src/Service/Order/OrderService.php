@@ -910,8 +910,8 @@ class OrderService
 
                 // If the captain had reached the store, then we would count half of the order financial value for the captain
                 // A. Update captain financial due
-//                $this->createOrUpdateCaptainFinancialDue($updatedOrder->getCaptainId()->getCaptainId(), $updatedOrder->getId(),
-//                    $updatedOrder->getCreatedAt());
+                $this->addHalfOrderValueToCaptainFinancialDue($updatedOrder->getCaptainId()->getCaptainId(),
+                    $updatedOrder->getCreatedAt(), $updatedOrder->getStoreBranchToClientDistance());
 
                 // B. Update captain financial daily
                 $this->createOrUpdateCaptainFinancialDaily($updatedOrder->getId(), $updatedOrder->getCaptainId());
@@ -2351,5 +2351,14 @@ class OrderService
     {
         return $this->captainFinancialDueAmountForStoreUpdateHandlerService->handleUpdatingCaptainFinancialDueAmountForStore($captainUserId,
             $orderId, $orderCreationDate, $captainOrderCost, $paidToProvider);
+    }
+
+    /**
+     * Calculates and adds half of order value to the captain financial due
+     */
+    public function addHalfOrderValueToCaptainFinancialDue(int $captainUserId, DateTimeInterface $orderCreatedAt, ?float $orderDistance): CaptainFinancialDuesEntity|int|string
+    {
+        return $this->captainFinancialDuesService->addHalfOrderValueToCaptainFinancialDue($captainUserId, $orderCreatedAt,
+            $orderDistance);
     }
 }

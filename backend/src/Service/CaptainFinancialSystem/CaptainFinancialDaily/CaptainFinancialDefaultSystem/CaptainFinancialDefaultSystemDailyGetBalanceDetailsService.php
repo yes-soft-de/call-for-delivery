@@ -2,6 +2,7 @@
 
 namespace App\Service\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDefaultSystem;
 
+use App\Constant\Order\OrderStateConstant;
 use App\Service\CaptainFinancialSystem\CaptainFinancialDefaultSystem\CaptainFinancialDefaultSystemGetStoreAmountService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialDefaultSystem\CaptainFinancialDefaultSystemOrderGetService;
 
@@ -79,6 +80,11 @@ class CaptainFinancialDefaultSystemDailyGetBalanceDetailsService
                     } elseif ($distance >= $captainFinancialSystemDetails['thirdSliceFromLimit']) {
                         $financialAccountDetails['basicFinancialAmount'] += ($distance * $captainFinancialSystemDetails['thirdSliceOneKilometerCost']);
 
+                    }
+
+                    if ($order['state'] === OrderStateConstant::ORDER_STATE_CANCEL) {
+                        // get half of order value
+                        $financialAccountDetails['basicFinancialAmount'] = $financialAccountDetails['basicFinancialAmount'] / 2;
                     }
                 }
             }

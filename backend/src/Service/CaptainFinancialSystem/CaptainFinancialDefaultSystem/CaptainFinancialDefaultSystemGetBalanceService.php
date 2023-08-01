@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyResultConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Constant\Order\OrderResultConstant;
+use App\Constant\Order\OrderStateConstant;
 use App\Constant\StoreOwnerDueFromCashOrder\StoreOwnerDueFromCashOrderStoreAmountConstant;
 use App\Entity\CaptainFinancialDailyEntity;
 use App\Entity\CaptainFinancialDuesEntity;
@@ -110,7 +111,14 @@ class CaptainFinancialDefaultSystemGetBalanceService
             ($todayStartAndEndDates[1])->format('Y-m-d H:i:s')
         );
 
-        $response['todayOrdersCount'] = count($orders);
+        foreach ($orders as $order) {
+            if ($order['state'] === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                $response['todayOrdersCount'] += 1;
+
+            } elseif ($order['state'] === OrderStateConstant::ORDER_STATE_CANCEL) {
+                $response['todayOrdersCount'] += 0.5;
+            }
+        }
 
         if ($response['todayOrdersCount'] > 0) {
             $captainFinancialDaily = $this->getCaptainFinancialDailyByCaptainProfileIdAndSpecificDate($captainProfileId,
@@ -130,7 +138,16 @@ class CaptainFinancialDefaultSystemGetBalanceService
             $sinceLastPaymentOrders = $this->getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
                 $fromDate->format('Y-m-d H:i:s'), (new \DateTime('now'))->format('Y-m-d H:i:s'));
 
-            $sinceLastPaymentOrdersCount = count($sinceLastPaymentOrders);
+            $sinceLastPaymentOrdersCount = 0.0;
+
+            foreach ($sinceLastPaymentOrders as $order) {
+                if ($order['state'] === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                    $sinceLastPaymentOrdersCount += 1;
+
+                } elseif ($order['state'] === OrderStateConstant::ORDER_STATE_CANCEL) {
+                    $sinceLastPaymentOrdersCount += 0.5;
+                }
+            }
 
             $response['sinceLastPaymentOrdersCount'] = $sinceLastPaymentOrdersCount;
 
