@@ -458,7 +458,7 @@ class CaptainProfileLoadedState extends States {
           onPressed: () {
             Navigator.of(context).pushNamed(
               PaymentsRoutes.CAPTAIN_PAYMENT,
-              arguments: [model?.captainId, model?.name],
+              arguments: [model?.profileId, model?.name],
             );
           },
           title: S.of(context).accountBalance,
