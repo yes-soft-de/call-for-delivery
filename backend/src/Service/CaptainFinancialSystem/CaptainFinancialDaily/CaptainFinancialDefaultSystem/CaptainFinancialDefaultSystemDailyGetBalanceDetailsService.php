@@ -84,6 +84,8 @@ class CaptainFinancialDefaultSystemDailyGetBalanceDetailsService
             }
         }
 
+        $financialAccountDetails['basicFinancialAmount'] = round($financialAccountDetails['basicFinancialAmount'], 1);
+
         return $financialAccountDetails;
     }
 }
