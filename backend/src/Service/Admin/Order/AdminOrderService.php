@@ -218,7 +218,6 @@ class AdminOrderService
 
         $orders = $this->adminOrderManager->filterStoreOrdersByAdmin($request);
 
-        //dd($orders);
         foreach ($orders as $key => $value) {
             $response[$key] = $this->autoMapping->map('array', StoreOrderFilterByAdminResponse::class, $value);
 
@@ -230,7 +229,7 @@ class AdminOrderService
 //                $response[$key]->externalDeliveredOrders[0]['externalOrderId'] = $externallyDeliveredOrder->getExternalOrderId();
 //            }
         }
-        //dd($response);
+
         return $response;
     }
 
@@ -1538,26 +1537,30 @@ class AdminOrderService
     public function updateStoreBranchToClientDistanceAndDestinationByAdmin(OrderStoreBranchToClientDistanceAndDestinationByAdminRequest $request,
                                                                            int $userId): ?OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse
     {
+        // 1. First get current order distance for updating captain financial
+        $currentOrderStoreBranchToClientDistance = $this->getOrderStoreBranchToClientDistanceByOrderId($request->getOrderId());
+
+        // 2. Update storeBranchToClientDistance
         $order = $this->adminOrderManager->updateStoreBranchToClientDistanceAndDestinationByAdmin($request);
 
         if (! $order) {
             return $order;
         }
 
-        // 2 Update delivery cost
+        // 3. Update delivery cost
         $orderEntity = $this->calculateAndUpdateOrderDeliveryCostByOrderIdAndStoreOwnerProfileIdAndDistance($order,
             $userId, OrderLogActionTypeConstant::ORDER_DELIVERY_COST_UPDATED_BY_NEW_DISTANCE_BY_ADMIN_CONST);
 
         if ($orderEntity !== OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
-            // 3 Update subscription cost of the store's subscription
+            // 4. Update subscription cost of the store's subscription
             $this->handleUpdatingStoreSubscriptionCost($orderEntity->getStoreOwner()->getId(), $orderEntity->getCreatedAt(),
                 $orderEntity->getDeliveryCost());
 
             if ($orderEntity->getCaptainId()) {
-                // 4 Re-calculate the financial dues of the captain who has the order (if exists)
-                if ($order->getCaptainId()?->getCaptainId()) {
-                    $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(),
-                        $order->getId(), $order->getCreatedAt());
+                // 5. Re-calculate the financial dues of the captain who has the order (if exists)
+                if ($orderEntity->getCaptainId()?->getCaptainId()) {
+                    $this->updateCaptainFinancialDueAfterOrderDistanceUpdating($orderEntity->getCaptainId()->getCaptainId(),
+                        $currentOrderStoreBranchToClientDistance, $orderEntity->getCreatedAt(), $orderEntity->getStoreBranchToClientDistance());
 
                     // Re-calculate daily captain financial due
                     $this->createOrUpdateCaptainFinancialDaily($order->getId());
@@ -1682,7 +1685,14 @@ class AdminOrderService
     // Add additional distance to storeBranchToClientDistance via new destination by admin
     public function addDistanceToStoreBranchToClientDistanceViaLocationByAdmin(OrderStoreBranchToClientDistanceAdditionByAdminRequest $request, int $userId)
     {
-        // 1. Calculate the new distance by the new destination
+        // 1. First get current order distance for updating captain financial
+        $currentOrderStoreBranchToClientDistance = $this->getOrderStoreBranchToClientDistanceByOrderId($request->getOrderId());
+
+        if ($currentOrderStoreBranchToClientDistance === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+        }
+
+        // 2. Calculate the new distance by the new destination
         $currentDestination = $this->getCurrentDestinationByOrderIdForAdmin($request->getOrderId());
 
         if (($currentDestination !== OrderResultConstant::ORDER_TYPE_BID) &&
@@ -1697,32 +1707,32 @@ class AdminOrderService
             $this->entityManager->getConnection()->beginTransaction();
 
             try {
-                // 2. Update the destination
+                // 3. Update the destination
                 $orderResult = $this->updateNormalOrderDestinationViaOrderIdAndDestinationArrayByAdmin($request->getOrderId(),
                     $currentDestination, $request->getDestination(), $userId);
 
                 if ($orderResult) {
-                    // 3. Add the new distance to the existing one
+                    // 4. Add the new distance to the existing one
                     $orderEntity = $this->updateOrderStoreBranchToClientDistanceViaAddingNewDistanceByAdmin($request->getOrderId(),
                         $distance, $userId, $request->getStoreBranchToClientDistanceAdditionExplanation());
 
                     if ($orderEntity) {
-                        // 4. Update related OrderDistanceConflict
+                        // 5. Update related OrderDistanceConflict
                         $this->handleUpdateOrderDistanceConflictByNewDestinationResolveByAdmin($request, $orderEntity, $userId,
                             $request->getDestination());
 
-                        // 5. Update delivery cost
+                        // 6. Update delivery cost
                         $orderDeliveryCostUpdateResult = $this->calculateAndUpdateOrderDeliveryCostByOrderIdAndStoreOwnerProfileIdAndDistance($orderEntity,
                             $userId, OrderLogActionTypeConstant::ORDER_DELIVERY_COST_UPDATED_BY_NEW_DESTINATION_BY_ADMIN_CONST);
 
-                        // 6 Update subscription cost of the store's subscription
+                        // 7. Update subscription cost of the store's subscription
                         $this->handleUpdatingStoreSubscriptionCost($orderDeliveryCostUpdateResult->getStoreOwner()->getId(),
                             $orderDeliveryCostUpdateResult->getCreatedAt(), $orderDeliveryCostUpdateResult->getDeliveryCost());
 
                         if ($orderDeliveryCostUpdateResult instanceof OrderEntity) {
                             $this->entityManager->getConnection()->commit();
 
-                            // 7. Send notifications
+                            // 8. Send notifications
                             // local notification to store
                             $this->createLocalNotificationForStore($orderEntity->getStoreOwner()->getStoreOwnerId(),
                                 NotificationConstant::ORDER_NEW_DESTINATION_ADDED_BY_ADMIN_TITLE_CONST, NotificationConstant::ORDER_NEW_DESTINATION_ADDED_BY_ADMIN_MESSAGE_CONST,
@@ -1733,10 +1743,10 @@ class AdminOrderService
                         }
 
                         if ($orderEntity->getCaptainId()) {
-                            // 4 Re-calculate the financial dues of the captain who has the order (if exists)
+                            // 9. Re-calculate the financial dues of the captain who has the order (if exists)
                             if ($orderEntity->getCaptainId()?->getCaptainId()) {
-                                $this->captainFinancialDuesService->captainFinancialDues($orderEntity->getCaptainId()->getCaptainId(),
-                                    $orderEntity->getId(), $orderEntity->getCreatedAt());
+                                $this->updateCaptainFinancialDueAfterOrderDistanceUpdating($orderEntity->getCaptainId()->getCaptainId(),
+                                    $currentOrderStoreBranchToClientDistance, $orderEntity->getCreatedAt(), $orderEntity->getStoreBranchToClientDistance());
 
                                 // Re-calculate daily captain financial due
                                 $this->createOrUpdateCaptainFinancialDaily($orderEntity->getId());
@@ -1827,13 +1837,14 @@ class AdminOrderService
             return $order;
         }
 
+        ///todo if captain financial profits calculated well then delete following IF block
         // Re-calculate the financial dues of the captain who has the order (if exists)
-        if ($order->getCaptainId()?->getCaptainId()) {
-            $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
-
-            // Create or update daily captain financial amount
-            $this->createOrUpdateCaptainFinancialDaily($order->getId());
-        }
+//        if ($order->getCaptainId()?->getCaptainId()) {
+//            $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
+//
+//            // Create or update daily captain financial amount
+//            $this->createOrUpdateCaptainFinancialDaily($order->getId());
+//        }
 
         // save log of the action on order
         $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
@@ -1908,27 +1919,30 @@ class AdminOrderService
      */
     public function addAdditionalDistanceToStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceUpdateByAddAdditionalDistanceByAdminRequest $request, int $userId): int|OrderStoreBranchToClientDistanceUpdateByAdminResponse
     {
+        // 1. First get current order distance for updating captain financial
+        $currentOrderStoreBranchToClientDistance = $this->getOrderStoreBranchToClientDistanceByOrderId($request->getOrderId());
+
         // start transaction commit ...
         $this->entityManager->getConnection()->beginTransaction();
 
         try {
-            // 1 update store branch to client distance
+            // 2 update store branch to client distance
             $order = $this->adminOrderManager->updateOrderStoreBranchToClientDistanceViaAddingNewDistanceByAdmin($request->getOrderId(),
                 $request->getAdditionalDistance(), $request->getStoreBranchToClientDistanceAdditionExplanation());
 
             if ($order) {
-                // 2 Update related OrderDistanceConflict
+                // 3 Update related OrderDistanceConflict
                 $this->handleUpdateOrderDistanceConflictByAdminAfterDistanceAddition($request, $order, $userId);
 
-                // 3 Update delivery cost
+                // 4 Update delivery cost
                 $orderDeliveryCostUpdateResult = $this->calculateAndUpdateOrderDeliveryCostByOrderIdAndStoreOwnerProfileIdAndDistance($order,
                     $userId, OrderLogActionTypeConstant::ORDER_DELIVERY_COST_UPDATED_BY_NEW_DISTANCE_BY_ADMIN_CONST);
 
                 if ($orderDeliveryCostUpdateResult instanceof OrderEntity) {
-                    // 4 Re-calculate the financial dues of the captain who has the order (if exists)
+                    // 5 Re-calculate the financial dues of the captain who has the order (if exists)
                     if ($order->getCaptainId()?->getCaptainId()) {
-                        $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(),
-                            $order->getId(), $order->getCreatedAt());
+                        $this->updateCaptainFinancialDueAfterOrderDistanceUpdating($order->getCaptainId()->getCaptainId(),
+                            $currentOrderStoreBranchToClientDistance, $order->getCreatedAt(), $order->getStoreBranchToClientDistance());
 
                         // Re-calculate daily captain financial due
                         $this->createOrUpdateCaptainFinancialDaily($order->getId());
@@ -1936,13 +1950,13 @@ class AdminOrderService
                         $this->createOrUpdateCaptainOrderFinancial($order->getId());
                     }
 
-                    // 5 Update subscription cost of the store's subscription
+                    // 6 Update subscription cost of the store's subscription
                     $this->handleUpdatingStoreSubscriptionCost($orderDeliveryCostUpdateResult->getStoreOwner()->getId(),
                         $orderDeliveryCostUpdateResult->getCreatedAt(), $orderDeliveryCostUpdateResult->getDeliveryCost());
 
                     $this->entityManager->getConnection()->commit();
 
-                    // 6 Send notifications
+                    // 7 Send notifications
                     // local notification to store
                     $this->createLocalNotificationForStore($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::ORDER_DISTANCE_ADDITION_BY_ADMIN_TITLE_CONST,
                         NotificationConstant::ORDER_DISTANCE_ADDITION_BY_ADMIN_MESSAGE_CONST, $order->getId());
@@ -2419,11 +2433,6 @@ class AdminOrderService
         return $response;
     }
 
-//    public function getLastExternallyDeliveredOrderByOrderId(int $orderId): ExternallyDeliveredOrderEntity|int
-//    {
-//        return $this->externallyDeliveredOrderGetService->getLastExternallyDeliveredOrderByOrderId($orderId);
-//    }
-
     /**
      * Handles the updating of the subscriptionCost field of last store subscription
      */
@@ -2501,5 +2510,29 @@ class AdminOrderService
     private function createOrUpdateCaptainOrderFinancial(int $orderId): CaptainOrderFinancialEntity|int|string
     {
         return $this->captainFinancialDuesService->createOrUpdateCaptainOrderFinancial($orderId);
+    }
+
+    /**
+     * Updates amount field of captain financial due entity after distance changed
+     */
+    public function updateCaptainFinancialDueAfterOrderDistanceUpdating(int $userId, $oldDistance, DateTimeInterface $orderCreatedAt, float $newDistance): CaptainFinancialDuesEntity|int|string
+    {
+        return $this->captainFinancialDuesService->updateCaptainFinancialDueAfterOrderDistanceUpdating($userId, $oldDistance,
+            $orderCreatedAt, $newDistance);
+    }
+
+    public function getOrderStoreBranchToClientDistanceByOrderId(int $orderId): float|string|int
+    {
+        $order = $this->adminOrderManager->getOrderById($orderId);
+
+        if (! $order) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+        }
+
+        if (! $order->getStoreBranchToClientDistance()) {
+            return OrderResultConstant::ORDER_STORE_BRANCH_TO_CLIENT_DISTANCE_IS_NULL_CONST;
+        }
+
+        return $order->getStoreBranchToClientDistance();
     }
 }

@@ -21,6 +21,7 @@ use App\Response\CaptainFinancialSystem\CaptainFinancialDuesResponse;
 use App\Service\CaptainPayment\CaptainPaymentService;
 use DateTime;
 use App\Request\CaptainFinancialSystem\CreateCaptainFinancialDuesByOptionalDatesRequest;
+use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 
 class CaptainFinancialDuesService
@@ -34,7 +35,6 @@ class CaptainFinancialDuesService
         private CaptainPaymentService $captainPaymentService,
         private CaptainFinancialSystemTwoGetBalanceDetailsService $captainFinancialSystemTwoGetBalanceDetailsService,
         private CaptainFinancialSystemThreeGetBalanceDetailsService $captainFinancialSystemThreeGetBalanceDetailsService,
-        //private DateFactoryService $dateFactoryService,
         //private CaptainFinancialSystemDetailGetService $captainFinancialSystemDetailGetService
         private CaptainFinancialSystemOneGetBalanceDetailsService $captainFinancialSystemOneGetBalanceDetailsService,
         private CaptainFinancialDefaultSystemGetBalanceService $captainFinancialDefaultSystemGetBalanceService,
@@ -510,5 +510,80 @@ class CaptainFinancialDuesService
         }
 
         return CaptainFinancialDues::FINANCIAL_NOT_FOUND;
+    }
+
+    public function getCaptainFinancialDuesByCaptainUserIdAndOrderCreationDate(int $captainUserId, DateTimeInterface $dateTimeInterface): int|CaptainFinancialDuesEntity
+    {
+        $captainFinancialDue = $this->captainFinancialDuesManager->getCaptainFinancialDuesByCaptainUserIdAndOrderCreationDate($captainUserId,
+            $dateTimeInterface);
+
+        if (count($captainFinancialDue) === 0) {
+            return CaptainFinancialDues::FINANCIAL_NOT_FOUND;
+        }
+
+        return $captainFinancialDue[0];
+    }
+
+    public function subtractValueFromCaptainFinancialDueAmount(int $captainUserId, float $value, DateTimeInterface $orderCreatedAt): CaptainFinancialDuesEntity|int
+    {
+        // 1 get captain financial due
+        $captainFinancialDue = $this->getCaptainFinancialDuesByCaptainUserIdAndOrderCreationDate($captainUserId, $orderCreatedAt);
+
+        if ($captainFinancialDue === CaptainFinancialDues::FINANCIAL_NOT_FOUND) {
+            return CaptainFinancialDues::FINANCIAL_NOT_FOUND;
+        }
+
+        // 2 update captain financial due
+        return $this->captainFinancialDuesManager->subtractValueFromCaptainFinancialDueAmountByCaptainFinancialDueEntity($captainFinancialDue,
+            $value);
+    }
+
+    public function addValueToCaptainFinancialDueAmount(int $captainUserId, float $value, DateTimeInterface $orderCreatedAt): CaptainFinancialDuesEntity|int
+    {
+        // 1 get captain financial due
+        $captainFinancialDue = $this->getCaptainFinancialDuesByCaptainUserIdAndOrderCreationDate($captainUserId, $orderCreatedAt);
+
+        if ($captainFinancialDue === CaptainFinancialDues::FINANCIAL_NOT_FOUND) {
+            return CaptainFinancialDues::FINANCIAL_NOT_FOUND;
+        }
+
+        // 2 update captain financial due
+        return $this->captainFinancialDuesManager->addValueToCaptainFinancialDueAmount($captainFinancialDue, $value);
+    }
+
+    /**
+     * Updates amount field of captain financial due entity after distance changed
+     */
+    public function updateCaptainFinancialDueAfterOrderDistanceUpdating(int $captainUserId, $oldDistance, DateTimeInterface $orderCreatedAt, float $newDistance): CaptainFinancialDuesEntity|int|string
+    {
+        // 1 According to old order distance, subtract order financial value from captain financial due
+        if ($oldDistance === OrderResultConstant::ORDER_STORE_BRANCH_TO_CLIENT_DISTANCE_IS_NULL_CONST) {
+            $oldDistance = 0.0;
+        }
+
+        $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailCurrent($captainUserId);
+
+        if ($financialSystemDetail) {
+            if (count($financialSystemDetail) > 0) {
+                if ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST) {
+                    $captainProfit = $this->captainFinancialDefaultSystemGetBalanceService->calculateCaptainFinancialAmountForSingleOrderByOrderDistance($oldDistance,
+                        $financialSystemDetail);
+
+                    if ($captainProfit != 0.0) {
+                        // subtract the value of the amount field of captain financial due
+                        $this->subtractValueFromCaptainFinancialDueAmount($captainUserId, $captainProfit, $orderCreatedAt);
+                    }
+
+                    // 2 According to new order distance, add order value to captain financial due
+                    $newCaptainProfit = $this->captainFinancialDefaultSystemGetBalanceService->calculateCaptainFinancialAmountForSingleOrderByOrderDistance($newDistance,
+                        $financialSystemDetail);
+
+                    // update captain financial dues
+                    return $this->addValueToCaptainFinancialDueAmount($captainUserId, $newCaptainProfit, $orderCreatedAt);
+                }
+            }
+        }
+
+        return CaptainFinancialSystem::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM;
     }
 }
