@@ -133,7 +133,7 @@ class CaptainFinancialDuesService
                         $orderId);
                     // *** End of Rami code ***
 
-                    // create or update Captain Order Financial
+                    // create Captain Order Financial
                     $this->createCaptainOrderFinancial($orderId, $financialDues, $captainFinancialDues);
 
                     //update captain financial dues
