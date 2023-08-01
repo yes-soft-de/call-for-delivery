@@ -9,6 +9,7 @@ use App\Entity\CaptainFinancialDuesEntity;
 use App\Entity\CaptainEntity;
 use App\Entity\ImageEntity;
 use App\Request\Admin\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueFilterByAdminRequest;
+use DateTimeInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -352,5 +353,27 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
         }
 
         return $query->getQuery()->getResult();
+    }
+
+    public function getCaptainFinancialDuesByCaptainUserIdAndOrderCreationDate(int $captainUserId, DateTimeInterface $dateTimeInterface): array
+    {
+        return $this->createQueryBuilder('captainFinancialDuesEntity')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = captainFinancialDuesEntity.captain'
+            )
+
+            ->andWhere('captainEntity.captainId = :captainUserId')
+            ->setParameter('captainUserId', $captainUserId)
+
+            ->andWhere('captainFinancialDuesEntity.startDate <= :dateTimeInterface')
+            ->andWhere('captainFinancialDuesEntity.endDate >= :dateTimeInterface')
+            ->setParameter('dateTimeInterface', $dateTimeInterface)
+
+            ->getQuery()
+            ->getResult();
     }
 }

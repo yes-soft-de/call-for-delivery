@@ -65,4 +65,6 @@ final class OrderResultConstant
     const ORDER_STATE_IS_NOT_PENDING_CONST = 224;
 
     const ORDER_HAS_NO_CAPTAIN_CONST = 243;
+
+    const ORDER_STORE_BRANCH_TO_CLIENT_DISTANCE_IS_NULL_CONST = 245;
 }

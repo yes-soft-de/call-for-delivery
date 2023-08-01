@@ -7,7 +7,6 @@ use App\Constant\Order\OrderHasPayConflictAnswersConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\Order\OrderTypeConstant;
 use App\Entity\OrderEntity;
-use App\Entity\StoreOrderDetailsEntity;
 use App\Repository\OrderEntityRepository;
 use App\Request\Admin\Order\CaptainNotArrivedOrderFilterByAdminRequest;
 use App\Request\Admin\Order\Dev\OrderDevCreateByAdminRequest;
@@ -32,7 +31,6 @@ use App\Constant\Captain\CaptainConstant;
 use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
 use App\Request\Admin\Order\FilterOrdersPaidOrNotPaidByAdminRequest;
 use App\Request\Admin\Order\FilterOrdersWhoseHasNotDistanceHasCalculatedRequest;
-use App\Request\Admin\Order\OrderStoreBranchToClientDistanceByAdminRequest;
 use App\Request\Admin\Order\OrderStoreBranchToClientDistanceAndDestinationByAdminRequest;
 use App\Request\Admin\Order\OrderUpdateIsCashPaymentConfirmedByStoreByAdminRequest;
 
@@ -362,21 +360,6 @@ class AdminOrderManager
     {
         return $this->orderEntityRepository->filterOrdersWhoseHasNotDistanceHasCalculated($request);
     }
-   
-//    public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request): ?OrderEntity
-//    {
-//        $orderEntity = $this->orderEntityRepository->find($request->getId());
-//
-//        if(! $orderEntity) {
-//            return $orderEntity;
-//        }
-//
-//        $orderEntity = $this->autoMapping->mapToObject(OrderStoreBranchToClientDistanceByAdminRequest::class, OrderEntity::class, $request, $orderEntity);
-//
-//        $this->entityManager->flush();
-//
-//        return $orderEntity;
-//    }
 
     public function filterOrders(FilterOrdersWhoseHasNotDistanceHasCalculatedRequest $request): ?array
     {
