@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_plan/model/my_profits_model.dart';
 import 'package:c4d/module_plan/plan_routes.dart';
@@ -9,17 +10,9 @@ import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 
 Color get _blue => const Color(0xff2C5085);
-
-Color get _darkBlue => const Color(0xFF1E385D);
-
 Color get _yellow => const Color(0xffFFB800);
-
-Color get _darkYellow => const Color(0xFFB98100);
-
 Color get _gray => Colors.grey;
-
-Color get _darkGray => const Color(0xFFA9A9A9);
-
+Color get _white => Colors.white;
 Color get _lightBlue => const Color(0xffF2FAFD);
 // Color get _lightGreen => const Color(0xff46F4A1);
 Color get _transparentBlue => const Color(0xff5E789D);
@@ -32,6 +25,7 @@ class MyProfitsStateLoaded extends States {
 
   @override
   Widget getUI(BuildContext context) {
+    var darkMode = getIt<ThemePreferencesHelper>().isDarkMode();
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SingleChildScrollView(
@@ -41,7 +35,7 @@ class MyProfitsStateLoaded extends States {
             Text(
               S.current.today,
               style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                    color: _blue,
+                    color: darkMode ? _white : _blue,
                   ),
             ),
             const SizedBox(height: 10),
@@ -52,9 +46,7 @@ class MyProfitsStateLoaded extends States {
                   borderRadius: BorderRadius.circular(12),
                   color: _lightBlue,
                   border: Border.all(
-                    color: ThemePreferencesHelper().isDarkMode()
-                        ? _darkBlue
-                        : _blue,
+                    color: _blue,
                     width: 2,
                   )),
               child: Row(
@@ -65,9 +57,7 @@ class MyProfitsStateLoaded extends States {
                       child: Text(
                         S.current.yourProfitsStart,
                         style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              color: ThemePreferencesHelper().isDarkMode()
-                                  ? _darkBlue
-                                  : _blue,
+                              color: _blue,
                             ),
                       ),
                     ),
@@ -115,19 +105,26 @@ class _CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var darkMode = getIt<ThemePreferencesHelper>().isDarkMode();
     return SizedBox(
       height: 56,
       width: MediaQuery.sizeOf(context).width * 0.75,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
-          backgroundColor:
-              ThemePreferencesHelper().isDarkMode() ? _darkBlue : _blue,
+          backgroundColor: _blue,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(12),
           ),
         ),
-        child: Text(title),
+        child: Text(
+          title,
+          style: darkMode
+              ? const TextStyle(
+                  color: Colors.white,
+                )
+              : null,
+        ),
       ),
     );
   }
@@ -144,8 +141,9 @@ class _SecondCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var darkMode = getIt<ThemePreferencesHelper>().isDarkMode();
     return Card(
-      color: ThemePreferencesHelper().isDarkMode() ? _darkBlue : _blue,
+      color: _blue,
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 20),
         child: Column(
@@ -204,11 +202,8 @@ class _SecondCard extends StatelessWidget {
                     backgroundColor: model.netProfitSinceLastPayment == 0
                         ? null
                         : Colors.white,
-                    textColor: model.netProfitSinceLastPayment == 0
-                        ? null
-                        : ThemePreferencesHelper().isDarkMode()
-                            ? _darkBlue
-                            : _blue,
+                    textColor:
+                        model.netProfitSinceLastPayment == 0 ? null : _blue,
                   ),
                 ),
               ],
@@ -228,9 +223,7 @@ class _SecondCard extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: model.netProfitSinceLastPayment == 0
                       ? _transparentBlue
-                      : ThemePreferencesHelper().isDarkMode()
-                          ? _darkYellow
-                          : _yellow,
+                      : _yellow,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),
@@ -242,9 +235,7 @@ class _SecondCard extends StatelessWidget {
                       S.current.getProfits,
                       style: model.netProfitSinceLastPayment == 0
                           ? Theme.of(context).textTheme.bodySmall?.copyWith(
-                                color: ThemePreferencesHelper().isDarkMode()
-                                    ? _darkGray
-                                    : _gray,
+                                color: _gray,
                               )
                           : Theme.of(context).textTheme.bodyLarge?.copyWith(
                                 color: Colors.white,
@@ -262,6 +253,7 @@ class _SecondCard extends StatelessWidget {
   }
 
   void _showConfirmDialog(BuildContext context, void Function() onConfirm) {
+    var darkMode = getIt<ThemePreferencesHelper>().isDarkMode();
     showDialog(
       context: context,
       builder: (context) {
@@ -274,9 +266,8 @@ class _SecondCard extends StatelessWidget {
                 Text(
                   S.current.doYouWantToDoThisAction,
                   style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: ThemePreferencesHelper().isDarkMode()
-                          ? _darkBlue
-                          : _blue),
+                        color: darkMode ? _white : _blue,
+                      ),
                 ),
                 const SizedBox(height: 80),
                 SizedBox(
@@ -287,16 +278,19 @@ class _SecondCard extends StatelessWidget {
                       onConfirm();
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: ThemePreferencesHelper().isDarkMode()
-                          ? _darkBlue
-                          : _blue,
+                      backgroundColor: _blue,
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
                     ),
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 30),
-                      child: Text(S.current.confirm),
+                      child: Text(
+                        S.current.confirm,
+                        style: Theme.of(context).textTheme.bodyLarge?.copyWith(
+                              color: darkMode ? _white : null,
+                            ),
+                      ),
                     ),
                   ),
                 ),
@@ -326,17 +320,17 @@ class _RowDetailCard extends StatelessWidget {
           children: [
             Text(
               title,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: ThemePreferencesHelper().isDarkMode()
-                      ? _darkBlue
-                      : _blue),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: _blue),
             ),
             Text(
               value,
-              style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                  color: ThemePreferencesHelper().isDarkMode()
-                      ? _darkBlue
-                      : _blue),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyMedium
+                  ?.copyWith(color: _blue),
             ),
           ],
         ),
@@ -448,18 +442,17 @@ class _CardDetail extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
             child: Text(
               value.toString(),
-              style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color:
-                      ThemePreferencesHelper().isDarkMode() ? _darkBlue : _blue,
-                  fontWeight: FontWeight.w600),
+              style: Theme.of(context)
+                  .textTheme
+                  .bodyLarge
+                  ?.copyWith(color: _blue, fontWeight: FontWeight.w600),
             ),
           ),
         ),
         Text(
           title,
           style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                color:
-                    ThemePreferencesHelper().isDarkMode() ? _darkBlue : _blue,
+                color: _blue,
               ),
         ),
       ],
