@@ -2,6 +2,7 @@
 
 namespace App\Service\CaptainFinancialSystem\CaptainFinancialDue;
 
+use App\Constant\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\Order\OrderTypeConstant;
@@ -46,6 +47,10 @@ class CaptainFinancialDueAmountForStoreUpdateHandlerService
     {
         // 1 Get CaptainAmountFromOrderCash by specific captain and order
         $previousAnswer = $this->getCaptainAmountFromOrderCashByOrderId($orderId);
+
+        if ($previousAnswer === CaptainAmountFromOrderCashConstant::CAPTAIN_AMOUNT_FROM_ORDER_CASH_NOT_EXIST_CONST) {
+            return CaptainAmountFromOrderCashConstant::CAPTAIN_AMOUNT_FROM_ORDER_CASH_NOT_EXIST_CONST;
+        }
 
         // 2 If CaptainAmountFromOrderCash exist, check it with the new captain answer
         if ($previousAnswer->getFlag() === $paidToProvider) {
