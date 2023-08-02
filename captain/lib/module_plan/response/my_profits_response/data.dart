@@ -1,11 +1,11 @@
 class Data {
-  int? todayOrdersCount;
+  num? todayOrdersCount;
   num? todayFinancialAmount;
-  int? sinceLastPaymentOrdersCount;
+  num? sinceLastPaymentOrdersCount;
   num? sinceLastPaymentFinancialAmount;
   num? sinceLastPaymentCashOrderAmount;
   num? sinceLastPaymentRemainFinancialAmount;
-  int? captainFinancialSystemType;
+  num? captainFinancialSystemType;
   num? openingOrderCost;
   num? firstSliceLimit;
   num? firstSliceCost;
@@ -36,10 +36,10 @@ class Data {
   });
 
   factory Data.fromJson(Map<String, dynamic> json) => Data(
-        todayOrdersCount: json['todayOrdersCount'] as int?,
+        todayOrdersCount: json['todayOrdersCount'] as num?,
         sinceLastPaymentOrdersCount:
-            json['sinceLastPaymentOrdersCount'] as int?,
-        captainFinancialSystemType: json['captainFinancialSystemType'] as int?,
+            json['sinceLastPaymentOrdersCount'] as num?,
+        captainFinancialSystemType: json['captainFinancialSystemType'] as num?,
         todayFinancialAmount: json['todayFinancialAmount'] as num?,
         sinceLastPaymentFinancialAmount:
             json['sinceLastPaymentFinancialAmount'] as num?,

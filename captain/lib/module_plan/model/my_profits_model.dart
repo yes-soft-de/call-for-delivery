@@ -3,9 +3,9 @@ import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/module_plan/response/my_profits_response/my_profits_response.dart';
 
 class MyProfitsModel extends DataModel {
-  late int ordersCountToday;
+  late num ordersCountToday;
   late num profitToday;
-  late int orderCountSinceLastPayment;
+  late num orderCountSinceLastPayment;
   late num netProfitSinceLastPayment;
   late num openOrderCost;
 
@@ -52,8 +52,8 @@ class MyProfitsModel extends DataModel {
       firstSliceToLimit: data?.firstSliceLimit ?? _nullNumber,
       openOrderCost: data?.openingOrderCost ?? _nullNumber,
       orderCountSinceLastPayment:
-          (data?.sinceLastPaymentOrdersCount ?? _nullNumber).toInt(),
-      ordersCountToday: data?.todayOrdersCount ?? _nullNumber.toInt(),
+          (data?.sinceLastPaymentOrdersCount ?? _nullNumber),
+      ordersCountToday: data?.todayOrdersCount ?? _nullNumber,
       profitToday: data?.todayFinancialAmount ?? _nullNumber,
       secondSliceFromLimit: data?.secondSliceFromLimit ?? _nullNumber,
       secondSliceOneKilometerCost:
