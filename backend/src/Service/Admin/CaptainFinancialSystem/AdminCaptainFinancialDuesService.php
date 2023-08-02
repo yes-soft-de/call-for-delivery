@@ -158,6 +158,8 @@ class AdminCaptainFinancialDuesService
                     $paymentsSum = $this->getCaptainPaymentSumByCaptainProfileIdAndCaptainFinancialDemand($value['captainProfileId']);
 
                     $response[$key]->toBePaid = $response[$key]->financialDueAmount - $paymentsSum;
+
+                    $response[$key]->toBePaid = round($response[$key]->toBePaid, 1);
                 }
                 // But, if it is required the unpaid financial due, the what have to paid is equal to the financial due
                 // final net amount
