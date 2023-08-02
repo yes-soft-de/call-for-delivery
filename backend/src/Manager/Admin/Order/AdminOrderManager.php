@@ -244,7 +244,7 @@ class AdminOrderManager
         $orderEntity->setState(OrderStateConstant::ORDER_STATE_CANCEL);
 
         // save captain user id for later use
-        $captainUserId = $orderEntity->getCaptainId();
+        $captainProfile = $orderEntity->getCaptainId();
 
         $orderEntity->setDateCaptainArrived(null);
         $orderEntity->setIsCaptainArrived(null);
@@ -254,7 +254,7 @@ class AdminOrderManager
 
         $this->entityManager->flush();
 
-        return [$orderEntity, $captainUserId];
+        return [$orderEntity, $captainProfile];
     }
 
     /**
@@ -267,7 +267,7 @@ class AdminOrderManager
         $orderEntity->setState(OrderStateConstant::ORDER_STATE_CANCEL);
 
         // save captain user id for later use
-        $captainUserId = $orderEntity->getCaptainId();
+        $captainProfile = $orderEntity->getCaptainId();
 
         $orderEntity->setDateCaptainArrived(null);
         $orderEntity->setIsCaptainArrived(null);
@@ -278,7 +278,7 @@ class AdminOrderManager
 
         $this->entityManager->flush();
 
-        return [$orderEntity, $captainUserId];
+        return [$orderEntity, $captainProfile];
     }
 
     public function updateDeliveredOrderToCancelled(OrderEntity $orderEntity): array

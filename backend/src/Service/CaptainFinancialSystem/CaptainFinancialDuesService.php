@@ -649,4 +649,72 @@ class CaptainFinancialDuesService
 
         return CaptainFinancialSystem::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM;
     }
+
+    /**
+     * Calculates and subtract half of order value from the captain financial due
+     */
+    public function subtractHalfOrderValueFromCaptainFinancialDue(int $captainUserId, DateTimeInterface $orderCreatedAt, ?float $orderDistance): CaptainFinancialDuesEntity|int|string
+    {
+        // 1 get captain financial due
+        $captainFinancialDue = $this->getCaptainFinancialDuesByCaptainUserIdAndOrderCreationDate($captainUserId, $orderCreatedAt);
+
+        if ($captainFinancialDue === CaptainFinancialDues::FINANCIAL_NOT_FOUND) {
+            return CaptainFinancialDues::FINANCIAL_NOT_FOUND;
+        }
+
+        // 2 get which financial system has the captain subscribed with
+        $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailCurrent($captainUserId);
+
+        if ($financialSystemDetail) {
+            if (count($financialSystemDetail) > 0) {
+                if ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST) {
+                    // 3 Calculate how much profit will the captain get from the order
+                    $orderValue = $this->captainFinancialDefaultSystemGetBalanceService->calculateCaptainFinancialAmountForSingleOrderByOrderDistance($orderDistance,
+                        $financialSystemDetail);
+
+                    if ($orderValue != 0) {
+                        // 4 Add half of the order value to the captain financial due (amount field)
+                        $valueToBeAdded = round($orderValue / 2, 1);
+
+                        return $this->subtractValueFromCaptainFinancialDueAmount($captainUserId, $valueToBeAdded, $orderCreatedAt);
+                    }
+                }
+            }
+        }
+
+        return CaptainFinancialSystem::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM;
+    }
+
+    /**
+     * Calculates and subtracts order value from the captain financial due
+     */
+    public function subtractOrderValueFromCaptainFinancialDue(int $captainUserId, DateTimeInterface $orderCreatedAt, ?float $orderDistance): CaptainFinancialDuesEntity|int|string
+    {
+        // 1 get captain financial due
+        $captainFinancialDue = $this->getCaptainFinancialDuesByCaptainUserIdAndOrderCreationDate($captainUserId, $orderCreatedAt);
+
+        if ($captainFinancialDue === CaptainFinancialDues::FINANCIAL_NOT_FOUND) {
+            return CaptainFinancialDues::FINANCIAL_NOT_FOUND;
+        }
+
+        // 2 get which financial system has the captain subscribed with
+        $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailCurrent($captainUserId);
+
+        if ($financialSystemDetail) {
+            if (count($financialSystemDetail) > 0) {
+                if ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST) {
+                    // 3 Calculate how much profit will the captain get from the order
+                    $orderValue = $this->captainFinancialDefaultSystemGetBalanceService->calculateCaptainFinancialAmountForSingleOrderByOrderDistance($orderDistance,
+                        $financialSystemDetail);
+
+                    if ($orderValue != 0) {
+                        // 4 Add half of the order value to the captain financial due (amount field)
+                        return $this->subtractValueFromCaptainFinancialDueAmount($captainUserId, $orderValue, $orderCreatedAt);
+                    }
+                }
+            }
+        }
+
+        return CaptainFinancialSystem::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM;
+    }
 }

@@ -70,4 +70,21 @@ class CaptainFinancialDueAmountForStoreUpdateHandlerService
 
         return OrderResultConstant::ORDER_PAID_TO_PROVIDER_WRONG_ANSWER_CONST;
     }
+
+    /**
+     * Subtracts the amount of specific CaptainAmountFromOrderCash from the filed
+     * amountForStore of the CaptainFinancialDue
+     */
+    public function subtractSpecificCaptainAmountFromOrderCashFromCaptainFinancialDue(int $captainUserId, int $orderId, DateTimeInterface $orderCreationDate): CaptainFinancialDuesEntity|int
+    {
+        // 1 Get CaptainAmountFromOrderCash by specific captain and order
+        $captainAmountFromOrderCash = $this->getCaptainAmountFromOrderCashByOrderId($orderId);
+
+        if ($captainAmountFromOrderCash === CaptainAmountFromOrderCashConstant::CAPTAIN_AMOUNT_FROM_ORDER_CASH_NOT_EXIST_CONST) {
+            return CaptainAmountFromOrderCashConstant::CAPTAIN_AMOUNT_FROM_ORDER_CASH_NOT_EXIST_CONST;
+        }
+
+        return $this->subtractValueFromCaptainFinancialDueAmountForStore($captainUserId, $orderCreationDate,
+            $captainAmountFromOrderCash->getAmount());
+    }
 }
