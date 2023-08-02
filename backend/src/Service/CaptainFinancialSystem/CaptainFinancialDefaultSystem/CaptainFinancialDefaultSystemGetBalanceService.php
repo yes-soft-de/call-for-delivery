@@ -230,7 +230,7 @@ class CaptainFinancialDefaultSystemGetBalanceService
      *              financial amount += (10 + (0.75 * order distance))
      *
      */
-    public function calculateCaptainFinancialAmountForSingleOrderByOrderDistance(float $orderDistance, array $financialSystemDetail): float
+    public function calculateCaptainFinancialAmountForSingleOrderByOrderDistance(?float $orderDistance, array $financialSystemDetail): float
     {
         $financialAmount = 0.0;
 

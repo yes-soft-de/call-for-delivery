@@ -18,7 +18,8 @@ class CaptainAmountFromOrderCashService
     public function createCaptainAmountFromOrderCash(OrderEntity $orderEntity, int $flag, float $orderCost): ?CaptainAmountFromOrderCashEntity
     {
         $captainAmountFromOrderCash = $this->captainAmountFromOrderCashManager->getCaptainAmountFromOrderCashByOrderId($orderEntity->getId());
-        if( ! $captainAmountFromOrderCash) {
+
+        if (! $captainAmountFromOrderCash) {
             return $this->create($orderEntity, $orderCost, $flag);
         }
 
