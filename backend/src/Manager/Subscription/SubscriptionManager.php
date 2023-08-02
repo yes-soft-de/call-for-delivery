@@ -506,7 +506,6 @@ class SubscriptionManager
     }
 
     /**
-     * ///todo to be used for Updating subscriptionCost field of the store
      * Get last store subscription and not a future one (whatever its status)
      */
     public function getLastUnFutureStoreSubscriptionByStoreOwnerProfileId(int $storeOwnerProfileId): array
