@@ -1,6 +1,6 @@
 class Destination {
-  dynamic lat;
-  dynamic lon;
+  num? lat;
+  num? lon;
   String? link;
 
   Destination({this.lat, this.lon, this.link});

@@ -1,9 +1,6 @@
-import 'dart:developer';
-
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/response/order_details_response/order_details_response.dart';
 import 'package:c4d/module_orders/response/sub_order_list/sub_order.dart';
@@ -94,17 +91,11 @@ class OrderDetailsModel extends DataModel {
     var element = response.data;
     // date converter
     // created At
-    var create = DateFormat.jm()
-            .format(DateHelper.convert(element?.createdAt?.timestamp)) +
-        ' 📅 ' +
-        DateFormat.yMMMEd()
-            .format(DateHelper.convert(element?.createdAt?.timestamp));
+    var create =
+        '${DateFormat.jm().format(DateHelper.convert(element?.createdAt?.timestamp))} 📅 ${DateFormat.yMMMEd().format(DateHelper.convert(element?.createdAt?.timestamp))}';
     // delivery date
-    var delivery = DateFormat.jm()
-            .format(DateHelper.convert(element?.deliveryDate?.timestamp)) +
-        ' 📅 ' +
-        DateFormat.yMMMEd()
-            .format(DateHelper.convert(element?.deliveryDate?.timestamp));
+    var delivery =
+        '${DateFormat.jm().format(DateHelper.convert(element?.deliveryDate?.timestamp))} 📅 ${DateFormat.yMMMEd().format(DateHelper.convert(element?.deliveryDate?.timestamp))}';
     _orders = OrderDetailsModel(
       rating: element?.rating != null
           ? FixedNumber.getFixedNumber(element?.rating ?? 0)
@@ -116,11 +107,13 @@ class OrderDetailsModel extends DataModel {
       customerPhone: element?.recipientPhone ?? '',
       deliveryDateString: delivery,
       deliveryDate: DateHelper.convert(element?.deliveryDate?.timestamp),
-      destinationCoordinate: element?.destination?.lat != null &&
-              element?.destination?.lon != null
-          ? LatLng(
-              element?.destination?.lat ?? 0, element?.destination?.lon ?? 0)
-          : null,
+      destinationCoordinate:
+          element?.destination?.lat != null && element?.destination?.lon != null
+              ? LatLng(
+                  element?.destination?.lat?.toDouble() ?? 0,
+                  element?.destination?.lon?.toDouble() ?? 0,
+                )
+              : null,
       destinationLink: element?.destination?.link,
       note: element?.note ?? '',
       orderCost: element?.orderCost ?? 0,
@@ -131,7 +124,10 @@ class OrderDetailsModel extends DataModel {
       captainID: int.tryParse(element?.captainId ?? '-1') ?? -1,
       branchCoordinate:
           element?.location?.lat != null && element?.location?.lon != null
-              ? LatLng(element?.location?.lat ?? 0, element?.location?.lon ?? 0)
+              ? LatLng(
+                  element?.location?.lat?.toDouble() ?? 0,
+                  element?.location?.lon?.toDouble() ?? 0,
+                )
               : null,
       storeName: element?.storeOwnerName ?? S.current.unknown,
       storePhone: element?.phone ?? '',
@@ -166,16 +162,10 @@ class OrderDetailsModel extends DataModel {
   List<OrderModel> _getOrders(List<SubOrder> suborder) {
     List<OrderModel> orders = [];
     suborder.forEach((element) {
-      var create = DateFormat.jm()
-              .format(DateHelper.convert(element.createdAt?.timestamp)) +
-          ' 📅 ' +
-          DateFormat.Md()
-              .format(DateHelper.convert(element.createdAt?.timestamp));
-      var delivery = DateFormat.jm()
-              .format(DateHelper.convert(element.deliveryDate?.timestamp)) +
-          ' 📅 ' +
-          DateFormat.Md()
-              .format(DateHelper.convert(element.deliveryDate?.timestamp));
+      var create =
+          '${DateFormat.jm().format(DateHelper.convert(element.createdAt?.timestamp))} 📅 ${DateFormat.Md().format(DateHelper.convert(element.createdAt?.timestamp))}';
+      var delivery =
+          '${DateFormat.jm().format(DateHelper.convert(element.deliveryDate?.timestamp))} 📅 ${DateFormat.Md().format(DateHelper.convert(element.deliveryDate?.timestamp))}';
       orders.add(OrderModel(
           branchName: element.branchName ?? S.current.unknown,
           createdDate: create,
