@@ -854,7 +854,7 @@ class SubscriptionService
                         $item['orderDeliveryCost'] = $subscription['openingOrderCost'];
 
                     } else {
-                        $item['orderDeliveryCost'] = 14;
+                        $item['orderDeliveryCost'] = 12;
                     }
 
                     if ($subscription['oneKilometerCost']) {

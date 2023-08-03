@@ -2931,7 +2931,8 @@ class OrderEntityRepository extends ServiceEntityRepository
     public function getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates(int $captainProfileId, string $fromDate, string $toDate): array
     {
         return $this->createQueryBuilder('orderEntity')
-            ->select('orderEntity.id', 'orderEntity.storeBranchToClientDistance', 'orderEntity.kilometer')
+            ->select('orderEntity.id', 'orderEntity.storeBranchToClientDistance', 'orderEntity.kilometer', 'orderEntity.state',
+                'orderEntity.orderCancelledByUserAndAtState')
 
             ->andWhere('(orderEntity.state = :deliveredState) OR '
                 .'(orderEntity.state = :cancelledState AND orderEntity.orderCancelledByUserAndAtState IN (:orderCancelledByUserAndAtStateArray))')
