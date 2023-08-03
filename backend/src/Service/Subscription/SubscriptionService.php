@@ -1418,7 +1418,7 @@ class SubscriptionService
         $newSubscriptionCost = 0.0;
 
         if ($subscriptionEntity->getSubscriptionCost()) {
-            $newSubscriptionCost = $subscriptionEntity->getSubscriptionCost() + $orderCost;
+            $newSubscriptionCost = $subscriptionEntity->getSubscriptionCost() - $orderCost;
         }
 
         return $this->subscriptionManager->updateSubscriptionCostBySubscriptionEntityAndNewSubscriptionCost($subscriptionEntity,
