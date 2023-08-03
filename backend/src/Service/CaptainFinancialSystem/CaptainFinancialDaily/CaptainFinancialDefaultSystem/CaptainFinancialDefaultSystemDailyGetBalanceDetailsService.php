@@ -68,7 +68,7 @@ class CaptainFinancialDefaultSystemDailyGetBalanceDetailsService
                 $tempValue = 0.0;
                 $distance = $order['storeBranchToClientDistance'];
 
-                if ($distance) {
+                if (($distance !== null) && ($distance != 0)) {
                     $tempValue += $captainFinancialSystemDetails['openingOrderCost'];
 
                     if ($distance <= $captainFinancialSystemDetails['firstSliceLimit']) {

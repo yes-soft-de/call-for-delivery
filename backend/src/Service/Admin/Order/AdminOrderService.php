@@ -1190,7 +1190,7 @@ class AdminOrderService
                             // that the order belongs to
                             $this->deleteCaptainAmountFromCashOrderAndUpdatePaymentByCaptainProfileIdAndOrderId($arrayResult[1]->getId(),
                                 $arrayResult[0]->getId(), $arrayResult[0]->getPayment());
-                            // Subtract order cost from store's subscription cost
+                            // Subtract order cost from store's subscription cost if order had been delivered
                             // Update subscription cost of the store's subscription
                             $this->handleUpdatingStoreSubscriptionCost($arrayResult[0]->getStoreOwner()->getId(),
                                 $arrayResult[0]->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION,
@@ -1199,11 +1199,14 @@ class AdminOrderService
                         }
 
                     } else {
-                        // Cut the order from Store's subscription => add order cost to subscription's cost
-                        // Update subscription cost of the store's subscription
-                        $this->handleUpdatingStoreSubscriptionCost($arrayResult[0]->getStoreOwner()->getId(),
-                            $arrayResult[0]->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_ADDITION,
-                            $arrayResult[0]->getDeliveryCost());
+                        // Cut the order from Store's subscription => add order cost to subscription's cost if order is
+                        // not being delivered yet
+                        if ($orderStateBeforeUpdate !== OrderStateConstant::ORDER_STATE_DELIVERED) {
+                            // Update subscription cost of the store's subscription
+                            $this->handleUpdatingStoreSubscriptionCost($arrayResult[0]->getStoreOwner()->getId(),
+                                $arrayResult[0]->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_ADDITION,
+                                $arrayResult[0]->getDeliveryCost());
+                        }
                     }
 
                     // 4. If order isn't delivered yet, then update the remaining cars (because the captain returned available)
