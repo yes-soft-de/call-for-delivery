@@ -5,6 +5,7 @@ import 'package:c4d/module_payments/response/captain_previous_payment_response/p
 
 class CaptainPreviousPaymentsModel extends DataModel {
   late num paymentsTotalAmount;
+  late num toBePaid;
   late List<EPaymentModel> ePayments;
   late bool hasTpPay;
 
@@ -14,6 +15,7 @@ class CaptainPreviousPaymentsModel extends DataModel {
     required this.paymentsTotalAmount,
     required this.ePayments,
     required this.hasTpPay,
+    required this.toBePaid,
   });
 
   CaptainPreviousPaymentsModel.withData(
@@ -22,8 +24,9 @@ class CaptainPreviousPaymentsModel extends DataModel {
 
     _model = CaptainPreviousPaymentsModel(
       paymentsTotalAmount: data?.paymentsTotalAmount ?? 0,
+      toBePaid: data?.toBePaid ?? 0,
       ePayments: _getEPaymentModel(data?.payments),
-      hasTpPay: (data?.paymentsTotalAmount ?? 0) > 0,
+      hasTpPay: (data?.toBePaid ?? 0) > 0,
     );
   }
 
