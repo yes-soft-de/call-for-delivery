@@ -468,7 +468,7 @@ class CaptainFinancialDuesService
                                 $captainOrderFinancial = $this->entityManager->getRepository(CaptainOrderFinancialEntity::class)
                                     ->findOneBy(['orderId' => $orderId]);
 
-                                if (!$captainOrderFinancial) {
+                                if (! $captainOrderFinancial) {
                                     return $this->createCaptainOrderFinancial($orderId, $financialDues, $captainFinancialDues);
 
                                 } else {
@@ -716,5 +716,85 @@ class CaptainFinancialDuesService
         }
 
         return CaptainFinancialSystem::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM;
+    }
+
+    /**
+     * Add or Subtract half order/full order value to/from CaptainOrderFinancial
+     */
+    public function addOrSubtractCaptainOrderFinancial(int $orderId, int $captainUserId, int $captainProfileId, int $operationType, bool $halfOrderValue): CaptainOrderFinancialEntity|int|string
+    {//dd($orderId, $operationType, $halfOrderValue);
+        $orderEntity = $this->entityManager->getRepository(OrderEntity::class)->findOneBy(['id' => $orderId]);
+
+        if ($orderEntity) {
+            //dd($orderId, $operationType, $halfOrderValue, $orderEntity);
+                $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailCurrent($captainUserId);
+
+                //dd($orderId, $operationType, $halfOrderValue, $financialSystemDetail);
+                if ($financialSystemDetail) {
+                    if (count($financialSystemDetail) > 0) {
+                        $captainFinancialDues = $this->getCaptainFinancialDueByCaptainProfileIdAndOrderCreationDate($captainProfileId,
+                            $orderEntity->getCreatedAt());
+
+                        //dd($orderId, $operationType, $halfOrderValue, $captainFinancialDues);
+                        if ($captainFinancialDues !== CaptainFinancialDues::FINANCIAL_NOT_FOUND) {
+                            if ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST) {
+                                $financialDues = $this->captainFinancialDefaultSystemGetBalanceService->calculateCaptainDues($financialSystemDetail,
+                                    $orderId);
+
+                                $captainOrderFinancial = $this->entityManager->getRepository(CaptainOrderFinancialEntity::class)
+                                    ->findOneBy(['orderId' => $orderId]);
+                                //dd($orderId, $operationType, $halfOrderValue, $captainOrderFinancial);
+                                if (! $captainOrderFinancial) {
+                                    // order value not exist, we want to create it
+                                    if ($operationType === CaptainFinancialSystem::OPERATION_TYPE_ADDITION_CONST) {
+                                        if ($halfOrderValue === CaptainFinancialSystem::HALF_ORDER_VALUE_CONST) {
+                                            // add half order value
+                                            $financialDues['financialDues'] = round($financialDues['financialDues'] / 2,
+                                                1);
+                                            return $this->createCaptainOrderFinancial($orderId, $financialDues, $captainFinancialDues);
+                                        }
+                                        // add full order value
+                                        return $this->createCaptainOrderFinancial($orderId, $financialDues, $captainFinancialDues);
+                                    }
+
+                                } else {//dd($operationType, $halfOrderValue);
+                                    // order value exists, update it
+                                    if ($operationType === CaptainFinancialSystem::OPERATION_TYPE_SUBTRACTION_CONST) {
+                                        if ($halfOrderValue === CaptainFinancialSystem::HALF_ORDER_VALUE_CONST) {
+                                            // subtract half of order value by updating it
+                                            $captainOrderFinancial->setProfit(round($financialDues['financialDues'] / 2,
+                                                1));
+                                            $captainOrderFinancial->setCashAmount($financialDues['amountForStore']);
+                                            $captainOrderFinancial->setFinalProfit($financialDues['financialDues'] - $financialDues['amountForStore']);
+
+                                            $this->entityManager->flush();
+
+                                            return $captainOrderFinancial;
+                                        }//dd($orderId);
+                                        // subtract full order value by updating it
+                                        $captainOrderFinancial->setProfit(0.0);
+                                        $captainOrderFinancial->setCashAmount($financialDues['amountForStore']);
+                                        $captainOrderFinancial->setFinalProfit(0.0 - $financialDues['amountForStore']);
+
+                                        $this->entityManager->flush();
+
+                                        return $captainOrderFinancial;
+                                    }
+                                }
+                            }
+
+                            return CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_IS_NOT_THE_DEFAULT_SYSTEM_CONST;
+                        }
+
+                        return CaptainFinancialDues::FINANCIAL_NOT_FOUND;
+                    }
+
+                    return CaptainFinancialSystem::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM;
+                }
+
+                return CaptainFinancialSystem::YOU_NOT_HAVE_CAPTAIN_FINANCIAL_SYSTEM;
+        }
+
+        return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
     }
 }

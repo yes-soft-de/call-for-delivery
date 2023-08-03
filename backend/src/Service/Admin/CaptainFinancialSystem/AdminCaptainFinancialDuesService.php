@@ -152,6 +152,8 @@ class AdminCaptainFinancialDuesService
 
                 $response[$key]->image = $this->uploadFileHelperService->getImageParams($value['imagePath']);
 
+                $response[$key]->financialDueAmount = round($response[$key]->financialDueAmount, 1);
+
                 // If it is required to get sum of financial due which captain demanded it, then calculate what have
                 // to be paid
                 if ($request->getHasCaptainFinancialDueDemanded() === true) {

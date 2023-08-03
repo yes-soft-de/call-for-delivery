@@ -24,6 +24,13 @@ class CaptainPaymentFilterByAdminRequest
      */
     private $customizedTimezone;
 
+    /**
+     * This field had been added because Front uses it instead of $captainProfileId
+     *
+     * @var int|null
+     */
+    private $captainId;
+
     public function getFromDate(): ?string
     {
         return $this->fromDate;
@@ -42,5 +49,10 @@ class CaptainPaymentFilterByAdminRequest
     public function getCustomizedTimezone(): ?string
     {
         return $this->customizedTimezone;
+    }
+
+    public function getCaptainId(): ?int
+    {
+        return $this->captainId;
     }
 }

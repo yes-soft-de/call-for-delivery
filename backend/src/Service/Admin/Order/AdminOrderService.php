@@ -7,6 +7,7 @@ use App\Constant\Admin\AdminProfileConstant;
 use App\Constant\Admin\Report\Statistics\StatisticsConstant;
 use App\Constant\AppFeature\AppFeatureResultConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyResultConstant;
+use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\ExternalDeliveryCompany\ExternalDeliveryCompanyResultConstant;
 use App\Constant\ExternalDeliveryCompany\Mrsool\MrsoolCompanyConstant;
 use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaResultConstant;
@@ -1147,11 +1148,21 @@ class AdminOrderService
                         // order hadn't been delivered, so add half of its value to captain financial due
                         $this->addHalfOrderValueToCaptainFinancialDue($arrayResult[0]->getCaptainId()->getCaptainId(),
                             $arrayResult[0]->getCreatedAt(), $arrayResult[0]->getStoreBranchToClientDistance());
+                        // Add half order value to CaptainOrderFinancial
+                        $this->addOrSubtractCaptainOrderFinancial($arrayResult[0]->getId(),
+                            $arrayResult[0]->getCaptainId()->getCaptainId(), $arrayResult[0]->getCaptainId()->getId(),
+                            CaptainFinancialSystem::OPERATION_TYPE_ADDITION_CONST,
+                            CaptainFinancialSystem::HALF_ORDER_VALUE_CONST);
 
                     } else {
                         // order had already been delivered, so subtract half of its value from Captain Financial Due
                         $this->subtractHalfOrderValueFromCaptainFinancialDue($arrayResult[0]->getCaptainId()->getCaptainId(),
                             $arrayResult[0]->getCreatedAt(), $arrayResult[0]->getStoreBranchToClientDistance());
+                        // Subtract half order value From CaptainOrderFinancial
+                        $this->addOrSubtractCaptainOrderFinancial($arrayResult[0]->getId(),
+                            $arrayResult[0]->getCaptainId()->getCaptainId(), $arrayResult[0]->getCaptainId()->getId(),
+                            CaptainFinancialSystem::OPERATION_TYPE_SUBTRACTION_CONST,
+                            CaptainFinancialSystem::HALF_ORDER_VALUE_CONST);
                     }
 
                 } else {
@@ -1167,6 +1178,10 @@ class AdminOrderService
                         // amountForStore of the CaptainFinancialDue
                         $this->subtractSpecificCaptainAmountFromOrderCashFromCaptainFinancialDue($arrayResult[1]->getCaptainId(),
                             $arrayResult[0]->getId(), $arrayResult[0]->getCreatedAt());
+                        // Subtract half order value From CaptainOrderFinancial
+                        $this->addOrSubtractCaptainOrderFinancial($arrayResult[0]->getId(),
+                            $arrayResult[1]->getCaptainId(), $arrayResult[1]->getId(),
+                            CaptainFinancialSystem::OPERATION_TYPE_SUBTRACTION_CONST, false);
                     }
                 }
 
@@ -2612,5 +2627,14 @@ class AdminOrderService
     {
         return $this->captainFinancialDuesService->subtractHalfOrderValueFromCaptainFinancialDue($captainUserId, $orderCreatedAt,
             $orderDistance);
+    }
+
+    /**
+     * Add or Subtract half order/full order value to/from CaptainOrderFinancial
+     */
+    private function addOrSubtractCaptainOrderFinancial(int $orderId, int $captainUserId, int $captainProfileId,int $operationType, bool $halfOrderValue): CaptainOrderFinancialEntity|int|string
+    {
+        return $this->captainFinancialDuesService->addOrSubtractCaptainOrderFinancial($orderId, $captainUserId,
+            $captainProfileId, $operationType, $halfOrderValue);
     }
 }
