@@ -96,6 +96,15 @@ class OrderDetailsModel extends DataModel {
     // delivery date
     var delivery =
         '${DateFormat.jm().format(DateHelper.convert(element?.deliveryDate?.timestamp))} 📅 ${DateFormat.yMMMEd().format(DateHelper.convert(element?.deliveryDate?.timestamp))}';
+
+    // handle if coordinate was an integer
+    element?.destination?.lat =
+        _dynamicIntToDynamicDouble(element.destination?.lat);
+    element?.destination?.lon =
+        _dynamicIntToDynamicDouble(element.destination?.lon);
+    element?.location?.lat = _dynamicIntToDynamicDouble(element.location?.lat);
+    element?.location?.lon = _dynamicIntToDynamicDouble(element.location?.lon);
+
     _orders = OrderDetailsModel(
       rating: element?.rating != null
           ? FixedNumber.getFixedNumber(element?.rating ?? 0)
@@ -110,8 +119,8 @@ class OrderDetailsModel extends DataModel {
       destinationCoordinate:
           element?.destination?.lat != null && element?.destination?.lon != null
               ? LatLng(
-                  element?.destination?.lat?.toDouble() ?? 0,
-                  element?.destination?.lon?.toDouble() ?? 0,
+                  element?.destination?.lat ?? 0,
+                  element?.destination?.lon ?? 0,
                 )
               : null,
       destinationLink: element?.destination?.link,
@@ -125,8 +134,8 @@ class OrderDetailsModel extends DataModel {
       branchCoordinate:
           element?.location?.lat != null && element?.location?.lon != null
               ? LatLng(
-                  element?.location?.lat?.toDouble() ?? 0,
-                  element?.location?.lon?.toDouble() ?? 0,
+                  element?.location?.lat ?? 0,
+                  element?.location?.lon ?? 0,
                 )
               : null,
       storeName: element?.storeOwnerName ?? S.current.unknown,
@@ -189,6 +198,14 @@ class OrderDetailsModel extends DataModel {
   }
 
   OrderDetailsModel get data => _orders;
+}
+
+dynamic _dynamicIntToDynamicDouble(dynamic v) {
+  if (v != null && (v is int || v is int?)) {
+    v = v.toString();
+    v = double.tryParse(v) ?? 0.0;
+  }
+  return v;
 }
 
 class PdfModel {
