@@ -15,6 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
+import 'package:webview_flutter/webview_flutter.dart';
 
 @injectable
 class OrderRecyclingScreen extends StatefulWidget {
@@ -47,7 +48,8 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
   int? branch;
   LatLng? customerLocation;
   int? costType;
-
+  late WebViewController controller;
+  bool startParseLocation = false;
   //
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -94,10 +96,46 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
         Fluttertoast.showToast(msg: S.current.invalidMapLink);
       }
     });
+    controller = WebViewController()
+      ..setJavaScriptMode(JavaScriptMode.unrestricted)
+      ..setBackgroundColor(const Color(0x00000000))
+      ..setNavigationDelegate(
+        NavigationDelegate(
+          onProgress: (int progress) {
+            // Update loading bar.
+          },
+          onPageStarted: (String url) {
+            print('started ---------------------------> $url');
+          },
+          onPageFinished: (String url) {
+            print('finished ---------------------------> $url');
+            customerLocation =
+                DeepLinksService.getCustomerLocationFromRedirectedUrl(url);
+            if (customerLocation != null) {
+              refresh();
+            }
+          },
+          onWebResourceError: (WebResourceError error) {},
+        ),
+      );
     super.initState();
   }
 
+  void showLoadingIndicatorOverlayToPreventPressingWhileLinkBeingParsing() {
+    showDialog(
+        context: context,
+        builder: (ctx) {
+          return SizedBox(
+              height: 50,
+              width: 50,
+              child: Center(child: CircularProgressIndicator()));
+        });
+  }
   void locationParsing() async {
+    setState(() {
+      startParseLocation = true;
+    });
+    showLoadingIndicatorOverlayToPreventPressingWhileLinkBeingParsing();
     if (toController.text.isNotEmpty && toController.text != '') {
       if (toController.text.contains(' ') || toController.text.contains('\n')) {
         toController.text = Cleaner.clean(toController.text);
@@ -105,23 +143,47 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
       var data = toController.text.trim();
       var link = Uri.tryParse(data);
       if (link != null && link.queryParameters['q'] != null) {
-        customerLocation = LatLng(
-          double.parse(link.queryParameters['q']!.split(',')[0]),
-          double.parse(link.queryParameters['q']!.split(',')[1]),
-        );
-        setState(() {});
+        try {
+          customerLocation = LatLng(
+            double.parse(link.queryParameters['q']!.split(',')[0]),
+            double.parse(link.queryParameters['q']!.split(',')[1]),
+          );
+        } catch (e) {
+          toController.text =
+          await DeepLinksService.extractCoordinatesFromUrl(data);
+        }
+        setState(() {
+          startParseLocation = false;
+        });
       } else if (link != null) {
         toController.text =
-            await DeepLinksService.extractCoordinatesFromUrl(data);
-        setState(() {});
+        await DeepLinksService.extractCoordinatesFromUrl(data);
+        setState(() {
+          startParseLocation = false;
+        });
       } else {
         customerLocation = null;
-        setState(() {});
+        setState(() {
+          startParseLocation = false;
+        });
       }
     } else {
       customerLocation = null;
-      setState(() {});
+      setState(() {
+        startParseLocation = false;
+      });
     }
+    if (customerLocation == null) {
+      try {
+        controller.loadRequest(Uri.parse(toController.text));
+      } catch (e) {
+        //
+      }
+      setState(() {
+        startParseLocation = false;
+      });
+    }
+    Navigator.of(context).pop();
   }
 
   void refresh() {

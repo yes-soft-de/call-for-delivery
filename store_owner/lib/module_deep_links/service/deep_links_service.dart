@@ -19,8 +19,6 @@ class DeepLinksService {
     try {
       final dio = Dio();
       final response = await dio.get(link);
-      print(response.headers);
-      print(response.redirects.first.location.toString());
       return response.redirects.first.location.toString();
     } catch (e) {
       return link;
@@ -35,6 +33,8 @@ class DeepLinksService {
     } else if (uri.scheme == 'comgooglemaps' &&
         uri.queryParameters.containsKey('daddr')) {
       return _extractCoordinatesFromComGoogleMapsUrl(uri);
+    } else if (uri.host.contains('maps.apple.com')) {
+      return _extractCoordinatesFromAppleMapsUrl(uri);
     } else {
       print('Invalid URL format.');
       return _getFirebaseDynamicLinkData(url);
@@ -192,9 +192,24 @@ class DeepLinksService {
     }
     return uri.toString();
   }
+  static String _extractCoordinatesFromAppleMapsUrl(Uri uri) {
+    String ll = uri.queryParameters['ll']!;
+    List<String> coordinates = ll.split(',');
 
+    if (coordinates.length == 2) {
+      String latitude = coordinates[0];
+      String longitude = coordinates[1];
+
+      print('Latitude: $latitude');
+      print('Longitude: $longitude');
+      return 'https://maps.google.com?q=$latitude,$longitude';
+    } else {
+      print('Invalid coordinates format.');
+    }
+    return uri.toString();
+  }
   static LatLng? getCustomerLocationFromRedirectedUrl(String url) {
-    RegExp latLngPattern = RegExp(r'//@(-?\d+\.?\d*),(-?\d+\.?\d*)');
+    RegExp latLngPattern = RegExp(r'/@(-?\d+\.?\d*),(-?\d+\.?\d*)');
     RegExpMatch? match = latLngPattern.firstMatch(url);
     if (match != null) {
       double latitude = double.tryParse(match.group(1) ?? '') ?? 0;

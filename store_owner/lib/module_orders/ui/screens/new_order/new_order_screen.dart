@@ -33,13 +33,16 @@ class NewOrderScreenState extends State<NewOrderScreen>
   late States currentState;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   StreamSubscription? _stateSubscription;
+  bool startParseLocation = false;
 
   void addNewOrder(CreateOrderRequest request) {
     widget._stateManager.createOrder(this, request);
   }
 
   void refresh() {
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   // New Order state controller
@@ -55,6 +58,7 @@ class NewOrderScreenState extends State<NewOrderScreen>
   int? branch;
   LatLng? customerLocation;
   late WebViewController controller;
+
   //
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -115,7 +119,7 @@ class NewOrderScreenState extends State<NewOrderScreen>
             customerLocation =
                 DeepLinksService.getCustomerLocationFromRedirectedUrl(url);
             if (customerLocation != null) {
-              setState(() {});
+              refresh();
             }
           },
           onWebResourceError: (WebResourceError error) {},
@@ -155,7 +159,22 @@ class NewOrderScreenState extends State<NewOrderScreen>
     }
   }
 
+  void showLoadingIndicatorOverlayToPreventPressingWhileLinkBeingParsing() {
+    showDialog(
+        context: context,
+        builder: (ctx) {
+          return SizedBox(
+              height: 50,
+              width: 50,
+              child: Center(child: CircularProgressIndicator()));
+        });
+  }
+
   void locationParsing() async {
+    setState(() {
+      startParseLocation = true;
+    });
+    showLoadingIndicatorOverlayToPreventPressingWhileLinkBeingParsing();
     if (toController.text.isNotEmpty && toController.text != '') {
       if (toController.text.contains(' ') || toController.text.contains('\n')) {
         toController.text = Cleaner.clean(toController.text);
@@ -163,22 +182,35 @@ class NewOrderScreenState extends State<NewOrderScreen>
       var data = toController.text.trim();
       var link = Uri.tryParse(data);
       if (link != null && link.queryParameters['q'] != null) {
-        customerLocation = LatLng(
-          double.parse(link.queryParameters['q']!.split(',')[0]),
-          double.parse(link.queryParameters['q']!.split(',')[1]),
-        );
-        setState(() {});
+        try {
+          customerLocation = LatLng(
+            double.parse(link.queryParameters['q']!.split(',')[0]),
+            double.parse(link.queryParameters['q']!.split(',')[1]),
+          );
+        } catch (e) {
+          toController.text =
+              await DeepLinksService.extractCoordinatesFromUrl(data);
+        }
+        setState(() {
+          startParseLocation = false;
+        });
       } else if (link != null) {
         toController.text =
             await DeepLinksService.extractCoordinatesFromUrl(data);
-        setState(() {});
+        setState(() {
+          startParseLocation = false;
+        });
       } else {
         customerLocation = null;
-        setState(() {});
+        setState(() {
+          startParseLocation = false;
+        });
       }
     } else {
       customerLocation = null;
-      setState(() {});
+      setState(() {
+        startParseLocation = false;
+      });
     }
     if (customerLocation == null) {
       try {
@@ -186,8 +218,11 @@ class NewOrderScreenState extends State<NewOrderScreen>
       } catch (e) {
         //
       }
-      setState(() {});
+      setState(() {
+        startParseLocation = false;
+      });
     }
+    Navigator.of(context).pop();
   }
 
   @override
