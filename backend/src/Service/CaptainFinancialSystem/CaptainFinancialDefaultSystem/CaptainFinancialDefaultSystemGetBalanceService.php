@@ -234,7 +234,7 @@ class CaptainFinancialDefaultSystemGetBalanceService
     {
         $financialAmount = 0.0;
 
-        if ($orderDistance !== null) {
+        if (($orderDistance !== null) && ($orderDistance != 0)) {
             $financialAmount += $financialSystemDetail['openingOrderCost'];
 
             if ($orderDistance <= $financialSystemDetail['firstSliceLimit']) {

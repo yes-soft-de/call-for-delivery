@@ -1392,26 +1392,43 @@ class SubscriptionService
         return $subscriptionArrayResult[0];
     }
 
+    /**
+     * Updates subscriptionCost of specific store's subscription after adding value to it
+     */
     public function addNewSubscriptionCostToSpecificSubscription(SubscriptionEntity $subscriptionEntity, float $orderCost): SubscriptionEntity
     {
-        $subscriptionCost = 0.0;
+        $newSubscriptionCost = 0.0;
 
         if (! $subscriptionEntity->getSubscriptionCost()) {
-            $subscriptionCost = $orderCost;
+            $newSubscriptionCost = $orderCost;
 
         } else {
-            $subscriptionCost = $subscriptionEntity->getSubscriptionCost() + $orderCost;
+            $newSubscriptionCost = $subscriptionEntity->getSubscriptionCost() + $orderCost;
         }
 
         return $this->subscriptionManager->updateSubscriptionCostBySubscriptionEntityAndNewSubscriptionCost($subscriptionEntity,
-            $subscriptionCost);
+            $newSubscriptionCost);
     }
 
     /**
-     * ///todo to be used for Updating subscriptionCost field of the store
+     * Updates subscriptionCost of specific store's subscription after subtracting value from it
+     */
+    public function subtractValueFromSubscriptionCostBySpecificSubscription(SubscriptionEntity $subscriptionEntity, float $orderCost): SubscriptionEntity
+    {
+        $newSubscriptionCost = 0.0;
+
+        if ($subscriptionEntity->getSubscriptionCost()) {
+            $newSubscriptionCost = $subscriptionEntity->getSubscriptionCost() + $orderCost;
+        }
+
+        return $this->subscriptionManager->updateSubscriptionCostBySubscriptionEntityAndNewSubscriptionCost($subscriptionEntity,
+            $newSubscriptionCost);
+    }
+
+    /**
      * Updates subscriptionCost field of last store subscription
      */
-    public function handleUpdatingStoreSubscriptionCost(int $storeOwnerProfileId, DateTimeInterface $orderCreatedAt, ?float $orderDeliveryCost = null): SubscriptionEntity|int|string
+    public function handleUpdatingStoreSubscriptionCost(int $storeOwnerProfileId, DateTimeInterface $orderCreatedAt, string $operationType, ?float $orderDeliveryCost = null): SubscriptionEntity|int|string
     {
         // 1. get LAST store subscription
         // why LAST? because maybe the store created the order then the subscription had finished.
@@ -1432,7 +1449,14 @@ class SubscriptionService
             $orderDeliveryCost = 0.0;
         }
 
-        return $this->addNewSubscriptionCostToSpecificSubscription($subscription, $orderDeliveryCost);
+        if ($operationType === SubscriptionConstant::OPERATION_TYPE_ADDITION) {
+            return $this->addNewSubscriptionCostToSpecificSubscription($subscription, $orderDeliveryCost);
+
+        } elseif ($operationType === SubscriptionConstant::OPERATION_TYPE_SUBTRACTION) {
+            return $this->subtractValueFromSubscriptionCostBySpecificSubscription($subscription, $orderDeliveryCost);
+        }
+
+        return SubscriptionConstant::OPERATION_TYPE_WRONG_CONST;
     }
 }
  

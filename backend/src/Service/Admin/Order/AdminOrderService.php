@@ -1190,6 +1190,22 @@ class AdminOrderService
                             // that the order belongs to
                             $this->deleteCaptainAmountFromCashOrderAndUpdatePaymentByCaptainProfileIdAndOrderId($arrayResult[1]->getId(),
                                 $arrayResult[0]->getId(), $arrayResult[0]->getPayment());
+                            // Subtract order cost from store's subscription cost if order had been delivered
+                            // Update subscription cost of the store's subscription
+                            $this->handleUpdatingStoreSubscriptionCost($arrayResult[0]->getStoreOwner()->getId(),
+                                $arrayResult[0]->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION,
+                                $arrayResult[0]->getDeliveryCost());
+
+                        }
+
+                    } else {
+                        // Cut the order from Store's subscription => add order cost to subscription's cost if order is
+                        // not being delivered yet
+                        if ($orderStateBeforeUpdate !== OrderStateConstant::ORDER_STATE_DELIVERED) {
+                            // Update subscription cost of the store's subscription
+                            $this->handleUpdatingStoreSubscriptionCost($arrayResult[0]->getStoreOwner()->getId(),
+                                $arrayResult[0]->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_ADDITION,
+                                $arrayResult[0]->getDeliveryCost());
                         }
                     }
 
@@ -1198,11 +1214,6 @@ class AdminOrderService
                         $this->updateRemainingCarsOfStoreSubscriptionByAdmin($arrayResult[0]->getStoreOwner()->getId(),
                             $arrayResult[0]->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_ADDITION, 1);
                     }
-
-                    // 5. Update captain financial dues (re-calculate them actually)
-//                    $this->createOrUpdateCaptainFinancialDues($arrayResult[1]->getCaptainId(), $arrayResult[0]->getId(),
-//                        $arrayResult[0]->getCreatedAt());
-                    ///todo need function to delete order financial amount from captain financial due
 
                     // 6. Update daily captain financial amount
                     $this->createOrUpdateCaptainFinancialDaily($arrayResult[0]->getId(), $arrayResult[1]);
@@ -1302,7 +1313,8 @@ class AdminOrderService
                         $this->createOrUpdateCaptainFinancialDaily($orderResult[0]->getId());
                         // Update subscription cost of the store's subscription
                         $this->handleUpdatingStoreSubscriptionCost($orderResult[0]->getStoreOwner()->getId(),
-                            $orderResult[0]->getCreatedAt(), $orderResult[0]->getDeliveryCost());
+                            $orderResult[0]->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_ADDITION,
+                            $orderResult[0]->getDeliveryCost());
                     }
 
                     // create firebase notification to captain
@@ -1581,7 +1593,7 @@ class AdminOrderService
         if ($orderEntity !== OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
             // 4. Update subscription cost of the store's subscription
             $this->handleUpdatingStoreSubscriptionCost($orderEntity->getStoreOwner()->getId(), $orderEntity->getCreatedAt(),
-                $orderEntity->getDeliveryCost());
+                SubscriptionConstant::OPERATION_TYPE_ADDITION, $orderEntity->getDeliveryCost());
 
             if ($orderEntity->getCaptainId()) {
                 // 5. Re-calculate the financial dues of the captain who has the order (if exists)
@@ -1754,7 +1766,8 @@ class AdminOrderService
 
                         // 7. Update subscription cost of the store's subscription
                         $this->handleUpdatingStoreSubscriptionCost($orderDeliveryCostUpdateResult->getStoreOwner()->getId(),
-                            $orderDeliveryCostUpdateResult->getCreatedAt(), $orderDeliveryCostUpdateResult->getDeliveryCost());
+                            $orderDeliveryCostUpdateResult->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_ADDITION,
+                            $orderDeliveryCostUpdateResult->getDeliveryCost());
 
                         if ($orderDeliveryCostUpdateResult instanceof OrderEntity) {
                             $this->entityManager->getConnection()->commit();
@@ -1979,7 +1992,8 @@ class AdminOrderService
 
                     // 6 Update subscription cost of the store's subscription
                     $this->handleUpdatingStoreSubscriptionCost($orderDeliveryCostUpdateResult->getStoreOwner()->getId(),
-                        $orderDeliveryCostUpdateResult->getCreatedAt(), $orderDeliveryCostUpdateResult->getDeliveryCost());
+                        $orderDeliveryCostUpdateResult->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_ADDITION,
+                        $orderDeliveryCostUpdateResult->getDeliveryCost());
 
                     $this->entityManager->getConnection()->commit();
 
@@ -2463,10 +2477,10 @@ class AdminOrderService
     /**
      * Handles the updating of the subscriptionCost field of last store subscription
      */
-    private function handleUpdatingStoreSubscriptionCost(int $storeOwnerProfileId, DateTimeInterface $orderCreatedAt, ?float $orderDeliveryCost = null): SubscriptionEntity|int|string
+    private function handleUpdatingStoreSubscriptionCost(int $storeOwnerProfileId, DateTimeInterface $orderCreatedAt, string $operationType, ?float $orderDeliveryCost = null): SubscriptionEntity|int|string
     {
         return $this->subscriptionService->handleUpdatingStoreSubscriptionCost($storeOwnerProfileId, $orderCreatedAt,
-            $orderDeliveryCost);
+            $operationType, $orderDeliveryCost);
     }
 
     public function getUnPaidStoreOwnerDueFromCashOrderByOrderId(int $orderId): int|StoreOwnerDuesFromCashOrdersEntity

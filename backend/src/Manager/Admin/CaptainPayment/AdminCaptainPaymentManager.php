@@ -46,8 +46,8 @@ class AdminCaptainPaymentManager
         $this->entityManager->persist($captainPaymentEntity);
         $this->entityManager->flush();
 
-        $differenceAmount = ($captainFinancialDuesEntity->getAmount() - $captainFinancialDuesEntity->getAmountForStore())
-            - $captainPaymentEntity->getAmount();
+        $differenceAmount = round((($captainFinancialDuesEntity->getAmount() - $captainFinancialDuesEntity->getAmountForStore())
+            - $captainPaymentEntity->getAmount()), 1);
 
         // End the captain financial due, in order to create a new one
         $this->adminCaptainFinancialDuesManager->endCaptainFinancialDue($captainFinancialDuesEntity);
