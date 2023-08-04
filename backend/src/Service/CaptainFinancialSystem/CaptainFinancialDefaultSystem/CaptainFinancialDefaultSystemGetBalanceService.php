@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyResultConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Constant\Order\OrderResultConstant;
+use App\Constant\Order\OrderStateConstant;
 use App\Constant\StoreOwnerDueFromCashOrder\StoreOwnerDueFromCashOrderStoreAmountConstant;
 use App\Entity\CaptainFinancialDailyEntity;
 use App\Entity\CaptainFinancialDuesEntity;
@@ -110,7 +111,14 @@ class CaptainFinancialDefaultSystemGetBalanceService
             ($todayStartAndEndDates[1])->format('Y-m-d H:i:s')
         );
 
-        $response['todayOrdersCount'] = count($orders);
+        foreach ($orders as $order) {
+            if ($order['state'] === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                $response['todayOrdersCount'] += 1;
+
+            } elseif ($order['state'] === OrderStateConstant::ORDER_STATE_CANCEL) {
+                $response['todayOrdersCount'] += 0.5;
+            }
+        }
 
         if ($response['todayOrdersCount'] > 0) {
             $captainFinancialDaily = $this->getCaptainFinancialDailyByCaptainProfileIdAndSpecificDate($captainProfileId,
@@ -130,7 +138,16 @@ class CaptainFinancialDefaultSystemGetBalanceService
             $sinceLastPaymentOrders = $this->getDeliveredOrdersByCaptainProfileIdAndBetweenTwoDates($captainProfileId,
                 $fromDate->format('Y-m-d H:i:s'), (new \DateTime('now'))->format('Y-m-d H:i:s'));
 
-            $sinceLastPaymentOrdersCount = count($sinceLastPaymentOrders);
+            $sinceLastPaymentOrdersCount = 0.0;
+
+            foreach ($sinceLastPaymentOrders as $order) {
+                if ($order['state'] === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                    $sinceLastPaymentOrdersCount += 1;
+
+                } elseif ($order['state'] === OrderStateConstant::ORDER_STATE_CANCEL) {
+                    $sinceLastPaymentOrdersCount += 0.5;
+                }
+            }
 
             $response['sinceLastPaymentOrdersCount'] = $sinceLastPaymentOrdersCount;
 
@@ -147,40 +164,12 @@ class CaptainFinancialDefaultSystemGetBalanceService
             $response);
     }
 
-    /**
-     *      if order distance != null
-     *          if order distance <= 5 k
-     *              financial amount += (10 + 2.5)
-     *
-     *          else if order distance >= 6 AND order distance < 9
-     *              financial amount += (10 + (0.5 * order distance))
-     *
-     *          else if order distance >= 9
-     *              financial amount += (10 + (0.75 * order distance))
-     *
-     */
     public function calculateCaptainFinancialAmountForSingleOrder(OrderEntity $order, array $financialSystemDetail): float
     {
-        $financialAmount = 0.0;
-
         $distance = $order->getStoreBranchToClientDistance();
 
-        if ($distance !== null) {
-            $financialAmount += $financialSystemDetail['openingOrderCost'];
-
-            if ($distance <= $financialSystemDetail['firstSliceLimit']) {
-                $financialAmount += $financialSystemDetail['firstSliceCost'];
-
-            } elseif (($distance >= $financialSystemDetail['secondSliceFromLimit'])
-                && ($distance < $financialSystemDetail['secondSliceToLimit'])) {
-                $financialAmount += ($distance * $financialSystemDetail['secondSliceOneKilometerCost']);
-
-            } elseif ($distance >= $financialSystemDetail['thirdSliceFromLimit']) {
-                $financialAmount += ($distance * $financialSystemDetail['thirdSliceOneKilometerCost']);
-            }
-        }
-
-        return round($financialAmount, 1);
+        // Core function for calculating captain profit of a single order
+        return $this->calculateCaptainFinancialAmountForSingleOrderByOrderDistance($distance, $financialSystemDetail);
     }
 
     /**
@@ -225,5 +214,41 @@ class CaptainFinancialDefaultSystemGetBalanceService
         }
 
         return $response;
+    }
+
+    /**
+     * Core function for calculating captain profit of a single order
+     *
+     *      if order distance != null
+     *          if order distance <= 5 k
+     *              financial amount += (10 + 2.5)
+     *
+     *          else if order distance >= 6 AND order distance < 9
+     *              financial amount += (10 + (0.5 * order distance))
+     *
+     *          else if order distance >= 9
+     *              financial amount += (10 + (0.75 * order distance))
+     *
+     */
+    public function calculateCaptainFinancialAmountForSingleOrderByOrderDistance(?float $orderDistance, array $financialSystemDetail): float
+    {
+        $financialAmount = 0.0;
+
+        if (($orderDistance !== null) && ($orderDistance != 0)) {
+            $financialAmount += $financialSystemDetail['openingOrderCost'];
+
+            if ($orderDistance <= $financialSystemDetail['firstSliceLimit']) {
+                $financialAmount += $financialSystemDetail['firstSliceCost'];
+
+            } elseif (($orderDistance >= $financialSystemDetail['secondSliceFromLimit'])
+                && ($orderDistance < $financialSystemDetail['secondSliceToLimit'])) {
+                $financialAmount += ($orderDistance * $financialSystemDetail['secondSliceOneKilometerCost']);
+
+            } elseif ($orderDistance >= $financialSystemDetail['thirdSliceFromLimit']) {
+                $financialAmount += ($orderDistance * $financialSystemDetail['thirdSliceOneKilometerCost']);
+            }
+        }
+
+        return $financialAmount;
     }
 }

@@ -66,7 +66,9 @@ final class SubscriptionConstant
 
     const OPERATION_TYPE_ADDITION = "addition";
 
-    const OPERATION_TYPE_SUBTRACTION = "subtraction";   
+    const OPERATION_TYPE_SUBTRACTION = "subtraction";
+
+    const OPERATION_TYPE_WRONG_CONST = 249;
 
     const CAN_NOT_CREATE_SUB_ORDER = "canNotCreateSubOrder";
 

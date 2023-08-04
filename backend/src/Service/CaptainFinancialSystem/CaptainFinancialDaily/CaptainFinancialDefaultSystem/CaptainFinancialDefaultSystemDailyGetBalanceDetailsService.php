@@ -2,6 +2,7 @@
 
 namespace App\Service\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDefaultSystem;
 
+use App\Constant\Order\OrderStateConstant;
 use App\Service\CaptainFinancialSystem\CaptainFinancialDefaultSystem\CaptainFinancialDefaultSystemGetStoreAmountService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialDefaultSystem\CaptainFinancialDefaultSystemOrderGetService;
 
@@ -64,22 +65,29 @@ class CaptainFinancialDefaultSystemDailyGetBalanceDetailsService
 
         if (count($orders) > 0) {
             foreach ($orders as $order) {
+                $tempValue = 0.0;
                 $distance = $order['storeBranchToClientDistance'];
 
-                if ($distance) {
-                    $financialAccountDetails['basicFinancialAmount'] += $captainFinancialSystemDetails['openingOrderCost'];
+                if (($distance !== null) && ($distance != 0)) {
+                    $tempValue += $captainFinancialSystemDetails['openingOrderCost'];
 
                     if ($distance <= $captainFinancialSystemDetails['firstSliceLimit']) {
-                        $financialAccountDetails['basicFinancialAmount'] += $captainFinancialSystemDetails['firstSliceCost'];
+                        $tempValue += $captainFinancialSystemDetails['firstSliceCost'];
 
                     } elseif (($distance >= $captainFinancialSystemDetails['secondSliceFromLimit'])
                         && ($distance < $captainFinancialSystemDetails['secondSliceToLimit'])) {
-                        $financialAccountDetails['basicFinancialAmount'] += ($distance * $captainFinancialSystemDetails['secondSliceOneKilometerCost']);
+                        $tempValue += ($distance * $captainFinancialSystemDetails['secondSliceOneKilometerCost']);
 
                     } elseif ($distance >= $captainFinancialSystemDetails['thirdSliceFromLimit']) {
-                        $financialAccountDetails['basicFinancialAmount'] += ($distance * $captainFinancialSystemDetails['thirdSliceOneKilometerCost']);
-
+                        $tempValue += ($distance * $captainFinancialSystemDetails['thirdSliceOneKilometerCost']);
                     }
+
+                    if ($order['state'] === OrderStateConstant::ORDER_STATE_CANCEL) {
+                        // get half of order value
+                        $tempValue = $tempValue / 2;
+                    }
+
+                    $financialAccountDetails['basicFinancialAmount'] += $tempValue;
                 }
             }
         }

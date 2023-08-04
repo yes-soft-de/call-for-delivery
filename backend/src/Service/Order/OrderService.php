@@ -25,6 +25,7 @@ use App\Constant\Subscription\SubscriptionDetailsConstant;
 use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\CaptainEntity;
+use App\Entity\CaptainFinancialDuesEntity;
 use App\Entity\CaptainOrderFinancialEntity;
 use App\Entity\ExternallyDeliveredOrderEntity;
 use App\Entity\OrderDestinationEntity;
@@ -63,6 +64,7 @@ use App\Response\Subscription\CanCreateOrderResponse;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Service\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyService;
+use App\Service\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueAmountForStoreUpdateHandlerService;
 use App\Service\CaptainOrderFinancialService\OrderFinancialValueGetService;
 use App\Service\DateFactory\DateFactoryService;
 use App\Service\ExternallyDeliveredOrderHandle\ExternallyDeliveredOrderHandleService;
@@ -136,7 +138,8 @@ class OrderService
         private StoreOrderDetailsService $storeOrderDetailsService,
         private DashboardLocalNotificationService $dashboardLocalNotificationService,
         private CaptainFinancialDailyService $captainFinancialDailyService,
-        private ExternallyDeliveredOrderHandleService $externallyDeliveredOrderHandleService
+        private ExternallyDeliveredOrderHandleService $externallyDeliveredOrderHandleService,
+        private CaptainFinancialDueAmountForStoreUpdateHandlerService $captainFinancialDueAmountForStoreUpdateHandlerService
     )
     {
     }
@@ -670,7 +673,7 @@ class OrderService
                 $this->createOrUpdateCaptainFinancialDaily($order->getId());
                 // Update subscription cost of the store's subscription
                 $this->handleUpdatingStoreSubscriptionCost($order->getStoreOwner()->getId(), $order->getCreatedAt(),
-                    $order->getDeliveryCost());
+                    SubscriptionConstant::OPERATION_TYPE_ADDITION, $order->getDeliveryCost());
             }
 
             // save log of the action on order
@@ -907,8 +910,8 @@ class OrderService
 
                 // If the captain had reached the store, then we would count half of the order financial value for the captain
                 // A. Update captain financial due
-//                $this->createOrUpdateCaptainFinancialDue($updatedOrder->getCaptainId()->getCaptainId(), $updatedOrder->getId(),
-//                    $updatedOrder->getCreatedAt());
+                $this->addHalfOrderValueToCaptainFinancialDue($updatedOrder->getCaptainId()->getCaptainId(),
+                    $updatedOrder->getCreatedAt(), $updatedOrder->getStoreBranchToClientDistance());
 
                 // B. Update captain financial daily
                 $this->createOrUpdateCaptainFinancialDaily($updatedOrder->getId(), $updatedOrder->getCaptainId());
@@ -1227,12 +1230,18 @@ class OrderService
                 $flag = OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO;
             }
 
+            // Before updating CaptainAmountFromOrderCash, compare previous answer with the new one, and
+            // update amountForStore field in CaptainFinancialDuesEntity according to captain's answer
+            $this->handleUpdatingCaptainFinancialDueAmountForStore($userId, $order->getId(), $order->getCreatedAt(),
+                $order->getCaptainOrderCost(), $paidToProvider);
+
+            // Now continue creating or updating both CaptainAmountFromOrderCash
             $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($order, $flag, $orderCost);
 
             $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($order, $flag, $orderCost);
 
-//            $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(),
-//                $order->getCreatedAt());
+            // Create or update captain financial daily amount
+            $this->createOrUpdateCaptainFinancialDaily($order->getId());
 
             $this->createOrUpdateCaptainOrderFinancial($orderId);
         }
@@ -2323,14 +2332,33 @@ class OrderService
     /**
      * Handles the updating of the subscriptionCost field of last store subscription
      */
-    public function handleUpdatingStoreSubscriptionCost(int $storeOwnerProfileId, DateTimeInterface $orderCreatedAt, ?float $orderDeliveryCost = null): SubscriptionEntity|int|string
+    public function handleUpdatingStoreSubscriptionCost(int $storeOwnerProfileId, DateTimeInterface $orderCreatedAt, string $operationType, ?float $orderDeliveryCost = null): SubscriptionEntity|int|string
     {
         return $this->subscriptionService->handleUpdatingStoreSubscriptionCost($storeOwnerProfileId, $orderCreatedAt,
-            $orderDeliveryCost);
+            $operationType, $orderDeliveryCost);
     }
 
     public function createOrUpdateCaptainOrderFinancial(int $orderId): CaptainOrderFinancialEntity|int|string
     {
         return $this->captainFinancialDuesService->createOrUpdateCaptainOrderFinancial($orderId);
+    }
+
+    /**
+     * Updates amountForStore field of the captain financial due according to captains' previous and new answer about
+     * paying cash order amount to the store or not
+     */
+    public function handleUpdatingCaptainFinancialDueAmountForStore(int $captainUserId, int $orderId, DateTimeInterface $orderCreationDate, float $captainOrderCost, int $paidToProvider): CaptainFinancialDuesEntity|int
+    {
+        return $this->captainFinancialDueAmountForStoreUpdateHandlerService->handleUpdatingCaptainFinancialDueAmountForStore($captainUserId,
+            $orderId, $orderCreationDate, $captainOrderCost, $paidToProvider);
+    }
+
+    /**
+     * Calculates and adds half of order value to the captain financial due
+     */
+    public function addHalfOrderValueToCaptainFinancialDue(int $captainUserId, DateTimeInterface $orderCreatedAt, ?float $orderDistance): CaptainFinancialDuesEntity|int|string
+    {
+        return $this->captainFinancialDuesService->addHalfOrderValueToCaptainFinancialDue($captainUserId, $orderCreatedAt,
+            $orderDistance);
     }
 }

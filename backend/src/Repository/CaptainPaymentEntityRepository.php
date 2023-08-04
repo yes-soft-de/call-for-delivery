@@ -224,6 +224,11 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
                 ->setParameter('captainProfileId', $request->getCaptainProfileId());
         }
 
+        if ($request->getCaptainId()) {
+            $query->andWhere('captainPaymentEntity.captain = :captainProfileId')
+                ->setParameter('captainProfileId', $request->getCaptainId());
+        }
+
         if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
             || ($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")
             || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {

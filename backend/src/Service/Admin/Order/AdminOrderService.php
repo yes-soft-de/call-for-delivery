@@ -7,6 +7,7 @@ use App\Constant\Admin\AdminProfileConstant;
 use App\Constant\Admin\Report\Statistics\StatisticsConstant;
 use App\Constant\AppFeature\AppFeatureResultConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyResultConstant;
+use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\ExternalDeliveryCompany\ExternalDeliveryCompanyResultConstant;
 use App\Constant\ExternalDeliveryCompany\Mrsool\MrsoolCompanyConstant;
 use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaResultConstant;
@@ -93,6 +94,7 @@ use App\Service\Admin\StoreCashOrder\AdminStoreCashOrderService;
 use App\Service\Admin\StoreOwnerDuesFromCashOrders\AdminStoreOwnerDueFromCashOrderGetService;
 use App\Service\Admin\StoreOwnerDuesFromCashOrders\AdminStoreOwnerDuesFromCashOrdersService;
 use App\Service\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyService;
+use App\Service\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueAmountForStoreUpdateHandlerService;
 use App\Service\ChatRoom\OrderChatRoomService;
 use App\Service\ExternallyDeliveredOrder\ExternallyDeliveredOrderGetService;
 use App\Service\ExternallyDeliveredOrder\ExternallyDeliveredOrderService;
@@ -175,7 +177,8 @@ class AdminOrderService
         private AdminStoreOwnerDueFromCashOrderGetService $adminStoreOwnerDueFromCashOrderGetService,
         private AdminCaptainFinancialDuesService $adminCaptainFinancialDuesService,
         private AdminCaptainFinancialDailyService $adminCaptainFinancialDailyService,
-        private AdminStoreOwnerDuesFromCashOrdersService $adminStoreOwnerDuesFromCashOrdersService
+        private AdminStoreOwnerDuesFromCashOrdersService $adminStoreOwnerDuesFromCashOrdersService,
+        private CaptainFinancialDueAmountForStoreUpdateHandlerService $captainFinancialDueAmountForStoreUpdateHandlerService
     )
     {
     }
@@ -218,7 +221,6 @@ class AdminOrderService
 
         $orders = $this->adminOrderManager->filterStoreOrdersByAdmin($request);
 
-        //dd($orders);
         foreach ($orders as $key => $value) {
             $response[$key] = $this->autoMapping->map('array', StoreOrderFilterByAdminResponse::class, $value);
 
@@ -230,7 +232,7 @@ class AdminOrderService
 //                $response[$key]->externalDeliveredOrders[0]['externalOrderId'] = $externallyDeliveredOrder->getExternalOrderId();
 //            }
         }
-        //dd($response);
+
         return $response;
     }
 
@@ -1123,6 +1125,7 @@ class AdminOrderService
                 return OrderResultConstant::ORDER_UPDATE_PROBLEM;
 
             } elseif (in_array($orderEntity->getState(), OrderStateConstant::ORDER_STATE_ONGOING_TILL_DELIVERED_ARRAY)) {
+                $orderStateBeforeUpdate = $orderEntity->getState();
                 // 1. Update order state and other info
                 if ($request->getAddHalfOrderValueToCaptainFinancialDue() === true) {
                     // As long as it required to add half financial value of the order to captain due
@@ -1140,10 +1143,46 @@ class AdminOrderService
                     $arrayResult = $this->adminOrderManager->updateOngoingOrderToCancelledWithoutRemovingCaptain($orderEntity,
                         $orderCancelledByAdminAndAtState);
 
+                    // 2. Update captain financial due
+                    if ($orderStateBeforeUpdate !== OrderStateConstant::ORDER_STATE_DELIVERED) {
+                        // order hadn't been delivered, so add half of its value to captain financial due
+                        $this->addHalfOrderValueToCaptainFinancialDue($arrayResult[0]->getCaptainId()->getCaptainId(),
+                            $arrayResult[0]->getCreatedAt(), $arrayResult[0]->getStoreBranchToClientDistance());
+                        // Add half order value to CaptainOrderFinancial
+                        $this->addOrSubtractCaptainOrderFinancial($arrayResult[0]->getId(),
+                            $arrayResult[0]->getCaptainId()->getCaptainId(), $arrayResult[0]->getCaptainId()->getId(),
+                            CaptainFinancialSystem::OPERATION_TYPE_ADDITION_CONST,
+                            CaptainFinancialSystem::HALF_ORDER_VALUE_CONST);
+
+                    } else {
+                        // order had already been delivered, so subtract half of its value from Captain Financial Due
+                        $this->subtractHalfOrderValueFromCaptainFinancialDue($arrayResult[0]->getCaptainId()->getCaptainId(),
+                            $arrayResult[0]->getCreatedAt(), $arrayResult[0]->getStoreBranchToClientDistance());
+                        // Subtract half order value From CaptainOrderFinancial
+                        $this->addOrSubtractCaptainOrderFinancial($arrayResult[0]->getId(),
+                            $arrayResult[0]->getCaptainId()->getCaptainId(), $arrayResult[0]->getCaptainId()->getId(),
+                            CaptainFinancialSystem::OPERATION_TYPE_SUBTRACTION_CONST,
+                            CaptainFinancialSystem::HALF_ORDER_VALUE_CONST);
+                    }
+
                 } else {
                     // while it isn't required to add half financial value of the order to captain due
                     // then, we can update order state and remove the captain as well from the order record
                     $arrayResult = $this->adminOrderManager->updateOngoingOrderToCancelled($orderEntity);
+                    // we want to add half of order value to Captain Financial Due, then if the order had been already
+                    // delivered, subtract its value from Captain Financial Due
+                    if ($orderStateBeforeUpdate === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                        $this->subtractOrderValueFromCaptainFinancialDue($arrayResult[1]->getCaptainId(),
+                            $arrayResult[0]->getCreatedAt(), $arrayResult[0]->getStoreBranchToClientDistance());
+                        // Also, subtracts the amount of specific CaptainAmountFromOrderCash from the filed
+                        // amountForStore of the CaptainFinancialDue
+                        $this->subtractSpecificCaptainAmountFromOrderCashFromCaptainFinancialDue($arrayResult[1]->getCaptainId(),
+                            $arrayResult[0]->getId(), $arrayResult[0]->getCreatedAt());
+                        // Subtract half order value From CaptainOrderFinancial
+                        $this->addOrSubtractCaptainOrderFinancial($arrayResult[0]->getId(),
+                            $arrayResult[1]->getCaptainId(), $arrayResult[1]->getId(),
+                            CaptainFinancialSystem::OPERATION_TYPE_SUBTRACTION_CONST, false);
+                    }
                 }
 
                 if ($arrayResult[0]) {
@@ -1156,7 +1195,7 @@ class AdminOrderService
                         $this->updateRemainingOrdersOfStoreSubscriptionByAdmin($arrayResult[0]->getStoreOwner()->getId(),
                             $arrayResult[0]->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_ADDITION, 1);
 
-                        if ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
+                        if ($orderStateBeforeUpdate === OrderStateConstant::ORDER_STATE_DELIVERED) {
                             // Delete cash dues and update payments - if exist/s - of the store
                             $this->deleteStoreDuesFromCashOrderAndUpdatePaymentByStoreOwnerProfileIdAndOrderId($arrayResult[0]->getStoreOwner()->getId(),
                                 $arrayResult[0]->getId(), $arrayResult[0]->getPayment());
@@ -1166,22 +1205,35 @@ class AdminOrderService
                             // that the order belongs to
                             $this->deleteCaptainAmountFromCashOrderAndUpdatePaymentByCaptainProfileIdAndOrderId($arrayResult[1]->getId(),
                                 $arrayResult[0]->getId(), $arrayResult[0]->getPayment());
+                            // Subtract order cost from store's subscription cost if order had been delivered
+                            // Update subscription cost of the store's subscription
+                            $this->handleUpdatingStoreSubscriptionCost($arrayResult[0]->getStoreOwner()->getId(),
+                                $arrayResult[0]->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_SUBTRACTION,
+                                $arrayResult[0]->getDeliveryCost());
+
+                        }
+
+                    } else {
+                        // Cut the order from Store's subscription => add order cost to subscription's cost if order is
+                        // not being delivered yet
+                        if ($orderStateBeforeUpdate !== OrderStateConstant::ORDER_STATE_DELIVERED) {
+                            // Update subscription cost of the store's subscription
+                            $this->handleUpdatingStoreSubscriptionCost($arrayResult[0]->getStoreOwner()->getId(),
+                                $arrayResult[0]->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_ADDITION,
+                                $arrayResult[0]->getDeliveryCost());
                         }
                     }
 
                     // 4. If order isn't delivered yet, then update the remaining cars (because the captain returned available)
-                    if ($orderEntity->getState() !== OrderStateConstant::ORDER_STATE_DELIVERED) {
+                    if ($orderStateBeforeUpdate !== OrderStateConstant::ORDER_STATE_DELIVERED) {
                         $this->updateRemainingCarsOfStoreSubscriptionByAdmin($arrayResult[0]->getStoreOwner()->getId(),
                             $arrayResult[0]->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_ADDITION, 1);
                     }
 
-                    // 5. Update captain financial dues (re-calculate them actually)
-//                    $this->createOrUpdateCaptainFinancialDues($arrayResult[1]->getCaptainId(), $arrayResult[0]->getId(),
-//                        $arrayResult[0]->getCreatedAt());
-                    ///todo need function to delete order financial amount from captain financial due
-
                     // 6. Update daily captain financial amount
                     $this->createOrUpdateCaptainFinancialDaily($arrayResult[0]->getId(), $arrayResult[1]);
+
+                    // Update Captain Order Financial
 
                     // 7. Create log
                     $this->createOrderLogViaOrderEntity($arrayResult[0]);
@@ -1276,7 +1328,8 @@ class AdminOrderService
                         $this->createOrUpdateCaptainFinancialDaily($orderResult[0]->getId());
                         // Update subscription cost of the store's subscription
                         $this->handleUpdatingStoreSubscriptionCost($orderResult[0]->getStoreOwner()->getId(),
-                            $orderResult[0]->getCreatedAt(), $orderResult[0]->getDeliveryCost());
+                            $orderResult[0]->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_ADDITION,
+                            $orderResult[0]->getDeliveryCost());
                     }
 
                     // create firebase notification to captain
@@ -1538,26 +1591,30 @@ class AdminOrderService
     public function updateStoreBranchToClientDistanceAndDestinationByAdmin(OrderStoreBranchToClientDistanceAndDestinationByAdminRequest $request,
                                                                            int $userId): ?OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse
     {
+        // 1. First get current order distance for updating captain financial
+        $currentOrderStoreBranchToClientDistance = $this->getOrderStoreBranchToClientDistanceByOrderId($request->getOrderId());
+
+        // 2. Update storeBranchToClientDistance
         $order = $this->adminOrderManager->updateStoreBranchToClientDistanceAndDestinationByAdmin($request);
 
         if (! $order) {
             return $order;
         }
 
-        // 2 Update delivery cost
+        // 3. Update delivery cost
         $orderEntity = $this->calculateAndUpdateOrderDeliveryCostByOrderIdAndStoreOwnerProfileIdAndDistance($order,
             $userId, OrderLogActionTypeConstant::ORDER_DELIVERY_COST_UPDATED_BY_NEW_DISTANCE_BY_ADMIN_CONST);
 
         if ($orderEntity !== OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
-            // 3 Update subscription cost of the store's subscription
+            // 4. Update subscription cost of the store's subscription
             $this->handleUpdatingStoreSubscriptionCost($orderEntity->getStoreOwner()->getId(), $orderEntity->getCreatedAt(),
-                $orderEntity->getDeliveryCost());
+                SubscriptionConstant::OPERATION_TYPE_ADDITION, $orderEntity->getDeliveryCost());
 
             if ($orderEntity->getCaptainId()) {
-                // 4 Re-calculate the financial dues of the captain who has the order (if exists)
-                if ($order->getCaptainId()?->getCaptainId()) {
-                    $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(),
-                        $order->getId(), $order->getCreatedAt());
+                // 5. Re-calculate the financial dues of the captain who has the order (if exists)
+                if ($orderEntity->getCaptainId()?->getCaptainId()) {
+                    $this->updateCaptainFinancialDueAfterOrderDistanceUpdating($orderEntity->getCaptainId()->getCaptainId(),
+                        $currentOrderStoreBranchToClientDistance, $orderEntity->getCreatedAt(), $orderEntity->getStoreBranchToClientDistance());
 
                     // Re-calculate daily captain financial due
                     $this->createOrUpdateCaptainFinancialDaily($order->getId());
@@ -1682,7 +1739,14 @@ class AdminOrderService
     // Add additional distance to storeBranchToClientDistance via new destination by admin
     public function addDistanceToStoreBranchToClientDistanceViaLocationByAdmin(OrderStoreBranchToClientDistanceAdditionByAdminRequest $request, int $userId)
     {
-        // 1. Calculate the new distance by the new destination
+        // 1. First get current order distance for updating captain financial
+        $currentOrderStoreBranchToClientDistance = $this->getOrderStoreBranchToClientDistanceByOrderId($request->getOrderId());
+
+        if ($currentOrderStoreBranchToClientDistance === OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+        }
+
+        // 2. Calculate the new distance by the new destination
         $currentDestination = $this->getCurrentDestinationByOrderIdForAdmin($request->getOrderId());
 
         if (($currentDestination !== OrderResultConstant::ORDER_TYPE_BID) &&
@@ -1697,32 +1761,33 @@ class AdminOrderService
             $this->entityManager->getConnection()->beginTransaction();
 
             try {
-                // 2. Update the destination
+                // 3. Update the destination
                 $orderResult = $this->updateNormalOrderDestinationViaOrderIdAndDestinationArrayByAdmin($request->getOrderId(),
                     $currentDestination, $request->getDestination(), $userId);
 
                 if ($orderResult) {
-                    // 3. Add the new distance to the existing one
+                    // 4. Add the new distance to the existing one
                     $orderEntity = $this->updateOrderStoreBranchToClientDistanceViaAddingNewDistanceByAdmin($request->getOrderId(),
                         $distance, $userId, $request->getStoreBranchToClientDistanceAdditionExplanation());
 
                     if ($orderEntity) {
-                        // 4. Update related OrderDistanceConflict
+                        // 5. Update related OrderDistanceConflict
                         $this->handleUpdateOrderDistanceConflictByNewDestinationResolveByAdmin($request, $orderEntity, $userId,
                             $request->getDestination());
 
-                        // 5. Update delivery cost
+                        // 6. Update delivery cost
                         $orderDeliveryCostUpdateResult = $this->calculateAndUpdateOrderDeliveryCostByOrderIdAndStoreOwnerProfileIdAndDistance($orderEntity,
                             $userId, OrderLogActionTypeConstant::ORDER_DELIVERY_COST_UPDATED_BY_NEW_DESTINATION_BY_ADMIN_CONST);
 
-                        // 6 Update subscription cost of the store's subscription
+                        // 7. Update subscription cost of the store's subscription
                         $this->handleUpdatingStoreSubscriptionCost($orderDeliveryCostUpdateResult->getStoreOwner()->getId(),
-                            $orderDeliveryCostUpdateResult->getCreatedAt(), $orderDeliveryCostUpdateResult->getDeliveryCost());
+                            $orderDeliveryCostUpdateResult->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_ADDITION,
+                            $orderDeliveryCostUpdateResult->getDeliveryCost());
 
                         if ($orderDeliveryCostUpdateResult instanceof OrderEntity) {
                             $this->entityManager->getConnection()->commit();
 
-                            // 7. Send notifications
+                            // 8. Send notifications
                             // local notification to store
                             $this->createLocalNotificationForStore($orderEntity->getStoreOwner()->getStoreOwnerId(),
                                 NotificationConstant::ORDER_NEW_DESTINATION_ADDED_BY_ADMIN_TITLE_CONST, NotificationConstant::ORDER_NEW_DESTINATION_ADDED_BY_ADMIN_MESSAGE_CONST,
@@ -1733,10 +1798,10 @@ class AdminOrderService
                         }
 
                         if ($orderEntity->getCaptainId()) {
-                            // 4 Re-calculate the financial dues of the captain who has the order (if exists)
+                            // 9. Re-calculate the financial dues of the captain who has the order (if exists)
                             if ($orderEntity->getCaptainId()?->getCaptainId()) {
-                                $this->captainFinancialDuesService->captainFinancialDues($orderEntity->getCaptainId()->getCaptainId(),
-                                    $orderEntity->getId(), $orderEntity->getCreatedAt());
+                                $this->updateCaptainFinancialDueAfterOrderDistanceUpdating($orderEntity->getCaptainId()->getCaptainId(),
+                                    $currentOrderStoreBranchToClientDistance, $orderEntity->getCreatedAt(), $orderEntity->getStoreBranchToClientDistance());
 
                                 // Re-calculate daily captain financial due
                                 $this->createOrUpdateCaptainFinancialDaily($orderEntity->getId());
@@ -1827,13 +1892,14 @@ class AdminOrderService
             return $order;
         }
 
+        ///todo if captain financial profits calculated well then delete following IF block
         // Re-calculate the financial dues of the captain who has the order (if exists)
-        if ($order->getCaptainId()?->getCaptainId()) {
-            $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
-
-            // Create or update daily captain financial amount
-            $this->createOrUpdateCaptainFinancialDaily($order->getId());
-        }
+//        if ($order->getCaptainId()?->getCaptainId()) {
+//            $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
+//
+//            // Create or update daily captain financial amount
+//            $this->createOrUpdateCaptainFinancialDaily($order->getId());
+//        }
 
         // save log of the action on order
         $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
@@ -1908,27 +1974,30 @@ class AdminOrderService
      */
     public function addAdditionalDistanceToStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceUpdateByAddAdditionalDistanceByAdminRequest $request, int $userId): int|OrderStoreBranchToClientDistanceUpdateByAdminResponse
     {
+        // 1. First get current order distance for updating captain financial
+        $currentOrderStoreBranchToClientDistance = $this->getOrderStoreBranchToClientDistanceByOrderId($request->getOrderId());
+
         // start transaction commit ...
         $this->entityManager->getConnection()->beginTransaction();
 
         try {
-            // 1 update store branch to client distance
+            // 2 update store branch to client distance
             $order = $this->adminOrderManager->updateOrderStoreBranchToClientDistanceViaAddingNewDistanceByAdmin($request->getOrderId(),
                 $request->getAdditionalDistance(), $request->getStoreBranchToClientDistanceAdditionExplanation());
 
             if ($order) {
-                // 2 Update related OrderDistanceConflict
+                // 3 Update related OrderDistanceConflict
                 $this->handleUpdateOrderDistanceConflictByAdminAfterDistanceAddition($request, $order, $userId);
 
-                // 3 Update delivery cost
+                // 4 Update delivery cost
                 $orderDeliveryCostUpdateResult = $this->calculateAndUpdateOrderDeliveryCostByOrderIdAndStoreOwnerProfileIdAndDistance($order,
                     $userId, OrderLogActionTypeConstant::ORDER_DELIVERY_COST_UPDATED_BY_NEW_DISTANCE_BY_ADMIN_CONST);
 
                 if ($orderDeliveryCostUpdateResult instanceof OrderEntity) {
-                    // 4 Re-calculate the financial dues of the captain who has the order (if exists)
+                    // 5 Re-calculate the financial dues of the captain who has the order (if exists)
                     if ($order->getCaptainId()?->getCaptainId()) {
-                        $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(),
-                            $order->getId(), $order->getCreatedAt());
+                        $this->updateCaptainFinancialDueAfterOrderDistanceUpdating($order->getCaptainId()->getCaptainId(),
+                            $currentOrderStoreBranchToClientDistance, $order->getCreatedAt(), $order->getStoreBranchToClientDistance());
 
                         // Re-calculate daily captain financial due
                         $this->createOrUpdateCaptainFinancialDaily($order->getId());
@@ -1936,13 +2005,14 @@ class AdminOrderService
                         $this->createOrUpdateCaptainOrderFinancial($order->getId());
                     }
 
-                    // 5 Update subscription cost of the store's subscription
+                    // 6 Update subscription cost of the store's subscription
                     $this->handleUpdatingStoreSubscriptionCost($orderDeliveryCostUpdateResult->getStoreOwner()->getId(),
-                        $orderDeliveryCostUpdateResult->getCreatedAt(), $orderDeliveryCostUpdateResult->getDeliveryCost());
+                        $orderDeliveryCostUpdateResult->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_ADDITION,
+                        $orderDeliveryCostUpdateResult->getDeliveryCost());
 
                     $this->entityManager->getConnection()->commit();
 
-                    // 6 Send notifications
+                    // 7 Send notifications
                     // local notification to store
                     $this->createLocalNotificationForStore($order->getStoreOwner()->getStoreOwnerId(), NotificationConstant::ORDER_DISTANCE_ADDITION_BY_ADMIN_TITLE_CONST,
                         NotificationConstant::ORDER_DISTANCE_ADDITION_BY_ADMIN_MESSAGE_CONST, $order->getId());
@@ -2419,18 +2489,13 @@ class AdminOrderService
         return $response;
     }
 
-//    public function getLastExternallyDeliveredOrderByOrderId(int $orderId): ExternallyDeliveredOrderEntity|int
-//    {
-//        return $this->externallyDeliveredOrderGetService->getLastExternallyDeliveredOrderByOrderId($orderId);
-//    }
-
     /**
      * Handles the updating of the subscriptionCost field of last store subscription
      */
-    private function handleUpdatingStoreSubscriptionCost(int $storeOwnerProfileId, DateTimeInterface $orderCreatedAt, ?float $orderDeliveryCost = null): SubscriptionEntity|int|string
+    private function handleUpdatingStoreSubscriptionCost(int $storeOwnerProfileId, DateTimeInterface $orderCreatedAt, string $operationType, ?float $orderDeliveryCost = null): SubscriptionEntity|int|string
     {
         return $this->subscriptionService->handleUpdatingStoreSubscriptionCost($storeOwnerProfileId, $orderCreatedAt,
-            $orderDeliveryCost);
+            $operationType, $orderDeliveryCost);
     }
 
     public function getUnPaidStoreOwnerDueFromCashOrderByOrderId(int $orderId): int|StoreOwnerDuesFromCashOrdersEntity
@@ -2501,5 +2566,75 @@ class AdminOrderService
     private function createOrUpdateCaptainOrderFinancial(int $orderId): CaptainOrderFinancialEntity|int|string
     {
         return $this->captainFinancialDuesService->createOrUpdateCaptainOrderFinancial($orderId);
+    }
+
+    /**
+     * Updates amount field of captain financial due entity after distance changed
+     */
+    public function updateCaptainFinancialDueAfterOrderDistanceUpdating(int $userId, $oldDistance, DateTimeInterface $orderCreatedAt, float $newDistance): CaptainFinancialDuesEntity|int|string
+    {
+        return $this->captainFinancialDuesService->updateCaptainFinancialDueAfterOrderDistanceUpdating($userId, $oldDistance,
+            $orderCreatedAt, $newDistance);
+    }
+
+    public function getOrderStoreBranchToClientDistanceByOrderId(int $orderId): float|string|int
+    {
+        $order = $this->adminOrderManager->getOrderById($orderId);
+
+        if (! $order) {
+            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+        }
+
+        if (! $order->getStoreBranchToClientDistance()) {
+            return OrderResultConstant::ORDER_STORE_BRANCH_TO_CLIENT_DISTANCE_IS_NULL_CONST;
+        }
+
+        return $order->getStoreBranchToClientDistance();
+    }
+
+    /**
+     * Calculates and adds half of order value to the captain financial due
+     */
+    public function addHalfOrderValueToCaptainFinancialDue(int $captainUserId, DateTimeInterface $orderCreatedAt, ?float $orderDistance): CaptainFinancialDuesEntity|int|string
+    {
+        return $this->captainFinancialDuesService->addHalfOrderValueToCaptainFinancialDue($captainUserId, $orderCreatedAt,
+            $orderDistance);
+    }
+
+    /**
+     * Calculates and subtracts order value from the captain financial due
+     */
+    public function subtractOrderValueFromCaptainFinancialDue(int $captainUserId, DateTimeInterface $orderCreatedAt, ?float $orderDistance): CaptainFinancialDuesEntity|int|string
+    {
+        return $this->captainFinancialDuesService->subtractOrderValueFromCaptainFinancialDue($captainUserId, $orderCreatedAt,
+            $orderDistance);
+    }
+
+    /**
+     * Subtracts the amount of specific CaptainAmountFromOrderCash from the filed
+     * amountForStore of the CaptainFinancialDue
+     */
+    public function subtractSpecificCaptainAmountFromOrderCashFromCaptainFinancialDue(int $captainUserId, int $orderId, DateTimeInterface $orderCreationDate): CaptainFinancialDuesEntity|int
+    {
+        return $this->captainFinancialDueAmountForStoreUpdateHandlerService->subtractSpecificCaptainAmountFromOrderCashFromCaptainFinancialDue($captainUserId,
+            $orderId, $orderCreationDate);
+    }
+
+    /**
+     * Calculates and subtract half of order value from the captain financial due
+     */
+    public function subtractHalfOrderValueFromCaptainFinancialDue(int $captainUserId, DateTimeInterface $orderCreatedAt, ?float $orderDistance): CaptainFinancialDuesEntity|int|string
+    {
+        return $this->captainFinancialDuesService->subtractHalfOrderValueFromCaptainFinancialDue($captainUserId, $orderCreatedAt,
+            $orderDistance);
+    }
+
+    /**
+     * Add or Subtract half order/full order value to/from CaptainOrderFinancial
+     */
+    private function addOrSubtractCaptainOrderFinancial(int $orderId, int $captainUserId, int $captainProfileId,int $operationType, bool $halfOrderValue): CaptainOrderFinancialEntity|int|string
+    {
+        return $this->captainFinancialDuesService->addOrSubtractCaptainOrderFinancial($orderId, $captainUserId,
+            $captainProfileId, $operationType, $halfOrderValue);
     }
 }

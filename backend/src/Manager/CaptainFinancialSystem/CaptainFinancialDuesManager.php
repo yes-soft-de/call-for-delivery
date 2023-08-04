@@ -7,6 +7,7 @@ use App\Entity\CaptainFinancialDuesEntity;
 use App\Repository\CaptainFinancialDuesEntityRepository;
 use App\Request\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueCreateRequest;
 use App\Request\CaptainFinancialSystem\CaptainFinancialDue\CaptainFinancialDueStoppedFinancialCycleUpdateRequest;
+use DateTimeInterface;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Request\CaptainFinancialSystem\CreateCaptainFinancialDuesRequest;
 use App\Manager\Captain\CaptainManager;
@@ -200,5 +201,50 @@ class CaptainFinancialDuesManager
     {
         return $this->captainFinancialDuesRepository->getCaptainFinancialDueByCaptainProfileIdAndOrderCreationDate($captainProfileId,
             $orderCreationDate);
+    }
+
+    /**
+     * Get Captain Financial Dues Entity by Captain user id and specific date
+     */
+    public function getCaptainFinancialDuesByCaptainUserIdAndOrderCreationDate(int $captainUserId, DateTimeInterface $dateTimeInterface): array
+    {
+        return $this->captainFinancialDuesRepository->getCaptainFinancialDuesByCaptainUserIdAndOrderCreationDate($captainUserId,
+            $dateTimeInterface);
+    }
+
+    public function subtractValueFromCaptainFinancialDueAmountByCaptainFinancialDueEntity(CaptainFinancialDuesEntity $captainFinancialDuesEntity, float $value): CaptainFinancialDuesEntity
+    {
+        $captainFinancialDuesEntity->setAmount($captainFinancialDuesEntity->getAmount() - $value);
+
+        $this->entityManager->flush();
+
+        return $captainFinancialDuesEntity;
+    }
+
+    public function addValueToCaptainFinancialDueAmount(CaptainFinancialDuesEntity $captainFinancialDuesEntity, float $value): CaptainFinancialDuesEntity|int
+    {
+        $captainFinancialDuesEntity->setAmount($captainFinancialDuesEntity->getAmount() + $value);
+
+        $this->entityManager->flush();
+
+        return $captainFinancialDuesEntity;
+    }
+
+    public function subtractValueFromCaptainFinancialDueAmountForStoreByCaptainFinancialDueEntity(CaptainFinancialDuesEntity $captainFinancialDuesEntity, float $value): CaptainFinancialDuesEntity
+    {
+        $captainFinancialDuesEntity->setAmountForStore($captainFinancialDuesEntity->getAmountForStore() - $value);
+
+        $this->entityManager->flush();
+
+        return $captainFinancialDuesEntity;
+    }
+
+    public function addValueToCaptainFinancialDueAmountForStoreByCaptainFinancialDueEntity(CaptainFinancialDuesEntity $captainFinancialDuesEntity, float $value): CaptainFinancialDuesEntity
+    {
+        $captainFinancialDuesEntity->setAmountForStore($captainFinancialDuesEntity->getAmountForStore() + $value);
+
+        $this->entityManager->flush();
+
+        return $captainFinancialDuesEntity;
     }
 }

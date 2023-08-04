@@ -551,6 +551,7 @@ class AdminCaptainPaymentController extends BaseController
      *          @OA\Property(type="string", property="fromDate"),
      *          @OA\Property(type="string", property="toDate"),
      *          @OA\Property(type="integer", property="captainProfileId"),
+     *          @OA\Property(type="integer", property="captainId", description="it is also captain profile id - used by Front"),
      *          @OA\Property(type="string", property="customizedTimezone")
      *      )
      * )
