@@ -20,6 +20,7 @@ use App\Request\EPayment\EPaymentCreateByStoreOwnerRequest;
 use App\Request\Subscription\SubscriptionCreateRequest;
 use App\Response\Subscription\SubscriptionErrorResponse;
 use App\Response\Subscription\SubscriptionResponse;
+use App\Service\EPaymentFromStoreLog\EPaymentFromStoreLogDispatchService;
 use App\Service\Notification\NotificationFirebaseService;
 use App\Service\Notification\NotificationLocalService;
 use App\Service\StoreOwner\StoreOwnerProfileGetService;
@@ -33,7 +34,8 @@ class EPaymentService
         private StoreOwnerProfileGetService $storeOwnerProfileGetService,
         private EPaymentFromStoreManager $ePaymentFromStoreManager,
         private NotificationLocalService $notificationLocalService,
-        private NotificationFirebaseService $notificationFirebaseService
+        private NotificationFirebaseService $notificationFirebaseService,
+        private EPaymentFromStoreLogDispatchService $ePaymentFromStoreLogDispatchService
     )
     {
     }

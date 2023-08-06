@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\EPaymentFromStoreEntityRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -50,6 +52,14 @@ class EPaymentFromStoreEntity
 
     #[ORM\Column(type: 'integer', options: ["default" => 0])]
     private $createdBy;
+
+    #[ORM\OneToMany(mappedBy: 'EPaymentFromStore', targetEntity: EPaymentFromStoreLogEntity::class)]
+    private $ePaymentFromStoreLogs;
+
+    public function __construct()
+    {
+        $this->ePaymentFromStoreLogs = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -184,6 +194,36 @@ class EPaymentFromStoreEntity
     public function setCreatedBy(int $createdBy): self
     {
         $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EPaymentFromStoreLogEntity>
+     */
+    public function getEPaymentFromStoreLogs(): Collection
+    {
+        return $this->ePaymentFromStoreLogs;
+    }
+
+    public function addStorePaymentLog(EPaymentFromStoreLogEntity $ePaymentFromStoreLog): self
+    {
+        if (!$this->ePaymentFromStoreLogs->contains($ePaymentFromStoreLog)) {
+            $this->ePaymentFromStoreLogs[] = $ePaymentFromStoreLog;
+            $ePaymentFromStoreLog->setEPaymentFromStore($this);
+        }
+
+        return $this;
+    }
+
+    public function removeStorePaymentLog(EPaymentFromStoreLogEntity $ePaymentFromStoreLog): self
+    {
+        if ($this->ePaymentFromStoreLogs->removeElement($ePaymentFromStoreLog)) {
+            // set the owning side to null (unless already changed)
+            if ($ePaymentFromStoreLog->getEPaymentFromStore() === $this) {
+                $ePaymentFromStoreLog->setEPaymentFromStore(null);
+            }
+        }
 
         return $this;
     }
