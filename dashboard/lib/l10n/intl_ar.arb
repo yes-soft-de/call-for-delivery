@@ -689,7 +689,7 @@
     "collectedPaymentNote": "ملاحظات الكابتن حول سعر الطلبية",
     "collectedPayment": "المبلغ المقبوض",
     "collectedPaymentNotMatch": "المبلغ المقبوض لا يطابق المبلغ الذي من المفترض دفعه",
-    "finishingOrderMessageWithPayment": "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة والمبلغ المقبوض وسيتم إنهاء الطلب",
+    "finishingOrderMessageWithPayment": "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمبلغ المقبوض وسيتم إنهاء الطلب",
     "finishingOrderMessage": "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة وسيتم إنهاء الطلب",
     "updateOrderStatusSuccessfully": "تم تحديث حالة الطلب بنجاح",
     "orderAssignedSuccessfully": "تم إسناد الطلب للكابتن المختار بنجاح",

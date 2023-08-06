@@ -738,7 +738,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "finishingOrderMessage": MessageLookupByLibrary.simpleMessage(
             "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة وسيتم إنهاء الطلب"),
         "finishingOrderMessageWithPayment": MessageLookupByLibrary.simpleMessage(
-            "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة والمبلغ المقبوض وسيتم إنهاء الطلب"),
+            "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمبلغ المقبوض وسيتم إنهاء الطلب"),
         "firstDate": MessageLookupByLibrary.simpleMessage("من تاريخ"),
         "firstName": MessageLookupByLibrary.simpleMessage("الاسم الأول"),
         "firstSendMessage":

@@ -91,11 +91,12 @@ class _UpdateOrderStatusFormState extends State<UpdateOrderStatusForm> {
                       .contains(StatusHelper.getStatusEnum(request.state)),
                   child: Column(
                     children: [
-                      AlertContainer(
-                        subtitle: orderInfo.payment == 'cash'
-                            ? S.current.finishingOrderMessageWithPayment
-                            : S.current.finishingOrderMessage,
-                        title: S.current.warnning,
+                      Visibility(
+                        visible: orderInfo.payment == 'cash',
+                        child: AlertContainer(
+                          subtitle: S.current.finishingOrderMessageWithPayment,
+                          title: S.current.warnning,
+                        ),
                       ),
                       Padding(
                           padding: const EdgeInsets.all(8.0),
