@@ -300,8 +300,8 @@ class AdminCaptainPaymentService
             }
         }
 
-        if ($request->getCaptainProfileId()) {
-            $response['toBePaid'] = $this->getToBePaidToCaptain($request->getCaptainProfileId());
+        if ($request->getCaptainId()) {
+            $response['toBePaid'] = $this->getToBePaidToCaptain($request->getCaptainId());
             $response['toBePaid'] = round($response['toBePaid'], 1);
         }
 

@@ -225,8 +225,8 @@ class CaptainPaymentEntityRepository extends ServiceEntityRepository
         }
 
         if ($request->getCaptainId()) {
-            $query->andWhere('captainPaymentEntity.captain = :captainProfileId')
-                ->setParameter('captainProfileId', $request->getCaptainId());
+            $query->andWhere('captainPaymentEntity.captain = :captainId')
+                ->setParameter('captainId', $request->getCaptainId());
         }
 
         if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
