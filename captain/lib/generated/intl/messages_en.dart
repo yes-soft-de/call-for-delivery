@@ -511,7 +511,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "finishingOrderMessage": MessageLookupByLibrary.simpleMessage(
             "Please provide us with distance you reached out with this order To finish the order"),
         "finishingOrderMessageWithPayment": MessageLookupByLibrary.simpleMessage(
-            "Please provide us with distance you reached out and collected payment with this order To finish the order"),
+            "Please provide us the collected payment for this order To finish the order"),
         "firstDate": MessageLookupByLibrary.simpleMessage("From date"),
         "firstName": MessageLookupByLibrary.simpleMessage("First name"),
         "firstSendMessage": MessageLookupByLibrary.simpleMessage(

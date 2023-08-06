@@ -6240,10 +6240,10 @@ class S {
     );
   }
 
-  /// `Please provide us with distance you reached out and collected payment with this order To finish the order`
+  /// `Please provide us the collected payment for this order To finish the order`
   String get finishingOrderMessageWithPayment {
     return Intl.message(
-      'Please provide us with distance you reached out and collected payment with this order To finish the order',
+      'Please provide us the collected payment for this order To finish the order',
       name: 'finishingOrderMessageWithPayment',
       desc: '',
       args: [],
