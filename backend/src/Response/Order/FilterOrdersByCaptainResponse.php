@@ -65,4 +65,6 @@ class FilterOrdersByCaptainResponse
     public $sourceDestination;
 
     public array|null $subOrder;
+
+    public ?float $profit;
 }
