@@ -27,6 +27,7 @@ use App\Service\DateFactory\DateFactoryService;
 use App\Service\ExternalDeliveryCompany\ExternalDeliveryCompanyGetService;
 use App\Service\ExternallyDeliveredOrder\ExternallyDeliveredOrderService;
 use App\Service\Order\OrderGetService;
+use App\Service\StreetLine\StreetLineOrderService;
 use DateTimeInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
@@ -41,7 +42,8 @@ class ExternallyDeliveredOrderHandleService
         private MrsoolDeliveredOrderService $mrsoolDeliveredOrderService,
         private ExternallyDeliveredOrderService $externallyDeliveredOrderService,
         private OrderGetService $orderGetService,
-        private DateFactoryService $dateFactoryService
+        private DateFactoryService $dateFactoryService,
+        private StreetLineOrderService $streetLineOrderService
     )
     {
     }
@@ -189,6 +191,10 @@ class ExternallyDeliveredOrderHandleService
         if ($externalDeliveryCompanyEntity->getId() === ExternalDeliveryCompanyIdentityConstant::MRSOOL_COMPANY_CONST) {
             // delivery company is Mrsool
             return $this->createOrderInMrsool($orderEntity, $storeOrderDetailsEntity);
+
+        } elseif ($externalDeliveryCompanyEntity->getId() === ExternalDeliveryCompanyIdentityConstant::STREET_LINE_COMPANY_CONST) {
+            // delivery company is Street Line
+            return $this->createOrderInStreetLine($orderEntity, $storeOrderDetailsEntity);
         }
 
         return ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_IS_NOT_REGISTERED_CONST;
@@ -197,19 +203,32 @@ class ExternallyDeliveredOrderHandleService
     /**
      * Handles ResponseInterface object
      */
-    public function handleResponseInterface(ResponseInterface $response): int|array
+    public function handleResponseInterface(ResponseInterface $response, int $externalDeliveryCompanyId): int|array
     {
         $statusCode = $response->getStatusCode();
 
-        if ($statusCode === HttpResponseConstant::INVALID_CREDENTIALS_STATUS_CODE_CONST) {
-            return HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST;
+        if ($externalDeliveryCompanyId === ExternalDeliveryCompanyIdentityConstant::MRSOOL_COMPANY_CONST) {
+            if ($statusCode === HttpResponseConstant::INVALID_CREDENTIALS_STATUS_CODE_CONST) {
+                return HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST;
 
-        } elseif ($statusCode === HttpResponseConstant::INVALID_INPUT_STATUS_CODE_CONST) {
-            return HttpResponseConstant::INVALID_INPUT_RESULT_CODE_CONST;
+            } elseif ($statusCode === HttpResponseConstant::INVALID_INPUT_STATUS_CODE_CONST) {
+                return HttpResponseConstant::INVALID_INPUT_RESULT_CODE_CONST;
 
-        } elseif ($statusCode === HttpResponseConstant::SUCCESSFULLY_CREATED_STATUS_CODE_CONST) {
-            // While the create post request done successfully, then return the response content
-            return json_decode($response->getContent(), true);
+            } elseif ($statusCode === HttpResponseConstant::SUCCESSFULLY_CREATED_STATUS_CODE_CONST) {
+                // While the create post request done successfully, then return the response content
+                return json_decode($response->getContent(), true);
+            }
+
+        } elseif ($externalDeliveryCompanyId === ExternalDeliveryCompanyIdentityConstant::STREET_LINE_COMPANY_CONST) {
+            if ($statusCode === HttpResponseConstant::DONE_SUCCESSFULLY_STATUS_CODE_CONST) {
+                return json_decode($response->getContent(), true);
+
+            } elseif ($statusCode === HttpResponseConstant::METHOD_NOT_ALLOWED_STATUS_CODE_CONST) {
+                return HttpResponseConstant::METHOD_NOT_ALLOWED_RESULT_CONST;
+
+            } elseif ($statusCode === HttpResponseConstant::NOT_ACCEPTABLE_STATUS_CODE_CONST) {
+                return HttpResponseConstant::INVALID_INPUT_RESULT_CODE_CONST;
+            }
         }
 
         return HttpResponseConstant::UN_RECOGNIZED_STATUS_CODE_RESULT_CONST;
@@ -232,8 +251,15 @@ class ExternallyDeliveredOrderHandleService
 
         $createExternalOrderRequest->setOrderId($orderEntity);
         $createExternalOrderRequest->setExternalDeliveryCompany($externalDeliveryCompanyEntity);
-        $createExternalOrderRequest->setExternalOrderId($createOrderResponse['data']['id']);
-        $createExternalOrderRequest->setStatus($createOrderResponse['data']['status']);
+
+        if ($externalDeliveryCompanyEntity->getId() === ExternalDeliveryCompanyIdentityConstant::MRSOOL_COMPANY_CONST) {
+            $createExternalOrderRequest->setExternalOrderId($createOrderResponse['data']['id']);
+            $createExternalOrderRequest->setStatus($createOrderResponse['data']['status']);
+
+        } elseif ($externalDeliveryCompanyEntity->getId() === ExternalDeliveryCompanyIdentityConstant::STREET_LINE_COMPANY_CONST) {
+            $createExternalOrderRequest->setExternalOrderId($createOrderResponse['order_id']);
+            $createExternalOrderRequest->setStatus($createOrderResponse['status']);
+        }
 
         return $this->externallyDeliveredOrderService->createExternallyDeliveredOrder($createExternalOrderRequest);
     }
@@ -279,11 +305,12 @@ class ExternallyDeliveredOrderHandleService
         }
 
         // 5 According to the response that being resulted from previous step, handle the situation
-        $arrayResponse = $this->handleResponseInterface($orderCreateResponse);
+        $arrayResponse = $this->handleResponseInterface($orderCreateResponse, $externalDeliveryCompany->getId());
 
         if (($arrayResponse === HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
             || ($arrayResponse === HttpResponseConstant::INVALID_INPUT_RESULT_CODE_CONST)
-            || ($arrayResponse === HttpResponseConstant::UN_RECOGNIZED_STATUS_CODE_RESULT_CONST)) {
+            || ($arrayResponse === HttpResponseConstant::UN_RECOGNIZED_STATUS_CODE_RESULT_CONST)
+            || ($arrayResponse === HttpResponseConstant::METHOD_NOT_ALLOWED_RESULT_CONST)) {
             return $arrayResponse;
         }
 
@@ -348,14 +375,23 @@ class ExternallyDeliveredOrderHandleService
         }
 
         // 4 According to the response that being resulted from previous step, handle the situation
-        $arrayResponse = $this->handleResponseInterface($orderCreateResponse);
+        $arrayResponse = $this->handleResponseInterface($orderCreateResponse, $request->getExternalCompanyId());
 
         if (($arrayResponse === HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
-            || ($arrayResponse === HttpResponseConstant::INVALID_INPUT_RESULT_CODE_CONST)) {
+            || ($arrayResponse === HttpResponseConstant::INVALID_INPUT_RESULT_CODE_CONST)
+            || ($arrayResponse === HttpResponseConstant::METHOD_NOT_ALLOWED_RESULT_CONST)) {
             return $arrayResponse;
         }
 
         // 5 Create externally delivered order
         return $this->createExternallyDeliveredOrder($orderEntity, $externalDeliveryCompany, $arrayResponse);
+    }
+
+    /**
+     * Creates a new order in Street Line and returns the response
+     */
+    public function createOrderInStreetLine(OrderEntity $orderEntity, StoreOrderDetailsEntity $storeOrderDetailsEntity): ResponseInterface
+    {
+        return $this->streetLineOrderService->createOrderInStreetLine($orderEntity, $storeOrderDetailsEntity);
     }
 }

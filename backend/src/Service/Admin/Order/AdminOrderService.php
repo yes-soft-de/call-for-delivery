@@ -911,7 +911,8 @@ class AdminOrderService
                 && ($externalOrder !== ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_IS_NOT_REGISTERED_CONST)
                 && ($externalOrder !== HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
                 && ($externalOrder !== HttpResponseConstant::INVALID_INPUT_RESULT_CODE_CONST)
-                && ($externalOrder !== HttpResponseConstant::UN_RECOGNIZED_STATUS_CODE_RESULT_CONST)) {
+                && ($externalOrder !== HttpResponseConstant::UN_RECOGNIZED_STATUS_CODE_RESULT_CONST)
+                && ($externalOrder !== HttpResponseConstant::METHOD_NOT_ALLOWED_RESULT_CONST)) {
                 // save log of the action on order
                 $this->createOrderLogMessageViaOrderEntityAndByAdmin($order, $userId,
                     OrderLogActionTypeConstant::AUTOMATIC_SENDING_NORMAL_ORDER_EXTERNALLY_CONST,
