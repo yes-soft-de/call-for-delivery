@@ -3,12 +3,9 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_payments/model/captain_previous_payments_model.dart';
 import 'package:c4d/module_payments/request/captain_previous_payments_request.dart';
 import 'package:c4d/module_payments/ui/screen/captain_previous_payments_screen.dart';
-import 'package:c4d/module_payments/ui/widget/add_payment_to_captain_dialog.dart';
 import 'package:c4d/module_payments/ui/widget/payment_card.dart' as p;
-import 'package:c4d/module_payments/ui/widget/payment_widget.dart';
 import 'package:c4d/module_payments/ui/widget/select_date_bar_widget.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
-import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -28,28 +25,28 @@ class CaptainPreviousPaymentsStateLoaded extends States {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            PaymentWidget(
-              model: model,
-              onPressed: () {
-                if (model.hasTpPay) {
-                  showDialog(
-                    context: context,
-                    builder: (context) {
-                      return AddPaymentToCaptainDialog(
-                        onConfirmed: (request) {
-                          screenState.addPayment(request);
-                        },
-                      );
-                    },
-                  );
-                } else {
-                  CustomFlushBarHelper.createError(
-                    title: S.current.warnning,
-                    message: S.current.thereIsNoPaymentToMade,
-                  );
-                }
-              },
-            ),
+            // PaymentWidget(
+            //   model: model,
+            //   onPressed: () {
+            //     if (model.hasTpPay) {
+            //       showDialog(
+            //         context: context,
+            //         builder: (context) {
+            //           return AddPaymentToCaptainDialog(
+            //             onConfirmed: (request) {
+            //               screenState.addPayment(request);
+            //             },
+            //           );
+            //         },
+            //       );
+            //     } else {
+            //       CustomFlushBarHelper.createError(
+            //         title: S.current.warnning,
+            //         message: S.current.thereIsNoPaymentToMade,
+            //       );
+            //     }
+            //   },
+            // ),
             SizedBox(height: 10),
             // date pickers
             Row(
