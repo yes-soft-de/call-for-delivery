@@ -900,7 +900,8 @@ class OrderController extends BaseController
      *                  @OA\Property(type="object", property="location"),
      *                  @OA\Property(type="string", property="branchName"),
      *                  @OA\Property(type="string", property="storeOwnerName"),
-     *                  @OA\Property(type="string", property="state")
+     *                  @OA\Property(type="string", property="state"),
+     *                  @OA\Property(type="number", property="profit")
      *               )
      *          )
      *      )

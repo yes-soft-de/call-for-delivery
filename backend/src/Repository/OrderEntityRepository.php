@@ -18,6 +18,7 @@ use App\Constant\Payment\PaymentConstant;
 use App\Constant\Supplier\SupplierProfileConstant;
 use App\Entity\BidDetailsEntity;
 use App\Entity\CaptainFinancialDuesEntity;
+use App\Entity\CaptainOrderFinancialEntity;
 use App\Entity\ChatRoomEntity;
 use App\Entity\ExternallyDeliveredOrderEntity;
 use App\Entity\OrderDistanceConflictEntity;
@@ -626,6 +627,7 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->select('orderEntity.id', 'orderEntity.deliveryDate', 'orderEntity.createdAt', 'orderEntity.payment',
                 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.state')
             ->addSelect('bidDetailsEntity as bidDetails')
+            ->addSelect('captainOrderFinancialEntity.profit')
 
             ->andWhere('orderEntity.captainId = :captainId')
             ->setParameter('captainId', $request->getCaptainId())
@@ -638,6 +640,13 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'bidDetailsEntity',
                 Join::WITH,
                 'bidDetailsEntity.orderId = orderEntity.id'
+            )
+
+            ->leftJoin(
+                CaptainOrderFinancialEntity::class,
+                'captainOrderFinancialEntity',
+                Join::WITH,
+                'captainOrderFinancialEntity.orderId = orderEntity.id'
             )
 
             ->orderBy('orderEntity.id', 'DESC');
