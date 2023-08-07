@@ -3,6 +3,7 @@
 namespace App\Service\EPayment;
 
 use App\AutoMapping;
+use App\Constant\Admin\AdminProfileConstant;
 use App\Constant\EPaymentFromStore\EPaymentFromStoreConstant;
 use App\Constant\Notification\NotificationConstant;
 use App\Constant\Notification\NotificationFirebaseConstant;
@@ -12,6 +13,7 @@ use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Constant\Subscription\SubscriptionDetailsConstant;
 use App\Constant\Subscription\SubscriptionFlagConstant;
+use App\Entity\AdminProfileEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Entity\SubscriptionDetailsEntity;
 use App\Entity\SubscriptionEntity;
@@ -20,22 +22,26 @@ use App\Request\EPayment\EPaymentCreateByStoreOwnerRequest;
 use App\Request\Subscription\SubscriptionCreateRequest;
 use App\Response\Subscription\SubscriptionErrorResponse;
 use App\Response\Subscription\SubscriptionResponse;
+use App\Service\Admin\AdminProfile\AdminProfileGetService;
 use App\Service\EPaymentFromStoreLog\EPaymentFromStoreLogDispatchService;
 use App\Service\Notification\NotificationFirebaseService;
 use App\Service\Notification\NotificationLocalService;
 use App\Service\StoreOwner\StoreOwnerProfileGetService;
 use App\Service\Subscription\SubscriptionService;
+//use Doctrine\ORM\EntityManagerInterface;
 
 class EPaymentService
 {
     public function __construct(
         private AutoMapping $autoMapping,
+        //private EntityManagerInterface $entityManager,
         private SubscriptionService $subscriptionService,
         private StoreOwnerProfileGetService $storeOwnerProfileGetService,
         private EPaymentFromStoreManager $ePaymentFromStoreManager,
         private NotificationLocalService $notificationLocalService,
         private NotificationFirebaseService $notificationFirebaseService,
-        private EPaymentFromStoreLogDispatchService $ePaymentFromStoreLogDispatchService
+        private EPaymentFromStoreLogDispatchService $ePaymentFromStoreLogDispatchService,
+        private AdminProfileGetService $adminProfileGetService
     )
     {
     }
@@ -58,62 +64,71 @@ class EPaymentService
     public function createEPaymentByStoreOwner(EPaymentCreateByStoreOwnerRequest $request): SubscriptionResponse|int|string|SubscriptionErrorResponse
     {
         if ($request->getStatus() === 1) {
-            // update the flag field of the last finished subscription to isPaid
-
-            if (($request->getPaymentGetaway() === EPaymentFromStoreConstant::PAYMENT_GETAWAY_IN_APP_PURCHASE_APPLE_CONST) ||
-                ($request->getPaymentGetaway() === EPaymentFromStoreConstant::PAYMENT_GETAWAY_IN_APP_PURCHASE_GOOGLE_CONST)) {
-                if (! $request->getPaymentId()) {
-                    $request->setPaymentId("");
-                }
-            }
-
-            if (($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_STORE_CONST)
-                || ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_STORE_CONST)) {
-                $storeOwnerProfile = $this->getStoreOwnerProfileByStoreId($request->getStoreOwnerProfile());
-
-            } else {
-                $storeOwnerProfile = $this->getStoreOwnerProfileById($request->getStoreOwnerProfile());
-            }
-
-            if (! $storeOwnerProfile) {
-                return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
-            }
-
-            // if the payment for uniform package (not opening package) subscription, then update the paid flag
-            //  of the last finished subscription
-            if ($request->getPaymentFor() === EPaymentFromStoreConstant::PAYMENT_FOR_UNIFORM_SUBSCRIPTION_CONST) {
-                $this->updateCurrentSubscriptionPaidFlagByStoreOwnerUserId($storeOwnerProfile->getStoreOwnerId(),
-                    SubscriptionFlagConstant::SUBSCRIPTION_FLAG_PAID);
-            }
-
-            // create new subscription
-            if ($request->getPaymentFor() === EPaymentFromStoreConstant::PAYMENT_FOR_SUBSCRIPTION_CONST) {
-                $subscription = $this->createSubscriptionWithFreePackage($storeOwnerProfile->getStoreOwnerId());
-
-            } elseif ($request->getPaymentFor() === EPaymentFromStoreConstant::PAYMENT_FOR_UNIFORM_SUBSCRIPTION_CONST) {
-                $subscription = $this->createSubscription($storeOwnerProfile->getStoreOwnerId(), 19);
-            }
-
-            if ($subscription) {
-                if (($subscription === SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND)
-                    || ($subscription instanceof SubscriptionErrorResponse)
-                    || ($subscription === PackageConstant::PACKAGE_NOT_EXIST)
-                    || ($subscription === SubscriptionConstant::SUBSCRIPTION_DOES_NOT_EXIST_CONST)) {
-                    return $subscription;
+//            try {
+                // update the flag field of the last finished subscription to isPaid
+                if (($request->getPaymentGetaway() === EPaymentFromStoreConstant::PAYMENT_GETAWAY_IN_APP_PURCHASE_APPLE_CONST) ||
+                    ($request->getPaymentGetaway() === EPaymentFromStoreConstant::PAYMENT_GETAWAY_IN_APP_PURCHASE_GOOGLE_CONST)) {
+                    if (! $request->getPaymentId()) {
+                        $request->setPaymentId("");
+                    }
                 }
 
-                $request->setStoreOwnerProfile($storeOwnerProfile);
-                $request->setSubscription($subscription);
+                if (($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_STORE_CONST)
+                    || ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_STORE_CONST)) {
+                    $storeOwnerProfile = $this->getStoreOwnerProfileByStoreId($request->getStoreOwnerProfile());
 
-                // create the payment if the store needs to pay in order to subscribe:
-                // the store has to pay when: package is 19, or package is 18 and admin didn't approve the payment bypass
-                // And when the payment is not a bypass payment, or mock one
-                if ((($subscription->getPackage()->getId() === 19)
-                    || (($subscription->getPackage()->getId() === 18) && ($storeOwnerProfile->getOpeningSubscriptionWithoutPayment() === false)))
-                    && ($request->getPaymentGetaway() !== EPaymentFromStoreConstant::PAYMENT_GETAWAY_NOT_SPECIFIED_CONST)
-                    && ($request->getPaymentType() !== EPaymentFromStoreConstant::MOCK_PAYMENT_BY_ADMIN_CONST)
-                    && ($request->getPaymentType() !== EPaymentFromStoreConstant::MOCK_PAYMENT_BY_STORE_CONST)
-                    && ($request->getPaymentType() !== EPaymentFromStoreConstant::MOCK_PAYMENT_BY_SUPER_ADMIN_CONST)) {
+                } else {
+                    if (($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_ADMIN_CONST)
+                        || ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_ADMIN_CONST)) {
+                        $adminProfile = $this->getAdminProfileEntityByAdminUserId($request->getCreatedBy());
+
+                        if ($adminProfile === AdminProfileConstant::ADMIN_PROFILE_NOT_EXIST) {
+                            return AdminProfileConstant::ADMIN_PROFILE_NOT_EXIST;
+                        }
+                    }
+
+                    $storeOwnerProfile = $this->getStoreOwnerProfileById($request->getStoreOwnerProfile());
+                }
+
+                if (! $storeOwnerProfile) {
+                    return StoreProfileConstant::STORE_OWNER_PROFILE_NOT_EXISTS;
+                }
+
+                // if the payment for uniform package (not opening package) subscription, then update the paid flag
+                //  of the last finished subscription
+                if ($request->getPaymentFor() === EPaymentFromStoreConstant::PAYMENT_FOR_UNIFORM_SUBSCRIPTION_CONST) {
+                    $oldSubscription = $this->updateCurrentSubscriptionPaidFlagByStoreOwnerUserId($storeOwnerProfile->getStoreOwnerId(),
+                        SubscriptionFlagConstant::SUBSCRIPTION_FLAG_PAID);
+                }
+
+                // create new subscription
+                if ($request->getPaymentFor() === EPaymentFromStoreConstant::PAYMENT_FOR_SUBSCRIPTION_CONST) {
+                    $subscription = $this->createSubscriptionWithFreePackage($storeOwnerProfile->getStoreOwnerId());
+
+                } elseif ($request->getPaymentFor() === EPaymentFromStoreConstant::PAYMENT_FOR_UNIFORM_SUBSCRIPTION_CONST) {
+                    $subscription = $this->createSubscription($storeOwnerProfile->getStoreOwnerId(), 19);
+                }
+
+                if ($subscription) {
+                    if (($subscription === SubscriptionDetailsConstant::SUBSCRIPTION_DETAILS_NOT_FOUND)
+                        || ($subscription instanceof SubscriptionErrorResponse)
+                        || ($subscription === PackageConstant::PACKAGE_NOT_EXIST)
+                        || ($subscription === SubscriptionConstant::SUBSCRIPTION_DOES_NOT_EXIST_CONST)) {
+                        return $subscription;
+                    }
+
+                    $request->setStoreOwnerProfile($storeOwnerProfile);
+                    $request->setSubscription($subscription);
+
+                    // create the payment if the store needs to pay in order to subscribe:
+                    // the store has to pay when: package is 19, or package is 18 and admin didn't approve the payment bypass
+                    // And when the payment is not a bypass payment, or mock one
+                    if ((($subscription->getPackage()->getId() === 19)
+                            || (($subscription->getPackage()->getId() === 18) && ($storeOwnerProfile->getOpeningSubscriptionWithoutPayment() === false)))
+                        && ($request->getPaymentGetaway() !== EPaymentFromStoreConstant::PAYMENT_GETAWAY_NOT_SPECIFIED_CONST)
+                        && ($request->getPaymentType() !== EPaymentFromStoreConstant::MOCK_PAYMENT_BY_ADMIN_CONST)
+                        && ($request->getPaymentType() !== EPaymentFromStoreConstant::MOCK_PAYMENT_BY_STORE_CONST)
+                        && ($request->getPaymentType() !== EPaymentFromStoreConstant::MOCK_PAYMENT_BY_SUPER_ADMIN_CONST)) {
 //                    // if the payment is mock, the reset all fields to Zero
 //                    if (($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_ADMIN_CONST)
 //                        || ($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_STORE_CONST)
@@ -124,47 +139,85 @@ class EPaymentService
 //                        $request->setPaymentFor(0);
 //                    }
 
-                    // if the payment is done manually by admin, or if it is for testing issues, then set payment id
-                    // to empty string
-                    if (($request->getPaymentGetaway() === EPaymentFromStoreConstant::PAYMENT_GETAWAY_MANUAL_CONST)
-                        || ($request->getPaymentGetaway() === EPaymentFromStoreConstant::PAYMENT_GETAWAY_NOT_SPECIFIED_CONST)) {
-                        $request->setPaymentId("");
-                    }
+                        // if the payment is done manually by admin, or if it is for testing issues, then set payment id
+                        // to empty string
+                        if (($request->getPaymentGetaway() === EPaymentFromStoreConstant::PAYMENT_GETAWAY_MANUAL_CONST)
+                            || ($request->getPaymentGetaway() === EPaymentFromStoreConstant::PAYMENT_GETAWAY_NOT_SPECIFIED_CONST)) {
+                            $request->setPaymentId("");
+                        }
 
-                    $payment = $this->ePaymentFromStoreManager->createEPaymentFromStore($request);
+                        $payment = $this->ePaymentFromStoreManager->createEPaymentFromStore($request);
 
-                    // send notifications to the store if the payment had been made by admin
-                    if ($payment) {
-                        if ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_ADMIN_CONST) {
-                            // local notification to store
-                            $this->createLocalNotificationForStore($storeOwnerProfile->getStoreOwnerId(),
-                                NotificationConstant::PAYMENT_FOR_STORE_SUBSCRIPTION_BY_ADMIN_TITLE_CONST,
-                                NotificationConstant::PAYMENT_FOR_STORE_SUBSCRIPTION_BY_ADMIN_TEXT_CONST);
+                        // send notifications to the store if the payment had been made by admin
+                        if ($payment) {
+//                            // start new transaction commit ...
+//                            $this->entityManager->getConnection()->beginTransaction();
 
-                            // firebase notification to store
-                            $this->createFirebaseNotificationForUser($storeOwnerProfile->getStoreOwnerId(),
-                                NotificationFirebaseConstant::PAYMENT_FOR_STORE_SUBSCRIPTION_BY_ADMIN_CONST);
+                            if ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_ADMIN_CONST) {
+                                // create a new log for the payment
+//                                $this->dispatchEPaymentFromStoreCreateMessage($request->getCreatedBy(),
+//                                    EPaymentFromStoreConstant::NEW_REAL_PAYMENT_CREATED_SUCCESSFULLY_BY_ADMIN_ACTION_CONST,
+//                                    $storeOwnerProfile->getId(), $payment->getId(), $adminProfile);
+                                // local notification to store
+                                $this->createLocalNotificationForStore($storeOwnerProfile->getStoreOwnerId(),
+                                    NotificationConstant::PAYMENT_FOR_STORE_SUBSCRIPTION_BY_ADMIN_TITLE_CONST,
+                                    NotificationConstant::PAYMENT_FOR_STORE_SUBSCRIPTION_BY_ADMIN_TEXT_CONST);
+
+                                // firebase notification to store
+                                $this->createFirebaseNotificationForUser($storeOwnerProfile->getStoreOwnerId(),
+                                    NotificationFirebaseConstant::PAYMENT_FOR_STORE_SUBSCRIPTION_BY_ADMIN_CONST);
+
+                            }
                         }
                     }
+
+                    // send firebase notification to store if the admin create the subscription
+                    if ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_ADMIN_CONST) {
+                        // local notification to store
+                        $this->createLocalNotificationForStore($storeOwnerProfile->getStoreOwnerId(),
+                            NotificationConstant::STORE_SUBSCRIPTION_CREATE_BY_ADMIN_TITLE_CONST,
+                            NotificationConstant::STORE_SUBSCRIPTION_CREATE_BY_ADMIN_TEXT_CONST);
+
+                        // firebase notification to store
+                        $this->createFirebaseNotificationForUser($storeOwnerProfile->getStoreOwnerId(),
+                            NotificationFirebaseConstant::PAYMENT_FOR_STORE_SUBSCRIPTION_BY_ADMIN_CONST);
+                    }
+
+                    return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
+
+                } else {
+                    return SubscriptionConstant::SUBSCRIPTION_DOES_NOT_EXIST_CONST;
                 }
 
-                // send firebase notification to store if the admin create the subscription
-                if ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_ADMIN_CONST) {
-                    // local notification to store
-                    $this->createLocalNotificationForStore($storeOwnerProfile->getStoreOwnerId(),
-                        NotificationConstant::STORE_SUBSCRIPTION_CREATE_BY_ADMIN_TITLE_CONST,
-                        NotificationConstant::STORE_SUBSCRIPTION_CREATE_BY_ADMIN_TEXT_CONST);
-
-                    // firebase notification to store
-                    $this->createFirebaseNotificationForUser($storeOwnerProfile->getStoreOwnerId(),
-                        NotificationFirebaseConstant::PAYMENT_FOR_STORE_SUBSCRIPTION_BY_ADMIN_CONST);
-                }
-
-                return $this->autoMapping->map(SubscriptionEntity::class, SubscriptionResponse::class, $subscription);
-
-            } else {
-                return SubscriptionConstant::SUBSCRIPTION_DOES_NOT_EXIST_CONST;
-            }
+//            }
+//            catch (\Exception $e) {
+//
+//                // create a new log for the payment
+//                if (! isset($storeOwnerProfile)) {
+//                    $storeOwnerProfile = null;
+//                }
+//
+//                if (($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_STORE_CONST)
+//                    || ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_STORE_CONST)) {
+//                    $this->dispatchEPaymentFromStoreCreateMessage($request->getCreatedBy(),
+//                        EPaymentFromStoreConstant::NEW_REAL_PAYMENT_CREATED_FAILED_BY_STORE_ACTION_CONST,
+//                        $storeOwnerProfile->getId());
+//
+//                }
+//                elseif (($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_ADMIN_CONST)
+//                    || ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_ADMIN_CONST)) {
+//                    // check if admin profile is set
+//                    if (! isset($adminProfile)) {
+//                        $adminProfile = null;
+//                    }
+//
+//                    $this->dispatchEPaymentFromStoreCreateMessage($request->getCreatedBy(),
+//                        EPaymentFromStoreConstant::NEW_REAL_PAYMENT_CREATED_FAILED_BY_ADMIN_ACTION_CONST,
+//                        $storeOwnerProfile->getId(), null, $adminProfile);
+//                }
+//
+//                throw $e;
+//            }
         }
 
         return 0;
@@ -211,5 +264,26 @@ class EPaymentService
     public function createFirebaseNotificationForUser(int $userId, string $text)
     {
         return $this->notificationFirebaseService->notificationToUserWithoutOrderByUserId($userId, $text);
+    }
+
+//    public function dispatchEPaymentFromStoreCreateMessage(
+//        int $createdByUserId,
+//        int $action,
+//        ?int $storeOwnerProfile = null,
+//        ?int $ePaymentFromStore = null,
+//        ?int $adminProfile = null,
+//        ?string $details = null
+//    ): void
+//    {
+//        $this->ePaymentFromStoreLogDispatchService->dispatchEPaymentFromStoreCreateMessage($createdByUserId, $action,
+//            $storeOwnerProfile, $ePaymentFromStore, $adminProfile, $details);
+//    }
+
+    /**
+     * Get admin profile entity if exists
+     */
+    public function getAdminProfileEntityByAdminUserId(int $adminUserId): AdminProfileEntity|string
+    {
+        return $this->adminProfileGetService->getAdminProfileEntityByAdminUserId($adminUserId);
     }
 }

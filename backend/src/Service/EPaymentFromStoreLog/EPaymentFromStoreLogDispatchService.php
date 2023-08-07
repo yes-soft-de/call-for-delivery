@@ -13,8 +13,16 @@ class EPaymentFromStoreLogDispatchService
     {
     }
 
-    public function dispatchEPaymentFromStoreCreateMessage(int $ePaymentFromStore, int $action, ?string $details = null)
+    public function dispatchEPaymentFromStoreCreateMessage(
+        int $createdByUserId,
+        int $action,
+        ?int $storeOwnerProfile = null,
+        ?int $ePaymentFromStore = null,
+        ?int $adminProfile = null,
+        ?string $details = null
+    )
     {
-        $this->eventBus->dispatch(EPaymentFromStoreLogCreateMessage::create($ePaymentFromStore, $action, $details));
+        $this->eventBus->dispatch(EPaymentFromStoreLogCreateMessage::create($createdByUserId, $action, $storeOwnerProfile,
+            $ePaymentFromStore, $adminProfile, $details));
     }
 }

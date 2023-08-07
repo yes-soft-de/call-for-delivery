@@ -55,6 +55,9 @@ class AdminProfileEntity
     #[ORM\OneToMany(mappedBy: 'createdByAdmin', targetEntity: CaptainPaymentEntity::class)]
     private $captainPaymentEntities;
 
+    #[ORM\OneToMany(mappedBy: 'adminProfile', targetEntity: EPaymentFromStoreLogEntity::class)]
+    private $ePaymentFromStoreLogs;
+
     public function __construct()
     {
         $this->images = new ArrayCollection();
@@ -63,6 +66,7 @@ class AdminProfileEntity
         $this->externalDeliveryCompanyCriteriaEntities = new ArrayCollection();
         $this->captainFinancialDefaultSystemEntities = new ArrayCollection();
         $this->captainPaymentEntities = new ArrayCollection();
+        $this->ePaymentFromStoreLogs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -316,6 +320,36 @@ class AdminProfileEntity
             // set the owning side to null (unless already changed)
             if ($captainPaymentEntity->getCreatedByAdmin() === $this) {
                 $captainPaymentEntity->setCreatedByAdmin(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EPaymentFromStoreLogEntity>
+     */
+    public function getEPaymentFromStoreLogs(): Collection
+    {
+        return $this->ePaymentFromStoreLogs;
+    }
+
+    public function addEPaymentFromStoreLog(EPaymentFromStoreLogEntity $ePaymentFromStoreLog): self
+    {
+        if (!$this->ePaymentFromStoreLogs->contains($ePaymentFromStoreLog)) {
+            $this->ePaymentFromStoreLogs[] = $ePaymentFromStoreLog;
+            $ePaymentFromStoreLog->setAdminProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEPaymentFromStoreLog(EPaymentFromStoreLogEntity $ePaymentFromStoreLog): self
+    {
+        if ($this->ePaymentFromStoreLogs->removeElement($ePaymentFromStoreLog)) {
+            // set the owning side to null (unless already changed)
+            if ($ePaymentFromStoreLog->getAdminProfile() === $this) {
+                $ePaymentFromStoreLog->setAdminProfile(null);
             }
         }
 
