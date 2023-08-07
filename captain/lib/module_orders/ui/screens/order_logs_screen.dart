@@ -60,8 +60,19 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
     widget._stateManager.getOrdersFilters(this, ordersFilter, loading);
   }
 
+  bool flag = true;
+
   @override
   Widget build(BuildContext context) {
+    if (flag) {
+      flag = false;
+      var args = ModalRoute.of(context)?.settings.arguments;
+      if (args is int && args == 1) {
+        currentIndex = 1;
+        ordersFilter.state = 'delivered';
+        getOrders();
+      }
+    }
     return GestureDetector(
       onTap: () {
         var focus = FocusScope.of(context);
@@ -233,8 +244,8 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
                 currentIndex = index;
                 getOrders();
               },
-              selectedContent: Theme.of(context).textTheme.button!.color!,
-              unselectedContent: Theme.of(context).textTheme.headline6!.color!,
+              selectedContent: Theme.of(context).textTheme.labelLarge!.color!,
+              unselectedContent: Theme.of(context).textTheme.titleLarge!.color!,
             ),
             const SizedBox(
               height: 16,

@@ -1,11 +1,9 @@
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/screens/order_logs_screen.dart';
-import 'package:c4d/module_orders/ui/widgets/home_widgets/order_card.dart';
+import 'package:c4d/module_orders/ui/widgets/order_log_card.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
-import 'package:c4d/utils/components/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
 
@@ -39,14 +37,14 @@ class OrderLogsLoadedState extends States {
                     arguments: element.id.toString());
               }
             },
-            child: OrderCard(
+            child: OrderLogCard(
               orderIsMain: element.orderIsMain,
               background: element.orderIsMain
                   ? Colors.red[700]
                   : StatusHelper.getOrderStatusColor(element.state),
               deliveryDate: element.deliveryDate,
               note: element.note,
-              orderCost: FixedNumber.getFixedNumber(element.orderCost),
+              profit: element.profit?.toStringAsFixed(1) ?? '0',
               orderNumber: element.id.toString(),
               orderStatus: StatusHelper.getOrderStatusMessages(element.state),
               destination: '',

@@ -5,7 +5,7 @@ const _dev = 'http://134.209.241.49';
 const _prod = 'http://46.101.100.62';
 
 class Urls {
-  static const String DOMAIN = _prod;
+  static const String DOMAIN = _dev;
   static const String BASE_API = DOMAIN;
 
   static const String IMAGES_ROOT =

@@ -2,6 +2,7 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_plan/model/my_profits_model.dart';
 import 'package:c4d/module_plan/plan_routes.dart';
 import 'package:c4d/module_plan/ui/screen/my_profits_screen.dart';
@@ -73,11 +74,26 @@ class MyProfitsStateLoaded extends States {
               },
             ),
             const SizedBox(height: 20),
-            _CustomButton(
-              title: S.current.historyOfPreviousPayments,
-              onPressed: () {
-                Navigator.pushNamed(context, PlanRoutes.PAYMENT_HISTORY);
-              },
+            Row(
+              children: [
+                Flexible(
+                  child: _CustomButton(
+                    title: S.current.historyOfPreviousPayments,
+                    onPressed: () {
+                      Navigator.pushNamed(context, PlanRoutes.PAYMENT_HISTORY);
+                    },
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Flexible(
+                  child: _CustomButton(
+                    title: S.current.profitsFromOrders,
+                    onPressed: () {
+                      Navigator.of(context).pushNamed(OrdersRoutes.ORDER_LOGS);
+                    },
+                  ),
+                ),
+              ],
             ),
             // const SizedBox(height: 20),
             // _CustomButton(
@@ -108,7 +124,7 @@ class _CustomButton extends StatelessWidget {
     var darkMode = getIt<ThemePreferencesHelper>().isDarkMode();
     return SizedBox(
       height: 56,
-      width: MediaQuery.sizeOf(context).width * 0.75,
+      width: double.infinity,
       child: ElevatedButton(
         onPressed: onPressed,
         style: ElevatedButton.styleFrom(
