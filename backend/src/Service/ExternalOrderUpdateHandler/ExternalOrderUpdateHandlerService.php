@@ -130,10 +130,14 @@ class ExternalOrderUpdateHandlerService
     {
         // 1 compare status
         if (($externalOrderStatus === StreetLineCompanyConstant::ORDER_CREATED_STATUS_CONST)
-            || ($externalOrderStatus === StreetLineCompanyConstant::PENDING_ORDER_PREPARATION_STATUS_CONST)) {
+            || ($externalOrderStatus === StreetLineCompanyConstant::PENDING_DRIVER_ACCEPTANCE_STATUS_CONST)
+            || ($externalOrderStatus === StreetLineCompanyConstant::DRIVER_ACCEPTANCE_TIMEOUT_STATUS_CONST)
+            || ($externalOrderStatus === StreetLineCompanyConstant::DRIVER_REJECTED_ORDER_STATUS_CONST)
+            || ($externalOrderStatus === StreetLineCompanyConstant::ORDER_UNASSIGNED_STATUS_CONST)) {
             $internalOrderStatus = OrderStateConstant::ORDER_STATE_PENDING;
 
-        } elseif ($externalOrderStatus === StreetLineCompanyConstant::ARRIVED_TO_PICKUP_STATUS_CONST) {
+        } elseif (($externalOrderStatus === StreetLineCompanyConstant::ARRIVED_TO_PICKUP_STATUS_CONST)
+            || ($externalOrderStatus === StreetLineCompanyConstant::PENDING_ORDER_PREPARATION_STATUS_CONST)) {
             $internalOrderStatus = OrderStateConstant::ORDER_STATE_IN_STORE;
 
         } elseif (($externalOrderStatus === StreetLineCompanyConstant::ORDER_PICKED_UP_STATUS_CONST)
@@ -162,10 +166,10 @@ class ExternalOrderUpdateHandlerService
 
         // 2 Get order status
         $newOrderStatus = $this->getOrderStatusFromExternalOneAtStreetLine($request->getStatus(),
-            $externallyDeliveredOrder->getOrderId()->getState());//dd($newOrderStatus);
+            $externallyDeliveredOrder->getOrderId()->getState());
 
         // 2 Update order status in OrderEntity
-        $order = $this->updateOrderStateByOrderEntityAndNewState($externallyDeliveredOrder->getOrderId(), $newOrderStatus);
+        $this->updateOrderStateByOrderEntityAndNewState($externallyDeliveredOrder->getOrderId(), $newOrderStatus);
 
         // 3 Return appropriate result
         return $externallyDeliveredOrder;

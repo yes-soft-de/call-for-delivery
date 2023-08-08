@@ -42,7 +42,7 @@ final class StreetLineCompanyConstant
 
     const ORDER_CANCELLED_STATUS_CONST = "Order cancelled";
 
-    const ORDER_ACCEPTANCE_STATUS_CONST = "Driver acceptance timeout";
+    const DRIVER_ACCEPTANCE_TIMEOUT_STATUS_CONST = "Driver acceptance timeout";
 
     const DRIVER_REJECTED_ORDER_STATUS_CONST = "Driver rejected the order";
 
