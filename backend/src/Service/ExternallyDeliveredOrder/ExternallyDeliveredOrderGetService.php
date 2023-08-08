@@ -2,7 +2,6 @@
 
 namespace App\Service\ExternallyDeliveredOrder;
 
-use App\Constant\ExternallyDeliveredOrder\ExternallyDeliveredOrderConstant;
 use App\Entity\ExternallyDeliveredOrderEntity;
 use App\Manager\ExternallyDeliveredOrder\ExternallyDeliveredOrderManager;
 
@@ -22,15 +21,15 @@ class ExternallyDeliveredOrderGetService
         return $this->externallyDeliveredOrderManager->getAllExternallyDeliveredOrdersByOrderId($orderId);
     }
 
-    public function getExternallyDeliveredOrdersByStatus(string $status): array
-    {
-        return $this->externallyDeliveredOrderManager->getExternallyDeliveredOrdersByStatus($status);
-    }
+//    public function getExternallyDeliveredOrdersByStatus(string $status): array
+//    {
+//        return $this->externallyDeliveredOrderManager->getExternallyDeliveredOrdersByStatus($status);
+//    }
 
-    public function getOnGoingExternallyDeliveredOrders(): array
-    {
-        return $this->externallyDeliveredOrderManager->getOnGoingExternallyDeliveredOrders();
-    }
+//    public function getOnGoingExternallyDeliveredOrders(): array
+//    {
+//        return $this->externallyDeliveredOrderManager->getOnGoingExternallyDeliveredOrders();
+//    }
 
     /**
      *

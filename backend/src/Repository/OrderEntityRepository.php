@@ -1394,7 +1394,7 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'externallyDeliveredOrderEntity.orderId = orderEntity.id'
             )
 
-            ->andWhere('externallyDeliveredOrderEntity.orderId IS NULL')
+//            ->andWhere('externallyDeliveredOrderEntity.orderId IS NULL')
 
             ->andWhere('orderEntity.state = :pending ')
             ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
@@ -1403,9 +1403,9 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->setParameter('show', OrderIsHideConstant::ORDER_SHOW);
 //            ->setParameter('hide', OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)
 
-//        if ($externalOrder === 1) {
-//            $query->andWhere('externallyDeliveredOrderEntity.orderId IS NOT NULL');
-//        }
+        if ($externalOrder === 1) {
+            $query->andWhere('externallyDeliveredOrderEntity.orderId IS NOT NULL');
+        }
 
         return $query->getQuery()->getResult();
     }
@@ -1433,7 +1433,7 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'externallyDeliveredOrderEntity.orderId = orderEntity.id'
             )
 
-            ->andWhere('externallyDeliveredOrderEntity.orderId IS NULL')
+//            ->andWhere('externallyDeliveredOrderEntity.orderId IS NULL')
 
             ->andWhere('orderEntity.isHide = :hide')
             ->setParameter('hide', OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE)
@@ -1443,9 +1443,9 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->orderBy('orderEntity.id', 'DESC');
 
-//        if ($externalOrder === 1) {
-//            $query->andWhere('externallyDeliveredOrderEntity.orderId IS NOT NULL');
-//        }
+        if ($externalOrder === 1) {
+            $query->andWhere('externallyDeliveredOrderEntity.orderId IS NOT NULL');
+        }
 
         return $query->getQuery()->getResult();
     }
@@ -1484,7 +1484,7 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'externallyDeliveredOrderEntity.orderId = orderEntity.id'
             )
 
-            ->andWhere('externallyDeliveredOrderEntity.orderId IS NULL')
+//            ->andWhere('externallyDeliveredOrderEntity.orderId IS NULL')
 
             ->andWhere('orderEntity.state IN (:onGoingStatusArray)')
             ->setParameter('onGoingStatusArray', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY)
@@ -1495,9 +1495,9 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->orderBy('orderEntity.id', 'DESC');
 
-//        if ($externalOrder === 1) {
-//            $query->andWhere('externallyDeliveredOrderEntity.orderId IS NOT NULL');
-//        }
+        if ($externalOrder === 1) {
+            $query->andWhere('externallyDeliveredOrderEntity.orderId IS NOT NULL');
+        }
 
         return $query->getQuery()->getResult();
     }
@@ -2960,5 +2960,110 @@ class OrderEntityRepository extends ServiceEntityRepository
 
             ->getQuery()
             ->getResult();
+    }
+
+    public function filterExternallyDeliveredOrdersByAdmin(OrderFilterByAdminRequest $request): array
+    {
+        $query = $this->createQueryBuilder('orderEntity')
+            ->addSelect('storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
+                'storeOwnerProfileEntity.storeOwnerName')
+
+            ->leftJoin(
+                StoreOrderDetailsEntity::class,
+                'storeOrderDetails',
+                Join::WITH,
+                'orderEntity.id = storeOrderDetails.orderId'
+            )
+
+            ->leftJoin(
+                StoreOwnerBranchEntity::class,
+                'storeOwnerBranch',
+                Join::WITH,
+                'storeOrderDetails.branch = storeOwnerBranch.id'
+            )
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+            )
+
+            ->leftJoin(
+                ExternallyDeliveredOrderEntity::class,
+                'externallyDeliveredOrderEntity',
+                Join::WITH,
+                'externallyDeliveredOrderEntity.orderId = orderEntity.id'
+            )
+
+            ->orderBy('orderEntity.id', 'DESC');
+
+        if ($request->getOrderId()) {
+            $query->andWhere('orderEntity.id = :orderId');
+            $query->setParameter('orderId', $request->getOrderId());
+        }
+
+        if ($request->getStoreOwnerProfileId()) {
+            $query->andWhere('orderEntity.storeOwner = :storeOwner');
+            $query->setParameter('storeOwner', $request->getStoreOwnerProfileId());
+        }
+
+        if ($request->getState() != null && $request->getState() != "" && $request->getState() != OrderStateConstant::ORDER_STATE_ONGOING) {
+            $query->andWhere('orderEntity.state = :state');
+            $query->setParameter('state', $request->getState());
+        }
+
+        if ($request->getState() === OrderStateConstant::ORDER_STATE_ONGOING) {
+            $query->andWhere('orderEntity.state IN (:statesArray)');
+            $query->setParameter('statesArray', OrderStateConstant::ORDER_STATE_ONGOING_FILTER_ARRAY);
+        }
+
+        if ($request->getChosenDistanceIndicator() === OrderDistanceConstant::KILOMETER_DISTANCE_CONST) {
+            if (($request->getKilometer()) && ($request->getKilometer() !== "")) {
+                $query->andWhere('orderEntity.kilometer = :kilometerValue');
+                $query->setParameter('kilometerValue', $request->getKilometer());
+            }
+
+        } elseif ($request->getChosenDistanceIndicator() === OrderDistanceConstant::STORE_BRANCH_TO_CLIENT_DISTANCE_CONST) {
+            if (($request->getStoreBranchToClientDistance()) && ($request->getStoreBranchToClientDistance() !== "")) {
+                $query->andWhere('orderEntity.storeBranchToClientDistance = :storeBranchToClientDistanceValue');
+                $query->setParameter('storeBranchToClientDistanceValue', $request->getStoreBranchToClientDistance());
+            }
+        }
+
+        if ($request->getStoreBranchId()) {
+            $query->andWhere('storeOwnerBranch.id = :storeBranchId')
+                ->setParameter('storeBranchId', $request->getStoreBranchId());
+        }
+
+        if (($request->getExternalOrder() !== null) && ($request->getExternalOrder() === true)) {
+            $query->andWhere('externallyDeliveredOrderEntity.orderId IS NOT NULL');
+        }
+
+        if (($request->getHiddenOrder() !== null) && ($request->getHiddenOrder() === true)) {
+            $query->andWhere('orderEntity.isHide IN (:hiddenValuesArray)')
+                ->setParameter('hiddenValuesArray', OrderIsHideConstant::ORDER_HIDE_ARRAY_CONST);
+        }
+
+        if ($request->getExternalCompanyId()) {
+            $query->andWhere('externallyDeliveredOrderEntity.externalDeliveryCompany = :externalDeliveryCompanyId')
+                ->setParameter('externalDeliveryCompanyId', $request->getExternalCompanyId());
+        }
+
+        if (($request->getHiddenOrder() !== null) && ($request->getHiddenOrder() === true)) {
+            $query->andWhere('orderEntity.isHide IN (:hiddenValuesArray)')
+                ->setParameter('hiddenValuesArray', OrderIsHideConstant::ORDER_HIDE_ARRAY_CONST);
+        }
+
+        if ((($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() === null || $request->getToDate() === ""))
+            || ($request->getFromDate() === null || $request->getFromDate() === "") && ($request->getToDate() != null || $request->getToDate() != "")
+            || ($request->getFromDate() != null || $request->getFromDate() != "") && ($request->getToDate() != null || $request->getToDate() != "")) {
+            $tempQuery = $query->getQuery()->getResult();
+
+            return $this->filterOrdersEntitiesByOptionalDates($tempQuery, $request->getFromDate(), $request->getToDate(),
+                $request->getCustomizedTimezone());
+        }
+
+        return $query->getQuery()->getResult();
     }
 }

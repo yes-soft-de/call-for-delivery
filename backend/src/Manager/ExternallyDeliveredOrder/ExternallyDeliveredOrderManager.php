@@ -45,15 +45,15 @@ class ExternallyDeliveredOrderManager
         return $externallyDeliveredOrderEntity;
     }
 
-    public function getExternallyDeliveredOrdersByStatus(string $status): array
-    {
-        return $this->externallyDeliveredOrderEntityRepository->findBy(['status' => $status]);
-    }
+//    public function getExternallyDeliveredOrdersByStatus(string $status): array
+//    {
+//        return $this->externallyDeliveredOrderEntityRepository->findBy(['status' => $status]);
+//    }
 
-    public function getOnGoingExternallyDeliveredOrders(): array
-    {
-        return $this->externallyDeliveredOrderEntityRepository->findBy(['status' => MrsoolCompanyConstant::ONGOING_ORDER_CONST]);
-    }
+//    public function getOnGoingExternallyDeliveredOrders(): array
+//    {
+//        return $this->externallyDeliveredOrderEntityRepository->findBy(['status' => MrsoolCompanyConstant::ONGOING_ORDER_CONST]);
+//    }
 
     public function getAllExternallyDeliveredOrdersByOrderId(int $orderId): array
     {
