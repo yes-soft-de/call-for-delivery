@@ -60,14 +60,12 @@ class ExternallyDeliveredOrderManager
         return $this->externallyDeliveredOrderEntityRepository->findBy(['orderId' => $orderId]);
     }
 
-    public function getExternallyDeliveredOrderByExternalOrderId(int $externalOrderId): ?ExternallyDeliveredOrderEntity
+    /**
+     * Gets Externally Delivered Order By External Order Id And External Company Id
+     */
+    public function getExternallyDeliveredOrderByExternalOrderIdAndExternalCompanyId(int $externalOrderId, int $externalCompanyId): ?ExternallyDeliveredOrderEntity
     {
         return $this->externallyDeliveredOrderEntityRepository->findOneBy(['externalOrderId' => $externalOrderId,
-            'externalDeliveryCompany' => 1]);
-    }
-
-    public function getLastExternallyDeliveredOrderByOrderId(int $orderId): array
-    {
-        return $this->externallyDeliveredOrderEntityRepository->findBy(['orderId' => $orderId], ['id' => 'DESC'], 1);
+            'externalDeliveryCompany' => $externalCompanyId]);
     }
 }

@@ -25,4 +25,28 @@ final class StreetLineCompanyConstant
     const ORDER_DELIVER_AT_FIELD_CONST = "deliver_at";
 
     const CLIENT_ORDER_ID_FIELD_CONST = "client_order_id";
+    // order status
+    const ORDER_CREATED_STATUS_CONST = "Order created";
+
+    const PENDING_DRIVER_ACCEPTANCE_STATUS_CONST = "Pending driver acceptance";
+
+    const PENDING_ORDER_PREPARATION_STATUS_CONST = "Pending order preparation";
+
+    const ARRIVED_TO_PICKUP_STATUS_CONST = "Arrived to pickup";
+
+    const ORDER_PICKED_UP_STATUS_CONST = "Order picked up";
+
+    const ARRIVED_TO_DROP_OFF_STATUS_CONST = "Arrived to dropoff";
+
+    const ORDER_DELIVERED_STATUS_CONST = "Order delivered";
+
+    const ORDER_CANCELLED_STATUS_CONST = "Order cancelled";
+
+    const ORDER_ACCEPTANCE_STATUS_CONST = "Driver acceptance timeout";
+
+    const DRIVER_REJECTED_ORDER_STATUS_CONST = "Driver rejected the order";
+
+    const ORDER_UNASSIGNED_STATUS_CONST = "Order Unassigned";
+
+    const ORDER_FAILED_STATUS_CONST = "Order failed";
 }

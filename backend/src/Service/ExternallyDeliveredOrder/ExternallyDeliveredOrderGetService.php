@@ -32,19 +32,13 @@ class ExternallyDeliveredOrderGetService
         return $this->externallyDeliveredOrderManager->getOnGoingExternallyDeliveredOrders();
     }
 
-    public function getExternallyDeliveredOrderByExternalOrderId(int $externalOrderId): ?ExternallyDeliveredOrderEntity
+    /**
+     *
+     * Gets Externally Delivered Order By External Order Id And External Company Id
+     */
+    public function getExternallyDeliveredOrderByExternalOrderId(int $externalOrderId, int $externalCompanyId): ?ExternallyDeliveredOrderEntity
     {
-        return $this->externallyDeliveredOrderManager->getExternallyDeliveredOrderByExternalOrderId($externalOrderId);
-    }
-
-    public function getLastExternallyDeliveredOrderByOrderId(int $orderId): ExternallyDeliveredOrderEntity|int
-    {
-        $externallyDeliveredOrder = $this->externallyDeliveredOrderManager->getLastExternallyDeliveredOrderByOrderId($orderId);
-
-        if (count($externallyDeliveredOrder) > 0) {
-            return $externallyDeliveredOrder[0];
-        }
-
-        return ExternallyDeliveredOrderConstant::EXTERNALLY_DELIVERED_ORDER_NOT_EXIST_CONST;
+        return $this->externallyDeliveredOrderManager->getExternallyDeliveredOrderByExternalOrderIdAndExternalCompanyId($externalOrderId,
+            $externalCompanyId);
     }
 }

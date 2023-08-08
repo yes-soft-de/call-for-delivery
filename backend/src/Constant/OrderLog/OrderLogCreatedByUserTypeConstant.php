@@ -16,12 +16,15 @@ final class OrderLogCreatedByUserTypeConstant
 
     const MARSOOL_EXTERNAL_DELIVERY_COMPANY_CONST = 6;
 
+    const STREETLINE_EXTERNAL_DELIVERY_COMPANY_CONST = 7;
+
     const USER_JOB_DESCRIPTION_ARRAY_CONST = [
         self::SUPPLIER_USER_TYPE_CONST => "المورد ",
         self::SUPER_ADMIN_USER_TYPE_CONST => "سوبر أدمن ",
         self::CAPTAIN_USER_TYPE_CONST => "الكابتن ",
         self::STORE_OWNER_USER_TYPE_CONST => "صاحب المتجر ",
         self::ADMIN_USER_TYPE_CONST => "المدير ",
-        self::MARSOOL_EXTERNAL_DELIVERY_COMPANY_CONST => "مرسول"
+        self::MARSOOL_EXTERNAL_DELIVERY_COMPANY_CONST => "مرسول",
+        self::STREETLINE_EXTERNAL_DELIVERY_COMPANY_CONST => "الشروق"
     ];
 }

@@ -27,7 +27,7 @@ use App\Service\DateFactory\DateFactoryService;
 use App\Service\ExternalDeliveryCompany\ExternalDeliveryCompanyGetService;
 use App\Service\ExternallyDeliveredOrder\ExternallyDeliveredOrderService;
 use App\Service\Order\OrderGetService;
-use App\Service\StreetLine\StreetLineOrderService;
+use App\Service\StreetLine\StreetLineOrderSendService;
 use DateTimeInterface;
 use Symfony\Contracts\HttpClient\ResponseInterface;
 
@@ -43,7 +43,7 @@ class ExternallyDeliveredOrderHandleService
         private ExternallyDeliveredOrderService $externallyDeliveredOrderService,
         private OrderGetService $orderGetService,
         private DateFactoryService $dateFactoryService,
-        private StreetLineOrderService $streetLineOrderService
+        private StreetLineOrderSendService $streetLineOrderSendService
     )
     {
     }
@@ -392,6 +392,6 @@ class ExternallyDeliveredOrderHandleService
      */
     public function createOrderInStreetLine(OrderEntity $orderEntity, StoreOrderDetailsEntity $storeOrderDetailsEntity): ResponseInterface
     {
-        return $this->streetLineOrderService->createOrderInStreetLine($orderEntity, $storeOrderDetailsEntity);
+        return $this->streetLineOrderSendService->createOrderInStreetLine($orderEntity, $storeOrderDetailsEntity);
     }
 }
