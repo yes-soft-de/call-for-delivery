@@ -59,7 +59,8 @@ class AdminExternallyDeliveredOrderService
             || ($externallyDeliveredOrder === ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_IS_NOT_REGISTERED_CONST)
             || ($externallyDeliveredOrder === HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
             || ($externallyDeliveredOrder === HttpResponseConstant::INVALID_INPUT_RESULT_CODE_CONST)
-            || ($externallyDeliveredOrder === OrderResultConstant::ORDER_STATE_IS_NOT_PENDING_CONST)){
+            || ($externallyDeliveredOrder === OrderResultConstant::ORDER_STATE_IS_NOT_PENDING_CONST)
+            || ($externallyDeliveredOrder === HttpResponseConstant::METHOD_NOT_ALLOWED_RESULT_CONST)){
             return $externallyDeliveredOrder;
         }
 

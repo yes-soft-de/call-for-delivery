@@ -61,6 +61,11 @@ class OrderFilterByAdminRequest
 
     private ?int $storeBranchId = null;
 
+    /**
+     * @var bool|null
+     */
+    private $hiddenOrder;
+
     public function getState(): ?string
     {
         return $this->state;
@@ -134,5 +139,15 @@ class OrderFilterByAdminRequest
     public function getStoreBranchId(): ?int
     {
         return $this->storeBranchId;
+    }
+
+    public function getHiddenOrder(): ?bool
+    {
+        return $this->hiddenOrder;
+    }
+
+    public function setHiddenOrder(?bool $hiddenOrder): void
+    {
+        $this->hiddenOrder = $hiddenOrder;
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\Service\ExternallyDeliveredOrder;
 
-use App\Constant\ExternallyDeliveredOrder\ExternallyDeliveredOrderConstant;
 use App\Entity\ExternallyDeliveredOrderEntity;
 use App\Manager\ExternallyDeliveredOrder\ExternallyDeliveredOrderManager;
 
@@ -22,29 +21,23 @@ class ExternallyDeliveredOrderGetService
         return $this->externallyDeliveredOrderManager->getAllExternallyDeliveredOrdersByOrderId($orderId);
     }
 
-    public function getExternallyDeliveredOrdersByStatus(string $status): array
+//    public function getExternallyDeliveredOrdersByStatus(string $status): array
+//    {
+//        return $this->externallyDeliveredOrderManager->getExternallyDeliveredOrdersByStatus($status);
+//    }
+
+//    public function getOnGoingExternallyDeliveredOrders(): array
+//    {
+//        return $this->externallyDeliveredOrderManager->getOnGoingExternallyDeliveredOrders();
+//    }
+
+    /**
+     *
+     * Gets Externally Delivered Order By External Order Id And External Company Id
+     */
+    public function getExternallyDeliveredOrderByExternalOrderId(int $externalOrderId, int $externalCompanyId): ?ExternallyDeliveredOrderEntity
     {
-        return $this->externallyDeliveredOrderManager->getExternallyDeliveredOrdersByStatus($status);
-    }
-
-    public function getOnGoingExternallyDeliveredOrders(): array
-    {
-        return $this->externallyDeliveredOrderManager->getOnGoingExternallyDeliveredOrders();
-    }
-
-    public function getExternallyDeliveredOrderByExternalOrderId(int $externalOrderId): ?ExternallyDeliveredOrderEntity
-    {
-        return $this->externallyDeliveredOrderManager->getExternallyDeliveredOrderByExternalOrderId($externalOrderId);
-    }
-
-    public function getLastExternallyDeliveredOrderByOrderId(int $orderId): ExternallyDeliveredOrderEntity|int
-    {
-        $externallyDeliveredOrder = $this->externallyDeliveredOrderManager->getLastExternallyDeliveredOrderByOrderId($orderId);
-
-        if (count($externallyDeliveredOrder) > 0) {
-            return $externallyDeliveredOrder[0];
-        }
-
-        return ExternallyDeliveredOrderConstant::EXTERNALLY_DELIVERED_ORDER_NOT_EXIST_CONST;
+        return $this->externallyDeliveredOrderManager->getExternallyDeliveredOrderByExternalOrderIdAndExternalCompanyId($externalOrderId,
+            $externalCompanyId);
     }
 }

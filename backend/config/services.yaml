@@ -20,6 +20,10 @@ parameters:
     mrsool_base_url: '%env(MRSOOL_BASE_URL)%'
     mrsool_create_order_url: '%env(MRSOO_CREATE_ORDER_URL)%'
     mrsool_get_order_url: '%env(MRSOO_GET_ORDER_URL)%'
+    streetLine_token: '%env(STREETLINE_TOKEN)%'
+    streetLine_base_url: '%env(STREETLINE_BASE_URL)%'
+    streetLine_create_order_url: '%env(STREETLINE_CREATE_ORDER_URL)%'
+    streetLine_get_order_url: '%env(STREETLINE_GET_ORDER_URL)%'
 
 services:
     # default configuration for services in *this* file

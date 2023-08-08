@@ -638,4 +638,9 @@ class AdminOrderManager
 
         return $orderEntity;
     }
+
+    public function filterExternallyDeliveredOrdersByAdmin(OrderFilterByAdminRequest $request): array
+    {
+        return $this->orderEntityRepository->filterExternallyDeliveredOrdersByAdmin($request);
+    }
 }

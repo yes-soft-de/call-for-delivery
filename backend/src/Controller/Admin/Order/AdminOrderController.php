@@ -119,7 +119,7 @@ class AdminOrderController extends BaseController
 
         $request = $this->autoMapping->map(stdClass::class, OrderFilterByAdminRequest::class, (object)$data);
 
-        $result = $this->adminOrderService->filterStoreOrdersByAdmin($request, $this->getUserId());//dd($result);
+        $result = $this->adminOrderService->filterStoreOrdersByAdmin($request, $this->getUserId());
 
 //        return new JsonResponse(["status_code" => '200',
 //            "msg" => 'fetched' . " " . "Successfully.",

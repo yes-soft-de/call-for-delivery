@@ -45,29 +45,27 @@ class ExternallyDeliveredOrderManager
         return $externallyDeliveredOrderEntity;
     }
 
-    public function getExternallyDeliveredOrdersByStatus(string $status): array
-    {
-        return $this->externallyDeliveredOrderEntityRepository->findBy(['status' => $status]);
-    }
+//    public function getExternallyDeliveredOrdersByStatus(string $status): array
+//    {
+//        return $this->externallyDeliveredOrderEntityRepository->findBy(['status' => $status]);
+//    }
 
-    public function getOnGoingExternallyDeliveredOrders(): array
-    {
-        return $this->externallyDeliveredOrderEntityRepository->findBy(['status' => MrsoolCompanyConstant::ONGOING_ORDER_CONST]);
-    }
+//    public function getOnGoingExternallyDeliveredOrders(): array
+//    {
+//        return $this->externallyDeliveredOrderEntityRepository->findBy(['status' => MrsoolCompanyConstant::ONGOING_ORDER_CONST]);
+//    }
 
     public function getAllExternallyDeliveredOrdersByOrderId(int $orderId): array
     {
         return $this->externallyDeliveredOrderEntityRepository->findBy(['orderId' => $orderId]);
     }
 
-    public function getExternallyDeliveredOrderByExternalOrderId(int $externalOrderId): ?ExternallyDeliveredOrderEntity
+    /**
+     * Gets Externally Delivered Order By External Order Id And External Company Id
+     */
+    public function getExternallyDeliveredOrderByExternalOrderIdAndExternalCompanyId(int $externalOrderId, int $externalCompanyId): ?ExternallyDeliveredOrderEntity
     {
         return $this->externallyDeliveredOrderEntityRepository->findOneBy(['externalOrderId' => $externalOrderId,
-            'externalDeliveryCompany' => 1]);
-    }
-
-    public function getLastExternallyDeliveredOrderByOrderId(int $orderId): array
-    {
-        return $this->externallyDeliveredOrderEntityRepository->findBy(['orderId' => $orderId], ['id' => 'DESC'], 1);
+            'externalDeliveryCompany' => $externalCompanyId]);
     }
 }
