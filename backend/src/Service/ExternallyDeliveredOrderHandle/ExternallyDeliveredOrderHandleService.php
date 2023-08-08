@@ -268,7 +268,7 @@ class ExternallyDeliveredOrderHandleService
      * Main function
      * Responsible for handling the process of sending order to an external party
      */
-    public function handleSendingOrderToExternalDeliveryCompany(OrderEntity $orderEntity, StoreOrderDetailsEntity $storeOrderDetailsEntity): int|ExternallyDeliveredOrderEntity
+    public function handleSendingOrderToExternalDeliveryCompany(OrderEntity $orderEntity, StoreOrderDetailsEntity $storeOrderDetailsEntity): int|array
     {
         // 1 check if sending order feature is On.
         $sendOrderExternallyFeatureStatus = $this->checkSendingOrderToExternalDeliveryCompanyFeatureStatus();
@@ -280,42 +280,50 @@ class ExternallyDeliveredOrderHandleService
             return AppFeatureResultConstant::APP_FEATURE_NOT_ACTIVATED_CONST;
         }
 
-        // 2 check which company is available in order to send order to.
-        $externalDeliveryCompany = $this->checkAvailableExternalDeliveryCompany();
+        // 2 Get all available and active companies
+        $externalDeliveryCompanies = $this->getAllActiveExternalDeliveryCompanies();
 
-        if ($externalDeliveryCompany === ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_NOT_FOUND_CONST) {
+        if ($externalDeliveryCompanies === ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_NOT_FOUND_CONST) {
             return ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_NOT_FOUND_CONST;
         }
 
-        // 3 check if order meet the setting options
-        $orderMatchResult = $this->checkIfOrderMatchTheSetting($orderEntity, $externalDeliveryCompany, $storeOrderDetailsEntity);
+        $response = [];
 
-        if ($orderMatchResult === ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST) {
-            return ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST;
+        foreach ($externalDeliveryCompanies as $externalDeliveryCompany) {
+            // 3 check if order meet the setting options
+            $orderMatchResult = $this->checkIfOrderMatchTheSetting($orderEntity, $externalDeliveryCompany, $storeOrderDetailsEntity);
 
-        } elseif ($orderMatchResult === ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_DOES_NOT_MATCH_ORDER_CONST) {
-            return ExternalDeliveryCompanyCriteriaResultConstant::ORDER_DOES_NOT_MATCH_CRITERIA_RESULT;
+            if ($orderMatchResult === ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST) {
+                return ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST;
+
+            } elseif ($orderMatchResult === ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_DOES_NOT_MATCH_ORDER_CONST) {
+                return ExternalDeliveryCompanyCriteriaResultConstant::ORDER_DOES_NOT_MATCH_CRITERIA_RESULT;
+            }
+
+            // 4 while order is matching with one of the criteria, then send it
+            $orderCreateResponse = $this->sendOrderToExternalDeliveryCompany($orderEntity, $externalDeliveryCompany, $storeOrderDetailsEntity);
+
+            if ($orderCreateResponse === ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_IS_NOT_REGISTERED_CONST) {
+                return ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_IS_NOT_REGISTERED_CONST;
+            }
+
+            // 5 According to the response that being resulted from previous step, handle the situation
+            $arrayResponse = $this->handleResponseInterface($orderCreateResponse, $externalDeliveryCompany->getId());
+
+            if (($arrayResponse === HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
+                || ($arrayResponse === HttpResponseConstant::INVALID_INPUT_RESULT_CODE_CONST)
+                || ($arrayResponse === HttpResponseConstant::UN_RECOGNIZED_STATUS_CODE_RESULT_CONST)
+                || ($arrayResponse === HttpResponseConstant::METHOD_NOT_ALLOWED_RESULT_CONST)) {
+                return $arrayResponse;
+            }
+
+            // 6 Create externally delivered order
+            $externallyDeliveredOrder = $this->createExternallyDeliveredOrder($orderEntity, $externalDeliveryCompany, $arrayResponse);
+
+            $response[] = $externallyDeliveredOrder;
         }
 
-        // 4 while order is matching with one of the criteria, then send it
-        $orderCreateResponse = $this->sendOrderToExternalDeliveryCompany($orderEntity, $externalDeliveryCompany, $storeOrderDetailsEntity);
-
-        if ($orderCreateResponse === ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_IS_NOT_REGISTERED_CONST) {
-            return ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_IS_NOT_REGISTERED_CONST;
-        }
-
-        // 5 According to the response that being resulted from previous step, handle the situation
-        $arrayResponse = $this->handleResponseInterface($orderCreateResponse, $externalDeliveryCompany->getId());
-
-        if (($arrayResponse === HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
-            || ($arrayResponse === HttpResponseConstant::INVALID_INPUT_RESULT_CODE_CONST)
-            || ($arrayResponse === HttpResponseConstant::UN_RECOGNIZED_STATUS_CODE_RESULT_CONST)
-            || ($arrayResponse === HttpResponseConstant::METHOD_NOT_ALLOWED_RESULT_CONST)) {
-            return $arrayResponse;
-        }
-
-        // 6 Create externally delivered order
-        return $this->createExternallyDeliveredOrder($orderEntity, $externalDeliveryCompany, $arrayResponse);
+        return $response;
     }
 
     /**
@@ -393,5 +401,10 @@ class ExternallyDeliveredOrderHandleService
     public function createOrderInStreetLine(OrderEntity $orderEntity, StoreOrderDetailsEntity $storeOrderDetailsEntity): ResponseInterface
     {
         return $this->streetLineOrderSendService->createOrderInStreetLine($orderEntity, $storeOrderDetailsEntity);
+    }
+
+    public function getAllActiveExternalDeliveryCompanies(): array|int
+    {
+        return $this->externalDeliveryCompanyGetService->getAllActiveExternalDeliveryCompanies();
     }
 }
