@@ -67,4 +67,54 @@ class ExternalDeliveryCompanyCriteriaCreateByAdminRequest
     {
         $this->externalDeliveryCompany = $externalDeliveryCompany;
     }
+
+    public function isSpecificDate(): bool
+    {
+        return $this->isSpecificDate;
+    }
+
+    public function getIsDistance(): int
+    {
+        return $this->isDistance;
+    }
+
+    public function getFromDistance(): ?float
+    {
+        return $this->fromDistance;
+    }
+
+    public function getToDistance(): ?float
+    {
+        return $this->toDistance;
+    }
+
+    public function getPayment(): int
+    {
+        return $this->payment;
+    }
+
+    public function isFromAllStores(): bool
+    {
+        return $this->isFromAllStores;
+    }
+
+    public function getFromStoresBranches(): ?array
+    {
+        return $this->fromStoresBranches;
+    }
+
+    public function getCriteriaName(): string
+    {
+        return $this->criteriaName;
+    }
+
+    public function isStatus(): bool
+    {
+        return $this->status;
+    }
+
+    public function getCashLimit(): ?float
+    {
+        return $this->cashLimit;
+    }
 }

@@ -55,7 +55,7 @@ class AdminExternalDeliveryCompanyCriteriaService
     /**
      * creates External Delivery Company Criteria
      */
-    public function createExternalDeliveryCompanyCriteria(ExternalDeliveryCompanyCriteriaCreateByAdminRequest $request): int|ExternalDeliveryCompanyCriteriaCreateByAdminResponse
+    public function createExternalDeliveryCompanyCriteria(ExternalDeliveryCompanyCriteriaCreateByAdminRequest $request): int|ExternalDeliveryCompanyCriteriaCreateByAdminResponse|array
     {
         // First, check if external delivery company is exist
         $externalDeliveryCompanyEntity = $this->getExternalDeliveryCompanyEntityById($request->getExternalDeliveryCompany());
@@ -65,6 +65,13 @@ class AdminExternalDeliveryCompanyCriteriaService
         }
 
         $request->setExternalDeliveryCompany($externalDeliveryCompanyEntity);
+
+        // Make sure there are no similar criteria for another company
+        $criteriaExist = $this->isThereSimilarCriteriaForDifferentCompany($request);
+
+        if (is_array($criteriaExist)) {
+            return $criteriaExist;
+        }
 
         // Now continue creating the required company criteria
         $externalDeliveryCompanyCriteria = $this->adminExternalDeliveryCompanyCriteriaManager->createExternalDeliveryCompanyCriteria($request);
@@ -179,5 +186,23 @@ class AdminExternalDeliveryCompanyCriteriaService
     public function deleteExternalDeliveryCompanyCriteriaByExternalCompanyId(int $externalDeliveryCompanyId): array
     {
         return $this->adminExternalDeliveryCompanyCriteriaManager->deleteExternalDeliveryCompanyCriteriaByExternalCompanyId($externalDeliveryCompanyId);
+    }
+
+    public function isThereSimilarCriteriaForDifferentCompany(ExternalDeliveryCompanyCriteriaCreateByAdminRequest $request): bool|array
+    {
+        $criteriaArray = $this->adminExternalDeliveryCompanyCriteriaManager->getExternalDeliveryCompanyCriteriaBySpecificCriteriaAndCompany($request);
+
+        if (count($criteriaArray) > 0) {
+            $response = [];
+
+            foreach ($criteriaArray as $criteria) {
+                $response['id'] = $criteria->getId();
+                $response['externalCompanyName'] = $criteria->getExternalDeliveryCompany()->getCompanyName();
+            }
+
+            return $response;
+        }
+
+        return false;
     }
 }

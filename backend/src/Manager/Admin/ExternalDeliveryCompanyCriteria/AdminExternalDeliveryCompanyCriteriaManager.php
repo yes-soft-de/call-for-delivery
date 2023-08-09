@@ -146,4 +146,9 @@ class AdminExternalDeliveryCompanyCriteriaManager
 
         return $externalDeliveryCompanyCriteriaArray;
     }
+
+    public function getExternalDeliveryCompanyCriteriaBySpecificCriteriaAndCompany(ExternalDeliveryCompanyCriteriaCreateByAdminRequest $request)
+    {
+        return $this->externalDeliveryCompanyCriteriaEntityRepository->getExternalDeliveryCompanyCriteriaBySpecificCriteriaAndCompany($request);
+    }
 }
