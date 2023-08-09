@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:liquid_progress_indicator/liquid_progress_indicator.dart';
 
 class AnimatedLiquidCircularProgressIndicator extends StatefulWidget {
   final int count;
@@ -47,24 +46,24 @@ class _AnimatedLiquidCircularProgressIndicatorState
       child: SizedBox(
         width: 100.0,
         height: 100.0,
-        child: LiquidCircularProgressIndicator(
-          key: widget.key,
-          value: _animationController.value,
-          valueColor: AlwaysStoppedAnimation(
-            Theme.of(context).colorScheme.primary.withOpacity(0.4),
-          ), // Defaults to the current Theme's accentColor.
-          backgroundColor: Theme.of(context)
-              .scaffoldBackgroundColor, // Defaults to the current Theme's backgroundColor.
-          borderColor: Theme.of(context).colorScheme.primary,
-          borderWidth: 2,
-          direction: Axis.vertical, //
-          center: Center(
-            child: Text(
-              cnt.toStringAsFixed(0),
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
-            ),
-          ),
-        ),
+        // child: LiquidCircularProgressIndicator(
+        //   key: widget.key,
+        //   value: _animationController.value,
+        //   valueColor: AlwaysStoppedAnimation(
+        //     Theme.of(context).colorScheme.primary.withOpacity(0.4),
+        //   ), // Defaults to the current Theme's accentColor.
+        //   backgroundColor: Theme.of(context)
+        //       .scaffoldBackgroundColor, // Defaults to the current Theme's backgroundColor.
+        //   borderColor: Theme.of(context).colorScheme.primary,
+        //   borderWidth: 2,
+        //   direction: Axis.vertical, //
+        //   center: Center(
+        //     child: Text(
+        //       cnt.toStringAsFixed(0),
+        //       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
+        //     ),
+        //   ),
+        // ),
       ),
     );
   }
