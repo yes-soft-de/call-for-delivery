@@ -67,7 +67,7 @@ class ExternalDeliveryCompaniesService {
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
       String? companyName =
-          _extractCompanyNameFromActionResponse(response.data);
+          _extractCompanyNameFromActionResponse(response);
       return DataModel.withError(
         StatusCodeHelper.getStatusCodeMessages(
           response.statusCode,
@@ -95,7 +95,7 @@ class ExternalDeliveryCompaniesService {
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
       String? companyName =
-          _extractCompanyNameFromActionResponse(response.data);
+          _extractCompanyNameFromActionResponse(response);
       return DataModel.withError(
         StatusCodeHelper.getStatusCodeMessages(
           response.statusCode,
@@ -112,7 +112,7 @@ class ExternalDeliveryCompaniesService {
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '201') {
       String? companyName =
-          _extractCompanyNameFromActionResponse(response.data);
+          _extractCompanyNameFromActionResponse(response);
 
       return DataModel.withError(
         StatusCodeHelper.getStatusCodeMessages(
@@ -142,7 +142,7 @@ class ExternalDeliveryCompaniesService {
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
       String? companyName =
-          _extractCompanyNameFromActionResponse(response.data);
+          _extractCompanyNameFromActionResponse(response);
       return DataModel.withError(
         StatusCodeHelper.getStatusCodeMessages(
           response.statusCode,
@@ -224,7 +224,8 @@ String _getAssignOrderToExternalCompanyMessage(String? statusCode) {
 }
 
 /// in case the response was to dynamic
-String? _extractCompanyNameFromActionResponse(dynamic response) {
+String? _extractCompanyNameFromActionResponse(ActionResponse response) {
+  if (response.data == null) return null;
   if (response.data is Map<String, dynamic> &&
       (response.data['externalCompanyName'] is String ||
           response.data['externalCompanyName'] is String?)) {
