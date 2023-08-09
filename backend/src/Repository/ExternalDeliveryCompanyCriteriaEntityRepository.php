@@ -50,24 +50,34 @@ class ExternalDeliveryCompanyCriteriaEntityRepository extends ServiceEntityRepos
         }
     }
 
-    public function getExternalDeliveryCompanyCriteriaBySpecificCriteriaAndCompany(ExternalDeliveryCompanyCriteriaCreateByAdminRequest|ExternalDeliveryCompanyCriteriaUpdateByAdminRequest $request)
+    /**
+     * check if there is active and similar criteria for another company
+     */
+    public function getExternalDeliveryCompanyCriteriaBySpecificCriteriaAndCompany(
+        int $externalDeliveryCompanyId,
+        bool $isSpecificDate,
+        int $isDistance,
+        int $payment,
+        bool $isFromAllStores,
+        ?float $cacheLimit = null
+    )
     {
         $query = $this->createQueryBuilder('externalDeliveryCompanyCriteriaEntity')
 
             ->andWhere('externalDeliveryCompanyCriteriaEntity.externalDeliveryCompany != :specificCompanyId')
-            ->setParameter('specificCompanyId', $request->getExternalDeliveryCompany()->getId())
+            ->setParameter('specificCompanyId', $externalDeliveryCompanyId)
 
             ->andWhere('externalDeliveryCompanyCriteriaEntity.isSpecificDate = :hasSpecificDate')
-            ->setParameter('hasSpecificDate', $request->isSpecificDate())
+            ->setParameter('hasSpecificDate', $isSpecificDate)
 
             ->andWhere('externalDeliveryCompanyCriteriaEntity.isDistance = :hasSpecificDistance')
-            ->setParameter('hasSpecificDistance', $request->getIsDistance())
+            ->setParameter('hasSpecificDistance', $isDistance)
 
             ->andWhere('externalDeliveryCompanyCriteriaEntity.payment = :paymentOption')
-            ->setParameter('paymentOption', $request->getPayment())
+            ->setParameter('paymentOption', $payment)
 
             ->andWhere('externalDeliveryCompanyCriteriaEntity.isFromAllStores = :isFromAllStoresOption')
-            ->setParameter('isFromAllStoresOption', $request->isFromAllStores())
+            ->setParameter('isFromAllStoresOption', $isFromAllStores)
 
             ->andWhere('externalDeliveryCompanyCriteriaEntity.status = :offStatus')
             ->setParameter('offStatus', ExternalDeliveryCompanyStatusConstant::STATUS_TRUE_CONST);
@@ -95,11 +105,11 @@ class ExternalDeliveryCompanyCriteriaEntityRepository extends ServiceEntityRepos
 //            }
 //        }
 
-        if (($request->getPayment() === ExternalDeliveryCompanyCriteriaPaymentConstant::PAYMENT_BOTH_CARD_AND_CASH_CONST)
-            || ($request->getPayment() === ExternalDeliveryCompanyCriteriaPaymentConstant::PAYMENT_CASH_CONST)) {
-            if ($request->getCashLimit()) {
+        if (($payment === ExternalDeliveryCompanyCriteriaPaymentConstant::PAYMENT_BOTH_CARD_AND_CASH_CONST)
+            || ($payment === ExternalDeliveryCompanyCriteriaPaymentConstant::PAYMENT_CASH_CONST)) {
+            if ($cacheLimit) {
                 $query->andWhere('externalDeliveryCompanyCriteriaEntity.cashLimit = :specificLimit')
-                    ->setParameter('specificLimit', $request->getCashLimit());
+                    ->setParameter('specificLimit', $cacheLimit);
             }
         }
 

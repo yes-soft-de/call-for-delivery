@@ -2,6 +2,7 @@
 
 namespace App\Request\Admin\ExternalDeliveryCompanyCriteria;
 
+use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaStatusConstant;
 use App\Entity\AdminProfileEntity;
 use App\Entity\ExternalDeliveryCompanyEntity;
 use DateTime;
@@ -50,6 +51,11 @@ class ExternalDeliveryCompanyCriteriaUpdateByAdminRequest
      * @var ExternalDeliveryCompanyEntity|null
      */
     private $externalDeliveryCompany;
+
+    /**
+     * @var bool|null
+     */
+    private $status;
 
     public function getId(): int
     {
@@ -129,5 +135,15 @@ class ExternalDeliveryCompanyCriteriaUpdateByAdminRequest
     public function getCashLimit(): ?float
     {
         return $this->cashLimit;
+    }
+
+    public function setStatus(?bool $status): void
+    {
+        $this->status = $status;
+    }
+
+    public function getStatus(): ?bool
+    {
+        return $this->status;
     }
 }

@@ -58,7 +58,7 @@ class AdminExternalDeliveryCompanyCriteriaManager
     {
         $externalDeliveryCompanyCriteria = $this->externalDeliveryCompanyCriteriaEntityRepository->findOneBy(['id' => $request->getId()]);
 
-        if (!$externalDeliveryCompanyCriteria) {
+        if (! $externalDeliveryCompanyCriteria) {
             return ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST;
         }
 
@@ -75,6 +75,10 @@ class AdminExternalDeliveryCompanyCriteriaManager
 
         } else {
             $request->setToDate(null);
+        }
+
+        if (! $request->getStatus()) {
+            $request->setStatus($externalDeliveryCompanyCriteria->getStatus());
         }
 
         $externalDeliveryCompanyCriteria = $this->autoMapping->mapToObject(ExternalDeliveryCompanyCriteriaUpdateByAdminRequest::class,
@@ -147,9 +151,18 @@ class AdminExternalDeliveryCompanyCriteriaManager
         return $externalDeliveryCompanyCriteriaArray;
     }
 
-    public function getExternalDeliveryCompanyCriteriaBySpecificCriteriaAndCompany(ExternalDeliveryCompanyCriteriaCreateByAdminRequest|ExternalDeliveryCompanyCriteriaUpdateByAdminRequest $request)
+    /**
+     * check if there is active and similar criteria for another company
+     */
+    public function getExternalDeliveryCompanyCriteriaBySpecificCriteriaAndCompany(int $externalDeliveryCompanyId,
+                                                                                   bool $isSpecificDate,
+                                                                                   int $isDistance,
+                                                                                   int $payment,
+                                                                                   bool $isFromAllStores,
+                                                                                   ?float $cacheLimit = null)
     {
-        return $this->externalDeliveryCompanyCriteriaEntityRepository->getExternalDeliveryCompanyCriteriaBySpecificCriteriaAndCompany($request);
+        return $this->externalDeliveryCompanyCriteriaEntityRepository->getExternalDeliveryCompanyCriteriaBySpecificCriteriaAndCompany(
+            $externalDeliveryCompanyId, $isSpecificDate, $isDistance, $payment, $isFromAllStores, $cacheLimit);
     }
 
     public function getExternalDeliveryCompanyCriteriaById(int $externalDeliveryCompanyCriteriaId): ?ExternalDeliveryCompanyCriteriaEntity
