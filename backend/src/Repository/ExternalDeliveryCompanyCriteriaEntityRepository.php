@@ -7,6 +7,7 @@ use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteria
 use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaPaymentConstant;
 use App\Entity\ExternalDeliveryCompanyCriteriaEntity;
 use App\Request\Admin\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaCreateByAdminRequest;
+use App\Request\Admin\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaUpdateByAdminRequest;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
@@ -49,7 +50,7 @@ class ExternalDeliveryCompanyCriteriaEntityRepository extends ServiceEntityRepos
         }
     }
 
-    public function getExternalDeliveryCompanyCriteriaBySpecificCriteriaAndCompany(ExternalDeliveryCompanyCriteriaCreateByAdminRequest $request)
+    public function getExternalDeliveryCompanyCriteriaBySpecificCriteriaAndCompany(ExternalDeliveryCompanyCriteriaCreateByAdminRequest|ExternalDeliveryCompanyCriteriaUpdateByAdminRequest $request)
     {
         $query = $this->createQueryBuilder('externalDeliveryCompanyCriteriaEntity')
 

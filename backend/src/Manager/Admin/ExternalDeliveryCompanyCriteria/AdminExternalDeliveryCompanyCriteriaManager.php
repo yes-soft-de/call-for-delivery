@@ -147,8 +147,13 @@ class AdminExternalDeliveryCompanyCriteriaManager
         return $externalDeliveryCompanyCriteriaArray;
     }
 
-    public function getExternalDeliveryCompanyCriteriaBySpecificCriteriaAndCompany(ExternalDeliveryCompanyCriteriaCreateByAdminRequest $request)
+    public function getExternalDeliveryCompanyCriteriaBySpecificCriteriaAndCompany(ExternalDeliveryCompanyCriteriaCreateByAdminRequest|ExternalDeliveryCompanyCriteriaUpdateByAdminRequest $request)
     {
         return $this->externalDeliveryCompanyCriteriaEntityRepository->getExternalDeliveryCompanyCriteriaBySpecificCriteriaAndCompany($request);
+    }
+
+    public function getExternalDeliveryCompanyCriteriaById(int $externalDeliveryCompanyCriteriaId): ?ExternalDeliveryCompanyCriteriaEntity
+    {
+        return $this->externalDeliveryCompanyCriteriaEntityRepository->findOneBy(['id' => $externalDeliveryCompanyCriteriaId]);
     }
 }

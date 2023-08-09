@@ -20,15 +20,24 @@ class ExternalDeliveryCompanyCriteriaCreateByAdminRequest
 
     private int $isDistance = ExternalDeliveryCompanyCriteriaIsDistanceConstant::IS_DISTANCE_OFF_CONST;
 
-    private ?float $fromDistance;
+    /**
+     * @var float|null
+     */
+    private $fromDistance;
 
-    private ?float $toDistance;
+    /**
+     * @var float|null
+     */
+    private $toDistance;
 
     private int $payment = ExternalDeliveryCompanyCriteriaPaymentConstant::PAYMENT_OFF_CONST;
 
     private bool $isFromAllStores = ExternalDeliveryCompanyCriteriaIsFromAllStoresConstant::IS_FROM_ALL_STORES_FALSE_CONST;
 
-    private ?array $fromStoresBranches;
+    /**
+     * @var array|null
+     */
+    private $fromStoresBranches;
 
     private ExternalDeliveryCompanyEntity|int $externalDeliveryCompany;
 
@@ -36,7 +45,10 @@ class ExternalDeliveryCompanyCriteriaCreateByAdminRequest
 
     private bool $status = ExternalDeliveryCompanyCriteriaStatusConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_STATUS_FALSE_CONST;
 
-    private ?float $cashLimit;
+    /**
+     * @var float|null
+     */
+    private $cashLimit;
 
     public function getFromDate(): null|string|DateTime
     {
