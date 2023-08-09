@@ -14,6 +14,7 @@ use App\Request\Admin\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCri
 use App\Request\Admin\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaDeleteByAdminRequest;
 use App\Request\Admin\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaStatusUpdateByAdminRequest;
 use App\Request\Admin\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaUpdateByAdminRequest;
+use App\Response\Admin\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaAlreadyExistResponse;
 use App\Response\Admin\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaCreateByAdminResponse;
 use App\Response\Admin\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaDeleteResponse;
 use App\Response\Admin\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaUpdateByAdminResponse;
@@ -69,12 +70,19 @@ class AdminExternalDeliveryCompanyCriteriaService
         // Make sure there are no similar criteria for another company
         $criteriaExist = $this->isThereSimilarCriteriaForDifferentCompany($request);
 
-        if (is_array($criteriaExist)) {
-            return $criteriaExist;
-        }
-
         // Now continue creating the required company criteria
         $externalDeliveryCompanyCriteria = $this->adminExternalDeliveryCompanyCriteriaManager->createExternalDeliveryCompanyCriteria($request);
+
+        if (is_array($criteriaExist)) {
+            $response = [];
+
+            foreach ($criteriaExist as $criteria) {
+                $response[] = $this->autoMapping->map('array', ExternalDeliveryCompanyCriteriaAlreadyExistResponse::class,
+                    $criteria);
+            }
+
+            return $response;
+        }
 
         return $this->autoMapping->map(ExternalDeliveryCompanyCriteriaEntity::class, ExternalDeliveryCompanyCriteriaCreateByAdminResponse::class,
             $externalDeliveryCompanyCriteria);
@@ -83,7 +91,7 @@ class AdminExternalDeliveryCompanyCriteriaService
     /**
      * updates External Delivery Company Criteria
      */
-    public function updateExternalDeliveryCompanyCriteria(ExternalDeliveryCompanyCriteriaUpdateByAdminRequest $request, int $adminUserId): int|ExternalDeliveryCompanyCriteriaUpdateByAdminResponse
+    public function updateExternalDeliveryCompanyCriteria(ExternalDeliveryCompanyCriteriaUpdateByAdminRequest $request, int $adminUserId): int|ExternalDeliveryCompanyCriteriaUpdateByAdminResponse|array
     {
         // First, get and set admin profile id
         $adminProfileEntity = $this->getAdminProfileEntityByAdminUserId($adminUserId);
@@ -93,11 +101,34 @@ class AdminExternalDeliveryCompanyCriteriaService
         }
 
         $request->setUpdatedBy($adminProfileEntity);
+
+        // Make sure there are no similar criteria for another company
+        $company = $this->getExternalDeliveryCompanyIdByCriteriaId($request->getId());
+
+        if ($company === ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST) {
+            return ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST;
+        }
+
+        $request->setExternalDeliveryCompany($company);
+
         // Now continue updating the criteria
         $externalDeliveryCompanyCriteria = $this->adminExternalDeliveryCompanyCriteriaManager->updateExternalDeliveryCompanyCriteria($request);
 
         if ($externalDeliveryCompanyCriteria === ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST) {
             return ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST;
+        }
+
+        $criteriaExist = $this->isThereSimilarCriteriaForDifferentCompany($request);
+
+        if (is_array($criteriaExist)) {
+            $response = [];
+
+            foreach ($criteriaExist as $criteria) {
+                $response[] = $this->autoMapping->map('array', ExternalDeliveryCompanyCriteriaAlreadyExistResponse::class,
+                    $criteria);
+            }
+
+            return $response;
         }
 
         return $this->autoMapping->map(ExternalDeliveryCompanyCriteriaEntity::class, ExternalDeliveryCompanyCriteriaUpdateByAdminResponse::class,
@@ -188,21 +219,32 @@ class AdminExternalDeliveryCompanyCriteriaService
         return $this->adminExternalDeliveryCompanyCriteriaManager->deleteExternalDeliveryCompanyCriteriaByExternalCompanyId($externalDeliveryCompanyId);
     }
 
-    public function isThereSimilarCriteriaForDifferentCompany(ExternalDeliveryCompanyCriteriaCreateByAdminRequest $request): bool|array
+    public function isThereSimilarCriteriaForDifferentCompany(ExternalDeliveryCompanyCriteriaCreateByAdminRequest|ExternalDeliveryCompanyCriteriaUpdateByAdminRequest $request): bool|array
     {
         $criteriaArray = $this->adminExternalDeliveryCompanyCriteriaManager->getExternalDeliveryCompanyCriteriaBySpecificCriteriaAndCompany($request);
 
         if (count($criteriaArray) > 0) {
             $response = [];
 
-            foreach ($criteriaArray as $criteria) {
-                $response['id'] = $criteria->getId();
-                $response['externalCompanyName'] = $criteria->getExternalDeliveryCompany()->getCompanyName();
+            foreach ($criteriaArray as $key => $value) {
+                $response[$key]['id'] = $value->getId();
+                $response[$key]['externalCompanyName'] = $value->getExternalDeliveryCompany()->getCompanyName();
             }
 
             return $response;
         }
 
         return false;
+    }
+
+    public function getExternalDeliveryCompanyIdByCriteriaId(int $externalDeliveryCompanyCriteriaId): int|ExternalDeliveryCompanyEntity
+    {
+        $externalDeliveryCompanyCriteria = $this->adminExternalDeliveryCompanyCriteriaManager->getExternalDeliveryCompanyCriteriaById($externalDeliveryCompanyCriteriaId);
+
+        if (! $externalDeliveryCompanyCriteria) {
+            return ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST;
+        }
+
+        return $externalDeliveryCompanyCriteria->getExternalDeliveryCompany();
     }
 }
