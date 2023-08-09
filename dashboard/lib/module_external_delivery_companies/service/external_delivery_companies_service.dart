@@ -66,8 +66,14 @@ class ExternalDeliveryCompaniesService {
     ActionResponse? response = await _manager.updateCompanyStatus(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
+      String? companyName =
+          _extractCompanyNameFromActionResponse(response.data);
       return DataModel.withError(
-          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+        StatusCodeHelper.getStatusCodeMessages(
+          response.statusCode,
+          optionalMessage: companyName,
+        ),
+      );
     }
     return DataModel.empty();
   }
@@ -88,8 +94,14 @@ class ExternalDeliveryCompaniesService {
     ActionResponse? response = await _manager.updateCompanyCriterial(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
+      String? companyName =
+          _extractCompanyNameFromActionResponse(response.data);
       return DataModel.withError(
-          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+        StatusCodeHelper.getStatusCodeMessages(
+          response.statusCode,
+          optionalMessage: companyName,
+        ),
+      );
     }
     return DataModel.empty();
   }
@@ -99,8 +111,15 @@ class ExternalDeliveryCompaniesService {
     ActionResponse? response = await _manager.createCompanyCriterial(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '201') {
+      String? companyName =
+          _extractCompanyNameFromActionResponse(response.data);
+
       return DataModel.withError(
-          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+        StatusCodeHelper.getStatusCodeMessages(
+          response.statusCode,
+          optionalMessage: companyName,
+        ),
+      );
     }
     return DataModel.empty();
   }
@@ -122,8 +141,14 @@ class ExternalDeliveryCompaniesService {
         await _manager.updateCompanyCriterialStatus(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
+      String? companyName =
+          _extractCompanyNameFromActionResponse(response.data);
       return DataModel.withError(
-          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+        StatusCodeHelper.getStatusCodeMessages(
+          response.statusCode,
+          optionalMessage: companyName,
+        ),
+      );
     }
     return DataModel.empty();
   }
@@ -184,6 +209,7 @@ class ExternalDeliveryCompaniesService {
   }
 }
 
+// TODO: why this is here (:
 String _getAssignOrderToExternalCompanyMessage(String? statusCode) {
   if (statusCode == '9076') return S.current.featureNotAvailable;
   if (statusCode == '9077') return S.current.featureNotActive;
@@ -195,4 +221,14 @@ String _getAssignOrderToExternalCompanyMessage(String? statusCode) {
     return S.current.orderRequestInTheCompanyNotComplete;
   if (statusCode == '9228') return S.current.orderStatusIsNotPending;
   return StatusCodeHelper.getStatusCodeMessages(statusCode);
+}
+
+/// in case the response was to dynamic
+String? _extractCompanyNameFromActionResponse(dynamic response) {
+  if (response.data is Map<String, dynamic> &&
+      (response.data['externalCompanyName'] is String ||
+          response.data['externalCompanyName'] is String?)) {
+    return response.data['externalCompanyName'];
+  }
+  return null;
 }

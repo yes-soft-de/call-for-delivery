@@ -10540,6 +10540,16 @@ class S {
     );
   }
 
+  /// `update order status in response to check it status from us`
+  String get normalOrderStatusUpdateByFetchingItFromExternalCompany {
+    return Intl.message(
+      'update order status in response to check it status from us',
+      name: 'normalOrderStatusUpdateByFetchingItFromExternalCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `enter the max limit that are allowed to store dues`
   String get enterTheMaxLimitThatAreAllowedToStoreDues {
     return Intl.message(
@@ -10604,23 +10614,21 @@ class S {
     );
   }
 
-  /// `update order status in response to check it status from us`
-  String
-      get NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST {
-    return Intl.message(
-      'update order status in response to check it status from us',
-      name:
-          'NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `update order status by marsool`
   String get updateOrderStatusByMarsool {
     return Intl.message(
       'update order status by marsool',
       name: 'updateOrderStatusByMarsool',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `update order status by الشروق`
+  String get updateOrderStatusByAlsuruq {
+    return Intl.message(
+      'update order status by الشروق',
+      name: 'updateOrderStatusByAlsuruq',
       desc: '',
       args: [],
     );
@@ -10893,6 +10901,16 @@ class S {
       name: 'previousPayments',
       desc: '',
       args: [],
+    );
+  }
+
+  /// `there is active criterial for {companyName}`
+  String criteriaAlreadyExists(String companyName) {
+    return Intl.message(
+      'there is active criterial for $companyName',
+      name: 'criteriaAlreadyExists',
+      desc: '',
+      args: [companyName],
     );
   }
 
