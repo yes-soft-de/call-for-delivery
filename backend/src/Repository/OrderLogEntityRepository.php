@@ -270,6 +270,29 @@ class OrderLogEntityRepository extends ServiceEntityRepository
                 }
 
                 $orderLogs[$key]['createdBy'] = (string) $orderLogs[$key]['createdBy'];
+
+            } elseif ($value['createdByUserType'] === OrderLogCreatedByUserTypeConstant::STREETLINE_EXTERNAL_DELIVERY_COMPANY_CONST) {
+                $createdByName = $this->createQueryBuilder('orderLogEntity')
+                    ->select('externalDeliveryCompanyEntity.companyName')
+
+                    ->leftJoin(
+                        ExternalDeliveryCompanyEntity::class,
+                        'externalDeliveryCompanyEntity',
+                        Join::WITH,
+                        'externalDeliveryCompanyEntity.id = orderLogEntity.createdBy'
+                    )
+
+                    ->andWhere('orderLogEntity.id = :id')
+                    ->setParameter('id', $value['id'])
+
+                    ->getQuery()
+                    ->getSingleColumnResult();
+
+                if (count($createdByName) !== 0) {
+                    $orderLogs[$key]['createdBy'] = $createdByName[0];
+                }
+
+                $orderLogs[$key]['createdBy'] = (string) $orderLogs[$key]['createdBy'];
             }
         }
 

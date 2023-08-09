@@ -46,7 +46,7 @@ class StreetLineOrderService
     public function createOrderLogMessageViaOrderEntityAndByStreetLineCompany(OrderEntity $orderEntity, array $details)
     {
         // save log of the action on order
-        $this->orderLogService->createOrderLogMessage($orderEntity, 1, OrderLogCreatedByUserTypeConstant::STREETLINE_EXTERNAL_DELIVERY_COMPANY_CONST,
+        $this->orderLogService->createOrderLogMessage($orderEntity, 2, OrderLogCreatedByUserTypeConstant::STREETLINE_EXTERNAL_DELIVERY_COMPANY_CONST,
             OrderLogActionTypeConstant::ORDER_STATUS_UPDATE_BY_STREETLINE_EXTERNAL_COMPANY_CONST, $details,
             null, null);
     }
