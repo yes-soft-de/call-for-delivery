@@ -1109,8 +1109,26 @@
     "byHand" : "by hand",
     "bankTransfer" : "bank transfer",
     "previousPayments" : "previous payments",
-    "criteriaAlreadyExists": "there is active criterial for {companyName}",
-    "@criteriaAlreadyExists": {
+    "criteriaCreatedButNotActivated": "criteria created but not activated because there an matched and active criteria in {companyName}",
+    "@criteriaCreatedButNotActivated": {
+        "description": "",
+        "placeholders": {
+            "companyName": {
+                "type": "String"
+            }
+        }
+    },
+    "criteriaUpdatedButNotActivated": "criteria updated but not activated because there an matched and active criteria in {companyName}",
+    "@criteriaUpdatedButNotActivated": {
+        "description": "",
+        "placeholders": {
+            "companyName": {
+                "type": "String"
+            }
+        }
+    },
+    "criteriaNotActivated": "criteria not activated because there an matched and active criteria in {companyName}",
+    "@criteriaNotActivated": {
         "description": "",
         "placeholders": {
             "companyName": {

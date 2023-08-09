@@ -10904,11 +10904,31 @@ class S {
     );
   }
 
-  /// `there is active criterial for {companyName}`
-  String criteriaAlreadyExists(String companyName) {
+  /// `criteria created but not activated because there an matched and active criteria in {companyName}`
+  String criteriaCreatedButNotActivated(String companyName) {
     return Intl.message(
-      'there is active criterial for $companyName',
-      name: 'criteriaAlreadyExists',
+      'criteria created but not activated because there an matched and active criteria in $companyName',
+      name: 'criteriaCreatedButNotActivated',
+      desc: '',
+      args: [companyName],
+    );
+  }
+
+  /// `criteria updated but not activated because there an matched and active criteria in {companyName}`
+  String criteriaUpdatedButNotActivated(String companyName) {
+    return Intl.message(
+      'criteria updated but not activated because there an matched and active criteria in $companyName',
+      name: 'criteriaUpdatedButNotActivated',
+      desc: '',
+      args: [companyName],
+    );
+  }
+
+  /// `criteria not activated because there an matched and active criteria in {companyName}`
+  String criteriaNotActivated(String companyName) {
+    return Intl.message(
+      'criteria not activated because there an matched and active criteria in $companyName',
+      name: 'criteriaNotActivated',
       desc: '',
       args: [companyName],
     );

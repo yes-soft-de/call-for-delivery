@@ -25,7 +25,11 @@ class StatusCodeHelper {
       case '9001':
         return S.current.accountAlreadyExist;
       case '9053':
-        return S.current.criteriaAlreadyExists(optionalMessage ?? S.current.unknown);
+        return S.current.criteriaCreatedButNotActivated(optionalMessage ?? S.current.unknown);
+      case '9054':
+        return S.current.criteriaUpdatedButNotActivated(optionalMessage ?? S.current.unknown);
+      case '9053':
+        return S.current.criteriaNotActivated(optionalMessage ?? S.current.unknown);
       case '9106':
         return S.current.youCannotMakePaymentThereIsNoOrderCash;
       case '9163':

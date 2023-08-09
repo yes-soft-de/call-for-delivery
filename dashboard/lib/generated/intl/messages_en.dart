@@ -23,11 +23,17 @@ class MessageLookup extends MessageLookupByLibrary {
   static String m0(value) => "are you sure about add payment ${value} Riyal?";
 
   static String m1(companyName) =>
-      "there is active criterial for ${companyName}";
+      "criteria created but not activated because there an matched and active criteria in ${companyName}";
 
-  static String m2(value) => "payment ${value} Riyal";
+  static String m2(companyName) =>
+      "criteria not activated because there an matched and active criteria in ${companyName}";
 
-  static String m3(value) => "${value} Riyal";
+  static String m3(companyName) =>
+      "criteria updated but not activated because there an matched and active criteria in ${companyName}";
+
+  static String m4(value) => "payment ${value} Riyal";
+
+  static String m5(value) => "${value} Riyal";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -493,7 +499,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "createdNewOrder":
             MessageLookupByLibrary.simpleMessage("Created new order"),
         "createdOrders": MessageLookupByLibrary.simpleMessage("created orders"),
-        "criteriaAlreadyExists": m1,
+        "criteriaCreatedButNotActivated": m1,
+        "criteriaNotActivated": m2,
+        "criteriaUpdatedButNotActivated": m3,
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("Current Balance:"),
         "currentFinancialCycle":
@@ -1165,7 +1173,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Payment created successfully"),
         "paymentToCaptain":
             MessageLookupByLibrary.simpleMessage("Payment To Captain"),
-        "paymentValueRiyal": m2,
+        "paymentValueRiyal": m4,
         "payments": MessageLookupByLibrary.simpleMessage("Payments"),
         "paymentsDeletedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Payment deleted successfully"),
@@ -1693,7 +1701,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Uploading Image, Please Wait"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "validation": MessageLookupByLibrary.simpleMessage("Validation"),
-        "valueRiyal": m3,
+        "valueRiyal": m5,
         "views": MessageLookupByLibrary.simpleMessage("views"),
         "waiting": MessageLookupByLibrary.simpleMessage("waiting"),
         "waitingDescription": MessageLookupByLibrary.simpleMessage(

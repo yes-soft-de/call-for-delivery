@@ -1109,8 +1109,26 @@
     "byHand" : "باليد",
     "bankTransfer" : "تحويل بنكي",
     "previousPayments" : "المدفوعات السابقة",
-    "criteriaAlreadyExists": "{companyName}يوجد معيار مطابق ومفعل بالفعل لصالح الشركة",
-    "@criteriaAlreadyExists": {
+    "criteriaCreatedButNotActivated": "تم انشاء المعيار بنجاح لكن لم يتم تفعيله نظرا لوجود معيار مطابق مفعل تابع للشركة {companyName}",
+    "@criteriaCreatedButNotActivated": {
+        "description": "",
+        "placeholders": {
+            "companyName": {
+                "type": "String"
+            }
+        }
+    },
+    "criteriaUpdatedButNotActivated": "تم تحديث المعيار بنجاح لكن لم يتم تفعيله نظرا لوجود معيار مطابق مفعل تابع للشركة {companyName}",
+    "@criteriaUpdatedButNotActivated": {
+        "description": "",
+        "placeholders": {
+            "companyName": {
+                "type": "String"
+            }
+        }
+    },
+    "criteriaNotActivated": "لم يتم تفعيل المعيار نظرا لوجود معيار مطابق مفعل لصحالح الشركة {companyName}",
+    "@criteriaNotActivated": {
         "description": "",
         "placeholders": {
             "companyName": {

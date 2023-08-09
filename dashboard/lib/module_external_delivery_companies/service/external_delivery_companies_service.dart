@@ -66,8 +66,7 @@ class ExternalDeliveryCompaniesService {
     ActionResponse? response = await _manager.updateCompanyStatus(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
-      String? companyName =
-          _extractCompanyNameFromActionResponse(response);
+      String? companyName = _extractCompanyNameFromActionResponse(response);
       return DataModel.withError(
         StatusCodeHelper.getStatusCodeMessages(
           response.statusCode,
@@ -94,8 +93,7 @@ class ExternalDeliveryCompaniesService {
     ActionResponse? response = await _manager.updateCompanyCriterial(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
-      String? companyName =
-          _extractCompanyNameFromActionResponse(response);
+      String? companyName = _extractCompanyNameFromActionResponse(response);
       return DataModel.withError(
         StatusCodeHelper.getStatusCodeMessages(
           response.statusCode,
@@ -111,8 +109,7 @@ class ExternalDeliveryCompaniesService {
     ActionResponse? response = await _manager.createCompanyCriterial(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '201') {
-      String? companyName =
-          _extractCompanyNameFromActionResponse(response);
+      String? companyName = _extractCompanyNameFromActionResponse(response);
 
       return DataModel.withError(
         StatusCodeHelper.getStatusCodeMessages(
@@ -141,8 +138,7 @@ class ExternalDeliveryCompaniesService {
         await _manager.updateCompanyCriterialStatus(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
-      String? companyName =
-          _extractCompanyNameFromActionResponse(response);
+      String? companyName = _extractCompanyNameFromActionResponse(response);
       return DataModel.withError(
         StatusCodeHelper.getStatusCodeMessages(
           response.statusCode,
@@ -225,11 +221,18 @@ String _getAssignOrderToExternalCompanyMessage(String? statusCode) {
 
 /// in case the response was to dynamic
 String? _extractCompanyNameFromActionResponse(ActionResponse response) {
-  if (response.data == null) return null;
-  if (response.data is Map<String, dynamic> &&
-      (response.data['externalCompanyName'] is String ||
-          response.data['externalCompanyName'] is String?)) {
-    return response.data['externalCompanyName'];
+  var data = response.data;
+  if (data == null) return null;
+  String result = '';
+  if (data is List) {
+    data.forEach(
+      (element) {
+        if (element['externalCompanyName'] is String) {
+          result += element['externalCompanyName'] + ', ';
+        }
+      },
+    );
+    return result;
   }
   return null;
 }
