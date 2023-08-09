@@ -21,4 +21,9 @@ class ExternalDeliveryCompanyCriteriaStatusUpdateByAdminRequest
     {
         $this->updatedBy = $updatedBy;
     }
+
+    public function isStatus(): bool
+    {
+        return $this->status;
+    }
 }

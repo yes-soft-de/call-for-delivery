@@ -6,6 +6,7 @@ use App\AutoMapping;
 use App\Constant\Admin\AdminProfileConstant;
 use App\Constant\ExternalDeliveryCompany\ExternalDeliveryCompanyResultConstant;
 use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaResultConstant;
+use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaStatusConstant;
 use App\Entity\AdminProfileEntity;
 use App\Entity\ExternalDeliveryCompanyCriteriaEntity;
 use App\Entity\ExternalDeliveryCompanyEntity;
@@ -68,7 +69,9 @@ class AdminExternalDeliveryCompanyCriteriaService
         $request->setExternalDeliveryCompany($externalDeliveryCompanyEntity);
 
         // Make sure there are no similar criteria for another company
-        $criteriaExist = $this->isThereSimilarCriteriaForDifferentCompany($request);
+        $criteriaExist = $this->isThereSimilarCriteriaForDifferentCompany($request->getExternalDeliveryCompany()->getId(),
+            $request->isSpecificDate(), $request->getIsDistance(), $request->getPayment(), $request->isFromAllStores(),
+            $request->getCashLimit());
 
         // Now continue creating the required company criteria
         $externalDeliveryCompanyCriteria = $this->adminExternalDeliveryCompanyCriteriaManager->createExternalDeliveryCompanyCriteria($request);
@@ -111,16 +114,15 @@ class AdminExternalDeliveryCompanyCriteriaService
 
         $request->setExternalDeliveryCompany($company);
 
-        // Now continue updating the criteria
-        $externalDeliveryCompanyCriteria = $this->adminExternalDeliveryCompanyCriteriaManager->updateExternalDeliveryCompanyCriteria($request);
-
-        if ($externalDeliveryCompanyCriteria === ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST) {
-            return ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST;
-        }
-
-        $criteriaExist = $this->isThereSimilarCriteriaForDifferentCompany($request);
+        // check if there is active and similar criteria for another company
+        $criteriaExist = $this->isThereSimilarCriteriaForDifferentCompany($request->getExternalDeliveryCompany()->getId(),
+            $request->isSpecificDate(), $request->getIsDistance(), $request->getPayment(), $request->isFromAllStores(),
+            $request->getCashLimit());
 
         if (is_array($criteriaExist)) {
+            // Already there is active similar criteria for another company, so continue updating but with inactive status
+            $request->setStatus(ExternalDeliveryCompanyCriteriaStatusConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_STATUS_FALSE_CONST);
+
             $response = [];
 
             foreach ($criteriaExist as $criteria) {
@@ -128,17 +130,28 @@ class AdminExternalDeliveryCompanyCriteriaService
                     $criteria);
             }
 
-            return $response;
+            // Now continue updating the criteria
+            $externalDeliveryCompanyCriteria = $this->adminExternalDeliveryCompanyCriteriaManager->updateExternalDeliveryCompanyCriteria($request);
+
+        } else {
+            // No active and similar criteria does exist, continue updating normally
+            $externalDeliveryCompanyCriteria = $this->adminExternalDeliveryCompanyCriteriaManager->updateExternalDeliveryCompanyCriteria($request);
+
+            $response = $this->autoMapping->map(ExternalDeliveryCompanyCriteriaEntity::class, ExternalDeliveryCompanyCriteriaUpdateByAdminResponse::class,
+                $externalDeliveryCompanyCriteria);
         }
 
-        return $this->autoMapping->map(ExternalDeliveryCompanyCriteriaEntity::class, ExternalDeliveryCompanyCriteriaUpdateByAdminResponse::class,
-            $externalDeliveryCompanyCriteria);
+        if ($externalDeliveryCompanyCriteria === ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST) {
+            return ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST;
+        }
+
+        return $response;
     }
 
     /**
      * updates the status External Delivery Company Criteria
      */
-    public function updateExternalDeliveryCompanyCriteriaStatus(ExternalDeliveryCompanyCriteriaStatusUpdateByAdminRequest $request, int $adminUserId): int|ExternalDeliveryCompanyCriteriaUpdateByAdminResponse
+    public function updateExternalDeliveryCompanyCriteriaStatus(ExternalDeliveryCompanyCriteriaStatusUpdateByAdminRequest $request, int $adminUserId): int|ExternalDeliveryCompanyCriteriaUpdateByAdminResponse|array
     {
         // First, get and set admin profile id
         $adminProfileEntity = $this->getAdminProfileEntityByAdminUserId($adminUserId);
@@ -148,6 +161,26 @@ class AdminExternalDeliveryCompanyCriteriaService
         }
 
         $request->setUpdatedBy($adminProfileEntity);
+
+        if ($request->isStatus() === ExternalDeliveryCompanyCriteriaStatusConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_STATUS_TRUE_CONST) {
+            // check if there is active and similar criteria for another company
+            $criteriaExist = $this->isThereSimilarCriteriaForDifferentCompanyByExternalDeliveryCompanyCriteriaId($request->getId());
+
+            if ($criteriaExist === ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST) {
+                return ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST;
+
+            } elseif (is_array($criteriaExist)) {
+                $response = [];
+
+                foreach ($criteriaExist as $criteria) {
+                    $response[] = $this->autoMapping->map('array', ExternalDeliveryCompanyCriteriaAlreadyExistResponse::class,
+                        $criteria);
+                }
+
+                return $response;
+            }
+        }
+
         // Now continue updating the criteria
         $externalDeliveryCompanyCriteria = $this->adminExternalDeliveryCompanyCriteriaManager->updateExternalDeliveryCompanyCriteriaStatus($request);
 
@@ -219,9 +252,18 @@ class AdminExternalDeliveryCompanyCriteriaService
         return $this->adminExternalDeliveryCompanyCriteriaManager->deleteExternalDeliveryCompanyCriteriaByExternalCompanyId($externalDeliveryCompanyId);
     }
 
-    public function isThereSimilarCriteriaForDifferentCompany(ExternalDeliveryCompanyCriteriaCreateByAdminRequest|ExternalDeliveryCompanyCriteriaUpdateByAdminRequest $request): bool|array
+    /**
+     * check if there is active and similar criteria for another company
+     */
+    public function isThereSimilarCriteriaForDifferentCompany(int $externalDeliveryCompanyId,
+                                                              bool $isSpecificDate,
+                                                              int $isDistance,
+                                                              int $payment,
+                                                              bool $isFromAllStores,
+                                                              ?float $cacheLimit = null): bool|array
     {
-        $criteriaArray = $this->adminExternalDeliveryCompanyCriteriaManager->getExternalDeliveryCompanyCriteriaBySpecificCriteriaAndCompany($request);
+        $criteriaArray = $this->adminExternalDeliveryCompanyCriteriaManager->getExternalDeliveryCompanyCriteriaBySpecificCriteriaAndCompany($externalDeliveryCompanyId,
+        $isSpecificDate, $isDistance, $payment, $isFromAllStores, $cacheLimit);
 
         if (count($criteriaArray) > 0) {
             $response = [];
@@ -246,5 +288,21 @@ class AdminExternalDeliveryCompanyCriteriaService
         }
 
         return $externalDeliveryCompanyCriteria->getExternalDeliveryCompany();
+    }
+
+    public function isThereSimilarCriteriaForDifferentCompanyByExternalDeliveryCompanyCriteriaId(int $externalDeliveryCompanyCriteriaId): array|bool|int
+    {
+        // 1 Get External Delivery Company Criteria
+        $externalDeliveryCompanyCriteria = $this->adminExternalDeliveryCompanyCriteriaManager->getExternalDeliveryCompanyCriteriaById($externalDeliveryCompanyCriteriaId);
+
+        if (! $externalDeliveryCompanyCriteria) {
+            return ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST;
+        }
+
+        // 2 Convert the entity to the create request in order to check if there is similar
+        return $this->isThereSimilarCriteriaForDifferentCompany($externalDeliveryCompanyCriteria->getExternalDeliveryCompany()->getId(),
+            $externalDeliveryCompanyCriteria->getIsSpecificDate(), $externalDeliveryCompanyCriteria->getIsDistance(),
+            $externalDeliveryCompanyCriteria->getPayment(), $externalDeliveryCompanyCriteria->getIsFromAllStores(),
+            $externalDeliveryCompanyCriteria->getCashLimit());
     }
 }

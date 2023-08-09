@@ -101,9 +101,11 @@ class AdminExternalDeliveryCompanyCriteriaController extends BaseController
      *                   @OA\Schema(type="object",
      *                       @OA\Property(type="string", property="status_code", description="9053"),
      *                       @OA\Property(type="string", property="msg"),
-     *                       @OA\Property(type="object", property="Data",
-     *                          @OA\Property(type="integer", property="id"),
-     *                          @OA\Property(type="string", property="externalCompanyName")
+     *                       @OA\Property(type="array", property="Data",
+     *                          @OA\Items(
+     *                              @OA\Property(type="integer", property="id"),
+     *                              @OA\Property(type="string", property="externalCompanyName")
+     *                          )
      *                       )
      *                   )
      *              }
@@ -133,7 +135,7 @@ class AdminExternalDeliveryCompanyCriteriaController extends BaseController
             return $this->response(MainErrorConstant::ERROR_MSG, self::EXTERNAL_DELIVERY_COMPANY_NOT_FOUND_CONST);
 
         } elseif (is_array($result)) {
-            return $this->response($result, self::EXTERNAL_DELIVERY_COMPANY_CRITERIA_ALREADY_EXIST_CONST);
+            return $this->response($result, self::CRITERIA_CREATED_INACTIVE_ALREADY_EXIST_SIMILAR_ONE_CONST);
         }
 
         return $this->response($result, self::CREATE);
@@ -197,6 +199,16 @@ class AdminExternalDeliveryCompanyCriteriaController extends BaseController
      *                   @OA\Schema(type="object",
      *                       @OA\Property(type="string", property="status_code", description="9250"),
      *                       @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                       @OA\Property(type="string", property="status_code", description="9054"),
+     *                       @OA\Property(type="string", property="msg"),
+     *                       @OA\Property(type="array", property="Data",
+     *                          @OA\Items(
+     *                              @OA\Property(type="integer", property="id"),
+     *                              @OA\Property(type="string", property="externalCompanyName")
+     *                          )
+     *                       )
      *                   )
      *              }
      *      )
@@ -224,6 +236,9 @@ class AdminExternalDeliveryCompanyCriteriaController extends BaseController
 
         if ($result === ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST);
+
+        } elseif (is_array($result)) {
+            return $this->response($result, self::CRITERIA_UPDATED_INACTIVE_ALREADY_EXIST_SIMILAR_ONE_CONST);
         }
 
         return $this->response($result, self::UPDATE);
@@ -275,6 +290,16 @@ class AdminExternalDeliveryCompanyCriteriaController extends BaseController
      *                   @OA\Schema(type="object",
      *                       @OA\Property(type="string", property="status_code", description="9250"),
      *                       @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                       @OA\Property(type="string", property="status_code", description="9055"),
+     *                       @OA\Property(type="string", property="msg"),
+     *                       @OA\Property(type="array", property="Data",
+     *                          @OA\Items(
+     *                              @OA\Property(type="integer", property="id"),
+     *                              @OA\Property(type="string", property="externalCompanyName")
+     *                          )
+     *                       )
      *                   )
      *              }
      *      )
@@ -302,6 +327,9 @@ class AdminExternalDeliveryCompanyCriteriaController extends BaseController
 
         if ($result === ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST);
+
+        } elseif (is_array($result)) {
+            return $this->response($result, self::CRITERIA_STATUS_INACTIVE_ALREADY_EXIST_SIMILAR_ONE_CONST);
         }
 
         return $this->response($result, self::UPDATE);
