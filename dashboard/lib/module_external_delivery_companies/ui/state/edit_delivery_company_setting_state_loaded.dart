@@ -112,7 +112,7 @@ class EditDeliveryCompanySettingScreenStateLoaded extends States {
                               (e) => e.id,
                             )
                             .toList(),
-                        isDistance: companySetting.distance.isFilterActive,
+                        isDistance: companySetting.distance.isFilterActive ? 206 : 205,
                         isFromAllStores:
                             companySetting.storeType == StoreType.all,
                         isSpecificDate:
