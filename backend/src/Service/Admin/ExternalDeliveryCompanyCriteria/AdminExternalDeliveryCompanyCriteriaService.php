@@ -131,6 +131,20 @@ class AdminExternalDeliveryCompanyCriteriaService
         }
 
         $request->setExternalDeliveryCompany($company);
+        // Convert from and to dates from string to DateTime before persisting to the database
+        if (($request->getFromDate()) && ($request->getFromDate() !== "")) {
+            $request->setFromDate(new \DateTime($request->getFromDate()));
+
+        } else {
+            $request->setFromDate(null);
+        }
+
+        if (($request->getToDate()) && ($request->getToDate() !== "")) {
+            $request->setToDate(new \DateTime($request->getToDate()));
+
+        } else {
+            $request->setToDate(null);
+        }
 
         // check if there is active and similar criteria for another company
         $criteriaExist = $this->isThereSimilarCriteriaForDifferentCompany($request->getExternalDeliveryCompany()->getId(),
