@@ -10934,6 +10934,16 @@ class S {
     );
   }
 
+  /// `edit company info`
+  String get editCompanyInfo {
+    return Intl.message(
+      'edit company info',
+      name: 'editCompanyInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

@@ -31,6 +31,8 @@ class CustomFormField extends StatefulWidget {
   final Color? backgroundColor;
   final double? radius;
   final TextStyle? textStyle;
+  Function(PointerDownEvent pointerDownEvent)? onTapOutside;
+
   @override
   _CustomFormFieldState createState() => _CustomFormFieldState();
 
@@ -57,6 +59,7 @@ class CustomFormField extends StatefulWidget {
     this.backgroundColor,
     this.radius,
     this.textStyle,
+    this.onTapOutside,
   });
 }
 
@@ -78,6 +81,7 @@ class _CustomFormFieldState extends State<CustomFormField> {
             children: [
               Expanded(
                 child: TextFormField(
+                  onTapOutside: widget.onTapOutside,
                   style: widget.textStyle,
                   minLines: widget.minLines,
                   autovalidateMode: mode,
@@ -197,29 +201,31 @@ class CustomFormFieldWithTranslate extends StatefulWidget {
   final List<String> languages;
   final String initLanguage;
   bool canReChoose;
+
   @override
   _CustomFormFieldWithTranslateState createState() =>
       _CustomFormFieldWithTranslateState();
 
-  CustomFormFieldWithTranslate(
-      {this.height = 50,
-      this.canReChoose = true,
-      this.contentPadding = const EdgeInsets.fromLTRB(16, 8, 16, 8),
-      this.hintText,
-      this.preIcon,
-      this.sufIcon,
-      this.controller,
-      this.readOnly = false,
-      this.onTap,
-      this.maxLines,
-      this.numbers = false,
-      this.last = false,
-      this.validator = true,
-      this.phone = false,
-      this.onChanged,
-      required this.languages,
-      required this.initLanguage,
-      this.onSelected});
+  CustomFormFieldWithTranslate({
+    this.height = 50,
+    this.canReChoose = true,
+    this.contentPadding = const EdgeInsets.fromLTRB(16, 8, 16, 8),
+    this.hintText,
+    this.preIcon,
+    this.sufIcon,
+    this.controller,
+    this.readOnly = false,
+    this.onTap,
+    this.maxLines,
+    this.numbers = false,
+    this.last = false,
+    this.validator = true,
+    this.phone = false,
+    this.onChanged,
+    required this.languages,
+    required this.initLanguage,
+    this.onSelected,
+  });
 }
 
 class _CustomFormFieldWithTranslateState

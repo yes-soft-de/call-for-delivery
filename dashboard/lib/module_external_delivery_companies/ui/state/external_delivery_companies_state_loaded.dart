@@ -39,6 +39,9 @@ class ExternalDeliveryCompaniesStateLoaded extends States {
                         ),
                       );
                     },
+                    onCompanyUpdated: (request) {
+                      _screenState.updateCompany(request);
+                    },
                   );
                 },
                 itemCount: _companies.length,

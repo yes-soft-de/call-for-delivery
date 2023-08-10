@@ -1136,5 +1136,6 @@
             }
         }
     },
+    "editCompanyInfo": "edit company info",
     "dev": "Dev"
 }

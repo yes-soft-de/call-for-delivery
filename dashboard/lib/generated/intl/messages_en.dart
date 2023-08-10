@@ -603,6 +603,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "editAds": MessageLookupByLibrary.simpleMessage("Edit Ads"),
         "editBranchName":
             MessageLookupByLibrary.simpleMessage("Edit Branch Name"),
+        "editCompanyInfo":
+            MessageLookupByLibrary.simpleMessage("edit company info"),
         "editCoordinates":
             MessageLookupByLibrary.simpleMessage("edit coordinates"),
         "editDistance": MessageLookupByLibrary.simpleMessage("edit distance"),
