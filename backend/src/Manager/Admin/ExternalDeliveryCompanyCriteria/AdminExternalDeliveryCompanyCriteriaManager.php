@@ -27,21 +27,6 @@ class AdminExternalDeliveryCompanyCriteriaManager
      */
     public function createExternalDeliveryCompanyCriteria(ExternalDeliveryCompanyCriteriaCreateByAdminRequest $request): ExternalDeliveryCompanyCriteriaEntity
     {
-        // Convert from and to dates from string to DateTime before persisting to the database
-        if (($request->getFromDate()) && ($request->getFromDate() !== "")) {
-            $request->setFromDate(new \DateTime($request->getFromDate()));
-
-        } else {
-            $request->setFromDate(null);
-        }
-
-        if (($request->getToDate()) && ($request->getToDate() !== "")) {
-            $request->setToDate(new \DateTime($request->getToDate()));
-
-        } else {
-            $request->setToDate(null);
-        }
-
         $externalDeliveryCompanyCriteria = $this->autoMapping->map(ExternalDeliveryCompanyCriteriaCreateByAdminRequest::class,
             ExternalDeliveryCompanyCriteriaEntity::class, $request);
 
