@@ -28,7 +28,7 @@ class StatusCodeHelper {
         return S.current.criteriaCreatedButNotActivated(optionalMessage ?? S.current.unknown);
       case '9054':
         return S.current.criteriaUpdatedButNotActivated(optionalMessage ?? S.current.unknown);
-      case '9053':
+      case '9055':
         return S.current.criteriaNotActivated(optionalMessage ?? S.current.unknown);
       case '9106':
         return S.current.youCannotMakePaymentThereIsNoOrderCash;
