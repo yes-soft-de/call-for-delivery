@@ -1587,8 +1587,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: master
-      resolved-ref: c96a47bc08813287996b8fcdaefd4270da4191b2
+      ref: make-from-more-accurate
+      resolved-ref: f89fd0db9866ee1d904d3ffbb4d5cbf05c9fb742
       url: "https://github.com/Yazan99sh/simple_moment"
     source: git
     version: "1.2.0"
