@@ -5,6 +5,8 @@ namespace App\Service\Admin\ExternalDeliveryCompanyCriteria;
 use App\AutoMapping;
 use App\Constant\Admin\AdminProfileConstant;
 use App\Constant\ExternalDeliveryCompany\ExternalDeliveryCompanyResultConstant;
+use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaIsDistanceConstant;
+use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaIsSpecificDateConstant;
 use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaResultConstant;
 use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaStatusConstant;
 use App\Entity\AdminProfileEntity;
@@ -23,6 +25,7 @@ use App\Response\Admin\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyGe
 use App\Service\Admin\AdminProfile\AdminProfileGetService;
 use App\Service\Admin\ExternalDeliveryCompany\AdminExternalDeliveryCompanyGetService;
 use App\Service\Admin\StoreOwnerBranch\AdminStoreOwnerBranchGetService;
+use DateTimeInterface;
 
 class AdminExternalDeliveryCompanyCriteriaService
 {
@@ -67,11 +70,26 @@ class AdminExternalDeliveryCompanyCriteriaService
         }
 
         $request->setExternalDeliveryCompany($externalDeliveryCompanyEntity);
+        // Convert from and to dates from string to DateTime before persisting to the database
+        if (($request->getFromDate()) && ($request->getFromDate() !== "")) {
+            $request->setFromDate(new \DateTime($request->getFromDate()));
+
+        } else {
+            $request->setFromDate(null);
+        }
+
+        if (($request->getToDate()) && ($request->getToDate() !== "")) {
+            $request->setToDate(new \DateTime($request->getToDate()));
+
+        } else {
+            $request->setToDate(null);
+        }
 
         // Make sure there are no similar criteria for another company
         $criteriaExist = $this->isThereSimilarCriteriaForDifferentCompany($request->getExternalDeliveryCompany()->getId(),
             $request->isSpecificDate(), $request->getIsDistance(), $request->getPayment(), $request->isFromAllStores(),
-            $request->getCashLimit());
+            $request->getCashLimit(), $request->getFromDistance(), $request->getToDistance(), $request->getFromDate(),
+            $request->getToDate());
 
         // Now continue creating the required company criteria
         $externalDeliveryCompanyCriteria = $this->adminExternalDeliveryCompanyCriteriaManager->createExternalDeliveryCompanyCriteria($request);
@@ -117,7 +135,8 @@ class AdminExternalDeliveryCompanyCriteriaService
         // check if there is active and similar criteria for another company
         $criteriaExist = $this->isThereSimilarCriteriaForDifferentCompany($request->getExternalDeliveryCompany()->getId(),
             $request->isSpecificDate(), $request->getIsDistance(), $request->getPayment(), $request->isFromAllStores(),
-            $request->getCashLimit());
+            $request->getCashLimit(), $request->getFromDistance(), $request->getToDistance(), $request->getFromDate(),
+            $request->getToDate());
 
         if (is_array($criteriaExist)) {
             // Already there is active similar criteria for another company, so continue updating but with inactive status
@@ -255,25 +274,76 @@ class AdminExternalDeliveryCompanyCriteriaService
     /**
      * check if there is active and similar criteria for another company
      */
-    public function isThereSimilarCriteriaForDifferentCompany(int $externalDeliveryCompanyId,
-                                                              bool $isSpecificDate,
-                                                              int $isDistance,
-                                                              int $payment,
-                                                              bool $isFromAllStores,
-                                                              ?float $cacheLimit = null): bool|array
+    public function isThereSimilarCriteriaForDifferentCompany(
+        int $externalDeliveryCompanyId,
+        bool $isSpecificDate,
+        int $isDistance,
+        int $payment,
+        bool $isFromAllStores,
+        ?float $cacheLimit = null,
+        ?float $fromDistance = null,
+        ?float $toDistance = null,
+        ?DateTimeInterface $fromDate = null,
+        ?DateTimeInterface $toDate = null
+    ): bool|array
     {
         $criteriaArray = $this->adminExternalDeliveryCompanyCriteriaManager->getExternalDeliveryCompanyCriteriaBySpecificCriteriaAndCompany($externalDeliveryCompanyId,
         $isSpecificDate, $isDistance, $payment, $isFromAllStores, $cacheLimit);
 
         if (count($criteriaArray) > 0) {
             $response = [];
+            // $matchedArray = [];
+            $isMatched = true;
 
-            foreach ($criteriaArray as $key => $value) {
-                $response[$key]['id'] = $value->getId();
-                $response[$key]['externalCompanyName'] = $value->getExternalDeliveryCompany()->getCompanyName();
+            // 1. if distance is enabled, then check if the new distance space is within the already exist one, or include it
+            if ($isDistance === ExternalDeliveryCompanyCriteriaIsDistanceConstant::IS_DISTANCE_STORE_BRANCH_TO_CLIENT_DISTANCE_CONST) {
+                foreach ($criteriaArray as $key => $value) {
+                    // If new criteria is match with just one single existing and active criteria, then stop the loop
+                    // and return true
+                    if ((($fromDistance < $value->getFromDistance()) && ($toDistance <= $value->getFromDistance()))
+                        || (($fromDistance >= $value->getToDistance()) && ($toDistance > $value->getToDistance()))) {
+                        // no overlap between distance spaces, jump to the next criteria
+                        continue;
+
+                    } else {
+                        // An overlap is exist, return the matched company which the criteria belongs to
+                        $response[$key]['id'] = $value->getId();
+                        $response[$key]['externalCompanyName'] = $value->getExternalDeliveryCompany()->getCompanyName();
+
+                        return $response;
+                    }
+                }
+                // As long as there is no overlap between the existed distance spaces among all criteria
+                $isMatched = false;
+            }
+            // 2. check time slices from both criteria, while no overlap between the distance spaces is exist among all criteria
+            if ($isSpecificDate === ExternalDeliveryCompanyCriteriaIsSpecificDateConstant::IS_SPECIFIC_DATE_TRUE_CONST) {
+                foreach ($criteriaArray as $key => $value) {
+                    if ((($fromDate < $value->getFromDate()) && ($toDate <= $value->getFromDate()))
+                        || (($toDate >= $value->getToDate()) && ($toDate > $value->getToDate()))) {
+                        // no overlap between distance spaces, jump to the next criteria
+                        continue;
+
+                    } else {
+                        // An overlap is exist, return the matched company which the criteria belongs to
+                        $response[$key]['id'] = $value->getId();
+                        $response[$key]['externalCompanyName'] = $value->getExternalDeliveryCompany()->getCompanyName();
+
+                        return $response;
+                    }
+                }
+                // As long as there is no overlap between the existed time slices among all criteria
+                $isMatched = false;
             }
 
-            return $response;
+            if ($isMatched === true) {
+                foreach ($criteriaArray as $key => $value) {
+                    $response[$key]['id'] = $value->getId();
+                    $response[$key]['externalCompanyName'] = $value->getExternalDeliveryCompany()->getCompanyName();
+                }
+
+                return $response;
+            }
         }
 
         return false;
@@ -303,6 +373,8 @@ class AdminExternalDeliveryCompanyCriteriaService
         return $this->isThereSimilarCriteriaForDifferentCompany($externalDeliveryCompanyCriteria->getExternalDeliveryCompany()->getId(),
             $externalDeliveryCompanyCriteria->getIsSpecificDate(), $externalDeliveryCompanyCriteria->getIsDistance(),
             $externalDeliveryCompanyCriteria->getPayment(), $externalDeliveryCompanyCriteria->getIsFromAllStores(),
-            $externalDeliveryCompanyCriteria->getCashLimit());
+            $externalDeliveryCompanyCriteria->getCashLimit(), $externalDeliveryCompanyCriteria->getFromDistance(),
+            $externalDeliveryCompanyCriteria->getToDistance(), $externalDeliveryCompanyCriteria->getFromDate(),
+            $externalDeliveryCompanyCriteria->getToDate());
     }
 }
