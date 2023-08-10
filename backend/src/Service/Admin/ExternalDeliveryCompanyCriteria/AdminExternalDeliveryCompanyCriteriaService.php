@@ -131,6 +131,20 @@ class AdminExternalDeliveryCompanyCriteriaService
         }
 
         $request->setExternalDeliveryCompany($company);
+        // Convert from and to dates from string to DateTime before persisting to the database
+        if (($request->getFromDate()) && ($request->getFromDate() !== "")) {
+            $request->setFromDate(new \DateTime($request->getFromDate()));
+
+        } else {
+            $request->setFromDate(null);
+        }
+
+        if (($request->getToDate()) && ($request->getToDate() !== "")) {
+            $request->setToDate(new \DateTime($request->getToDate()));
+
+        } else {
+            $request->setToDate(null);
+        }
 
         // check if there is active and similar criteria for another company
         $criteriaExist = $this->isThereSimilarCriteriaForDifferentCompany($request->getExternalDeliveryCompany()->getId(),
@@ -292,14 +306,12 @@ class AdminExternalDeliveryCompanyCriteriaService
 
         if (count($criteriaArray) > 0) {
             $response = [];
-            // $matchedArray = [];
             $isMatched = true;
 
             // 1. if distance is enabled, then check if the new distance space is within the already exist one, or include it
             if ($isDistance === ExternalDeliveryCompanyCriteriaIsDistanceConstant::IS_DISTANCE_STORE_BRANCH_TO_CLIENT_DISTANCE_CONST) {
                 foreach ($criteriaArray as $key => $value) {
                     // If new criteria is match with just one single existing and active criteria, then stop the loop
-                    // and return true
                     if ((($fromDistance < $value->getFromDistance()) && ($toDistance <= $value->getFromDistance()))
                         || (($fromDistance >= $value->getToDistance()) && ($toDistance > $value->getToDistance()))) {
                         // no overlap between distance spaces, jump to the next criteria
