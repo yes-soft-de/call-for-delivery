@@ -1127,7 +1127,7 @@
             }
         }
     },
-    "criteriaNotActivated": "لم يتم تفعيل المعيار نظرا لوجود معيار مطابق مفعل لصحالح الشركة {companyName}",
+    "criteriaNotActivated": "لم يتم تفعيل المعيار نظرا لوجود معيار مطابق مفعل لصالح الشركة {companyName}",
     "@criteriaNotActivated": {
         "description": "",
         "placeholders": {

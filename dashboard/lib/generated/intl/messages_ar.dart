@@ -26,7 +26,7 @@ class MessageLookup extends MessageLookupByLibrary {
       "تم انشاء المعيار بنجاح لكن لم يتم تفعيله نظرا لوجود معيار مطابق مفعل تابع للشركة ${companyName}";
 
   static String m2(companyName) =>
-      "لم يتم تفعيل المعيار نظرا لوجود معيار مطابق مفعل لصحالح الشركة ${companyName}";
+      "لم يتم تفعيل المعيار نظرا لوجود معيار مطابق مفعل لصالح الشركة ${companyName}";
 
   static String m3(companyName) =>
       "تم تحديث المعيار بنجاح لكن لم يتم تفعيله نظرا لوجود معيار مطابق مفعل تابع للشركة ${companyName}";
