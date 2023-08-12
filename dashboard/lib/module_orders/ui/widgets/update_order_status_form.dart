@@ -66,7 +66,7 @@ class _UpdateOrderStatusFormState extends State<UpdateOrderStatusForm> {
                         width: double.maxFinite,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(25),
-                            color: Theme.of(context).backgroundColor),
+                            color: Theme.of(context).colorScheme.background),
                         child: Padding(
                           padding: const EdgeInsets.only(left: 16.0, right: 16),
                           child: DropdownButtonHideUnderline(
@@ -132,13 +132,16 @@ class _UpdateOrderStatusFormState extends State<UpdateOrderStatusForm> {
                           ),
                         ),
                       ),
-                      CheckboxListTile(
-                          value: paid,
-                          title: Text(S.current.captainPaidToProvider),
-                          onChanged: (value) {
-                            paid = value ?? false;
-                            setState(() {});
-                          })
+                      Visibility(
+                        visible: orderInfo.payment == 'cash',
+                        child: CheckboxListTile(
+                            value: paid,
+                            title: Text(S.current.captainPaidToProvider),
+                            onChanged: (value) {
+                              paid = value ?? false;
+                              setState(() {});
+                            }),
+                      )
                     ],
                   ),
                 ),
@@ -171,7 +174,7 @@ class _UpdateOrderStatusFormState extends State<UpdateOrderStatusForm> {
                         child: Text(S.current.update)),
                   ),
                   Divider(
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).colorScheme.background,
                     thickness: 2.5,
                     indent: 16,
                     endIndent: 16,
