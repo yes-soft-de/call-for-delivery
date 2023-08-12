@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/costom_search.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
@@ -49,8 +48,140 @@ class CaptainAssignOrderLoadedState extends States {
     return FixedContainer(
         child: Column(
       children: [
+        Padding(
+          padding: EdgeInsets.only(left: 18.0, right: 18.0, bottom: 16),
+          child: CustomDeliverySearch(
+            hintText: S.current.searchForCaptain,
+            onChanged: (s) {
+              if (s == '' || s.isEmpty) {
+                search = null;
+                screenState.refresh();
+              } else {
+                search = s;
+                screenState.refresh();
+              }
+            },
+          ),
+        ),
         Expanded(
-          child: CustomListView.custom(children: getCaptains(context)),
+          child: ListView.builder(
+            shrinkWrap: true,
+            itemCount: model?.length ?? 0,
+            itemBuilder: (context, index) {
+              if (model != null &&
+                  model![index]
+                      .captainName
+                      .toLowerCase()
+                      .contains(search?.toLowerCase() ?? '')) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(25),
+                    onTap: () {
+                      if (model![index].chosen == false) {
+                        model?.forEach((element) {
+                          element.chosen = false;
+                        });
+                        model![index].chosen = true;
+                        id = model![index].id;
+                      } else {
+                        model?.forEach((element) {
+                          element.chosen = false;
+                        });
+                        id = null;
+                      }
+                      screenState.refresh();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          boxShadow: model![index].chosen
+                              ? [
+                                  BoxShadow(
+                                    color: Theme.of(context)
+                                        .primaryColor
+                                        .withOpacity(0.3),
+                                    spreadRadius: 1.5,
+                                    offset: Offset(0.5, 0.5),
+                                    blurRadius: 6,
+                                  ),
+                                ]
+                              : null,
+                          gradient: model![index].chosen
+                              ? LinearGradient(colors: [
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .primary
+                                      .withOpacity(0.7),
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .primary
+                                      .withOpacity(0.8),
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .primary
+                                      .withOpacity(0.9),
+                                  Theme.of(context).colorScheme.primary,
+                                ])
+                              : null),
+                      child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Row(
+                          children: [
+                            Container(
+                              constraints: BoxConstraints(maxWidth: 75),
+                              child: ClipOval(
+                                child: CustomNetworkImage(
+                                  width: 75,
+                                  height: 75,
+                                  imageSource: model![index].image,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 16,
+                            ),
+                            Text(
+                              model![index].captainName,
+                              style: model![index].chosen ? activeStyle : null,
+                            ),
+                            Spacer(),
+                            Container(
+                              decoration: BoxDecoration(
+                                color: Theme.of(context).colorScheme.background,
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(12.0),
+                                child: Row(
+                                  children: [
+                                    Icon(
+                                      FontAwesomeIcons.boxes,
+                                      color: Theme.of(context).disabledColor,
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    Text(
+                                      model![index]
+                                              .countOngoingOrders
+                                              .toString() +
+                                          ' ${S.current.sOrder}',
+                                    )
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                );
+              }
+              return SizedBox();
+            },
+          ),
         ),
         Visibility(
             visible: MediaQuery.of(context).viewInsets.bottom == 0,
@@ -74,7 +205,7 @@ class CaptainAssignOrderLoadedState extends States {
                         child: Text(S.current.assign)),
                   ),
                   Divider(
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).colorScheme.background,
                     thickness: 2.5,
                     indent: 16,
                     endIndent: 16,
@@ -93,129 +224,5 @@ class CaptainAssignOrderLoadedState extends States {
             )),
       ],
     ));
-  }
-
-  List<Widget> getCaptains(BuildContext context) {
-    List<Widget> widgets = [];
-    for (var element in model ?? <CaptainOrderModel>[]) {
-      if (!element.captainName.contains(search ?? '') && search != null) {
-        continue;
-      }
-      widgets.add(Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(25),
-          onTap: () {
-            if (element.chosen == false) {
-              model?.forEach((element) {
-                element.chosen = false;
-              });
-              element.chosen = true;
-              id = element.id;
-            } else {
-              model?.forEach((element) {
-                element.chosen = false;
-              });
-              id = null;
-            }
-            screenState.refresh();
-          },
-          child: Container(
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(25),
-                boxShadow: element.chosen
-                    ? [
-                        BoxShadow(
-                          color:
-                              Theme.of(context).primaryColor.withOpacity(0.3),
-                          spreadRadius: 1.5,
-                          offset: Offset(0.5, 0.5),
-                          blurRadius: 6,
-                        ),
-                      ]
-                    : null,
-                gradient: element.chosen
-                    ? LinearGradient(colors: [
-                        Theme.of(context).colorScheme.primary.withOpacity(0.7),
-                        Theme.of(context).colorScheme.primary.withOpacity(0.8),
-                        Theme.of(context).colorScheme.primary.withOpacity(0.9),
-                        Theme.of(context).colorScheme.primary,
-                      ])
-                    : null),
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Row(
-                children: [
-                  Container(
-                    constraints: BoxConstraints(maxWidth: 75),
-                    child: ClipOval(
-                      child: CustomNetworkImage(
-                        width: 75,
-                        height: 75,
-                        imageSource: element.image,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: 16,
-                  ),
-                  Text(
-                    element.captainName,
-                    style: element.chosen ? activeStyle : null,
-                  ),
-                  Spacer(),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).backgroundColor,
-                      borderRadius: BorderRadius.circular(25),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(12.0),
-                      child: Row(
-                        children: [
-                          Icon(
-                            FontAwesomeIcons.boxes,
-                            color: Theme.of(context).disabledColor,
-                          ),
-                          SizedBox(
-                            width: 8,
-                          ),
-                          Text(
-                            element.countOngoingOrders.toString() +
-                                ' ${S.current.sOrder}',
-                          )
-                        ],
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ),
-      ));
-    }
-
-    if (model != null) {
-      widgets.insert(
-          0,
-          Padding(
-            padding: EdgeInsets.only(left: 18.0, right: 18.0, bottom: 16),
-            child: CustomDeliverySearch(
-              hintText: S.current.searchForCaptain,
-              onChanged: (s) {
-                if (s == '' || s.isEmpty) {
-                  search = null;
-                  screenState.refresh();
-                } else {
-                  search = s;
-                  screenState.refresh();
-                }
-              },
-            ),
-          ));
-    }
-
-    return widgets;
   }
 }

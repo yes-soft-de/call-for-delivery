@@ -15,22 +15,6 @@ class CaptainDuesStateManager {
   CaptainDuesStateManager(this._planService);
   Stream<States> get stateStream => stateSubject.stream;
 
-  // void getCaptainsFinanceDaily(CaptainFinanceDailyScreenState screenState) {
-  //   stateSubject.add(LoadingState(screenState));
-  //   _planService.getCaptainFinanceDaily().then((value) {
-  //     if (value.hasError) {
-  //       stateSubject.add(CaptainFinanceDailyLoadedState(screenState, null,
-  //           error: value.error));
-  //     } else if (value.isEmpty) {
-  //       stateSubject.add(CaptainFinanceDailyLoadedState(screenState, null,
-  //           empty: value.isEmpty));
-  //     } else {
-  //       CaptainFinanceDailyModel _model = value as CaptainFinanceDailyModel;
-  //       stateSubject
-  //           .add(CaptainFinanceDailyLoadedState(screenState, _model.data));
-  //     }
-  //   });
-  // }
   void getCaptainsFinanceDailyNew(
       CaptainDuesScreenState screenState, CaptainPaymentRequest request) {
     stateSubject.add(LoadingState(screenState));

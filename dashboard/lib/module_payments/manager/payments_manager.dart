@@ -106,8 +106,7 @@ class PaymentsManager {
       _paymentsRepository.paymentFromCaptain(request);
   Future<ActionResponse?> deletePaymentToCaptain(String id) =>
       _paymentsRepository.deletePaymentToCaptain(id);
-  Future<ActionResponse?> deletePaymentFROMCaptain(String id) =>
-      _paymentsRepository.deletePaymentFROMCaptain(id);
+
   Future<CaptainAllFinanceResponse?> getAllAmountCaptain(
           CaptainPaymentRequest request) =>
       _paymentsRepository.getAllAmountCaptain(request);

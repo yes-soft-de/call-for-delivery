@@ -314,16 +314,18 @@ class Urls {
   static const GET_CAPTAIN_FINANCE_BY_ORDER_COUNTS =
       BASE_API_CAPTAIN_FINANCE_BY_ORDER_COUNTS +
           '/captainfinancialsystemaccordingtocountofordersbyadmin';
-  static const GET_CAPTAIN_ACCOUNT_BALANCE =
-      BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainbalancedetailforcaptainspecific';
+  // not used
+  // static const GET_CAPTAIN_ACCOUNT_BALANCE =
+  //     BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainbalancedetailforcaptainspecific';
   static const UPDATE_CAPTAIN_FINANCE_PLAN =
       BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainfinancialsystemdetailstatus';
   static const CHANGE_CAPTAIN_FINANCE_PLAN =
       BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainfinancialsystemdetailupdate';
   static const CREATE_CAPTAIN_FINANCE_PLAN =
       BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainfinancialsystemdetailbyadmin';
-  static const GET_CAPTAIN_FINANCE_DUES =
-      BASE_CAPTAIN_ACCOUNT_BALANCE_DUES + '/captainfinancialduesforadmin';
+  // not used    
+  // static const GET_CAPTAIN_FINANCE_DUES =
+  //     BASE_CAPTAIN_ACCOUNT_BALANCE_DUES + '/captainfinancialduesforadmin';
   static const GET_CAPTAIN_RATING_REPORT =
       BASE_API + VERSION_ADMIN + '/report/captainsratings';
   static const GET_CAPTAIN_RATING_DETAILS =

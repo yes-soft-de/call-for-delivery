@@ -2,8 +2,6 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/model/captain_dues_model.dart';
 import 'package:c4d/module_captain/ui/screen/captain_dues_screen.dart';
-import 'package:c4d/module_captain/ui/widget/captain_dues_widget.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
@@ -36,24 +34,17 @@ class CaptainDuesLoadedState extends States {
           });
     }
     return FixedContainer(
-        child: CustomListView.custom(children: getCaptains(context)));
-  }
-
-  List<Widget> getCaptains(BuildContext context) {
-    List<Widget> widgets = [];
-    for (var element in model ?? <CaptainDuesModel>[]) {
-      if ((!element.captainName!.contains(screenState.search ?? '') &&
-              !element.captainProfileId!
-                  .toString()
-                  .contains(screenState.search ?? '')) &&
-          screenState.search != null) {
-        continue;
-      }
-      widgets.add(CaptainDuesWidget(
-        model: element,
-      ));
-    }
-
-    return widgets;
+        child: Column(
+      children: [
+        Flexible(
+            child: ListView.builder(
+          shrinkWrap: true,
+          itemCount: model?.length ?? 0,
+          itemBuilder: (context, index) {
+            return null;
+          },
+        )),
+      ],
+    ));
   }
 }

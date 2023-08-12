@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
@@ -46,33 +45,8 @@ class CaptainsNeedSupportLoadedState extends States {
           });
     }
     return FixedContainer(
-        child: CustomListView.custom(children: getClients(context)));
-  }
-
-  List<Widget> getClients(BuildContext context) {
-    List<Widget> widgets = [];
-    for (var element in model ?? <CaptainNeedSupportModel>[]) {
-      if (element.captainName.contains(search ?? '') == false) {
-        continue;
-      }
-      widgets.add(StoreCard(
-        Id: element.id,
-        name: element.captainName,
-        image: element.image,
-        onTap: () {
-          Navigator.of(context).pushNamed(
-            ChatRoutes.chatRoute,
-            arguments: ChatArgument(
-                roomID: element.roomID,
-                userType: 'captain',
-                userID: int.parse(element.userId)),
-          );
-        },
-      ));
-    }
-    if (model != null) {
-      widgets.insert(
-          0,
+      child: Column(
+        children: [
           Padding(
             padding: EdgeInsets.only(left: 18.0, right: 18.0, bottom: 16),
             child: CustomDeliverySearch(
@@ -87,8 +61,39 @@ class CaptainsNeedSupportLoadedState extends States {
                 }
               },
             ),
-          ));
-    }
-    return widgets;
+          ),
+          Flexible(
+            child: ListView.builder(
+              itemCount: model?.length ?? 0,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                if (model != null &&
+                    model![index]
+                        .captainName
+                        .toLowerCase()
+                        .contains(search?.toLowerCase() ?? '')) {
+                  return StoreCard(
+                    Id: model![index].id,
+                    name: model![index].captainName,
+                    image: model![index].image,
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                        ChatRoutes.chatRoute,
+                        arguments: ChatArgument(
+                          roomID: model![index].roomID,
+                          userType: 'captain',
+                          userID: int.parse(model![index].userId),
+                        ),
+                      );
+                    },
+                  );
+                }
+                return SizedBox();
+              },
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
