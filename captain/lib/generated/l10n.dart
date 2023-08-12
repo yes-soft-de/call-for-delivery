@@ -6240,10 +6240,10 @@ class S {
     );
   }
 
-  /// `Please provide us with distance you reached out and collected payment with this order To finish the order`
+  /// `Please provide us the collected payment for this order To finish the order`
   String get finishingOrderMessageWithPayment {
     return Intl.message(
-      'Please provide us with distance you reached out and collected payment with this order To finish the order',
+      'Please provide us the collected payment for this order To finish the order',
       name: 'finishingOrderMessageWithPayment',
       desc: '',
       args: [],
@@ -7800,11 +7800,371 @@ class S {
     );
   }
 
+  /// `my profits`
+  String get myProfits {
+    return Intl.message(
+      'my profits',
+      name: 'myProfits',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `today`
+  String get today {
+    return Intl.message(
+      'today',
+      name: 'today',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Your financial dues`
+  String get yourFinancialDues {
+    return Intl.message(
+      'Your financial dues',
+      name: 'yourFinancialDues',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `(since the last payment)`
+  String get sinceTheLastPayment {
+    return Intl.message(
+      '(since the last payment)',
+      name: 'sinceTheLastPayment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `orders total`
+  String get ordersTotal {
+    return Intl.message(
+      'orders total',
+      name: 'ordersTotal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `dues claim`
+  String get duesClaim {
+    return Intl.message(
+      'dues claim',
+      name: 'duesClaim',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `history of previous payments`
+  String get historyOfPreviousPayments {
+    return Intl.message(
+      'history of previous payments',
+      name: 'historyOfPreviousPayments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `plan details`
+  String get planDetails {
+    return Intl.message(
+      'plan details',
+      name: 'planDetails',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `are you sure to ask the administration to pay?`
+  String get areYouSureToAskTheAdministrationToPay {
+    return Intl.message(
+      'are you sure to ask the administration to pay?',
+      name: 'areYouSureToAskTheAdministrationToPay',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `{value} Riyal`
+  String valueRiyal(String value) {
+    return Intl.message(
+      '$value Riyal',
+      name: 'valueRiyal',
+      desc: '',
+      args: [value],
+    );
+  }
+
+  /// `payment {value} Riyal`
+  String paymentValueRiyal(String value) {
+    return Intl.message(
+      'payment $value Riyal',
+      name: 'paymentValueRiyal',
+      desc: '',
+      args: [value],
+    );
+  }
+
+  /// `the profit (Riyal)`
+  String get theProfitRiyal {
+    return Intl.message(
+      'the profit (Riyal)',
+      name: 'theProfitRiyal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `from`
+  String get from {
+    return Intl.message(
+      'from',
+      name: 'from',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `total received by the specified date`
+  String get totalReceivedByTheSpecifiedDate {
+    return Intl.message(
+      'total received by the specified date',
+      name: 'totalReceivedByTheSpecifiedDate',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Profits are added to your balance upon delivery of the order.\n The opening price is ({openOrderPrince} riyals) + profit from kilometers`
+  String planDetailsDescription(String openOrderPrince) {
+    return Intl.message(
+      'Profits are added to your balance upon delivery of the order.\n The opening price is ($openOrderPrince riyals) + profit from kilometers',
+      name: 'planDetailsDescription',
+      desc: '',
+      args: [openOrderPrince],
+    );
+  }
+
+  /// `The higher delivery distance, the higher profit rate`
+  String get theHigherDeliveryDistance {
+    return Intl.message(
+      'The higher delivery distance, the higher profit rate',
+      name: 'theHigherDeliveryDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `bank transfer`
+  String get bankTransfer {
+    return Intl.message(
+      'bank transfer',
+      name: 'bankTransfer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `calculate your dues`
+  String get calculateYourDues {
+    return Intl.message(
+      'calculate your dues',
+      name: 'calculateYourDues',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `enter  the number of kilometer`
+  String get enterTheNumberOfKilometer {
+    return Intl.message(
+      'enter  the number of kilometer',
+      name: 'enterTheNumberOfKilometer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `the profits`
+  String get theProfits {
+    return Intl.message(
+      'the profits',
+      name: 'theProfits',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `open order price`
+  String get openOrderPrice {
+    return Intl.message(
+      'open order price',
+      name: 'openOrderPrice',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order from {firstLimit} to {secondLimit}`
+  String ordersFromTo(String firstLimit, String secondLimit) {
+    return Intl.message(
+      'order from $firstLimit to $secondLimit',
+      name: 'ordersFromTo',
+      desc: '',
+      args: [firstLimit, secondLimit],
+    );
+  }
+
+  /// `every 1 KM (orders greater then {firstLimit} to {secondLimit} KM)`
+  String everyOneKMOrdersGreaterThenTo(String firstLimit, String secondLimit) {
+    return Intl.message(
+      'every 1 KM (orders greater then $firstLimit to $secondLimit KM)',
+      name: 'everyOneKMOrdersGreaterThenTo',
+      desc: '',
+      args: [firstLimit, secondLimit],
+    );
+  }
+
+  /// `every 1 KM (orders from {limit} KM and more)`
+  String everyOneKMOrdersFromAndMore(String limit) {
+    return Intl.message(
+      'every 1 KM (orders from $limit KM and more)',
+      name: 'everyOneKMOrdersFromAndMore',
+      desc: '',
+      args: [limit],
+    );
+  }
+
+  /// `profits net:`
+  String get profitsNet {
+    return Intl.message(
+      'profits net:',
+      name: 'profitsNet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `unpaid amounts from cash to stores`
+  String get unpaidAmountsFromCashToStores {
+    return Intl.message(
+      'unpaid amounts from cash to stores',
+      name: 'unpaidAmountsFromCashToStores',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `profits from orders`
+  String get profitsFromOrders {
+    return Intl.message(
+      'profits from orders',
+      name: 'profitsFromOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `get profits`
+  String get getProfits {
+    return Intl.message(
+      'get profits',
+      name: 'getProfits',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `this Feature Not Available Yet`
+  String get thisFeatureNotAvailableYet {
+    return Intl.message(
+      'this Feature Not Available Yet',
+      name: 'thisFeatureNotAvailableYet',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `your profits start from 12.5 to 33 riyal and more`
+  String get yourProfitsStart {
+    return Intl.message(
+      'your profits start from 12.5 to 33 riyal and more',
+      name: 'yourProfitsStart',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Requested Already You Will Receive Your Dues Soon`
+  String get requestedAlreadyYouWillReceiveYourDuesSoon {
+    return Intl.message(
+      'Requested Already You Will Receive Your Dues Soon',
+      name: 'requestedAlreadyYouWillReceiveYourDuesSoon',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Riyal`
+  String get Riyal {
+    return Intl.message(
+      'Riyal',
+      name: 'Riyal',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Captain Not Exist`
+  String get captainNotExist {
+    return Intl.message(
+      'Captain Not Exist',
+      name: 'captainNotExist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `There Is No Current Active Financial Cycle`
+  String get ThereIsNoCurrentActiveFinancialCycle {
+    return Intl.message(
+      'There Is No Current Active Financial Cycle',
+      name: 'ThereIsNoCurrentActiveFinancialCycle',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `requested successfully`
+  String get requestedSuccessfully {
+    return Intl.message(
+      'requested successfully',
+      name: 'requestedSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Over paid`
   String get financeOverPaid {
     return Intl.message(
       'Over paid',
       name: 'financeOverPaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Do you want to do this action ?`
+  String get doYouWantToDoThisAction {
+    return Intl.message(
+      'Do you want to do this action ?',
+      name: 'doYouWantToDoThisAction',
       desc: '',
       args: [],
     );

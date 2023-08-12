@@ -1,6 +1,5 @@
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
-import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:flutter/material.dart';
 
 class ProvideDistance extends StatelessWidget {
@@ -27,13 +26,13 @@ class ProvideDistance extends StatelessWidget {
         Expanded(
           child: Column(
             children: [
-              CustomFormField(
-                hintText:
-                    '${S.of(context).finishOrderProvideDistanceInKm} e.g 45',
-                controller: controller,
-                numbers: true,
-                last: payment == false ? true : false,
-              ),
+              // CustomFormField(
+              //   hintText:
+              //       '${S.of(context).finishOrderProvideDistanceInKm} e.g 45',
+              //   controller: controller,
+              //   numbers: true,
+              //   last: payment == false ? true : false,
+              // ),
               const SizedBox(
                 height: 8.0,
               ),
@@ -73,25 +72,30 @@ class ProvideDistance extends StatelessWidget {
                   color: Colors.white,
                 ),
                 onPressed: () {
-                  if (controller.text.isNotEmpty &&
-                      (num.tryParse(controller.text) ?? 0) < 100) {
-                    callBack(
-                        controller.text,
-                        controller2.text.trim() == ''
-                            ? null
-                            : controller2.text.trim());
-                  } else if ((num.tryParse(controller.text) ?? 0) >= 100) {
-                    CustomFlushBarHelper.createError(
-                            title: S.current.warnning,
-                            message:
-                                S.of(context).pleaseCorrectProvidedDistance)
-                        .show(context);
-                  } else {
-                    CustomFlushBarHelper.createError(
-                            title: S.current.warnning,
-                            message: S.of(context).pleaseProvideTheDistance)
-                        .show(context);
-                  }
+                  callBack(
+                      controller.text,
+                      controller2.text.trim() == ''
+                          ? null
+                          : controller2.text.trim());
+                  // if (controller.text.isNotEmpty &&
+                  //     (num.tryParse(controller.text) ?? 0) < 100) {
+                  //   callBack(
+                  //       controller.text,
+                  //       controller2.text.trim() == ''
+                  //           ? null
+                  //           : controller2.text.trim());
+                  // } else if ((num.tryParse(controller.text) ?? 0) >= 100) {
+                  //   CustomFlushBarHelper.createError(
+                  //           title: S.current.warnning,
+                  //           message:
+                  //               S.of(context).pleaseCorrectProvidedDistance)
+                  //       .show(context);
+                  // } else {
+                  //   CustomFlushBarHelper.createError(
+                  //           title: S.current.warnning,
+                  //           message: S.of(context).pleaseProvideTheDistance)
+                  //       .show(context);
+                  // }
                 }),
           ),
         ),

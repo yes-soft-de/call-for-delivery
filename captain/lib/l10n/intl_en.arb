@@ -619,7 +619,7 @@
     "chatRoomCreated": "Chat room created successfully",
     "collectedPayment": "Collected Payment",
     "collectedPaymentNotMatch": "Collected payment not match with bill that you should receive",
-    "finishingOrderMessageWithPayment": "Please provide us with distance you reached out and collected payment with this order To finish the order",
+    "finishingOrderMessageWithPayment": "Please provide us the collected payment for this order To finish the order",
     "currentRating": "Your current rating by this store is",
     "branchPhone": "Branch Phone",
     "HisComment": "His Comment",
@@ -775,5 +775,96 @@
     "youCantRequestEdit": "you can't request edit",
     "youCanEditOnlyOneTimeIfNotSure": "you can edit only one time, if you are not sure then edit when order you complete the order",
     "youCanEditOnlyOneTimeContactWith": "you can edit only one time, you can contact with direct support",
-    "financeOverPaid": "Over paid"
+    "myProfits": "my profits",
+    "today": "today",
+    "yourFinancialDues": "Your financial dues",
+    "sinceTheLastPayment": "(since the last payment)",
+    "ordersTotal": "orders total",
+    "duesClaim": "dues claim",
+    "historyOfPreviousPayments": "history of previous payments",
+    "planDetails": "plan details",
+    "areYouSureToAskTheAdministrationToPay": "are you sure to ask the administration to pay?",
+    "valueRiyal": "{value} Riyal",
+    "@valueRiyal": {
+        "description": "",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "paymentValueRiyal": "payment {value} Riyal",
+    "@paymentValueRiyal": {
+        "description": "",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "theProfitRiyal": "the profit (Riyal)",
+    "from": "from",
+    "totalReceivedByTheSpecifiedDate": "total received by the specified date",
+    "planDetailsDescription": "Profits are added to your balance upon delivery of the order.\n The opening price is ({openOrderPrince} riyals) + profit from kilometers",
+    "@planDetailsDescription": {
+        "description": "",
+        "placeholders": {
+            "openOrderPrince": {
+                "type": "String"
+            }
+        }
+    },
+    "theHigherDeliveryDistance": "The higher delivery distance, the higher profit rate",
+    "bankTransfer": "bank transfer",
+    "calculateYourDues": "calculate your dues",
+    "enterTheNumberOfKilometer": "enter  the number of kilometer",
+    "theProfits": "the profits",
+    "openOrderPrice": "open order price",
+    "ordersFromTo": "order from {firstLimit} to {secondLimit}",
+    "@ordersFromTo": {
+        "description": "",
+        "placeholders": {
+            "firstLimit": {
+                "type": "String"
+            },
+            "secondLimit": {
+                "type": "String"
+            }
+        }
+    },
+    "everyOneKMOrdersGreaterThenTo": "every 1 KM (orders greater then {firstLimit} to {secondLimit} KM)",
+    "@everyOneKMOrdersGreaterThenTo": {
+        "description": "",
+        "placeholders": {
+            "firstLimit": {
+                "type": "String"
+            },
+            "secondLimit": {
+                "type": "String"
+            }
+        }
+    },
+    "everyOneKMOrdersFromAndMore": "every 1 KM (orders from {limit} KM and more)",
+    "@everyOneKMOrdersFromAndMore": {
+        "description": "",
+        "placeholders": {
+            "limit": {
+                "type": "String"
+            }
+        }
+    },
+    "profitsNet": "profits net:",
+    "unpaidAmountsFromCashToStores": "unpaid amounts from cash to stores",
+    "profitsFromOrders": "profits from orders",
+    "getProfits": "get profits",
+    "thisFeatureNotAvailableYet": "this Feature Not Available Yet",
+    "yourProfitsStart": "your profits start from 12.5 to 33 riyal and more",
+    "requestedAlreadyYouWillReceiveYourDuesSoon": "Requested Already You Will Receive Your Dues Soon",
+    "Riyal": "Riyal",
+    "captainNotExist": "Captain Not Exist",
+    "ThereIsNoCurrentActiveFinancialCycle": "There Is No Current Active Financial Cycle",
+    "requestedSuccessfully": "requested successfully",
+    "financeOverPaid": "Over paid",
+    "doYouWantToDoThisAction":"Do you want to do this action ?"
+
 }

@@ -128,22 +128,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   void initState() {
     super.initState();
     farOrders = NotificationsPrefHelper().getFarOrder();
-    DeepLinksService.canRequestLocation().then((value) async {
-      if (value) {
-        Logger().info('Location enabled', '$value');
-        Geolocator.getPositionStream(
-            locationSettings: const LocationSettings(
-          distanceFilter: 1000,
-        )).listen((event) {
-          currentLocation = LatLng(event.latitude, event.longitude);
-          Logger().info('Location with us ',
-              currentLocation?.toJson().toString() ?? 'null');
-          if (mounted) {
-            setState(() {});
-          }
-        });
-      }
-    });
+    canRequestOrder();
     getIt<FireNotificationService>().refreshToken();
     currentState = LoadingState(this, picture: true);
     widget._stateManager.getProfile(this);
@@ -196,9 +181,29 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
     }
   }
 
+  void canRequestOrder() {
+    DeepLinksService.canRequestLocation().then((value) async {
+      if (value) {
+        Logger().info('Location enabled', '$value');
+        Geolocator.getPositionStream(
+            locationSettings: const LocationSettings(
+          distanceFilter: 1000,
+        )).listen((event) {
+          currentLocation = LatLng(event.latitude, event.longitude);
+          Logger().info('Location with us ',
+              currentLocation?.toJson().toString() ?? 'null');
+          if (mounted) {
+            setState(() {});
+          }
+        });
+      }
+    });
+  }
+
   bool somethingMissingInProfileData = false;
   @override
   Widget build(BuildContext context) {
+    if (currentLocation == null) canRequestOrder();
     return Scaffold(
       key: drawerKey,
       body: AdvancedDrawer(

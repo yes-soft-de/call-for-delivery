@@ -1,9 +1,13 @@
 import 'package:c4d/module_plan/request/captain_finance_request.dart';
+import 'package:c4d/module_plan/request/payment_history_request.dart';
+import 'package:c4d/module_plan/request/request_payment.dart';
 import 'package:c4d/module_plan/response/captain_account_balance_response/captain_account_balance_response.dart';
 import 'package:c4d/module_plan/response/captain_finance_by_hours_response/captain_finance_by_hours_response.dart';
 import 'package:c4d/module_plan/response/captain_finance_by_order_count_response/captain_finance_by_order_count_response.dart';
 import 'package:c4d/module_plan/response/captain_financeby_order_response/captain_financeby_order_response.dart';
 import 'package:c4d/module_plan/response/captain_financial_dues_response/captain_financial_dues_response.dart';
+import 'package:c4d/module_plan/response/my_profits_response/my_profits_response.dart';
+import 'package:c4d/module_plan/response/payment_history_response/payment_history_response.dart';
 import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/module_plan/repository/plan_repository.dart';
@@ -27,4 +31,14 @@ class CaptainBalanceManager {
       _packageBalanceRepository.getCaptainFinancialDues();
   Future<ActionResponse?> stopFinanceRequest() =>
       _packageBalanceRepository.stopFinanceRequest();
+
+  Future<PaymentHistoryResponse?> getPaymentHistory(
+          PaymentHistoryRequest request) =>
+      _packageBalanceRepository.getPaymentHistory(request);
+
+  Future<MyProfitsResponse?> getMyProfits() =>
+      _packageBalanceRepository.getMyProfits();
+
+  Future<ActionResponse?> requestPayment(RequestPayment request) =>
+      _packageBalanceRepository.requestPayment(request);
 }

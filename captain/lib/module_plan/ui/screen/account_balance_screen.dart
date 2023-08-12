@@ -2,7 +2,6 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_plan/plan_routes.dart';
 import 'package:c4d/module_plan/state_manager/account_balance_state_manager.dart';
 import 'package:c4d/module_plan/ui/screen/captain_financial_dues_screen.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -53,13 +52,18 @@ class AccountBalanceScreenState extends State<AccountBalanceScreen> {
           actions: [
             Visibility(
               visible: false,
-              child: CustomC4dAppBar.actionIcon(context, onTap: () {
-                Navigator.of(context).pushNamed(PlanRoutes.PLAN_ROUTE,
-                    arguments: S.current.updateProfile);
-              }, icon: Icons.balance_rounded),
-            )
+              child: CustomC4dAppBar.actionIcon(
+                context,
+                onTap: () {
+                  // Navigator.of(context).pushNamed(PlanRoutes.PLAN_ROUTE,
+                  //     arguments: S.current.updateProfile);
+                },
+                icon: Icons.balance_rounded,
+              ),
+            ),
           ],
           bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(40),
               child: FilterBar(
                 cursorRadius: BorderRadius.circular(25),
                 animationDuration: const Duration(milliseconds: 350),
@@ -80,11 +84,10 @@ class AccountBalanceScreenState extends State<AccountBalanceScreen> {
                       curve: Curves.linear);
                   setState(() {});
                 },
-                selectedContent: Theme.of(context).textTheme.button!.color!,
+                selectedContent: Theme.of(context).textTheme.labelLarge!.color!,
                 unselectedContent:
-                    Theme.of(context).textTheme.headline6!.color!,
-              ),
-              preferredSize: const Size.fromHeight(40))),
+                    Theme.of(context).textTheme.titleLarge!.color!,
+              ))),
       body: PageView(
         controller: pageController,
         onPageChanged: (index) {

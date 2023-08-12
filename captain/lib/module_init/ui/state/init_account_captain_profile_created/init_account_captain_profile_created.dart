@@ -1,10 +1,9 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_init/ui/screens/init_account_screen/init_account_screen.dart';
-import 'package:c4d/module_plan/plan_routes.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
-import 'package:c4d/module_orders/orders_routes.dart';
 
 class InitAccountStateProfileCreated extends States {
   InitAccountStateProfileCreated(InitAccountScreenState screen) : super(screen);
@@ -30,12 +29,12 @@ class InitAccountStateProfileCreated extends States {
                   padding: const EdgeInsets.all(14.0),
                   child: Text(
                     S.of(context).go,
-                    style: TextStyle(color: Colors.white, fontSize: 16),
+                    style: const TextStyle(color: Colors.white, fontSize: 16),
                   ),
                 ),
                 onPressed: () {
                   Navigator.of(context).pushNamedAndRemoveUntil(
-                      PlanRoutes.PLAN_ROUTE, (r) => false);
+                      OrdersRoutes.CAPTAIN_ORDERS_SCREEN, (r) => false);
                 }),
           )
         ],

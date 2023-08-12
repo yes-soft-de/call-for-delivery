@@ -173,7 +173,7 @@
     "activePlan": "الباقة الحالية",
     "activeCars": "السيارات المشغولة",
     "ordersMonth": "طلب / الشهر",
-    "paymentHistory": "تاريخ الدفعات",
+    "paymentHistory": "سجل الدفعات",
     "completedOrders": " طلبات منتهية ",
     "latestUpdates": "اخر التحديثات",
     "myBalance": "الحساب المالي",
@@ -623,7 +623,7 @@
     "chatRoomCreated": "تم إنشاء غرفة المحادثة",
     "collectedPayment": "المبلغ المقبوض",
     "collectedPaymentNotMatch": "المبلغ المقبوض لا يطابق المبلغ الذي من المفترض دفعه",
-    "finishingOrderMessageWithPayment": "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة والمبلغ المقبوض وسيتم إنهاء الطلب",
+    "finishingOrderMessageWithPayment": "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمبلغ المقبوض وسيتم إنهاء الطلب",
     "currentRating": "المتجر قيمك ب",
     "branchPhone": "رقم هاتف الفرع",
     "collectedPaymentNote": "ملاحظات الكابتن حول سعر الطلبية",
@@ -765,7 +765,7 @@
     "todayProfit": "مستحقات اليوم",
     "plan": "الخطة",
     "addsAndOffers": "الاعلانات والعروض",
-    "yourBalanceToday": "رصيدك الليوم",
+    "yourBalanceToday": "رصيدك اليوم",
     "dontTakeMoneyThisOrderIsPaidAlready": "لا تستلم مبلغ من الزبون هذا الطلب مدفوع مسبقا",
     "areSureYouWantToCancelThisOrder": "هل أنت متأكد من رغبتك في إلغاء هذا الطلب",
     "remainingOrdersNumber": "عدد الطلبات المتبقية",
@@ -777,5 +777,95 @@
     "youCanEditOnlyOneTimeIfNotSure": "يمكنك التعديل مرة واحدة فقط, ان لم تكن متأكد قم بالتعديل عند انتهاء تسليم الطلب",
     "youCanEditOnlyOneTimeContactWith": "يمكنك التعديل مرة واحدة فقط, بدلا من ذلك تواصل مع الدعم المباشر",
     "goToOffers": "اذهب الى العروض",
-    "financeOverPaid": "دفعة زائدة"
+    "myProfits": "ارباحي",
+    "today": "اليوم",
+    "yourFinancialDues": "مستحقاتك المالية",
+    "sinceTheLastPayment": "(منذ اخر اخر دفعة حتى الان)",
+    "ordersTotal": "اجمالي الطلبات",
+    "duesClaim": "المطالبة بالمستحقات",
+    "historyOfPreviousPayments": "سجل الدفعات السابقة",
+    "planDetails": "تفاصيل خطة العمل",
+    "areYouSureToAskTheAdministrationToPay": "هل انت متاكد من مطالبة الادارة بالدفع؟",
+    "valueRiyal": "{value} ريال",
+    "@valueRiyal": {
+        "description": "",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "paymentValueRiyal": "الدفعة {value} ريال",
+    "@paymentValueRiyal": {
+        "description": "",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
+    "theProfitRiyal": "الارباح (ريال)",
+    "from": "من",
+    "totalReceivedByTheSpecifiedDate": "اجمالي الارباح المستلمة حسب التاريخ المحدد",
+    "planDetailsDescription": "تتم اضافة الارباح الى رصيدك عند التسليم الطلب\nالسعر الافتتاحي ({openOrderPrince} ريال) + الربح من الكيلومترات",
+    "@planDetailsDescription": {
+        "description": "",
+        "placeholders": {
+            "openOrderPrince": {
+                "type": "String"
+            }
+        }
+    },
+    "theHigherDeliveryDistance": "كلما زادت مسافة التوصيل سترتفع نسبة الربح",
+    "bankTransfer": "تحويل بنكي",
+    "calculateYourDues": "احسب ارباحك",
+    "enterTheNumberOfKilometer": "ادخل عدد الكيلو متر",
+    "theProfits": "الارباح",
+    "openOrderPrice": "السعر الافتتاحي للطلب",
+    "ordersFromTo": "للطلبات من {firstLimit} حتى {secondLimit} كم",
+    "@ordersFromTo": {
+        "description": "",
+        "placeholders": {
+            "firstLimit": {
+                "type": "String"
+            },
+            "secondLimit": {
+                "type": "String"
+            }
+        }
+    },
+    "everyOneKMOrdersGreaterThenTo": "كل 1 كم (الطلبات اكبر من {firstLimit} الى {secondLimit} كم)",
+    "@everyOneKMOrdersGreaterThenTo": {
+        "description": "",
+        "placeholders": {
+            "firstLimit": {
+                "type": "String"
+            },
+            "secondLimit": {
+                "type": "String"
+            }
+        }
+    },
+    "everyOneKMOrdersFromAndMore": "كل 1 كم (الطلبات من {limit} كم واكثر)",
+    "@everyOneKMOrdersFromAndMore": {
+        "description": "",
+        "placeholders": {
+            "limit": {
+                "type": "String"
+            }
+        }
+    },
+    "profitsNet": "صافي الارباح:",
+    "unpaidAmountsFromCashToStores": "المبالغ من الكاش غير المسلمة للمتاجر",
+    "profitsFromOrders": "الارباح من الطلبات",
+    "getProfits": "تحصيل الارباح",
+    "thisFeatureNotAvailableYet": "هذه الميزة غير متوفرة بعد",
+    "yourProfitsStart": "ارباحك ستبدا من 12.5 حتى 33 ريال واكثر",
+    "requestedAlreadyYouWillReceiveYourDuesSoon": "لقد تم الطلب مسبقا, ستستلم مستحقاتك قريبا",
+    "Riyal": "ريال",
+    "captainNotExist": "الكابتن غير موجود",
+    "ThereIsNoCurrentActiveFinancialCycle": "لا يوجد دورة مالية حالية وفعالة",
+    "requestedSuccessfully": "تمت المطالبة بنجاح",
+    "financeOverPaid": "دفعة زائدة",
+    "doYouWantToDoThisAction":"هل أنت متأكد من القيام بهذا الإجراء ؟"
 }

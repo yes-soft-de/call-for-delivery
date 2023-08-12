@@ -22,7 +22,7 @@ class UpdateOrderRequest {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['id'] = id.toString();
     data['state'] = state;
-    if (distance != null) {
+    if (distance != null && (distance?.isNotEmpty ?? false)) {
       data['kilometer'] = double.tryParse(distance ?? '0');
     }
     if (orderCost != null) {

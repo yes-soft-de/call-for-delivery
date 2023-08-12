@@ -1,11 +1,4 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
-import 'package:c4d/module_init/init_routes.dart';
-import 'package:c4d/module_orders/orders_routes.dart';
-import 'package:c4d/module_plan/plan_routes.dart';
-import 'package:c4d/module_profile/profile_routes.dart';
-import 'package:c4d/utils/response/action_response.dart';
-import 'package:injectable/injectable.dart';
-import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/enums/auth_status.dart';
 import 'package:c4d/module_auth/exceptions/auth_exception.dart';
@@ -18,9 +11,13 @@ import 'package:c4d/module_auth/request/login_request/login_request.dart';
 import 'package:c4d/module_auth/request/register_request/register_request.dart';
 import 'package:c4d/module_auth/request/register_request/verfy_code_request.dart';
 import 'package:c4d/module_auth/response/login_response/login_response.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:c4d/module_auth/response/regester_response/regester_response.dart';
+import 'package:c4d/module_init/init_routes.dart';
+import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
+import 'package:c4d/utils/response/action_response.dart';
+import 'package:injectable/injectable.dart';
+import 'package:rxdart/rxdart.dart';
 
 @Injectable()
 class AuthService {
@@ -244,7 +241,8 @@ class AuthService {
       switch (response?.statusCode) {
         // account created
         case '9102':
-          _prefsHelper.setUserCompetedProfile(PlanRoutes.PLAN_ROUTE);
+          _prefsHelper
+              .setUserCompetedProfile(OrdersRoutes.CAPTAIN_ORDERS_SCREEN);
           break;
         // account not filled
         case '9103':

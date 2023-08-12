@@ -146,19 +146,28 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
                   Navigator.of(context).pop();
                   if (request.orderCost != null &&
                       request.state == 'delivered') {
-                    showDialog(
-                        barrierDismissible: false,
-                        context: context,
-                        routeSettings: const RouteSettings(name: '/paid'),
-                        builder: (_) {
-                          return CustomAlertDialogForCash(
-                              onPressed: (paid) {
-                                Navigator.of(context).pop();
-                                request.paid = paid ? 1 : 2;
-                                widget.stateManager.updateOrder(request, this);
-                              },
-                              content: S.of(context).paidToProvider);
-                        });
+                    // payment cash show payment to provider dialog
+                    if (orderInfo.payment == 'cash') {
+                      showDialog(
+                          barrierDismissible: false,
+                          context: context,
+                          routeSettings: const RouteSettings(name: '/paid'),
+                          builder: (_) {
+                            return CustomAlertDialogForCash(
+                                onPressed: (paid) {
+                                  Navigator.of(context).pop();
+                                  request.paid = paid ? 1 : 2;
+                                  widget.stateManager
+                                      .updateOrder(request, this);
+                                },
+                                content: S.of(context).paidToProvider);
+                          });
+                    }
+                    // payment is card no need to show payment to provider dialog
+                    // send the request directly
+                    else {
+                      widget.stateManager.updateOrder(request, this);
+                    }
                   } else if (orderInfo.state == OrderStatusEnum.IN_STORE &&
                       orderInfo.payment == 'card') {
                     noNeedToTakeMoneyDialog(request);

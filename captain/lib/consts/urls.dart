@@ -6,7 +6,7 @@ const _prod = 'http://46.101.100.62';
 
 class Urls {
   static const String DOMAIN = _dev;
-  static const String BASE_API = '$DOMAIN';
+  static const String BASE_API = DOMAIN;
 
   static const String IMAGES_ROOT =
       'https://c4d-media.s3.eu-central-1.amazonaws.com' '/upload/';
@@ -232,5 +232,11 @@ class Urls {
       '$DOMAIN/v1/captainfinancialsystemdetail/captainbalancedetail';
   static const GET_CAPTAIN_FINANCIAL_DUES =
       '$DOMAIN/v1/captainfinancialdues/captainfinancialdues';
+
+  static const GET_PAYMENTS_HISTORY =
+      '$DOMAIN/v1/captainpayment/filtercaptainpayment';
+
+  static const REQUEST_PAYMENT = '$DOMAIN/v1/captainfinancialdemand/captainfinancialdemand';
+
   static const DELETE_USER = '$DOMAIN/v1/userstatus/userstatus';
 }

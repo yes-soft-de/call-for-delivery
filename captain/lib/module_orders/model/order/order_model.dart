@@ -27,6 +27,8 @@ class OrderModel extends DataModel {
   late num? storeBranchToClientDistance;
   late String storeName;
   num? captainProfit;
+  num? profit;
+
   OrderModel({
     required this.branchName,
     required this.state,
@@ -45,6 +47,7 @@ class OrderModel extends DataModel {
     required this.storeName,
     this.destination,
     this.destinationLink,
+    this.profit,
     required this.captainProfit,
   });
   List<OrderModel> _orders = [];
@@ -91,7 +94,9 @@ class OrderModel extends DataModel {
               ? LatLng(
                   element.destination?.lat ?? 0, element.destination?.lon ?? 0)
               : null,
-          captainProfit: element.captainProfit ?? 0));
+          captainProfit: element.captainProfit ?? 0,
+          profit: element.profit
+          ));
     });
   }
   List<OrderModel> _getOrders(List<SubOrder> suborder) {
