@@ -588,8 +588,10 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Edit Branch Name"),
         "editCoordinates":
             MessageLookupByLibrary.simpleMessage("edit coordinates"),
+        "editDistance": MessageLookupByLibrary.simpleMessage("edit distance"),
         "editDistanceRequestDetails": MessageLookupByLibrary.simpleMessage(
             "edit distance request details"),
+        "editKilometer": MessageLookupByLibrary.simpleMessage("edit kilometer"),
         "editOrder": MessageLookupByLibrary.simpleMessage("Edit order"),
         "editProfile":
             MessageLookupByLibrary.simpleMessage("Edit store profile"),
@@ -615,6 +617,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Enter extra cars count"),
         "enterDeliveryCompanyName":
             MessageLookupByLibrary.simpleMessage("enter delivery company name"),
+        "enterLink": MessageLookupByLibrary.simpleMessage("enter link"),
         "enterProductInfo":
             MessageLookupByLibrary.simpleMessage("Enter product information"),
         "enterTheMaxLimitThatAreAllowedToStoreDues":

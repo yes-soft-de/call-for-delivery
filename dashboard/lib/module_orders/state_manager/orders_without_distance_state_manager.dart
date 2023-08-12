@@ -5,6 +5,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order_without_distance_model.dart';
+import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/update_distance_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
@@ -52,14 +53,46 @@ class OrderWithoutDistanceStateManager {
     _myOrdersService.updateDistance(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error ?? '')
-            ;
+            title: S.current.warnning, message: value.error ?? '');
         screenState.getOrders();
       } else {
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.distanceUpdatedSuccessfully)
-            ;
+            title: S.current.warnning,
+            message: S.current.distanceUpdatedSuccessfully);
+        screenState.getOrders();
+      }
+    });
+  }
+
+  void addKilometer(OrdersWithoutDistanceScreenState screenState,
+      AddExtraDistanceRequest request) {
+    _stateSubject.add(LoadingState(screenState));
+    _myOrdersService.addExtraDistanceToOrder(request).then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.createError(
+            title: S.current.warnning, message: value.error ?? '');
+        screenState.getOrders();
+      } else {
+        CustomFlushBarHelper.createSuccess(
+            title: S.current.warnning,
+            message: S.current.distanceUpdatedSuccessfully);
+        screenState.getOrders();
+      }
+    });
+  }
+
+  void addCoordinates(OrdersWithoutDistanceScreenState screenState,
+      AddExtraDistanceRequest request) {
+    _stateSubject.add(LoadingState(screenState));
+    _myOrdersService.updateExtraDistanceToOrder(request).then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.createError(
+            title: S.current.warnning, message: value.error ?? '');
+        screenState.getOrders();
+      } else {
+        CustomFlushBarHelper.createSuccess(
+            title: S.current.warnning,
+            message: S.current.distanceUpdatedSuccessfully);
         screenState.getOrders();
       }
     });

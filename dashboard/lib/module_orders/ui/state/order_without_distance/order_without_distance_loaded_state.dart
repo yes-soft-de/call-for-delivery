@@ -1,10 +1,10 @@
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order_without_distance_model.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/ui/screens/orders_without_distance_screen.dart';
+import 'package:c4d/module_orders/ui/widgets/orders_without_distance/add_distance_dialog.dart';
 import 'package:c4d/module_orders/ui/widgets/orders_without_distance/order_without_distance_card.dart';
-import 'package:c4d/module_orders/ui/widgets/orders_without_distance/update_distance_dialog.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
@@ -44,23 +44,27 @@ class OrderWithoutDistanceLoadedState extends States {
               destinationUrl: element.destinationLink ?? '',
               onEdit: () {
                 showDialog(
-                    context: context,
-                    builder: (ctx) {
-                      return AlertDialog(
-                        scrollable: true,
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(25)),
-                        title: Text(S.current.updateDistance),
-                        content: UpdateDistanceDialog(
-                          branchLocation:
-                              element.branchLocation ?? LatLng(0, 0),
-                          callback: (request) {
-                            screenState.updateDistance(request);
-                          },
+                  context: context,
+                  builder: (ctx) {
+                    return AddDistanceDialog(
+                      onCoordinatesAdd: (coordinates) {
+                        screenState.addCoordinates(AddExtraDistanceRequest(
                           id: element.id,
-                        ),
-                      );
-                    });
+                          destination: Destination(
+                            lat: coordinates.lat,
+                            lon: coordinates.lon,
+                          ),
+                        ));
+                      },
+                      onKilometerAdd: (kilometer) {
+                        screenState.addKilometer(AddExtraDistanceRequest(
+                          id: element.id,
+                          additionalDistance: kilometer.toDouble(),
+                        ));
+                      },
+                    );
+                  },
+                );
               },
             ),
           ),
