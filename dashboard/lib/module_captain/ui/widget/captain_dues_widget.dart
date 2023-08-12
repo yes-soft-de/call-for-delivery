@@ -1,21 +1,20 @@
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_captain/model/new_captain_finance_daily_model.dart';
+import 'package:c4d/module_captain/model/captain_dues_model.dart';
 import 'package:c4d/module_payments/payments_routes.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:flutter/material.dart';
 
-class CaptainFinanceDailyWidget extends StatelessWidget {
+class CaptainDuesWidget extends StatelessWidget {
   // final CaptainFinanceDailyModel? model;
-  final NewCaptainFinanceDailyModel? model;
-  const CaptainFinanceDailyWidget({Key? key, required this.model})
-      : super(key: key);
+  final CaptainDuesModel? model;
+  const CaptainDuesWidget({Key? key, required this.model}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
         Navigator.of(context).pushNamed(
-          PaymentsRoutes.CAPTAIN_DAILY_PAYMENTS,
+          PaymentsRoutes.CAPTAIN_PAYMENT,
           arguments: [model?.captainProfileId, model?.captainName],
         );
       },

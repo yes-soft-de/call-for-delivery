@@ -10666,6 +10666,16 @@ class S {
     );
   }
 
+  /// `are you sure about add payment {value} Riyal?`
+  String areYouSureAboutAddPayment(String value) {
+    return Intl.message(
+      'are you sure about add payment $value Riyal?',
+      name: 'areYouSureAboutAddPayment',
+      desc: '',
+      args: [value],
+    );
+  }
+
   /// `register payment`
   String get registerPayment {
     return Intl.message(
@@ -10751,6 +10761,136 @@ class S {
     return Intl.message(
       'enter link',
       name: 'enterLink',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `capitan dues`
+  String get captainDues {
+    return Intl.message(
+      'capitan dues',
+      name: 'captainDues',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Payment Requests`
+  String get paymentRequests {
+    return Intl.message(
+      'Payment Requests',
+      name: 'paymentRequests',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `financial dues`
+  String get FinancialDues {
+    return Intl.message(
+      'financial dues',
+      name: 'FinancialDues',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `since last payment until now`
+  String get sinceLastPaymentUntilNow {
+    return Intl.message(
+      'since last payment until now',
+      name: 'sinceLastPaymentUntilNow',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `unpaid amounts from cash to stores`
+  String get unpaidAmountsFromCashToStores {
+    return Intl.message(
+      'unpaid amounts from cash to stores',
+      name: 'unpaidAmountsFromCashToStores',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `profits from orders`
+  String get profitsFromOrders {
+    return Intl.message(
+      'profits from orders',
+      name: 'profitsFromOrders',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `last payment`
+  String get lastPayment {
+    return Intl.message(
+      'last payment',
+      name: 'lastPayment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `show previous payments`
+  String get showPreviousPayments {
+    return Intl.message(
+      'show previous payments',
+      name: 'showPreviousPayments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `add payment`
+  String get addPayment {
+    return Intl.message(
+      'add payment',
+      name: 'addPayment',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `Not Paid`
+  String get notPaid {
+    return Intl.message(
+      'Not Paid',
+      name: 'notPaid',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `by hand`
+  String get byHand {
+    return Intl.message(
+      'by hand',
+      name: 'byHand',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `bank transfer`
+  String get bankTransfer {
+    return Intl.message(
+      'bank transfer',
+      name: 'bankTransfer',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `previous payments`
+  String get previousPayments {
+    return Intl.message(
+      'previous payments',
+      name: 'previousPayments',
       desc: '',
       args: [],
     );

@@ -29,8 +29,10 @@ class CaptainCard extends StatelessWidget {
       child: InkWell(
         borderRadius: BorderRadius.circular(50),
         onTap: () {
-          Navigator.of(context)
-              .pushNamed(CaptainsRoutes.CAPTAIN_PROFILE, arguments: captainId);
+          Navigator.of(context).pushNamed(
+            CaptainsRoutes.CAPTAIN_PROFILE,
+            arguments: profileID,
+          );
         },
         child: Container(
           decoration: BoxDecoration(
@@ -86,7 +88,10 @@ class CaptainCard extends StatelessWidget {
                 child: Container(
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: Theme.of(context).backgroundColor.withOpacity(0.2),
+                    color: Theme.of(context)
+                        .colorScheme
+                        .background
+                        .withOpacity(0.2),
                   ),
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),

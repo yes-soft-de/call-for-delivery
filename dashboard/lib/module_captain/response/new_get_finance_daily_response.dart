@@ -48,7 +48,7 @@ class CaptainDataFinance {
     captainProfileId = json['captainProfileId'];
     captainName = json['captainName'];
     image = json['image'] != null ? new Image.fromJson(json['image']) : null;
-    amountSum = json['amountSum'];
+    amountSum = json['financialDueAmount'];
     toBePaid = json['toBePaid'];
   }
 

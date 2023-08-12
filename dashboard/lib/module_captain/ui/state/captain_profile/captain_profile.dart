@@ -1,11 +1,11 @@
 import 'package:c4d/hive/util/argument_hive_helper.dart';
-import 'package:c4d/module_captain/captains_routes.dart';
 import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/ui/widget/captain_control_widget.dart';
 import 'package:c4d/module_captain/ui/widget/captain_profile/captain_finance_info.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
+import 'package:c4d/module_payments/payments_routes.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/state.dart';
@@ -208,7 +208,7 @@ class CaptainProfileLoadedState extends States {
                                 title: S.of(context).name,
                                 subTitle: (model?.name ?? '') +
                                     ' ' +
-                                    '{${model?.captainId.toString() ?? ''}}',
+                                    '{${model?.profileId.toString() ?? ''}}',
                                 iconData: Icons.person_rounded),
                             CustomListTile(
                                 title: S.of(context).age,
@@ -406,7 +406,7 @@ class CaptainProfileLoadedState extends States {
                     appBar: CustomC4dAppBar.appBar(context,
                         title: S.current.FinanceRequest),
                     body: CaptainFinanceInfo(
-                      captainID: screenState.captainId,
+                      captainID: screenState.captainProfileId,
                       details: model!.captainFinance!,
                       requestStatus: (status) {
                         Navigator.of(context).pop();
@@ -429,7 +429,7 @@ class CaptainProfileLoadedState extends States {
           icon: Icons.money,
           onPressed: () {
             ArgumentHiveHelper()
-                .setCurrentCaptainID(screenState.captainId.toString());
+                .setCurrentCaptainID(screenState.captainProfileId.toString());
             Navigator.of(context).pushNamed(OrdersRoutes.ORDER_CASH_CAPTAINS);
           },
           title: S.of(context).cashOrders,
@@ -438,7 +438,7 @@ class CaptainProfileLoadedState extends States {
           icon: FontAwesomeIcons.boxes,
           onPressed: () {
             ArgumentHiveHelper()
-                .setCurrentCaptainID(screenState.captainId.toString());
+                .setCurrentCaptainID(screenState.captainProfileId.toString());
             Navigator.of(context).pushNamed(OrdersRoutes.CAPTAIN_ORDERS_SCREEN);
           },
           title: S.of(context).orderLog,
@@ -456,8 +456,10 @@ class CaptainProfileLoadedState extends States {
         CaptainControlWidget(
           icon: Icons.balance,
           onPressed: () {
-            Navigator.of(context).pushNamed(CaptainsRoutes.CAPTAIN_BALANCE,
-                arguments: screenState.captainId);
+            Navigator.of(context).pushNamed(
+              PaymentsRoutes.CAPTAIN_PAYMENT,
+              arguments: [model?.captainId, model?.name],
+            );
           },
           title: S.of(context).accountBalance,
         ),

@@ -26,14 +26,15 @@ class InActiveModel extends DataModel {
     _model = [];
     for (var element in data) {
       _model.add(InActiveModel(
-          captainID: element.id ?? -1,
-          image: element.image?.image ?? '',
-          captainName: element.captainName ?? '',
-          phoneNumber:
-              element.phone ?? element.userId ?? S.current.notCompletedAccount,
-          userID: element.userId,
-          verificationStatus: element.verificationStatus == 1 ? true : false,
-          profileID: element.captainID ?? -1));
+        captainID: element.captainID ?? -1,
+        image: element.image?.image ?? '',
+        captainName: element.captainName ?? '',
+        phoneNumber:
+            element.phone ?? element.userId ?? S.current.notCompletedAccount,
+        userID: element.userId,
+        verificationStatus: element.verificationStatus == 1 ? true : false,
+        profileID: element.id ?? -1,
+      ));
     }
   }
   List<InActiveModel> get data => _model;

@@ -20,9 +20,11 @@ typedef String MessageIfAbsent(String messageStr, List<dynamic> args);
 class MessageLookup extends MessageLookupByLibrary {
   String get localeName => 'en';
 
-  static String m0(value) => "payment ${value} Riyal";
+  static String m0(value) => "are you sure about add payment ${value} Riyal?";
 
-  static String m1(value) => "${value} Riyal";
+  static String m1(value) => "payment ${value} Riyal";
+
+  static String m2(value) => "${value} Riyal";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -33,6 +35,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "This area contain a very sensitive action may cause to loose all your data , and there is no going back in current time"),
         "FinanceRequest":
             MessageLookupByLibrary.simpleMessage("Finance request"),
+        "FinancialDues": MessageLookupByLibrary.simpleMessage("financial dues"),
         "InvalidInput": MessageLookupByLibrary.simpleMessage("Invalid"),
         "LastCreatedDelivery":
             MessageLookupByLibrary.simpleMessage("Last created delivery"),
@@ -110,6 +113,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "addPackage": MessageLookupByLibrary.simpleMessage("Add package"),
         "addPackageSuccessfully":
             MessageLookupByLibrary.simpleMessage("Package Added successfully"),
+        "addPayment": MessageLookupByLibrary.simpleMessage("add payment"),
         "addProducts": MessageLookupByLibrary.simpleMessage("Add Products"),
         "addSetting": MessageLookupByLibrary.simpleMessage("Add Setting"),
         "addStore": MessageLookupByLibrary.simpleMessage("Add Stores"),
@@ -150,6 +154,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Are you sure about deleting your account , you won\'t be able to login with this credential any more"),
         "areSureAboutResolveThisOrder": MessageLookupByLibrary.simpleMessage(
             "Are sure about resolving this order finance conflict"),
+        "areYouSureAboutAddPayment": m0,
         "areYouSureAboutCreatingSubOrder": MessageLookupByLibrary.simpleMessage(
             "Are you sure about creating new sub order , you can split later if needed"),
         "areYouSureAboutDeleteOrder": MessageLookupByLibrary.simpleMessage(
@@ -204,6 +209,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "bankAccountNumber":
             MessageLookupByLibrary.simpleMessage("Bank Account Number"),
         "bankName": MessageLookupByLibrary.simpleMessage("Bank Name"),
+        "bankTransfer": MessageLookupByLibrary.simpleMessage("bank transfer"),
         "bestStore": MessageLookupByLibrary.simpleMessage("Best Store"),
         "bidOrder": MessageLookupByLibrary.simpleMessage("Bid order"),
         "bill": MessageLookupByLibrary.simpleMessage("Bill"),
@@ -227,6 +233,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "branchManagement":
             MessageLookupByLibrary.simpleMessage("Branch management"),
         "businessName": MessageLookupByLibrary.simpleMessage("Business Name"),
+        "byHand": MessageLookupByLibrary.simpleMessage("by hand"),
         "calculating": MessageLookupByLibrary.simpleMessage("Calculating"),
         "camera": MessageLookupByLibrary.simpleMessage("Camera"),
         "cancel": MessageLookupByLibrary.simpleMessage("Cancel"),
@@ -250,6 +257,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainDaily": MessageLookupByLibrary.simpleMessage("captain daily"),
         "captainDistance":
             MessageLookupByLibrary.simpleMessage("Captain Distance"),
+        "captainDues": MessageLookupByLibrary.simpleMessage("capitan dues"),
         "captainFinance":
             MessageLookupByLibrary.simpleMessage("Captain Finance"),
         "captainFinanceDaily":
@@ -853,6 +861,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Last 7 days orders"),
         "last7days": MessageLookupByLibrary.simpleMessage("last 7 days"),
         "lastName": MessageLookupByLibrary.simpleMessage("Last name"),
+        "lastPayment": MessageLookupByLibrary.simpleMessage("last payment"),
         "lastSeenMessage": MessageLookupByLibrary.simpleMessage("New Messages"),
         "lastSevenDays":
             MessageLookupByLibrary.simpleMessage("last seven days"),
@@ -936,6 +945,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Not completed account"),
         "notImplementedYet":
             MessageLookupByLibrary.simpleMessage("Not implemented yet"),
+        "notPaid": MessageLookupByLibrary.simpleMessage("Not Paid"),
         "notReceivedCash":
             MessageLookupByLibrary.simpleMessage("Cash not Received"),
         "notSubscription": MessageLookupByLibrary.simpleMessage(
@@ -1144,12 +1154,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "paymentMethodHint": MessageLookupByLibrary.simpleMessage("Choose"),
         "paymentPortalHint": MessageLookupByLibrary.simpleMessage(
             "All prices in payments portal are included with 15% vat"),
+        "paymentRequests":
+            MessageLookupByLibrary.simpleMessage("Payment Requests"),
         "paymentResume": MessageLookupByLibrary.simpleMessage("Payment Resume"),
         "paymentSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Payment created successfully"),
         "paymentToCaptain":
             MessageLookupByLibrary.simpleMessage("Payment To Captain"),
-        "paymentValueRiyal": m0,
+        "paymentValueRiyal": m1,
         "payments": MessageLookupByLibrary.simpleMessage("Payments"),
         "paymentsDeletedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Payment deleted successfully"),
@@ -1238,6 +1250,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Preferred Language"),
         "pressHere": MessageLookupByLibrary.simpleMessage("Press here"),
         "previousOrder": MessageLookupByLibrary.simpleMessage("previous order"),
+        "previousPayments":
+            MessageLookupByLibrary.simpleMessage("previous payments"),
         "price": MessageLookupByLibrary.simpleMessage("Price"),
         "primaryOrder": MessageLookupByLibrary.simpleMessage("Primary order"),
         "privacyPolicy": MessageLookupByLibrary.simpleMessage("Privacy Policy"),
@@ -1255,6 +1269,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "profileFetchedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Profile Data Fetched Successfully"),
         "profit": MessageLookupByLibrary.simpleMessage("Profit"),
+        "profitsFromOrders":
+            MessageLookupByLibrary.simpleMessage("profits from orders"),
         "provideClientCoordinations":
             MessageLookupByLibrary.simpleMessage("Delivery location"),
         "provideClientCoordinationsHint":
@@ -1381,10 +1397,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "share": MessageLookupByLibrary.simpleMessage("Share"),
         "showAll": MessageLookupByLibrary.simpleMessage("Show All"),
         "showPayments": MessageLookupByLibrary.simpleMessage("show payments"),
+        "showPreviousPayments":
+            MessageLookupByLibrary.simpleMessage("show previous payments"),
         "showingCart": MessageLookupByLibrary.simpleMessage("Cart"),
         "signOut": MessageLookupByLibrary.simpleMessage("Sign out"),
         "similarProducts":
             MessageLookupByLibrary.simpleMessage("Similar Products"),
+        "sinceLastPaymentUntilNow": MessageLookupByLibrary.simpleMessage(
+            "since last payment until now"),
         "skip": MessageLookupByLibrary.simpleMessage("Skip"),
         "skipPaymentStageForWelcomePackage":
             MessageLookupByLibrary.simpleMessage(
@@ -1595,6 +1615,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "unlinkedSubOrderFromGroupedOrder":
             MessageLookupByLibrary.simpleMessage(
                 "Unlinked order from group order"),
+        "unpaidAmountsFromCashToStores": MessageLookupByLibrary.simpleMessage(
+            "unpaid amounts from cash to stores"),
         "unpaidCaptainFinanceDaily":
             MessageLookupByLibrary.simpleMessage("Unpaid"),
         "update": MessageLookupByLibrary.simpleMessage("Update"),
@@ -1665,7 +1687,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Uploading Image, Please Wait"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "validation": MessageLookupByLibrary.simpleMessage("Validation"),
-        "valueRiyal": m1,
+        "valueRiyal": m2,
         "views": MessageLookupByLibrary.simpleMessage("views"),
         "waiting": MessageLookupByLibrary.simpleMessage("waiting"),
         "waitingDescription": MessageLookupByLibrary.simpleMessage(

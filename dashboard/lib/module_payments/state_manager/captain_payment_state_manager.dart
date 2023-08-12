@@ -3,32 +3,34 @@ import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_captain/request/captain_daily_finance_request.dart';
+import 'package:c4d/module_captain/request/captain_payment_request.dart';
 import 'package:c4d/module_payments/model/captain_all_amount_model.dart';
 import 'package:c4d/module_payments/model/captain_daily_finance.dart';
+import 'package:c4d/module_payments/model/captain_dues_model.dart';
 import 'package:c4d/module_payments/request/captain_daily_payment_request.dart';
+import 'package:c4d/module_payments/request/captain_payments_request.dart';
 import 'package:c4d/module_payments/service/payments_service.dart';
 import 'package:c4d/module_payments/ui/screen/all_amount_captains_screen.dart';
-import 'package:c4d/module_payments/ui/screen/daily_payments_screen.dart';
+import 'package:c4d/module_payments/ui/screen/captain_payment_screen.dart';
 import 'package:c4d/module_payments/ui/state/all_amount_captains_state.dart';
-import 'package:c4d/module_payments/ui/state/daily_payments_loaded_state.dart';
+import 'package:c4d/module_payments/ui/state/captain_payment_state_loaded.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
 @injectable
-class DailyBalanceStateManager {
+class CaptainPaymentStateManager {
   final PaymentsService _profileService;
 
   final PublishSubject<States> _stateSubject = PublishSubject<States>();
 
   Stream<States> get stateStream => _stateSubject.stream;
 
-  DailyBalanceStateManager(
+  CaptainPaymentStateManager(
     this._profileService,
   );
-  void getAccountBalance(DailyPaymentsScreenState screenState,
-      CaptainDailyFinanceRequest request) {
+  void getAccountBalance(
+      CaptainPaymentScreenState screenState, CaptainPaymentRequest request) {
     _stateSubject.add(LoadingState(screenState));
     _profileService.getCaptainFinanceDaily(request).then((value) {
       if (value.hasError) {
@@ -43,26 +45,50 @@ class DailyBalanceStateManager {
         }, title: S.current.payments, emptyMessage: S.current.emptyStaff));
       } else {
         CaptainDailyFinanceModel captain = value as CaptainDailyFinanceModel;
-        _stateSubject.add(DailyPaymentsLoaded(screenState, captain.data));
+        // TODO this function api call need to change
+        // _stateSubject.add(CaptainPaymentStateLoaded(screenState, captain.data));
       }
     });
   }
 
-  void makePayments(DailyPaymentsScreenState screenState,
-      CaptainDailyPaymentsRequest request) {
+  void getCaptainPaymentsDetails(
+      CaptainPaymentScreenState screenState, int captainId) {
     _stateSubject.add(LoadingState(screenState));
-    _profileService.payDailyFinance(request).then((value) {
+    _profileService.getCaptainFinance(captainId).then((value) {
+      if (value.hasError) {
+        _stateSubject.add(ErrorState(
+          screenState,
+          onPressed: () {
+            getCaptainPaymentsDetails(screenState, captainId);
+          },
+          title: '',
+          hasAppbar: false,
+        ));
+      } else if (value.isEmpty) {
+        _stateSubject
+            .add(EmptyState(screenState, hasAppbar: false, onPressed: () {
+          getCaptainPaymentsDetails(screenState, captainId);
+        }, title: S.current.payments, emptyMessage: S.current.emptyStaff));
+      } else {
+        CaptainPaymentModel _balance = value as CaptainPaymentModel;
+        _stateSubject
+            .add(CaptainPaymentStateLoaded(screenState, _balance.data));
+      }
+    });
+  }
+
+  void addPayment(
+      CaptainPaymentScreenState screenState, CaptainPaymentsRequest request) {
+    _stateSubject.add(LoadingState(screenState));
+    _profileService.paymentToCaptain(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error.toString())
-            ;
-        getAccountBalance(screenState, screenState.paymentsFilter);
+            title: S.current.warnning, message: value.error.toString());
+        getCaptainPaymentsDetails(screenState, request.captainId ?? -1);
       } else {
-        getAccountBalance(screenState, screenState.paymentsFilter);
+        getCaptainPaymentsDetails(screenState, request.captainId ?? -1);
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.paymentSuccessfully)
-            ;
+            title: S.current.warnning, message: S.current.paymentSuccessfully);
       }
     });
   }
@@ -73,15 +99,13 @@ class DailyBalanceStateManager {
     _profileService.editDailyFinance(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error.toString())
-            ;
+            title: S.current.warnning, message: value.error.toString());
         getAllAmount(screenState, screenState.paymentsFilter);
       } else {
         getAllAmount(screenState, screenState.paymentsFilter);
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.updatePaymentSuccessfully)
-            ;
+            title: S.current.warnning,
+            message: S.current.updatePaymentSuccessfully);
       }
     });
   }
@@ -92,22 +116,20 @@ class DailyBalanceStateManager {
     _profileService.deleteDailyFinance(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error.toString())
-            ;
+            title: S.current.warnning, message: value.error.toString());
         getAllAmount(screenState, screenState.paymentsFilter);
         // getAccountBalance(screenState, screenState.paymentsFilter);
       } else {
         getAllAmount(screenState, screenState.paymentsFilter);
         // getAccountBalance(screenState, screenState.paymentsFilter);
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning, message: S.current.deleteSuccess)
-            ;
+            title: S.current.warnning, message: S.current.deleteSuccess);
       }
     });
   }
 
-  void getAllAmount(AllAmountCaptainsScreenState screenState,
-      CaptainDailyFinanceRequest request) {
+  void getAllAmount(
+      AllAmountCaptainsScreenState screenState, CaptainPaymentRequest request) {
     _stateSubject.add(LoadingState(screenState));
     _profileService.getAllAmountCaptains(request).then((value) {
       if (value.hasError) {

@@ -317,11 +317,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.duesPayments,
                 icon: FontAwesomeIcons.moneyBillTransfer,
                 children: [
-                  customListTile(
-                      getIt<CaptainsModule>().captainFinanceDailyScreen,
-                      S.current.captainDaily,
-                      FontAwesomeIcons.moneyBills,
-                      true),
+                  customListTile(getIt<CaptainsModule>().captainDuesScreen,
+                      S.current.captainDues, FontAwesomeIcons.moneyBills, true),
                   customListTile(
                       getIt<StoresModule>().storesDuesScreen,
                       S.current.storesCashRequest,

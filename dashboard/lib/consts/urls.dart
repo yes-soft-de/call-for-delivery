@@ -303,6 +303,8 @@ class Urls {
       DOMAIN + '/v1/captainfinancialsystemdetail/captainfinancialsystemdetail';
 
   /*------------------------CAPTAIN FINANCE------------------------*/
+  static const FILTER_CAPTAIN_PAYMENT =
+      DOMAIN + VERSION_ADMIN + '/captainpayment/filtercaptainpaymentbyadmin';
   static const GET_CAPTAIN_FINANCE_BY_ORDERS =
       BASE_API_CAPTAIN_FINANCE_BY_ORDER +
           '/captainfinancialsystemaccordingonorderbyadmin';
@@ -339,12 +341,16 @@ class Urls {
   static const GET_CAPTAIN_FINANCE_DAILY = DOMAIN +
       VERSION_ADMIN +
       '/captainfinancialdaily/captainswithfinancialdailyoftoday';
-  static const NEW_GET_CAPTAIN_FINANCE_DAILY = DOMAIN +
-      VERSION_ADMIN +
-      '/captainfinancialdaily/filtercaptainfinancialdailysumbyadmin';
+  static const GET_CAPTAIN_DUES = DOMAIN +
+      VERSION +
+      '/captainfinancialduesforadmin/filtercaptainfinancialduesumbyadmin';
   static const NEW_GET_CAPTAIN_FINANCE_ALL_AMOUNT = DOMAIN +
       VERSION_ADMIN +
       '/captainpayment/filterpaymentsforcaptainfinancialdailybyadmin';
+
+  static const GET_CAPTAIN_FINCANCE_DUES = DOMAIN +
+      VERSION +
+      '/captainfinancialduesforadmin/unpaidcaptainfinancialduebyadmin';
   /*-----------------Supplier--Categories---------------*/
   static const GET_SUPPLIER_CATEGORIES =
       BASE_API_SUPPLIER_CATE + '/suppliercategories';

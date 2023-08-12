@@ -1,11 +1,12 @@
-import 'package:intl/intl.dart';
-
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/module_captain/response/captain_profile_response.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
+import 'package:intl/intl.dart';
 
 class ProfileModel extends DataModel {
   int id = -1;
+  int? profileId;
   String? image;
   String? name;
   String? phone;
@@ -30,6 +31,7 @@ class ProfileModel extends DataModel {
   String? address;
   ProfileModel({
     required this.id,
+    this.profileId,
     this.image,
     this.name,
     this.phone,
@@ -43,48 +45,49 @@ class ProfileModel extends DataModel {
     this.age,
     this.isOnline,
     this.status,
-    this.bounce,
     this.salary,
+    this.bounce,
     this.createDate,
     this.captainFinance,
     this.verificationStatus,
     required this.captainId,
     required this.roomId,
-    this.address,
     this.city,
+    this.address,
   });
 
   ProfileModel? _models;
 
   ProfileModel.withData(Data data) : super.withData() {
     _models = ProfileModel(
-        captainFinance: getOrderCounts(data.financialSystemCaptainDetails),
-        id: data.id ?? -1,
-        image: data.image?.image,
-        name: data.captainName,
-        phone: data.phone,
-        stcPay: data.stcPay,
-        bankName: data.bankName,
-        bankNumber: data.bankAccountNumber,
-        car: data.car,
-        age: data.age,
-        mechanicLicense: data.mechanicLicense?.image,
-        drivingLicence: data.drivingLicence?.image,
-        identity: data.identity?.image,
-        isOnline: data.isOnline,
-        status: data.status,
-        salary: data.salary,
-        bounce: data.bounce,
-        city: data.city,
-        address: data.address,
-        createDate: DateFormat.jm()
-                .format(DateHelper.convert(data.createDate?.timestamp)) +
-            '   ' +
-            DateFormat.yMd()
-                .format(DateHelper.convert(data.createDate?.timestamp)),
-        verificationStatus: data.verificationStatus == 1 ? true : false,
-        captainId: data.captainID ?? -1,
-        roomId: data.roomID ?? '');
+      captainFinance: getOrderCounts(data.financialSystemCaptainDetails),
+      id: data.id ?? -1,
+      image: data.image?.image,
+      name: data.captainName,
+      phone: data.phone,
+      stcPay: data.stcPay,
+      bankName: data.bankName,
+      bankNumber: data.bankAccountNumber,
+      car: data.car,
+      age: data.age,
+      mechanicLicense: data.mechanicLicense?.image,
+      drivingLicence: data.drivingLicence?.image,
+      identity: data.identity?.image,
+      isOnline: data.isOnline,
+      status: data.status,
+      salary: data.salary,
+      bounce: data.bounce,
+      city: data.city,
+      address: data.address,
+      createDate: DateFormat.jm()
+              .format(DateHelper.convert(data.createDate?.timestamp)) +
+          '   ' +
+          DateFormat.yMd()
+              .format(DateHelper.convert(data.createDate?.timestamp)),
+      verificationStatus: data.verificationStatus == 1 ? true : false,
+      captainId: data.captainID ?? -1,
+      roomId: data.roomID ?? '',
+    );
   }
 
   ProfileModel get data =>

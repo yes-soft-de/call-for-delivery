@@ -40,20 +40,21 @@ class CaptainProfileScreenState extends State<CaptainProfileScreen> {
   }
 
   void getCaptain() {
-    widget._stateManager.getCaptainProfile(this, captainId);
+    widget._stateManager.getCaptainProfile(this, captainProfileId);
   }
 
   void enableCaptain(String status) {
-    widget._stateManager.acceptCaptainProfile(this, captainId,
-        EnableCaptainRequest(id: captainId, status: status), false);
+    widget._stateManager.acceptCaptainProfile(this, captainProfileId,
+        EnableCaptainRequest(id: captainProfileId, status: status), false);
   }
 
   void enableCaptainFinance(CaptainFinanceRequest request) {
-    widget._stateManager.captainFinanceStatusPlan(this, captainId, request);
+    widget._stateManager
+        .captainFinanceStatusPlan(this, captainProfileId, request);
   }
 
   void updateCaptainProfile(UpdateCaptainRequest request) {
-    request.id = captainId;
+    request.id = captainProfileId;
     widget._stateManager.updateCaptainProfile(this, request);
   }
 
@@ -65,15 +66,15 @@ class CaptainProfileScreenState extends State<CaptainProfileScreen> {
     }
   }
 
-  int captainId = -1;
+  int captainProfileId = -1;
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    if (captainId == -1) {
+    if (captainProfileId == -1) {
       var arg = ModalRoute.of(context)?.settings.arguments;
       if (arg != null && arg is int) {
-        captainId = arg;
-        widget._stateManager.getCaptainProfile(this, captainId);
+        captainProfileId = arg;
+        widget._stateManager.getCaptainProfile(this, captainProfileId);
       }
     }
     return Scaffold(

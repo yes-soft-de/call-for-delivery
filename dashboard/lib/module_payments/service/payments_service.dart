@@ -1,18 +1,21 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_captain/request/captain_daily_finance_request.dart';
+import 'package:c4d/module_captain/request/captain_payment_request.dart';
 import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_payments/manager/payments_manager.dart';
 import 'package:c4d/module_payments/model/captain_all_amount_model.dart';
 import 'package:c4d/module_payments/model/captain_balance_model.dart';
 import 'package:c4d/module_payments/model/captain_daily_finance.dart';
+import 'package:c4d/module_payments/model/captain_dues_model.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_hours_model.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_order_count.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_order_model.dart';
+import 'package:c4d/module_payments/model/captain_previous_payments_model.dart';
 import 'package:c4d/module_payments/model/store_balance_model.dart';
 import 'package:c4d/module_payments/request/captain_daily_payment_request.dart';
 import 'package:c4d/module_payments/request/captain_payments_request.dart';
+import 'package:c4d/module_payments/request/captain_previous_payments_request.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_count_order_request.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_hours.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_order_request.dart';
@@ -22,7 +25,9 @@ import 'package:c4d/module_payments/response/captain_dialy_finance/captain_dialy
 import 'package:c4d/module_payments/response/captain_finance_by_hours_response/captain_finance_by_hours_response.dart';
 import 'package:c4d/module_payments/response/captain_finance_by_order_counts_response/captain_finance_by_order_counts_response.dart';
 import 'package:c4d/module_payments/response/captain_finance_by_order_response/captain_finance_by_order_response.dart';
+import 'package:c4d/module_payments/response/captain_finance_response/captain_finance_response.dart';
 import 'package:c4d/module_payments/response/captain_payments_response/captain_payments_response.dart';
+import 'package:c4d/module_payments/response/captain_previous_payment_response/captain_previous_payment_response.dart';
 import 'package:c4d/module_payments/response/store_payments_response/store_payments_response.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
 import 'package:injectable/injectable.dart';
@@ -103,6 +108,22 @@ class PaymentsService {
   }
 
   /*-----------------------------------CAPTAIN PAYMENTS----------------------------------------------- */
+
+  Future<DataModel> filterCaptainPayment(
+      CaptainPreviousPaymentRequest request) async {
+    CaptainPreviousPaymentResponse? response =
+        await _paymentsManager.filterCaptainPayment(request);
+    if (response == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (response.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    if (response.data == null) return DataModel.empty();
+    return CaptainPreviousPaymentsModel.withData(response);
+  }
+
   Future<DataModel> getCaptainBalance(int captainId) async {
     CaptainPaymentsResponse? _captainProfileResponse =
         await _paymentsManager.getAccountBalance(captainId);
@@ -175,7 +196,7 @@ class PaymentsService {
 
   /* ---------------------------------- CAPTAIN DAILY FINANCE --------------------------------------- */
   Future<DataModel> getCaptainFinanceDaily(
-      CaptainDailyFinanceRequest request) async {
+      CaptainPaymentRequest request) async {
     CaptainDailyFinanceResponse? actionResponse =
         await _paymentsManager.getCaptainDailyFinance(request);
     if (actionResponse == null) {
@@ -236,6 +257,22 @@ class PaymentsService {
   }
 
   /* ---------------------------------- CAPTAIN FINANCE --------------------------------------- */
+  Future<DataModel> getCaptainFinance(int captainId) async {
+    CaptainFinanceResponse? actionResponse =
+        await _paymentsManager.getCaptainFinance(captainId);
+    if (actionResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (actionResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
+    }
+    if (actionResponse.data == null) {
+      return DataModel.empty();
+    }
+    return CaptainPaymentModel.withData(actionResponse);
+  }
+
   /* GET */
   Future<DataModel> getCaptainFinanceByOrder() async {
     CaptainFinanceByOrderResponse? actionResponse =
@@ -448,8 +485,7 @@ class PaymentsService {
     return DataModel.empty();
   }
 
-  Future<DataModel> getAllAmountCaptains(
-      CaptainDailyFinanceRequest request) async {
+  Future<DataModel> getAllAmountCaptains(CaptainPaymentRequest request) async {
     CaptainAllFinanceResponse? actionResponse =
         await _paymentsManager.getAllAmountCaptain(request);
     if (actionResponse == null) {

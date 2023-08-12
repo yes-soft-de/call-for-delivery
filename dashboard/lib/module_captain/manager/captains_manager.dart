@@ -1,7 +1,7 @@
 import 'package:c4d/module_captain/repository/captains_repository.dart';
 import 'package:c4d/module_captain/request/assign_order_to_captain_request.dart';
 import 'package:c4d/module_captain/request/captain_activities_filter_request.dart';
-import 'package:c4d/module_captain/request/captain_daily_finance_request.dart';
+import 'package:c4d/module_captain/request/captain_payment_request.dart';
 import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/request/captain_offer_request.dart';
 import 'package:c4d/module_captain/request/enable_captain.dart';
@@ -105,6 +105,6 @@ class CaptainsManager {
       _repository.getCaptainFinanceDaily();
 
   Future<CaptainFinanceDailyNewResponse?> getCaptainFinanceDailyNew(
-          CaptainDailyFinanceRequest request) =>
+          CaptainPaymentRequest request) =>
       _repository.getCaptainFinanceDailyNew(request);
 }

@@ -1077,6 +1077,15 @@
             }
         }
     },
+    "areYouSureAboutAddPayment": "are you sure about add payment {value} Riyal?",
+    "@areYouSureAboutAddPayment": {
+        "description": "",
+        "placeholders": {
+            "value": {
+                "type": "String"
+            }
+        }
+    },
     "registerPayment" : "register payment",
     "paymentsRecords" : "payment records",
     "skipped" : "skipped",
@@ -1086,5 +1095,18 @@
     "editDistance" : "edit distance",
     "editKilometer" : "edit kilometer",
     "enterLink" : "enter link",
+    "captainDues" : "capitan dues",
+    "paymentRequests" : "Payment Requests",
+    "FinancialDues" : "financial dues",
+    "sinceLastPaymentUntilNow" : "since last payment until now",
+    "unpaidAmountsFromCashToStores": "unpaid amounts from cash to stores",
+    "profitsFromOrders": "profits from orders",
+    "lastPayment" : "last payment",
+    "showPreviousPayments" : "show previous payments",
+    "addPayment" : "add payment",
+    "notPaid" : "Not Paid",
+    "byHand" : "by hand",
+    "bankTransfer" : "bank transfer",
+    "previousPayments" : "previous payments",
     "dev": "Dev"
 }
