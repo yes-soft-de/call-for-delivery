@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
@@ -20,10 +19,10 @@ class StatisticsRepository {
   Future<StatisticsResponse?> getStatistics() async {
     var token = await _authService.getToken();
     var timezone;
-    if (kIsWeb) {
-      timezone = await FlutterNativeTimezone.getLocalTimezone();
-      timezone = timezone.replaceAll('/', '-');
-    }
+
+    timezone = await FlutterNativeTimezone.getLocalTimezone();
+    timezone = timezone.replaceAll('/', '-');
+
     var url = '${Urls.GET_STATISTICS}';
     if (timezone != null) url += '/$timezone';
 
