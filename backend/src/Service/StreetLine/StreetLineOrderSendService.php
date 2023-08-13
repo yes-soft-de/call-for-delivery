@@ -32,8 +32,8 @@ class StreetLineOrderSendService
         }
 
         return [
-            StreetLineCompanyConstant::PICKUP_LAT_FIELD_CONST => $storeOrderDetailsEntity->getBranch()->getLocation()['lat'],
-            StreetLineCompanyConstant::PICKUP_LNG_FIELD_CONST => $storeOrderDetailsEntity->getBranch()->getLocation()['lon'],
+//            StreetLineCompanyConstant::PICKUP_LAT_FIELD_CONST => $storeOrderDetailsEntity->getBranch()->getLocation()['lat'],
+//            StreetLineCompanyConstant::PICKUP_LNG_FIELD_CONST => $storeOrderDetailsEntity->getBranch()->getLocation()['lon'],
             StreetLineCompanyConstant::CUSTOMER_LAT_FIELD_CONST => $storeOrderDetailsEntity->getDestination()['lat'],
             StreetLineCompanyConstant::CUSTOMER_LNG_FIELD_CONST => $storeOrderDetailsEntity->getDestination()['lon'],
             StreetLineCompanyConstant::CUSTOMER_PHONE_FIELD_CONST => $storeOrderDetailsEntity->getRecipientPhone(),
@@ -41,7 +41,8 @@ class StreetLineOrderSendService
             StreetLineCompanyConstant::ORDER_VALUE_FIELD_CONST => $orderEntity->getOrderCost(),
             StreetLineCompanyConstant::ORDER_DETAILS_FIELD_CONST => $storeOrderDetailsEntity->getDetail(),
             StreetLineCompanyConstant::CUSTOMER_NAME_FIELD_CONST => $storeOrderDetailsEntity->getRecipientName(),
-            StreetLineCompanyConstant::CLIENT_ORDER_ID_FIELD_CONST => $orderEntity->getId()
+            StreetLineCompanyConstant::CLIENT_ORDER_ID_FIELD_CONST => $orderEntity->getId(),
+            StreetLineCompanyConstant::PICKUP_ID_FIELD_CONST => $this->params->get('streetLine_pickup_id')
         ];
     }
 
