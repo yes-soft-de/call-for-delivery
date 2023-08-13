@@ -65,7 +65,7 @@ class EPaymentService
     {
         if ($request->getStatus() === 1) {
 //            try {
-                // update the flag field of the last finished subscription to isPaid
+//                 // update the flag field of the last finished subscription to isPaid
                 if (($request->getPaymentGetaway() === EPaymentFromStoreConstant::PAYMENT_GETAWAY_IN_APP_PURCHASE_APPLE_CONST) ||
                     ($request->getPaymentGetaway() === EPaymentFromStoreConstant::PAYMENT_GETAWAY_IN_APP_PURCHASE_GOOGLE_CONST)) {
                     if (! $request->getPaymentId()) {
@@ -157,7 +157,7 @@ class EPaymentService
                                 // create a new log for the payment
 //                                $this->dispatchEPaymentFromStoreCreateMessage($request->getCreatedBy(),
 //                                    EPaymentFromStoreConstant::NEW_REAL_PAYMENT_CREATED_SUCCESSFULLY_BY_ADMIN_ACTION_CONST,
-//                                    $storeOwnerProfile->getId(), $payment->getId(), $adminProfile);
+//                                    $storeOwnerProfile->getId(), $payment->getId(), $adminProfile->getId());
                                 // local notification to store
                                 $this->createLocalNotificationForStore($storeOwnerProfile->getStoreOwnerId(),
                                     NotificationConstant::PAYMENT_FOR_STORE_SUBSCRIPTION_BY_ADMIN_TITLE_CONST,
@@ -166,6 +166,12 @@ class EPaymentService
                                 // firebase notification to store
                                 $this->createFirebaseNotificationForUser($storeOwnerProfile->getStoreOwnerId(),
                                     NotificationFirebaseConstant::PAYMENT_FOR_STORE_SUBSCRIPTION_BY_ADMIN_CONST);
+
+                            } elseif ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_STORE_CONST) {
+                                // create a new log for the payment
+//                                $this->dispatchEPaymentFromStoreCreateMessage($request->getCreatedBy(),
+//                                    EPaymentFromStoreConstant::NEW_REAL_PAYMENT_CREATED_SUCCESSFULLY_BY_STORE_ACTION_CONST,
+//                                    $storeOwnerProfile->getId(), $payment->getId());
 
                             }
                         }
@@ -213,7 +219,7 @@ class EPaymentService
 //
 //                    $this->dispatchEPaymentFromStoreCreateMessage($request->getCreatedBy(),
 //                        EPaymentFromStoreConstant::NEW_REAL_PAYMENT_CREATED_FAILED_BY_ADMIN_ACTION_CONST,
-//                        $storeOwnerProfile->getId(), null, $adminProfile);
+//                        $storeOwnerProfile->getId(), null, $adminProfile->getId());
 //                }
 //
 //                throw $e;
@@ -269,14 +275,14 @@ class EPaymentService
 //    public function dispatchEPaymentFromStoreCreateMessage(
 //        int $createdByUserId,
 //        int $action,
-//        ?int $storeOwnerProfile = null,
-//        ?int $ePaymentFromStore = null,
-//        ?int $adminProfile = null,
+//        ?int $storeOwnerProfileId = null,
+//        ?int $ePaymentFromStoreId = null,
+//        ?int $adminProfileId = null,
 //        ?string $details = null
 //    ): void
 //    {
 //        $this->ePaymentFromStoreLogDispatchService->dispatchEPaymentFromStoreCreateMessage($createdByUserId, $action,
-//            $storeOwnerProfile, $ePaymentFromStore, $adminProfile, $details);
+//            $storeOwnerProfileId, $ePaymentFromStoreId, $adminProfileId, $details);
 //    }
 
     /**
