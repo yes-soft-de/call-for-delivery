@@ -105,3 +105,4 @@ config/jwt
 !var/sessions/.gitkeep
 !var/SymfonyRequirements.php
 /web/bundles/
+/mysql

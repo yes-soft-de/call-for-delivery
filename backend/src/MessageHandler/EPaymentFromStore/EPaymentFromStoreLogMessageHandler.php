@@ -50,28 +50,28 @@ class EPaymentFromStoreLogMessageHandler
         ?StoreOwnerProfileEntity $storeOwnerProfile = null,
         ?EPaymentFromStoreEntity $ePaymentFromStore = null,
         ?AdminProfileEntity $adminProfile = null,
-        ?string $details = null): void
+        ?string $details = null)
     {
         $this->ePaymentFromStoreLogToMySqlService->createEPaymentFromStoreLog($createdByUserId, $action, $storeOwnerProfile,
         $ePaymentFromStore, $adminProfile, $details);
     }
 
-    public function handleCreateEPaymentFromStoreLogMessage(EPaymentFromStoreLogCreateMessage $ePaymentFromStoreLogCreateMessage): void
+    public function handleCreateEPaymentFromStoreLogMessage(EPaymentFromStoreLogCreateMessage $ePaymentFromStoreLogCreateMessage)
     {
         $ePaymentFromStore = null;
         $storeOwnerProfile = null;
         $adminProfile = null;
 
-        if ($ePaymentFromStoreLogCreateMessage->getEPaymentFromStore()) {
-            $ePaymentFromStore = $this->getEPaymentFromStoreEntityById($ePaymentFromStoreLogCreateMessage->getEPaymentFromStore());
+        if ($ePaymentFromStoreLogCreateMessage->getEPaymentFromStoreId()) {
+            $ePaymentFromStore = $this->getEPaymentFromStoreEntityById($ePaymentFromStoreLogCreateMessage->getEPaymentFromStoreId());
         }
 
-        if ($ePaymentFromStoreLogCreateMessage->getStoreOwnerProfile()) {
-            $storeOwnerProfile = $this->getStoreOwnerProfileById($ePaymentFromStoreLogCreateMessage->getStoreOwnerProfile());
+        if ($ePaymentFromStoreLogCreateMessage->getStoreOwnerProfileId()) {
+            $storeOwnerProfile = $this->getStoreOwnerProfileById($ePaymentFromStoreLogCreateMessage->getStoreOwnerProfileId());
         }
 
-        if ($ePaymentFromStoreLogCreateMessage->getAdminProfile()) {
-            $adminProfile = $this->getAdminProfileById($ePaymentFromStoreLogCreateMessage->getAdminProfile());
+        if ($ePaymentFromStoreLogCreateMessage->getAdminProfileId()) {
+            $adminProfile = $this->getAdminProfileById($ePaymentFromStoreLogCreateMessage->getAdminProfileId());
         }
 
         $this->createEPaymentFromStoreLog($ePaymentFromStoreLogCreateMessage->getCreatedByUserId(),

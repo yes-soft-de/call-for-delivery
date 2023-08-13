@@ -6,34 +6,46 @@ class EPaymentFromStoreLogCreateMessage
 {
     private int $createdByUserId;
 
-    private ?int $ePaymentFromStore;
+    /**
+     * @var int|null
+     */
+    private $ePaymentFromStoreId;
 
     // the int value refers to the resulting action of the payment
     private int $action;
 
-    private ?string $details;
+    /**
+     * @var string|null
+     */
+    private $details;
 
-    private ?int $storeOwnerProfile;
+    /**
+     * @var int|null
+     */
+    private $storeOwnerProfileId;
 
-    private ?int $adminProfile;
+    /**
+     * @var int|null
+     */
+    private $adminProfileId;
 
-    public static function create(int $createdByUserId, int $action, ?int $storeOwnerProfile = null, ?int $ePaymentFromStore = null, ?int $adminProfile = null, ?string $details = null): self
+    public static function create(int $createdByUserId, int $action, ?int $storeOwnerProfileId = null, ?int $ePaymentFromStoreId = null, ?int $adminProfileId = null, ?string $details = null): self
     {
         $ePaymentFromStoreLogCreateMessage = new EPaymentFromStoreLogCreateMessage();
 
-        $ePaymentFromStoreLogCreateMessage->ePaymentFromStore = $ePaymentFromStore;
+        $ePaymentFromStoreLogCreateMessage->ePaymentFromStoreId = $ePaymentFromStoreId;
         $ePaymentFromStoreLogCreateMessage->action = $action;
         $ePaymentFromStoreLogCreateMessage->details = $details;
         $ePaymentFromStoreLogCreateMessage->createdByUserId = $createdByUserId;
-        $ePaymentFromStoreLogCreateMessage->storeOwnerProfile = $storeOwnerProfile;
-        $ePaymentFromStoreLogCreateMessage->adminProfile = $adminProfile;
+        $ePaymentFromStoreLogCreateMessage->storeOwnerProfileId = $storeOwnerProfileId;
+        $ePaymentFromStoreLogCreateMessage->adminProfileId = $adminProfileId;
 
         return $ePaymentFromStoreLogCreateMessage;
     }
 
-    public function getEPaymentFromStore(): ?int
+    public function getEPaymentFromStoreId(): ?int
     {
-        return $this->ePaymentFromStore;
+        return $this->ePaymentFromStoreId;
     }
 
     public function getAction(): int
@@ -51,13 +63,13 @@ class EPaymentFromStoreLogCreateMessage
         return $this->createdByUserId;
     }
 
-    public function getStoreOwnerProfile(): ?int
+    public function getStoreOwnerProfileId(): ?int
     {
-        return $this->storeOwnerProfile;
+        return $this->storeOwnerProfileId;
     }
 
-    public function getAdminProfile(): ?int
+    public function getAdminProfileId(): ?int
     {
-        return $this->adminProfile;
+        return $this->adminProfileId;
     }
 }
