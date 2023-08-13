@@ -1,24 +1,24 @@
 <?php
 
-namespace App\Service\Mrsool;
+namespace App\Service\StreetLine;
 
 use App\AutoMapping;
+use App\Constant\ExternalDeliveryCompany\StreetLine\StreetLineCompanyConstant;
 use App\Constant\ExternallyDeliveredOrder\ExternallyDeliveredOrderConstant;
-use App\Constant\Order\OrderStateConstant;
 use App\Constant\OrderLog\OrderLogActionTypeConstant;
 use App\Constant\OrderLog\OrderLogCreatedByUserTypeConstant;
 use App\Constant\Subscription\SubscriptionConstant;
 use App\Entity\ExternallyDeliveredOrderEntity;
 use App\Entity\OrderEntity;
 use App\Entity\SubscriptionEntity;
-use App\Request\Mrsool\MrsoolOrderStatusUpdateRequest;
-use App\Response\Mrsool\MrsoolOrderStatusUpdateResponse;
+use App\Request\StreetLine\StreetLineOrderStatusUpdateRequest;
+use App\Response\StreetLine\StreetLineOrderStatusUpdateResponse;
 use App\Service\ExternalOrderUpdateHandler\ExternalOrderUpdateHandlerService;
 use App\Service\OrderLog\OrderLogService;
 use App\Service\Subscription\SubscriptionService;
 use DateTimeInterface;
 
-class MrsoolOrderService
+class StreetLineOrderService
 {
     public function __construct(
         private AutoMapping $autoMapping,
@@ -29,33 +29,36 @@ class MrsoolOrderService
     {
     }
 
-    public function updateMrsoolOrderStatus(MrsoolOrderStatusUpdateRequest $request): int|MrsoolOrderStatusUpdateResponse
+    /**
+     * Updates order status by StreetLine Delivery Company
+     */
+    public function updateStreetLineOrderStatus(StreetLineOrderStatusUpdateRequest $request): int|StreetLineOrderStatusUpdateResponse
     {
-        $order = $this->externalOrderUpdateHandlerService->handleMrsoolOrderStatusUpdate($request);
+        $order = $this->externalOrderUpdateHandlerService->handleStreetLineOrderStatusUpdate($request);
 
         if ($order === ExternallyDeliveredOrderConstant::EXTERNALLY_DELIVERED_ORDER_NOT_EXIST_CONST) {
             return ExternallyDeliveredOrderConstant::EXTERNALLY_DELIVERED_ORDER_NOT_EXIST_CONST;
         }
         // If order had been delivered, then update subscription cost of the store's subscription
-        if ($order->getOrderId()->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
+        if ($request->getStatus() === StreetLineCompanyConstant::ORDER_DELIVERED_STATUS_CONST) {
             $this->handleUpdatingStoreSubscriptionCost($order->getOrderId()->getStoreOwner()->getId(),
                 $order->getOrderId()->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_ADDITION,
                 $order->getOrderId()->getDeliveryCost());
         }
         // save order log
-        $this->createOrderLogMessageViaOrderEntityAndByMarsoolCompany($order->getOrderId(), [
+        $this->createOrderLogMessageViaOrderEntityAndByStreetLineCompany($order->getOrderId(), [
             'externalCompanyName' => $order->getExternalDeliveryCompany()->getCompanyName()
         ]);
 
-        return $this->autoMapping->map(ExternallyDeliveredOrderEntity::class, MrsoolOrderStatusUpdateResponse::class,
+        return $this->autoMapping->map(ExternallyDeliveredOrderEntity::class, StreetLineOrderStatusUpdateResponse::class,
             $order);
     }
 
-    public function createOrderLogMessageViaOrderEntityAndByMarsoolCompany(OrderEntity $orderEntity, array $details)
+    public function createOrderLogMessageViaOrderEntityAndByStreetLineCompany(OrderEntity $orderEntity, array $details)
     {
         // save log of the action on order
-        $this->orderLogService->createOrderLogMessage($orderEntity, 1, OrderLogCreatedByUserTypeConstant::MARSOOL_EXTERNAL_DELIVERY_COMPANY_CONST,
-            OrderLogActionTypeConstant::ORDER_STATUS_UPDATE_BY_MARSOOL_EXTERNAL_COMPANY_CONST, $details,
+        $this->orderLogService->createOrderLogMessage($orderEntity, 2, OrderLogCreatedByUserTypeConstant::STREETLINE_EXTERNAL_DELIVERY_COMPANY_CONST,
+            OrderLogActionTypeConstant::ORDER_STATUS_UPDATE_BY_STREETLINE_EXTERNAL_COMPANY_CONST, $details,
             null, null);
     }
 

@@ -25,6 +25,9 @@ class BaseController extends AbstractController
     const EXTERNAL_DELIVERY_COMPANY_NOT_FOUND_CONST = ["external delivery company not found", "9050"];
     const EXTERNAL_DELIVERY_COMPANY_HAS_ORDERS_CONST = ["external delivery company has orders", "9051"];
     const EXTERNAL_DELIVERY_COMPANY_NOT_REGISTERED_CONST = ["external delivery company has orders", "9052"];
+    const CRITERIA_CREATED_INACTIVE_ALREADY_EXIST_SIMILAR_ONE_CONST = ["criteria created but inactive, already exist similar one", "9053"];
+    const CRITERIA_UPDATED_INACTIVE_ALREADY_EXIST_SIMILAR_ONE_CONST = ["criteria updated but inactive, already exist similar one", "9054"];
+    const CRITERIA_STATUS_INACTIVE_ALREADY_EXIST_SIMILAR_ONE_CONST = ["criteria status inactive, already exist similar one", "9055"];
     // app feature
     const APP_FEATURE_NOT_FOUND_CONST = ["app feature not found", "9076"];
     const APP_FEATURE_NOT_ACTIVE_CONST = ["app feature not active", "9077"];
@@ -185,6 +188,7 @@ class BaseController extends AbstractController
     const INVALID_CREDENTIALS_RESULT_CONST = ["invalid credentials", "9676"];
     const INVALID_INPUT_RESULT_CONST = ["invalid input", "9677"];
     const EXTERNAL_ORDER_NOT_FOUND_CONST = ["external order not found", "9678"];
+    const METHOD_NOT_ALLOWED_CONST = ["method not allowed", "9679"];
     // epayment
     const E_PAYMENT_HAD_NOT_CREATED_SUCCESSFULLY_CONST = ["e-payment had not done successfully", "9700"];
     // captain financial demand

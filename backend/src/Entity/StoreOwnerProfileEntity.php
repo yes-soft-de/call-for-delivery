@@ -110,6 +110,9 @@ class StoreOwnerProfileEntity
     #[ORM\OneToOne(mappedBy: 'storeOwnerProfile', targetEntity: StoreOwnerPreferenceEntity::class, cascade: ['persist', 'remove'])]
     private $storeOwnerPreferenceEntity;
 
+    #[ORM\OneToMany(mappedBy: 'storeOwnerProfile', targetEntity: EPaymentFromStoreLogEntity::class)]
+    private $ePaymentFromStoreLogs;
+
     public function __construct()
     {
         $this->subscriptionEntities = new ArrayCollection();
@@ -122,6 +125,7 @@ class StoreOwnerProfileEntity
         $this->storeOwnerDuesFromCashOrders = new ArrayCollection();
         $this->orderLogEntities = new ArrayCollection();
         $this->ePaymentFromStoreEntities = new ArrayCollection();
+        $this->ePaymentFromStoreLogs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -683,6 +687,36 @@ class StoreOwnerProfileEntity
         }
 
         $this->storeOwnerPreferenceEntity = $storeOwnerPreferenceEntity;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, EPaymentFromStoreLogEntity>
+     */
+    public function getEPaymentFromStoreLogs(): Collection
+    {
+        return $this->ePaymentFromStoreLogs;
+    }
+
+    public function addEPaymentFromStoreLog(EPaymentFromStoreLogEntity $ePaymentFromStoreLog): self
+    {
+        if (!$this->ePaymentFromStoreLogs->contains($ePaymentFromStoreLog)) {
+            $this->ePaymentFromStoreLogs[] = $ePaymentFromStoreLog;
+            $ePaymentFromStoreLog->setStoreOwnerProfile($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEPaymentFromStoreLog(EPaymentFromStoreLogEntity $ePaymentFromStoreLog): self
+    {
+        if ($this->ePaymentFromStoreLogs->removeElement($ePaymentFromStoreLog)) {
+            // set the owning side to null (unless already changed)
+            if ($ePaymentFromStoreLog->getStoreOwnerProfile() === $this) {
+                $ePaymentFromStoreLog->setStoreOwnerProfile(null);
+            }
+        }
 
         return $this;
     }

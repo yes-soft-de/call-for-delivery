@@ -2,7 +2,9 @@
 
 namespace App\Request\Admin\ExternalDeliveryCompanyCriteria;
 
+use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaStatusConstant;
 use App\Entity\AdminProfileEntity;
+use App\Entity\ExternalDeliveryCompanyEntity;
 use DateTime;
 
 class ExternalDeliveryCompanyCriteriaUpdateByAdminRequest
@@ -17,21 +19,43 @@ class ExternalDeliveryCompanyCriteriaUpdateByAdminRequest
 
     private int $isDistance;
 
-    private ?float $fromDistance;
+    /**
+     * @var float|null
+     */
+    private $fromDistance;
 
-    private ?float $toDistance;
+    /**
+     * @var float|null
+     */
+    private $toDistance;
 
     private int $payment;
 
     private bool $isFromAllStores;
 
-    private ?array $fromStoresBranches;
+    /**
+     * @var array|null
+     */
+    private $fromStoresBranches;
 
     private string $criteriaName;
 
-    private ?float $cashLimit;
+    /**
+     * @var float|null
+     */
+    private $cashLimit;
 
     private int|AdminProfileEntity $updatedBy;
+
+    /**
+     * @var ExternalDeliveryCompanyEntity|null
+     */
+    private $externalDeliveryCompany;
+
+    /**
+     * @var bool|null
+     */
+    private $status;
 
     public function getId(): int
     {
@@ -61,5 +85,65 @@ class ExternalDeliveryCompanyCriteriaUpdateByAdminRequest
     public function setUpdatedBy(AdminProfileEntity|int $updatedBy): void
     {
         $this->updatedBy = $updatedBy;
+    }
+
+    public function getExternalDeliveryCompany(): ?ExternalDeliveryCompanyEntity
+    {
+        return $this->externalDeliveryCompany;
+    }
+
+    public function setExternalDeliveryCompany(?ExternalDeliveryCompanyEntity $externalDeliveryCompany): void
+    {
+        $this->externalDeliveryCompany = $externalDeliveryCompany;
+    }
+
+    public function isSpecificDate(): bool
+    {
+        return $this->isSpecificDate;
+    }
+
+    public function getIsDistance(): int
+    {
+        return $this->isDistance;
+    }
+
+    public function getFromDistance(): ?float
+    {
+        return $this->fromDistance;
+    }
+
+    public function getToDistance(): ?float
+    {
+        return $this->toDistance;
+    }
+
+    public function getPayment(): int
+    {
+        return $this->payment;
+    }
+
+    public function isFromAllStores(): bool
+    {
+        return $this->isFromAllStores;
+    }
+
+    public function getFromStoresBranches(): ?array
+    {
+        return $this->fromStoresBranches;
+    }
+
+    public function getCashLimit(): ?float
+    {
+        return $this->cashLimit;
+    }
+
+    public function setStatus(?bool $status): void
+    {
+        $this->status = $status;
+    }
+
+    public function getStatus(): ?bool
+    {
+        return $this->status;
     }
 }

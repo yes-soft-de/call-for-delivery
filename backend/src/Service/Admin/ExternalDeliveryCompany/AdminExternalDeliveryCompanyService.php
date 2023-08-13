@@ -45,10 +45,10 @@ class AdminExternalDeliveryCompanyService
             return ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_NOT_FOUND_CONST;
         }
 
-        // If we update status to true, then update other companies status to false
-        if ($request->getStatus() === true) {
-            $this->adminExternalDeliveryCompanyManager->updateExternalDeliveryCompaniesStatusToFalse($request->getId());
-        }
+//        // If we update status to true, then update other companies status to false
+//        if ($request->getStatus() === true) {
+//            $this->adminExternalDeliveryCompanyManager->updateExternalDeliveryCompaniesStatusToFalse($request->getId());
+//        }
 
         return $this->autoMapping->map(ExternalDeliveryCompanyEntity::class, ExternalDeliveryCompanyStatusUpdateByAdminResponse::class,
             $externalDeliveryCompany);

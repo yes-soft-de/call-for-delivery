@@ -12,4 +12,9 @@ final class OrderIsHideConstant
     const ORDER_HIDE_TEMPORARILY = 3;
     //Hidden due to exceeding delivery time
     const ORDER_HIDE_EXCEEDING_DELIVERED_DATE = 4;
+    // hide values array
+    const ORDER_HIDE_ARRAY_CONST = [
+        self::ORDER_HIDE_TEMPORARILY,
+        self::ORDER_HIDE_EXCEEDING_DELIVERED_DATE
+    ];
 }

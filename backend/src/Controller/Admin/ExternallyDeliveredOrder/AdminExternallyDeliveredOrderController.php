@@ -107,6 +107,10 @@ class AdminExternallyDeliveredOrderController extends BaseController
      *                   @OA\Schema(type="object",
      *                       @OA\Property(type="string", property="status_code", description="9677"),
      *                       @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                       @OA\Property(type="string", property="status_code", description="9679"),
+     *                       @OA\Property(type="string", property="msg")
      *                   )
      *              }
      *      )
@@ -156,6 +160,9 @@ class AdminExternallyDeliveredOrderController extends BaseController
 
         } elseif ($result === OrderResultConstant::ORDER_STATE_IS_NOT_PENDING_CONST) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ORDER_STATE_NOT_PENDING_CONST);
+
+        }  elseif ($result === HttpResponseConstant::METHOD_NOT_ALLOWED_RESULT_CONST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::METHOD_NOT_ALLOWED_CONST);
         }
 
         return $this->response($result, self::CREATE);

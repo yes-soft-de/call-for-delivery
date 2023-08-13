@@ -27,21 +27,6 @@ class AdminExternalDeliveryCompanyCriteriaManager
      */
     public function createExternalDeliveryCompanyCriteria(ExternalDeliveryCompanyCriteriaCreateByAdminRequest $request): ExternalDeliveryCompanyCriteriaEntity
     {
-        // Convert from and to dates from string to DateTime before persisting to the database
-        if (($request->getFromDate()) && ($request->getFromDate() !== "")) {
-            $request->setFromDate(new \DateTime($request->getFromDate()));
-
-        } else {
-            $request->setFromDate(null);
-        }
-
-        if (($request->getToDate()) && ($request->getToDate() !== "")) {
-            $request->setToDate(new \DateTime($request->getToDate()));
-
-        } else {
-            $request->setToDate(null);
-        }
-
         $externalDeliveryCompanyCriteria = $this->autoMapping->map(ExternalDeliveryCompanyCriteriaCreateByAdminRequest::class,
             ExternalDeliveryCompanyCriteriaEntity::class, $request);
 
@@ -58,23 +43,12 @@ class AdminExternalDeliveryCompanyCriteriaManager
     {
         $externalDeliveryCompanyCriteria = $this->externalDeliveryCompanyCriteriaEntityRepository->findOneBy(['id' => $request->getId()]);
 
-        if (!$externalDeliveryCompanyCriteria) {
+        if (! $externalDeliveryCompanyCriteria) {
             return ExternalDeliveryCompanyCriteriaResultConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST;
         }
 
-        // Convert from and to dates from string to DateTime before persisting to the database
-        if (($request->getFromDate()) && ($request->getFromDate() !== "")) {
-            $request->setFromDate(new \DateTime($request->getFromDate()));
-
-        } else {
-            $request->setFromDate(null);
-        }
-
-        if (($request->getToDate()) && ($request->getToDate() !== "")) {
-            $request->setToDate(new \DateTime($request->getToDate()));
-
-        } else {
-            $request->setToDate(null);
+        if (! $request->getStatus()) {
+            $request->setStatus($externalDeliveryCompanyCriteria->getStatus());
         }
 
         $externalDeliveryCompanyCriteria = $this->autoMapping->mapToObject(ExternalDeliveryCompanyCriteriaUpdateByAdminRequest::class,
@@ -145,5 +119,24 @@ class AdminExternalDeliveryCompanyCriteriaManager
         }
 
         return $externalDeliveryCompanyCriteriaArray;
+    }
+
+    /**
+     * check if there is active and similar criteria for another company
+     */
+    public function getExternalDeliveryCompanyCriteriaBySpecificCriteriaAndCompany(int $externalDeliveryCompanyId,
+                                                                                   bool $isSpecificDate,
+                                                                                   int $isDistance,
+                                                                                   int $payment,
+                                                                                   bool $isFromAllStores,
+                                                                                   ?float $cacheLimit = null)
+    {
+        return $this->externalDeliveryCompanyCriteriaEntityRepository->getExternalDeliveryCompanyCriteriaBySpecificCriteriaAndCompany(
+            $externalDeliveryCompanyId, $isSpecificDate, $isDistance, $payment, $isFromAllStores, $cacheLimit);
+    }
+
+    public function getExternalDeliveryCompanyCriteriaById(int $externalDeliveryCompanyCriteriaId): ?ExternalDeliveryCompanyCriteriaEntity
+    {
+        return $this->externalDeliveryCompanyCriteriaEntityRepository->findOneBy(['id' => $externalDeliveryCompanyCriteriaId]);
     }
 }

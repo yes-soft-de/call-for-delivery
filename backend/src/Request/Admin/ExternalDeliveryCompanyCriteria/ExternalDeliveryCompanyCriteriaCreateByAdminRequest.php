@@ -20,15 +20,24 @@ class ExternalDeliveryCompanyCriteriaCreateByAdminRequest
 
     private int $isDistance = ExternalDeliveryCompanyCriteriaIsDistanceConstant::IS_DISTANCE_OFF_CONST;
 
-    private ?float $fromDistance;
+    /**
+     * @var float|null
+     */
+    private $fromDistance;
 
-    private ?float $toDistance;
+    /**
+     * @var float|null
+     */
+    private $toDistance;
 
     private int $payment = ExternalDeliveryCompanyCriteriaPaymentConstant::PAYMENT_OFF_CONST;
 
     private bool $isFromAllStores = ExternalDeliveryCompanyCriteriaIsFromAllStoresConstant::IS_FROM_ALL_STORES_FALSE_CONST;
 
-    private ?array $fromStoresBranches;
+    /**
+     * @var array|null
+     */
+    private $fromStoresBranches;
 
     private ExternalDeliveryCompanyEntity|int $externalDeliveryCompany;
 
@@ -36,7 +45,10 @@ class ExternalDeliveryCompanyCriteriaCreateByAdminRequest
 
     private bool $status = ExternalDeliveryCompanyCriteriaStatusConstant::EXTERNAL_DELIVERY_COMPANY_CRITERIA_STATUS_FALSE_CONST;
 
-    private ?float $cashLimit;
+    /**
+     * @var float|null
+     */
+    private $cashLimit;
 
     public function getFromDate(): null|string|DateTime
     {
@@ -66,5 +78,55 @@ class ExternalDeliveryCompanyCriteriaCreateByAdminRequest
     public function setExternalDeliveryCompany(int|ExternalDeliveryCompanyEntity $externalDeliveryCompany): void
     {
         $this->externalDeliveryCompany = $externalDeliveryCompany;
+    }
+
+    public function isSpecificDate(): bool
+    {
+        return $this->isSpecificDate;
+    }
+
+    public function getIsDistance(): int
+    {
+        return $this->isDistance;
+    }
+
+    public function getFromDistance(): ?float
+    {
+        return $this->fromDistance;
+    }
+
+    public function getToDistance(): ?float
+    {
+        return $this->toDistance;
+    }
+
+    public function getPayment(): int
+    {
+        return $this->payment;
+    }
+
+    public function isFromAllStores(): bool
+    {
+        return $this->isFromAllStores;
+    }
+
+    public function getFromStoresBranches(): ?array
+    {
+        return $this->fromStoresBranches;
+    }
+
+    public function getCriteriaName(): string
+    {
+        return $this->criteriaName;
+    }
+
+    public function isStatus(): bool
+    {
+        return $this->status;
+    }
+
+    public function getCashLimit(): ?float
+    {
+        return $this->cashLimit;
     }
 }

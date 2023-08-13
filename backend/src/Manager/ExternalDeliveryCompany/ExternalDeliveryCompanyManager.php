@@ -30,4 +30,9 @@ class ExternalDeliveryCompanyManager
     {
         return $this->externalDeliveryCompanyEntityRepository->findOneBy(['id' => $externalCompanyId]);
     }
+
+    public function getAllActiveExternalDeliveryCompanies(): array
+    {
+        return $this->externalDeliveryCompanyEntityRepository->findBy(['status' => ExternalDeliveryCompanyStatusConstant::STATUS_TRUE_CONST]);
+    }
 }

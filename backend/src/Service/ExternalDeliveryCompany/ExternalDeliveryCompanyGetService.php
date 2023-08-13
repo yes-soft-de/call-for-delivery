@@ -41,4 +41,15 @@ class ExternalDeliveryCompanyGetService
 
         return $externalDeliveryCompany;
     }
+
+    public function getAllActiveExternalDeliveryCompanies(): array|int
+    {
+        $externalDeliveryCompaniesArray = $this->externalDeliveryCompanyManager->getAllActiveExternalDeliveryCompanies();
+
+        if (count($externalDeliveryCompaniesArray) > 0) {
+            return $externalDeliveryCompaniesArray;
+        }
+
+        return ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_NOT_FOUND_CONST;
+    }
 }
