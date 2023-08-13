@@ -131,4 +131,9 @@ class OrderGetForAdminResponse
      *     @OA\Items(type="object"))
      */
     public array $externalDeliveredOrders = [];
+
+    /**
+     * @var float|null
+     */
+    public $captainProfit;
 }
