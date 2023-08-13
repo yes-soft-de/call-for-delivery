@@ -299,6 +299,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "هل تم دفع تكلفة الطلب للمتجر"),
         "captainPayments":
             MessageLookupByLibrary.simpleMessage("دفعات الكابتن"),
+        "captainProfit": MessageLookupByLibrary.simpleMessage("ارباح الكابتن"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("تم تقييم الكابتن بنجاح"),
         "captainRetreatOrder": MessageLookupByLibrary.simpleMessage(
