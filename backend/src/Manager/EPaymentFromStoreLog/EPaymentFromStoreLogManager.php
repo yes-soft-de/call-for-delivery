@@ -3,7 +3,7 @@
 namespace App\Manager\EPaymentFromStoreLog;
 
 use App\AutoMapping;
-use App\Entity\EPaymentFromStoreEntity;
+use App\Entity\EPaymentFromStoreLogEntity;
 use App\Request\EPaymentFromStoreLog\EPaymentFromStoreLogCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -16,14 +16,14 @@ class EPaymentFromStoreLogManager
     {
     }
 
-    public function createEPaymentFromStoreLog(EPaymentFromStoreLogCreateRequest $request): EPaymentFromStoreEntity
+    public function createEPaymentFromStoreLog(EPaymentFromStoreLogCreateRequest $request): EPaymentFromStoreLogEntity
     {
-        $ePaymentFromStoreEntity = $this->autoMapping->map(EPaymentFromStoreLogCreateRequest::class,
-            EPaymentFromStoreEntity::class, $request);
+        $ePaymentFromStoreLogEntity = $this->autoMapping->map(EPaymentFromStoreLogCreateRequest::class,
+            EPaymentFromStoreLogEntity::class, $request);
 
-        $this->entityManager->persist($ePaymentFromStoreEntity);
+        $this->entityManager->persist($ePaymentFromStoreLogEntity);
         $this->entityManager->flush();
 
-        return $ePaymentFromStoreEntity;
+        return $ePaymentFromStoreLogEntity;
     }
 }

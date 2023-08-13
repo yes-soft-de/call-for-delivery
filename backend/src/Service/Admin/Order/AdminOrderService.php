@@ -1371,7 +1371,6 @@ class AdminOrderService
         $response['totalCashOrdersCost'] = 0;
 
         $orders = $this->adminOrderManager->filterCaptainOrdersByAdmin($request);
-        // $countOrders = count($orders);
       
         foreach ($orders as $order) {
             // note: when an order is not a cash one, then captainOrderCost = 0

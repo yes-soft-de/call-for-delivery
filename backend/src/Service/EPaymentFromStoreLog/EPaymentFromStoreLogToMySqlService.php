@@ -4,6 +4,7 @@ namespace App\Service\EPaymentFromStoreLog;
 
 use App\Entity\AdminProfileEntity;
 use App\Entity\EPaymentFromStoreEntity;
+use App\Entity\EPaymentFromStoreLogEntity;
 use App\Entity\StoreOwnerProfileEntity;
 use App\Manager\EPaymentFromStoreLog\EPaymentFromStoreLogManager;
 use App\Request\EPaymentFromStoreLog\EPaymentFromStoreLogCreateRequest;
@@ -23,7 +24,7 @@ class EPaymentFromStoreLogToMySqlService
         ?EPaymentFromStoreEntity $ePaymentFromStore = null,
         ?AdminProfileEntity $adminProfile = null,
         ?string $details = null
-    ): EPaymentFromStoreEntity
+    ): EPaymentFromStoreLogEntity
     {
         $ePaymentFromStoreLogCreateRequest = $this->initializeEPaymentFromStoreLogCreateRequest();
 

@@ -25,6 +25,12 @@ final class StreetLineCompanyConstant
     const ORDER_DELIVER_AT_FIELD_CONST = "deliver_at";
 
     const CLIENT_ORDER_ID_FIELD_CONST = "client_order_id";
+
+    const SHOP_ID_FIELD_CONST = "ingr_shop_id";
+
+    const SHOP_NAME_FIELD_CONST = "ingr_shop_name";
+
+    const PICKUP_ID_FIELD_CONST = "pickup_id";
     // order status
     const ORDER_CREATED_STATUS_CONST = "Order created";
 

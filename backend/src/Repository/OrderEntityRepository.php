@@ -1727,7 +1727,8 @@ class OrderEntityRepository extends ServiceEntityRepository
             ->select('orderEntity.id ', 'orderEntity.state', 'orderEntity.payment', 'orderEntity.orderCost', 'orderEntity.orderType', 'orderEntity.note', 'orderEntity.deliveryDate', 'orderEntity.captainOrderCost',
                 'orderEntity.createdAt', 'orderEntity.updatedAt', 'orderEntity.kilometer', 'storeOrderDetails.id as storeOrderDetailsId', 'storeOrderDetails.destination', 'storeOrderDetails.recipientName',
                 'storeOrderDetails.recipientPhone', 'storeOrderDetails.detail', 'storeOwnerBranch.id as storeOwnerBranchId', 'storeOwnerBranch.location', 'storeOwnerBranch.name as branchName',
-                'imageEntity.id as imageId', 'imageEntity.imagePath as images', 'orderEntity.isCashPaymentConfirmedByStore', 'orderEntity.isCashPaymentConfirmedByStoreUpdateDate')
+                'imageEntity.id as imageId', 'imageEntity.imagePath as images', 'orderEntity.isCashPaymentConfirmedByStore', 'orderEntity.isCashPaymentConfirmedByStoreUpdateDate',
+                'captainOrderFinancialEntity.profit as captainProfit')
 
             ->leftJoin(
                 StoreOrderDetailsEntity::class,
@@ -1746,6 +1747,13 @@ class OrderEntityRepository extends ServiceEntityRepository
                 'imageEntity',
                 Join::WITH,
                 'imageEntity.id = storeOrderDetails.images')
+
+            ->leftJoin(
+                CaptainOrderFinancialEntity::class,
+                'captainOrderFinancialEntity',
+                Join::WITH,
+                'captainOrderFinancialEntity.orderId = orderEntity.id'
+            )
 
             ->orderBy('orderEntity.id', 'DESC');
 
