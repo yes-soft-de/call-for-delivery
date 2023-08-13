@@ -7,7 +7,6 @@ import 'package:c4d/utils/effect/checked.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/stacked_form.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:image_picker/image_picker.dart';
@@ -54,299 +53,304 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
     return StackedForm(
         child: Form(
           key: _key,
-          child: CustomListView
-              .custom(padding: EdgeInsets.only(right: 16, left: 16), children: [
-            //  image profile
-            SizedBox(
-              height: 200,
-              child: InkWell(
-                onTap: () {
-                  ImagePicker()
-                      .pickImage(source: ImageSource.gallery, imageQuality: 70)
-                      .then((value) async {
-                    if (value != null) {
-                      imageBytes = await value.readAsBytes();
-                      imagePath = await uploadImage(value.path);
-                      networkImage = null;
-                      setState(() {});
-                    }
-                  });
-                },
-                child: Checked(
-                    checked: imagePath != null,
-                    checkedWidget: ClipRRect(
-                        borderRadius: BorderRadius.circular(25),
-                        child: imageBytes != null
-                            ? Image.memory(
-                                imageBytes ?? Uint8List(0),
-                                fit: BoxFit.cover,
-                              )
-                            : Image.network(
-                                networkImage ?? '',
-                                fit: BoxFit.cover,
-                              )),
-                    child: Center(
-                        child: Icon(
-                      Icons.camera_alt,
-                      color: Colors.white,
-                    ))),
-              ),
-            ),
+          child: ListView(
+              padding: EdgeInsets.only(right: 16, left: 16),
+              children: [
+                //  image profile
+                SizedBox(
+                  height: 200,
+                  child: InkWell(
+                    onTap: () {
+                      ImagePicker()
+                          .pickImage(
+                              source: ImageSource.gallery, imageQuality: 70)
+                          .then((value) async {
+                        if (value != null) {
+                          imageBytes = await value.readAsBytes();
+                          imagePath = await uploadImage(value.path);
+                          networkImage = null;
+                          setState(() {});
+                        }
+                      });
+                    },
+                    child: Checked(
+                        checked: imagePath != null,
+                        checkedWidget: ClipRRect(
+                            borderRadius: BorderRadius.circular(25),
+                            child: imageBytes != null
+                                ? Image.memory(
+                                    imageBytes ?? Uint8List(0),
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.network(
+                                    networkImage ?? '',
+                                    fit: BoxFit.cover,
+                                  )),
+                        child: Center(
+                            child: Icon(
+                          Icons.camera_alt,
+                          color: Colors.white,
+                        ))),
+                  ),
+                ),
 
-            //name
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 12.0, bottom: 8, right: 12, top: 16.0),
-              child: Text(
-                S.current.name,
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.start,
-              ),
-            ),
-            CustomFormField(
-              controller: _nameController,
-              hintText: S.current.name,
-            ),
-
-            //age
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 12.0, bottom: 8, right: 12, top: 16.0),
-              child: Text(
-                S.current.age,
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.start,
-              ),
-            ),
-            CustomFormField(
-              controller: _ageController,
-              hintText: S.current.age,
-              numbers: true,
-            ),
-            //car
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 12.0, bottom: 8, right: 12, top: 16.0),
-              child: Text(
-                S.current.car,
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.start,
-              ),
-            ),
-            CustomFormField(
-              controller: _carController,
-              hintText: S.current.car,
-            ),
-            //phone
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 12.0, bottom: 8, right: 12, top: 16.0),
-              child: Text(
-                S.current.phoneNumber,
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.start,
-              ),
-            ),
-            CustomFormField(
-              controller: _phoneController,
-              hintText: S.current.phoneNumber,
-              numbers: true,
-              phone: true,
-            ),
-            // city
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 12.0, bottom: 8, right: 12, top: 16.0),
-              child: Text(
-                S.current.city,
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.start,
-              ),
-            ),
-            CustomFormField(
-              controller: _cityController,
-              hintText: S.current.city,
-            ),
-            // address
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 12.0, bottom: 8, right: 12, top: 16.0),
-              child: Text(
-                S.current.address,
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.start,
-              ),
-            ),
-            CustomFormField(
-              controller: _addressController,
-              hintText: S.current.address,
-            ),
-            //Bankname
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 12.0, bottom: 8, right: 12, top: 16.0),
-              child: Text(
-                S.current.bankName,
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.start,
-              ),
-            ),
-            CustomFormField(
-              controller: _bankNameController,
-              hintText: S.current.bankName,
-            ),
-
-            //BankNumber
-            Padding(
-              padding: const EdgeInsets.only(
-                  left: 12.0, bottom: 8, right: 12, top: 16.0),
-              child: Text(
-                S.current.bankAccountNumber,
-                style: TextStyle(fontWeight: FontWeight.bold),
-                textAlign: TextAlign.start,
-              ),
-            ),
-            CustomFormField(
-              controller: _bankAccountNumberController,
-              hintText: S.current.bankAccountNumber,
-              numbers: true,
-            ),
-            //  driver licence
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Center(
+                //name
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 12.0, bottom: 8, right: 12, top: 16.0),
                   child: Text(
-                S.current.driverLicence,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              )),
-            ),
-            SizedBox(
-              height: 200,
-              child: InkWell(
-                onTap: () {
-                  ImagePicker()
-                      .pickImage(source: ImageSource.gallery, imageQuality: 100)
-                      .then((value) async {
-                    if (value != null) {
-                      imageBytesDriving = await value.readAsBytes();
-                      imagePathDriving = await uploadImage(value.path);
-                      networkImageDriving = null;
-                      setState(() {});
-                    }
-                  });
-                },
-                child: Checked(
-                    checked: imagePathDriving != null,
-                    checkedWidget: ClipRRect(
-                        borderRadius: BorderRadius.circular(25),
-                        child: imageBytesDriving != null
-                            ? Image.memory(
-                                imageBytesDriving ?? Uint8List(0),
-                                fit: BoxFit.cover,
-                              )
-                            : Image.network(
-                                networkImageDriving ?? '',
-                                fit: BoxFit.cover,
-                              )),
-                    child: Center(
-                        child: Icon(
-                      Icons.camera_alt,
-                      color: Colors.white,
-                    ))),
-              ),
-            ),
-            // mechanic
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Center(
+                    S.current.name,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+                CustomFormField(
+                  controller: _nameController,
+                  hintText: S.current.name,
+                ),
+
+                //age
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 12.0, bottom: 8, right: 12, top: 16.0),
                   child: Text(
-                S.current.mechanichLicence,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              )),
-            ),
-            SizedBox(
-              height: 200,
-              child: InkWell(
-                onTap: () {
-                  ImagePicker()
-                      .pickImage(source: ImageSource.gallery, imageQuality: 100)
-                      .then((value) async {
-                    if (value != null) {
-                      imageBytesMechanich = await value.readAsBytes();
-                      imagePathMechanich = await uploadImage(value.path);
-                      ;
-                      networkImageMechanich = null;
-                      setState(() {});
-                    }
-                  });
-                },
-                child: Checked(
-                    checked: imagePathMechanich != null,
-                    checkedWidget: ClipRRect(
-                        borderRadius: BorderRadius.circular(25),
-                        child: imageBytesMechanich != null
-                            ? Image.memory(
-                                imageBytesMechanich ?? Uint8List(0),
-                                fit: BoxFit.cover,
-                              )
-                            : Image.network(
-                                networkImageMechanich ?? '',
-                                fit: BoxFit.cover,
-                              )),
-                    child: Center(
-                        child: Icon(
-                      Icons.camera_alt,
-                    ))),
-              ),
-            ),
+                    S.current.age,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+                CustomFormField(
+                  controller: _ageController,
+                  hintText: S.current.age,
+                  numbers: true,
+                ),
+                //car
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 12.0, bottom: 8, right: 12, top: 16.0),
+                  child: Text(
+                    S.current.car,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+                CustomFormField(
+                  controller: _carController,
+                  hintText: S.current.car,
+                ),
+                //phone
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 12.0, bottom: 8, right: 12, top: 16.0),
+                  child: Text(
+                    S.current.phoneNumber,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+                CustomFormField(
+                  controller: _phoneController,
+                  hintText: S.current.phoneNumber,
+                  numbers: true,
+                  phone: true,
+                ),
+                // city
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 12.0, bottom: 8, right: 12, top: 16.0),
+                  child: Text(
+                    S.current.city,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+                CustomFormField(
+                  controller: _cityController,
+                  hintText: S.current.city,
+                ),
+                // address
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 12.0, bottom: 8, right: 12, top: 16.0),
+                  child: Text(
+                    S.current.address,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+                CustomFormField(
+                  controller: _addressController,
+                  hintText: S.current.address,
+                ),
+                //Bankname
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 12.0, bottom: 8, right: 12, top: 16.0),
+                  child: Text(
+                    S.current.bankName,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+                CustomFormField(
+                  controller: _bankNameController,
+                  hintText: S.current.bankName,
+                ),
+
+                //BankNumber
+                Padding(
+                  padding: const EdgeInsets.only(
+                      left: 12.0, bottom: 8, right: 12, top: 16.0),
+                  child: Text(
+                    S.current.bankAccountNumber,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.start,
+                  ),
+                ),
+                CustomFormField(
+                  controller: _bankAccountNumberController,
+                  hintText: S.current.bankAccountNumber,
+                  numbers: true,
+                ),
+                //  driver licence
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Center(
+                      child: Text(
+                    S.current.driverLicence,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                ),
+                SizedBox(
+                  height: 200,
+                  child: InkWell(
+                    onTap: () {
+                      ImagePicker()
+                          .pickImage(
+                              source: ImageSource.gallery, imageQuality: 100)
+                          .then((value) async {
+                        if (value != null) {
+                          imageBytesDriving = await value.readAsBytes();
+                          imagePathDriving = await uploadImage(value.path);
+                          networkImageDriving = null;
+                          setState(() {});
+                        }
+                      });
+                    },
+                    child: Checked(
+                        checked: imagePathDriving != null,
+                        checkedWidget: ClipRRect(
+                            borderRadius: BorderRadius.circular(25),
+                            child: imageBytesDriving != null
+                                ? Image.memory(
+                                    imageBytesDriving ?? Uint8List(0),
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.network(
+                                    networkImageDriving ?? '',
+                                    fit: BoxFit.cover,
+                                  )),
+                        child: Center(
+                            child: Icon(
+                          Icons.camera_alt,
+                          color: Colors.white,
+                        ))),
+                  ),
+                ),
+                // mechanic
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Center(
+                      child: Text(
+                    S.current.mechanichLicence,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                ),
+                SizedBox(
+                  height: 200,
+                  child: InkWell(
+                    onTap: () {
+                      ImagePicker()
+                          .pickImage(
+                              source: ImageSource.gallery, imageQuality: 100)
+                          .then((value) async {
+                        if (value != null) {
+                          imageBytesMechanich = await value.readAsBytes();
+                          imagePathMechanich = await uploadImage(value.path);
+                          ;
+                          networkImageMechanich = null;
+                          setState(() {});
+                        }
+                      });
+                    },
+                    child: Checked(
+                        checked: imagePathMechanich != null,
+                        checkedWidget: ClipRRect(
+                            borderRadius: BorderRadius.circular(25),
+                            child: imageBytesMechanich != null
+                                ? Image.memory(
+                                    imageBytesMechanich ?? Uint8List(0),
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.network(
+                                    networkImageMechanich ?? '',
+                                    fit: BoxFit.cover,
+                                  )),
+                        child: Center(
+                            child: Icon(
+                          Icons.camera_alt,
+                        ))),
+                  ),
+                ),
 // identity
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Center(
-                  child: Text(
-                S.current.identity,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              )),
-            ),
-            SizedBox(
-              height: 200,
-              child: InkWell(
-                onTap: () {
-                  ImagePicker()
-                      .pickImage(source: ImageSource.gallery, imageQuality: 100)
-                      .then((value) async {
-                    if (value != null) {
-                      imageBytesIdentity = await value.readAsBytes();
-                      imagePathIdentity = await uploadImage(value.path);
-                      networkImageIdentity = null;
-                      setState(() {});
-                    }
-                  });
-                },
-                child: Checked(
-                    checked: imagePathIdentity != null,
-                    checkedWidget: ClipRRect(
-                        borderRadius: BorderRadius.circular(25),
-                        child: imageBytesIdentity != null
-                            ? Image.memory(
-                                imageBytesIdentity ?? Uint8List(0),
-                                fit: BoxFit.cover,
-                              )
-                            : Image.network(
-                                networkImageIdentity ?? '',
-                                fit: BoxFit.cover,
-                              )),
-                    child: Center(
-                        child: Icon(
-                      Icons.camera_alt,
-                      color: Colors.white,
-                    ))),
-              ),
-            ),
-            SizedBox(
-              height: 100,
-            ),
-          ]),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Center(
+                      child: Text(
+                    S.current.identity,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                ),
+                SizedBox(
+                  height: 200,
+                  child: InkWell(
+                    onTap: () {
+                      ImagePicker()
+                          .pickImage(
+                              source: ImageSource.gallery, imageQuality: 100)
+                          .then((value) async {
+                        if (value != null) {
+                          imageBytesIdentity = await value.readAsBytes();
+                          imagePathIdentity = await uploadImage(value.path);
+                          networkImageIdentity = null;
+                          setState(() {});
+                        }
+                      });
+                    },
+                    child: Checked(
+                        checked: imagePathIdentity != null,
+                        checkedWidget: ClipRRect(
+                            borderRadius: BorderRadius.circular(25),
+                            child: imageBytesIdentity != null
+                                ? Image.memory(
+                                    imageBytesIdentity ?? Uint8List(0),
+                                    fit: BoxFit.cover,
+                                  )
+                                : Image.network(
+                                    networkImageIdentity ?? '',
+                                    fit: BoxFit.cover,
+                                  )),
+                        child: Center(
+                            child: Icon(
+                          Icons.camera_alt,
+                          color: Colors.white,
+                        ))),
+                  ),
+                ),
+                SizedBox(
+                  height: 100,
+                ),
+              ]),
         ),
         label: S.current.save,
         onTap: () {
@@ -370,8 +374,8 @@ class _UpdateCaptainProfileState extends State<UpdateCaptainProfile> {
             ));
           } else {
             CustomFlushBarHelper.createError(
-                    title: S.current.warnning,
-                    message: S.current.pleaseCompleteTheForm);
+                title: S.current.warnning,
+                message: S.current.pleaseCompleteTheForm);
           }
         });
   }

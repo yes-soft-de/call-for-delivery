@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_categories/ui/screen/categories_screen.dart';
 import 'package:c4d/utils/components/costom_search.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 
@@ -49,72 +48,68 @@ class CategoriesLoadedState extends States {
       child: Center(
         child: Container(
           constraints: BoxConstraints(maxWidth: 600),
-          child: CustomListView.custom(children: getCategories(context)),
+          child: Column(
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 18.0, right: 18.0, bottom: 16),
+                child: CustomDeliverySearch(
+                  hintText: S.current.search,
+                  onChanged: (s) {
+                    if (s == '' || s.isEmpty) {
+                      search = null;
+                      screenState.refresh();
+                    } else {
+                      search = s;
+                      screenState.refresh();
+                    }
+                  },
+                ),
+              ),
+              Flexible(
+                child: ListView.builder(
+                  itemCount: model?.length ?? 0,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    if (model != null &&
+                        model![index]
+                            .categoryName
+                            .toLowerCase()
+                            .contains(search?.toLowerCase() ?? '')) {
+                      return CategoryCard(
+                        description: model![index].description ?? '',
+                        name: model![index].categoryName,
+                        status: model![index].status,
+                        onEdit: () {
+                          showDialog(
+                              context: context,
+                              builder: (_) {
+                                return CategoryForm(
+                                  request: model![index],
+                                  onSave: (request) {
+                                    screenState.updateCategory(request);
+                                  },
+                                );
+                              });
+                        },
+                        onActivate: (status) {
+                          model![index].status = status;
+                          screenState.refresh();
+                          screenState.enableCategories(ActivePackageRequest(
+                              id: model![index].id, status: status ? 1 : 0));
+                        },
+                      );
+                    }
+                    return SizedBox();
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 50,
+              )
+            ],
+          ),
         ),
       ),
     );
-  }
-
-  List<Widget> getCategories(context) {
-    List<Widget> widgets = [];
-    if (model == null) {
-      return widgets;
-    }
-    if (model!.isEmpty) return widgets;
-    for (var element in model ?? <PackagesCategoryModel>[]) {
-      if (!element.categoryName.contains(search ?? '') && search != null) {
-        continue;
-      }
-
-      widgets.add(
-        CategoryCard(
-          description: element.description ?? '',
-          name: element.categoryName,
-          status: element.status,
-          onEdit: () {
-            showDialog(
-                context: context,
-                builder: (_) {
-                  return CategoryForm(
-                    request: element,
-                    onSave: (request) {
-                      screenState.updateCategory(request);
-                    },
-                  );
-                });
-          },
-          onActivate: (status) {
-            element.status = status;
-            screenState.refresh();
-            screenState.enableCategories(
-                ActivePackageRequest(id: element.id, status: status ? 1 : 0));
-          },
-        ),
-      );
-    }
-
-    if (model != null) {
-      widgets.insert(
-          0,
-          Padding(
-            padding: EdgeInsets.only(left: 18.0, right: 18.0, bottom: 16),
-            child: CustomDeliverySearch(
-              hintText: S.current.search,
-              onChanged: (s) {
-                if (s == '' || s.isEmpty) {
-                  search = null;
-                  screenState.refresh();
-                } else {
-                  search = s;
-                  screenState.refresh();
-                }
-              },
-            ),
-          ));
-    }
-    widgets.add(SizedBox(
-      height: 50,
-    ));
-    return widgets;
   }
 }

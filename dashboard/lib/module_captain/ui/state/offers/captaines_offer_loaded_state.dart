@@ -6,7 +6,6 @@ import 'package:c4d/module_captain/ui/widget/offer/captain_offer_form.dart';
 import 'package:c4d/module_captain/ui/widget/offer/offer_card.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 
@@ -50,7 +49,7 @@ class CaptainOffersLoadedState extends States {
         child: Container(
           constraints: BoxConstraints(maxWidth: 600),
           child: SizedBox(
-            child: CustomListView.custom(
+            child: ListView(
               children: [
                 GridView(
                     padding: EdgeInsets.all(4),

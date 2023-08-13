@@ -5,7 +5,6 @@ import 'package:c4d/module_company/model/company_model.dart';
 import 'package:c4d/module_company/request/create_company_profile.dart';
 import 'package:c4d/module_company/ui/screen/company_profile_screen.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
 import 'package:c4d/utils/components/stacked_form.dart';
@@ -75,7 +74,7 @@ class CompanyLoadedState extends States {
         child: Form(
           key: _key,
           child: FixedContainer(
-              child: CustomListView.custom(
+              child: ListView(
                   padding: EdgeInsets.only(right: 16, left: 16),
                   children: [
                 // phone
@@ -223,8 +222,9 @@ class CompanyLoadedState extends States {
             }
           } else {
             CustomFlushBarHelper.createError(
-                    title: S.current.warnning,
-                    message: S.current.pleaseCompleteTheForm);
+              title: S.current.warnning,
+              message: S.current.pleaseCompleteTheForm,
+            );
           }
         });
   }

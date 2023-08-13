@@ -16,7 +16,6 @@ import 'package:c4d/module_captain/ui/widget/captain_profile/custom_captain_prof
 import 'package:c4d/module_captain/ui/widget/captain_profile/image_tile.dart';
 import 'package:c4d/module_captain/ui/widget/update_captain_widget.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
@@ -173,7 +172,7 @@ class CaptainProfileLoadedState extends States {
           height: 8,
         ),
         Expanded(
-          child: CustomListView.custom(
+          child: ListView(
             children: [
               // image profile
               Padding(
