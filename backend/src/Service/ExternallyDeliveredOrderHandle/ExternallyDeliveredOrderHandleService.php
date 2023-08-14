@@ -437,7 +437,7 @@ class ExternallyDeliveredOrderHandleService
     /**
      * Cancel order in the external company platform, and according to the returned response do the required
      */
-    public function handleCancellingExternalOrderInExternalDeliveryCompanyPlatform(int $externalDeliveryCompanyId, int $externalOrderId): array|int|string
+    public function handleCancellingExternalOrderInExternalDeliveryCompanyPlatform(int $externalDeliveryCompanyId, int $externalOrderId): ExternallyDeliveredOrderEntity|int|array|string
     {
         // 1 cancel order in external company platform
         $orderCancelResponse = $this->updateOrderStatusToCancelInExternalDeliveryCompany($externalDeliveryCompanyId,
@@ -460,7 +460,7 @@ class ExternallyDeliveredOrderHandleService
             if ($arrayResponse['message'] === StreetLineCompanyConstant::RESPONSE_MESSAGE_OK_VALUE_CONST) {
                 // return StreetLineCompanyConstant::RESPONSE_MESSAGE_OK_VALUE_CONST;
                 // 3 Update order status in ExternalDeliveredOrderEntity
-                $this->updateExternallyDeliveredOrderStatusByExternalOrderIdAndExternalCompanyId($externalOrderId,
+                return $this->updateExternallyDeliveredOrderStatusByExternalOrderIdAndExternalCompanyId($externalOrderId,
                     $externalDeliveryCompanyId, StreetLineCompanyConstant::ORDER_CANCELLED_STATUS_CONST);
 
             } elseif ($arrayResponse['message'] === StreetLineCompanyConstant::RESPONSE_MESSAGE_INVALID_ORDER_VALUE_CONST) {

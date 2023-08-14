@@ -2726,7 +2726,7 @@ class AdminOrderService
     /**
      *
      */
-    public function handleCancellingExternalOrderInExternalDeliveryCompanyPlatform(int $externalDeliveryCompanyId, int $externalOrderId): array|int|string
+    public function handleCancellingExternalOrderInExternalDeliveryCompanyPlatform(int $externalDeliveryCompanyId, int $externalOrderId): ExternallyDeliveredOrderEntity|array|int|string
     {
         return $this->externallyDeliveredOrderHandleService->handleCancellingExternalOrderInExternalDeliveryCompanyPlatform($externalDeliveryCompanyId,
             $externalOrderId);
