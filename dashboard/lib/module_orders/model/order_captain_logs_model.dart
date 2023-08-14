@@ -49,6 +49,7 @@ class OrderCaptainLogsModel extends DataModel {
         subOrders: _getOrders(element.subOrders ?? []),
         kilometer: 0,
         storeBranchToClientDistance: 0,
+        captainProfit: element.captainProfit,
       ));
     });
     _orders = OrderCaptainLogsModel(

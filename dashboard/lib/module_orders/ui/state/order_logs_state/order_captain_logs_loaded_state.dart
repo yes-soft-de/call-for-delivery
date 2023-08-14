@@ -309,33 +309,33 @@ class _CaptainOrderCard extends StatelessWidget {
       ],
     );
   }
-}
 
-Widget verticalTile(context,
-    {required String title, required String subtitle}) {
-  return Column(
-    children: [
-      Text(
-        title,
-        style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Theme.of(context).textTheme.labelLarge?.color),
-      ),
-      Text(subtitle,
-          style: Theme.of(context)
-              .textTheme
-              .labelLarge
-              ?.copyWith(fontWeight: FontWeight.normal)),
-    ],
-  );
-}
+  Widget verticalTile(context,
+      {required String title, required String subtitle}) {
+    return Column(
+      children: [
+        Text(
+          title,
+          style: TextStyle(
+              fontWeight: FontWeight.bold,
+              color: Theme.of(context).textTheme.labelLarge?.color),
+        ),
+        Text(subtitle,
+            style: Theme.of(context)
+                .textTheme
+                .labelLarge
+                ?.copyWith(fontWeight: FontWeight.normal)),
+      ],
+    );
+  }
 
-Widget divider(context) {
-  Color dividerColor = Theme.of(context).textTheme.labelLarge!.color!;
-  return Divider(
-    thickness: 2,
-    indent: 16,
-    endIndent: 16,
-    color: dividerColor,
-  );
+  Widget divider(context) {
+    Color dividerColor = Theme.of(context).textTheme.labelLarge!.color!;
+    return Divider(
+      thickness: 2,
+      indent: 16,
+      endIndent: 16,
+      color: dividerColor,
+    );
+  }
 }

@@ -10944,6 +10944,16 @@ class S {
     );
   }
 
+  /// `captain profit`
+  String get captainProfit {
+    return Intl.message(
+      'captain profit',
+      name: 'captainProfit',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

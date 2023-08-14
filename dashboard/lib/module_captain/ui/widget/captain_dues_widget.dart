@@ -7,7 +7,10 @@ import 'package:flutter/material.dart';
 class CaptainDuesWidget extends StatelessWidget {
   // final CaptainFinanceDailyModel? model;
   final CaptainDuesModel? model;
-  const CaptainDuesWidget({Key? key, required this.model}) : super(key: key);
+  final bool hideToBePaid;
+  const CaptainDuesWidget(
+      {Key? key, required this.model, this.hideToBePaid = false})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -85,9 +88,16 @@ class CaptainDuesWidget extends StatelessWidget {
                         title: S.current.dues,
                         subtitle:
                             model?.amountSum.toString() ?? '' + S.current.sar),
-                    verticalTile(context,
-                        title: S.current.remainingtoPay,
-                        subtitle: '${model?.toBePaid.toString() ?? ''}'),
+                    Visibility(
+                      replacement: Icon(
+                        Icons.arrow_circle_left_outlined,
+                        color: Colors.white,
+                      ),
+                      visible: hideToBePaid,
+                      child: verticalTile(context,
+                          title: S.current.remainingtoPay,
+                          subtitle: '${model?.toBePaid.toString() ?? ''}'),
+                    ),
                   ],
                 ),
                 // // divider

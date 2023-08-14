@@ -37,6 +37,7 @@ class DatumOrder {
   int? costType;
   int? packageType;
   List<ExternalDeliveryOrder>? externalDeliveryOrder;
+  num? captainProfit;
 
   DatumOrder({
     this.id,
@@ -68,6 +69,7 @@ class DatumOrder {
     this.costType,
     this.packageType,
     this.externalDeliveryOrder,
+    this.captainProfit,
   });
 
   factory DatumOrder.fromJson(Map<String, dynamic> json) => DatumOrder(
@@ -76,6 +78,7 @@ class DatumOrder {
         payment: json['payment'] as String?,
         orderCost: json['orderCost'] as num?,
         kilometer: json['kilometer'] as num?,
+        captainProfit: json['captainProfit'] as num?,
         storeBranchToClientDistance:
             json['storeBranchToClientDistance'] as num?,
         orderType: json['orderType'] as int?,
