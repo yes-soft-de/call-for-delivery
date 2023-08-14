@@ -73,4 +73,25 @@ class StreetLineOrderSendService
             $createOrderJsonRequest
         );
     }
+
+    /**
+     * Execute a cancel order get request to Street Line
+     */
+    public function createCancelOrderGetRequest(string $url): ResponseInterface
+    {
+        return $this->client->request(HttpMethodConstant::GET_METHOD_CONST, $url);
+    }
+
+    /**
+     * Cancel an exist order in Street Line and returns the response
+     */
+    public function cancelOrderInStreetLine(int $externalOrderId): ResponseInterface
+    {
+        return $this->createCancelOrderGetRequest(
+            $this->params->get('streetLine_base_url')
+            . $this->params->get('streetLine_token')
+            . $this->params->get('streetLine_cancel_order_url')
+            . $externalOrderId
+        );
+    }
 }
