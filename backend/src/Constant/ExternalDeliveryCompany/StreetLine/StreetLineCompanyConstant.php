@@ -55,4 +55,8 @@ final class StreetLineCompanyConstant
     const ORDER_UNASSIGNED_STATUS_CONST = "Order Unassigned";
 
     const ORDER_FAILED_STATUS_CONST = "Order failed";
+    // response constant
+    const RESPONSE_MESSAGE_OK_VALUE_CONST = "OK";
+
+    const RESPONSE_MESSAGE_INVALID_ORDER_VALUE_CONST = "Invalid order";
 }

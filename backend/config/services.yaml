@@ -25,6 +25,7 @@ parameters:
     streetLine_create_order_url: '%env(STREETLINE_CREATE_ORDER_URL)%'
     streetLine_get_order_url: '%env(STREETLINE_GET_ORDER_URL)%'
     streetLine_pickup_id: '%env(STREETLINE_PICKUP_ID)%'
+    streetLine_cancel_order_url: '%env(STREETLINE_CANCEL_ORDER_URL)%'
 
 services:
     # default configuration for services in *this* file

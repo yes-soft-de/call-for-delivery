@@ -7,6 +7,7 @@ use App\Constant\AppFeature\AppFeatureResultConstant;
 use App\Constant\AppFeature\AppFeatureStatusConstant;
 use App\Constant\ExternalDeliveryCompany\ExternalDeliveryCompanyIdentityConstant;
 use App\Constant\ExternalDeliveryCompany\ExternalDeliveryCompanyResultConstant;
+use App\Constant\ExternalDeliveryCompany\StreetLine\StreetLineCompanyConstant;
 use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaIsDistanceConstant;
 use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaIsFromAllStoresConstant;
 use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaPaymentConstant;
@@ -340,7 +341,7 @@ class ExternallyDeliveredOrderHandleService
     }
 
     /**
-     * Main function
+     * Main function 1
      * Responsible for handling the process of sending order to an external party by admin
      * Note: because admin has different conditions for sending order externally
      */
@@ -406,5 +407,73 @@ class ExternallyDeliveredOrderHandleService
     public function getAllActiveExternalDeliveryCompanies(): array|int
     {
         return $this->externalDeliveryCompanyGetService->getAllActiveExternalDeliveryCompanies();
+    }
+
+    /**
+     * Cancel order in StreetLine company
+     */
+    public function cancelOrderInStreetLine(int $externalOrderId): ResponseInterface
+    {
+        return $this->streetLineOrderSendService->cancelOrderInStreetLine($externalOrderId);
+    }
+
+    /**
+     * Depending on the external company, update order status
+     */
+    public function updateOrderStatusToCancelInExternalDeliveryCompany(int $externalDeliveryCompanyId, int $externalOrderId): int|ResponseInterface
+    {
+        // According to external delivery company send the order
+        if ($externalDeliveryCompanyId === ExternalDeliveryCompanyIdentityConstant::MRSOOL_COMPANY_CONST) {
+            // delivery company is Mrsool
+
+        } elseif ($externalDeliveryCompanyId === ExternalDeliveryCompanyIdentityConstant::STREET_LINE_COMPANY_CONST) {
+            // delivery company is Street Line
+            return $this->cancelOrderInStreetLine($externalOrderId);
+        }
+
+        return ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_IS_NOT_REGISTERED_CONST;
+    }
+
+    /**
+     * Cancel order in the external company platform, and according to the returned response do the required
+     */
+    public function handleCancellingExternalOrderInExternalDeliveryCompanyPlatform(int $externalDeliveryCompanyId, int $externalOrderId): ExternallyDeliveredOrderEntity|int|array|string
+    {
+        // 1 cancel order in external company platform
+        $orderCancelResponse = $this->updateOrderStatusToCancelInExternalDeliveryCompany($externalDeliveryCompanyId,
+            $externalOrderId);
+
+        if ($orderCancelResponse === ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_IS_NOT_REGISTERED_CONST) {
+            return ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_IS_NOT_REGISTERED_CONST;
+        }
+
+        // 2 According to the response that being resulted from previous step, handle the situation
+        $arrayResponse = $this->handleResponseInterface($orderCancelResponse, $externalDeliveryCompanyId);
+
+        if (($arrayResponse === HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
+            || ($arrayResponse === HttpResponseConstant::INVALID_INPUT_RESULT_CODE_CONST)
+            || ($arrayResponse === HttpResponseConstant::METHOD_NOT_ALLOWED_RESULT_CONST)) {
+            return $arrayResponse;
+        }
+
+        if (isset($arrayResponse['message'])) {
+            if ($arrayResponse['message'] === StreetLineCompanyConstant::RESPONSE_MESSAGE_OK_VALUE_CONST) {
+                // return StreetLineCompanyConstant::RESPONSE_MESSAGE_OK_VALUE_CONST;
+                // 3 Update order status in ExternalDeliveredOrderEntity
+                return $this->updateExternallyDeliveredOrderStatusByExternalOrderIdAndExternalCompanyId($externalOrderId,
+                    $externalDeliveryCompanyId, StreetLineCompanyConstant::ORDER_CANCELLED_STATUS_CONST);
+
+            } elseif ($arrayResponse['message'] === StreetLineCompanyConstant::RESPONSE_MESSAGE_INVALID_ORDER_VALUE_CONST) {
+                return StreetLineCompanyConstant::RESPONSE_MESSAGE_INVALID_ORDER_VALUE_CONST;
+            }
+        }
+
+        return HttpResponseConstant::UNRECOGNIZED_RESPONSE_CONST;
+    }
+
+    public function updateExternallyDeliveredOrderStatusByExternalOrderIdAndExternalCompanyId(int $externalOrderId, int $externalDeliveryCompanyId, string $status): int|ExternallyDeliveredOrderEntity
+    {
+        return $this->externallyDeliveredOrderService->updateExternallyDeliveredOrderStatusByExternalOrderIdAndExternalCompanyId($externalOrderId,
+            $externalDeliveryCompanyId, $status);
     }
 }

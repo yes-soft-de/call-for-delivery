@@ -3,7 +3,6 @@
 namespace App\Manager\ExternallyDeliveredOrder;
 
 use App\AutoMapping;
-use App\Constant\ExternalDeliveryCompany\Mrsool\MrsoolCompanyConstant;
 use App\Entity\ExternallyDeliveredOrderEntity;
 use App\Repository\ExternallyDeliveredOrderEntityRepository;
 use App\Request\ExternallyDeliveredOrder\ExternallyDeliveredOrderCreateRequest;
@@ -45,16 +44,6 @@ class ExternallyDeliveredOrderManager
         return $externallyDeliveredOrderEntity;
     }
 
-//    public function getExternallyDeliveredOrdersByStatus(string $status): array
-//    {
-//        return $this->externallyDeliveredOrderEntityRepository->findBy(['status' => $status]);
-//    }
-
-//    public function getOnGoingExternallyDeliveredOrders(): array
-//    {
-//        return $this->externallyDeliveredOrderEntityRepository->findBy(['status' => MrsoolCompanyConstant::ONGOING_ORDER_CONST]);
-//    }
-
     public function getAllExternallyDeliveredOrdersByOrderId(int $orderId): array
     {
         return $this->externallyDeliveredOrderEntityRepository->findBy(['orderId' => $orderId]);
@@ -67,5 +56,19 @@ class ExternallyDeliveredOrderManager
     {
         return $this->externallyDeliveredOrderEntityRepository->findOneBy(['externalOrderId' => $externalOrderId,
             'externalDeliveryCompany' => $externalCompanyId]);
+    }
+
+    public function updateExternallyDeliveredOrderStatusByExternalOrderIdAndExternalCompanyId(int $externalOrderId, int $externalDeliveryCompanyId, string $status): int|ExternallyDeliveredOrderEntity
+    {
+        $externalOrder = $this->externallyDeliveredOrderEntityRepository->findOneBy(['externalOrderId' => $externalOrderId,
+            'externalDeliveryCompany' => $externalDeliveryCompanyId]);
+
+        if ($externalOrder) {
+            $externalOrder->setStatus($status);
+
+            $this->entityManager->flush();
+        }
+
+        return $externalOrder;
     }
 }
