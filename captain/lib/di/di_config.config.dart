@@ -108,7 +108,7 @@ import '../module_plan/plan_module.dart' as _i108;
 import '../module_plan/repository/plan_repository.dart' as _i40;
 import '../module_plan/service/plan_service.dart' as _i63;
 import '../module_plan/state_manager/account_balance_state_manager.dart'
-    as _i74;
+    as _i73;
 import '../module_plan/state_manager/captain_financial_dues_state_manager.dart'
     as _i77;
 import '../module_plan/state_manager/daily_payments_state_manager.dart' as _i81;
@@ -116,7 +116,7 @@ import '../module_plan/state_manager/my_profits_state_manager.dart' as _i86;
 import '../module_plan/state_manager/payment_history_state_manager.dart'
     as _i90;
 import '../module_plan/state_manager/plan_screen_state_manager.dart' as _i92;
-import '../module_plan/ui/screen/account_balance_screen.dart' as _i98;
+import '../module_plan/ui/screen/account_balance_screen.dart' as _i97;
 import '../module_plan/ui/screen/captain_financial_details_screen.dart' as _i6;
 import '../module_plan/ui/screen/captain_financial_dues_screen.dart' as _i100;
 import '../module_plan/ui/screen/daily_payments_screen.dart' as _i82;
@@ -129,11 +129,11 @@ import '../module_profile/module_profile.dart' as _i110;
 import '../module_profile/repository/profile/profile.repository.dart' as _i41;
 import '../module_profile/service/profile/profile.service.dart' as _i65;
 import '../module_profile/state_manager/account_balance_state_manager.dart'
-    as _i73;
+    as _i74;
 import '../module_profile/state_manager/activity/activity_state_manager.dart'
     as _i75;
 import '../module_profile/state_manager/edit_profile/edit_profile.dart' as _i83;
-import '../module_profile/ui/screen/account_balance_screen.dart' as _i97;
+import '../module_profile/ui/screen/account_balance_screen.dart' as _i98;
 import '../module_profile/ui/screen/activity_screen/activity_screen.dart'
     as _i99;
 import '../module_profile/ui/screen/edit_profile/edit_profile.dart' as _i102;
@@ -342,13 +342,13 @@ _i1.GetIt $initGetIt(
   gh.factory<_i72.AboutScreenStateManager>(
       () => _i72.AboutScreenStateManager(gh<_i46.AboutService>()));
   gh.factory<_i73.AccountBalanceStateManager>(
-      () => _i73.AccountBalanceStateManager(
+      () => _i73.AccountBalanceStateManager(gh<_i63.PlanService>()));
+  gh.factory<_i74.AccountBalanceStateManager>(
+      () => _i74.AccountBalanceStateManager(
             gh<_i65.ProfileService>(),
             gh<_i28.AuthService>(),
             gh<_i32.ImageUploadService>(),
           ));
-  gh.factory<_i74.AccountBalanceStateManager>(
-      () => _i74.AccountBalanceStateManager(gh<_i63.PlanService>()));
   gh.factory<_i75.ActivityStateManager>(() => _i75.ActivityStateManager(
         gh<_i65.ProfileService>(),
         gh<_i28.AuthService>(),
@@ -450,10 +450,9 @@ _i1.GetIt $initGetIt(
   gh.factory<_i107.PaymentHistoryScreen>(
       () => _i107.PaymentHistoryScreen(gh<_i90.PaymentHistoryStateManager>()));
   gh.factory<_i108.PlanModule>(() => _i108.PlanModule(
-        gh<_i98.AccountBalanceScreen>(),
+        gh<_i97.AccountBalanceScreen>(),
         gh<_i6.CaptainFinancialDuesDetailsScreen>(),
         gh<_i100.CaptainFinancialDuesScreen>(),
-        gh<_i82.DailyPaymentsScreen>(),
         gh<_i105.MyProfitsScreen>(),
         gh<_i107.PaymentHistoryScreen>(),
         gh<_i91.PlanDetailsScreen>(),
@@ -463,7 +462,7 @@ _i1.GetIt $initGetIt(
   gh.factory<_i110.ProfileModule>(() => _i110.ProfileModule(
         gh<_i99.ActivityScreen>(),
         gh<_i102.EditProfileScreen>(),
-        gh<_i97.AccountBalanceScreen>(),
+        gh<_i98.AccountBalanceScreen>(),
       ));
   gh.factory<_i111.AboutModule>(
       () => _i111.AboutModule(gh<_i96.AboutScreen>()));

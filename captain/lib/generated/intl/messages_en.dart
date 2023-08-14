@@ -1181,6 +1181,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "Your request not accepted from administration you can contact us to get info"),
         "unavailable": MessageLookupByLibrary.simpleMessage("Unavailable"),
+        "unifiedPlan": MessageLookupByLibrary.simpleMessage("unified plan"),
         "unknown": MessageLookupByLibrary.simpleMessage("Unknown"),
         "unknownNumberOfCar":
             MessageLookupByLibrary.simpleMessage("The number of cars unknown"),

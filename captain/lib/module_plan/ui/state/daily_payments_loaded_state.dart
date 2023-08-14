@@ -4,7 +4,6 @@ import 'package:c4d/module_plan/ui/screen/daily_payments_screen.dart';
 import 'package:c4d/module_plan/ui/widget/daily_payments_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
-import 'package:intl/intl.dart' as intl;
 
 class DailyPaymentsLoaded extends States {
   final DailyPaymentsScreenState screenState;

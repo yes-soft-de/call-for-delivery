@@ -32,7 +32,8 @@ class DailyWidget extends StatelessWidget {
     List<String> packages = [
       S.current.planByHours,
       S.current.planByOrders,
-      S.current.planByOrderCount
+      S.current.planByOrderCount,
+      S.current.unifiedPlan
     ];
     return Container(
       decoration: BoxDecoration(
@@ -56,10 +57,12 @@ class DailyWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Expanded(
-                      child: VerticalBubble(
-                          title: S.current.todayProfit,
-                          subtitle:
-                              '${FixedNumber.getFixedNumber(amount)} ${S.current.sar}')),
+                    child: VerticalBubble(
+                      title: S.current.todayProfit,
+                      subtitle:
+                          '${FixedNumber.getFixedNumber(amount)} ${S.current.sar}',
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
@@ -69,10 +72,12 @@ class DailyWidget extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                      child: VerticalBubble(
-                          title: S.current.totalEarnedProfit,
-                          subtitle:
-                              '${FixedNumber.getFixedNumber(alreadyHadAmount)} ${S.current.sar}')),
+                    child: VerticalBubble(
+                      title: S.current.totalEarnedProfit,
+                      subtitle:
+                          '${FixedNumber.getFixedNumber(alreadyHadAmount)} ${S.current.sar}',
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -83,9 +88,11 @@ class DailyWidget extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Expanded(
-                      child: VerticalBubble(
-                          title: S.current.myPlan,
-                          subtitle: packages[financeType - 1])),
+                    child: VerticalBubble(
+                      title: S.current.myPlan,
+                      subtitle: packages[financeType - 1],
+                    ),
+                  ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Container(
@@ -95,9 +102,11 @@ class DailyWidget extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                      child: VerticalBubble(
-                          title: S.current.plan,
-                          subtitle: financeSystemPlan.toString())),
+                    child: VerticalBubble(
+                      title: S.current.plan,
+                      subtitle: financeSystemPlan.toString(),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -123,11 +132,12 @@ class DailyWidget extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                      child: VerticalBubble(
-                          title: S.current.financeStatus,
-                          subtitle: FinanceHelper.getDailyFinance(isPaid),
-                          background:
-                              FinanceHelper.getFinanceStatusColor(isPaid))),
+                    child: VerticalBubble(
+                      title: S.current.financeStatus,
+                      subtitle: FinanceHelper.getDailyFinance(isPaid),
+                      background: FinanceHelper.getFinanceStatusColor(isPaid),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -144,28 +154,30 @@ class DailyWidget extends StatelessWidget {
                     ));
                   });
                   showDialog(
-                      context: context,
-                      builder: (ctx) {
-                        return Scaffold(
-                          appBar: CustomC4dAppBar.appBar(
-                            context,
-                            title: '',
-                            icon: Icons.cancel,
-                          ),
-                          body: SingleChildScrollView(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                children: widgets,
-                              ),
+                    context: context,
+                    builder: (ctx) {
+                      return Scaffold(
+                        appBar: CustomC4dAppBar.appBar(
+                          context,
+                          title: '',
+                          icon: Icons.cancel,
+                        ),
+                        body: SingleChildScrollView(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: widgets,
                             ),
                           ),
-                        );
-                      });
+                        ),
+                      );
+                    },
+                  );
                 },
                 child: Padding(
-                    padding: const EdgeInsets.all(8),
-                    child: Text(S.current.payments)),
+                  padding: const EdgeInsets.all(8),
+                  child: Text(S.current.payments),
+                ),
               ),
             )
           ],

@@ -865,6 +865,7 @@
     "ThereIsNoCurrentActiveFinancialCycle": "There Is No Current Active Financial Cycle",
     "requestedSuccessfully": "requested successfully",
     "financeOverPaid": "Over paid",
+    "unifiedPlan": "unified plan",
     "doYouWantToDoThisAction":"Do you want to do this action ?"
 
 }
