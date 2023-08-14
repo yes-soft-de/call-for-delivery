@@ -23,7 +23,7 @@ class OrderDetailsStateLoaded extends States {
   Widget getUI(BuildContext context) {
     return StackedForm(
       label: '',
-      child: CustomListView.custom(
+      child: ListView(
         children: [
           model.images.isEmpty
               ? Image.asset(
@@ -120,7 +120,7 @@ class OrderDetailsStateLoaded extends States {
             indent: 16,
             endIndent: 16,
             thickness: 2.5,
-            color: Theme.of(context).backgroundColor,
+            color: Theme.of(context).colorScheme.background,
           ),
           Padding(
             padding: const EdgeInsetsDirectional.only(start: 8, end: 8),

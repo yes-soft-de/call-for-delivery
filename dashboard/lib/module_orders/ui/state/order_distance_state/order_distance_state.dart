@@ -7,7 +7,6 @@ import 'package:c4d/module_orders/ui/screens/order_conflict_distance_screen.dart
 import 'package:c4d/module_orders/ui/widgets/order_distance_conflict_card.dart';
 import 'package:c4d/utils/components/custom_c4d_field.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:flutter/material.dart';
 
 class OrderDistanceConflictLoadedState extends States {
@@ -19,48 +18,54 @@ class OrderDistanceConflictLoadedState extends States {
 
   @override
   Widget getUI(BuildContext context) {
-    return CustomListView.custom(children: getOrders(context));
-  }
+    return Column(
+      children: [
+        Flexible(
+          child: ListView.builder(
+            itemCount: orders.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(25),
+                    onTap: () {
+                      Navigator.of(screenState.context).pushNamed(
+                          OrdersRoutes.ORDER_STATUS_SCREEN,
+                          arguments: orders[index].orderId);
+                    },
+                    child: OrderDistanceConflict(
+                      orderNumber: orders[index].orderId.toString(),
+                      branchName: orders[index].storeBranchName,
+                      captain: orders[index].captainName,
+                      distance: orders[index].proposedDestinationOrDistance,
+                      onEdit: () {
+                        ActionType action = ActionType.defaultValue;
+                        TextEditingController decision =
+                            TextEditingController();
+                        TextEditingController reason = TextEditingController();
+                        final GlobalKey<FormState> formKey =
+                            GlobalKey<FormState>();
 
-  List<Widget> getOrders(context) {
-    List<Widget> widgets = [];
-    orders.forEach((element) {
-      widgets.add(Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(25),
-            onTap: () {
-              Navigator.of(screenState.context).pushNamed(
-                  OrdersRoutes.ORDER_STATUS_SCREEN,
-                  arguments: element.orderId);
+                        _caseDetailsAndSolveDialog(context, orders[index],
+                            formKey, reason, decision, action);
+                      },
+                      storeOwner: orders[index].storeOwnerName,
+                      conflictReason: orders[index].conflictNote,
+                    ),
+                  ),
+                ),
+              );
             },
-            child: OrderDistanceConflict(
-              orderNumber: element.orderId.toString(),
-              branchName: element.storeBranchName,
-              captain: element.captainName,
-              distance: element.proposedDestinationOrDistance,
-              onEdit: () {
-                ActionType action = ActionType.defaultValue;
-                TextEditingController decision = TextEditingController();
-                TextEditingController reason = TextEditingController();
-                final GlobalKey<FormState> formKey = GlobalKey<FormState>();
-
-                _caseDetailsAndSolveDialog(
-                    context, element, formKey, reason, decision, action);
-              },
-              storeOwner: element.storeOwnerName,
-              conflictReason: element.conflictNote,
-            ),
           ),
         ),
-      ));
-    });
-    widgets.add(SizedBox(
-      height: 75,
-    ));
-    return widgets;
+        SizedBox(
+          height: 25,
+        )
+      ],
+    );
   }
 
   void _caseDetailsAndSolveDialog(

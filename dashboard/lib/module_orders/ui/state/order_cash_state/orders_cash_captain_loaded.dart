@@ -5,7 +5,6 @@ import 'package:c4d/module_orders/ui/screens/order_cash_captain_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/bubble_widget.dart';
 import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
 import 'package:c4d/module_orders/ui/widgets/orders_cash_captain_card.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:flutter/material.dart';
@@ -26,7 +25,7 @@ class OrdersCashCaptainLoadedState extends States {
   @override
   Widget getUI(BuildContext context) {
     var total = model.total;
-    return CustomListView.custom(children: [
+    return ListView(children: [
       Padding(
         padding: const EdgeInsets.all(8.0),
         child: Row(

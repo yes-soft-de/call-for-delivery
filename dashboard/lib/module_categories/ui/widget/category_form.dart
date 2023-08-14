@@ -3,7 +3,6 @@ import 'package:c4d/module_categories/model/package_categories_model.dart';
 import 'package:c4d/module_categories/request/package_category_request.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
 import 'package:c4d/utils/components/stacked_form.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
@@ -45,7 +44,7 @@ class _CategoryFormState extends State<CategoryForm> {
           child: Form(
             key: _key,
             child: FixedContainer(
-              child: CustomListView.custom(
+              child: ListView(
                   padding: EdgeInsets.only(right: 16, left: 16),
                   children: [
                     Padding(
@@ -91,8 +90,8 @@ class _CategoryFormState extends State<CategoryForm> {
                   id: id));
             } else {
               CustomFlushBarHelper.createError(
-                      title: S.current.warnning,
-                      message: S.current.pleaseCompleteTheForm);
+                  title: S.current.warnning,
+                  message: S.current.pleaseCompleteTheForm);
             }
           }),
     );

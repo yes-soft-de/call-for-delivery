@@ -4,7 +4,6 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/captains_module.dart';
 import 'package:c4d/module_categories/categories_module.dart';
 import 'package:c4d/module_company/company_module.dart';
-import 'package:c4d/module_delivary_car/cars_module.dart';
 import 'package:c4d/module_dev/dev_module.dart';
 import 'package:c4d/module_external_delivery_companies/external_delivery_companies_module.dart';
 import 'package:c4d/module_external_delivery_companies/model/feature_model.dart';
@@ -356,12 +355,6 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                     //                      true),
                   ],
                   page: widget.currentPage),
-            ),
-            // cars
-            Visibility(
-              visible: false,
-              child: customListTile(getIt<CarsModule>().carsScreen,
-                  S.current.deliveryCars, FontAwesomeIcons.car),
             ),
             // company
             customExpansionTile(

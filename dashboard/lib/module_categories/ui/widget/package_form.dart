@@ -3,7 +3,6 @@ import 'package:c4d/module_categories/model/packages_model.dart';
 import 'package:c4d/module_categories/request/package_request.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
 import 'package:c4d/utils/components/stacked_form.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
@@ -30,7 +29,7 @@ class _CategoryFormState extends State<PackageForm> {
   final TextEditingController _orderCountController = TextEditingController();
   final TextEditingController _geographicalRangeController =
       TextEditingController();
-  final TextEditingController _expirdCountController = TextEditingController();
+  final TextEditingController _expiredCountController = TextEditingController();
   final TextEditingController _extraCostController = TextEditingController();
   int? id;
   String? status = 'active';
@@ -44,7 +43,7 @@ class _CategoryFormState extends State<PackageForm> {
       _nameController.text = widget.request?.name ?? '';
       _noteController.text = widget.request?.note ?? '';
       _cityController.text = widget.request?.city ?? '';
-      _expirdCountController.text = widget.request?.expired.toString() ?? '';
+      _expiredCountController.text = widget.request?.expired.toString() ?? '';
 //
       type = widget.request?.type.toInt() ?? 0;
 
@@ -70,7 +69,7 @@ class _CategoryFormState extends State<PackageForm> {
           child: Form(
             key: _key,
             child: FixedContainer(
-              child: CustomListView.custom(
+              child: ListView(
                   padding: EdgeInsets.only(right: 16, left: 16),
                   children: [
                     Padding(
@@ -137,7 +136,7 @@ class _CategoryFormState extends State<PackageForm> {
                       ),
                     ),
                     CustomFormField(
-                      controller: _expirdCountController,
+                      controller: _expiredCountController,
                       hintText: S.current.dayCount,
                       numbers: true,
                     ),
@@ -233,12 +232,12 @@ class _CategoryFormState extends State<PackageForm> {
                   cost: int.parse(_costController.text),
                   carCount: int.parse(_carCountController.text),
                   city: _cityController.text,
-                  expired: int.parse(_expirdCountController.text),
+                  expired: int.parse(_expiredCountController.text),
                   status: status));
             } else {
               CustomFlushBarHelper.createError(
-                      title: S.current.warnning,
-                      message: S.current.pleaseCompleteTheForm);
+                  title: S.current.warnning,
+                  message: S.current.pleaseCompleteTheForm);
             }
           }),
     );
