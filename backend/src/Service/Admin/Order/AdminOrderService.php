@@ -1045,7 +1045,7 @@ class AdminOrderService
                 // 1. Update order state in OrderEntity
                 $newUpdatedOrder = $this->adminOrderManager->updateOrderStatusToCancelled($orderEntity);
                 // Cancel related external order in the external company platform
-                $this->cancelExternalDeliveredOrderOfStreetLineCompanyByOrderEntity($newUpdatedOrder);
+                $this->cancelExternalDeliveredOrderOfStreetLineCompanyByOrderEntity($newUpdatedOrder, $userId);
 
                 // 2. Update store subscription (remaining orders), if order relate
                 if ($newUpdatedOrder) {
@@ -2705,7 +2705,7 @@ class AdminOrderService
         return $response;
     }
 
-    public function cancelExternalDeliveredOrderOfStreetLineCompanyByOrderEntity(OrderEntity $orderEntity): void
+    public function cancelExternalDeliveredOrderOfStreetLineCompanyByOrderEntity(OrderEntity $orderEntity, int $adminUserId): ExternallyDeliveredOrderEntity|int|array|string
     {
         $externalOrders = $orderEntity->getExternallyDeliveredOrderEntities()->toArray();
 
@@ -2715,12 +2715,28 @@ class AdminOrderService
                 if ($externalOrder->getExternalDeliveryCompany()->getId() === ExternalDeliveryCompanyIdentityConstant::STREET_LINE_COMPANY_CONST) {
                     if ($externalOrder->getStatus() != StreetLineCompanyConstant::ORDER_CANCELLED_STATUS_CONST) {
                         // while the order is not being cancelled yet, then cancel it
-                        $this->handleCancellingExternalOrderInExternalDeliveryCompanyPlatform(ExternalDeliveryCompanyIdentityConstant::STREET_LINE_COMPANY_CONST,
+                        $cancelOrderResult = $this->handleCancellingExternalOrderInExternalDeliveryCompanyPlatform(ExternalDeliveryCompanyIdentityConstant::STREET_LINE_COMPANY_CONST,
                             $externalOrder->getExternalOrderId());
+
+                        if (($cancelOrderResult === ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_IS_NOT_REGISTERED_CONST)
+                            || ($cancelOrderResult === HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
+                            || ($cancelOrderResult === HttpResponseConstant::INVALID_INPUT_RESULT_CODE_CONST)
+                            || ($cancelOrderResult === HttpResponseConstant::METHOD_NOT_ALLOWED_RESULT_CONST)
+                            || ($cancelOrderResult === StreetLineCompanyConstant::RESPONSE_MESSAGE_INVALID_ORDER_VALUE_CONST)
+                            || ($cancelOrderResult === HttpResponseConstant::UNRECOGNIZED_RESPONSE_CONST)
+                            || ($cancelOrderResult === ExternallyDeliveredOrderConstant::EXTERNALLY_DELIVERED_ORDER_NOT_EXIST_CONST)) {
+                            return $cancelOrderResult;
+                        }
+                        // save order log
+                        $this->createOrderLogMessageViaOrderEntityAndByAdmin($cancelOrderResult->getOrderId(), $adminUserId,
+                            OrderLogActionTypeConstant::ORDER_CANCELLED_IN_STREETLINE_AND_IN_C4D_BY_ADMIN_ACTION_CONST,
+                            ['externalCompanyName' => $cancelOrderResult->getExternalDeliveryCompany()->getCompanyName()]);
                     }
                 }
             }
         }
+
+        return ExternallyDeliveredOrderConstant::EXTERNALLY_DELIVERED_ORDER_NOT_EXIST_CONST;
     }
 
     /**
