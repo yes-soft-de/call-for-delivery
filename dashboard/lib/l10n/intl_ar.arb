@@ -1141,5 +1141,6 @@
     "orderCanceledFromAllByAdmin": "تم الغاء الطلب لدى الجميع من قبل الادمن",
     "captainProfit": "ارباح الكابتن",
     "orderNotExistInTheExternalCompany": "الطلب غير موجود عند الشركة الخارجية",
+    "doYouWantToDeleteTheOrderOnlyFormAlshoroq": "هل تريد حذف الطلب عند المشغل شروق فقط؟",
     "dev": "المطورين"
 }

@@ -10984,6 +10984,16 @@ class S {
     );
   }
 
+  /// `do you want to delete the order only form alshoroq?`
+  String get doYouWantToDeleteTheOrderOnlyFormAlshoroq {
+    return Intl.message(
+      'do you want to delete the order only form alshoroq?',
+      name: 'doYouWantToDeleteTheOrderOnlyFormAlshoroq',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

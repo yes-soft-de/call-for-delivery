@@ -234,7 +234,7 @@ class OrderRepository {
       DeleteOrderFromAlShoroqRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
-        '${Urls.DELETE_ORDER}', request.toMap(),
+        '${Urls.DELETE_ORDER_FROM_ALSHOROQ}', request.toMap(),
         headers: {'Authorization': 'Bearer $token'});
     if (response == null) return null;
     return ActionResponse.fromJson(response);

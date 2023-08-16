@@ -146,19 +146,14 @@ class ExternalDeliveryOrder {
   String? id;
   String? companyName;
   String? externalOrderId;
+  int? externalCompanyId;
 
   ExternalDeliveryOrder({
     this.id,
     this.companyName,
     this.externalOrderId,
+    this.externalCompanyId,
   });
-
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'id': id,
-      'companyName': companyName,
-    };
-  }
 
   factory ExternalDeliveryOrder.fromMap(Map<String, dynamic> map) {
     return ExternalDeliveryOrder(
@@ -168,10 +163,11 @@ class ExternalDeliveryOrder {
       externalOrderId: map['externalOrderId'] != null
           ? map['externalOrderId'] as String
           : null,
+      externalCompanyId: map['externalCompanyId'] != null
+          ? map['externalCompanyId'] as int
+          : null,
     );
   }
-
-  String toJson() => json.encode(toMap());
 
   factory ExternalDeliveryOrder.fromJson(String source) =>
       ExternalDeliveryOrder.fromMap(

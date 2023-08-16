@@ -121,63 +121,71 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
         visible: screenState.canRemoveOrder,
         child: FloatingActionButton(
           backgroundColor: Theme.of(context).colorScheme.error,
-          onPressed: () {
+          onPressed: () async {
             bool cancelDialog = StatusHelper.getOrderStatusIndex((screenState
                         .currentState as OrderDetailsStateOwnerOrderLoaded)
                     .orderInfo
                     .state) >=
                 StatusHelper.getOrderStatusIndex(OrderStatusEnum.IN_STORE);
-            if (cancelDialog) {
-              showDialog(
-                  context: context,
-                  builder: (ctx) {
-                    return OrderCancelDialog(
-                      onDone: (store, captain) {
-                        Navigator.of(context).pop();
-                        showDialog(
-                            context: context,
-                            builder: (_) {
-                              return CustomAlertDialog(
-                                content: S.current.areYouSureAboutDeleteOrder,
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                  screenState.stateManager.deleteOrder(
-                                    DeleteOrderRequest(
-                                      orderID: screenState.orderId,
-                                      cutOrderFromStoreSubscription: store,
-                                      addHalfOrderValueToCaptainFinancialDue:
-                                          captain,
-                                    ),
-                                    this,
-                                  );
-                                },
-                                oneAction: false,
-                              );
-                            });
-                      },
-                      onExit: () {
-                        Navigator.of(context).pop();
-                      },
-                    );
-                  });
-            } else {
-              showDialog(
-                  context: context,
-                  builder: (_) {
-                    return CustomAlertDialog(
-                      content: S.current.areYouSureAboutDeleteOrder,
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                        screenState.stateManager.deleteOrder(
-                          DeleteOrderRequest(
-                            orderID: screenState.orderId,
-                          ),
-                          this,
-                        );
-                      },
-                      oneAction: false,
-                    );
-                  });
+
+            bool canceledOnlyFromAlshoroq = false;
+            if (orderInfo.externalCompanyId == 2) {
+              canceledOnlyFromAlshoroq =
+                  await showDeleteOnlyFromAlshoroqDialog(context) ?? false;
+            }
+            if (!canceledOnlyFromAlshoroq) {
+              if (cancelDialog) {
+                showDialog(
+                    context: context,
+                    builder: (ctx) {
+                      return OrderCancelDialog(
+                        onDone: (store, captain) {
+                          Navigator.of(context).pop();
+                          showDialog(
+                              context: context,
+                              builder: (_) {
+                                return CustomAlertDialog(
+                                  content: S.current.areYouSureAboutDeleteOrder,
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    screenState.stateManager.deleteOrder(
+                                      DeleteOrderRequest(
+                                        orderID: screenState.orderId,
+                                        cutOrderFromStoreSubscription: store,
+                                        addHalfOrderValueToCaptainFinancialDue:
+                                            captain,
+                                      ),
+                                      this,
+                                    );
+                                  },
+                                  oneAction: false,
+                                );
+                              });
+                        },
+                        onExit: () {
+                          Navigator.of(context).pop();
+                        },
+                      );
+                    });
+              } else {
+                showDialog(
+                    context: context,
+                    builder: (_) {
+                      return CustomAlertDialog(
+                        content: S.current.areYouSureAboutDeleteOrder,
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          screenState.stateManager.deleteOrder(
+                            DeleteOrderRequest(
+                              orderID: screenState.orderId,
+                            ),
+                            this,
+                          );
+                        },
+                        oneAction: false,
+                      );
+                    });
+              }
             }
           },
           child: Icon(
@@ -1101,6 +1109,24 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
           ),
         ],
       ),
+    );
+  }
+
+  Future<bool?> showDeleteOnlyFromAlshoroqDialog(BuildContext context) {
+    return showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return CustomAlertDialog(
+          content: S.current.doYouWantToDeleteTheOrderOnlyFormAlshoroq,
+          onPressed: () {
+            Navigator.of(context).pop(true);
+            screenState.deleteOrderFromAlShoroq();
+          },
+          oneAction: false,
+          actionTitle: S.current.yes,
+          actionTitle2: S.current.no,
+        );
+      },
     );
   }
 

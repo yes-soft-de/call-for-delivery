@@ -399,7 +399,8 @@ class Urls {
   static const UPDATE_STORE_ANSWER_ORDER =
       BASE_API_ORDER + '/confirmcashpaymentbystorebyadmin';
 
-  static const DELETE_ODERE_FROM_ALSHOROQ = DOMAIN + '/v1/admin/streetline/order/cancelexternalorderonly';
+  static const DELETE_ORDER_FROM_ALSHOROQ =
+      DOMAIN + '/v1/admin/streetline/order/cancelexternalorderonly';
 
   /*-----------------------------subscription----------------------------*/
   static const String BASE_API_SUBSCRIPTION =

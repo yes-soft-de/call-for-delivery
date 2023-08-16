@@ -585,6 +585,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المسافة التي ادخلها الكابتن"),
         "distanceUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث المسافة بنجاح"),
+        "doYouWantToDeleteTheOrderOnlyFormAlshoroq":
+            MessageLookupByLibrary.simpleMessage(
+                "هل تريد حذف الطلب عند المشغل شروق فقط؟"),
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
             "حمل تطبيقنا على متجر غوغل عبر الرابط"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("رخصة القيادة"),

@@ -591,6 +591,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "Distance provided by captain"),
         "distanceUpdatedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Distance updated successfully"),
+        "doYouWantToDeleteTheOrderOnlyFormAlshoroq":
+            MessageLookupByLibrary.simpleMessage(
+                "do you want to delete the order only form alshoroq?"),
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
             "Download Twaslna App on Play Store"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("Driver Licence"),

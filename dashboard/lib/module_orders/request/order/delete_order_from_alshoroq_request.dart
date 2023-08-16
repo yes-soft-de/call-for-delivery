@@ -10,7 +10,7 @@ class DeleteOrderFromAlShoroqRequest {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'id': orderId,
+      'orderId': orderId,
       'externalCompanyId': externalCompanyId,
     };
   }
