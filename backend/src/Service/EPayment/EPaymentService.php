@@ -23,24 +23,22 @@ use App\Request\Subscription\SubscriptionCreateRequest;
 use App\Response\Subscription\SubscriptionErrorResponse;
 use App\Response\Subscription\SubscriptionResponse;
 use App\Service\Admin\AdminProfile\AdminProfileGetService;
-use App\Service\EPaymentFromStoreLog\EPaymentFromStoreLogDispatchService;
+use App\Service\EPaymentFromStoreLog\EPaymentFromStoreLogService;
 use App\Service\Notification\NotificationFirebaseService;
 use App\Service\Notification\NotificationLocalService;
 use App\Service\StoreOwner\StoreOwnerProfileGetService;
 use App\Service\Subscription\SubscriptionService;
-//use Doctrine\ORM\EntityManagerInterface;
 
 class EPaymentService
 {
     public function __construct(
         private AutoMapping $autoMapping,
-        //private EntityManagerInterface $entityManager,
         private SubscriptionService $subscriptionService,
         private StoreOwnerProfileGetService $storeOwnerProfileGetService,
         private EPaymentFromStoreManager $ePaymentFromStoreManager,
         private NotificationLocalService $notificationLocalService,
         private NotificationFirebaseService $notificationFirebaseService,
-        private EPaymentFromStoreLogDispatchService $ePaymentFromStoreLogDispatchService,
+        private EPaymentFromStoreLogService $EPaymentFromStoreLogService,
         private AdminProfileGetService $adminProfileGetService
     )
     {
@@ -64,7 +62,7 @@ class EPaymentService
     public function createEPaymentByStoreOwner(EPaymentCreateByStoreOwnerRequest $request): SubscriptionResponse|int|string|SubscriptionErrorResponse
     {
         if ($request->getStatus() === 1) {
-//            try {
+            try {
 //                 // update the flag field of the last finished subscription to isPaid
                 if (($request->getPaymentGetaway() === EPaymentFromStoreConstant::PAYMENT_GETAWAY_IN_APP_PURCHASE_APPLE_CONST) ||
                     ($request->getPaymentGetaway() === EPaymentFromStoreConstant::PAYMENT_GETAWAY_IN_APP_PURCHASE_GOOGLE_CONST)) {
@@ -155,9 +153,9 @@ class EPaymentService
 
                             if ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_ADMIN_CONST) {
                                 // create a new log for the payment
-//                                $this->dispatchEPaymentFromStoreCreateMessage($request->getCreatedBy(),
-//                                    EPaymentFromStoreConstant::NEW_REAL_PAYMENT_CREATED_SUCCESSFULLY_BY_ADMIN_ACTION_CONST,
-//                                    $storeOwnerProfile->getId(), $payment->getId(), $adminProfile->getId());
+                                $this->createEPaymentFromStoreLogCreateMessage($request->getCreatedBy(),
+                                    EPaymentFromStoreConstant::NEW_REAL_PAYMENT_CREATED_SUCCESSFULLY_BY_ADMIN_ACTION_CONST,
+                                    $storeOwnerProfile->getId(), $payment->getId(), $adminProfile->getId());
                                 // local notification to store
                                 $this->createLocalNotificationForStore($storeOwnerProfile->getStoreOwnerId(),
                                     NotificationConstant::PAYMENT_FOR_STORE_SUBSCRIPTION_BY_ADMIN_TITLE_CONST,
@@ -169,9 +167,9 @@ class EPaymentService
 
                             } elseif ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_STORE_CONST) {
                                 // create a new log for the payment
-//                                $this->dispatchEPaymentFromStoreCreateMessage($request->getCreatedBy(),
-//                                    EPaymentFromStoreConstant::NEW_REAL_PAYMENT_CREATED_SUCCESSFULLY_BY_STORE_ACTION_CONST,
-//                                    $storeOwnerProfile->getId(), $payment->getId());
+                                $this->createEPaymentFromStoreLogCreateMessage($request->getCreatedBy(),
+                                    EPaymentFromStoreConstant::NEW_REAL_PAYMENT_CREATED_SUCCESSFULLY_BY_STORE_ACTION_CONST,
+                                    $storeOwnerProfile->getId(), $payment->getId());
 
                             }
                         }
@@ -195,35 +193,33 @@ class EPaymentService
                     return SubscriptionConstant::SUBSCRIPTION_DOES_NOT_EXIST_CONST;
                 }
 
-//            }
-//            catch (\Exception $e) {
-//
-//                // create a new log for the payment
-//                if (! isset($storeOwnerProfile)) {
-//                    $storeOwnerProfile = null;
-//                }
-//
-//                if (($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_STORE_CONST)
-//                    || ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_STORE_CONST)) {
-//                    $this->dispatchEPaymentFromStoreCreateMessage($request->getCreatedBy(),
-//                        EPaymentFromStoreConstant::NEW_REAL_PAYMENT_CREATED_FAILED_BY_STORE_ACTION_CONST,
-//                        $storeOwnerProfile->getId());
-//
-//                }
-//                elseif (($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_ADMIN_CONST)
-//                    || ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_ADMIN_CONST)) {
-//                    // check if admin profile is set
-//                    if (! isset($adminProfile)) {
-//                        $adminProfile = null;
-//                    }
-//
-//                    $this->dispatchEPaymentFromStoreCreateMessage($request->getCreatedBy(),
-//                        EPaymentFromStoreConstant::NEW_REAL_PAYMENT_CREATED_FAILED_BY_ADMIN_ACTION_CONST,
-//                        $storeOwnerProfile->getId(), null, $adminProfile->getId());
-//                }
-//
+            } catch (\Exception $e) {
+                // create a new log for the payment
+                if (! isset($storeOwnerProfile)) {
+                    $storeOwnerProfile = null;
+                }
+
+                if (($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_STORE_CONST)
+                    || ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_STORE_CONST)) {
+                    $this->createEPaymentFromStoreLogCreateMessage($request->getCreatedBy(),
+                        EPaymentFromStoreConstant::NEW_REAL_PAYMENT_CREATED_FAILED_BY_STORE_ACTION_CONST,
+                        $storeOwnerProfile->getId());
+
+                }
+                elseif (($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_ADMIN_CONST)
+                    || ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_ADMIN_CONST)) {
+                    // check if admin profile is set
+                    if (! isset($adminProfile)) {
+                        $adminProfile = null;
+                    }
+
+                    $this->createEPaymentFromStoreLogCreateMessage($request->getCreatedBy(),
+                        EPaymentFromStoreConstant::NEW_REAL_PAYMENT_CREATED_FAILED_BY_ADMIN_ACTION_CONST,
+                        $storeOwnerProfile->getId(), null, $adminProfile->getId());
+                }
+
 //                throw $e;
-//            }
+            }
         }
 
         return 0;
@@ -272,18 +268,18 @@ class EPaymentService
         return $this->notificationFirebaseService->notificationToUserWithoutOrderByUserId($userId, $text);
     }
 
-//    public function dispatchEPaymentFromStoreCreateMessage(
-//        int $createdByUserId,
-//        int $action,
-//        ?int $storeOwnerProfileId = null,
-//        ?int $ePaymentFromStoreId = null,
-//        ?int $adminProfileId = null,
-//        ?string $details = null
-//    ): void
-//    {
-//        $this->ePaymentFromStoreLogDispatchService->dispatchEPaymentFromStoreCreateMessage($createdByUserId, $action,
-//            $storeOwnerProfileId, $ePaymentFromStoreId, $adminProfileId, $details);
-//    }
+    public function createEPaymentFromStoreLogCreateMessage(
+        int $createdByUserId,
+        int $action,
+        ?int $storeOwnerProfileId = null,
+        ?int $ePaymentFromStoreId = null,
+        ?int $adminProfileId = null,
+        ?string $details = null
+    ): void
+    {
+        $this->EPaymentFromStoreLogService->createEPaymentFromStoreLogCreateMessage($createdByUserId, $action,
+            $storeOwnerProfileId, $ePaymentFromStoreId, $adminProfileId, $details);
+    }
 
     /**
      * Get admin profile entity if exists

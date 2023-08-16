@@ -14,7 +14,7 @@ class EPaymentFromStoreLogCreateRequest
 
     private ?string $details;
 
-    private int $createdByUser;
+    private int $createdByUserId;
 
     private ?StoreOwnerProfileEntity $storeOwnerProfile;
 
@@ -35,9 +35,9 @@ class EPaymentFromStoreLogCreateRequest
         $this->details = $details;
     }
 
-    public function setCreatedByUser(int $createdByUser): void
+    public function setCreatedByUserId(int $createdByUserId): void
     {
-        $this->createdByUser = $createdByUser;
+        $this->createdByUserId = $createdByUserId;
     }
 
     public function setStoreOwnerProfile(?StoreOwnerProfileEntity $storeOwnerProfile): void
