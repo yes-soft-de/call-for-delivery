@@ -770,6 +770,7 @@ class NotificationFirebaseService
             }
         }
     }
+
     //when admin update state order 
     public function notificationOrderStateForUserByAdmin(int $userId, int $orderId, string $orderState, string $userType)
     {
@@ -1188,7 +1189,7 @@ class NotificationFirebaseService
             ]
         ]);
 
-        $msgContent = $text;dd($msgContent);
+        $msgContent = $text;
 
         $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msgContent))
             ->withHighestPossiblePriority();
