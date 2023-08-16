@@ -5,13 +5,13 @@ namespace App\Service\Notification;
 
 use App\AutoMapping;
 use App\Entity\NotificationFirebaseTokenEntity;
+use App\Entity\StoreOwnerProfileEntity;
 use App\Manager\Notification\NotificationFirebaseManager;
-use App\Request\Admin\Order\OrderCaptainFilterByAdminRequest;
 use App\Request\Notification\NotificationFirebaseBySuperAdminCreateRequest;
 use App\Response\Notification\NotificationFirebaseTokenDeleteResponse;
 use App\Service\DateFactory\DateFactoryService;
+use App\Service\StoreOwner\StoreOwnerProfileGetService;
 use App\Service\User\UserService;
-use DateTime;
 use DateTimeInterface;
 use Kreait\Firebase\Contract\Messaging;
 use Kreait\Firebase\Messaging\CloudMessage;
@@ -26,7 +26,6 @@ use Kreait\Firebase\Messaging\AndroidConfig;
 use Kreait\Firebase\Messaging\ApnsConfig;
 use App\Service\ChatRoom\OrderChatRoomService;
 use App\Service\Captain\CaptainService;
-use App\Service\StoreOwner\StoreOwnerProfileService;
 
 class NotificationFirebaseService
 {
@@ -38,8 +37,8 @@ class NotificationFirebaseService
         private UserService $userService,
         private OrderChatRoomService $orderChatRoomService,
         private CaptainService $captainService,
-        private StoreOwnerProfileService $storeOwnerProfileService,
-        private DateFactoryService $dateFactoryService
+        private DateFactoryService $dateFactoryService,
+        private StoreOwnerProfileGetService $storeOwnerProfileGetService
     )
     {
     }
@@ -549,13 +548,19 @@ class NotificationFirebaseService
         $userName ="";
 
         if($sendByUser === NotificationTokenConstant::APP_TYPE_STORE) {
-            $user = $this->storeOwnerProfileService->getStoreByUserId($request->getUserID());
-            $userName = $user->getStoreOwnerName();
+            $user = $this->getStoreOwnerProfileByStoreId($request->getUserID());
+
+            if ($user) {
+                $userName = $user->getStoreOwnerName();
+            }
         }
 
         if ($sendByUser === NotificationTokenConstant::APP_TYPE_CAPTAIN) {
             $user = $this->captainService->getCaptainProfileByUserId($request->getUserID());
-            $userName = $user->getCaptainName();
+
+            if ($user) {
+                $userName = $user->getCaptainName();
+            }
         }
 
         $adminsTokens =  $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_ADMIN);
@@ -1138,5 +1143,60 @@ class NotificationFirebaseService
          $this->messaging->sendMulticast($message, $devicesToken);
  
          return $devicesToken;
-     } 
+     }
+
+    public function getStoreOwnerProfileByStoreId($storeOwnerId): ?StoreOwnerProfileEntity
+    {
+        return $this->storeOwnerProfileGetService->getStoreOwnerProfileByStoreId($storeOwnerId);
+    }
+
+    /**
+     * Send firebase notification to all admins (with text parameter only)
+     */
+    public function sendNotificationToAllAdmins(string $text)
+    {
+        $devicesToken = [];
+        $sound = NotificationTokenConstant::SOUND;
+
+        $adminsTokens = $this->notificationTokensService->getUsersTokensByAppType(NotificationTokenConstant::APP_TYPE_ADMIN);
+
+        foreach ($adminsTokens as $token) {
+            $devicesToken[] = $token['token'];
+        }
+
+        $payload = [
+            'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+            'navigate_route' => NotificationFirebaseConstant::URL,
+            'argument' => null,
+        ];
+
+        $config = AndroidConfig::fromArray([
+            "notification" => [
+                "channel_id" => "C4d_Notifications_custom_sound_test"
+            ]
+        ]);
+
+        $apnsConfig = ApnsConfig::fromArray([
+            'headers' => [
+                'apns-priority' => '10',
+                'apns-push-type' => 'alert',
+            ],
+            'payload' => [
+                'aps' =>[
+                    'sound' => $sound
+                ]
+            ]
+        ]);
+
+        $msgContent = $text;dd($msgContent);
+
+        $message = CloudMessage::new()->withNotification(Notification::create(NotificationFirebaseConstant::DELIVERY_COMPANY_NAME, $msgContent))
+            ->withHighestPossiblePriority();
+
+        $message = $message->withData($payload)->withAndroidConfig($config)->withApnsConfig($apnsConfig);
+
+        $this->messaging->sendMulticast($message, $devicesToken);
+
+        return $devicesToken;
+    }
 }

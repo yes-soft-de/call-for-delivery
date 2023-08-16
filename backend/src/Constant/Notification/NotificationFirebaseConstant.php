@@ -136,6 +136,8 @@ final class NotificationFirebaseConstant
 
     const UN_ACCEPT_ORDER_BY_CAPTAIN_CONST = "قام الكابتن بالتراجع عن تسليم الطلب ";
 
+    const NEW_STORE_REGISTRATION_TEXT_CONST = "تم إنشاء حساب جديد للمتجر: ";
+
     // e-payment
     const PAYMENT_FOR_STORE_SUBSCRIPTION_BY_ADMIN_CONST = "دفعة من الإدارة نيابة عن متجرك مقابل الاشتراك";
 }
