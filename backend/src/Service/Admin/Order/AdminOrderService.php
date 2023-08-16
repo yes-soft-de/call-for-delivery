@@ -292,6 +292,7 @@ class AdminOrderService
                     $order['externalDeliveredOrders'][$key]['id'] = $value->getId();
                     $order['externalDeliveredOrders'][$key]['companyName'] = $value->getExternalDeliveryCompany()->getCompanyName();
                     $order['externalDeliveredOrders'][$key]['externalOrderId'] = $value->getExternalOrderId();
+                    $order['externalDeliveredOrders'][$key]['externalCompanyId'] = $value->getExternalDeliveryCompany()->getId();
                 }
             }
 
@@ -664,6 +665,7 @@ class AdminOrderService
                     $response[$key]->externalDeliveredOrders[0]['id'] = $lastOrder->getId();
                     $response[$key]->externalDeliveredOrders[0]['companyName'] = $lastOrder->getExternalDeliveryCompany()->getCompanyName();
                     $response[$key]->externalDeliveredOrders[0]['externalOrderId'] = $lastOrder->getExternalOrderId();
+                    $response[$key]->externalDeliveredOrders[0]['externalCompanyId'] = $lastOrder->getExternalDeliveryCompany()->getId();
                     //}
                 }
             }
@@ -1426,27 +1428,6 @@ class AdminOrderService
     {
         return $this->adminOrderManager->filterOrdersWhoseHasNotDistanceHasCalculated($request);  
     }
-     
-//    public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request, int $userId): OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse
-//    {
-//        $order = $this->adminOrderManager->updateStoreBranchToClientDistanceByAdmin($request);
-//
-//        if ($order) {
-//            if ($order->getCaptainId()?->getCaptainId()) {
-//                $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
-//
-//                // Create or update daily captain financial amount
-//                $this->createOrUpdateCaptainFinancialDaily($order->getId());
-//            }
-//
-//            // save log of the action on order
-//            $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
-//                OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_BY_ADMIN_ACTION_CONST, [], null,
-//                null);
-//        }
-//
-//        return $this->autoMapping->map(OrderEntity::class, OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse::class, $order);
-//    }
 
     public function createSubOrderByAdmin(SubOrderCreateByAdminRequest $request, int $userId): string|OrderCreateByAdminResponse
     {
