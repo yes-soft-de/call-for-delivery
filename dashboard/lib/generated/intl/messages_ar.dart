@@ -997,6 +997,11 @@ class MessageLookup extends MessageLookupByLibrary {
             "تم إسناد الطلب للكابتن المختار بنجاح"),
         "orderAssignedToCompanySuccessfully":
             MessageLookupByLibrary.simpleMessage("تم اسناد الطلب للشركة بنجاح"),
+        "orderCanceledFromAllByAdmin": MessageLookupByLibrary.simpleMessage(
+            "تم الغاء الطلب لدى الجميع من قبل الادمن"),
+        "orderCanceledFromAlshoroqByAdmin":
+            MessageLookupByLibrary.simpleMessage(
+                "تم الغاء الطلب لدى المشغل شروق من قبل الادمن"),
         "orderCashStatus":
             MessageLookupByLibrary.simpleMessage("سعر الطلبية للمتجر"),
         "orderCashWithCaptain":

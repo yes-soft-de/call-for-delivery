@@ -10954,6 +10954,26 @@ class S {
     );
   }
 
+  /// `order canceled from alshoroq by admin`
+  String get orderCanceledFromAlshoroqByAdmin {
+    return Intl.message(
+      'order canceled from alshoroq by admin',
+      name: 'orderCanceledFromAlshoroqByAdmin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order canceled from all by admin`
+  String get orderCanceledFromAllByAdmin {
+    return Intl.message(
+      'order canceled from all by admin',
+      name: 'orderCanceledFromAllByAdmin',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

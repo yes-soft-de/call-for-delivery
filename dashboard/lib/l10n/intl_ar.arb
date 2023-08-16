@@ -1137,6 +1137,8 @@
         }
     },
     "editCompanyInfo": "تعديل معلومات الشركة",
+    "orderCanceledFromAlshoroqByAdmin": "تم الغاء الطلب لدى المشغل شروق من قبل الادمن",
+    "orderCanceledFromAllByAdmin": "تم الغاء الطلب لدى الجميع من قبل الادمن",
     "captainProfit": "ارباح الكابتن",
     "dev": "المطورين"
 }

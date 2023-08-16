@@ -1004,6 +1004,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderAssignedToCompanySuccessfully":
             MessageLookupByLibrary.simpleMessage(
                 "order assigned to company successfully"),
+        "orderCanceledFromAllByAdmin": MessageLookupByLibrary.simpleMessage(
+            "order canceled from all by admin"),
+        "orderCanceledFromAlshoroqByAdmin":
+            MessageLookupByLibrary.simpleMessage(
+                "order canceled from alshoroq by admin"),
         "orderCashStatus":
             MessageLookupByLibrary.simpleMessage("Order cost to store"),
         "orderCashWithCaptain":

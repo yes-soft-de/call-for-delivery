@@ -1138,5 +1138,7 @@
     },
     "editCompanyInfo": "edit company info",
     "captainProfit": "captain profit",
+    "orderCanceledFromAlshoroqByAdmin": "order canceled from alshoroq by admin",
+    "orderCanceledFromAllByAdmin": "order canceled from all by admin",
     "dev": "Dev"
 }
