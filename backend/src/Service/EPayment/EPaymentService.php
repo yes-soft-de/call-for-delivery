@@ -276,7 +276,7 @@ class EPaymentService
         ?int $adminProfileId = null,
         ?string $details = null
     ): void
-    {//dd($createdByUserId, $action, $storeOwnerProfileId, $ePaymentFromStoreId, $adminProfileId, $details);
+    {
         $this->EPaymentFromStoreLogService->createEPaymentFromStoreLogCreateMessage($createdByUserId, $action,
             $storeOwnerProfileId, $ePaymentFromStoreId, $adminProfileId, $details);
     }
