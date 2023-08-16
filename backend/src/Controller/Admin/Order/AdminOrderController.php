@@ -1134,64 +1134,6 @@ class AdminOrderController extends BaseController
         return $this->response($result, self::FETCH);
     }
 
-     // this api had been commented out because it isn't being used anywhere
-//    /**
-//     * Admin: update storeBranchToClientDistance by admin.
-//     * @Route("updatestorebranchtoclientdistancebyadmin", name="updateStoreBranchToClientDistanceByAdmin", methods={"PUT"})
-//     * @IsGranted("ROLE_ADMIN")
-//     * @param Request $request
-//     * @return JsonResponse
-//     *
-//     * @OA\Tag(name="Order")
-//     *
-//     * @OA\Parameter(
-//     *      name="token",
-//     *      in="header",
-//     *      description="token to be passed as a header",
-//     *      required=true
-//     * )
-//     *
-//     * @OA\RequestBody(
-//     *      description="update storeBranchToClientDistance by admin",
-//     *      @OA\JsonContent(
-//     *              @OA\Property(type="integer", property="id"),
-//     *              @OA\Property(type="string", property="storeBranchToClientDistance"),
-//     *      )
-//     * )
-//     *
-//     * @OA\Response(
-//     *      response=204,
-//     *      description="Returns the order info",
-//     *      @OA\JsonContent(
-//     *          @OA\Property(type="string", property="status_code"),
-//     *          @OA\Property(type="string", property="msg"),
-//     *          @OA\Property(type="object", property="Data",
-//     *               ref=@Model(type="App\Response\Admin\Order\OrderStateUpdateByAdminResponse")
-//     *      )
-//     *   )
-//     * )
-//     *
-//     * @Security(name="Bearer")
-//     */
-//    public function updateStoreBranchToClientDistanceByAdmin(Request $request): JsonResponse
-//    {
-//        $data = json_decode($request->getContent(), true);
-//
-//        $request = $this->autoMapping->map(\stdClass::class, OrderStoreBranchToClientDistanceByAdminRequest::class, (object) $data);
-//
-//        $violations = $this->validator->validate($request);
-//
-//        if (\count($violations) > 0) {
-//            $violationsString = (string) $violations;
-//
-//            return new JsonResponse($violationsString, Response::HTTP_OK);
-//        }
-//
-//        $result = $this->adminOrderService->updateStoreBranchToClientDistanceByAdmin($request, $this->getUserId());
-//
-//        return $this->response($result, self::UPDATE);
-//    }
-
     /**
      * Admin: Create new sub order by admin
      * @Route("createsuborderbyadmin", name="createSubOrderByAdmin", methods={"POST"})

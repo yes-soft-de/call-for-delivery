@@ -24,7 +24,7 @@ class BaseController extends AbstractController
     // external delivery company
     const EXTERNAL_DELIVERY_COMPANY_NOT_FOUND_CONST = ["external delivery company not found", "9050"];
     const EXTERNAL_DELIVERY_COMPANY_HAS_ORDERS_CONST = ["external delivery company has orders", "9051"];
-    const EXTERNAL_DELIVERY_COMPANY_NOT_REGISTERED_CONST = ["external delivery company has orders", "9052"];
+    const EXTERNAL_DELIVERY_COMPANY_NOT_REGISTERED_CONST = ["external delivery company is not registered", "9052"];
     const CRITERIA_CREATED_INACTIVE_ALREADY_EXIST_SIMILAR_ONE_CONST = ["criteria created but inactive, already exist similar one", "9053"];
     const CRITERIA_UPDATED_INACTIVE_ALREADY_EXIST_SIMILAR_ONE_CONST = ["criteria updated but inactive, already exist similar one", "9054"];
     const CRITERIA_STATUS_INACTIVE_ALREADY_EXIST_SIMILAR_ONE_CONST = ["criteria status inactive, already exist similar one", "9055"];
