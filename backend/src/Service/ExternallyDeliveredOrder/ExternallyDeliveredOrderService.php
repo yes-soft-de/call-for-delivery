@@ -34,4 +34,16 @@ class ExternallyDeliveredOrderService
 
         return $externallyDeliveredOrderEntity;
     }
+
+    public function updateExternallyDeliveredOrderStatusByExternalOrderIdAndExternalCompanyId(int $externalOrderId, int $externalDeliveryCompanyId, string $status): int|ExternallyDeliveredOrderEntity
+    {
+        $externalOrder = $this->externallyDeliveredOrderManager->updateExternallyDeliveredOrderStatusByExternalOrderIdAndExternalCompanyId($externalOrderId,
+            $externalDeliveryCompanyId, $status);
+
+        if (! $externalOrder) {
+            return ExternallyDeliveredOrderConstant::EXTERNALLY_DELIVERED_ORDER_NOT_EXIST_CONST;
+        }
+
+        return $externalOrder;
+    }
 }

@@ -189,6 +189,8 @@ class BaseController extends AbstractController
     const INVALID_INPUT_RESULT_CONST = ["invalid input", "9677"];
     const EXTERNAL_ORDER_NOT_FOUND_CONST = ["external order not found", "9678"];
     const METHOD_NOT_ALLOWED_CONST = ["method not allowed", "9679"];
+    const RESPONSE_MESSAGE_INVALID_ORDER_VALUE_CONST = ["invalid order id", "9680"];
+    const UNRECOGNIZED_RESPONSE_CONST = ["unrecognized response", "9681"];
     // epayment
     const E_PAYMENT_HAD_NOT_CREATED_SUCCESSFULLY_CONST = ["e-payment had not done successfully", "9700"];
     // captain financial demand

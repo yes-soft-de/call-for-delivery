@@ -37,4 +37,10 @@ class AdminExternallyDeliveredOrderManager
 
         return $externallyDeliveredOrder;
     }
+
+    public function getLastExternallyDeliveredOrderByOrderIdAndExternalDeliveryCompanyId(int $orderId, int $externalDeliveryCompanyId): array
+    {
+        return $this->externallyDeliveredOrderEntityRepository->findBy(['orderId' => $orderId,
+            'externalDeliveryCompany' => $externalDeliveryCompanyId], ['id' => 'DESC'], 1);
+    }
 }

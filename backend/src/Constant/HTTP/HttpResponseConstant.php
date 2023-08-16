@@ -29,6 +29,8 @@ final class HttpResponseConstant
     const METHOD_NOT_ALLOWED_RESULT_CONST = 257;
 
     const REQUEST_NOT_ACCEPTABLE_RESULT_CONST = 258;
+
+    const UNRECOGNIZED_RESPONSE_CONST = 259;
     // Street Line's Response Status Code
     // 200 is returned in multiple APIs when the operation (creating, getting, updated, etc.) is done successfully
     const DONE_SUCCESSFULLY_STATUS_CODE_CONST = 200;

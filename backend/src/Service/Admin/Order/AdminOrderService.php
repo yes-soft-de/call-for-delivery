@@ -8,8 +8,10 @@ use App\Constant\Admin\Report\Statistics\StatisticsConstant;
 use App\Constant\AppFeature\AppFeatureResultConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDaily\CaptainFinancialDailyResultConstant;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
+use App\Constant\ExternalDeliveryCompany\ExternalDeliveryCompanyIdentityConstant;
 use App\Constant\ExternalDeliveryCompany\ExternalDeliveryCompanyResultConstant;
 use App\Constant\ExternalDeliveryCompany\Mrsool\MrsoolCompanyConstant;
+use App\Constant\ExternalDeliveryCompany\StreetLine\StreetLineCompanyConstant;
 use App\Constant\ExternalDeliveryCompanyCriteria\ExternalDeliveryCompanyCriteriaResultConstant;
 use App\Constant\ExternallyDeliveredOrder\ExternallyDeliveredOrderConstant;
 use App\Constant\HTTP\HttpResponseConstant;
@@ -1040,8 +1042,10 @@ class AdminOrderService
 
         try {
             if ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_PENDING) {
-                // 1. Update order state
+                // 1. Update order state in OrderEntity
                 $newUpdatedOrder = $this->adminOrderManager->updateOrderStatusToCancelled($orderEntity);
+                // Cancel related external order in the external company platform
+                $this->cancelExternalDeliveredOrderOfStreetLineCompanyByOrderEntity($newUpdatedOrder, $userId);
 
                 // 2. Update store subscription (remaining orders), if order relate
                 if ($newUpdatedOrder) {
@@ -2699,5 +2703,48 @@ class AdminOrderService
         }
 
         return $response;
+    }
+
+    public function cancelExternalDeliveredOrderOfStreetLineCompanyByOrderEntity(OrderEntity $orderEntity, int $adminUserId): ExternallyDeliveredOrderEntity|int|array|string
+    {
+        $externalOrders = $orderEntity->getExternallyDeliveredOrderEntities()->toArray();
+
+        if (count($externalOrders) > 0) {
+            foreach ($externalOrders as $externalOrder) {
+                // first make sure order is belong to the second company StreetLine
+                if ($externalOrder->getExternalDeliveryCompany()->getId() === ExternalDeliveryCompanyIdentityConstant::STREET_LINE_COMPANY_CONST) {
+                    if ($externalOrder->getStatus() != StreetLineCompanyConstant::ORDER_CANCELLED_STATUS_CONST) {
+                        // while the order is not being cancelled yet, then cancel it
+                        $cancelOrderResult = $this->handleCancellingExternalOrderInExternalDeliveryCompanyPlatform(ExternalDeliveryCompanyIdentityConstant::STREET_LINE_COMPANY_CONST,
+                            $externalOrder->getExternalOrderId());
+
+                        if (($cancelOrderResult === ExternalDeliveryCompanyResultConstant::EXTERNAL_DELIVERY_COMPANY_IS_NOT_REGISTERED_CONST)
+                            || ($cancelOrderResult === HttpResponseConstant::INVALID_CREDENTIALS_RESULT_CONST)
+                            || ($cancelOrderResult === HttpResponseConstant::INVALID_INPUT_RESULT_CODE_CONST)
+                            || ($cancelOrderResult === HttpResponseConstant::METHOD_NOT_ALLOWED_RESULT_CONST)
+                            || ($cancelOrderResult === StreetLineCompanyConstant::RESPONSE_MESSAGE_INVALID_ORDER_VALUE_CONST)
+                            || ($cancelOrderResult === HttpResponseConstant::UNRECOGNIZED_RESPONSE_CONST)
+                            || ($cancelOrderResult === ExternallyDeliveredOrderConstant::EXTERNALLY_DELIVERED_ORDER_NOT_EXIST_CONST)) {
+                            return $cancelOrderResult;
+                        }
+                        // save order log
+                        $this->createOrderLogMessageViaOrderEntityAndByAdmin($cancelOrderResult->getOrderId(), $adminUserId,
+                            OrderLogActionTypeConstant::ORDER_CANCELLED_IN_STREETLINE_AND_IN_C4D_BY_ADMIN_ACTION_CONST,
+                            ['externalCompanyName' => $cancelOrderResult->getExternalDeliveryCompany()->getCompanyName()]);
+                    }
+                }
+            }
+        }
+
+        return ExternallyDeliveredOrderConstant::EXTERNALLY_DELIVERED_ORDER_NOT_EXIST_CONST;
+    }
+
+    /**
+     *
+     */
+    public function handleCancellingExternalOrderInExternalDeliveryCompanyPlatform(int $externalDeliveryCompanyId, int $externalOrderId): ExternallyDeliveredOrderEntity|array|int|string
+    {
+        return $this->externallyDeliveredOrderHandleService->handleCancellingExternalOrderInExternalDeliveryCompanyPlatform($externalDeliveryCompanyId,
+            $externalOrderId);
     }
 }

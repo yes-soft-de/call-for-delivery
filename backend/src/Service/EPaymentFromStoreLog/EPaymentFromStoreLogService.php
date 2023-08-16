@@ -5,7 +5,7 @@ namespace App\Service\EPaymentFromStoreLog;
 use App\Message\EPaymentFromStore\EPaymentFromStoreLogCreateMessage;
 use Symfony\Component\Messenger\MessageBusInterface;
 
-class EPaymentFromStoreLogDispatchService
+class EPaymentFromStoreLogService
 {
     public function __construct(
         private MessageBusInterface $eventBus
@@ -13,7 +13,7 @@ class EPaymentFromStoreLogDispatchService
     {
     }
 
-    public function dispatchEPaymentFromStoreCreateMessage(
+    public function createEPaymentFromStoreLogCreateMessage(
         int $createdByUserId,
         int $action,
         ?int $storeOwnerProfileId = null,

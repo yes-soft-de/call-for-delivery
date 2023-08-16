@@ -18,7 +18,8 @@ class EPaymentFromStoreLogEntity
     private $id;
 
     #[ORM\ManyToOne(targetEntity: EPaymentFromStoreEntity::class, inversedBy: 'ePaymentFromStoreLogs')]
-    private $EPaymentFromStore;
+    #[ORM\JoinColumn(nullable: true)]
+    private $ePaymentFromStore;
 
     #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(type: 'datetime')]
@@ -35,9 +36,11 @@ class EPaymentFromStoreLogEntity
     private $createdByUserId;
 
     #[ORM\ManyToOne(targetEntity: StoreOwnerProfileEntity::class, inversedBy: 'ePaymentFromStoreLogs')]
+    #[ORM\JoinColumn(nullable: true)]
     private $storeOwnerProfile;
 
     #[ORM\ManyToOne(targetEntity: AdminProfileEntity::class, inversedBy: 'ePaymentFromStoreLogs')]
+    #[ORM\JoinColumn(nullable: true)]
     private $adminProfile;
 
     public function getId(): ?int
@@ -47,12 +50,12 @@ class EPaymentFromStoreLogEntity
 
     public function getEPaymentFromStore(): ?EPaymentFromStoreEntity
     {
-        return $this->EPaymentFromStore;
+        return $this->ePaymentFromStore;
     }
 
-    public function setEPaymentFromStore(?EPaymentFromStoreEntity $EPaymentFromStore): self
+    public function setEPaymentFromStore(?EPaymentFromStoreEntity $ePaymentFromStore): self
     {
-        $this->EPaymentFromStore = $EPaymentFromStore;
+        $this->ePaymentFromStore = $ePaymentFromStore;
 
         return $this;
     }

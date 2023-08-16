@@ -5,13 +5,21 @@ framework:
 
         transports:
             # https://symfony.com/doc/current/messenger.html#transport-configuration
-            async: '%env(MESSENGER_TRANSPORT_DSN)%'
+            async:
+                dsn: '%env(MESSENGER_TRANSPORT_DSN)%'
+                # default configuration
+#                retry_strategy:
+#                    max_retries: 4
+#                    # milliseconds delay
+#                    delay: 2000
             # failed: 'doctrine://default?queue_name=failed'
             # sync: 'sync://'
 
         routing:
             # Route your messages to the transports
             'App\Message\OrderLog\OrderLogCreateMessage': async
+            'App\Message\DashboardLocalNotification\DashboardLocalNotificationCreateMessage': async
+            'App\Message\EPaymentFromStore\EPaymentFromStoreLogCreateMessage': async
 
 # when@test:
 #    framework:
