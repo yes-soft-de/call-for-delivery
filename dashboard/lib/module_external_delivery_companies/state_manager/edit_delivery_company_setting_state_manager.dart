@@ -22,13 +22,13 @@ class EditDeliveryCompanySettingScreenStateManager {
       UpdateCompanyCriterialRequest request) {
     _service.updateCompanyCriterial(request).then(
       (value) {
+        if (screenState.context.mounted) {
+          Navigator.pop(screenState.context, true);
+        }
         if (value.hasError) {
           CustomFlushBarHelper.createError(
               title: S.current.warnning, message: value.error ?? '');
         } else {
-          if (screenState.context.mounted) {
-            Navigator.pop(screenState.context, true);
-          }
           CustomFlushBarHelper.createSuccess(
             title: S.current.warnning,
             message: S.current.dataUpdatedSuccessfully,
@@ -42,13 +42,13 @@ class EditDeliveryCompanySettingScreenStateManager {
       CreateCompanyCriteria request) {
     _service.createCompanyCriterial(request).then(
       (value) {
+        if (screenState.context.mounted) {
+          Navigator.pop(screenState.context, true);
+        }
         if (value.hasError) {
           CustomFlushBarHelper.createError(
               title: S.current.warnning, message: value.error ?? '');
         } else {
-          if (screenState.context.mounted) {
-            Navigator.pop(screenState.context, true);
-          }
           CustomFlushBarHelper.createSuccess(
             title: S.current.warnning,
             message: S.current.companyCriterialAddedSuccessfully,

@@ -15,7 +15,7 @@ class CreateCompanyCriteria {
   int payment;
 
   ///205: off. 206: storeBranchToClientDistance
-  bool isDistance;
+  int isDistance;
   int toDistance;
   int fromDistance;
 
@@ -66,7 +66,7 @@ class CreateCompanyCriteria {
       isFromAllStores: (map['isFromAllStores'] ?? false) as bool,
       externalDeliveryCompany: (map['externalDeliveryCompany'] ?? 0) as int,
       payment: (map['payment'] ?? 0) as int,
-      isDistance: (map['isDistance'] ?? false) as bool,
+      isDistance: (map['isDistance'] ?? false) as int,
       toDistance: (map['toDistance'] ?? 0) as int,
       fromDistance: (map['fromDistance'] ?? 0) as int,
       isSpecificDate: (map['isSpecificDate'] ?? false) as bool,

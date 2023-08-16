@@ -23,12 +23,12 @@ class ProvideDistance extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        CustomFormField(
-          hintText: '${S.of(context).finishOrderProvideDistanceInKm} e.g 45',
-          controller: controller,
-          numbers: true,
-          last: payment == false ? true : false,
-        ),
+          // CustomFormField(
+          //   hintText: '${S.of(context).finishOrderProvideDistanceInKm} e.g 45',
+          //   controller: controller,
+          //   numbers: true,
+          //   last: payment == false ? true : false,
+          // ),
         const SizedBox(
           height: 8.0,
         ),

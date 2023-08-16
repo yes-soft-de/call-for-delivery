@@ -37,6 +37,7 @@ class OrderModel extends DataModel {
   int? costType;
   late String? externalCompanyName;
   late String? orderIdInExternalCompany;
+  num? captainProfit;
 
   OrderModel({
     required this.id,
@@ -66,6 +67,7 @@ class OrderModel extends DataModel {
     this.costType,
     required this.externalCompanyName,
     this.orderIdInExternalCompany,
+    this.captainProfit,
   });
   List<OrderModel> _orders = [];
   OrderModel.withData(OrdersResponse response) {

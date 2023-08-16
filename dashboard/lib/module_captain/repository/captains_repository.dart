@@ -8,10 +8,8 @@ import 'package:c4d/module_captain/request/enable_offer.dart';
 import 'package:c4d/module_captain/request/specific_captain_activities_filter_request.dart';
 import 'package:c4d/module_captain/request/update_captain_request.dart';
 import 'package:c4d/module_captain/response/capatin_offer_response.dart';
-import 'package:c4d/module_captain/response/captain_account_balance_response/captain_account_balance_response.dart';
 import 'package:c4d/module_captain/response/captain_activity_response/captain_activity_response.dart';
 import 'package:c4d/module_captain/response/captain_finance_daily_response.dart';
-import 'package:c4d/module_captain/response/captain_financial_dues_response/captain_financial_dues_response.dart';
 import 'package:c4d/module_captain/response/captain_need_support_response/captain_need_support_response.dart';
 import 'package:c4d/module_captain/response/captain_order_control_response/captain_order_control_response.dart';
 import 'package:c4d/module_captain/response/captain_profile_response.dart';
@@ -150,15 +148,6 @@ class CaptainsRepository {
   }
 
   /*------------------------------------------ACCOUNT BALANCE-------------------------------------------*/
-  Future<CaptainAccountBalanceResponse?> getCaptainAccountBalance(
-      int id) async {
-    var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(
-        Urls.GET_CAPTAIN_ACCOUNT_BALANCE + '/$id',
-        headers: {'Authorization': 'Bearer ' + token.toString()});
-    if (response == null) return null;
-    return CaptainAccountBalanceResponse.fromJson(response);
-  }
 
   Future<ActionResponse?> captainFinanceStatus(
       CaptainFinanceRequest request) async {
@@ -168,16 +157,6 @@ class CaptainsRepository {
         headers: {'Authorization': 'Bearer ' + token.toString()});
     if (response == null) return null;
     return ActionResponse.fromJson(response);
-  }
-
-  Future<CaptainFinancialDuesResponse?> getCaptainFinancialDues(
-      int captainID) async {
-    var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(
-        Urls.GET_CAPTAIN_FINANCE_DUES + '/$captainID',
-        headers: {'Authorization': 'Bearer ' + token.toString()});
-    if (response == null) return null;
-    return CaptainFinancialDuesResponse.fromJson(response);
   }
 
   Future<CaptainRatingResponse?> getCaptainRating() async {

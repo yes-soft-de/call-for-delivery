@@ -31,7 +31,7 @@ class ExternalDeliveryCompaniesRepository {
 
   Future<ActionResponse?> updateCompany(
       UpdateDeliveryCompanyRequest request) async {
-    var token = _authService.getToken();
+    var token = await _authService.getToken();
 
     dynamic response = await _apiClient.put(
       Urls.EXTERNAL_DELIVERY_COMPANY,

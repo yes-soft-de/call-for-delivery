@@ -4,6 +4,7 @@ import 'dart:convert';
 class UpdateDeliveryCompanyRequest {
   int id;
   String companyName;
+  
   UpdateDeliveryCompanyRequest({
     required this.id,
     required this.companyName,

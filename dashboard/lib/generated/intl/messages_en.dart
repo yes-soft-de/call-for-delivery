@@ -22,9 +22,18 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(value) => "are you sure about add payment ${value} Riyal?";
 
-  static String m1(value) => "payment ${value} Riyal";
+  static String m1(companyName) =>
+      "criteria created but not activated because there an matched and active criteria in ${companyName}";
 
-  static String m2(value) => "${value} Riyal";
+  static String m2(companyName) =>
+      "criteria not activated because there an matched and active criteria in ${companyName}";
+
+  static String m3(companyName) =>
+      "criteria updated but not activated because there an matched and active criteria in ${companyName}";
+
+  static String m4(value) => "payment ${value} Riyal";
+
+  static String m5(value) => "${value} Riyal";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -41,9 +50,6 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Last created delivery"),
         "LastDeliveredDelivery":
             MessageLookupByLibrary.simpleMessage("Last delivered delivery"),
-        "NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST":
-            MessageLookupByLibrary.simpleMessage(
-                "update order status in response to check it status from us"),
         "ProvideDistanceInKm":
             MessageLookupByLibrary.simpleMessage("distance in KM"),
         "StatusCodeNotFound":
@@ -292,6 +298,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain paid to provider ?"),
         "captainPayments":
             MessageLookupByLibrary.simpleMessage("Captain Payments"),
+        "captainProfit": MessageLookupByLibrary.simpleMessage("captain profit"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("Captain rated successfully"),
         "captainRetreatOrder": MessageLookupByLibrary.simpleMessage(
@@ -493,6 +500,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "createdNewOrder":
             MessageLookupByLibrary.simpleMessage("Created new order"),
         "createdOrders": MessageLookupByLibrary.simpleMessage("created orders"),
+        "criteriaCreatedButNotActivated": m1,
+        "criteriaNotActivated": m2,
+        "criteriaUpdatedButNotActivated": m3,
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("Current Balance:"),
         "currentFinancialCycle":
@@ -594,6 +604,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "editAds": MessageLookupByLibrary.simpleMessage("Edit Ads"),
         "editBranchName":
             MessageLookupByLibrary.simpleMessage("Edit Branch Name"),
+        "editCompanyInfo":
+            MessageLookupByLibrary.simpleMessage("edit company info"),
         "editCoordinates":
             MessageLookupByLibrary.simpleMessage("edit coordinates"),
         "editDistance": MessageLookupByLibrary.simpleMessage("edit distance"),
@@ -746,7 +758,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "finishingOrderMessage": MessageLookupByLibrary.simpleMessage(
             "Please provide us with distance you reached out with this order To finish the order"),
         "finishingOrderMessageWithPayment": MessageLookupByLibrary.simpleMessage(
-            "Please provide us with distance you reached out and collected payment with this order To finish the order"),
+            "Please provide us the collected payment for this order To finish the order"),
         "firstDate": MessageLookupByLibrary.simpleMessage("From date"),
         "firstName": MessageLookupByLibrary.simpleMessage("First name"),
         "firstSendMessage": MessageLookupByLibrary.simpleMessage(
@@ -936,6 +948,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "no": MessageLookupByLibrary.simpleMessage("No"),
         "noComment": MessageLookupByLibrary.simpleMessage("No comments"),
         "noImage": MessageLookupByLibrary.simpleMessage("No Image"),
+        "normalOrderStatusUpdateByFetchingItFromExternalCompany":
+            MessageLookupByLibrary.simpleMessage(
+                "update order status in response to check it status from us"),
         "notAccepted": MessageLookupByLibrary.simpleMessage("not accepted"),
         "notAllowedCaptainInStore": MessageLookupByLibrary.simpleMessage(
             "You can\'t edit, captain in the store."),
@@ -1161,7 +1176,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Payment created successfully"),
         "paymentToCaptain":
             MessageLookupByLibrary.simpleMessage("Payment To Captain"),
-        "paymentValueRiyal": m1,
+        "paymentValueRiyal": m4,
         "payments": MessageLookupByLibrary.simpleMessage("Payments"),
         "paymentsDeletedSuccessfully": MessageLookupByLibrary.simpleMessage(
             "Payment deleted successfully"),
@@ -1644,6 +1659,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "You can update your order item from this interface"),
         "updateOrderState":
             MessageLookupByLibrary.simpleMessage("Update order state"),
+        "updateOrderStatusByAlsuruq": MessageLookupByLibrary.simpleMessage(
+            "update order status by الشروق"),
         "updateOrderStatusByMarsool": MessageLookupByLibrary.simpleMessage(
             "update order status by marsool"),
         "updateOrderStatusSuccessfully": MessageLookupByLibrary.simpleMessage(
@@ -1687,7 +1704,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "Uploading Image, Please Wait"),
         "username": MessageLookupByLibrary.simpleMessage("Username"),
         "validation": MessageLookupByLibrary.simpleMessage("Validation"),
-        "valueRiyal": m2,
+        "valueRiyal": m5,
         "views": MessageLookupByLibrary.simpleMessage("views"),
         "waiting": MessageLookupByLibrary.simpleMessage("waiting"),
         "waitingDescription": MessageLookupByLibrary.simpleMessage(

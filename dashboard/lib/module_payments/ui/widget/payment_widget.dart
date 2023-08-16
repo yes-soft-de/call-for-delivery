@@ -35,7 +35,7 @@ class PaymentWidget extends StatelessWidget {
                       ?.copyWith(color: Colors.white),
                 ),
                 Text(
-                  S.current.valueRiyal(model.paymentsTotalAmount.toString()),
+                  S.current.valueRiyal(model.toBePaid.toString()),
                   style: Theme.of(context)
                       .textTheme
                       .titleMedium

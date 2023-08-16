@@ -116,15 +116,6 @@ class PaymentsRepository {
     return ActionResponse.fromJson(response);
   }
 
-  Future<ActionResponse?> deletePaymentFROMCaptain(String id) async {
-    var token = await _authService.getToken();
-    dynamic response = await _apiClient.delete(
-        Urls.CREATE_CAPTAIN_PAYMENTS + '/$id',
-        headers: {'Authorization': 'Bearer ' + token.toString()});
-    if (response == null) return null;
-    return ActionResponse.fromJson(response);
-  }
-
   Future<CaptainPaymentsResponse?> getCaptainAccountBalance(
       int captainId) async {
     var token = await _authService.getToken();

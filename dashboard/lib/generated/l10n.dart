@@ -6930,10 +6930,10 @@ class S {
     );
   }
 
-  /// `Please provide us with distance you reached out and collected payment with this order To finish the order`
+  /// `Please provide us the collected payment for this order To finish the order`
   String get finishingOrderMessageWithPayment {
     return Intl.message(
-      'Please provide us with distance you reached out and collected payment with this order To finish the order',
+      'Please provide us the collected payment for this order To finish the order',
       name: 'finishingOrderMessageWithPayment',
       desc: '',
       args: [],
@@ -10540,6 +10540,16 @@ class S {
     );
   }
 
+  /// `update order status in response to check it status from us`
+  String get normalOrderStatusUpdateByFetchingItFromExternalCompany {
+    return Intl.message(
+      'update order status in response to check it status from us',
+      name: 'normalOrderStatusUpdateByFetchingItFromExternalCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `enter the max limit that are allowed to store dues`
   String get enterTheMaxLimitThatAreAllowedToStoreDues {
     return Intl.message(
@@ -10604,23 +10614,21 @@ class S {
     );
   }
 
-  /// `update order status in response to check it status from us`
-  String
-      get NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST {
-    return Intl.message(
-      'update order status in response to check it status from us',
-      name:
-          'NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST',
-      desc: '',
-      args: [],
-    );
-  }
-
   /// `update order status by marsool`
   String get updateOrderStatusByMarsool {
     return Intl.message(
       'update order status by marsool',
       name: 'updateOrderStatusByMarsool',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `update order status by الشروق`
+  String get updateOrderStatusByAlsuruq {
+    return Intl.message(
+      'update order status by الشروق',
+      name: 'updateOrderStatusByAlsuruq',
       desc: '',
       args: [],
     );
@@ -10891,6 +10899,56 @@ class S {
     return Intl.message(
       'previous payments',
       name: 'previousPayments',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `criteria created but not activated because there an matched and active criteria in {companyName}`
+  String criteriaCreatedButNotActivated(String companyName) {
+    return Intl.message(
+      'criteria created but not activated because there an matched and active criteria in $companyName',
+      name: 'criteriaCreatedButNotActivated',
+      desc: '',
+      args: [companyName],
+    );
+  }
+
+  /// `criteria updated but not activated because there an matched and active criteria in {companyName}`
+  String criteriaUpdatedButNotActivated(String companyName) {
+    return Intl.message(
+      'criteria updated but not activated because there an matched and active criteria in $companyName',
+      name: 'criteriaUpdatedButNotActivated',
+      desc: '',
+      args: [companyName],
+    );
+  }
+
+  /// `criteria not activated because there an matched and active criteria in {companyName}`
+  String criteriaNotActivated(String companyName) {
+    return Intl.message(
+      'criteria not activated because there an matched and active criteria in $companyName',
+      name: 'criteriaNotActivated',
+      desc: '',
+      args: [companyName],
+    );
+  }
+
+  /// `edit company info`
+  String get editCompanyInfo {
+    return Intl.message(
+      'edit company info',
+      name: 'editCompanyInfo',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `captain profit`
+  String get captainProfit {
+    return Intl.message(
+      'captain profit',
+      name: 'captainProfit',
       desc: '',
       args: [],
     );

@@ -10,7 +10,7 @@ class SinglePackageCard extends StatelessWidget {
   final String ordersCount;
   final String carsCount;
   final String cost;
-  final String expaired;
+  final String expired;
   final String city;
   final String status;
   final String extraCost;
@@ -29,7 +29,7 @@ class SinglePackageCard extends StatelessWidget {
       required this.city,
       required this.ordersCount,
       required this.cost,
-      required this.expaired,
+      required this.expired,
       required this.extraCost,
       required this.type,
       required this.geographicalRange});
@@ -298,7 +298,7 @@ class SinglePackageCard extends StatelessWidget {
                             ),
                             SizedBox(
                               child: Text(
-                                '${expaired} ' + S.current.day,
+                                '${expired} ' + S.current.day,
                                 overflow: TextOverflow.ellipsis,
                               ),
                             ),

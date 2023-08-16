@@ -2,7 +2,6 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_bid_order/model/order/order_model.dart';
 import 'package:c4d/module_bid_order/ui/screen/bid_orders_screen.dart';
 import 'package:c4d/module_bid_order/ui/widget/bid_order_card.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:flutter/material.dart';
 
 class BidOrdersListStateLoaded extends States {
@@ -14,25 +13,29 @@ class BidOrdersListStateLoaded extends States {
   }) : super(screenState) {}
   @override
   Widget getUI(BuildContext context) {
-    return CustomListView.custom(children: getOrders(context));
-  }
-
-  List<Widget> getOrders(context) {
-    List<Widget> widgets = [];
-    orders.forEach((element) {
-      widgets.add(Material(
-        color: Colors.transparent,
-        child: InkWell(
-          onTap: () {
-//            Navigator.pushNamed(context, BidOrdersRoutes.ORDER_DETAILS_SCREEN,arguments:{'id' : element.id ,'onGoing':false} );
-          },
-          child: BidOrderCard(element, true),
+    return Column(
+      children: [
+        Flexible(
+          child: ListView.builder(
+            itemCount: orders.length,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              return Material(
+                color: Colors.transparent,
+                child: InkWell(
+                  onTap: () {
+                    //            Navigator.pushNamed(context, BidOrdersRoutes.ORDER_DETAILS_SCREEN,arguments:{'id' : element.id ,'onGoing':false} );
+                  },
+                  child: BidOrderCard(orders[index], true),
+                ),
+              );
+            },
+          ),
         ),
-      ));
-    });
-    widgets.add(SizedBox(
-      height: 75,
-    ));
-    return widgets;
+        SizedBox(
+          height: 75,
+        )
+      ],
+    );
   }
 }

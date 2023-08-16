@@ -180,20 +180,6 @@ class PaymentsService {
     return DataModel.empty();
   }
 
-  Future<DataModel> deletePaymentFROMCaptain(String id) async {
-    ActionResponse? actionResponse =
-        await _paymentsManager.deletePaymentFROMCaptain(id);
-
-    if (actionResponse == null) {
-      return DataModel.withError(S.current.networkError);
-    }
-    if (actionResponse.statusCode != '401') {
-      return DataModel.withError(
-          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
-    }
-    return DataModel.empty();
-  }
-
   /* ---------------------------------- CAPTAIN DAILY FINANCE --------------------------------------- */
   Future<DataModel> getCaptainFinanceDaily(
       CaptainPaymentRequest request) async {

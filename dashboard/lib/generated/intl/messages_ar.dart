@@ -22,9 +22,18 @@ class MessageLookup extends MessageLookupByLibrary {
 
   static String m0(value) => "هل انت متاكد من تسجيل دفعة ${value} ريال؟";
 
-  static String m1(value) => "الدفعة ${value} ريال";
+  static String m1(companyName) =>
+      "تم انشاء المعيار بنجاح لكن لم يتم تفعيله نظرا لوجود معيار مطابق مفعل تابع للشركة ${companyName}";
 
-  static String m2(value) => "${value} ريال";
+  static String m2(companyName) =>
+      "لم يتم تفعيل المعيار نظرا لوجود معيار مطابق مفعل لصالح الشركة ${companyName}";
+
+  static String m3(companyName) =>
+      "تم تحديث المعيار بنجاح لكن لم يتم تفعيله نظرا لوجود معيار مطابق مفعل تابع للشركة ${companyName}";
+
+  static String m4(value) => "الدفعة ${value} ريال";
+
+  static String m5(value) => "${value} ريال";
 
   final messages = _notInlinedMessages(_notInlinedMessages);
   static Map<String, Function> _notInlinedMessages(_) => <String, Function>{
@@ -290,6 +299,7 @@ class MessageLookup extends MessageLookupByLibrary {
             "هل تم دفع تكلفة الطلب للمتجر"),
         "captainPayments":
             MessageLookupByLibrary.simpleMessage("دفعات الكابتن"),
+        "captainProfit": MessageLookupByLibrary.simpleMessage("ارباح الكابتن"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("تم تقييم الكابتن بنجاح"),
         "captainRetreatOrder": MessageLookupByLibrary.simpleMessage(
@@ -485,6 +495,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "createdNewOrder":
             MessageLookupByLibrary.simpleMessage("تم إنشاء طلب جديد"),
         "createdOrders": MessageLookupByLibrary.simpleMessage("أنشؤوا طلبات"),
+        "criteriaCreatedButNotActivated": m1,
+        "criteriaNotActivated": m2,
+        "criteriaUpdatedButNotActivated": m3,
         "currentBalance":
             MessageLookupByLibrary.simpleMessage("الرصيد الحالي:"),
         "currentFinancialCycle":
@@ -585,6 +598,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "editAds": MessageLookupByLibrary.simpleMessage("تعديل الإعلان"),
         "editBranchName":
             MessageLookupByLibrary.simpleMessage("تعديل اسم الفرع"),
+        "editCompanyInfo":
+            MessageLookupByLibrary.simpleMessage("تعديل معلومات الشركة"),
         "editCoordinates":
             MessageLookupByLibrary.simpleMessage("تعديل الاحداثيات"),
         "editDistance": MessageLookupByLibrary.simpleMessage("تعديل المسافة"),
@@ -738,7 +753,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "finishingOrderMessage": MessageLookupByLibrary.simpleMessage(
             "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة وسيتم إنهاء الطلب"),
         "finishingOrderMessageWithPayment": MessageLookupByLibrary.simpleMessage(
-            "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة والمبلغ المقبوض وسيتم إنهاء الطلب"),
+            "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمبلغ المقبوض وسيتم إنهاء الطلب"),
         "firstDate": MessageLookupByLibrary.simpleMessage("من تاريخ"),
         "firstName": MessageLookupByLibrary.simpleMessage("الاسم الأول"),
         "firstSendMessage":
@@ -926,6 +941,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "no": MessageLookupByLibrary.simpleMessage("كلا"),
         "noComment": MessageLookupByLibrary.simpleMessage("لا تعليق"),
         "noImage": MessageLookupByLibrary.simpleMessage("لا يوجد صورة"),
+        "normalOrderStatusUpdateByFetchingItFromExternalCompany":
+            MessageLookupByLibrary.simpleMessage(
+                "تحديث حالة الطلب نتيجة التحقق من حالته من قبلنا"),
         "notAccepted": MessageLookupByLibrary.simpleMessage("غير مسلمة"),
         "notAllowedCaptainInStore": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك تعديل الطلب لأن الكابتن في المتجر"),
@@ -1148,7 +1166,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم تسجيل دفعة بنجاح"),
         "paymentToCaptain":
             MessageLookupByLibrary.simpleMessage("دفعة للكابتن"),
-        "paymentValueRiyal": m1,
+        "paymentValueRiyal": m4,
         "payments": MessageLookupByLibrary.simpleMessage("الدفعات"),
         "paymentsDeletedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم حذف الدفعة بنجاح"),
@@ -1626,6 +1644,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "يمكنك تعديل الطلب من خلال النافذة الحالية"),
         "updateOrderState":
             MessageLookupByLibrary.simpleMessage("تحديث حالة الطلب"),
+        "updateOrderStatusByAlsuruq": MessageLookupByLibrary.simpleMessage(
+            "تحديث حالة الطلب من قبل الشروق"),
         "updateOrderStatusByMarsool": MessageLookupByLibrary.simpleMessage(
             "تحديث حالة الطلب من قبل مرسول"),
         "updateOrderStatusSuccessfully":
@@ -1673,7 +1693,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("يتم رفع الصورة"),
         "username": MessageLookupByLibrary.simpleMessage("اسم المستخدم"),
         "validation": MessageLookupByLibrary.simpleMessage("صلاحية"),
-        "valueRiyal": m2,
+        "valueRiyal": m5,
         "views": MessageLookupByLibrary.simpleMessage("مشاهدة"),
         "waiting": MessageLookupByLibrary.simpleMessage("في الانتظار"),
         "waitingDescription":

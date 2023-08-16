@@ -689,7 +689,7 @@
     "collectedPaymentNote": "ملاحظات الكابتن حول سعر الطلبية",
     "collectedPayment": "المبلغ المقبوض",
     "collectedPaymentNotMatch": "المبلغ المقبوض لا يطابق المبلغ الذي من المفترض دفعه",
-    "finishingOrderMessageWithPayment": "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة والمبلغ المقبوض وسيتم إنهاء الطلب",
+    "finishingOrderMessageWithPayment": "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمبلغ المقبوض وسيتم إنهاء الطلب",
     "finishingOrderMessage": "من فضلك في حال تسليم الطلبية يرجى تزويدنا بالمسافة المقطوعة وسيتم إنهاء الطلب",
     "updateOrderStatusSuccessfully": "تم تحديث حالة الطلب بنجاح",
     "orderAssignedSuccessfully": "تم إسناد الطلب للكابتن المختار بنجاح",
@@ -1049,8 +1049,9 @@
     "sendOrderAutomaticToTheExternalCompanyBecauseHeMeetWithCompanyStander": "ارسال طلب عادي بشكل تلقائي للمشغل الخارجي (نتيجة تطابقه مع معايير المشغل)",
     "sendSubOrderAutomaticToTheExternalCompanyBecauseHeMeetWithCompanyStander": "ارسال طلب فرعي بشكل تلقائي للمشغل الخارجي (نتيجة تطابقه مع معايير المشغل)",
     "sendOrderToExternalCompanyByAdmin": "ارسال طلب لمشغل خارجي من قبل الادمن",
-    "NORMAL_ORDER_STATUS_UPDATE_BY_FETCHING_IT_FROM_EXTERNAL_COMPANY_CONST ": "تحديث حالة الطلب نتيجة التحقق من حالته من قبلنا",
+    "normalOrderStatusUpdateByFetchingItFromExternalCompany": "تحديث حالة الطلب نتيجة التحقق من حالته من قبلنا",
     "updateOrderStatusByMarsool": "تحديث حالة الطلب من قبل مرسول",
+    "updateOrderStatusByAlsuruq": "تحديث حالة الطلب من قبل الشروق",
     "editStoreSetting": "تعديل اعدادات المتجر",
     "storeSetting": "اعدادات المتجر",
     "enterTheMaxLimitThatAreAllowedToStoreDues": "ادخل الحد الاعلى للمستحقات المسموحة للمتجر",
@@ -1108,5 +1109,34 @@
     "byHand" : "باليد",
     "bankTransfer" : "تحويل بنكي",
     "previousPayments" : "المدفوعات السابقة",
+    "criteriaCreatedButNotActivated": "تم انشاء المعيار بنجاح لكن لم يتم تفعيله نظرا لوجود معيار مطابق مفعل تابع للشركة {companyName}",
+    "@criteriaCreatedButNotActivated": {
+        "description": "",
+        "placeholders": {
+            "companyName": {
+                "type": "String"
+            }
+        }
+    },
+    "criteriaUpdatedButNotActivated": "تم تحديث المعيار بنجاح لكن لم يتم تفعيله نظرا لوجود معيار مطابق مفعل تابع للشركة {companyName}",
+    "@criteriaUpdatedButNotActivated": {
+        "description": "",
+        "placeholders": {
+            "companyName": {
+                "type": "String"
+            }
+        }
+    },
+    "criteriaNotActivated": "لم يتم تفعيل المعيار نظرا لوجود معيار مطابق مفعل لصالح الشركة {companyName}",
+    "@criteriaNotActivated": {
+        "description": "",
+        "placeholders": {
+            "companyName": {
+                "type": "String"
+            }
+        }
+    },
+    "editCompanyInfo": "تعديل معلومات الشركة",
+    "captainProfit": "ارباح الكابتن",
     "dev": "المطورين"
 }

@@ -1,8 +1,6 @@
 import 'package:c4d/module_captain/manager/captains_manager.dart';
 import 'package:c4d/module_captain/model/captain_activity_model.dart';
-import 'package:c4d/module_captain/model/captain_balance_model.dart';
 import 'package:c4d/module_captain/model/captain_finance_daily_model.dart';
-import 'package:c4d/module_captain/model/captain_financial_dues.dart';
 import 'package:c4d/module_captain/model/captain_need_support.dart';
 import 'package:c4d/module_captain/model/captain_offer_model.dart';
 import 'package:c4d/module_captain/model/captains_order_model.dart';
@@ -19,10 +17,8 @@ import 'package:c4d/module_captain/request/enable_offer.dart';
 import 'package:c4d/module_captain/request/specific_captain_activities_filter_request.dart';
 import 'package:c4d/module_captain/request/update_captain_request.dart';
 import 'package:c4d/module_captain/response/capatin_offer_response.dart';
-import 'package:c4d/module_captain/response/captain_account_balance_response/captain_account_balance_response.dart';
 import 'package:c4d/module_captain/response/captain_activity_response/captain_activity_response.dart';
 import 'package:c4d/module_captain/response/captain_finance_daily_response.dart';
-import 'package:c4d/module_captain/response/captain_financial_dues_response/captain_financial_dues_response.dart';
 import 'package:c4d/module_captain/response/captain_need_support_response/captain_need_support_response.dart';
 import 'package:c4d/module_captain/response/captain_order_control_response/captain_order_control_response.dart';
 import 'package:c4d/module_captain/response/captain_profile_response.dart';
@@ -219,19 +215,6 @@ class CaptainsService {
     return CaptainOrderModel.withData(_clients);
   }
 
-  Future<DataModel> getCaptainAccountBalance(int captainID) async {
-    CaptainAccountBalanceResponse? actionResponse =
-        await _manager.getCaptainAccountBalance(captainID);
-    if (actionResponse == null) {
-      return DataModel.withError(S.current.networkError);
-    }
-    if (actionResponse.statusCode != '200') {
-      return DataModel.withError(
-          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
-    }
-    return CaptainAccountBalanceModel.withData(actionResponse);
-  }
-
   Future<DataModel> captainFinancePlanStatus(
       CaptainFinanceRequest request) async {
     ActionResponse? actionResponse =
@@ -245,22 +228,6 @@ class CaptainsService {
           StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
     }
     return DataModel.empty();
-  }
-
-  Future<DataModel> getCaptainFinancialDues(int captainID) async {
-    CaptainFinancialDuesResponse? actionResponse =
-        await _manager.getCaptainFinancialDues(captainID);
-    if (actionResponse == null) {
-      return DataModel.withError(S.current.networkError);
-    }
-    if (actionResponse.statusCode != '200') {
-      return DataModel.withError(
-          StatusCodeHelper.getStatusCodeMessages(actionResponse.statusCode));
-    }
-    if (actionResponse.data == null) {
-      return DataModel.empty();
-    }
-    return CaptainFinancialDuesModel.withData(actionResponse);
   }
 
   Future<DataModel> getCaptainRating() async {

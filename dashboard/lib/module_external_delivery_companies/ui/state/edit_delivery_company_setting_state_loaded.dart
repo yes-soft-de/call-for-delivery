@@ -8,7 +8,6 @@ import 'package:c4d/module_external_delivery_companies/ui/widgets/payment_card.d
 import 'package:c4d/module_external_delivery_companies/ui/widgets/store_card.dart';
 import 'package:c4d/module_external_delivery_companies/ui/widgets/work_hours_card.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/distance_card.dart';
@@ -40,7 +39,7 @@ class EditDeliveryCompanySettingScreenStateLoaded extends States {
             padding: const EdgeInsets.all(8.0),
             child: SizedBox(
               height: MediaQuery.of(context).size.height * 0.8,
-              child: CustomListView.custom(
+              child: ListView(
                 children: [
                   Text(S.current.settingName),
                   Form(
@@ -112,7 +111,8 @@ class EditDeliveryCompanySettingScreenStateLoaded extends States {
                               (e) => e.id,
                             )
                             .toList(),
-                        isDistance: companySetting.distance.isFilterActive,
+                        isDistance:
+                            companySetting.distance.isFilterActive ? 206 : 205,
                         isFromAllStores:
                             companySetting.storeType == StoreType.all,
                         isSpecificDate:

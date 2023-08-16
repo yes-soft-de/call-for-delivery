@@ -2,7 +2,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/logger/logger.dart';
 
 class StatusCodeHelper {
-  static String getStatusCodeMessages(var statusCode) {
+  static String getStatusCodeMessages(var statusCode,{String? optionalMessage}) {
     if (statusCode is int) {
       statusCode = statusCode.toString();
     }
@@ -24,6 +24,12 @@ class StatusCodeHelper {
         return S.current.invalidCredentials;
       case '9001':
         return S.current.accountAlreadyExist;
+      case '9053':
+        return S.current.criteriaCreatedButNotActivated(optionalMessage ?? S.current.unknown);
+      case '9054':
+        return S.current.criteriaUpdatedButNotActivated(optionalMessage ?? S.current.unknown);
+      case '9055':
+        return S.current.criteriaNotActivated(optionalMessage ?? S.current.unknown);
       case '9106':
         return S.current.youCannotMakePaymentThereIsNoOrderCash;
       case '9163':

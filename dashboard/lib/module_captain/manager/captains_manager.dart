@@ -9,10 +9,8 @@ import 'package:c4d/module_captain/request/enable_offer.dart';
 import 'package:c4d/module_captain/request/specific_captain_activities_filter_request.dart';
 import 'package:c4d/module_captain/request/update_captain_request.dart';
 import 'package:c4d/module_captain/response/capatin_offer_response.dart';
-import 'package:c4d/module_captain/response/captain_account_balance_response/captain_account_balance_response.dart';
 import 'package:c4d/module_captain/response/captain_activity_response/captain_activity_response.dart';
 import 'package:c4d/module_captain/response/captain_finance_daily_response.dart';
-import 'package:c4d/module_captain/response/captain_financial_dues_response/captain_financial_dues_response.dart';
 import 'package:c4d/module_captain/response/captain_need_support_response/captain_need_support_response.dart';
 import 'package:c4d/module_captain/response/captain_order_control_response/captain_order_control_response.dart';
 import 'package:c4d/module_captain/response/captain_profile_response.dart';
@@ -65,17 +63,9 @@ class CaptainsManager {
   Future<CaptainNeedSupportResponse?> getCaptainSupport() =>
       _repository.getCaptainSupport();
 
-  Future<CaptainAccountBalanceResponse?> getCaptainAccountBalance(
-          int captainId) =>
-      _repository.getCaptainAccountBalance(captainId);
-
   Future<ActionResponse?> captainFinancePlanStatus(
           CaptainFinanceRequest request) =>
       _repository.captainFinanceStatus(request);
-
-  Future<CaptainFinancialDuesResponse?> getCaptainFinancialDues(
-          int captainID) =>
-      _repository.getCaptainFinancialDues(captainID);
 
   Future<ActionResponse?> deleteCaptain(String captainID) =>
       _repository.deleteCaptain(captainID);

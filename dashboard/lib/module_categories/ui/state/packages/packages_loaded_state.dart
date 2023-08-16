@@ -7,7 +7,6 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_categories/model/package_categories_model.dart';
 import 'package:c4d/module_categories/ui/screen/packages_screen.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
@@ -79,61 +78,57 @@ class PackagesLoadedState extends States {
           ),
         ),
         Expanded(
-          child: CustomListView.custom(children: getProducts(context)),
+          child: ListView.builder(
+            itemCount: packages?.length ?? 0,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              if (packages != null) {
+                return SinglePackageCard(
+                  carsCount: packages![index].carCount.toString(),
+                  ordersCount: packages![index].orderCount.toString(),
+                  packageInfo: packages![index].note,
+                  packageName: packages![index].name,
+                  cost: packages![index].cost.toString(),
+                  expired: packages![index].expired.toString(),
+                  city: packages![index].city,
+                  status: packages![index].status,
+                  edit: () {
+                    showDialog(
+                        context: context,
+                        builder: (_) {
+                          return PackageForm(
+                            request: packages![index],
+                            onSave: (request) {
+                              request.packageCategoryID =
+                                  int.tryParse(screenState.id ?? '');
+                              screenState.updatePakage(request);
+                            },
+                          );
+                        });
+                  },
+                  enablePackage: (status) {
+                    packages![index].status = status;
+                    screenState.refresh();
+                    screenState.enablePackage(
+                        ActivePackageRequest(
+                            status: status, id: packages![index].id),
+                        false);
+                  },
+                  extraCost: packages![index].extraCost?.toString() ?? '',
+                  geographicalRange:
+                      packages![index].geographicalRange?.toString() ?? '',
+                  type: packages![index].type.toInt(),
+                );
+              }
+              return SizedBox();
+            },
+          ),
+        ),
+        SizedBox(
+          height: 100,
         )
       ],
     ));
-  }
-
-  List<Widget> getProducts(BuildContext context) {
-    List<Widget> widgets = [];
-    if (packages == null) {
-      return widgets;
-    }
-
-    if (packages!.isEmpty) return widgets;
-    for (var element in packages!) {
-//      if (id != null && id != element.) {
-//        continue;
-//      }
-      widgets.add(SinglePackageCard(
-        carsCount: element.carCount.toString(),
-        ordersCount: element.orderCount.toString(),
-        packageInfo: element.note,
-        packageName: element.name,
-        cost: element.cost.toString(),
-        expaired: element.expired.toString(),
-        city: element.city,
-        status: element.status,
-        edit: () {
-          showDialog(
-              context: context,
-              builder: (_) {
-                return PackageForm(
-                  request: element,
-                  onSave: (request) {
-                    request.packageCategoryID =
-                        int.tryParse(screenState.id ?? '');
-                    screenState.updatePakage(request);
-                  },
-                );
-              });
-        },
-        enablePackage: (status) {
-          element.status = status;
-          screenState.refresh();
-          screenState.enablePackage(
-              ActivePackageRequest(status: status, id: element.id), false);
-        },
-        extraCost: element.extraCost?.toString() ?? '',
-        geographicalRange: element.geographicalRange?.toString() ?? '',
-        type: element.type.toInt(),
-      ));
-    }
-    widgets.add(SizedBox(
-      height: 100,
-    ));
-    return widgets;
   }
 
   List<DropdownMenuItem<String>> getChoices() {

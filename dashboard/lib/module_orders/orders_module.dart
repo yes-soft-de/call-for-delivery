@@ -7,7 +7,6 @@ import 'package:c4d/module_orders/ui/screens/order_actions_log_screen.dart';
 import 'package:c4d/module_orders/ui/screens/order_cash_captain_screen.dart';
 import 'package:c4d/module_orders/ui/screens/order_cash_store_screen.dart';
 import 'package:c4d/module_orders/ui/screens/order_conflict_distance_screen.dart';
-import 'package:c4d/module_orders/ui/screens/order_logs_screen.dart';
 import 'package:c4d/module_orders/ui/screens/order_pending_screen.dart';
 import 'package:c4d/module_orders/ui/screens/orders_captain_screen.dart';
 import 'package:c4d/module_orders/ui/screens/orders_receive_cash_screen.dart';
@@ -21,7 +20,6 @@ import 'ui/screens/recycle_order/recycle_order_screen.dart';
 
 @injectable
 class OrdersModule extends YesModule {
-  final OrderLogsScreen _logsScreen;
   final OrdersCashCaptainScreen _cashCaptain;
   final OrdersCashStoreScreen _cashStore;
   final OrderPendingScreen pendingScreen;
@@ -38,7 +36,6 @@ class OrdersModule extends YesModule {
   final OrderDistanceConflictScreen orderDistanceConflictScreen;
 
   OrdersModule(
-    this._logsScreen,
     this._cashCaptain,
     this._cashStore,
     this.updateOrderScreen,
@@ -59,7 +56,6 @@ class OrdersModule extends YesModule {
 
   Map<String, WidgetBuilder> getRoutes() {
     return {
-      OrdersRoutes.OWNER_LOGS_ORDERS_SCREEN: (context) => _logsScreen,
       OrdersRoutes.ORDER_CASH_STORES: (context) => _cashStore,
       OrdersRoutes.ORDER_CASH_CAPTAINS: (context) => _cashCaptain,
       OrdersRoutes.PENDING_ORDERS_SCREEN: (context) => pendingScreen,
