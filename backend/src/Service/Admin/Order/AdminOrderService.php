@@ -289,10 +289,13 @@ class AdminOrderService
 
             if ($externallyDeliveredOrders !== ExternallyDeliveredOrderConstant::EXTERNALLY_DELIVERED_ORDER_NOT_EXIST_CONST) {
                 foreach ($externallyDeliveredOrders as $key => $value) {
-                    $order['externalDeliveredOrders'][$key]['id'] = $value->getId();
-                    $order['externalDeliveredOrders'][$key]['companyName'] = $value->getExternalDeliveryCompany()->getCompanyName();
-                    $order['externalDeliveredOrders'][$key]['externalOrderId'] = $value->getExternalOrderId();
-                    $order['externalDeliveredOrders'][$key]['externalCompanyId'] = $value->getExternalDeliveryCompany()->getId();
+                    if (($value->getStatus() !== MrsoolCompanyConstant::CANCELED_ORDER_STATUS_CONST)
+                        && ($value->getStatus() !== StreetLineCompanyConstant::ORDER_CANCELLED_STATUS_CONST)) {
+                        $order['externalDeliveredOrders'][$key]['id'] = $value->getId();
+                        $order['externalDeliveredOrders'][$key]['companyName'] = $value->getExternalDeliveryCompany()->getCompanyName();
+                        $order['externalDeliveredOrders'][$key]['externalOrderId'] = $value->getExternalOrderId();
+                        $order['externalDeliveredOrders'][$key]['externalCompanyId'] = $value->getExternalDeliveryCompany()->getId();
+                    }
                 }
             }
 
@@ -657,16 +660,17 @@ class AdminOrderService
                 $externalOrdersArrayLength = count($externallyDeliveredOrders);
 
                 if ($externalOrdersArrayLength > 0) {
-                    $lastOrder = $externallyDeliveredOrders[$externalOrdersArrayLength-1];
-
-                    //foreach ($externallyDeliveredOrders as $key2 => $value2) {
                     $response[$key]->externalDeliveredOrders = [];
 
-                    $response[$key]->externalDeliveredOrders[0]['id'] = $lastOrder->getId();
-                    $response[$key]->externalDeliveredOrders[0]['companyName'] = $lastOrder->getExternalDeliveryCompany()->getCompanyName();
-                    $response[$key]->externalDeliveredOrders[0]['externalOrderId'] = $lastOrder->getExternalOrderId();
-                    $response[$key]->externalDeliveredOrders[0]['externalCompanyId'] = $lastOrder->getExternalDeliveryCompany()->getId();
-                    //}
+                    $lastOrder = $externallyDeliveredOrders[$externalOrdersArrayLength-1];
+
+                    if (($lastOrder->getStatus() !== MrsoolCompanyConstant::CANCELED_ORDER_STATUS_CONST)
+                        && ($lastOrder->getStatus() !== StreetLineCompanyConstant::ORDER_CANCELLED_STATUS_CONST)) {
+                        $response[$key]->externalDeliveredOrders[0]['id'] = $lastOrder->getId();
+                        $response[$key]->externalDeliveredOrders[0]['companyName'] = $lastOrder->getExternalDeliveryCompany()->getCompanyName();
+                        $response[$key]->externalDeliveredOrders[0]['externalOrderId'] = $lastOrder->getExternalOrderId();
+                        $response[$key]->externalDeliveredOrders[0]['externalCompanyId'] = $lastOrder->getExternalDeliveryCompany()->getId();
+                    }
                 }
             }
         }
