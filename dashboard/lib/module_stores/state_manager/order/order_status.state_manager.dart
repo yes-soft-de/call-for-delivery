@@ -6,6 +6,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
+import 'package:c4d/module_orders/request/order/delete_order_from_alshoroq_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_stores/request/delete_order_request.dart';
@@ -83,14 +84,32 @@ class OrderStatusStateManager {
     getIt<OrdersService>().deleteOrder(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error ?? '')
-            ;
+            title: S.current.warnning, message: value.error ?? '');
         getOrder(screenState, request.orderID ?? -1);
       } else {
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning, message: S.current.deleteSuccess)
-            ;
+            title: S.current.warnning, message: S.current.deleteSuccess);
         getOrder(screenState, request.orderID ?? -1);
+        FireStoreHelper().backgroundThread('Trigger');
+      }
+    });
+  }
+
+  void deleteOrderFromAlShoroq(
+    OrderDetailsScreenState screenState,
+    DeleteOrderFromAlShoroqRequest request,
+  ) {
+    screenState.canRemoveOrder = false;
+    _stateSubject.add(LoadingState(screenState));
+    getIt<OrdersService>().deleteOrderFromAlShoroq(request).then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.createError(
+            title: S.current.warnning, message: value.error ?? '');
+        getOrder(screenState, request.orderId);
+      } else {
+        CustomFlushBarHelper.createSuccess(
+            title: S.current.warnning, message: S.current.deleteSuccess);
+        getOrder(screenState, request.orderId);
         FireStoreHelper().backgroundThread('Trigger');
       }
     });
@@ -102,14 +121,12 @@ class OrderStatusStateManager {
     getIt<OrdersService>().updateOrderStatus(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error ?? '')
-            ;
+            title: S.current.warnning, message: value.error ?? '');
         getOrder(screenState, request.id ?? -1);
       } else {
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.updateOrderStatusSuccessfully)
-            ;
+            title: S.current.warnning,
+            message: S.current.updateOrderStatusSuccessfully);
         getOrder(screenState, request.id ?? -1);
         FireStoreHelper().backgroundThread('Trigger').ignore();
       }
@@ -121,14 +138,12 @@ class OrderStatusStateManager {
     getIt<OrdersService>().unAssignCaptain(orderId).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error ?? '')
-            ;
+            title: S.current.warnning, message: value.error ?? '');
         getOrder(screenState, orderId);
       } else {
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.orderUpdatedSuccessfully)
-            ;
+            title: S.current.warnning,
+            message: S.current.orderUpdatedSuccessfully);
         getOrder(screenState, orderId);
         FireStoreHelper().backgroundThread('Trigger');
       }
@@ -141,14 +156,12 @@ class OrderStatusStateManager {
     getIt<OrdersService>().updateExtraDistanceToOrder(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error ?? '')
-            ;
+            title: S.current.warnning, message: value.error ?? '');
         getOrder(screenState, request.id!, false);
       } else {
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.distanceUpdatedSuccessfully)
-            ;
+            title: S.current.warnning,
+            message: S.current.distanceUpdatedSuccessfully);
         getOrder(screenState, request.id!, false);
       }
     });
@@ -160,15 +173,13 @@ class OrderStatusStateManager {
     getIt<OrdersService>().addExtraDistanceToOrder(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error ?? '')
-            ;
+            title: S.current.warnning, message: value.error ?? '');
         // screenState.getOrders();
         getOrder(screenState, request.id!, false);
       } else {
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.distanceUpdatedSuccessfully)
-            ;
+            title: S.current.warnning,
+            message: S.current.distanceUpdatedSuccessfully);
         // screenState.getOrders();
         getOrder(screenState, request.id!, false);
       }

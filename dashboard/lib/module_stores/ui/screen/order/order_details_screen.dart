@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/module_orders/request/order/delete_order_from_alshoroq_request.dart';
 import 'package:c4d/module_stores/state_manager/order/order_status.state_manager.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
@@ -53,6 +54,12 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
     if (mounted) {
       setState(() {});
     }
+  }
+
+  void deleteOrderFromAlShoroq() {
+    var request = DeleteOrderFromAlShoroqRequest(orderId: orderId);
+
+    widget._stateManager.deleteOrderFromAlShoroq(this, request);
   }
 
   get stateManager => widget._stateManager;

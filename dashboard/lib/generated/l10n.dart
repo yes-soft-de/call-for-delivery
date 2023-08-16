@@ -10974,6 +10974,16 @@ class S {
     );
   }
 
+  /// `order not exist in the external company`
+  String get orderNotExistInTheExternalCompany {
+    return Intl.message(
+      'order not exist in the external company',
+      name: 'orderNotExistInTheExternalCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

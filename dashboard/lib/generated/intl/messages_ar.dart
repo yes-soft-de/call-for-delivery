@@ -1051,6 +1051,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderList": MessageLookupByLibrary.simpleMessage("قائمة الطلبات"),
         "orderLog": MessageLookupByLibrary.simpleMessage("سجل الطلبات"),
         "orderLogHistory": MessageLookupByLibrary.simpleMessage("سجل الطلب"),
+        "orderNotExistInTheExternalCompany":
+            MessageLookupByLibrary.simpleMessage(
+                "الطلب غير موجود عند الشركة الخارجية"),
         "orderNotFound":
             MessageLookupByLibrary.simpleMessage("الطلب غير موجود"),
         "orderNumber": MessageLookupByLibrary.simpleMessage("رقم الطلب"),

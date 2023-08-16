@@ -1140,5 +1140,6 @@
     "captainProfit": "captain profit",
     "orderCanceledFromAlshoroqByAdmin": "order canceled from alshoroq by admin",
     "orderCanceledFromAllByAdmin": "order canceled from all by admin",
+    "orderNotExistInTheExternalCompany": "order not exist in the external company",
     "dev": "Dev"
 }

@@ -1060,6 +1060,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderLog": MessageLookupByLibrary.simpleMessage("Orders Log"),
         "orderLogHistory":
             MessageLookupByLibrary.simpleMessage("Order action logs"),
+        "orderNotExistInTheExternalCompany":
+            MessageLookupByLibrary.simpleMessage(
+                "order not exist in the external company"),
         "orderNotFound":
             MessageLookupByLibrary.simpleMessage("Order not found"),
         "orderNumber": MessageLookupByLibrary.simpleMessage("Order Number"),
