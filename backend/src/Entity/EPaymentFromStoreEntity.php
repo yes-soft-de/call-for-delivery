@@ -53,7 +53,7 @@ class EPaymentFromStoreEntity
     #[ORM\Column(type: 'integer', options: ["default" => 0])]
     private $createdBy;
 
-    #[ORM\OneToMany(mappedBy: 'EPaymentFromStore', targetEntity: EPaymentFromStoreLogEntity::class)]
+    #[ORM\OneToMany(mappedBy: 'ePaymentFromStore', targetEntity: EPaymentFromStoreLogEntity::class)]
     private $ePaymentFromStoreLogs;
 
     public function __construct()

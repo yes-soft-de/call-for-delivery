@@ -29,6 +29,17 @@ class EPaymentFromStoreLogCreateMessage
      */
     private $adminProfileId;
 
+
+//    public function __construct(int $createdByUserId, ?int $ePaymentFromStoreId, int $action, ?string $details, ?int $storeOwnerProfileId, ?int $adminProfileId)
+//    {
+//        $this->createdByUserId = $createdByUserId;
+//        $this->ePaymentFromStoreId = $ePaymentFromStoreId;
+//        $this->action = $action;
+//        $this->details = $details;
+//        $this->storeOwnerProfileId = $storeOwnerProfileId;
+//        $this->adminProfileId = $adminProfileId;
+//    }
+
     public static function create(int $createdByUserId, int $action, ?int $storeOwnerProfileId = null, ?int $ePaymentFromStoreId = null, ?int $adminProfileId = null, ?string $details = null): self
     {
         $ePaymentFromStoreLogCreateMessage = new EPaymentFromStoreLogCreateMessage();
