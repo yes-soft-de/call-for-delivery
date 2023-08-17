@@ -75,8 +75,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                   return StatefulBuilder(builder: (ctx, refreshFul) {
                     return UpdateOrderStatusForm(
                       callBack: (request) {
-                        screenState.stateManager
-                            .updateOrderStatus(this, request);
+                        screenState.updateOrderStatus(request);
                       },
                       orderInfo: (screenState.currentState
                               as OrderDetailsStateOwnerOrderLoaded)
@@ -118,7 +117,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
         )
       ]),
       floatingActionButton: Visibility(
-        visible: screenState.canRemoveOrder,
+        visible: screenState.canRemoveOrder && orderInfo.externalCompanyId != 1,
         child: FloatingActionButton(
           backgroundColor: Theme.of(context).colorScheme.error,
           onPressed: () async {
@@ -148,14 +147,13 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                                   content: S.current.areYouSureAboutDeleteOrder,
                                   onPressed: () {
                                     Navigator.of(context).pop();
-                                    screenState.stateManager.deleteOrder(
+                                    screenState.deleteOrder(
                                       DeleteOrderRequest(
                                         orderID: screenState.orderId,
                                         cutOrderFromStoreSubscription: store,
                                         addHalfOrderValueToCaptainFinancialDue:
                                             captain,
                                       ),
-                                      this,
                                     );
                                   },
                                   oneAction: false,
@@ -175,11 +173,10 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                         content: S.current.areYouSureAboutDeleteOrder,
                         onPressed: () {
                           Navigator.of(context).pop();
-                          screenState.stateManager.deleteOrder(
+                          screenState.deleteOrder(
                             DeleteOrderRequest(
                               orderID: screenState.orderId,
                             ),
-                            this,
                           );
                         },
                         oneAction: false,

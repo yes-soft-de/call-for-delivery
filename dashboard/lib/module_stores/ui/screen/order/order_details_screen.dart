@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_orders/request/order/delete_order_from_alshoroq_request.dart';
+import 'package:c4d/module_orders/request/order/update_order_request.dart';
+import 'package:c4d/module_stores/request/delete_order_request.dart';
 import 'package:c4d/module_stores/state_manager/order/order_status.state_manager.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
@@ -62,7 +64,13 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
     widget._stateManager.deleteOrderFromAlShoroq(this, request);
   }
 
-  get stateManager => widget._stateManager;
+  void deleteOrder(DeleteOrderRequest request) {
+    widget._stateManager.deleteOrder(request, this);
+  }
+
+  void updateOrderStatus(UpdateOrderRequest request) {
+    widget._stateManager.updateOrderStatus(this, request);
+  }
 
   int currentIndex = -1;
   bool flag = true;
