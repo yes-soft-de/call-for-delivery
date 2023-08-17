@@ -54,10 +54,9 @@ class AdminStreetLineOrderController extends BaseController
      * )
      *
      * @OA\RequestBody(
-     *      description="create new external order request",
+     *      description="cancel external order request",
      *      @OA\JsonContent(
-     *          @OA\Property(type="integer", property="id"),
-     *          @OA\Property(type="integer", property="externalCompanyId")
+     *          @OA\Property(type="integer", property="orderId")
      *      )
      * )
      *
