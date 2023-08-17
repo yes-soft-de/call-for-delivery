@@ -291,10 +291,10 @@ class AdminOrderService
                 foreach ($externallyDeliveredOrders as $key => $value) {
                     if (($value->getStatus() !== MrsoolCompanyConstant::CANCELED_ORDER_STATUS_CONST)
                         && ($value->getStatus() !== StreetLineCompanyConstant::ORDER_CANCELLED_STATUS_CONST)) {
-                        $order['externalDeliveredOrders'][$key]['id'] = $value->getId();
-                        $order['externalDeliveredOrders'][$key]['companyName'] = $value->getExternalDeliveryCompany()->getCompanyName();
-                        $order['externalDeliveredOrders'][$key]['externalOrderId'] = $value->getExternalOrderId();
-                        $order['externalDeliveredOrders'][$key]['externalCompanyId'] = $value->getExternalDeliveryCompany()->getId();
+                        $order['externalDeliveredOrders'][0]['id'] = $value->getId();
+                        $order['externalDeliveredOrders'][0]['companyName'] = $value->getExternalDeliveryCompany()->getCompanyName();
+                        $order['externalDeliveredOrders'][0]['externalOrderId'] = $value->getExternalOrderId();
+                        $order['externalDeliveredOrders'][0]['externalCompanyId'] = $value->getExternalDeliveryCompany()->getId();
                     }
                 }
             }
@@ -1880,21 +1880,10 @@ class AdminOrderService
         if (! $order) {
             return $order;
         }
-
-        ///todo if captain financial profits calculated well then delete following IF block
-        // Re-calculate the financial dues of the captain who has the order (if exists)
-//        if ($order->getCaptainId()?->getCaptainId()) {
-//            $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
-//
-//            // Create or update daily captain financial amount
-//            $this->createOrUpdateCaptainFinancialDaily($order->getId());
-//        }
-
         // save log of the action on order
         $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
             OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_VIA_ADDING_DISTANCE_BY_ADMIN_ACTION_CONST,
             [], null, null);
-
         //return $this->autoMapping->map(OrderEntity::class, OrderDestinationUpdateByAdminResponse::class, $order);
         return $order;
     }
