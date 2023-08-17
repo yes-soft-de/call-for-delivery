@@ -6,6 +6,7 @@ use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialSystem;
 use App\Constant\ChatRoom\ChatRoomConstant;
 use App\Constant\ExternalDeliveryCompany\Mrsool\MrsoolCompanyConstant;
+use App\Constant\ExternalDeliveryCompany\StreetLine\StreetLineCompanyConstant;
 use App\Constant\Image\ImageEntityTypeConstant;
 use App\Constant\Image\ImageUseAsConstant;
 use App\Constant\Order\OrderCancelledByUserAndAtStateConstant;
@@ -337,8 +338,10 @@ class OrderEntityRepository extends ServiceEntityRepository
             )
 
             ->andWhere('externallyDeliveredOrderEntity.orderId IS NULL '.
-                'OR (externallyDeliveredOrderEntity.orderId IS NOT NULL AND externallyDeliveredOrderEntity.status = :expiredStatus)')
+                'OR (externallyDeliveredOrderEntity.orderId IS NOT NULL AND (externallyDeliveredOrderEntity.status = :expiredStatus OR '
+                .'externallyDeliveredOrderEntity.status = :streetLineCancelStatus))')
             ->setParameter('expiredStatus', MrsoolCompanyConstant::EXPIRED_ORDER_STATUS_CONST)
+            ->setParameter('streetLineCancelStatus', StreetLineCompanyConstant::ORDER_CANCELLED_STATUS_CONST)
 
             ->setParameter('pending', OrderStateConstant::ORDER_STATE_PENDING)
             ->setParameter('captainId', $captainId)
