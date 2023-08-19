@@ -56,6 +56,8 @@ class StatusCodeHelper {
         return S.current.expiredSubscriptions;
       case '9200':
         return S.current.youCannotAcceptAnotherOrderFromThisStore;
+      case '9210':
+        return S.current.orderConflictDistanceNotExist;
       case '9218':
         return S.current.theOrderHidden;
       case '9307':
