@@ -3,6 +3,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/conflict_distance_order.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
+import 'package:c4d/module_orders/request/refused_order_distance_conflict.dart';
 import 'package:c4d/module_orders/ui/screens/order_conflict_distance_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/order_distance_conflict_card.dart';
 import 'package:c4d/utils/components/custom_c4d_field.dart';
@@ -134,6 +135,7 @@ class OrderDistanceConflictLoadedState extends States {
                                 style: _elevatedButtonStyle(color: Colors.red),
                                 onPressed: () {
                                   Navigator.of(context).pop();
+                                  showRefusedDialog(context, reason, element);
                                 },
                                 child: Text(S.current.ignoreOrder)),
                           ),
@@ -188,6 +190,92 @@ class OrderDistanceConflictLoadedState extends States {
                   ],
                 );
               },
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  Future<dynamic> showRefusedDialog(BuildContext context,
+      TextEditingController reason, ConflictDistanceOrder element) {
+    return showDialog(
+      context: context,
+      builder: (context) {
+        return Dialog(
+          backgroundColor: const Color(0xff666ACB),
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Row(
+                  children: [
+                    Icon(
+                      Icons.notifications,
+                      size: 50,
+                      color: Colors.amber,
+                    ),
+                    Flexible(
+                      child: Text(
+                        S.current.areYouSureAboutRefusedTheConflictRequest,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(height: 20),
+                Text(
+                  reason.text,
+                  style: TextStyle(color: Colors.white),
+                ),
+                SizedBox(height: 20),
+                SizedBox(
+                  height: 40,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.white),
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: Text(
+                            S.current.cancel,
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 20),
+                      Expanded(
+                        child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.amber),
+                          onPressed: () {
+                            Navigator.pop(context);
+                            var request = RefusedOrderDistanceConflictRequest(
+                              id: element.orderId,
+                              adminNote: reason.text.trim(),
+                            );
+                            screenState.manager.refusedOrderDistanceConflict(
+                                screenState, request);
+                          },
+                          child: Text(
+                            S.current.confirm,
+                            style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              ],
             ),
           ),
         );

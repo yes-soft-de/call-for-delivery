@@ -10954,6 +10954,66 @@ class S {
     );
   }
 
+  /// `order canceled from alshoroq by admin`
+  String get orderCanceledFromAlshoroqByAdmin {
+    return Intl.message(
+      'order canceled from alshoroq by admin',
+      name: 'orderCanceledFromAlshoroqByAdmin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order canceled from all by admin`
+  String get orderCanceledFromAllByAdmin {
+    return Intl.message(
+      'order canceled from all by admin',
+      name: 'orderCanceledFromAllByAdmin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order not exist in the external company`
+  String get orderNotExistInTheExternalCompany {
+    return Intl.message(
+      'order not exist in the external company',
+      name: 'orderNotExistInTheExternalCompany',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `do you want to delete the order only form alshoroq?`
+  String get doYouWantToDeleteTheOrderOnlyFormAlshoroq {
+    return Intl.message(
+      'do you want to delete the order only form alshoroq?',
+      name: 'doYouWantToDeleteTheOrderOnlyFormAlshoroq',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `are you sure about refused the conflict request`
+  String get areYouSureAboutRefusedTheConflictRequest {
+    return Intl.message(
+      'are you sure about refused the conflict request',
+      name: 'areYouSureAboutRefusedTheConflictRequest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `the captain raised an conflict about distance`
+  String get theCaptainRaisedAnConflictAboutDistance {
+    return Intl.message(
+      'the captain raised an conflict about distance',
+      name: 'theCaptainRaisedAnConflictAboutDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

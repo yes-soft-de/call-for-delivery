@@ -14,12 +14,14 @@ import 'package:c4d/module_orders/model/pending_order.dart';
 import 'package:c4d/module_orders/model/store_cash_orders_finance.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
+import 'package:c4d/module_orders/request/order/delete_order_from_alshoroq_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order/pending_order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/request/order_conflict_distance_request/order_conflict_distance_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/order_non_sub_request.dart';
+import 'package:c4d/module_orders/request/refused_order_distance_conflict.dart';
 import 'package:c4d/module_orders/request/resolve_conflects_order_request.dart';
 import 'package:c4d/module_orders/request/store_answer_cash_order_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
@@ -229,6 +231,18 @@ class OrdersService {
     return DataModel.empty();
   }
 
+  Future<DataModel> refusedOrderDistanceConflict(
+      RefusedOrderDistanceConflictRequest request) async {
+    ActionResponse? response =
+        await _ordersManager.refusedOrderDistanceConflict(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+
   Future<DataModel> hideOrder(int orderID) async {
     ActionResponse? response = await _ordersManager.hideOrder(orderID);
     if (response == null) return DataModel.withError(S.current.networkError);
@@ -242,6 +256,18 @@ class OrdersService {
 
   Future<DataModel> deleteOrder(DeleteOrderRequest request) async {
     ActionResponse? response = await _ordersManager.deleteOrder(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> deleteOrderFromAlShoroq(
+      DeleteOrderFromAlShoroqRequest request) async {
+    ActionResponse? response =
+        await _ordersManager.deleteOrderFromAlShoroq(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
       return DataModel.withError(

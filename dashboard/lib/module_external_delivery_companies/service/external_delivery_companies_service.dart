@@ -205,17 +205,10 @@ class ExternalDeliveryCompaniesService {
   }
 }
 
-// TODO: why this is here (:
 String _getAssignOrderToExternalCompanyMessage(String? statusCode) {
-  if (statusCode == '9076') return S.current.featureNotAvailable;
-  if (statusCode == '9077') return S.current.featureNotActive;
   if (statusCode == '9055') return S.current.externalCompanyNotExist;
-  if (statusCode == '9205') return S.current.orderNotFound;
   if (statusCode == '9052') return S.current.companyDoesntHaveSetting;
-  if (statusCode == '9676') return S.current.companyCredentialNotCorrect;
-  if (statusCode == '9677')
-    return S.current.orderRequestInTheCompanyNotComplete;
-  if (statusCode == '9228') return S.current.orderStatusIsNotPending;
+
   return StatusCodeHelper.getStatusCodeMessages(statusCode);
 }
 
