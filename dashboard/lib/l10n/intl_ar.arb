@@ -1144,5 +1144,6 @@
     "doYouWantToDeleteTheOrderOnlyFormAlshoroq": "هل تريد حذف الطلب عند المشغل شروق فقط؟",
     "areYouSureAboutRefusedTheConflictRequest": "هل انت متاكد من تجاهل طلب النزاع",
     "theCaptainRaisedAnConflictAboutDistance": "قام الكابتن بتقديم تعارض حول مسافة الطلب",
+    "orderConflictDistanceNotExist": "طلب النزاع غير موجود",
     "dev": "المطورين"
 }

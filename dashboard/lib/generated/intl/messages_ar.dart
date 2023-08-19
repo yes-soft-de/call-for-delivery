@@ -1012,6 +1012,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("سعر الطلبية للمتجر"),
         "orderCashWithCaptain":
             MessageLookupByLibrary.simpleMessage("المبلغ المقبوض مع الكابتن"),
+        "orderConflictDistanceNotExist":
+            MessageLookupByLibrary.simpleMessage("طلب النزاع غير موجود"),
         "orderConflictDistances":
             MessageLookupByLibrary.simpleMessage("طلبات بمسافات متنازعة"),
         "orderConflictedSuccessfully":

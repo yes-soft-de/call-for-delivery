@@ -1019,6 +1019,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Order cost to store"),
         "orderCashWithCaptain":
             MessageLookupByLibrary.simpleMessage("Cash With Captain"),
+        "orderConflictDistanceNotExist": MessageLookupByLibrary.simpleMessage(
+            "order conflict distance not exist"),
         "orderConflictDistances":
             MessageLookupByLibrary.simpleMessage("Order conflicted distance"),
         "orderConflictedSuccessfully": MessageLookupByLibrary.simpleMessage(

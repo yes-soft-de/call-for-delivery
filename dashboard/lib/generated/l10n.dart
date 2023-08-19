@@ -11014,6 +11014,16 @@ class S {
     );
   }
 
+  /// `order conflict distance not exist`
+  String get orderConflictDistanceNotExist {
+    return Intl.message(
+      'order conflict distance not exist',
+      name: 'orderConflictDistanceNotExist',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(
