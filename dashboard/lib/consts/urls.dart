@@ -194,6 +194,12 @@ class Urls {
       VERSION_ADMIN +
       '/orderdistanceconflict' +
       '/filterorderdistanceconflictbyadmin';
+
+  static const REFUSED_ORDERS_CONFLICTED_DISTANCE_API = DOMAIN +
+      VERSION_ADMIN +
+      '/orderdistanceconflict' +
+      '/refuseorderdistanceconflictbyadmin';
+
   static const GET_ORDER_LOGS_API =
       DOMAIN + '/v1/admin/orderlog' + '/orderlogsbyorderidforadmin';
   static const ORDERS_PENDING_API = BASE_API_ORDER + '/orderpending';

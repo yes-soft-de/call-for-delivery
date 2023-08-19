@@ -10994,6 +10994,26 @@ class S {
     );
   }
 
+  /// `are you sure about refused the conflict request`
+  String get areYouSureAboutRefusedTheConflictRequest {
+    return Intl.message(
+      'are you sure about refused the conflict request',
+      name: 'areYouSureAboutRefusedTheConflictRequest',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `the captain raised an conflict about distance`
+  String get theCaptainRaisedAnConflictAboutDistance {
+    return Intl.message(
+      'the captain raised an conflict about distance',
+      name: 'theCaptainRaisedAnConflictAboutDistance',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Dev`
   String get dev {
     return Intl.message(

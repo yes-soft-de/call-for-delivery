@@ -178,6 +178,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("هل انت متاكد من التعديل؟"),
         "areYouSureAboutMakePayment": MessageLookupByLibrary.simpleMessage(
             "هل انت متاكد من تسجيل الدفعة؟"),
+        "areYouSureAboutRefusedTheConflictRequest":
+            MessageLookupByLibrary.simpleMessage(
+                "هل انت متاكد من تجاهل طلب النزاع"),
         "areYouSureAboutRependingOrder": MessageLookupByLibrary.simpleMessage(
             "هل أنت متأكد من رغبتك بإعادة هذا الطلب لحالة الانتظار وإلغاء اسناد الكابتن"),
         "areYouSureAboutSkipPaymentStageFor":
@@ -1560,6 +1563,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "taxNumber": MessageLookupByLibrary.simpleMessage("الرقم الضريبي"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("شروط الاستخدام"),
+        "theCaptainRaisedAnConflictAboutDistance":
+            MessageLookupByLibrary.simpleMessage(
+                "قام الكابتن بتقديم تعارض حول مسافة الطلب"),
         "theEdit": MessageLookupByLibrary.simpleMessage("التعديل"),
         "theOrderHidden": MessageLookupByLibrary.simpleMessage(
             "لا يمكن اسناد هذا الطلب لهذا الكابتن , لأن الطلب مخفي"),
