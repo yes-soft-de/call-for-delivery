@@ -23,7 +23,6 @@ import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/global_nav_key.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NavigatorMenu extends StatefulWidget {
@@ -112,7 +111,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
               borderRadius: Localizations.localeOf(context).languageCode == 'ar'
                   ? BorderRadius.horizontal(left: Radius.circular(12))
                   : BorderRadius.horizontal(right: Radius.circular(12))),
-          child: CustomListView.custom(children: [
+          child: ListView(children: [
             drawerHeader,
             customListTile(getIt<StatisticsModule>().statisticsScreen,
                 S.current.home, FontAwesomeIcons.home),

@@ -3,7 +3,6 @@ import 'package:c4d/module_payments/model/captain_finance_by_order_count.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_count_order_request.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
 import 'package:c4d/utils/components/stacked_form.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
@@ -59,7 +58,7 @@ class _CategoryFormState extends State<FinanceByOrderCountForm> {
           child: Form(
             key: _key,
             child: FixedContainer(
-              child: CustomListView.custom(
+              child: ListView(
                   padding: EdgeInsets.only(right: 16, left: 16),
                   children: [
                     Padding(
@@ -163,8 +162,8 @@ class _CategoryFormState extends State<FinanceByOrderCountForm> {
                       num.tryParse(_orderCountController.text.trim()) ?? 0));
             } else {
               CustomFlushBarHelper.createError(
-                      title: S.current.warnning,
-                      message: S.current.pleaseCompleteTheForm);
+                  title: S.current.warnning,
+                  message: S.current.pleaseCompleteTheForm);
             }
           }),
     );

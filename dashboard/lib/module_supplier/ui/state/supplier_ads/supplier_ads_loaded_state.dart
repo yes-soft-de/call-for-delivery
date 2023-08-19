@@ -3,7 +3,6 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_supplier/model/ads_model.dart';
 import 'package:c4d/module_supplier/ui/screen/supplier_ads_screen.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
@@ -43,14 +42,13 @@ class SupplierAdsLoadedState extends States {
           });
     }
     return FixedContainer(
-        child: CustomListView.custom(children: getCaptains(context)));
-  }
-
-  List<Widget> getCaptains(BuildContext context) {
-    List<Widget> widgets = [];
-    for (var element in model ?? <SupplierAdsModel>[]) {
-      widgets.add(Text(''));
-    }
-    return widgets;
+      child: ListView.builder(
+        itemCount: model?.length ?? 0,
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return Text('');
+        },
+      ),
+    );
   }
 }

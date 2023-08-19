@@ -13,7 +13,6 @@ import 'package:c4d/module_subscriptions/subscriptions_routes.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
@@ -50,7 +49,7 @@ class StoreProfileLoadedState extends States {
           });
     }
     return FixedContainer(
-        child: CustomListView.custom(children: [
+        child: ListView(children: [
       Stack(
         children: [
           Container(
