@@ -1137,6 +1137,13 @@
         }
     },
     "editCompanyInfo": "تعديل معلومات الشركة",
+    "orderCanceledFromAlshoroqByAdmin": "تم الغاء الطلب لدى المشغل شروق من قبل الادمن",
+    "orderCanceledFromAllByAdmin": "تم الغاء الطلب لدى الجميع من قبل الادمن",
     "captainProfit": "ارباح الكابتن",
+    "orderNotExistInTheExternalCompany": "الطلب غير موجود عند الشركة الخارجية",
+    "doYouWantToDeleteTheOrderOnlyFormAlshoroq": "هل تريد حذف الطلب عند المشغل شروق فقط؟",
+    "areYouSureAboutRefusedTheConflictRequest": "هل انت متاكد من تجاهل طلب النزاع",
+    "theCaptainRaisedAnConflictAboutDistance": "قام الكابتن بتقديم تعارض حول مسافة الطلب",
+    "orderConflictDistanceNotExist": "طلب النزاع غير موجود",
     "dev": "المطورين"
 }

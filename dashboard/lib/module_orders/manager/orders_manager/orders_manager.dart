@@ -2,12 +2,14 @@ import 'package:c4d/abstracts/response/action_response.dart';
 import 'package:c4d/module_orders/repository/order_repository/order_repository.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
+import 'package:c4d/module_orders/request/order/delete_order_from_alshoroq_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order/pending_order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/request/order_conflict_distance_request/order_conflict_distance_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/order_non_sub_request.dart';
+import 'package:c4d/module_orders/request/refused_order_distance_conflict.dart';
 import 'package:c4d/module_orders/request/resolve_conflects_order_request.dart';
 import 'package:c4d/module_orders/request/store_answer_cash_order_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
@@ -68,6 +70,10 @@ class OrdersManager {
   Future<ActionResponse?> deleteOrder(DeleteOrderRequest request) =>
       _repository.deleteOrder(request);
 
+  Future<ActionResponse?> deleteOrderFromAlShoroq(
+          DeleteOrderFromAlShoroqRequest request) =>
+      _repository.deleteOrderFromAlShoroq(request);
+
   Future<ActionResponse?> unAssignCaptain(int orderId) =>
       _repository.unAssignCaptain(orderId);
   Future<OrderActionLogsResponse?> getActionOrderLogs(int orderID) =>
@@ -86,6 +92,11 @@ class OrdersManager {
       _repository.updateExtraDistanceToOrder(request);
   Future<ActionResponse?> updateDistance(UpdateDistanceRequest request) =>
       _repository.updateDistance(request);
+
+  Future<ActionResponse?> refusedOrderDistanceConflict(
+          RefusedOrderDistanceConflictRequest request) =>
+      _repository.refusedOrderDistanceConflict(request);
+
   Future<ActionResponse?> addNewOrderLink(CreateOrderRequest orderRequest) =>
       _repository.addNewOrderLink(orderRequest);
   Future<ActionResponse?> resolveOrderConflicts(

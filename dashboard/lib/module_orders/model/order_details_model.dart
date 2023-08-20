@@ -57,6 +57,7 @@ class OrderDetailsModel extends DataModel {
   int? primaryOrderId;
   int? packageType;
   int? costType;
+  int? externalCompanyId;
   String? externalCompanyName;
 
   OrderDetailsModel({
@@ -102,6 +103,7 @@ class OrderDetailsModel extends DataModel {
     required this.packageType,
     required this.costType,
     required this.orderCostWithDeliveryCost,
+    required this.externalCompanyId,
     required this.externalCompanyName,
   });
 
@@ -126,6 +128,9 @@ class OrderDetailsModel extends DataModel {
     _orders = OrderDetailsModel(
       externalCompanyName: (element?.externalDeliveryOrder?.isNotEmpty ?? false)
           ? element?.externalDeliveryOrder?.first.companyName
+          : null,
+      externalCompanyId: (element?.externalDeliveryOrder?.isNotEmpty ?? false)
+          ? element?.externalDeliveryOrder?.first.externalCompanyId
           : null,
       image: element?.image?.image,
       canRemove: false,

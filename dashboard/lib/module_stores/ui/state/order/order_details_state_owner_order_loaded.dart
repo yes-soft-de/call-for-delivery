@@ -11,11 +11,15 @@ import 'package:c4d/module_external_delivery_companies/external_delivery_compani
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/ui/widgets/order_widget/order_button.dart';
+import 'package:c4d/module_orders/ui/widgets/update_order_status_form.dart';
+import 'package:c4d/module_stores/request/delete_order_request.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_stores/ui/screen/order/order_details_screen.dart';
+import 'package:c4d/module_stores/ui/widget/order_cancle_dialog.dart';
 import 'package:c4d/module_stores/ui/widget/orders/custom_step.dart';
 import 'package:c4d/module_stores/ui/widget/orders/progress_order_status.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
+import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 import 'package:c4d/utils/helpers/finance_status_helper.dart';
@@ -48,692 +52,783 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
     var decoration = BoxDecoration(
         borderRadius: BorderRadius.circular(25),
         color: Theme.of(context).colorScheme.background);
-    return CustomListView.custom(
-      children: [
-        // svg picture
-        Padding(
-          padding: const EdgeInsets.only(
-            top: 8.0,
-            left: 16,
-            right: 16,
-          ),
-          child: OrderProgressionHelper.getStatusIcon(
-              orderInfo.state, 175, context),
-        ),
-        // steps
-        Padding(
-          padding:
-              const EdgeInsets.only(top: 8.0, left: 16, right: 16, bottom: 8),
-          child: Flex(
-            direction: Axis.horizontal,
-            children:
-                getStepper(StatusHelper.getOrderStatusIndex(orderInfo.state)),
-          ),
-        ),
-        // captain name
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      appBar: CustomC4dAppBar
+          .appBar(context, title: S.current.orderDetails, actions: [
         Visibility(
-            replacement: Visibility(
-              visible: orderInfo.state != OrderStatusEnum.FINISHED &&
-                  orderInfo.state != OrderStatusEnum.CANCELLED &&
-                  orderInfo.externalCompanyName == null,
-              child: OrderButton(
-                  onTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (ctx) {
-                          ArgumentHiveHelper().setCurrentOrderID(
-                              screenState.orderId.toString());
-                          return getIt<CaptainAssignOrderScreen>();
-                        });
-                  },
-                  backgroundColor: Colors.orange,
-                  icon: Icons.delivery_dining_rounded,
-                  subtitle: S.current.assignCaptainHint,
-                  title: S.current.assignCaptain),
-            ),
-            visible: orderInfo.captainName != null,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                constraints: BoxConstraints(minHeight: 75),
-                decoration: BoxDecoration(
-                    color: StatusHelper.getOrderStatusColor(orderInfo.state),
-                    borderRadius: BorderRadius.circular(25)),
-                child: Row(
-                  children: [
-                    Row(
-                      children: [
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Icon(
-                          Icons.delivery_dining_rounded,
-                          color: Colors.white,
-                        ),
-                        SizedBox(
-                          width: 8,
-                        ),
-                        Container(
-                          width: 200,
-                          child: Text.rich(
-                            TextSpan(
-                              children: [
-                                TextSpan(
-                                    text: orderInfo.state ==
-                                            OrderStatusEnum.FINISHED
-                                        ? S.current.orderHandledDoneByCaptain +
-                                            ' '
-                                        : S.current.orderHandledByCaptain + ' ',
-                                    style: TextStyle(color: Colors.white)),
-                                TextSpan(
-                                    text: orderInfo.captainName,
-                                    recognizer: TapGestureRecognizer()
-                                      ..onTap = () {
-                                        showDialog(
-                                            context: context,
-                                            builder: (ctx) {
-                                              return AlertDialog(
-                                                scrollable: true,
-                                                title: Text(S.current.profile),
-                                                content: Column(
-                                                  children: [
-                                                    ClipOval(
-                                                      child: CustomNetworkImage(
-                                                          height: 100,
-                                                          width: 100,
-                                                          imageSource: orderInfo
-                                                                  .captain
-                                                                  ?.images
-                                                                  ?.image ??
-                                                              ''),
-                                                    ),
-                                                    Text(
-                                                        orderInfo.captainName ??
-                                                            S.current.unknown),
-                                                    SelectableText(
-                                                      PhoneNumberFormatter
-                                                              .format(orderInfo
-                                                                  .captain
-                                                                  ?.phone) ??
-                                                          '',
-                                                      textDirection:
-                                                          TextDirection.ltr,
-                                                      style: TextStyle(
-                                                        locale:
-                                                            Locale.fromSubtags(
-                                                                languageCode:
-                                                                    'en'),
-                                                      ),
-                                                    )
-                                                  ],
-                                                ),
-                                                actionsAlignment:
-                                                    MainAxisAlignment.center,
-                                                actions: [
-                                                  TextButton(
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pushNamed(
-                                                                CaptainsRoutes
-                                                                    .CAPTAIN_PROFILE,
-                                                                arguments:
-                                                                    orderInfo
-                                                                        .captain
-                                                                        ?.id);
-                                                      },
-                                                      child:
-                                                          Text(S.current.more))
-                                                ],
-                                              );
-                                            });
-                                      },
-                                    style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white)),
-                              ],
-                            ),
-                            overflow: TextOverflow.clip,
-                          ),
-                        ),
-                      ],
-                    ),
-                    Spacer(
-                      flex: 1,
-                    ),
-                    Visibility(
-                      visible: orderInfo.state != OrderStatusEnum.FINISHED &&
-                          orderInfo.state != OrderStatusEnum.CANCELLED &&
-                          orderInfo.externalCompanyName == null,
-                      child: IconButton(
-                        icon: Icon(Icons.remove_circle),
-                        onPressed: () {
+          visible: screenState.currentState
+                  is OrderDetailsStateOwnerOrderLoaded &&
+              (screenState.currentState as OrderDetailsStateOwnerOrderLoaded)
+                      .orderInfo
+                      .state !=
+                  OrderStatusEnum.CANCELLED &&
+              (screenState.currentState as OrderDetailsStateOwnerOrderLoaded)
+                      .orderInfo
+                      .state !=
+                  OrderStatusEnum.FINISHED,
+          child: CustomC4dAppBar.actionIcon(context,
+              icon: Icons.rotate_left_rounded, onTap: () {
+            showDialog(
+                context: context,
+                builder: (_) {
+                  return StatefulBuilder(builder: (ctx, refreshFul) {
+                    return UpdateOrderStatusForm(
+                      callBack: (request) {
+                        screenState.updateOrderStatus(request);
+                      },
+                      orderInfo: (screenState.currentState
+                              as OrderDetailsStateOwnerOrderLoaded)
+                          .orderInfo,
+                    );
+                  });
+                });
+          }),
+        ),
+        Visibility(
+          visible: screenState.currentState
+                  is OrderDetailsStateOwnerOrderLoaded &&
+              StatusHelper.getOrderStatusIndex((screenState.currentState
+                          as OrderDetailsStateOwnerOrderLoaded)
+                      .orderInfo
+                      .state) <
+                  StatusHelper.getOrderStatusIndex(OrderStatusEnum.FINISHED) &&
+              (screenState.currentState as OrderDetailsStateOwnerOrderLoaded)
+                      .orderInfo
+                      .state !=
+                  OrderStatusEnum.CANCELLED,
+          child: CustomC4dAppBar.actionIcon(context, onTap: () {
+            var s =
+                screenState.currentState as OrderDetailsStateOwnerOrderLoaded;
+            showDialog(
+                context: context,
+                builder: (ctx) {
+                  return CustomAlertDialog(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            OrdersRoutes.UPDATE_ORDERS_SCREEN, (route) => false,
+                            arguments: s.orderInfo);
+                      },
+                      content: S.current.updateOrderWarning,
+                      oneAction: false);
+                });
+          }, icon: Icons.edit),
+        )
+      ]),
+      floatingActionButton: Visibility(
+        visible: screenState.canRemoveOrder && orderInfo.externalCompanyId != 1,
+        child: FloatingActionButton(
+          backgroundColor: Theme.of(context).colorScheme.error,
+          onPressed: () async {
+            bool cancelDialog = StatusHelper.getOrderStatusIndex((screenState
+                        .currentState as OrderDetailsStateOwnerOrderLoaded)
+                    .orderInfo
+                    .state) >=
+                StatusHelper.getOrderStatusIndex(OrderStatusEnum.IN_STORE);
+
+            bool canceledOnlyFromAlshoroq = false;
+            if (orderInfo.externalCompanyId == 2) {
+              canceledOnlyFromAlshoroq =
+                  await showDeleteOnlyFromAlshoroqDialog(context) ?? false;
+            }
+            if (!canceledOnlyFromAlshoroq) {
+              if (cancelDialog) {
+                showDialog(
+                    context: context,
+                    builder: (ctx) {
+                      return OrderCancelDialog(
+                        onDone: (store, captain) {
+                          Navigator.of(context).pop();
                           showDialog(
                               context: context,
-                              builder: (ctx) {
+                              builder: (_) {
                                 return CustomAlertDialog(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      screenState.manager.unAssignedOrder(
-                                          screenState.orderId, screenState);
-                                    },
-                                    content:
-                                        S.current.areYouSureAboutRependingOrder,
-                                    oneAction: false);
+                                  content: S.current.areYouSureAboutDeleteOrder,
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                    screenState.deleteOrder(
+                                      DeleteOrderRequest(
+                                        orderID: screenState.orderId,
+                                        cutOrderFromStoreSubscription: store,
+                                        addHalfOrderValueToCaptainFinancialDue:
+                                            captain,
+                                      ),
+                                    );
+                                  },
+                                  oneAction: false,
+                                );
                               });
                         },
-                        color: Colors.white,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            )),
-        SizedBox(height: 10),
-        Visibility(
-          visible: orderInfo.state == OrderStatusEnum.WAITING &&
-              orderInfo.externalCompanyName == null,
-          child: OrderButton(
-            onTap: () {
-              Navigator.pushNamed(
-                context,
-                ExternalDeliveryCompaniesRoutes
-                    .ASSIGN_ORDER_TO_EXTERNAL_COMPANY_SCREEN,
-                arguments: [screenState.orderId],
-              ).then(
-                (value) {
-                  // TODO: implement the refresh technique if nessury
-                },
-              );
-            },
-            backgroundColor: Color(0xffE34400),
-            icon: FontAwesomeIcons.box,
-            subtitle: S.current.assignThisOrderToExternalCompany,
-            title: S.current.assignToExternalCompany,
+                        onExit: () {
+                          Navigator.of(context).pop();
+                        },
+                      );
+                    });
+              } else {
+                showDialog(
+                    context: context,
+                    builder: (_) {
+                      return CustomAlertDialog(
+                        content: S.current.areYouSureAboutDeleteOrder,
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                          screenState.deleteOrder(
+                            DeleteOrderRequest(
+                              orderID: screenState.orderId,
+                            ),
+                          );
+                        },
+                        oneAction: false,
+                      );
+                    });
+              }
+            }
+          },
+          child: Icon(
+            Icons.delete,
+            color: Colors.white,
           ),
         ),
-        // order status
-        Padding(
-          padding:
-              const EdgeInsets.only(right: 8.0, left: 8, bottom: 24, top: 16),
-          child: ListTile(
-            onLongPress: () {
-              Navigator.of(screenState.context).pushNamed(
-                  OrdersRoutes.ORDERS_ACTIONS_LOGS_SCREEN,
-                  arguments: orderInfo.id);
-            },
-            onTap: () {
-              Navigator.of(screenState.context).pushNamed(
-                  StoresRoutes.ORDER_TIMELINE_SCREEN,
-                  arguments: orderInfo.id);
-            },
-            leading: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(14),
-                  color: StatusHelper.getOrderStatusColor(orderInfo.state)),
+      ),
+      body: CustomListView.custom(
+        children: [
+          // svg picture
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 8.0,
+              left: 16,
+              right: 16,
+            ),
+            child: OrderProgressionHelper.getStatusIcon(
+                orderInfo.state, 175, context),
+          ),
+          // steps
+          Padding(
+            padding:
+                const EdgeInsets.only(top: 8.0, left: 16, right: 16, bottom: 8),
+            child: Flex(
+              direction: Axis.horizontal,
+              children:
+                  getStepper(StatusHelper.getOrderStatusIndex(orderInfo.state)),
+            ),
+          ),
+          // captain name
+          Visibility(
+              replacement: Visibility(
+                visible: orderInfo.state != OrderStatusEnum.FINISHED &&
+                    orderInfo.state != OrderStatusEnum.CANCELLED &&
+                    orderInfo.externalCompanyName == null,
+                child: OrderButton(
+                    onTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (ctx) {
+                            ArgumentHiveHelper().setCurrentOrderID(
+                                screenState.orderId.toString());
+                            return getIt<CaptainAssignOrderScreen>();
+                          });
+                    },
+                    backgroundColor: Colors.orange,
+                    icon: Icons.delivery_dining_rounded,
+                    subtitle: S.current.assignCaptainHint,
+                    title: S.current.assignCaptain),
+              ),
+              visible: orderInfo.captainName != null,
               child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Icon(
-                  StatusHelper.getOrderStatusIcon(orderInfo.state),
-                  color: Colors.white,
-                  size: 28,
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  constraints: BoxConstraints(minHeight: 75),
+                  decoration: BoxDecoration(
+                      color: StatusHelper.getOrderStatusColor(orderInfo.state),
+                      borderRadius: BorderRadius.circular(25)),
+                  child: Row(
+                    children: [
+                      Row(
+                        children: [
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Icon(
+                            Icons.delivery_dining_rounded,
+                            color: Colors.white,
+                          ),
+                          SizedBox(
+                            width: 8,
+                          ),
+                          Container(
+                            width: 200,
+                            child: Text.rich(
+                              TextSpan(
+                                children: [
+                                  TextSpan(
+                                      text: orderInfo.state ==
+                                              OrderStatusEnum.FINISHED
+                                          ? S.current
+                                                  .orderHandledDoneByCaptain +
+                                              ' '
+                                          : S.current.orderHandledByCaptain +
+                                              ' ',
+                                      style: TextStyle(color: Colors.white)),
+                                  TextSpan(
+                                      text: orderInfo.captainName,
+                                      recognizer: TapGestureRecognizer()
+                                        ..onTap = () {
+                                          showDialog(
+                                              context: context,
+                                              builder: (ctx) {
+                                                return AlertDialog(
+                                                  scrollable: true,
+                                                  title:
+                                                      Text(S.current.profile),
+                                                  content: Column(
+                                                    children: [
+                                                      ClipOval(
+                                                        child: CustomNetworkImage(
+                                                            height: 100,
+                                                            width: 100,
+                                                            imageSource: orderInfo
+                                                                    .captain
+                                                                    ?.images
+                                                                    ?.image ??
+                                                                ''),
+                                                      ),
+                                                      Text(orderInfo
+                                                              .captainName ??
+                                                          S.current.unknown),
+                                                      SelectableText(
+                                                        PhoneNumberFormatter
+                                                                .format(orderInfo
+                                                                    .captain
+                                                                    ?.phone) ??
+                                                            '',
+                                                        textDirection:
+                                                            TextDirection.ltr,
+                                                        style: TextStyle(
+                                                          locale: Locale
+                                                              .fromSubtags(
+                                                                  languageCode:
+                                                                      'en'),
+                                                        ),
+                                                      )
+                                                    ],
+                                                  ),
+                                                  actionsAlignment:
+                                                      MainAxisAlignment.center,
+                                                  actions: [
+                                                    TextButton(
+                                                        onPressed: () {
+                                                          Navigator.of(context)
+                                                              .pushNamed(
+                                                                  CaptainsRoutes
+                                                                      .CAPTAIN_PROFILE,
+                                                                  arguments:
+                                                                      orderInfo
+                                                                          .captain
+                                                                          ?.id);
+                                                        },
+                                                        child: Text(
+                                                            S.current.more))
+                                                  ],
+                                                );
+                                              });
+                                        },
+                                      style: TextStyle(
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.white)),
+                                ],
+                              ),
+                              overflow: TextOverflow.clip,
+                            ),
+                          ),
+                        ],
+                      ),
+                      Spacer(
+                        flex: 1,
+                      ),
+                      Visibility(
+                        visible: orderInfo.state != OrderStatusEnum.FINISHED &&
+                            orderInfo.state != OrderStatusEnum.CANCELLED &&
+                            orderInfo.externalCompanyName == null,
+                        child: IconButton(
+                          icon: Icon(Icons.remove_circle),
+                          onPressed: () {
+                            showDialog(
+                                context: context,
+                                builder: (ctx) {
+                                  return CustomAlertDialog(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                        screenState.manager.unAssignedOrder(
+                                            screenState.orderId, screenState);
+                                      },
+                                      content: S.current
+                                          .areYouSureAboutRependingOrder,
+                                      oneAction: false);
+                                });
+                          },
+                          color: Colors.white,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
-              ),
-            ),
-            trailing: Container(
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    color: StatusHelper.getOrderStatusColor(orderInfo.state)),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                      Moment.now().from(orderInfo.deliveryDate).toString(),
-                      style: TextStyle(
-                          fontWeight: FontWeight.w600, color: Colors.white)),
-                )),
-            title: Text(
-              StatusHelper.getOrderStatusMessages(orderInfo.state),
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
-            ),
-            subtitle: Padding(
-              padding: const EdgeInsets.only(top: 8.0),
-              child: Text(
-                  StatusHelper.getOrderStatusDescriptionMessages(
-                      orderInfo.state),
-                  style: TextStyle(fontWeight: FontWeight.w600)),
+              )),
+          SizedBox(height: 10),
+          Visibility(
+            visible: orderInfo.state == OrderStatusEnum.WAITING &&
+                orderInfo.externalCompanyName == null,
+            child: OrderButton(
+              onTap: () {
+                Navigator.pushNamed(
+                  context,
+                  ExternalDeliveryCompaniesRoutes
+                      .ASSIGN_ORDER_TO_EXTERNAL_COMPANY_SCREEN,
+                  arguments: [screenState.orderId],
+                );
+              },
+              backgroundColor: Color(0xffE34400),
+              icon: FontAwesomeIcons.box,
+              subtitle: S.current.assignThisOrderToExternalCompany,
+              title: S.current.assignToExternalCompany,
             ),
           ),
-        ),
-        // order log
-        Padding(
-          padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
-          child: OrderButton(
-              backgroundColor: Colors.grey[800]!,
-              icon: Icons.history,
-              subtitle: null,
-              onTap: () {
+          // order status
+          Padding(
+            padding:
+                const EdgeInsets.only(right: 8.0, left: 8, bottom: 24, top: 16),
+            child: ListTile(
+              onLongPress: () {
                 Navigator.of(screenState.context).pushNamed(
                     OrdersRoutes.ORDERS_ACTIONS_LOGS_SCREEN,
                     arguments: orderInfo.id);
               },
-              title: S.current.orderLogHistory),
-        ),
-        // chat
-        Visibility(
-          visible: orderInfo.roomID != null,
-          child: Padding(
+              onTap: () {
+                Navigator.of(screenState.context).pushNamed(
+                    StoresRoutes.ORDER_TIMELINE_SCREEN,
+                    arguments: orderInfo.id);
+              },
+              leading: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(14),
+                    color: StatusHelper.getOrderStatusColor(orderInfo.state)),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Icon(
+                    StatusHelper.getOrderStatusIcon(orderInfo.state),
+                    color: Colors.white,
+                    size: 28,
+                  ),
+                ),
+              ),
+              trailing: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(25),
+                      color: StatusHelper.getOrderStatusColor(orderInfo.state)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                        Moment.now().from(orderInfo.deliveryDate).toString(),
+                        style: TextStyle(
+                            fontWeight: FontWeight.w600, color: Colors.white)),
+                  )),
+              title: Text(
+                StatusHelper.getOrderStatusMessages(orderInfo.state),
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+              subtitle: Padding(
+                padding: const EdgeInsets.only(top: 8.0),
+                child: Text(
+                    StatusHelper.getOrderStatusDescriptionMessages(
+                        orderInfo.state),
+                    style: TextStyle(fontWeight: FontWeight.w600)),
+              ),
+            ),
+          ),
+          // order log
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
+            child: OrderButton(
+                backgroundColor: Colors.grey[800]!,
+                icon: Icons.history,
+                subtitle: null,
+                onTap: () {
+                  Navigator.of(screenState.context).pushNamed(
+                      OrdersRoutes.ORDERS_ACTIONS_LOGS_SCREEN,
+                      arguments: orderInfo.id);
+                },
+                title: S.current.orderLogHistory),
+          ),
+          // chat
+          Visibility(
+            visible: orderInfo.roomID != null,
+            child: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Container(
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                        color: Theme.of(context)
+                            .colorScheme
+                            .primary
+                            .withOpacity(0.5),
+                        spreadRadius: 1,
+                        blurRadius: 10,
+                        offset: Offset(-0.2, 0)),
+                  ],
+                  gradient: LinearGradient(
+                    colors: [
+                      Theme.of(context).colorScheme.primary.withOpacity(0.85),
+                      Theme.of(context).colorScheme.primary.withOpacity(0.85),
+                      Theme.of(context).colorScheme.primary.withOpacity(0.9),
+                      Theme.of(context).colorScheme.primary.withOpacity(0.93),
+                      Theme.of(context).colorScheme.primary.withOpacity(0.95),
+                      Theme.of(context).colorScheme.primary,
+                    ],
+                  ),
+                  borderRadius: BorderRadius.circular(25),
+                ),
+                child: Material(
+                  color: Colors.transparent,
+                  child: ListTile(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(25)),
+                    onTap: () {
+                      Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
+                          arguments: ChatArgument(
+                              roomID: orderInfo.roomID ?? '',
+                              userType: 'captain'));
+                    },
+                    leading: Icon(
+                      Icons.chat_bubble_rounded,
+                      color: Theme.of(context).textTheme.labelLarge?.color,
+                    ),
+                    title: Text(S.current.chatRoom),
+                    textColor: Theme.of(context).textTheme.labelLarge?.color,
+                    subtitle: Text(S.current.chatWithCaptain),
+                    trailing: Icon(Icons.arrow_forward_rounded,
+                        color: Theme.of(context).textTheme.labelLarge?.color),
+                  ),
+                ),
+              ),
+            ),
+          ),
+          // order details tile
+          ListTile(
+            title: Text(S.current.orderDetails + ' #${screenState.orderId}'),
+            leading: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(12),
+                    color: Theme.of(context).colorScheme.background),
+                child: Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Icon(Icons.info_rounded),
+                )),
+          ),
+          // date widgets
+          Padding(
             padding: const EdgeInsets.all(16.0),
             child: Container(
-              decoration: BoxDecoration(
-                boxShadow: [
-                  BoxShadow(
-                      color: Theme.of(context)
-                          .colorScheme
-                          .primary
-                          .withOpacity(0.5),
-                      spreadRadius: 1,
-                      blurRadius: 10,
-                      offset: Offset(-0.2, 0)),
+              decoration: decoration,
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.delivery_dining_rounded),
+                    title: Text(S.current.deliverDate),
+                    subtitle: Text(orderInfo.deliveryDateString),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                    child: DottedLine(
+                        dashColor: Theme.of(context).disabledColor,
+                        lineThickness: 2.5,
+                        dashRadius: 25),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.access_time_filled_rounded),
+                    title: Text(S.current.createdDate),
+                    subtitle: Text(orderInfo.createdDate),
+                  ),
                 ],
-                gradient: LinearGradient(
-                  colors: [
-                    Theme.of(context).colorScheme.primary.withOpacity(0.85),
-                    Theme.of(context).colorScheme.primary.withOpacity(0.85),
-                    Theme.of(context).colorScheme.primary.withOpacity(0.9),
-                    Theme.of(context).colorScheme.primary.withOpacity(0.93),
-                    Theme.of(context).colorScheme.primary.withOpacity(0.95),
-                    Theme.of(context).colorScheme.primary,
-                  ],
-                ),
-                borderRadius: BorderRadius.circular(25),
-              ),
-              child: Material(
-                color: Colors.transparent,
-                child: ListTile(
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(25)),
-                  onTap: () {
-                    Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
-                        arguments: ChatArgument(
-                            roomID: orderInfo.roomID ?? '',
-                            userType: 'captain'));
-                  },
-                  leading: Icon(
-                    Icons.chat_bubble_rounded,
-                    color: Theme.of(context).textTheme.labelLarge?.color,
-                  ),
-                  title: Text(S.current.chatRoom),
-                  textColor: Theme.of(context).textTheme.labelLarge?.color,
-                  subtitle: Text(S.current.chatWithCaptain),
-                  trailing: Icon(Icons.arrow_forward_rounded,
-                      color: Theme.of(context).textTheme.labelLarge?.color),
-                ),
               ),
             ),
           ),
-        ),
-        // order details tile
-        ListTile(
-          title: Text(S.current.orderDetails + ' #${screenState.orderId}'),
-          leading: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  color: Theme.of(context).colorScheme.background),
-              child: Padding(
-                padding: const EdgeInsets.all(10.0),
-                child: Icon(Icons.info_rounded),
-              )),
-        ),
-        // date widgets
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
-            decoration: decoration,
-            child: Column(
-              children: [
-                ListTile(
-                  leading: Icon(Icons.delivery_dining_rounded),
-                  title: Text(S.current.deliverDate),
-                  subtitle: Text(orderInfo.deliveryDateString),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: DottedLine(
-                      dashColor: Theme.of(context).disabledColor,
-                      lineThickness: 2.5,
-                      dashRadius: 25),
-                ),
-                ListTile(
-                  leading: Icon(Icons.access_time_filled_rounded),
-                  title: Text(S.current.createdDate),
-                  subtitle: Text(orderInfo.createdDate),
-                ),
-              ],
-            ),
-          ),
-        ),
-        // customers
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
-            decoration: decoration,
-            child: Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.account_box,
+          // customers
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              decoration: decoration,
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: Icon(
+                      Icons.account_box,
+                    ),
+                    title: Text(S.current.recipientName),
+                    subtitle: Text(orderInfo.customerName),
                   ),
-                  title: Text(S.current.recipientName),
-                  subtitle: Text(orderInfo.customerName),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: DottedLine(
-                      dashColor: Theme.of(context).disabledColor,
-                      lineThickness: 2.5,
-                      dashRadius: 25),
-                ),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(25),
-                    onTap: () {
-                      var url = 'tel:+${orderInfo.customerPhone}';
-                      canLaunch(url).then((value) {
-                        if (value) {
-                          launch(url);
-                        }
-                      });
-                    },
-                    child: ListTile(
-                      leading: Icon(Icons.phone),
-                      title: Text(S.current.recipientPhoneNumber),
-                      subtitle: Text(orderInfo.customerPhone),
-                      trailing: Icon(Icons.arrow_forward),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                    child: DottedLine(
+                        dashColor: Theme.of(context).disabledColor,
+                        lineThickness: 2.5,
+                        dashRadius: 25),
+                  ),
+                  Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(25),
+                      onTap: () {
+                        var url = 'tel:+${orderInfo.customerPhone}';
+                        canLaunch(url).then((value) {
+                          if (value) {
+                            launch(url);
+                          }
+                        });
+                      },
+                      child: ListTile(
+                        leading: Icon(Icons.phone),
+                        title: Text(S.current.recipientPhoneNumber),
+                        subtitle: Text(orderInfo.customerPhone),
+                        trailing: Icon(Icons.arrow_forward),
+                      ),
                     ),
                   ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: DottedLine(
-                      dashColor: Theme.of(context).disabledColor,
-                      lineThickness: 2.5,
-                      dashRadius: 25),
-                ),
-                Material(
-                  color: Colors.transparent,
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(25),
-                    onLongPress: () {
-                      final reason = TextEditingController();
-                      final distance = TextEditingController();
-                      final form_key = GlobalKey<FormState>();
-                      showDialog(
-                          context: context,
-                          builder: (ctx) {
-                            return AlertDialog(
-                              title: Text(S.current.updateDistance),
-                              content: SizedBox(
-                                height: 240,
-                                child: Form(
-                                  key: form_key,
-                                  child: Column(
-                                    children: [
-                                      CustomFormField(
-                                        controller: distance,
-                                        hintText: S.current.distance +
-                                            ' 10 ${S.current.km}',
-                                      ),
-                                      SizedBox(
-                                        height: 8,
-                                      ),
-                                      CustomFormField(
-                                        controller: reason,
-                                        hintText: S.current.reason,
-                                      ),
-                                      SizedBox(
-                                        height: 16,
-                                      ),
-                                      ElevatedButton(
-                                          onPressed: () {
-                                            if (form_key.currentState
-                                                    ?.validate() ==
-                                                true) {
-                                              Navigator.of(context).pop();
-                                              screenState.manager
-                                                  .addExtraDistance(
-                                                      screenState,
-                                                      AddExtraDistanceRequest(
-                                                          id: orderInfo.id,
-                                                          adminNote: reason
-                                                              .text
-                                                              .trim(),
-                                                          destination: null,
-                                                          additionalDistance:
-                                                              double.parse(
-                                                                  distance
-                                                                      .text)));
-                                            } else {
-                                              Fluttertoast.showToast(
-                                                  msg: S.current
-                                                      .pleaseEnterValidDistance);
-                                            }
-                                          },
-                                          child: Text(S.current.update)),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            );
-                          });
-                    },
-                    onDoubleTap: () {
-                      final reason = TextEditingController();
-                      final coord = TextEditingController();
-                      final form_key = GlobalKey<FormState>();
-                      showDialog(
-                          context: context,
-                          builder: (ctx) {
-                            return AlertDialog(
-                              title: Text(S.current.updateDistance),
-                              content: SizedBox(
-                                height: 240,
-                                child: Form(
-                                  key: form_key,
-                                  child: Column(
-                                    children: [
-                                      CustomFormField(
-                                        controller: coord,
-                                        hintText: S.current.coordinates +
-                                            ' 12.4,15.8',
-                                      ),
-                                      SizedBox(
-                                        height: 8,
-                                      ),
-                                      CustomFormField(
-                                        controller: reason,
-                                        hintText: S.current.reason,
-                                      ),
-                                      SizedBox(
-                                        height: 16,
-                                      ),
-                                      ElevatedButton(
-                                          onPressed: () {
-                                            if (form_key.currentState
-                                                    ?.validate() ==
-                                                true) {
-                                              if (coord.text
-                                                      .split(',')
-                                                      .length ==
-                                                  2) {
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                    child: DottedLine(
+                        dashColor: Theme.of(context).disabledColor,
+                        lineThickness: 2.5,
+                        dashRadius: 25),
+                  ),
+                  Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(25),
+                      onLongPress: () {
+                        final reason = TextEditingController();
+                        final distance = TextEditingController();
+                        final form_key = GlobalKey<FormState>();
+                        showDialog(
+                            context: context,
+                            builder: (ctx) {
+                              return AlertDialog(
+                                title: Text(S.current.updateDistance),
+                                content: SizedBox(
+                                  height: 240,
+                                  child: Form(
+                                    key: form_key,
+                                    child: Column(
+                                      children: [
+                                        CustomFormField(
+                                          controller: distance,
+                                          hintText: S.current.distance +
+                                              ' 10 ${S.current.km}',
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        CustomFormField(
+                                          controller: reason,
+                                          hintText: S.current.reason,
+                                        ),
+                                        SizedBox(
+                                          height: 16,
+                                        ),
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              if (form_key.currentState
+                                                      ?.validate() ==
+                                                  true) {
                                                 Navigator.of(context).pop();
                                                 screenState.manager
-                                                    .updateDistance(
+                                                    .addExtraDistance(
                                                         screenState,
                                                         AddExtraDistanceRequest(
                                                             id: orderInfo.id,
                                                             adminNote: reason
                                                                 .text
                                                                 .trim(),
-                                                            destination:
-                                                                Destination(
-                                                              lat: double
-                                                                  .tryParse(coord
-                                                                      .text
-                                                                      .trim()
-                                                                      .split(
-                                                                          ',')[0]
-                                                                      .trim()),
-                                                              lon: double
-                                                                  .tryParse(coord
-                                                                      .text
-                                                                      .trim()
-                                                                      .split(
-                                                                          ',')[1]
-                                                                      .trim()),
-                                                            )));
+                                                            destination: null,
+                                                            additionalDistance:
+                                                                double.parse(
+                                                                    distance
+                                                                        .text)));
                                               } else {
                                                 Fluttertoast.showToast(
                                                     msg: S.current
-                                                        .pleaseEnterValidCoord);
+                                                        .pleaseEnterValidDistance);
                                               }
-                                            }
-                                          },
-                                          child: Text(S.current.update)),
-                                    ],
+                                            },
+                                            child: Text(S.current.update)),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          });
-                    },
-                    onTap: () {
-                      String url = '';
-                      if (orderInfo.destinationCoordinate != null) {
-                        url = LauncherLinkHelper.getMapsLink(
-                            orderInfo.destinationCoordinate?.latitude ?? 0,
-                            orderInfo.destinationCoordinate?.longitude ?? 0);
-                      } else if (orderInfo.destinationLink != null) {
-                        url = orderInfo.destinationLink ?? '';
-                      }
-                      canLaunch(url).then((value) {
-                        if (value) {
-                          launch(url);
-                        } else {
-                          Fluttertoast.showToast(msg: S.current.invalidMapLink);
+                              );
+                            });
+                      },
+                      onDoubleTap: () {
+                        final reason = TextEditingController();
+                        final coord = TextEditingController();
+                        final form_key = GlobalKey<FormState>();
+                        showDialog(
+                            context: context,
+                            builder: (ctx) {
+                              return AlertDialog(
+                                title: Text(S.current.updateDistance),
+                                content: SizedBox(
+                                  height: 240,
+                                  child: Form(
+                                    key: form_key,
+                                    child: Column(
+                                      children: [
+                                        CustomFormField(
+                                          controller: coord,
+                                          hintText: S.current.coordinates +
+                                              ' 12.4,15.8',
+                                        ),
+                                        SizedBox(
+                                          height: 8,
+                                        ),
+                                        CustomFormField(
+                                          controller: reason,
+                                          hintText: S.current.reason,
+                                        ),
+                                        SizedBox(
+                                          height: 16,
+                                        ),
+                                        ElevatedButton(
+                                            onPressed: () {
+                                              if (form_key.currentState
+                                                      ?.validate() ==
+                                                  true) {
+                                                if (coord.text
+                                                        .split(',')
+                                                        .length ==
+                                                    2) {
+                                                  Navigator.of(context).pop();
+                                                  screenState.manager
+                                                      .updateDistance(
+                                                          screenState,
+                                                          AddExtraDistanceRequest(
+                                                              id: orderInfo.id,
+                                                              adminNote: reason
+                                                                  .text
+                                                                  .trim(),
+                                                              destination:
+                                                                  Destination(
+                                                                lat: double
+                                                                    .tryParse(coord
+                                                                        .text
+                                                                        .trim()
+                                                                        .split(
+                                                                            ',')[0]
+                                                                        .trim()),
+                                                                lon: double
+                                                                    .tryParse(coord
+                                                                        .text
+                                                                        .trim()
+                                                                        .split(
+                                                                            ',')[1]
+                                                                        .trim()),
+                                                              )));
+                                                } else {
+                                                  Fluttertoast.showToast(
+                                                      msg: S.current
+                                                          .pleaseEnterValidCoord);
+                                                }
+                                              }
+                                            },
+                                            child: Text(S.current.update)),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              );
+                            });
+                      },
+                      onTap: () {
+                        String url = '';
+                        if (orderInfo.destinationCoordinate != null) {
+                          url = LauncherLinkHelper.getMapsLink(
+                              orderInfo.destinationCoordinate?.latitude ?? 0,
+                              orderInfo.destinationCoordinate?.longitude ?? 0);
+                        } else if (orderInfo.destinationLink != null) {
+                          url = orderInfo.destinationLink ?? '';
                         }
-                      });
-                    },
-                    child: ListTile(
-                      leading: Icon(Icons.location_pin),
-                      title: Text(S.current.locationOfCustomer),
-                      subtitle: orderInfo.destinationCoordinate != null
-                          ? Text(S.current.distance +
-                              ' ${orderInfo.storeBranchToClientDistance} ' +
-                              S.current.km)
-                          : Text(S.current.distance + ' ' + S.current.unknown),
-                      trailing: Icon(Icons.arrow_forward),
+                        canLaunch(url).then((value) {
+                          if (value) {
+                            launch(url);
+                          } else {
+                            Fluttertoast.showToast(
+                                msg: S.current.invalidMapLink);
+                          }
+                        });
+                      },
+                      child: ListTile(
+                        leading: Icon(Icons.location_pin),
+                        title: Text(S.current.locationOfCustomer),
+                        subtitle: orderInfo.destinationCoordinate != null
+                            ? Text(S.current.distance +
+                                ' ${orderInfo.storeBranchToClientDistance} ' +
+                                S.current.km)
+                            : Text(
+                                S.current.distance + ' ' + S.current.unknown),
+                        trailing: Icon(Icons.arrow_forward),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-        ),
-        // details
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
-            decoration: decoration,
-            child: Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.store_rounded,
+          // details
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              decoration: decoration,
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: Icon(
+                      Icons.store_rounded,
+                    ),
+                    title: Text(S.current.storeName),
+                    subtitle: Text(orderInfo.storeName),
                   ),
-                  title: Text(S.current.storeName),
-                  subtitle: Text(orderInfo.storeName),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: DottedLine(
-                      dashColor: Theme.of(context).disabledColor,
-                      lineThickness: 2.5,
-                      dashRadius: 25),
-                ),
-                ListTile(
-                  leading: Icon(
-                    Icons.store_rounded,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                    child: DottedLine(
+                        dashColor: Theme.of(context).disabledColor,
+                        lineThickness: 2.5,
+                        dashRadius: 25),
                   ),
-                  title: Text(S.current.branch),
-                  subtitle: Text(orderInfo.branchName),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: DottedLine(
-                      dashColor: Theme.of(context).disabledColor,
-                      lineThickness: 2.5,
-                      dashRadius: 25),
-                ),
-                Visibility(
-                  visible: orderInfo.image != null,
-                  child: Column(
-                    children: [
-                      ListTile(
-                        leading: Icon(
-                          Icons.image,
-                        ),
-                        title: Text(S.current.orderImage),
-                      ),
-                      Center(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: SizedBox(
-                            width: 100,
-                            height: 100,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(25),
-                              child: CustomNetworkImage(
-                                height: 100,
-                                imageSource: orderInfo.image ?? '',
-                                width: 100,
-                              ),
-                            ),
+                  ListTile(
+                    leading: Icon(
+                      Icons.store_rounded,
+                    ),
+                    title: Text(S.current.branch),
+                    subtitle: Text(orderInfo.branchName),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                    child: DottedLine(
+                        dashColor: Theme.of(context).disabledColor,
+                        lineThickness: 2.5,
+                        dashRadius: 25),
+                  ),
+                  Visibility(
+                    visible: orderInfo.image != null,
+                    child: Column(
+                      children: [
+                        ListTile(
+                          leading: Icon(
+                            Icons.image,
                           ),
+                          title: Text(S.current.orderImage),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                        child: DottedLine(
-                            dashColor: Theme.of(context).disabledColor,
-                            lineThickness: 2.5,
-                            dashRadius: 25),
-                      ),
-                    ],
-                  ),
-                ),
-                Visibility(
-                  visible: orderInfo.pdf != null,
-                  child: Column(
-                    children: [
-                      ListTile(
-                        leading: Icon(
-                          Icons.attach_file_rounded,
-                        ),
-                        title: Text(S.current.attachedFile),
-                      ),
-                      InkWell(
-                        onTap: () {
-                          var url = orderInfo.pdf?.pdfPreview;
-                          canLaunch(url ?? '').then((value) {
-                            if (value) {
-                              launch(url ?? '');
-                            } else {
-                              Fluttertoast.showToast(
-                                  msg: S.current.unavailable);
-                            }
-                          });
-                        },
-                        child: Center(
+                        Center(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: SizedBox(
@@ -741,70 +836,15 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                               height: 100,
                               child: ClipRRect(
                                 borderRadius: BorderRadius.circular(25),
-                                child: Icon(
-                                  FontAwesomeIcons.filePdf,
-                                  color: Colors.red,
-                                  size: 100,
+                                child: CustomNetworkImage(
+                                  height: 100,
+                                  imageSource: orderInfo.image ?? '',
+                                  width: 100,
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                        child: DottedLine(
-                            dashColor: Theme.of(context).disabledColor,
-                            lineThickness: 2.5,
-                            dashRadius: 25),
-                      ),
-                    ],
-                  ),
-                ),
-                ListTile(
-                  leading: Icon(
-                    Icons.info,
-                  ),
-                  title: Text(S.current.orderDetails),
-                  subtitle: SelectableLinkify(
-                    onOpen: (link) async {
-                      if (await canLaunch(link.url)) {
-                        await launch(link.url);
-                      } else {
-                        Fluttertoast.showToast(msg: 'Invalid link');
-                      }
-                    },
-                    text: '${orderInfo.note}',
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        // entered
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
-            decoration: decoration,
-            child: Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.storefront,
-                  ),
-                  title: Text(S.current.confirmCaptainLocation),
-                  subtitle: Visibility(
-                      replacement: Text(S.current.unknown),
-                      visible: orderInfo.isCaptainArrived != null,
-                      child: Text(orderInfo.isCaptainArrived == true
-                          ? S.current.confirmed
-                          : S.current.unconfirmed)),
-                ),
-                Visibility(
-                    visible: orderInfo.paidToProvider != null &&
-                        orderInfo.payment == 'cash',
-                    child: Column(
-                      children: [
                         Padding(
                           padding:
                               const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -812,66 +852,50 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                               dashColor: Theme.of(context).disabledColor,
                               lineThickness: 2.5,
                               dashRadius: 25),
-                        ),
-                        ListTile(
-                          leading: Icon(Icons.money),
-                          title: Text(S.current.captainPaidToProvider),
-                          subtitle: Text(FinanceHelper.getStatusString(
-                              orderInfo.paidToProvider?.toInt() ?? -1)),
                         ),
                       ],
-                    )),
-                Visibility(
-                    visible: orderInfo.kilometer != null,
+                    ),
+                  ),
+                  Visibility(
+                    visible: orderInfo.pdf != null,
                     child: Column(
                       children: [
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(left: 16.0, right: 16.0),
-                          child: DottedLine(
-                              dashColor: Theme.of(context).disabledColor,
-                              lineThickness: 2.5,
-                              dashRadius: 25),
-                        ),
                         ListTile(
-                          leading: Icon(FontAwesomeIcons.locationArrow),
-                          title: Text(S.current.distanceProvidedByCaptain),
-                          subtitle: Text(FixedNumber.getFixedNumber(
-                                  orderInfo.kilometer ?? 0) +
-                              ' ${S.current.km}'),
+                          leading: Icon(
+                            Icons.attach_file_rounded,
+                          ),
+                          title: Text(S.current.attachedFile),
                         ),
-                        Visibility(
-                            visible:
-                                orderInfo.storeBranchToClientDistance != null,
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                      left: 16.0, right: 16.0),
-                                  child: DottedLine(
-                                      dashColor:
-                                          Theme.of(context).disabledColor,
-                                      lineThickness: 2.5,
-                                      dashRadius: 25),
+                        InkWell(
+                          onTap: () {
+                            var url = orderInfo.pdf?.pdfPreview;
+                            canLaunch(url ?? '').then((value) {
+                              if (value) {
+                                launch(url ?? '');
+                              } else {
+                                Fluttertoast.showToast(
+                                    msg: S.current.unavailable);
+                              }
+                            });
+                          },
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                width: 100,
+                                height: 100,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(25),
+                                  child: Icon(
+                                    FontAwesomeIcons.filePdf,
+                                    color: Colors.red,
+                                    size: 100,
+                                  ),
                                 ),
-                                ListTile(
-                                  leading: Icon(FontAwesomeIcons.satellite),
-                                  title: Text(
-                                      S.current.storeBranchToClientDistance),
-                                  subtitle: Text(
-                                      (orderInfo.storeBranchToClientDistance ??
-                                              '') +
-                                          ' ${S.current.km}'),
-                                ),
-                              ],
-                            )),
-                      ],
-                    )),
-                Visibility(
-                    visible: orderInfo.captainOrderCost != null &&
-                        orderInfo.payment == 'cash',
-                    child: Column(
-                      children: [
+                              ),
+                            ),
+                          ),
+                        ),
                         Padding(
                           padding:
                               const EdgeInsets.only(left: 16.0, right: 16.0),
@@ -880,84 +904,226 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                               lineThickness: 2.5,
                               dashRadius: 25),
                         ),
-                        ListTile(
-                          leading: Icon(FontAwesomeIcons.moneyBill),
-                          title: Text(S.current.orderCashWithCaptain),
-                          subtitle: Text(FixedNumber.getFixedNumber(
-                                  orderInfo.captainOrderCost ?? 0) +
-                              ' ${S.current.sar}'),
-                        ),
                       ],
-                    )),
-                Visibility(
-                    visible: orderInfo.captainOrderCost != null &&
-                        orderInfo.payment == 'cash' &&
-                        orderInfo.captainOrderCost != orderInfo.orderCost &&
-                        orderInfo.noteCaptainOrderCost != null,
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding:
-                              const EdgeInsets.only(left: 16.0, right: 16.0),
-                          child: DottedLine(
-                              dashColor: Theme.of(context).disabledColor,
-                              lineThickness: 2.5,
-                              dashRadius: 25),
-                        ),
-                        ListTile(
-                          leading: Icon(FontAwesomeIcons.info),
-                          title: Text(S.current.captainNote),
-                          subtitle: Text(orderInfo.noteCaptainOrderCost ?? ''),
-                        ),
-                      ],
-                    )),
-              ],
-            ),
-          ),
-        ),
-        // payments
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Container(
-            decoration: decoration,
-            child: Column(
-              children: [
-                ListTile(
-                  leading: Icon(
-                    Icons.payment,
+                    ),
                   ),
-                  title: Text(S.current.paymentMethod),
-                  subtitle: Text(orderInfo.payment == 'cash'
-                      ? S.current.cash
-                      : S.current.card),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                  child: DottedLine(
-                      dashColor: Theme.of(context).disabledColor,
-                      lineThickness: 2.5,
-                      dashRadius: 25),
-                ),
-                ListTile(
-                  leading: Icon(Icons.price_change_rounded),
-                  title: Text(S.current.orderCostWithDeliveryCost),
-                  subtitle: Text(
-                      orderInfo.orderCostWithDeliveryCost.toStringAsFixed(1) +
-                          ' ' +
-                          S.current.sar),
-                ),
-              ],
+                  ListTile(
+                    leading: Icon(
+                      Icons.info,
+                    ),
+                    title: Text(S.current.orderDetails),
+                    subtitle: SelectableLinkify(
+                      onOpen: (link) async {
+                        if (await canLaunch(link.url)) {
+                          await launch(link.url);
+                        } else {
+                          Fluttertoast.showToast(msg: 'Invalid link');
+                        }
+                      },
+                      text: '${orderInfo.note}',
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
-        // with order type we can get order widgets
-        Visibility(
-            visible: orderInfo.state != OrderStatusEnum.CANCELLED,
-            child: Container()),
-        Container(
-          height: 75,
-        ),
-      ],
+          // entered
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              decoration: decoration,
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: Icon(
+                      Icons.storefront,
+                    ),
+                    title: Text(S.current.confirmCaptainLocation),
+                    subtitle: Visibility(
+                        replacement: Text(S.current.unknown),
+                        visible: orderInfo.isCaptainArrived != null,
+                        child: Text(orderInfo.isCaptainArrived == true
+                            ? S.current.confirmed
+                            : S.current.unconfirmed)),
+                  ),
+                  Visibility(
+                      visible: orderInfo.paidToProvider != null &&
+                          orderInfo.payment == 'cash',
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 16.0, right: 16.0),
+                            child: DottedLine(
+                                dashColor: Theme.of(context).disabledColor,
+                                lineThickness: 2.5,
+                                dashRadius: 25),
+                          ),
+                          ListTile(
+                            leading: Icon(Icons.money),
+                            title: Text(S.current.captainPaidToProvider),
+                            subtitle: Text(FinanceHelper.getStatusString(
+                                orderInfo.paidToProvider?.toInt() ?? -1)),
+                          ),
+                        ],
+                      )),
+                  Visibility(
+                      visible: orderInfo.kilometer != null,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 16.0, right: 16.0),
+                            child: DottedLine(
+                                dashColor: Theme.of(context).disabledColor,
+                                lineThickness: 2.5,
+                                dashRadius: 25),
+                          ),
+                          ListTile(
+                            leading: Icon(FontAwesomeIcons.locationArrow),
+                            title: Text(S.current.distanceProvidedByCaptain),
+                            subtitle: Text(FixedNumber.getFixedNumber(
+                                    orderInfo.kilometer ?? 0) +
+                                ' ${S.current.km}'),
+                          ),
+                          Visibility(
+                              visible:
+                                  orderInfo.storeBranchToClientDistance != null,
+                              child: Column(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 16.0, right: 16.0),
+                                    child: DottedLine(
+                                        dashColor:
+                                            Theme.of(context).disabledColor,
+                                        lineThickness: 2.5,
+                                        dashRadius: 25),
+                                  ),
+                                  ListTile(
+                                    leading: Icon(FontAwesomeIcons.satellite),
+                                    title: Text(
+                                        S.current.storeBranchToClientDistance),
+                                    subtitle: Text((orderInfo
+                                                .storeBranchToClientDistance ??
+                                            '') +
+                                        ' ${S.current.km}'),
+                                  ),
+                                ],
+                              )),
+                        ],
+                      )),
+                  Visibility(
+                      visible: orderInfo.captainOrderCost != null &&
+                          orderInfo.payment == 'cash',
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 16.0, right: 16.0),
+                            child: DottedLine(
+                                dashColor: Theme.of(context).disabledColor,
+                                lineThickness: 2.5,
+                                dashRadius: 25),
+                          ),
+                          ListTile(
+                            leading: Icon(FontAwesomeIcons.moneyBill),
+                            title: Text(S.current.orderCashWithCaptain),
+                            subtitle: Text(FixedNumber.getFixedNumber(
+                                    orderInfo.captainOrderCost ?? 0) +
+                                ' ${S.current.sar}'),
+                          ),
+                        ],
+                      )),
+                  Visibility(
+                      visible: orderInfo.captainOrderCost != null &&
+                          orderInfo.payment == 'cash' &&
+                          orderInfo.captainOrderCost != orderInfo.orderCost &&
+                          orderInfo.noteCaptainOrderCost != null,
+                      child: Column(
+                        children: [
+                          Padding(
+                            padding:
+                                const EdgeInsets.only(left: 16.0, right: 16.0),
+                            child: DottedLine(
+                                dashColor: Theme.of(context).disabledColor,
+                                lineThickness: 2.5,
+                                dashRadius: 25),
+                          ),
+                          ListTile(
+                            leading: Icon(FontAwesomeIcons.info),
+                            title: Text(S.current.captainNote),
+                            subtitle:
+                                Text(orderInfo.noteCaptainOrderCost ?? ''),
+                          ),
+                        ],
+                      )),
+                ],
+              ),
+            ),
+          ),
+          // payments
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              decoration: decoration,
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: Icon(
+                      Icons.payment,
+                    ),
+                    title: Text(S.current.paymentMethod),
+                    subtitle: Text(orderInfo.payment == 'cash'
+                        ? S.current.cash
+                        : S.current.card),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                    child: DottedLine(
+                        dashColor: Theme.of(context).disabledColor,
+                        lineThickness: 2.5,
+                        dashRadius: 25),
+                  ),
+                  ListTile(
+                    leading: Icon(Icons.price_change_rounded),
+                    title: Text(S.current.orderCostWithDeliveryCost),
+                    subtitle: Text(
+                        orderInfo.orderCostWithDeliveryCost.toStringAsFixed(1) +
+                            ' ' +
+                            S.current.sar),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          // with order type we can get order widgets
+          Visibility(
+              visible: orderInfo.state != OrderStatusEnum.CANCELLED,
+              child: Container()),
+          Container(
+            height: 75,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Future<bool?> showDeleteOnlyFromAlshoroqDialog(BuildContext context) {
+    return showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return CustomAlertDialog(
+          content: S.current.doYouWantToDeleteTheOrderOnlyFormAlshoroq,
+          onPressed: () {
+            Navigator.of(context).pop(true);
+            screenState.deleteOrderFromAlShoroq();
+          },
+          oneAction: false,
+          actionTitle: S.current.yes,
+          actionTitle2: S.current.no,
+        );
+      },
     );
   }
 
