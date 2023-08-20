@@ -27,7 +27,6 @@ use App\Entity\BidDetailsEntity;
 use App\Entity\CaptainEntity;
 use App\Entity\CaptainFinancialDuesEntity;
 use App\Entity\CaptainOrderFinancialEntity;
-use App\Entity\ExternallyDeliveredOrderEntity;
 use App\Entity\OrderDestinationEntity;
 use App\Entity\OrderEntity;
 use App\Entity\StoreOrderDetailsEntity;
@@ -155,14 +154,12 @@ class OrderService
         $canCreateOrder = $this->subscriptionService->canCreateOrder($request->getStoreOwner());
 
         if ($canCreateOrder === StoreProfileConstant::STORE_OWNER_PROFILE_INACTIVE_STATUS || $canCreateOrder->canCreateOrder === SubscriptionConstant::CAN_NOT_CREATE_ORDER) {
-
             return $canCreateOrder;
         }
 
         $request->setIsHide(OrderIsHideConstant::ORDER_SHOW);
 
         if ($canCreateOrder->subscriptionStatus === SubscriptionConstant::CARS_FINISHED) {
-
             $request->setIsHide(OrderIsHideConstant::ORDER_HIDE_TEMPORARILY);
         }
 
@@ -179,12 +176,10 @@ class OrderService
               // ["text" => DashboardLocalNotificationMessageConstant::CREATE_ORDER_BY_STORE_TEXT_CONST.$order->getId()], null, $order->getId());
 
             $this->orderTimeLineService->createOrderLogsRequest($order);
-
             // save log of the action on order
             $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
                 OrderLogActionTypeConstant::CREATE_ORDER_BY_STORE_ACTION_CONST, [], null,
                 null);
-
             // send order to external delivery company
             $externalOrders = $this->sendOrderToExternalDeliveryCompany($order);
 
@@ -206,23 +201,18 @@ class OrderService
                 }
             }
 
-            //create firebase notification to store
             try {
-                $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
-            } catch (\Exception $e) {
-                error_log($e);
-            }
-            //create firebase notification to captains
-            try {
+                //create firebase notification to store
+                $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(),
+                    $order->getId(), $order->getState(), NotificationConstant::STORE);
+                //create firebase notification to captains
                 $this->notificationFirebaseService->notificationToCaptains($order->getId());
-
                 // scheduled notification to captain
                 //  $this->notificationFirebaseService->scheduledNotificationToCaptains($order->getId(), $order->getDeliveryDate());
 
             } catch (\Exception $e) {
                 error_log($e);
             }
-
             // check if receiver location is a valid one
             $this->checkIfReceiverLocationIsValid($order, $request->getDestination(), $order->getStoreBranchToClientDistance());
         }
@@ -246,21 +236,16 @@ class OrderService
                 $orderAndBidDetailsEntities[0]->getId());
 
             $this->orderTimeLineService->createOrderLogsRequest($orderAndBidDetailsEntities[0]);
-            //create firebase notification to store
+
             try {
+                //create firebase notification to store
                 $this->notificationFirebaseService->notificationOrderStateForUser($orderAndBidDetailsEntities[0]->getStoreOwner()->getStoreOwnerId(), $orderAndBidDetailsEntities[0]->getId(), $orderAndBidDetailsEntities[0]->getState(), NotificationConstant::STORE);
-            } catch (\Exception $e) {
-                error_log($e);
-            }
-            //create firebase notification to captains
-            try {
+                //create firebase notification to captains
                 $this->notificationFirebaseService->notificationToCaptains($orderAndBidDetailsEntities[0]->getId());
-            } catch (\Exception $e) {
-                error_log($e);
-            }
-            //create firebase notification to supplier who belong to the same category that the bid order belong
-            try {
-                $this->notificationFirebaseService->sendNotificationToSpecificSuppliers($orderAndBidDetailsEntities[0]->getId(), $orderAndBidDetailsEntities[1]->getSupplierCategory()->getId());
+                //create firebase notification to supplier who belong to the same category that the bid order belong
+                $this->notificationFirebaseService->sendNotificationToSpecificSuppliers($orderAndBidDetailsEntities[0]->getId(),
+                    $orderAndBidDetailsEntities[1]->getSupplierCategory()->getId());
+
             } catch (\Exception $e) {
                 error_log($e);
             }
@@ -283,7 +268,6 @@ class OrderService
         $orders = $this->orderManager->getStoreOrders($userId);
 
         foreach ($orders as $order) {
-
             $order['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderIdForStore($order['id']);
 
             $response[] = $this->autoMapping->map("array", OrdersResponse::class, $order);
@@ -357,12 +341,6 @@ class OrderService
 
             $externalOrderArrayLength = count($externalOrders);
 
-//            if (count($externalOrders) > 0) {
-//                foreach ($externalOrders as $externalOrder) {
-//                    $response[$key]->detail .= " - ".$externalOrder->getExternalOrderId();
-//                }
-//            }
-
             if ($externalOrderArrayLength > 0) {
                 $response[$key]->detail .= " - ".$externalOrders[$externalOrderArrayLength-1]->getExternalOrderId();
             }
@@ -401,29 +379,28 @@ class OrderService
     public function closestOrders($userId): array|CaptainStatusResponse|string
     {
         $captain = $this->captainService->captainIsActive($userId);
+
         if ($captain->status === CaptainConstant::CAPTAIN_INACTIVE) {
 
             return $this->autoMapping->map(CaptainStatusResponse::class, CaptainStatusResponse::class, $captain);
         }
-
         //not show orders for captain because not online
         if ($captain->isOnline === CaptainConstant::CAPTAIN_ONLINE_FALSE) {
             return CaptainConstant::ERROR_CAPTAIN_ONLINE_FALSE;
         }
-
         // Following statement is for ending Captain Financial Due (Cycle) when end date is passed.
         // Following statement had been commented out because ending Captain Financial Due is done by admin when creating
         // new payment for captain
         // $this->captainFinancialDuesService->updateCaptainFinancialSystemDetail($userId);
 
         $captainFinancialSystemStatus = $this->captainService->getCaptainFinancialSystemStatus($userId);
+
         if ($captainFinancialSystemStatus->status === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_INACTIVE) {
             return CaptainFinancialSystem::FINANCIAL_SYSTEM_INACTIVE;
         }
 
         $this->showSubOrderIfCarIsAvailable($userId, OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST);
         $this->hideOrderExceededDeliveryTimeByHour($userId, OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST);
-
         // Hide pending orders if the remaining cars of the store current subscription are finished
         $this->hidePendingOrderIfStoreSubscriptionRemainingCarsAreFinished($userId, OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST);
 
@@ -435,7 +412,6 @@ class OrderService
 
         foreach ($orders as $key => $value) {
             $value['subOrder'] = $this->orderManager->getSubOrdersByPrimaryOrderId($value['id']);
-
             // Get the financial value that the order will add to the financial dues of the captain if he/she accept the order
             $value['captainProfit'] = $this->getSingleOrderFinancialValueByCaptainUserId($userId, $value['storeBranchToClientDistance']);
 
@@ -514,8 +490,8 @@ class OrderService
     public function getSpecificOrderForCaptain(int $id, int $userId): null|SpecificOrderForCaptainResponse|string
     {
         $order = $this->orderManager->getSpecificOrderForCaptain($id, $userId);
-        if ($order) {
 
+        if ($order) {
             if ($order[0]->getState() !== OrderStateConstant::ORDER_STATE_PENDING) {
                 if ($order[0]->getCaptainId()->getCaptainId() !== $userId) {
                     return OrderResultConstant::ORDER_ALREADY_IS_BEING_ACCEPTED;
@@ -582,7 +558,6 @@ class OrderService
             }
         }
         // end check captain complete account status
-
         // check captain profile status
         $captain = $this->captainService->captainIsActive($request->getCaptainId());
 
@@ -590,15 +565,14 @@ class OrderService
             return CaptainConstant::CAPTAIN_INACTIVE;
         }
         // end check captain profile status
-
-        $this->captainFinancialDuesService->updateCaptainFinancialSystemDetail($request->getCaptainId());
+        // Following statement for ending captain financial cycle if its endDate is passed
+        // $this->captainFinancialDuesService->updateCaptainFinancialSystemDetail($request->getCaptainId());
 
         $captainFinancialSystemStatus = $this->captainService->getCaptainFinancialSystemStatus($request->getCaptainId());
 
         if ($captainFinancialSystemStatus->status === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_INACTIVE) {
             return CaptainFinancialSystem::FINANCIAL_SYSTEM_INACTIVE;
         }
-
         // Check if captain try to update order state before specific time (except 'on way to pick order' state)
         if (in_array($request->getState(), OrderStateConstant::ORDER_STATE_ONGOING_TILL_DELIVERED_ARRAY)) {
             $result = $this->checkIfNormalOrderStateUpdateBeforeSpecificTimeForCaptain($request->getId(),
@@ -608,7 +582,7 @@ class OrderService
                 return OrderResultConstant::ORDER_UPDATE_STATE_NOT_ALLOWED_DUE_TO_SHORT_TIME_CONST;
             }
         }
-
+        // If this first time of updating order status by captain, then some conditions need to be check
         if ($request->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
             //not show orders for captain because not online
             if ($captain->isOnline === CaptainConstant::CAPTAIN_ONLINE_FALSE) {
@@ -622,13 +596,13 @@ class OrderService
 
             $orderEntity = $this->orderManager->getOrderTypeByOrderId($request->getId());
 
-            if ($orderEntity) {
+            if ($orderEntity instanceof OrderEntity) {
                 // Check whether the captain has received an order for a specific store
                 $checkCaptainReceivedOrder = $this->checkWhetherCaptainReceivedOrderForSpecificStore($request->getCaptainId(), $orderEntity->getStoreOwner()->getId(), $orderEntity->getPrimaryOrder()?->getId());
                 if ($checkCaptainReceivedOrder === OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE_INT) {
                     return OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE;
                 }
-                // end check
+                // Check remaining cars if the order is the main order of a grouped one or individual order (not grouped)
                 if ($orderEntity->getOrderType() === OrderTypeConstant::ORDER_TYPE_NORMAL) {
                     // Following if block will be executed only when the order is not sub-order,
                     // otherwise, we will move to update statement directly
@@ -641,6 +615,12 @@ class OrderService
                         }
                     }
                 }
+                // Make sure that the status of each order (not delivered yet) with the captain is at least 'in store'
+                $hasOrders = $this->hasCaptainOrderWithStatusOnWayToPickOrder($request->getCaptainId());
+
+                if ($hasOrders === OrderResultConstant::CAPTAIN_HAS_ORDER_WITH_ON_WAY_TO_PICK_ORDER_STATUS_CONST) {
+                    return OrderResultConstant::CAPTAIN_HAS_ORDER_WITH_ON_WAY_TO_PICK_ORDER_STATUS_CONST;
+                }
             }
         }
 
@@ -649,19 +629,16 @@ class OrderService
         if ($order) {
             if ($order->getState() === OrderStateConstant::ORDER_STATE_CANCEL) {
                 return OrderStateConstant::ORDER_STATE_CANCEL;
-            }
 
-            if ($order->getIsHide() === OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE) {
+            } elseif ($order->getIsHide() === OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE) {
                 return OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE;
-            }
 
-            if ($order->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
+            } elseif ($order->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
                 $this->createOrderChatRoomOrUpdateCurrent($order);
                 // update the distance between the captain and the branch of the store
                 $this->updateCaptainToStoreBranchDistanceByOrderId($order->getId(), $request->getCaptainToStoreBranchDistance());
-            }
 
-            if ($order->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
+            } elseif ($order->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
                 //Save the price of the order in cash in case the captain does not pay the store
                 if ($this->checkCashOrderCostPaidToStoreOrNotByOrderEntity($order)) {
                     $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($order, OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $order->getOrderCost());
@@ -678,21 +655,17 @@ class OrderService
                 $this->handleUpdatingStoreSubscriptionCost($order->getStoreOwner()->getId(), $order->getCreatedAt(),
                     SubscriptionConstant::OPERATION_TYPE_ADDITION, $order->getDeliveryCost());
             }
-
             // save log of the action on order
             $this->orderLogService->createOrderLogMessage($order, $request->getCaptainId()->getCaptainId(), OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST,
                 OrderLogActionTypeConstant::UPDATE_ORDER_STATE_BY_CAPTAIN_ACTION_CONST, [], null,
                 null);
-
             //create Notification Local for store
             $this->notificationLocalService->createNotificationLocalForOrderState($order->getStoreOwner()->getStoreOwnerId(),
                 NotificationConstant::STATE_TITLE, $order->getState(), NotificationConstant::STORE, $order->getId(),
                 $order->getCaptainId()->getId());
-
             //create Notification Local for captain
             $this->notificationLocalService->createNotificationLocalForOrderState($order->getCaptainId()->getCaptainId(),
                 NotificationConstant::STATE_TITLE, $order->getState(), NotificationConstant::CAPTAIN, $order->getId());
-
 //            // create dashboard local notification
 //            $this->createDashboardLocalNotificationByCaptain(DashboardLocalNotificationTitleConstant::UPDATE_ORDER_STATE_BY_CAPTAIN_TITLE_CONST,
 //                ["text" => DashboardLocalNotificationMessageConstant::UPDATE_ORDER_STATE_BY_CAPTAIN_TEXT_CONST.$order->getId()], null, $order->getId());
@@ -702,24 +675,21 @@ class OrderService
                 $this->notificationLocalService->createNotificationLocalForOrderState($order->getBidDetailsEntity()->getSupplierProfile()->getUser()->getId(),
                     NotificationConstant::STATE_TITLE, $order->getState(), $order->getId(), NotificationConstant::SUPPLIER);
             }
-
             //create order log
             $this->orderTimeLineService->createOrderLogsRequest($order);
             //create firebase notification to store
             try {
-                $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(), $order->getId(), $order->getState(), NotificationConstant::STORE);
+                $this->notificationFirebaseService->notificationOrderStateForUser($order->getStoreOwner()->getStoreOwnerId(),
+                    $order->getId(), $order->getState(), NotificationConstant::STORE);
+                // create firebase notification to captain
+                if ($order->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
+                    $this->notificationFirebaseService->notificationOrderStateForUser($order->getCaptainId()->getCaptainId(),
+                        $order->getId(), $order->getState(), NotificationConstant::CAPTAIN);
+                }
+
             } catch (\Exception $e) {
                 error_log($e);
             }
-            // create firebase notification to captain
-             try {
-                 if ($order->getState() === OrderStateConstant::ORDER_STATE_ON_WAY) {
-                     $this->notificationFirebaseService->notificationOrderStateForUser($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getState(), NotificationConstant::CAPTAIN);
-                 }
-
-             } catch (\Exception $e){
-                  error_log($e);
-              }
         }
 
         return $this->autoMapping->map(OrderEntity::class, OrderUpdateByCaptainResponse::class, $order);
@@ -728,7 +698,6 @@ class OrderService
     public function getUsedAs($usedAs): string
     {
         if ($usedAs === ChatRoomConstant::CAPTAIN_STORE_ENQUIRE) {
-
             return ChatRoomConstant::CHAT_ENQUIRE_USE;
         }
 
@@ -786,12 +755,10 @@ class OrderService
         if ($order) {
             // create order log in order time line
             $this->orderTimeLineService->createOrderLogsRequest($order);
-
             // save log of the action on order
             $this->orderLogService->createOrderLogMessage($order, $order->getStoreOwner()->getStoreOwnerId(), OrderLogCreatedByUserTypeConstant::STORE_OWNER_USER_TYPE_CONST,
                 OrderLogActionTypeConstant::CONFIRM_CAPTAIN_ARRIVAL_BY_STORE_ACTION_CONST, [], null,
                 null);
-
             // send firebase notification to admin if isCaptainArrived = false
             if ($order->getIsCaptainArrived() === false) {
                 $this->notificationFirebaseService->notificationCaptainNotArrivedStoreToAdmin($order->getId());
@@ -2366,5 +2333,19 @@ class OrderService
     {
         return $this->captainFinancialDuesService->addHalfOrderValueToCaptainFinancialDue($captainUserId, $orderCreatedAt,
             $orderDistance);
+    }
+
+    /**
+     * Checks if captain has order/s with status = on way to pick order
+     */
+    public function hasCaptainOrderWithStatusOnWayToPickOrder(int $captainUserId): int
+    {
+        $orders = $this->orderManager->getOnWayToPickOrderByCaptainUserId($captainUserId);
+
+        if (count($orders) > 0) {
+            return OrderResultConstant::CAPTAIN_HAS_ORDER_WITH_ON_WAY_TO_PICK_ORDER_STATUS_CONST;
+        }
+
+        return OrderResultConstant::CAPTAIN_HAS_NOT_ORDER_WITH_ON_WAY_TO_PICK_ORDER_STATUS_CONST;
     }
 }
