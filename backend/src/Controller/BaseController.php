@@ -58,6 +58,7 @@ class BaseController extends AbstractController
     const ORDER_PENDING_STATE_CONST = ["order is in pending state", "9226"];
     const ORDER_STATE_NOT_CORRECT_CONST = ["order is in pending state", "9227"];
     const ORDER_STATE_NOT_PENDING_CONST = ["order is not in pending state", "9228"];
+    const CAPTAIN_HAS_ORDER_WITH_ON_WAY_TO_PICK_ORDER_STATUS_CONST = ["captain has on way to pick order/s", "9229"];
     // external delivery company criteria
     const EXTERNAL_DELIVERY_COMPANY_CRITERIA_NOT_FOUND_CONST = ["external delivery company criteria not found", "9250"];
     // error users

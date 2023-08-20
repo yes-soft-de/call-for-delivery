@@ -3077,4 +3077,28 @@ class OrderEntityRepository extends ServiceEntityRepository
 
         return $query->getQuery()->getResult();
     }
+
+    /**
+     * Get orders according to captain and status = on way to pick order
+     */
+    public function getOnWayToPickOrderByCaptainUserId(int $captainUserId)
+    {
+        return $this->createQueryBuilder('orderEntity')
+
+            ->leftJoin(
+                CaptainEntity::class,
+                'captainEntity',
+                Join::WITH,
+                'captainEntity.id = orderEntity.captainId'
+            )
+
+            ->andWhere('captainEntity.captainId = :captainUserId')
+            ->setParameter('captainUserId', $captainUserId)
+
+            ->andWhere('orderEntity.state = :onWayToPickOrderStatus')
+            ->setParameter('onWayToPickOrderStatus', OrderStateConstant::ORDER_STATE_ON_WAY)
+
+            ->getQuery()
+            ->getResult();
+    }
 }

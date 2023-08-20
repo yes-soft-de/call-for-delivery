@@ -788,6 +788,10 @@ class OrderController extends BaseController
      *                   @OA\Schema(type="object",
      *                          @OA\Property(type="string", property="status_code", description="9223"),
      *                          @OA\Property(type="string", property="msg")
+     *                   ),
+     *                   @OA\Schema(type="object",
+     *                          @OA\Property(type="string", property="status_code", description="9229"),
+     *                          @OA\Property(type="string", property="msg")
      *                   )
      *              }
      *      )
@@ -815,44 +819,38 @@ class OrderController extends BaseController
 
         if ($response === CaptainConstant::CAPTAIN_PROFILE_NOT_COMPLETED) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::PROFILE_NOT_COMPLETED);
-        }
 
-        if ($response === CaptainConstant::CAPTAIN_INACTIVE) {
+        } elseif ($response === CaptainConstant::CAPTAIN_INACTIVE) {
            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_CAPTAIN_INACTIVE);
-        }
- 
-        if ($response === CaptainConstant::ERROR_CAPTAIN_ONLINE_FALSE) {
+
+        } elseif ($response === CaptainConstant::ERROR_CAPTAIN_ONLINE_FALSE) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_CAPTAIN_ONLINE_FALSE);
-        }
- 
-        if ($response === CaptainFinancialSystem::FINANCIAL_SYSTEM_INACTIVE) {
+
+        } elseif ($response === CaptainFinancialSystem::FINANCIAL_SYSTEM_INACTIVE) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_SYSTEM_FINANCIAL_INACTIVE);
-        }
 
-        if($response === SubscriptionConstant::CARS_FINISHED) {
+        } elseif ($response === SubscriptionConstant::CARS_FINISHED) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAN_NOT_ACCEPTED_ORDER);
-        }
 
-        if ($response === OrderResultConstant::ORDER_ALREADY_IS_BEING_ACCEPTED) {
+        } elseif ($response === OrderResultConstant::ORDER_ALREADY_IS_BEING_ACCEPTED) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_ALREADY_ACCEPTED_BY_CAPTAIN);
-        }
 
-        if ($response === OrderStateConstant::ORDER_STATE_CANCEL) {
+        } elseif ($response === OrderStateConstant::ORDER_STATE_CANCEL) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_CANCEL);
-        }
 
-        if ($response === OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE) {
+        } elseif ($response === OrderIsHideConstant::ORDER_HIDE_EXCEEDING_DELIVERED_DATE) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_HIDE);
-        }
 
-        if ($response === OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE) {
+        } elseif ($response === OrderResultConstant::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE) {
             return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_RECEIVED_ORDER_FOR_THIS_STORE);
+
+        } elseif ($response === OrderResultConstant::ORDER_UPDATE_STATE_NOT_ALLOWED_DUE_TO_SHORT_TIME_CONST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_UPDATE_STATE_BY_CAPTAIN_BEFORE_TIME);
+
+        } elseif ($response === OrderResultConstant::CAPTAIN_HAS_ORDER_WITH_ON_WAY_TO_PICK_ORDER_STATUS_CONST) {
+            return $this->response(MainErrorConstant::ERROR_MSG, self::CAPTAIN_HAS_ORDER_WITH_ON_WAY_TO_PICK_ORDER_STATUS_CONST);
         }
 
-        if ($response === OrderResultConstant::ORDER_UPDATE_STATE_NOT_ALLOWED_DUE_TO_SHORT_TIME_CONST) {
-            return $this->response(MainErrorConstant::ERROR_MSG, self::ERROR_ORDER_UPDATE_STATE_BY_CAPTAIN_BEFORE_TIME);
-        }
-      
         return $this->response($response, self::UPDATE);
     }
 
