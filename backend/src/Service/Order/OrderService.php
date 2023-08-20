@@ -616,11 +616,11 @@ class OrderService
                     }
                 }
                 // Make sure that the status of each order (not delivered yet) with the captain is at least 'in store'
-                $hasOrders = $this->hasCaptainOrderWithStatusOnWayToPickOrder($request->getCaptainId());
-
-                if ($hasOrders === OrderResultConstant::CAPTAIN_HAS_ORDER_WITH_ON_WAY_TO_PICK_ORDER_STATUS_CONST) {
-                    return OrderResultConstant::CAPTAIN_HAS_ORDER_WITH_ON_WAY_TO_PICK_ORDER_STATUS_CONST;
-                }
+//                $hasOrders = $this->hasCaptainOrderWithStatusOnWayToPickOrder($request->getCaptainId());
+//
+//                if ($hasOrders === OrderResultConstant::CAPTAIN_HAS_ORDER_WITH_ON_WAY_TO_PICK_ORDER_STATUS_CONST) {
+//                    return OrderResultConstant::CAPTAIN_HAS_ORDER_WITH_ON_WAY_TO_PICK_ORDER_STATUS_CONST;
+//                }
             }
         }
 
@@ -1808,6 +1808,12 @@ class OrderService
             $newDate, $minuets);
     }
 
+    public function checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanSpecificSeconds(\DateTimeInterface $oldDate, DateTime $newDate, int $minuets): bool
+    {
+        return $this->dateFactoryService->checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanSpecificSeconds($oldDate,
+            $newDate, $minuets);
+    }
+
     public function checkIfNormalOrderStateUpdateBeforeSpecificTimeForCaptain(int $orderId, int $captainUserId, string $nextOrderState): bool|int
     {
         // Get the creation time of the record of last order state
@@ -1819,14 +1825,17 @@ class OrderService
         }
 
         // Check date according to order state
-        if ($nextOrderState === OrderStateConstant::ORDER_STATE_IN_STORE) {
-            $overdueTime = $this->checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanSpecificMinutes($createdAtResult,
-                new DateTime('now'), OrderUpdateStateConstant::TWO_MINUETS_TIME_CONST);
+//        if ($nextOrderState === OrderStateConstant::ORDER_STATE_IN_STORE) {
+//            $overdueTime = $this->checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanSpecificMinutes($createdAtResult,
+//                new DateTime('now'), OrderUpdateStateConstant::TWO_MINUETS_TIME_CONST);
+//
+//        } else {
+//            $overdueTime = $this->checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanSpecificMinutes($createdAtResult,
+//                new DateTime('now'), OrderUpdateStateConstant::ONE_MINUETS_TIME_CONST);
+//        }
 
-        } else {
-            $overdueTime = $this->checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanSpecificMinutes($createdAtResult,
-                new DateTime('now'), OrderUpdateStateConstant::ONE_MINUETS_TIME_CONST);
-        }
+        $overdueTime = $this->checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanSpecificSeconds($createdAtResult,
+            new DateTime('now'), OrderUpdateStateConstant::THIRTEEN_SECONDS_TIME_CONST);
 
         if ($overdueTime === true) {
             // 1. Send firebase notification to admin

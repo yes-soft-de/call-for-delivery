@@ -8,4 +8,6 @@ final class OrderUpdateStateConstant
     const ONE_MINUETS_TIME_CONST = 1;
 
     const TWO_MINUETS_TIME_CONST = 2;
+
+    const THIRTEEN_SECONDS_TIME_CONST = 30;
 }
