@@ -15,18 +15,10 @@ class ChatModel {
       msg = jsonData['msg'].toString();
     }
     if (jsonData['sentDate'] is String) {
-      try {
-        sentDate = DateTime.parse(jsonData['sentDate']);
-      } catch (e) {
-        sentDate = DateTime.fromMillisecondsSinceEpoch(
-            int.tryParse(jsonData['sentDate'])! * 1000);
-      }
+      sentDate = DateTime.tryParse(jsonData['sentDate']);
     }
     if (jsonData['sentDate'] is int) {
-      DateTime.fromMillisecondsSinceEpoch(jsonData['sentDate'] * 1000);
-    }
-    if (jsonData['sentDate'] is DateTime) {
-      sentDate = jsonData['sentDate'];
+      sentDate = DateTime.fromMillisecondsSinceEpoch((jsonData['sentDate'] ?? 1));
     }
   }
 

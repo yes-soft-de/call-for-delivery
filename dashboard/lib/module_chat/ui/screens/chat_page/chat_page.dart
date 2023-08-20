@@ -306,8 +306,7 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
   Future<void> buildMessagesList(List<ChatModel> chatList) async {
     List<Widget> newMessagesList = [];
     String username = widget._authService.username;
-    lastSeenIndex = widget._chatHiveHelper.getChatIndex(chatRoomId, username);
-    bool newMessages =
+    lastSeenIndex = widget._chatHiveHelper.getChatIndex(chatRoomId, username);    bool newMessages =
         lastSeenIndex != null ? (lastSeenIndex! < chatList.length) : false;
     Map<String, List<ChatModel>> messages = groupBy(chatList,
         (ChatModel message) => DateFormat('d MMM y').format(message.sentDate));
@@ -330,7 +329,7 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
                 : isDateYesterday(date, 'd MMM y')
                     ? S.current.yesterday
                     : date,
-            style: Theme.of(context).textTheme.subtitle1?.copyWith(
+            style: Theme.of(context).textTheme.titleMedium?.copyWith(
                 color: Theme.of(context).disabledColor,
                 fontWeight: FontWeight.bold),
           ),
@@ -391,7 +390,7 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
         padding: const EdgeInsets.only(top: 16.0, bottom: 16),
         child: Container(
           width: double.maxFinite,
-          color: Theme.of(context).backgroundColor,
+          color: Theme.of(context).colorScheme.background,
           child: Padding(
             padding: const EdgeInsets.all(8),
             child: Container(
