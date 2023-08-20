@@ -1352,6 +1352,8 @@ class SubscriptionService
                 $response['deliveredOrdersCostsSum'] += $order['deliveryCost'];
             }
 
+            $response['deliveredOrdersCostsSum'] = round($response['deliveredOrdersCostsSum'], 2);
+
             if ($response['deliveredOrdersCostsSum'] >= $response['subscriptionCostLimit']) {
                 $response['hasToPay'] = true;
             }
