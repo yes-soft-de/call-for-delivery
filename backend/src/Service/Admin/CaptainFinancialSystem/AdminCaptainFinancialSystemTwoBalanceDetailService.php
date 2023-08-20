@@ -111,7 +111,7 @@ class AdminCaptainFinancialSystemTwoBalanceDetailService
                 $item['financialDues'] = round($item['salary'] + $item['monthCompensation'] + $item['bounce'], 1);
             }
             else {
-                $item['financialDues'] = round(($item['countOrdersCompleted'] - $item['countOverOrdersThanRequired']) * CaptainFinancialSystem::TARGET_FAILED_SALARY + $item['bounce'], 2);  
+                $item['financialDues'] = round(($item['countOrdersCompleted'] - $item['countOverOrdersThanRequired']) * CaptainFinancialSystem::TARGET_FAILED_SALARY + $item['bounce'], 1);
             }
 
             $total = $sumPayments - round($item['financialDues'], 1);
