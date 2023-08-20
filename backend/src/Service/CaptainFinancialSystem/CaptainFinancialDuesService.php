@@ -178,7 +178,7 @@ class CaptainFinancialDuesService
         
         foreach ($captainFinancialDues as $captainFinancialDue) {
             
-            $captainFinancialDue['amount'] = round($captainFinancialDue['amount'], 2);
+            $captainFinancialDue['amount'] = round($captainFinancialDue['amount'], 1);
             $captainFinancialDue['paymentsFromCompany'] = $this->captainPaymentService->getPaymentsByCaptainFinancialDues($captainFinancialDue['id']);
           
             $captainFinancialDue['total'] = $this->getCaptainFinancialTotal($captainFinancialDue['id']);
@@ -205,9 +205,9 @@ class CaptainFinancialDuesService
             $captainFinancialDues['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_YES;    
         }
        
-        $captainFinancialDues['sumCaptainFinancialDues'] =  round($sumCaptainFinancialDues['sumCaptainFinancialDues'], 2);
+        $captainFinancialDues['sumCaptainFinancialDues'] =  round($sumCaptainFinancialDues['sumCaptainFinancialDues'], 1);
         $captainFinancialDues['sumPaymentsToCaptain'] = $sumPaymentsToCaptain['sumPaymentsToCaptain'];
-        $captainFinancialDues['total'] = abs(round($total,2));
+        $captainFinancialDues['total'] = abs(round($total,1));
 
         return $captainFinancialDues;
     }
@@ -217,23 +217,26 @@ class CaptainFinancialDuesService
         return $this->captainFinancialDuesManager->getLatestCaptainFinancialDues($captainId);
     }
 
-    // Check the end date of the financial cycle
-    public function updateCaptainFinancialSystemDetail(int $userId)      
-    {    
-       $date = $this->captainFinancialSystemDateService->getCurrentMonthDate();
-
-       $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByEndDate($userId, $date);
-
-       if($captainFinancialDues) {
-            if(new datetime($captainFinancialDues['endDate']->format('y-m-d 23:59:59')) < new datetime('now')) {
-               $this->captainFinancialDuesManager->updateCaptainFinancialDuesStateToInactive($captainFinancialDues['id']);
-              
-            //    return $this->captainFinancialSystemDetailServiceTwo->updateCaptainFinancialSystemDetail(0, $userId);
-            }
-       }
-
-       return null;
-    }
+    /**
+     * Check the end date of the financial cycle
+     * currently we don't need it, we may do in the future
+     */
+//    public function updateCaptainFinancialSystemDetail(int $userId)
+//    {
+//       $date = $this->captainFinancialSystemDateService->getCurrentMonthDate();
+//
+//       $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByEndDate($userId, $date);
+//
+//       if($captainFinancialDues) {
+//            if(new datetime($captainFinancialDues['endDate']->format('y-m-d 23:59:59')) < new datetime('now')) {
+//               $this->captainFinancialDuesManager->updateCaptainFinancialDuesStateToInactive($captainFinancialDues['id']);
+//
+//            //    return $this->captainFinancialSystemDetailServiceTwo->updateCaptainFinancialSystemDetail(0, $userId);
+//            }
+//       }
+//
+//       return null;
+//    }
 
     public function getFinancialDuesByCaptainId(int $captainId): array
     {
@@ -259,8 +262,6 @@ class CaptainFinancialDuesService
                 $ordersNotBelongsToFinancialDues[] = $order;
             }
         }
-        // Just for testing, un-comment the following line in order to check if there are orders meeting the conditions
-        // dd($ordersNotBelongsToFinancialDues);
 
         // Second, group orders according to captains
         $items = $this->makeOrdersIntoCaptainsGroups($ordersNotBelongsToFinancialDues);
@@ -320,9 +321,9 @@ class CaptainFinancialDuesService
      {
          $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailCurrent($userId);
         
-         if($financialSystemDetail) { 
-            
+         if ($financialSystemDetail) {
             $captainFinancialDues = $this->captainFinancialDuesManager->getCaptainFinancialDuesByUserIDAndOrderIdForFixByUserID($userId, $orderId, $createdDate);    
+
             if(! $captainFinancialDues) {
                 // Create Captain Financial Dues
                 return CaptainFinancialDues::FINANCIAL_NOT_FOUND;
@@ -332,7 +333,7 @@ class CaptainFinancialDuesService
             
              $countWorkdays = $this->captainFinancialSystemDateService->subtractTwoDatesTest(new DateTime ($date ['fromDate']), new DateTime($date['toDate']));
  
-             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
+             if ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_ONE) {
                 //Calculation of financial dues
                  // *** Habib code ***
                  //$financialDues = $this->captainFinancialSystemOneBalanceDetailService->getFinancialDuesWithSystemOne($financialSystemDetail, $financialSystemDetail['captainId'], $date, $countWorkdays);
@@ -347,7 +348,7 @@ class CaptainFinancialDuesService
                 return $this->updateCaptainFinancialDuesAmount($captainFinancialDues, $financialDues);
              }
  
-             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
+             if ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_TWO) {
                  // *** Habib code ***
                  //Calculation of financial dues
                  // $financialDues = $this->captainFinancialSystemTwoBalanceDetailService->getFinancialDuesWithSystemTwo($financialSystemDetail, $financialSystemDetail['captainId'], $date, $countWorkdays);
@@ -361,7 +362,7 @@ class CaptainFinancialDuesService
                 return $this->updateCaptainFinancialDuesAmount($captainFinancialDues, $financialDues);
              }
  
-             if($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_THREE) {
+             if ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_SYSTEM_THREE) {
                
                  $choseFinancialSystemDetails = $this->captainFinancialSystemAccordingOnOrderService->getCaptainFinancialSystemAccordingOnOrder();
 
@@ -722,20 +723,17 @@ class CaptainFinancialDuesService
      * Add or Subtract half order/full order value to/from CaptainOrderFinancial
      */
     public function addOrSubtractCaptainOrderFinancial(int $orderId, int $captainUserId, int $captainProfileId, int $operationType, bool $halfOrderValue): CaptainOrderFinancialEntity|int|string
-    {//dd($orderId, $operationType, $halfOrderValue);
+    {
         $orderEntity = $this->entityManager->getRepository(OrderEntity::class)->findOneBy(['id' => $orderId]);
 
         if ($orderEntity) {
-            //dd($orderId, $operationType, $halfOrderValue, $orderEntity);
                 $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailCurrent($captainUserId);
 
-                //dd($orderId, $operationType, $halfOrderValue, $financialSystemDetail);
                 if ($financialSystemDetail) {
                     if (count($financialSystemDetail) > 0) {
                         $captainFinancialDues = $this->getCaptainFinancialDueByCaptainProfileIdAndOrderCreationDate($captainProfileId,
                             $orderEntity->getCreatedAt());
 
-                        //dd($orderId, $operationType, $halfOrderValue, $captainFinancialDues);
                         if ($captainFinancialDues !== CaptainFinancialDues::FINANCIAL_NOT_FOUND) {
                             if ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST) {
                                 $financialDues = $this->captainFinancialDefaultSystemGetBalanceService->calculateCaptainDues($financialSystemDetail,
@@ -743,7 +741,7 @@ class CaptainFinancialDuesService
 
                                 $captainOrderFinancial = $this->entityManager->getRepository(CaptainOrderFinancialEntity::class)
                                     ->findOneBy(['orderId' => $orderId]);
-                                //dd($orderId, $operationType, $halfOrderValue, $captainOrderFinancial);
+
                                 if (! $captainOrderFinancial) {
                                     // order value not exist, we want to create it
                                     if ($operationType === CaptainFinancialSystem::OPERATION_TYPE_ADDITION_CONST) {
@@ -757,7 +755,7 @@ class CaptainFinancialDuesService
                                         return $this->createCaptainOrderFinancial($orderId, $financialDues, $captainFinancialDues);
                                     }
 
-                                } else {//dd($operationType, $halfOrderValue);
+                                } else {
                                     // order value exists, update it
                                     if ($operationType === CaptainFinancialSystem::OPERATION_TYPE_SUBTRACTION_CONST) {
                                         if ($halfOrderValue === CaptainFinancialSystem::HALF_ORDER_VALUE_CONST) {
@@ -770,7 +768,7 @@ class CaptainFinancialDuesService
                                             $this->entityManager->flush();
 
                                             return $captainOrderFinancial;
-                                        }//dd($orderId);
+                                        }
                                         // subtract full order value by updating it
                                         $captainOrderFinancial->setProfit(0.0);
                                         $captainOrderFinancial->setCashAmount($financialDues['amountForStore']);

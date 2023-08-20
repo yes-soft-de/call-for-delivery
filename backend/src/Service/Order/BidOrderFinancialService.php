@@ -35,7 +35,7 @@ class BidOrderFinancialService
                 if ($priceOffer->getPriceOfferStatus() === PriceOfferStatusConstant::PRICE_OFFER_CONFIRMED_STATUS) {
                     $result = $priceOffer->getDeliveryCar()->getDeliveryCost() * $priceOffer->getTransportationCount() + $storeProfitMargin + $priceOffer->getPriceOfferValue();
 
-                    return round($result, 2);
+                    return round($result, 1);
                 }
             }
         }

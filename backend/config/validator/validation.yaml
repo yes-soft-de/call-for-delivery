@@ -1041,3 +1041,8 @@ App\Request\CaptainFinancialDemand\CaptainFinancialDemandCreateRequest:
     properties:
         captain:
             - NotBlank: ~
+
+App\Request\Admin\StreetLine\OrderInStreetLineCancelByAdminRequest:
+    properties:
+        orderId:
+            - NotBlank: ~

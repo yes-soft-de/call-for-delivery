@@ -231,4 +231,31 @@ class DateFactoryService
 
         return new DateTime($dateTime->format('Y-m-d 00:00:00'));
     }
+
+    public function checkIfDifferenceBetweenDateTimeInterfaceAndDateTimeIsMoreThanSpecificSeconds(DateTimeInterface $oldDateInterface, DateTime $newDate, int $seconds): bool
+    {
+        $oldDate = DateTime::createFromInterface($oldDateInterface);
+
+        $interval = date_diff($oldDate, $newDate);
+
+        $different_days = $interval->format('%d');
+
+        if ($different_days == 0) {
+            $different_hours = $interval->format('%h');
+
+            if ($different_hours <= 1) {
+                $different_minutes = $interval->format('%i');
+
+                if ($different_minutes < 1) {
+                    $different_seconds = $interval->format('%s');
+
+                    if ($different_seconds < $seconds) {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
 }

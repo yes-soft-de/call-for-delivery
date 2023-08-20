@@ -289,9 +289,13 @@ class AdminOrderService
 
             if ($externallyDeliveredOrders !== ExternallyDeliveredOrderConstant::EXTERNALLY_DELIVERED_ORDER_NOT_EXIST_CONST) {
                 foreach ($externallyDeliveredOrders as $key => $value) {
-                    $order['externalDeliveredOrders'][$key]['id'] = $value->getId();
-                    $order['externalDeliveredOrders'][$key]['companyName'] = $value->getExternalDeliveryCompany()->getCompanyName();
-                    $order['externalDeliveredOrders'][$key]['externalOrderId'] = $value->getExternalOrderId();
+                    if (($value->getStatus() !== MrsoolCompanyConstant::CANCELED_ORDER_STATUS_CONST)
+                        && ($value->getStatus() !== StreetLineCompanyConstant::ORDER_CANCELLED_STATUS_CONST)) {
+                        $order['externalDeliveredOrders'][0]['id'] = $value->getId();
+                        $order['externalDeliveredOrders'][0]['companyName'] = $value->getExternalDeliveryCompany()->getCompanyName();
+                        $order['externalDeliveredOrders'][0]['externalOrderId'] = $value->getExternalOrderId();
+                        $order['externalDeliveredOrders'][0]['externalCompanyId'] = $value->getExternalDeliveryCompany()->getId();
+                    }
                 }
             }
 
@@ -656,15 +660,17 @@ class AdminOrderService
                 $externalOrdersArrayLength = count($externallyDeliveredOrders);
 
                 if ($externalOrdersArrayLength > 0) {
-                    $lastOrder = $externallyDeliveredOrders[$externalOrdersArrayLength-1];
-
-                    //foreach ($externallyDeliveredOrders as $key2 => $value2) {
                     $response[$key]->externalDeliveredOrders = [];
 
-                    $response[$key]->externalDeliveredOrders[0]['id'] = $lastOrder->getId();
-                    $response[$key]->externalDeliveredOrders[0]['companyName'] = $lastOrder->getExternalDeliveryCompany()->getCompanyName();
-                    $response[$key]->externalDeliveredOrders[0]['externalOrderId'] = $lastOrder->getExternalOrderId();
-                    //}
+                    $lastOrder = $externallyDeliveredOrders[$externalOrdersArrayLength-1];
+
+                    if (($lastOrder->getStatus() !== MrsoolCompanyConstant::CANCELED_ORDER_STATUS_CONST)
+                        && ($lastOrder->getStatus() !== StreetLineCompanyConstant::ORDER_CANCELLED_STATUS_CONST)) {
+                        $response[$key]->externalDeliveredOrders[0]['id'] = $lastOrder->getId();
+                        $response[$key]->externalDeliveredOrders[0]['companyName'] = $lastOrder->getExternalDeliveryCompany()->getCompanyName();
+                        $response[$key]->externalDeliveredOrders[0]['externalOrderId'] = $lastOrder->getExternalOrderId();
+                        $response[$key]->externalDeliveredOrders[0]['externalCompanyId'] = $lastOrder->getExternalDeliveryCompany()->getId();
+                    }
                 }
             }
         }
@@ -1426,27 +1432,6 @@ class AdminOrderService
     {
         return $this->adminOrderManager->filterOrdersWhoseHasNotDistanceHasCalculated($request);  
     }
-     
-//    public function updateStoreBranchToClientDistanceByAdmin(OrderStoreBranchToClientDistanceByAdminRequest $request, int $userId): OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse
-//    {
-//        $order = $this->adminOrderManager->updateStoreBranchToClientDistanceByAdmin($request);
-//
-//        if ($order) {
-//            if ($order->getCaptainId()?->getCaptainId()) {
-//                $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
-//
-//                // Create or update daily captain financial amount
-//                $this->createOrUpdateCaptainFinancialDaily($order->getId());
-//            }
-//
-//            // save log of the action on order
-//            $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
-//                OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_BY_ADMIN_ACTION_CONST, [], null,
-//                null);
-//        }
-//
-//        return $this->autoMapping->map(OrderEntity::class, OrderStoreToBranchDistanceAndDestinationUpdateByAdminResponse::class, $order);
-//    }
 
     public function createSubOrderByAdmin(SubOrderCreateByAdminRequest $request, int $userId): string|OrderCreateByAdminResponse
     {
@@ -1895,21 +1880,10 @@ class AdminOrderService
         if (! $order) {
             return $order;
         }
-
-        ///todo if captain financial profits calculated well then delete following IF block
-        // Re-calculate the financial dues of the captain who has the order (if exists)
-//        if ($order->getCaptainId()?->getCaptainId()) {
-//            $this->captainFinancialDuesService->captainFinancialDues($order->getCaptainId()->getCaptainId(), $order->getId(), $order->getCreatedAt());
-//
-//            // Create or update daily captain financial amount
-//            $this->createOrUpdateCaptainFinancialDaily($order->getId());
-//        }
-
         // save log of the action on order
         $this->orderLogService->createOrderLogMessage($order, $userId, OrderLogCreatedByUserTypeConstant::ADMIN_USER_TYPE_CONST,
             OrderLogActionTypeConstant::UPDATE_STORE_BRANCH_TO_CLIENT_DISTANCE_VIA_ADDING_DISTANCE_BY_ADMIN_ACTION_CONST,
             [], null, null);
-
         //return $this->autoMapping->map(OrderEntity::class, OrderDestinationUpdateByAdminResponse::class, $order);
         return $order;
     }

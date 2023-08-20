@@ -19,7 +19,7 @@ class OrderFinancialValueAccordingToSystemOneCalculationService
                 return $compensationForEveryOrder;
 
             } elseif ($orderDistance > CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER) {
-                return round(($compensationForEveryOrder * 2), 2);
+                return round(($compensationForEveryOrder * 2), 1);
             }
         }
 

@@ -69,7 +69,7 @@ class PriceOfferService
             if ($response[$key]->transportationCount !== null && $response[$key]->deliveryCost !== null) {
                 // Calculate the total delivery cost of a price offer
                 // Total Delivery Cost = the delivery cost of one transportation of a specific car X transportation count
-                $response[$key]->totalDeliveryCost = round($response[$key]->transportationCount * $response[$key]->deliveryCost, 2);
+                $response[$key]->totalDeliveryCost = round($response[$key]->transportationCount * $response[$key]->deliveryCost, 1);
             }
 
             // set the store profit margin

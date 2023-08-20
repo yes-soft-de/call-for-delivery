@@ -3,6 +3,7 @@
 namespace App\Service\StoreOwner;
 
 use App\AutoMapping;
+use App\Constant\Notification\NotificationFirebaseConstant;
 use App\Constant\StoreOwner\StoreProfileConstant;
 use App\Constant\User\UserReturnResultConstant;
 use App\Entity\StoreOwnerProfileEntity;
@@ -20,6 +21,7 @@ use App\Request\User\UserRegisterRequest;
 use App\Response\StoreOwnerBranch\StoreOwnerBranchResponse;
 use App\Response\User\UserRegisterResponse;
 use App\Manager\StoreOwner\StoreOwnerProfileManager;
+use App\Service\Notification\NotificationFirebaseService;
 use App\Service\StoreOwnerBranch\StoreOwnerBranchService;
 use App\Service\Verification\VerificationService;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -33,7 +35,8 @@ class StoreOwnerProfileService
         private StoreOwnerProfileManager $storeOwnerProfileManager,
         ParameterBagInterface $params,
         private VerificationService $verificationService,
-        private StoreOwnerBranchService $storeOwnerBranchService
+        private StoreOwnerBranchService $storeOwnerBranchService,
+        private NotificationFirebaseService $notificationFirebaseService
     )
     {
         $this->params = $params->get('upload_base_url') . '/';
@@ -110,15 +113,17 @@ class StoreOwnerProfileService
                 $branchCreateResult = $this->createStoreOwnerBranch($request, $item);
 
                 if ($branchCreateResult) {
-                    //if ($branchCreateResult instanceof StoreOwnerBranchResponse) {
-                        // update completeAccountStatus to requiredFreeSubscription
-                        $completeAccountStatus = $this->getCompleteAccountStatusByStoreOwnerId($request->getUserId());
+                    // update completeAccountStatus to requiredFreeSubscription
+                    $completeAccountStatus = $this->getCompleteAccountStatusByStoreOwnerId($request->getUserId());
 
-                        if ($completeAccountStatus['completeAccountStatus'] === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED) {
-                            $this->updateStoreOwnerProfileCompleteAccountStatusAfterBranchCreation($request->getUserId(),
-                                StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_BEFORE_FREE_SUBSCRIPTION_CONST);
-                        }
-                    //}
+                    if ($completeAccountStatus['completeAccountStatus'] === StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_BRANCH_CREATED) {
+                        $this->updateStoreOwnerProfileCompleteAccountStatusAfterBranchCreation($request->getUserId(),
+                            StoreProfileConstant::COMPLETE_ACCOUNT_STATUS_BEFORE_FREE_SUBSCRIPTION_CONST);
+                    }
+                    // Send notifications to admin
+                    // 1 Firebase notification
+                    $this->sendNotificationToAllAdmins(NotificationFirebaseConstant::NEW_STORE_REGISTRATION_TEXT_CONST
+                        .$branchCreateResult->name);
                 }
             }
         }
@@ -237,5 +242,13 @@ class StoreOwnerProfileService
     public function deleteStoreOwnerProfileByStoreOwnerId(int $storeOwnerId): ?StoreOwnerProfileEntity
     {
         return $this->storeOwnerProfileManager->deleteStoreOwnerProfileByStoreOwnerId($storeOwnerId);
+    }
+
+    /**
+     * Send firebase notification to all admins (with text parameter only)
+     */
+    public function sendNotificationToAllAdmins(string $text)
+    {
+        return $this->notificationFirebaseService->sendNotificationToAllAdmins($text);
     }
 }

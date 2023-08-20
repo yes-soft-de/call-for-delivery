@@ -832,4 +832,12 @@ class OrderManager
 
         return $orderEntity;
     }
+
+    /**
+     * Get orders according to captain and status = on way to pick order
+     */
+    public function getOnWayToPickOrderByCaptainUserId(int $captainUserId)
+    {
+        return $this->orderRepository->getOnWayToPickOrderByCaptainUserId($captainUserId);
+    }
 }

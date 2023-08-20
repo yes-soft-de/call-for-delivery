@@ -136,8 +136,10 @@ class ExternalOrderUpdateHandlerService
             || ($externalOrderStatus === StreetLineCompanyConstant::ORDER_UNASSIGNED_STATUS_CONST)) {
             $internalOrderStatus = OrderStateConstant::ORDER_STATE_PENDING;
 
-        } elseif (($externalOrderStatus === StreetLineCompanyConstant::ARRIVED_TO_PICKUP_STATUS_CONST)
-            || ($externalOrderStatus === StreetLineCompanyConstant::PENDING_ORDER_PREPARATION_STATUS_CONST)) {
+        } elseif ($externalOrderStatus === StreetLineCompanyConstant::PENDING_ORDER_PREPARATION_STATUS_CONST) {
+            $internalOrderStatus = OrderStateConstant::ORDER_STATE_ON_WAY;
+
+        } elseif ($externalOrderStatus === StreetLineCompanyConstant::ARRIVED_TO_PICKUP_STATUS_CONST) {
             $internalOrderStatus = OrderStateConstant::ORDER_STATE_IN_STORE;
 
         } elseif (($externalOrderStatus === StreetLineCompanyConstant::ORDER_PICKED_UP_STATUS_CONST)

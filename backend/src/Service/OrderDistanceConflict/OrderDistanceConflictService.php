@@ -11,6 +11,8 @@ use App\Constant\Notification\NotificationFirebaseConstant;
 use App\Constant\Order\OrderResultConstant;
 use App\Constant\Order\OrderStateConstant;
 use App\Constant\OrderDistanceConflict\OrderDistanceConflictResultConstant;
+use App\Constant\OrderLog\OrderLogActionTypeConstant;
+use App\Constant\OrderLog\OrderLogCreatedByUserTypeConstant;
 use App\Constant\StoreOrderDetails\StoreOrderDetailsConstant;
 use App\Entity\OrderDistanceConflictEntity;
 use App\Entity\OrderEntity;
@@ -21,6 +23,7 @@ use App\Service\Captain\CaptainGetService;
 use App\Service\Notification\DashboardLocalNotification\DashboardLocalNotificationService;
 use App\Service\Notification\NotificationFirebaseService;
 use App\Service\Order\OrderGetService;
+use App\Service\OrderLog\OrderLogService;
 use App\Service\StoreOrderDetails\StoreOrderDetailsGetService;
 
 class OrderDistanceConflictService
@@ -32,6 +35,7 @@ class OrderDistanceConflictService
         private StoreOrderDetailsGetService $storeOrderDetailsGetService,
         private DashboardLocalNotificationService $dashboardLocalNotificationService,
         private NotificationFirebaseService $notificationFirebaseService,
+        private OrderLogService $orderLogService,
         private OrderDistanceConflictManager $orderDistanceConflictManager
     )
     {
@@ -113,20 +117,16 @@ class OrderDistanceConflictService
         if ($orderEntity->getState() === OrderStateConstant::ORDER_STATE_CANCEL) {
             return OrderResultConstant::ORDER_ALREADY_BEING_CANCELLED;
         }
-
         // Second, check if captain had created an order distance conflict for the same order before.
         $orderDistanceConflict = $this->getOrderDistanceConflictByOrderId($request->getOrderId());
 
         if ($orderDistanceConflict !== OrderDistanceConflictResultConstant::ORDER_DISTANCE_CONFLICT_NOT_EXIST_CONST) {
             return OrderDistanceConflictResultConstant::ORDER_DISTANCE_ALREADY_EXIST_CONST;
         }
-
         // set order entity
         $request->setOrderId($orderEntity);
-
         // Set old distance
         $request->setOldDistance($orderEntity->getStoreBranchToClientDistance());
-
         // Get and set captain profile id
         $captainProfileId = $this->getCaptainProfileIdByCaptainUserId($captainUserId);
 
@@ -135,7 +135,6 @@ class OrderDistanceConflictService
         }
 
         $request->setConflictIssuedBy($captainProfileId);
-
         // Get and set old destination
         $orderDestination = $this->getNormalOrderDestinationByOrderId($orderEntity->getId());
 
@@ -146,8 +145,12 @@ class OrderDistanceConflictService
         $request->setOldDestination($orderDestination);
 
         $orderDistanceConflict = $this->orderDistanceConflictManager->createOrderDistanceConflictByCaptain($request);
-
-        // 7. Create notifications
+        // Save order log
+        $this->createOrderLogMessageByOrderEntityAndUser($orderDistanceConflict->getOrderId(), $captainUserId,
+            OrderLogCreatedByUserTypeConstant::CAPTAIN_USER_TYPE_CONST,
+            OrderLogActionTypeConstant::ORDER_DISTANCE_CONFLICT_CREATED_BY_CAPTAIN_ACTION_CONST,
+            ["orderDistanceConflictId" => $orderDistanceConflict->getId()]);
+        // Create notifications
         // Create local notification for admin
         $this->createDashboardLocalNotificationByCaptain(DashboardLocalNotificationTitleConstant::ORDER_DISTANCE_CONFLICT_CREATED_BY_CAPTAIN_TITLE_CONST,
             ["text" => DashboardLocalNotificationMessageConstant::ORDER_DISTANCE_CONFLICT_CREATED_BY_CAPTAIN_TEXT_CONST.$orderEntity->getId()],
@@ -158,5 +161,14 @@ class OrderDistanceConflictService
 
         return $this->autoMapping->map(OrderDistanceConflictEntity::class, OrderDistanceConflictCreateByCaptainResponse::class,
             $orderDistanceConflict);
+    }
+
+    /**
+     * Creates order log message by order entity, a specific user, user type, action, and other optional parameters
+     */
+    public function createOrderLogMessageByOrderEntityAndUser(OrderEntity $orderEntity, int $createdByUser, int $userType, int $action, array $details, int $storeOwnerBranchId = null, int $supplierProfileId = null)
+    {
+        $this->orderLogService->createOrderLogMessage($orderEntity, $createdByUser, $userType, $action, $details,
+            $storeOwnerBranchId, $supplierProfileId);
     }
 }
