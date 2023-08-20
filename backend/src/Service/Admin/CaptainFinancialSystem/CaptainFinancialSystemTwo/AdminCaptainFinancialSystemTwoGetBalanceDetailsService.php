@@ -157,7 +157,7 @@ class AdminCaptainFinancialSystemTwoGetBalanceDetailsService
             $financialSystemDetail['salary'], $financialSystemDetail['monthCompensation'], $balanceDetailsResponse['countOrdersCompleted'],
             $financialSystemDetail['countOrdersInMonth'], $financialSystemDetail['bounceMaxCountOrdersInMonth']);
 
-        $total = round(($sumPayments - $balanceDetailsResponse['financialDues']), 2);
+        $total = round(($sumPayments - $balanceDetailsResponse['financialDues']), 1);
 
         $balanceDetailsResponse['advancePayment'] = CaptainFinancialSystem::ADVANCED_PAYMENT_BALANCE_CONST;
 

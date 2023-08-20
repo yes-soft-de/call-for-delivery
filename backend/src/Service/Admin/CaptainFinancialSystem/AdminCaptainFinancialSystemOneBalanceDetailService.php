@@ -60,7 +60,7 @@ class AdminCaptainFinancialSystemOneBalanceDetailService
 
         $financialSystemDetail['countOrdersWithoutDistance'] = $countOrdersWithoutDistance;
 
-        $total = $sumPayments - round($financialSystemDetail['financialDues'], 2);
+        $total = $sumPayments - round($financialSystemDetail['financialDues'], 1);
        
         $financialSystemDetail['advancePayment'] = CaptainFinancialSystem::ADVANCED_PAYMENT_BALANCE_CONST;
         
@@ -68,7 +68,7 @@ class AdminCaptainFinancialSystemOneBalanceDetailService
             $financialSystemDetail['advancePayment'] = CaptainFinancialSystem::ADVANCED_PAYMENT_EXIST_CONST;
         }
 
-        $financialSystemDetail['total'] = abs(round($total, 2));
+        $financialSystemDetail['total'] = abs(round($total, 1));
         
         $financialSystemDetail['amountForStore'] = $amountForStore;
     

@@ -184,7 +184,7 @@ class AdminCaptainFinancialSystemOneGetBalanceDetailsService
             $financialSystemDetail['advancePayment'] = CaptainFinancialSystem::ADVANCED_PAYMENT_EXIST_CONST;
         }
 
-        $financialSystemDetail['total'] = abs(round($total, 2));
+        $financialSystemDetail['total'] = abs(round($total, 1));
 
         return $this->autoMapping->map('array', AdminCaptainFinancialSystemAccordingToCountOfHoursBalanceDetailResponse::class, $financialSystemDetail);
     }

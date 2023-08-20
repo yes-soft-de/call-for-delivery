@@ -178,7 +178,7 @@ class CaptainFinancialDuesService
         
         foreach ($captainFinancialDues as $captainFinancialDue) {
             
-            $captainFinancialDue['amount'] = round($captainFinancialDue['amount'], 2);
+            $captainFinancialDue['amount'] = round($captainFinancialDue['amount'], 1);
             $captainFinancialDue['paymentsFromCompany'] = $this->captainPaymentService->getPaymentsByCaptainFinancialDues($captainFinancialDue['id']);
           
             $captainFinancialDue['total'] = $this->getCaptainFinancialTotal($captainFinancialDue['id']);
@@ -205,9 +205,9 @@ class CaptainFinancialDuesService
             $captainFinancialDues['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_YES;    
         }
        
-        $captainFinancialDues['sumCaptainFinancialDues'] =  round($sumCaptainFinancialDues['sumCaptainFinancialDues'], 2);
+        $captainFinancialDues['sumCaptainFinancialDues'] =  round($sumCaptainFinancialDues['sumCaptainFinancialDues'], 1);
         $captainFinancialDues['sumPaymentsToCaptain'] = $sumPaymentsToCaptain['sumPaymentsToCaptain'];
-        $captainFinancialDues['total'] = abs(round($total,2));
+        $captainFinancialDues['total'] = abs(round($total,1));
 
         return $captainFinancialDues;
     }
