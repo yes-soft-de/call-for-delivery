@@ -260,7 +260,7 @@ class OrderDistanceConflictLoadedState extends States {
                           onPressed: () {
                             Navigator.pop(context);
                             var request = RefusedOrderDistanceConflictRequest(
-                              id: element.orderId,
+                              id: element.id,
                               adminNote: reason.text.trim(),
                             );
                             screenState.manager.refusedOrderDistanceConflict(
