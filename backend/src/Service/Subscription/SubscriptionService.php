@@ -874,7 +874,7 @@ class SubscriptionService
                     $item['orderDeliveryCost'] = $subscription['packageCost'];
 
                 } else {
-                    $item['orderDeliveryCost'] = round($subscription['packageCost'] / $subscription['packageOrderCount'], 2);
+                    $item['orderDeliveryCost'] = round($subscription['packageCost'] / $subscription['packageOrderCount'], 1);
                 }
 
                 $item['extraOrderDeliveryCost'] = ($item['extraDistance'] * $subscription['packageExtraCost']);
@@ -1352,7 +1352,7 @@ class SubscriptionService
                 $response['deliveredOrdersCostsSum'] += $order['deliveryCost'];
             }
 
-            $response['deliveredOrdersCostsSum'] = round($response['deliveredOrdersCostsSum'], 2);
+            $response['deliveredOrdersCostsSum'] = round($response['deliveredOrdersCostsSum'], 1);
 
             if ($response['deliveredOrdersCostsSum'] >= $response['subscriptionCostLimit']) {
                 $response['hasToPay'] = true;

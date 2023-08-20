@@ -144,7 +144,7 @@ class ReportService
 
         if (count($sortedCaptainsResult) > 0) {
             foreach ($sortedCaptainsResult as $key => $value) {
-                $value['avgRating'] = round($value['avgRating'], 2);
+                $value['avgRating'] = round($value['avgRating'], 1);
 
                 $response[$key] = $this->autoMapping->map('array', CaptainsRatingsForAdminGetResponse::class, $value);
 

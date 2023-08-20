@@ -31,6 +31,6 @@ class CaptainFinancialSystemTwoCalculationService
             $financialDues = $countOrdersCompleted * (($salary + $monthCompensation) / (float) $countOrdersInMonth);
         }
 
-        return round($financialDues, 2);
+        return round($financialDues, 1);
     }
 }

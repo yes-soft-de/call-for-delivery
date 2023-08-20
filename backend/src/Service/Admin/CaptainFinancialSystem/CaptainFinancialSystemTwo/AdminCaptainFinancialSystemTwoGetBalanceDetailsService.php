@@ -142,7 +142,7 @@ class AdminCaptainFinancialSystemTwoGetBalanceDetailsService
 
             $balanceDetailsResponse['countOverOrdersThanRequired'] = $balanceDetailsResponse['countOrdersCompleted'] - $financialSystemDetail['countOrdersInMonth'];
 
-            $balanceDetailsResponse['bounce'] = round($balanceDetailsResponse['countOverOrdersThanRequired'] * $financialSystemDetail['bounceMaxCountOrdersInMonth'], 2);
+            $balanceDetailsResponse['bounce'] = round($balanceDetailsResponse['countOverOrdersThanRequired'] * $financialSystemDetail['bounceMaxCountOrdersInMonth'], 1);
 
             $balanceDetailsResponse['monthTargetSuccess'] = CaptainFinancialSystem::TARGET_SUCCESS_AND_INCREASE;
 
@@ -157,7 +157,7 @@ class AdminCaptainFinancialSystemTwoGetBalanceDetailsService
             $financialSystemDetail['salary'], $financialSystemDetail['monthCompensation'], $balanceDetailsResponse['countOrdersCompleted'],
             $financialSystemDetail['countOrdersInMonth'], $financialSystemDetail['bounceMaxCountOrdersInMonth']);
 
-        $total = round(($sumPayments - $balanceDetailsResponse['financialDues']), 2);
+        $total = round(($sumPayments - $balanceDetailsResponse['financialDues']), 1);
 
         $balanceDetailsResponse['advancePayment'] = CaptainFinancialSystem::ADVANCED_PAYMENT_BALANCE_CONST;
 

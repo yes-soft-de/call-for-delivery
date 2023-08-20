@@ -60,7 +60,7 @@ class AdminCaptainFinancialSystemOneBalanceDetailService
 
         $financialSystemDetail['countOrdersWithoutDistance'] = $countOrdersWithoutDistance;
 
-        $total = $sumPayments - round($financialSystemDetail['financialDues'], 2);
+        $total = $sumPayments - round($financialSystemDetail['financialDues'], 1);
        
         $financialSystemDetail['advancePayment'] = CaptainFinancialSystem::ADVANCED_PAYMENT_BALANCE_CONST;
         
@@ -68,7 +68,7 @@ class AdminCaptainFinancialSystemOneBalanceDetailService
             $financialSystemDetail['advancePayment'] = CaptainFinancialSystem::ADVANCED_PAYMENT_EXIST_CONST;
         }
 
-        $financialSystemDetail['total'] = abs(round($total, 2));
+        $financialSystemDetail['total'] = abs(round($total, 1));
         
         $financialSystemDetail['amountForStore'] = $amountForStore;
     
@@ -84,10 +84,10 @@ class AdminCaptainFinancialSystemOneBalanceDetailService
         //The number of actual working days is 25, if the captain works 25 days or more, he will receive the full monthly salary
         if($countWorkdays >= 25){
              
-           return round((($countOrdersCompleted + $countOrdersMaxFromNineteen) * $compensationForEveryOrder ) + $salary, 2);
+           return round((($countOrdersCompleted + $countOrdersMaxFromNineteen) * $compensationForEveryOrder ) + $salary, 1);
         }
  
         $dailySalary = $salary / 30;
-        return round((($countOrdersCompleted + $countOrdersMaxFromNineteen) * $compensationForEveryOrder ) + $dailySalary, 2);
+        return round((($countOrdersCompleted + $countOrdersMaxFromNineteen) * $compensationForEveryOrder ) + $dailySalary, 1);
     }
 }

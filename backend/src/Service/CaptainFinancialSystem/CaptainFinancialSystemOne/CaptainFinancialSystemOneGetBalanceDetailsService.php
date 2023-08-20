@@ -159,12 +159,12 @@ class CaptainFinancialSystemOneGetBalanceDetailsService
     {
         if ($countWorkdays >= 25) {
             return round((($countOrdersCompleted + $countOrdersMaxFromNineteen) * $compensationForEveryOrder ) + $salary,
-                2);
+                1);
         }
 
         $dailySalary = $salary / 30;
 
-        return round((($countOrdersCompleted + $countOrdersMaxFromNineteen) * $compensationForEveryOrder ) + ($dailySalary * $countWorkdays), 2);
+        return round((($countOrdersCompleted + $countOrdersMaxFromNineteen) * $compensationForEveryOrder ) + ($dailySalary * $countWorkdays), 1);
     }
 
     /**

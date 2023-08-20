@@ -103,18 +103,18 @@ class AdminCaptainFinancialSystemTwoBalanceDetailService
 
             $item['countOverOrdersThanRequired'] = $item['countOrdersCompleted'] - $financialSystemDetail['countOrdersInMonth'] / 30;
 
-            $item['bounce'] = round($item['countOverOrdersThanRequired'] * $financialSystemDetail['bounceMaxCountOrdersInMonth'], 2);   
+            $item['bounce'] = round($item['countOverOrdersThanRequired'] * $financialSystemDetail['bounceMaxCountOrdersInMonth'], 1);
            
             $item['monthTargetSuccess'] = CaptainFinancialSystem::TARGET_SUCCESS_AND_INCREASE;   
             // if count workdays equal 30 days,The captain gets the salary and the monthly compensation 
             if($countWorkdays === 30) {
-                $item['financialDues'] = round($item['salary'] + $item['monthCompensation'] + $item['bounce'], 2); 
+                $item['financialDues'] = round($item['salary'] + $item['monthCompensation'] + $item['bounce'], 1);
             }
             else {
-                $item['financialDues'] = round(($item['countOrdersCompleted'] - $item['countOverOrdersThanRequired']) * CaptainFinancialSystem::TARGET_FAILED_SALARY + $item['bounce'], 2);  
+                $item['financialDues'] = round(($item['countOrdersCompleted'] - $item['countOverOrdersThanRequired']) * CaptainFinancialSystem::TARGET_FAILED_SALARY + $item['bounce'], 1);
             }
 
-            $total = $sumPayments - round($item['financialDues'], 2);
+            $total = $sumPayments - round($item['financialDues'], 1);
         }
 
         if($checkTarget === CaptainFinancialSystem::TARGET_FAILED_INT) {
@@ -124,7 +124,7 @@ class AdminCaptainFinancialSystemTwoBalanceDetailService
              
             $item['financialDues'] = $item['countOrdersCompleted'] * CaptainFinancialSystem::TARGET_FAILED_SALARY; 
           
-            $total = round($sumPayments - $item['financialDues'], 2);
+            $total = round($sumPayments - $item['financialDues'], 1);
         }
 
         $item['advancePayment'] = CaptainFinancialSystem::ADVANCE_PAYMENT_NO;

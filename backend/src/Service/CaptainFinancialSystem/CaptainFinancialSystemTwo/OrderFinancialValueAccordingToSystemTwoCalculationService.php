@@ -60,7 +60,7 @@ class OrderFinancialValueAccordingToSystemTwoCalculationService
                 return round(
                     (($captainFinancialSystemDetails['salary'] + $captainFinancialSystemDetails['monthCompensation']) /
                         (float) $captainFinancialSystemDetails['countOrdersInMonth']),
-                    2);
+                    1);
 
             } elseif (($target === CaptainFinancialSystem::TARGET_SUCCESS_INT) || ($target === CaptainFinancialSystem::TARGET_SUCCESS_AND_INCREASE_INT)) {
                 // Target achieved currently
@@ -69,7 +69,7 @@ class OrderFinancialValueAccordingToSystemTwoCalculationService
                 return round(
                     (($captainFinancialSystemDetails['salary'] + $captainFinancialSystemDetails['monthCompensation']) /
                         (float) $captainFinancialSystemDetails['countOrdersInMonth']),
-                    2);
+                    1);
             }
 
         } elseif ($orderDistance > CaptainFinancialSystem::KILOMETER_TO_DOUBLE_ORDER) {
@@ -79,14 +79,14 @@ class OrderFinancialValueAccordingToSystemTwoCalculationService
                 // order value = (bounceMinCountOrdersInMonth * (month compensation / orders in month)) * 2 >>> Rami's Equation
                 // order value = ((salary + monthCompensation) / countOrdersInMonth) * 2
                 return round(((($captainFinancialSystemDetails['salary'] + $captainFinancialSystemDetails['monthCompensation']) /
-                        (float) $captainFinancialSystemDetails['countOrdersInMonth'])) * 2.0, 2);
+                        (float) $captainFinancialSystemDetails['countOrdersInMonth'])) * 2.0, 1);
 
             } elseif (($target === CaptainFinancialSystem::TARGET_SUCCESS_INT) || ($target === CaptainFinancialSystem::TARGET_SUCCESS_AND_INCREASE_INT)) {
                 // Target achieved currently
                 // order value = (bounceMaxCountOrdersInMonth * (month compensation / orders in month)) * 2 >>> Rami's Equation
                 // order value = ((salary + monthCompensation) / countOrdersInMonth) * 2
                 return round(((($captainFinancialSystemDetails['salary'] + $captainFinancialSystemDetails['monthCompensation']) /
-                        (float) $captainFinancialSystemDetails['countOrdersInMonth'])) * 2.0, 2);
+                        (float) $captainFinancialSystemDetails['countOrdersInMonth'])) * 2.0, 1);
             }
         }
 

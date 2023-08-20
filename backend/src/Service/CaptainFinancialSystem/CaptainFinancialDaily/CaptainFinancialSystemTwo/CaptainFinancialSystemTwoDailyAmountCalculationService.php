@@ -35,6 +35,6 @@ class CaptainFinancialSystemTwoDailyAmountCalculationService
             $bonus = ($currentFinancialCycleCompletedOrders - $countOrdersInMonth) * $bounceMaxCountOrdersInMonth;
         }
 
-        return [round($financialDues, 2), $bonus];
+        return [round($financialDues, 1), $bonus];
     }
 }
