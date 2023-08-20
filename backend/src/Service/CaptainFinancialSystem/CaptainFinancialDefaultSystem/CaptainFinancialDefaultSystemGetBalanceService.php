@@ -127,6 +127,8 @@ class CaptainFinancialDefaultSystemGetBalanceService
             if ($captainFinancialDaily !== CaptainFinancialDailyResultConstant::CAPTAIN_FINANCIAL_DAILY_NOT_EXIST_CONST) {
                 $response['todayFinancialAmount'] = $captainFinancialDaily->getAmount();
             }
+
+            $response['todayFinancialAmount'] = round($response['todayFinancialAmount'], 1);
         }
 
         // since last payment financial data
@@ -154,9 +156,11 @@ class CaptainFinancialDefaultSystemGetBalanceService
             $response['sinceLastPaymentCashOrderAmount'] = $captainFinancialDue->getAmountForStore();
 
             $response['sinceLastPaymentFinancialAmount'] = $captainFinancialDue->getAmount();
+            $response['sinceLastPaymentFinancialAmount'] = round($response['sinceLastPaymentFinancialAmount'], 1);
 
             // ** sinceLastPaymentRemainFinancialAmount = sinceLastPaymentFinancialAmount - sinceLastPaymentCashOrderAmount
             $response['sinceLastPaymentRemainFinancialAmount'] = $response['sinceLastPaymentFinancialAmount'] - $response['sinceLastPaymentCashOrderAmount'];
+            $response['sinceLastPaymentRemainFinancialAmount'] = round($response['sinceLastPaymentRemainFinancialAmount'], 1);
 
         }
 
