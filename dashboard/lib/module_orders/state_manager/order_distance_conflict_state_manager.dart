@@ -93,7 +93,7 @@ class OrderDistanceConflictStateManager {
       } else {
         CustomFlushBarHelper.createSuccess(
             title: S.current.warnning,
-            message: S.current.distanceUpdatedSuccessfully);
+            message: S.current.orderIgnoredSuccessfully);
         screenState.getOrders();
       }
     });

@@ -1145,5 +1145,7 @@
     "areYouSureAboutRefusedTheConflictRequest": "are you sure about refused the conflict request",
     "theCaptainRaisedAnConflictAboutDistance": "the captain raised an conflict about distance",
     "orderConflictDistanceNotExist": "order conflict distance not exist",
-    "dev": "Dev"
+    "dev": "Dev",
+    "orderIgnoredSuccessfully": "Order ignored successfully"
+
 }

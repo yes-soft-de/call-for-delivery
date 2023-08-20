@@ -145,6 +145,7 @@ class ChatPageState extends State<ChatPage> with WidgetsBindingObserver {
     WidgetsBinding.instance.removeObserver(this);
     pool.release();
     streamSubscription.cancel();
+    widget._chatStateManager.dispose();
     super.dispose();
   }
 

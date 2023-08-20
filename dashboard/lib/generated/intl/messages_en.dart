@@ -1056,6 +1056,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "Order hided to edit by admin"),
         "orderHidedToEditByStore":
             MessageLookupByLibrary.simpleMessage("Order hided to be edit"),
+        "orderIgnoredSuccessfully":
+            MessageLookupByLibrary.simpleMessage("Order ignored successfully"),
         "orderImage": MessageLookupByLibrary.simpleMessage("Order Image"),
         "orderIsCreated":
             MessageLookupByLibrary.simpleMessage("Order is created"),

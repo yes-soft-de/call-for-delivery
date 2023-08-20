@@ -53,5 +53,6 @@ class ChatStateManager {
 
   void dispose() {
     listening = false;
+    _chatBlocSubject.close();
   }
 }
