@@ -140,7 +140,7 @@ class StoreOwnerDuesFromCashOrdersEntityRepository extends ServiceEntityReposito
     public function getUnPaidCashOrdersDuesByCaptainAndDuringSpecificTime(int $captainId, string $fromDate, string $toDate): array
     {
         return $this->createQueryBuilder('storeOwnerDuesFromCashOrdersEntity')
-            ->select('SUM(storeOwnerDuesFromCashOrdersEntity.amount)')
+            ->select('SUM(storeOwnerDuesFromCashOrdersEntity.storeAmount)')
 
             ->andWhere('storeOwnerDuesFromCashOrdersEntity.flag = :notPaid')
             ->setParameter('notPaid', OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO)

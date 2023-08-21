@@ -401,19 +401,22 @@ class AdminOrderService
         }
     }
 
-    public function getExternalOrderByOrderIdAndExternalDeliveryCompanyId(int $orderId, int $externalDeliveryCompanyId): int|array
-    {
-        return $this->externalOrderGetHandlerService->getExternalOrderByOrderIdAndExternalDeliveryCompanyId($orderId,
-            $externalDeliveryCompanyId);
-    }
+    /**
+     * Following function had been commented out because it isn't being used anywhere
+     */
+//    public function getExternalOrderByOrderIdAndExternalDeliveryCompanyId(int $orderId, int $externalDeliveryCompanyId): int|array
+//    {
+//        return $this->externalOrderGetHandlerService->getExternalOrderByOrderIdAndExternalDeliveryCompanyId($orderId,
+//            $externalDeliveryCompanyId);
+//    }
 
     /**
      * Get uncancelled, undelivered, and not expired external orders from OrderEntity
      */
-    public function getNotCancelledNorDeliveredNorExpiredExternalOrdersOnly(?int $externalCompanyId): array
-    {
-        return $this->adminOrderManager->getNotCancelledNorDeliveredNorExpiredExternalOrdersOnly($externalCompanyId);
-    }
+//    public function getNotCancelledNorDeliveredNorExpiredExternalOrdersOnly(?int $externalCompanyId): array
+//    {
+//        return $this->adminOrderManager->getNotCancelledNorDeliveredNorExpiredExternalOrdersOnly($externalCompanyId);
+//    }
 
     /**
      * Updates the status of the order in ExternallyDeliveredOrderEntity
@@ -648,14 +651,6 @@ class AdminOrderService
                 }
 
                 $externallyDeliveredOrders = $value[0]->getExternallyDeliveredOrderEntities()->toArray();
-
-//                if (count($externallyDeliveredOrders) > 0) {
-//                    foreach ($externallyDeliveredOrders as $key2 => $value2) {
-//                        $response[$key]->externalDeliveredOrders[$key2]['id'] = $value2->getId();
-//                        $response[$key]->externalDeliveredOrders[$key2]['companyName'] = $value2->getExternalDeliveryCompany()->getCompanyName();
-//                        $response[$key]->externalDeliveredOrders[$key2]['externalOrderId'] = $value2->getExternalOrderId();
-//                    }
-//                }
 
                 $externalOrdersArrayLength = count($externallyDeliveredOrders);
 
@@ -1334,9 +1329,10 @@ class AdminOrderService
                         // update captainFinancialDues
                         $this->captainFinancialDuesService->captainFinancialDues($orderResult[0]->getCaptainId()->getCaptainId(),
                             $orderResult[0]->getId(), $orderResult[0]->getCreatedAt());
-
                         // Create or update daily captain financial amount
                         $this->createOrUpdateCaptainFinancialDaily($orderResult[0]->getId());
+                        // Create or update captain order financial
+                        $this->createOrUpdateCaptainOrderFinancial($orderResult[0]->getId());
                         // Update subscription cost of the store's subscription
                         $this->handleUpdatingStoreSubscriptionCost($orderResult[0]->getStoreOwner()->getId(),
                             $orderResult[0]->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_ADDITION,
