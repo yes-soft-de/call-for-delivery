@@ -2952,7 +2952,14 @@ class OrderEntityRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('orderEntity')
             ->select('orderEntity.id', 'orderEntity.storeBranchToClientDistance', 'orderEntity.kilometer', 'orderEntity.state',
-                'orderEntity.orderCancelledByUserAndAtState')
+                'orderEntity.orderCancelledByUserAndAtState', 'orderEntity.deliveryCost', 'storeOwnerProfileEntity.id as storeOwnerProfileId')
+
+            ->leftJoin(
+                StoreOwnerProfileEntity::class,
+                'storeOwnerProfileEntity',
+                Join::WITH,
+                'storeOwnerProfileEntity.id = orderEntity.storeOwner'
+            )
 
             ->andWhere('(orderEntity.state = :deliveredState) OR '
                 .'(orderEntity.state = :cancelledState AND orderEntity.orderCancelledByUserAndAtState IN (:orderCancelledByUserAndAtStateArray))')

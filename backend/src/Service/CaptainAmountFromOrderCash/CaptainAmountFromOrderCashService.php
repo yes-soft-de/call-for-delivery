@@ -2,6 +2,7 @@
 
 namespace App\Service\CaptainAmountFromOrderCash;
 
+use App\Constant\Order\OrderTypeConstant;
 use App\Entity\CaptainAmountFromOrderCashEntity;
 use App\Entity\OrderEntity;
 use App\Request\CaptainAmountFromOrderCash\CaptainAmountFromOrderCashRequest;
@@ -17,13 +18,23 @@ class CaptainAmountFromOrderCashService
 
     public function createCaptainAmountFromOrderCash(OrderEntity $orderEntity, int $flag, float $orderCost): ?CaptainAmountFromOrderCashEntity
     {
+        $finalAmount = $orderCost;
+
+        if ($flag === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
+            if ($orderEntity->getStoreOwner()->getId() === 94) {
+                if ($orderEntity->getDeliveryCost()) {
+                    $finalAmount = $orderCost - $orderEntity->getDeliveryCost();
+                }
+            }
+        }
+
         $captainAmountFromOrderCash = $this->captainAmountFromOrderCashManager->getCaptainAmountFromOrderCashByOrderId($orderEntity->getId());
 
         if (! $captainAmountFromOrderCash) {
-            return $this->create($orderEntity, $orderCost, $flag);
+            return $this->create($orderEntity, $finalAmount, $flag);
         }
 
-        return $this->updateCaptainAmountFromOrderCash($orderEntity, $captainAmountFromOrderCash, $orderCost, $flag);
+        return $this->updateCaptainAmountFromOrderCash($orderEntity, $captainAmountFromOrderCash, $finalAmount, $flag);
     }
 
     public function create(OrderEntity $orderEntity, float $orderCost, int $flag): ?CaptainAmountFromOrderCashEntity

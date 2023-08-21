@@ -204,17 +204,22 @@ class CaptainFinancialDefaultSystemGetBalanceService
     {
         $response = $this->initializeNecessaryFieldsForDuesCalculation($financialSystemDetail);
 
-        $orders = $this->getOrderEntityById($orderId);
+        $order = $this->getOrderEntityById($orderId);
 
-        if ($orders !== OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
-            $response['financialDues'] = $this->calculateCaptainFinancialAmountForSingleOrder($orders, $financialSystemDetail);
+        if ($order !== OrderResultConstant::ORDER_NOT_FOUND_RESULT) {
+            $response['financialDues'] = $this->calculateCaptainFinancialAmountForSingleOrder($order, $financialSystemDetail);
         }
 
+        if ($order->getStoreOwner()->getId() === 94) {
+            if ($order->getDeliveryCost()) {
+                $response['financialDues'] = $response['financialDues'] + $order->getDeliveryCost();
+            }
+        }
         // Get the amount of the due of unpaid cash order that the captain delivered
         $storeDueFromCashOrder = $this->getUnPaidStoreOwnerDuesFromCashOrdersByOrderId($orderId);
 
         if ($storeDueFromCashOrder !== StoreOwnerDueFromCashOrderStoreAmountConstant::STORE_DUE_FROM_CASH_ORDER_NOT_EXIST_CONST) {
-            $response['amountForStore'] = $storeDueFromCashOrder->getAmount();
+            $response['amountForStore'] = $storeDueFromCashOrder->getStoreAmount();
         }
 
         return $response;

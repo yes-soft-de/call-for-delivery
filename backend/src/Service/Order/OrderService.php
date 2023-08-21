@@ -641,8 +641,10 @@ class OrderService
             } elseif ($order->getState() === OrderStateConstant::ORDER_STATE_DELIVERED) {
                 //Save the price of the order in cash in case the captain does not pay the store
                 if ($this->checkCashOrderCostPaidToStoreOrNotByOrderEntity($order)) {
-                    $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($order, OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $order->getOrderCost());
-                    $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($order, OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $order->getOrderCost());
+                    $this->captainAmountFromOrderCashService->createCaptainAmountFromOrderCash($order,
+                        OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $order->getOrderCost());
+                    $this->storeOwnerDuesFromCashOrdersService->createStoreOwnerDuesFromCashOrders($order,
+                        OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO, $order->getOrderCost());
                 }
 
                 // update captain financial due
@@ -651,6 +653,8 @@ class OrderService
 
                 // Create or update captain financial daily amount
                 $this->createOrUpdateCaptainFinancialDaily($order->getId());
+                // Create or update captain order financial
+                $this->createOrUpdateCaptainOrderFinancial($order->getId());
                 // Update subscription cost of the store's subscription
                 $this->handleUpdatingStoreSubscriptionCost($order->getStoreOwner()->getId(), $order->getCreatedAt(),
                     SubscriptionConstant::OPERATION_TYPE_ADDITION, $order->getDeliveryCost());

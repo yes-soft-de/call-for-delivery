@@ -89,6 +89,12 @@ class CaptainFinancialDefaultSystemDailyGetBalanceDetailsService
 
                     $financialAccountDetails['basicFinancialAmount'] += $tempValue;
                 }
+
+                if ($order['storeOwnerProfileId'] == 94) {
+                    if ($order['deliveryCost']) {
+                        $financialAccountDetails['basicFinancialAmount'] += $order['deliveryCost'];
+                    }
+                }
             }
         }
 
