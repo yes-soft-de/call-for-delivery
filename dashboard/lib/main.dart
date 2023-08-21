@@ -24,7 +24,6 @@ import 'package:c4d/module_subscriptions/subscriptions_module.dart';
 import 'package:c4d/module_supplier_categories/categories_supplier_module.dart';
 import 'package:device_info/device_info.dart';
 import 'package:injectable/injectable.dart';
-import 'package:c4d/utils/effect/scroll_behavior.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/abstracts/module/yes_module.dart';
@@ -227,7 +226,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   ) {
     return FeatureDiscovery(
       child: MaterialApp(
-        scrollBehavior: MyCustomScrollBehavior(),
+        scrollBehavior: ScrollConfiguration.of(context).copyWith(
+          physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()),
+        ),
         debugShowCheckedModeBanner: false,
         // navigatorObservers: <NavigatorObserver>[observer],
         navigatorKey: GlobalVariable.navState,

@@ -5,7 +5,6 @@ import 'package:c4d/module_stores/model/stores_model.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_stores/ui/screen/stores_inactive_screen.dart';
 import 'package:c4d/utils/components/costom_search.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
@@ -70,127 +69,80 @@ class StoresInActiveLoadedState extends States {
                 ),
               ),
               Expanded(
-                child: CustomListView.custom(children: getStores()),
+                child: ListView.builder(
+                  itemCount: model?.length ?? 0,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    if (model == null || model!.isEmpty) return SizedBox();
+                    var element = model![index];
+                    if (element.storeOwnerName
+                            .toLowerCase()
+                            .contains(search?.toLowerCase() ?? '') ==
+                        false) {
+                      return SizedBox();
+                    }
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: InkWell(
+                        borderRadius: BorderRadius.circular(12),
+                        onTap: () {
+                          Navigator.of(screenState.context).pushNamed(
+                              StoresRoutes.STORE_INFO,
+                              arguments: StoresModel(
+                                  id: element.id,
+                                  storeOwnerName: element.storeOwnerName,
+                                  phone: element.phone,
+                                  imageUrl: element.imageUrl,
+                                  status: element.status));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            color: Theme.of(screenState.context)
+                                .colorScheme
+                                .primary,
+                            borderRadius: BorderRadius.circular(25),
+                          ),
+                          child: Flex(
+                            direction: Axis.horizontal,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(25),
+                                  child: SizedBox(
+                                    height: 75,
+                                    width: 75,
+                                    child: CustomNetworkImage(
+                                      imageSource: element.imageUrl ?? '',
+                                      width: 75,
+                                      height: 75,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Expanded(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: getTile((element.storeOwnerName == '0'
+                                          ? element.phone
+                                          : element.storeOwnerName) +
+                                      ' {${element.id.toString()}}'),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
               )
             ],
           ),
         ),
       ),
     );
-  }
-
-  List<Widget> getStores() {
-    List<Widget> widgets = [];
-    if (model == null) {
-      return widgets;
-    }
-    if (model!.isEmpty) return widgets;
-    for (var element in model!) {
-      if (element.storeOwnerName
-              .toLowerCase()
-              .contains(search?.toLowerCase() ?? '') ==
-          false) {
-        continue;
-      }
-      widgets.add(Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: InkWell(
-          borderRadius: BorderRadius.circular(12),
-          onTap: () {
-            Navigator.of(screenState.context).pushNamed(StoresRoutes.STORE_INFO,
-                arguments: StoresModel(
-                    id: element.id,
-                    storeOwnerName: element.storeOwnerName,
-                    phone: element.phone,
-                    imageUrl: element.imageUrl,
-                    status: element.status));
-          },
-          child: Container(
-            decoration: BoxDecoration(
-              color: Theme.of(screenState.context).colorScheme.primary,
-              borderRadius: BorderRadius.circular(25),
-            ),
-            child: Flex(
-              direction: Axis.horizontal,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(25),
-                    child: SizedBox(
-                      height: 75,
-                      width: 75,
-                      child: CustomNetworkImage(
-                        imageSource: element.imageUrl ?? '',
-                        width: 75,
-                        height: 75,
-                      ),
-                    ),
-                  ),
-                ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: getTile((element.storeOwnerName == '0'
-                            ? element.phone
-                            : element.storeOwnerName) +
-                        ' {${element.id.toString()}}'),
-                  ),
-                ),
-//                InkWell(
-//                  onTap: () {
-//                    showDialog(
-//                        barrierDismissible: false,
-//                        context: screenState.context,
-//                        builder: (context) {
-//                          return Container(
-//                            width: MediaQuery.of(context).size.width,
-//                            height: MediaQuery.of(context).size.height,
-//                            child: Scaffold(
-//                              appBar: CustomC4dAppBar.appBar(context,
-//                                  title: S.current.updateStore),
-//                              backgroundColor:
-//                                  Theme.of(context).scaffoldBackgroundColor,
-//                              body: UpdateStoreWidget(
-//                                storesModel: element,
-//                                updateStore: (request, haveImage) {
-//                                  Navigator.of(context).pop();
-//                                  screenState.updateStore(request, haveImage);
-//                                },
-//                              ),
-//                            ),
-//                          );
-//                        });
-//                  },
-//                  child: Padding(
-//                    padding: const EdgeInsets.all(16.0),
-//                    child: Container(
-//                      decoration: BoxDecoration(
-//                        shape: BoxShape.circle,
-//                        color: Theme.of(screenState.context)
-//                            .backgroundColor
-//                            .withOpacity(0.2),
-//                      ),
-//                      child: Padding(
-//                        padding: const EdgeInsets.all(8.0),
-//                        child: Icon(
-//                          Icons.edit,
-//                          color: Colors.white,
-//                        ),
-//                      ),
-//                    ),
-//                  ),
-//                ),
-              ],
-            ),
-          ),
-        ),
-      ));
-    }
-
-    widgets.add(SizedBox(height: 75));
-    return widgets;
   }
 
   Widget getTile(String text) {
