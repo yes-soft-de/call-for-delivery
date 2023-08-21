@@ -2,6 +2,7 @@
 
 namespace App\Service\StoreOwnerDuesFromCashOrders;
 
+use App\Constant\Order\OrderTypeConstant;
 use App\Constant\StoreOwnerDueFromCashOrder\StoreOwnerDueFromCashOrderStoreAmountConstant;
 use App\Request\StoreOwnerDuesFromCashOrders\StoreOwnerDuesFromCashOrdersRequest;
 use App\Entity\StoreOwnerDuesFromCashOrdersEntity;
@@ -18,12 +19,23 @@ class StoreOwnerDuesFromCashOrdersService
 
     public function createStoreOwnerDuesFromCashOrders(OrderEntity $orderEntity, int $flag, float $orderCost): ?StoreOwnerDuesFromCashOrdersEntity
     {
-        $storeOwnerDuesFromCashOrders = $this->storeOwnerDuesFromCashOrdersManager->getStoreOwnerDuesFromCashOrdersByOrderId($orderEntity->getId());
-        if( ! $storeOwnerDuesFromCashOrders) {
-            return $this->create($orderEntity, $orderCost, $flag);
+        $finalAmount = $orderCost;
+
+        if ($flag === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
+            if ($orderEntity->getStoreOwner()->getId() == 361) {
+                if ($orderEntity->getDeliveryCost()) {
+                    $finalAmount = $orderCost - $orderEntity->getDeliveryCost();
+                }
+            }
         }
 
-        return $this->updateStoreOwnerDuesFromCashOrders($orderEntity, $storeOwnerDuesFromCashOrders, $orderCost, $flag);
+        $storeOwnerDuesFromCashOrders = $this->storeOwnerDuesFromCashOrdersManager->getStoreOwnerDuesFromCashOrdersByOrderId($orderEntity->getId());
+
+        if (! $storeOwnerDuesFromCashOrders) {
+            return $this->create($orderEntity, $finalAmount, $flag);
+        }
+
+        return $this->updateStoreOwnerDuesFromCashOrders($orderEntity, $storeOwnerDuesFromCashOrders, $finalAmount, $flag);
     }
 
     public function create(OrderEntity $orderEntity, float $orderCost, int $flag): ?StoreOwnerDuesFromCashOrdersEntity
