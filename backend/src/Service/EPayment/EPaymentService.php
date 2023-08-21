@@ -195,27 +195,29 @@ class EPaymentService
 
             } catch (\Exception $e) {
                 // create a new log for the payment
-                if (! isset($storeOwnerProfile)) {
-                    $storeOwnerProfile = null;
+                $storeOwnerProfileId = null;
+                $adminProfileId = null;
+
+                if (isset($storeOwnerProfile)) {
+                    $storeOwnerProfileId = $storeOwnerProfile->getId();
                 }
 
                 if (($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_STORE_CONST)
                     || ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_STORE_CONST)) {
                     $this->createEPaymentFromStoreLogCreateMessage($request->getCreatedBy(),
                         EPaymentFromStoreConstant::NEW_REAL_PAYMENT_CREATED_FAILED_BY_STORE_ACTION_CONST,
-                        $storeOwnerProfile->getId());
+                        $storeOwnerProfileId, null, null, $e->getMessage());
 
-                }
-                elseif (($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_ADMIN_CONST)
+                } elseif (($request->getPaymentType() === EPaymentFromStoreConstant::MOCK_PAYMENT_BY_ADMIN_CONST)
                     || ($request->getPaymentType() === EPaymentFromStoreConstant::REAL_PAYMENT_BY_ADMIN_CONST)) {
                     // check if admin profile is set
-                    if (! isset($adminProfile)) {
-                        $adminProfile = null;
+                    if (isset($adminProfile)) {
+                        $adminProfileId = $adminProfile->getId();
                     }
 
                     $this->createEPaymentFromStoreLogCreateMessage($request->getCreatedBy(),
                         EPaymentFromStoreConstant::NEW_REAL_PAYMENT_CREATED_FAILED_BY_ADMIN_ACTION_CONST,
-                        $storeOwnerProfile->getId(), null, $adminProfile->getId());
+                        $storeOwnerProfileId, null, $adminProfileId, $e->getMessage());
                 }
 
 //                throw $e;
