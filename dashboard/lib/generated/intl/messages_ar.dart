@@ -1049,6 +1049,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم إخفاء طلب لتعديله"),
         "orderHidedToEditByStore":
             MessageLookupByLibrary.simpleMessage("تم إخفاء طلب لتعديله"),
+        "orderIgnoredSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تجاهل الطلب بنجاح"),
         "orderImage": MessageLookupByLibrary.simpleMessage("صورة الطلب"),
         "orderIsCreated": MessageLookupByLibrary.simpleMessage("تم الانشاء"),
         "orderIsDone": MessageLookupByLibrary.simpleMessage("انتهى الطلب!"),
