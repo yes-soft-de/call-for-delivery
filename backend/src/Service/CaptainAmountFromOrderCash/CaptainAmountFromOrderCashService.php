@@ -21,7 +21,7 @@ class CaptainAmountFromOrderCashService
         $finalAmount = $orderCost;
 
         if ($flag === OrderTypeConstant::ORDER_PAID_TO_PROVIDER_NO) {
-            if ($orderEntity->getStoreOwner()->getId() === 94) {
+            if ($orderEntity->getStoreOwner()->getId() === 361) {
                 if ($orderEntity->getDeliveryCost()) {
                     $finalAmount = $orderCost - $orderEntity->getDeliveryCost();
                 }

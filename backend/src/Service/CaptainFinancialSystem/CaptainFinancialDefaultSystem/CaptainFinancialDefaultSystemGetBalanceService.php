@@ -210,7 +210,7 @@ class CaptainFinancialDefaultSystemGetBalanceService
             $response['financialDues'] = $this->calculateCaptainFinancialAmountForSingleOrder($order, $financialSystemDetail);
         }
 
-        if ($order->getStoreOwner()->getId() === 94) {
+        if ($order->getStoreOwner()->getId() == 361) {
             if ($order->getDeliveryCost()) {
                 $response['financialDues'] = $response['financialDues'] + $order->getDeliveryCost();
             }
