@@ -88,11 +88,12 @@ class CaptainFinancialDefaultSystemDailyGetBalanceDetailsService
                     }
 
                     $financialAccountDetails['basicFinancialAmount'] += $tempValue;
-                }
-
-                if ($order['storeOwnerProfileId'] == 361) {
-                    if ($order['deliveryCost']) {
-                        $financialAccountDetails['basicFinancialAmount'] += $order['deliveryCost'];
+                    // Specific store on production may include delivery cost within order cost
+                    // delivery cost in this situation belongs to captain's profit
+                    if ($order['storeOwnerProfileId'] == 361) {
+                        if ($order['deliveryCost']) {
+                            $financialAccountDetails['basicFinancialAmount'] += $order['deliveryCost'];
+                        }
                     }
                 }
             }

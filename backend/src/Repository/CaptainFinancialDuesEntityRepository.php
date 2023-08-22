@@ -15,7 +15,6 @@ use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\Query\Expr\Join;
-use App\Entity\CaptainPaymentEntity;
 use DateTime;
 use App\Constant\CaptainFinancialSystem\CaptainFinancialDues;
 use App\Entity\OrderEntity;
@@ -132,30 +131,33 @@ class CaptainFinancialDuesEntityRepository extends ServiceEntityRepository
             ->getOneOrNullResult();
     }
 
-    public function getCaptainFinancialDuesByEndDate(int $userId, DateTime $date): ?array
-    {
-        return $this->createQueryBuilder('captainFinancialDuesEntity')
-
-            ->select('captainFinancialDuesEntity.id, captainFinancialDuesEntity.status, captainFinancialDuesEntity.amount, captainFinancialDuesEntity.startDate, captainFinancialDuesEntity.endDate, captainFinancialDuesEntity.amountForStore')
-            
-            ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.id = captainFinancialDuesEntity.captain')
-
-            ->andWhere('captainEntity.captainId = :userId')
-
-            ->setParameter('userId', $userId)
-            
-            // ->andWhere('captainFinancialDuesEntity.endDate = :date')
-
-            // ->setParameter('date', $date)
-
-            ->andWhere('captainFinancialDuesEntity.state = :state')
-
-            ->setParameter('state', CaptainFinancialDues::FINANCIAL_STATE_ACTIVE)
-
-            ->getQuery()
-
-            ->getOneOrNullResult();
-    }
+    /**
+     * Following function commented out because it isn't being used anywhere
+     */
+//    public function getCaptainFinancialDuesByEndDate(int $userId, DateTime $date): ?array
+//    {
+//        return $this->createQueryBuilder('captainFinancialDuesEntity')
+//
+//            ->select('captainFinancialDuesEntity.id, captainFinancialDuesEntity.status, captainFinancialDuesEntity.amount, captainFinancialDuesEntity.startDate, captainFinancialDuesEntity.endDate, captainFinancialDuesEntity.amountForStore')
+//
+//            ->leftJoin(CaptainEntity::class, 'captainEntity', Join::WITH, 'captainEntity.id = captainFinancialDuesEntity.captain')
+//
+//            ->andWhere('captainEntity.captainId = :userId')
+//
+//            ->setParameter('userId', $userId)
+//
+//            // ->andWhere('captainFinancialDuesEntity.endDate = :date')
+//
+//            // ->setParameter('date', $date)
+//
+//            ->andWhere('captainFinancialDuesEntity.state = :state')
+//
+//            ->setParameter('state', CaptainFinancialDues::FINANCIAL_STATE_ACTIVE)
+//
+//            ->getQuery()
+//
+//            ->getOneOrNullResult();
+//    }
 
     public function getFinancialDuesByCaptainId(int $captainId): array
     {

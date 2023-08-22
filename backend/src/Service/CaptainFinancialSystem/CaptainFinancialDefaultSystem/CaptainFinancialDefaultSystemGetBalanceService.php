@@ -210,9 +210,13 @@ class CaptainFinancialDefaultSystemGetBalanceService
             $response['financialDues'] = $this->calculateCaptainFinancialAmountForSingleOrder($order, $financialSystemDetail);
         }
 
-        if ($order->getStoreOwner()->getId() == 361) {
-            if ($order->getDeliveryCost()) {
-                $response['financialDues'] = $response['financialDues'] + $order->getDeliveryCost();
+        // Specific store on production may include delivery cost within order cost
+        // delivery cost in this situation belongs to captain's profit
+        if (($order->getStoreBranchToClientDistance() !== null) && ($order->getStoreBranchToClientDistance() != 0)) {
+            if ($order->getStoreOwner()->getId() == 361) {
+                if ($order->getDeliveryCost()) {
+                    $response['financialDues'] = $response['financialDues'] + $order->getDeliveryCost();
+                }
             }
         }
         // Get the amount of the due of unpaid cash order that the captain delivered
