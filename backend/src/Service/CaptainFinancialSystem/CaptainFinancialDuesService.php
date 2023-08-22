@@ -570,7 +570,7 @@ class CaptainFinancialDuesService
                     // Specific store on production may include delivery cost within order cost
                     // delivery cost in this situation belongs to captain's profit
                     if (($oldDistance != null) && ($oldDistance != 0)) {
-                        if ($orderEntity->getStoreOwner()->getId() == 94) {
+                        if ($orderEntity->getStoreOwner()->getId() == 361) {
                             if ($oldDeliveryCost) {
                                 $captainProfit += $oldDeliveryCost;
                             }
@@ -589,7 +589,7 @@ class CaptainFinancialDuesService
                     // Specific store on production may include delivery cost within order cost
                     // delivery cost in this situation belongs to captain's profit
                     if (($orderEntity->getStoreBranchToClientDistance() != null) && ($orderEntity->getStoreBranchToClientDistance() != 0)) {
-                        if ($orderEntity->getStoreOwner()->getId() == 94) {
+                        if ($orderEntity->getStoreOwner()->getId() == 361) {
                             if ($orderEntity->getDeliveryCost()) {
                                 $newCaptainProfit += $orderEntity->getDeliveryCost();
                             }
