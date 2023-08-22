@@ -1,5 +1,6 @@
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_captain/captains_module.dart';
+import 'package:c4d/module_captain/ui/screen/captains_list_screen.dart';
 import 'package:c4d/module_orders/orders_module.dart';
 import 'package:c4d/module_stores/stores_module.dart';
 import 'package:injectable/injectable.dart';
@@ -20,7 +21,7 @@ class GlobalStateManager {
   }
 
   void goToCaptains() {
-    _stateSubject.add(getIt<CaptainsModule>().captainsScreen);
+    _stateSubject.add(CaptainsScreen());
   }
 
   void goToInActiveCaptain() {

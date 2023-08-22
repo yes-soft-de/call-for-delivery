@@ -2,6 +2,7 @@ import 'package:c4d/consts/urls.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/captains_module.dart';
+import 'package:c4d/module_captain/ui/screen/captains_list_screen.dart';
 import 'package:c4d/module_categories/categories_module.dart';
 import 'package:c4d/module_company/company_module.dart';
 import 'package:c4d/module_dev/dev_module.dart';
@@ -166,7 +167,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.captains,
                 icon: FontAwesomeIcons.car,
                 children: [
-                  customListTile(getIt<CaptainsModule>().captainsScreen,
+                  customListTile(CaptainsScreen(),
                       S.current.captains, FontAwesomeIcons.solidListAlt, true),
                   customListTile(
                       getIt<CaptainsModule>().inActiveCaptains,

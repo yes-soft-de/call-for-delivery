@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/module_captain/model/inActiveModel.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
@@ -8,11 +9,13 @@ import 'package:c4d/module_captain/ui/screen/captains_list_screen.dart';
 import 'package:c4d/module_captain/ui/state/captain_list/captains_loaded_state.dart';
 
 @injectable
-class CaptainsStateManager {
+class CaptainsStateManager extends StateManagerHandler {
   final CaptainsService _captainsService;
   final PublishSubject<States> _stateSubject = PublishSubject();
   CaptainsScreenState? _captainsScreenState;
+
   Stream<States> get stateStream => _stateSubject.stream;
+
   CaptainsScreenState? get state => _captainsScreenState;
 
   CaptainsStateManager(this._captainsService);
@@ -32,5 +35,9 @@ class CaptainsStateManager {
         _stateSubject.add(CaptainsLoadedState(screenState, _model.data));
       }
     });
+  }
+  @override
+  void dispose() {
+    _stateSubject.close();
   }
 }

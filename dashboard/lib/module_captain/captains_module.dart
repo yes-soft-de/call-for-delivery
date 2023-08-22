@@ -20,7 +20,6 @@ import 'ui/screen/captains_offer_screen.dart';
 class CaptainsModule extends YesModule {
   final CaptainOffersScreen captainOffersScreen;
   final InActiveCaptainsScreen inActiveCaptains;
-  final CaptainsScreen captainsScreen;
   final CaptainProfileScreen captainProfileScreen;
   final CaptainsNeedsSupportScreen supportScreen;
   final PlanScreen planScreen;
@@ -33,7 +32,6 @@ class CaptainsModule extends YesModule {
   CaptainsModule(
     this.captainOffersScreen,
     this.inActiveCaptains,
-    this.captainsScreen,
     this.captainProfileScreen,
     this.supportScreen,
     this.planScreen,
@@ -49,7 +47,7 @@ class CaptainsModule extends YesModule {
   Map<String, WidgetBuilder> getRoutes() {
     return {
       CaptainsRoutes.OFFER: (context) => captainOffersScreen,
-      CaptainsRoutes.CAPTAINS: (context) => captainsScreen,
+      CaptainsRoutes.CAPTAINS: (context) => CaptainsScreen(),
       CaptainsRoutes.CAPTAIN_PROFILE: (context) => captainProfileScreen,
       CaptainsRoutes.IN_ACTIVE_CAPTAINS: (context) => inActiveCaptains,
       CaptainsRoutes.CAPTAIN_SUPPORT: (context) => supportScreen,

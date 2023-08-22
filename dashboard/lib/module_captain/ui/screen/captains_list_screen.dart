@@ -1,6 +1,7 @@
+import 'dart:async';
+
 import 'package:c4d/di/di_config.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -10,11 +11,9 @@ import 'package:c4d/utils/components/custom_app_bar.dart';
 
 import '../../../utils/global/global_state_manager.dart';
 
-@injectable
 class CaptainsScreen extends StatefulWidget {
-  final CaptainsStateManager _stateManager;
 
-  CaptainsScreen(this._stateManager);
+  CaptainsScreen();
 
   @override
   CaptainsScreenState createState() => CaptainsScreenState();
@@ -22,23 +21,25 @@ class CaptainsScreen extends StatefulWidget {
 
 class CaptainsScreenState extends State<CaptainsScreen> {
   late States currentState;
-
+  late CaptainsStateManager _stateManager;
+  StreamSubscription? stateSubscription;
   @override
   void initState() {
     currentState = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt<CaptainsStateManager>();
+    _stateManager.stateStream.listen((event) {
       currentState = event;
       refresh();
     });
-    getIt<GlobalStateManager>().stateStream.listen((event) {
+   stateSubscription =  getIt<GlobalStateManager>().stateStream.listen((event) {
       getCaptains();
     });
-    widget._stateManager.getCaptains(this);
+    _stateManager.getCaptains(this);
     super.initState();
   }
 
   void getCaptains() {
-    widget._stateManager.getCaptains(this);
+    _stateManager.getCaptains(this);
   }
 
   void refresh() {
@@ -56,5 +57,11 @@ class CaptainsScreenState extends State<CaptainsScreen> {
       }),
       body: currentState.getUI(context),
     );
+  }
+  @override
+  void dispose() {
+    stateSubscription?.cancel();
+    _stateManager.dispose();
+    super.dispose();
   }
 }
