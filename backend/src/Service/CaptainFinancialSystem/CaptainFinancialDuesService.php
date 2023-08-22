@@ -132,10 +132,8 @@ class CaptainFinancialDuesService
                     $financialDues = $this->captainFinancialDefaultSystemGetBalanceService->calculateCaptainDues($financialSystemDetail,
                         $orderId);
                     // *** End of Rami code ***
-
                     // create Captain Order Financial
                     $this->createCaptainOrderFinancial($orderId, $financialDues, $captainFinancialDues);
-
                     //update captain financial dues
                     return $this->updateCaptainFinancialDuesAmountByNewAmountAddition($captainFinancialDues, $financialDues);
                 }
@@ -555,32 +553,52 @@ class CaptainFinancialDuesService
     /**
      * Updates amount field of captain financial due entity after distance changed
      */
-    public function updateCaptainFinancialDueAfterOrderDistanceUpdating(int $captainUserId, $oldDistance, DateTimeInterface $orderCreatedAt, float $newDistance): CaptainFinancialDuesEntity|int|string
+    public function updateCaptainFinancialDueAfterOrderDistanceUpdating(OrderEntity $orderEntity, $oldDistance, ?float $oldDeliveryCost = null): CaptainFinancialDuesEntity|int|string
     {
         // 1 According to old order distance, subtract order financial value from captain financial due
         if ($oldDistance === OrderResultConstant::ORDER_STORE_BRANCH_TO_CLIENT_DISTANCE_IS_NULL_CONST) {
             $oldDistance = 0.0;
         }
 
-        $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailCurrent($captainUserId);
+        $financialSystemDetail = $this->captainFinancialSystemDetailManager->getCaptainFinancialSystemDetailCurrent($orderEntity->getCaptainId()->getCaptainId());
 
         if ($financialSystemDetail) {
             if (count($financialSystemDetail) > 0) {
                 if ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST) {
                     $captainProfit = $this->captainFinancialDefaultSystemGetBalanceService->calculateCaptainFinancialAmountForSingleOrderByOrderDistance($oldDistance,
                         $financialSystemDetail);
+                    // Specific store on production may include delivery cost within order cost
+                    // delivery cost in this situation belongs to captain's profit
+                    if (($oldDistance != null) && ($oldDistance != 0)) {
+                        if ($orderEntity->getStoreOwner()->getId() == 361) {
+                            if ($oldDeliveryCost) {
+                                $captainProfit += $oldDeliveryCost;
+                            }
+                        }
+                    }
 
                     if ($captainProfit != 0.0) {
                         // subtract the value of the amount field of captain financial due
-                        $this->subtractValueFromCaptainFinancialDueAmount($captainUserId, $captainProfit, $orderCreatedAt);
+                        $this->subtractValueFromCaptainFinancialDueAmount($orderEntity->getCaptainId()->getCaptainId(),
+                            $captainProfit, $orderEntity->getCreatedAt());
                     }
 
                     // 2 According to new order distance, add order value to captain financial due
-                    $newCaptainProfit = $this->captainFinancialDefaultSystemGetBalanceService->calculateCaptainFinancialAmountForSingleOrderByOrderDistance($newDistance,
+                    $newCaptainProfit = $this->captainFinancialDefaultSystemGetBalanceService->calculateCaptainFinancialAmountForSingleOrderByOrderDistance($orderEntity->getStoreBranchToClientDistance(),
                         $financialSystemDetail);
+                    // Specific store on production may include delivery cost within order cost
+                    // delivery cost in this situation belongs to captain's profit
+                    if (($orderEntity->getStoreBranchToClientDistance() != null) && ($orderEntity->getStoreBranchToClientDistance() != 0)) {
+                        if ($orderEntity->getStoreOwner()->getId() == 361) {
+                            if ($orderEntity->getDeliveryCost()) {
+                                $newCaptainProfit += $orderEntity->getDeliveryCost();
+                            }
+                        }
+                    }
 
                     // update captain financial dues
-                    return $this->addValueToCaptainFinancialDueAmount($captainUserId, $newCaptainProfit, $orderCreatedAt);
+                    return $this->addValueToCaptainFinancialDueAmount($orderEntity->getCaptainId()->getCaptainId(),
+                        $newCaptainProfit, $orderEntity->getCreatedAt());
                 }
             }
         }

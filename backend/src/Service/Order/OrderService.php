@@ -650,7 +650,6 @@ class OrderService
                 // update captain financial due
                 $this->captainFinancialDuesService->captainFinancialDues($request->getCaptainId()->getCaptainId(),
                     $order->getId(), $order->getCreatedAt());
-
                 // Create or update captain financial daily amount
                 $this->createOrUpdateCaptainFinancialDaily($order->getId());
                 // Create or update captain order financial
@@ -1897,10 +1896,13 @@ class OrderService
         return $this->orderManager->getOrderById($orderId);
     }
 
-    public function updateStoreBranchToClientDistanceByAddNewDistance(OrderStoreBranchToClientDistanceUpdateRequest $request): OrderEntity|string
-    {
-        return $this->orderManager->updateStoreBranchToClientDistanceByAddNewDistance($request);
-    }
+    /**
+     * Following function commented out because it isn't being used anywhere
+     */
+//    public function updateStoreBranchToClientDistanceByAddNewDistance(OrderStoreBranchToClientDistanceUpdateRequest $request): OrderEntity|string
+//    {
+//        return $this->orderManager->updateStoreBranchToClientDistanceByAddNewDistance($request);
+//    }
 
     public function getStoreBranchToClientDistanceByOrderId(int $orderId): float|string
     {

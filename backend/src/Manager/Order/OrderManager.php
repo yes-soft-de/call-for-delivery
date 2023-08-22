@@ -22,7 +22,6 @@ use App\Request\Order\OrderDeliveryCostUpdateRequest;
 use App\Request\Order\OrderFilterByCaptainRequest;
 use App\Request\Order\OrderFilterRequest;
 use App\Request\Order\OrderCreateRequest;
-use App\Request\Order\OrderStoreBranchToClientDistanceUpdateRequest;
 use App\Request\Order\OrderUpdateByCaptainRequest;
 use App\Request\OrderTimeLine\OrderLogsCreateRequest;
 use Doctrine\ORM\EntityManagerInterface;
@@ -672,21 +671,24 @@ class OrderManager
         return $this->orderRepository->filterCashOrdersPaidOrNotByStore($request);
     }
 
-    public function updateStoreBranchToClientDistanceByAddNewDistance(OrderStoreBranchToClientDistanceUpdateRequest $request): string|OrderEntity
-    {
-        $orderEntity = $this->orderRepository->findOneBy(['id' => $request->getId()]);
-
-        if (! $orderEntity) {
-            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
-        }
-
-        $orderEntity = $this->autoMapping->mapToObject(OrderStoreBranchToClientDistanceUpdateRequest::class, OrderEntity::class,
-            $request, $orderEntity);
-
-        $this->entityManager->flush();
-
-        return $orderEntity;
-    }
+    /**
+     * Following function commented out because it isn't being used anywhere
+     */
+//    public function updateStoreBranchToClientDistanceByAddNewDistance(OrderStoreBranchToClientDistanceUpdateRequest $request): string|OrderEntity
+//    {
+//        $orderEntity = $this->orderRepository->findOneBy(['id' => $request->getId()]);
+//
+//        if (! $orderEntity) {
+//            return OrderResultConstant::ORDER_NOT_FOUND_RESULT;
+//        }
+//
+//        $orderEntity = $this->autoMapping->mapToObject(OrderStoreBranchToClientDistanceUpdateRequest::class, OrderEntity::class,
+//            $request, $orderEntity);
+//
+//        $this->entityManager->flush();
+//
+//        return $orderEntity;
+//    }
 
     public function getStoreBranchToClientDistanceByOrderId(int $orderId): float|string|null
     {
