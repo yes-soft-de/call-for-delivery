@@ -217,18 +217,22 @@ class CaptainFinancialDuesManager
             $dateTimeInterface);
     }
 
-    public function subtractValueFromCaptainFinancialDueAmountByCaptainFinancialDueEntity(CaptainFinancialDuesEntity $captainFinancialDuesEntity, float $value): CaptainFinancialDuesEntity
+    public function subtractValueFromCaptainFinancialDueAmountByCaptainFinancialDueEntity(CaptainFinancialDuesEntity $captainFinancialDuesEntity, float $value, float $advancedAmountFromCashOrder): CaptainFinancialDuesEntity
     {
         $captainFinancialDuesEntity->setAmount($captainFinancialDuesEntity->getAmount() - $value);
+        $captainFinancialDuesEntity->setAdvancedAmountsFromCashOrders($captainFinancialDuesEntity->getAmount()
+            - $advancedAmountFromCashOrder);
 
         $this->entityManager->flush();
 
         return $captainFinancialDuesEntity;
     }
 
-    public function addValueToCaptainFinancialDueAmount(CaptainFinancialDuesEntity $captainFinancialDuesEntity, float $value): CaptainFinancialDuesEntity|int
+    public function addValueToCaptainFinancialDueAmount(CaptainFinancialDuesEntity $captainFinancialDuesEntity, float $value, float $advancedAmountFromCashOrder): CaptainFinancialDuesEntity|int
     {
         $captainFinancialDuesEntity->setAmount($captainFinancialDuesEntity->getAmount() + $value);
+        $captainFinancialDuesEntity->setAdvancedAmountsFromCashOrders($captainFinancialDuesEntity->getAdvancedAmountsFromCashOrders()
+            + $advancedAmountFromCashOrder);
 
         $this->entityManager->flush();
 

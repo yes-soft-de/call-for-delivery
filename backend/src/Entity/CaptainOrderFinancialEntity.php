@@ -42,6 +42,9 @@ class CaptainOrderFinancialEntity
     #[ORM\ManyToOne(targetEntity: CaptainFinancialDuesEntity::class, inversedBy: 'captainOrderFinancialEntities')]
     private $captainFinancialDue;
 
+    #[ORM\Column(type: 'float', options: ["default" => 0])]
+    private $advancedAmountFromCashOrder;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -139,6 +142,18 @@ class CaptainOrderFinancialEntity
     public function setCaptainFinancialDue(?CaptainFinancialDuesEntity $captainFinancialDue): self
     {
         $this->captainFinancialDue = $captainFinancialDue;
+
+        return $this;
+    }
+
+    public function getAdvancedAmountFromCashOrder(): ?float
+    {
+        return $this->advancedAmountFromCashOrder;
+    }
+
+    public function setAdvancedAmountFromCashOrder(float $advancedAmountFromCashOrder): self
+    {
+        $this->advancedAmountFromCashOrder = $advancedAmountFromCashOrder;
 
         return $this;
     }

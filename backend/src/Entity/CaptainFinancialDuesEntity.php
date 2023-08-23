@@ -52,6 +52,9 @@ class CaptainFinancialDuesEntity
     #[ORM\OneToMany(mappedBy: 'captainFinancialDue', targetEntity: CaptainOrderFinancialEntity::class)]
     private $captainOrderFinancialEntities;
 
+    #[ORM\Column(type: 'float', nullable: true)]
+    private $advancedAmountsFromCashOrders;
+
     public function __construct()
     {
         $this->captainPaymentEntities = new ArrayCollection();
@@ -258,6 +261,18 @@ class CaptainFinancialDuesEntity
                 $captainOrderFinancialEntity->setCaptainFinancialDue(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAdvancedAmountsFromCashOrders(): ?float
+    {
+        return $this->advancedAmountsFromCashOrders;
+    }
+
+    public function setAdvancedAmountsFromCashOrders(?float $advancedAmountsFromCashOrders): self
+    {
+        $this->advancedAmountsFromCashOrders = $advancedAmountsFromCashOrders;
 
         return $this;
     }
