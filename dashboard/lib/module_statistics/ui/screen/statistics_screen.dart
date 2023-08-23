@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
@@ -20,6 +22,7 @@ class StatisticsScreen extends StatefulWidget {
 class StatisticsScreenState extends State<StatisticsScreen> {
   late States state;
   late StatisticsStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
 
   void refresh() {
     if (mounted) {
@@ -31,7 +34,7 @@ class StatisticsScreenState extends State<StatisticsScreen> {
   void initState() {
     state = LoadingState(this);
     _stateManager = getIt<StatisticsStateManager>();
-    _stateManager.stateStream.listen((event) {
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       state = event;
       if (this.mounted) {
         setState(() {});
@@ -90,6 +93,7 @@ class StatisticsScreenState extends State<StatisticsScreen> {
 
   @override
   void dispose() {
+    _stateSubscription.cancel();
     _stateManager.dispose();
     super.dispose();
   }

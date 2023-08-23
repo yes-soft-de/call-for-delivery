@@ -3,6 +3,7 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/captains_module.dart';
 import 'package:c4d/module_captain/ui/screen/captains_list_screen.dart';
+import 'package:c4d/module_captain/ui/screen/in_active_captains_screen.dart';
 import 'package:c4d/module_categories/categories_module.dart';
 import 'package:c4d/module_company/company_module.dart';
 import 'package:c4d/module_dev/dev_module.dart';
@@ -170,7 +171,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                   customListTile(CaptainsScreen(), S.current.captains,
                       FontAwesomeIcons.solidListAlt, true),
                   customListTile(
-                      getIt<CaptainsModule>().inActiveCaptains,
+                      InActiveCaptainsScreen(),
                       S.current.inActiveCaptains,
                       FontAwesomeIcons.solidAddressCard,
                       true),

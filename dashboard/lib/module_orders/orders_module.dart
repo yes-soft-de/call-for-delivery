@@ -25,7 +25,6 @@ class OrdersModule extends YesModule {
   final OrderPendingScreen pendingScreen;
   final UpdateOrderScreen updateOrderScreen;
   final NewOrderScreen newOrderScreen;
-  final OrderCaptainLogsScreen orderCaptainLogsScreen;
   final OrderActionLogsScreen orderActionLogsScreen;
   final OrdersWithoutDistanceScreen ordersWithoutDistanceScreen;
   final OrdersReceiveCashScreen ordersReceiveCashScreen;
@@ -41,7 +40,6 @@ class OrdersModule extends YesModule {
     this.updateOrderScreen,
     this.pendingScreen,
     this.newOrderScreen,
-    this.orderCaptainLogsScreen,
     this.orderActionLogsScreen,
     this.ordersWithoutDistanceScreen,
     this.ordersReceiveCashScreen,
@@ -61,7 +59,7 @@ class OrdersModule extends YesModule {
       OrdersRoutes.PENDING_ORDERS_SCREEN: (context) => pendingScreen,
       OrdersRoutes.UPDATE_ORDERS_SCREEN: (context) => updateOrderScreen,
       OrdersRoutes.NEW_ORDER_SCREEN: (context) => newOrderScreen,
-      OrdersRoutes.CAPTAIN_ORDERS_SCREEN: (context) => orderCaptainLogsScreen,
+      OrdersRoutes.CAPTAIN_ORDERS_SCREEN: (context) => OrderCaptainLogsScreen(),
       OrdersRoutes.ORDERS_ACTIONS_LOGS_SCREEN: (context) =>
           orderActionLogsScreen,
       OrdersRoutes.ORDERS_RECEIVE_CASH: (context) => orderActionLogsScreen,

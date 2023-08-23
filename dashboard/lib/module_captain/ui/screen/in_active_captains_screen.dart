@@ -1,5 +1,6 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
@@ -9,11 +10,8 @@ import 'package:c4d/module_captain/state_manager/in_active_captains_state_manage
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 
-@injectable
 class InActiveCaptainsScreen extends StatefulWidget {
-  final InActiveCaptainsStateManager _stateManager;
-
-  InActiveCaptainsScreen(this._stateManager);
+  InActiveCaptainsScreen();
 
   @override
   InActiveCaptainsScreenState createState() => InActiveCaptainsScreenState();
@@ -21,15 +19,18 @@ class InActiveCaptainsScreen extends StatefulWidget {
 
 class InActiveCaptainsScreenState extends State<InActiveCaptainsScreen> {
   late States currentState;
+  late InActiveCaptainsStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
 
   @override
   void initState() {
     currentState = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt<InActiveCaptainsStateManager>();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       refresh();
     });
-    widget._stateManager.getCaptains(this);
+    _stateManager.getCaptains(this);
     getIt<GlobalStateManager>().stateStream.listen((event) {
       getCaptains();
     });
@@ -37,7 +38,7 @@ class InActiveCaptainsScreenState extends State<InActiveCaptainsScreen> {
   }
 
   void getCaptains() {
-    widget._stateManager.getCaptains(this);
+    _stateManager.getCaptains(this);
   }
 
   void refresh() {
@@ -55,5 +56,12 @@ class InActiveCaptainsScreenState extends State<InActiveCaptainsScreen> {
       }),
       body: currentState.getUI(context),
     );
+  }
+
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
   }
 }

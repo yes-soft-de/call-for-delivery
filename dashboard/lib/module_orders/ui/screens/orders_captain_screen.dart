@@ -11,16 +11,12 @@ import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:intl/intl.dart';
 
-@injectable
 class OrderCaptainLogsScreen extends StatefulWidget {
-  final OrderCaptainLogsStateManager _stateManager;
-
-  OrderCaptainLogsScreen(this._stateManager);
+  OrderCaptainLogsScreen();
 
   @override
   OrderCaptainLogsScreenState createState() => OrderCaptainLogsScreenState();
@@ -28,8 +24,9 @@ class OrderCaptainLogsScreen extends StatefulWidget {
 
 class OrderCaptainLogsScreenState extends State<OrderCaptainLogsScreen> {
   late States currentState;
+  late OrderCaptainLogsStateManager _stateManager;
   int currentIndex = 0;
-  StreamSubscription? _stateSubscription;
+  late StreamSubscription _stateSubscription;
 
   void refresh() {
     if (mounted) {
@@ -47,13 +44,14 @@ class OrderCaptainLogsScreenState extends State<OrderCaptainLogsScreen> {
   void initState() {
     super.initState();
     currentState = LoadingState(this);
+    _stateManager = getIt<OrderCaptainLogsStateManager>();
     ordersFilter = FilterOrderRequest(
         state: 'ongoing',
         captainID: ArgumentHiveHelper().getCurrentCaptainID(),
         fromDate: DateTime(today.year, today.month, today.day, 0),
         toDate: DateTime.now());
-    widget._stateManager.getOrdersFilters(this, ordersFilter);
-    _stateSubscription = widget._stateManager.stateStream.listen((event) {
+    _stateManager.getOrdersFilters(this, ordersFilter);
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -63,14 +61,15 @@ class OrderCaptainLogsScreenState extends State<OrderCaptainLogsScreen> {
 
   @override
   void dispose() {
-    _stateSubscription?.cancel();
+    _stateSubscription.cancel();
+    _stateManager.dispose();
     super.dispose();
   }
 
   late FilterOrderRequest ordersFilter;
   Future<void> getOrders([bool loading = true]) async {
     ordersFilter.payment = payment;
-    widget._stateManager.getOrdersFilters(this, ordersFilter, loading);
+    _stateManager.getOrdersFilters(this, ordersFilter, loading);
   }
 
   String? payment;
@@ -103,7 +102,9 @@ class OrderCaptainLogsScreenState extends State<OrderCaptainLogsScreen> {
                                   width: double.maxFinite,
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(25),
-                                      color: Theme.of(context).backgroundColor),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .background),
                                   child: Padding(
                                     padding: const EdgeInsets.only(
                                         left: 16.0, right: 16),
@@ -166,7 +167,7 @@ class OrderCaptainLogsScreenState extends State<OrderCaptainLogsScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
-                        color: Theme.of(context).backgroundColor,
+                        color: Theme.of(context).colorScheme.background,
                       ),
                       child: Material(
                         color: Colors.transparent,
@@ -213,14 +214,14 @@ class OrderCaptainLogsScreenState extends State<OrderCaptainLogsScreen> {
                     child: Container(
                       width: 32,
                       height: 2.5,
-                      color: Theme.of(context).backgroundColor,
+                      color: Theme.of(context).colorScheme.background,
                     ),
                   ),
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
-                        color: Theme.of(context).backgroundColor,
+                        color: Theme.of(context).colorScheme.background,
                       ),
                       child: Material(
                         color: Colors.transparent,
@@ -271,7 +272,7 @@ class OrderCaptainLogsScreenState extends State<OrderCaptainLogsScreen> {
             FilterBar(
               cursorRadius: BorderRadius.circular(25),
               animationDuration: Duration(milliseconds: 350),
-              backgroundColor: Theme.of(context).backgroundColor,
+              backgroundColor: Theme.of(context).colorScheme.background,
               currentIndex: currentIndex,
               borderRadius: BorderRadius.circular(25),
               floating: true,
@@ -290,8 +291,8 @@ class OrderCaptainLogsScreenState extends State<OrderCaptainLogsScreen> {
                 currentIndex = index;
                 getOrders();
               },
-              selectedContent: Theme.of(context).textTheme.button!.color!,
-              unselectedContent: Theme.of(context).textTheme.headline6!.color!,
+              selectedContent: Theme.of(context).textTheme.labelLarge!.color!,
+              unselectedContent: Theme.of(context).textTheme.titleLarge!.color!,
             ),
             Visibility(
                 visible: payment != null,
