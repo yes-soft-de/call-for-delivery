@@ -653,7 +653,7 @@ class OrderService
                 // Create or update captain financial daily amount
                 $this->createOrUpdateCaptainFinancialDaily($order->getId());
                 // Create or update captain order financial
-                $this->createOrUpdateCaptainOrderFinancial($order->getId());
+                // $this->createOrUpdateCaptainOrderFinancial($order->getId());
                 // Update subscription cost of the store's subscription
                 $this->handleUpdatingStoreSubscriptionCost($order->getStoreOwner()->getId(), $order->getCreatedAt(),
                     SubscriptionConstant::OPERATION_TYPE_ADDITION, $order->getDeliveryCost());

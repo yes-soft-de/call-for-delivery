@@ -159,7 +159,11 @@ class CaptainFinancialDefaultSystemGetBalanceService
             $response['sinceLastPaymentFinancialAmount'] = round($response['sinceLastPaymentFinancialAmount'], 1);
 
             // ** sinceLastPaymentRemainFinancialAmount = sinceLastPaymentFinancialAmount - sinceLastPaymentCashOrderAmount
-            $response['sinceLastPaymentRemainFinancialAmount'] = $response['sinceLastPaymentFinancialAmount'] - $response['sinceLastPaymentCashOrderAmount'];
+            // Captain final profit = (captain profit - (cash amount + delivery cost))
+            $response['sinceLastPaymentRemainFinancialAmount'] = $response['sinceLastPaymentFinancialAmount']
+                - ($response['sinceLastPaymentCashOrderAmount']
+                    + ($captainFinancialDue->getAdvancedAmountsFromCashOrders()));
+
             $response['sinceLastPaymentRemainFinancialAmount'] = round($response['sinceLastPaymentRemainFinancialAmount'], 1);
 
         }
@@ -188,6 +192,7 @@ class CaptainFinancialDefaultSystemGetBalanceService
 
         // cash orders sum (which will be forwarded from captain to administration
         $response['amountForStore'] = 0.0;
+        $response['advancedAmountsFromCashOrders'] = 0.0;
 
         return $response;
     }
@@ -213,9 +218,11 @@ class CaptainFinancialDefaultSystemGetBalanceService
         // Specific store on production may include delivery cost within order cost
         // delivery cost in this situation belongs to captain's profit
         if (($order->getStoreBranchToClientDistance() !== null) && ($order->getStoreBranchToClientDistance() != 0)) {
-            if ($order->getStoreOwner()->getId() == 361) {
+            if (($order->getStoreOwner()->getId() == 361)) {
                 if ($order->getDeliveryCost()) {
-                    $response['financialDues'] = $response['financialDues'] + $order->getDeliveryCost();
+                    $response['advancedAmountsFromCashOrders'] = $order->getDeliveryCost() - $response['financialDues'];
+
+                    $response['advancedAmountsFromCashOrders'] = round($response['advancedAmountsFromCashOrders'], 1);
                 }
             }
         }

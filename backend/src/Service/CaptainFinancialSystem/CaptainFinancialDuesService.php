@@ -408,6 +408,8 @@ class CaptainFinancialDuesService
     {
         $captainFinancialDues->setAmount($captainFinancialDues->getAmount() + $financialDues['financialDues']);
         $captainFinancialDues->setAmountForStore($captainFinancialDues->getAmountForStore() + $financialDues['amountForStore']);
+        $captainFinancialDues->setAdvancedAmountsFromCashOrders($captainFinancialDues->getAdvancedAmountsFromCashOrders()
+            + $financialDues['advancedAmountsFromCashOrders']);
 
         return $this->captainFinancialDuesManager->updateCaptainFinancialDues($captainFinancialDues);
     }
@@ -430,6 +432,7 @@ class CaptainFinancialDuesService
                     $captainOrderFinancial->setCashAmount($financialDueArray['amountForStore']);
                     $captainOrderFinancial->setFinalProfit($financialDueArray['financialDues'] - $financialDueArray['amountForStore']);
                     $captainOrderFinancial->setCaptainFinancialDue($captainFinancialDuesEntity);
+                    $captainOrderFinancial->setAdvancedAmountFromCashOrder($financialDueArray['advancedAmountsFromCashOrders']);
 
                     $this->entityManager->persist($captainOrderFinancial);
                     $this->entityManager->flush();
@@ -473,6 +476,7 @@ class CaptainFinancialDuesService
                                 } else {
                                     $captainOrderFinancial->setProfit($financialDues['financialDues']);
                                     $captainOrderFinancial->setCashAmount($financialDues['amountForStore']);
+                                    $captainOrderFinancial->setAdvancedAmountFromCashOrder($financialDues['advancedAmountsFromCashOrders']);
                                     $captainOrderFinancial->setFinalProfit($financialDues['financialDues'] - $financialDues['amountForStore']);
 
                                     $this->entityManager->flush();
@@ -523,7 +527,7 @@ class CaptainFinancialDuesService
         return $captainFinancialDue[0];
     }
 
-    public function subtractValueFromCaptainFinancialDueAmount(int $captainUserId, float $value, DateTimeInterface $orderCreatedAt): CaptainFinancialDuesEntity|int
+    public function subtractValueFromCaptainFinancialDueAmount(int $captainUserId, float $value, DateTimeInterface $orderCreatedAt, ?float $advancedAmountFromCashOrder = null): CaptainFinancialDuesEntity|int
     {
         // 1 get captain financial due
         $captainFinancialDue = $this->getCaptainFinancialDuesByCaptainUserIdAndOrderCreationDate($captainUserId, $orderCreatedAt);
@@ -534,10 +538,10 @@ class CaptainFinancialDuesService
 
         // 2 update captain financial due
         return $this->captainFinancialDuesManager->subtractValueFromCaptainFinancialDueAmountByCaptainFinancialDueEntity($captainFinancialDue,
-            $value);
+            $value, $advancedAmountFromCashOrder);
     }
 
-    public function addValueToCaptainFinancialDueAmount(int $captainUserId, float $value, DateTimeInterface $orderCreatedAt): CaptainFinancialDuesEntity|int
+    public function addValueToCaptainFinancialDueAmount(int $captainUserId, float $value, DateTimeInterface $orderCreatedAt, ?float $advancedAmountFromCashOrder = null): CaptainFinancialDuesEntity|int
     {
         // 1 get captain financial due
         $captainFinancialDue = $this->getCaptainFinancialDuesByCaptainUserIdAndOrderCreationDate($captainUserId, $orderCreatedAt);
@@ -547,7 +551,7 @@ class CaptainFinancialDuesService
         }
 
         // 2 update captain financial due
-        return $this->captainFinancialDuesManager->addValueToCaptainFinancialDueAmount($captainFinancialDue, $value);
+        return $this->captainFinancialDuesManager->addValueToCaptainFinancialDueAmount($captainFinancialDue, $value, $advancedAmountFromCashOrder);
     }
 
     /**
@@ -567,12 +571,13 @@ class CaptainFinancialDuesService
                 if ($financialSystemDetail['captainFinancialSystemType'] === CaptainFinancialSystem::CAPTAIN_FINANCIAL_DEFAULT_SYSTEM_CONST) {
                     $captainProfit = $this->captainFinancialDefaultSystemGetBalanceService->calculateCaptainFinancialAmountForSingleOrderByOrderDistance($oldDistance,
                         $financialSystemDetail);
+                    $advancedAmountFromCashOrder = 0.0;
                     // Specific store on production may include delivery cost within order cost
                     // delivery cost in this situation belongs to captain's profit
                     if (($oldDistance != null) && ($oldDistance != 0)) {
                         if ($orderEntity->getStoreOwner()->getId() == 361) {
                             if ($oldDeliveryCost) {
-                                $captainProfit += $oldDeliveryCost;
+                                $advancedAmountFromCashOrder = $oldDeliveryCost - $captainProfit;
                             }
                         }
                     }
@@ -580,7 +585,7 @@ class CaptainFinancialDuesService
                     if ($captainProfit != 0.0) {
                         // subtract the value of the amount field of captain financial due
                         $this->subtractValueFromCaptainFinancialDueAmount($orderEntity->getCaptainId()->getCaptainId(),
-                            $captainProfit, $orderEntity->getCreatedAt());
+                            $captainProfit, $orderEntity->getCreatedAt(), $advancedAmountFromCashOrder);
                     }
 
                     // 2 According to new order distance, add order value to captain financial due
@@ -591,14 +596,14 @@ class CaptainFinancialDuesService
                     if (($orderEntity->getStoreBranchToClientDistance() != null) && ($orderEntity->getStoreBranchToClientDistance() != 0)) {
                         if ($orderEntity->getStoreOwner()->getId() == 361) {
                             if ($orderEntity->getDeliveryCost()) {
-                                $newCaptainProfit += $orderEntity->getDeliveryCost();
+                                $advancedAmountFromCashOrder = $orderEntity->getDeliveryCost() - $newCaptainProfit;
                             }
                         }
                     }
 
                     // update captain financial dues
                     return $this->addValueToCaptainFinancialDueAmount($orderEntity->getCaptainId()->getCaptainId(),
-                        $newCaptainProfit, $orderEntity->getCreatedAt());
+                        $newCaptainProfit, $orderEntity->getCreatedAt(), $advancedAmountFromCashOrder);
                 }
             }
         }

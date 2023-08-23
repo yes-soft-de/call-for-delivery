@@ -190,7 +190,10 @@ class AdminCaptainFinancialDuesService
             $response = $this->autoMapping->map(CaptainFinancialDuesEntity::class, CaptainFinancialDueUnpaidStatusGetForAdminResponse::class,
                 $captainFinancialDue[0]);
 
-            $response->finalAmount = $response->amount - $response->amountForStore;
+            $response->finalAmount = $response->amount -
+                ($response->amountForStore + $captainFinancialDue[0]->getAdvancedAmountsFromCashOrders());
+
+            $response->finalAmount = round($response->finalAmount, 1);
 
             if ($captainPayment !== CaptainPaymentResultConstant::CAPTAIN_PAYMENT_NOT_EXIST) {
                 $response->lastPaymentId = $captainPayment->getId();
