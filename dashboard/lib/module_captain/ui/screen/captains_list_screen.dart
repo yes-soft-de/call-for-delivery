@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:c4d/di/di_config.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -9,10 +7,7 @@ import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_captain/state_manager/captain_list.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 
-import '../../../utils/global/global_state_manager.dart';
-
 class CaptainsScreen extends StatefulWidget {
-
   CaptainsScreen();
 
   @override
@@ -22,7 +17,6 @@ class CaptainsScreen extends StatefulWidget {
 class CaptainsScreenState extends State<CaptainsScreen> {
   late States currentState;
   late CaptainsStateManager _stateManager;
-  StreamSubscription? stateSubscription;
   @override
   void initState() {
     currentState = LoadingState(this);
@@ -31,9 +25,7 @@ class CaptainsScreenState extends State<CaptainsScreen> {
       currentState = event;
       refresh();
     });
-   stateSubscription =  getIt<GlobalStateManager>().stateStream.listen((event) {
-      getCaptains();
-    });
+
     _stateManager.getCaptains(this);
     super.initState();
   }
@@ -58,9 +50,9 @@ class CaptainsScreenState extends State<CaptainsScreen> {
       body: currentState.getUI(context),
     );
   }
+
   @override
   void dispose() {
-    stateSubscription?.cancel();
     _stateManager.dispose();
     super.dispose();
   }

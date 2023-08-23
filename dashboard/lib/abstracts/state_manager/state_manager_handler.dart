@@ -1,3 +1,13 @@
+import 'package:c4d/abstracts/states/state.dart';
+import 'package:flutter/material.dart';
+import 'package:rxdart/rxdart.dart';
+
 abstract class StateManagerHandler {
-  void dispose();
+  @protected
+  final PublishSubject<States> stateSubject = PublishSubject();
+
+  @mustCallSuper
+  void dispose() {
+    stateSubject.close();
+  }
 }

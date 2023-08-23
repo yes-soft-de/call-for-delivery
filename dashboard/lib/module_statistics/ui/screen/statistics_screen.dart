@@ -1,5 +1,6 @@
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
@@ -8,13 +9,9 @@ import 'package:c4d/module_statistics/state_manager/statistics_state_manager.dar
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class StatisticsScreen extends StatefulWidget {
-  final StatisticsStateManager _stateManager;
-
-  const StatisticsScreen(this._stateManager);
+  const StatisticsScreen();
 
   @override
   State<StatisticsScreen> createState() => StatisticsScreenState();
@@ -22,6 +19,7 @@ class StatisticsScreen extends StatefulWidget {
 
 class StatisticsScreenState extends State<StatisticsScreen> {
   late States state;
+  late StatisticsStateManager _stateManager;
 
   void refresh() {
     if (mounted) {
@@ -32,7 +30,8 @@ class StatisticsScreenState extends State<StatisticsScreen> {
   @override
   void initState() {
     state = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt<StatisticsStateManager>();
+    _stateManager.stateStream.listen((event) {
       state = event;
       if (this.mounted) {
         setState(() {});
@@ -43,7 +42,7 @@ class StatisticsScreenState extends State<StatisticsScreen> {
   }
 
   void getStatistics() {
-    widget._stateManager.getStatistics(this);
+    _stateManager.getStatistics(this);
   }
 
   @override
@@ -87,5 +86,11 @@ class StatisticsScreenState extends State<StatisticsScreen> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _stateManager.dispose();
+    super.dispose();
   }
 }

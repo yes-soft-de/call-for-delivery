@@ -15,7 +15,7 @@ import 'package:c4d/module_notice/notice_module.dart';
 import 'package:c4d/module_orders/orders_module.dart';
 import 'package:c4d/module_payments/payments_module.dart';
 import 'package:c4d/module_settings/settings_module.dart';
-import 'package:c4d/module_statistics/ui/statistics_module.dart';
+import 'package:c4d/module_statistics/ui/screen/statistics_screen.dart';
 import 'package:c4d/module_stores/stores_module.dart';
 import 'package:c4d/module_supplier/supplier_module.dart';
 import 'package:c4d/module_supplier_categories/categories_supplier_module.dart';
@@ -114,8 +114,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                   : BorderRadius.horizontal(right: Radius.circular(12))),
           child: ListView(children: [
             drawerHeader,
-            customListTile(getIt<StatisticsModule>().statisticsScreen,
-                S.current.home, FontAwesomeIcons.home),
+            customListTile(
+                StatisticsScreen(), S.current.home, FontAwesomeIcons.home),
             // order
             customExpansionTile(
                 title: S.current.orders,
@@ -167,8 +167,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.captains,
                 icon: FontAwesomeIcons.car,
                 children: [
-                  customListTile(CaptainsScreen(),
-                      S.current.captains, FontAwesomeIcons.solidListAlt, true),
+                  customListTile(CaptainsScreen(), S.current.captains,
+                      FontAwesomeIcons.solidListAlt, true),
                   customListTile(
                       getIt<CaptainsModule>().inActiveCaptains,
                       S.current.inActiveCaptains,
