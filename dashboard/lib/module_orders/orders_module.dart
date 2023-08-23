@@ -26,7 +26,6 @@ class OrdersModule extends YesModule {
   final UpdateOrderScreen updateOrderScreen;
   final NewOrderScreen newOrderScreen;
   final OrderActionLogsScreen orderActionLogsScreen;
-  final OrdersWithoutDistanceScreen ordersWithoutDistanceScreen;
   final OrdersReceiveCashScreen ordersReceiveCashScreen;
   final SubOrdersScreen subOrdersScreen;
   final NewOrderLinkScreen addNewOrderLinkScreen;
@@ -41,7 +40,6 @@ class OrdersModule extends YesModule {
     this.pendingScreen,
     this.newOrderScreen,
     this.orderActionLogsScreen,
-    this.ordersWithoutDistanceScreen,
     this.ordersReceiveCashScreen,
     this.subOrdersScreen,
     this.addNewOrderLinkScreen,

@@ -14,6 +14,7 @@ import 'package:c4d/module_external_delivery_companies/service/external_delivery
 import 'package:c4d/module_external_delivery_companies/ui/widgets/show_confirm_dialog.dart';
 import 'package:c4d/module_notice/notice_module.dart';
 import 'package:c4d/module_orders/orders_module.dart';
+import 'package:c4d/module_orders/ui/screens/orders_without_distance_screen.dart';
 import 'package:c4d/module_payments/payments_module.dart';
 import 'package:c4d/module_settings/settings_module.dart';
 import 'package:c4d/module_statistics/ui/screen/statistics_screen.dart';
@@ -135,7 +136,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 icon: Icons.report,
                 children: [
                   customListTile(
-                      getIt<OrdersModule>().ordersWithoutDistanceScreen,
+                      OrdersWithoutDistanceScreen(),
                       S.current.orderWithoutDistance,
                       Icons.edit_road_rounded,
                       true),

@@ -10,16 +10,12 @@ import 'package:c4d/module_orders/state_manager/orders_without_distance_state_ma
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:intl/intl.dart';
 
-@injectable
 class OrdersWithoutDistanceScreen extends StatefulWidget {
-  final OrderWithoutDistanceStateManager _stateManager;
-
-  OrdersWithoutDistanceScreen(this._stateManager);
+  OrdersWithoutDistanceScreen();
 
   @override
   OrdersWithoutDistanceScreenState createState() =>
@@ -30,10 +26,13 @@ class OrdersWithoutDistanceScreenState
     extends State<OrdersWithoutDistanceScreen> {
   late States currentState;
   int currentIndex = 0;
+  late OrderWithoutDistanceStateManager _stateManager;
   StreamSubscription? _stateSubscription;
-  OrderWithoutDistanceStateManager get manager => widget._stateManager;
+  
+  OrderWithoutDistanceStateManager get manager => _stateManager;
+
   void updateDistance(UpdateDistanceRequest request) {
-    widget._stateManager.updateDistance(this, request);
+    _stateManager.updateDistance(this, request);
   }
 
   void refresh() {
@@ -48,11 +47,11 @@ class OrdersWithoutDistanceScreenState
   }
 
   void addKilometer(AddExtraDistanceRequest request) {
-    widget._stateManager.addKilometer(this, request);
+    _stateManager.addKilometer(this, request);
   }
 
   void addCoordinates(AddExtraDistanceRequest request) {
-    widget._stateManager.addCoordinates(this, request);
+    _stateManager.addCoordinates(this, request);
   }
 
   var today = DateTime.now();
@@ -63,8 +62,9 @@ class OrdersWithoutDistanceScreenState
     ordersFilter = FilterOrderRequest(
         fromDate: DateTime(today.year, today.month, today.day, 0),
         toDate: DateTime.now());
-    widget._stateManager.getOrdersWithoutDistance(this, ordersFilter);
-    _stateSubscription = widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateManager.getOrdersWithoutDistance(this, ordersFilter);
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -75,12 +75,13 @@ class OrdersWithoutDistanceScreenState
   @override
   void dispose() {
     _stateSubscription?.cancel();
+    _stateManager.dispose();
     super.dispose();
   }
 
   late FilterOrderRequest ordersFilter;
   Future<void> getOrders([bool loading = true]) async {
-    widget._stateManager.getOrdersWithoutDistance(this, ordersFilter, loading);
+    _stateManager.getOrdersWithoutDistance(this, ordersFilter, loading);
   }
 
   @override
