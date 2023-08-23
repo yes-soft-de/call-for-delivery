@@ -100,7 +100,6 @@ use App\Service\ChatRoom\OrderChatRoomService;
 use App\Service\ExternallyDeliveredOrder\ExternallyDeliveredOrderGetService;
 use App\Service\ExternallyDeliveredOrder\ExternallyDeliveredOrderService;
 use App\Service\ExternallyDeliveredOrderHandle\ExternallyDeliveredOrderHandleService;
-use App\Service\ExternalOrderGetHandler\ExternalOrderGetHandlerService;
 use App\Service\FileUpload\UploadFileHelperService;
 use App\Service\GeoDistance\GeoDistanceService;
 use App\Service\Notification\DashboardLocalNotification\DashboardLocalNotificationService;
@@ -1329,7 +1328,7 @@ class AdminOrderService
                         // Create or update daily captain financial amount
                         $this->createOrUpdateCaptainFinancialDaily($orderResult[0]->getId());
                         // Create or update captain order financial
-                        $this->createOrUpdateCaptainOrderFinancial($orderResult[0]->getId());
+                        // $this->createOrUpdateCaptainOrderFinancial($orderResult[0]->getId());
                         // Update subscription cost of the store's subscription
                         $this->handleUpdatingStoreSubscriptionCost($orderResult[0]->getStoreOwner()->getId(),
                             $orderResult[0]->getCreatedAt(), SubscriptionConstant::OPERATION_TYPE_ADDITION,
@@ -1597,7 +1596,6 @@ class AdminOrderService
                 if ($orderEntity[0]->getCaptainId()?->getCaptainId()) {
                     $this->updateCaptainFinancialDueAfterOrderDistanceUpdating($orderEntity[0], $currentOrderStoreBranchToClientDistance,
                         $orderEntity[1]);
-
                     // Re-calculate daily captain financial due
                     $this->createOrUpdateCaptainFinancialDaily($order->getId());
                     // Update captain's profit of the single order
