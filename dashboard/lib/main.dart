@@ -92,7 +92,7 @@ void main() async {
     DeviceOrientation.portraitUp,
   ]).then((_) async {
     FlutterError.onError = (FlutterErrorDetails details) async {
-      Logger().error('Main', details.toString(), StackTrace.current);
+      Logger.error('Main', details.toString(), StackTrace.current);
     };
     await runZonedGuarded(() {
       configureDependencies();
@@ -100,7 +100,7 @@ void main() async {
       runApp(getIt<MyApp>());
     }, (error, stackTrace) {
       print(error);
-      new Logger().error(
+      Logger.error(
           'Main', error.toString() + stackTrace.toString(), StackTrace.current);
     });
   });

@@ -19,7 +19,7 @@ class CarsResponse {
       }
     } catch (e) {
       statusCode = '-1';
-      Logger().error('Cars Response', e.toString(), StackTrace.current);
+      Logger.error('Cars Response', e.toString(), StackTrace.current);
     }
   }
   String? statusCode;

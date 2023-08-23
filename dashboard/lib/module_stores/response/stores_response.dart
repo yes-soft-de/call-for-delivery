@@ -19,7 +19,7 @@ class StoresResponse {
       });
     }
     try {} catch (e) {
-      Logger().error('stores response', '${e.toString()}', StackTrace.current);
+      Logger.error('stores response', '${e.toString()}', StackTrace.current);
       statusCode = '-1';
     }
   }

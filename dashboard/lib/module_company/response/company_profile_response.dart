@@ -14,7 +14,7 @@ class CompanyProfileResponse {
       data = Data.fromJson(json['Data']);
     }
     try {} catch (e) {
-      Logger().error('Company Response', e.toString(), StackTrace.current);
+      Logger.error('Company Response', e.toString(), StackTrace.current);
       statusCode = '-1';
     }
   }

@@ -19,7 +19,7 @@ class PackagesResponse {
       }
     } catch (e) {
       statusCode = '-1';
-      Logger().error('Packages Response', e.toString(), StackTrace.current);
+      Logger.error('Packages Response', e.toString(), StackTrace.current);
     }
   }
   String? statusCode;

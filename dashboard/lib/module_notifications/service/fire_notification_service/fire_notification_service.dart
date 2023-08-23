@@ -62,7 +62,7 @@ class FireNotificationService {
         _notificationRepo.postToken(token);
         FirebaseMessaging.onMessage.listen((RemoteMessage message) {
           _onNotificationReceived.add(message);
-          Logger().info('FireNotificationService', 'onMessage: $message');
+          Logger.info('FireNotificationService', 'onMessage: $message');
         });
         FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
           NotificationModel notificationModel =

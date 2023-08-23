@@ -20,13 +20,13 @@ class UploadRepository {
       'image': kIsWeb ? multi : await MultipartFile.fromFile(filePath),
     });
 
-    Logger().info('UploadRepo', 'Uploading: ' + filePath);
+    Logger.info('UploadRepo', 'Uploading: ' + filePath);
     try {
       Response? response = await client.post(
         Urls.UPLOAD_API,
         data: data,
       );
-      Logger().info('Got a Response', response.toString());
+      Logger.info('Got a Response', response.toString());
       return ImgBBResponse(url: response.data);
     } catch (e) {
       return null;
@@ -45,13 +45,13 @@ class UploadRepository {
       'file': kIsWeb ? multi : await MultipartFile.fromFile(filePath),
     });
 
-    Logger().info('UploadRepo', 'Uploading: ' + filePath);
+    Logger.info('UploadRepo', 'Uploading: ' + filePath);
     try {
       Response? response = await client.post(
         Urls.UPLOAD_PDF_API,
         data: data,
       );
-      Logger().info('Got a Response', response.toString());
+      Logger.info('Got a Response', response.toString());
       return ImgBBResponse(url: response.data);
     } catch (e) {
       return null;

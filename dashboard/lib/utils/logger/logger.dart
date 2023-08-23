@@ -7,7 +7,7 @@ import 'package:flutter/foundation.dart' show kDebugMode, kIsWeb;
 @injectable
 @singleton
 class Logger {
-  void info(String tag, String msg) {
+  static void info(String tag, String msg) {
     String time = DateTime.now().toString();
 
     if (_shouldPrintLog())
@@ -17,14 +17,14 @@ class Logger {
       );
   }
 
-  void warn(String tag, String msg) {
+  static void warn(String tag, String msg) {
     String time = DateTime.now().toString();
 
     if (_shouldPrintLog())
       log('\x1B[33m$time: \t $tag \t $msg\x1B[0m', name: tag);
   }
 
-  void error(String tag, String msg, StackTrace? trace) {
+  static void error(String tag, String msg, StackTrace? trace) {
     String time = DateTime.now().toString();
     if (_shouldPrintLog())
       log(
@@ -43,7 +43,7 @@ class Logger {
     }
   }
 
-  bool _shouldPrintLog() {
+  static bool _shouldPrintLog() {
     if (!kDebugMode) return true;
     return true;
   }

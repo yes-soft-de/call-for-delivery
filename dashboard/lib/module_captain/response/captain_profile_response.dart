@@ -14,7 +14,7 @@ class CaptainProfileResponse {
       msg = json['msg'];
       data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
     } catch (e) {
-      Logger().error('Captain Profile', e.toString(), StackTrace.current);
+      Logger.error('Captain Profile', e.toString(), StackTrace.current);
       statusCode = '-1';
     }
   }

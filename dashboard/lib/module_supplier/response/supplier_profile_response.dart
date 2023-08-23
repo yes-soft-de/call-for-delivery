@@ -16,7 +16,7 @@ class SupplierProfileResponse {
           ? DataSupplierProfile.fromJson(json['Data'])
           : null;
     } catch (e) {
-      Logger().error('Supplier Profile', e.toString(), StackTrace.current);
+      Logger.error('Supplier Profile', e.toString(), StackTrace.current);
       statusCode = '-1';
     }
   }

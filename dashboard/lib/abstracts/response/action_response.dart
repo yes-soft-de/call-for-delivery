@@ -13,7 +13,7 @@ class ActionResponse {
       msg = json['msg'];
       data = json['Data'];
     } catch (e) {
-      Logger().error('Response', e.toString(), StackTrace.current);
+      Logger.error('Response', e.toString(), StackTrace.current);
       statusCode = '-1';
     }
   }

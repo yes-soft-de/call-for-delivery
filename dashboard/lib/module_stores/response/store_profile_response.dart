@@ -13,7 +13,7 @@ class StoreProfileResponse {
     msg = json['msg'];
     data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
     try {} catch (e) {
-      Logger().error('Store Profile', e.toString(), StackTrace.current);
+      Logger.error('Store Profile', e.toString(), StackTrace.current);
       statusCode = '-1';
     }
   }
