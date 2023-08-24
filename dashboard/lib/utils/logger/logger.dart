@@ -44,7 +44,7 @@ class Logger {
   }
 
   static bool _shouldPrintLog() {
-    if (!kDebugMode) return true;
+    if (!kDebugMode) return false;
     return true;
   }
 }
