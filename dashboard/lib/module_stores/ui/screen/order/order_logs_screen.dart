@@ -1,24 +1,22 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
+import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:c4d/module_notice/ui/widget/filter_bar.dart';
 import 'package:c4d/module_stores/model/store_profile_model.dart';
 import 'package:c4d/module_stores/request/order_filter_request.dart';
-import 'package:c4d/utils/components/custom_feild.dart';
-import '../../../state_manager/order/order_logs_state_manager.dart';
+import 'package:c4d/module_stores/state_manager/order/order_logs_state_manager.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
-import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:intl/intl.dart';
 
-@injectable
 class OrderLogsScreen extends StatefulWidget {
-  final OrderLogsStateManager _stateManager;
-
-  OrderLogsScreen(this._stateManager);
+  OrderLogsScreen();
 
   @override
   OrderLogsScreenState createState() => OrderLogsScreenState();
@@ -26,9 +24,13 @@ class OrderLogsScreen extends StatefulWidget {
 
 class OrderLogsScreenState extends State<OrderLogsScreen> {
   late States currentState;
+  late OrderLogsStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   int currentIndex = 0;
   bool geoKilo = false;
   bool isExternalFilterOn = false;
+
   void refresh() {
     if (mounted) {
       setState(() {});
@@ -47,7 +49,8 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
   void initState() {
     super.initState();
     currentState = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -57,10 +60,18 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
 
   late FilterOrderRequest ordersFilter;
   Future<void> getOrders([bool loading = true]) async {
-    widget._stateManager.getOrdersFilters(this, ordersFilter, loading);
+    _stateManager.getOrdersFilters(this, ordersFilter, loading);
   }
 
   StoreProfileModel? store;
+
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     if (storeID == -1) {
@@ -73,7 +84,7 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
             state: 'pending',
             fromDate: DateTime(today.year, today.month, today.day, 0),
             toDate: DateTime.now());
-        widget._stateManager.getOrdersFilters(this, ordersFilter);
+        _stateManager.getOrdersFilters(this, ordersFilter);
       }
     }
     return Scaffold(

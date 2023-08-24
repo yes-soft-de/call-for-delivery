@@ -2,6 +2,7 @@ import 'package:c4d/consts/urls.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/captains_module.dart';
+import 'package:c4d/module_captain/ui/screen/captain_dues_screen.dart';
 import 'package:c4d/module_captain/ui/screen/captains_list_screen.dart';
 import 'package:c4d/module_captain/ui/screen/in_active_captains_screen.dart';
 import 'package:c4d/module_categories/categories_module.dart';
@@ -19,6 +20,7 @@ import 'package:c4d/module_payments/payments_module.dart';
 import 'package:c4d/module_settings/settings_module.dart';
 import 'package:c4d/module_statistics/ui/screen/statistics_screen.dart';
 import 'package:c4d/module_stores/stores_module.dart';
+import 'package:c4d/module_stores/ui/screen/stores_screen.dart';
 import 'package:c4d/module_supplier/supplier_module.dart';
 import 'package:c4d/module_supplier_categories/categories_supplier_module.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
@@ -183,8 +185,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.stores,
                 icon: FontAwesomeIcons.store,
                 children: [
-                  customListTile(getIt<StoresModule>().storesScreen,
-                      S.current.storesList, Icons.storefront_rounded, true),
+                  customListTile(StoresScreen(), S.current.storesList,
+                      Icons.storefront_rounded, true),
                   customListTile(
                       getIt<StoresModule>().storesInActiveScreen,
                       S.current.storesInActive,
@@ -318,8 +320,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.duesPayments,
                 icon: FontAwesomeIcons.moneyBillTransfer,
                 children: [
-                  customListTile(getIt<CaptainsModule>().captainDuesScreen,
-                      S.current.captainDues, FontAwesomeIcons.moneyBills, true),
+                  customListTile(CaptainDuesScreen(), S.current.captainDues,
+                      FontAwesomeIcons.moneyBills, true),
                   customListTile(
                       getIt<StoresModule>().storesDuesScreen,
                       S.current.storesCashRequest,

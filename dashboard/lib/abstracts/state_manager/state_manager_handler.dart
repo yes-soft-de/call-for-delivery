@@ -10,6 +10,7 @@ abstract class StateManagerHandler {
   @mustCallSuper
   void dispose() {
     stateSubject.close();
-    Logger.info('StateManagement', '${this.runtimeType} disposed successfully');
+    Logger.info(
+        'StateManagement', '\n\n${this.runtimeType} disposed successfully\n\n');
   }
 }

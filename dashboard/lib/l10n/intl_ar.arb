@@ -923,7 +923,7 @@
     "deliveryOnly": "سعر التوصيل فقط",
     "orderCostAndDelivery": "سعر الطلب والتوصيل",
     "cutOrderForStore": "احتساب الطلب على المتجر",
-    "giveCaptainHalfProfit": "احتساب نصف قيمة الطلب على الكابتن",
+    "giveCaptainHalfProfit": "احتساب نصف قيمة الطلب الى الكابتن",
     "allOrders": "كل الطلبات",
     "lastSevenDays": "اخر سبع ايام",
     "last3Active": "اخر 3 فعالين",

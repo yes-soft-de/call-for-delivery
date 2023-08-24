@@ -3,6 +3,7 @@ import 'package:c4d/module_captain/ui/screen/captains_list_screen.dart';
 import 'package:c4d/module_captain/ui/screen/in_active_captains_screen.dart';
 import 'package:c4d/module_orders/orders_module.dart';
 import 'package:c4d/module_stores/stores_module.dart';
+import 'package:c4d/module_stores/ui/screen/stores_screen.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -29,7 +30,7 @@ class GlobalStateManager {
   }
 
   void goToStores() {
-    _stateSubject.add(getIt<StoresModule>().storesScreen);
+    _stateSubject.add(StoresScreen());
   }
 
   void goToInActiveStores() {

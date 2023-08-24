@@ -27,10 +27,9 @@ class CaptainsModule extends YesModule {
   final CaptinRatingDetailsScreen captainsRatingsDetailsScreen;
   final CaptainsActivityScreen captainsActivityScreen;
   final CaptainActivityDetailsScreen captainsActivityDetailsScreen;
-  final CaptainDuesScreen captainDuesScreen;
+
   CaptainsModule(
     this.captainOffersScreen,
-
     this.captainProfileScreen,
     this.supportScreen,
     this.planScreen,
@@ -39,7 +38,6 @@ class CaptainsModule extends YesModule {
     this.captainsRatingsDetailsScreen,
     this.captainsActivityScreen,
     this.captainsActivityDetailsScreen,
-    this.captainDuesScreen,
   ) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
@@ -58,7 +56,7 @@ class CaptainsModule extends YesModule {
       CaptainsRoutes.CAPTAIN_ACTIVITY: (context) => captainsActivityScreen,
       CaptainsRoutes.CAPTAIN_ACTIVITY_DETAILS: (context) =>
           captainsActivityDetailsScreen,
-      CaptainsRoutes.CAPTAIN_DUES: (context) => captainDuesScreen,
+      CaptainsRoutes.CAPTAIN_DUES: (context) => CaptainDuesScreen(),
     };
   }
 }
