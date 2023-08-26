@@ -124,6 +124,7 @@ dependencies:
   bubble_tab_indicator: ^0.1.6
   group_button: ^5.2.2
   card_swiper: ^2.0.4
+  flutter_chat_ui: ^1.6.9
   simple_moment:
     git:
       url: https://github.com/Yazan99sh/simple_moment

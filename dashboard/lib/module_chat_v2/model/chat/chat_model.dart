@@ -1,6 +1,6 @@
 class ChatModel {
   String? sender;
-  int? sentDate;
+  dynamic sentDate;
   String? msg;
   String? id;
   /// 1 for text , 2 for images
@@ -19,7 +19,7 @@ class ChatModel {
       sentDate = DateTime.tryParse(jsonData['sentDate'])?.millisecondsSinceEpoch;
     }
     if (jsonData['sentDate'] is int) {
-      sentDate =  DateTime.fromMillisecondsSinceEpoch(jsonData['sentDate'] ?? 1).toLocal().millisecondsSinceEpoch;
+      sentDate =  DateTime.fromMillisecondsSinceEpoch(jsonData['sentDate'] ?? 1).millisecondsSinceEpoch;
       print(jsonData['sentDate']);
     }
     messageType = jsonData['messageType'];

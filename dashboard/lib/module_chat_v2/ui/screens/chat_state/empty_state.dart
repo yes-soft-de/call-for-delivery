@@ -1,6 +1,6 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/module_chat_v2/manager/chat/chat_manager.dart';
-import 'package:c4d/module_chat_v2/model/chat_argument.dart';
+import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_chat_v2/state_manager/chat_state_manager.dart';
 import 'package:c4d/module_chat_v2/ui/widget/chat_writer/chat_writer.dart';
 import 'package:flutter/material.dart';

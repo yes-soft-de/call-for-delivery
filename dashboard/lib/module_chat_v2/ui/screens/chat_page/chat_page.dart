@@ -3,7 +3,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_chat_v2/model/chat/chat_model.dart';
-import 'package:c4d/module_chat_v2/model/chat_argument.dart';
+import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_chat_v2/presistance/chat_hive_helper.dart';
 import 'package:c4d/module_chat_v2/state_manager/chat_state_manager.dart';
 import 'package:c4d/module_chat_v2/ui/widget/image_dialog_picker.dart';

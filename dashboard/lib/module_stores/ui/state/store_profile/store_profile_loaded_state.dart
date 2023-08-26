@@ -10,6 +10,7 @@ import 'package:c4d/module_stores/request/active_store_request.dart';
 import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_stores/ui/screen/store_info_screen.dart';
 import 'package:c4d/module_subscriptions/subscriptions_routes.dart';
+import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
@@ -250,7 +251,7 @@ class StoreProfileLoadedState extends States {
               image: ImageAsset.CHAT,
               title: S.of(context).chatRoom,
               onTapCard: () {
-                Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
+                Navigator.of(context).pushNamed(ThemePreferencesHelper().getChatRoute(),
                     arguments: ChatArgument(
                         roomID: profile?.roomId ?? '',
                         userID: profile?.storeId,

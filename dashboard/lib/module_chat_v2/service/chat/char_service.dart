@@ -1,6 +1,6 @@
 import 'package:c4d/module_chat_v2/manager/chat/chat_manager.dart';
 import 'package:c4d/module_chat_v2/model/chat/chat_model.dart';
-import 'package:c4d/module_chat_v2/model/chat_argument.dart';
+import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -32,7 +32,7 @@ class Chat2Service {
     ChatModel model = ChatModel(
       msg: msg,
       sender: username,
-      sentDate: millisecond,
+      sentDate: DateTime.fromMillisecondsSinceEpoch(millisecond).toUtc(),
       id: id,
       messageType: messageType
     );

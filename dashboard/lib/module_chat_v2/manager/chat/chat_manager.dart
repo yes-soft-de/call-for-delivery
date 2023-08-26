@@ -1,5 +1,5 @@
 import 'package:c4d/module_chat_v2/model/chat/chat_model.dart';
-import 'package:c4d/module_chat_v2/model/chat_argument.dart';
+import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_chat_v2/repository/chat/chat_repository.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:injectable/injectable.dart';
