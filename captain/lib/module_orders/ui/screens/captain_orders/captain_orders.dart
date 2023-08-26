@@ -5,10 +5,10 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_chat/chat_routes.dart';
-import 'package:c4d/module_chat/model/chat_argument.dart';
-import 'package:c4d/module_chat/presistance/chat_hive_helper.dart';
-import 'package:c4d/module_chat/repository/chat/chat_repository.dart';
+import 'package:c4d/module_chat_v2/chat_routes.dart';
+import 'package:c4d/module_chat_v2/model/chat_argument.dart';
+import 'package:c4d/module_chat_v2/presistance/chat_hive_helper.dart';
+import 'package:c4d/module_chat_v2/repository/chat/chat_repository.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:c4d/module_notifications/preferences/notification_preferences/notification_preferences.dart';
@@ -103,7 +103,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
 
   subscribeToDirectSupportMessages(String roomID) {
     _supportMessages =
-        getIt<ChatRepository>().requestMessages(roomID).listen((event) {
+        getIt<Chat2Repository>().listenToMessages(roomID).listen((event) {
       try {
         Map<String, dynamic> lastMessage =
             event.docs.last.data() as Map<String, dynamic>;
@@ -260,7 +260,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
                                 _lastMessageFromSupportDate ?? '');
                       }
                       if (_currentProfile != null) {
-                        Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
+                        Navigator.of(context).pushNamed(Chat2Routes.chat2Route,
                             arguments: ChatArgument(
                                 roomID: _currentProfile!.roomID ?? '',
                                 userType: 'Admin'));

@@ -3,9 +3,9 @@ import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/module_chat/chat_routes.dart';
-import 'package:c4d/module_chat/model/chat_argument.dart';
-import 'package:c4d/module_chat/presistance/chat_hive_helper.dart';
+import 'package:c4d/module_chat_v2/chat_routes.dart';
+import 'package:c4d/module_chat_v2/model/chat_argument.dart';
+import 'package:c4d/module_chat_v2/presistance/chat_hive_helper.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/model/roomId/room_id_model.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
@@ -93,7 +93,7 @@ class OrderStatusStateManager {
         getOrderDetails(orderId, screenState);
         if (value.isEmpty == false) {
           value as RoomId;
-          Navigator.of(screenState.context).pushNamed(ChatRoutes.chatRoute,
+          Navigator.of(screenState.context).pushNamed(Chat2Routes.chat2Route,
               arguments: ChatArgument(
                   roomID: value.roomId ?? '',
                   userType: 'store',
@@ -227,7 +227,7 @@ class OrderStatusStateManager {
                         var roomID = ChatHiveHelper().getDirectSupport();
                         if (roomID != null) {
                           Navigator.of(context).pushNamed(
-                            ChatRoutes.chatRoute,
+                            Chat2Routes.chat2Route,
                             arguments:
                                 ChatArgument(roomID: roomID, userType: 'Admin'),
                           );

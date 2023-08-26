@@ -7,15 +7,15 @@ import 'chat_routes.dart';
 import 'ui/screens/chat_page/chat_page.dart';
 
 @injectable
-class ChatModule extends YesModule {
-  final ChatPage _chatPage;
+class Chat2Module extends YesModule {
+  final Chat2Page _chatPage;
   final AuthService _authService;
 
-  ChatModule(this._chatPage, this._authService) {
+  Chat2Module(this._chatPage, this._authService) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
 
   Map<String, WidgetBuilder> getRoutes() {
-    return {ChatRoutes.chatRoute: (context) => _chatPage};
+    return {Chat2Routes.chat2Route: (context) => _chatPage};
   }
 }

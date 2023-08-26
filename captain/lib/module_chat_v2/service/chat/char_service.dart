@@ -1,14 +1,14 @@
+import 'package:c4d/module_chat_v2/manager/chat/chat_manager.dart';
+import 'package:c4d/module_chat_v2/model/chat/chat_model.dart';
+import 'package:c4d/module_chat_v2/model/chat_argument.dart';
 import 'package:injectable/injectable.dart';
-import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:rxdart/rxdart.dart';
-import 'package:c4d/module_chat/manager/chat/chat_manager.dart';
-import 'package:c4d/module_chat/model/chat/chat_model.dart';
 
 @injectable
-class ChatService {
-  final ChatManager _chatManager;
+class Chat2Service {
+  final Chat2Manager _chatManager;
 
-  ChatService(this._chatManager);
+  Chat2Service(this._chatManager);
 
   // This is Real Time, That is Why I went this way
   final PublishSubject<List<ChatModel>> _chatPublishSubject = PublishSubject();
@@ -27,11 +27,14 @@ class ChatService {
     });
   }
 
-  void sendMessage(String chatRoomID, String msg, String username) async {
+  void sendMessage(String chatRoomID, String msg, String username,
+      int millisecond, String id,int messageType) async {
     ChatModel model = ChatModel(
       msg: msg,
       sender: username,
-      sentDate: DateTime.now().toString(),
+      sentDate: millisecond,
+      id: id,
+      messageType: messageType
     );
     _chatManager.sendMessage(chatRoomID, model);
   }

@@ -1,16 +1,16 @@
 import 'package:another_flushbar/flushbar.dart';
+import 'package:c4d/module_chat_v2/model/chat_argument.dart';
+import 'package:c4d/module_chat_v2/state_manager/chat_state_manager.dart';
+import 'package:c4d/module_chat_v2/ui/widget/chat_writer/chat_writer.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
-import 'package:c4d/module_chat/model/chat_argument.dart';
-import 'package:c4d/module_chat/state_manager/chat_state_manager.dart';
-import 'package:c4d/module_chat/ui/widget/chat_writer/chat_writer.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 
 class LoadingChatPage extends StatelessWidget {
-  final ChatStateManager _chatStateManager;
+  final Chat2StateManager _chatStateManager;
   final ImageUploadService _uploadService;
   final AuthService _authService;
 

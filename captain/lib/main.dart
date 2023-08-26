@@ -2,8 +2,9 @@
 import 'dart:async';
 import 'dart:io' as p;
 import 'package:c4d/module_about/about_module.dart';
-import 'package:c4d/module_chat/chat_routes.dart';
-import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:c4d/module_chat_v2/chat_module.dart';
+import 'package:c4d/module_chat_v2/chat_routes.dart';
+import 'package:c4d/module_chat_v2/model/chat_argument.dart';
 import 'package:c4d/module_init/init_account_module.dart';
 import 'package:c4d/module_my_notifications/my_notifications_module.dart';
 import 'package:c4d/module_notifications/model/notification_model.dart';
@@ -21,7 +22,6 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/hive/hive_init.dart';
 import 'package:c4d/module_auth/authoriazation_module.dart';
-import 'package:c4d/module_chat/chat_module.dart';
 import 'package:c4d/module_localization/service/localization_service/localization_service.dart';
 import 'package:c4d/module_notifications/service/fire_notification_service/fire_notification_service.dart';
 import 'package:c4d/module_settings/settings_module.dart';
@@ -92,7 +92,7 @@ class MyApp extends StatefulWidget {
   final SplashModule _splashModule;
   final AuthorizationModule _authorizationModule;
   final SettingsModule _settingsModule;
-  final ChatModule _chatModule;
+  final Chat2Module _chatModule;
   final AboutModule _aboutModule;
   final InitAccountModule _initAccountModule;
   final ProfileModule _profileModule;
@@ -152,7 +152,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     });
     widget._localNotificationService.onLocalNotificationStream.listen((event) {
       NotificationModel notificationModel = NotificationModel.fromJson(event);
-      if (notificationModel.navigateRoute == ChatRoutes.chatRoute) {
+      if (notificationModel.navigateRoute == Chat2Routes.chat2Route) {
         Navigator.pushNamed(GlobalVariable.navState.currentContext!,
             notificationModel.navigateRoute ?? '',
             arguments: ChatArgument(

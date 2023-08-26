@@ -1,7 +1,7 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
-import 'package:c4d/module_chat/chat_routes.dart';
-import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:c4d/module_chat_v2/chat_routes.dart';
+import 'package:c4d/module_chat_v2/model/chat_argument.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/ui/screens/order_status/order_status_without_actions.dart';
@@ -670,7 +670,7 @@ class OrderDetailsCaptainWithoutActionsOrderLoadedState extends States {
               subtitle: S.current.chatWithStoreOwner,
               title: S.current.chatRoom,
               onTap: () {
-                Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
+                Navigator.of(context).pushNamed(Chat2Routes.chat2Route,
                     arguments: ChatArgument(
                         roomID: orderInfo.roomID ?? '',
                         userType: 'store',

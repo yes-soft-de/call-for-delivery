@@ -35,13 +35,13 @@ import '../module_auth/ui/screen/forget_password_screen/forget_password_screen.d
     as _i52;
 import '../module_auth/ui/screen/login_screen/login_screen.dart' as _i56;
 import '../module_auth/ui/screen/register_screen/register_screen.dart' as _i66;
-import '../module_chat/chat_module.dart' as _i101;
-import '../module_chat/manager/chat/chat_manager.dart' as _i48;
-import '../module_chat/presistance/chat_hive_helper.dart' as _i7;
-import '../module_chat/repository/chat/chat_repository.dart' as _i29;
-import '../module_chat/service/chat/char_service.dart' as _i49;
-import '../module_chat/state_manager/chat_state_manager.dart' as _i50;
-import '../module_chat/ui/screens/chat_page/chat_page.dart' as _i80;
+import '../module_chat_v2/chat_module.dart' as _i101;
+import '../module_chat_v2/manager/chat/chat_manager.dart' as _i48;
+import '../module_chat_v2/presistance/chat_hive_helper.dart' as _i7;
+import '../module_chat_v2/repository/chat/chat_repository.dart' as _i29;
+import '../module_chat_v2/service/chat/char_service.dart' as _i49;
+import '../module_chat_v2/state_manager/chat_state_manager.dart' as _i50;
+import '../module_chat_v2/ui/screens/chat_page/chat_page.dart' as _i80;
 import '../module_deep_links/repository/deep_link_repository.dart' as _i30;
 import '../module_init/init_account_module.dart' as _i103;
 import '../module_init/manager/init_account/init_account.manager.dart' as _i53;
@@ -213,7 +213,7 @@ _i1.GetIt $initGetIt(
         gh<_i5.AuthPrefsHelper>(),
         gh<_i27.AuthManager>(),
       ));
-  gh.factory<_i29.ChatRepository>(() => _i29.ChatRepository(
+  gh.factory<_i29.Chat2Repository>(() => _i29.Chat2Repository(
         gh<_i21.ApiClient>(),
         gh<_i28.AuthService>(),
       ));
@@ -270,11 +270,12 @@ _i1.GetIt $initGetIt(
       () => _i46.AboutService(gh<_i45.AboutManager>()));
   gh.factory<_i47.CaptainBalanceManager>(
       () => _i47.CaptainBalanceManager(gh<_i40.PackageBalanceRepository>()));
-  gh.factory<_i48.ChatManager>(
-      () => _i48.ChatManager(gh<_i29.ChatRepository>()));
-  gh.factory<_i49.ChatService>(() => _i49.ChatService(gh<_i48.ChatManager>()));
-  gh.factory<_i50.ChatStateManager>(
-      () => _i50.ChatStateManager(gh<_i49.ChatService>()));
+  gh.factory<_i48.Chat2Manager>(
+      () => _i48.Chat2Manager(gh<_i29.Chat2Repository>()));
+  gh.factory<_i49.Chat2Service>(
+      () => _i49.Chat2Service(gh<_i48.Chat2Manager>()));
+  gh.factory<_i50.Chat2StateManager>(
+      () => _i50.Chat2StateManager(gh<_i49.Chat2Service>()));
   gh.factory<_i51.FireNotificationService>(() => _i51.FireNotificationService(
         gh<_i16.NotificationsPrefHelper>(),
         gh<_i36.NotificationRepo>(),
@@ -367,8 +368,8 @@ _i1.GetIt $initGetIt(
           ));
   gh.factory<_i79.CaptainOrdersScreen>(
       () => _i79.CaptainOrdersScreen(gh<_i78.CaptainOrdersListStateManager>()));
-  gh.factory<_i80.ChatPage>(() => _i80.ChatPage(
-        gh<_i50.ChatStateManager>(),
+  gh.factory<_i80.Chat2Page>(() => _i80.Chat2Page(
+        gh<_i50.Chat2StateManager>(),
         gh<_i32.ImageUploadService>(),
         gh<_i28.AuthService>(),
         gh<_i7.ChatHiveHelper>(),
@@ -425,8 +426,8 @@ _i1.GetIt $initGetIt(
   gh.factory<_i100.CaptainFinancialDuesScreen>(() =>
       _i100.CaptainFinancialDuesScreen(
           gh<_i77.CaptainFinancialDuesStateManager>()));
-  gh.factory<_i101.ChatModule>(() => _i101.ChatModule(
-        gh<_i80.ChatPage>(),
+  gh.factory<_i101.Chat2Module>(() => _i101.Chat2Module(
+        gh<_i80.Chat2Page>(),
         gh<_i28.AuthService>(),
       ));
   gh.factory<_i102.EditProfileScreen>(
@@ -474,7 +475,7 @@ _i1.GetIt $initGetIt(
         gh<_i11.LocalNotificationService>(),
         gh<_i68.SplashModule>(),
         gh<_i76.AuthorizationModule>(),
-        gh<_i101.ChatModule>(),
+        gh<_i101.Chat2Module>(),
         gh<_i93.SettingsModule>(),
         gh<_i111.AboutModule>(),
         gh<_i103.InitAccountModule>(),
