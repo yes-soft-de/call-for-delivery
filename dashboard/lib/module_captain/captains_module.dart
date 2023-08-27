@@ -19,7 +19,6 @@ import 'ui/screen/captains_offer_screen.dart';
 @injectable
 class CaptainsModule extends YesModule {
   final CaptainOffersScreen captainOffersScreen;
-  final CaptainProfileScreen captainProfileScreen;
   final CaptainsNeedsSupportScreen supportScreen;
   final PlanScreen planScreen;
   final CaptainAssignOrderScreen captainAssignOrderScreen;
@@ -30,7 +29,6 @@ class CaptainsModule extends YesModule {
 
   CaptainsModule(
     this.captainOffersScreen,
-    this.captainProfileScreen,
     this.supportScreen,
     this.planScreen,
     this.captainAssignOrderScreen,
@@ -45,7 +43,7 @@ class CaptainsModule extends YesModule {
     return {
       CaptainsRoutes.OFFER: (context) => captainOffersScreen,
       CaptainsRoutes.CAPTAINS: (context) => CaptainsScreen(),
-      CaptainsRoutes.CAPTAIN_PROFILE: (context) => captainProfileScreen,
+      CaptainsRoutes.CAPTAIN_PROFILE: (context) => CaptainProfileScreen(),
       CaptainsRoutes.IN_ACTIVE_CAPTAINS: (context) => InActiveCaptainsScreen(),
       CaptainsRoutes.CAPTAIN_SUPPORT: (context) => supportScreen,
       CaptainsRoutes.CAPTAIN_PLAN: (context) => planScreen,
