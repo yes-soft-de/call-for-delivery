@@ -15,6 +15,7 @@ class ChatBubbleWidget extends StatefulWidget {
   final bool me;
   final bool isAdmin;
   final String? username;
+
   ChatBubbleWidget({
     Key? key,
     required this.message,
@@ -95,20 +96,37 @@ class ChatBubbleWidgetState extends State<ChatBubbleWidget> {
                                   width: 240,
                                 ),
                               )
-                            : SelectableLinkify(
-                                onOpen: (link) async {
-                                  if (await canLaunch(link.url)) {
-                                    await launch(link.url);
-                                  } else {
-                                    Fluttertoast.showToast(msg: 'Invalid link');
-                                  }
-                                },
-                                text: '${widget.message}',
-                                textAlign: reg.hasMatch(widget.message)
-                                    ? TextAlign.right
-                                    : TextAlign.left,
-                                style: TextStyle(fontWeight: FontWeight.w400),
-                              ),
+                            : widget.message.contains('image/')
+                                ? ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: CustomNetworkImage(
+                                      background: widget.me
+                                          ? Theme.of(context)
+                                              .primaryColor
+                                              .withOpacity(0.25)
+                                          : null,
+                                      imageSource:
+                                          Urls.IMAGES_ROOT + widget.message,
+                                      height: 250,
+                                      width: 240,
+                                    ),
+                                  )
+                                : SelectableLinkify(
+                                    onOpen: (link) async {
+                                      if (await canLaunch(link.url)) {
+                                        await launch(link.url);
+                                      } else {
+                                        Fluttertoast.showToast(
+                                            msg: 'Invalid link');
+                                      }
+                                    },
+                                    text: '${widget.message}',
+                                    textAlign: reg.hasMatch(widget.message)
+                                        ? TextAlign.right
+                                        : TextAlign.left,
+                                    style:
+                                        TextStyle(fontWeight: FontWeight.w400),
+                                  ),
                       ],
                     ),
                   ],

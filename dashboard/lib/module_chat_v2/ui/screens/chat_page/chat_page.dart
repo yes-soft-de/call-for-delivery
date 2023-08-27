@@ -89,7 +89,6 @@ class Chat2PageState extends State<Chat2Page> with WidgetsBindingObserver {
       child: Scaffold(
           appBar: CustomC4dAppBar.appBar(context, title: S.current.chatRoom),
           body: Chat(
-           timeFormat: DateFormat.jm('en'),
             onAttachmentPressed: () {
               showImageDialogPicker(context,
                   onGallery: () => _pickImageFromGallery(),
@@ -199,8 +198,10 @@ class Chat2PageState extends State<Chat2Page> with WidgetsBindingObserver {
 
   void _addNonExistingOnesToList(List<ChatModel> newChats) {
     newChats.sort((c, c1) {
-      return DateTime.fromMillisecondsSinceEpoch(c.sentDate ?? DateTime.now().millisecondsSinceEpoch)
-          .compareTo(DateTime.fromMillisecondsSinceEpoch(c1.sentDate ?? DateTime.now().millisecondsSinceEpoch));
+      return DateTime.fromMillisecondsSinceEpoch(
+              c.sentDate ?? DateTime.now().millisecondsSinceEpoch)
+          .compareTo(DateTime.fromMillisecondsSinceEpoch(
+              c1.sentDate ?? DateTime.now().millisecondsSinceEpoch));
     });
     int index = _messages.length - 1;
     if (index < 0) index = 0;
@@ -208,7 +209,7 @@ class Chat2PageState extends State<Chat2Page> with WidgetsBindingObserver {
       if (chatExist(newChats[i])) {
         continue;
       }
-      if (newChats[i].messageType == 1 || newChats[i].messageType == null) {
+      if ((newChats[i].messageType == 1 || newChats[i].messageType == null) && newChats[i].msg?.contains(Urls.IMAGES_ROOT) == false) {
         _messages.insert(
             0,
             types.TextMessage(
@@ -223,18 +224,34 @@ class Chat2PageState extends State<Chat2Page> with WidgetsBindingObserver {
                 firstName: newChats[i].sender ?? S.current.unknown,
               ),
             ));
-      } else {
+      } else if (newChats[i].messageType == 2 ||
+          newChats[i].msg?.contains(Urls.IMAGES_ROOT) == true) {
         _messages.insert(
             0,
             types.ImageMessage(
               createdAt: newChats[i].sentDate,
               name: newChats[i].msg?.split('/').last ?? S.current.unknown,
               size: 1024,
-              uri: Urls.IMAGES_ROOT + (newChats[i].msg ?? ''),
+              uri:newChats[i].msg?.contains(Urls.IMAGES_ROOT) == true ? newChats[i].msg! : Urls.IMAGES_ROOT + (newChats[i].msg ?? ''),
               id: newChats[i].id ??
                   newChats[i].sentDate?.toString() ??
                   const Uuid().v1(),
               type: types.MessageType.image,
+              author: types.User(
+                id: newChats[i].sender ?? S.current.unknown,
+                firstName: newChats[i].sender ?? S.current.unknown,
+              ),
+            ));
+      } else {
+        _messages.insert(
+            0,
+            types.TextMessage(
+              createdAt: newChats[i].sentDate,
+              text: newChats[i].msg ?? '',
+              id: newChats[i].id ??
+                  newChats[i].sentDate?.toString() ??
+                  const Uuid().v1(),
+              type: types.MessageType.text,
               author: types.User(
                 id: newChats[i].sender ?? S.current.unknown,
                 firstName: newChats[i].sender ?? S.current.unknown,
