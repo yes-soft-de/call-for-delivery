@@ -89,6 +89,7 @@ class Chat2PageState extends State<Chat2Page> with WidgetsBindingObserver {
       child: Scaffold(
           appBar: CustomC4dAppBar.appBar(context, title: S.current.chatRoom),
           body: Chat(
+           timeFormat: DateFormat.jm('en'),
             onAttachmentPressed: () {
               showImageDialogPicker(context,
                   onGallery: () => _pickImageFromGallery(),

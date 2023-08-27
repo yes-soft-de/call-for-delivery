@@ -32,7 +32,7 @@ class Chat2Service {
     ChatModel model = ChatModel(
       msg: msg,
       sender: username,
-      sentDate: DateTime.fromMillisecondsSinceEpoch(millisecond).toUtc().toIso8601String(),
+      sentDate: DateTime.fromMillisecondsSinceEpoch(millisecond).toIso8601String(),
       id: id,
       messageType: messageType
     );
