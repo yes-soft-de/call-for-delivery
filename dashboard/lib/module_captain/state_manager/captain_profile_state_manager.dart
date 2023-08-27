@@ -1,8 +1,8 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/module_captain/request/captain_finance_request.dart';
 import 'package:c4d/module_captain/request/enable_captain.dart';
 import 'package:c4d/module_captain/request/update_captain_request.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
@@ -15,31 +15,30 @@ import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 
 @injectable
-class CaptainProfileStateManager {
+class CaptainProfileStateManager extends StateManagerHandler {
   final CaptainsService _captainsService;
-  final PublishSubject<States> _stateSubject = PublishSubject();
 
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
 
   CaptainProfileStateManager(this._captainsService);
 
   void getCaptainProfile(CaptainProfileScreenState screenState, int captainId,
       [bool loading = true]) {
     if (loading) {
-      _stateSubject.add(LoadingState(screenState));
+      stateSubject.add(LoadingState(screenState));
     }
     _captainsService.getCaptainProfile(captainId).then((value) {
       if (value.hasError) {
-        _stateSubject.add(
+        stateSubject.add(
             CaptainProfileLoadedState(screenState, null, error: value.error));
       } else if (value.isEmpty) {
-        _stateSubject.add(
+        stateSubject.add(
             CaptainProfileLoadedState(screenState, null, empty: value.isEmpty));
       } else {
         ProfileModel _model = value as ProfileModel;
         _model = _model.data;
         _model.profileId = screenState.captainProfileId;
-        _stateSubject.add(CaptainProfileLoadedState(screenState, _model));
+        stateSubject.add(CaptainProfileLoadedState(screenState, _model));
       }
     });
   }
@@ -48,7 +47,7 @@ class CaptainProfileStateManager {
       int captainId, EnableCaptainRequest request,
       [bool loading = true]) {
     if (loading) {
-      _stateSubject.add(LoadingState(screenState));
+      stateSubject.add(LoadingState(screenState));
     }
     _captainsService.enableCaptain(request).then((value) {
       if (value.hasError) {
@@ -65,7 +64,7 @@ class CaptainProfileStateManager {
 
   void deleteCaptainProfile(
       CaptainProfileScreenState screenState, String captainID) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _captainsService.deleteCaptain(captainID).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
@@ -83,7 +82,7 @@ class CaptainProfileStateManager {
 
   void updateCaptainProfile(
       CaptainProfileScreenState screenState, UpdateCaptainRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _captainsService.updateCaptain(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
@@ -101,7 +100,7 @@ class CaptainProfileStateManager {
 
   void captainFinanceStatusPlan(CaptainProfileScreenState screenState,
       int captainId, CaptainFinanceRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _captainsService.captainFinancePlanStatus(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(

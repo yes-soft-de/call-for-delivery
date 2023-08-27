@@ -25,7 +25,6 @@ class StoresModule extends YesModule {
   final TopActiveStoreScreen topActiveStoreScreen;
   final StoreBalanceScreen storeBalanceScreen;
   final StoresNeedsSupportScreen supportScreen;
-  final OrderDetailsScreen _orderStatus;
   final OrderCaptainNotArrivedScreen captainNotArrivedScreen;
   final OrderTimeLineScreen orderTimeLineScreen;
   final OrdersTopActiveStoreScreen ordersTopActiveStoreScreen;
@@ -38,7 +37,6 @@ class StoresModule extends YesModule {
     this.storesInActiveScreen,
     this.storeBalanceScreen,
     this.supportScreen,
-    this._orderStatus,
     this.captainNotArrivedScreen,
     this.orderTimeLineScreen,
     this.topActiveStoreScreen,
@@ -56,7 +54,7 @@ class StoresModule extends YesModule {
       StoresRoutes.STORES_INACTIVE: (context) => storesInActiveScreen,
       StoresRoutes.STORE_BALANCE: (context) => storeBalanceScreen,
       StoresRoutes.STORE_SUPPORT: (context) => supportScreen,
-      StoresRoutes.ORDER_STATUS_SCREEN: (context) => _orderStatus,
+      StoresRoutes.ORDER_STATUS_SCREEN: (context) => OrderDetailsScreen(),
       StoresRoutes.LOGS_ORDERS_SCREEN: (context) => OrderLogsScreen(),
       StoresRoutes.ORDER_TIMELINE_SCREEN: (context) => orderTimeLineScreen,
       StoresRoutes.ORDER_CAPTAIN_SCREEN: (context) => captainNotArrivedScreen,
