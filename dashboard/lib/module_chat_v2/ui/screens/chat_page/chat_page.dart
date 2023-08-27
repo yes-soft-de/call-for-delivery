@@ -198,8 +198,8 @@ class Chat2PageState extends State<Chat2Page> with WidgetsBindingObserver {
 
   void _addNonExistingOnesToList(List<ChatModel> newChats) {
     newChats.sort((c, c1) {
-      return DateTime.fromMillisecondsSinceEpoch(c.sentDate!)
-          .compareTo(DateTime.fromMillisecondsSinceEpoch(c1.sentDate!));
+      return DateTime.fromMillisecondsSinceEpoch(c.sentDate ?? DateTime.now().millisecondsSinceEpoch)
+          .compareTo(DateTime.fromMillisecondsSinceEpoch(c1.sentDate ?? DateTime.now().millisecondsSinceEpoch));
     });
     int index = _messages.length - 1;
     if (index < 0) index = 0;

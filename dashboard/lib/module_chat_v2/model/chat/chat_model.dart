@@ -20,7 +20,6 @@ class ChatModel {
     }
     if (jsonData['sentDate'] is int) {
       sentDate =  DateTime.fromMillisecondsSinceEpoch(jsonData['sentDate'] ?? 1).millisecondsSinceEpoch;
-      print(jsonData['sentDate']);
     }
     messageType = jsonData['messageType'];
   }
