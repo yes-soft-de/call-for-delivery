@@ -16,6 +16,7 @@ import 'package:c4d/module_notifications/service/fire_notification_service/fire_
 import 'package:c4d/module_profile/model/daily_model.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:c4d/utils/logger/logger.dart';
@@ -128,7 +129,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   void initState() {
     super.initState();
     farOrders = NotificationsPrefHelper().getFarOrder();
-    canRequestOrder();
+    canRequestLocation();
     getIt<FireNotificationService>().refreshToken();
     currentState = LoadingState(this, picture: true);
     widget._stateManager.getProfile(this);
@@ -181,29 +182,56 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
     }
   }
 
-  void canRequestOrder() {
-    DeepLinksService.canRequestLocation().then((value) async {
-      if (value) {
-        Logger().info('Location enabled', '$value');
-        Geolocator.getPositionStream(
-            locationSettings: const LocationSettings(
-          distanceFilter: 1000,
-        )).listen((event) {
-          currentLocation = LatLng(event.latitude, event.longitude);
-          Logger().info('Location with us ',
-              currentLocation?.toJson().toString() ?? 'null');
-          if (mounted) {
-            setState(() {});
-          }
-        });
+  // to ignore calling [canRequestLocation()] when its not necessary
+  bool _requestLocationIsPausedNow = false;
+  // the delay between each geo request
+  Duration _requestLocationDelayDuration = const Duration(seconds: 10);
+
+  void canRequestLocation() {
+    try {
+      if (_requestLocationIsPausedNow) {
+        return;
       }
-    });
+      _requestLocationIsPausedNow = true;
+      Future.delayed(_requestLocationDelayDuration).then(
+        (value) {
+          _requestLocationIsPausedNow = false;
+        },
+      );
+      DeepLinksService.canRequestLocation().then((value) async {
+        if (value) {
+          Logger().info('Location enabled', '$value');
+          Geolocator.getPositionStream(
+              locationSettings: const LocationSettings(
+            distanceFilter: 1000,
+          )).listen((event) {
+            currentLocation = LatLng(event.latitude, event.longitude);
+            Logger().info('Location with us ',
+                currentLocation?.toJson().toString() ?? 'null');
+            if (mounted) {
+              setState(() {});
+            }
+          });
+        }
+      });
+    } catch (e) {
+      Logger().error('GEO Locator', e.toString(), StackTrace.current);
+      WidgetsBinding.instance.addPostFrameCallback(
+        (_) {
+          if (mounted) {
+            CustomFlushBarHelper.createError(
+                    title: S.current.warnning, message: S.current.errorHappened)
+                .show(context);
+          }
+        },
+      );
+    }
   }
 
   bool somethingMissingInProfileData = false;
   @override
   Widget build(BuildContext context) {
-    if (currentLocation == null) canRequestOrder();
+    if (currentLocation == null) canRequestLocation();
     return Scaffold(
       key: drawerKey,
       body: AdvancedDrawer(

@@ -82,7 +82,7 @@ dependencies:
   firebase_remote_config: ^4.2.1
   cloud_firestore: ^4.3.2
   firebase_messaging: ^14.2.1
-  firebase_crashlytics: ^3.0.11
+  firebase_crashlytics: ^3.3.5
   firebase_performance_web: ^0.1.0+5
   # Internationalization
   intl: ^0.18.0
