@@ -7,6 +7,7 @@ import 'package:c4d/consts/c4d_stores_id.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:c4d/module_branches/model/branches/branches_model.dart';
+import 'package:c4d/module_deep_links/service/location_parsing.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/ui/screens/new_order/new_order_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/geo_widget.dart';
@@ -260,7 +261,7 @@ class NewOrderStateBranchesLoaded extends States {
                       child: Opacity(
                           opacity: 0,
                           child: WebViewWidget(
-                              controller: screenState.controller)),
+                              controller: webViewController ?? WebViewController())),
                     ),
                   ),
                   Visibility(

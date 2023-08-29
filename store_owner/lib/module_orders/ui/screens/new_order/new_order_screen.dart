@@ -2,8 +2,10 @@ import 'dart:async';
 
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/enum/location_parsing_state_enum.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
+import 'package:c4d/module_deep_links/service/location_parsing.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/state_manager/new_order/new_order.state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -57,7 +59,6 @@ class NewOrderScreenState extends State<NewOrderScreen>
   int? costType;
   int? branch;
   LatLng? customerLocation;
-  late WebViewController controller;
 
   //
   @override
@@ -95,7 +96,27 @@ class NewOrderScreenState extends State<NewOrderScreen>
     toController.addListener(() {
       if (old != toController.text) {
         old = toController.text;
-        locationParsing();
+        LocationParsing().tryParsing(context, toController.text,
+            locationCallBack: (location) {
+          customerLocation = location;
+        }, parsingState: (state) {
+          print('--------------------------------------------->$state');
+          if (state ==
+              LocationParsingStateEnum
+                  .startUsingWebViewToRetrieveLocationData) {
+            setState(() {
+              startParseLocation = true;
+            });
+            showLoadingIndicatorOverlayToPreventPressingWhileLinkBeingParsing();
+          } else if (state == LocationParsingStateEnum.webViewFinishedParsing) {
+            setState(() {
+              startParseLocation = false;
+            });
+            Navigator.of(context).pop();
+          }
+        }, refresh: () {
+          setState(() {});
+        });
       }
       if (!toController.text.contains('http') &&
           !toController.text.contains('geo')) {
@@ -103,28 +124,6 @@ class NewOrderScreenState extends State<NewOrderScreen>
         Fluttertoast.showToast(msg: S.current.invalidMapLink);
       }
     });
-    controller = WebViewController()
-      ..setJavaScriptMode(JavaScriptMode.unrestricted)
-      ..setBackgroundColor(const Color(0x00000000))
-      ..setNavigationDelegate(
-        NavigationDelegate(
-          onProgress: (int progress) {
-            // Update loading bar.
-          },
-          onPageStarted: (String url) {
-            print('started ---------------------------> $url');
-          },
-          onPageFinished: (String url) {
-            print('finished ---------------------------> $url');
-            customerLocation =
-                DeepLinksService.getCustomerLocationFromRedirectedUrl(url);
-            if (customerLocation != null) {
-              refresh();
-            }
-          },
-          onWebResourceError: (WebResourceError error) {},
-        ),
-      );
   }
 
   void quickFillUp() async {
@@ -214,7 +213,7 @@ class NewOrderScreenState extends State<NewOrderScreen>
     }
     if (customerLocation == null) {
       try {
-        controller.loadRequest(Uri.parse(toController.text));
+        // controller.loadRequest(Uri.parse(toController.text));
       } catch (e) {
         //
       }

@@ -192,6 +192,7 @@ class DeepLinksService {
     }
     return uri.toString();
   }
+
   static String _extractCoordinatesFromAppleMapsUrl(Uri uri) {
     String ll = uri.queryParameters['ll']!;
     List<String> coordinates = ll.split(',');
@@ -208,6 +209,7 @@ class DeepLinksService {
     }
     return uri.toString();
   }
+
   static LatLng? getCustomerLocationFromRedirectedUrl(String url) {
     RegExp latLngPattern = RegExp(r'/@(-?\d+\.?\d*),(-?\d+\.?\d*)');
     RegExpMatch? match = latLngPattern.firstMatch(url);
@@ -216,6 +218,36 @@ class DeepLinksService {
       double longitude = double.tryParse(match.group(2) ?? '') ?? 0;
       return LatLng(latitude, longitude);
     } else {
+      return null;
+    }
+  }
+
+  static Future<LatLng?> getCustomerLocationFromRedirectedUrlAsync(
+      String url) async {
+    RegExp latLngPattern = RegExp(r'/@(-?\d+\.?\d*),(-?\d+\.?\d*)');
+    RegExpMatch? match = latLngPattern.firstMatch(url);
+    if (match != null) {
+      double latitude = double.tryParse(match.group(1) ?? '') ?? 0;
+      double longitude = double.tryParse(match.group(2) ?? '') ?? 0;
+      return LatLng(latitude, longitude);
+    } else {
+      try {
+        var locationUrl = await extractCoordinatesFromUrl(url);
+        double? _latitude = double.tryParse(Uri.tryParse(locationUrl)!
+            .queryParameters['q']!
+            .split(',')[0]
+            .toString());
+        double? _longitude = double.tryParse(Uri.tryParse(locationUrl)!
+            .queryParameters['q']!
+            .split(',')[1]
+            .toString());
+        if (_latitude == null || _longitude == null) {
+          return null;
+        }
+        return LatLng(_latitude, _longitude);
+      } catch (e) {
+        //
+      }
       return null;
     }
   }
