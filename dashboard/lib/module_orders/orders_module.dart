@@ -30,7 +30,7 @@ class OrdersModule extends YesModule {
   final SubOrdersScreen subOrdersScreen;
   final NewOrderLinkScreen addNewOrderLinkScreen;
   final SearchForOrderScreen searchForOrderScreen;
-  final RecycleOrderScreen recycleOrdersScreen;
+  final RecycleOrderScreen recycleOrdersScreen; 
   final OrderDistanceConflictScreen orderDistanceConflictScreen;
 
   OrdersModule(

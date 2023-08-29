@@ -19,9 +19,7 @@ import 'ui/screen/captains_offer_screen.dart';
 @injectable
 class CaptainsModule extends YesModule {
   final CaptainOffersScreen captainOffersScreen;
-  final CaptainsNeedsSupportScreen supportScreen;
   final PlanScreen planScreen;
-  final CaptainAssignOrderScreen captainAssignOrderScreen;
   final CaptainsRatingScreen captainsRatingsScreen;
   final CaptinRatingDetailsScreen captainsRatingsDetailsScreen;
   final CaptainsActivityScreen captainsActivityScreen;
@@ -29,9 +27,7 @@ class CaptainsModule extends YesModule {
 
   CaptainsModule(
     this.captainOffersScreen,
-    this.supportScreen,
     this.planScreen,
-    this.captainAssignOrderScreen,
     this.captainsRatingsScreen,
     this.captainsRatingsDetailsScreen,
     this.captainsActivityScreen,
@@ -45,9 +41,9 @@ class CaptainsModule extends YesModule {
       CaptainsRoutes.CAPTAINS: (context) => CaptainsScreen(),
       CaptainsRoutes.CAPTAIN_PROFILE: (context) => CaptainProfileScreen(),
       CaptainsRoutes.IN_ACTIVE_CAPTAINS: (context) => InActiveCaptainsScreen(),
-      CaptainsRoutes.CAPTAIN_SUPPORT: (context) => supportScreen,
+      CaptainsRoutes.CAPTAIN_SUPPORT: (context) => CaptainsNeedsSupportScreen(),
       CaptainsRoutes.CAPTAIN_PLAN: (context) => planScreen,
-      CaptainsRoutes.ASSIGN_TO_CAPTAIN: (context) => captainAssignOrderScreen,
+      CaptainsRoutes.ASSIGN_TO_CAPTAIN: (context) => CaptainAssignOrderScreen(),
       CaptainsRoutes.CAPTAIN_RATING: (context) => captainsRatingsScreen,
       CaptainsRoutes.CAPTAIN_RATING_DETAILS: (context) =>
           captainsRatingsDetailsScreen,

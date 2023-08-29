@@ -3,6 +3,7 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/captains_module.dart';
 import 'package:c4d/module_captain/ui/screen/captain_dues_screen.dart';
+import 'package:c4d/module_captain/ui/screen/captain_needs_support_screen.dart';
 import 'package:c4d/module_captain/ui/screen/captains_list_screen.dart';
 import 'package:c4d/module_captain/ui/screen/in_active_captains_screen.dart';
 import 'package:c4d/module_categories/categories_module.dart';
@@ -262,7 +263,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 children: [
                   customListTile(getIt<StoresModule>().supportScreen,
                       S.current.stores, Icons.storefront_rounded, true),
-                  customListTile(getIt<CaptainsModule>().supportScreen,
+                  customListTile(CaptainsNeedsSupportScreen(),
                       S.current.captains, FontAwesomeIcons.car, true),
                   Visibility(
                     visible: false,
