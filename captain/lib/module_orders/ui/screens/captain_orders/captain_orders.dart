@@ -9,6 +9,7 @@ import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_chat/presistance/chat_hive_helper.dart';
 import 'package:c4d/module_chat/repository/chat/chat_repository.dart';
+import 'package:c4d/module_deep_links/repository/deep_link_local_repository.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:c4d/module_notifications/preferences/notification_preferences/notification_preferences.dart';
@@ -206,6 +207,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
             distanceFilter: 1000,
           )).listen((event) {
             currentLocation = LatLng(event.latitude, event.longitude);
+            DeepLinkLocalRepository.clearCachedDistances();
             Logger().info('Location with us ',
                 currentLocation?.toJson().toString() ?? 'null');
             if (mounted) {

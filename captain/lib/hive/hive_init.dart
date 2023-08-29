@@ -1,5 +1,4 @@
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:hive/hive.dart';
 
 class HiveSetUp {
   static Future<void> init() async {
@@ -19,5 +18,6 @@ class HiveSetUp {
     await Hive.openBox('Notifications');
     await Hive.openBox('My Notification');
     await Hive.openBox('Suggestions');
+    await Hive.openBox('DeepLinkLocalRepository');
   }
 }
