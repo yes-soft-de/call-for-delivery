@@ -9,30 +9,30 @@ import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:intl/intl.dart';
 
 class ExternalOrder extends DataModel {
-  List<OrderModel> hiddenOrders = [];
+  List<OrderModel> deliveredOrders = [];
   List<OrderModel> pendingOrders = [];
   List<OrderModel> notDeliveredOrders = [];
   late int totalOrderCount;
   late int pendingOrdersCount;
-  late int hiddenOrdersCount;
+  late int deliveredOrdersCount;
   late int notDeliveredOrdersCount;
   ExternalOrder(
-      {required this.hiddenOrders,
+      {required this.deliveredOrders,
       required this.notDeliveredOrders,
       required this.pendingOrders,
       required this.totalOrderCount,
       required this.pendingOrdersCount,
-      required this.hiddenOrdersCount,
+      required this.deliveredOrdersCount,
       required this.notDeliveredOrdersCount});
   late ExternalOrder _data;
   ExternalOrder.withData(ExternalOrderResponse response) {
     var element = response.data;
     _data = ExternalOrder(
-        hiddenOrders: _getOrders(element?.hiddenOrders ?? []),
+        deliveredOrders: _getOrders(element?.deliveredOrders ?? []),
         notDeliveredOrders: _getOrders(element?.notDeliveredOrders ?? []),
         pendingOrders: _getOrders(element?.pendingOrders ?? []),
         totalOrderCount: element?.totalOrderCount?.toInt() ?? 0,
-        hiddenOrdersCount: element?.hiddenOrdersCount?.toInt() ?? 0,
+        deliveredOrdersCount: element?.deliveredOrdersCount?.toInt() ?? 0,
         notDeliveredOrdersCount: element?.notDeliveredOrdersCount?.toInt() ?? 0,
         pendingOrdersCount: element?.pendingOrdersCount?.toInt() ?? 0);
   }
