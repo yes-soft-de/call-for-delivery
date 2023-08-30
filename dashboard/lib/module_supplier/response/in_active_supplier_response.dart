@@ -12,7 +12,7 @@ class SupplierResponse {
   SupplierResponse.fromJson(dynamic json) {
     try {} catch (e) {
       statusCode = '-1';
-      Logger()
+      Logger
           .error('InActiveCaptainResponse', e.toString(), StackTrace.current);
     }
     statusCode = json['status_code'];

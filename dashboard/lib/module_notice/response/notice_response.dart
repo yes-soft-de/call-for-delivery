@@ -22,7 +22,7 @@ class NoticeResponse {
       }
     } catch (e) {
       statusCode = '-1';
-      Logger().error('Notice Response', e.toString(), StackTrace.current);
+      Logger.error('Notice Response', e.toString(), StackTrace.current);
     }
   }
   String? statusCode;

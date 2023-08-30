@@ -19,7 +19,7 @@ class Datum {
         id: json['id'] as int?,
         storeOwnerProfileId: json['storeOwnerProfileId'] as int?,
         storeOwnerName: json['storeOwnerName'] as String?,
-        image: json['image']['image'] as String?,
+        image: json['image'] != null ? json['image']['image'] as String? : null,
         amountSum: json['amountSum'] as num?,
         toBePaid: json['toBePaid'] as num?,
       );

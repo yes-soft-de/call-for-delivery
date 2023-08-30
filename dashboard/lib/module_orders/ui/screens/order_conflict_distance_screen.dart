@@ -13,16 +13,12 @@ import 'package:c4d/module_stores/service/store_service.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:intl/intl.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 
-@injectable
 class OrderDistanceConflictScreen extends StatefulWidget {
-  final OrderDistanceConflictStateManager _stateManager;
-
-  OrderDistanceConflictScreen(this._stateManager);
+  OrderDistanceConflictScreen();
 
   @override
   OrderDistanceConflictScreenState createState() =>
@@ -32,6 +28,8 @@ class OrderDistanceConflictScreen extends StatefulWidget {
 class OrderDistanceConflictScreenState
     extends State<OrderDistanceConflictScreen> {
   late States currentState;
+  late OrderDistanceConflictStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
 
   ValueNotifier<List<StoresModel>> stores = ValueNotifier([]);
   ValueNotifier<List<BranchesModel>> branches = ValueNotifier([]);
@@ -39,8 +37,7 @@ class OrderDistanceConflictScreenState
   BranchesModel? selectedBranch;
 
   int currentIndex = 0;
-  StreamSubscription? _stateSubscription;
-  OrderDistanceConflictStateManager get manager => widget._stateManager;
+  OrderDistanceConflictStateManager get manager => _stateManager;
   void refresh() {
     if (mounted) {
       setState(() {});
@@ -52,12 +49,13 @@ class OrderDistanceConflictScreenState
   void initState() {
     super.initState();
     currentState = LoadingState(this);
+    _stateManager = getIt();
     ordersFilter = FilterOrderRequest(
         isResolved: currentIndex == 0 ? false : true,
         fromDate: DateTime(today.year, today.month, today.day, 0),
         toDate: DateTime.now());
-    widget._stateManager.getOrdersFilters(this, ordersFilter);
-    _stateSubscription = widget._stateManager.stateStream.listen((event) {
+    _stateManager.getOrdersFilters(this, ordersFilter);
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -89,13 +87,16 @@ class OrderDistanceConflictScreenState
 
   @override
   void dispose() {
-    _stateSubscription?.cancel();
+    _stateSubscription.cancel();
+    stores.dispose();
+    branches.dispose();
+    _stateManager.dispose();
     super.dispose();
   }
 
   late FilterOrderRequest ordersFilter;
   Future<void> getOrders([bool loading = true]) async {
-    widget._stateManager.getOrdersFilters(this, ordersFilter, loading);
+    _stateManager.getOrdersFilters(this, ordersFilter, loading);
   }
 
   @override

@@ -12,16 +12,12 @@ import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:intl/intl.dart';
 
-@injectable
 class OrdersCashCaptainScreen extends StatefulWidget {
-  final OrderCashCaptainStateManager _stateManager;
-
-  OrdersCashCaptainScreen(this._stateManager);
+  OrdersCashCaptainScreen();
 
   @override
   OrdersCashCaptainScreenState createState() => OrdersCashCaptainScreenState();
@@ -29,8 +25,10 @@ class OrdersCashCaptainScreen extends StatefulWidget {
 
 class OrdersCashCaptainScreenState extends State<OrdersCashCaptainScreen> {
   late States currentState;
+  late OrderCashCaptainStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   int currentIndex = 0;
-  StreamSubscription? _stateSubscription;
   TextEditingController _amount = TextEditingController();
   TextEditingController _note = TextEditingController();
 
@@ -50,13 +48,14 @@ class OrdersCashCaptainScreenState extends State<OrdersCashCaptainScreen> {
   void initState() {
     super.initState();
     currentState = LoadingState(this);
+    _stateManager = getIt();
     ordersFilter = CaptainCashFinanceRequest(
         captainId: ArgumentHiveHelper().getCurrentCaptainID(),
         fromDate:
             DateTime(today.year, today.month, today.day, 0).toIso8601String(),
         toDate: DateTime.now().toIso8601String());
-    widget._stateManager.getOrdersFilters(this, ordersFilter);
-    _stateSubscription = widget._stateManager.stateStream.listen((event) {
+    _stateManager.getOrdersFilters(this, ordersFilter);
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -66,13 +65,14 @@ class OrdersCashCaptainScreenState extends State<OrdersCashCaptainScreen> {
 
   @override
   void dispose() {
-    _stateSubscription?.cancel();
+    _stateSubscription.cancel();
+    _stateManager.dispose();
     super.dispose();
   }
 
   late CaptainCashFinanceRequest ordersFilter;
   Future<void> getOrders([bool loading = true]) async {
-    widget._stateManager.getOrdersFilters(this, ordersFilter, loading);
+    _stateManager.getOrdersFilters(this, ordersFilter, loading);
   }
 
   bool canMakePayment = false;
@@ -143,7 +143,7 @@ class OrdersCashCaptainScreenState extends State<OrdersCashCaptainScreen> {
                                 ? null
                                 : () {
                                     Navigator.of(context).pop();
-                                    widget._stateManager.payForStore(
+                                    _stateManager.payForStore(
                                         this,
                                         CaptainPaymentsRequest(
                                           toDate: ordersFilter.toDate,
@@ -162,7 +162,7 @@ class OrdersCashCaptainScreenState extends State<OrdersCashCaptainScreen> {
                                   },
                             child: Text(
                               S.current.pay,
-                              style: Theme.of(context).textTheme.button,
+                              style: Theme.of(context).textTheme.labelLarge,
                             )),
                         ElevatedButton(
                             onPressed: () {
@@ -172,7 +172,7 @@ class OrdersCashCaptainScreenState extends State<OrdersCashCaptainScreen> {
                             },
                             child: Text(
                               S.current.cancel,
-                              style: Theme.of(context).textTheme.button,
+                              style: Theme.of(context).textTheme.labelLarge,
                             ))
                       ],
                     );

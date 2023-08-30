@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -16,22 +17,21 @@ import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 
 @injectable
-class NewOrderLinkStateManager {
+class NewOrderLinkStateManager extends StateManagerHandler {
   final OrdersService _ordersService;
-  final PublishSubject<States> _stateSubject = new PublishSubject();
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
+  
   NewOrderLinkStateManager(this._ordersService);
   void getBranches(NewOrderLinkScreenState screenState, String storeId) {
     getIt<BranchesListService>().getBranches(storeId).then((value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(screenState, onPressed: () {
+        stateSubject.add(ErrorState(screenState, onPressed: () {
           getBranches(screenState, storeId);
         }, title: '', error: value.error, hasAppbar: false));
       } else if (value.isEmpty) {
-        _stateSubject.add(EmptyState(screenState, onPressed: () {
+        stateSubject.add(EmptyState(screenState, onPressed: () {
           Navigator.of(screenState.context)
               .pushReplacementNamed(BranchesRoutes.BRANCHES_LIST_SCREEN);
         },
@@ -41,7 +41,7 @@ class NewOrderLinkStateManager {
             hasAppbar: false));
       } else {
         value as BranchesModel;
-        _stateSubject.add(NewOrderLinkStateLoaded(value.data, screenState));
+        stateSubject.add(NewOrderLinkStateLoaded(value.data, screenState));
         FireStoreHelper().backgroundThread('Trigger');
       }
     });
@@ -49,7 +49,7 @@ class NewOrderLinkStateManager {
 
   void createOrder(
       NewOrderLinkScreenState screenState, CreateOrderRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _ordersService.addNewOrderLink(request).then((value) {
       if (value.hasError) {
         getIt<GlobalStateManager>().updateList();

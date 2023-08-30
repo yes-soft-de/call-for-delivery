@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
@@ -45,27 +44,27 @@ class SupplierNeedSupportLoadedState extends States {
           });
     }
     return FixedContainer(
-        child: CustomListView.custom(children: getClients(context)));
-  }
-
-  List<Widget> getClients(BuildContext context) {
-    List<Widget> widgets = [];
-    for (var element in model ?? <SupplierNeedSupportModel>[]) {
-      widgets.add(StoreCard(
-        Id: element.id,
-        name: element.captainName,
-        image: element.image,
-        onTap: () {
-          Navigator.of(context).pushNamed(
-            ChatRoutes.chatRoute,
-            arguments: ChatArgument(
-                roomID: element.roomID,
-                userType: 'supplier',
-                userID: int.parse(element.userId)),
-          );
-        },
-      ));
-    }
-    return widgets;
+        child: ListView.builder(
+      itemCount: model?.length ?? 0,
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        if (model == null) return SizedBox();
+        var element = model![index];
+        return StoreCard(
+          Id: element.id,
+          name: element.captainName,
+          image: element.image,
+          onTap: () {
+            Navigator.of(context).pushNamed(
+              ChatRoutes.chatRoute,
+              arguments: ChatArgument(
+                  roomID: element.roomID,
+                  userType: 'supplier',
+                  userID: int.parse(element.userId)),
+            );
+          },
+        );
+      },
+    ));
   }
 }

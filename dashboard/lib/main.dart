@@ -24,7 +24,6 @@ import 'package:c4d/module_subscriptions/subscriptions_module.dart';
 import 'package:c4d/module_supplier_categories/categories_supplier_module.dart';
 import 'package:device_info/device_info.dart';
 import 'package:injectable/injectable.dart';
-import 'package:c4d/utils/effect/scroll_behavior.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/abstracts/module/yes_module.dart';
@@ -93,7 +92,7 @@ void main() async {
     DeviceOrientation.portraitUp,
   ]).then((_) async {
     FlutterError.onError = (FlutterErrorDetails details) async {
-      Logger().error('Main', details.toString(), StackTrace.current);
+      Logger.error('Main', details.toString(), StackTrace.current);
     };
     await runZonedGuarded(() {
       configureDependencies();
@@ -101,7 +100,7 @@ void main() async {
       runApp(getIt<MyApp>());
     }, (error, stackTrace) {
       print(error);
-      new Logger().error(
+      Logger.error(
           'Main', error.toString() + stackTrace.toString(), StackTrace.current);
     });
   });
@@ -227,7 +226,10 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   ) {
     return FeatureDiscovery(
       child: MaterialApp(
-        scrollBehavior: MyCustomScrollBehavior(),
+        scrollBehavior: ScrollConfiguration.of(context).copyWith(
+          physics: const BouncingScrollPhysics(
+              parent: AlwaysScrollableScrollPhysics()),
+        ),
         debugShowCheckedModeBanner: false,
         // navigatorObservers: <NavigatorObserver>[observer],
         navigatorKey: GlobalVariable.navState,

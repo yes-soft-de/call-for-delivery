@@ -12,15 +12,10 @@ import 'package:c4d/utils/components/phone_number_detection.dart';
 import 'package:c4d/utils/helpers/link_cleaner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 
-@injectable
 class UpdateOrderScreen extends StatefulWidget {
-  final UpdateOrderStateManager _stateManager;
-  UpdateOrderScreen(
-    this._stateManager,
-  );
+  UpdateOrderScreen();
 
   @override
   UpdateOrderScreenState createState() => UpdateOrderScreenState();
@@ -29,11 +24,13 @@ class UpdateOrderScreen extends StatefulWidget {
 class UpdateOrderScreenState extends State<UpdateOrderScreen>
     with WidgetsBindingObserver {
   late States currentState;
+  late UpdateOrderStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  StreamSubscription? _stateSubscription;
 
   void addNewOrder(CreateOrderRequest request) {
-    widget._stateManager.updateOrder(this, request);
+    _stateManager.updateOrder(this, request);
   }
 
   void refresh() {
@@ -76,9 +73,10 @@ class UpdateOrderScreenState extends State<UpdateOrderScreen>
   void initState() {
     super.initState();
     currentState = LoadingState(this);
+    _stateManager = getIt();
     WidgetsBinding.instance.addObserver(this);
     countryNumberController.text = '966';
-    _stateSubscription = widget._stateManager.stateStream.listen((event) {
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -125,7 +123,8 @@ class UpdateOrderScreenState extends State<UpdateOrderScreen>
     countryNumberController.dispose();
     toController.dispose();
     priceController.dispose();
-    _stateSubscription?.cancel();
+    _stateSubscription.cancel();
+    _stateManager.dispose();
     super.dispose();
   }
 
@@ -140,7 +139,7 @@ class UpdateOrderScreenState extends State<UpdateOrderScreen>
         if (hideFlag) {
           hideFlag = false;
           getIt<OrdersService>().hideOrder(orderInfo.id).ignore();
-          widget._stateManager.getBranches(this, orderInfo.storeID);
+          _stateManager.getBranches(this, orderInfo.storeID);
         }
       }
     }

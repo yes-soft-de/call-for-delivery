@@ -11033,6 +11033,16 @@ class S {
       args: [],
     );
   }
+
+  /// `Order ignored successfully`
+  String get orderIgnoredSuccessfully {
+    return Intl.message(
+      'Order ignored successfully',
+      name: 'orderIgnoredSuccessfully',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

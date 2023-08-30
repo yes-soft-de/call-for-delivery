@@ -1,11 +1,9 @@
 import 'package:c4d/module_supplier/model/porfile_model.dart';
 import 'package:c4d/module_supplier/ui/screen/supplier_profile_screen.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/ui/widget/captain_profile/custom_captain_profile_tile.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
@@ -45,7 +43,7 @@ class SupplierProfileLoadedState extends States {
     }
     return StackedForm(
         child: FixedContainer(
-          child: CustomListView.custom(
+          child: ListView(
             children: [
               Padding(
                 padding: const EdgeInsets.all(16.0),

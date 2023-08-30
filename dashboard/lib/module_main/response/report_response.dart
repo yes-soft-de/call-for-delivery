@@ -14,7 +14,7 @@ class ReportResponse {
       data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
     } catch (e) {
       statusCode = '-1';
-      Logger().error('Report Response', e.toString(), StackTrace.current);
+      Logger.error('Report Response', e.toString(), StackTrace.current);
     }
   }
 }

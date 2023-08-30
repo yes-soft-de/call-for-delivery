@@ -20,7 +20,7 @@ class SupplierCategoryResponse {
       }
     } catch (e) {
       statusCode = '-1';
-      Logger().error(
+      Logger.error(
           'Supplier Category Response', e.toString(), StackTrace.current);
     }
   }

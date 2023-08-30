@@ -13,8 +13,7 @@ class CompanyDeliveryPriceResponse {
       msg = json['msg'];
       data = json['Data'] != null ? Data.fromJson(json['Data']) : null;
     } catch (e) {
-      Logger()
-          .error('Company Delivery Price', e.toString(), StackTrace.current);
+      Logger.error('Company Delivery Price', e.toString(), StackTrace.current);
       statusCode = '-1';
     }
   }

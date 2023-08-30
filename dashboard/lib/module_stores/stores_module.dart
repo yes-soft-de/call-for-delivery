@@ -20,14 +20,11 @@ import 'ui/screen/stores_needs_support_screen.dart';
 
 @injectable
 class StoresModule extends YesModule {
-  final StoresScreen storesScreen;
   final StoreInfoScreen _storeInfoScreen;
   final StoresInActiveScreen storesInActiveScreen;
   final TopActiveStoreScreen topActiveStoreScreen;
   final StoreBalanceScreen storeBalanceScreen;
   final StoresNeedsSupportScreen supportScreen;
-  final OrderDetailsScreen _orderStatus;
-  final OrderLogsScreen _logsScreen;
   final OrderCaptainNotArrivedScreen captainNotArrivedScreen;
   final OrderTimeLineScreen orderTimeLineScreen;
   final OrdersTopActiveStoreScreen ordersTopActiveStoreScreen;
@@ -36,13 +33,10 @@ class StoresModule extends YesModule {
   final EditStoreSettingScreen editStoreSettingScreen;
 
   StoresModule(
-    this.storesScreen,
     this._storeInfoScreen,
     this.storesInActiveScreen,
     this.storeBalanceScreen,
     this.supportScreen,
-    this._orderStatus,
-    this._logsScreen,
     this.captainNotArrivedScreen,
     this.orderTimeLineScreen,
     this.topActiveStoreScreen,
@@ -55,13 +49,13 @@ class StoresModule extends YesModule {
   }
   Map<String, WidgetBuilder> getRoutes() {
     return {
-      StoresRoutes.STORES: (context) => storesScreen,
+      StoresRoutes.STORES: (context) => StoresScreen(),
       StoresRoutes.STORE_INFO: (context) => _storeInfoScreen,
       StoresRoutes.STORES_INACTIVE: (context) => storesInActiveScreen,
       StoresRoutes.STORE_BALANCE: (context) => storeBalanceScreen,
       StoresRoutes.STORE_SUPPORT: (context) => supportScreen,
-      StoresRoutes.ORDER_STATUS_SCREEN: (context) => _orderStatus,
-      StoresRoutes.LOGS_ORDERS_SCREEN: (context) => _logsScreen,
+      StoresRoutes.ORDER_STATUS_SCREEN: (context) => OrderDetailsScreen(),
+      StoresRoutes.LOGS_ORDERS_SCREEN: (context) => OrderLogsScreen(),
       StoresRoutes.ORDER_TIMELINE_SCREEN: (context) => orderTimeLineScreen,
       StoresRoutes.ORDER_CAPTAIN_SCREEN: (context) => captainNotArrivedScreen,
       StoresRoutes.TOP_STORE_ACTIVE: (context) => topActiveStoreScreen,

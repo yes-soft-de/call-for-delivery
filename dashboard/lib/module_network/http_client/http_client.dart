@@ -9,12 +9,11 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 
 @injectable
 class ApiClient {
-  final Logger _logger;
   final String tag = 'ApiClient';
 
   final performanceInterceptor = DioFirebasePerformanceInterceptor();
 
-  ApiClient(this._logger);
+  ApiClient();
 
   Future<Map<String, dynamic>?> get(
     String url, {
@@ -22,9 +21,9 @@ class ApiClient {
     Map<String, String>? headers,
   }) async {
     try {
-      _logger.info(tag, 'Requesting GET to: ' + url);
-      _logger.info(tag, 'Headers: ' + headers.toString());
-      _logger.info(tag, 'Query: ' + queryParams.toString());
+      Logger.info(tag, 'Requesting GET to: ' + url);
+      Logger.info(tag, 'Headers: ' + headers.toString());
+      Logger.info(tag, 'Query: ' + queryParams.toString());
       Dio client = Dio(BaseOptions(
         sendTimeout: 60000,
         receiveTimeout: 60000,
@@ -35,10 +34,10 @@ class ApiClient {
       }
       if (headers != null) {
         if (headers['Authorization'] != null) {
-          _logger.info(tag, 'Adding Auth Header');
+          Logger.info(tag, 'Adding Auth Header');
           client.options.headers['Authorization'] = headers['Authorization'];
         }
-        _logger.info(tag, 'LANG');
+        Logger.info(tag, 'LANG');
         client.options.headers['Accept-Language'] =
             getIt<LocalizationService>().getLanguage();
         // client.options.headers['Access-Control-Allow-Origin'] =
@@ -55,7 +54,7 @@ class ApiClient {
         DioError err = e;
         if (err.response != null) {
           if (err.response!.statusCode! < 501) {
-            _logger.error(
+            Logger.error(
                 tag, err.message + ', GET: ' + url, StackTrace.current);
             return {
               'status_code': '${err.response?.statusCode?.toString() ?? '0'}'
@@ -63,7 +62,7 @@ class ApiClient {
           }
         }
       } else {
-        _logger.error(tag, e.toString() + ', GET: ' + url, StackTrace.current);
+        Logger.error(tag, e.toString() + ', GET: ' + url, StackTrace.current);
       }
       return null;
     }
@@ -81,12 +80,12 @@ class ApiClient {
       connectTimeout: 60000,
     ));
     try {
-      _logger.info(tag, 'Requesting Post to: ' + url);
-      _logger.info(tag, 'POST: ' + jsonEncode(payLoad));
-      _logger.info(tag, 'Headers: ' + jsonEncode(headers));
+      Logger.info(tag, 'Requesting Post to: ' + url);
+      Logger.info(tag, 'POST: ' + jsonEncode(payLoad));
+      Logger.info(tag, 'Headers: ' + jsonEncode(headers));
       if (headers != null) {
         if (headers['Authorization'] != null) {
-          _logger.info(tag, 'Adding Auth Header');
+          Logger.info(tag, 'Adding Auth Header');
           client.options.headers['Authorization'] = headers['Authorization'];
         }
       }
@@ -105,7 +104,7 @@ class ApiClient {
         DioError err = e;
         if (err.response != null) {
           if (err.response!.statusCode! < 501) {
-            _logger.error(
+            Logger.error(
                 tag, err.message + ', POST: ' + url, StackTrace.current);
             return {
               'status_code': '${err.response?.statusCode?.toString() ?? '0'}'
@@ -113,7 +112,7 @@ class ApiClient {
           }
         }
       } else {
-        _logger.error(tag, e.toString() + ', POST: ' + url, StackTrace.current);
+        Logger.error(tag, e.toString() + ', POST: ' + url, StackTrace.current);
         return null;
       }
     }
@@ -127,9 +126,9 @@ class ApiClient {
     Map<String, String>? headers,
   }) async {
     try {
-      _logger.info(tag, 'Requesting PUT to: ' + url);
-      _logger.info(tag, 'PUT: ' + jsonEncode(payLoad));
-      _logger.info(tag, 'Headers: ' + jsonEncode(headers));
+      Logger.info(tag, 'Requesting PUT to: ' + url);
+      Logger.info(tag, 'PUT: ' + jsonEncode(payLoad));
+      Logger.info(tag, 'Headers: ' + jsonEncode(headers));
       Dio client = Dio(BaseOptions(
         sendTimeout: 60000,
         receiveTimeout: 60000,
@@ -138,7 +137,7 @@ class ApiClient {
 
       if (headers != null) {
         if (headers['Authorization'] != null) {
-          _logger.info(tag, 'Adding Auth Header');
+          Logger.info(tag, 'Adding Auth Header');
           client.options.headers['Authorization'] = headers['Authorization'];
         }
       }
@@ -158,7 +157,7 @@ class ApiClient {
         DioError err = e;
         if (err.response != null) {
           if (err.response!.statusCode! < 501) {
-            _logger.error(
+            Logger.error(
                 tag, err.message + ', PUT: ' + url, StackTrace.current);
             return {
               'status_code': '${err.response?.statusCode?.toString() ?? '0'}'
@@ -166,7 +165,7 @@ class ApiClient {
           }
         }
       } else {
-        _logger.error(tag, e.toString() + ', PUT: ' + url, StackTrace.current);
+        Logger.error(tag, e.toString() + ', PUT: ' + url, StackTrace.current);
       }
       return null;
     }
@@ -179,11 +178,11 @@ class ApiClient {
     Map<String, dynamic>? payLoad,
   }) async {
     try {
-      _logger.info(tag, 'Requesting DELETE to: ' + url);
-      _logger.info(tag, 'Headers: ' + headers.toString());
-      _logger.info(tag, 'Query: ' + queryParams.toString());
+      Logger.info(tag, 'Requesting DELETE to: ' + url);
+      Logger.info(tag, 'Headers: ' + headers.toString());
+      Logger.info(tag, 'Query: ' + queryParams.toString());
       if (payLoad != null) {
-        _logger.info(tag, 'PUT: ' + jsonEncode(payLoad));
+        Logger.info(tag, 'PUT: ' + jsonEncode(payLoad));
       }
       Dio client = Dio(BaseOptions(
         sendTimeout: 60000,
@@ -195,7 +194,7 @@ class ApiClient {
       }
       if (headers != null) {
         if (headers['Authorization'] != null) {
-          _logger.info(tag, 'Adding Auth Header');
+          Logger.info(tag, 'Adding Auth Header');
           client.options.headers['Authorization'] = headers['Authorization'];
         }
       }
@@ -210,11 +209,11 @@ class ApiClient {
       if (e is DioError) {
         DioError err = e;
         if (err.response!.statusCode != 404) {
-          _logger.error(
+          Logger.error(
               tag, err.message + ', DELETE: ' + url, StackTrace.current);
         }
       } else {
-        _logger.error(
+        Logger.error(
             tag, e.toString() + ', DELETE: ' + url, StackTrace.current);
       }
       return null;
@@ -223,10 +222,10 @@ class ApiClient {
 
   Map<String, dynamic>? _processResponse(Response response) {
     if (response.statusCode! < 500) {
-      _logger.info(tag, response.data.toString());
+      Logger.info(tag, response.data.toString());
       return response.data;
     } else {
-      _logger.error(
+      Logger.error(
           tag,
           response.statusCode.toString() + '\n\n' + response.data.toString(),
           StackTrace.current);

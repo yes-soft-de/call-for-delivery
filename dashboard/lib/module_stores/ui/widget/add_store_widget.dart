@@ -57,7 +57,7 @@ class _UpdateStoreWidgetState extends State<UpdateStoreWidget> {
                 constraints: BoxConstraints(
                   maxWidth: 600,
                 ),
-                child: CustomListView.custom(
+                child: ListView(
                     padding: EdgeInsets.only(right: 16, left: 16),
                     children: [
                       //store name

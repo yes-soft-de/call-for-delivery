@@ -11,8 +11,7 @@ class CaptainResponse {
   CaptainResponse.fromJson(dynamic json) {
     try {} catch (e) {
       statusCode = '-1';
-      Logger()
-          .error('InActiveCaptainResponse', e.toString(), StackTrace.current);
+      Logger.error('InActiveCaptainResponse', e.toString(), StackTrace.current);
     }
     statusCode = json['status_code'];
     msg = json['msg'];

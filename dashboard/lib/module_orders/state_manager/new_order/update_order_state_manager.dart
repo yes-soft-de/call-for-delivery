@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -16,22 +17,22 @@ import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 
 @injectable
-class UpdateOrderStateManager {
+class UpdateOrderStateManager extends StateManagerHandler {
   final OrdersService _ordersService;
-  final PublishSubject<States> _stateSubject = new PublishSubject();
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
+
   UpdateOrderStateManager(this._ordersService);
+  
   void getBranches(UpdateOrderScreenState screenState, int storeID) {
     getIt<BranchesListService>().getBranches(storeID.toString()).then((value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(screenState, onPressed: () {
+        stateSubject.add(ErrorState(screenState, onPressed: () {
           getBranches(screenState, storeID);
         }, title: '', error: value.error, hasAppbar: false));
       } else if (value.isEmpty) {
-        _stateSubject.add(EmptyState(screenState, onPressed: () {
+        stateSubject.add(EmptyState(screenState, onPressed: () {
           getBranches(screenState, storeID);
         },
             title: '',
@@ -39,7 +40,7 @@ class UpdateOrderStateManager {
             hasAppbar: false));
       } else {
         value as BranchesModel;
-        _stateSubject.add(
+        stateSubject.add(
             UpdateOrderLoaded(screenState, value.data, screenState.orderInfo));
       }
     });
@@ -47,23 +48,21 @@ class UpdateOrderStateManager {
 
   void updateOrder(
       UpdateOrderScreenState screenState, CreateOrderRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _ordersService.updateOrder(request).then((value) {
       if (value.hasError) {
         getIt<GlobalStateManager>().updateList();
         Navigator.of(screenState.context)
             .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
         CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error ?? '')
-            ;
+            title: S.current.warnning, message: value.error ?? '');
       } else {
         getIt<GlobalStateManager>().updateList();
         Navigator.of(screenState.context)
             .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.orderUpdatedSuccessfully)
-            ;
+            title: S.current.warnning,
+            message: S.current.orderUpdatedSuccessfully);
         FireStoreHelper().backgroundThread('Trigger');
       }
     });

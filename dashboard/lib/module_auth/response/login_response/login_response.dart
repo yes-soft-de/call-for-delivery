@@ -10,7 +10,7 @@ class LoginResponse {
       token = json['token'];
       statusCode = json['code'] ?? json['statusCode'] ?? json['status_code'];
     } catch (e) {
-      Logger().error('Auth Login Response', e.toString(), StackTrace.current);
+      Logger.error('Auth Login Response', e.toString(), StackTrace.current);
       statusCode = '-1';
     }
   }

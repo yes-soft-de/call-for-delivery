@@ -18,7 +18,7 @@ class FinancialCompensationsResponse {
         });
       }
     } catch (e) {
-      Logger().error('Fniance', e.toString(), StackTrace.current);
+      Logger.error('Finance', e.toString(), StackTrace.current);
       statusCode = '-1';
     }
   }

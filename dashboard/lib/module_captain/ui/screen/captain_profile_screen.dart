@@ -7,17 +7,13 @@ import 'package:c4d/module_captain/request/update_captain_request.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/state_manager/captain_profile_state_manager.dart';
 
-@injectable
 class CaptainProfileScreen extends StatefulWidget {
-  final CaptainProfileStateManager _stateManager;
-
-  CaptainProfileScreen(this._stateManager);
+  CaptainProfileScreen();
 
   @override
   CaptainProfileScreenState createState() => CaptainProfileScreenState();
@@ -25,40 +21,43 @@ class CaptainProfileScreen extends StatefulWidget {
 
 class CaptainProfileScreenState extends State<CaptainProfileScreen> {
   late States currentState;
-  StreamSubscription? global;
+  late CaptainProfileStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+  late StreamSubscription _global;
+
   @override
   void initState() {
     currentState = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       refresh();
     });
-    global = getIt<GlobalStateManager>().stateStream.listen((event) {
+    _global = getIt<GlobalStateManager>().stateStream.listen((event) {
       getCaptain();
     });
     super.initState();
   }
 
   void getCaptain() {
-    widget._stateManager.getCaptainProfile(this, captainProfileId);
+    _stateManager.getCaptainProfile(this, captainProfileId);
   }
 
   void enableCaptain(String status) {
-    widget._stateManager.acceptCaptainProfile(this, captainProfileId,
+    _stateManager.acceptCaptainProfile(this, captainProfileId,
         EnableCaptainRequest(id: captainProfileId, status: status), false);
   }
 
   void enableCaptainFinance(CaptainFinanceRequest request) {
-    widget._stateManager
-        .captainFinanceStatusPlan(this, captainProfileId, request);
+    _stateManager.captainFinanceStatusPlan(this, captainProfileId, request);
   }
 
   void updateCaptainProfile(UpdateCaptainRequest request) {
     request.id = captainProfileId;
-    widget._stateManager.updateCaptainProfile(this, request);
+    _stateManager.updateCaptainProfile(this, request);
   }
 
-  CaptainProfileStateManager get stateManager => widget._stateManager;
+  CaptainProfileStateManager get stateManager => _stateManager;
 
   void refresh() {
     if (mounted) {
@@ -74,7 +73,7 @@ class CaptainProfileScreenState extends State<CaptainProfileScreen> {
       var arg = ModalRoute.of(context)?.settings.arguments;
       if (arg != null && arg is int) {
         captainProfileId = arg;
-        widget._stateManager.getCaptainProfile(this, captainProfileId);
+        _stateManager.getCaptainProfile(this, captainProfileId);
       }
     }
     return Scaffold(
@@ -88,7 +87,9 @@ class CaptainProfileScreenState extends State<CaptainProfileScreen> {
 
   @override
   void dispose() {
-    global?.cancel();
+    _global.cancel();
+    _stateSubscription.cancel();
+    _stateManager.dispose();
     super.dispose();
   }
 }

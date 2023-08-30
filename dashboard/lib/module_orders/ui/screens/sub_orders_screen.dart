@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/state_manager/sub_orders_list_state_manager.dart';
@@ -9,12 +12,9 @@ import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class SubOrdersScreen extends StatefulWidget {
-  final SubOrdersStateManager _stateManager;
-  SubOrdersScreen(this._stateManager);
+  SubOrdersScreen();
 
   @override
   SubOrdersScreenState createState() => SubOrdersScreenState();
@@ -23,13 +23,16 @@ class SubOrdersScreen extends StatefulWidget {
 class SubOrdersScreenState extends State<SubOrdersScreen> {
   int orderId = -1;
   late States currentState;
+  late SubOrdersStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
 
-  SubOrdersStateManager get manager => widget._stateManager;
+  SubOrdersStateManager get manager => _stateManager;
 
   @override
   void initState() {
     currentState = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -37,10 +40,17 @@ class SubOrdersScreenState extends State<SubOrdersScreen> {
     });
     FireStoreHelper().onInsertChangeWatcher()?.listen((event) {
       if (mounted) {
-        widget._stateManager.getOrder(this, orderId, false);
+        _stateManager.getOrder(this, orderId, false);
       }
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
   }
 
   void refresh() {
@@ -56,7 +66,7 @@ class SubOrdersScreenState extends State<SubOrdersScreen> {
     var args = ModalRoute.of(context)?.settings.arguments;
     if (args != null && currentState is LoadingState && flag) {
       orderId = args as int;
-      widget._stateManager.getOrder(this, orderId);
+      _stateManager.getOrder(this, orderId);
       flag = false;
     }
     return GestureDetector(

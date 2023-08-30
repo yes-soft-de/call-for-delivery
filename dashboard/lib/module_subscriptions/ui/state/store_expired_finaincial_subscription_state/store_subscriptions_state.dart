@@ -4,7 +4,6 @@ import 'package:c4d/module_stores/hive/store_hive_helper.dart';
 import 'package:c4d/module_subscriptions/model/store_subscriptions_financial.dart';
 import 'package:c4d/module_subscriptions/subscriptions_routes.dart';
 import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_expired_screen.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:c4d/utils/helpers/subscription_status_helper.dart';
 import 'package:flutter/material.dart';
@@ -16,166 +15,186 @@ class StoreSubscriptionsExpiredFinanceStateLoaded extends States {
       : super(screenState);
   @override
   Widget getUI(BuildContext context) {
-    return CustomListView.custom(children: getDues(context));
-  }
-
-  List<Widget> getDues(context) {
-    List<Widget> widgets = [];
-    widgets.add(Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(25),
-            color: Theme.of(context).colorScheme.primary),
-        child: Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: Text(
-            S.current.expiredSubscriptionsFinanceHint,
-            style: Theme.of(context).textTheme.labelLarge,
-          ),
-        ),
-      ),
-    ));
-
-    dues?.forEach((element) {
-      widgets.add(Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Material(
-          color: Colors.transparent,
-          child: InkWell(
-            borderRadius: BorderRadius.circular(25),
-            onTap: () {
-              StoresHiveHelper().setCurrentStoreID(screenState.storeID);
-              Navigator.of(context).pushNamed(
-                  SubscriptionsRoutes.SUBSCRIPTIONS_DUES_DETAILS_SCREEN,
-                  arguments: element);
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: Theme.of(context).scaffoldBackgroundColor,
-                  boxShadow: [
-                    BoxShadow(
-                        blurRadius: 5,
-                        spreadRadius: 0.5,
-                        offset: const Offset(-1, 0),
-                        color: Theme.of(context).colorScheme.background),
-                  ]),
-              child: Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Column(
-                  children: [
-                    // financial cycleDate
-                    Center(
-                        child: Text(
-                      element.packageName,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
-                    )),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Expanded(
-                              child: verticalBubble(context,
-                                  subtitle: element.startDate,
-                                  title: S.current.subscriptionDate)),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: 32,
-                              height: 2.5,
-                              color: Theme.of(context).colorScheme.background,
-                            ),
-                          ),
-                          Expanded(
-                              child: verticalBubble(context,
-                                  title: S.current.expirationData,
-                                  subtitle: element.endDate)),
-                        ],
-                      ),
-                    ),
-                    // financial summery
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Expanded(
-                              child: verticalBubble(context,
-                                  title: S.current.requiredToPay,
-                                  subtitle: FixedNumber.getFixedNumber(
-                                          element.total.requiredToPay) +
-                                      ' ${S.current.sar}')),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: 32,
-                              height: 2.5,
-                              color: Theme.of(context).colorScheme.background,
-                            ),
-                          ),
-                          Expanded(
-                              child: verticalBubble(context,
-                                  title: S.current.sumPayments,
-                                  subtitle: FixedNumber.getFixedNumber(
-                                          element.total.sumPayments) +
-                                      ' ${S.current.sar}')),
-                        ],
-                      ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Expanded(
-                            child: verticalBubble(context,
-                                title: S.current.leftToPay,
-                                subtitle: FixedNumber.getFixedNumber(
-                                        element.total.total) +
-                                    ' ${S.current.sar}',
-                                background: element.total.advancePayment == null
-                                    ? null
-                                    : (element.total.advancePayment == 160
-                                        ? Colors.green
-                                        : element.total.advancePayment == 159
-                                            ? Colors.red
-                                            : Theme.of(screenState.context)
-                                                .disabledColor)),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Container(
-                              width: 32,
-                              height: 2.5,
-                              color: Theme.of(context).colorScheme.background,
-                            ),
-                          ),
-                          Expanded(
-                              child: verticalBubble(
-                            context,
-                            title: S.current.subscriptionStatus,
-                            subtitle:
-                                SubscriptionsStatusHelper.getStatusMessage(
-                                    element.status),
-                            background:
-                                SubscriptionsStatusHelper.getStatusColor(
-                                    element.status),
-                            subtitleText: true,
-                          )),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Container(
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(25),
+                color: Theme.of(context).colorScheme.primary),
+            child: Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(
+                S.current.expiredSubscriptionsFinanceHint,
+                style: Theme.of(context).textTheme.labelLarge,
               ),
             ),
           ),
         ),
-      ));
-    });
-    return widgets;
+        Flexible(
+          child: ListView.builder(
+            itemCount: dues?.length ?? 0,
+            shrinkWrap: true,
+            itemBuilder: (context, index) {
+              if (dues == null) return SizedBox();
+              var element = dues![index];
+              return Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Material(
+                  color: Colors.transparent,
+                  child: InkWell(
+                    borderRadius: BorderRadius.circular(25),
+                    onTap: () {
+                      StoresHiveHelper().setCurrentStoreID(screenState.storeID);
+                      Navigator.of(context).pushNamed(
+                          SubscriptionsRoutes.SUBSCRIPTIONS_DUES_DETAILS_SCREEN,
+                          arguments: element);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(25),
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          boxShadow: [
+                            BoxShadow(
+                                blurRadius: 5,
+                                spreadRadius: 0.5,
+                                offset: const Offset(-1, 0),
+                                color:
+                                    Theme.of(context).colorScheme.background),
+                          ]),
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Column(
+                          children: [
+                            // financial cycleDate
+                            Center(
+                                child: Text(
+                              element.packageName,
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
+                            )),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Expanded(
+                                      child: verticalBubble(context,
+                                          subtitle: element.startDate,
+                                          title: S.current.subscriptionDate)),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      width: 32,
+                                      height: 2.5,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .background,
+                                    ),
+                                  ),
+                                  Expanded(
+                                      child: verticalBubble(context,
+                                          title: S.current.expirationData,
+                                          subtitle: element.endDate)),
+                                ],
+                              ),
+                            ),
+                            // financial summery
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Expanded(
+                                      child: verticalBubble(context,
+                                          title: S.current.requiredToPay,
+                                          subtitle: FixedNumber.getFixedNumber(
+                                                  element.total.requiredToPay) +
+                                              ' ${S.current.sar}')),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      width: 32,
+                                      height: 2.5,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .background,
+                                    ),
+                                  ),
+                                  Expanded(
+                                      child: verticalBubble(context,
+                                          title: S.current.sumPayments,
+                                          subtitle: FixedNumber.getFixedNumber(
+                                                  element.total.sumPayments) +
+                                              ' ${S.current.sar}')),
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceAround,
+                                children: [
+                                  Expanded(
+                                    child: verticalBubble(context,
+                                        title: S.current.leftToPay,
+                                        subtitle: FixedNumber.getFixedNumber(
+                                                element.total.total) +
+                                            ' ${S.current.sar}',
+                                        background: element
+                                                    .total.advancePayment ==
+                                                null
+                                            ? null
+                                            : (element.total.advancePayment ==
+                                                    160
+                                                ? Colors.green
+                                                : element.total
+                                                            .advancePayment ==
+                                                        159
+                                                    ? Colors.red
+                                                    : Theme.of(
+                                                            screenState.context)
+                                                        .disabledColor)),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Container(
+                                      width: 32,
+                                      height: 2.5,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .background,
+                                    ),
+                                  ),
+                                  Expanded(
+                                      child: verticalBubble(
+                                    context,
+                                    title: S.current.subscriptionStatus,
+                                    subtitle: SubscriptionsStatusHelper
+                                        .getStatusMessage(element.status),
+                                    background: SubscriptionsStatusHelper
+                                        .getStatusColor(element.status),
+                                    subtitleText: true,
+                                  )),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
   }
 
   Widget getVerticalTile(BuildContext context,

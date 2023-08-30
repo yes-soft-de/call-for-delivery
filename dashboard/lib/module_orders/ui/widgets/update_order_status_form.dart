@@ -8,6 +8,7 @@ import 'package:c4d/module_orders/ui/widgets/label_text.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/effect/scaling.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
 
@@ -161,16 +162,25 @@ class _UpdateOrderStatusFormState extends State<UpdateOrderStatusForm> {
                     child: TextButton(
                         style: TextButton.styleFrom(shape: StadiumBorder()),
                         onPressed: () {
-                          request = UpdateOrderRequest(
-                              id: orderInfo.id,
-                              state: request.state,
-                              distance: distanceCalculator.text,
-                              paid: paid ? 1 : 2,
-                              orderCost:
-                                  double.tryParse(paymentController.text),
-                              paymentNote: noteController.text);
-                          widget.callBack(request);
-                          Navigator.pop(context);
+                          if (request.state == 'delivered' &&
+                              orderInfo.payment == 'cash' &&
+                              paymentController.text.isEmpty) {
+                            CustomFlushBarHelper.createError(
+                              title: S.current.warnning,
+                              message: S.current.pleaseCompleteField,
+                            );
+                          } else {
+                            request = UpdateOrderRequest(
+                                id: orderInfo.id,
+                                state: request.state,
+                                distance: distanceCalculator.text,
+                                paid: paid ? 1 : 2,
+                                orderCost:
+                                    double.tryParse(paymentController.text),
+                                paymentNote: noteController.text);
+                            widget.callBack(request);
+                            Navigator.pop(context);
+                          }
                         },
                         child: Text(S.current.update)),
                   ),

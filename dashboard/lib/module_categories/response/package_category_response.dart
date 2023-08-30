@@ -19,8 +19,8 @@ class PackageCategoryResponse {
       }
     } catch (e) {
       statusCode = '-1';
-      Logger()
-          .error('Package Category Response', e.toString(), StackTrace.current);
+      Logger.error(
+          'Package Category Response', e.toString(), StackTrace.current);
     }
   }
   String? statusCode;

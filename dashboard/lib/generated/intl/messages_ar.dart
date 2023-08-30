@@ -779,7 +779,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "getDirection":
             MessageLookupByLibrary.simpleMessage("موقع المحل (الاستلام)"),
         "giveCaptainHalfProfit": MessageLookupByLibrary.simpleMessage(
-            "احتساب نصف قيمة الطلب على الكابتن"),
+            "احتساب نصف قيمة الطلب الى الكابتن"),
         "go": MessageLookupByLibrary.simpleMessage("انطلق"),
         "groupOrder": MessageLookupByLibrary.simpleMessage("طلب مجمع"),
         "had_amount_daily_captain":
@@ -1049,6 +1049,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("تم إخفاء طلب لتعديله"),
         "orderHidedToEditByStore":
             MessageLookupByLibrary.simpleMessage("تم إخفاء طلب لتعديله"),
+        "orderIgnoredSuccessfully":
+            MessageLookupByLibrary.simpleMessage("تم تجاهل الطلب بنجاح"),
         "orderImage": MessageLookupByLibrary.simpleMessage("صورة الطلب"),
         "orderIsCreated": MessageLookupByLibrary.simpleMessage("تم الانشاء"),
         "orderIsDone": MessageLookupByLibrary.simpleMessage("انتهى الطلب!"),

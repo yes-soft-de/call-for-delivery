@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_captain/request/captain_payment_request.dart';
@@ -11,9 +14,7 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class CaptainDuesScreen extends StatefulWidget {
-  final CaptainDuesStateManager _manager;
-
-  const CaptainDuesScreen(this._manager);
+  const CaptainDuesScreen();
 
   @override
   State<StatefulWidget> createState() => CaptainDuesScreenState();
@@ -21,30 +22,42 @@ class CaptainDuesScreen extends StatefulWidget {
 
 class CaptainDuesScreenState extends State<CaptainDuesScreen> {
   States? _currentState;
+  late CaptainDuesStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   int currentIndex = 0;
   String? search;
   late CaptainPaymentRequest filter;
+
   @override
   void initState() {
     _currentState = LoadingState(this);
-    widget._manager.stateSubject.listen((value) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((value) {
       _currentState = value;
 
       if (mounted) setState(() {});
     });
     filter = CaptainPaymentRequest(hasCaptainFinancialDueDemanded: true);
-    widget._manager.getCaptainsFinanceDailyNew(this, filter);
+    _stateManager.getCaptainsFinanceDailyNew(this, filter);
     super.initState();
   }
 
-  CaptainDuesStateManager get manager => widget._manager;
+  CaptainDuesStateManager get manager => _stateManager;
   void refresh() {
     if (mounted) setState(() {});
   }
 
   void getAccount() {
-    widget._manager.getCaptainsFinanceDailyNew(this, filter);
+    _stateManager.getCaptainsFinanceDailyNew(this, filter);
     refresh();
+  }
+
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
   }
 
   @override
@@ -88,8 +101,8 @@ class CaptainDuesScreenState extends State<CaptainDuesScreen> {
                           filter = CaptainPaymentRequest(
                               hasCaptainFinancialDueDemanded: true);
                           refresh();
-                          widget._manager
-                              .getCaptainsFinanceDailyNew(this, filter);
+                          _stateManager.getCaptainsFinanceDailyNew(
+                              this, filter);
                         },
                         child: AnimatedContainer(
                           height: 40,
@@ -132,8 +145,8 @@ class CaptainDuesScreenState extends State<CaptainDuesScreen> {
                           currentIndex = 1;
                           filter = CaptainPaymentRequest(status: 2);
                           refresh();
-                          widget._manager
-                              .getCaptainsFinanceDailyNew(this, filter);
+                          _stateManager.getCaptainsFinanceDailyNew(
+                              this, filter);
                         },
                         child: AnimatedContainer(
                           height: 40,

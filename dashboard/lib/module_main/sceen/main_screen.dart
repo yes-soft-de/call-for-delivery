@@ -13,7 +13,7 @@ import 'package:c4d/utils/global/screen_type.dart';
 class MainScreen extends StatefulWidget {
   final StatisticsScreen _homeScreen;
 
-  MainScreen(this._homeScreen);
+  MainScreen() : _homeScreen = StatisticsScreen();
 
   @override
   _MainScreenState createState() => _MainScreenState();

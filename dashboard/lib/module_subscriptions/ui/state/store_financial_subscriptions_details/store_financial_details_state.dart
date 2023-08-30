@@ -13,7 +13,6 @@ import 'package:c4d/module_subscriptions/ui/widget/item_payment_widget.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/effect/scaling.dart';
 import 'package:c4d/utils/helpers/date_converter.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
@@ -34,7 +33,7 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
   @override
   Widget getUI(BuildContext context) {
     model = screenState.model;
-    return CustomListView.custom(
+    return ListView(
       children: [
         Padding(
           padding: const EdgeInsets.all(8.0),
@@ -303,90 +302,6 @@ class StoreSubscriptionsFinanceDetailsStateLoaded extends States {
         ),
       ),
     );
-  }
-
-  List<Widget> getPayments(context) {
-    List<Widget> widgets = [];
-    model.paymentsFromStore.forEach((element) {
-      widgets.add(Padding(
-        padding: const EdgeInsets.only(top: 8.0, bottom: 8),
-        child: Container(
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(25),
-              color: Theme.of(context).colorScheme.background,
-            ),
-            child: ListTile(
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25)),
-              onTap: element.note != null
-                  ? () {
-                      showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              title: Text(S.current.note),
-                              content: Container(
-                                child: Text(element.note ?? ''),
-                              ),
-                            );
-                          });
-                    }
-                  : null,
-              leading: const Icon(Icons.credit_card_rounded),
-              title: Text(S.current.paymentAmount),
-              subtitle: Text(FixedNumber.getFixedNumber(element.amount) +
-                  ' ${S.current.sar}'),
-              trailing: SizedBox(
-                width: 150,
-                child: Row(
-                  children: [
-                    Text(DateFormat('yyyy/M/dd').format(element.paymentDate)),
-                    Spacer(),
-                    IconButton(
-                        onPressed: () {
-                          showDialog(
-                              context: screenState.context,
-                              builder: (context) {
-                                return CustomAlertDialog(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                      screenState.manager.deletePayment(
-                                          screenState, element.id.toString());
-                                    },
-                                    oneAction: false,
-                                    content: S
-                                        .current.areYouSureToDeleteThisPayment);
-                              });
-                        },
-                        icon: Icon(Icons.delete))
-                  ],
-                ),
-              ),
-            )),
-      ));
-    });
-    if (widgets.isNotEmpty) {
-      widgets.insert(
-        0,
-        const Padding(
-          padding: EdgeInsets.only(right: 16.0, left: 16),
-          child: Divider(
-            thickness: 2,
-          ),
-        ),
-      );
-      widgets.insert(
-        1,
-        Text(
-          S.current.storePayments,
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-      );
-    }
-    return widgets;
   }
 
   Widget getDetails(context) {

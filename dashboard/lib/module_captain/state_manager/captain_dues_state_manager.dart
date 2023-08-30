@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_captain/model/captain_dues_model.dart';
@@ -6,13 +7,13 @@ import 'package:c4d/module_captain/service/captains_service.dart';
 import 'package:c4d/module_captain/ui/screen/captain_dues_screen.dart';
 import 'package:c4d/module_captain/ui/state/captain_dues_loaded_state.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/subjects.dart';
 
 @injectable
-class CaptainDuesStateManager {
-  final stateSubject = PublishSubject<States>();
+class CaptainDuesStateManager extends StateManagerHandler {
   final CaptainsService _planService;
+
   CaptainDuesStateManager(this._planService);
+  
   Stream<States> get stateStream => stateSubject.stream;
 
   void getCaptainsFinanceDailyNew(

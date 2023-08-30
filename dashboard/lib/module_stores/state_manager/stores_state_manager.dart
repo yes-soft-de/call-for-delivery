@@ -1,8 +1,8 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_stores/ui/state/stores_lists/stores_loaded_state.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/model/stores_model.dart';
 import 'package:c4d/module_stores/request/create_store_request.dart';
@@ -12,34 +12,32 @@ import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 
 @injectable
-class StoresStateManager {
+class StoresStateManager extends StateManagerHandler {
   final StoresService _storesService;
   final ImageUploadService _uploadService;
-  final PublishSubject<States> _stateSubject = PublishSubject();
 
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
 
-  StoresStateManager(
-      this._storesService,this._uploadService);
+  StoresStateManager(this._storesService, this._uploadService);
 
   void getStores(StoresScreenState screenState) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _storesService.getStores().then((value) {
       if (value.hasError) {
-        _stateSubject
+        stateSubject
             .add(StoresLoadedState(screenState, null, error: value.error));
       } else if (value.isEmpty) {
-        _stateSubject.add(StoresLoadedState(screenState, null, empty: true));
+        stateSubject.add(StoresLoadedState(screenState, null, empty: true));
       } else {
         StoresModel model = value as StoresModel;
-        _stateSubject.add(StoresLoadedState(screenState, model.data));
+        stateSubject.add(StoresLoadedState(screenState, model.data));
       }
     });
   }
 
 //  void createStore(
 //      StoresScreenState screenState, CreateStoreRequest request) {
-//    _stateSubject.add(StoresLoadingState(screenState));
+//    stateSubject.add(StoresLoadingState(screenState));
 //
 //    _uploadService.uploadImage(request.image!).then((value) {
 //      if (value == null) {
@@ -69,15 +67,14 @@ class StoresStateManager {
 
   void updateStore(StoresScreenState screenState, UpdateStoreRequest request,
       bool haveImage) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     if (haveImage) {
       _uploadService.uploadImage(request.image).then((image) {
         if (image == null) {
           screenState.getStores();
           CustomFlushBarHelper.createError(
-                  title: S.current.warnning,
-                  message: S.current.errorUploadingImages)
-              ;
+              title: S.current.warnning,
+              message: S.current.errorUploadingImages);
           return;
         } else {
           request.image = image;
@@ -85,14 +82,12 @@ class StoresStateManager {
             if (value.hasError) {
               getStores(screenState);
               CustomFlushBarHelper.createError(
-                  title: S.current.warnning, message: value.error ?? '')
-                ;
+                  title: S.current.warnning, message: value.error ?? '');
             } else {
               getStores(screenState);
               CustomFlushBarHelper.createSuccess(
                   title: S.current.warnning,
-                  message: S.current.storeUpdatedSuccessfully)
-                ;
+                  message: S.current.storeUpdatedSuccessfully);
             }
           });
         }
@@ -102,14 +97,12 @@ class StoresStateManager {
         if (value.hasError) {
           getStores(screenState);
           CustomFlushBarHelper.createError(
-              title: S.current.warnning, message: value.error ?? '')
-            ;
+              title: S.current.warnning, message: value.error ?? '');
         } else {
           getStores(screenState);
           CustomFlushBarHelper.createSuccess(
               title: S.current.warnning,
-              message: S.current.storeUpdatedSuccessfully)
-            ;
+              message: S.current.storeUpdatedSuccessfully);
         }
       });
     }

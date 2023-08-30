@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -17,30 +18,29 @@ import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 
 @injectable
-class RecycleOrderStateManager {
+class RecycleOrderStateManager extends StateManagerHandler {
   final OrdersService _ordersService;
-  final PublishSubject<States> _stateSubject = new PublishSubject();
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
+
   RecycleOrderStateManager(this._ordersService);
 
   void getOrderbyId(RecycleOrderScreenState screenState, int orderId) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _ordersService.getOrderDetails(orderId).then((value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(screenState, onPressed: () {
+        stateSubject.add(ErrorState(screenState, onPressed: () {
           // getOrder(screenState, id);
         }, title: '', error: value.error, hasAppbar: false));
       } else if (value.isEmpty) {
-        _stateSubject.add(EmptyState(screenState, onPressed: () {
+        stateSubject.add(EmptyState(screenState, onPressed: () {
           // getOrder(screenState, id);
         }, title: '', emptyMessage: S.current.homeDataEmpty, hasAppbar: false));
       } else {
         value as OrderDetailsModel;
         screenState.orderInfo = value.data;
-        _stateSubject.add(RecycleOrderLoaded2(screenState, [], value.data));
+        stateSubject.add(RecycleOrderLoaded2(screenState, [], value.data));
         getBranches(screenState, value.data.storeID);
       }
     });
@@ -49,11 +49,11 @@ class RecycleOrderStateManager {
   void getBranches(RecycleOrderScreenState screenState, int storeID) {
     getIt<BranchesListService>().getBranches(storeID.toString()).then((value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(screenState, onPressed: () {
+        stateSubject.add(ErrorState(screenState, onPressed: () {
           getBranches(screenState, storeID);
         }, title: '', error: value.error, hasAppbar: false));
       } else if (value.isEmpty) {
-        _stateSubject.add(EmptyState(screenState, onPressed: () {
+        stateSubject.add(EmptyState(screenState, onPressed: () {
           getBranches(screenState, storeID);
         },
             title: '',
@@ -62,7 +62,7 @@ class RecycleOrderStateManager {
       } else {
         value as BranchesModel;
         screenState.branches = value.data;
-        _stateSubject
+        stateSubject
             .add(RecycleOrderLoaded2(screenState, [], screenState.orderInfo));
       }
     });
@@ -70,23 +70,21 @@ class RecycleOrderStateManager {
 
   void recycleOrder(
       RecycleOrderScreenState screenState, CreateOrderRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _ordersService.recycleOrder(request).then((value) {
       if (value.hasError) {
         getIt<GlobalStateManager>().updateList();
         Navigator.of(screenState.context)
             .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
         CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error ?? '')
-            ;
+            title: S.current.warnning, message: value.error ?? '');
       } else {
         getIt<GlobalStateManager>().updateList();
         Navigator.of(screenState.context)
             .pushNamedAndRemoveUntil(MainRoutes.MAIN_SCREEN, (route) => false);
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.orderRecycledSuccessfully)
-            ;
+            title: S.current.warnning,
+            message: S.current.orderRecycledSuccessfully);
         FireStoreHelper().backgroundThread('Trigger');
       }
     });

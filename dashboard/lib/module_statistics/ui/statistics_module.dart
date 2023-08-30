@@ -6,14 +6,13 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class StatisticsModule extends YesModule {
-  final StatisticsScreen statisticsScreen;
 
-  StatisticsModule(this.statisticsScreen) {
+  StatisticsModule() {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
     return {
-      StatisticsRoutes.STATISTICS_SCREEN: (context) => statisticsScreen,
+      StatisticsRoutes.STATISTICS_SCREEN: (context) => StatisticsScreen(),
     };
   }
 }

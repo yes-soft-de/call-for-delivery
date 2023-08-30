@@ -7,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
@@ -46,34 +45,10 @@ class StoresNeedSupportLoadedState extends States {
           });
     }
     return FixedContainer(
-        child: CustomListView.custom(children: getClients(context)));
-  }
-
-  List<Widget> getClients(BuildContext context) {
-    List<Widget> widgets = [];
-
-    for (var element in model ?? <StoresNeedSupportModel>[]) {
-      if (element.storeName.contains(search ?? '') == false) {
-        continue;
-      }
-      widgets.add(StoreCard(
-        Id: element.id,
-        name: element.storeName,
-        image: element.image,
-        onTap: () {
-          Navigator.of(context).pushNamed(
-            ChatRoutes.chatRoute,
-            arguments: ChatArgument(
-                roomID: element.roomID,
-                userType: 'store',
-                userID: int.parse(element.userId)),
-          );
-        },
-      ));
-    }
-    if (model != null) {
-      widgets.insert(
-          0,
+        child: Visibility(
+      visible: model != null,
+      child: Column(
+        children: [
           Padding(
             padding: EdgeInsets.only(left: 18.0, right: 18.0, bottom: 16),
             child: CustomDeliverySearch(
@@ -88,9 +63,38 @@ class StoresNeedSupportLoadedState extends States {
                 }
               },
             ),
-          ));
-    }
-
-    return widgets;
+          ),
+          Flexible(
+            child: ListView.builder(
+              itemCount: model?.length ?? 0,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                var element = model![index];
+                if (element.storeName
+                        .toLowerCase()
+                        .contains(search?.toLowerCase() ?? '') ==
+                    false) {
+                  return SizedBox();
+                }
+                return StoreCard(
+                  Id: element.id,
+                  name: element.storeName,
+                  image: element.image,
+                  onTap: () {
+                    Navigator.of(context).pushNamed(
+                      ChatRoutes.chatRoute,
+                      arguments: ChatArgument(
+                          roomID: element.roomID,
+                          userType: 'store',
+                          userID: int.parse(element.userId)),
+                    );
+                  },
+                );
+              },
+            ),
+          ),
+        ],
+      ),
+    ));
   }
 }

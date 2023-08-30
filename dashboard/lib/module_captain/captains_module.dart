@@ -19,49 +19,38 @@ import 'ui/screen/captains_offer_screen.dart';
 @injectable
 class CaptainsModule extends YesModule {
   final CaptainOffersScreen captainOffersScreen;
-  final InActiveCaptainsScreen inActiveCaptains;
-  final CaptainsScreen captainsScreen;
-  final CaptainProfileScreen captainProfileScreen;
-  final CaptainsNeedsSupportScreen supportScreen;
   final PlanScreen planScreen;
-  final CaptainAssignOrderScreen captainAssignOrderScreen;
   final CaptainsRatingScreen captainsRatingsScreen;
   final CaptinRatingDetailsScreen captainsRatingsDetailsScreen;
   final CaptainsActivityScreen captainsActivityScreen;
   final CaptainActivityDetailsScreen captainsActivityDetailsScreen;
-  final CaptainDuesScreen captainDuesScreen;
+
   CaptainsModule(
     this.captainOffersScreen,
-    this.inActiveCaptains,
-    this.captainsScreen,
-    this.captainProfileScreen,
-    this.supportScreen,
     this.planScreen,
-    this.captainAssignOrderScreen,
     this.captainsRatingsScreen,
     this.captainsRatingsDetailsScreen,
     this.captainsActivityScreen,
     this.captainsActivityDetailsScreen,
-    this.captainDuesScreen,
   ) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
     return {
       CaptainsRoutes.OFFER: (context) => captainOffersScreen,
-      CaptainsRoutes.CAPTAINS: (context) => captainsScreen,
-      CaptainsRoutes.CAPTAIN_PROFILE: (context) => captainProfileScreen,
-      CaptainsRoutes.IN_ACTIVE_CAPTAINS: (context) => inActiveCaptains,
-      CaptainsRoutes.CAPTAIN_SUPPORT: (context) => supportScreen,
+      CaptainsRoutes.CAPTAINS: (context) => CaptainsScreen(),
+      CaptainsRoutes.CAPTAIN_PROFILE: (context) => CaptainProfileScreen(),
+      CaptainsRoutes.IN_ACTIVE_CAPTAINS: (context) => InActiveCaptainsScreen(),
+      CaptainsRoutes.CAPTAIN_SUPPORT: (context) => CaptainsNeedsSupportScreen(),
       CaptainsRoutes.CAPTAIN_PLAN: (context) => planScreen,
-      CaptainsRoutes.ASSIGN_TO_CAPTAIN: (context) => captainAssignOrderScreen,
+      CaptainsRoutes.ASSIGN_TO_CAPTAIN: (context) => CaptainAssignOrderScreen(),
       CaptainsRoutes.CAPTAIN_RATING: (context) => captainsRatingsScreen,
       CaptainsRoutes.CAPTAIN_RATING_DETAILS: (context) =>
           captainsRatingsDetailsScreen,
       CaptainsRoutes.CAPTAIN_ACTIVITY: (context) => captainsActivityScreen,
       CaptainsRoutes.CAPTAIN_ACTIVITY_DETAILS: (context) =>
           captainsActivityDetailsScreen,
-      CaptainsRoutes.CAPTAIN_DUES: (context) => captainDuesScreen,
+      CaptainsRoutes.CAPTAIN_DUES: (context) => CaptainDuesScreen(),
     };
   }
 }

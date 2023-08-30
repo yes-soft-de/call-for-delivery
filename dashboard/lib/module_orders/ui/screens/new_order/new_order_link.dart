@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
@@ -10,16 +11,10 @@ import 'package:c4d/utils/components/phone_number_detection.dart';
 import 'package:c4d/utils/helpers/link_cleaner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 
-@injectable
 class NewOrderLinkScreen extends StatefulWidget {
-  final NewOrderLinkStateManager _stateManager;
-
-  NewOrderLinkScreen(
-    this._stateManager,
-  );
+  NewOrderLinkScreen();
 
   @override
   NewOrderLinkScreenState createState() => NewOrderLinkScreenState();
@@ -28,11 +23,13 @@ class NewOrderLinkScreen extends StatefulWidget {
 class NewOrderLinkScreenState extends State<NewOrderLinkScreen>
     with WidgetsBindingObserver {
   late States currentState;
+  late NewOrderLinkStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  StreamSubscription? _stateSubscription;
 
   void addNewOrder(CreateOrderRequest request) {
-    widget._stateManager.createOrder(this, request);
+    _stateManager.createOrder(this, request);
   }
 
   void refresh() {
@@ -74,8 +71,9 @@ class NewOrderLinkScreenState extends State<NewOrderLinkScreen>
   void initState() {
     super.initState();
     currentState = LoadingState(this);
+    _stateManager = getIt();
     countryNumberController.text = '966';
-    _stateSubscription = widget._stateManager.stateStream.listen((event) {
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -122,7 +120,8 @@ class NewOrderLinkScreenState extends State<NewOrderLinkScreen>
     countryNumberController.dispose();
     toController.dispose();
     priceController.dispose();
-    _stateSubscription?.cancel();
+    _stateSubscription.cancel();
+    _stateManager.dispose();
     super.dispose();
   }
 
@@ -140,7 +139,7 @@ class NewOrderLinkScreenState extends State<NewOrderLinkScreen>
         storeID = args.storeId;
         packageType = args.packageType;
         branch = int.tryParse(args.branchID.toString());
-        widget._stateManager.getBranches(this, storeID.toString());
+        _stateManager.getBranches(this, storeID.toString());
       }
       flag = false;
     }

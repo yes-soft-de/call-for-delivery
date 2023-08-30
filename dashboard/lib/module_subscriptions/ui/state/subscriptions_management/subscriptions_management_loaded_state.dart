@@ -5,7 +5,6 @@ import 'package:c4d/module_subscriptions/ui/screen/subscriptions_managment_scree
 import 'package:c4d/module_subscriptions/ui/widget/bottom_sheet_sub_management/bottom_sheet_renew_sub.dart';
 import 'package:c4d/module_subscriptions/ui/widget/control_widget.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
-import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:flutter/material.dart';
 
 class SubscriptionManagementStateLoaded extends States {
@@ -13,7 +12,7 @@ class SubscriptionManagementStateLoaded extends States {
   SubscriptionManagementStateLoaded(this.screenState) : super(screenState);
   @override
   Widget getUI(BuildContext context) {
-    return CustomListView.custom(children: [
+    return ListView(children: [
       Wrap(
         alignment: WrapAlignment.center,
         spacing: 16,
