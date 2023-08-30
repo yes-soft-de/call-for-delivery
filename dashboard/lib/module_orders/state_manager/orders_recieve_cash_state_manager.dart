@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -15,14 +16,12 @@ import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 
 @injectable
-class OrdersReceiveCashStateManager {
+class OrdersReceiveCashStateManager extends StateManagerHandler {
   final OrdersService _myOrdersService;
-  final PublishSubject<States> _stateSubject = PublishSubject<States>();
 
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
 
   OrdersReceiveCashStateManager(this._myOrdersService);
 
@@ -30,7 +29,7 @@ class OrdersReceiveCashStateManager {
       OrdersReceiveCashScreenState screenState, FilterOrderRequest request,
       [bool loading = true]) {
     if (loading) {
-      _stateSubject.add(LoadingState(screenState));
+      stateSubject.add(LoadingState(screenState));
     }
     if (screenState.currentIndex == 0) {
       getNotAnsweredOrder(screenState, request);
@@ -43,17 +42,16 @@ class OrdersReceiveCashStateManager {
       OrdersReceiveCashScreenState screenState, FilterOrderRequest request) {
     _myOrdersService.getNotAnsweredOrderCash(request).then((value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(screenState, onPressed: () {
+        stateSubject.add(ErrorState(screenState, onPressed: () {
           getOrdersFilters(screenState, request);
         }, title: '', error: value.error, hasAppbar: false, size: 200));
       } else if (value.isEmpty) {
-        _stateSubject.add(EmptyState(screenState, size: 200, onPressed: () {
+        stateSubject.add(EmptyState(screenState, size: 200, onPressed: () {
           getOrdersFilters(screenState, request);
         }, title: '', emptyMessage: S.current.homeDataEmpty, hasAppbar: false));
       } else {
         value as OrderModel;
-        _stateSubject
-            .add(OrdersReceiveCashLoadedState(screenState, value.data));
+        stateSubject.add(OrdersReceiveCashLoadedState(screenState, value.data));
       }
     });
   }
@@ -62,17 +60,16 @@ class OrdersReceiveCashStateManager {
       OrdersReceiveCashScreenState screenState, FilterOrderRequest request) {
     _myOrdersService.getConflictingAnswerOrderCash(request).then((value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(screenState, onPressed: () {
+        stateSubject.add(ErrorState(screenState, onPressed: () {
           getOrdersFilters(screenState, request);
         }, title: '', error: value.error, hasAppbar: false, size: 200));
       } else if (value.isEmpty) {
-        _stateSubject.add(EmptyState(screenState, size: 200, onPressed: () {
+        stateSubject.add(EmptyState(screenState, size: 200, onPressed: () {
           getOrdersFilters(screenState, request);
         }, title: '', emptyMessage: S.current.homeDataEmpty, hasAppbar: false));
       } else {
         value as OrderModel;
-        _stateSubject
-            .add(OrdersReceiveCashLoadedState(screenState, value.data));
+        stateSubject.add(OrdersReceiveCashLoadedState(screenState, value.data));
       }
     });
   }
@@ -88,15 +85,13 @@ class OrdersReceiveCashStateManager {
                 _myOrdersService.resolveOrderConflicts(resolve).then((value) {
                   if (value.hasError) {
                     CustomFlushBarHelper.createError(
-                            title: S.current.warnning,
-                            message: value.error ?? S.current.errorHappened)
-                        ;
+                        title: S.current.warnning,
+                        message: value.error ?? S.current.errorHappened);
                     getOrdersFilters(screenState, request);
                   } else {
                     CustomFlushBarHelper.createSuccess(
-                            title: S.current.warnning,
-                            message: S.current.orderConflictedSuccessfully)
-                        ;
+                        title: S.current.warnning,
+                        message: S.current.orderConflictedSuccessfully);
                     getOrdersFilters(screenState, request);
                   }
                 });
@@ -119,15 +114,13 @@ class OrdersReceiveCashStateManager {
                     .then((value) {
                   if (value.hasError) {
                     CustomFlushBarHelper.createError(
-                            title: S.current.warnning,
-                            message: value.error ?? S.current.errorHappened)
-                        ;
+                        title: S.current.warnning,
+                        message: value.error ?? S.current.errorHappened);
                     getOrdersFilters(screenState, request);
                   } else {
                     CustomFlushBarHelper.createSuccess(
-                            title: S.current.warnning,
-                            message: S.current.updateStoreAnswerSuccessfully)
-                        ;
+                        title: S.current.warnning,
+                        message: S.current.updateStoreAnswerSuccessfully);
                     getOrdersFilters(screenState, request);
                   }
                 });

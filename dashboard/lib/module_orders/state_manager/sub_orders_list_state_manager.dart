@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -16,29 +17,26 @@ import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
-import 'package:rxdart/rxdart.dart';
 
 @injectable
-class SubOrdersStateManager {
+class SubOrdersStateManager extends StateManagerHandler {
   final OrdersService _ordersService;
 
-  final PublishSubject<States> _stateSubject = new PublishSubject();
-
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
 
   SubOrdersStateManager(this._ordersService);
   void getOrder(SubOrdersScreenState screenState, int id,
       [bool loading = true]) {
     if (loading) {
-      _stateSubject.add(LoadingState(screenState));
+      stateSubject.add(LoadingState(screenState));
     }
     _ordersService.getOrderDetails(id).then((value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(screenState, onPressed: () {
+        stateSubject.add(ErrorState(screenState, onPressed: () {
           getOrder(screenState, id);
         }, title: '', error: value.error, hasAppbar: false));
       } else if (value.isEmpty) {
-        _stateSubject.add(EmptyState(screenState, onPressed: () {
+        stateSubject.add(EmptyState(screenState, onPressed: () {
           getOrder(screenState, id);
         }, title: '', emptyMessage: S.current.homeDataEmpty, hasAppbar: false));
       } else {
@@ -71,15 +69,14 @@ class SubOrdersStateManager {
         List<OrderModel> orders = [];
         orders.addAll(order.subOrders);
         orders.insert(0, primaryOrder);
-        _stateSubject
-            .add(SubOrdersListStateLoaded(screenState, orders: orders));
+        stateSubject.add(SubOrdersListStateLoaded(screenState, orders: orders));
       }
     });
   }
 
   void removeSubOrder(
       SubOrdersScreenState screenState, OrderNonSubRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _ordersService.removeOrderSub(request).then((value) {
       if (value.hasError) {
         getIt<GlobalStateManager>().updateList();

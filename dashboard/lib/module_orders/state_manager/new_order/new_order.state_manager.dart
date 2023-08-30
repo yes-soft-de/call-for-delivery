@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -19,27 +20,26 @@ import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 
 @injectable
-class NewOrderStateManager {
+class NewOrderStateManager extends StateManagerHandler {
   final OrdersService _ordersService;
-  final PublishSubject<States> _stateSubject = new PublishSubject();
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
+
   NewOrderStateManager(this._ordersService);
   void getStores(NewOrderScreenState screenState) {
     getIt<StoresService>().getStores().then((value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(screenState, onPressed: () {
+        stateSubject.add(ErrorState(screenState, onPressed: () {
           getStores(screenState);
         }, title: '', error: value.error, hasAppbar: false));
       } else if (value.isEmpty) {
-        _stateSubject.add(EmptyState(screenState, onPressed: () {
+        stateSubject.add(EmptyState(screenState, onPressed: () {
           getStores(screenState);
         }, title: '', emptyMessage: S.current.homeDataEmpty, hasAppbar: false));
       } else {
         value as StoresModel;
-        _stateSubject
+        stateSubject
             .add(NewOrderStateBranchesLoaded(value.data, [], screenState));
       }
     });
@@ -50,14 +50,13 @@ class NewOrderStateManager {
     getIt<BranchesListService>().getBranches(storeID.toString()).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error ?? '')
-            ;
-        _stateSubject.add(NewOrderStateBranchesLoaded(stores, [], screenState));
+            title: S.current.warnning, message: value.error ?? '');
+        stateSubject.add(NewOrderStateBranchesLoaded(stores, [], screenState));
       } else if (value.isEmpty) {
-        _stateSubject.add(NewOrderStateBranchesLoaded(stores, [], screenState));
+        stateSubject.add(NewOrderStateBranchesLoaded(stores, [], screenState));
       } else {
         value as BranchesModel;
-        _stateSubject
+        stateSubject
             .add(NewOrderStateBranchesLoaded(stores, value.data, screenState));
       }
     });
@@ -65,14 +64,13 @@ class NewOrderStateManager {
 
   void createOrder(
       NewOrderScreenState screenState, CreateOrderRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _ordersService.createOrder(request).then((value) {
       if (value.hasError) {
         screenState.clear();
         getStores(screenState);
         CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error ?? '')
-            ;
+            title: S.current.warnning, message: value.error ?? '');
       } else {
         getIt<GlobalStateManager>().updateList();
         screenState.clear();
@@ -82,9 +80,8 @@ class NewOrderStateManager {
             StoresRoutes.ORDER_STATUS_SCREEN,
             arguments: value.data.id);
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.orderCreatedSuccessfully)
-            ;
+            title: S.current.warnning,
+            message: S.current.orderCreatedSuccessfully);
         FireStoreHelper().backgroundThread('Trigger');
       }
     });

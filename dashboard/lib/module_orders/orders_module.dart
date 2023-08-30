@@ -9,7 +9,6 @@ import 'package:c4d/module_orders/ui/screens/order_cash_store_screen.dart';
 import 'package:c4d/module_orders/ui/screens/order_conflict_distance_screen.dart';
 import 'package:c4d/module_orders/ui/screens/order_pending_screen.dart';
 import 'package:c4d/module_orders/ui/screens/orders_captain_screen.dart';
-import 'package:c4d/module_orders/ui/screens/orders_receive_cash_screen.dart';
 import 'package:c4d/module_orders/ui/screens/search_for_order_screen.dart';
 import 'package:c4d/module_orders/ui/screens/sub_orders_screen.dart';
 import 'package:flutter/material.dart';
@@ -19,39 +18,23 @@ import 'ui/screens/recycle_order/recycle_order_screen.dart';
 
 @injectable
 class OrdersModule extends YesModule {
-  final OrdersCashCaptainScreen _cashCaptain;
-  final OrdersCashStoreScreen _cashStore;
-  final UpdateOrderScreen updateOrderScreen;
-  final NewOrderScreen newOrderScreen;
-  final OrdersReceiveCashScreen ordersReceiveCashScreen;
-  final SubOrdersScreen subOrdersScreen;
-  final NewOrderLinkScreen addNewOrderLinkScreen;
-
-  OrdersModule(
-    this._cashCaptain,
-    this._cashStore,
-    this.updateOrderScreen,
-    this.newOrderScreen,
-    this.ordersReceiveCashScreen,
-    this.subOrdersScreen,
-    this.addNewOrderLinkScreen,
-  ) {
+  OrdersModule() {
     YesModule.RoutesMap.addAll(getRoutes());
   }
 
   Map<String, WidgetBuilder> getRoutes() {
     return {
-      OrdersRoutes.ORDER_CASH_STORES: (context) => _cashStore,
-      OrdersRoutes.ORDER_CASH_CAPTAINS: (context) => _cashCaptain,
+      OrdersRoutes.ORDER_CASH_STORES: (context) => OrdersCashStoreScreen(),
+      OrdersRoutes.ORDER_CASH_CAPTAINS: (context) => OrdersCashCaptainScreen(),
       OrdersRoutes.PENDING_ORDERS_SCREEN: (context) => OrderPendingScreen(),
-      OrdersRoutes.UPDATE_ORDERS_SCREEN: (context) => updateOrderScreen,
-      OrdersRoutes.NEW_ORDER_SCREEN: (context) => newOrderScreen,
+      OrdersRoutes.UPDATE_ORDERS_SCREEN: (context) => UpdateOrderScreen(),
+      OrdersRoutes.NEW_ORDER_SCREEN: (context) => NewOrderScreen(),
       OrdersRoutes.CAPTAIN_ORDERS_SCREEN: (context) => OrderCaptainLogsScreen(),
       OrdersRoutes.ORDERS_ACTIONS_LOGS_SCREEN: (context) =>
           OrderActionLogsScreen(),
       OrdersRoutes.ORDERS_RECEIVE_CASH: (context) => OrderActionLogsScreen(),
-      OrdersRoutes.SUB_ORDERS_SCREEN: (context) => subOrdersScreen,
-      OrdersRoutes.NEW_SUB_ORDER_SCREEN: (context) => addNewOrderLinkScreen,
+      OrdersRoutes.SUB_ORDERS_SCREEN: (context) => SubOrdersScreen(),
+      OrdersRoutes.NEW_SUB_ORDER_SCREEN: (context) => NewOrderLinkScreen(),
       OrdersRoutes.SEARCH_FOR_ORDERS_SCREEN: (context) =>
           SearchForOrderScreen(),
       OrdersRoutes.RECYCLE_ORDERS_SCREEN: (context) => RecycleOrderScreen(),
