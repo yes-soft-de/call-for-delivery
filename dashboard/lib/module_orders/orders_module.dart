@@ -10,7 +10,6 @@ import 'package:c4d/module_orders/ui/screens/order_conflict_distance_screen.dart
 import 'package:c4d/module_orders/ui/screens/order_pending_screen.dart';
 import 'package:c4d/module_orders/ui/screens/orders_captain_screen.dart';
 import 'package:c4d/module_orders/ui/screens/orders_receive_cash_screen.dart';
-import 'package:c4d/module_orders/ui/screens/orders_without_distance_screen.dart';
 import 'package:c4d/module_orders/ui/screens/search_for_order_screen.dart';
 import 'package:c4d/module_orders/ui/screens/sub_orders_screen.dart';
 import 'package:flutter/material.dart';
@@ -22,30 +21,20 @@ import 'ui/screens/recycle_order/recycle_order_screen.dart';
 class OrdersModule extends YesModule {
   final OrdersCashCaptainScreen _cashCaptain;
   final OrdersCashStoreScreen _cashStore;
-  final OrderPendingScreen pendingScreen;
   final UpdateOrderScreen updateOrderScreen;
   final NewOrderScreen newOrderScreen;
-  final OrderActionLogsScreen orderActionLogsScreen;
   final OrdersReceiveCashScreen ordersReceiveCashScreen;
   final SubOrdersScreen subOrdersScreen;
   final NewOrderLinkScreen addNewOrderLinkScreen;
-  final SearchForOrderScreen searchForOrderScreen;
-  final RecycleOrderScreen recycleOrdersScreen; 
-  final OrderDistanceConflictScreen orderDistanceConflictScreen;
 
   OrdersModule(
     this._cashCaptain,
     this._cashStore,
     this.updateOrderScreen,
-    this.pendingScreen,
     this.newOrderScreen,
-    this.orderActionLogsScreen,
     this.ordersReceiveCashScreen,
     this.subOrdersScreen,
     this.addNewOrderLinkScreen,
-    this.searchForOrderScreen,
-    this.recycleOrdersScreen,
-    this.orderDistanceConflictScreen,
   ) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
@@ -54,19 +43,20 @@ class OrdersModule extends YesModule {
     return {
       OrdersRoutes.ORDER_CASH_STORES: (context) => _cashStore,
       OrdersRoutes.ORDER_CASH_CAPTAINS: (context) => _cashCaptain,
-      OrdersRoutes.PENDING_ORDERS_SCREEN: (context) => pendingScreen,
+      OrdersRoutes.PENDING_ORDERS_SCREEN: (context) => OrderPendingScreen(),
       OrdersRoutes.UPDATE_ORDERS_SCREEN: (context) => updateOrderScreen,
       OrdersRoutes.NEW_ORDER_SCREEN: (context) => newOrderScreen,
       OrdersRoutes.CAPTAIN_ORDERS_SCREEN: (context) => OrderCaptainLogsScreen(),
       OrdersRoutes.ORDERS_ACTIONS_LOGS_SCREEN: (context) =>
-          orderActionLogsScreen,
-      OrdersRoutes.ORDERS_RECEIVE_CASH: (context) => orderActionLogsScreen,
+          OrderActionLogsScreen(),
+      OrdersRoutes.ORDERS_RECEIVE_CASH: (context) => OrderActionLogsScreen(),
       OrdersRoutes.SUB_ORDERS_SCREEN: (context) => subOrdersScreen,
       OrdersRoutes.NEW_SUB_ORDER_SCREEN: (context) => addNewOrderLinkScreen,
-      OrdersRoutes.SEARCH_FOR_ORDERS_SCREEN: (context) => searchForOrderScreen,
-      OrdersRoutes.RECYCLE_ORDERS_SCREEN: (context) => recycleOrdersScreen,
+      OrdersRoutes.SEARCH_FOR_ORDERS_SCREEN: (context) =>
+          SearchForOrderScreen(),
+      OrdersRoutes.RECYCLE_ORDERS_SCREEN: (context) => RecycleOrderScreen(),
       OrdersRoutes.ORDER_CONFLICT_DISTANCE_SCREEN: (context) =>
-          orderDistanceConflictScreen,
+          OrderDistanceConflictScreen(),
     };
   }
 }
