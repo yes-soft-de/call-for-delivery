@@ -53,6 +53,13 @@ class StatisticsScreenState extends State<StatisticsScreen> {
           title: S.of(context).home, icon: Icons.menu, onTap: () {
         GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
       }, actions: [
+        CustomC4dAppBar.actionIcon(
+          context,
+          onTap: () {
+            getStatistics();
+          },
+          icon: Icons.restart_alt_rounded,
+        ),
         CustomC4dAppBar.actionIcon(context, onTap: () {
           Navigator.of(context)
               .pushNamed(MyNotificationsRoutes.MY_NOTIFICATIONS);
@@ -60,7 +67,7 @@ class StatisticsScreenState extends State<StatisticsScreen> {
         CustomC4dAppBar.actionIcon(context, onTap: () {
           Navigator.of(context)
               .pushNamed(OrdersRoutes.SEARCH_FOR_ORDERS_SCREEN);
-        }, icon: Icons.search)
+        }, icon: Icons.search),
       ]),
       body: Stack(
         children: [

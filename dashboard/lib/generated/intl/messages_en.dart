@@ -175,6 +175,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("are you sure about edit"),
         "areYouSureAboutMakePayment": MessageLookupByLibrary.simpleMessage(
             "are you sure about make payment"),
+        "areYouSureAboutRefusedTheConflictRequest":
+            MessageLookupByLibrary.simpleMessage(
+                "are you sure about refused the conflict request"),
         "areYouSureAboutRependingOrder": MessageLookupByLibrary.simpleMessage(
             "Are you sure about reset this order and remove it form captain"),
         "areYouSureAboutSkipPaymentStageFor":
@@ -1016,6 +1019,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Order cost to store"),
         "orderCashWithCaptain":
             MessageLookupByLibrary.simpleMessage("Cash With Captain"),
+        "orderConflictDistanceNotExist": MessageLookupByLibrary.simpleMessage(
+            "order conflict distance not exist"),
         "orderConflictDistances":
             MessageLookupByLibrary.simpleMessage("Order conflicted distance"),
         "orderConflictedSuccessfully": MessageLookupByLibrary.simpleMessage(
@@ -1572,6 +1577,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "taxNumber": MessageLookupByLibrary.simpleMessage("Tax Number"),
         "termsOfService":
             MessageLookupByLibrary.simpleMessage("Terms of Service"),
+        "theCaptainRaisedAnConflictAboutDistance":
+            MessageLookupByLibrary.simpleMessage(
+                "the captain raised an conflict about distance"),
         "theEdit": MessageLookupByLibrary.simpleMessage("the edit"),
         "theOrderHidden": MessageLookupByLibrary.simpleMessage(
             "This order cannot be assigned to this captain because the request is hidden"),

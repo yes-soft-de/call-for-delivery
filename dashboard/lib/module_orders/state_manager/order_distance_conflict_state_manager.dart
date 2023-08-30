@@ -7,6 +7,7 @@ import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/model/order/conflict_distance_order.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
+import 'package:c4d/module_orders/request/refused_order_distance_conflict.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/ui/screens/order_conflict_distance_screen.dart';
 import 'package:c4d/module_orders/ui/state/order_distance_state/order_distance_state.dart';
@@ -67,6 +68,24 @@ class OrderDistanceConflictStateManager {
       AddExtraDistanceRequest request) {
     _stateSubject.add(LoadingState(screenState));
     _myOrdersService.addExtraDistanceToOrder(request).then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.createError(
+            title: S.current.warnning, message: value.error ?? '');
+        screenState.getOrders();
+      } else {
+        CustomFlushBarHelper.createSuccess(
+            title: S.current.warnning,
+            message: S.current.distanceUpdatedSuccessfully);
+        screenState.getOrders();
+      }
+    });
+  }
+
+  void refusedOrderDistanceConflict(
+      OrderDistanceConflictScreenState screenState,
+      RefusedOrderDistanceConflictRequest request) {
+    _stateSubject.add(LoadingState(screenState));
+    _myOrdersService.refusedOrderDistanceConflict(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
             title: S.current.warnning, message: value.error ?? '');

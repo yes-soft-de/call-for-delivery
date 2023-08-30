@@ -32,10 +32,16 @@ class StatusCodeHelper {
         return S.current.criteriaUpdatedButNotActivated(optionalMessage ?? S.current.unknown);
       case '9055':
         return S.current.criteriaNotActivated(optionalMessage ?? S.current.unknown);
+      case '9076':
+        return S.current.featureNotAvailable;
+      case '9077':
+        return S.current.featureNotActive;
       case '9106':
         return S.current.youCannotMakePaymentThereIsNoOrderCash;
       case '9163':
         return S.current.thereIsNoSettingFotThisStore;
+      case '9228':
+        return S.current.orderStatusIsNotPending;
       case '9603':
         return S.current.yourRequestToChangeCaptainPlanFailed;
       case '9355':
@@ -50,6 +56,8 @@ class StatusCodeHelper {
         return S.current.expiredSubscriptions;
       case '9200':
         return S.current.youCannotAcceptAnotherOrderFromThisStore;
+      case '9210':
+        return S.current.orderConflictDistanceNotExist;
       case '9218':
         return S.current.theOrderHidden;
       case '9307':
@@ -74,6 +82,10 @@ class StatusCodeHelper {
         return S.current.invalidNumber;
       case '9502':
         return S.current.financialPayment;
+      case '9676':
+        return S.current.companyCredentialNotCorrect;
+      case '9677':
+        return S.current.orderRequestInTheCompanyNotComplete;
       case '9678':
         return S.current.orderNotExistInTheExternalCompany;
       case '-1':

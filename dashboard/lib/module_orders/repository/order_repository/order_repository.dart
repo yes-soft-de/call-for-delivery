@@ -11,6 +11,7 @@ import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/request/order_conflict_distance_request/order_conflict_distance_request.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
 import 'package:c4d/module_orders/request/order_non_sub_request.dart';
+import 'package:c4d/module_orders/request/refused_order_distance_conflict.dart';
 import 'package:c4d/module_orders/request/resolve_conflects_order_request.dart';
 import 'package:c4d/module_orders/request/store_answer_cash_order_request.dart';
 import 'package:c4d/module_orders/request/store_cash_finance_request.dart';
@@ -123,6 +124,18 @@ class OrderRepository {
     dynamic response = await _apiClient.put(
       Urls.UPDATE_EXTRA_DISTANCE_TO_ORDER_API,
       request.toJson(),
+      headers: {'Authorization': 'Bearer ${token}'},
+    );
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> refusedOrderDistanceConflict(
+      RefusedOrderDistanceConflictRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+      Urls.REFUSED_ORDERS_CONFLICTED_DISTANCE_API,
+      request.toMap(),
       headers: {'Authorization': 'Bearer ${token}'},
     );
     if (response == null) return null;
