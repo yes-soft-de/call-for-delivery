@@ -54,27 +54,30 @@ class CaptainActivityData {
   LocationLatLang? location;
   int? storeOwnerBranchId;
   bool? orderIsMain;
+  num? profit;
 
-  CaptainActivityData(
-      {this.id,
-      this.state,
-      this.payment,
-      this.orderCost,
-      this.orderType,
-      this.note,
-      this.deliveryDate,
-      this.createdAt,
-      this.updatedAt,
-      this.storeOrderDetailsId,
-      this.detail,
-      this.captainOrderCost,
-      this.destination,
-      this.recipientName,
-      this.recipientPhone,
-      this.branchName,
-      this.location,
-      this.storeOwnerBranchId,
-      this.orderIsMain});
+  CaptainActivityData({
+    this.id,
+    this.state,
+    this.payment,
+    this.orderCost,
+    this.orderType,
+    this.note,
+    this.deliveryDate,
+    this.createdAt,
+    this.updatedAt,
+    this.storeOrderDetailsId,
+    this.detail,
+    this.captainOrderCost,
+    this.destination,
+    this.recipientName,
+    this.recipientPhone,
+    this.branchName,
+    this.location,
+    this.storeOwnerBranchId,
+    this.orderIsMain,
+    this.profit,
+  });
 
   CaptainActivityData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -106,6 +109,7 @@ class CaptainActivityData {
         : null;
     storeOwnerBranchId = json['storeOwnerBranchId'];
     orderIsMain = json['orderIsMain'];
+    profit = json['profit'] as num?;
   }
 
   Map<String, dynamic> toJson() {
@@ -139,6 +143,7 @@ class CaptainActivityData {
     }
     data['storeOwnerBranchId'] = this.storeOwnerBranchId;
     data['orderIsMain'] = this.orderIsMain;
+    data['profit'] = this.profit;
     return data;
   }
 }

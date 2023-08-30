@@ -27,27 +27,31 @@ class CaptainActivityDetailsModel extends DataModel {
   late String? recipientName;
   late num? recipientPhone;
   late bool? orderIsMain;
+  late num? profit;
 
-  CaptainActivityDetailsModel(
-      {required this.id,
-      required this.state,
-      required this.payment,
-      required this.orderCost,
-      required this.orderType,
-      required this.note,
-      required this.storeOrderDetailsId,
-      required this.detail,
-      required this.captainOrderCost,
-      required this.deliveryDate,
-      required this.createdDate,
-      this.created,
-      this.delivery,
-      this.branchName,
-      this.branchLocation,
-      this.destination,
-      this.recipientName,
-      this.recipientPhone,
-      this.orderIsMain});
+  CaptainActivityDetailsModel({
+    required this.id,
+    required this.state,
+    required this.payment,
+    required this.orderCost,
+    required this.orderType,
+    required this.note,
+    required this.storeOrderDetailsId,
+    required this.detail,
+    required this.captainOrderCost,
+    required this.deliveryDate,
+    required this.createdDate,
+    this.created,
+    this.delivery,
+    this.branchName,
+    this.branchLocation,
+    this.destination,
+    this.recipientName,
+    this.recipientPhone,
+    this.orderIsMain,
+    this.profit,
+  });
+
   List<CaptainActivityDetailsModel> _ordersDetails = [];
 
   CaptainActivityDetailsModel.withData(
@@ -67,19 +71,21 @@ class CaptainActivityDetailsModel extends DataModel {
           DateFormat.Md()
               .format(DateHelper.convert(element.deliveryDate?.timestamp));
       _ordersDetails.add(CaptainActivityDetailsModel(
-          id: element.id ?? -1,
-          state: StatusHelper.getStatusEnum(element.state),
-          payment: element.payment ?? '',
-          orderCost: element.orderCost ?? 0,
-          orderType: element.orderType ?? 0,
-          note: element.note ?? '',
-          recipientName: element.recipientName,
-          storeOrderDetailsId: element.storeOrderDetailsId ?? 0,
-          detail: element.detail ?? '',
-          branchName: element.branchName,
-          captainOrderCost: element.captainOrderCost ?? 0,
-          deliveryDate: delivery,
-          createdDate: create));
+        id: element.id ?? -1,
+        state: StatusHelper.getStatusEnum(element.state),
+        payment: element.payment ?? '',
+        orderCost: element.orderCost ?? 0,
+        orderType: element.orderType ?? 0,
+        note: element.note ?? '',
+        recipientName: element.recipientName,
+        storeOrderDetailsId: element.storeOrderDetailsId ?? 0,
+        detail: element.detail ?? '',
+        branchName: element.branchName,
+        captainOrderCost: element.captainOrderCost ?? 0,
+        deliveryDate: delivery,
+        createdDate: create,
+        profit: element.profit,
+      ));
     });
   }
   List<CaptainActivityDetailsModel> get data => _ordersDetails;
