@@ -103,8 +103,7 @@ class MenuScreen extends StatelessWidget {
               Center(child: Text(profileModel.name ?? S.current.username)),
               InkWell(
                 onTap: () {
-                  Navigator.of(context)
-                      .pushNamed(PlanRoutes.CAPTAIN_DAILY_PAYMENTS);
+                  Navigator.of(context).pushNamed(PlanRoutes.MY_PROFIT);
                 },
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),

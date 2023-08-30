@@ -8160,6 +8160,16 @@ class S {
     );
   }
 
+  /// `unified plan`
+  String get unifiedPlan {
+    return Intl.message(
+      'unified plan',
+      name: 'unifiedPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Do you want to do this action ?`
   String get doYouWantToDoThisAction {
     return Intl.message(
