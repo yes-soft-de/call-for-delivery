@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
@@ -12,16 +13,10 @@ import 'package:c4d/utils/components/phone_number_detection.dart';
 import 'package:c4d/utils/helpers/link_cleaner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 
-@injectable
 class NewOrderScreen extends StatefulWidget {
-  final NewOrderStateManager _stateManager;
-
-  NewOrderScreen(
-    this._stateManager,
-  );
+  NewOrderScreen();
 
   @override
   NewOrderScreenState createState() => NewOrderScreenState();
@@ -30,15 +25,17 @@ class NewOrderScreen extends StatefulWidget {
 class NewOrderScreenState extends State<NewOrderScreen>
     with WidgetsBindingObserver {
   late States currentState;
+  late NewOrderStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  StreamSubscription? _stateSubscription;
 
   void addNewOrder(CreateOrderRequest request) {
-    widget._stateManager.createOrder(this, request);
+    _stateManager.createOrder(this, request);
   }
 
   void getBranches(List<StoresModel> stores) {
-    widget._stateManager.getBranches(this, storeID ?? -1, stores);
+    _stateManager.getBranches(this, storeID ?? -1, stores);
   }
 
   void refresh() {
@@ -82,10 +79,11 @@ class NewOrderScreenState extends State<NewOrderScreen>
   void initState() {
     super.initState();
     currentState = LoadingState(this);
+    _stateManager = getIt();
     WidgetsBinding.instance.addObserver(this);
     countryNumberController.text = '966';
-    widget._stateManager.getStores(this);
-    _stateSubscription = widget._stateManager.stateStream.listen((event) {
+    _stateManager.getStores(this);
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -132,7 +130,8 @@ class NewOrderScreenState extends State<NewOrderScreen>
     countryNumberController.dispose();
     toController.dispose();
     priceController.dispose();
-    _stateSubscription?.cancel();
+    _stateSubscription.cancel();
+    _stateManager.dispose();
     super.dispose();
   }
 

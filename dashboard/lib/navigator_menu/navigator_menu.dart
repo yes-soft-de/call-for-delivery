@@ -1,8 +1,10 @@
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_captain/captains_module.dart';
 import 'package:c4d/module_captain/ui/screen/captain_dues_screen.dart';
+import 'package:c4d/module_captain/ui/screen/captain_needs_support_screen.dart';
 import 'package:c4d/module_captain/ui/screen/captains_list_screen.dart';
 import 'package:c4d/module_captain/ui/screen/in_active_captains_screen.dart';
 import 'package:c4d/module_categories/categories_module.dart';
@@ -14,7 +16,10 @@ import 'package:c4d/module_external_delivery_companies/request/feature_request/f
 import 'package:c4d/module_external_delivery_companies/service/external_delivery_companies_service.dart';
 import 'package:c4d/module_external_delivery_companies/ui/widgets/show_confirm_dialog.dart';
 import 'package:c4d/module_notice/notice_module.dart';
-import 'package:c4d/module_orders/orders_module.dart';
+import 'package:c4d/module_orders/ui/screens/new_order/new_order_screen.dart';
+import 'package:c4d/module_orders/ui/screens/order_conflict_distance_screen.dart';
+import 'package:c4d/module_orders/ui/screens/order_pending_screen.dart';
+import 'package:c4d/module_orders/ui/screens/orders_receive_cash_screen.dart';
 import 'package:c4d/module_orders/ui/screens/orders_without_distance_screen.dart';
 import 'package:c4d/module_payments/payments_module.dart';
 import 'package:c4d/module_settings/settings_module.dart';
@@ -27,7 +32,6 @@ import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
-import 'package:c4d/global_nav_key.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NavigatorMenu extends StatefulWidget {
@@ -125,10 +129,10 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.orders,
                 icon: FontAwesomeIcons.boxes,
                 children: [
-                  customListTile(getIt<OrdersModule>().pendingScreen,
+                  customListTile(OrderPendingScreen(),
                       S.current.orderedNotAccepted, FontAwesomeIcons.box, true),
-                  customListTile(getIt<OrdersModule>().newOrderScreen,
-                      S.current.newOrder, Icons.add_rounded, true)
+                  customListTile(NewOrderScreen(), S.current.newOrder,
+                      Icons.add_rounded, true)
                 ],
                 page: widget.currentPage),
 
@@ -143,7 +147,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       Icons.edit_road_rounded,
                       true),
                   customListTile(
-                      getIt<OrdersModule>().orderDistanceConflictScreen,
+                      OrderDistanceConflictScreen(),
                       S.current.orderConflictDistances,
                       Icons.edit_road_rounded,
                       true),
@@ -152,7 +156,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.captainNotArrived,
                       Icons.storefront_rounded,
                       true),
-                  customListTile(getIt<OrdersModule>().ordersReceiveCashScreen,
+                  customListTile(OrdersReceiveCashScreen(),
                       S.current.ordersCash, Icons.payments_rounded, true),
                   customListTile(getIt<CaptainsModule>().captainsRatingsScreen,
                       S.current.captainsRating, Icons.star_rounded, true),
@@ -262,7 +266,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 children: [
                   customListTile(getIt<StoresModule>().supportScreen,
                       S.current.stores, Icons.storefront_rounded, true),
-                  customListTile(getIt<CaptainsModule>().supportScreen,
+                  customListTile(CaptainsNeedsSupportScreen(),
                       S.current.captains, FontAwesomeIcons.car, true),
                   Visibility(
                     visible: false,

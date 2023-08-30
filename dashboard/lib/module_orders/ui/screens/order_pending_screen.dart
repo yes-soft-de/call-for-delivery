@@ -2,30 +2,29 @@ import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/navigator_assistant.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_orders/request/order/pending_order_request.dart';
 import 'package:c4d/module_orders/state_manager/order_pending_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
 
-@injectable
 class OrderPendingScreen extends StatefulWidget {
-  final OrderPendingStateManager _stateManager;
-
-  OrderPendingScreen(this._stateManager);
+  OrderPendingScreen();
 
   @override
   OrderPendingScreenState createState() => OrderPendingScreenState();
 }
 
 class OrderPendingScreenState extends State<OrderPendingScreen> {
-  bool isExternalFilterOn = false;
   late States currentState;
+  late OrderPendingStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
+  bool isExternalFilterOn = false;
   int currentIndex = 0;
-  StreamSubscription? _stateSubscription;
 
   void refresh() {
     if (mounted) {
@@ -44,7 +43,8 @@ class OrderPendingScreenState extends State<OrderPendingScreen> {
     super.initState();
     currentIndex = NavigatorAssistant.nonDeliveringIndex;
     currentState = LoadingState(this);
-    _stateSubscription = widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -55,12 +55,13 @@ class OrderPendingScreenState extends State<OrderPendingScreen> {
 
   @override
   void dispose() {
-    _stateSubscription?.cancel();
+    _stateSubscription.cancel();
+    _stateManager.dispose();
     super.dispose();
   }
 
   Future<void> getOrders([bool loading = true]) async {
-    widget._stateManager.getPendingOrders(
+    _stateManager.getPendingOrders(
       this,
       PendingOrderRequest(
         type: getPendingOrderRequest(),

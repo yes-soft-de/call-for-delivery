@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_branches/model/branches/branches_model.dart';
 import 'package:c4d/module_orders/model/order_details_model.dart';
@@ -13,15 +14,10 @@ import 'package:c4d/utils/helpers/link_cleaner.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 // import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 
-@injectable
 class RecycleOrderScreen extends StatefulWidget {
-  final RecycleOrderStateManager _stateManager;
-  RecycleOrderScreen(
-    this._stateManager,
-  );
+  RecycleOrderScreen();
 
   @override
   RecycleOrderScreenState createState() => RecycleOrderScreenState();
@@ -29,12 +25,14 @@ class RecycleOrderScreen extends StatefulWidget {
 
 class RecycleOrderScreenState extends State<RecycleOrderScreen>
     with WidgetsBindingObserver {
+  late RecycleOrderStateManager _stateManager;
   late States currentState;
+  late StreamSubscription _stateSubscription;
+
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  StreamSubscription? _stateSubscription;
 
   void addNewOrder(CreateOrderRequest request) {
-    widget._stateManager.recycleOrder(this, request);
+    _stateManager.recycleOrder(this, request);
   }
 
   void refresh() {
@@ -79,9 +77,10 @@ class RecycleOrderScreenState extends State<RecycleOrderScreen>
   void initState() {
     super.initState();
     currentState = LoadingState(this);
+    _stateManager = getIt();
     WidgetsBinding.instance.addObserver(this);
     countryNumberController.text = '966';
-    _stateSubscription = widget._stateManager.stateStream.listen((event) {
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -128,7 +127,8 @@ class RecycleOrderScreenState extends State<RecycleOrderScreen>
     countryNumberController.dispose();
     toController.dispose();
     priceController.dispose();
-    _stateSubscription?.cancel();
+    _stateSubscription.cancel();
+    _stateManager.dispose();
     super.dispose();
   }
 
@@ -143,7 +143,7 @@ class RecycleOrderScreenState extends State<RecycleOrderScreen>
         if (hideFlag) {
           hideFlag = false;
           orderId = args;
-          widget._stateManager.getOrderbyId(this, orderId);
+          _stateManager.getOrderbyId(this, orderId);
         }
       }
     }
