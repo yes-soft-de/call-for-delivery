@@ -585,6 +585,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المسافة التي ادخلها الكابتن"),
         "distanceUpdatedSuccessfully":
             MessageLookupByLibrary.simpleMessage("تم تحديث المسافة بنجاح"),
+        "doYouWantToDeleteTheOrderOnlyFormAlshoroq":
+            MessageLookupByLibrary.simpleMessage(
+                "هل تريد حذف الطلب عند المشغل شروق فقط؟"),
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
             "حمل تطبيقنا على متجر غوغل عبر الرابط"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("رخصة القيادة"),
@@ -997,6 +1000,11 @@ class MessageLookup extends MessageLookupByLibrary {
             "تم إسناد الطلب للكابتن المختار بنجاح"),
         "orderAssignedToCompanySuccessfully":
             MessageLookupByLibrary.simpleMessage("تم اسناد الطلب للشركة بنجاح"),
+        "orderCanceledFromAllByAdmin": MessageLookupByLibrary.simpleMessage(
+            "تم الغاء الطلب لدى الجميع من قبل الادمن"),
+        "orderCanceledFromAlshoroqByAdmin":
+            MessageLookupByLibrary.simpleMessage(
+                "تم الغاء الطلب لدى المشغل شروق من قبل الادمن"),
         "orderCashStatus":
             MessageLookupByLibrary.simpleMessage("سعر الطلبية للمتجر"),
         "orderCashWithCaptain":
@@ -1046,6 +1054,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderList": MessageLookupByLibrary.simpleMessage("قائمة الطلبات"),
         "orderLog": MessageLookupByLibrary.simpleMessage("سجل الطلبات"),
         "orderLogHistory": MessageLookupByLibrary.simpleMessage("سجل الطلب"),
+        "orderNotExistInTheExternalCompany":
+            MessageLookupByLibrary.simpleMessage(
+                "الطلب غير موجود عند الشركة الخارجية"),
         "orderNotFound":
             MessageLookupByLibrary.simpleMessage("الطلب غير موجود"),
         "orderNumber": MessageLookupByLibrary.simpleMessage("رقم الطلب"),

@@ -323,7 +323,7 @@ class Urls {
       BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainfinancialsystemdetailupdate';
   static const CREATE_CAPTAIN_FINANCE_PLAN =
       BASE_CAPTAIN_ACCOUNT_BALANCE + '/captainfinancialsystemdetailbyadmin';
-  // not used    
+  // not used
   // static const GET_CAPTAIN_FINANCE_DUES =
   //     BASE_CAPTAIN_ACCOUNT_BALANCE_DUES + '/captainfinancialduesforadmin';
   static const GET_CAPTAIN_RATING_REPORT =
@@ -398,6 +398,9 @@ class Urls {
       BASE_API_ORDER + '/resolveconflictedanswersbyadmin';
   static const UPDATE_STORE_ANSWER_ORDER =
       BASE_API_ORDER + '/confirmcashpaymentbystorebyadmin';
+
+  static const DELETE_ORDER_FROM_ALSHOROQ =
+      DOMAIN + '/v1/admin/streetline/order/cancelexternalorderonly';
 
   /*-----------------------------subscription----------------------------*/
   static const String BASE_API_SUBSCRIPTION =

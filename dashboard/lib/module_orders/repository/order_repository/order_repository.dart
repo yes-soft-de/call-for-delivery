@@ -4,6 +4,7 @@ import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
+import 'package:c4d/module_orders/request/order/delete_order_from_alshoroq_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order/pending_order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
@@ -224,6 +225,16 @@ class OrderRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
         '${Urls.DELETE_ORDER}', request.toJson(),
+        headers: {'Authorization': 'Bearer $token'});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> deleteOrderFromAlShoroq(
+      DeleteOrderFromAlShoroqRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+        '${Urls.DELETE_ORDER_FROM_ALSHOROQ}', request.toMap(),
         headers: {'Authorization': 'Bearer $token'});
     if (response == null) return null;
     return ActionResponse.fromJson(response);
