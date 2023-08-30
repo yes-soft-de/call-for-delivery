@@ -1,17 +1,16 @@
+import 'dart:async';
+
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_payments/request/store_owner_payment_request.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_payments/state_manager/store_balance_state_manager.dart';
 
-@injectable
 class StoreBalanceScreen extends StatefulWidget {
-  final StoreBalanceStateManager _stateManager;
-
-  StoreBalanceScreen(this._stateManager);
+  StoreBalanceScreen();
 
   @override
   StoreBalanceScreenState createState() => StoreBalanceScreenState();
@@ -19,27 +18,38 @@ class StoreBalanceScreen extends StatefulWidget {
 
 class StoreBalanceScreenState extends State<StoreBalanceScreen> {
   late States currentState;
+  late StoreBalanceStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   int storeID = -1;
   @override
   void initState() {
     currentState = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       refresh();
     });
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
   void pay(CreateStorePaymentsRequest request) {
-    widget._stateManager.payForStore(this, request);
+    _stateManager.payForStore(this, request);
   }
 
   void deletePay(String id) {
-    widget._stateManager.deletePayment(this, id);
+    _stateManager.deletePayment(this, id);
   }
 
   void getPayments() {
-    widget._stateManager.getBalance(this, storeID);
+    _stateManager.getBalance(this, storeID);
   }
 
   void refresh() {
@@ -54,7 +64,7 @@ class StoreBalanceScreenState extends State<StoreBalanceScreen> {
       var arg = ModalRoute.of(context)?.settings.arguments;
       if (arg != null && arg is int) {
         storeID = arg;
-        widget._stateManager.getBalance(this, storeID);
+        _stateManager.getBalance(this, storeID);
       }
     }
     return Scaffold(

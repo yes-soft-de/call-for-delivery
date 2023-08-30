@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/module_payments/model/captain_finance_by_order_model.dart';
 import 'package:c4d/module_payments/request/create_captain_finance_by_order_request.dart';
 import 'package:c4d/module_payments/service/payments_service.dart';
@@ -6,35 +7,33 @@ import 'package:c4d/module_payments/ui/state/captain_finance/captain_finance_by_
 import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 
 @injectable
-class CaptainFinanceByOrderStateManager {
+class CaptainFinanceByOrderStateManager extends StateManagerHandler{
   final PaymentsService _storePaymentsService;
-  final PublishSubject<States> _stateSubject = PublishSubject();
 
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
 
   CaptainFinanceByOrderStateManager(this._storePaymentsService);
 
   void getFinances(CaptainFinanceByOrderScreenState screenState) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _storePaymentsService.getCaptainFinanceByOrder().then((value) {
       if (value.hasError) {
-        _stateSubject.add(CaptainFinanceByOrderLoadedState(
+        stateSubject.add(CaptainFinanceByOrderLoadedState(
           screenState,
           null,
           error: value.error,
         ));
       } else if (value.isEmpty) {
-        _stateSubject.add(CaptainFinanceByOrderLoadedState(screenState, null,
+        stateSubject.add(CaptainFinanceByOrderLoadedState(screenState, null,
             empty: value.isEmpty));
       } else {
         CaptainFinanceByOrderModel _balance =
             value as CaptainFinanceByOrderModel;
-        _stateSubject
+        stateSubject
             .add(CaptainFinanceByOrderLoadedState(screenState, _balance.data));
       }
     });
@@ -42,7 +41,7 @@ class CaptainFinanceByOrderStateManager {
 
   void createFinance(CaptainFinanceByOrderScreenState screenState,
       CreateCaptainFinanceByOrderRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _storePaymentsService.createCaptainFinanceByOrder(request).then((value) {
       if (value.hasError) {
         getFinances(screenState);
@@ -62,7 +61,7 @@ class CaptainFinanceByOrderStateManager {
 
   void updateFinance(CaptainFinanceByOrderScreenState screenState,
       CreateCaptainFinanceByOrderRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _storePaymentsService.updateCaptainFinanceByOrder(request).then((value) {
       if (value.hasError) {
         getFinances(screenState);
@@ -81,7 +80,7 @@ class CaptainFinanceByOrderStateManager {
   }
 
   void deleteFinance(CaptainFinanceByOrderScreenState screenState, int id) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _storePaymentsService.deleteCaptainFinanceByOrder(id).then((value) {
       if (value.hasError) {
         getFinances(screenState);

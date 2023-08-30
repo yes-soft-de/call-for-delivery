@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -9,25 +10,23 @@ import 'package:c4d/module_payments/ui/screen/captain_previous_payments_screen.d
 import 'package:c4d/module_payments/ui/state/captain_previous_payments/captain_previous_payments_state_loaded.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 
 @injectable
-class CaptainPreviousPaymentsStateManager {
+class CaptainPreviousPaymentsStateManager extends StateManagerHandler {
   final PaymentsService _storePaymentsService;
-  final PublishSubject<States> _stateSubject = PublishSubject();
 
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
 
   CaptainPreviousPaymentsStateManager(this._storePaymentsService);
 
   void filterCaptainPayment(CaptainPreviousPaymentsScreenState screenState,
       CaptainPreviousPaymentRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _storePaymentsService.filterCaptainPayment(request).then((value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(
+        stateSubject.add(ErrorState(
           screenState,
           error: value.error,
           onPressed: () {
@@ -36,7 +35,7 @@ class CaptainPreviousPaymentsStateManager {
           title: S.current.previousPayments,
         ));
       } else if (value.isEmpty) {
-        _stateSubject.add(EmptyState(
+        stateSubject.add(EmptyState(
           screenState,
           emptyMessage: S.current.emptyStaff,
           title: S.current.previousPayments,
@@ -46,7 +45,7 @@ class CaptainPreviousPaymentsStateManager {
         ));
       } else {
         var _balance = value as CaptainPreviousPaymentsModel;
-        _stateSubject.add(CaptainPreviousPaymentsStateLoaded(
+        stateSubject.add(CaptainPreviousPaymentsStateLoaded(
           screenState,
           _balance.data,
           request,
@@ -57,7 +56,7 @@ class CaptainPreviousPaymentsStateManager {
 
   void addPayment(CaptainPreviousPaymentsScreenState screenState,
       CaptainPaymentsRequest request, CaptainPreviousPaymentRequest filter) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _storePaymentsService.paymentToCaptain(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(

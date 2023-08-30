@@ -21,7 +21,9 @@ import 'package:c4d/module_orders/ui/screens/order_conflict_distance_screen.dart
 import 'package:c4d/module_orders/ui/screens/order_pending_screen.dart';
 import 'package:c4d/module_orders/ui/screens/orders_receive_cash_screen.dart';
 import 'package:c4d/module_orders/ui/screens/orders_without_distance_screen.dart';
-import 'package:c4d/module_payments/payments_module.dart';
+import 'package:c4d/module_payments/ui/screen/captain_finance_by_hours_screen.dart';
+import 'package:c4d/module_payments/ui/screen/captain_finance_by_order_count_screen.dart';
+import 'package:c4d/module_payments/ui/screen/captain_finance_by_order_screen.dart';
 import 'package:c4d/module_settings/settings_module.dart';
 import 'package:c4d/module_statistics/ui/screen/statistics_screen.dart';
 import 'package:c4d/module_stores/stores_module.dart';
@@ -308,14 +310,11 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.captainFinance,
                 icon: Icons.account_balance_rounded,
                 children: [
-                  customListTile(getIt<PaymentsModule>().financeByHoursScreen,
+                  customListTile(CaptainFinanceByHoursScreen(),
                       S.current.financeByHours, FontAwesomeIcons.clock, true),
-                  customListTile(
-                      getIt<PaymentsModule>().financeByCountOrderScreen,
-                      S.current.financeByOrders,
-                      FontAwesomeIcons.boxes,
-                      true),
-                  customListTile(getIt<PaymentsModule>().financeByOrderScreen,
+                  customListTile(CaptainFinanceByCountOrderScreen(),
+                      S.current.financeByOrders, FontAwesomeIcons.boxes, true),
+                  customListTile(CaptainFinanceByOrderScreen(),
                       S.current.financeCountOrder, FontAwesomeIcons.box, true),
                 ],
                 page: widget.currentPage),

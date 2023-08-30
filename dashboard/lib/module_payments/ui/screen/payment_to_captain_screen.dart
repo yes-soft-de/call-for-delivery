@@ -1,17 +1,16 @@
+import 'dart:async';
+
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_payments/request/captain_payments_request.dart';
 import 'package:c4d/module_payments/state_manager/payments_to_state_manager.dart';
 
-@injectable
 class PaymentsToCaptainScreen extends StatefulWidget {
-  final PaymentsToCaptainStateManager _stateManager;
-
-  PaymentsToCaptainScreen(this._stateManager);
+  PaymentsToCaptainScreen();
 
   @override
   PaymentsToCaptainScreenState createState() => PaymentsToCaptainScreenState();
@@ -19,27 +18,38 @@ class PaymentsToCaptainScreen extends StatefulWidget {
 
 class PaymentsToCaptainScreenState extends State<PaymentsToCaptainScreen> {
   late States currentState;
+  late PaymentsToCaptainStateManager _stateManager;
+  late StreamSubscription _streamSubscription;
+
   int captainId = -1;
   @override
   void initState() {
     currentState = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _streamSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       refresh();
     });
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _streamSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
   void getPayments() {
-    widget._stateManager.getCaptainPaymentsDetails(this, captainId);
+    _stateManager.getCaptainPaymentsDetails(this, captainId);
   }
 
   void pay(CaptainPaymentsRequest request) {
-    widget._stateManager.makePayments(this, request);
+    _stateManager.makePayments(this, request);
   }
 
   void deletePay(String id) {
-    widget._stateManager.deletePayment(this, id);
+    _stateManager.deletePayment(this, id);
   }
 
   void refresh() {
@@ -54,7 +64,7 @@ class PaymentsToCaptainScreenState extends State<PaymentsToCaptainScreen> {
       var arg = ModalRoute.of(context)?.settings.arguments;
       if (arg != null && arg is int) {
         captainId = arg;
-        widget._stateManager.getCaptainPaymentsDetails(this, captainId);
+        _stateManager.getCaptainPaymentsDetails(this, captainId);
       }
     }
     return Scaffold(
