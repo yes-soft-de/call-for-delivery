@@ -1,46 +1,45 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
+import 'package:c4d/abstracts/states/loading_state.dart';
+import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_stores/model/store_profile_model.dart';
 import 'package:c4d/module_stores/request/active_store_request.dart';
 import 'package:c4d/module_stores/request/create_store_request.dart';
 import 'package:c4d/module_stores/request/welcome_package_payment_request.dart';
+import 'package:c4d/module_stores/service/store_service.dart';
+import 'package:c4d/module_stores/ui/screen/store_info_screen.dart';
+import 'package:c4d/module_stores/ui/state/store_profile/store_profile_loaded_state.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:c4d/abstracts/states/loading_state.dart';
-import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/module_stores/model/store_profile_model.dart';
-import 'package:c4d/module_stores/service/store_service.dart';
-import 'package:c4d/module_stores/ui/screen/store_info_screen.dart';
-import 'package:c4d/module_stores/ui/state/store_profile/store_profile_loaded_state.dart';
 
 @injectable
-class StoreProfileStateManager {
+class StoreProfileStateManager extends StateManagerHandler {
   final StoresService _storesService;
   final ImageUploadService _uploadService;
-  final PublishSubject<States> _stateSubject = PublishSubject();
 
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
 
   StoreProfileStateManager(this._storesService, this._uploadService);
 
   void getStore(StoreInfoScreenState screenState, int id,
       [bool loading = true]) {
     if (loading) {
-      _stateSubject.add(LoadingState(screenState));
+      stateSubject.add(LoadingState(screenState));
     }
     _storesService.getStoreProfile(id).then((value) {
       if (value.hasError) {
-        _stateSubject.add(
+        stateSubject.add(
             StoreProfileLoadedState(screenState, null, error: value.error));
       } else if (value.isEmpty) {
-        _stateSubject
+        stateSubject
             .add(StoreProfileLoadedState(screenState, null, empty: true));
       } else {
         StoreProfileModel model = value as StoreProfileModel;
-        _stateSubject.add(StoreProfileLoadedState(screenState, model.data));
+        stateSubject.add(StoreProfileLoadedState(screenState, model.data));
       }
     });
   }
@@ -48,7 +47,7 @@ class StoreProfileStateManager {
   void enableStore(StoreInfoScreenState screenState, ActiveStoreRequest request,
       [bool loading = true]) {
     if (loading) {
-      _stateSubject.add(LoadingState(screenState));
+      stateSubject.add(LoadingState(screenState));
     }
     _storesService.enableStore(request).then((value) {
       if (value.hasError) {
@@ -67,7 +66,7 @@ class StoreProfileStateManager {
   void deleteStore(StoreInfoScreenState screenState, int storeID,
       [bool loading = true]) {
     if (loading) {
-      _stateSubject.add(LoadingState(screenState));
+      stateSubject.add(LoadingState(screenState));
     }
     _storesService.deleteStore(storeID).then((value) {
       if (value.hasError) {
@@ -87,7 +86,7 @@ class StoreProfileStateManager {
       WelcomePackagePaymentRequest request, int storeID,
       [bool loading = true]) {
     if (loading) {
-      _stateSubject.add(LoadingState(screenState));
+      stateSubject.add(LoadingState(screenState));
     }
     _storesService.updateWelcomePackageWithoutPayment(request).then((value) {
       if (value.hasError) {
@@ -96,7 +95,8 @@ class StoreProfileStateManager {
             screenState, value.error ?? S.current.errorHappened, loading);
       } else {
         getStore(screenState, storeID, loading);
-        showSnackSuccess(screenState, S.current.dataUpdatedSuccessfully, loading);
+        showSnackSuccess(
+            screenState, S.current.dataUpdatedSuccessfully, loading);
       }
     });
   }
@@ -114,7 +114,7 @@ class StoreProfileStateManager {
 
   void updateStore(StoreInfoScreenState screenState, UpdateStoreRequest request,
       bool haveImage) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     if (haveImage) {
       _uploadService.uploadImage(request.image).then((image) {
         if (image == null) {

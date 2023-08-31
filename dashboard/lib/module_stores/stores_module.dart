@@ -1,17 +1,17 @@
+import 'package:c4d/abstracts/module/yes_module.dart';
+import 'package:c4d/module_payments/ui/screen/store_balance_screen.dart';
+import 'package:c4d/module_stores/stores_routes.dart';
 import 'package:c4d/module_stores/ui/screen/edit_store_setting_screen.dart';
-import 'package:c4d/module_stores/ui/screen/order/order_top_active_store.dart';
 import 'package:c4d/module_stores/ui/screen/order/order_time_line_screen.dart';
+import 'package:c4d/module_stores/ui/screen/order/order_top_active_store.dart';
+import 'package:c4d/module_stores/ui/screen/store_info_screen.dart';
 import 'package:c4d/module_stores/ui/screen/stores_dues/store_dues_screen.dart';
 import 'package:c4d/module_stores/ui/screen/stores_dues/stores_dues_screen.dart';
+import 'package:c4d/module_stores/ui/screen/stores_inactive_screen.dart';
+import 'package:c4d/module_stores/ui/screen/stores_screen.dart';
 import 'package:c4d/module_stores/ui/screen/top_active_store_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:c4d/abstracts/module/yes_module.dart';
-import 'package:c4d/module_stores/stores_routes.dart';
-import 'package:c4d/module_payments/ui/screen/store_balance_screen.dart';
-import 'package:c4d/module_stores/ui/screen/store_info_screen.dart';
-import 'package:c4d/module_stores/ui/screen/stores_inactive_screen.dart';
-import 'package:c4d/module_stores/ui/screen/stores_screen.dart';
 
 import 'ui/screen/order/order_captain_not_arrived.dart';
 import 'ui/screen/order/order_details_screen.dart';
@@ -20,49 +20,28 @@ import 'ui/screen/stores_needs_support_screen.dart';
 
 @injectable
 class StoresModule extends YesModule {
-  final StoreInfoScreen _storeInfoScreen;
-  final StoresInActiveScreen storesInActiveScreen;
-  final TopActiveStoreScreen topActiveStoreScreen;
-  final StoresNeedsSupportScreen supportScreen;
-  final OrderCaptainNotArrivedScreen captainNotArrivedScreen;
-  final OrderTimeLineScreen orderTimeLineScreen;
-  final OrdersTopActiveStoreScreen ordersTopActiveStoreScreen;
-  final StoresDuesScreen storesDuesScreen;
-  final StoreDuesScreen storeDuesScreen;
-  final EditStoreSettingScreen editStoreSettingScreen;
-
-  StoresModule(
-    this._storeInfoScreen,
-    this.storesInActiveScreen,
-    this.supportScreen,
-    this.captainNotArrivedScreen,
-    this.orderTimeLineScreen,
-    this.topActiveStoreScreen,
-    this.ordersTopActiveStoreScreen,
-    this.storesDuesScreen,
-    this.storeDuesScreen,
-    this.editStoreSettingScreen,
-  ) {
+  StoresModule() {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
     return {
       StoresRoutes.STORES: (context) => StoresScreen(),
-      StoresRoutes.STORE_INFO: (context) => _storeInfoScreen,
-      StoresRoutes.STORES_INACTIVE: (context) => storesInActiveScreen,
+      StoresRoutes.STORE_INFO: (context) => StoreInfoScreen(),
+      StoresRoutes.STORES_INACTIVE: (context) => StoresInActiveScreen(),
       StoresRoutes.STORE_BALANCE: (context) => StoreBalanceScreen(),
-      StoresRoutes.STORE_SUPPORT: (context) => supportScreen,
+      StoresRoutes.STORE_SUPPORT: (context) => StoresNeedsSupportScreen(),
       StoresRoutes.ORDER_STATUS_SCREEN: (context) => OrderDetailsScreen(),
       StoresRoutes.LOGS_ORDERS_SCREEN: (context) => OrderLogsScreen(),
-      StoresRoutes.ORDER_TIMELINE_SCREEN: (context) => orderTimeLineScreen,
-      StoresRoutes.ORDER_CAPTAIN_SCREEN: (context) => captainNotArrivedScreen,
-      StoresRoutes.TOP_STORE_ACTIVE: (context) => topActiveStoreScreen,
+      StoresRoutes.ORDER_TIMELINE_SCREEN: (context) => OrderTimeLineScreen(),
+      StoresRoutes.ORDER_CAPTAIN_SCREEN: (context) =>
+          OrderCaptainNotArrivedScreen(),
+      StoresRoutes.TOP_STORE_ACTIVE: (context) => TopActiveStoreScreen(),
       StoresRoutes.ORDERS_TOP_STORE_ACTIVE: (context) =>
-          ordersTopActiveStoreScreen,
-      StoresRoutes.STORES_DUES_SCREEN: (context) => storesDuesScreen,
-      StoresRoutes.STORE_DUES_SCREEN: (context) => storeDuesScreen,
+          OrdersTopActiveStoreScreen(),
+      StoresRoutes.STORES_DUES_SCREEN: (context) => StoresDuesScreen(),
+      StoresRoutes.STORE_DUES_SCREEN: (context) => StoreDuesScreen(),
       StoresRoutes.Edit_STORE_Setting_SCREEN: (context) =>
-          editStoreSettingScreen
+          EditStoreSettingScreen(),
     };
   }
 }

@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_stores/request/stores_dues_request.dart';
@@ -7,20 +10,19 @@ import 'package:c4d/module_stores/state_manager/stores_dues_state_manager.dart';
 import 'package:c4d/utils/components/costom_search.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class StoresDuesScreen extends StatefulWidget {
-  final StoresDuesStateManager _manager;
-
-  const StoresDuesScreen(this._manager);
+  const StoresDuesScreen();
 
   @override
   State<StatefulWidget> createState() => StoresDuesScreenState();
 }
 
 class StoresDuesScreenState extends State<StoresDuesScreen> {
-  States? _currentState;
+  late States _currentState;
+  late StoresDuesStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   int currentIndex = 0;
   String? search;
 
@@ -29,7 +31,8 @@ class StoresDuesScreenState extends State<StoresDuesScreen> {
   @override
   void initState() {
     _currentState = LoadingState(this);
-    widget._manager.stateStream.listen((value) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((value) {
       _currentState = value;
 
       if (mounted) setState(() {});
@@ -37,8 +40,15 @@ class StoresDuesScreenState extends State<StoresDuesScreen> {
 
     filter = StoresDuesRequest();
 
-    widget._manager.getStoresDues(this, filter);
+    _stateManager.getStoresDues(this, filter);
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
   }
 
   void refresh() {
@@ -46,7 +56,7 @@ class StoresDuesScreenState extends State<StoresDuesScreen> {
   }
 
   void getStoresDues() {
-    widget._manager.getStoresDues(this, filter);
+    _stateManager.getStoresDues(this, filter);
   }
 
   @override
@@ -89,7 +99,7 @@ class StoresDuesScreenState extends State<StoresDuesScreen> {
                           currentIndex = 0;
                           filter = StoresDuesRequest(isPaid: '2');
                           refresh();
-                          widget._manager.getStoresDues(this, filter);
+                          _stateManager.getStoresDues(this, filter);
                         },
                         child: AnimatedContainer(
                           height: 40,
@@ -132,7 +142,7 @@ class StoresDuesScreenState extends State<StoresDuesScreen> {
                           currentIndex = 1;
                           filter = StoresDuesRequest(isPaid: null);
                           refresh();
-                          widget._manager.getStoresDues(this, filter);
+                          _stateManager.getStoresDues(this, filter);
                         },
                         child: AnimatedContainer(
                           height: 40,
@@ -170,7 +180,7 @@ class StoresDuesScreenState extends State<StoresDuesScreen> {
                     ),
                   ]),
             ),
-            Expanded(child: _currentState!.getUI(context)),
+            Expanded(child: _currentState.getUI(context)),
           ],
         ));
   }

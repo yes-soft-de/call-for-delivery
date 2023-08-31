@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
@@ -9,14 +11,10 @@ import 'package:c4d/module_stores/state_manager/order/order_captain_not_arrived_
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
 
-@injectable
 class OrderCaptainNotArrivedScreen extends StatefulWidget {
-  final OrderCaptainNotArrivedStateManager _stateManager;
-
-  OrderCaptainNotArrivedScreen(this._stateManager);
+  OrderCaptainNotArrivedScreen();
 
   @override
   OrderCaptainNotArrivedScreenState createState() =>
@@ -26,6 +24,9 @@ class OrderCaptainNotArrivedScreen extends StatefulWidget {
 class OrderCaptainNotArrivedScreenState
     extends State<OrderCaptainNotArrivedScreen> {
   late States currentState;
+  late OrderCaptainNotArrivedStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   void refresh() {
     if (mounted) {
       setState(() {});
@@ -39,17 +40,26 @@ class OrderCaptainNotArrivedScreenState
 
   var today = DateTime.now();
   int? storeID = -1;
+
   @override
   void initState() {
     super.initState();
     currentState = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
       }
     });
-    widget._stateManager.getOrdersFilters(this, ordersFilter);
+    _stateManager.getOrdersFilters(this, ordersFilter);
+  }
+
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
   }
 
   late FilterOrderCaptainNotArrivedRequest ordersFilter = ordersFilter =
@@ -57,7 +67,7 @@ class OrderCaptainNotArrivedScreenState
           fromDate: DateTime.now(), toDate: DateTime.now());
 
   Future<void> getOrders([bool loading = true]) async {
-    widget._stateManager.getOrdersFilters(this, ordersFilter, loading);
+    _stateManager.getOrdersFilters(this, ordersFilter, loading);
   }
 
   @override
@@ -82,7 +92,7 @@ class OrderCaptainNotArrivedScreenState
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
-                      color: Theme.of(context).backgroundColor,
+                      color: Theme.of(context).colorScheme.background,
                     ),
                     child: Material(
                       color: Colors.transparent,
@@ -129,14 +139,14 @@ class OrderCaptainNotArrivedScreenState
                   child: Container(
                     width: 32,
                     height: 2.5,
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).colorScheme.background,
                   ),
                 ),
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
-                      color: Theme.of(context).backgroundColor,
+                      color: Theme.of(context).colorScheme.background,
                     ),
                     child: Material(
                       color: Colors.transparent,

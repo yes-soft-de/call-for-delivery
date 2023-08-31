@@ -26,8 +26,13 @@ import 'package:c4d/module_payments/ui/screen/captain_finance_by_order_count_scr
 import 'package:c4d/module_payments/ui/screen/captain_finance_by_order_screen.dart';
 import 'package:c4d/module_settings/settings_module.dart';
 import 'package:c4d/module_statistics/ui/screen/statistics_screen.dart';
-import 'package:c4d/module_stores/stores_module.dart';
+import 'package:c4d/module_stores/ui/screen/order/order_captain_not_arrived.dart';
+import 'package:c4d/module_stores/ui/screen/stores_dues/store_dues_screen.dart';
+import 'package:c4d/module_stores/ui/screen/stores_dues/stores_dues_screen.dart';
+import 'package:c4d/module_stores/ui/screen/stores_inactive_screen.dart';
+import 'package:c4d/module_stores/ui/screen/stores_needs_support_screen.dart';
 import 'package:c4d/module_stores/ui/screen/stores_screen.dart';
+import 'package:c4d/module_stores/ui/screen/top_active_store_screen.dart';
 import 'package:c4d/module_supplier/supplier_module.dart';
 import 'package:c4d/module_supplier_categories/categories_supplier_module.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
@@ -154,7 +159,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       Icons.edit_road_rounded,
                       true),
                   customListTile(
-                      getIt<StoresModule>().captainNotArrivedScreen,
+                      OrderCaptainNotArrivedScreen(),
                       S.current.captainNotArrived,
                       Icons.storefront_rounded,
                       true),
@@ -167,8 +172,12 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       S.current.captainActivity,
                       Icons.show_chart_rounded,
                       true),
-                  customListTile(getIt<StoresModule>().topActiveStoreScreen,
-                      S.current.topstoreActivity, FontAwesomeIcons.store, true),
+                  customListTile(
+                    TopActiveStoreScreen(),
+                    S.current.topstoreActivity,
+                    FontAwesomeIcons.store,
+                    true,
+                  ),
                 ],
                 page: widget.currentPage),
 
@@ -194,7 +203,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                   customListTile(StoresScreen(), S.current.storesList,
                       Icons.storefront_rounded, true),
                   customListTile(
-                      getIt<StoresModule>().storesInActiveScreen,
+                      StoresInActiveScreen(),
                       S.current.storesInActive,
                       FontAwesomeIcons.storeSlash,
                       true),
@@ -266,8 +275,12 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.directSupport,
                 icon: FontAwesomeIcons.headphonesAlt,
                 children: [
-                  customListTile(getIt<StoresModule>().supportScreen,
-                      S.current.stores, Icons.storefront_rounded, true),
+                  customListTile(
+                    StoresNeedsSupportScreen(),
+                    S.current.stores,
+                    Icons.storefront_rounded,
+                    true,
+                  ),
                   customListTile(CaptainsNeedsSupportScreen(),
                       S.current.captains, FontAwesomeIcons.car, true),
                   Visibility(
@@ -323,13 +336,18 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.duesPayments,
                 icon: FontAwesomeIcons.moneyBillTransfer,
                 children: [
-                  customListTile(CaptainDuesScreen(), S.current.captainDues,
-                      FontAwesomeIcons.moneyBills, true),
                   customListTile(
-                      getIt<StoresModule>().storesDuesScreen,
-                      S.current.storesCashRequest,
-                      FontAwesomeIcons.moneyBills,
-                      true),
+                    CaptainDuesScreen(),
+                    S.current.captainDues,
+                    FontAwesomeIcons.moneyBills,
+                    true,
+                  ),
+                  customListTile(
+                    StoresDuesScreen(),
+                    S.current.storesCashRequest,
+                    FontAwesomeIcons.moneyBills,
+                    true,
+                  ),
                 ],
                 page: widget.currentPage),
 
