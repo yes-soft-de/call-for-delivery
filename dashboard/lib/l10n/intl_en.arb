@@ -1146,6 +1146,7 @@
     "theCaptainRaisedAnConflictAboutDistance": "the captain raised an conflict about distance",
     "orderConflictDistanceNotExist": "order conflict distance not exist",
     "dev": "Dev",
+    "orderCanceledFromMarsoolByAdmin": "order canceled from marsool by admin",
     "orderIgnoredSuccessfully": "Order ignored successfully"
 
 }

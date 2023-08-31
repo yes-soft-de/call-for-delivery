@@ -1146,5 +1146,6 @@
     "theCaptainRaisedAnConflictAboutDistance": "قام الكابتن بتقديم تعارض حول مسافة الطلب",
     "orderConflictDistanceNotExist": "طلب النزاع غير موجود",
     "dev": "المطورين",
+    "orderCanceledFromMarsoolByAdmin": "تم الغاء الطلب لدى المشغل مرسول من قبل الادمن",
     "orderIgnoredSuccessfully": "تم تجاهل الطلب بنجاح"
 }

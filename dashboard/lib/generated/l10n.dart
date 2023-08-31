@@ -11034,6 +11034,16 @@ class S {
     );
   }
 
+  /// `order canceled from marsool by admin`
+  String get orderCanceledFromMarsoolByAdmin {
+    return Intl.message(
+      'order canceled from marsool by admin',
+      name: 'orderCanceledFromMarsoolByAdmin',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Order ignored successfully`
   String get orderIgnoredSuccessfully {
     return Intl.message(
