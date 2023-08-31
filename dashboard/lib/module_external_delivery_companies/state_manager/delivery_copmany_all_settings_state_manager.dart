@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -11,29 +12,27 @@ import 'package:c4d/module_external_delivery_companies/ui/screen/delivery_compan
 import 'package:c4d/module_external_delivery_companies/ui/state/delivery_copmany_all_settings_state_loaded.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 
 @injectable
-class DeliveryCompanyAllSettingsStateManager {
+class DeliveryCompanyAllSettingsStateManager extends StateManagerHandler {
   final ExternalDeliveryCompaniesService _service;
-  final PublishSubject<States> _stateSubject = PublishSubject();
 
   DeliveryCompanyAllSettingsStateManager(this._service);
 
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
 
   void getCompanySetting(
       DeliveryCompanyAllSettingsScreenState screenState, int companyId) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
 
     _service.getCompanyCriterial(companyId).then(
       (value) {
         if (value.hasError) {
-          _stateSubject.add(ErrorState(screenState, onPressed: () {
+          stateSubject.add(ErrorState(screenState, onPressed: () {
             getCompanySetting(screenState, companyId);
           }, title: '', error: value.error, hasAppbar: false, size: 200));
         } else if (value.isEmpty) {
-          _stateSubject.add(EmptyState(screenState, size: 200, onPressed: () {
+          stateSubject.add(EmptyState(screenState, size: 200, onPressed: () {
             getCompanySetting(screenState, companyId);
           },
               title: '',
@@ -41,7 +40,7 @@ class DeliveryCompanyAllSettingsStateManager {
               hasAppbar: false));
         } else {
           value as CompanySetting;
-          _stateSubject.add(
+          stateSubject.add(
             DeliveryCompanyAllSettingsStateLoaded(screenState, value.data),
           );
         }
@@ -51,7 +50,7 @@ class DeliveryCompanyAllSettingsStateManager {
 
   void deleteCompanyCriterial(DeliveryCompanyAllSettingsScreenState screenState,
       DeleteCompanyCriterialRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
 
     _service.deleteCompanyCriterial(request).then(
       (value) {

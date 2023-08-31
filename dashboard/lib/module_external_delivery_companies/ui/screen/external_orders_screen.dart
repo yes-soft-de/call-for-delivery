@@ -15,15 +15,11 @@ import 'package:c4d/module_stores/service/store_service.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:intl/intl.dart';
 
-@injectable
 class ExternalOrderScreen extends StatefulWidget {
-  final ExternalOrdersStateManager _stateManager;
-
-  const ExternalOrderScreen(this._stateManager);
+  const ExternalOrderScreen();
 
   @override
   State<ExternalOrderScreen> createState() => ExternalOrderScreenState();
@@ -31,6 +27,9 @@ class ExternalOrderScreen extends StatefulWidget {
 
 class ExternalOrderScreenState extends State<ExternalOrderScreen> {
   late States currentState;
+  late ExternalOrdersStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   late CompanyModel company;
   int currentIndex = 0;
   final ExternalOrderRequest filter = ExternalOrderRequest();
@@ -41,13 +40,13 @@ class ExternalOrderScreenState extends State<ExternalOrderScreen> {
   BranchesModel? selectedBranch;
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  StreamSubscription? _stateSubscription;
 
   @override
   void initState() {
     super.initState();
     currentState = LoadingState(this);
-    _stateSubscription = widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -56,7 +55,7 @@ class ExternalOrderScreenState extends State<ExternalOrderScreen> {
   }
 
   Future<void> getOrders([bool loading = true]) async {
-    widget._stateManager.getPendingOrders(
+    _stateManager.getPendingOrders(
       this,
       filter,
       loading,
@@ -91,7 +90,8 @@ class ExternalOrderScreenState extends State<ExternalOrderScreen> {
 
   @override
   void dispose() {
-    _stateSubscription?.cancel();
+    _stateSubscription.cancel();
+    _stateManager.dispose();
     super.dispose();
   }
 

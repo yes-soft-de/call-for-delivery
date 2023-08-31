@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
@@ -12,33 +13,31 @@ import 'package:c4d/module_external_delivery_companies/ui/screen/external_delive
 import 'package:c4d/module_external_delivery_companies/ui/state/external_delivery_companies_state_loaded.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 
 @injectable
-class ExternalDeliveryCompaniesStateManager {
+class ExternalDeliveryCompaniesStateManager extends StateManagerHandler {
   final ExternalDeliveryCompaniesService _service;
-  final PublishSubject<States> _stateSubject = PublishSubject();
 
   ExternalDeliveryCompaniesStateManager(this._service);
 
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
 
   void getExternalCompanies(ExternalDeliveryCompaniesScreenState screenState) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
 
     _service.getAllCompanies().then(
       (value) {
         if (value.hasError) {
-          _stateSubject.add(ErrorState(screenState, onPressed: () {
+          stateSubject.add(ErrorState(screenState, onPressed: () {
             getExternalCompanies(screenState);
           }, title: '', error: value.error, hasAppbar: false, size: 200));
         } else if (value.isEmpty) {
-          _stateSubject.add(
+          stateSubject.add(
             ExternalDeliveryCompaniesStateLoaded(screenState, []),
           );
         } else {
           value as CompanyModel;
-          _stateSubject.add(
+          stateSubject.add(
             ExternalDeliveryCompaniesStateLoaded(screenState, value.data),
           );
         }
@@ -48,7 +47,7 @@ class ExternalDeliveryCompaniesStateManager {
 
   void updateCompany(ExternalDeliveryCompaniesScreenState screenState,
       UpdateDeliveryCompanyRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
 
     _service.updateCompany(request).then(
       (value) {
@@ -68,7 +67,7 @@ class ExternalDeliveryCompaniesStateManager {
 
   void createNewCompany(ExternalDeliveryCompaniesScreenState screenState,
       CreateNewDeliveryCompanyRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
 
     _service.createNewCompany(request).then(
       (value) {
@@ -88,7 +87,7 @@ class ExternalDeliveryCompaniesStateManager {
 
   void deleteCompany(ExternalDeliveryCompaniesScreenState screenState,
       DeleteDeliveryCompanyRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
 
     _service.deleteCompany(request).then(
       (value) {

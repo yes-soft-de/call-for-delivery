@@ -2,18 +2,15 @@ import 'dart:async';
 
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_external_delivery_companies/request/assign_order_to_external_company/assign_order_to_external_company_request.dart';
 import 'package:c4d/module_external_delivery_companies/state_manager/assign_order_to_external_company_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class AssignOrderToExternalCompanyScreen extends StatefulWidget {
-  final AssignOrderToExternalCompanyStateManager _stateManager;
-
-  const AssignOrderToExternalCompanyScreen(this._stateManager);
+  const AssignOrderToExternalCompanyScreen();
 
   @override
   State<AssignOrderToExternalCompanyScreen> createState() =>
@@ -23,15 +20,18 @@ class AssignOrderToExternalCompanyScreen extends StatefulWidget {
 class AssignOrderToExternalCompanyScreenState
     extends State<AssignOrderToExternalCompanyScreen> {
   late States currentState;
+  late AssignOrderToExternalCompanyStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   late int orderId;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  StreamSubscription? _stateSubscription;
 
   @override
   void initState() {
     super.initState();
     currentState = LoadingState(this);
-    _stateSubscription = widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -41,11 +41,11 @@ class AssignOrderToExternalCompanyScreenState
   }
 
   getExternalCompanies() {
-    widget._stateManager.getExternalCompanies(this);
+    _stateManager.getExternalCompanies(this);
   }
 
   assignOrderToExternalCompany(int companyId) {
-    widget._stateManager.assignOrderToExternalCompany(
+    _stateManager.assignOrderToExternalCompany(
         this,
         AssignOrderToExternalCompanyRequest(
           externalCompanyId: companyId,
@@ -59,7 +59,8 @@ class AssignOrderToExternalCompanyScreenState
 
   @override
   void dispose() {
-    _stateSubscription?.cancel();
+    _stateSubscription.cancel();
+    _stateManager.dispose();
     super.dispose();
   }
 
