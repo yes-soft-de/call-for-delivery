@@ -408,6 +408,9 @@ class Urls {
   static const DELETE_ORDER_FROM_ALSHOROQ =
       DOMAIN + '/v1/admin/streetline/order/cancelexternalorderonly';
 
+  static const DELETE_ORDER_FROM_MARSOOL =
+      DOMAIN + '/v1/admin/marsool/order/cancelexternalorderonly';
+
   /*-----------------------------subscription----------------------------*/
   static const String BASE_API_SUBSCRIPTION =
       DOMAIN + VERSION_ADMIN + '/subscription';

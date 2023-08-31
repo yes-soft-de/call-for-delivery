@@ -8,6 +8,7 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/order/delete_order_from_alshoroq_request.dart';
+import 'package:c4d/module_orders/request/order/delete_order_from_marsool_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_stores/request/delete_order_request.dart';
@@ -83,6 +84,26 @@ class OrderStatusStateManager extends StateManagerHandler {
     screenState.canRemoveOrder = false;
     stateSubject.add(LoadingState(screenState));
     getIt<OrdersService>().deleteOrderFromAlShoroq(request).then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.createError(
+            title: S.current.warnning, message: value.error ?? '');
+        getOrder(screenState, request.orderId);
+      } else {
+        CustomFlushBarHelper.createSuccess(
+            title: S.current.warnning, message: S.current.deleteSuccess);
+        getOrder(screenState, request.orderId);
+        FireStoreHelper().backgroundThread('Trigger');
+      }
+    });
+  }
+
+  void deleteOrderFromAlMarsool(
+    OrderDetailsScreenState screenState,
+    DeleteOrderFromMarsoolRequest request,
+  ) {
+    screenState.canRemoveOrder = false;
+    stateSubject.add(LoadingState(screenState));
+    getIt<OrdersService>().deleteOrderFromMarsool(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
             title: S.current.warnning, message: value.error ?? '');

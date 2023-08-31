@@ -591,6 +591,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "doYouWantToDeleteTheOrderOnlyFormAlshoroq":
             MessageLookupByLibrary.simpleMessage(
                 "هل تريد حذف الطلب عند المشغل شروق فقط؟"),
+        "doYouWantToDeleteTheOrderOnlyFormMarsool":
+            MessageLookupByLibrary.simpleMessage(
+                "هل تريد حذف الطلب عند المشغل مرسول فقط؟"),
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
             "حمل تطبيقنا على متجر غوغل عبر الرابط"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("رخصة القيادة"),

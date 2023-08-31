@@ -1142,6 +1142,7 @@
     "captainProfit": "ارباح الكابتن",
     "orderNotExistInTheExternalCompany": "الطلب غير موجود عند الشركة الخارجية",
     "doYouWantToDeleteTheOrderOnlyFormAlshoroq": "هل تريد حذف الطلب عند المشغل شروق فقط؟",
+    "doYouWantToDeleteTheOrderOnlyFormMarsool": "هل تريد حذف الطلب عند المشغل مرسول فقط؟",
     "areYouSureAboutRefusedTheConflictRequest": "هل انت متاكد من تجاهل طلب النزاع",
     "theCaptainRaisedAnConflictAboutDistance": "قام الكابتن بتقديم تعارض حول مسافة الطلب",
     "orderConflictDistanceNotExist": "طلب النزاع غير موجود",
