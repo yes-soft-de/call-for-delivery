@@ -1,19 +1,18 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_captain/request/captain_activities_filter_request.dart';
 import 'package:c4d/module_captain/request/specific_captain_activities_filter_request.dart';
 import 'package:c4d/module_captain/state_manager/captain_activity_details_state_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
 import '../../../generated/l10n.dart';
 import '../../../utils/components/custom_app_bar.dart';
 
-@injectable
 class CaptainActivityDetailsScreen extends StatefulWidget {
-  final CaptainActivityDetailsStateManager _stateManager;
-
-  const CaptainActivityDetailsScreen(this._stateManager);
+  const CaptainActivityDetailsScreen();
 
   @override
   CaptainActivityDetailsScreenState createState() =>
@@ -23,21 +22,31 @@ class CaptainActivityDetailsScreen extends StatefulWidget {
 class CaptainActivityDetailsScreenState
     extends State<CaptainActivityDetailsScreen> {
   late States currentState;
+  late CaptainActivityDetailsStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   @override
   void initState() {
-    // TODO: implement initState
-    super.initState();
     currentState = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       refresh();
     });
+    super.initState();
   }
 
-  CaptainActivityDetailsStateManager get statemanager => widget._stateManager;
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
+  CaptainActivityDetailsStateManager get statemanager => _stateManager;
 
   void getCaptainActivityDetails() {
-    widget._stateManager.getCaptainActivityDetails(this, captainId);
+    _stateManager.getCaptainActivityDetails(this, captainId);
   }
 
   void refresh() {
@@ -60,7 +69,7 @@ class CaptainActivityDetailsScreenState
         captainName = arg[1];
         filter = arg[2];
         if (filter != null) {
-          widget._stateManager.getCaptainActivityDetailsFilter(
+          _stateManager.getCaptainActivityDetailsFilter(
               this,
               SpecificCaptainActivityFilterRequest(
                 state: 'delivered',
@@ -69,7 +78,7 @@ class CaptainActivityDetailsScreenState
                 toDate: filter!.toDate,
               ));
         } else {
-          widget._stateManager.getCaptainActivityDetails(this, captainId);
+          _stateManager.getCaptainActivityDetails(this, captainId);
         }
       }
     }

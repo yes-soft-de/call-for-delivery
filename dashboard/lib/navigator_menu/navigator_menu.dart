@@ -2,10 +2,12 @@ import 'package:c4d/consts/urls.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
-import 'package:c4d/module_captain/captains_module.dart';
+import 'package:c4d/module_captain/ui/screen/captain_activity_model.dart';
 import 'package:c4d/module_captain/ui/screen/captain_dues_screen.dart';
 import 'package:c4d/module_captain/ui/screen/captain_needs_support_screen.dart';
+import 'package:c4d/module_captain/ui/screen/captain_rating_screen.dart';
 import 'package:c4d/module_captain/ui/screen/captains_list_screen.dart';
+import 'package:c4d/module_captain/ui/screen/captains_offer_screen.dart';
 import 'package:c4d/module_captain/ui/screen/in_active_captains_screen.dart';
 import 'package:c4d/module_categories/categories_module.dart';
 import 'package:c4d/module_company/company_module.dart';
@@ -27,7 +29,6 @@ import 'package:c4d/module_payments/ui/screen/captain_finance_by_order_screen.da
 import 'package:c4d/module_settings/settings_module.dart';
 import 'package:c4d/module_statistics/ui/screen/statistics_screen.dart';
 import 'package:c4d/module_stores/ui/screen/order/order_captain_not_arrived.dart';
-import 'package:c4d/module_stores/ui/screen/stores_dues/store_dues_screen.dart';
 import 'package:c4d/module_stores/ui/screen/stores_dues/stores_dues_screen.dart';
 import 'package:c4d/module_stores/ui/screen/stores_inactive_screen.dart';
 import 'package:c4d/module_stores/ui/screen/stores_needs_support_screen.dart';
@@ -165,13 +166,18 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       true),
                   customListTile(OrdersReceiveCashScreen(),
                       S.current.ordersCash, Icons.payments_rounded, true),
-                  customListTile(getIt<CaptainsModule>().captainsRatingsScreen,
-                      S.current.captainsRating, Icons.star_rounded, true),
                   customListTile(
-                      getIt<CaptainsModule>().captainsActivityScreen,
-                      S.current.captainActivity,
-                      Icons.show_chart_rounded,
-                      true),
+                    CaptainsRatingScreen(),
+                    S.current.captainsRating,
+                    Icons.star_rounded,
+                    true,
+                  ),
+                  customListTile(
+                    CaptainsActivityScreen(),
+                    S.current.captainActivity,
+                    Icons.show_chart_rounded,
+                    true,
+                  ),
                   customListTile(
                     TopActiveStoreScreen(),
                     S.current.topstoreActivity,
@@ -299,23 +305,23 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 icon: Icons.backpack_outlined,
                 children: [
                   customListTile(
-                      getIt<CategoriesModule>().packageCategoriesScreen,
-                      S.current.categories,
-                      Icons.category,
-                      true),
-//                  customListTile(getIt<CategoriesModule>().subCategoriesScreen,
-//                      S.current.subCategories, FontAwesomeIcons.square, true),
+                    getIt<CategoriesModule>().packageCategoriesScreen,
+                    S.current.categories,
+                    Icons.category,
+                    true,
+                  ),
                   customListTile(
-                      getIt<CategoriesModule>().packagesScreen,
-                      S.current.packages,
-                      FontAwesomeIcons.wolfPackBattalion,
-                      true),
-
+                    getIt<CategoriesModule>().packagesScreen,
+                    S.current.packages,
+                    FontAwesomeIcons.wolfPackBattalion,
+                    true,
+                  ),
                   customListTile(
-                      getIt<CaptainsModule>().captainOffersScreen,
-                      S.current.captainsOffer,
-                      FontAwesomeIcons.solidListAlt,
-                      true),
+                    CaptainOffersScreen(),
+                    S.current.captainsOffer,
+                    FontAwesomeIcons.solidListAlt,
+                    true,
+                  ),
                 ],
                 page: widget.currentPage),
             // captain finance
