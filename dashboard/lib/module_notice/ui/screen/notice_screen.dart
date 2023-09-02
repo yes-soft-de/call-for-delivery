@@ -1,21 +1,20 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_notice/request/notice_request.dart';
 import 'package:c4d/module_notice/state_manager/notice_state_manager.dart';
 import 'package:c4d/module_notice/ui/widget/notice_form.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/floated_button.dart';
 import 'package:c4d/utils/effect/hidder.dart';
 
-@injectable
 class NoticeScreen extends StatefulWidget {
-  final NoticeStateManager _stateManager;
-
-  NoticeScreen(this._stateManager);
+  NoticeScreen();
 
   @override
   NoticeScreenState createState() => NoticeScreenState();
@@ -23,34 +22,45 @@ class NoticeScreen extends StatefulWidget {
 
 class NoticeScreenState extends State<NoticeScreen> {
   late States currentState;
+  late NoticeStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   bool canAddCategories = true;
   int currentIndex = 0;
 
   @override
   void initState() {
     currentState = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       refresh();
     });
-    widget._stateManager.getNotice(this);
+    _stateManager.getNotice(this);
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
   void getNotice() {
-    widget._stateManager.getNotice(this);
+    _stateManager.getNotice(this);
   }
 
   void addNotice(NoticeRequest request) {
-    widget._stateManager.addNotice(this, request);
+    _stateManager.addNotice(this, request);
   }
 
   void updateNotice(NoticeRequest request) {
-    widget._stateManager.updateNotice(this, request);
+    _stateManager.updateNotice(this, request);
   }
 
   void deleteCategories(String id) {
-//    widget._stateManager.deleteCategories(this, id);
+//    _stateManager.deleteCategories(this, id);
   }
 
   void refresh() {

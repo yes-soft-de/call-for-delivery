@@ -6,15 +6,12 @@ import 'package:c4d/abstracts/module/yes_module.dart';
 
 @injectable
 class NoticeModule extends YesModule {
-  final NoticeScreen noticeScreen;
-  NoticeModule(
-    this.noticeScreen,
-  ) {
+  NoticeModule() {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
     return {
-      NoticeRoutes.NOTICE: (context) => noticeScreen,
+      NoticeRoutes.NOTICE: (context) => NoticeScreen(),
     };
   }
 }

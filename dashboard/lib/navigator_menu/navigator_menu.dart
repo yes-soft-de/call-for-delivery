@@ -12,13 +12,12 @@ import 'package:c4d/module_captain/ui/screen/in_active_captains_screen.dart';
 import 'package:c4d/module_categories/categories_module.dart';
 import 'package:c4d/module_company/company_module.dart';
 import 'package:c4d/module_dev/dev_module.dart';
-import 'package:c4d/module_external_delivery_companies/external_delivery_companies_module.dart';
 import 'package:c4d/module_external_delivery_companies/model/feature_model.dart';
 import 'package:c4d/module_external_delivery_companies/request/feature_request/feature_request.dart';
 import 'package:c4d/module_external_delivery_companies/service/external_delivery_companies_service.dart';
 import 'package:c4d/module_external_delivery_companies/ui/screen/external_delivery_companies_screen.dart';
 import 'package:c4d/module_external_delivery_companies/ui/widgets/show_confirm_dialog.dart';
-import 'package:c4d/module_notice/notice_module.dart';
+import 'package:c4d/module_notice/ui/screen/notice_screen.dart';
 import 'package:c4d/module_orders/ui/screens/new_order/new_order_screen.dart';
 import 'package:c4d/module_orders/ui/screens/order_conflict_distance_screen.dart';
 import 'package:c4d/module_orders/ui/screens/order_pending_screen.dart';
@@ -269,11 +268,8 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       ],
                     ),
                   ),
-                  customListTile(
-                      ExternalDeliveryCompaniesScreen(),
-                      S.current.deliveryCompanies,
-                      FontAwesomeIcons.box,
-                      true),
+                  customListTile(ExternalDeliveryCompaniesScreen(),
+                      S.current.deliveryCompanies, FontAwesomeIcons.box, true),
                 ],
                 page: widget.currentPage),
             // support
@@ -297,8 +293,11 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 ],
                 page: widget.currentPage),
             // notice
-            customListTile(getIt<NoticeModule>().noticeScreen, S.current.notice,
-                FontAwesomeIcons.stickyNote),
+            customListTile(
+              NoticeScreen(),
+              S.current.notice,
+              FontAwesomeIcons.stickyNote,
+            ),
             // packages
             customExpansionTile(
                 title: S.current.packages,
