@@ -1,17 +1,16 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/module_captain/model/captain_activity_details_model.dart';
 import 'package:c4d/module_captain/request/specific_captain_activities_filter_request.dart';
 import 'package:c4d/module_captain/ui/screen/captain_activity_details_screen.dart';
 import 'package:c4d/module_captain/ui/state/captain_activity_details/loaded_captain_activity_details.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 
 import '../../abstracts/states/state.dart';
 import '../service/captains_service.dart';
 
 @injectable
-class CaptainActivityDetailsStateManager {
-  final stateSubject = PublishSubject<States>();
+class CaptainActivityDetailsStateManager extends StateManagerHandler {
   final CaptainsService _captainService;
 
   CaptainActivityDetailsStateManager(this._captainService);

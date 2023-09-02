@@ -4,13 +4,10 @@ import 'package:c4d/module_external_delivery_companies/model/external_order.dart
 import 'package:c4d/module_external_delivery_companies/ui/screen/external_orders_screen.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/ui/widgets/owner_order_card/owner_order_card.dart';
-import 'package:c4d/module_orders/ui/widgets/recycle_widgets/recycle_button_widget.dart';
-import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/module_orders/model/order/order_model.dart';
 
@@ -23,7 +20,7 @@ class ExternalOrdersLoadedState extends States {
     ordersIndex = [
       orders.pendingOrders,
       orders.notDeliveredOrders,
-      orders.hiddenOrders,
+      orders.deliveredOrders,
     ];
   }
   List<List<OrderModel>> ordersIndex = [];
@@ -140,44 +137,6 @@ class ExternalOrdersLoadedState extends States {
                                 .storeName,
                           ),
                         ),
-                        screenState.currentIndex == 2
-                            ? Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Container(
-                                  child: RecycleOrderButton(
-                                    onTap: () {
-                                      showDialog(
-                                          context: context,
-                                          builder: (ctx) {
-                                            return CustomAlertDialog(
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                  Navigator.of(context)
-                                                      .pushNamedAndRemoveUntil(
-                                                    OrdersRoutes
-                                                        .RECYCLE_ORDERS_SCREEN,
-                                                    (route) => false,
-                                                    arguments: ordersIndex[
-                                                                screenState
-                                                                    .currentIndex]
-                                                            [index]
-                                                        .id,
-                                                    // element.storeId
-                                                  );
-                                                },
-                                                content: S.current
-                                                    .recycleOrderWarning,
-                                                oneAction: false);
-                                          });
-                                    },
-                                    backgroundColor: Colors.green,
-                                    icon: FontAwesomeIcons.recycle,
-                                    title: S.current.recycleOrder,
-                                    short: true,
-                                  ),
-                                ),
-                              )
-                            : SizedBox()
                       ],
                     ),
                   ),

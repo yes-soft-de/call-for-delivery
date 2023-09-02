@@ -117,7 +117,7 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
         )
       ]),
       floatingActionButton: Visibility(
-        visible: screenState.canRemoveOrder && orderInfo.externalCompanyId != 1,
+        visible: screenState.canRemoveOrder,
         child: FloatingActionButton(
           backgroundColor: Theme.of(context).colorScheme.error,
           onPressed: () async {
@@ -128,6 +128,10 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                 StatusHelper.getOrderStatusIndex(OrderStatusEnum.IN_STORE);
 
             bool canceledOnlyFromAlshoroq = false;
+            if (orderInfo.externalCompanyId == 1) {
+              canceledOnlyFromAlshoroq =
+                  await showDeleteOnlyFromMarsoolDialog(context) ?? false;
+            }
             if (orderInfo.externalCompanyId == 2) {
               canceledOnlyFromAlshoroq =
                   await showDeleteOnlyFromAlshoroqDialog(context) ?? false;
@@ -1118,6 +1122,24 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
           onPressed: () {
             Navigator.of(context).pop(true);
             screenState.deleteOrderFromAlShoroq();
+          },
+          oneAction: false,
+          actionTitle: S.current.yes,
+          actionTitle2: S.current.no,
+        );
+      },
+    );
+  }
+
+  Future<bool?> showDeleteOnlyFromMarsoolDialog(BuildContext context) {
+    return showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return CustomAlertDialog(
+          content: S.current.doYouWantToDeleteTheOrderOnlyFormMarsool,
+          onPressed: () {
+            Navigator.of(context).pop(true);
+            screenState.deleteOrderFromMarsool();
           },
           oneAction: false,
           actionTitle: S.current.yes,

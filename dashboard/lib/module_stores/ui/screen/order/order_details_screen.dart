@@ -1,18 +1,17 @@
 import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_orders/request/order/delete_order_from_alshoroq_request.dart';
+import 'package:c4d/module_orders/request/order/delete_order_from_marsool_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_stores/request/delete_order_request.dart';
 import 'package:c4d/module_stores/state_manager/order/order_status.state_manager.dart';
 import 'package:c4d/utils/helpers/firestore_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class OrderDetailsScreen extends StatefulWidget {
-  final OrderStatusStateManager _stateManager;
-  OrderDetailsScreen(this._stateManager);
+  OrderDetailsScreen();
 
   @override
   OrderDetailsScreenState createState() => OrderDetailsScreenState();
@@ -22,13 +21,18 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   int orderId = -1;
 
   late States currentState;
+  late OrderStatusStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
   StreamSubscription? firebaseStream;
-  OrderStatusStateManager get manager => widget._stateManager;
+
+  OrderStatusStateManager get manager => _stateManager;
+
   @override
   void initState() {
     currentState = LoadingState(this);
+    _stateManager = getIt();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      widget._stateManager.stateStream.listen((event) {
+      _stateSubscription = _stateManager.stateStream.listen((event) {
         WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
           currentState = event;
           if (mounted) {
@@ -39,7 +43,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
       firebaseStream =
           FireStoreHelper().onInsertChangeWatcher()?.listen((event) {
         if (flag == false) {
-          widget._stateManager.getOrder(this, orderId, false);
+          _stateManager.getOrder(this, orderId, false);
         }
       });
     });
@@ -49,6 +53,8 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   @override
   void dispose() {
     firebaseStream?.cancel();
+    _stateSubscription.cancel();
+    _stateManager.dispose();
     super.dispose();
   }
 
@@ -61,15 +67,21 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
   void deleteOrderFromAlShoroq() {
     var request = DeleteOrderFromAlShoroqRequest(orderId: orderId);
 
-    widget._stateManager.deleteOrderFromAlShoroq(this, request);
+    _stateManager.deleteOrderFromAlShoroq(this, request);
+  }
+
+  void deleteOrderFromMarsool() {
+    var request = DeleteOrderFromMarsoolRequest(orderId: orderId);
+
+    _stateManager.deleteOrderFromAlMarsool(this, request);
   }
 
   void deleteOrder(DeleteOrderRequest request) {
-    widget._stateManager.deleteOrder(request, this);
+    _stateManager.deleteOrder(request, this);
   }
 
   void updateOrderStatus(UpdateOrderRequest request) {
-    widget._stateManager.updateOrderStatus(this, request);
+    _stateManager.updateOrderStatus(this, request);
   }
 
   int currentIndex = -1;
@@ -80,7 +92,7 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
     var args = ModalRoute.of(context)?.settings.arguments;
     if (args != null && currentState is LoadingState && flag) {
       orderId = args as int;
-      widget._stateManager.getOrder(this, orderId);
+      _stateManager.getOrder(this, orderId);
       flag = false;
     }
     return GestureDetector(

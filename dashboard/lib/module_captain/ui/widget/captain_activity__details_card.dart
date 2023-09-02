@@ -58,14 +58,21 @@ class CardCaptainActivityDetails extends StatelessWidget {
                           title: S.current.cost,
                           subtitle:
                               model.orderCost.toString() + ' ${S.current.sar}'),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(
-                            Icons.arrow_circle_left_outlined,
-                            color: Colors.white,
-                          )
-                        ],
+                      Visibility(
+                        visible: model.profit != null,
+                        child: verticalTile(context,
+                            title: S.current.captainProfit,
+                            subtitle:
+                                model.profit.toString() + ' ${S.current.sar}'),
+                        replacement: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.arrow_circle_left_outlined,
+                              color: Colors.white,
+                            )
+                          ],
+                        ),
                       )
                     ],
                   ),
@@ -85,19 +92,19 @@ Widget verticalTile(context,
         title,
         style: TextStyle(
             fontWeight: FontWeight.bold,
-            color: Theme.of(context).textTheme.button?.color),
+            color: Theme.of(context).textTheme.labelLarge?.color),
       ),
       Text(subtitle,
           style: Theme.of(context)
               .textTheme
-              .button
+              .labelLarge
               ?.copyWith(fontWeight: FontWeight.normal)),
     ],
   );
 }
 
 Widget divider(context) {
-  Color dividerColor = Theme.of(context).textTheme.button!.color!;
+  Color dividerColor = Theme.of(context).textTheme.labelLarge!.color!;
   return Divider(
     thickness: 2,
     indent: 16,

@@ -1,17 +1,16 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_stores/state_manager/stores_need_support_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class StoresNeedsSupportScreen extends StatefulWidget {
-  final StoresNeedsSupportStateManager _stateManager;
-
-  StoresNeedsSupportScreen(this._stateManager);
+  StoresNeedsSupportScreen();
 
   @override
   StoreNeedsSupportScreenState createState() => StoreNeedsSupportScreenState();
@@ -19,20 +18,30 @@ class StoresNeedsSupportScreen extends StatefulWidget {
 
 class StoreNeedsSupportScreenState extends State<StoresNeedsSupportScreen> {
   late States currentState;
+  late StoresNeedsSupportStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
 
   @override
   void initState() {
     currentState = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       refresh();
     });
-    widget._stateManager.getStores(this);
+    _stateManager.getStores(this);
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
   void getClients() {
-    widget._stateManager.getStores(this);
+    _stateManager.getStores(this);
   }
 
   void refresh() {

@@ -13,41 +13,25 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class PaymentsModule extends YesModule {
-  final CaptainFinanceByOrderScreen financeByOrderScreen;
-  final CaptainFinanceByCountOrderScreen financeByCountOrderScreen;
-  final CaptainFinanceByHoursScreen financeByHoursScreen;
-  final PaymentsToCaptainScreen paymentsToCaptainScreen;
-  final StoreBalanceScreen storeBalanceScreen;
-  final CaptainPaymentScreen captainPaymentScreen;
-  final AllAmountCaptainsScreen allAmountCaptainsScreen;
-  final CaptainPreviousPaymentsScreen captainPreviousPayments;
-
-  PaymentsModule(
-    this.financeByCountOrderScreen,
-    this.financeByHoursScreen,
-    this.financeByOrderScreen,
-    this.paymentsToCaptainScreen,
-    this.storeBalanceScreen,
-    this.captainPaymentScreen,
-    this.allAmountCaptainsScreen,
-    this.captainPreviousPayments,
-  ) {
+  PaymentsModule() {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
     return {
       PaymentsRoutes.CAPTAIN_FINANCE_BY_ORDER: (context) =>
-          financeByOrderScreen,
+          CaptainFinanceByOrderScreen(),
       PaymentsRoutes.CAPTAIN_FINANCE_BY_HOURS: (context) =>
-          financeByHoursScreen,
+          CaptainFinanceByHoursScreen(),
       PaymentsRoutes.CAPTAIN_FINANCE_BY_COUNT_ORDERS: (context) =>
-          financeByCountOrderScreen,
-      PaymentsRoutes.PAYMENTS_TO_CAPTAIN: (context) => paymentsToCaptainScreen,
-      PaymentsRoutes.PAYMENTS_LIST: (context) => storeBalanceScreen,
-      PaymentsRoutes.CAPTAIN_PAYMENT: (context) => captainPaymentScreen,
-      PaymentsRoutes.ALL_AMOUNT_CAPTAINS: (context) => allAmountCaptainsScreen,
+          CaptainFinanceByCountOrderScreen(),
+      PaymentsRoutes.PAYMENTS_TO_CAPTAIN: (context) =>
+          PaymentsToCaptainScreen(),
+      PaymentsRoutes.PAYMENTS_LIST: (context) => StoreBalanceScreen(),
+      PaymentsRoutes.CAPTAIN_PAYMENT: (context) => CaptainPaymentScreen(),
+      PaymentsRoutes.ALL_AMOUNT_CAPTAINS: (context) =>
+          AllAmountCaptainsScreen(),
       PaymentsRoutes.CAPTAIN_PREVIOUS_PAYMENTS: (context) =>
-          captainPreviousPayments,
+          CaptainPreviousPaymentsScreen(),
     };
   }
 }

@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_captain/state_manager/captain_need_support_state_manager.dart';
@@ -9,9 +12,7 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class CaptainsNeedsSupportScreen extends StatefulWidget {
-  final CaptainsNeedsSupportStateManager _stateManager;
-
-  CaptainsNeedsSupportScreen(this._stateManager);
+  CaptainsNeedsSupportScreen();
 
   @override
   CaptainsNeedsSupportScreenState createState() =>
@@ -21,26 +22,36 @@ class CaptainsNeedsSupportScreen extends StatefulWidget {
 class CaptainsNeedsSupportScreenState
     extends State<CaptainsNeedsSupportScreen> {
   late States currentState;
+  late CaptainsNeedsSupportStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
 
   @override
   void initState() {
     currentState = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       refresh();
     });
-    widget._stateManager.getCaptainSupport(this);
+    _stateManager.getCaptainSupport(this);
     super.initState();
   }
 
   void getClients() {
-    widget._stateManager.getCaptainSupport(this);
+    _stateManager.getCaptainSupport(this);
   }
 
   void refresh() {
     if (mounted) {
       setState(() {});
     }
+  }
+
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
   }
 
   @override

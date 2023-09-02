@@ -591,6 +591,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "doYouWantToDeleteTheOrderOnlyFormAlshoroq":
             MessageLookupByLibrary.simpleMessage(
                 "هل تريد حذف الطلب عند المشغل شروق فقط؟"),
+        "doYouWantToDeleteTheOrderOnlyFormMarsool":
+            MessageLookupByLibrary.simpleMessage(
+                "هل تريد حذف الطلب عند المشغل مرسول فقط؟"),
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
             "حمل تطبيقنا على متجر غوغل عبر الرابط"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("رخصة القيادة"),
@@ -1008,6 +1011,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderCanceledFromAlshoroqByAdmin":
             MessageLookupByLibrary.simpleMessage(
                 "تم الغاء الطلب لدى المشغل شروق من قبل الادمن"),
+        "orderCanceledFromMarsoolByAdmin": MessageLookupByLibrary.simpleMessage(
+            "تم الغاء الطلب لدى المشغل مرسول من قبل الادمن"),
         "orderCashStatus":
             MessageLookupByLibrary.simpleMessage("سعر الطلبية للمتجر"),
         "orderCashWithCaptain":

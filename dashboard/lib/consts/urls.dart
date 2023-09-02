@@ -14,7 +14,7 @@ class Urls {
     '552222225',
   ];
   /*--------BASES-------------------*/
-  static const String DOMAIN = prodDomain;
+  static const String DOMAIN = devDomain;
   static const String BASE_API = DOMAIN + '';
   static const String VERSION = '/v1';
   static const GEO_DISTANCE = DOMAIN + '/v1/geodistance/geodistance';
@@ -407,6 +407,9 @@ class Urls {
 
   static const DELETE_ORDER_FROM_ALSHOROQ =
       DOMAIN + '/v1/admin/streetline/order/cancelexternalorderonly';
+
+  static const DELETE_ORDER_FROM_MARSOOL =
+      DOMAIN + '/v1/admin/marsool/order/cancelexternalorderonly';
 
   /*-----------------------------subscription----------------------------*/
   static const String BASE_API_SUBSCRIPTION =

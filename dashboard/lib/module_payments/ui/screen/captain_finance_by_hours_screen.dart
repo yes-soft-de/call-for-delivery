@@ -1,18 +1,17 @@
+import 'dart:async';
+
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_payments/state_manager/captain_finance_by_hours_state_manager.dart';
 import 'package:c4d/module_payments/ui/widget/finance_by_hours_form.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 
-@injectable
 class CaptainFinanceByHoursScreen extends StatefulWidget {
-  final CaptainFinanceByHoursStateManager _stateManager;
-
-  CaptainFinanceByHoursScreen(this._stateManager);
+  CaptainFinanceByHoursScreen();
 
   @override
   CaptainFinanceByHoursScreenState createState() =>
@@ -22,11 +21,15 @@ class CaptainFinanceByHoursScreen extends StatefulWidget {
 class CaptainFinanceByHoursScreenState
     extends State<CaptainFinanceByHoursScreen> {
   late States currentState;
+  late CaptainFinanceByHoursStateManager _stateManager;
+  late StreamSubscription _streamSubscription;
+
   int storeID = -1;
   @override
   void initState() {
     currentState = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _streamSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       refresh();
     });
@@ -34,9 +37,16 @@ class CaptainFinanceByHoursScreenState
     super.initState();
   }
 
-  CaptainFinanceByHoursStateManager get stateManager => widget._stateManager;
+  @override
+  void dispose() {
+    _streamSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
+  CaptainFinanceByHoursStateManager get stateManager => _stateManager;
   void getFinances() {
-    widget._stateManager.getFinances(this);
+    _stateManager.getFinances(this);
   }
 
   void refresh() {
@@ -73,14 +83,14 @@ class CaptainFinanceByHoursScreenState
             icon: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Icon(Icons.add_rounded,
-                  color: Theme.of(context).textTheme.button?.color ??
+                  color: Theme.of(context).textTheme.labelLarge?.color ??
                       Colors.white),
             ),
             label: Padding(
               padding: const EdgeInsets.all(10.0),
               child: Text(
                 S.current.addWorkPackage,
-                style: Theme.of(context).textTheme.button,
+                style: Theme.of(context).textTheme.labelLarge,
               ),
             )),
       ),

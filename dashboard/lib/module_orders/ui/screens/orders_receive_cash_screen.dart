@@ -9,16 +9,12 @@ import 'package:c4d/module_orders/ui/widgets/filter_bar.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:intl/intl.dart';
 
-@injectable
 class OrdersReceiveCashScreen extends StatefulWidget {
-  final OrdersReceiveCashStateManager _stateManager;
-
-  OrdersReceiveCashScreen(this._stateManager);
+  OrdersReceiveCashScreen();
 
   @override
   OrdersReceiveCashScreenState createState() => OrdersReceiveCashScreenState();
@@ -26,8 +22,10 @@ class OrdersReceiveCashScreen extends StatefulWidget {
 
 class OrdersReceiveCashScreenState extends State<OrdersReceiveCashScreen> {
   late States currentState;
+  late OrdersReceiveCashStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   int currentIndex = 0;
-  StreamSubscription? _stateSubscription;
 
   void refresh() {
     if (mounted) {
@@ -41,14 +39,15 @@ class OrdersReceiveCashScreenState extends State<OrdersReceiveCashScreen> {
   }
 
   var today = DateTime.now();
-  OrdersReceiveCashStateManager get manager => widget._stateManager;
+  OrdersReceiveCashStateManager get manager => _stateManager;
   @override
   void initState() {
     super.initState();
     currentState = LoadingState(this);
+    _stateManager = getIt();
     ordersFilter = FilterOrderRequest();
-    widget._stateManager.getOrdersFilters(this, ordersFilter);
-    _stateSubscription = widget._stateManager.stateStream.listen((event) {
+    _stateManager.getOrdersFilters(this, ordersFilter);
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -58,13 +57,14 @@ class OrdersReceiveCashScreenState extends State<OrdersReceiveCashScreen> {
 
   @override
   void dispose() {
-    _stateSubscription?.cancel();
+    _stateSubscription.cancel();
+    _stateManager.dispose();
     super.dispose();
   }
 
   late FilterOrderRequest ordersFilter;
   Future<void> getOrders([bool loading = true]) async {
-    widget._stateManager.getOrdersFilters(this, ordersFilter, loading);
+    _stateManager.getOrdersFilters(this, ordersFilter, loading);
   }
 
   @override
@@ -103,7 +103,7 @@ class OrdersReceiveCashScreenState extends State<OrdersReceiveCashScreen> {
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
-                        color: Theme.of(context).backgroundColor,
+                        color: Theme.of(context).colorScheme.background,
                       ),
                       child: Material(
                         color: Colors.transparent,
@@ -150,14 +150,14 @@ class OrdersReceiveCashScreenState extends State<OrdersReceiveCashScreen> {
                     child: Container(
                       width: 32,
                       height: 2.5,
-                      color: Theme.of(context).backgroundColor,
+                      color: Theme.of(context).colorScheme.background,
                     ),
                   ),
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
-                        color: Theme.of(context).backgroundColor,
+                        color: Theme.of(context).colorScheme.background,
                       ),
                       child: Material(
                         color: Colors.transparent,
@@ -208,7 +208,7 @@ class OrdersReceiveCashScreenState extends State<OrdersReceiveCashScreen> {
             FilterBar(
               cursorRadius: BorderRadius.circular(25),
               animationDuration: Duration(milliseconds: 350),
-              backgroundColor: Theme.of(context).backgroundColor,
+              backgroundColor: Theme.of(context).colorScheme.background,
               currentIndex: currentIndex,
               borderRadius: BorderRadius.circular(25),
               floating: true,
@@ -224,8 +224,8 @@ class OrdersReceiveCashScreenState extends State<OrdersReceiveCashScreen> {
                 currentIndex = index;
                 getOrders();
               },
-              selectedContent: Theme.of(context).textTheme.button!.color!,
-              unselectedContent: Theme.of(context).textTheme.headline6!.color!,
+              selectedContent: Theme.of(context).textTheme.labelLarge!.color!,
+              unselectedContent: Theme.of(context).textTheme.titleLarge!.color!,
             ),
             SizedBox(
               height: 16,

@@ -13,16 +13,12 @@ import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/effect/scaling.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:intl/intl.dart';
 
-@injectable
 class OrdersCashStoreScreen extends StatefulWidget {
-  final OrdersCashStoreStateManager _stateManager;
-
-  OrdersCashStoreScreen(this._stateManager);
+  OrdersCashStoreScreen();
 
   @override
   OrdersCashStoreScreenState createState() => OrdersCashStoreScreenState();
@@ -30,8 +26,10 @@ class OrdersCashStoreScreen extends StatefulWidget {
 
 class OrdersCashStoreScreenState extends State<OrdersCashStoreScreen> {
   late States currentState;
+  late OrdersCashStoreStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   int currentIndex = 0;
-  StreamSubscription? _stateSubscription;
   TextEditingController _amount = TextEditingController();
   TextEditingController _note = TextEditingController();
 
@@ -52,12 +50,13 @@ class OrdersCashStoreScreenState extends State<OrdersCashStoreScreen> {
   void initState() {
     super.initState();
     currentState = LoadingState(this);
+    _stateManager = getIt();
     ordersFilter = StoreCashFinanceRequest(
         storeId: ArgumentHiveHelper().getCurrentStoreID(),
         fromDate: DateTime(today.year, today.month, today.day, 0),
         toDate: DateTime.now());
-    widget._stateManager.getOrdersFilters(this, ordersFilter);
-    _stateSubscription = widget._stateManager.stateStream.listen((event) {
+    _stateManager.getOrdersFilters(this, ordersFilter);
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -67,13 +66,14 @@ class OrdersCashStoreScreenState extends State<OrdersCashStoreScreen> {
 
   @override
   void dispose() {
-    _stateSubscription?.cancel();
+    _stateSubscription.cancel();
+    _stateManager.dispose();
     super.dispose();
   }
 
   late StoreCashFinanceRequest ordersFilter;
   Future<void> getOrders([bool loading = true]) async {
-    widget._stateManager.getOrdersFilters(this, ordersFilter, loading);
+    _stateManager.getOrdersFilters(this, ordersFilter, loading);
   }
 
   bool canMakePayment = false;
@@ -325,7 +325,7 @@ class OrdersCashStoreScreenState extends State<OrdersCashStoreScreen> {
                                     ? null
                                     : () {
                                         Navigator.of(context).pop();
-                                        widget._stateManager.payForStore(
+                                        _stateManager.payForStore(
                                             this,
                                             CreateStorePaymentsRequest(
                                               fromDate: ordersFilter.fromDate

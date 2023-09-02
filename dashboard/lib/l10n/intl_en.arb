@@ -1142,10 +1142,12 @@
     "orderCanceledFromAllByAdmin": "order canceled from all by admin",
     "orderNotExistInTheExternalCompany": "order not exist in the external company",
     "doYouWantToDeleteTheOrderOnlyFormAlshoroq": "do you want to delete the order only form alshoroq?",
+    "doYouWantToDeleteTheOrderOnlyFormMarsool": "do you want to delete the order only form Marsool?",
     "areYouSureAboutRefusedTheConflictRequest": "are you sure about refused the conflict request",
     "theCaptainRaisedAnConflictAboutDistance": "the captain raised an conflict about distance",
     "orderConflictDistanceNotExist": "order conflict distance not exist",
     "dev": "Dev",
+    "orderCanceledFromMarsoolByAdmin": "order canceled from marsool by admin",
     "orderIgnoredSuccessfully": "Order ignored successfully"
 
 }

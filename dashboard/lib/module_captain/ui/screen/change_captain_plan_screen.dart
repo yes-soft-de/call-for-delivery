@@ -1,21 +1,23 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_captain/state_manager/plan_screen_state_manager.dart';
 import 'package:c4d/module_captain/ui/state/init_plan_state_loaded.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class PlanScreen extends StatefulWidget {
-  final PlanScreenStateManager _manager;
-
-  const PlanScreen(this._manager);
+  const PlanScreen();
 
   @override
   State<StatefulWidget> createState() => PlanScreenState();
 }
 
 class PlanScreenState extends State<PlanScreen> {
-  States? _currentState;
+  late States _currentState;
+  late PlanScreenStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   String? selectedPlan;
   @override
   void initState() {
@@ -25,14 +27,22 @@ class PlanScreenState extends State<PlanScreen> {
       financeByOrder: null,
       financeByOrderCount: null,
     );
-    widget._manager.stateSubject.listen((value) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((value) {
       _currentState = value;
       if (mounted) setState(() {});
     });
     super.initState();
   }
 
-  PlanScreenStateManager get manager => widget._manager;
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
+  PlanScreenStateManager get manager => _stateManager;
   void refresh() {
     if (mounted) setState(() {});
   }
@@ -44,7 +54,7 @@ class PlanScreenState extends State<PlanScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _currentState?.getUI(context) ?? Container(),
+      body: _currentState.getUI(context),
     );
   }
 }

@@ -1,29 +1,25 @@
 import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_captain/request/captain_payment_request.dart';
 import 'package:c4d/module_payments/request/add_payment_to_captain_request.dart';
 import 'package:c4d/module_payments/request/captain_payments_request.dart';
 import 'package:c4d/module_payments/state_manager/captain_payment_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class CaptainPaymentScreen extends StatefulWidget {
-  final CaptainPaymentStateManager _stateManager;
-
-  const CaptainPaymentScreen(
-    this._stateManager,
-  );
+  const CaptainPaymentScreen();
 
   @override
   State<StatefulWidget> createState() => CaptainPaymentScreenState();
 }
 
 class CaptainPaymentScreenState extends State<CaptainPaymentScreen> {
-  late StreamSubscription _streamSubscription;
   late States currentState;
+  late CaptainPaymentStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
 
   void refresh() {
     if (mounted) {
@@ -42,20 +38,21 @@ class CaptainPaymentScreenState extends State<CaptainPaymentScreen> {
           : PaymentGetaway.manual,
       paymentType: PaymentType.realPaymentByAdmin,
     );
-    widget._stateManager.addPayment(this, actualRequest);
+    _stateManager.addPayment(this, actualRequest);
   }
 
   void getCaptainPaymentsDetails() {
-    widget._stateManager.getCaptainPaymentsDetails(this, captainID);
+    _stateManager.getCaptainPaymentsDetails(this, captainID);
   }
 
-  CaptainPaymentStateManager get manager => widget._stateManager;
+  CaptainPaymentStateManager get manager => _stateManager;
 
   @override
   void initState() {
     currentState = LoadingState(this);
     paymentsFilter = CaptainPaymentRequest();
-    _streamSubscription = widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -89,7 +86,8 @@ class CaptainPaymentScreenState extends State<CaptainPaymentScreen> {
 
   @override
   void dispose() {
-    _streamSubscription.cancel();
+    _stateSubscription.cancel();
+    _stateManager.dispose();
     super.dispose();
   }
 }

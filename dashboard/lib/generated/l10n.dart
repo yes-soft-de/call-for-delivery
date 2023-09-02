@@ -10994,6 +10994,16 @@ class S {
     );
   }
 
+  /// `do you want to delete the order only form Marsool?`
+  String get doYouWantToDeleteTheOrderOnlyFormMarsool {
+    return Intl.message(
+      'do you want to delete the order only form Marsool?',
+      name: 'doYouWantToDeleteTheOrderOnlyFormMarsool',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `are you sure about refused the conflict request`
   String get areYouSureAboutRefusedTheConflictRequest {
     return Intl.message(
@@ -11029,6 +11039,16 @@ class S {
     return Intl.message(
       'Dev',
       name: 'dev',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order canceled from marsool by admin`
+  String get orderCanceledFromMarsoolByAdmin {
+    return Intl.message(
+      'order canceled from marsool by admin',
+      name: 'orderCanceledFromMarsoolByAdmin',
       desc: '',
       args: [],
     );

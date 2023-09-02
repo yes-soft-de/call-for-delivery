@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -10,33 +11,28 @@ import 'package:c4d/module_stores/ui/screen/stores_dues/store_dues_screen.dart';
 import 'package:c4d/module_stores/ui/state/stores_dues/store_due_loaded_state.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 
 @injectable
-class StoreDuesStateManager {
+class StoreDuesStateManager extends StateManagerHandler {
   final StoresService _storesService;
   final PaymentsService _paymentsService;
-  final PublishSubject<States> _stateSubject = new PublishSubject();
 
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
 
   StoreDuesStateManager(this._storesService, this._paymentsService);
 
   void makePayments(
       StoreDuesScreenState screenState, CreateStorePaymentsRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _paymentsService.paymentToStore(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error.toString())
-            ;
+            title: S.current.warnning, message: value.error.toString());
         getStoreDues(screenState, screenState.filter);
       } else {
         getStoreDues(screenState, screenState.filter);
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.paymentSuccessfully)
-            ;
+            title: S.current.warnning, message: S.current.paymentSuccessfully);
       }
     });
   }
@@ -44,17 +40,17 @@ class StoreDuesStateManager {
   void getStoreDues(StoreDuesScreenState screenState, StoreDuesRequest request,
       [bool loading = true]) {
     if (loading) {
-      _stateSubject.add(LoadingState(screenState));
+      stateSubject.add(LoadingState(screenState));
     }
     _storesService.getStoreDues(request).then((value) {
       if (value.hasError) {
-        _stateSubject
+        stateSubject
             .add(StoreDuesLoadedState(screenState, [], error: value.error));
       } else if (value.isEmpty) {
-        _stateSubject.add(StoreDuesLoadedState(screenState, [], empty: true));
+        stateSubject.add(StoreDuesLoadedState(screenState, [], empty: true));
       } else {
         StoreDuesModel model = value as StoreDuesModel;
-        _stateSubject.add(StoreDuesLoadedState(screenState, model.data));
+        stateSubject.add(StoreDuesLoadedState(screenState, model.data));
       }
     });
   }

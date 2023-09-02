@@ -1,9 +1,13 @@
 import 'package:c4d/consts/urls.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_captain/captains_module.dart';
+import 'package:c4d/global_nav_key.dart';
+import 'package:c4d/module_captain/ui/screen/captain_activity_model.dart';
 import 'package:c4d/module_captain/ui/screen/captain_dues_screen.dart';
+import 'package:c4d/module_captain/ui/screen/captain_needs_support_screen.dart';
+import 'package:c4d/module_captain/ui/screen/captain_rating_screen.dart';
 import 'package:c4d/module_captain/ui/screen/captains_list_screen.dart';
+import 'package:c4d/module_captain/ui/screen/captains_offer_screen.dart';
 import 'package:c4d/module_captain/ui/screen/in_active_captains_screen.dart';
 import 'package:c4d/module_categories/categories_module.dart';
 import 'package:c4d/module_company/company_module.dart';
@@ -12,22 +16,31 @@ import 'package:c4d/module_external_delivery_companies/external_delivery_compani
 import 'package:c4d/module_external_delivery_companies/model/feature_model.dart';
 import 'package:c4d/module_external_delivery_companies/request/feature_request/feature_request.dart';
 import 'package:c4d/module_external_delivery_companies/service/external_delivery_companies_service.dart';
+import 'package:c4d/module_external_delivery_companies/ui/screen/external_delivery_companies_screen.dart';
 import 'package:c4d/module_external_delivery_companies/ui/widgets/show_confirm_dialog.dart';
 import 'package:c4d/module_notice/notice_module.dart';
-import 'package:c4d/module_orders/orders_module.dart';
+import 'package:c4d/module_orders/ui/screens/new_order/new_order_screen.dart';
+import 'package:c4d/module_orders/ui/screens/order_conflict_distance_screen.dart';
+import 'package:c4d/module_orders/ui/screens/order_pending_screen.dart';
+import 'package:c4d/module_orders/ui/screens/orders_receive_cash_screen.dart';
 import 'package:c4d/module_orders/ui/screens/orders_without_distance_screen.dart';
-import 'package:c4d/module_payments/payments_module.dart';
+import 'package:c4d/module_payments/ui/screen/captain_finance_by_hours_screen.dart';
+import 'package:c4d/module_payments/ui/screen/captain_finance_by_order_count_screen.dart';
+import 'package:c4d/module_payments/ui/screen/captain_finance_by_order_screen.dart';
 import 'package:c4d/module_settings/settings_module.dart';
 import 'package:c4d/module_statistics/ui/screen/statistics_screen.dart';
-import 'package:c4d/module_stores/stores_module.dart';
+import 'package:c4d/module_stores/ui/screen/order/order_captain_not_arrived.dart';
+import 'package:c4d/module_stores/ui/screen/stores_dues/stores_dues_screen.dart';
+import 'package:c4d/module_stores/ui/screen/stores_inactive_screen.dart';
+import 'package:c4d/module_stores/ui/screen/stores_needs_support_screen.dart';
 import 'package:c4d/module_stores/ui/screen/stores_screen.dart';
+import 'package:c4d/module_stores/ui/screen/top_active_store_screen.dart';
 import 'package:c4d/module_supplier/supplier_module.dart';
 import 'package:c4d/module_supplier_categories/categories_supplier_module.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/images/images.dart';
 import 'package:flutter/material.dart';
-import 'package:c4d/global_nav_key.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class NavigatorMenu extends StatefulWidget {
@@ -125,10 +138,10 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.orders,
                 icon: FontAwesomeIcons.boxes,
                 children: [
-                  customListTile(getIt<OrdersModule>().pendingScreen,
+                  customListTile(OrderPendingScreen(),
                       S.current.orderedNotAccepted, FontAwesomeIcons.box, true),
-                  customListTile(getIt<OrdersModule>().newOrderScreen,
-                      S.current.newOrder, Icons.add_rounded, true)
+                  customListTile(NewOrderScreen(), S.current.newOrder,
+                      Icons.add_rounded, true)
                 ],
                 page: widget.currentPage),
 
@@ -143,26 +156,35 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       Icons.edit_road_rounded,
                       true),
                   customListTile(
-                      getIt<OrdersModule>().orderDistanceConflictScreen,
+                      OrderDistanceConflictScreen(),
                       S.current.orderConflictDistances,
                       Icons.edit_road_rounded,
                       true),
                   customListTile(
-                      getIt<StoresModule>().captainNotArrivedScreen,
+                      OrderCaptainNotArrivedScreen(),
                       S.current.captainNotArrived,
                       Icons.storefront_rounded,
                       true),
-                  customListTile(getIt<OrdersModule>().ordersReceiveCashScreen,
+                  customListTile(OrdersReceiveCashScreen(),
                       S.current.ordersCash, Icons.payments_rounded, true),
-                  customListTile(getIt<CaptainsModule>().captainsRatingsScreen,
-                      S.current.captainsRating, Icons.star_rounded, true),
                   customListTile(
-                      getIt<CaptainsModule>().captainsActivityScreen,
-                      S.current.captainActivity,
-                      Icons.show_chart_rounded,
-                      true),
-                  customListTile(getIt<StoresModule>().topActiveStoreScreen,
-                      S.current.topstoreActivity, FontAwesomeIcons.store, true),
+                    CaptainsRatingScreen(),
+                    S.current.captainsRating,
+                    Icons.star_rounded,
+                    true,
+                  ),
+                  customListTile(
+                    CaptainsActivityScreen(),
+                    S.current.captainActivity,
+                    Icons.show_chart_rounded,
+                    true,
+                  ),
+                  customListTile(
+                    TopActiveStoreScreen(),
+                    S.current.topstoreActivity,
+                    FontAwesomeIcons.store,
+                    true,
+                  ),
                 ],
                 page: widget.currentPage),
 
@@ -188,7 +210,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                   customListTile(StoresScreen(), S.current.storesList,
                       Icons.storefront_rounded, true),
                   customListTile(
-                      getIt<StoresModule>().storesInActiveScreen,
+                      StoresInActiveScreen(),
                       S.current.storesInActive,
                       FontAwesomeIcons.storeSlash,
                       true),
@@ -248,8 +270,7 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                     ),
                   ),
                   customListTile(
-                      getIt<ExternalDeliveryCompaniesModule>()
-                          .externalDeliveryCompaniesScreen,
+                      ExternalDeliveryCompaniesScreen(),
                       S.current.deliveryCompanies,
                       FontAwesomeIcons.box,
                       true),
@@ -260,9 +281,13 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.directSupport,
                 icon: FontAwesomeIcons.headphonesAlt,
                 children: [
-                  customListTile(getIt<StoresModule>().supportScreen,
-                      S.current.stores, Icons.storefront_rounded, true),
-                  customListTile(getIt<CaptainsModule>().supportScreen,
+                  customListTile(
+                    StoresNeedsSupportScreen(),
+                    S.current.stores,
+                    Icons.storefront_rounded,
+                    true,
+                  ),
+                  customListTile(CaptainsNeedsSupportScreen(),
                       S.current.captains, FontAwesomeIcons.car, true),
                   Visibility(
                     visible: false,
@@ -280,23 +305,23 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 icon: Icons.backpack_outlined,
                 children: [
                   customListTile(
-                      getIt<CategoriesModule>().packageCategoriesScreen,
-                      S.current.categories,
-                      Icons.category,
-                      true),
-//                  customListTile(getIt<CategoriesModule>().subCategoriesScreen,
-//                      S.current.subCategories, FontAwesomeIcons.square, true),
+                    getIt<CategoriesModule>().packageCategoriesScreen,
+                    S.current.categories,
+                    Icons.category,
+                    true,
+                  ),
                   customListTile(
-                      getIt<CategoriesModule>().packagesScreen,
-                      S.current.packages,
-                      FontAwesomeIcons.wolfPackBattalion,
-                      true),
-
+                    getIt<CategoriesModule>().packagesScreen,
+                    S.current.packages,
+                    FontAwesomeIcons.wolfPackBattalion,
+                    true,
+                  ),
                   customListTile(
-                      getIt<CaptainsModule>().captainOffersScreen,
-                      S.current.captainsOffer,
-                      FontAwesomeIcons.solidListAlt,
-                      true),
+                    CaptainOffersScreen(),
+                    S.current.captainsOffer,
+                    FontAwesomeIcons.solidListAlt,
+                    true,
+                  ),
                 ],
                 page: widget.currentPage),
             // captain finance
@@ -304,14 +329,11 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.captainFinance,
                 icon: Icons.account_balance_rounded,
                 children: [
-                  customListTile(getIt<PaymentsModule>().financeByHoursScreen,
+                  customListTile(CaptainFinanceByHoursScreen(),
                       S.current.financeByHours, FontAwesomeIcons.clock, true),
-                  customListTile(
-                      getIt<PaymentsModule>().financeByCountOrderScreen,
-                      S.current.financeByOrders,
-                      FontAwesomeIcons.boxes,
-                      true),
-                  customListTile(getIt<PaymentsModule>().financeByOrderScreen,
+                  customListTile(CaptainFinanceByCountOrderScreen(),
+                      S.current.financeByOrders, FontAwesomeIcons.boxes, true),
+                  customListTile(CaptainFinanceByOrderScreen(),
                       S.current.financeCountOrder, FontAwesomeIcons.box, true),
                 ],
                 page: widget.currentPage),
@@ -320,13 +342,18 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 title: S.current.duesPayments,
                 icon: FontAwesomeIcons.moneyBillTransfer,
                 children: [
-                  customListTile(CaptainDuesScreen(), S.current.captainDues,
-                      FontAwesomeIcons.moneyBills, true),
                   customListTile(
-                      getIt<StoresModule>().storesDuesScreen,
-                      S.current.storesCashRequest,
-                      FontAwesomeIcons.moneyBills,
-                      true),
+                    CaptainDuesScreen(),
+                    S.current.captainDues,
+                    FontAwesomeIcons.moneyBills,
+                    true,
+                  ),
+                  customListTile(
+                    StoresDuesScreen(),
+                    S.current.storesCashRequest,
+                    FontAwesomeIcons.moneyBills,
+                    true,
+                  ),
                 ],
                 page: widget.currentPage),
 

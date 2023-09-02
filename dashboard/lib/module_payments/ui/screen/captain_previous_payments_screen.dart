@@ -2,18 +2,15 @@ import 'dart:async';
 
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_payments/request/add_payment_to_captain_request.dart';
 import 'package:c4d/module_payments/request/captain_payments_request.dart';
 import 'package:c4d/module_payments/request/captain_previous_payments_request.dart';
 import 'package:c4d/module_payments/state_manager/captain_previous_payments.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class CaptainPreviousPaymentsScreen extends StatefulWidget {
-  final CaptainPreviousPaymentsStateManager _stateManager;
-
-  const CaptainPreviousPaymentsScreen(this._stateManager);
+  const CaptainPreviousPaymentsScreen();
 
   @override
   State<CaptainPreviousPaymentsScreen> createState() =>
@@ -24,6 +21,8 @@ class CaptainPreviousPaymentsScreenState
     extends State<CaptainPreviousPaymentsScreen> {
   late States _currentState;
   late StreamSubscription _streamSubscription;
+  late CaptainPreviousPaymentsStateManager _stateManager;
+
   late int captainId;
   late int captainFinancialDuesId;
   late CaptainPreviousPaymentRequest filter;
@@ -31,8 +30,8 @@ class CaptainPreviousPaymentsScreenState
   @override
   void initState() {
     _currentState = LoadingState(this);
-
-    _streamSubscription = widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _streamSubscription = _stateManager.stateStream.listen((event) {
       _currentState = event;
       if (mounted) {
         setState(() {});
@@ -43,7 +42,7 @@ class CaptainPreviousPaymentsScreenState
 
   void filterCaptainPayment(CaptainPreviousPaymentRequest request) {
     request.copyWith(captainId: captainId);
-    widget._stateManager.filterCaptainPayment(
+    _stateManager.filterCaptainPayment(
       this,
       request,
     );
@@ -60,12 +59,13 @@ class CaptainPreviousPaymentsScreenState
           : PaymentGetaway.manual,
       paymentType: PaymentType.realPaymentByAdmin,
     );
-    widget._stateManager.addPayment(this, actualRequest, filter);
+    _stateManager.addPayment(this, actualRequest, filter);
   }
 
   @override
   void dispose() {
     _streamSubscription.cancel();
+    _stateManager.dispose();
     super.dispose();
   }
 

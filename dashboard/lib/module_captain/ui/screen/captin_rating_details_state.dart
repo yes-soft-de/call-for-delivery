@@ -1,41 +1,51 @@
+import 'dart:async';
+
+import 'package:c4d/di/di_config.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
 import '../../../abstracts/states/loading_state.dart';
 import '../../../abstracts/states/state.dart';
 import '../../../generated/l10n.dart';
 import '../../../utils/components/custom_app_bar.dart';
-import '../../state_manager/captin_rating_details_state_manager.dart';
+import '../../state_manager/caption_rating_details_state_manager.dart';
 
-@injectable
-class CaptinRatingDetailsScreen extends StatefulWidget {
-  final CaptinRatingDetailsStateManager _stateManager;
-
-  CaptinRatingDetailsScreen(this._stateManager);
+class CaptainRatingDetailsScreen extends StatefulWidget {
+  CaptainRatingDetailsScreen();
 
   @override
-  CaptinRatingDetailsScreenState createState() =>
-      CaptinRatingDetailsScreenState();
+  CaptainRatingDetailsScreenState createState() =>
+      CaptainRatingDetailsScreenState();
 }
 
-class CaptinRatingDetailsScreenState extends State<CaptinRatingDetailsScreen> {
+class CaptainRatingDetailsScreenState
+    extends State<CaptainRatingDetailsScreen> {
   late States currentState;
-  // StreamSubscription? global;
+  late CaptainRatingDetailsStateManager _stateManager;
+  late StreamSubscription _streamSubscription;
+
   @override
   void initState() {
     currentState = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _streamSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       refresh();
     });
     super.initState();
   }
 
-  void getCaptainRating() {
-    widget._stateManager.getCaptinRatingDetails(this, captainId);
+  @override
+  void dispose() {
+    _streamSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
   }
 
-  CaptinRatingDetailsStateManager get stateManager => widget._stateManager;
+  void getCaptainRating() {
+    _stateManager.getCaptainRatingDetails(this, captainId);
+  }
+
+  CaptainRatingDetailsStateManager get stateManager => _stateManager;
   void refresh() {
     if (mounted) {
       setState(() {});
@@ -51,7 +61,7 @@ class CaptinRatingDetailsScreenState extends State<CaptinRatingDetailsScreen> {
       var arg = ModalRoute.of(context)?.settings.arguments;
       if (arg != null && arg is int) {
         captainId = arg;
-        widget._stateManager.getCaptinRatingDetails(this, captainId);
+        _stateManager.getCaptainRatingDetails(this, captainId);
       }
     }
     return Scaffold(

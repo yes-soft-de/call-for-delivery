@@ -1,8 +1,7 @@
-import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_captain/ui/screen/captains_list_screen.dart';
 import 'package:c4d/module_captain/ui/screen/in_active_captains_screen.dart';
-import 'package:c4d/module_orders/orders_module.dart';
-import 'package:c4d/module_stores/stores_module.dart';
+import 'package:c4d/module_orders/ui/screens/order_pending_screen.dart';
+import 'package:c4d/module_stores/ui/screen/stores_inactive_screen.dart';
 import 'package:c4d/module_stores/ui/screen/stores_screen.dart';
 import 'package:injectable/injectable.dart';
 import 'package:rxdart/rxdart.dart';
@@ -18,7 +17,7 @@ class GlobalStateManager {
   }
 
   void goToNonDeliveredOrder() {
-    _stateSubject.add(getIt<OrdersModule>().pendingScreen);
+    _stateSubject.add(OrderPendingScreen());
   }
 
   void goToCaptains() {
@@ -34,6 +33,6 @@ class GlobalStateManager {
   }
 
   void goToInActiveStores() {
-    _stateSubject.add(getIt<StoresModule>().storesInActiveScreen);
+    _stateSubject.add(StoresInActiveScreen());
   }
 }

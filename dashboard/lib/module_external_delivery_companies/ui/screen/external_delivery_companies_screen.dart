@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_external_delivery_companies/request/company_request/create_new_delivery_company_request.dart';
@@ -11,13 +12,9 @@ import 'package:c4d/module_external_delivery_companies/request/company_request/u
 import 'package:c4d/module_external_delivery_companies/state_manager/external_delivery_companies_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class ExternalDeliveryCompaniesScreen extends StatefulWidget {
-  final ExternalDeliveryCompaniesStateManager _stateManager;
-
-  const ExternalDeliveryCompaniesScreen(this._stateManager);
+  const ExternalDeliveryCompaniesScreen();
 
   @override
   State<ExternalDeliveryCompaniesScreen> createState() =>
@@ -27,14 +24,17 @@ class ExternalDeliveryCompaniesScreen extends StatefulWidget {
 class ExternalDeliveryCompaniesScreenState
     extends State<ExternalDeliveryCompaniesScreen> {
   late States currentState;
+  late ExternalDeliveryCompaniesStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  StreamSubscription? _stateSubscription;
 
   @override
   void initState() {
     super.initState();
     currentState = LoadingState(this);
-    _stateSubscription = widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -44,23 +44,23 @@ class ExternalDeliveryCompaniesScreenState
   }
 
   getExternalCompanies() {
-    widget._stateManager.getExternalCompanies(this);
+    _stateManager.getExternalCompanies(this);
   }
 
   updateCompany(UpdateDeliveryCompanyRequest request) {
-    widget._stateManager.updateCompany(this, request);
+    _stateManager.updateCompany(this, request);
   }
 
   createNewCompany(CreateNewDeliveryCompanyRequest request) {
-    widget._stateManager.createNewCompany(this, request);
+    _stateManager.createNewCompany(this, request);
   }
 
   deleteCompany(DeleteDeliveryCompanyRequest request) {
-    widget._stateManager.deleteCompany(this, request);
+    _stateManager.deleteCompany(this, request);
   }
 
   updateCompanyStatus(UpdateDeliveryCompanyStatusRequest request) {
-    widget._stateManager.updateCompanyStatus(this, request);
+    _stateManager.updateCompanyStatus(this, request);
   }
 
   void refresh() {
@@ -69,7 +69,8 @@ class ExternalDeliveryCompaniesScreenState
 
   @override
   void dispose() {
-    _stateSubscription?.cancel();
+    _stateSubscription.cancel();
+    _stateManager.dispose();
     super.dispose();
   }
 

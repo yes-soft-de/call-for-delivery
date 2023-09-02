@@ -1,26 +1,25 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
+import 'package:c4d/abstracts/states/loading_state.dart';
+import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/model/store_setting_model.dart';
 import 'package:c4d/module_stores/request/create_store_request.dart';
 import 'package:c4d/module_stores/request/edit_store_setting_request.dart';
 import 'package:c4d/module_stores/request/welcome_package_payment_request.dart';
+import 'package:c4d/module_stores/service/store_service.dart';
 import 'package:c4d/module_stores/ui/screen/edit_store_setting_screen.dart';
 import 'package:c4d/module_stores/ui/state/edit_store_setting_state_loaded.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:c4d/abstracts/states/loading_state.dart';
-import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/module_stores/service/store_service.dart';
 
 @injectable
-class EditStoreSettingStateManager {
+class EditStoreSettingStateManager extends StateManagerHandler {
   final StoresService _storesService;
   final ImageUploadService _uploadService;
-  final PublishSubject<States> _stateSubject = PublishSubject();
 
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
 
   EditStoreSettingStateManager(this._storesService, this._uploadService);
 
@@ -28,7 +27,7 @@ class EditStoreSettingStateManager {
       WelcomePackagePaymentRequest request, int storeID,
       [bool loading = true]) {
     if (loading) {
-      _stateSubject.add(LoadingState(screenState));
+      stateSubject.add(LoadingState(screenState));
     }
     _storesService.updateWelcomePackageWithoutPayment(request).then((value) {
       if (value.hasError) {
@@ -111,14 +110,14 @@ class EditStoreSettingStateManager {
   void getStoreSetting(EditStoreSettingScreenState screenState,
       [bool loading = true]) {
     if (loading) {
-      _stateSubject.add(LoadingState(screenState));
+      stateSubject.add(LoadingState(screenState));
     }
 
     _storesService.getStoreSetting(screenState.model.id).then((value) {
       if (value.hasError) {
         if (value.error == 'no setting') {
           screenState.shouldCreateNewSetting = true;
-          _stateSubject.add(EditStoreSettingStateLoaded(
+          stateSubject.add(EditStoreSettingStateLoaded(
             screenState,
             screenState.model,
             StoreSettingModel.empty(),
@@ -129,7 +128,7 @@ class EditStoreSettingStateManager {
             screenState, value.error ?? S.current.errorHappened, loading);
       } else {
         StoreSettingModel model = value as StoreSettingModel;
-        _stateSubject.add(EditStoreSettingStateLoaded(
+        stateSubject.add(EditStoreSettingStateLoaded(
           screenState,
           screenState.model,
           model.data,
