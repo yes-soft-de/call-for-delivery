@@ -1,6 +1,7 @@
 import 'package:c4d/enum/location_parsing_state_enum.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/utils/helpers/link_cleaner.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -45,9 +46,14 @@ class LocationParsing {
       waysTried++;
     }
     if (weFoundLocationData) {
-      var queryData = convertedUrlToUri?.queryParameters['q'];
-      if (queryData?.startsWith('@') == true) {
-        queryData = queryData?.substring(1);
+      String? queryData;
+      if (convertedUrlToUri.toString().contains('geo:')) {
+        queryData = convertedUrlToUri?.path;
+      } else {
+        queryData = convertedUrlToUri?.queryParameters['q'];
+        if (queryData?.startsWith('@') == true) {
+          queryData = queryData?.substring(1);
+        }
       }
       locationCallBack(LatLng(
         double.parse(queryData!.split(',')[0]),
@@ -90,6 +96,9 @@ class LocationParsing {
   bool _checkForAnyLocationData(Uri? uri) {
     try {
       String? queryData;
+      if (uri.toString().contains('geo:')) {
+        return true;
+      }
       queryData = uri?.queryParameters['q'];
       if (queryData == null) {
         return false;
