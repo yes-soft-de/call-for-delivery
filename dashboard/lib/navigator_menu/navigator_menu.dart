@@ -9,8 +9,10 @@ import 'package:c4d/module_captain/ui/screen/captain_rating_screen.dart';
 import 'package:c4d/module_captain/ui/screen/captains_list_screen.dart';
 import 'package:c4d/module_captain/ui/screen/captains_offer_screen.dart';
 import 'package:c4d/module_captain/ui/screen/in_active_captains_screen.dart';
-import 'package:c4d/module_categories/categories_module.dart';
-import 'package:c4d/module_company/company_module.dart';
+import 'package:c4d/module_categories/ui/screen/categories_screen.dart';
+import 'package:c4d/module_categories/ui/screen/packages_screen.dart';
+import 'package:c4d/module_company/ui/screen/company_finance_screen.dart';
+import 'package:c4d/module_company/ui/screen/company_profile_screen.dart';
 import 'package:c4d/module_dev/dev_module.dart';
 import 'package:c4d/module_external_delivery_companies/model/feature_model.dart';
 import 'package:c4d/module_external_delivery_companies/request/feature_request/feature_request.dart';
@@ -304,13 +306,13 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 icon: Icons.backpack_outlined,
                 children: [
                   customListTile(
-                    getIt<CategoriesModule>().packageCategoriesScreen,
+                    CategoriesScreen(),
                     S.current.categories,
                     Icons.category,
                     true,
                   ),
                   customListTile(
-                    getIt<CategoriesModule>().packagesScreen,
+                    PackagesScreen(),
                     S.current.packages,
                     FontAwesomeIcons.wolfPackBattalion,
                     true,
@@ -392,12 +394,16 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                 icon: FontAwesomeIcons.solidCopyright,
                 children: [
                   customListTile(
-                      getIt<CompanyModule>().companyFinanceScreen,
+                      CompanyFinanceScreen(),
                       S.current.companyFinance,
                       FontAwesomeIcons.moneyCheckAlt,
                       true),
-                  customListTile(getIt<CompanyModule>().companyProfileScreen,
-                      S.current.contactInfo, Icons.info, true),
+                  customListTile(
+                    CompanyProfileScreen(),
+                    S.current.contactInfo,
+                    Icons.info,
+                    true,
+                  ),
                 ],
                 page: widget.currentPage),
             // dev
