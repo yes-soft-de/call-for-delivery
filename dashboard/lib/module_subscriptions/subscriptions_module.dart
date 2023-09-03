@@ -13,48 +13,26 @@ import 'package:c4d/abstracts/module/yes_module.dart';
 
 @injectable
 class SubscriptionsModule extends YesModule {
-  final StoreSubscriptionsFinanceScreen storeSubscriptionsFinanceScreen;
-  final StoreSubscriptionsFinanceDetailsScreen
-      storeSubscriptionsFinanceDetailsScreen;
-  final SubscriptionManagementScreen subscriptionManagementScreen;
-  final StoreSubscriptionsExpiredFinanceScreen
-      subscriptionsExpiredFinanceScreen;
-  final CreateSubscriptionScreen initSubscriptionScreen;
-  final CreateSubscriptionToCaptainOfferScreen
-      createSubscriptionToCaptainOfferScreen;
-  final EditSubscriptionScreen editSubscriptionScreen;
-  final ReceiptsScreen receiptsScreen;
-
-  SubscriptionsModule(
-    this.storeSubscriptionsFinanceDetailsScreen,
-    this.storeSubscriptionsFinanceScreen,
-    this.subscriptionManagementScreen,
-    this.subscriptionsExpiredFinanceScreen,
-    this.initSubscriptionScreen,
-    this.createSubscriptionToCaptainOfferScreen,
-    this.editSubscriptionScreen,
-    this.receiptsScreen,
-  ) {
+  SubscriptionsModule() {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
     return {
       SubscriptionsRoutes.SUBSCRIPTIONS_DUES_SCREEN: (context) =>
-          storeSubscriptionsFinanceScreen,
+          StoreSubscriptionsFinanceScreen(),
       SubscriptionsRoutes.SUBSCRIPTIONS_DUES_DETAILS_SCREEN: (context) =>
-          storeSubscriptionsFinanceDetailsScreen,
+          StoreSubscriptionsFinanceDetailsScreen(),
       SubscriptionsRoutes.SUBSCRIPTIONS_MANAGEMENT: (context) =>
-          subscriptionManagementScreen,
+          SubscriptionManagementScreen(),
       SubscriptionsRoutes.SUBSCRIPTIONS_EXPIRED_DUES_SCREEN: (context) =>
-          subscriptionsExpiredFinanceScreen,
+          StoreSubscriptionsExpiredFinanceScreen(),
       SubscriptionsRoutes.CREATE_NEW_SUBSCRIPTION_SCREEN: (context) =>
-          initSubscriptionScreen,
+          CreateSubscriptionScreen(),
       SubscriptionsRoutes.EDIT_SUBSCRIPTION_SCREEN: (context) =>
-          editSubscriptionScreen,
+          EditSubscriptionScreen(),
       SubscriptionsRoutes.CREATE_NEW_SUBSCRIPTION_TO_CAPTAIN_OFFER_SCREEN:
-          (context) => createSubscriptionToCaptainOfferScreen,
-      SubscriptionsRoutes.RECEIPTS_SCREEN: (context) =>
-          receiptsScreen,
+          (context) => CreateSubscriptionToCaptainOfferScreen(),
+      SubscriptionsRoutes.RECEIPTS_SCREEN: (context) => ReceiptsScreen(),
     };
   }
 }

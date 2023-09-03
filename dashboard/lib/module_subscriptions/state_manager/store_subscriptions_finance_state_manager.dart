@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -7,12 +8,10 @@ import 'package:c4d/module_subscriptions/model/store_subscriptions_financial.dar
 import 'package:c4d/module_subscriptions/service/subscriptions_service.dart';
 import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_screen.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 import '../ui/state/subscriptions_finance/store_subscriptions_state.dart';
 
 @injectable
-class StoreSubscriptionsFinanceStateManager {
-  final stateSubject = PublishSubject<States>();
+class StoreSubscriptionsFinanceStateManager extends StateManagerHandler {
   final SubscriptionsService _serviceService;
 
   StoreSubscriptionsFinanceStateManager(this._serviceService);

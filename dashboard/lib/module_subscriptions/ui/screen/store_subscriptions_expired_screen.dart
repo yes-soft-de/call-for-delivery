@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
@@ -6,13 +8,9 @@ import 'package:c4d/module_subscriptions/state_manager/store_subscriptions_expir
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class StoreSubscriptionsExpiredFinanceScreen extends StatefulWidget {
-  final StoreSubscriptionsExpiredFinanceStateManager _manager;
-
-  const StoreSubscriptionsExpiredFinanceScreen(this._manager);
+  const StoreSubscriptionsExpiredFinanceScreen();
 
   @override
   State<StatefulWidget> createState() =>
@@ -21,22 +19,33 @@ class StoreSubscriptionsExpiredFinanceScreen extends StatefulWidget {
 
 class StoreSubscriptionsExpiredFinanceScreenState
     extends State<StoreSubscriptionsExpiredFinanceScreen> {
-  States? _currentState;
+  late States _currentState;
+  late StoreSubscriptionsExpiredFinanceStateManager _stateManager;
+  late StreamSubscription _streamSubscription;
+
   String? selectedPlan;
   @override
   void initState() {
     _currentState = LoadingState(this);
-    widget._manager.stateSubject.listen((value) {
+    _stateManager = getIt();
+    _streamSubscription = _stateManager.stateStream.listen((value) {
       _currentState = value;
       if (mounted) setState(() {});
     });
     getIt<GlobalStateManager>().stateStream.listen((event) {
-      widget._manager.getAccountBalance(this, storeID);
+      _stateManager.getAccountBalance(this, storeID);
     });
     super.initState();
   }
 
-  StoreSubscriptionsExpiredFinanceStateManager get manager => widget._manager;
+  @override
+  void dispose() {
+    _streamSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
+  StoreSubscriptionsExpiredFinanceStateManager get manager => _stateManager;
   void refresh() {
     if (mounted) setState(() {});
   }
@@ -52,13 +61,13 @@ class StoreSubscriptionsExpiredFinanceScreenState
       var arg = ModalRoute.of(context)?.settings.arguments;
       if (arg != null && arg is int) {
         storeID = arg;
-        widget._manager.getAccountBalance(this, storeID);
+        _stateManager.getAccountBalance(this, storeID);
       }
     }
     return Scaffold(
       appBar:
           CustomC4dAppBar.appBar(context, title: S.current.endedSubscriptions),
-      body: _currentState?.getUI(context) ?? Container(),
+      body: _currentState.getUI(context),
     );
   }
 }
