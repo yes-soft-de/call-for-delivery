@@ -35,10 +35,7 @@ class InitAccountStateManager {
       CreateCaptainProfileRequest request, InitAccountScreenState screenState) {
     _stateSubject.add(LoadingState(screenState));
     uploadingImages(request).then((value) {
-      if (value[0] != null ||
-          value[1] != null ||
-          value[2] != null ||
-          value[3] != null) {
+      if (value[0] != null) {
         request.image = value[0];
         request.drivingLicence = value[1];
         request.mechanicLicence = value[2];
@@ -55,6 +52,19 @@ class InitAccountStateManager {
       } else {
         _stateSubject.add(InitAccountCaptainInitProfile(screenState));
         screenState.showMessage(S.current.errorUploadingImages, false);
+      }
+    });
+  }
+
+  void submitProfileWithoutPhoto(
+      CreateCaptainProfileRequest request, InitAccountScreenState screenState) {
+    _stateSubject.add(LoadingState(screenState));
+    _initAccountService.createCaptainProfile(request).then((value) {
+      if (value.hasError) {
+        _stateSubject.add(InitAccountCaptainInitProfile(screenState));
+        screenState.showMessage(value.error, false);
+      } else {
+        _stateSubject.add(InitAccountStateProfileCreated(screenState));
       }
     });
   }
