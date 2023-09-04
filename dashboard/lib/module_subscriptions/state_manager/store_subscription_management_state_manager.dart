@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -6,15 +7,12 @@ import 'package:c4d/module_subscriptions/ui/screen/subscriptions_managment_scree
 import 'package:c4d/module_subscriptions/ui/state/subscriptions_management/subscriptions_management_loaded_state.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 
 @injectable
-class StoreSubscriptionManagementStateManager {
+class StoreSubscriptionManagementStateManager extends StateManagerHandler {
   final SubscriptionsService _subscriptionService;
 
-  final PublishSubject<States> _stateSubject = PublishSubject<States>();
-
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
 
   StoreSubscriptionManagementStateManager(
     this._subscriptionService,
@@ -22,61 +20,55 @@ class StoreSubscriptionManagementStateManager {
 
   void renewPackage(
       SubscriptionManagementScreenState screenState, int storeID) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _subscriptionService.renewPackage(storeID).then((value) {
       if (value.hasError) {
-        _stateSubject.add(SubscriptionManagementStateLoaded(screenState));
+        stateSubject.add(SubscriptionManagementStateLoaded(screenState));
 
         CustomFlushBarHelper.createError(
-                title: S.current.warnning,
-                message: value.error ?? S.current.errorHappened)
-            ;
+            title: S.current.warnning,
+            message: value.error ?? S.current.errorHappened);
       } else {
-        _stateSubject.add(SubscriptionManagementStateLoaded(screenState));
+        stateSubject.add(SubscriptionManagementStateLoaded(screenState));
 
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning, message: S.current.successRenew)
-            ;
+            title: S.current.warnning, message: S.current.successRenew);
       }
     });
   }
 
   void extendPackage(
       SubscriptionManagementScreenState screenState, int storeID) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _subscriptionService.extendPackage(storeID).then((value) {
       if (value.hasError) {
-        _stateSubject.add(SubscriptionManagementStateLoaded(screenState));
+        stateSubject.add(SubscriptionManagementStateLoaded(screenState));
         CustomFlushBarHelper.createError(
-                title: S.current.warnning,
-                message: value.error ?? S.current.errorHappened)
-            ;
+            title: S.current.warnning,
+            message: value.error ?? S.current.errorHappened);
       } else {
-        _stateSubject.add(SubscriptionManagementStateLoaded(screenState));
+        stateSubject.add(SubscriptionManagementStateLoaded(screenState));
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.packageExtendedSuccessfully)
-            ;
+            title: S.current.warnning,
+            message: S.current.packageExtendedSuccessfully);
       }
     });
   }
 
   void deleteFutureSubscriptions(
       SubscriptionManagementScreenState screenState, int storeID) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _subscriptionService.deleteFutureSubscriptions(storeID).then((value) {
       if (value.hasError) {
-        _stateSubject.add(SubscriptionManagementStateLoaded(screenState));
+        stateSubject.add(SubscriptionManagementStateLoaded(screenState));
         CustomFlushBarHelper.createError(
-                title: S.current.warnning,
-                message: value.error ?? S.current.errorHappened)
-            ;
+            title: S.current.warnning,
+            message: value.error ?? S.current.errorHappened);
       } else {
-        _stateSubject.add(SubscriptionManagementStateLoaded(screenState));
+        stateSubject.add(SubscriptionManagementStateLoaded(screenState));
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.futureSubscriptionsDeletedSuccessfully)
-            ;
+            title: S.current.warnning,
+            message: S.current.futureSubscriptionsDeletedSuccessfully);
       }
     });
   }

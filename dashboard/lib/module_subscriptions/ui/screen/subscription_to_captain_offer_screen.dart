@@ -1,20 +1,15 @@
 import 'dart:async';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_categories/model/package_categories_model.dart';
 import 'package:c4d/module_subscriptions/request/store_captain_offer_request.dart';
 import 'package:c4d/module_subscriptions/state_manager/subscription_to_captain_offer_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class CreateSubscriptionToCaptainOfferScreen extends StatefulWidget {
-  final SubscriptionToCaptainOfferStateManager _stateManager;
-
-  CreateSubscriptionToCaptainOfferScreen(
-    this._stateManager,
-  );
+  CreateSubscriptionToCaptainOfferScreen();
 
   @override
   State<StatefulWidget> createState() =>
@@ -23,8 +18,10 @@ class CreateSubscriptionToCaptainOfferScreen extends StatefulWidget {
 
 class CreateSubscriptionToCaptainOfferScreenState
     extends State<CreateSubscriptionToCaptainOfferScreen> {
+  late States currentState;
+  late SubscriptionToCaptainOfferStateManager _stateManager;
   late StreamSubscription _streamSubscription;
-  States? currentState;
+
   List<PackagesCategoryModel> categories = [];
   final scaffoldKey = GlobalKey<ScaffoldState>();
   late bool canPop;
@@ -38,30 +35,31 @@ class CreateSubscriptionToCaptainOfferScreenState
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Navigator.of(context).pop();
       CustomFlushBarHelper.createSuccess(
-              title: S.current.warnning,
-              message: S.current.subscribedToOfferSuccessfully);
+          title: S.current.warnning,
+          message: S.current.subscribedToOfferSuccessfully);
     });
   }
 
   @override
   void initState() {
     canPop = Navigator.of(context).canPop();
-    _streamSubscription = widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _streamSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
       }
     });
-    widget._stateManager.getPackages(this);
+    _stateManager.getPackages(this);
     super.initState();
   }
 
   void subscribeToPackage(StoreSubscribeToCaptainOfferRequest request) {
-    widget._stateManager.subscribePackage(this, request);
+    _stateManager.subscribePackage(this, request);
   }
 
   void getPackages(int selectedCategories) {
-    widget._stateManager.getPackages(this);
+    _stateManager.getPackages(this);
   }
 
   int storeID = -1;
@@ -75,13 +73,14 @@ class CreateSubscriptionToCaptainOfferScreenState
     }
     return Scaffold(
       key: scaffoldKey,
-      body: currentState == null ? SizedBox() : currentState?.getUI(context),
+      body: currentState.getUI(context),
     );
   }
 
   @override
   void dispose() {
     _streamSubscription.cancel();
+    _stateManager.dispose();
     super.dispose();
   }
 }

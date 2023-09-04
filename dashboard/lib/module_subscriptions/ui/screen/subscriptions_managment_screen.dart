@@ -1,16 +1,16 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/model/store_profile_model.dart';
 import 'package:c4d/module_subscriptions/state_manager/store_subscription_management_state_manager.dart';
 import 'package:c4d/module_subscriptions/ui/state/subscriptions_management/subscriptions_management_loaded_state.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class SubscriptionManagementScreen extends StatefulWidget {
-  final StoreSubscriptionManagementStateManager _stateManager;
-  SubscriptionManagementScreen(this._stateManager);
+  SubscriptionManagementScreen();
 
   @override
   State<SubscriptionManagementScreen> createState() =>
@@ -19,13 +19,17 @@ class SubscriptionManagementScreen extends StatefulWidget {
 
 class SubscriptionManagementScreenState
     extends State<SubscriptionManagementScreen> {
+  late States currentState;
+  late StoreSubscriptionManagementStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   bool flagArgs = true;
   StoreProfileModel? profileId;
-  States? currentState;
   @override
   void initState() {
     currentState = SubscriptionManagementStateLoaded(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (this.mounted) {
         setState(() {});
@@ -34,8 +38,14 @@ class SubscriptionManagementScreenState
     super.initState();
   }
 
-  StoreSubscriptionManagementStateManager get stateManager =>
-      widget._stateManager;
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
+  StoreSubscriptionManagementStateManager get stateManager => _stateManager;
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)?.settings.arguments;
@@ -48,6 +58,6 @@ class SubscriptionManagementScreenState
     return Scaffold(
         appBar: CustomC4dAppBar.appBar(context,
             title: S.current.subscriptionManagement),
-        body: currentState?.getUI(context));
+        body: currentState.getUI(context));
   }
 }

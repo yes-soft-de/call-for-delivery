@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
@@ -10,25 +11,22 @@ import 'package:c4d/module_subscriptions/ui/screen/receipts_screen.dart';
 import 'package:c4d/module_subscriptions/ui/state/receipts/receipts_state_loaded.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 
 @injectable
-class ReceiptsStateManager {
+class ReceiptsStateManager extends StateManagerHandler {
   final SubscriptionsService _subscriptionService;
 
-  final PublishSubject<States> _stateSubject = PublishSubject<States>();
-
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
 
   ReceiptsStateManager(
     this._subscriptionService,
   );
 
   void getReceipts(ReceiptsScreenState screenState, ReceiptsRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _subscriptionService.getReceipts(request).then((value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(
+        stateSubject.add(ErrorState(
           screenState,
           onPressed: () {
             getReceipts(screenState, request);
@@ -42,7 +40,7 @@ class ReceiptsStateManager {
             message: value.error ?? S.current.errorHappened);
       } else {
         value as ReceiptsModel;
-        _stateSubject.add(ReceiptsStateLoaded(
+        stateSubject.add(ReceiptsStateLoaded(
           screenState,
           value.data,
           request,

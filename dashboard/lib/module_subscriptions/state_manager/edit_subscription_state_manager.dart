@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -13,34 +14,32 @@ import 'package:c4d/module_subscriptions/ui/screen/edit_subscription_screen.dart
 import 'package:c4d/module_subscriptions/ui/state/subscribe_to_packages/edit_subscriptions_loaded_state.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 
 @injectable
-class EditSubscriptionStateManager {
+class EditSubscriptionStateManager extends StateManagerHandler {
   final SubscriptionsService _initAccountService;
-  final PublishSubject<States> _stateSubject = PublishSubject<States>();
 
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
 
   EditSubscriptionStateManager(
     this._initAccountService,
   );
   void getCategories(EditSubscriptionScreenState screenState) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     getIt<CategoriesService>().getCategories().then((value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(screenState, onPressed: () {
+        stateSubject.add(ErrorState(screenState, onPressed: () {
           getCategories(screenState);
         }, title: S.current.storeAccountInit, error: value.error));
       } else if (value.isEmpty) {
-        _stateSubject.add(EmptyState(screenState, onPressed: () {
+        stateSubject.add(EmptyState(screenState, onPressed: () {
           getCategories(screenState);
         },
             title: S.current.storeAccountInit,
             emptyMessage: S.current.homeDataEmpty));
       } else {
         value as PackagesCategoryModel;
-        _stateSubject
+        stateSubject
             .add(EditSubscriptionsLoadedState(screenState, value.data, []));
       }
     });
@@ -49,18 +48,18 @@ class EditSubscriptionStateManager {
   void getPackages(EditSubscriptionScreenState screenState, int id) {
     getIt<CategoriesService>().getPackagesByCategory(id).then((value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(screenState, onPressed: () {
+        stateSubject.add(ErrorState(screenState, onPressed: () {
           getPackages(screenState, id);
         }, title: S.current.storeAccountInit, error: value.error));
       } else if (value.isEmpty) {
-        _stateSubject.add(EmptyState(screenState, onPressed: () {
+        stateSubject.add(EmptyState(screenState, onPressed: () {
           getPackages(screenState, id);
         },
             title: S.current.storeAccountInit,
             emptyMessage: S.current.homeDataEmpty));
       } else {
         value as PackagesModel;
-        _stateSubject.add(EditSubscriptionsLoadedState(
+        stateSubject.add(EditSubscriptionsLoadedState(
             screenState, screenState.categories, value.data));
       }
     });
@@ -68,14 +67,13 @@ class EditSubscriptionStateManager {
 
   void subscribePackage(EditSubscriptionScreenState screenState,
       EditStoreSubscribeToPackageRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _initAccountService.editSubscribePackage(request).then((value) {
       if (value.hasError) {
         getCategories(screenState);
         CustomFlushBarHelper.createError(
-                title: S.current.warnning,
-                message: value.error ?? S.current.errorHappened)
-            ;
+            title: S.current.warnning,
+            message: value.error ?? S.current.errorHappened);
       } else {
         screenState.moveNext();
       }

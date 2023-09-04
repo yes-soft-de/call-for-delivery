@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -12,14 +13,12 @@ import 'package:c4d/module_subscriptions/ui/screen/subscription_to_captain_offer
 import 'package:c4d/module_subscriptions/ui/state/subscribe_to_captain_offer/subscribe_to_captain_offer_loaded_state.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 
 @injectable
-class SubscriptionToCaptainOfferStateManager {
+class SubscriptionToCaptainOfferStateManager extends StateManagerHandler {
   final SubscriptionsService _initAccountService;
-  final PublishSubject<States> _stateSubject = PublishSubject<States>();
 
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
 
   SubscriptionToCaptainOfferStateManager(
     this._initAccountService,
@@ -29,18 +28,18 @@ class SubscriptionToCaptainOfferStateManager {
   ) {
     getIt<CaptainsService>().getCaptainOffer().then((value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(screenState, onPressed: () {
+        stateSubject.add(ErrorState(screenState, onPressed: () {
           getPackages(screenState);
         }, title: S.current.captainOffer, error: value.error));
       } else if (value.isEmpty) {
-        _stateSubject.add(EmptyState(screenState, onPressed: () {
+        stateSubject.add(EmptyState(screenState, onPressed: () {
           getPackages(screenState);
         },
             title: S.current.captainOffer,
             emptyMessage: S.current.homeDataEmpty));
       } else {
         value as CaptainsOffersModel;
-        _stateSubject
+        stateSubject
             .add(SubscribeToCaptainOfferLoadedState(screenState, value.data));
       }
     });
@@ -48,14 +47,13 @@ class SubscriptionToCaptainOfferStateManager {
 
   void subscribePackage(CreateSubscriptionToCaptainOfferScreenState screenState,
       StoreSubscribeToCaptainOfferRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _initAccountService.subscribeToCaptainOffer(request).then((value) {
       if (value.hasError) {
         getPackages(screenState);
         CustomFlushBarHelper.createError(
-                title: S.current.warnning,
-                message: value.error ?? S.current.errorHappened)
-            ;
+            title: S.current.warnning,
+            message: value.error ?? S.current.errorHappened);
       } else {
         screenState.moveNext();
       }
