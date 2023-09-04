@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_stores/model/store_profile_model.dart';
 import 'package:c4d/module_stores/request/create_store_request.dart';
@@ -8,21 +11,20 @@ import 'package:c4d/module_stores/request/welcome_package_payment_request.dart';
 import 'package:c4d/module_stores/state_manager/edit_store_setting_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class EditStoreSettingScreen extends StatefulWidget {
-  final EditStoreSettingStateManager stateManager;
-
-  EditStoreSettingScreen(this.stateManager);
+  EditStoreSettingScreen();
 
   @override
   State<EditStoreSettingScreen> createState() => EditStoreSettingScreenState();
 }
 
 class EditStoreSettingScreenState extends State<EditStoreSettingScreen> {
-  bool flag = true;
   late States currentState;
+  late EditStoreSettingStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
+  bool flag = true;
   late StoreProfileModel model;
   int currentIndex = 0;
   bool refreshThePreviousScreen = false;
@@ -31,7 +33,8 @@ class EditStoreSettingScreenState extends State<EditStoreSettingScreen> {
   @override
   void initState() {
     currentState = LoadingState(this);
-    widget.stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -40,8 +43,15 @@ class EditStoreSettingScreenState extends State<EditStoreSettingScreen> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
   void updateStore(UpdateStoreRequest request, bool haveImage) {
-    widget.stateManager.updateStore(this, request, haveImage);
+    _stateManager.updateStore(this, request, haveImage);
   }
 
   void refresh() {
@@ -52,16 +62,15 @@ class EditStoreSettingScreenState extends State<EditStoreSettingScreen> {
     WelcomePackagePaymentRequest request, [
     bool loading = false,
   ]) {
-    widget.stateManager
-        .updateWelcomePackagePayment(this, request, model.id, loading);
+    _stateManager.updateWelcomePackagePayment(this, request, model.id, loading);
   }
 
   void createSubscriptionWithWelcomePackage() {
-    widget.stateManager.createSubscriptionWithWelcomePackage(this, model.id);
+    _stateManager.createSubscriptionWithWelcomePackage(this, model.id);
   }
 
   void createOrUpdateStoreSetting(EditStoreSettingRequest request) {
-    widget.stateManager.createOrEditStoreSetting(this, request);
+    _stateManager.createOrEditStoreSetting(this, request);
   }
 
   @override
@@ -71,7 +80,7 @@ class EditStoreSettingScreenState extends State<EditStoreSettingScreen> {
       if (args.length > 0) {
         model = args[0] as StoreProfileModel;
         flag = false;
-        widget.stateManager.getStoreSetting(this);
+        _stateManager.getStoreSetting(this);
       }
       currentState = LoadingState(this);
     }

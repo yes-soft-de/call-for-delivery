@@ -1,23 +1,22 @@
+import 'dart:async';
+
+import 'package:c4d/abstracts/states/loading_state.dart';
+import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
+import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_categories/model/package_categories_model.dart';
 import 'package:c4d/module_categories/request/active_package_request.dart';
 import 'package:c4d/module_categories/request/package_request.dart';
+import 'package:c4d/module_categories/state_manager/packages_state_manager.dart';
 import 'package:c4d/module_categories/ui/widget/package_form.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/floated_button.dart';
 import 'package:c4d/utils/effect/hidder.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
-import 'package:c4d/abstracts/states/loading_state.dart';
-import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_categories/state_manager/packages_state_manager.dart';
 
-@injectable
 class PackagesScreen extends StatefulWidget {
-  final PackagesStateManager _stateManager;
-
-  PackagesScreen(this._stateManager);
+  PackagesScreen();
 
   @override
   PackagesScreenState createState() => PackagesScreenState();
@@ -25,6 +24,9 @@ class PackagesScreen extends StatefulWidget {
 
 class PackagesScreenState extends State<PackagesScreen> {
   late States currentState;
+  late PackagesStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   bool canAddPackage = false;
 
   String? id;
@@ -32,32 +34,40 @@ class PackagesScreenState extends State<PackagesScreen> {
   @override
   void initState() {
     currentState = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       refresh();
     });
-    widget._stateManager.getCategories(this);
+    _stateManager.getCategories(this);
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
   void getCategories() {
-    widget._stateManager.getCategories(this);
+    _stateManager.getCategories(this);
   }
 
   void getPackagesCategories(int id, List<PackagesCategoryModel> categories) {
-    widget._stateManager.getPackagesByCategory(this, id, categories);
+    _stateManager.getPackagesByCategory(this, id, categories);
   }
 
   void createPackage(PackageRequest request) {
-    widget._stateManager.createPackage(this, request);
+    _stateManager.createPackage(this, request);
   }
 
   void updatePakage(PackageRequest request) {
-    widget._stateManager.updatePackage(this, request);
+    _stateManager.updatePackage(this, request);
   }
 
   void enablePackage(ActivePackageRequest request, bool loading) {
-    widget._stateManager.enablePackage(this, request, loading);
+    _stateManager.enablePackage(this, request, loading);
   }
 
   void refresh() {

@@ -1,22 +1,22 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
+import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_captain/request/captain_offer_request.dart';
 import 'package:c4d/module_captain/request/enable_offer.dart';
 import 'package:c4d/module_captain/state_manager/captain_offer_state_manager.dart';
-import '../widget/offer/captain_offer_form.dart';
-import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
-import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/floated_button.dart';
 import 'package:c4d/utils/effect/hidder.dart';
+import 'package:flutter/material.dart';
 
-@injectable
+import '../widget/offer/captain_offer_form.dart';
+
 class CaptainOffersScreen extends StatefulWidget {
-  final CaptainOfferStateManager _stateManager;
-
-  CaptainOffersScreen(this._stateManager);
+  CaptainOffersScreen();
 
   @override
   CaptainOffersScreenState createState() => CaptainOffersScreenState();
@@ -24,36 +24,47 @@ class CaptainOffersScreen extends StatefulWidget {
 
 class CaptainOffersScreenState extends State<CaptainOffersScreen> {
   late States currentState;
+  late CaptainOfferStateManager _stateManager;
+  late StreamSubscription _streamSubscription;
+
   bool canAddCategories = true;
 
   @override
   void initState() {
     currentState = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _streamSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       refresh();
     });
-    widget._stateManager.getCaptainOffer(this);
+    _stateManager.getCaptainOffer(this);
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _streamSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
   void getCaptainOffer() {
-    widget._stateManager.getCaptainOffer(this);
+    _stateManager.getCaptainOffer(this);
   }
 
   void addCaptainOffer(CaptainOfferRequest request) {
-    widget._stateManager.addCaptainOffer(this, request);
+    _stateManager.addCaptainOffer(this, request);
   }
 
   void updateCaptainOffer(CaptainOfferRequest request) {
-    widget._stateManager.updateCaptainOffer(this, request);
+    _stateManager.updateCaptainOffer(this, request);
   }
 
   void enableCaptainOffer(EnableOfferRequest request, [bool loading = true]) {
-    widget._stateManager.enableCaptainOffer(this, request, loading);
+    _stateManager.enableCaptainOffer(this, request, loading);
   }
 //  void deleteCategories(String id) {
-//    widget._stateManager.deleteCategories(this, id);
+//    _stateManager.deleteCategories(this, id);
 //  }
 
   void refresh() {

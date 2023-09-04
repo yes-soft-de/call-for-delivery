@@ -13,20 +13,19 @@ import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:custom_info_window/custom_info_window.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class UpdateBranchScreen extends StatefulWidget {
-  final UpdateBranchStateManager _manager;
-
-  UpdateBranchScreen(this._manager);
+  UpdateBranchScreen();
 
   @override
   UpdateBranchScreenState createState() => UpdateBranchScreenState();
 }
 
 class UpdateBranchScreenState extends State<UpdateBranchScreen> {
-  States? currentState;
+  late States currentState;
+  late UpdateBranchStateManager _stateManager;
+  late StreamSubscription _streamSubscription;
+
   String? storeID = '-1';
   BranchesModel? branchesModel;
   // google map controller
@@ -37,8 +36,10 @@ class UpdateBranchScreenState extends State<UpdateBranchScreen> {
   void initState() {
     canPop = Navigator.canPop(context);
     currentState = UpdateBranchStateLoaded(this);
+    _stateManager = getIt();
+
     customInfoWindowController = CustomInfoWindowController();
-    widget._manager.stateStream.listen((event) {
+    _streamSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -47,12 +48,19 @@ class UpdateBranchScreenState extends State<UpdateBranchScreen> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _streamSubscription.cancel;
+    _stateManager.dispose();
+    super.dispose();
+  }
+
   void updateBranch(UpdateBranchesRequest request) {
-    widget._manager.updateBranch(this, request);
+    _stateManager.updateBranch(this, request);
   }
 
   void createBranch(CreateListBranchesRequest request) {
-    widget._manager.createBranch(this, request);
+    _stateManager.createBranch(this, request);
   }
 
   void moveNext(bool success) {
@@ -113,7 +121,7 @@ class UpdateBranchScreenState extends State<UpdateBranchScreen> {
               ? S.of(context).updateBranch
               : S.of(context).addBranch,
           canGoBack: canPop),
-      body: currentState?.getUI(context),
+      body: currentState.getUI(context),
     );
   }
 }

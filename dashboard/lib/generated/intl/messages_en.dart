@@ -597,6 +597,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "doYouWantToDeleteTheOrderOnlyFormAlshoroq":
             MessageLookupByLibrary.simpleMessage(
                 "do you want to delete the order only form alshoroq?"),
+        "doYouWantToDeleteTheOrderOnlyFormMarsool":
+            MessageLookupByLibrary.simpleMessage(
+                "do you want to delete the order only form Marsool?"),
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
             "Download Twaslna App on Play Store"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("Driver Licence"),
@@ -1015,6 +1018,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "orderCanceledFromAlshoroqByAdmin":
             MessageLookupByLibrary.simpleMessage(
                 "order canceled from alshoroq by admin"),
+        "orderCanceledFromMarsoolByAdmin": MessageLookupByLibrary.simpleMessage(
+            "order canceled from marsool by admin"),
         "orderCashStatus":
             MessageLookupByLibrary.simpleMessage("Order cost to store"),
         "orderCashWithCaptain":

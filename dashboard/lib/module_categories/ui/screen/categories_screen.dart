@@ -1,22 +1,21 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/module_categories/request/active_package_request.dart';
-import 'package:c4d/module_categories/request/package_category_request.dart';
-import 'package:c4d/module_categories/ui/widget/category_form.dart';
-import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
+import 'package:c4d/module_categories/request/active_package_request.dart';
+import 'package:c4d/module_categories/request/package_category_request.dart';
 import 'package:c4d/module_categories/state_manager/categories_state_manager.dart';
+import 'package:c4d/module_categories/ui/widget/category_form.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/floated_button.dart';
 import 'package:c4d/utils/effect/hidder.dart';
+import 'package:flutter/material.dart';
 
-@injectable
 class CategoriesScreen extends StatefulWidget {
-  final PackageCategoriesStateManager _stateManager;
-
-  CategoriesScreen(this._stateManager);
+  CategoriesScreen();
 
   @override
   CategoriesScreenState createState() => CategoriesScreenState();
@@ -24,37 +23,48 @@ class CategoriesScreen extends StatefulWidget {
 
 class CategoriesScreenState extends State<CategoriesScreen> {
   late States currentState;
+  late PackageCategoriesStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   bool canAddCategories = true;
 
   @override
   void initState() {
     currentState = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       refresh();
     });
-    widget._stateManager.getCategories(this);
+    _stateManager.getCategories(this);
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
   void getPackagesCategories() {
-    widget._stateManager.getCategories(this);
+    _stateManager.getCategories(this);
   }
 
   void addCategory(PackageCategoryRequest request) {
-    widget._stateManager.createCategory(this, request);
+    _stateManager.createCategory(this, request);
   }
 
   void updateCategory(PackageCategoryRequest request) {
-    widget._stateManager.updateCategory(this, request);
+    _stateManager.updateCategory(this, request);
   }
 
   void deleteCategories(String id) {
-    widget._stateManager.deleteCategories(this, id);
+    _stateManager.deleteCategories(this, id);
   }
 
   void enableCategories(ActivePackageRequest request) {
-    widget._stateManager.enableCategories(this, request);
+    _stateManager.enableCategories(this, request);
   }
 
   void refresh() {

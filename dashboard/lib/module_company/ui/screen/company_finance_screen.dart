@@ -1,18 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_company/request/create_company_profile.dart';
 import 'package:c4d/module_company/state_manager/company_financial_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:flutter/material.dart';
 
-@injectable
 class CompanyFinanceScreen extends StatefulWidget {
-  final CompanyFinanceStateManager _stateManager;
-
-  CompanyFinanceScreen(this._stateManager);
+  CompanyFinanceScreen();
 
   @override
   CompanyFinanceScreenState createState() => CompanyFinanceScreenState();
@@ -20,31 +19,42 @@ class CompanyFinanceScreen extends StatefulWidget {
 
 class CompanyFinanceScreenState extends State<CompanyFinanceScreen> {
   late States currentState;
+  late CompanyFinanceStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   bool canAddCategories = true;
 
   @override
   void initState() {
     currentState = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         refresh();
       }
     });
-    widget._stateManager.getCompanyProfile(this);
+    _stateManager.getCompanyProfile(this);
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
   void getFinance() {
-    widget._stateManager.getCompanyProfile(this);
+    _stateManager.getCompanyProfile(this);
   }
 
   void createProfile(CreateCompanyProfile request) {
-    widget._stateManager.createProfile(this, request);
+    _stateManager.createProfile(this, request);
   }
 
   void UpdateCompanyProfile(CreateCompanyProfile request) {
-    widget._stateManager.UpdateCompanyProfile(this, request);
+    _stateManager.UpdateCompanyProfile(this, request);
   }
 
   void refresh() {

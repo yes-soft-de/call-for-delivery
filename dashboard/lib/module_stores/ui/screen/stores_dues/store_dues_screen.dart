@@ -1,34 +1,36 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_payments/payments_routes.dart';
 import 'package:c4d/module_stores/request/store_dues_request.dart';
 import 'package:c4d/module_stores/state_manager/store_dues_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class StoreDuesScreen extends StatefulWidget {
-  final StoreDuesStateManager _manager;
-
-  const StoreDuesScreen(this._manager);
+  const StoreDuesScreen();
 
   @override
   State<StoreDuesScreen> createState() => StoreDuesScreenState();
 }
 
 class StoreDuesScreenState extends State<StoreDuesScreen> {
-  States? _currentState;
+  late States _currentState;
+  late StoreDuesStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
 
   late StoreDuesRequest filter;
 
-  StoreDuesStateManager get stateManager => widget._manager;
+  StoreDuesStateManager get stateManager => _stateManager;
 
   @override
   void initState() {
     _currentState = LoadingState(this);
-    widget._manager.stateStream.listen((value) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((value) {
       _currentState = value;
 
       if (mounted) setState(() {});
@@ -40,12 +42,19 @@ class StoreDuesScreenState extends State<StoreDuesScreen> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
   void refresh() {
     if (mounted) setState(() {});
   }
 
   void getStoresDues() {
-    widget._manager.getStoreDues(this, filter);
+    _stateManager.getStoreDues(this, filter);
   }
 
   String storeOwnerName = '';
@@ -62,7 +71,7 @@ class StoreDuesScreenState extends State<StoreDuesScreen> {
       flag = false;
       filter.storeOwnerProfileId = storeOwnerId;
       filter.isPaid = args[2];
-      widget._manager.getStoreDues(this, filter);
+      _stateManager.getStoreDues(this, filter);
     }
 
     return Scaffold(
@@ -141,7 +150,7 @@ class StoreDuesScreenState extends State<StoreDuesScreen> {
             ),
           ),
           Divider(height: 5, color: Theme.of(context).colorScheme.background),
-          Expanded(child: _currentState!.getUI(context)),
+          Expanded(child: _currentState.getUI(context)),
         ],
       ),
     );

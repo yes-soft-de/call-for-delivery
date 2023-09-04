@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
@@ -13,18 +14,16 @@ import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 
 @injectable
-class PlanScreenStateManager {
-  final stateSubject = PublishSubject<States>();
-  final PaymentsService _paymentsService;
+class PlanScreenStateManager extends StateManagerHandler {
+  final PaymentsService paymentsService;
 
-  PlanScreenStateManager(this._paymentsService);
+  PlanScreenStateManager(this.paymentsService);
   Stream<States> get stateStream => stateSubject.stream;
 
   void getFinanceCaptainByOrder(PlanScreenState screenState) {
-    _paymentsService.getCaptainFinanceByOrder().then((value) {
+    paymentsService.getCaptainFinanceByOrder().then((value) {
       if (value.hasError) {
         stateSubject.add(InitCaptainPlanLoadedState(screenState,
             financeByHours: null,
@@ -49,7 +48,7 @@ class PlanScreenStateManager {
   }
 
   void getFinanceCaptainByHours(PlanScreenState screenState) {
-    _paymentsService.getCaptainFinanceByHour().then((value) {
+    paymentsService.getCaptainFinanceByHour().then((value) {
       if (value.hasError) {
         stateSubject.add(InitCaptainPlanLoadedState(screenState,
             financeByHours: null,
@@ -74,7 +73,7 @@ class PlanScreenStateManager {
   }
 
   void getFinanceCaptainByOrderCount(PlanScreenState screenState) {
-    _paymentsService.getCaptainFinanceByOrderCounts().then((value) {
+    paymentsService.getCaptainFinanceByOrderCounts().then((value) {
       if (value.hasError) {
         stateSubject.add(InitCaptainPlanLoadedState(screenState,
             financeByHours: null,
@@ -111,12 +110,11 @@ class PlanScreenStateManager {
   void financeRequest(
       PlanScreenState screenState, CaptainFinanceRequest request) {
     stateSubject.add(LoadingState(screenState));
-    _paymentsService.financeRequest(request).then((value) {
+    paymentsService.financeRequest(request).then((value) {
       if (value.hasError) {
         screenState.selectedPlan = null;
         CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error ?? '')
-            ;
+            title: S.current.warnning, message: value.error ?? '');
         stateSubject.add(InitCaptainPlanLoadedState(
           screenState,
           financeByHours: null,
@@ -133,12 +131,11 @@ class PlanScreenStateManager {
   void financeCreate(
       PlanScreenState screenState, CaptainFinanceRequest request) {
     stateSubject.add(LoadingState(screenState));
-    _paymentsService.financeCreate(request).then((value) {
+    paymentsService.financeCreate(request).then((value) {
       if (value.hasError) {
         screenState.selectedPlan = null;
         CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error ?? '')
-            ;
+            title: S.current.warnning, message: value.error ?? '');
         stateSubject.add(InitCaptainPlanLoadedState(
           screenState,
           financeByHours: null,

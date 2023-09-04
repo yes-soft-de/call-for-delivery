@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
@@ -10,31 +11,29 @@ import 'package:c4d/module_notice/ui/widget/uploud_image_failed_dialog.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 
 @injectable
-class NoticeStateManager {
+class NoticeStateManager extends StateManagerHandler {
   final NoticeService _service;
 
-  final PublishSubject<States> _stateSubject = PublishSubject();
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
 
   NoticeStateManager(this._service);
 
   void getNotice(NoticeScreenState screenState) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _service.getNotice().then((value) {
       if (value.hasError) {
-        _stateSubject
+        stateSubject
             .add(NoticeLoadedState(screenState, null, error: value.error));
       } else if (value.isEmpty) {
-        _stateSubject
+        stateSubject
             .add(NoticeLoadedState(screenState, null, empty: value.isEmpty));
       } else {
         NoticeModel model = value as NoticeModel;
-        _stateSubject.add(NoticeLoadedState(screenState, model.data));
+        stateSubject.add(NoticeLoadedState(screenState, model.data));
       }
     });
   }
@@ -62,7 +61,8 @@ class NoticeStateManager {
       });
     } else {
       CustomFlushBarHelper.createError(
-          title: S.current.warnning, message: S.current.failedToUploadSomeImage);
+          title: S.current.warnning,
+          message: S.current.failedToUploadSomeImage);
 
       await showDialog(
         barrierDismissible: false,
@@ -104,7 +104,8 @@ class NoticeStateManager {
       });
     } else {
       CustomFlushBarHelper.createError(
-          title: S.current.warnning, message: S.current.failedToUploadSomeImage);
+          title: S.current.warnning,
+          message: S.current.failedToUploadSomeImage);
 
       await showDialog(
         barrierDismissible: false,

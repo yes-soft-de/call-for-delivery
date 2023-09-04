@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_external_delivery_companies/model/company_model.dart';
 import 'package:c4d/module_external_delivery_companies/model/company_setting.dart';
 import 'package:c4d/module_external_delivery_companies/request/company_criterial_request/create_company_criteria_request.dart';
@@ -10,12 +11,9 @@ import 'package:c4d/module_external_delivery_companies/state_manager/edit_delive
 import 'package:c4d/module_external_delivery_companies/ui/state/edit_delivery_company_setting_state_loaded.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class EditDeliveryCompanySettingScreen extends StatefulWidget {
-  final EditDeliveryCompanySettingScreenStateManager _stateManager;
-  const EditDeliveryCompanySettingScreen(this._stateManager);
+  const EditDeliveryCompanySettingScreen();
 
   @override
   State<EditDeliveryCompanySettingScreen> createState() =>
@@ -25,17 +23,20 @@ class EditDeliveryCompanySettingScreen extends StatefulWidget {
 class EditDeliveryCompanySettingScreenState
     extends State<EditDeliveryCompanySettingScreen> {
   late States currentState;
+  late EditDeliveryCompanySettingScreenStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   late CompanySetting companySetting;
   late CompanyModel company;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
-  StreamSubscription? _stateSubscription;
 
   @override
   void initState() {
     super.initState();
     currentState = LoadingState(this);
 
-    _stateSubscription = widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
 
       if (mounted) {
@@ -45,11 +46,11 @@ class EditDeliveryCompanySettingScreenState
   }
 
   updateCompanyCriterial(UpdateCompanyCriterialRequest request) {
-    widget._stateManager.updateCompanyCriterial(this, request);
+    _stateManager.updateCompanyCriterial(this, request);
   }
 
   createCompanyCriterial(CreateCompanyCriteria request) {
-    widget._stateManager.createCompanyCriterial(this, request);
+    _stateManager.createCompanyCriterial(this, request);
   }
 
   void refresh() {
@@ -58,7 +59,8 @@ class EditDeliveryCompanySettingScreenState
 
   @override
   void dispose() {
-    _stateSubscription?.cancel();
+    _stateSubscription.cancel();
+    _stateManager.dispose();
     super.dispose();
   }
 

@@ -11,34 +11,22 @@ import 'external_delivery_companies_routes.dart';
 
 @injectable
 class ExternalDeliveryCompaniesModule extends YesModule {
-  final ExternalDeliveryCompaniesScreen externalDeliveryCompaniesScreen;
-  final DeliveryCompanyAllSettingsScreen deliveryCompanyAllSettingsScreen;
-  final EditDeliveryCompanySettingScreen editDeliveryCompanySettingScreen;
-  final AssignOrderToExternalCompanyScreen assignOrderToExternalCompanyScreen;
-  final ExternalOrderScreen externalOrderScreen;
-
-  ExternalDeliveryCompaniesModule(
-    this.externalDeliveryCompaniesScreen,
-    this.deliveryCompanyAllSettingsScreen,
-    this.editDeliveryCompanySettingScreen,
-    this.assignOrderToExternalCompanyScreen,
-    this.externalOrderScreen,
-  ) {
+  ExternalDeliveryCompaniesModule() {
     YesModule.RoutesMap.addAll(getRoutes());
   }
 
   Map<String, WidgetBuilder> getRoutes() {
     return {
       ExternalDeliveryCompaniesRoutes.EXTERNAL_COMPANY_SCREEN: (context) =>
-          externalDeliveryCompaniesScreen,
+          ExternalDeliveryCompaniesScreen(),
       ExternalDeliveryCompaniesRoutes.Delivery_COMPANY_ALL_SETTINGS_SCREEN:
-          (context) => deliveryCompanyAllSettingsScreen,
+          (context) => DeliveryCompanyAllSettingsScreen(),
       ExternalDeliveryCompaniesRoutes.EDIT_Delivery_COMPANY_SETTINGS_SCREEN:
-          (context) => editDeliveryCompanySettingScreen,
+          (context) => EditDeliveryCompanySettingScreen(),
       ExternalDeliveryCompaniesRoutes.ASSIGN_ORDER_TO_EXTERNAL_COMPANY_SCREEN:
-          (context) => assignOrderToExternalCompanyScreen,
+          (context) => AssignOrderToExternalCompanyScreen(),
       ExternalDeliveryCompaniesRoutes.EXTERNAL_ORDERS_SCREEN: (context) =>
-          externalOrderScreen
+          ExternalOrderScreen(),
     };
   }
 }

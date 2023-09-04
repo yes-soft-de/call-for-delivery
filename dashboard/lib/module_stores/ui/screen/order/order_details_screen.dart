@@ -3,6 +3,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_orders/request/order/delete_order_from_alshoroq_request.dart';
+import 'package:c4d/module_orders/request/order/delete_order_from_marsool_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
 import 'package:c4d/module_stores/request/delete_order_request.dart';
 import 'package:c4d/module_stores/state_manager/order/order_status.state_manager.dart';
@@ -67,6 +68,12 @@ class OrderDetailsScreenState extends State<OrderDetailsScreen> {
     var request = DeleteOrderFromAlShoroqRequest(orderId: orderId);
 
     _stateManager.deleteOrderFromAlShoroq(this, request);
+  }
+
+  void deleteOrderFromMarsool() {
+    var request = DeleteOrderFromMarsoolRequest(orderId: orderId);
+
+    _stateManager.deleteOrderFromAlMarsool(this, request);
   }
 
   void deleteOrder(DeleteOrderRequest request) {

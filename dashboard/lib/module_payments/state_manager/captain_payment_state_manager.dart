@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -16,30 +17,27 @@ import 'package:c4d/module_payments/ui/state/all_amount_captains_state.dart';
 import 'package:c4d/module_payments/ui/state/captain_payment_state_loaded.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 
 @injectable
-class CaptainPaymentStateManager {
+class CaptainPaymentStateManager extends StateManagerHandler {
   final PaymentsService _profileService;
 
-  final PublishSubject<States> _stateSubject = PublishSubject<States>();
-
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
 
   CaptainPaymentStateManager(
     this._profileService,
   );
   void getAccountBalance(
       CaptainPaymentScreenState screenState, CaptainPaymentRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _profileService.getCaptainFinanceDaily(request).then((value) {
       if (value.hasError) {
-        _stateSubject
+        stateSubject
             .add(ErrorState(screenState, hasAppbar: false, onPressed: () {
           getAccountBalance(screenState, request);
         }, title: S.current.payments));
       } else if (value.isEmpty) {
-        _stateSubject
+        stateSubject
             .add(EmptyState(screenState, hasAppbar: false, onPressed: () {
           getAccountBalance(screenState, request);
         }, title: S.current.payments, emptyMessage: S.current.emptyStaff));
@@ -53,10 +51,10 @@ class CaptainPaymentStateManager {
 
   void getCaptainPaymentsDetails(
       CaptainPaymentScreenState screenState, int captainId) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _profileService.getCaptainFinance(captainId).then((value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(
+        stateSubject.add(ErrorState(
           screenState,
           onPressed: () {
             getCaptainPaymentsDetails(screenState, captainId);
@@ -65,21 +63,20 @@ class CaptainPaymentStateManager {
           hasAppbar: false,
         ));
       } else if (value.isEmpty) {
-        _stateSubject
+        stateSubject
             .add(EmptyState(screenState, hasAppbar: false, onPressed: () {
           getCaptainPaymentsDetails(screenState, captainId);
         }, title: S.current.payments, emptyMessage: S.current.emptyStaff));
       } else {
         CaptainPaymentModel _balance = value as CaptainPaymentModel;
-        _stateSubject
-            .add(CaptainPaymentStateLoaded(screenState, _balance.data));
+        stateSubject.add(CaptainPaymentStateLoaded(screenState, _balance.data));
       }
     });
   }
 
   void addPayment(
       CaptainPaymentScreenState screenState, CaptainPaymentsRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _profileService.paymentToCaptain(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
@@ -95,7 +92,7 @@ class CaptainPaymentStateManager {
 
   void updatePayments(AllAmountCaptainsScreenState screenState,
       CaptainDailyPaymentsRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _profileService.editDailyFinance(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
@@ -112,7 +109,7 @@ class CaptainPaymentStateManager {
 
   void deletePayment(AllAmountCaptainsScreenState screenState,
       CaptainDailyPaymentsRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _profileService.deleteDailyFinance(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
@@ -130,22 +127,21 @@ class CaptainPaymentStateManager {
 
   void getAllAmount(
       AllAmountCaptainsScreenState screenState, CaptainPaymentRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _profileService.getAllAmountCaptains(request).then((value) {
       if (value.hasError) {
-        _stateSubject
+        stateSubject
             .add(ErrorState(screenState, hasAppbar: false, onPressed: () {
           getAllAmount(screenState, request);
         }, title: S.current.payments));
       } else if (value.isEmpty) {
-        _stateSubject
+        stateSubject
             .add(EmptyState(screenState, hasAppbar: false, onPressed: () {
           getAllAmount(screenState, request);
         }, title: S.current.payments, emptyMessage: S.current.emptyStaff));
       } else {
         CaptainAllAmountModel model = value as CaptainAllAmountModel;
-        _stateSubject
-            .add(AllAmountCaptainsLoadedState(screenState, model.data));
+        stateSubject.add(AllAmountCaptainsLoadedState(screenState, model.data));
       }
     });
   }

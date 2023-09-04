@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
@@ -7,16 +9,12 @@ import 'package:c4d/module_stores/state_manager/order/filter_orders_top_active_s
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:intl/intl.dart';
 
-@injectable
 class OrdersTopActiveStoreScreen extends StatefulWidget {
-  final FilterOrderTopStateManager _stateManager;
-
-  OrdersTopActiveStoreScreen(this._stateManager);
+  OrdersTopActiveStoreScreen();
 
   @override
   OrdersTopActiveStoreScreenState createState() =>
@@ -26,6 +24,9 @@ class OrdersTopActiveStoreScreen extends StatefulWidget {
 class OrdersTopActiveStoreScreenState
     extends State<OrdersTopActiveStoreScreen> {
   late States currentState;
+  late FilterOrderTopStateManager _stateManager;
+  late StreamSubscription _streamSubscription;
+
   int currentIndex = 0;
   void refresh() {
     if (mounted) {
@@ -46,7 +47,8 @@ class OrdersTopActiveStoreScreenState
   void initState() {
     super.initState();
     currentState = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _streamSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
 
       if (mounted) {
@@ -55,9 +57,16 @@ class OrdersTopActiveStoreScreenState
     });
   }
 
+  @override
+  void dispose() {
+    _streamSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
   late FilterOrderRequest ordersFilter;
   Future<void> getOrders([bool loading = true]) async {
-    widget._stateManager.getOrdersFilters(this, ordersFilter, loading);
+    _stateManager.getOrdersFilters(this, ordersFilter, loading);
   }
 
   @override
@@ -72,7 +81,7 @@ class OrdersTopActiveStoreScreenState
             fromDate: arg[0],
             toDate: arg[1],
             storeOwnerProfileId: storeID);
-        widget._stateManager.getOrdersFilters(this, ordersFilter);
+        _stateManager.getOrdersFilters(this, ordersFilter);
       }
     }
     return Scaffold(

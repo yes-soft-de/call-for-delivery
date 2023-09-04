@@ -94,6 +94,8 @@ class ActionTypeLogsHelper {
         return S.current.orderCanceledFromAllByAdmin;
       case 47:
         return S.current.theCaptainRaisedAnConflictAboutDistance;
+      case 48:
+        return S.current.orderCanceledFromMarsoolByAdmin;
       default:
         return S.current.unknownAction + ' !${orderLog}';
     }

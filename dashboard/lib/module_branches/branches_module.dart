@@ -8,19 +8,16 @@ import 'package:injectable/injectable.dart';
 
 @injectable
 class BranchesModule extends YesModule {
-  final BranchesListScreen _branchesListScreen;
-  final UpdateBranchScreen _updateBranchScreen;
-  final InitBranchesScreen _initBranchesScreen;
-  BranchesModule(this._branchesListScreen, this._updateBranchScreen,
-      this._initBranchesScreen) {
+  BranchesModule(
+  ) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
 
   Map<String, WidgetBuilder> getRoutes() {
     return {
-      BranchesRoutes.BRANCHES_LIST_SCREEN: (context) => _branchesListScreen,
-      BranchesRoutes.UPDATE_BRANCH_SCREEN: (context) => _updateBranchScreen,
-      BranchesRoutes.INIT_BRANCHES: (context) => _initBranchesScreen
+      BranchesRoutes.BRANCHES_LIST_SCREEN: (context) => BranchesListScreen(),
+      BranchesRoutes.UPDATE_BRANCH_SCREEN: (context) => UpdateBranchScreen(),
+      BranchesRoutes.INIT_BRANCHES: (context) => InitBranchesScreen()
     };
   }
 }

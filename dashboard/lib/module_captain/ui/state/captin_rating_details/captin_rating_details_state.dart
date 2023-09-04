@@ -8,13 +8,13 @@ import '../../../model/captin_rating_details_model.dart';
 import '../../screen/captin_rating_details_state.dart';
 import '../../widget/captain_rating_detail_widget.dart';
 
-class CaptinRatingDetailsLoadedState extends States {
-  final CaptinRatingDetailsScreenState screenState;
+class CaptainRatingDetailsLoadedState extends States {
+  final CaptainRatingDetailsScreenState screenState;
   final String? error;
   final bool empty;
   List<CaptainRatingDetailsModel>? model;
 
-  CaptinRatingDetailsLoadedState(this.screenState, this.model,
+  CaptainRatingDetailsLoadedState(this.screenState, this.model,
       {this.empty = false, this.error})
       : super(screenState) {
     if (error != null) {

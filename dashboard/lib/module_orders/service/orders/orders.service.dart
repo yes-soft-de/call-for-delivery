@@ -15,6 +15,7 @@ import 'package:c4d/module_orders/model/store_cash_orders_finance.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/order/delete_order_from_alshoroq_request.dart';
+import 'package:c4d/module_orders/request/order/delete_order_from_marsool_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order/pending_order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
@@ -268,6 +269,18 @@ class OrdersService {
       DeleteOrderFromAlShoroqRequest request) async {
     ActionResponse? response =
         await _ordersManager.deleteOrderFromAlShoroq(request);
+    if (response == null) return DataModel.withError(S.current.networkError);
+    if (response.statusCode != '204') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(response.statusCode));
+    }
+    return DataModel.empty();
+  }
+
+  Future<DataModel> deleteOrderFromMarsool(
+      DeleteOrderFromMarsoolRequest request) async {
+    ActionResponse? response =
+        await _ordersManager.deleteOrderFromMarsool(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '204') {
       return DataModel.withError(
