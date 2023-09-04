@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -15,34 +16,29 @@ import 'package:c4d/module_orders/ui/state/order_status/order_status_warning_sta
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/ui/screens/order_status/order_status_screen.dart';
-import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 
 @injectable
-class OrderStatusStateManager {
+class OrderStatusStateManager extends StateManagerHandler {
   final OrdersService _ordersService;
-  final ImageUploadService _imageUploadService;
-  final PublishSubject<States> _stateSubject = PublishSubject<States>();
 
-  Stream<States> get stateStream => _stateSubject.stream;
-  StreamSubscription? _updateStateListener;
+  Stream<States> get stateStream => stateSubject.stream;
 
-  OrderStatusStateManager(this._ordersService, this._imageUploadService);
+  OrderStatusStateManager(this._ordersService);
 
   void getOrderDetails(int orderId, OrderStatusScreenState screenState,
       {bool loading = true, String? message}) {
     if (loading) {
-      _stateSubject.add(LoadingState(screenState));
+      stateSubject.add(LoadingState(screenState));
     }
     _ordersService.getOrderDetails(orderId).then((value) {
       if (value.hasError) {
         if (value.error == S.current.thisOrderAcceptedByAnotherCaptain) {
-          _stateSubject.add(OrderStatusWarningState(screenState, onPressed: () {
+          stateSubject.add(OrderStatusWarningState(screenState, onPressed: () {
             getOrderDetails(orderId, screenState);
           },
               title: S.current.orderDetails,
@@ -57,7 +53,7 @@ class OrderStatusStateManager {
                     context: ctx);
               });
         } else {
-          _stateSubject.add(ErrorState(screenState, onPressed: () {
+          stateSubject.add(ErrorState(screenState, onPressed: () {
             getOrderDetails(orderId, screenState);
           },
               title: S.current.orderDetails,
@@ -65,7 +61,7 @@ class OrderStatusStateManager {
               hasAppbar: true));
         }
       } else if (value.isEmpty) {
-        _stateSubject.add(EmptyState(screenState, onPressed: () {
+        stateSubject.add(EmptyState(screenState, onPressed: () {
           getOrderDetails(orderId, screenState);
         },
             hasAppbar: true,
@@ -73,7 +69,7 @@ class OrderStatusStateManager {
             title: S.current.orderDetails));
       } else {
         value as OrderDetailsModel;
-        _stateSubject.add(OrderDetailsCaptainOrderLoadedState(
+        stateSubject.add(OrderDetailsCaptainOrderLoadedState(
             screenState, value.data,
             message: message));
       }
@@ -108,7 +104,7 @@ class OrderStatusStateManager {
 
   void updateOrder(
       UpdateOrderRequest request, OrderStatusScreenState screenState) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _ordersService.updateOrder(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
@@ -143,7 +139,7 @@ class OrderStatusStateManager {
 
   void updateDistance(
       OrderStatusScreenState screenState, AddExtraDistanceRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _ordersService.updateExtraDistanceToOrder(request).then((value) {
       if (value.hasError) {
         if (value.error == 'you can edit only once') {
@@ -253,7 +249,7 @@ class OrderStatusStateManager {
 
   void cancelOrder(
       OrderStatusScreenState screenState, CancelOrderRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _ordersService.cancelOrder(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
@@ -268,9 +264,5 @@ class OrderStatusStateManager {
             .show(screenState.context);
       }
     });
-  }
-
-  void dispose() {
-    _updateStateListener?.cancel();
   }
 }

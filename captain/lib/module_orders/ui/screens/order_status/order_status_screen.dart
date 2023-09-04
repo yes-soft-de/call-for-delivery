@@ -1,64 +1,57 @@
 import 'dart:async';
-import 'package:c4d/consts/order_status.dart';
-import 'package:c4d/module_deep_links/service/deep_links_service.dart';
-import 'package:c4d/module_orders/model/order/order_details_model.dart';
-import 'package:c4d/utils/logger/logger.dart';
-import 'package:latlong2/latlong.dart';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/di/di_config.dart';
+import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_deep_links/service/deep_links_service.dart';
+import 'package:c4d/module_orders/model/order/order_details_model.dart';
+import 'package:c4d/module_orders/request/order_invoice_request.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
+import 'package:c4d/module_orders/state_manager/order_status/order_status.state_manager.dart';
 import 'package:c4d/module_orders/ui/widgets/order_details_widget/custom_alert_paid_cash.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/helpers/text_reader.dart';
+import 'package:c4d/utils/logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:injectable/injectable.dart';
-import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_orders/request/order_invoice_request.dart';
-import 'package:c4d/module_orders/state_manager/order_status/order_status.state_manager.dart';
+import 'package:latlong2/latlong.dart';
 
-@injectable
 class OrderStatusScreen extends StatefulWidget {
-  final OrderStatusStateManager stateManager;
-
-  const OrderStatusScreen(this.stateManager);
+  const OrderStatusScreen();
 
   @override
   OrderStatusScreenState createState() => OrderStatusScreenState();
 }
 
 class OrderStatusScreenState extends State<OrderStatusScreen> {
+  late States currentState;
+  late OrderStatusStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   String? orderId;
-  States? currentState;
   OrderInvoiceRequest? invoiceRequest;
   bool makeInvoice = false;
   bool deliverOnMe = false;
   late FlutterTts flutterTts;
-  StreamSubscription? stateSub;
-  StreamSubscription? globalStateSub;
   late TextEditingController distanceCalculator;
   late TextEditingController paymentController;
   bool justOpen = true;
-  @override
-  void dispose() {
-    stateSub?.cancel();
-    globalStateSub?.cancel();
-    distanceCalculator.dispose();
-    paymentController.dispose();
-    super.dispose();
-  }
-
-  OrderStatusStateManager get manager => widget.stateManager;
+  int currentIndex = 0;
+  OrderStatusStateManager get manager => _stateManager;
   LatLng? myLocation;
+
   @override
   void initState() {
     currentState = LoadingState(this);
+    _stateManager = getIt();
+
     distanceCalculator = TextEditingController();
     paymentController = TextEditingController();
 
-    stateSub = widget.stateManager.stateStream.listen((event) {
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -90,6 +83,15 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
     super.initState();
   }
 
+  @override
+  void dispose() {
+    distanceCalculator.dispose();
+    paymentController.dispose();
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
   Future speak(String speak) async {
     if (speak == '') {
       return;
@@ -101,10 +103,8 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
     await flutterTts.stop();
   }
 
-  int currentIndex = 0;
-
   void createChatRoom(int orderId, int storeId) {
-    widget.stateManager.createChatRoom(this, orderId, storeId);
+    _stateManager.createChatRoom(this, orderId, storeId);
   }
 
   void refresh() {
@@ -157,8 +157,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
                                 onPressed: (paid) {
                                   Navigator.of(context).pop();
                                   request.paid = paid ? 1 : 2;
-                                  widget.stateManager
-                                      .updateOrder(request, this);
+                                  _stateManager.updateOrder(request, this);
                                 },
                                 content: S.of(context).paidToProvider);
                           });
@@ -166,13 +165,13 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
                     // payment is card no need to show payment to provider dialog
                     // send the request directly
                     else {
-                      widget.stateManager.updateOrder(request, this);
+                      _stateManager.updateOrder(request, this);
                     }
                   } else if (orderInfo.state == OrderStatusEnum.IN_STORE &&
                       orderInfo.payment == 'card') {
                     noNeedToTakeMoneyDialog(request);
                   } else {
-                    widget.stateManager.updateOrder(request, this);
+                    _stateManager.updateOrder(request, this);
                   }
                 },
                 content: S.of(context).confirmUpdateOrderStatus);
@@ -200,7 +199,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
                 width: MediaQuery.of(context).size.width * 0.5,
                 child: ElevatedButton(
                     onPressed: () {
-                      widget.stateManager.updateOrder(request, this);
+                      _stateManager.updateOrder(request, this);
 
                       Navigator.of(context).pop();
                     },
@@ -214,7 +213,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
   }
 
   void getOrderDetails(var orderId) {
-    widget.stateManager.getOrderDetails(orderId, this);
+    _stateManager.getOrderDetails(orderId, this);
   }
 
   void goBack() {
@@ -227,7 +226,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
     var args = ModalRoute.of(context)!.settings.arguments;
     if (args != null && flag) {
       orderId = args.toString();
-      widget.stateManager.getOrderDetails(int.tryParse(orderId!) ?? -1, this);
+      _stateManager.getOrderDetails(int.tryParse(orderId!) ?? -1, this);
       flag = false;
       refresh();
     }
@@ -239,7 +238,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
           }
         },
         child: Scaffold(
-          body: currentState?.getUI(context),
+          body: currentState.getUI(context),
         ));
   }
 }

@@ -1,24 +1,21 @@
 import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
+import 'package:c4d/module_orders/request/order_invoice_request.dart';
 import 'package:c4d/module_orders/state_manager/order_status/order_status_without_actions_state_manager.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/text_reader.dart';
 import 'package:c4d/utils/logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:injectable/injectable.dart';
-import 'package:c4d/module_orders/request/order_invoice_request.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 
-@injectable
 class OrderStatusWithoutActionsScreen extends StatefulWidget {
-  final OrderStatusWithoutActionsStateManager stateManager;
-
-  const OrderStatusWithoutActionsScreen(this.stateManager);
+  const OrderStatusWithoutActionsScreen();
 
   @override
   OrderStatusWithoutActionsScreenState createState() =>
@@ -27,40 +24,37 @@ class OrderStatusWithoutActionsScreen extends StatefulWidget {
 
 class OrderStatusWithoutActionsScreenState
     extends State<OrderStatusWithoutActionsScreen> {
+  late States currentState;
+  late OrderStatusWithoutActionsStateManager _stateManager;
+  late StreamSubscription _streamSubscription;
+  late StreamSubscription _globalStateSub;
+
   String? orderId;
-  States? currentState;
   OrderInvoiceRequest? invoiceRequest;
   bool makeInvoice = false;
   bool deliverOnMe = false;
   late FlutterTts flutterTts;
-  StreamSubscription? stateSub;
-  StreamSubscription? globalStateSub;
   late TextEditingController distanceCalculator;
   late TextEditingController paymentController;
-  @override
-  void dispose() {
-    stateSub?.cancel();
-    globalStateSub?.cancel();
-    distanceCalculator.dispose();
-    paymentController.dispose();
-    super.dispose();
-  }
 
+  int currentIndex = 0;
   LatLng? myLocation;
+
   @override
   void initState() {
     currentState = LoadingState(this);
+    _stateManager = getIt();
     distanceCalculator = TextEditingController();
     paymentController = TextEditingController();
-    stateSub = widget.stateManager.stateStream.listen((event) {
+    _streamSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
       }
     });
-    globalStateSub = getIt<GlobalStateManager>().stateStream.listen((event) {
-      widget.stateManager
-          .getOrderDetails(int.tryParse(orderId ?? '-1') ?? -1, this, false);
+    _globalStateSub = getIt<GlobalStateManager>().stateStream.listen((event) {
+      _stateManager.getOrderDetails(
+          int.tryParse(orderId ?? '-1') ?? -1, this, false);
     });
     getIt<FlutterTextToSpeech>().init().then((value) {
       flutterTts = value;
@@ -84,6 +78,16 @@ class OrderStatusWithoutActionsScreenState
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _streamSubscription.cancel();
+    _globalStateSub.cancel();
+    distanceCalculator.dispose();
+    paymentController.dispose();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
   Future speak(String speak) async {
     if (speak == '') {
       return;
@@ -95,10 +99,8 @@ class OrderStatusWithoutActionsScreenState
     await flutterTts.stop();
   }
 
-  int currentIndex = 0;
-
   void createChatRoom(int orderId, int storeId) {
-    widget.stateManager.createChatRoom(this, orderId, storeId);
+    _stateManager.createChatRoom(this, orderId, storeId);
   }
 
   void refresh() {
@@ -108,7 +110,7 @@ class OrderStatusWithoutActionsScreenState
   }
 
   void getOrderDetails(var orderId) {
-    widget.stateManager.getOrderDetails(orderId, this);
+    _stateManager.getOrderDetails(orderId, this);
   }
 
   bool flag = true;
@@ -117,7 +119,7 @@ class OrderStatusWithoutActionsScreenState
     var args = ModalRoute.of(context)!.settings.arguments;
     if (args != null && flag) {
       orderId = args.toString();
-      widget.stateManager.getOrderDetails(int.tryParse(orderId!) ?? -1, this);
+      _stateManager.getOrderDetails(int.tryParse(orderId!) ?? -1, this);
       flag = false;
       refresh();
     }
@@ -129,9 +131,7 @@ class OrderStatusWithoutActionsScreenState
           }
         },
         child: Scaffold(
-          body: currentState?.getUI(context),
+          body: currentState.getUI(context),
         ));
   }
-
-
 }

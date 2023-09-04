@@ -1,50 +1,44 @@
 import 'dart:async';
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/model/roomId/room_id_model.dart';
 import 'package:c4d/module_orders/ui/screens/order_status/order_status_without_actions.dart';
-import 'package:c4d/module_orders/ui/state/order_status/order_details_captain_state_loaded.dart';
 import 'package:c4d/module_orders/ui/state/order_status/order_details_captain_without_actions_state_loaded.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
-import 'package:c4d/module_orders/ui/screens/order_status/order_status_screen.dart';
-import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 
 @injectable
-class OrderStatusWithoutActionsStateManager {
+class OrderStatusWithoutActionsStateManager extends StateManagerHandler {
   final OrdersService _ordersService;
-  final ImageUploadService _imageUploadService;
-  final PublishSubject<States> _stateSubject = PublishSubject<States>();
 
-  Stream<States> get stateStream => _stateSubject.stream;
-  StreamSubscription? _updateStateListener;
+  Stream<States> get stateStream => stateSubject.stream;
 
   OrderStatusWithoutActionsStateManager(
-      this._ordersService, this._imageUploadService);
+    this._ordersService,
+  );
 
   void getOrderDetails(
       int orderId, OrderStatusWithoutActionsScreenState screenState,
       [bool loading = true]) {
     if (loading) {
-      _stateSubject.add(LoadingState(screenState));
+      stateSubject.add(LoadingState(screenState));
     }
     _ordersService.getOrderDetails(orderId).then((value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(screenState, onPressed: () {
+        stateSubject.add(ErrorState(screenState, onPressed: () {
           getOrderDetails(orderId, screenState);
         }, title: S.current.orderDetails, error: value.error, hasAppbar: true));
       } else if (value.isEmpty) {
-        _stateSubject.add(EmptyState(screenState, onPressed: () {
+        stateSubject.add(EmptyState(screenState, onPressed: () {
           getOrderDetails(orderId, screenState);
         },
             hasAppbar: true,
@@ -52,7 +46,7 @@ class OrderStatusWithoutActionsStateManager {
             title: S.current.orderDetails));
       } else {
         value as OrderDetailsModel;
-        _stateSubject.add(OrderDetailsCaptainWithoutActionsOrderLoadedState(
+        stateSubject.add(OrderDetailsCaptainWithoutActionsOrderLoadedState(
             screenState, value.data));
       }
     });
@@ -82,9 +76,5 @@ class OrderStatusWithoutActionsStateManager {
         }
       }
     });
-  }
-
-  void dispose() {
-    _updateStateListener?.cancel();
   }
 }

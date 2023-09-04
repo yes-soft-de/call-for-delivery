@@ -1,35 +1,36 @@
 import 'dart:async';
+
 import 'package:c4d/abstracts/data_model/data_model.dart';
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
+import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_my_notifications/model/update_model.dart';
 import 'package:c4d/module_my_notifications/service/my_notification_service.dart';
 import 'package:c4d/module_my_notifications/ui/widget/update_dialog.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_orders/request/update_order_request/update_order_request.dart';
-import 'package:c4d/module_profile/model/daily_model.dart';
-import 'package:c4d/utils/global/global_state_manager.dart';
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_orders/response/company_info/company_info.dart';
 import 'package:c4d/module_orders/service/orders/orders.service.dart';
 import 'package:c4d/module_orders/ui/screens/captain_orders/captain_orders.dart';
 import 'package:c4d/module_orders/ui/state/captain_orders/captain_orders_list_state_orders_loaded.dart';
+import 'package:c4d/module_profile/model/daily_model.dart';
 import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/module_profile/service/profile/profile.service.dart';
+import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:injectable/injectable.dart';
+import 'package:rxdart/rxdart.dart';
 
 @injectable
-class CaptainOrdersListStateManager {
+class CaptainOrdersListStateManager extends StateManagerHandler {
   final OrdersService _ordersService;
   final ProfileService _profileService;
 
-  final PublishSubject<States> _stateSubject = PublishSubject<States>();
   final PublishSubject<ProfileModel> _profileSubject =
       PublishSubject<ProfileModel>();
   final PublishSubject<DailyFinanceModel> _financeSubject =
@@ -37,12 +38,21 @@ class CaptainOrdersListStateManager {
   final PublishSubject<CompanyInfoResponse> _companySubject =
       PublishSubject<CompanyInfoResponse>();
   Stream<ProfileModel> get profileStream => _profileSubject.stream;
+
   Stream<DailyFinanceModel> get profitStream => _financeSubject.stream;
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
   Stream<CompanyInfoResponse> get companyStream => _companySubject.stream;
 
   CaptainOrdersListStateManager(this._ordersService, this._profileService);
   StreamSubscription? newActionSubscription;
+
+  @override
+  void dispose() {
+    _profileSubject.close();
+    _financeSubject.close();
+    _companySubject.close();
+    super.dispose();
+  }
 
   void getProfile(CaptainOrdersScreenState screenState) {
     _profileService.getProfile().then((profile) {
@@ -89,15 +99,15 @@ class CaptainOrdersListStateManager {
   void getNearbyOrders(CaptainOrdersScreenState screenState,
       [bool loading = true]) {
     if (loading) {
-      _stateSubject.add(LoadingState(screenState, picture: true));
+      stateSubject.add(LoadingState(screenState, picture: true));
     }
     _ordersService.getNearbyOrders().then((DataModel value) {
       if (value.hasError) {
         if (value.error == S.current.youAreOffline) {
-          _stateSubject.add(CaptainOrdersListStateOrdersLoaded(screenState,
+          stateSubject.add(CaptainOrdersListStateOrdersLoaded(screenState,
               DataModel.empty(), DataModel.withError(value.error)));
         } else {
-          _stateSubject.add(ErrorState(screenState,
+          stateSubject.add(ErrorState(screenState,
               onPressed: () {
                 getNearbyOrders(screenState);
               },
@@ -110,7 +120,7 @@ class CaptainOrdersListStateManager {
               icon: Icons.sort_rounded));
         }
       } else {
-        _stateSubject.add(CaptainOrdersListStateOrdersLoaded(
+        stateSubject.add(CaptainOrdersListStateOrdersLoaded(
             screenState, DataModel.empty(), value));
       }
     });
@@ -119,11 +129,11 @@ class CaptainOrdersListStateManager {
   void getAcceptedOrders(CaptainOrdersScreenState screenState,
       [bool loading = true]) {
     if (loading) {
-      _stateSubject.add(LoadingState(screenState, picture: true));
+      stateSubject.add(LoadingState(screenState, picture: true));
     }
     _ordersService.getCaptainOrders().then((DataModel value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(screenState,
+        stateSubject.add(ErrorState(screenState,
             onPressed: () {
               getAcceptedOrders(screenState);
             },
@@ -135,7 +145,7 @@ class CaptainOrdersListStateManager {
             },
             icon: Icons.sort_rounded));
       } else {
-        _stateSubject.add(CaptainOrdersListStateOrdersLoaded(
+        stateSubject.add(CaptainOrdersListStateOrdersLoaded(
             screenState, value, DataModel.empty()));
       }
     });
@@ -183,7 +193,7 @@ class CaptainOrdersListStateManager {
 
   void updateOrder(
       UpdateOrderRequest request, CaptainOrdersScreenState screenState) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _ordersService.updateOrder(request).then((value) {
       if (value.hasError) {
         screenState.getMyOrders();

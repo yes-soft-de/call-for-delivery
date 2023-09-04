@@ -1,10 +1,12 @@
 import 'dart:async';
+
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_chat/presistance/chat_hive_helper.dart';
@@ -12,9 +14,12 @@ import 'package:c4d/module_chat/repository/chat/chat_repository.dart';
 import 'package:c4d/module_deep_links/repository/deep_link_local_repository.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
+import 'package:c4d/module_navigation/menu.dart';
 import 'package:c4d/module_notifications/preferences/notification_preferences/notification_preferences.dart';
 import 'package:c4d/module_notifications/service/fire_notification_service/fire_notification_service.dart';
+import 'package:c4d/module_orders/state_manager/captain_orders/captain_orders.dart';
 import 'package:c4d/module_profile/model/daily_model.dart';
+import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
@@ -26,56 +31,120 @@ import 'package:flutter_advanced_drawer/flutter_advanced_drawer.dart';
 import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:injectable/injectable.dart';
-import 'package:c4d/module_auth/authorization_routes.dart';
-import 'package:c4d/module_navigation/menu.dart';
-import 'package:c4d/module_orders/response/company_info/company_info.dart';
-import 'package:c4d/module_orders/state_manager/captain_orders/captain_orders.dart';
-import 'package:c4d/module_profile/model/profile_model/profile_model.dart';
 import 'package:latlong2/latlong.dart';
 
-@injectable
 class CaptainOrdersScreen extends StatefulWidget {
-  final CaptainOrdersListStateManager _stateManager;
-
-  const CaptainOrdersScreen(this._stateManager);
+  const CaptainOrdersScreen();
 
   @override
   State<StatefulWidget> createState() => CaptainOrdersScreenState();
 }
 
 class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
-  States? currentState;
+  late States currentState;
+  late CaptainOrdersListStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+  late StreamSubscription _profileSubscription;
+  late StreamSubscription _companySubscription;
+  late StreamSubscription _financeSubscription;
+  late StreamSubscription _supportMessages;
+  late StreamSubscription _globalStateSubscription;
+  late StreamSubscription? _firebaseSubscription;
+
   ProfileModel? _currentProfile;
   DailyFinanceModel? _currentFinance;
-  CompanyInfoResponse? _companyInfo;
   int currentPage = 0;
-  StreamSubscription? _stateSubscription;
-  StreamSubscription? _profileSubscription;
-  StreamSubscription? _companySubscription;
-  StreamSubscription? _financeSubscription;
-  StreamSubscription? _supportMessages;
+
   String? _lastMessageFromSupportDate;
   ValueNotifier<bool> _isLastMessageFromAdminHasntSeenYet =
       ValueNotifier(false);
   GlobalKey<ScaffoldState> drawerKey = GlobalKey();
   final advancedController = AdvancedDrawerController();
   LatLng? currentLocation;
-  CaptainOrdersListStateManager get stateManager => widget._stateManager;
+  CaptainOrdersListStateManager get stateManager => _stateManager;
+
+  @override
+  void initState() {
+    super.initState();
+    _stateManager = getIt();
+    farOrders = NotificationsPrefHelper().getFarOrder();
+    canRequestLocation();
+    getIt<FireNotificationService>().refreshToken();
+    currentState = LoadingState(this, picture: true);
+    _stateManager.getProfile(this);
+    _stateManager.getMyOrders(this);
+    _firebaseSubscription =
+        FireStoreHelper().onInsertChangeWatcher()?.listen((event) {
+      _stateManager.getMyOrders(this, false);
+    });
+    _globalStateSubscription =
+        getIt<GlobalStateManager>().stateStream.listen((event) {
+      _stateManager.getProfile(this);
+      _stateManager.getProfitSummary(this);
+    });
+    _stateSubscription = _stateManager.stateStream.listen((event) {
+      currentState = event;
+      if (mounted) {
+        setState(() {});
+      }
+    });
+    _profileSubscription = _stateManager.profileStream.listen((event) {
+      _currentProfile = event;
+      if (_currentProfile != null) {
+        somethingMissingInProfileData =
+            _currentProfile?.address?.isNotEmpty == false ||
+                _currentProfile?.city?.isNotEmpty == false;
+      }
+      if (mounted) {
+        setState(() {});
+      }
+      if (_currentProfile != null && _currentProfile!.roomID != null) {
+        subscribeToDirectSupportMessages(_currentProfile!.roomID!);
+        ChatHiveHelper().setDirectSupportRom(_currentProfile!.roomID!);
+      }
+      _stateManager.getUpdates(this);
+    });
+
+    _financeSubscription = _stateManager.profitStream.listen((event) {
+      _currentFinance = event;
+      if (mounted) {
+        setState(() {});
+      }
+    });
+
+    currentPage = NotificationsPrefHelper().getHomeIndex();
+    if (NotificationsPrefHelper().getHomeIndex() == 1) {
+      NotificationsPrefHelper().setHomeIndex(1);
+    }
+  }
+
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _profileSubscription.cancel();
+    _companySubscription.cancel();
+    _financeSubscription.cancel();
+    _supportMessages.cancel();
+    _supportMessages.cancel();
+    _globalStateSubscription.cancel();
+    _firebaseSubscription?.cancel();
+    stateManager.dispose();
+    super.dispose();
+  }
 
   void getMyOrders([String? trigger]) {
-    widget._stateManager.getProfile(this);
-    widget._stateManager.getProfitSummary(this);
-    widget._stateManager.getMyOrders(this);
+    _stateManager.getProfile(this);
+    _stateManager.getProfitSummary(this);
+    _stateManager.getMyOrders(this);
     if (trigger != null) {
       FireStoreHelper().backgroundThread(trigger);
     }
   }
 
   Future<void> refreshOrders() async {
-    widget._stateManager.getProfile(this);
-    widget._stateManager.getProfitSummary(this);
-    widget._stateManager.getMyOrders(this);
+    _stateManager.getProfile(this);
+    _stateManager.getProfitSummary(this);
+    _stateManager.getMyOrders(this);
   }
 
   void refresh() {
@@ -94,7 +163,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   }
 
   void changeStatus(bool isOnline) {
-    widget._stateManager.updateProfileStatus(this, isOnline);
+    _stateManager.updateProfileStatus(this, isOnline);
   }
 
   void moveTo(String route, dynamic argument) {
@@ -126,62 +195,6 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
   }
 
   bool farOrders = false;
-  @override
-  void initState() {
-    super.initState();
-    farOrders = NotificationsPrefHelper().getFarOrder();
-    canRequestLocation();
-    getIt<FireNotificationService>().refreshToken();
-    currentState = LoadingState(this, picture: true);
-    widget._stateManager.getProfile(this);
-    widget._stateManager.getMyOrders(this);
-    FireStoreHelper().onInsertChangeWatcher()?.listen((event) {
-      widget._stateManager.getMyOrders(this, false);
-    });
-    getIt<GlobalStateManager>().stateStream.listen((event) {
-      widget._stateManager.getProfile(this);
-      widget._stateManager.getProfitSummary(this);
-    });
-    _stateSubscription = widget._stateManager.stateStream.listen((event) {
-      currentState = event;
-      if (mounted) {
-        setState(() {});
-      }
-    });
-    _profileSubscription = widget._stateManager.profileStream.listen((event) {
-      _currentProfile = event;
-      if (_currentProfile != null) {
-        somethingMissingInProfileData =
-            _currentProfile?.address?.isNotEmpty == false ||
-                _currentProfile?.city?.isNotEmpty == false;
-      }
-      if (mounted) {
-        setState(() {});
-      }
-      if (_currentProfile != null && _currentProfile!.roomID != null) {
-        subscribeToDirectSupportMessages(_currentProfile!.roomID!);
-        ChatHiveHelper().setDirectSupportRom(_currentProfile!.roomID!);
-      }
-      widget._stateManager.getUpdates(this);
-    });
-
-    _financeSubscription = widget._stateManager.profitStream.listen((event) {
-      _currentFinance = event;
-      if (mounted) {
-        setState(() {});
-      }
-    });
-    _companySubscription = widget._stateManager.companyStream.listen((event) {
-      _companyInfo = event;
-      if (mounted) {
-        setState(() {});
-      }
-    });
-    currentPage = NotificationsPrefHelper().getHomeIndex();
-    if (NotificationsPrefHelper().getHomeIndex() == 1) {
-      NotificationsPrefHelper().setHomeIndex(1);
-    }
-  }
 
   // to ignore calling [canRequestLocation()] when its not necessary
   bool _requestLocationIsPausedNow = false;
@@ -365,19 +378,9 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
               decoration: BoxDecoration(
                 color: Theme.of(context).scaffoldBackgroundColor,
               ),
-              child: currentState?.getUI(context)),
+              child: currentState.getUI(context)),
         ),
       ),
     );
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _stateSubscription?.cancel();
-    _profileSubscription?.cancel();
-    _companySubscription?.cancel();
-    widget._stateManager.newActionSubscription?.cancel();
-    _supportMessages?.cancel();
   }
 }
