@@ -1,18 +1,17 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_plan/request/payment_history_request.dart';
 import 'package:c4d/module_plan/state_manager/payment_history_state_manager.dart';
 import 'package:c4d/module_plan/ui/widget/select_date_bar_widget.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class PaymentHistoryScreen extends StatefulWidget {
-  final PaymentHistoryStateManager _manager;
-
-  const PaymentHistoryScreen(this._manager);
+  const PaymentHistoryScreen();
 
   @override
   State<StatefulWidget> createState() => PaymentHistoryScreenState();
@@ -20,11 +19,15 @@ class PaymentHistoryScreen extends StatefulWidget {
 
 class PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
   late States _currentState;
+  late PaymentHistoryStateManager _stateManager;
+  late StreamSubscription _streamSubscription;
+
   late PaymentHistoryRequest request;
 
   @override
   void initState() {
     _currentState = LoadingState(this);
+    _stateManager = getIt();
     request = PaymentHistoryRequest(
       fromDate: DateTime.now(),
       toDate: DateTime.now(),
@@ -32,15 +35,22 @@ class PaymentHistoryScreenState extends State<PaymentHistoryScreen> {
 
     getPaymentHistory(request);
 
-    widget._manager.stateSubject.listen((value) {
+    _streamSubscription = _stateManager.stateStream.listen((value) {
       _currentState = value;
       if (mounted) setState(() {});
     });
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _streamSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
   void getPaymentHistory(PaymentHistoryRequest request) {
-    widget._manager.getPaymentHistory(this, request);
+    _stateManager.getPaymentHistory(this, request);
   }
 
   void refresh() {

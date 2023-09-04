@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -10,11 +11,9 @@ import 'package:c4d/module_plan/ui/screen/my_profits_screen.dart';
 import 'package:c4d/module_plan/ui/state/my_profits/my_profits_state_loaded.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 
 @injectable
-class MyProfitsStateManager {
-  final stateSubject = PublishSubject<States>();
+class MyProfitsStateManager extends StateManagerHandler {
   final PlanService _planService;
 
   MyProfitsStateManager(this._planService);

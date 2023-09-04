@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -9,11 +10,9 @@ import 'package:c4d/module_plan/service/plan_service.dart';
 import 'package:c4d/module_plan/ui/screen/payment_history_screen.dart';
 import 'package:c4d/module_plan/ui/state/payment_history/payment_history_state_loaded.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 
 @injectable
-class PaymentHistoryStateManager {
-  final stateSubject = PublishSubject<States>();
+class PaymentHistoryStateManager extends StateManagerHandler {
   final PlanService _planService;
 
   PaymentHistoryStateManager(this._planService);

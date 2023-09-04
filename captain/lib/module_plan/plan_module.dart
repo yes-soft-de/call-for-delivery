@@ -11,35 +11,23 @@ import 'package:injectable/injectable.dart';
 @injectable
 class PlanModule extends YesModule {
   // final PlanScreen _planScreen;
-  final AccountBalanceScreen accountBalanceScreen;
-  final CaptainFinancialDuesScreen captainFinancialDuesScreen;
-  final CaptainFinancialDuesDetailsScreen captainFinancialDuesDetailsScreen;
   // final DailyPaymentsScreen paymentsScreen;
-  final MyProfitsScreen myProfitsScreen;
-  final PaymentHistoryScreen paymentHistoryScreen;
-  final PlanDetailsScreen planDetailsScreen;
 
   PlanModule(
-    // this._planScreen,
-    this.accountBalanceScreen,
-    this.captainFinancialDuesDetailsScreen,
-    this.captainFinancialDuesScreen,
-    // this.paymentsScreen,
-    this.myProfitsScreen,
-    this.paymentHistoryScreen,
-    this.planDetailsScreen,
-  ) {
+      // this._planScreen,
+      // this.paymentsScreen,
+      ) {
     YesModule.RoutesMap.addAll({
       // PlanRoutes.PLAN_ROUTE: (context) => _planScreen,
-      PlanRoutes.BALANCE_ROUTE: (context) => accountBalanceScreen,
+      PlanRoutes.BALANCE_ROUTE: (context) => const AccountBalanceScreen(),
       PlanRoutes.CAPTAIN_FINANCIAL_DUES: (context) =>
-          captainFinancialDuesScreen,
+          const CaptainFinancialDuesScreen(),
       PlanRoutes.CAPTAIN_FINANCIAL_DUES_DETAILS: (context) =>
-          captainFinancialDuesDetailsScreen,
+          CaptainFinancialDuesDetailsScreen(),
       // PlanRoutes.CAPTAIN_DAILY_PAYMENTS: (context) => paymentsScreen,
-      PlanRoutes.MY_PROFIT: (context) => myProfitsScreen,
-      PlanRoutes.PAYMENT_HISTORY: (context) => paymentHistoryScreen,
-      PlanRoutes.PLAN_DETAILS: (context) => planDetailsScreen,
+      PlanRoutes.MY_PROFIT: (context) => const MyProfitsScreen(),
+      PlanRoutes.PAYMENT_HISTORY: (context) => const PaymentHistoryScreen(),
+      PlanRoutes.PLAN_DETAILS: (context) => const PlanDetailsScreen(),
     });
   }
 }

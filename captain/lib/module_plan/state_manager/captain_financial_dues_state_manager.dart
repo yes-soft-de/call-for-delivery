@@ -1,19 +1,17 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_plan/model/captain_financial_dues.dart';
+import 'package:c4d/module_plan/service/plan_service.dart';
 import 'package:c4d/module_plan/ui/screen/captain_financial_dues_screen.dart';
-import 'package:c4d/module_plan/ui/state/account_balance/account_balance_loaded_state.dart';
 import 'package:c4d/module_plan/ui/state/captain_financial_dues_state/captain_financial_dues_state.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
-import 'package:c4d/module_plan/service/plan_service.dart';
 
 @injectable
-class CaptainFinancialDuesStateManager {
-  final stateSubject = PublishSubject<States>();
+class CaptainFinancialDuesStateManager extends StateManagerHandler {
   final PlanService _planService;
 
   CaptainFinancialDuesStateManager(this._planService);
