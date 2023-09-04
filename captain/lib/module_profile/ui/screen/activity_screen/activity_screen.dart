@@ -1,33 +1,42 @@
-import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
+import 'dart:async';
+
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_profile/state_manager/activity/activity_state_manager.dart';
 import 'package:c4d/module_profile/ui/states/activity_state/activity_state.dart';
 import 'package:c4d/module_profile/ui/states/activity_state_loading/activity_state_loading.dart';
+import 'package:flutter/material.dart';
 
-@injectable
 class ActivityScreen extends StatefulWidget {
-  final ActivityStateManager _profileStateManager;
-
-  ActivityScreen(this._profileStateManager);
+  const ActivityScreen();
 
   @override
   State<StatefulWidget> createState() => ActivityScreenState();
 }
 
 class ActivityScreenState extends State<ActivityScreen> {
-  ActivityState? _currentState;
+  late ActivityState _currentState;
+  late ActivityStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
 
   @override
   void initState() {
     _currentState = ActivityStateLoading(this);
-    widget._profileStateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       _currentState = event;
       if (mounted) {
         setState(() {});
       }
     });
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
   }
 
   @override
@@ -42,7 +51,7 @@ class ActivityScreenState extends State<ActivityScreen> {
                   : Colors.black),
         ),
       ),
-      body: _currentState!.getUI(context),
+      body: _currentState.getUI(context),
     );
   }
 }

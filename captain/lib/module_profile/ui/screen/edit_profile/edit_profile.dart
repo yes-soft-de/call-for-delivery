@@ -1,6 +1,8 @@
+import 'dart:async';
+
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_profile/request/profile/profile_request.dart';
 import 'package:c4d/module_profile/state_manager/edit_profile/edit_profile.dart';
@@ -9,25 +11,45 @@ import 'package:c4d/module_profile/ui/states/profile_state/profile_state.dart';
 import 'package:c4d/module_profile/ui/states/profile_state_dirty_profile/profile_state_dirty_profile.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 
-@injectable
 class EditProfileScreen extends StatefulWidget {
-  final EditProfileStateManager _stateManager;
-
-  EditProfileScreen(this._stateManager);
+  const EditProfileScreen();
 
   @override
   State<StatefulWidget> createState() => EditProfileScreenState();
 }
 
 class EditProfileScreenState extends State<EditProfileScreen> {
-  ProfileState? states;
+  late ProfileState states;
+  late EditProfileStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
+  @override
+  void initState() {
+    states = ProfileStateLoading(this);
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
+      states = event;
+      if (mounted) {
+        setState(() {});
+      }
+    });
+    _stateManager.getProfile(this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
 
   void saveProfile(ProfileRequest request) {
-    widget._stateManager.submitProfile(this, request);
+    _stateManager.submitProfile(this, request);
   }
 
   void uploadImage(ProfileRequest request, String? type, [String? image]) {
-    widget._stateManager.uploadImage(this, request, type, image);
+    _stateManager.uploadImage(this, request, type, image);
   }
 
   void showMessage(String msg, bool success) {
@@ -48,19 +70,6 @@ class EditProfileScreenState extends State<EditProfileScreen> {
   }
 
   @override
-  void initState() {
-    widget._stateManager.stateStream.listen((event) {
-      states = event;
-      if (mounted) {
-        setState(() {});
-      }
-    });
-    widget._stateManager.getProfile(this);
-    states ??= ProfileStateLoading(this);
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
@@ -76,7 +85,7 @@ class EditProfileScreenState extends State<EditProfileScreen> {
                 context,
                 title: S.of(context).profile,
               ),
-        body: states?.getUI(context),
+        body: states.getUI(context),
       ),
     );
   }
