@@ -21,7 +21,7 @@ class DeepLinkLocalRepository {
 
       return matchedValue.response;
     } catch (e) {
-      Logger()
+      Logger
           .error('DeepLinkLocalRepository', e.toString(), StackTrace.current);
       return null;
     }
@@ -35,7 +35,7 @@ class DeepLinkLocalRepository {
 
       _setDistanceList(list);
     } catch (e) {
-      Logger()
+      Logger
           .error('DeepLinkLocalRepository', e.toString(), StackTrace.current);
     }
   }
@@ -51,7 +51,7 @@ class DeepLinkLocalRepository {
           .toList();
       return distanceList ?? [];
     } catch (e) {
-      Logger()
+      Logger
           .error('DeepLinkLocalRepository', e.toString(), StackTrace.current);
       return [];
     }
@@ -66,8 +66,7 @@ class DeepLinkLocalRepository {
           .toList();
       _box.put(cachedDistance, distanceListAsString);
     } catch (e) {
-      Logger()
-          .error('DeepLinkLocalRepository', e.toString(), StackTrace.current);
+      Logger.error('DeepLinkLocalRepository', e.toString(), StackTrace.current);
     }
   }
 

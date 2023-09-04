@@ -6,11 +6,11 @@ import 'package:c4d/module_deep_links/model/geo_model.dart';
 import 'package:c4d/module_deep_links/request/geo_distance_request.dart';
 import 'package:c4d/module_deep_links/response/geo_distance_x/geo_distance_x.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
+import 'package:c4d/utils/logger/logger.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:uni_links/uni_links.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:c4d/utils/logger/logger.dart';
 
 @injectable
 class DeepLinksService {
@@ -64,7 +64,7 @@ class DeepLinksService {
       LatLng myPos = LatLng(myLocation.latitude, myLocation.longitude);
       return myPos;
     } catch (e) {
-      Logger().error('Get Location', e.toString(), StackTrace.current);
+      Logger.error('Get Location', e.toString(), StackTrace.current);
       LocationPermission checkPermission = await Geolocator.checkPermission();
       var serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (LocationPermission.whileInUse == checkPermission && serviceEnabled) {

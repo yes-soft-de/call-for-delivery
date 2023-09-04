@@ -19,7 +19,7 @@ class AcceptOrderResponse {
         });
       }
     } catch (e) {
-      Logger().error('AcceptOrder Response', e.toString(), StackTrace.current);
+      Logger.error('AcceptOrder Response', e.toString(), StackTrace.current);
       print(StackTrace.current);
       statusCode = '-1';
     }

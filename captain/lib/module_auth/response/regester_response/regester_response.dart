@@ -13,7 +13,7 @@ class RegisterResponse {
       msg = json['msg'];
       data = json['Data'];
     } catch (e) {
-      Logger()
+      Logger
           .error('Auth Register Response', e.toString(), StackTrace.current);
       statusCode = '-1';
     }

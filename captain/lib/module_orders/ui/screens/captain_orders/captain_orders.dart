@@ -201,14 +201,14 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
       );
       DeepLinksService.canRequestLocation().then((value) async {
         if (value) {
-          Logger().info('Location enabled', '$value');
+          Logger.info('Location enabled', '$value');
           Geolocator.getPositionStream(
               locationSettings: const LocationSettings(
             distanceFilter: 1000,
           )).listen((event) {
             currentLocation = LatLng(event.latitude, event.longitude);
             DeepLinkLocalRepository.clearCachedDistances();
-            Logger().info('Location with us ',
+            Logger.info('Location with us ',
                 currentLocation?.toJson().toString() ?? 'null');
             if (mounted) {
               setState(() {});
@@ -217,7 +217,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
         }
       });
     } catch (e) {
-      Logger().error('GEO Locator', e.toString(), StackTrace.current);
+      Logger.error('GEO Locator', e.toString(), StackTrace.current);
       WidgetsBinding.instance.addPostFrameCallback(
         (_) {
           if (mounted) {

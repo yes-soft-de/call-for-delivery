@@ -23,7 +23,7 @@ class LoginStateManager {
 
   LoginStateManager(this._authService) {
     _authService.authListener.listen((event) {
-      _loadingStateSubject.add(AsyncSnapshot.nothing());
+      _loadingStateSubject.add(const AsyncSnapshot.nothing());
       switch (event) {
         case AuthStatus.CODE_SENT:
           _screenState.verifyFirst(getIt<AuthPrefsHelper>().getUsername(),
@@ -42,7 +42,7 @@ class LoginStateManager {
           break;
       }
     }).onError((err) {
-      _loadingStateSubject.add(AsyncSnapshot.nothing());
+      _loadingStateSubject.add(const AsyncSnapshot.nothing());
       _loginStateSubject.add(LoginStateInit(_screenState, error: err));
     });
   }
@@ -53,42 +53,41 @@ class LoginStateManager {
   void loginClient(
     String username,
     String password,
-    LoginScreenState _loginScreenState,
+    LoginScreenState loginScreenState,
   ) {
-    _screenState = _loginScreenState;
-    _loadingStateSubject.add(AsyncSnapshot.waiting());
+    _screenState = loginScreenState;
+    _loadingStateSubject.add(const AsyncSnapshot.waiting());
     _authService.loginApi(username, password);
   }
 
   void resetCodeRequest(
-      ResetPassRequest request, LoginScreenState _loginScreenState) {
-    _loadingStateSubject.add(AsyncSnapshot.waiting());
-    _screenState = _loginScreenState;
-    _authService
-        .resetPassRequest(request)
-        .whenComplete(() => _loadingStateSubject.add(AsyncSnapshot.nothing()));
+      ResetPassRequest request, LoginScreenState loginScreenState) {
+    _loadingStateSubject.add(const AsyncSnapshot.waiting());
+    _screenState = loginScreenState;
+    _authService.resetPassRequest(request).whenComplete(
+        () => _loadingStateSubject.add(const AsyncSnapshot.nothing()));
   }
 
   void resendCode(
-      VerifyCodeRequest request, LoginScreenState _loginScreenState) {
-    _loadingStateSubject.add(AsyncSnapshot.waiting());
-    _screenState = _loginScreenState;
+      VerifyCodeRequest request, LoginScreenState loginScreenState) {
+    _loadingStateSubject.add(const AsyncSnapshot.waiting());
+    _screenState = loginScreenState;
     _authService.resendCode(request).whenComplete(
         () => _loadingStateSubject.add(const AsyncSnapshot.nothing()));
   }
 
   void verifyClient(
-      VerifyCodeRequest request, LoginScreenState _loginScreenState) {
+      VerifyCodeRequest request, LoginScreenState loginScreenState) {
     _loadingStateSubject.add(const AsyncSnapshot.waiting());
-    _screenState = _loginScreenState;
+    _screenState = loginScreenState;
     _authService.verifyCodeApi(request).whenComplete(
         () => _loadingStateSubject.add(const AsyncSnapshot.nothing()));
   }
 
-  void saveCredential(LoginScreenState _screenState) {
-    if (_screenState.rememberMe) {
-      Logger().info('Saving Credential',
-          'Remember me with value ${_screenState.rememberMe}');
+  void saveCredential(LoginScreenState screenState) {
+    if (screenState.rememberMe) {
+      Logger.info('Saving Credential',
+          'Remember me with value ${screenState.rememberMe}');
       AuthPrefsHelper().saveLoginCredential();
     }
     return;

@@ -82,7 +82,7 @@ class _SplashScreenState extends State<SplashScreen> {
       setState(() {
         _statusText = _finished;
       });
-      Logger().info('Notifications Channel', _statusText);
+      Logger.info('Notifications Channel', _statusText);
     } on PlatformException catch (e) {
       _statusText = _error;
       print(e);

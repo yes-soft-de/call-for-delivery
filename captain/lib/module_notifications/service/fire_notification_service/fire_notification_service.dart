@@ -111,7 +111,7 @@ class FireNotificationService {
   static Future<dynamic> backgroundMessageHandler(RemoteMessage message) async {
     await HiveSetUp.init();
     NotificationsPrefHelper().setNewLocalNotification();
-    Logger().info('Background Message Handler', 'onMessage: $message');
+    Logger.info('Background Message Handler', 'onMessage: $message');
     _onNotificationReceived.add(message);
     await playSound();
     return Future<void>.value();

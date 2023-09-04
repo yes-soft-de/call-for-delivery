@@ -67,13 +67,13 @@ class OrderStatusWithoutActionsScreenState
     });
     DeepLinksService.canRequestLocation().then((value) async {
       if (value) {
-        Logger().info('Location enabled', '$value');
+        Logger.info('Location enabled', '$value');
         Geolocator.getPositionStream(
             locationSettings: const LocationSettings(
           distanceFilter: 25,
         )).listen((event) {
           myLocation = LatLng(event.latitude, event.longitude);
-          Logger().info(
+          Logger.info(
               'Location with us ', myLocation?.toJson().toString() ?? 'null');
           if (mounted) {
             setState(() {});

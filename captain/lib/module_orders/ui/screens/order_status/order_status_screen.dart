@@ -69,10 +69,10 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
     });
     DeepLinksService.canRequestLocation().then((value) async {
       if (value) {
-        Logger().info('Location enabled', '$value');
+        Logger.info('Location enabled', '$value');
         Geolocator.getCurrentPosition().then((event) {
           myLocation = LatLng(event.latitude, event.longitude);
-          Logger().info('Location with us for the first time',
+          Logger.info('Location with us for the first time',
               myLocation?.toJson().toString() ?? 'null');
           setState(() {});
         });
@@ -81,7 +81,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
           distanceFilter: 100,
         )).listen((event) {
           myLocation = LatLng(event.latitude, event.longitude);
-          Logger().info(
+          Logger.info(
               'Location with us ', myLocation?.toJson().toString() ?? 'null');
           setState(() {});
         });
