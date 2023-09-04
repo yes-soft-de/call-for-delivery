@@ -1,16 +1,15 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
-import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:c4d/module_my_notifications/state_manager/my_notifications_state_manager.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
+import 'package:flutter/material.dart';
 
-@injectable
 class MyNotificationsScreen extends StatefulWidget {
-  final MyNotificationsStateManager _stateManager;
-  MyNotificationsScreen(this._stateManager);
+  const MyNotificationsScreen();
 
   @override
   MyNotificationsScreenState createState() => MyNotificationsScreenState();
@@ -18,6 +17,30 @@ class MyNotificationsScreen extends StatefulWidget {
 
 class MyNotificationsScreenState extends State<MyNotificationsScreen> {
   late States currentState;
+  late MyNotificationsStateManager _stateManager;
+  late StreamSubscription _streamSubscription;
+
+  @override
+  void initState() {
+    currentState = LoadingState(this);
+    _stateManager = getIt();
+    _stateManager.getNotifications(this);
+    _streamSubscription = _stateManager.stateStream.listen((event) {
+      currentState = event;
+      if (mounted) {
+        setState(() {});
+      }
+    });
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _streamSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
   bool markerMode = false;
   void refresh() {
     if (mounted) {
@@ -25,37 +48,22 @@ class MyNotificationsScreenState extends State<MyNotificationsScreen> {
     }
   }
 
-  MyNotificationsStateManager get manager => widget._stateManager;
+  MyNotificationsStateManager get manager => _stateManager;
   Future<void> getNotifications() async {
-    widget._stateManager.getNotifications(this);
+    _stateManager.getNotifications(this);
   }
 
   void deleteNotification(String id) {
-    widget._stateManager.deleteNotification(this, id);
+    _stateManager.deleteNotification(this, id);
   }
 
   void deleteNotifications(List<String> notification) {
-    widget._stateManager.deleteNotifications(this, notification);
+    _stateManager.deleteNotifications(this, notification);
   }
 
   void goToLogin() {
     Navigator.of(context)
         .pushNamed(AuthorizationRoutes.LOGIN_SCREEN, arguments: 3);
-  }
-
-  @override
-  void initState() {
-    currentState = LoadingState(this);
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      widget._stateManager.getNotifications(this);
-    });
-    widget._stateManager.stateStream.listen((event) {
-      currentState = event;
-      if (mounted) {
-        setState(() {});
-      }
-    });
-    super.initState();
   }
 
   @override
