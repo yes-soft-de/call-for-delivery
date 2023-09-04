@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -18,30 +19,27 @@ import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:injectable/injectable.dart';
 import 'package:intl/intl.dart';
-import 'package:rxdart/rxdart.dart';
 
 @injectable
-class SubOrdersStateManager {
+class SubOrdersStateManager extends StateManagerHandler {
   final OrdersService _ordersService;
   final AuthService _authService;
 
-  final PublishSubject<States> _stateSubject = new PublishSubject();
-
-  Stream<States> get stateStream => _stateSubject.stream;
+  Stream<States> get stateStream => stateSubject.stream;
 
   SubOrdersStateManager(this._ordersService, this._authService);
   void getOrder(SubOrdersScreenState screenState, int id,
       [bool loading = true]) {
     if (loading) {
-      _stateSubject.add(LoadingState(screenState));
+      stateSubject.add(LoadingState(screenState));
     }
     _ordersService.getOrderDetails(id).then((value) {
       if (value.hasError) {
-        _stateSubject.add(ErrorState(screenState, onPressed: () {
+        stateSubject.add(ErrorState(screenState, onPressed: () {
           getOrder(screenState, id);
         }, title: '', error: value.error, hasAppbar: false));
       } else if (value.isEmpty) {
-        _stateSubject.add(EmptyState(screenState, onPressed: () {
+        stateSubject.add(EmptyState(screenState, onPressed: () {
           getOrder(screenState, id);
         }, title: '', emptyMessage: S.current.homeDataEmpty, hasAppbar: false));
       } else {
@@ -52,12 +50,10 @@ class SubOrdersStateManager {
             state: order.state,
             orderCost: order.orderCost,
             note: order.note,
-            deliveryDate: DateFormat.jm().format(order.deliveryDate) +
-                ' 📅 ' +
-                DateFormat.Md().format(order.deliveryDate),
-            createdDate: DateFormat.jm().format(order.createDateTime) +
-                ' 📅 ' +
-                DateFormat.Md().format(order.createDateTime),
+            deliveryDate:
+                '${DateFormat.jm().format(order.deliveryDate)} 📅 ${DateFormat.Md().format(order.deliveryDate)}',
+            createdDate:
+                '${DateFormat.jm().format(order.createDateTime)} 📅 ${DateFormat.Md().format(order.createDateTime)}',
             id: order.id,
             orderIsMain: order.orderIsMain ?? false,
             subOrders: order.subOrders,
@@ -72,7 +68,7 @@ class SubOrdersStateManager {
         List<OrderModel> orders = [];
         orders.addAll(order.subOrders);
         orders.insert(0, primaryOrder);
-        _stateSubject.add(SubOrdersListStateLoaded(screenState,
+        stateSubject.add(SubOrdersListStateLoaded(screenState,
             orders: orders,
             acceptedOrder: StatusHelper.getOrderStatusIndex(order.state) > 0));
       }
@@ -81,7 +77,7 @@ class SubOrdersStateManager {
 
   void removeSubOrder(
       SubOrdersScreenState screenState, OrderNonSubRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _ordersService.removeOrderSub(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
@@ -102,7 +98,7 @@ class SubOrdersStateManager {
 
   void updateOrderState(
       SubOrdersScreenState screenState, UpdateOrderRequest request) {
-    _stateSubject.add(LoadingState(screenState));
+    stateSubject.add(LoadingState(screenState));
     _ordersService.updateOrder(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(

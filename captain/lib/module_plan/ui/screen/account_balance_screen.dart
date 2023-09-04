@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
@@ -7,33 +9,40 @@ import 'package:c4d/module_plan/ui/screen/captain_financial_dues_screen.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/flat_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class AccountBalanceScreen extends StatefulWidget {
-  final AccountBalanceStateManager _manager;
-
-  const AccountBalanceScreen(this._manager);
+  const AccountBalanceScreen();
 
   @override
   State<StatefulWidget> createState() => AccountBalanceScreenState();
 }
 
 class AccountBalanceScreenState extends State<AccountBalanceScreen> {
-  States? _currentState;
+  late States _currentState;
+  late AccountBalanceStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   String? selectedPlan;
   @override
   void initState() {
     _currentState = LoadingState(this);
-    widget._manager.stateSubject.listen((value) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((value) {
       _currentState = value;
       if (mounted) setState(() {});
     });
-    widget._manager.getAccountBalance(this);
+    _stateManager.getAccountBalance(this);
     super.initState();
   }
 
-  AccountBalanceStateManager get manager => widget._manager;
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
+  AccountBalanceStateManager get manager => _stateManager;
   void refresh() {
     if (mounted) setState(() {});
   }
@@ -99,7 +108,7 @@ class AccountBalanceScreenState extends State<AccountBalanceScreen> {
         },
         children: [
           Scaffold(
-            body: _currentState?.getUI(context) ?? Container(),
+            body: _currentState.getUI(context),
           ),
           getIt<CaptainFinancialDuesScreen>()
         ],

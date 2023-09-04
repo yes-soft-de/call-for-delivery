@@ -13,8 +13,8 @@ class CreateCaptainProfileResponse {
       msg = json['msg'];
       data = json['Data'];
     } catch (e) {
-      Logger().error('Create Captain Profile Response', '${e.toString()}',
-          StackTrace.current);
+      Logger.error(
+          'Create Captain Profile Response', e.toString(), StackTrace.current);
       statusCode = '-1';
     }
   }

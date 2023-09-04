@@ -1,17 +1,23 @@
 import 'package:c4d/abstracts/data_model/data_model.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_deep_links/manager/deep_link_manager.dart';
 import 'package:c4d/module_deep_links/model/geo_model.dart';
-import 'package:c4d/module_deep_links/repository/deep_link_repository.dart';
 import 'package:c4d/module_deep_links/request/geo_distance_request.dart';
 import 'package:c4d/module_deep_links/response/geo_distance_x/geo_distance_x.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
+import 'package:c4d/utils/logger/logger.dart';
+import 'package:geolocator/geolocator.dart';
+import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:uni_links/uni_links.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:c4d/utils/logger/logger.dart';
 
+@injectable
 class DeepLinksService {
+  static DeepLinkManager _deepLinkManager = getIt();
+
+  DeepLinksService();
+
   static Future<LatLng?> checkForGeoLink() async {
     var uri = await getInitialUri();
 
@@ -42,7 +48,7 @@ class DeepLinksService {
       //   }
       // }
       LocationPermission checkPermission = await Geolocator.checkPermission();
-      // 
+      //
       permission = await Geolocator.checkPermission();
       if (permission == LocationPermission.denied) {
         permission = await Geolocator.requestPermission();
@@ -58,7 +64,7 @@ class DeepLinksService {
       LatLng myPos = LatLng(myLocation.latitude, myLocation.longitude);
       return myPos;
     } catch (e) {
-      Logger().error('Get Location', e.toString(), StackTrace.current);
+      Logger.error('Get Location', e.toString(), StackTrace.current);
       LocationPermission checkPermission = await Geolocator.checkPermission();
       var serviceEnabled = await Geolocator.isLocationServiceEnabled();
       if (LocationPermission.whileInUse == checkPermission && serviceEnabled) {
@@ -90,8 +96,7 @@ class DeepLinksService {
   }
 
   static Future<DataModel> getGeoDistance(GeoDistanceRequest request) async {
-    GeoDistanceX? response =
-        await getIt<DeepLinkRepository>().getDistance(request);
+    GeoDistanceX? response = await _deepLinkManager.getDistance(request);
     if (response == null) return DataModel.withError(S.current.networkError);
     if (response.statusCode != '200') {
       return DataModel.withError(

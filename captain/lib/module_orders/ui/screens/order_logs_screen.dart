@@ -1,23 +1,21 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
+import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_auth/authorization_routes.dart';
 import 'package:c4d/module_orders/request/order_filter_request.dart';
+import 'package:c4d/module_orders/state_manager/order_logs_state_manager.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/flat_bar.dart';
 import 'package:c4d/utils/helpers/order_status_helper.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
-import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_auth/authorization_routes.dart';
-import 'package:c4d/module_orders/state_manager/order_logs_state_manager.dart';
 import 'package:intl/intl.dart';
 
-@injectable
 class OrderLogsScreen extends StatefulWidget {
-  final OrderLogsStateManager _stateManager;
-
-  const OrderLogsScreen(this._stateManager);
+  const OrderLogsScreen();
 
   @override
   OrderLogsScreenState createState() => OrderLogsScreenState();
@@ -25,7 +23,36 @@ class OrderLogsScreen extends StatefulWidget {
 
 class OrderLogsScreenState extends State<OrderLogsScreen> {
   late States currentState;
+  late OrderLogsStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   int currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    currentState = LoadingState(this);
+    _stateManager = getIt();
+    ordersFilter = FilterOrderRequest(
+        state: 'ongoing',
+        fromDate: DateTime(today.year, today.month, today.day, 0),
+        toDate: DateTime.now());
+    _stateManager.getOrdersFilters(this, ordersFilter);
+    _stateSubscription = _stateManager.stateStream.listen((event) {
+      currentState = event;
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
   void refresh() {
     if (mounted) {
       setState(() {});
@@ -38,26 +65,10 @@ class OrderLogsScreenState extends State<OrderLogsScreen> {
   }
 
   var today = DateTime.now();
-  @override
-  void initState() {
-    super.initState();
-    currentState = LoadingState(this);
-    ordersFilter = FilterOrderRequest(
-        state: 'ongoing',
-        fromDate: DateTime(today.year, today.month, today.day, 0),
-        toDate: DateTime.now());
-    widget._stateManager.getOrdersFilters(this, ordersFilter);
-    widget._stateManager.stateStream.listen((event) {
-      currentState = event;
-      if (mounted) {
-        setState(() {});
-      }
-    });
-  }
 
   late FilterOrderRequest ordersFilter;
   Future<void> getOrders([bool loading = true]) async {
-    widget._stateManager.getOrdersFilters(this, ordersFilter, loading);
+    _stateManager.getOrdersFilters(this, ordersFilter, loading);
   }
 
   bool flag = true;

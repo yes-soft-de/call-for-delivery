@@ -15,13 +15,9 @@ class DeepLinkRepository {
   Future<GeoDistanceX?> getDistance(GeoDistanceRequest g) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(
-        Urls.GEO_DISTANCE +
-            '/${g.distance.latitude}' +
-            '/${g.distance.longitude}' +
-            '/${g.origin.latitude}' +
-            '/${g.origin.longitude}',
+        '${Urls.GEO_DISTANCE}/${g.distance.latitude}/${g.distance.longitude}/${g.origin.latitude}/${g.origin.longitude}',
         headers: {'Authorization': 'Bearer $token'});
     if (response == null) return null;
-    return GeoDistanceX.fromJson(response);
+    return GeoDistanceX.fromMap(response);
   }
 }

@@ -17,7 +17,7 @@ class TermsResponse {
           data?.add(new Terms.fromJson(v));
         });
       } catch (e, stack) {
-        Logger().error('Network Error', '${e.toString()}:\n${stack.toString()}',
+        Logger.error('Network Error', '${e.toString()}:\n${stack.toString()}',
             StackTrace.current);
       }
     }

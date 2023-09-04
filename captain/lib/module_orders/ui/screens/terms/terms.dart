@@ -1,22 +1,21 @@
-import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
+import 'dart:async';
+
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_orders/state_manager/terms/terms_state_manager.dart';
 import 'package:c4d/module_orders/ui/state/terms/terms_state.dart';
+import 'package:flutter/material.dart';
 
-@injectable
 class TermsScreen extends StatefulWidget {
-  final TermsStateManager _stateManager;
-
-  TermsScreen(
-    this._stateManager,
-  );
+  const TermsScreen();
 
   @override
   TermsScreenState createState() => TermsScreenState();
 }
 
 class TermsScreenState extends State<TermsScreen> {
-  TermsListState? currentState;
+  late TermsListState currentState;
+  late TermsStateManager _stateManager;
+  late StreamSubscription _streamSubscription;
 
   void refresh() {
     setState(() {});
@@ -25,20 +24,28 @@ class TermsScreenState extends State<TermsScreen> {
   @override
   void initState() {
     super.initState();
-    widget._stateManager.termsStream.listen((event) {
+    _stateManager = getIt();
+    _streamSubscription = _stateManager.termsStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
       }
     });
-    widget._stateManager.getTerms(this);
+    _stateManager.getTerms(this);
+  }
+
+  @override
+  void dispose() {
+    _streamSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: currentState!.getUI(context),
+        child: currentState.getUI(context),
       ),
     );
   }

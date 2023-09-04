@@ -7,18 +7,15 @@ import 'package:c4d/module_my_notifications/ui/screen/my_notifications_screen.da
 
 @injectable
 class MyNotificationsModule extends YesModule {
-  final MyNotificationsScreen _myNotificationsScreen;
-  final UpdateScreen updateScreen;
-
-  MyNotificationsModule(this._myNotificationsScreen, this.updateScreen) {
+  MyNotificationsModule() {
     YesModule.RoutesMap.addAll(getRoutes());
   }
 
   Map<String, WidgetBuilder> getRoutes() {
     return {
       MyNotificationsRoutes.MY_NOTIFICATIONS: (context) =>
-          _myNotificationsScreen,
-      MyNotificationsRoutes.UPDATES_SCREEN: (context) => updateScreen,
+          const MyNotificationsScreen(),
+      MyNotificationsRoutes.UPDATES_SCREEN: (context) => const UpdateScreen(),
     };
   }
 }
