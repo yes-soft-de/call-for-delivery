@@ -77,7 +77,7 @@ class FireNotificationService {
                         roomID:
                             notificationModel.chatNotification?.roomID ?? '',
                         userID: notificationModel.chatNotification?.senderID,
-                        userType: null));
+                        userType: null, name: null));
               } else {
                 Navigator.pushNamed(GlobalVariable.navState.currentContext!,
                     notificationModel.navigateRoute ?? '',

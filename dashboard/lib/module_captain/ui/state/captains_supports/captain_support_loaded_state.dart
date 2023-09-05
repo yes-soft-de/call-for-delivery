@@ -83,7 +83,7 @@ class CaptainsNeedSupportLoadedState extends States {
                         arguments: ChatArgument(
                           roomID: model![index].roomID,
                           userType: 'captain',
-                          userID: int.parse(model![index].userId),
+                          userID: int.parse(model![index].userId), name: model![index].captainName,
                         ),
                       );
                     },

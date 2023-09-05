@@ -85,9 +85,11 @@ class StoresNeedSupportLoadedState extends States {
                     Navigator.of(context).pushNamed(
                       ThemePreferencesHelper().getChatRoute(),
                       arguments: ChatArgument(
-                          roomID: element.roomID,
-                          userType: 'store',
-                          userID: int.parse(element.userId)),
+                        roomID: element.roomID,
+                        userType: 'store',
+                        userID: int.parse(element.userId),
+                        name: element.storeName,
+                      ),
                     );
                   },
                 );

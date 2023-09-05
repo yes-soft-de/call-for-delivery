@@ -58,9 +58,11 @@ class SupplierNeedSupportLoadedState extends States {
             Navigator.of(context).pushNamed(
               ChatRoutes.chatRoute,
               arguments: ChatArgument(
-                  roomID: element.roomID,
-                  userType: 'supplier',
-                  userID: int.parse(element.userId)),
+                roomID: element.roomID,
+                userType: 'supplier',
+                userID: int.parse(element.userId),
+                name: element.captainName,
+              ),
             );
           },
         );

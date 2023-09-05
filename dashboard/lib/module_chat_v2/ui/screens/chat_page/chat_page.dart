@@ -87,7 +87,8 @@ class Chat2PageState extends State<Chat2Page> with WidgetsBindingObserver {
         }
       },
       child: Scaffold(
-          appBar: CustomC4dAppBar.appBar(context, title: S.current.chatRoom),
+          appBar: CustomC4dAppBar.appBar(context,
+              title: args.name ?? S.current.chatRoom),
           body: Chat(
             onAttachmentPressed: () {
               showImageDialogPicker(context,
@@ -209,7 +210,8 @@ class Chat2PageState extends State<Chat2Page> with WidgetsBindingObserver {
       if (chatExist(newChats[i])) {
         continue;
       }
-      if ((newChats[i].messageType == 1 || newChats[i].messageType == null) && newChats[i].msg?.contains(Urls.IMAGES_ROOT) == false) {
+      if ((newChats[i].messageType == 1 || newChats[i].messageType == null) &&
+          newChats[i].msg?.contains(Urls.IMAGES_ROOT) == false) {
         _messages.insert(
             0,
             types.TextMessage(
@@ -221,7 +223,9 @@ class Chat2PageState extends State<Chat2Page> with WidgetsBindingObserver {
               type: types.MessageType.text,
               author: types.User(
                 id: newChats[i].sender ?? S.current.unknown,
-                firstName: newChats[i].sender ?? S.current.unknown,
+                firstName: newChats[i].senderName ??
+                    newChats[i].sender ??
+                    S.current.unknown,
               ),
             ));
       } else if (newChats[i].messageType == 2 ||
@@ -232,14 +236,18 @@ class Chat2PageState extends State<Chat2Page> with WidgetsBindingObserver {
               createdAt: newChats[i].sentDate,
               name: newChats[i].msg?.split('/').last ?? S.current.unknown,
               size: 1024,
-              uri:newChats[i].msg?.contains(Urls.IMAGES_ROOT) == true ? newChats[i].msg! : Urls.IMAGES_ROOT + (newChats[i].msg ?? ''),
+              uri: newChats[i].msg?.contains(Urls.IMAGES_ROOT) == true
+                  ? newChats[i].msg!
+                  : Urls.IMAGES_ROOT + (newChats[i].msg ?? ''),
               id: newChats[i].id ??
                   newChats[i].sentDate?.toString() ??
                   const Uuid().v1(),
               type: types.MessageType.image,
               author: types.User(
                 id: newChats[i].sender ?? S.current.unknown,
-                firstName: newChats[i].sender ?? S.current.unknown,
+                firstName: newChats[i].senderName ??
+                    newChats[i].sender ??
+                    S.current.unknown,
               ),
             ));
       } else {
@@ -254,7 +262,7 @@ class Chat2PageState extends State<Chat2Page> with WidgetsBindingObserver {
               type: types.MessageType.text,
               author: types.User(
                 id: newChats[i].sender ?? S.current.unknown,
-                firstName: newChats[i].sender ?? S.current.unknown,
+                firstName:newChats[i].senderName ?? newChats[i].sender ?? S.current.unknown,
               ),
             ));
       }

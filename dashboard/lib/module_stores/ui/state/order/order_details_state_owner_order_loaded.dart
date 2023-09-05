@@ -41,12 +41,14 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 class OrderDetailsStateOwnerOrderLoaded extends States {
   OrderDetailsModel orderInfo;
   final OrderDetailsScreenState screenState;
+
   OrderDetailsStateOwnerOrderLoaded(
     this.screenState,
     this.orderInfo,
   ) : super(screenState) {
     screenState.canRemoveOrder = orderInfo.canRemove;
   }
+
   @override
   Widget getUI(BuildContext context) {
     var decoration = BoxDecoration(
@@ -498,10 +500,12 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25)),
                     onTap: () {
-                      Navigator.of(context).pushNamed(ThemePreferencesHelper().getChatRoute(),
+                      Navigator.of(context).pushNamed(
+                          ThemePreferencesHelper().getChatRoute(),
                           arguments: ChatArgument(
                               roomID: orderInfo.roomID ?? '',
-                              userType: 'captain'));
+                              userType: 'captain',
+                              name: orderInfo.captainName));
                     },
                     leading: Icon(
                       Icons.chat_bubble_rounded,

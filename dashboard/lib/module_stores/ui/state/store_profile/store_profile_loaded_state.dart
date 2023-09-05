@@ -251,11 +251,13 @@ class StoreProfileLoadedState extends States {
               image: ImageAsset.CHAT,
               title: S.of(context).chatRoom,
               onTapCard: () {
-                Navigator.of(context).pushNamed(ThemePreferencesHelper().getChatRoute(),
+                Navigator.of(context).pushNamed(
+                    ThemePreferencesHelper().getChatRoute(),
                     arguments: ChatArgument(
                         roomID: profile?.roomId ?? '',
                         userID: profile?.storeId,
-                        userType: ''));
+                        userType: '',
+                        name: profile?.storeOwnerName));
               }),
           cardTap(
               image: ImageAsset.PAYMENT,

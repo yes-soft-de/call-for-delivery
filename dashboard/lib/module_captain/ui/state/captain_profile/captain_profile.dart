@@ -449,7 +449,7 @@ class CaptainProfileLoadedState extends States {
             Navigator.of(context).pushNamed(ThemePreferencesHelper().getChatRoute(),
                 arguments: ChatArgument(
                     roomID: model?.roomId ?? '',
-                    userType: model?.captainId.toString()));
+                    userType: model?.captainId.toString(), name: model?.name));
           },
           title: S.of(context).chatRoom,
         ),
