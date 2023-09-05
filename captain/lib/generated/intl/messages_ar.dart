@@ -176,6 +176,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancelled2": MessageLookupByLibrary.simpleMessage("ملغاة"),
         "cancelledHint": MessageLookupByLibrary.simpleMessage(
             "الطلب تم إلغاءه من جهة العميل"),
+        "cantAcceptOrderBecauseOrderWithStatusCaptainInWayToStoreExist":
+            MessageLookupByLibrary.simpleMessage(
+                "لا يمكن قبول طلب جديد بسبب وجود طلب/ات سابقة حالتها \"الكابتن في طريقه الى المتجر\""),
         "captain": MessageLookupByLibrary.simpleMessage("كابتن"),
         "captainAcceptOrderDescription":
             MessageLookupByLibrary.simpleMessage("أنا في طريقي إلى المتجر"),
@@ -189,6 +192,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("حصل الكابتن على الكاش"),
         "captainGotTheCash":
             MessageLookupByLibrary.simpleMessage("حصل الكابتن على المال"),
+        "captainHasTowIngoingOrderCantAcceptNewOrder":
+            MessageLookupByLibrary.simpleMessage(
+                "الكابتن لديه طلبين جاريين حاليا, لا يمكنه قبول طلب جديد"),
         "captainInStore": MessageLookupByLibrary.simpleMessage("وصلت المتجر"),
         "captainInStoreDescription":
             MessageLookupByLibrary.simpleMessage("المتجر يقوم بتجهيز الطلب"),
