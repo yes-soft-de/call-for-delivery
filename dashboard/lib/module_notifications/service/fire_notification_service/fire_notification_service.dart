@@ -1,6 +1,5 @@
 import 'dart:async';
 import 'dart:io' as p;
-import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_notifications/model/notification_model.dart';
