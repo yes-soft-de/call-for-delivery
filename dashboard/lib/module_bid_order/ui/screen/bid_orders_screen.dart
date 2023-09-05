@@ -14,9 +14,7 @@ import 'package:intl/intl.dart';
 
 @injectable
 class BidOrdersScreen extends StatefulWidget {
-  final BidOrderStateManager _stateManager;
-
-  BidOrdersScreen(this._stateManager);
+  BidOrdersScreen();
 
   @override
   BidOrdersScreenState createState() => BidOrdersScreenState();
@@ -24,10 +22,11 @@ class BidOrdersScreen extends StatefulWidget {
 
 class BidOrdersScreenState extends State<BidOrdersScreen> {
   late States _currentState;
-  StreamSubscription? _stateSubscription;
+  late BidOrderStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
 
   void getBidOrdersFilters() {
-    widget._stateManager.getBidOrder(this, ordersFilter);
+    _stateManager.getBidOrder(this, ordersFilter);
   }
 
   bool openToPriceOffer = true;
@@ -40,7 +39,8 @@ class BidOrdersScreenState extends State<BidOrdersScreen> {
   void initState() {
     super.initState();
     _currentState = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       _currentState = event;
       if (mounted) {
         setState(() {});
@@ -60,7 +60,7 @@ class BidOrdersScreenState extends State<BidOrdersScreen> {
                 .toIso8601String(),
             toDate: DateTime.now().toIso8601String(),
             openToPriceOffer: openToPriceOffer);
-        widget._stateManager.getBidOrder(this, ordersFilter);
+        _stateManager.getBidOrder(this, ordersFilter);
       }
     }
     return Scaffold(
@@ -80,7 +80,7 @@ class BidOrdersScreenState extends State<BidOrdersScreen> {
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
-                      color: Theme.of(context).backgroundColor,
+                      color: Theme.of(context).colorScheme.background,
                     ),
                     child: Material(
                       color: Colors.transparent,
@@ -128,14 +128,14 @@ class BidOrdersScreenState extends State<BidOrdersScreen> {
                   child: Container(
                     width: 32,
                     height: 2.5,
-                    color: Theme.of(context).backgroundColor,
+                    color: Theme.of(context).colorScheme.background,
                   ),
                 ),
                 Expanded(
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(25),
-                      color: Theme.of(context).backgroundColor,
+                      color: Theme.of(context).colorScheme.background,
                     ),
                     child: Material(
                       color: Colors.transparent,
@@ -186,7 +186,7 @@ class BidOrdersScreenState extends State<BidOrdersScreen> {
           FilterBar(
             cursorRadius: BorderRadius.circular(25),
             animationDuration: Duration(milliseconds: 350),
-            backgroundColor: Theme.of(context).backgroundColor,
+            backgroundColor: Theme.of(context).colorScheme.background,
             currentIndex: currentIndex,
             borderRadius: BorderRadius.circular(25),
             floating: true,
@@ -204,8 +204,8 @@ class BidOrdersScreenState extends State<BidOrdersScreen> {
               currentIndex = index;
               getBidOrdersFilters();
             },
-            selectedContent: Theme.of(context).textTheme.button!.color!,
-            unselectedContent: Theme.of(context).textTheme.headline6!.color!,
+            selectedContent: Theme.of(context).textTheme.labelLarge!.color!,
+            unselectedContent: Theme.of(context).textTheme.titleLarge!.color!,
             cursorColor: Theme.of(context).primaryColor,
           ),
           SizedBox(
@@ -219,7 +219,8 @@ class BidOrdersScreenState extends State<BidOrdersScreen> {
 
   @override
   void dispose() {
-    _stateSubscription?.cancel();
+    _stateSubscription.cancel();
+    _stateManager.dispose();
     super.dispose();
   }
 }

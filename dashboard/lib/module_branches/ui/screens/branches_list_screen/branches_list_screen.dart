@@ -9,25 +9,25 @@ import 'package:c4d/module_branches/state_manager/branches_list_state_manager/br
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class BranchesListScreen extends StatefulWidget {
-  final BranchesListStateManager _manager;
-
-  const BranchesListScreen(this._manager);
+  const BranchesListScreen();
   @override
   BranchesListScreenState createState() => BranchesListScreenState();
 }
 
 class BranchesListScreenState extends State<BranchesListScreen> {
-  States? currentState;
-  String? storeID = '-1';
+  late States currentState;
+  late BranchesListStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
   StreamSubscription? streamSubscription;
+
+  String? storeID = '-1';
   @override
   void initState() {
     currentState = LoadingState(this);
-    widget._manager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -35,7 +35,7 @@ class BranchesListScreenState extends State<BranchesListScreen> {
     });
     streamSubscription =
         getIt<GlobalStateManager>().stateStream.listen((event) {
-      widget._manager.getBranchesList(this, storeID ?? '-1');
+      _stateManager.getBranchesList(this, storeID ?? '-1');
       if (mounted) {
         setState(() {});
       }
@@ -50,11 +50,13 @@ class BranchesListScreenState extends State<BranchesListScreen> {
   @override
   void dispose() {
     streamSubscription?.cancel();
+    _stateSubscription.cancel();
+    _stateManager.dispose();
     super.dispose();
   }
 
   void deleteBranch(int id) {
-    widget._manager.deleteBranch(this, id, storeID ?? '-1');
+    _stateManager.deleteBranch(this, id, storeID ?? '-1');
   }
 
   @override
@@ -63,7 +65,7 @@ class BranchesListScreenState extends State<BranchesListScreen> {
       var arg = ModalRoute.of(context)?.settings.arguments;
       if (arg != null && arg is int) {
         storeID = arg.toString();
-        widget._manager.getBranchesList(this, storeID ?? '-1');
+        _stateManager.getBranchesList(this, storeID ?? '-1');
       }
     }
     return Scaffold(
@@ -72,13 +74,13 @@ class BranchesListScreenState extends State<BranchesListScreen> {
         title: S.current.branchManagement,
         actions: [
           CustomC4dAppBar.actionIcon(context, onTap: () {
-            print("hihiStore" + storeID.toString());
+            print('hihiStore' + storeID.toString());
             Navigator.of(context).pushNamed(BranchesRoutes.UPDATE_BRANCH_SCREEN,
                 arguments: storeID);
           }, icon: Icons.add_rounded)
         ],
       ),
-      body: currentState?.getUI(context),
+      body: currentState.getUI(context),
     );
   }
 }

@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_subscriptions/model/store_subscriptions_financial.dart';
 import 'package:c4d/module_subscriptions/request/delete_subscription_request.dart';
@@ -9,14 +12,9 @@ import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
 
-@injectable
 class StoreSubscriptionsFinanceDetailsScreen extends StatefulWidget {
-  final StoreFinancialSubscriptionsDuesDetailsStateManager _manager;
-  const StoreSubscriptionsFinanceDetailsScreen(
-    this._manager,
-  );
+  const StoreSubscriptionsFinanceDetailsScreen();
   @override
   State<StatefulWidget> createState() =>
       StoreSubscriptionsFinanceDetailsScreenState();
@@ -25,11 +23,14 @@ class StoreSubscriptionsFinanceDetailsScreen extends StatefulWidget {
 class StoreSubscriptionsFinanceDetailsScreenState
     extends State<StoreSubscriptionsFinanceDetailsScreen> {
   late States currentState;
+  late StoreFinancialSubscriptionsDuesDetailsStateManager _stateManager;
+  late StreamSubscription _streamSubscription;
 
   @override
   void initState() {
     currentState = StoreSubscriptionsFinanceDetailsStateLoaded(this);
-    manager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _streamSubscription = manager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         setState(() {});
@@ -39,8 +40,15 @@ class StoreSubscriptionsFinanceDetailsScreenState
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _streamSubscription.cancel();
+    _stateManager.dispose();
+    super.dispose();
+  }
+
   StoreFinancialSubscriptionsDuesDetailsStateManager get manager =>
-      widget._manager;
+      _stateManager;
 
   void refresh() {
     if (mounted) setState(() {});
@@ -52,8 +60,8 @@ class StoreSubscriptionsFinanceDetailsScreenState
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       Navigator.of(context).pop();
       CustomFlushBarHelper.createSuccess(
-              title: S.current.warnning,
-              message: S.current.deleteCaptainOfferSubscriptionSuccessfully);
+          title: S.current.warnning,
+          message: S.current.deleteCaptainOfferSubscriptionSuccessfully);
     });
   }
 
@@ -83,7 +91,7 @@ class StoreSubscriptionsFinanceDetailsScreenState
                                     return CustomAlertDialog(
                                       onPressed: () {
                                         Navigator.of(context).pop();
-                                        widget._manager.deleteSubscriptions(
+                                        _stateManager.deleteSubscriptions(
                                             this,
                                             DeleteSubscriptionsRequest(
                                                 id: model.id,
@@ -91,7 +99,7 @@ class StoreSubscriptionsFinanceDetailsScreenState
                                       },
                                       onPressed2: () {
                                         Navigator.of(context).pop();
-                                        widget._manager.deleteSubscriptions(
+                                        _stateManager.deleteSubscriptions(
                                             this,
                                             DeleteSubscriptionsRequest(
                                                 id: model.id,

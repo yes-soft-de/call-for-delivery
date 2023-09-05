@@ -6,15 +6,13 @@ import 'package:c4d/abstracts/module/yes_module.dart';
 
 @injectable
 class BidOrderModule extends YesModule {
-  final BidOrdersScreen bidOrdersScreen;
   BidOrderModule(
-    this.bidOrdersScreen,
   ) {
     YesModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
     return {
-      BidOrderRoutes.BID_ORDER: (context) => bidOrdersScreen,
+      BidOrderRoutes.BID_ORDER: (context) => BidOrdersScreen(),
     };
   }
 }

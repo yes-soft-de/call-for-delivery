@@ -1,18 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:injectable/injectable.dart';
+import 'dart:async';
+
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_company/request/create_company_profile.dart';
 import 'package:c4d/module_company/state_manager/company_profile_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:flutter/material.dart';
 
-@injectable
 class CompanyProfileScreen extends StatefulWidget {
-  final CompanyProfileStateManager _stateManager;
-
-  CompanyProfileScreen(this._stateManager);
+  CompanyProfileScreen();
 
   @override
   CompanyProfileScreenState createState() => CompanyProfileScreenState();
@@ -20,31 +19,42 @@ class CompanyProfileScreen extends StatefulWidget {
 
 class CompanyProfileScreenState extends State<CompanyProfileScreen> {
   late States currentState;
+  late CompanyProfileStateManager _stateManager;
+  late StreamSubscription _stateSubscription;
+
   bool canAddCategories = true;
 
   @override
   void initState() {
     currentState = LoadingState(this);
-    widget._stateManager.stateStream.listen((event) {
+    _stateManager = getIt();
+    _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
       if (mounted) {
         refresh();
       }
     });
-    widget._stateManager.getCompanyProfile(this);
+    _stateManager.getCompanyProfile(this);
     super.initState();
   }
 
+  @override
+  void dispose() {
+    _stateSubscription.cancel();
+    _stateManager.dispose(); 
+    super.dispose();
+  }
+
   void getCompanyProfile() {
-    widget._stateManager.getCompanyProfile(this);
+    _stateManager.getCompanyProfile(this);
   }
 
   void createProfile(CreateCompanyProfile request) {
-    widget._stateManager.createProfile(this, request);
+    _stateManager.createProfile(this, request);
   }
 
   void updateProfile(CreateCompanyProfile request) {
-    widget._stateManager.updateStore(this, request);
+    _stateManager.updateStore(this, request);
   }
 
   void refresh() {

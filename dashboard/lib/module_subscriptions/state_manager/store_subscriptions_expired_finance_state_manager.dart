@@ -1,3 +1,4 @@
+import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
 import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
@@ -8,11 +9,9 @@ import 'package:c4d/module_subscriptions/service/subscriptions_service.dart';
 import 'package:c4d/module_subscriptions/ui/screen/store_subscriptions_expired_screen.dart';
 import 'package:c4d/module_subscriptions/ui/state/store_expired_finaincial_subscription_state/store_subscriptions_state.dart';
 import 'package:injectable/injectable.dart';
-import 'package:rxdart/rxdart.dart';
 
 @injectable
-class StoreSubscriptionsExpiredFinanceStateManager {
-  final stateSubject = PublishSubject<States>();
+class StoreSubscriptionsExpiredFinanceStateManager extends StateManagerHandler {
   final SubscriptionsService _serviceService;
 
   StoreSubscriptionsExpiredFinanceStateManager(this._serviceService);
