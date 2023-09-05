@@ -2,6 +2,7 @@ import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/module_stores/model/store_need_support.dart';
 import 'package:c4d/module_stores/ui/screen/stores_needs_support_screen.dart';
 import 'package:c4d/module_stores/ui/widget/store_card.dart';
+import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/costom_search.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -82,7 +83,7 @@ class StoresNeedSupportLoadedState extends States {
                   image: element.image,
                   onTap: () {
                     Navigator.of(context).pushNamed(
-                      ChatRoutes.chatRoute,
+                      ThemePreferencesHelper().getChatRoute(),
                       arguments: ChatArgument(
                           roomID: element.roomID,
                           userType: 'store',

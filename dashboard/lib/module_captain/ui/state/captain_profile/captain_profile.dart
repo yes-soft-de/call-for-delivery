@@ -6,6 +6,7 @@ import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_payments/payments_routes.dart';
+import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:c4d/abstracts/states/state.dart';
@@ -445,7 +446,7 @@ class CaptainProfileLoadedState extends States {
         CaptainControlWidget(
           icon: Icons.chat,
           onPressed: () {
-            Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
+            Navigator.of(context).pushNamed(ThemePreferencesHelper().getChatRoute(),
                 arguments: ChatArgument(
                     roomID: model?.roomId ?? '',
                     userType: model?.captainId.toString()));

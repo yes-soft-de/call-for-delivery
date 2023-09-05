@@ -15,7 +15,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 1.0.105+27
+version: 1.1.105+27
 environment:
   sdk: ">=2.17.0 <3.0.0"
 
@@ -124,6 +124,7 @@ dependencies:
   bubble_tab_indicator: ^0.1.6
   group_button: ^5.2.2
   card_swiper: ^2.0.4
+  flutter_chat_ui: ^1.6.9
   simple_moment:
     git:
       url: https://github.com/Yazan99sh/simple_moment
