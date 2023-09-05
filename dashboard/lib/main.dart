@@ -22,6 +22,7 @@ import 'package:c4d/module_payments/payments_module.dart';
 import 'package:c4d/module_stores/stores_module.dart';
 import 'package:c4d/module_subscriptions/subscriptions_module.dart';
 import 'package:c4d/module_supplier_categories/categories_supplier_module.dart';
+import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:device_info/device_info.dart';
 import 'package:injectable/injectable.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
@@ -71,14 +72,14 @@ void main() async {
   await Firebase.initializeApp(
     options: kIsWeb
         ? FirebaseOptions(
-            apiKey: 'AIzaSyBI1NPRqgXwAHgRBuy_7IAXnnvM8XT-Fu0',
-            authDomain: 'c4d-app-c299b.firebaseapp.com',
-            projectId: 'c4d-app-c299b',
-            storageBucket: 'c4d-app-c299b.appspot.com',
-            messagingSenderId: '410273886458',
-            appId: '1:410273886458:web:78390256f1f5efb11f1943',
-            measurementId: 'G-XSMNHCSQGV',
-          )
+      apiKey: 'AIzaSyBI1NPRqgXwAHgRBuy_7IAXnnvM8XT-Fu0',
+      authDomain: 'c4d-app-c299b.firebaseapp.com',
+      projectId: 'c4d-app-c299b',
+      storageBucket: 'c4d-app-c299b.appspot.com',
+      messagingSenderId: '410273886458',
+      appId: '1:410273886458:web:78390256f1f5efb11f1943',
+      measurementId: 'G-XSMNHCSQGV',
+    )
         : null,
   );
   if (kIsWeb) {
@@ -109,33 +110,33 @@ void main() async {
 @injectable
 class MyApp extends StatefulWidget {
   MyApp(
-    this._themeDataService,
-    this._localizationService,
-    this._fireNotificationService,
-    this._localNotificationService,
-    this._splashModule,
-    this._authorizationModule,
-    this._chatModule,
-    this._settingsModule,
-    this._mainModule,
-    this._storesModule,
-    this._categoriesModule,
-    this._companyModule,
-    this._branchesModule,
-    this._noticeModule,
-    this._captainsModule,
-    this._paymentsModule,
-    this._supplierCategoriesModule,
-    this._supplierModule,
-    this._carsModule,
-    this._bidOrderModule,
-    this._ordersModule,
-    this._subscriptionsModule,
-    this._myNotificationsModule,
-    this._statisticsModule,
-    this._devModule,
-    this._externalDeliveryCompaniesModule,
-  );
+      this._themeDataService,
+      this._localizationService,
+      this._fireNotificationService,
+      this._localNotificationService,
+      this._splashModule,
+      this._authorizationModule,
+      this._chatModule,
+      this._settingsModule,
+      this._mainModule,
+      this._storesModule,
+      this._categoriesModule,
+      this._companyModule,
+      this._branchesModule,
+      this._noticeModule,
+      this._captainsModule,
+      this._paymentsModule,
+      this._supplierCategoriesModule,
+      this._supplierModule,
+      this._carsModule,
+      this._bidOrderModule,
+      this._ordersModule,
+      this._subscriptionsModule,
+      this._myNotificationsModule,
+      this._statisticsModule,
+      this._devModule,
+      this._externalDeliveryCompaniesModule,
+      );
 
   final AuthorizationModule _authorizationModule;
   final BidOrderModule _bidOrderModule;
@@ -199,7 +200,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       NotificationModel notificationModel = NotificationModel.fromJson(event);
       if (notificationModel.navigateRoute == ChatRoutes.chatRoute) {
         Navigator.pushNamed(GlobalVariable.navState.currentContext!,
-            notificationModel.navigateRoute ?? '',
+            ThemePreferencesHelper().getChatRoute(),
             arguments: ChatArgument(
                 roomID: notificationModel.chatNotification?.roomID ?? '',
                 userID: notificationModel.chatNotification?.senderID,
@@ -222,8 +223,8 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   }
 
   Widget getConfiguredApp(
-    Map<String, WidgetBuilder> fullRoutesList,
-  ) {
+      Map<String, WidgetBuilder> fullRoutesList,
+      ) {
     return FeatureDiscovery(
       child: MaterialApp(
         scrollBehavior: ScrollConfiguration.of(context).copyWith(
