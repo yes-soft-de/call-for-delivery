@@ -139,7 +139,7 @@ dependencies:
   internet_connection_checker: ^1.0.0+1
   new_version_plus: ^0.0.9
   card_swiper: ^2.0.4
-
+  flutter_chat_ui: ^1.6.9
 
 
 dev_dependencies:

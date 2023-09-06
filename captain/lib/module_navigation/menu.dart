@@ -1,7 +1,7 @@
 import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
-import 'package:c4d/module_chat/chat_routes.dart';
-import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:c4d/module_chat_v2/chat_routes.dart';
+import 'package:c4d/module_chat_v2/model/chat_argument.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
 import 'package:c4d/module_plan/plan_routes.dart';
 import 'package:c4d/module_profile/model/daily_model.dart';
@@ -21,6 +21,7 @@ class MenuScreen extends StatelessWidget {
   final CaptainOrdersScreenState screenState;
   final ProfileModel profileModel;
   final DailyFinanceModel dailyFinance;
+
   const MenuScreen(
     this.screenState,
     this.profileModel,
@@ -298,7 +299,8 @@ class MenuScreen extends StatelessWidget {
                     Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
                         arguments: ChatArgument(
                             roomID: profileModel.roomID ?? '',
-                            userType: 'Admin'));
+                            userType: 'Admin',
+                            name: null));
                   },
                   leading: const Icon(Icons.support_agent_rounded),
                   title: Text(S.of(context).directSupport),

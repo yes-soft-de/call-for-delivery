@@ -76,8 +76,7 @@ class _ChatWriterWidget extends State<ChatWriterWidget> {
                         CustomFlushBarHelper.createSuccess(
                                 title: S.current.note,
                                 message: S.current.uploadingImagesPleaseWait,
-                                background: Theme.of(context).primaryColor)
-                            .show(context);
+                                background: Theme.of(context).primaryColor);
                         widget.uploadService
                             .uploadImage(imageFile!.path)
                             .then((value) {

@@ -1,7 +1,7 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
-import 'package:c4d/module_chat/chat_routes.dart';
-import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:c4d/module_chat_v2/chat_routes.dart';
+import 'package:c4d/module_chat_v2/model/chat_argument.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/ui/screens/order_status/order_status_without_actions.dart';
@@ -18,6 +18,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:simple_moment/simple_moment.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -29,12 +30,14 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 class OrderDetailsCaptainWithoutActionsOrderLoadedState extends States {
   OrderDetailsModel orderInfo;
   final OrderStatusWithoutActionsScreenState screenState;
+
   OrderDetailsCaptainWithoutActionsOrderLoadedState(
     this.screenState,
     this.orderInfo,
   ) : super(screenState);
   bool speaking = false;
   final TextEditingController noteController = TextEditingController();
+
   @override
   Widget getUI(BuildContext context) {
     return Scaffold(
@@ -657,7 +660,8 @@ class OrderDetailsCaptainWithoutActionsOrderLoadedState extends States {
               subtitle: S.current.canConnectHint,
               title: S.current.canConnect,
               onTap: () {
-                screenState.createChatRoom(orderInfo.id, orderInfo.storeId);
+                screenState.createChatRoom(
+                    orderInfo.id, orderInfo.storeId, orderInfo.storeName);
               },
             ),
           ),
@@ -672,9 +676,11 @@ class OrderDetailsCaptainWithoutActionsOrderLoadedState extends States {
               onTap: () {
                 Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
                     arguments: ChatArgument(
-                        roomID: orderInfo.roomID ?? '',
-                        userType: 'store',
-                        userID: orderInfo.storeId));
+                      roomID: orderInfo.roomID ?? '',
+                      userType: 'store',
+                      userID: orderInfo.storeId,
+                      name: orderInfo.storeName,
+                    ));
               },
             ),
           ),

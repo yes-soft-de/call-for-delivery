@@ -7,14 +7,14 @@ import 'package:c4d/module_settings/ui/settings_page/choose_local_page.dart';
 import 'package:c4d/module_settings/ui/settings_page/settings_page.dart';
 
 @injectable
-class SettingsModule extends YesModule {
+class SettingsModule extends RoutingModule {
   final SettingsScreen settingsScreen;
   final ChooseLocalScreen chooseLocalScreen;
   final PrivecyPolicy privecyPolicy;
   final TermsOfUse termsOfUse;
   SettingsModule(this.settingsScreen, this.chooseLocalScreen,
       this.privecyPolicy, this.termsOfUse) {
-    YesModule.RoutesMap.addAll({
+    RoutingModule.RoutesMap.addAll({
       SettingRoutes.ROUTE_SETTINGS: (context) => settingsScreen,
       SettingRoutes.CHOOSE_LANGUAGE: (context) => chooseLocalScreen,
       SettingRoutes.TERMS: (context) => termsOfUse,

@@ -2,8 +2,8 @@ import 'dart:async';
 import 'dart:developer';
 import 'dart:io' as p;
 import 'package:c4d/hive/hive_init.dart';
-import 'package:c4d/module_chat/chat_routes.dart';
-import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:c4d/module_chat_v2/chat_routes.dart';
+import 'package:c4d/module_chat_v2/model/chat_argument.dart';
 import 'package:c4d/module_notifications/model/notification_model.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
@@ -90,7 +90,8 @@ class FireNotificationService {
                         roomID:
                             notificationModel.chatNotification?.roomID ?? '',
                         userID: notificationModel.chatNotification?.senderID,
-                        userType: 'store'));
+                        userType: 'store',
+                        name: null));
               } else if (notificationModel.navigateRoute != null) {
                 Navigator.pushNamed(GlobalVariable.navState.currentContext!,
                     notificationModel.navigateRoute ?? '',
