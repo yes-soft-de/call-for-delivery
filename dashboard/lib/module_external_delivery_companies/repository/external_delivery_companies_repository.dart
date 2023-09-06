@@ -16,6 +16,7 @@ import 'package:c4d/module_external_delivery_companies/response/delivery_compani
 import 'package:c4d/module_external_delivery_companies/response/delivery_company_criteria_response/delivery_company_criteria_response.dart';
 import 'package:c4d/module_external_delivery_companies/response/external_order_response/order_pending_response.dart';
 import 'package:c4d/module_external_delivery_companies/response/feature_response/feature_response/feature_response.dart';
+import 'package:c4d/module_external_delivery_companies/response/naher_evan_captains_response/naher_evan_captains_response.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
 import 'package:injectable/injectable.dart';
 
@@ -215,5 +216,14 @@ class ExternalDeliveryCompaniesRepository {
     );
     if (response == null) return null;
     return ExternalOrderResponse.fromJson(response);
+  }
+
+    Future<NaherEvanCaptainsResponse?> getNaherEvanCaptains() async {
+    var token = await _authService.getToken();
+    // TODO: change url
+    dynamic response = await _apiClient.get(Urls.GET_CAPTAINS + 'inactive',
+        headers: {'Authorization': 'Bearer ' + token.toString()});
+    if (response == null) return null;
+    return NaherEvanCaptainsResponse.fromJson(response);
   }
 }

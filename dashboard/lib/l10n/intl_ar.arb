@@ -1154,5 +1154,6 @@
     "selectCaptainPlan": "اختيار خطة كابتن",
     "naherEvanOrdersPlan": "نهر ايفيان طلبات",
     "naherEvanHoursPlan": "نهر ايفيان ساعات",
+    "naherEvanCaptains": "كباتن نهر ايفيان",
     "orderIgnoredSuccessfully": "تم تجاهل الطلب بنجاح"
 }

@@ -11114,6 +11114,16 @@ class S {
     );
   }
 
+  /// `naher evan captains`
+  String get naherEvanCaptains {
+    return Intl.message(
+      'naher evan captains',
+      name: 'naherEvanCaptains',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Order ignored successfully`
   String get orderIgnoredSuccessfully {
     return Intl.message(

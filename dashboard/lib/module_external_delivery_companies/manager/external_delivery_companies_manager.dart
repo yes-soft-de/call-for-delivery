@@ -15,6 +15,7 @@ import 'package:c4d/module_external_delivery_companies/response/delivery_compani
 import 'package:c4d/module_external_delivery_companies/response/delivery_company_criteria_response/delivery_company_criteria_response.dart';
 import 'package:c4d/module_external_delivery_companies/response/external_order_response/order_pending_response.dart';
 import 'package:c4d/module_external_delivery_companies/response/feature_response/feature_response/feature_response.dart';
+import 'package:c4d/module_external_delivery_companies/response/naher_evan_captains_response/naher_evan_captains_response.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -71,4 +72,7 @@ class ExternalDeliveryCompaniesManager {
   Future<ExternalOrderResponse?> getExternalOrders(
           ExternalOrderRequest request) =>
       _repository.getExternalOrders(request);
+
+  Future<NaherEvanCaptainsResponse?> getNaherEvanCaptains() =>
+      _repository.getNaherEvanCaptains();
 }

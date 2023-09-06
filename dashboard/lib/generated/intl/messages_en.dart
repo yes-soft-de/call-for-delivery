@@ -932,6 +932,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "myProfile": MessageLookupByLibrary.simpleMessage("My Profile"),
         "myStatus": MessageLookupByLibrary.simpleMessage("My Status"),
         "naherEvan": MessageLookupByLibrary.simpleMessage("نهر ايفيان"),
+        "naherEvanCaptains":
+            MessageLookupByLibrary.simpleMessage("naher evan captains"),
         "naherEvanHoursPlan":
             MessageLookupByLibrary.simpleMessage("نهر ايفيان hours"),
         "naherEvanOrdersPlan":
