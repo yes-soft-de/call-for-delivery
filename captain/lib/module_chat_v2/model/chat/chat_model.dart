@@ -19,8 +19,7 @@ class ChatModel {
       sentDate = DateTime.tryParse(jsonData['sentDate'])?.millisecondsSinceEpoch;
     }
     if (jsonData['sentDate'] is int) {
-      sentDate =  DateTime.fromMillisecondsSinceEpoch(jsonData['sentDate'] ?? 1).toLocal().millisecondsSinceEpoch;
-      print(jsonData['sentDate']);
+      sentDate =  DateTime.fromMillisecondsSinceEpoch(jsonData['sentDate'] ?? 1).millisecondsSinceEpoch;
     }
     messageType = jsonData['messageType'];
   }
@@ -29,7 +28,7 @@ class ChatModel {
     Map<String, dynamic> jsonData = {
       'sender': sender,
       'msg': msg,
-      'sentDate': sentDate,
+      'sentDate': DateTime.fromMillisecondsSinceEpoch(sentDate!).toIso8601String(),
       'id': id,
       'messageType':messageType
     };
