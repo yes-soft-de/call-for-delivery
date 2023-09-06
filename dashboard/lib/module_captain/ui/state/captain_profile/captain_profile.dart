@@ -1,26 +1,26 @@
+import 'package:c4d/abstracts/states/state.dart';
+import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/hive/util/argument_hive_helper.dart';
+import 'package:c4d/module_captain/model/porfile_model.dart';
 import 'package:c4d/module_captain/request/captain_finance_request.dart';
+import 'package:c4d/module_captain/ui/screen/captain_profile_screen.dart';
 import 'package:c4d/module_captain/ui/widget/captain_control_widget.dart';
 import 'package:c4d/module_captain/ui/widget/captain_profile/captain_finance_info.dart';
-import 'package:c4d/module_chat/chat_routes.dart';
+import 'package:c4d/module_captain/ui/widget/captain_profile/custom_captain_profile_tile.dart';
+import 'package:c4d/module_captain/ui/widget/captain_profile/image_tile.dart';
+import 'package:c4d/module_captain/ui/widget/select_captain_type_dilaog.dart';
+import 'package:c4d/module_captain/ui/widget/update_captain_widget.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_orders/orders_routes.dart';
 import 'package:c4d/module_payments/payments_routes.dart';
 import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
-import 'package:flutter/material.dart';
-import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_captain/model/porfile_model.dart';
-import 'package:c4d/module_captain/ui/screen/captain_profile_screen.dart';
-import 'package:c4d/module_captain/ui/widget/captain_profile/custom_captain_profile_tile.dart';
-import 'package:c4d/module_captain/ui/widget/captain_profile/image_tile.dart';
-import 'package:c4d/module_captain/ui/widget/update_captain_widget.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/empty_screen.dart';
 import 'package:c4d/utils/components/error_screen.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -396,6 +396,55 @@ class CaptainProfileLoadedState extends States {
                 }),
           ),
         ),
+        Padding(
+          padding: const EdgeInsets.only(left: 8.0, right: 8.0, top: 8.0),
+          child: SizedBox(
+            height: 70,
+            child: ElevatedButton(
+              style: ButtonStyle(
+                padding: MaterialStatePropertyAll(
+                  EdgeInsets.symmetric(horizontal: 18),
+                ),
+              ),
+              onPressed: () {
+                showPickCaptainPlanDialog(context);
+              },
+              child: Row(
+                children: [
+                  Container(
+                    height: 40,
+                    width: 40,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.white),
+                    child: Icon(Icons.account_box_rounded,
+                        color: Theme.of(context).primaryColor),
+                  ),
+                  SizedBox(width: 20),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        S.current.captainPlan,
+                        style: Theme.of(context)
+                            .textTheme
+                            .titleMedium
+                            ?.copyWith(color: Colors.white),
+                      ),
+                      Text(
+                        model?.planType.name ?? S.current.unknown,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
         CaptainControlWidget(
           icon: Icons.account_balance_wallet_rounded,
           onPressed: () {
@@ -446,10 +495,12 @@ class CaptainProfileLoadedState extends States {
         CaptainControlWidget(
           icon: Icons.chat,
           onPressed: () {
-            Navigator.of(context).pushNamed(ThemePreferencesHelper().getChatRoute(),
+            Navigator.of(context).pushNamed(
+                ThemePreferencesHelper().getChatRoute(),
                 arguments: ChatArgument(
                     roomID: model?.roomId ?? '',
-                    userType: model?.captainId.toString(), name: model?.name));
+                    userType: model?.captainId.toString(),
+                    name: model?.name));
           },
           title: S.of(context).chatRoom,
         ),
@@ -548,6 +599,20 @@ class CaptainProfileLoadedState extends States {
           ),
         ),
       ],
+    );
+  }
+
+  void showPickCaptainPlanDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return SelectPlanTypeDialog(
+          model: model!,
+          onPlanChange: (planType) {
+            // TODO: call the change captain plan api
+          },
+        );
+      },
     );
   }
 }

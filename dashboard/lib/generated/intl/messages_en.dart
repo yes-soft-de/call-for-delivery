@@ -301,6 +301,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain paid to provider ?"),
         "captainPayments":
             MessageLookupByLibrary.simpleMessage("Captain Payments"),
+        "captainPlan": MessageLookupByLibrary.simpleMessage("captain plan"),
         "captainProfit": MessageLookupByLibrary.simpleMessage("captain profit"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("Captain rated successfully"),
@@ -539,6 +540,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "days": MessageLookupByLibrary.simpleMessage("days"),
         "deadLine": MessageLookupByLibrary.simpleMessage("Dead Line"),
         "defaultBranch": MessageLookupByLibrary.simpleMessage("Default Branch"),
+        "defaultPlan": MessageLookupByLibrary.simpleMessage("default plan"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleteAccount": MessageLookupByLibrary.simpleMessage("Delete Account"),
         "deleteAllFutureSubscriptions": MessageLookupByLibrary.simpleMessage(
@@ -929,6 +931,11 @@ class MessageLookup extends MessageLookupByLibrary {
         "myPlan": MessageLookupByLibrary.simpleMessage("My Plan"),
         "myProfile": MessageLookupByLibrary.simpleMessage("My Profile"),
         "myStatus": MessageLookupByLibrary.simpleMessage("My Status"),
+        "naherEvan": MessageLookupByLibrary.simpleMessage("نهر ايفيان"),
+        "naherEvanHoursPlan":
+            MessageLookupByLibrary.simpleMessage("نهر ايفيان hours"),
+        "naherEvanOrdersPlan":
+            MessageLookupByLibrary.simpleMessage("نهر ايفيان orders"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "nameHint": MessageLookupByLibrary.simpleMessage("e.g yazan"),
         "nameIsRequired":
@@ -1409,6 +1416,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Searching for Captain"),
         "second": MessageLookupByLibrary.simpleMessage("second"),
         "seconds": MessageLookupByLibrary.simpleMessage("seconds"),
+        "selectCaptainPlan":
+            MessageLookupByLibrary.simpleMessage("select captain plan"),
         "selectLanguage":
             MessageLookupByLibrary.simpleMessage("Select Language"),
         "selectYear": MessageLookupByLibrary.simpleMessage("select year"),

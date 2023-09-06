@@ -11054,6 +11054,66 @@ class S {
     );
   }
 
+  /// `captain plan`
+  String get captainPlan {
+    return Intl.message(
+      'captain plan',
+      name: 'captainPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `default plan`
+  String get defaultPlan {
+    return Intl.message(
+      'default plan',
+      name: 'defaultPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `نهر ايفيان`
+  String get naherEvan {
+    return Intl.message(
+      'نهر ايفيان',
+      name: 'naherEvan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `نهر ايفيان orders`
+  String get naherEvanOrdersPlan {
+    return Intl.message(
+      'نهر ايفيان orders',
+      name: 'naherEvanOrdersPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `نهر ايفيان hours`
+  String get naherEvanHoursPlan {
+    return Intl.message(
+      'نهر ايفيان hours',
+      name: 'naherEvanHoursPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `select captain plan`
+  String get selectCaptainPlan {
+    return Intl.message(
+      'select captain plan',
+      name: 'selectCaptainPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Order ignored successfully`
   String get orderIgnoredSuccessfully {
     return Intl.message(

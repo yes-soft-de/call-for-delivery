@@ -1148,6 +1148,11 @@
     "orderConflictDistanceNotExist": "order conflict distance not exist",
     "dev": "Dev",
     "orderCanceledFromMarsoolByAdmin": "order canceled from marsool by admin",
+    "captainPlan": "captain plan",
+    "defaultPlan": "default plan",
+    "naherEvan": "نهر ايفيان",
+    "naherEvanOrdersPlan": "نهر ايفيان orders",
+    "naherEvanHoursPlan": "نهر ايفيان hours",
+    "selectCaptainPlan": "select captain plan",
     "orderIgnoredSuccessfully": "Order ignored successfully"
-
 }
