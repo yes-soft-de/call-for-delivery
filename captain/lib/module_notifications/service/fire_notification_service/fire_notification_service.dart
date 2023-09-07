@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:developer';
 import 'dart:io' as p;
+import 'package:c4d/di/di_config.dart';
 import 'package:c4d/hive/hive_init.dart';
 import 'package:c4d/module_chat_v2/chat_routes.dart';
 import 'package:c4d/module_chat_v2/model/chat_argument.dart';
@@ -74,7 +75,7 @@ class FireNotificationService {
       try {
         _notificationRepo.postToken(token);
         FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-          playSound();
+          //playSound();
           NotificationsPrefHelper().setNewLocalNotification();
           _onNotificationReceived.add(message);
         });
@@ -111,10 +112,11 @@ class FireNotificationService {
 
   static Future<dynamic> backgroundMessageHandler(RemoteMessage message) async {
     await HiveSetUp.init();
+    configureDependencies();
     NotificationsPrefHelper().setNewLocalNotification();
     Logger.info('Background Message Handler', 'onMessage: $message');
     _onNotificationReceived.add(message);
-    await playSound();
+    //await playSound();
     return Future<void>.value();
   }
 
