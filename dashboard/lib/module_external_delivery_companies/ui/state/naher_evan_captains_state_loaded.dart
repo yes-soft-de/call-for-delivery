@@ -1,8 +1,8 @@
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_captain/ui/widget/captain_card.dart';
 import 'package:c4d/module_external_delivery_companies/model/naher_evan_captains_model.dart';
 import 'package:c4d/module_external_delivery_companies/ui/screen/naher_evan_captains_screen.dart';
+import 'package:c4d/module_external_delivery_companies/ui/widgets/evan_captain_card.dart';
 import 'package:c4d/utils/components/costom_search.dart';
 import 'package:c4d/utils/components/fixed_container.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +50,7 @@ class NaherEvanCaptainsStateLoaded extends States {
                       .contains(search?.toLowerCase() ?? '')) {
                 return SizedBox();
               }
-              return CaptainCard(
+              return EvanCaptainCard(
                 key: ValueKey(captains[index].captainID),
                 captainId: captains[index].captainID,
                 captainName: captains[index].captainName,

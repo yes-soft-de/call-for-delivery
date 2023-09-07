@@ -4,23 +4,24 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/global_nav_key.dart';
-import 'package:c4d/module_external_delivery_companies/state_manager/naher_evan_captains_state_manager.dart';
+import 'package:c4d/module_external_delivery_companies/request/naher_evan_captain_request/naher_evan_captain_request.dart';
+import 'package:c4d/module_external_delivery_companies/state_manager/naher_evan_captain_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
-class NaherEvanCaptainsScreen extends StatefulWidget {
-  const NaherEvanCaptainsScreen();
+class NaherEvanCaptainScreen extends StatefulWidget {
+  const NaherEvanCaptainScreen();
 
   @override
-  State<NaherEvanCaptainsScreen> createState() =>
-      NaherEvanCaptainsScreenState();
+  State<NaherEvanCaptainScreen> createState() => NaherEvanCaptainScreenState();
 }
 
-class NaherEvanCaptainsScreenState extends State<NaherEvanCaptainsScreen> {
+class NaherEvanCaptainScreenState extends State<NaherEvanCaptainScreen> {
   late States currentState;
-  late NaherEvanCaptainsStateManger _stateManager;
+  late NaherEvanCaptainStateManger _stateManager;
   late StreamSubscription _stateSubscription;
+
+  late NaherEvanCaptainRequest filter;
 
   @override
   void initState() {
@@ -34,11 +35,11 @@ class NaherEvanCaptainsScreenState extends State<NaherEvanCaptainsScreen> {
         setState(() {});
       }
     });
-    getNaherEvanCaptains();
+    getNaherEvanCaptain();
   }
 
-  Future<void> getNaherEvanCaptains() async {
-    _stateManager.getNaherEvanCaptains(this);
+  Future<void> getNaherEvanCaptain() async {
+    _stateManager.getNaherEvanCaptain(this, filter);
   }
 
   void refresh() {
@@ -52,8 +53,17 @@ class NaherEvanCaptainsScreenState extends State<NaherEvanCaptainsScreen> {
     super.dispose();
   }
 
+  bool flag = true;
+
   @override
   Widget build(BuildContext context) {
+    if (flag) {
+      var arg = ModalRoute.of(context)?.settings.arguments;
+      if (arg != null && arg is int) {
+        filter = NaherEvanCaptainRequest(captainProfileId: arg);
+        getNaherEvanCaptain();
+      }
+    }
     return GestureDetector(
       onTap: () {
         var focus = FocusScope.of(context);
@@ -65,10 +75,6 @@ class NaherEvanCaptainsScreenState extends State<NaherEvanCaptainsScreen> {
         appBar: CustomC4dAppBar.appBar(
           context,
           title: S.current.naherEvanCaptains,
-          icon: Icons.menu,
-          onTap: () {
-            GlobalVariable.mainScreenScaffold.currentState?.openDrawer();
-          },
         ),
         body: Center(child: currentState.getUI(context)),
       ),
