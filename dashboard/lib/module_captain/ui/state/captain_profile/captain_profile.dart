@@ -609,7 +609,10 @@ class CaptainProfileLoadedState extends States {
         return SelectPlanTypeDialog(
           model: model!,
           onPlanChange: (planType) {
-            // TODO: call the change captain plan api
+            screenState.changeCaptainFinancePlan(
+              model?.captainFinance?.id ?? 0,
+              planType.toInt,
+            );
           },
         );
       },

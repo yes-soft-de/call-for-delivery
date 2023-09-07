@@ -930,6 +930,7 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("نهر ايفيان ساعات"),
         "naherEvanOrdersPlan":
             MessageLookupByLibrary.simpleMessage("نهر ايفيان طلبات"),
+        "naherEvanPlan": MessageLookupByLibrary.simpleMessage("خطة نهر ايفيان"),
         "name": MessageLookupByLibrary.simpleMessage("الاسم"),
         "nameHint": MessageLookupByLibrary.simpleMessage("مثال يزن"),
         "nameIsRequired":

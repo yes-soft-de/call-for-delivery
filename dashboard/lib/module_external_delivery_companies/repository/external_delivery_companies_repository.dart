@@ -234,7 +234,7 @@ class ExternalDeliveryCompaniesRepository {
       NaherEvanCaptainRequest request) async {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.post(
-      Urls.GET_NAHER_EVAN_CAPTAINS,
+      Urls.GET_NAHER_EVAN_CAPTAIN,
       await request.toMap(),
       headers: {'Authorization': 'Bearer ' + token.toString()},
     );

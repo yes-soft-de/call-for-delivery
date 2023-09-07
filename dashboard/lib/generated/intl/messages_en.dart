@@ -938,6 +938,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("نهر ايفيان hours"),
         "naherEvanOrdersPlan":
             MessageLookupByLibrary.simpleMessage("نهر ايفيان orders"),
+        "naherEvanPlan":
+            MessageLookupByLibrary.simpleMessage("naher evan plan"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "nameHint": MessageLookupByLibrary.simpleMessage("e.g yazan"),
         "nameIsRequired":

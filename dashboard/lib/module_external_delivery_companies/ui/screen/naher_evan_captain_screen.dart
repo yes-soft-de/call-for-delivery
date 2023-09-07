@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
-import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_external_delivery_companies/request/naher_evan_captain_request/naher_evan_captain_request.dart';
 import 'package:c4d/module_external_delivery_companies/state_manager/naher_evan_captain_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
@@ -23,6 +22,8 @@ class NaherEvanCaptainScreenState extends State<NaherEvanCaptainScreen> {
 
   late NaherEvanCaptainRequest filter;
 
+  late String captainName;
+
   @override
   void initState() {
     super.initState();
@@ -35,7 +36,6 @@ class NaherEvanCaptainScreenState extends State<NaherEvanCaptainScreen> {
         setState(() {});
       }
     });
-    getNaherEvanCaptain();
   }
 
   Future<void> getNaherEvanCaptain() async {
@@ -58,9 +58,13 @@ class NaherEvanCaptainScreenState extends State<NaherEvanCaptainScreen> {
   @override
   Widget build(BuildContext context) {
     if (flag) {
+      flag = false;
       var arg = ModalRoute.of(context)?.settings.arguments;
-      if (arg != null && arg is int) {
-        filter = NaherEvanCaptainRequest(captainProfileId: arg);
+      if (arg != null && arg is List) {
+        if (arg.length == 2 && arg[0] is int && arg[1] is String) {
+          filter = NaherEvanCaptainRequest(captainProfileId: arg[0]);
+          captainName = arg[1];
+        }
         getNaherEvanCaptain();
       }
     }
@@ -74,7 +78,7 @@ class NaherEvanCaptainScreenState extends State<NaherEvanCaptainScreen> {
       child: Scaffold(
         appBar: CustomC4dAppBar.appBar(
           context,
-          title: S.current.naherEvanCaptains,
+          title: captainName,
         ),
         body: Center(child: currentState.getUI(context)),
       ),

@@ -9,14 +9,16 @@ class EvanCaptainCard extends StatelessWidget {
   final String image;
   final String captainName;
   final bool verificationStatus;
-  EvanCaptainCard(
-      {Key? key,
-      required this.captainId,
-      required this.profileID,
-      required this.image,
-      required this.captainName,
-      this.onTap,
-      required this.verificationStatus});
+
+  EvanCaptainCard({
+    Key? key,
+    required this.captainId,
+    required this.profileID,
+    required this.image,
+    required this.captainName,
+    this.onTap,
+    required this.verificationStatus,
+  });
 
   final Function()? onTap;
 
@@ -31,7 +33,7 @@ class EvanCaptainCard extends StatelessWidget {
         onTap: () {
           Navigator.of(context).pushNamed(
             ExternalDeliveryCompaniesRoutes.NAHER_EVAN_CAPTAIN_SCREEN,
-            arguments: profileID,
+            arguments: [profileID, captainName],
           );
         },
         child: Container(

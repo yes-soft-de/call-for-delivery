@@ -51,21 +51,12 @@ class _SelectPlanTypeDialogState extends State<SelectPlanTypeDialog> {
                   ),
                   SelectableItem<PlanType>(
                     onTap: () {
-                      widget.model.planType = PlanType.naherEvanOrders;
+                      widget.model.planType = PlanType.naherEvanPlan;
                       setState(() {});
                     },
-                    value: PlanType.naherEvanOrders,
+                    value: PlanType.naherEvanPlan,
                     selectedValue: widget.model.planType,
-                    title: PlanType.naherEvanOrders.name,
-                  ),
-                  SelectableItem<PlanType>(
-                    onTap: () {
-                      widget.model.planType = PlanType.naherEvanHours;
-                      setState(() {});
-                    },
-                    value: PlanType.naherEvanHours,
-                    selectedValue: widget.model.planType,
-                    title: PlanType.naherEvanHours.name,
+                    title: PlanType.naherEvanPlan.name,
                   ),
                 ],
               ),

@@ -7,21 +7,38 @@ import 'package:intl/intl.dart';
 
 enum PlanType {
   defaultPlan,
-  naherEvanOrders,
-  naherEvanHours,
+  naherEvanPlan,
   unknown;
 
   String get name {
     switch (this) {
       case PlanType.defaultPlan:
         return S.current.defaultPlan;
-      case PlanType.naherEvanOrders:
-        return S.current.naherEvanOrdersPlan;
-      case PlanType.naherEvanHours:
-        return S.current.naherEvanHoursPlan;
+      case PlanType.naherEvanPlan:
+        return S.current.naherEvanPlan;
       case PlanType.unknown:
         return S.current.unknown;
     }
+  }
+
+  int get toInt {
+    switch (this) {
+      case PlanType.defaultPlan:
+        return 4;
+      case PlanType.naherEvanPlan:
+        return 5;
+      case PlanType.unknown:
+        return -1;
+    }
+  }
+
+  static PlanType fromInt(int planType) {
+    if (planType == 4)
+      return PlanType.defaultPlan;
+    else if (planType == 5)
+      return PlanType.naherEvanPlan;
+    else
+      return PlanType.unknown;
   }
 }
 
@@ -84,7 +101,8 @@ class ProfileModel extends DataModel {
 
   ProfileModel.withData(Data data) : super.withData() {
     _models = ProfileModel(
-      planType: PlanType.defaultPlan,
+      planType: PlanType.fromInt(
+          data.financialSystemCaptainDetails?.captainFinancialSystemType ?? -1),
       captainFinance: getOrderCounts(data.financialSystemCaptainDetails),
       id: data.id ?? -1,
       image: data.image?.image,
@@ -123,6 +141,7 @@ class ProfileModel extends DataModel {
         roomId: '',
         planType: PlanType.defaultPlan,
       );
+      
   OrderCountsSystemDetails getOrderCounts(
       FinancialSystemCaptainDetails? finance) {
     return OrderCountsSystemDetails(

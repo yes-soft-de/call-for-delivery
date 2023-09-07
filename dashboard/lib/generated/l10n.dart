@@ -11124,6 +11124,16 @@ class S {
     );
   }
 
+  /// `naher evan plan`
+  String get naherEvanPlan {
+    return Intl.message(
+      'naher evan plan',
+      name: 'naherEvanPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Order ignored successfully`
   String get orderIgnoredSuccessfully {
     return Intl.message(
