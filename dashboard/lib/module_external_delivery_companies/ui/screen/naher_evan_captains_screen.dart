@@ -4,9 +4,7 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_external_delivery_companies/model/naher_evan_captains_model.dart';
 import 'package:c4d/module_external_delivery_companies/state_manager/naher_evan_captains_state_manager.dart';
-import 'package:c4d/module_external_delivery_companies/ui/state/naher_evan_captains_state_loaded.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:flutter/material.dart';
 
@@ -28,20 +26,6 @@ class NaherEvanCaptainsScreenState extends State<NaherEvanCaptainsScreen> {
     super.initState();
     currentState = LoadingState(this);
 
-    var list = [
-      NaherEvanCaptainsModel(
-        captainID: 1,
-        captainName: 'Mohsen',
-        image: '',
-        phoneNumber: '09xxxxxxx',
-        profileID: 12,
-        userID: '12',
-        verificationStatus: true,
-      )
-    ];
-
-    currentState = NaherEvanCaptainsStateLoaded(this, list);
-
     _stateManager = getIt();
     _stateSubscription = _stateManager.stateStream.listen((event) {
       currentState = event;
@@ -49,6 +33,7 @@ class NaherEvanCaptainsScreenState extends State<NaherEvanCaptainsScreen> {
         setState(() {});
       }
     });
+    getNaherEvanCaptains();
   }
 
   Future<void> getNaherEvanCaptains() async {

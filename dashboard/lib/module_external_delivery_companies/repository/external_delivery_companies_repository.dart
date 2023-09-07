@@ -218,11 +218,12 @@ class ExternalDeliveryCompaniesRepository {
     return ExternalOrderResponse.fromJson(response);
   }
 
-    Future<NaherEvanCaptainsResponse?> getNaherEvanCaptains() async {
+  Future<NaherEvanCaptainsResponse?> getNaherEvanCaptains() async {
     var token = await _authService.getToken();
-    // TODO: change url
-    dynamic response = await _apiClient.get(Urls.GET_CAPTAINS + 'inactive',
-        headers: {'Authorization': 'Bearer ' + token.toString()});
+    dynamic response = await _apiClient.get(
+      Urls.GET_NAHER_EVAN_CAPTAINS,
+      headers: {'Authorization': 'Bearer ' + token.toString()},
+    );
     if (response == null) return null;
     return NaherEvanCaptainsResponse.fromJson(response);
   }

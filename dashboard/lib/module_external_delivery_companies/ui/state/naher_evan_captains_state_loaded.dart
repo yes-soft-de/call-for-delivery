@@ -53,11 +53,9 @@ class NaherEvanCaptainsStateLoaded extends States {
               return CaptainCard(
                 key: ValueKey(captains[index].captainID),
                 captainId: captains[index].captainID,
-                captainName: captains[index].captainName == '0'
-                    ? captains[index].phoneNumber
-                    : captains[index].captainName,
+                captainName: captains[index].captainName,
                 image: captains[index].image,
-                verificationStatus: captains[index].verificationStatus,
+                verificationStatus: captains[index].status,
                 profileID: captains[index].profileID,
               );
             },
