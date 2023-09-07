@@ -12,10 +12,12 @@ import 'package:c4d/module_external_delivery_companies/request/company_request/u
 import 'package:c4d/module_external_delivery_companies/request/company_request/update_delivery_company_status_request.dart';
 import 'package:c4d/module_external_delivery_companies/request/external_order_request/external_orders_request.dart';
 import 'package:c4d/module_external_delivery_companies/request/feature_request/feature_request.dart';
+import 'package:c4d/module_external_delivery_companies/request/naher_evan_cpatain_request/naher_evan_cpatain_request.dart';
 import 'package:c4d/module_external_delivery_companies/response/delivery_companies_response/delivery_companies_response.dart';
 import 'package:c4d/module_external_delivery_companies/response/delivery_company_criteria_response/delivery_company_criteria_response.dart';
 import 'package:c4d/module_external_delivery_companies/response/external_order_response/order_pending_response.dart';
 import 'package:c4d/module_external_delivery_companies/response/feature_response/feature_response/feature_response.dart';
+import 'package:c4d/module_external_delivery_companies/response/naher_evan_captain_response/naher_evan_captain_response.dart';
 import 'package:c4d/module_external_delivery_companies/response/naher_evan_captains_response/naher_evan_captains_response.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
 import 'package:injectable/injectable.dart';
@@ -226,5 +228,17 @@ class ExternalDeliveryCompaniesRepository {
     );
     if (response == null) return null;
     return NaherEvanCaptainsResponse.fromJson(response);
+  }
+
+  Future<NaherEvanCaptainResponse?> getNaherEvanCaptain(
+      NaherEvanCaptainRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.post(
+      Urls.GET_NAHER_EVAN_CAPTAINS,
+      await request.toMap(),
+      headers: {'Authorization': 'Bearer ' + token.toString()},
+    );
+    if (response == null) return null;
+    return NaherEvanCaptainResponse.fromJson(response);
   }
 }

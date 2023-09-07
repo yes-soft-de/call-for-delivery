@@ -467,4 +467,7 @@ class Urls {
 
   static const GET_NAHER_EVAN_CAPTAINS = DOMAIN +
       '/v1/admin/captainfinancialsystemdetail/captainbycaptainfinancialsystemtype/5';
+
+  static const GET_NAHER_EVAN_CAPTAIN =
+      DOMAIN + '/v1/admin/captainpresence/filtercaptainpresence';
 }
