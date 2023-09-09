@@ -16,8 +16,8 @@ class NaherEvanCaptainRequest {
   Future<Map<String, dynamic>> toMap() async {
     return <String, dynamic>{
       'captainProfileId': captainProfileId,
-      if (fromDate != null) 'fromDate': fromDate,
-      if (toDate != null) 'toDate': toDate,
+      if (fromDate != null) 'fromDate': fromDate.toString(),
+      if (toDate != null) 'toDate': toDate.toString(),
       'customizedTimezone': await FlutterNativeTimezone.getLocalTimezone(),
     };
   }

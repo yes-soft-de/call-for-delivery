@@ -11134,6 +11134,86 @@ class S {
     );
   }
 
+  /// `online hours count`
+  String get onlineHoursCount {
+    return Intl.message(
+      'online hours count',
+      name: 'onlineHoursCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `delivered order count`
+  String get deliveredOrderCount {
+    return Intl.message(
+      'delivered order count',
+      name: 'deliveredOrderCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `created order count`
+  String get createdOrderCount {
+    return Intl.message(
+      'created order count',
+      name: 'createdOrderCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `online logs`
+  String get onlineLogs {
+    return Intl.message(
+      'online logs',
+      name: 'onlineLogs',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `captain presence`
+  String get captainPresence {
+    return Intl.message(
+      'captain presence',
+      name: 'captainPresence',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `online`
+  String get captainOnline {
+    return Intl.message(
+      'online',
+      name: 'captainOnline',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `offline`
+  String get captainOffline {
+    return Intl.message(
+      'offline',
+      name: 'captainOffline',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `no captain activity in the selected date`
+  String get noCaptainActivityInTheSelectedDateRange {
+    return Intl.message(
+      'no captain activity in the selected date',
+      name: 'noCaptainActivityInTheSelectedDateRange',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Order ignored successfully`
   String get orderIgnoredSuccessfully {
     return Intl.message(

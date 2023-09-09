@@ -297,11 +297,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainNote": MessageLookupByLibrary.simpleMessage("Captain Notes"),
         "captainOffer": MessageLookupByLibrary.simpleMessage("Captain offer"),
         "captainOffers": MessageLookupByLibrary.simpleMessage("Captain Offers"),
+        "captainOffline": MessageLookupByLibrary.simpleMessage("offline"),
+        "captainOnline": MessageLookupByLibrary.simpleMessage("online"),
         "captainPaidToProvider":
             MessageLookupByLibrary.simpleMessage("Captain paid to provider ?"),
         "captainPayments":
             MessageLookupByLibrary.simpleMessage("Captain Payments"),
         "captainPlan": MessageLookupByLibrary.simpleMessage("captain plan"),
+        "captainPresence":
+            MessageLookupByLibrary.simpleMessage("captain presence"),
         "captainProfit": MessageLookupByLibrary.simpleMessage("captain profit"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("Captain rated successfully"),
@@ -503,6 +507,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "createdDate": MessageLookupByLibrary.simpleMessage("Created date"),
         "createdNewOrder":
             MessageLookupByLibrary.simpleMessage("Created new order"),
+        "createdOrderCount":
+            MessageLookupByLibrary.simpleMessage("created order count"),
         "createdOrders": MessageLookupByLibrary.simpleMessage("created orders"),
         "criteriaCreatedButNotActivated": m1,
         "criteriaNotActivated": m2,
@@ -561,6 +567,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverForMe": MessageLookupByLibrary.simpleMessage("Deliver on me"),
         "deliverPrice": MessageLookupByLibrary.simpleMessage("deliver price"),
         "deliverTo": MessageLookupByLibrary.simpleMessage("Deliver To"),
+        "deliveredOrderCount":
+            MessageLookupByLibrary.simpleMessage("delivered order count"),
         "deliveredOrders":
             MessageLookupByLibrary.simpleMessage("delivered orders"),
         "deliveringDescription":
@@ -966,6 +974,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("Next Payment Date:"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
+        "noCaptainActivityInTheSelectedDateRange":
+            MessageLookupByLibrary.simpleMessage(
+                "no captain activity in the selected date"),
         "noComment": MessageLookupByLibrary.simpleMessage("No comments"),
         "noImage": MessageLookupByLibrary.simpleMessage("No Image"),
         "normalOrderStatusUpdateByFetchingItFromExternalCompany":
@@ -1013,6 +1024,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("oneStoreOrMore"),
         "ongoing": MessageLookupByLibrary.simpleMessage("Ongoing"),
         "online": MessageLookupByLibrary.simpleMessage("online"),
+        "onlineHoursCount":
+            MessageLookupByLibrary.simpleMessage("online hours count"),
+        "onlineLogs": MessageLookupByLibrary.simpleMessage("online logs"),
         "onlyExternal": MessageLookupByLibrary.simpleMessage("only external"),
         "open": MessageLookupByLibrary.simpleMessage("Open"),
         "openChatRoom": MessageLookupByLibrary.simpleMessage("Open Chat Room"),

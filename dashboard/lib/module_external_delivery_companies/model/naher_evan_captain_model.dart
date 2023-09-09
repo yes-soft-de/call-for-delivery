@@ -1,8 +1,8 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:c4d/abstracts/data_model/data_model.dart';
-import 'package:c4d/module_external_delivery_companies/response/naher_evan_captain_response/naher_evan_captain_response.dart';
 import 'package:c4d/module_external_delivery_companies/response/naher_evan_captain_response/log.dart'
     as r;
+import 'package:c4d/module_external_delivery_companies/response/naher_evan_captain_response/naher_evan_captain_response.dart';
 
 class NaherEvanCaptainModel extends DataModel {
   late List<Log> logs;
@@ -35,11 +35,13 @@ class Log {
   int id;
   int captainProfileId;
   bool isOnline;
+  DateTime createdAt;
 
   Log({
     required this.id,
     required this.captainProfileId,
     required this.isOnline,
+    required this.createdAt,
   });
 
   static List<Log> getLogs(List<r.Log>? responseList) {
@@ -51,6 +53,7 @@ class Log {
           id: element.id ?? 0,
           captainProfileId: element.captainProfileId ?? 0,
           isOnline: element.isOnline ?? false,
+          createdAt: element.createdAt ?? DateTime(2020),
         ));
       },
     );

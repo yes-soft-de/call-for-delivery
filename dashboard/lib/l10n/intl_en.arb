@@ -1156,5 +1156,13 @@
     "selectCaptainPlan": "select captain plan",
     "naherEvanCaptains": "naher evan captains",
     "naherEvanPlan": "naher evan plan",
+    "onlineHoursCount": "online hours count",
+    "deliveredOrderCount": "delivered order count",
+    "createdOrderCount": "created order count",
+    "onlineLogs": "online logs",
+    "captainPresence": "captain presence",
+    "captainOnline" : "online",
+    "captainOffline" : "offline",
+    "noCaptainActivityInTheSelectedDateRange" : "no captain activity in the selected date",
     "orderIgnoredSuccessfully": "Order ignored successfully"
 }

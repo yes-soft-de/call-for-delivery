@@ -1156,5 +1156,13 @@
     "naherEvanHoursPlan": "نهر ايفيان ساعات",
     "naherEvanCaptains": "كباتن نهر ايفيان",
     "naherEvanPlan": "خطة نهر ايفيان",
+    "onlineHoursCount": "عدد ساعات النشاط",
+    "deliveredOrderCount": "عدد الطلبات التي تم توصليها",
+    "createdOrderCount": "عدد الطلبات التي تم انشائها",
+    "onlineLogs" : "تفاصيل النشاط",
+    "captainPresence" : "حضور الكابتن",
+    "captainOnline" : "اونلاين",
+    "captainOffline" : "اوفلاين",
+    "noCaptainActivityInTheSelectedDateRange" : "لايوجد نشاط للكابتن بالوقت المحدد",
     "orderIgnoredSuccessfully": "تم تجاهل الطلب بنجاح"
 }

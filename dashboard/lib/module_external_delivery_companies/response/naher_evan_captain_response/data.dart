@@ -22,10 +22,5 @@ class Data {
         deliveredOrderCount: json['deliveredOrderCount'] as num?,
       );
 
-  Map<String, dynamic> toJson() => {
-        'logs': logs?.map((e) => e.toJson()).toList(),
-        'onlineHoursCount': onlineHoursCount,
-        'createdOrderCount': createdOrderCount,
-        'deliveredOrderCount': deliveredOrderCount,
-      };
+
 }

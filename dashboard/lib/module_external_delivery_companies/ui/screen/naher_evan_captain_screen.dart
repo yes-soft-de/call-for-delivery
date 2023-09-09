@@ -3,9 +3,12 @@ import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
+import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_external_delivery_companies/request/naher_evan_captain_request/naher_evan_captain_request.dart';
 import 'package:c4d/module_external_delivery_companies/state_manager/naher_evan_captain_state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/components/fixed_container.dart';
+import 'package:c4d/utils/components/select_date_bar_widget.dart';
 import 'package:flutter/material.dart';
 
 class NaherEvanCaptainScreen extends StatefulWidget {
@@ -62,7 +65,11 @@ class NaherEvanCaptainScreenState extends State<NaherEvanCaptainScreen> {
       var arg = ModalRoute.of(context)?.settings.arguments;
       if (arg != null && arg is List) {
         if (arg.length == 2 && arg[0] is int && arg[1] is String) {
-          filter = NaherEvanCaptainRequest(captainProfileId: arg[0]);
+          filter = NaherEvanCaptainRequest(
+            captainProfileId: arg[0],
+            toDate: DateTime.now(),
+            fromDate: DateTime.now(),
+          );
           captainName = arg[1];
         }
         getNaherEvanCaptain();
@@ -80,7 +87,37 @@ class NaherEvanCaptainScreenState extends State<NaherEvanCaptainScreen> {
           context,
           title: captainName,
         ),
-        body: Center(child: currentState.getUI(context)),
+        body: FixedContainer(
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Flexible(
+                    child: SelectDataBar(
+                      title: S.current.from,
+                      selectedDate: filter.fromDate,
+                      onSelected: (selectedDate) {
+                        filter.fromDate = selectedDate;
+                        getNaherEvanCaptain();
+                      },
+                    ),
+                  ),
+                  Flexible(
+                    child: SelectDataBar(
+                      onSelected: (selectedDate) {
+                        filter.toDate = selectedDate;
+                        getNaherEvanCaptain();
+                      },
+                      selectedDate: filter.toDate,
+                      title: S.current.to,
+                    ),
+                  ),
+                ],
+              ),
+              Expanded(child: Center(child: currentState.getUI(context))),
+            ],
+          ),
+        ),
       ),
     );
   }
