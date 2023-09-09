@@ -65,6 +65,16 @@ class CaptainProfileScreenState extends State<CaptainProfileScreen> {
     }
   }
 
+  void changeCaptainFinancePlan(int financeId, int captainFinancialSystemId) {
+    CaptainFinanceRequest request = CaptainFinanceRequest(
+      id: financeId,
+      status: true,
+      planType: captainFinancialSystemId,
+      planId: 0,
+    );
+    _stateManager.changeCaptainFinancePlan(this, request, captainProfileId);
+  }
+
   int captainProfileId = -1;
   int currentIndex = 0;
   @override

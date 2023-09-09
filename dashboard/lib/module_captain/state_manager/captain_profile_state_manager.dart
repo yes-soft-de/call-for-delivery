@@ -1,26 +1,28 @@
 import 'package:c4d/abstracts/state_manager/state_manager_handler.dart';
-import 'package:c4d/module_captain/request/captain_finance_request.dart';
-import 'package:c4d/module_captain/request/enable_captain.dart';
-import 'package:c4d/module_captain/request/update_captain_request.dart';
-import 'package:injectable/injectable.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_captain/model/porfile_model.dart';
+import 'package:c4d/module_captain/request/captain_finance_request.dart';
+import 'package:c4d/module_captain/request/enable_captain.dart';
+import 'package:c4d/module_captain/request/update_captain_request.dart';
 import 'package:c4d/module_captain/service/captains_service.dart';
 import 'package:c4d/module_captain/ui/screen/captain_profile_screen.dart';
 import 'package:c4d/module_captain/ui/state/captain_profile/captain_profile.dart';
+import 'package:c4d/module_payments/service/payments_service.dart';
 import 'package:c4d/utils/global/global_state_manager.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:injectable/injectable.dart';
 
 @injectable
 class CaptainProfileStateManager extends StateManagerHandler {
   final CaptainsService _captainsService;
+  final PaymentsService _paymentsService;
 
   Stream<States> get stateStream => stateSubject.stream;
 
-  CaptainProfileStateManager(this._captainsService);
+  CaptainProfileStateManager(this._captainsService, this._paymentsService);
 
   void getCaptainProfile(CaptainProfileScreenState screenState, int captainId,
       [bool loading = true]) {
@@ -112,6 +114,24 @@ class CaptainProfileStateManager extends StateManagerHandler {
             title: S.current.warnning,
             message: S.current.captainUpdatedSuccessfully);
         getIt<GlobalStateManager>().updateList();
+      }
+    });
+  }
+
+  void changeCaptainFinancePlan(CaptainProfileScreenState screenState,
+      CaptainFinanceRequest request, int captainId) {
+    stateSubject.add(LoadingState(screenState));
+    _paymentsService.financeRequest(request).then((value) {
+      if (value.hasError) {
+        CustomFlushBarHelper.createError(
+            title: S.current.warnning, message: value.error.toString());
+        getCaptainProfile(screenState, captainId);
+      } else {
+        getCaptainProfile(screenState, captainId);
+        CustomFlushBarHelper.createSuccess(
+          title: S.current.warnning,
+          message: S.current.captainUpdatedSuccessfully,
+        );
       }
     });
   }
