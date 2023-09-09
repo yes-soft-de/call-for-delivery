@@ -53,7 +53,7 @@ class Data {
     id = json['id'];
     captainID = json['captainId'];
     captainName = json['captainName'];
-    image = json['images'] != null ? ImageUrl.fromJson(json['images']) : null;
+    image = json['image'] != null ? ImageUrl.fromJson(json['image']) : null;
     status = json['status'];
   }
 
