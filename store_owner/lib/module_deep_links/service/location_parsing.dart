@@ -72,6 +72,9 @@ class LocationParsing {
             // Update loading bar.
           },
           onPageStarted: (String url) {},
+          onUrlChange: (c) {
+            print('finished ---------------------------> ');
+          },
           onPageFinished: (String url) async {
             print('finished ---------------------------> $url');
             var locationData = await DeepLinksService
@@ -82,6 +85,9 @@ class LocationParsing {
               parsingState(LocationParsingStateEnum.webViewFinishedParsing);
               refresh();
             }
+            Future.delayed(Duration(seconds: 5)).whenComplete(() {
+              parsingState(LocationParsingStateEnum.webViewFinishedParsing);
+            });
           },
           onWebResourceError: (WebResourceError error) {},
         ),
