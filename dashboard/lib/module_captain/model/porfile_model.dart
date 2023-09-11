@@ -21,12 +21,23 @@ enum PlanType {
     }
   }
 
-  int get toInt {
+  int get captainFinancialSystemType {
     switch (this) {
       case PlanType.defaultPlan:
         return 4;
       case PlanType.naherEvanPlan:
         return 5;
+      case PlanType.unknown:
+        return -1;
+    }
+  }
+
+  int get captainFinancialSystemId {
+    switch (this) {
+      case PlanType.defaultPlan:
+        return 1;
+      case PlanType.naherEvanPlan:
+        return 0;
       case PlanType.unknown:
         return -1;
     }
@@ -141,7 +152,7 @@ class ProfileModel extends DataModel {
         roomId: '',
         planType: PlanType.defaultPlan,
       );
-      
+
   OrderCountsSystemDetails getOrderCounts(
       FinancialSystemCaptainDetails? finance) {
     return OrderCountsSystemDetails(

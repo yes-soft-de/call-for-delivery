@@ -610,8 +610,9 @@ class CaptainProfileLoadedState extends States {
           model: model!,
           onPlanChange: (planType) {
             screenState.changeCaptainFinancePlan(
-              model?.captainFinance?.id ?? 0,
-              planType.toInt,
+              financeId: model?.captainFinance?.id ?? 0,
+              captainFinancialSystemType: planType.captainFinancialSystemType,
+              captainFinancialSystemId: planType.captainFinancialSystemId,
             );
           },
         );
