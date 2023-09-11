@@ -5,10 +5,10 @@ import 'package:c4d/module_about/about_routes.dart';
 import 'package:c4d/module_about/ui/screen/about_screen/about_screen.dart';
 
 @injectable
-class AboutModule extends YesModule {
+class AboutModule extends RoutingModule {
   final AboutScreen _aboutScreen;
   AboutModule(this._aboutScreen) {
-    YesModule.RoutesMap.addAll(getRoutes());
+    RoutingModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
     return {

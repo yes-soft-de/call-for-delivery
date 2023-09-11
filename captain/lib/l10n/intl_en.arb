@@ -866,6 +866,7 @@
     "requestedSuccessfully": "requested successfully",
     "financeOverPaid": "Over paid",
     "unifiedPlan": "unified plan",
-    "doYouWantToDoThisAction":"Do you want to do this action ?"
-
+    "youCantAcceptAnotherOrderUntilYouLeaveTheStore": "you cant accept another order until you leave the store",
+    "captainHasTowIngoingOrderCantAcceptNewOrder": "captain has tow ingoing order cant accept new order",
+    "doYouWantToDoThisAction": "Do you want to do this action ?"
 }

@@ -1,31 +1,34 @@
 import 'package:another_flushbar/flushbar.dart';
+import 'package:c4d/module_chat_v2/manager/chat/chat_manager.dart';
+import 'package:c4d/module_chat_v2/model/chat_argument.dart';
+import 'package:c4d/module_chat_v2/state_manager/chat_state_manager.dart';
+import 'package:c4d/module_chat_v2/ui/widget/chat_writer/chat_writer.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/presistance/auth_prefs_helper.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
-import 'package:c4d/module_chat/manager/chat/chat_manager.dart';
-import 'package:c4d/module_chat/model/chat_argument.dart';
-import 'package:c4d/module_chat/state_manager/chat_state_manager.dart';
-import 'package:c4d/module_chat/ui/widget/chat_writer/chat_writer.dart';
 import 'package:c4d/module_upload/service/image_upload/image_upload_service.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
 import 'package:c4d/utils/effect/hidder.dart';
 import 'package:c4d/utils/effect/scaling.dart';
+import 'package:uuid/uuid.dart';
 
 final TextEditingController supportName = TextEditingController();
 
 class EmptyChatPage extends StatelessWidget {
-  final ChatStateManager _chatStateManager;
+  final Chat2StateManager _chatStateManager;
   final ImageUploadService _uploadService;
   final AuthService _authService;
   final bool sendSupport;
 
   EmptyChatPage(this._chatStateManager, this._uploadService, this._authService,
       this.sendSupport);
+
   late ChatArgument args;
+
   @override
   Widget build(BuildContext context) {
     String chatRoomId = '';
@@ -117,13 +120,20 @@ class EmptyChatPage extends StatelessWidget {
                     onTap: () {},
                     onMessageSend: (msg) {
                       _chatStateManager.sendMessage(
-                          chatRoomId, msg, _authService.username, args);
+                          chatRoomId,
+                          msg,
+                          _authService.username,
+                          DateTime.now().millisecondsSinceEpoch,
+                          args,
+                          const Uuid().v1(),
+                          1
+                      );
                       if (sendSupport) {
                         if (getIt<AuthService>().isLoggedIn == false) {
                           getIt<AuthPrefsHelper>()
                               .setUsername(supportName.text);
                         }
-                        getIt<ChatManager>().needSupport();
+                        getIt<Chat2Manager>().needSupport();
                       }
                     },
                     uploadService: _uploadService,

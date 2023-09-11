@@ -7,14 +7,14 @@ import 'package:flutter/cupertino.dart';
 import 'authorization_routes.dart';
 
 @injectable
-class AuthorizationModule extends YesModule {
+class AuthorizationModule extends RoutingModule {
   final LoginScreen _loginScreen;
   final RegisterScreen _registerScreen;
   final ForgotPassScreen _forgotPassScreen;
 
   AuthorizationModule(
       this._loginScreen, this._registerScreen, this._forgotPassScreen) {
-    YesModule.RoutesMap.addAll(getRoutes());
+    RoutingModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
     return {
