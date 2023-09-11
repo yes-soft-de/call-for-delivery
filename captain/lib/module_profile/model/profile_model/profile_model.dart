@@ -18,6 +18,8 @@ class ProfileModel {
   String? roomID;
   String? address;
   String? city;
+  int? captainFinancialSystemType;
+
   ProfileModel({
     this.image,
     this.name,
@@ -35,6 +37,7 @@ class ProfileModel {
     this.roomID,
     required this.address,
     required this.city,
+    this.captainFinancialSystemType,
   });
 
   String? _error;
@@ -62,6 +65,7 @@ class ProfileModel {
       roomID: data.roomID,
       address: data.address,
       city: data.city,
+      captainFinancialSystemType: data.captainFinancialSystemType ?? -1,
     );
   }
   bool get hasError => _error != null;

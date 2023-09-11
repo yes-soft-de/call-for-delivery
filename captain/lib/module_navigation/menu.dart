@@ -102,87 +102,92 @@ class MenuScreen extends StatelessWidget {
                 ),
               ),
               Center(child: Text(profileModel.name ?? S.current.username)),
-              InkWell(
-                onTap: () {
-                  Navigator.of(context).pushNamed(PlanRoutes.MY_PROFIT);
-                },
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceAround,
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: Theme.of(context).colorScheme.primaryContainer,
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Text(
-                                S.current.yourBalanceToday,
-                                style: TextStyle(
-                                  fontSize: 13,
-                                  color: Theme.of(context).colorScheme.primary,
+              Visibility(
+                visible: profileModel.captainFinancialSystemType != 5,
+                child: InkWell(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(PlanRoutes.MY_PROFIT);
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(25),
+                            color:
+                                Theme.of(context).colorScheme.primaryContainer,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Text(
+                                  S.current.yourBalanceToday,
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color:
+                                        Theme.of(context).colorScheme.primary,
+                                  ),
                                 ),
-                              ),
-                              const SizedBox(width: 20),
-                              Text(
-                                '${dailyFinance.dailyTotal.toStringAsFixed(2)} ${S.current.Riyal}',
-                                style: TextStyle(
-                                  color: dailyFinance.dailyTotal > 0
-                                      ? Colors.red
-                                      : Theme.of(context).colorScheme.primary,
+                                const SizedBox(width: 20),
+                                Text(
+                                  '${dailyFinance.dailyTotal.toStringAsFixed(2)} ${S.current.Riyal}',
+                                  style: TextStyle(
+                                    color: dailyFinance.dailyTotal > 0
+                                        ? Colors.red
+                                        : Theme.of(context).colorScheme.primary,
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
-                      ),
-                      // Padding(
-                      //   padding: const EdgeInsets.all(8.0),
-                      //   child: Container(
-                      //     height: 16,
-                      //     decoration: BoxDecoration(
-                      //       color: Theme.of(context).disabledColor,
-                      //       borderRadius: BorderRadius.circular(25),
-                      //     ),
-                      //   ),
-                      // ),
-                      // Container(
-                      //   width: 125,
-                      //   decoration: BoxDecoration(
-                      //     borderRadius: BorderRadius.circular(25),
-                      //     color: Theme.of(context).colorScheme.primaryContainer,
-                      //   ),
-                      //   child: Padding(
-                      //     padding: const EdgeInsets.all(8.0),
-                      //     child: Column(
-                      //       crossAxisAlignment: CrossAxisAlignment.start,
-                      //       mainAxisAlignment: MainAxisAlignment.start,
-                      //       children: [
-                      //         Text(
-                      //           S.current.totalEarnedProfit,
-                      //           style: const TextStyle(
-                      //             fontSize: 13,
-                      //           ),
-                      //         ),
-                      //         Text(
-                      //           dailyFinance.totalProfit.toStringAsFixed(2) +
-                      //               S.current.sar,
-                      //           style: TextStyle(
-                      //             color: Theme.of(context).colorScheme.primary,
-                      //           ),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ),
-                      // ),
-                    ],
+                        // Padding(
+                        //   padding: const EdgeInsets.all(8.0),
+                        //   child: Container(
+                        //     height: 16,
+                        //     decoration: BoxDecoration(
+                        //       color: Theme.of(context).disabledColor,
+                        //       borderRadius: BorderRadius.circular(25),
+                        //     ),
+                        //   ),
+                        // ),
+                        // Container(
+                        //   width: 125,
+                        //   decoration: BoxDecoration(
+                        //     borderRadius: BorderRadius.circular(25),
+                        //     color: Theme.of(context).colorScheme.primaryContainer,
+                        //   ),
+                        //   child: Padding(
+                        //     padding: const EdgeInsets.all(8.0),
+                        //     child: Column(
+                        //       crossAxisAlignment: CrossAxisAlignment.start,
+                        //       mainAxisAlignment: MainAxisAlignment.start,
+                        //       children: [
+                        //         Text(
+                        //           S.current.totalEarnedProfit,
+                        //           style: const TextStyle(
+                        //             fontSize: 13,
+                        //           ),
+                        //         ),
+                        //         Text(
+                        //           dailyFinance.totalProfit.toStringAsFixed(2) +
+                        //               S.current.sar,
+                        //           style: TextStyle(
+                        //             color: Theme.of(context).colorScheme.primary,
+                        //           ),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //   ),
+                        // ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -241,13 +246,16 @@ class MenuScreen extends StatelessWidget {
                       )
                     ],
                   )),
-              ListTile(
-                onTap: () {
-                  Navigator.of(context).pushNamed(PlanRoutes.MY_PROFIT);
-                },
-                leading: const Icon(Icons.account_balance_rounded),
-                title: Text(
-                  S.of(context).myProfits,
+              Visibility(
+                visible: profileModel.captainFinancialSystemType != 5,
+                child: ListTile(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(PlanRoutes.MY_PROFIT);
+                  },
+                  leading: const Icon(Icons.account_balance_rounded),
+                  title: Text(
+                    S.of(context).myProfits,
+                  ),
                 ),
               ),
               // ListTile(

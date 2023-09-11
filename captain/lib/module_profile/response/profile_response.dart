@@ -60,6 +60,7 @@ class ProfileResponseModel {
   num? rate;
   String? address;
   String? city;
+  int? captainFinancialSystemType;
   ProfileResponseModel({
     this.id,
     this.captainID,
@@ -92,6 +93,7 @@ class ProfileResponseModel {
     this.rate,
     this.address,
     this.city,
+    this.captainFinancialSystemType,
   });
 
   ProfileResponseModel.fromJson(dynamic json) {
@@ -136,6 +138,7 @@ class ProfileResponseModel {
         : null;
     identity =
         json['identity'] != null ? Images.fromJson(json['identity']) : null;
+    captainFinancialSystemType = json['captainFinancialSystemType'] as int?;
   }
 
   Map<String, dynamic> toJson() {
