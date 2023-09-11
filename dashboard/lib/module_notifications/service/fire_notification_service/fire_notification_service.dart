@@ -3,6 +3,7 @@ import 'dart:io' as p;
 import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_notifications/model/notification_model.dart';
+import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:injectable/injectable.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -71,12 +72,12 @@ class FireNotificationService {
             (_) {
               if (notificationModel.navigateRoute == ChatRoutes.chatRoute) {
                 Navigator.pushNamed(GlobalVariable.navState.currentContext!,
-                    notificationModel.navigateRoute ?? '',
+                    ThemePreferencesHelper().getChatRoute(),
                     arguments: ChatArgument(
                         roomID:
                             notificationModel.chatNotification?.roomID ?? '',
                         userID: notificationModel.chatNotification?.senderID,
-                        userType: null));
+                        userType: null, name: null));
               } else {
                 Navigator.pushNamed(GlobalVariable.navState.currentContext!,
                     notificationModel.navigateRoute ?? '',

@@ -6,6 +6,8 @@ import 'package:c4d/module_external_delivery_companies/model/company_model.dart'
 import 'package:c4d/module_external_delivery_companies/model/company_setting.dart';
 import 'package:c4d/module_external_delivery_companies/model/external_order.dart';
 import 'package:c4d/module_external_delivery_companies/model/feature_model.dart';
+import 'package:c4d/module_external_delivery_companies/model/naher_evan_captain_model.dart';
+import 'package:c4d/module_external_delivery_companies/model/naher_evan_captains_model.dart';
 import 'package:c4d/module_external_delivery_companies/request/assign_order_to_external_company/assign_order_to_external_company_request.dart';
 import 'package:c4d/module_external_delivery_companies/request/company_criterial_request/create_company_criteria_request.dart';
 import 'package:c4d/module_external_delivery_companies/request/company_criterial_request/delete_company_criteria_request.dart';
@@ -17,10 +19,13 @@ import 'package:c4d/module_external_delivery_companies/request/company_request/u
 import 'package:c4d/module_external_delivery_companies/request/company_request/update_delivery_company_status_request.dart';
 import 'package:c4d/module_external_delivery_companies/request/external_order_request/external_orders_request.dart';
 import 'package:c4d/module_external_delivery_companies/request/feature_request/feature_request.dart';
+import 'package:c4d/module_external_delivery_companies/request/naher_evan_captain_request/naher_evan_captain_request.dart';
 import 'package:c4d/module_external_delivery_companies/response/delivery_companies_response/delivery_companies_response.dart';
 import 'package:c4d/module_external_delivery_companies/response/delivery_company_criteria_response/delivery_company_criteria_response.dart';
 import 'package:c4d/module_external_delivery_companies/response/external_order_response/order_pending_response.dart';
 import 'package:c4d/module_external_delivery_companies/response/feature_response/feature_response/feature_response.dart';
+import 'package:c4d/module_external_delivery_companies/response/naher_evan_captain_response/naher_evan_captain_response.dart';
+import 'package:c4d/module_external_delivery_companies/response/naher_evan_captains_response/naher_evan_captains_response.dart';
 import 'package:c4d/utils/helpers/status_code_helper.dart';
 import 'package:injectable/injectable.dart';
 
@@ -202,6 +207,34 @@ class ExternalDeliveryCompaniesService {
     }
     if (response.data == null) return DataModel.empty();
     return ExternalOrder.withData(response);
+  }
+
+  Future<DataModel> getNaherEvanCaptains() async {
+    NaherEvanCaptainsResponse? _ordersResponse =
+        await _manager.getNaherEvanCaptains();
+    if (_ordersResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (_ordersResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(_ordersResponse.statusCode));
+    }
+    if (_ordersResponse.data == null) return DataModel.empty();
+    return NaherEvanCaptainsModel.withData(_ordersResponse.data!);
+  }
+
+  Future<DataModel> getNaherEvanCaptain(NaherEvanCaptainRequest request) async {
+    NaherEvanCaptainResponse? _ordersResponse =
+        await _manager.getNaherEvanCaptain(request);
+    if (_ordersResponse == null) {
+      return DataModel.withError(S.current.networkError);
+    }
+    if (_ordersResponse.statusCode != '200') {
+      return DataModel.withError(
+          StatusCodeHelper.getStatusCodeMessages(_ordersResponse.statusCode));
+    }
+    if (_ordersResponse.data == null) return DataModel.empty();
+    return NaherEvanCaptainModel.withData(_ordersResponse);
   }
 }
 

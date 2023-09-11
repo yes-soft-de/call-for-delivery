@@ -18,6 +18,7 @@ import 'package:c4d/module_stores/ui/screen/order/order_details_screen.dart';
 import 'package:c4d/module_stores/ui/widget/order_cancle_dialog.dart';
 import 'package:c4d/module_stores/ui/widget/orders/custom_step.dart';
 import 'package:c4d/module_stores/ui/widget/orders/progress_order_status.dart';
+import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:c4d/utils/components/custom_alert_dialog.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
 import 'package:c4d/utils/components/custom_feild.dart';
@@ -40,12 +41,14 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 class OrderDetailsStateOwnerOrderLoaded extends States {
   OrderDetailsModel orderInfo;
   final OrderDetailsScreenState screenState;
+
   OrderDetailsStateOwnerOrderLoaded(
     this.screenState,
     this.orderInfo,
   ) : super(screenState) {
     screenState.canRemoveOrder = orderInfo.canRemove;
   }
+
   @override
   Widget getUI(BuildContext context) {
     var decoration = BoxDecoration(
@@ -497,10 +500,12 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(25)),
                     onTap: () {
-                      Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
+                      Navigator.of(context).pushNamed(
+                          ThemePreferencesHelper().getChatRoute(),
                           arguments: ChatArgument(
                               roomID: orderInfo.roomID ?? '',
-                              userType: 'captain'));
+                              userType: 'captain',
+                              name: orderInfo.captainName));
                     },
                     leading: Icon(
                       Icons.chat_bubble_rounded,

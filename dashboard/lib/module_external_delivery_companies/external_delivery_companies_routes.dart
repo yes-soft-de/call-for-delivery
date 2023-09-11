@@ -4,4 +4,6 @@ class ExternalDeliveryCompaniesRoutes {
   static const EDIT_Delivery_COMPANY_SETTINGS_SCREEN = '/edit_delivery_company_settings_screen';
   static const ASSIGN_ORDER_TO_EXTERNAL_COMPANY_SCREEN = '/assign_order_to_external_company_screen';
   static const EXTERNAL_ORDERS_SCREEN = '/external_orders_screen';
+  static const NAHER_EVAN_CAPTAINS_SCREEN = '/naher_evan_captains_screen';
+  static const NAHER_EVAN_CAPTAIN_SCREEN = '/naher_evan_captain_screen';
 }

@@ -1,4 +1,6 @@
 import 'package:c4d/di/di_config.dart';
+import 'package:c4d/module_chat/chat_routes.dart';
+import 'package:c4d/module_theme/pressistance/theme_preferences_helper.dart';
 import 'package:injectable/injectable.dart';
 import 'package:list_tile_switch/list_tile_switch.dart';
 import 'package:c4d/global_nav_key.dart';
@@ -112,6 +114,43 @@ class _SettingsScreenState extends State<SettingsScreen> {
                           onChanged: (newLang) {
                             widget._localizationService
                                 .setLanguage(newLang.toString());
+                          }),
+                    ),
+                    ListTile(
+                      leading: Icon(Icons.chat, color: Colors.white),
+                      title: Text(
+                        S.of(context).chatRoom,
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      trailing: DropdownButton(
+                          dropdownColor: Theme.of(context).primaryColor,
+                          value: ThemePreferencesHelper().getChatRoute(),
+                          style: TextStyle(color: Colors.white),
+                          underline: Container(),
+                          icon: Padding(
+                            padding: const EdgeInsets.all(4.0),
+                            child: Icon(Icons.arrow_drop_down_rounded,
+                                color: Colors.white),
+                          ),
+                          items: [
+                            DropdownMenuItem(
+                              child: Text(
+                                'old',
+                              ),
+                              value: ChatRoutes.chatRoute,
+                            ),
+                            DropdownMenuItem(
+                              child: Text(
+                                'New',
+                              ),
+                              value: ChatRoutes.chat2Route,
+                            ),
+                          ],
+                          onChanged: (String? route) {
+                            ThemePreferencesHelper()
+                                .setChatRoute(route ?? ChatRoutes.chatRoute);
+                            setState(() {
+                            });
                           }),
                     ),
                     ListTile(

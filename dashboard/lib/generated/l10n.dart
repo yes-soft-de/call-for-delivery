@@ -11054,6 +11054,166 @@ class S {
     );
   }
 
+  /// `captain plan`
+  String get captainPlan {
+    return Intl.message(
+      'captain plan',
+      name: 'captainPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `default plan`
+  String get defaultPlan {
+    return Intl.message(
+      'default plan',
+      name: 'defaultPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `نهر ايفيان`
+  String get naherEvan {
+    return Intl.message(
+      'نهر ايفيان',
+      name: 'naherEvan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `نهر ايفيان orders`
+  String get naherEvanOrdersPlan {
+    return Intl.message(
+      'نهر ايفيان orders',
+      name: 'naherEvanOrdersPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `نهر ايفيان hours`
+  String get naherEvanHoursPlan {
+    return Intl.message(
+      'نهر ايفيان hours',
+      name: 'naherEvanHoursPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `select captain plan`
+  String get selectCaptainPlan {
+    return Intl.message(
+      'select captain plan',
+      name: 'selectCaptainPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `naher evan captains`
+  String get naherEvanCaptains {
+    return Intl.message(
+      'naher evan captains',
+      name: 'naherEvanCaptains',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `naher evan plan`
+  String get naherEvanPlan {
+    return Intl.message(
+      'naher evan plan',
+      name: 'naherEvanPlan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `online hours count`
+  String get onlineHoursCount {
+    return Intl.message(
+      'online hours count',
+      name: 'onlineHoursCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `delivered order count`
+  String get deliveredOrderCount {
+    return Intl.message(
+      'delivered order count',
+      name: 'deliveredOrderCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `created order count`
+  String get createdOrderCount {
+    return Intl.message(
+      'created order count',
+      name: 'createdOrderCount',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `online logs`
+  String get onlineLogs {
+    return Intl.message(
+      'online logs',
+      name: 'onlineLogs',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `captain presence`
+  String get captainPresence {
+    return Intl.message(
+      'captain presence',
+      name: 'captainPresence',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `online`
+  String get captainOnline {
+    return Intl.message(
+      'online',
+      name: 'captainOnline',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `offline`
+  String get captainOffline {
+    return Intl.message(
+      'offline',
+      name: 'captainOffline',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `no captain activity in the selected date`
+  String get noCaptainActivityInTheSelectedDateRange {
+    return Intl.message(
+      'no captain activity in the selected date',
+      name: 'noCaptainActivityInTheSelectedDateRange',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Order ignored successfully`
   String get orderIgnoredSuccessfully {
     return Intl.message(

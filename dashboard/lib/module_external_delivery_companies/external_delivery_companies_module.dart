@@ -4,6 +4,8 @@ import 'package:c4d/module_external_delivery_companies/ui/screen/delivery_compan
 import 'package:c4d/module_external_delivery_companies/ui/screen/edit_delivery_company_setting_screen.dart';
 import 'package:c4d/module_external_delivery_companies/ui/screen/external_delivery_companies_screen.dart';
 import 'package:c4d/module_external_delivery_companies/ui/screen/external_orders_screen.dart';
+import 'package:c4d/module_external_delivery_companies/ui/screen/naher_evan_captain_screen.dart';
+import 'package:c4d/module_external_delivery_companies/ui/screen/naher_evan_captains_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
@@ -27,6 +29,10 @@ class ExternalDeliveryCompaniesModule extends YesModule {
           (context) => AssignOrderToExternalCompanyScreen(),
       ExternalDeliveryCompaniesRoutes.EXTERNAL_ORDERS_SCREEN: (context) =>
           ExternalOrderScreen(),
+      ExternalDeliveryCompaniesRoutes.NAHER_EVAN_CAPTAINS_SCREEN: (context) =>
+          NaherEvanCaptainsScreen(),
+      ExternalDeliveryCompaniesRoutes.NAHER_EVAN_CAPTAIN_SCREEN: (context) =>
+          NaherEvanCaptainScreen(),
     };
   }
 }

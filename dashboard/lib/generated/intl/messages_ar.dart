@@ -298,10 +298,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainNote": MessageLookupByLibrary.simpleMessage("ملاحظات الكابتن"),
         "captainOffer": MessageLookupByLibrary.simpleMessage("عرض الكابتن"),
         "captainOffers": MessageLookupByLibrary.simpleMessage("عروض الكباتن"),
+        "captainOffline": MessageLookupByLibrary.simpleMessage("اوفلاين"),
+        "captainOnline": MessageLookupByLibrary.simpleMessage("اونلاين"),
         "captainPaidToProvider": MessageLookupByLibrary.simpleMessage(
             "هل تم دفع تكلفة الطلب للمتجر"),
         "captainPayments":
             MessageLookupByLibrary.simpleMessage("دفعات الكابتن"),
+        "captainPlan": MessageLookupByLibrary.simpleMessage("خطة عمل الكابتن"),
+        "captainPresence": MessageLookupByLibrary.simpleMessage("حضور الكابتن"),
         "captainProfit": MessageLookupByLibrary.simpleMessage("ارباح الكابتن"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("تم تقييم الكابتن بنجاح"),
@@ -497,6 +501,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "createdDate": MessageLookupByLibrary.simpleMessage("تاريخ الإنشاء"),
         "createdNewOrder":
             MessageLookupByLibrary.simpleMessage("تم إنشاء طلب جديد"),
+        "createdOrderCount":
+            MessageLookupByLibrary.simpleMessage("عدد الطلبات التي تم انشائها"),
         "createdOrders": MessageLookupByLibrary.simpleMessage("أنشؤوا طلبات"),
         "criteriaCreatedButNotActivated": m1,
         "criteriaNotActivated": m2,
@@ -535,6 +541,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "deadLine": MessageLookupByLibrary.simpleMessage("تاريخ التسليم"),
         "defaultBranch":
             MessageLookupByLibrary.simpleMessage("الفرع الافتراضي"),
+        "defaultPlan":
+            MessageLookupByLibrary.simpleMessage("الخطة الحالية العامة"),
         "delete": MessageLookupByLibrary.simpleMessage("حذف"),
         "deleteAccount": MessageLookupByLibrary.simpleMessage("حذف الحساب"),
         "deleteAllFutureSubscriptions": MessageLookupByLibrary.simpleMessage(
@@ -554,6 +562,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverForMe": MessageLookupByLibrary.simpleMessage("طلب خارجي"),
         "deliverPrice": MessageLookupByLibrary.simpleMessage("التوصيل"),
         "deliverTo": MessageLookupByLibrary.simpleMessage("اسم المستلم"),
+        "deliveredOrderCount":
+            MessageLookupByLibrary.simpleMessage("عدد الطلبات التي تم توصليها"),
         "deliveredOrders": MessageLookupByLibrary.simpleMessage("سلموا طلبات"),
         "deliveringDescription":
             MessageLookupByLibrary.simpleMessage("الكابتن في طريقه إليك"),
@@ -920,6 +930,14 @@ class MessageLookup extends MessageLookupByLibrary {
         "myPlan": MessageLookupByLibrary.simpleMessage("باقتي"),
         "myProfile": MessageLookupByLibrary.simpleMessage("معلوماتي"),
         "myStatus": MessageLookupByLibrary.simpleMessage("حالتي"),
+        "naherEvan": MessageLookupByLibrary.simpleMessage("نهر ايفيان"),
+        "naherEvanCaptains":
+            MessageLookupByLibrary.simpleMessage("كباتن نهر ايفيان"),
+        "naherEvanHoursPlan":
+            MessageLookupByLibrary.simpleMessage("نهر ايفيان ساعات"),
+        "naherEvanOrdersPlan":
+            MessageLookupByLibrary.simpleMessage("نهر ايفيان طلبات"),
+        "naherEvanPlan": MessageLookupByLibrary.simpleMessage("خطة نهر ايفيان"),
         "name": MessageLookupByLibrary.simpleMessage("الاسم"),
         "nameHint": MessageLookupByLibrary.simpleMessage("مثال يزن"),
         "nameIsRequired":
@@ -948,6 +966,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("تاريخ الدفعة القادمة:"),
         "no": MessageLookupByLibrary.simpleMessage("كلا"),
+        "noCaptainActivityInTheSelectedDateRange":
+            MessageLookupByLibrary.simpleMessage(
+                "لايوجد نشاط للكابتن بالوقت المحدد"),
         "noComment": MessageLookupByLibrary.simpleMessage("لا تعليق"),
         "noImage": MessageLookupByLibrary.simpleMessage("لا يوجد صورة"),
         "normalOrderStatusUpdateByFetchingItFromExternalCompany":
@@ -995,6 +1016,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("خصص متجر او اكتر"),
         "ongoing": MessageLookupByLibrary.simpleMessage("جارية"),
         "online": MessageLookupByLibrary.simpleMessage("مدفوع"),
+        "onlineHoursCount":
+            MessageLookupByLibrary.simpleMessage("عدد ساعات النشاط"),
+        "onlineLogs": MessageLookupByLibrary.simpleMessage("تفاصيل النشاط"),
         "onlyExternal": MessageLookupByLibrary.simpleMessage("خارجي فقط"),
         "open": MessageLookupByLibrary.simpleMessage("مفتوح"),
         "openChatRoom":
@@ -1396,6 +1420,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("جار البحث عن كابتن"),
         "second": MessageLookupByLibrary.simpleMessage("ثانية"),
         "seconds": MessageLookupByLibrary.simpleMessage("ثواني"),
+        "selectCaptainPlan":
+            MessageLookupByLibrary.simpleMessage("اختيار خطة كابتن"),
         "selectLanguage":
             MessageLookupByLibrary.simpleMessage("اختر لغتك المفضلة"),
         "selectYear": MessageLookupByLibrary.simpleMessage("اختر السنة"),

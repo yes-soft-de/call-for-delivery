@@ -297,10 +297,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "captainNote": MessageLookupByLibrary.simpleMessage("Captain Notes"),
         "captainOffer": MessageLookupByLibrary.simpleMessage("Captain offer"),
         "captainOffers": MessageLookupByLibrary.simpleMessage("Captain Offers"),
+        "captainOffline": MessageLookupByLibrary.simpleMessage("offline"),
+        "captainOnline": MessageLookupByLibrary.simpleMessage("online"),
         "captainPaidToProvider":
             MessageLookupByLibrary.simpleMessage("Captain paid to provider ?"),
         "captainPayments":
             MessageLookupByLibrary.simpleMessage("Captain Payments"),
+        "captainPlan": MessageLookupByLibrary.simpleMessage("captain plan"),
+        "captainPresence":
+            MessageLookupByLibrary.simpleMessage("captain presence"),
         "captainProfit": MessageLookupByLibrary.simpleMessage("captain profit"),
         "captainRated":
             MessageLookupByLibrary.simpleMessage("Captain rated successfully"),
@@ -502,6 +507,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "createdDate": MessageLookupByLibrary.simpleMessage("Created date"),
         "createdNewOrder":
             MessageLookupByLibrary.simpleMessage("Created new order"),
+        "createdOrderCount":
+            MessageLookupByLibrary.simpleMessage("created order count"),
         "createdOrders": MessageLookupByLibrary.simpleMessage("created orders"),
         "criteriaCreatedButNotActivated": m1,
         "criteriaNotActivated": m2,
@@ -539,6 +546,7 @@ class MessageLookup extends MessageLookupByLibrary {
         "days": MessageLookupByLibrary.simpleMessage("days"),
         "deadLine": MessageLookupByLibrary.simpleMessage("Dead Line"),
         "defaultBranch": MessageLookupByLibrary.simpleMessage("Default Branch"),
+        "defaultPlan": MessageLookupByLibrary.simpleMessage("default plan"),
         "delete": MessageLookupByLibrary.simpleMessage("Delete"),
         "deleteAccount": MessageLookupByLibrary.simpleMessage("Delete Account"),
         "deleteAllFutureSubscriptions": MessageLookupByLibrary.simpleMessage(
@@ -559,6 +567,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "deliverForMe": MessageLookupByLibrary.simpleMessage("Deliver on me"),
         "deliverPrice": MessageLookupByLibrary.simpleMessage("deliver price"),
         "deliverTo": MessageLookupByLibrary.simpleMessage("Deliver To"),
+        "deliveredOrderCount":
+            MessageLookupByLibrary.simpleMessage("delivered order count"),
         "deliveredOrders":
             MessageLookupByLibrary.simpleMessage("delivered orders"),
         "deliveringDescription":
@@ -929,6 +939,15 @@ class MessageLookup extends MessageLookupByLibrary {
         "myPlan": MessageLookupByLibrary.simpleMessage("My Plan"),
         "myProfile": MessageLookupByLibrary.simpleMessage("My Profile"),
         "myStatus": MessageLookupByLibrary.simpleMessage("My Status"),
+        "naherEvan": MessageLookupByLibrary.simpleMessage("نهر ايفيان"),
+        "naherEvanCaptains":
+            MessageLookupByLibrary.simpleMessage("naher evan captains"),
+        "naherEvanHoursPlan":
+            MessageLookupByLibrary.simpleMessage("نهر ايفيان hours"),
+        "naherEvanOrdersPlan":
+            MessageLookupByLibrary.simpleMessage("نهر ايفيان orders"),
+        "naherEvanPlan":
+            MessageLookupByLibrary.simpleMessage("naher evan plan"),
         "name": MessageLookupByLibrary.simpleMessage("Name"),
         "nameHint": MessageLookupByLibrary.simpleMessage("e.g yazan"),
         "nameIsRequired":
@@ -955,6 +974,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "nextPaymentDate":
             MessageLookupByLibrary.simpleMessage("Next Payment Date:"),
         "no": MessageLookupByLibrary.simpleMessage("No"),
+        "noCaptainActivityInTheSelectedDateRange":
+            MessageLookupByLibrary.simpleMessage(
+                "no captain activity in the selected date"),
         "noComment": MessageLookupByLibrary.simpleMessage("No comments"),
         "noImage": MessageLookupByLibrary.simpleMessage("No Image"),
         "normalOrderStatusUpdateByFetchingItFromExternalCompany":
@@ -1002,6 +1024,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("oneStoreOrMore"),
         "ongoing": MessageLookupByLibrary.simpleMessage("Ongoing"),
         "online": MessageLookupByLibrary.simpleMessage("online"),
+        "onlineHoursCount":
+            MessageLookupByLibrary.simpleMessage("online hours count"),
+        "onlineLogs": MessageLookupByLibrary.simpleMessage("online logs"),
         "onlyExternal": MessageLookupByLibrary.simpleMessage("only external"),
         "open": MessageLookupByLibrary.simpleMessage("Open"),
         "openChatRoom": MessageLookupByLibrary.simpleMessage("Open Chat Room"),
@@ -1409,6 +1434,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Searching for Captain"),
         "second": MessageLookupByLibrary.simpleMessage("second"),
         "seconds": MessageLookupByLibrary.simpleMessage("seconds"),
+        "selectCaptainPlan":
+            MessageLookupByLibrary.simpleMessage("select captain plan"),
         "selectLanguage":
             MessageLookupByLibrary.simpleMessage("Select Language"),
         "selectYear": MessageLookupByLibrary.simpleMessage("select year"),

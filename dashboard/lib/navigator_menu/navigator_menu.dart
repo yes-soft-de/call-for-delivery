@@ -18,6 +18,7 @@ import 'package:c4d/module_external_delivery_companies/model/feature_model.dart'
 import 'package:c4d/module_external_delivery_companies/request/feature_request/feature_request.dart';
 import 'package:c4d/module_external_delivery_companies/service/external_delivery_companies_service.dart';
 import 'package:c4d/module_external_delivery_companies/ui/screen/external_delivery_companies_screen.dart';
+import 'package:c4d/module_external_delivery_companies/ui/screen/naher_evan_captains_screen.dart';
 import 'package:c4d/module_external_delivery_companies/ui/widgets/show_confirm_dialog.dart';
 import 'package:c4d/module_notice/ui/screen/notice_screen.dart';
 import 'package:c4d/module_orders/ui/screens/new_order/new_order_screen.dart';
@@ -270,8 +271,18 @@ class _NavigatorMenuState extends State<NavigatorMenu> {
                       ],
                     ),
                   ),
-                  customListTile(ExternalDeliveryCompaniesScreen(),
-                      S.current.deliveryCompanies, FontAwesomeIcons.box, true),
+                  customListTile(
+                    ExternalDeliveryCompaniesScreen(),
+                    S.current.deliveryCompanies,
+                    FontAwesomeIcons.box,
+                    true,
+                  ),
+                  customListTile(
+                    NaherEvanCaptainsScreen(),
+                    S.current.naherEvanCaptains,
+                    FontAwesomeIcons.solidAddressCard,
+                    true,
+                  ),
                 ],
                 page: widget.currentPage),
             // support
