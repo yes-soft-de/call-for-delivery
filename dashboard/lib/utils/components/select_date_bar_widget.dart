@@ -36,12 +36,11 @@ class _SelectDataBarState extends State<SelectDataBar> {
           child: TextButton(
             onPressed: () async {
               _selectedDate = await showDatePicker(
-                    context: context,
-                    initialDate: _selectedDate ?? DateTime.now(),
-                    firstDate: DateTime(2021),
-                    lastDate: DateTime(2025),
-                  ) ??
-                  DateTime(0);
+                context: context,
+                initialDate: _selectedDate ?? DateTime.now(),
+                firstDate: DateTime(2021),
+                lastDate: DateTime(2025),
+              );
               widget.onSelected(_selectedDate);
               setState(() {});
             },
