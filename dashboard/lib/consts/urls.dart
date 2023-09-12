@@ -470,4 +470,7 @@ class Urls {
 
   static const GET_NAHER_EVAN_CAPTAIN =
       DOMAIN + '/v1/admin/captainpresence/filtercaptainpresence';
+
+  static const DELETE_ORDER_FROM_NAHER_EVAN = DOMAIN +
+      '/v1/admin/externallydeliveredorder/cancelorderatthirdoperatoronlybyadmin';
 }

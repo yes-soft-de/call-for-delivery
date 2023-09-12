@@ -11224,6 +11224,26 @@ class S {
     );
   }
 
+  /// `order status is not waiting`
+  String get orderStatusIsNotWaiting {
+    return Intl.message(
+      'order status is not waiting',
+      name: 'orderStatusIsNotWaiting',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `do you want To delete the order only form naher evan`
+  String get doYouWantToDeleteTheOrderOnlyFormNaherEvan {
+    return Intl.message(
+      'do you want To delete the order only form naher evan',
+      name: 'doYouWantToDeleteTheOrderOnlyFormNaherEvan',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Order ignored successfully`
   String get orderIgnoredSuccessfully {
     return Intl.message(

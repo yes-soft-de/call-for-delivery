@@ -6,6 +6,7 @@ import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/order/delete_order_from_alshoroq_request.dart';
 import 'package:c4d/module_orders/request/order/delete_order_from_marsool_request.dart';
+import 'package:c4d/module_orders/request/order/delete_order_from_naher_evan_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order/pending_order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
@@ -259,6 +260,16 @@ class OrderRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.put(
         '${Urls.DELETE_ORDER_FROM_MARSOOL}', request.toMap(),
+        headers: {'Authorization': 'Bearer $token'});
+    if (response == null) return null;
+    return ActionResponse.fromJson(response);
+  }
+
+  Future<ActionResponse?> deleteOrderFromNaherEvan(
+      DeleteOrderFromNaherEvanRequest request) async {
+    var token = await _authService.getToken();
+    dynamic response = await _apiClient.put(
+        '${Urls.DELETE_ORDER_FROM_NAHER_EVAN}', request.toMap(),
         headers: {'Authorization': 'Bearer $token'});
     if (response == null) return null;
     return ActionResponse.fromJson(response);

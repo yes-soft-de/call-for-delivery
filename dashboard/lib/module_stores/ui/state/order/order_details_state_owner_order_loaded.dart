@@ -4,7 +4,6 @@ import 'package:c4d/di/di_config.dart';
 import 'package:c4d/hive/util/argument_hive_helper.dart';
 import 'package:c4d/module_captain/captains_routes.dart';
 import 'package:c4d/module_captain/ui/screen/captains_assign_order_screen.dart';
-import 'package:c4d/module_chat/chat_routes.dart';
 import 'package:c4d/module_chat/model/chat_argument.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
 import 'package:c4d/module_external_delivery_companies/external_delivery_companies_routes.dart';
@@ -129,16 +128,20 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
                     .state) >=
                 StatusHelper.getOrderStatusIndex(OrderStatusEnum.IN_STORE);
 
-            bool canceledOnlyFromAlshoroq = false;
+            bool canceledOnlyFromTheExternalCompany = false;
             if (orderInfo.externalCompanyId == 1) {
-              canceledOnlyFromAlshoroq =
+              canceledOnlyFromTheExternalCompany =
                   await showDeleteOnlyFromMarsoolDialog(context) ?? false;
             }
             if (orderInfo.externalCompanyId == 2) {
-              canceledOnlyFromAlshoroq =
+              canceledOnlyFromTheExternalCompany =
                   await showDeleteOnlyFromAlshoroqDialog(context) ?? false;
             }
-            if (!canceledOnlyFromAlshoroq) {
+            if (orderInfo.externalCompanyId == 3) {
+              canceledOnlyFromTheExternalCompany =
+                  await showDeleteOnlyFromNaherEvanDialog(context) ?? false;
+            }
+            if (!canceledOnlyFromTheExternalCompany) {
               if (cancelDialog) {
                 showDialog(
                     context: context,
@@ -1144,6 +1147,24 @@ class OrderDetailsStateOwnerOrderLoaded extends States {
           onPressed: () {
             Navigator.of(context).pop(true);
             screenState.deleteOrderFromMarsool();
+          },
+          oneAction: false,
+          actionTitle: S.current.yes,
+          actionTitle2: S.current.no,
+        );
+      },
+    );
+  }
+
+  Future<bool?> showDeleteOnlyFromNaherEvanDialog(BuildContext context) {
+    return showDialog<bool>(
+      context: context,
+      builder: (context) {
+        return CustomAlertDialog(
+          content: S.current.doYouWantToDeleteTheOrderOnlyFormNaherEvan,
+          onPressed: () {
+            Navigator.of(context).pop(true);
+            screenState.deleteOrderFromNaherEvan();
           },
           oneAction: false,
           actionTitle: S.current.yes,

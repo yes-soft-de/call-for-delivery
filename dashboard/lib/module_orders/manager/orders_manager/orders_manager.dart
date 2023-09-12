@@ -4,6 +4,7 @@ import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
 import 'package:c4d/module_orders/request/captain_cash_finance_request.dart';
 import 'package:c4d/module_orders/request/order/delete_order_from_alshoroq_request.dart';
 import 'package:c4d/module_orders/request/order/delete_order_from_marsool_request.dart';
+import 'package:c4d/module_orders/request/order/delete_order_from_naher_evan_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/request/order/pending_order_request.dart';
 import 'package:c4d/module_orders/request/order/update_order_request.dart';
@@ -78,6 +79,10 @@ class OrdersManager {
   Future<ActionResponse?> deleteOrderFromMarsool(
           DeleteOrderFromMarsoolRequest request) =>
       _repository.deleteOrderFromMarsool(request);
+
+  Future<ActionResponse?> deleteOrderFromNaherEvan(
+          DeleteOrderFromNaherEvanRequest request) =>
+      _repository.deleteOrderFromNaherEvan(request);
 
   Future<ActionResponse?> unAssignCaptain(int orderId) =>
       _repository.unAssignCaptain(orderId);

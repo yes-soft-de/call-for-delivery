@@ -610,6 +610,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "doYouWantToDeleteTheOrderOnlyFormMarsool":
             MessageLookupByLibrary.simpleMessage(
                 "do you want to delete the order only form Marsool?"),
+        "doYouWantToDeleteTheOrderOnlyFormNaherEvan":
+            MessageLookupByLibrary.simpleMessage(
+                "do you want To delete the order only form naher evan"),
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
             "Download Twaslna App on Play Store"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("Driver Licence"),
@@ -1129,6 +1132,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "You can know your order status in this interface"),
         "orderStatusIsNotPending":
             MessageLookupByLibrary.simpleMessage("order status is not pending"),
+        "orderStatusIsNotWaiting":
+            MessageLookupByLibrary.simpleMessage("order status is not waiting"),
         "orderTime": MessageLookupByLibrary.simpleMessage("Order Time"),
         "orderTimeLine":
             MessageLookupByLibrary.simpleMessage("Order Time Line"),

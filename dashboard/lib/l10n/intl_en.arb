@@ -1161,9 +1161,11 @@
     "createdOrderCount": "created order count",
     "onlineLogs": "online logs",
     "captainPresence": "captain presence",
-    "captainOnline" : "online",
-    "captainOffline" : "offline",
-    "noCaptainActivityInTheSelectedDateRange" : "no captain activity in the selected date",
-    "orderCanceledFromNaherEvanByAdmin" : "order canceled from naher evan by admin",
+    "captainOnline": "online",
+    "captainOffline": "offline",
+    "noCaptainActivityInTheSelectedDateRange": "no captain activity in the selected date",
+    "orderCanceledFromNaherEvanByAdmin": "order canceled from naher evan by admin",
+    "orderStatusIsNotWaiting": "order status is not waiting",
+    "doYouWantToDeleteTheOrderOnlyFormNaherEvan": "do you want To delete the order only form naher evan",
     "orderIgnoredSuccessfully": "Order ignored successfully"
 }

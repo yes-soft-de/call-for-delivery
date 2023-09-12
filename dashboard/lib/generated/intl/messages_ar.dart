@@ -604,6 +604,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "doYouWantToDeleteTheOrderOnlyFormMarsool":
             MessageLookupByLibrary.simpleMessage(
                 "هل تريد حذف الطلب عند المشغل مرسول فقط؟"),
+        "doYouWantToDeleteTheOrderOnlyFormNaherEvan":
+            MessageLookupByLibrary.simpleMessage(
+                "هل تريد حذف الطلب عند المشغل نهر ايفان فقط؟"),
         "downloadTwaslnaApp": MessageLookupByLibrary.simpleMessage(
             "حمل تطبيقنا على متجر غوغل عبر الرابط"),
         "driverLicence": MessageLookupByLibrary.simpleMessage("رخصة القيادة"),
@@ -1119,6 +1122,8 @@ class MessageLookup extends MessageLookupByLibrary {
             "يمكنك التعرف على حالة الطلب من خلال النافذة الحالية"),
         "orderStatusIsNotPending": MessageLookupByLibrary.simpleMessage(
             "حالة الطلب ليست قيد \"قيد الانتاظار\""),
+        "orderStatusIsNotWaiting": MessageLookupByLibrary.simpleMessage(
+            "لم تعد حالة الطلب قيد الانتظار"),
         "orderTime": MessageLookupByLibrary.simpleMessage("زمن التوصيل"),
         "orderTimeLine":
             MessageLookupByLibrary.simpleMessage("دورة حياة الطلب"),

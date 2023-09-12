@@ -1165,5 +1165,7 @@
     "captainOffline" : "اوفلاين",
     "noCaptainActivityInTheSelectedDateRange" : "لايوجد نشاط للكابتن بالوقت المحدد",
     "orderCanceledFromNaherEvanByAdmin" : "تم الغاء الطلب لدى المشغل نهر ايفيان من قبل الادمن",
+    "orderStatusIsNotWaiting" : "لم تعد حالة الطلب قيد الانتظار",
+    "doYouWantToDeleteTheOrderOnlyFormNaherEvan" : "هل تريد حذف الطلب عند المشغل نهر ايفان فقط؟",
     "orderIgnoredSuccessfully": "تم تجاهل الطلب بنجاح"
 }
