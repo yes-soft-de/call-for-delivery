@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:c4d/utils/components/progresive_image.dart';
 
 class EvanCaptainCard extends StatelessWidget {
-  final int captainId;
   final int profileID;
   final String image;
   final String captainName;
@@ -12,7 +11,6 @@ class EvanCaptainCard extends StatelessWidget {
 
   EvanCaptainCard({
     Key? key,
-    required this.captainId,
     required this.profileID,
     required this.image,
     required this.captainName,
