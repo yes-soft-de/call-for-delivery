@@ -1037,6 +1037,9 @@ class MessageLookup extends MessageLookupByLibrary {
                 "تم الغاء الطلب لدى المشغل شروق من قبل الادمن"),
         "orderCanceledFromMarsoolByAdmin": MessageLookupByLibrary.simpleMessage(
             "تم الغاء الطلب لدى المشغل مرسول من قبل الادمن"),
+        "orderCanceledFromNaherEvanByAdmin":
+            MessageLookupByLibrary.simpleMessage(
+                "تم الغاء الطلب لدى المشغل نهر ايفيان من قبل الادمن"),
         "orderCashStatus":
             MessageLookupByLibrary.simpleMessage("سعر الطلبية للمتجر"),
         "orderCashWithCaptain":

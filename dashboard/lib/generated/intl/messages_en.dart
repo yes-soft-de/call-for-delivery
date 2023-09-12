@@ -1045,6 +1045,9 @@ class MessageLookup extends MessageLookupByLibrary {
                 "order canceled from alshoroq by admin"),
         "orderCanceledFromMarsoolByAdmin": MessageLookupByLibrary.simpleMessage(
             "order canceled from marsool by admin"),
+        "orderCanceledFromNaherEvanByAdmin":
+            MessageLookupByLibrary.simpleMessage(
+                "order canceled from naher evan by admin"),
         "orderCashStatus":
             MessageLookupByLibrary.simpleMessage("Order cost to store"),
         "orderCashWithCaptain":

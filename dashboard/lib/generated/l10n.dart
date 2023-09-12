@@ -11214,6 +11214,16 @@ class S {
     );
   }
 
+  /// `order canceled from naher evan by admin`
+  String get orderCanceledFromNaherEvanByAdmin {
+    return Intl.message(
+      'order canceled from naher evan by admin',
+      name: 'orderCanceledFromNaherEvanByAdmin',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Order ignored successfully`
   String get orderIgnoredSuccessfully {
     return Intl.message(

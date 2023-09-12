@@ -1164,5 +1164,6 @@
     "captainOnline" : "اونلاين",
     "captainOffline" : "اوفلاين",
     "noCaptainActivityInTheSelectedDateRange" : "لايوجد نشاط للكابتن بالوقت المحدد",
+    "orderCanceledFromNaherEvanByAdmin" : "تم الغاء الطلب لدى المشغل نهر ايفيان من قبل الادمن",
     "orderIgnoredSuccessfully": "تم تجاهل الطلب بنجاح"
 }

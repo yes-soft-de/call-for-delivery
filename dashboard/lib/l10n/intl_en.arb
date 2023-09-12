@@ -1164,5 +1164,6 @@
     "captainOnline" : "online",
     "captainOffline" : "offline",
     "noCaptainActivityInTheSelectedDateRange" : "no captain activity in the selected date",
+    "orderCanceledFromNaherEvanByAdmin" : "order canceled from naher evan by admin",
     "orderIgnoredSuccessfully": "Order ignored successfully"
 }
