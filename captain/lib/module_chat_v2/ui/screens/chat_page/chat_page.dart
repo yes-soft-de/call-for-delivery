@@ -139,7 +139,7 @@ class Chat2PageState extends State<Chat2Page> with WidgetsBindingObserver {
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: Container(
                     width: double.maxFinite,
-                    color: Colors.grey[100],
+                    color: Theme.of(context).colorScheme.background,
                     child: Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Row(
@@ -148,7 +148,7 @@ class Chat2PageState extends State<Chat2Page> with WidgetsBindingObserver {
                           Container(
                             width: 150,
                             decoration: BoxDecoration(
-                              color: Colors.white,
+                              color: Theme.of(context).scaffoldBackgroundColor,
                               borderRadius: BorderRadius.circular(25),
                             ),
                             child: Padding(
