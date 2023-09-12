@@ -99,8 +99,8 @@ class OrderStatusWithoutActionsScreenState
     await flutterTts.stop();
   }
 
-  void createChatRoom(int orderId, int storeId) {
-    _stateManager.createChatRoom(this, orderId, storeId);
+  void createChatRoom(int orderId, int storeId, String? storeName) {
+    _stateManager.createChatRoom(this, orderId, storeId, storeName);
   }
 
   void refresh() {
@@ -114,6 +114,7 @@ class OrderStatusWithoutActionsScreenState
   }
 
   bool flag = true;
+
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)!.settings.arguments;

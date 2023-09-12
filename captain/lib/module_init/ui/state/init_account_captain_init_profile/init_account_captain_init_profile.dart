@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
@@ -6,11 +7,11 @@ import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:c4d/module_init/request/create_captain_profile/create_captain_profile_request.dart';
 import 'package:c4d/module_init/ui/screens/init_account_screen/init_account_screen.dart';
-import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:c4d/utils/components/custom_list_view.dart';
 import 'package:c4d/utils/components/faded_button_bar.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:the_country_number/the_country_number.dart';
 
 import '../../widget/get_image_path.dart';
@@ -321,10 +322,24 @@ class InitAccountCaptainInitProfile extends States {
                                 stcPay: screen.stcPayController.text));
                       } else {
                         if (captainImage == null) {
-                          CustomFlushBarHelper.createError(
-                                  title: S.current.warnning,
-                                  message: S.current.pleaseProvideProfileImage)
-                              .show(context);
+                          screen.submitProfileWithoutPhoto(
+                              CreateCaptainProfileRequest.withUriImages(
+                            name: screen.nameController.text.trim(),
+                            age: int.tryParse(screen.ageController.text),
+                            car: screen.carController.text,
+                            captainImage: captainImage,
+                            driving: driverLicence,
+                            mechanic: mechanicLicence,
+                            idImage: identity,
+                            phone: screen.countryCodeController.text +
+                                screen.phoneController.text,
+                            city: screen.cityController.text.trim(),
+                            address: screen.addressController.text.trim(),
+                            bankAccountNumber:
+                                screen.bankAccountNumberController.text,
+                            bankName: screen.bankNameController.text,
+                            stcPay: screen.stcPayController.text,
+                          ));
                         }
                       }
                     } else {

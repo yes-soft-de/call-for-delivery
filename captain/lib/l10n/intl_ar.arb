@@ -868,5 +868,7 @@
     "requestedSuccessfully": "تمت المطالبة بنجاح",
     "financeOverPaid": "دفعة زائدة",
     "unifiedPlan": "الباقة موحدة",
-    "doYouWantToDoThisAction":"هل أنت متأكد من القيام بهذا الإجراء ؟"
+    "youCantAcceptAnotherOrderUntilYouLeaveTheStore": "لا يمكنك قبول طلب ثاني لغاية انطلاقك من المتجر",
+    "captainHasTowIngoingOrderCantAcceptNewOrder": "الكابتن لديه طلبين جاريين حاليا, لا يمكنه قبول طلب جديد",
+    "doYouWantToDoThisAction": "هل أنت متأكد من القيام بهذا الإجراء ؟"
 }

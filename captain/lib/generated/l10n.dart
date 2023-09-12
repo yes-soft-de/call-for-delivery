@@ -8170,6 +8170,26 @@ class S {
     );
   }
 
+  /// `you cant accept another order until you leave the store`
+  String get youCantAcceptAnotherOrderUntilYouLeaveTheStore {
+    return Intl.message(
+      'you cant accept another order until you leave the store',
+      name: 'youCantAcceptAnotherOrderUntilYouLeaveTheStore',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `captain has tow ingoing order cant accept new order`
+  String get captainHasTowIngoingOrderCantAcceptNewOrder {
+    return Intl.message(
+      'captain has tow ingoing order cant accept new order',
+      name: 'captainHasTowIngoingOrderCantAcceptNewOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Do you want to do this action ?`
   String get doYouWantToDoThisAction {
     return Intl.message(

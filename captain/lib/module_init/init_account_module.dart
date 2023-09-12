@@ -5,11 +5,11 @@ import 'package:c4d/module_init/init_routes.dart';
 import 'package:c4d/module_init/ui/screens/init_account_screen/init_account_screen.dart';
 
 @injectable
-class InitAccountModule extends YesModule {
+class InitAccountModule extends RoutingModule {
   final InitAccountScreen _initAccountScreen;
 
   InitAccountModule(this._initAccountScreen) {
-    YesModule.RoutesMap.addAll(getRoutes());
+    RoutingModule.RoutesMap.addAll(getRoutes());
   }
   Map<String, WidgetBuilder> getRoutes() {
     return {

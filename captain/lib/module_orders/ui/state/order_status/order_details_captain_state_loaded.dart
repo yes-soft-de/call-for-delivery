@@ -1,8 +1,8 @@
 import 'dart:developer';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/consts/order_status.dart';
-import 'package:c4d/module_chat/chat_routes.dart';
-import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:c4d/module_chat_v2/chat_routes.dart';
+import 'package:c4d/module_chat_v2/model/chat_argument.dart';
 import 'package:c4d/module_deep_links/helper/laubcher_link_helper.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
@@ -40,6 +40,7 @@ import 'package:flutter_linkify/flutter_linkify.dart';
 class OrderDetailsCaptainOrderLoadedState extends States {
   OrderDetailsModel orderInfo;
   final OrderStatusScreenState screenState;
+
   OrderDetailsCaptainOrderLoadedState(this.screenState, this.orderInfo,
       {String? message})
       : super(screenState) {
@@ -54,6 +55,7 @@ class OrderDetailsCaptainOrderLoadedState extends States {
       }
     }
   }
+
   bool speaking = false;
   bool shouldButZero = true;
   final TextEditingController noteController = TextEditingController();
@@ -79,13 +81,13 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                     value: S.current.requestDistanceEdit,
                     child: _CustomText(text: S.current.requestDistanceEdit),
                   ),
-                  if (!(orderInfo.state == OrderStatusEnum.FINISHED ||
-                      orderInfo.state == OrderStatusEnum.CANCELLED ||
-                      orderInfo.state == OrderStatusEnum.WAITING))
-                    PopupMenuItem(
-                      value: S.current.cancelOrder,
-                      child: _CustomText(text: S.current.cancelOrder),
-                    )
+                  // if (!(orderInfo.state == OrderStatusEnum.FINISHED ||
+                  //     orderInfo.state == OrderStatusEnum.CANCELLED ||
+                  //     orderInfo.state == OrderStatusEnum.WAITING))
+                  //   PopupMenuItem(
+                  //     value: S.current.cancelOrder,
+                  //     child: _CustomText(text: S.current.cancelOrder),
+                  //   )
                 ];
               },
             )
@@ -841,7 +843,8 @@ class OrderDetailsCaptainOrderLoadedState extends States {
               subtitle: S.current.canConnectHint,
               title: S.current.canConnect,
               onTap: () {
-                screenState.createChatRoom(orderInfo.id, orderInfo.storeId);
+                screenState.createChatRoom(
+                    orderInfo.id, orderInfo.storeId, orderInfo.storeName);
               },
             ),
           ),
@@ -856,9 +859,11 @@ class OrderDetailsCaptainOrderLoadedState extends States {
               onTap: () {
                 Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
                     arguments: ChatArgument(
-                        roomID: orderInfo.roomID ?? '',
-                        userType: 'store',
-                        userID: orderInfo.storeId));
+                      roomID: orderInfo.roomID ?? '',
+                      userType: 'store',
+                      userID: orderInfo.storeId,
+                      name: orderInfo.storeName,
+                    ));
               },
             ),
           ),

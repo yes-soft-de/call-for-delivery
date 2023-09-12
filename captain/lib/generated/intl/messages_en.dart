@@ -191,6 +191,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain Got Cash"),
         "captainGotTheCash":
             MessageLookupByLibrary.simpleMessage("Captain got the cash"),
+        "captainHasTowIngoingOrderCantAcceptNewOrder":
+            MessageLookupByLibrary.simpleMessage(
+                "captain has tow ingoing order cant accept new order"),
         "captainInStore": MessageLookupByLibrary.simpleMessage("I\'m in Store"),
         "captainInStoreDescription":
             MessageLookupByLibrary.simpleMessage("captain packing your order"),
@@ -1280,6 +1283,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "You cannot change your answer about giving cash to provider because you receive payment for this order from our company"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "You cannot choose plan right now , please try again"),
+        "youCantAcceptAnotherOrderUntilYouLeaveTheStore":
+            MessageLookupByLibrary.simpleMessage(
+                "you cant accept another order until you leave the store"),
         "youCantRequestEdit":
             MessageLookupByLibrary.simpleMessage("you can\'t request edit"),
         "youHaveFinanceAccount": MessageLookupByLibrary.simpleMessage(

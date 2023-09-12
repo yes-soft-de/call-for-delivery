@@ -67,6 +67,10 @@ class StatusCodeHelper {
         return S.current.youCannotChangeYourAnswer;
       case '9223':
         return S.current.updateStatusForTimeLimitation;
+      case '9229':
+        return S.current.youCantAcceptAnotherOrderUntilYouLeaveTheStore;
+      case '9231':
+        return S.current.captainHasTowIngoingOrderCantAcceptNewOrder;
       case '9751':
         return S.current.requestedAlreadyYouWillReceiveYourDuesSoon;
       case '-1':

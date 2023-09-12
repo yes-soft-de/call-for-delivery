@@ -40,6 +40,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
   late TextEditingController paymentController;
   bool justOpen = true;
   int currentIndex = 0;
+
   OrderStatusStateManager get manager => _stateManager;
   LatLng? myLocation;
 
@@ -103,8 +104,8 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
     await flutterTts.stop();
   }
 
-  void createChatRoom(int orderId, int storeId) {
-    _stateManager.createChatRoom(this, orderId, storeId);
+  void createChatRoom(int orderId, int storeId, String? storeName) {
+    _stateManager.createChatRoom(this, orderId, storeId, storeName);
   }
 
   void refresh() {
@@ -221,6 +222,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
   }
 
   bool flag = true;
+
   @override
   Widget build(BuildContext context) {
     var args = ModalRoute.of(context)!.settings.arguments;

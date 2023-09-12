@@ -1,18 +1,19 @@
 import 'dart:async';
+
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:injectable/injectable.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_init/request/create_captain_profile/create_captain_profile_request.dart';
 import 'package:c4d/module_init/state_manager/init_account/init_account.state_manager.dart';
-import 'package:feature_discovery/feature_discovery.dart';
 import 'package:c4d/utils/helpers/custom_flushbar.dart';
+import 'package:feature_discovery/feature_discovery.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
+import 'package:injectable/injectable.dart';
 
 @injectable
 class InitAccountScreen extends StatefulWidget {
   final InitAccountStateManager _stateManager;
-  InitAccountScreen(
+  const InitAccountScreen(
     this._stateManager,
   );
 
@@ -57,10 +58,14 @@ class InitAccountScreenState extends State<InitAccountScreen> {
     widget._stateManager.submitProfile(request, this);
   }
 
+  void submitProfileWithoutPhoto(CreateCaptainProfileRequest request) {
+    widget._stateManager.submitProfileWithoutPhoto(request, this);
+  }
+
   @override
   void initState() {
     SchedulerBinding.instance.addPostFrameCallback((Duration duration) async {
-      await Future.delayed(Duration(seconds: 5)).whenComplete(() {
+      await Future.delayed(const Duration(seconds: 5)).whenComplete(() {
         FeatureDiscovery.discoverFeatures(
           context,
           const <String>{

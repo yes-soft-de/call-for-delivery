@@ -189,6 +189,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("حصل الكابتن على الكاش"),
         "captainGotTheCash":
             MessageLookupByLibrary.simpleMessage("حصل الكابتن على المال"),
+        "captainHasTowIngoingOrderCantAcceptNewOrder":
+            MessageLookupByLibrary.simpleMessage(
+                "الكابتن لديه طلبين جاريين حاليا, لا يمكنه قبول طلب جديد"),
         "captainInStore": MessageLookupByLibrary.simpleMessage("وصلت المتجر"),
         "captainInStoreDescription":
             MessageLookupByLibrary.simpleMessage("المتجر يقوم بتجهيز الطلب"),
@@ -1275,6 +1278,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "لايمكنك تغيير جوابك بخصوص هذا الطلب لتلقي دفعة من قبل الشركة"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك اختيار خطة حاليا الرجاء المحاولة لاحقا"),
+        "youCantAcceptAnotherOrderUntilYouLeaveTheStore":
+            MessageLookupByLibrary.simpleMessage(
+                "لا يمكنك قبول طلب ثاني لغاية انطلاقك من المتجر"),
         "youCantRequestEdit":
             MessageLookupByLibrary.simpleMessage("لا يمكنك طلب تعديل"),
         "youHaveFinanceAccount": MessageLookupByLibrary.simpleMessage(
