@@ -22,49 +22,26 @@ class NaherEvanCaptainsResponse {
       });
     }
   }
-
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map['status_code'] = statusCode;
-    map['msg'] = msg;
-    if (data != null) {
-      map['Data'] = data?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
 }
 
 class Data {
-  int? id;
-  int? captainID;
+  int? captainProfileId;
   String? captainName;
   ImageUrl? image;
   bool? status;
 
   Data({
-    this.id,
-    this.captainID,
+    this.captainProfileId,
     this.captainName,
     this.image,
     this.status,
   });
 
   Data.fromJson(dynamic json) {
-    id = json['id'];
-    captainID = json['captainId'];
+    captainProfileId = json['captainProfileId'];
     captainName = json['captainName'];
     image = json['image'] != null ? ImageUrl.fromJson(json['image']) : null;
     status = json['status'];
-  }
-
-  Map<String, dynamic> toJson() {
-    var map = <String, dynamic>{};
-    map['id'] = id;
-    map['captainID'] = captainID;
-    map['captainName'] = captainName;
-    map['image'] = image;
-    map['status'] = status;
-    return map;
   }
 }
 

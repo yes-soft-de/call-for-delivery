@@ -51,8 +51,7 @@ class NaherEvanCaptainsStateLoaded extends States {
                 return SizedBox();
               }
               return EvanCaptainCard(
-                key: ValueKey(captains[index].captainID),
-                captainId: captains[index].captainID,
+                key: ValueKey(captains[index].profileID),
                 captainName: captains[index].captainName,
                 image: captains[index].image,
                 verificationStatus: captains[index].status,

@@ -21,7 +21,7 @@ class NaherEvanCaptainStateLoaded extends States {
     return FixedContainer(
       child: Visibility(
         visible:
-            captain.deliveredOrderCount != 0 && captain.onlineHoursCount != 0,
+            captain.deliveredOrderCount != 0 || captain.onlineHoursCount != 0,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(

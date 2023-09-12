@@ -18,9 +18,7 @@ class Data {
             ?.map((e) => Log.fromJson(e as Map<String, dynamic>))
             .toList(),
         onlineHoursCount: json['onlineHoursCount'] as num?,
-        createdOrderCount: json['createdOrderCount'] as num?,
-        deliveredOrderCount: json['deliveredOrderCount'] as num?,
+        createdOrderCount: json['createdOrdersCount'] as num?,
+        deliveredOrderCount: json['deliveredOrdersCount'] as num?,
       );
-
-
 }
