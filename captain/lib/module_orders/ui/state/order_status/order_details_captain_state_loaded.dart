@@ -81,13 +81,13 @@ class OrderDetailsCaptainOrderLoadedState extends States {
                     value: S.current.requestDistanceEdit,
                     child: _CustomText(text: S.current.requestDistanceEdit),
                   ),
-                  if (!(orderInfo.state == OrderStatusEnum.FINISHED ||
-                      orderInfo.state == OrderStatusEnum.CANCELLED ||
-                      orderInfo.state == OrderStatusEnum.WAITING))
-                    PopupMenuItem(
-                      value: S.current.cancelOrder,
-                      child: _CustomText(text: S.current.cancelOrder),
-                    )
+                  // if (!(orderInfo.state == OrderStatusEnum.FINISHED ||
+                  //     orderInfo.state == OrderStatusEnum.CANCELLED ||
+                  //     orderInfo.state == OrderStatusEnum.WAITING))
+                  //   PopupMenuItem(
+                  //     value: S.current.cancelOrder,
+                  //     child: _CustomText(text: S.current.cancelOrder),
+                  //   )
                 ];
               },
             )
