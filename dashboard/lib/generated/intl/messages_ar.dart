@@ -1033,13 +1033,20 @@ class MessageLookup extends MessageLookupByLibrary {
             "تم إسناد الطلب للكابتن المختار بنجاح"),
         "orderAssignedToCompanySuccessfully":
             MessageLookupByLibrary.simpleMessage("تم اسناد الطلب للشركة بنجاح"),
-        "orderCanceledFromAllByAdmin": MessageLookupByLibrary.simpleMessage(
-            "تم الغاء الطلب لدى الجميع من قبل الادمن"),
+        "orderCanceledFromAlshoroqAndC4DByAdmin":
+            MessageLookupByLibrary.simpleMessage(
+                "تم الغاء الطلب لدى المشغل شروق وتطبيقات C4D من قبل الادمن"),
         "orderCanceledFromAlshoroqByAdmin":
             MessageLookupByLibrary.simpleMessage(
                 "تم الغاء الطلب لدى المشغل شروق من قبل الادمن"),
+        "orderCanceledFromMarsoolAndC4DByAdmin":
+            MessageLookupByLibrary.simpleMessage(
+                "تم الغاء الطلب لدى المشغل مرسول وتطبيقات ال C4D من قبل الادمن"),
         "orderCanceledFromMarsoolByAdmin": MessageLookupByLibrary.simpleMessage(
             "تم الغاء الطلب لدى المشغل مرسول من قبل الادمن"),
+        "orderCanceledFromNaherEvanAndC4DByAdmin":
+            MessageLookupByLibrary.simpleMessage(
+                "تم الغاء الطلب لدى المشغل نهر ايفيان وتطبيقات ال C4D من قبل الادمن"),
         "orderCanceledFromNaherEvanByAdmin":
             MessageLookupByLibrary.simpleMessage(
                 "تم الغاء الطلب لدى المشغل نهر ايفيان من قبل الادمن"),

@@ -1139,7 +1139,7 @@
     "editCompanyInfo": "edit company info",
     "captainProfit": "captain profit",
     "orderCanceledFromAlshoroqByAdmin": "order canceled from alshoroq by admin",
-    "orderCanceledFromAllByAdmin": "order canceled from all by admin",
+    "orderCanceledFromAlshoroqAndC4DByAdmin": "order canceled from alshoroq and C4D by admin",
     "orderNotExistInTheExternalCompany": "order not exist in the external company",
     "doYouWantToDeleteTheOrderOnlyFormAlshoroq": "do you want to delete the order only form alshoroq?",
     "doYouWantToDeleteTheOrderOnlyFormMarsool": "do you want to delete the order only form Marsool?",
@@ -1167,5 +1167,7 @@
     "orderCanceledFromNaherEvanByAdmin": "order canceled from naher evan by admin",
     "orderStatusIsNotWaiting": "order status is not waiting",
     "doYouWantToDeleteTheOrderOnlyFormNaherEvan": "do you want To delete the order only form naher evan",
+    "orderCanceledFromMarsoolAndC4DByAdmin" : "order canceled from marsool and C4D by admin",
+    "orderCanceledFromNaherEvanAndC4DByAdmin" : "order canceled from naher evan and C4D by admin",
     "orderIgnoredSuccessfully": "Order ignored successfully"
 }

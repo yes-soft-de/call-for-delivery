@@ -10964,11 +10964,11 @@ class S {
     );
   }
 
-  /// `order canceled from all by admin`
-  String get orderCanceledFromAllByAdmin {
+  /// `order canceled from alshoroq and C4D by admin`
+  String get orderCanceledFromAlshoroqAndC4DByAdmin {
     return Intl.message(
-      'order canceled from all by admin',
-      name: 'orderCanceledFromAllByAdmin',
+      'order canceled from alshoroq and C4D by admin',
+      name: 'orderCanceledFromAlshoroqAndC4DByAdmin',
       desc: '',
       args: [],
     );
@@ -11239,6 +11239,26 @@ class S {
     return Intl.message(
       'do you want To delete the order only form naher evan',
       name: 'doYouWantToDeleteTheOrderOnlyFormNaherEvan',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order canceled from marsool and C4D by admin`
+  String get orderCanceledFromMarsoolAndC4DByAdmin {
+    return Intl.message(
+      'order canceled from marsool and C4D by admin',
+      name: 'orderCanceledFromMarsoolAndC4DByAdmin',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `order canceled from naher evan and C4D by admin`
+  String get orderCanceledFromNaherEvanAndC4DByAdmin {
+    return Intl.message(
+      'order canceled from naher evan and C4D by admin',
+      name: 'orderCanceledFromNaherEvanAndC4DByAdmin',
       desc: '',
       args: [],
     );

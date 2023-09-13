@@ -1138,7 +1138,7 @@
     },
     "editCompanyInfo": "تعديل معلومات الشركة",
     "orderCanceledFromAlshoroqByAdmin": "تم الغاء الطلب لدى المشغل شروق من قبل الادمن",
-    "orderCanceledFromAllByAdmin": "تم الغاء الطلب لدى الجميع من قبل الادمن",
+    "orderCanceledFromAlshoroqAndC4DByAdmin": "تم الغاء الطلب لدى المشغل شروق وتطبيقات C4D من قبل الادمن",
     "captainProfit": "ارباح الكابتن",
     "orderNotExistInTheExternalCompany": "الطلب غير موجود عند الشركة الخارجية",
     "doYouWantToDeleteTheOrderOnlyFormAlshoroq": "هل تريد حذف الطلب عند المشغل شروق فقط؟",
@@ -1167,5 +1167,7 @@
     "orderCanceledFromNaherEvanByAdmin" : "تم الغاء الطلب لدى المشغل نهر ايفيان من قبل الادمن",
     "orderStatusIsNotWaiting" : "لم تعد حالة الطلب قيد الانتظار",
     "doYouWantToDeleteTheOrderOnlyFormNaherEvan" : "هل تريد حذف الطلب عند المشغل نهر ايفان فقط؟",
+    "orderCanceledFromMarsoolAndC4DByAdmin" : "تم الغاء الطلب لدى المشغل مرسول وتطبيقات ال C4D من قبل الادمن",
+    "orderCanceledFromNaherEvanAndC4DByAdmin" : "تم الغاء الطلب لدى المشغل نهر ايفيان وتطبيقات ال C4D من قبل الادمن",
     "orderIgnoredSuccessfully": "تم تجاهل الطلب بنجاح"
 }
