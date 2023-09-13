@@ -178,6 +178,9 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancelled2": MessageLookupByLibrary.simpleMessage("Cancelled"),
         "cancelledHint": MessageLookupByLibrary.simpleMessage(
             "The order has been cancelled by the client"),
+        "cantAcceptOrderBecauseOrderWithStatusCaptainInWayToStoreExist":
+            MessageLookupByLibrary.simpleMessage(
+                "cant accept order because order with status captain in way to store exist"),
         "captain": MessageLookupByLibrary.simpleMessage("Captain"),
         "captainAcceptOrderDescription":
             MessageLookupByLibrary.simpleMessage("I\'m heading to store"),
@@ -191,6 +194,9 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Captain Got Cash"),
         "captainGotTheCash":
             MessageLookupByLibrary.simpleMessage("Captain got the cash"),
+        "captainHasTowIngoingOrderCantAcceptNewOrder":
+            MessageLookupByLibrary.simpleMessage(
+                "captain has tow ingoing order cant accept new order"),
         "captainInStore": MessageLookupByLibrary.simpleMessage("I\'m in Store"),
         "captainInStoreDescription":
             MessageLookupByLibrary.simpleMessage("captain packing your order"),

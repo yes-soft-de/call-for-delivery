@@ -8170,6 +8170,26 @@ class S {
     );
   }
 
+  /// `cant accept order because order with status captain in way to store exist`
+  String get cantAcceptOrderBecauseOrderWithStatusCaptainInWayToStoreExist {
+    return Intl.message(
+      'cant accept order because order with status captain in way to store exist',
+      name: 'cantAcceptOrderBecauseOrderWithStatusCaptainInWayToStoreExist',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `captain has tow ingoing order cant accept new order`
+  String get captainHasTowIngoingOrderCantAcceptNewOrder {
+    return Intl.message(
+      'captain has tow ingoing order cant accept new order',
+      name: 'captainHasTowIngoingOrderCantAcceptNewOrder',
+      desc: '',
+      args: [],
+    );
+  }
+
   /// `Do you want to do this action ?`
   String get doYouWantToDoThisAction {
     return Intl.message(
