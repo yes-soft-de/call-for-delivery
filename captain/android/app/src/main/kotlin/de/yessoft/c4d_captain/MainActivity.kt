@@ -47,7 +47,7 @@ private fun createNotificationChannel(mapData: HashMap<String,String>): Boolean 
         val id = mapData["id"]
         val name = mapData["name"]
         val descriptionText = mapData["description"]
-        val sound = "silence"
+        val sound = "ringtone3"
         val importance = NotificationManager.IMPORTANCE_HIGH
         val mChannel = NotificationChannel(id, name, importance)
         mChannel.description = descriptionText

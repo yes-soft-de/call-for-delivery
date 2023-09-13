@@ -10,9 +10,9 @@ import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class OrdersModule extends YesModule {
+class OrdersModule extends RoutingModule {
   OrdersModule() {
-    YesModule.RoutesMap.addAll(getRoutes());
+    RoutingModule.RoutesMap.addAll(getRoutes());
   }
 
   Map<String, WidgetBuilder> getRoutes() {

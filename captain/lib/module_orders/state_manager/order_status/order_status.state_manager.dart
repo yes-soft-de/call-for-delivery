@@ -4,9 +4,9 @@ import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/module_chat/chat_routes.dart';
-import 'package:c4d/module_chat/model/chat_argument.dart';
-import 'package:c4d/module_chat/presistance/chat_hive_helper.dart';
+import 'package:c4d/module_chat_v2/chat_routes.dart';
+import 'package:c4d/module_chat_v2/model/chat_argument.dart';
+import 'package:c4d/module_chat_v2/presistance/chat_hive_helper.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/model/roomId/room_id_model.dart';
 import 'package:c4d/module_orders/request/add_extra_distance_request.dart';
@@ -76,13 +76,13 @@ class OrderStatusStateManager extends StateManagerHandler {
     });
   }
 
-  void createChatRoom(
-      OrderStatusScreenState screenState, int orderId, int storeId) {
+  void createChatRoom(OrderStatusScreenState screenState, int orderId,
+      int storeId,String? storeName) {
     _ordersService.createChatRoom(orderId).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
-                title: S.current.warnning,
-                message: value.error ?? S.current.errorHappened)
+            title: S.current.warnning,
+            message: value.error ?? S.current.errorHappened)
             .show(screenState.context);
         getOrderDetails(orderId, screenState);
       } else {
@@ -93,40 +93,40 @@ class OrderStatusStateManager extends StateManagerHandler {
               arguments: ChatArgument(
                   roomID: value.roomId ?? '',
                   userType: 'store',
-                  userID: storeId));
+                  userID: storeId, name: storeName));
           CustomFlushBarHelper.createSuccess(
-                  title: S.current.warnning, message: S.current.chatRoomCreated)
+              title: S.current.warnning, message: S.current.chatRoomCreated)
               .show(screenState.context);
         }
       }
     });
   }
 
-  void updateOrder(
-      UpdateOrderRequest request, OrderStatusScreenState screenState) {
+  void updateOrder(UpdateOrderRequest request,
+      OrderStatusScreenState screenState) {
     stateSubject.add(LoadingState(screenState));
     _ordersService.updateOrder(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error)
+            title: S.current.warnning, message: value.error)
             .show(screenState.context);
         getOrderDetails(request.id ?? -1, screenState);
       } else {
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.updateOrderSuccess)
+            title: S.current.warnning,
+            message: S.current.updateOrderSuccess)
             .show(screenState.context);
         getOrderDetails(request.id ?? -1, screenState, message: 'Trigger');
       }
     });
   }
 
-  void updateCashStatus(
-      UpdateOrderRequest request, OrderStatusScreenState screenState) {
+  void updateCashStatus(UpdateOrderRequest request,
+      OrderStatusScreenState screenState) {
     _ordersService.updateCashStatus(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error)
+            title: S.current.warnning, message: value.error)
             .show(screenState.context);
         getOrderDetails(request.id ?? -1, screenState, loading: false);
       } else {
@@ -137,8 +137,8 @@ class OrderStatusStateManager extends StateManagerHandler {
     });
   }
 
-  void updateDistance(
-      OrderStatusScreenState screenState, AddExtraDistanceRequest request) {
+  void updateDistance(OrderStatusScreenState screenState,
+      AddExtraDistanceRequest request) {
     stateSubject.add(LoadingState(screenState));
     _ordersService.updateExtraDistanceToOrder(request).then((value) {
       if (value.hasError) {
@@ -146,14 +146,14 @@ class OrderStatusStateManager extends StateManagerHandler {
           _showCantEditDistanceDialog(screenState.context);
         } else {
           CustomFlushBarHelper.createError(
-                  title: S.current.warnning, message: value.error ?? '')
+              title: S.current.warnning, message: value.error ?? '')
               .show(screenState.context);
         }
         screenState.getOrderDetails(request.id);
       } else {
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.noticeHasBeenSendedToAdministration)
+            title: S.current.warnning,
+            message: S.current.noticeHasBeenSendedToAdministration)
             .show(screenState.context);
         screenState.getOrderDetails(request.id);
       }
@@ -179,7 +179,8 @@ class OrderStatusStateManager extends StateManagerHandler {
                         horizontal: 20, vertical: 10),
                     child: Text(
                       S.current.requestDistanceEdit,
-                      style: Theme.of(context)
+                      style: Theme
+                          .of(context)
                           .textTheme
                           .titleLarge
                           ?.copyWith(color: Colors.white),
@@ -196,18 +197,23 @@ class OrderStatusStateManager extends StateManagerHandler {
                       const SizedBox(width: 20),
                       Text(
                         S.current.youCantRequestEdit,
-                        style: Theme.of(context).textTheme.bodyMedium?.copyWith(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.white,
-                            ),
+                        style: Theme
+                            .of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.white,
+                        ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 20),
                   Text(
                     S.current.youCanEditOnlyOneTimeContactWith,
-                    style: Theme.of(context)
+                    style: Theme
+                        .of(context)
                         .textTheme
                         .bodyMedium
                         ?.copyWith(color: Colors.white),
@@ -225,13 +231,15 @@ class OrderStatusStateManager extends StateManagerHandler {
                           Navigator.of(context).pushNamed(
                             ChatRoutes.chatRoute,
                             arguments:
-                                ChatArgument(roomID: roomID, userType: 'Admin'),
+                            ChatArgument(
+                                roomID: roomID, userType: 'Admin', name: null),
                           );
                         }
                       },
                       child: Text(
                         S.current.directSupport,
-                        style: Theme.of(context)
+                        style: Theme
+                            .of(context)
                             .textTheme
                             .titleMedium
                             ?.copyWith(color: const Color(0xff381D87)),
@@ -247,20 +255,20 @@ class OrderStatusStateManager extends StateManagerHandler {
     );
   }
 
-  void cancelOrder(
-      OrderStatusScreenState screenState, CancelOrderRequest request) {
+  void cancelOrder(OrderStatusScreenState screenState,
+      CancelOrderRequest request) {
     stateSubject.add(LoadingState(screenState));
     _ordersService.cancelOrder(request).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
-                title: S.current.warnning, message: value.error ?? '')
+            title: S.current.warnning, message: value.error ?? '')
             .show(screenState.context);
         screenState.getOrderDetails(request.id);
       } else {
         screenState.goBack();
         CustomFlushBarHelper.createSuccess(
-                title: S.current.warnning,
-                message: S.current.updateOrderSuccess)
+            title: S.current.warnning,
+            message: S.current.updateOrderSuccess)
             .show(screenState.context);
       }
     });

@@ -178,9 +178,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancelled2": MessageLookupByLibrary.simpleMessage("Cancelled"),
         "cancelledHint": MessageLookupByLibrary.simpleMessage(
             "The order has been cancelled by the client"),
-        "cantAcceptOrderBecauseOrderWithStatusCaptainInWayToStoreExist":
-            MessageLookupByLibrary.simpleMessage(
-                "cant accept order because order with status captain in way to store exist"),
         "captain": MessageLookupByLibrary.simpleMessage("Captain"),
         "captainAcceptOrderDescription":
             MessageLookupByLibrary.simpleMessage("I\'m heading to store"),
@@ -1286,6 +1283,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "You cannot change your answer about giving cash to provider because you receive payment for this order from our company"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "You cannot choose plan right now , please try again"),
+        "youCantAcceptAnotherOrderUntilYouLeaveTheStore":
+            MessageLookupByLibrary.simpleMessage(
+                "you cant accept another order until you leave the store"),
         "youCantRequestEdit":
             MessageLookupByLibrary.simpleMessage("you can\'t request edit"),
         "youHaveFinanceAccount": MessageLookupByLibrary.simpleMessage(

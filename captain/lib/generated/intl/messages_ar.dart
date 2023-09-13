@@ -176,9 +176,6 @@ class MessageLookup extends MessageLookupByLibrary {
         "cancelled2": MessageLookupByLibrary.simpleMessage("ملغاة"),
         "cancelledHint": MessageLookupByLibrary.simpleMessage(
             "الطلب تم إلغاءه من جهة العميل"),
-        "cantAcceptOrderBecauseOrderWithStatusCaptainInWayToStoreExist":
-            MessageLookupByLibrary.simpleMessage(
-                "لا يمكن قبول طلب جديد بسبب وجود طلب/ات سابقة حالتها \"الكابتن في طريقه الى المتجر\""),
         "captain": MessageLookupByLibrary.simpleMessage("كابتن"),
         "captainAcceptOrderDescription":
             MessageLookupByLibrary.simpleMessage("أنا في طريقي إلى المتجر"),
@@ -1281,6 +1278,9 @@ class MessageLookup extends MessageLookupByLibrary {
             "لايمكنك تغيير جوابك بخصوص هذا الطلب لتلقي دفعة من قبل الشركة"),
         "youCannotChoosePlan": MessageLookupByLibrary.simpleMessage(
             "لا يمكنك اختيار خطة حاليا الرجاء المحاولة لاحقا"),
+        "youCantAcceptAnotherOrderUntilYouLeaveTheStore":
+            MessageLookupByLibrary.simpleMessage(
+                "لا يمكنك قبول طلب ثاني لغاية انطلاقك من المتجر"),
         "youCantRequestEdit":
             MessageLookupByLibrary.simpleMessage("لا يمكنك طلب تعديل"),
         "youHaveFinanceAccount": MessageLookupByLibrary.simpleMessage(
