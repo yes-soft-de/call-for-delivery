@@ -61,18 +61,20 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
     getIt<FlutterTextToSpeech>().init().then((value) {
       flutterTts = value;
     });
+
+    DeepLinksService.getLocation().then((value) {
+        myLocation = value;
+        Logger.info('Location with us for the first time',
+            myLocation?.toJson().toString() ?? 'null');
+        setState(() {});
+    });
+
     DeepLinksService.canRequestLocation().then((value) async {
       if (value) {
         Logger.info('Location enabled', '$value');
-        Geolocator.getCurrentPosition().then((event) {
-          myLocation = LatLng(event.latitude, event.longitude);
-          Logger.info('Location with us for the first time',
-              myLocation?.toJson().toString() ?? 'null');
-          setState(() {});
-        });
         Geolocator.getPositionStream(
             locationSettings: const LocationSettings(
-          distanceFilter: 100,
+          distanceFilter: 1000,
         )).listen((event) {
           myLocation = LatLng(event.latitude, event.longitude);
           Logger.info(
@@ -81,6 +83,7 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
         });
       }
     });
+
     super.initState();
   }
 

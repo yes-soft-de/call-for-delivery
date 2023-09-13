@@ -11,6 +11,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:uni_links/uni_links.dart';
+import 'package:location/location.dart';
 
 @injectable
 class DeepLinksService {
@@ -32,6 +33,39 @@ class DeepLinksService {
       double.parse(uri.queryParameters['q']!.split(',')[0]),
       double.parse(uri.queryParameters['q']!.split(',')[1]),
     );
+  }
+
+  static Future<LatLng?> getLocation() async{
+    try {
+      var canRequestLocation = await DeepLinksService.canRequestLocation();
+      if (!canRequestLocation) return null;
+
+      var isPermissionGiven = await DeepLinksService.isServiceEnabled();
+      if(!isPermissionGiven) return null;
+
+
+      var location = await Location().getLocation();
+
+      if (location.latitude == null || location.longitude == null) {
+        return null;
+      }
+
+      return LatLng(location.latitude!, location.longitude!);
+    }catch(e){
+      return null;
+    }
+  }
+
+  static Future<bool> isServiceEnabled() async{
+    Location location = Location();
+
+    var serviceEnabled = await location.serviceEnabled();
+
+    if(serviceEnabled) return true;
+
+    serviceEnabled = await location.requestService();
+
+    return serviceEnabled;
   }
 
   static Future<LatLng?> defaultLocation() async {
