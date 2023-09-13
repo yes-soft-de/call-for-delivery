@@ -1,7 +1,7 @@
+import 'dart:io';
 import 'package:c4d/enum/location_parsing_state_enum.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/utils/helpers/link_cleaner.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:webview_flutter/webview_flutter.dart';
@@ -14,10 +14,10 @@ class LocationParsing {
       {required Function(LatLng) locationCallBack,
         required Function(LocationParsingStateEnum) parsingState,
         required Function() refresh}) async {
+    if (url.contains('http') == false && url.contains('geo') == false) return;
     webViewController = WebViewController();
     String finalUrl = url;
     parsingState(LocationParsingStateEnum.startParsing);
-
     /// checks if url empty .
     if (finalUrl.isEmpty || finalUrl == '') {
       parsingState(LocationParsingStateEnum.urlDoNotContainAData);
@@ -30,6 +30,7 @@ class LocationParsing {
       finalUrl.trim();
     }
     var convertedUrlToUri = Uri.tryParse(finalUrl);
+    if (convertedUrlToUri == null) return;
     int waysTried = 0;
     bool weFoundLocationData = false;
     while (waysTried <= 1) {
@@ -48,9 +49,9 @@ class LocationParsing {
     if (weFoundLocationData) {
       String? queryData;
       if (convertedUrlToUri.toString().contains('geo:')) {
-        queryData = convertedUrlToUri?.path;
+        queryData = convertedUrlToUri.path;
       } else {
-        queryData = convertedUrlToUri?.queryParameters['q'];
+        queryData = convertedUrlToUri.queryParameters['q'];
         if (queryData?.startsWith('@') == true) {
           queryData = queryData?.substring(1);
         }
@@ -61,7 +62,9 @@ class LocationParsing {
       ));
       return;
     }
-    /// we will start
+    if (Platform.isIOS) {
+      return;
+    }
     parsingState(LocationParsingStateEnum.startUsingWebViewToRetrieveLocationData);
     webViewController!
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -72,9 +75,7 @@ class LocationParsing {
             // Update loading bar.
           },
           onPageStarted: (String url) {},
-          onUrlChange: (c) {
-            print('finished ---------------------------> ');
-          },
+          onUrlChange: (c) {},
           onPageFinished: (String url) async {
             print('finished ---------------------------> $url');
             var locationData = await DeepLinksService
@@ -85,8 +86,11 @@ class LocationParsing {
               parsingState(LocationParsingStateEnum.webViewFinishedParsing);
               refresh();
             }
-            Future.delayed(Duration(seconds: 5)).whenComplete(() {
-              parsingState(LocationParsingStateEnum.webViewFinishedParsing);
+            Future.delayed(Duration(seconds: 60 * 3)).whenComplete(() {
+              if (weFoundLocationData == false) {
+                parsingState(LocationParsingStateEnum.webViewFinishedParsing);
+                refresh();
+              }
             });
           },
           onWebResourceError: (WebResourceError error) {},

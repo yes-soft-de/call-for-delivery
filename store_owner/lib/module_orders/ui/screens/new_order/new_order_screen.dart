@@ -94,6 +94,11 @@ class NewOrderScreenState extends State<NewOrderScreen>
     });
     var old = toController.text;
     toController.addListener(() {
+      if (!toController.text.contains('http') &&
+          !toController.text.contains('geo')) {
+        toController.clear();
+        Fluttertoast.showToast(msg: S.current.invalidMapLink);
+      }
       if (old != toController.text) {
         old = toController.text;
         LocationParsing().tryParsing(context, toController.text,
@@ -117,11 +122,6 @@ class NewOrderScreenState extends State<NewOrderScreen>
         }, refresh: () {
           setState(() {});
         });
-      }
-      if (!toController.text.contains('http') &&
-          !toController.text.contains('geo')) {
-        toController.clear();
-        Fluttertoast.showToast(msg: S.current.invalidMapLink);
       }
     });
   }
