@@ -69,20 +69,20 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
         setState(() {});
     });
 
-    DeepLinksService.canRequestLocation().then((value) async {
-      if (value) {
-        Logger.info('Location enabled', '$value');
-        Geolocator.getPositionStream(
-            locationSettings: const LocationSettings(
-          distanceFilter: 1000,
-        )).listen((event) {
-          myLocation = LatLng(event.latitude, event.longitude);
-          Logger.info(
-              'Location with us ', myLocation?.toJson().toString() ?? 'null');
-          setState(() {});
-        });
-      }
-    });
+    // DeepLinksService.canRequestLocation().then((value) async {
+    //   if (value) {
+    //     Logger.info('Location enabled', '$value');
+    //     Geolocator.getPositionStream(
+    //         locationSettings: const LocationSettings(
+    //       distanceFilter: 1000,
+    //     )).listen((event) {
+    //       myLocation = LatLng(event.latitude, event.longitude);
+    //       Logger.info(
+    //           'Location with us ', myLocation?.toJson().toString() ?? 'null');
+    //       setState(() {});
+    //     });
+    //   }
+    // });
 
     super.initState();
   }
