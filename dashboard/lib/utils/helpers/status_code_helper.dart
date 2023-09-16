@@ -92,6 +92,8 @@ class StatusCodeHelper {
         return S.current.orderRequestInTheCompanyNotComplete;
       case '9678':
         return S.current.orderNotExistInTheExternalCompany;
+      case '9682':
+        return S.current.orderStatusIsNotWaiting;
       case '-1':
         return S.current.dataDecodeError;
       default:

@@ -405,12 +405,6 @@ class Urls {
   static const UPDATE_STORE_ANSWER_ORDER =
       BASE_API_ORDER + '/confirmcashpaymentbystorebyadmin';
 
-  static const DELETE_ORDER_FROM_ALSHOROQ =
-      DOMAIN + '/v1/admin/streetline/order/cancelexternalorderonly';
-
-  static const DELETE_ORDER_FROM_MARSOOL =
-      DOMAIN + '/v1/admin/marsool/order/cancelexternalorderonly';
-
   /*-----------------------------subscription----------------------------*/
   static const String BASE_API_SUBSCRIPTION =
       DOMAIN + VERSION_ADMIN + '/subscription';
@@ -464,4 +458,19 @@ class Urls {
 
   static const FILTER_EXTERNAL_ORDERS_BY_ADMIN =
       BASE_API_ORDER + '/filterexternallydeliveredordersbyadmin';
+
+  static const DELETE_ORDER_FROM_ALSHOROQ =
+      DOMAIN + '/v1/admin/streetline/order/cancelexternalorderonly';
+
+  static const DELETE_ORDER_FROM_MARSOOL =
+      DOMAIN + '/v1/admin/marsool/order/cancelexternalorderonly';
+
+  static const GET_NAHER_EVAN_CAPTAINS = DOMAIN +
+      '/v1/admin/captainfinancialsystemdetail/captainbycaptainfinancialsystemtype/5';
+
+  static const GET_NAHER_EVAN_CAPTAIN =
+      DOMAIN + '/v1/admin/captainpresence/filtercaptainpresence';
+
+  static const DELETE_ORDER_FROM_NAHER_EVAN = DOMAIN +
+      '/v1/admin/externallydeliveredorder/cancelorderatthirdoperatoronlybyadmin';
 }

@@ -11,10 +11,13 @@ import 'package:c4d/module_external_delivery_companies/request/company_request/u
 import 'package:c4d/module_external_delivery_companies/request/company_request/update_delivery_company_status_request.dart';
 import 'package:c4d/module_external_delivery_companies/request/external_order_request/external_orders_request.dart';
 import 'package:c4d/module_external_delivery_companies/request/feature_request/feature_request.dart';
+import 'package:c4d/module_external_delivery_companies/request/naher_evan_captain_request/naher_evan_captain_request.dart';
 import 'package:c4d/module_external_delivery_companies/response/delivery_companies_response/delivery_companies_response.dart';
 import 'package:c4d/module_external_delivery_companies/response/delivery_company_criteria_response/delivery_company_criteria_response.dart';
 import 'package:c4d/module_external_delivery_companies/response/external_order_response/order_pending_response.dart';
 import 'package:c4d/module_external_delivery_companies/response/feature_response/feature_response/feature_response.dart';
+import 'package:c4d/module_external_delivery_companies/response/naher_evan_captain_response/naher_evan_captain_response.dart';
+import 'package:c4d/module_external_delivery_companies/response/naher_evan_captains_response/naher_evan_captains_response.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -71,4 +74,11 @@ class ExternalDeliveryCompaniesManager {
   Future<ExternalOrderResponse?> getExternalOrders(
           ExternalOrderRequest request) =>
       _repository.getExternalOrders(request);
+
+  Future<NaherEvanCaptainsResponse?> getNaherEvanCaptains() =>
+      _repository.getNaherEvanCaptains();
+
+  Future<NaherEvanCaptainResponse?> getNaherEvanCaptain(
+          NaherEvanCaptainRequest request) =>
+      _repository.getNaherEvanCaptain(request);
 }
