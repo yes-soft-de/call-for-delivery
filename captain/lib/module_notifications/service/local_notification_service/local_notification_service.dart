@@ -51,10 +51,10 @@ class LocalNotificationService {
 
     AndroidNotificationDetails androidPlatformChannelSpecifics =
         const AndroidNotificationDetails(
-      'Local_notification2',
-      'Local Notification2',
+      'Local_notification',
+      'Local Notification',
       channelDescription: 'Showing notifications while the app running',
-      sound: RawResourceAndroidNotificationSound('ringtone3'),
+      sound: RawResourceAndroidNotificationSound('silence'),
       importance: Importance.max,
       priority: Priority.max,
       showWhen: true,

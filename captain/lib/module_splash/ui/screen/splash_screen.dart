@@ -71,8 +71,8 @@ class _SplashScreenState extends State<SplashScreen> {
       MethodChannel('yessoft.de/channel_test');
 
   Map<String, String> channelMap = {
-    "id": "C4d_Notifications_custom_sound_test2",
-    "name": "C4d Notifications2",
+    "id": "C4d_Notifications_custom_sound_test",
+    "name": "C4d Notifications",
     "description": "C4d Notifications with custom sounds",
   };
 
