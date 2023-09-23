@@ -2,13 +2,14 @@ import 'dart:async';
 
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/enum/location_parsing_state_enum.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_deep_links/model/geo_model.dart';
+import 'package:c4d/module_deep_links/request/geo_distance_request.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
-import 'package:c4d/module_deep_links/service/location_parsing.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/state_manager/new_order/new_order.state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
+import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/link_cleaner.dart';
 import 'package:c4d/utils/helpers/phone_number_detection.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,6 @@ import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 @injectable
 class NewOrderScreen extends StatefulWidget {
@@ -60,7 +60,6 @@ class NewOrderScreenState extends State<NewOrderScreen>
   int? branch;
   LatLng? customerLocation;
 
-  //
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     Clipboard.hasStrings().asStream().listen((event) async {
@@ -92,37 +91,27 @@ class NewOrderScreenState extends State<NewOrderScreen>
         setState(() {});
       }
     });
+
     var old = toController.text;
-    toController.addListener(() {
-      if (!toController.text.contains('http') &&
-          !toController.text.contains('geo')) {
-        toController.clear();
-        Fluttertoast.showToast(msg: S.current.invalidMapLink);
+
+    toController.addListener(() async {
+      CustomFlushBarHelper.createSuccess(
+        title: 'calling',
+        message: 'we are calling the end point for coordinate',
+      ).show(context);
+
+      var snap = await DeepLinksService.getGeoDistanceWithDeliveryCost(
+          GeoDistanceRequest(
+        link: toController.text,
+      ));
+
+      if (snap is GeoDistanceModel) {
+        customerLocation = LatLng(
+          snap.geoDestination?.lat ?? 0,
+          snap.geoDestination?.lon ?? 0,
+        );
       }
-      if (old != toController.text) {
-        old = toController.text;
-        LocationParsing().tryParsing(context, toController.text,
-            locationCallBack: (location) {
-          customerLocation = location;
-        }, parsingState: (state) {
-          print('--------------------------------------------->$state');
-          if (state ==
-              LocationParsingStateEnum
-                  .startUsingWebViewToRetrieveLocationData) {
-            setState(() {
-              startParseLocation = true;
-            });
-            showLoadingIndicatorOverlayToPreventPressingWhileLinkBeingParsing();
-          } else if (state == LocationParsingStateEnum.webViewFinishedParsing) {
-            setState(() {
-              startParseLocation = false;
-            });
-            Navigator.of(context).pop();
-          }
-        }, refresh: () {
-          setState(() {});
-        });
-      }
+      refresh();
     });
   }
 

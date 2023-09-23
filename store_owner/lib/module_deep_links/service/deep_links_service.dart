@@ -154,7 +154,13 @@ class DeepLinksService {
     if (response.data == null) return DataModel.empty();
     GeoDistanceModel model = GeoDistanceModel(
         distance: response.data?.distance,
-        costDeliveryOrder: response.data?.costDeliveryOrder);
+        costDeliveryOrder: response.data?.costDeliveryOrder,
+        geoDestination: GeoDestination(
+          lat: response.data?.destination?[0].lat ?? 0,
+          lon: response.data?.destination?[0].lon ?? 0,
+          link: response.data?.destination?[0].link ?? '',
+        ));
+
     return model;
   }
 
