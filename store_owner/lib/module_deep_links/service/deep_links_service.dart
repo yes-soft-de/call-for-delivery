@@ -156,9 +156,8 @@ class DeepLinksService {
         distance: response.data?.distance,
         costDeliveryOrder: response.data?.costDeliveryOrder,
         geoDestination: GeoDestination(
-          lat: response.data?.destination?[0].lat ?? 0,
-          lon: response.data?.destination?[0].lon ?? 0,
-          link: response.data?.destination?[0].link ?? '',
+          lat: response.data?.destination?.latitude ?? 0,
+          lon: response.data?.destination?.longitude ?? 0,
         ));
 
     return model;

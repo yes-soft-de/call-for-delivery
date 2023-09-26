@@ -17,11 +17,9 @@ class GeoDistanceModel extends DataModel {
 class GeoDestination {
   double lat;
   double lon;
-  String link;
 
   GeoDestination({
     required this.lat,
     required this.lon,
-    required this.link,
   });
 }

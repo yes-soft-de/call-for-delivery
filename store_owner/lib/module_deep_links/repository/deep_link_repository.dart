@@ -28,17 +28,13 @@ class DeepLinkRepository {
   }
 
   Future<GeoDistanceX?> getDistanceWithDeliveryCost(
-      GeoDistanceRequest g) async {
+      GeoDistanceRequest request) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(
-        Urls.GEO_DISTANCE_WITH_DELIVERY_COST +
-            '/${g.link}' +
-            '/${g.distance?.latitude}' +
-            '/${g.distance?.longitude}' +
-            '/${g.origin?.latitude}' +
-            '/${g.origin?.longitude}',
-        headers: {'Authorization': 'Bearer $token'});
-    if (response == null) return null;
+    dynamic response = await _apiClient.post(
+      Urls.GEO_DISTANCE_WITH_DELIVERY_COST,
+      request.toMap(),
+      headers: {'Authorization': 'Bearer $token'},
+    );
 
     var context = GlobalVariable.navState.currentContext!;
 
@@ -46,6 +42,8 @@ class DeepLinkRepository {
       title: 'the result is',
       message: response.toString(),
     ).show(context);
+
+    if (response == null) return null;
 
     return GeoDistanceX.fromJson(response);
   }

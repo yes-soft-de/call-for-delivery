@@ -92,9 +92,11 @@ class NewOrderScreenState extends State<NewOrderScreen>
       }
     });
 
-    var old = toController.text;
+    // var old = toController.text;
 
     toController.addListener(() async {
+      if (toController.text.isEmpty) return;
+
       CustomFlushBarHelper.createSuccess(
         title: 'calling',
         message: 'we are calling the end point for coordinate',

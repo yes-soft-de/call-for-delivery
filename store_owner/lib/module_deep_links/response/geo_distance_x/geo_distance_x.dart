@@ -14,6 +14,4 @@ class GeoDistanceX {
             ? null
             : Data.fromJson(json['Data'] as Map<String, dynamic>),
       );
-
-
 }

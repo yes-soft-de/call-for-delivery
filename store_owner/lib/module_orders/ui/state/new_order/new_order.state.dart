@@ -261,7 +261,8 @@ class NewOrderStateBranchesLoaded extends States {
                       child: Opacity(
                           opacity: 0,
                           child: WebViewWidget(
-                              controller: webViewController ?? WebViewController())),
+                              controller:
+                                  webViewController ?? WebViewController())),
                     ),
                   ),
                   Visibility(
@@ -841,6 +842,7 @@ class NewOrderStateBranchesLoaded extends States {
 
   Future<void> getClipBoardData() async {
     ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
+    screenState.toController.text = '';
     screenState.toController.text = data?.text ?? '';
     screenState.refresh();
     return;
