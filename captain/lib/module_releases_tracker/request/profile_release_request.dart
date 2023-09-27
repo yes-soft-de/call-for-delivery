@@ -1,28 +1,40 @@
 import 'dart:convert';
 
 // ignore_for_file: public_member_api_docs, sort_constructors_first
+
+enum PlatformOS {
+  android,
+  ios;
+
+  int get toInt {
+    switch (this) {
+      case PlatformOS.android:
+        return 0;
+      case PlatformOS.ios:
+        return 1;
+    }
+  }
+}
+
 class ProfileReleaseRequest {
   String version;
+  PlatformOS platformOS;
 
   ProfileReleaseRequest({
     required this.version,
+    required this.platformOS,
   });
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'version': version,
+      'platformOS': platformOS.toInt,
     };
   }
 
-  factory ProfileReleaseRequest.fromMap(Map<String, dynamic> map) {
-    return ProfileReleaseRequest(
-      version: (map['version'] ?? '') as String,
-    );
-  }
+ 
 
   String toJson() => json.encode(toMap());
 
-  factory ProfileReleaseRequest.fromJson(String source) =>
-      ProfileReleaseRequest.fromMap(
-          json.decode(source) as Map<String, dynamic>);
+ 
 }

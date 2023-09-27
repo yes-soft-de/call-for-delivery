@@ -1,7 +1,8 @@
-import 'package:c4d/module_releases_tracker/repository/releases_tracker_repository.dart';
-import 'package:c4d/module_releases_tracker/request/profile_release_request.dart';
-import 'package:c4d/utils/response/action_response.dart';
 import 'package:injectable/injectable.dart';
+
+import '../repository/releases_tracker_repository.dart';
+import '../request/profile_release_request.dart';
+import '../response/profile_release_response/profile_release_response.dart';
 
 @injectable
 class ReleasesTrackerManager {
@@ -11,6 +12,7 @@ class ReleasesTrackerManager {
     this._repository,
   );
 
-  Future<ActionResponse?> checkForUpdates(ProfileReleaseRequest request) =>
+  Future<ProfileReleaseResponse?> checkForUpdates(
+          ProfileReleaseRequest request) =>
       _repository.checkForUpdates(request);
 }
