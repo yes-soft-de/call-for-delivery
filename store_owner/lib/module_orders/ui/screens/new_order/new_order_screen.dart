@@ -59,6 +59,8 @@ class NewOrderScreenState extends State<NewOrderScreen>
   int? costType;
   int? branch;
   LatLng? customerLocation;
+  GeoDistanceRequest request = GeoDistanceRequest();
+  GeoDistanceModel? geoDistanceModel;
 
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -92,27 +94,28 @@ class NewOrderScreenState extends State<NewOrderScreen>
       }
     });
 
-    // var old = toController.text;
-
     toController.addListener(() async {
       if (toController.text.isEmpty) return;
 
-      CustomFlushBarHelper.createSuccess(
-        title: 'calling',
-        message: 'we are calling the end point for coordinate',
-      ).show(context);
+      request.link = toController.text;
 
-      var snap = await DeepLinksService.getGeoDistanceWithDeliveryCost(
-          GeoDistanceRequest(
-        link: toController.text,
-      ));
+      var snap = await DeepLinksService.getGeoDistanceWithDeliveryCost(request);
 
       if (snap is GeoDistanceModel) {
+        geoDistanceModel = snap;
         customerLocation = LatLng(
           snap.geoDestination?.lat ?? 0,
           snap.geoDestination?.lon ?? 0,
         );
       }
+
+      if (snap.hasError) {
+        CustomFlushBarHelper.createError(
+          title: S.current.note,
+          message: snap.error ?? S.current.unknown,
+        ).show(context);
+      }
+
       refresh();
     });
   }

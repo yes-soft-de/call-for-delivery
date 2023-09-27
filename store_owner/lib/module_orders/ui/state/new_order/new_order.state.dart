@@ -43,6 +43,7 @@ class NewOrderStateBranchesLoaded extends States {
       screenState.branch = branches[0].id;
       activeBranch =
           branches.firstWhere((element) => element.id == screenState.branch);
+      screenState.request.origin = activeBranch?.location;
       screenState.refresh();
     }
   }
@@ -146,6 +147,8 @@ class NewOrderStateBranchesLoaded extends States {
                                   screenState.branch = v.id;
                                   activeBranch = branches.firstWhere(
                                       (element) => element.id == v.id);
+                                  screenState.request.origin =
+                                      activeBranch?.location;
                                   screenState.refresh();
                                 },
                                 selectedItem: screenState.branch != null
@@ -285,6 +288,7 @@ class NewOrderStateBranchesLoaded extends States {
                                   distance = d;
                                   deliveryCost = cost;
                                 },
+                                geoDistanceModel: screenState.geoDistanceModel,
                               )),
                         ),
                       )),
@@ -842,7 +846,6 @@ class NewOrderStateBranchesLoaded extends States {
 
   Future<void> getClipBoardData() async {
     ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
-    screenState.toController.text = '';
     screenState.toController.text = data?.text ?? '';
     screenState.refresh();
     return;

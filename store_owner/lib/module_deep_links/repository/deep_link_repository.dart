@@ -36,12 +36,13 @@ class DeepLinkRepository {
       headers: {'Authorization': 'Bearer $token'},
     );
 
-    var context = GlobalVariable.navState.currentContext!;
-
-    CustomFlushBarHelper.createSuccess(
-      title: 'the result is',
-      message: response.toString(),
-    ).show(context);
+    if (Urls.DOMAIN == devDomain) {
+      var context = GlobalVariable.navState.currentContext!;
+      CustomFlushBarHelper.createSuccess(
+        title: 'the result is',
+        message: response.toString(),
+      ).show(context);
+    }
 
     if (response == null) return null;
 

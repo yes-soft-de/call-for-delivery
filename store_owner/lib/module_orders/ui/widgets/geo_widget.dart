@@ -1,9 +1,6 @@
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_deep_links/model/deep_links_model.dart';
 import 'package:c4d/module_deep_links/model/geo_model.dart';
-import 'package:c4d/module_deep_links/request/geo_distance_request.dart';
 import 'package:c4d/module_deep_links/response/geo_distance_x/cost_delivery_order_response/cost_delivery_order.dart';
-import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/utils/helpers/fixed_numbers.dart';
 import 'package:flutter/material.dart';
 import 'package:latlong2/latlong.dart';
@@ -11,12 +8,14 @@ import 'package:latlong2/latlong.dart';
 class GeoDistanceText extends StatefulWidget {
   LatLng origin;
   LatLng destination;
+  GeoDistanceModel? geoDistanceModel;
   Function(String?, num?) destance;
   GeoDistanceText({
     Key? key,
     required this.destination,
     required this.origin,
     required this.destance,
+    this.geoDistanceModel,
   }) : super(key: key);
 
   @override
@@ -43,25 +42,36 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
   Future<void> _setup() async {
     origin = widget.origin;
     destination = widget.destination;
-    var snap = await DeepLinksService.getGeoDistanceWithDeliveryCost(
-        GeoDistanceRequest(
-      origin: widget.origin,
-      distance: widget.destination,
-    ));
-    if (snap.hasError || snap.isEmpty) {
-      loading = false;
-      distance = S.current.unknown;
-      setState(() {});
-    } else {
+
+    if (widget.geoDistanceModel != null) {
+      var snap = widget.geoDistanceModel;
       loading = false;
       distance = (snap as GeoDistanceModel).distance;
-      deliveryCost = FixedNumber.getFixedNumber(
-          (snap).costDeliveryOrder?.total ?? 0);
+      deliveryCost =
+          FixedNumber.getFixedNumber((snap).costDeliveryOrder?.total ?? 0);
       deliveryCostDetails = (snap).costDeliveryOrder;
-      widget.destance(
-          distance, (snap).costDeliveryOrder?.total);
+      widget.destance(distance, (snap).costDeliveryOrder?.total);
       setState(() {});
     }
+
+    // var snap = await DeepLinksService.getGeoDistanceWithDeliveryCost(
+    //     GeoDistanceRequest(
+    //   origin: widget.origin,
+    //   distance: widget.destination,
+    // ));
+    // if (snap.hasError || snap.isEmpty) {
+    //   loading = false;
+    //   distance = S.current.unknown;
+    //   setState(() {});
+    // } else {
+    //   loading = false;
+    //   distance = (snap as GeoDistanceModel).distance;
+    //   deliveryCost =
+    //       FixedNumber.getFixedNumber((snap).costDeliveryOrder?.total ?? 0);
+    //   deliveryCostDetails = (snap).costDeliveryOrder;
+    //   widget.destance(distance, (snap).costDeliveryOrder?.total);
+    //   setState(() {});
+    // }
   }
 
   @override
@@ -97,7 +107,7 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
             Divider(
               indent: 16,
               endIndent: 16,
-              color: Theme.of(context).backgroundColor,
+              color: Theme.of(context).colorScheme.background,
               thickness: 2.5,
             ),
             InkWell(
@@ -132,7 +142,7 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
                                     ' ' +
                                     S.current.sar),
                             Divider(
-                              color: Theme.of(context).backgroundColor,
+                              color: Theme.of(context).colorScheme.background,
                               thickness: 2.5,
                               indent: 8,
                               endIndent: 8,
@@ -183,7 +193,7 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
             width: 125,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(25),
-                color: Theme.of(context).backgroundColor),
+                color: Theme.of(context).colorScheme.background),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(
@@ -199,7 +209,7 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
             width: 75,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(25),
-                color: Theme.of(context).backgroundColor),
+                color: Theme.of(context).colorScheme.background),
             child: Padding(
               padding: const EdgeInsets.all(8.0),
               child: Text(

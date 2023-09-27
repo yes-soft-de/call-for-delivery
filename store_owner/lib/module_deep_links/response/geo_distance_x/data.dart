@@ -20,10 +20,10 @@ class Data {
           ? null
           : CostDeliveryOrder.fromJson(
               json['costDeliveryOrder'] as Map<String, dynamic>),
-      destination: extractFromList(json['destination'] as List<num>?));
+      destination: extractFromList(json['destination'] as List?));
 }
 
-LatLng? extractFromList(List<num>? list) {
+LatLng? extractFromList(List? list) {
   if (list == null)
     return null;
   else if (list.length < 2) return null;

@@ -1024,6 +1024,8 @@ class MessageLookup extends MessageLookupByLibrary {
         "unaccept": MessageLookupByLibrary.simpleMessage(
             "لم يتم الموافقة على اشتراكك من قبل الإدارة يمكنك التواصل معنا للحصول على المزيد من التفاصيل"),
         "unavailable": MessageLookupByLibrary.simpleMessage("غير معروفة"),
+        "unfamiliarLink":
+            MessageLookupByLibrary.simpleMessage("رابط غير مألوف"),
         "unknown": MessageLookupByLibrary.simpleMessage("غير معروف"),
         "unknownNumberOfCar":
             MessageLookupByLibrary.simpleMessage("عدد الكباتن غير محدود"),
