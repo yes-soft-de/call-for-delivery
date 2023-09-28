@@ -62,6 +62,15 @@ class NewOrderScreenState extends State<NewOrderScreen>
   GeoDistanceRequest request = GeoDistanceRequest();
   GeoDistanceModel? geoDistanceModel;
 
+  /// this variable is used for ignoring unnecessary
+  String oldLink = '';
+  bool _ignoreUnnecessaryCall(String newLink) {
+    if (newLink.isEmpty) return true;
+
+    if (newLink.trim() == oldLink) return true;
+    return false;
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     Clipboard.hasStrings().asStream().listen((event) async {
@@ -95,7 +104,7 @@ class NewOrderScreenState extends State<NewOrderScreen>
     });
 
     toController.addListener(() async {
-      if (toController.text.isEmpty) return;
+      if (_ignoreUnnecessaryCall(toController.text)) return;
 
       request.link = toController.text;
 

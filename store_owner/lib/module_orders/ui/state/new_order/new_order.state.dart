@@ -847,6 +847,9 @@ class NewOrderStateBranchesLoaded extends States {
   Future<void> getClipBoardData() async {
     ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
     screenState.toController.text = data?.text ?? '';
+    /// trim is used to make sure that the link will display in the filed what ever white spaces he have
+    /// note that trim will apply in the begin an end of text so there is no actual data will lose in this possess
+    screenState.toController.text = screenState.toController.text.trim();
     screenState.refresh();
     return;
   }
