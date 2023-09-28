@@ -272,4 +272,7 @@ class Urls {
   static const GEO_DISTANCE = DOMAIN + '/v1/geodistance/geodistance';
   static const GEO_DISTANCE_WITH_DELIVERY_COST =
       DOMAIN + '/v1/geodistance/distanceanddeliverycostbymapurlandcoordinates';
+
+  static const PROFILE_RELEASE_VERSION =
+      '$DOMAIN/v1/profilereleaseversion/profilereleaseversion';
 }
