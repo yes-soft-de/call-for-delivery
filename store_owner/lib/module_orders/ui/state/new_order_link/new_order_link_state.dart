@@ -198,8 +198,7 @@ class NewOrderLinkStateLoaded extends States {
                   ),
                 ),
                 Visibility(
-                    visible: screenState.customerLocation != null &&
-                        activeBranch != null,
+                    visible: screenState.canCallForLocation,
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Container(
@@ -213,10 +212,12 @@ class NewOrderLinkStateLoaded extends States {
                               destination:
                                   screenState.customerLocation ?? LatLng(0, 0),
                               origin: activeBranch?.location ?? LatLng(0, 0),
-                              destance: (d, cost) {
-                                distance = d;
-                                deliveryCost = cost;
+                              finalDistance: (v) {
+                                distance = v.distance;
+                                deliveryCost = v.costDeliveryOrder?.total;
                               },
+                              callGeoAgin: screenState.callGeoAgin,
+                              request: screenState.request,
                             )),
                       ),
                     )),

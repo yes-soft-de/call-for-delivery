@@ -7499,6 +7499,16 @@ class S {
       args: [],
     );
   }
+
+  /// `fetching data...`
+  String get fetchingData {
+    return Intl.message(
+      'fetching data...',
+      name: 'fetchingData',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

@@ -398,6 +398,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("المتاجر المفضلة"),
         "fax": MessageLookupByLibrary.simpleMessage("فاكس"),
         "female": MessageLookupByLibrary.simpleMessage("أنثى"),
+        "fetchingData":
+            MessageLookupByLibrary.simpleMessage("جاري جلب المعلومات..."),
         "financePaid": MessageLookupByLibrary.simpleMessage("تم التسديد"),
         "financePartlyPaid":
             MessageLookupByLibrary.simpleMessage("تم التسديد جزئيا"),

@@ -269,8 +269,7 @@ class NewOrderStateBranchesLoaded extends States {
                     ),
                   ),
                   Visibility(
-                      visible: screenState.customerLocation != null &&
-                          activeBranch != null,
+                      visible: screenState.canCallForLocation,
                       child: Padding(
                         padding: const EdgeInsets.all(16.0),
                         child: Container(
@@ -279,17 +278,19 @@ class NewOrderStateBranchesLoaded extends States {
                               borderRadius: BorderRadius.circular(25),
                               color: Colors.amber),
                           child: Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: GeoDistanceText(
-                                destination: screenState.customerLocation ??
-                                    LatLng(0, 0),
-                                origin: activeBranch?.location ?? LatLng(0, 0),
-                                destance: (d, cost) {
-                                  distance = d;
-                                  deliveryCost = cost;
-                                },
-                                geoDistanceModel: screenState.geoDistanceModel,
-                              )),
+                            padding: const EdgeInsets.all(12.0),
+                            child: GeoDistanceText(
+                              destination:
+                                  screenState.customerLocation ?? LatLng(0, 0),
+                              origin: activeBranch?.location ?? LatLng(0, 0),
+                              finalDistance: (v) {
+                                distance = v.distance;
+                                deliveryCost = v.costDeliveryOrder?.total;
+                              },
+                              callGeoAgin: screenState.callGeoAgin,
+                              request: screenState.request,
+                            ),
+                          ),
                         ),
                       )),
                   // order details
@@ -847,6 +848,7 @@ class NewOrderStateBranchesLoaded extends States {
   Future<void> getClipBoardData() async {
     ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
     screenState.toController.text = data?.text ?? '';
+
     /// trim is used to make sure that the link will display in the filed what ever white spaces he have
     /// note that trim will apply in the begin an end of text so there is no actual data will lose in this possess
     screenState.toController.text = screenState.toController.text.trim();

@@ -3,13 +3,11 @@ import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_deep_links/model/geo_model.dart';
 import 'package:c4d/module_deep_links/request/geo_distance_request.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/state_manager/new_order/new_order.state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
-import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:c4d/utils/helpers/link_cleaner.dart';
 import 'package:c4d/utils/helpers/phone_number_detection.dart';
 import 'package:flutter/material.dart';
@@ -60,14 +58,22 @@ class NewOrderScreenState extends State<NewOrderScreen>
   int? branch;
   LatLng? customerLocation;
   GeoDistanceRequest request = GeoDistanceRequest();
-  GeoDistanceModel? geoDistanceModel;
+  int callGeoAgin = 0;
+
+  /// this variable become true when user enter the link
+  /// so can let [GeoDistanceText] appear  do their job
+  bool canCallForLocation = false;
 
   /// this variable is used for ignoring unnecessary
   String oldLink = '';
   bool _ignoreUnnecessaryCall(String newLink) {
     if (newLink.isEmpty) return true;
 
-    if (newLink.trim() == oldLink) return true;
+    var newLinkAfterTrim = newLink.trim();
+
+    if (newLinkAfterTrim == oldLink) return true;
+
+    oldLink = newLinkAfterTrim;
     return false;
   }
 
@@ -106,24 +112,9 @@ class NewOrderScreenState extends State<NewOrderScreen>
     toController.addListener(() async {
       if (_ignoreUnnecessaryCall(toController.text)) return;
 
-      request.link = toController.text;
-
-      var snap = await DeepLinksService.getGeoDistanceWithDeliveryCost(request);
-
-      if (snap is GeoDistanceModel) {
-        geoDistanceModel = snap;
-        customerLocation = LatLng(
-          snap.geoDestination?.lat ?? 0,
-          snap.geoDestination?.lon ?? 0,
-        );
-      }
-
-      if (snap.hasError) {
-        CustomFlushBarHelper.createError(
-          title: S.current.note,
-          message: snap.error ?? S.current.unknown,
-        ).show(context);
-      }
+      request.link = toController.text.trim();
+      canCallForLocation = true;
+      callGeoAgin++;
 
       refresh();
     });

@@ -407,6 +407,8 @@ class MessageLookup extends MessageLookupByLibrary {
             MessageLookupByLibrary.simpleMessage("Favorite Stores"),
         "fax": MessageLookupByLibrary.simpleMessage("Fax"),
         "female": MessageLookupByLibrary.simpleMessage("Female"),
+        "fetchingData":
+            MessageLookupByLibrary.simpleMessage("fetching data..."),
         "financePaid": MessageLookupByLibrary.simpleMessage("Paid"),
         "financePartlyPaid":
             MessageLookupByLibrary.simpleMessage("Partly paid"),

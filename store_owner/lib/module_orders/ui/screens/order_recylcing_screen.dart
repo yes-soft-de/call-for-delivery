@@ -12,10 +12,11 @@ import 'package:c4d/utils/helpers/link_cleaner.dart';
 import 'package:c4d/utils/helpers/phone_number_detection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:injectable/injectable.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+
+import '../../../module_deep_links/request/geo_distance_request.dart';
 
 @injectable
 class OrderRecyclingScreen extends StatefulWidget {
@@ -50,6 +51,26 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
   int? costType;
   late WebViewController controller;
   bool startParseLocation = false;
+  GeoDistanceRequest request = GeoDistanceRequest();
+  int callGeoAgin = 0;
+
+  /// this variable become true when user enter the link
+  /// so can let [GeoDistanceText] appear  do their job
+  bool canCallForLocation = false;
+
+  /// this variable is used for ignoring unnecessary
+  String oldLink = '';
+  bool _ignoreUnnecessaryCall(String newLink) {
+    if (newLink.isEmpty) return true;
+
+    var newLinkAfterTrim = newLink.trim();
+
+    if (newLinkAfterTrim == oldLink) return true;
+
+    oldLink = newLinkAfterTrim;
+    return false;
+  }
+
   //
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
@@ -87,14 +108,13 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
     });
     var old = toController.text;
     toController.addListener(() {
-      if (old != toController.text) {
-        old = toController.text;
-        locationParsing();
-      }
-      if (!toController.text.contains('http') && !toController.text.contains('geo')) {
-        toController.clear();
-        Fluttertoast.showToast(msg: S.current.invalidMapLink);
-      }
+      if (_ignoreUnnecessaryCall(toController.text)) return;
+
+      request.link = toController.text.trim();
+      canCallForLocation = true;
+      callGeoAgin++;
+
+      refresh();
     });
     controller = WebViewController()
       ..setJavaScriptMode(JavaScriptMode.unrestricted)
@@ -131,6 +151,7 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
               child: Center(child: CircularProgressIndicator()));
         });
   }
+
   void locationParsing() async {
     setState(() {
       startParseLocation = true;
@@ -150,14 +171,14 @@ class OrderRecyclingScreenState extends State<OrderRecyclingScreen>
           );
         } catch (e) {
           toController.text =
-          await DeepLinksService.extractCoordinatesFromUrl(data);
+              await DeepLinksService.extractCoordinatesFromUrl(data);
         }
         setState(() {
           startParseLocation = false;
         });
       } else if (link != null) {
         toController.text =
-        await DeepLinksService.extractCoordinatesFromUrl(data);
+            await DeepLinksService.extractCoordinatesFromUrl(data);
         setState(() {
           startParseLocation = false;
         });
