@@ -278,15 +278,11 @@ class UpdateOrderLoaded extends States {
                         child: Padding(
                             padding: const EdgeInsets.all(12.0),
                             child: GeoDistanceText(
-                              destination:
-                                  screenState.customerLocation ?? LatLng(0, 0),
-                              origin: activeBranch?.location ?? LatLng(0, 0),
                               finalDistance: (v) {
                                 distance = v.distance;
                                 deliveryCost = v.costDeliveryOrder?.total;
                               },
-                              callGeoAgin: screenState.callGeoAgin,
-                              request: screenState.request,
+                              request: screenState.geoDistanceRequest,
                             )),
                       ),
                     )),

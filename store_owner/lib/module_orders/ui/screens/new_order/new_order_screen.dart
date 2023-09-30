@@ -57,8 +57,7 @@ class NewOrderScreenState extends State<NewOrderScreen>
   int? costType;
   int? branch;
   LatLng? customerLocation;
-  GeoDistanceRequest request = GeoDistanceRequest();
-  int callGeoAgin = 0;
+  GeoDistanceRequest geoDistanceRequest = GeoDistanceRequest();
 
   /// this variable become true when user enter the link
   /// so can let [GeoDistanceText] appear  do their job
@@ -112,9 +111,8 @@ class NewOrderScreenState extends State<NewOrderScreen>
     toController.addListener(() async {
       if (_ignoreUnnecessaryCall(toController.text)) return;
 
-      request.link = toController.text.trim();
+      geoDistanceRequest.link = toController.text.trim();
       canCallForLocation = true;
-      callGeoAgin++;
 
       refresh();
     });

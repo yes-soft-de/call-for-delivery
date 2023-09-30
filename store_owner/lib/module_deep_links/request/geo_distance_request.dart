@@ -1,5 +1,4 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
-import 'dart:convert';
 
 import 'package:latlong2/latlong.dart';
 
@@ -22,5 +21,27 @@ class GeoDistanceRequest {
     };
   }
 
-  String toJson() => json.encode(toMap());
+  GeoDistanceRequest copyWith({
+    LatLng? origin,
+    LatLng? distance,
+    String? link,
+  }) {
+    return GeoDistanceRequest(
+      origin: origin ?? this.origin,
+      distance: distance ?? this.distance,
+      link: link ?? this.link,
+    );
+  }
+
+  @override
+  bool operator ==(covariant GeoDistanceRequest other) {
+    if (identical(this, other)) return true;
+
+    return other.origin == origin &&
+        other.distance == distance &&
+        other.link == link;
+  }
+
+  @override
+  int get hashCode => origin.hashCode ^ distance.hashCode ^ link.hashCode;
 }

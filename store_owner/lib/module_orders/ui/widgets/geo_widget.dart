@@ -1,29 +1,21 @@
-import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_deep_links/model/geo_model.dart';
-import 'package:c4d/module_deep_links/response/geo_distance_x/cost_delivery_order_response/cost_delivery_order.dart';
 import 'package:flutter/material.dart';
-import 'package:latlong2/latlong.dart';
 
+import '../../../generated/l10n.dart';
+import '../../../module_deep_links/model/geo_model.dart';
 import '../../../module_deep_links/request/geo_distance_request.dart';
+import '../../../module_deep_links/response/geo_distance_x/cost_delivery_order_response/cost_delivery_order.dart';
 import '../../../module_deep_links/service/deep_links_service.dart';
 import '../../../utils/helpers/custom_flushbar.dart';
 import '../../../utils/helpers/fixed_numbers.dart';
 
 class GeoDistanceText extends StatefulWidget {
-  LatLng origin;
-  LatLng destination;
-
-  GeoDistanceRequest request;
-  Function(GeoDistanceModel) finalDistance;
-  int callGeoAgin;
+  final GeoDistanceRequest request;
+  final Function(GeoDistanceModel geoDistanceModel) finalDistance;
 
   GeoDistanceText({
     Key? key,
-    required this.destination,
-    required this.origin,
     required this.finalDistance,
     required this.request,
-    required this.callGeoAgin,
   }) : super(key: key);
 
   @override
@@ -35,10 +27,7 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
   String? distance = '';
   String? deliveryCost;
   CostDeliveryOrder? deliveryCostDetails;
-  late LatLng origin;
-  late LatLng destination;
   late GeoDistanceRequest request;
-  late int callGeoAgin;
 
   @override
   void initState() {
@@ -51,10 +40,9 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
   }
 
   Future<void> _setup() async {
-    request = widget.request;
-    origin = widget.origin;
-    destination = widget.destination;
-    callGeoAgin = widget.callGeoAgin ?? 0;
+    // the [copyWith] is important to make [didUpdateWidget] condition work correctly
+    request = widget.request.copyWith();
+
     var snap =
         await DeepLinksService.getGeoDistanceWithDeliveryCost(widget.request);
 
@@ -78,33 +66,11 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
 
     loading = false;
     setState(() {});
-
-    // var snap = await DeepLinksService.getGeoDistanceWithDeliveryCost(
-    //     GeoDistanceRequest(
-    //   origin: widget.origin,
-    //   distance: widget.destination,
-    // ));
-    // if (snap.hasError || snap.isEmpty) {
-    //   loading = false;
-    //   distance = S.current.unknown;
-    //   setState(() {});
-    // } else {
-    //   loading = false;
-    //   distance = (snap as GeoDistanceModel).distance;
-    //   deliveryCost =
-    //       FixedNumber.getFixedNumber((snap).costDeliveryOrder?.total ?? 0);
-    //   deliveryCostDetails = (snap).costDeliveryOrder;
-    //   widget.destance(distance, (snap).costDeliveryOrder?.total);
-    //   setState(() {});
-    // }
   }
 
   @override
   void didUpdateWidget(GeoDistanceText oldWidget) {
-    if (origin != widget.origin ||
-        destination != widget.destination ||
-        request.link != widget.request.link ||
-        callGeoAgin != widget.callGeoAgin) {
+    if (request != widget.request) {
       WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
         setState(() {
           loading = true;

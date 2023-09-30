@@ -59,8 +59,7 @@ class NewOrderLinkScreenState extends State<NewOrderLinkScreen>
   late WebViewController controller;
   bool startParseLocation = false;
 
-  GeoDistanceRequest request = GeoDistanceRequest();
-  int callGeoAgin = 0;
+  GeoDistanceRequest geoDistanceRequest = GeoDistanceRequest();
 
   /// this variable become true when user enter the link
   /// so can let [GeoDistanceText] appear  do their job
@@ -110,13 +109,11 @@ class NewOrderLinkScreenState extends State<NewOrderLinkScreen>
         setState(() {});
       }
     });
-    var old = toController.text;
     toController.addListener(() {
       if (_ignoreUnnecessaryCall(toController.text)) return;
 
-      request.link = toController.text.trim();
+      geoDistanceRequest.link = toController.text.trim();
       canCallForLocation = true;
-      callGeoAgin++;
 
       refresh();
     });
