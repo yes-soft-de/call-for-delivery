@@ -9,7 +9,7 @@ import 'package:c4d/module_plan/ui/screen/plan_details_screen.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
-class PlanModule extends YesModule {
+class PlanModule extends RoutingModule {
   // final PlanScreen _planScreen;
   // final DailyPaymentsScreen paymentsScreen;
 
@@ -17,7 +17,7 @@ class PlanModule extends YesModule {
       // this._planScreen,
       // this.paymentsScreen,
       ) {
-    YesModule.RoutesMap.addAll({
+    RoutingModule.RoutesMap.addAll({
       // PlanRoutes.PLAN_ROUTE: (context) => _planScreen,
       PlanRoutes.BALANCE_ROUTE: (context) => const AccountBalanceScreen(),
       PlanRoutes.CAPTAIN_FINANCIAL_DUES: (context) =>

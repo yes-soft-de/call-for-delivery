@@ -4,8 +4,8 @@ import 'package:c4d/abstracts/states/empty_state.dart';
 import 'package:c4d/abstracts/states/error_state.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
-import 'package:c4d/module_chat/chat_routes.dart';
-import 'package:c4d/module_chat/model/chat_argument.dart';
+import 'package:c4d/module_chat_v2/chat_routes.dart';
+import 'package:c4d/module_chat_v2/model/chat_argument.dart';
 import 'package:c4d/module_orders/model/order/order_details_model.dart';
 import 'package:c4d/module_orders/model/roomId/room_id_model.dart';
 import 'package:c4d/module_orders/ui/screens/order_status/order_status_without_actions.dart';
@@ -53,7 +53,7 @@ class OrderStatusWithoutActionsStateManager extends StateManagerHandler {
   }
 
   void createChatRoom(OrderStatusWithoutActionsScreenState screenState,
-      int orderId, int storeId) {
+      int orderId, int storeId, String? storeName) {
     _ordersService.createChatRoom(orderId).then((value) {
       if (value.hasError) {
         CustomFlushBarHelper.createError(
@@ -69,7 +69,7 @@ class OrderStatusWithoutActionsStateManager extends StateManagerHandler {
               arguments: ChatArgument(
                   roomID: value.roomId ?? '',
                   userType: 'store',
-                  userID: storeId));
+                  userID: storeId, name: storeName));
           CustomFlushBarHelper.createSuccess(
                   title: S.current.warnning, message: S.current.chatRoomCreated)
               .show(screenState.context);

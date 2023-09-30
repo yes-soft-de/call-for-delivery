@@ -1,11 +1,13 @@
 // Production Domain => http://46.101.100.62
 // Dev Domain => http://134.209.241.49
 
+// ignore_for_file: constant_identifier_names
+
 const _dev = 'http://134.209.241.49';
 const _prod = 'http://46.101.100.62';
 
 class Urls {
-  static const String DOMAIN = _dev;
+  static const String DOMAIN = _prod;
   static const String BASE_API = DOMAIN;
 
   static const String IMAGES_ROOT =
@@ -236,7 +238,11 @@ class Urls {
   static const GET_PAYMENTS_HISTORY =
       '$DOMAIN/v1/captainpayment/filtercaptainpayment';
 
-  static const REQUEST_PAYMENT = '$DOMAIN/v1/captainfinancialdemand/captainfinancialdemand';
+  static const REQUEST_PAYMENT =
+      '$DOMAIN/v1/captainfinancialdemand/captainfinancialdemand';
 
   static const DELETE_USER = '$DOMAIN/v1/userstatus/userstatus';
+
+  static const PROFILE_RELEASE_VERSION =
+      '$DOMAIN/v1/profilereleaseversion/profilereleaseversion';
 }

@@ -1,6 +1,7 @@
-import 'dart:developer';
+// ignore_for_file: use_build_context_synchronously, library_private_types_in_public_api
+
 import 'dart:io';
-import 'package:c4d/global_nav_key.dart';
+import 'package:flutter/foundation.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_about/about_routes.dart';
@@ -21,7 +22,7 @@ import 'package:c4d/module_settings/setting_routes.dart';
 @injectable
 class SplashScreen extends StatefulWidget {
   final AuthService _authService;
-  SplashScreen(this._authService);
+  const SplashScreen(this._authService);
 
   @override
   _SplashScreenState createState() => _SplashScreenState();
@@ -63,17 +64,17 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
   }
 
-  String _statusText = "Waiting...";
-  final String _finished = "Finished creating channel";
-  final String _error = "Error while creating channel";
+  String _statusText = 'Waiting...';
+  final String _finished = 'Finished creating channel';
+  final String _error = 'Error while creating channel';
 
   static const MethodChannel _channel =
       MethodChannel('yessoft.de/channel_test');
 
   Map<String, String> channelMap = {
-    "id": "C4d_Notifications_custom_sound_test",
-    "name": "C4d Notifications",
-    "description": "C4d Notifications with custom sounds",
+    'id': 'C4d_Notifications_custom_sound_test',
+    'name': 'C4d Notifications',
+    'description': 'C4d Notifications with custom sounds',
   };
 
   void _createNewChannel() async {
@@ -85,7 +86,9 @@ class _SplashScreenState extends State<SplashScreen> {
       Logger.info('Notifications Channel', _statusText);
     } on PlatformException catch (e) {
       _statusText = _error;
-      print(e);
+      if (kDebugMode) {
+        print(e);
+      }
     }
   }
 

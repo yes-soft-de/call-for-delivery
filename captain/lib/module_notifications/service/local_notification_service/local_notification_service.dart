@@ -54,6 +54,7 @@ class LocalNotificationService {
       'Local_notification',
       'Local Notification',
       channelDescription: 'Showing notifications while the app running',
+      sound: RawResourceAndroidNotificationSound('silence'),
       importance: Importance.max,
       priority: Priority.max,
       showWhen: true,
@@ -76,7 +77,7 @@ class LocalNotificationService {
         platformChannelSpecifics,
         payload: json.encode(message.data));
 
-    playSound();
+   // playSound();
   }
 
   Future selectNotification(NotificationResponse? notification) async {

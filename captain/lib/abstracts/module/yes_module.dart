@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
 
-abstract class YesModule {
+abstract class RoutingModule {
   static Map<String, WidgetBuilder> RoutesMap = {};
 }
