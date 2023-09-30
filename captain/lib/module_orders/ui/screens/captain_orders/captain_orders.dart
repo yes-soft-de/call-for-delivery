@@ -7,10 +7,10 @@ import 'package:c4d/consts/order_status.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_auth/authorization_routes.dart';
-import 'package:c4d/module_chat/chat_routes.dart';
-import 'package:c4d/module_chat/model/chat_argument.dart';
-import 'package:c4d/module_chat/presistance/chat_hive_helper.dart';
-import 'package:c4d/module_chat/repository/chat/chat_repository.dart';
+import 'package:c4d/module_chat_v2/chat_routes.dart';
+import 'package:c4d/module_chat_v2/model/chat_argument.dart';
+import 'package:c4d/module_chat_v2/presistance/chat_hive_helper.dart';
+import 'package:c4d/module_chat_v2/repository/chat/chat_repository.dart';
 import 'package:c4d/module_deep_links/repository/deep_link_local_repository.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_my_notifications/my_notifications_routes.dart';
@@ -32,6 +32,8 @@ import 'package:flutter_snake_navigationbar/flutter_snake_navigationbar.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:latlong2/latlong.dart';
+
+import '../../../../module_releases_tracker/state_manager/releases_tracker_state_manager.dart';
 
 class CaptainOrdersScreen extends StatefulWidget {
   const CaptainOrdersScreen();
@@ -116,6 +118,11 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
     if (NotificationsPrefHelper().getHomeIndex() == 1) {
       NotificationsPrefHelper().setHomeIndex(1);
     }
+    _versionCheck();
+  }
+
+  _versionCheck() {
+    getIt<ReleasesTrackerStateManager>().checkVersion();
   }
 
   @override
@@ -174,7 +181,7 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
 
   subscribeToDirectSupportMessages(String roomID) {
     _supportMessages =
-        getIt<ChatRepository>().requestMessages(roomID).listen((event) {
+        getIt<Chat2Repository>().listenToMessages(roomID).listen((event) {
       try {
         Map<String, dynamic> lastMessage =
             event.docs.last.data() as Map<String, dynamic>;
@@ -305,8 +312,10 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
                       if (_currentProfile != null) {
                         Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
                             arguments: ChatArgument(
-                                roomID: _currentProfile!.roomID ?? '',
-                                userType: 'Admin'));
+                              roomID: _currentProfile!.roomID ?? '',
+                              userType: 'Admin',
+                              name: null,
+                            ));
                       }
                     },
                         icon: Icons.support_agent_rounded,

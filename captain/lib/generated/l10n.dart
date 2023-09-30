@@ -8170,11 +8170,11 @@ class S {
     );
   }
 
-  /// `cant accept order because order with status captain in way to store exist`
-  String get cantAcceptOrderBecauseOrderWithStatusCaptainInWayToStoreExist {
+  /// `you cant accept another order until you leave the store`
+  String get youCantAcceptAnotherOrderUntilYouLeaveTheStore {
     return Intl.message(
-      'cant accept order because order with status captain in way to store exist',
-      name: 'cantAcceptOrderBecauseOrderWithStatusCaptainInWayToStoreExist',
+      'you cant accept another order until you leave the store',
+      name: 'youCantAcceptAnotherOrderUntilYouLeaveTheStore',
       desc: '',
       args: [],
     );
