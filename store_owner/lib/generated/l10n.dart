@@ -7489,6 +7489,26 @@ class S {
       args: [openOrderPrice, oneKilometerCost],
     );
   }
+
+  /// `unfamiliar link`
+  String get unfamiliarLink {
+    return Intl.message(
+      'unfamiliar link',
+      name: 'unfamiliarLink',
+      desc: '',
+      args: [],
+    );
+  }
+
+  /// `fetching data...`
+  String get fetchingData {
+    return Intl.message(
+      'fetching data...',
+      name: 'fetchingData',
+      desc: '',
+      args: [],
+    );
+  }
 }
 
 class AppLocalizationDelegate extends LocalizationsDelegate<S> {

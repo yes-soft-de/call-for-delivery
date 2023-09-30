@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
+import 'package:c4d/module_deep_links/request/geo_distance_request.dart';
 import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/state_manager/new_order/new_order.state_manager.dart';
@@ -32,13 +33,16 @@ class NewOrderScreenState extends State<NewOrderScreen>
   late States currentState;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   StreamSubscription? _stateSubscription;
+  bool startParseLocation = false;
 
   void addNewOrder(CreateOrderRequest request) {
     widget._stateManager.createOrder(this, request);
   }
 
   void refresh() {
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   // New Order state controller
@@ -53,7 +57,26 @@ class NewOrderScreenState extends State<NewOrderScreen>
   int? costType;
   int? branch;
   LatLng? customerLocation;
-  //
+  GeoDistanceRequest request = GeoDistanceRequest();
+  int callGeoAgin = 0;
+
+  /// this variable become true when user enter the link
+  /// so can let [GeoDistanceText] appear  do their job
+  bool canCallForLocation = false;
+
+  /// this variable is used for ignoring unnecessary
+  String oldLink = '';
+  bool _ignoreUnnecessaryCall(String newLink) {
+    if (newLink.isEmpty) return true;
+
+    var newLinkAfterTrim = newLink.trim();
+
+    if (newLinkAfterTrim == oldLink) return true;
+
+    oldLink = newLinkAfterTrim;
+    return false;
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     Clipboard.hasStrings().asStream().listen((event) async {
@@ -85,16 +108,15 @@ class NewOrderScreenState extends State<NewOrderScreen>
         setState(() {});
       }
     });
-    var old = toController.text;
-    toController.addListener(() {
-      if (old != toController.text) {
-        old = toController.text;
-        locationParsing();
-      }
-      if (!toController.text.contains('http') && !toController.text.contains('geo')) {
-        toController.clear();
-        Fluttertoast.showToast(msg: S.current.invalidMapLink);
-      }
+
+    toController.addListener(() async {
+      if (_ignoreUnnecessaryCall(toController.text)) return;
+
+      request.link = toController.text.trim();
+      canCallForLocation = true;
+      callGeoAgin++;
+
+      refresh();
     });
   }
 
@@ -130,7 +152,22 @@ class NewOrderScreenState extends State<NewOrderScreen>
     }
   }
 
+  void showLoadingIndicatorOverlayToPreventPressingWhileLinkBeingParsing() {
+    showDialog(
+        context: context,
+        builder: (ctx) {
+          return SizedBox(
+              height: 50,
+              width: 50,
+              child: Center(child: CircularProgressIndicator()));
+        });
+  }
+
   void locationParsing() async {
+    setState(() {
+      startParseLocation = true;
+    });
+    showLoadingIndicatorOverlayToPreventPressingWhileLinkBeingParsing();
     if (toController.text.isNotEmpty && toController.text != '') {
       if (toController.text.contains(' ') || toController.text.contains('\n')) {
         toController.text = Cleaner.clean(toController.text);
@@ -138,23 +175,47 @@ class NewOrderScreenState extends State<NewOrderScreen>
       var data = toController.text.trim();
       var link = Uri.tryParse(data);
       if (link != null && link.queryParameters['q'] != null) {
-        customerLocation = LatLng(
-          double.parse(link.queryParameters['q']!.split(',')[0]),
-          double.parse(link.queryParameters['q']!.split(',')[1]),
-        );
-        setState(() {});
-      } else if (link != null) {
-        toController.text = await DeepLinksService.extractCoordinatesFromUrl(data);
+        try {
+          customerLocation = LatLng(
+            double.parse(link.queryParameters['q']!.split(',')[0]),
+            double.parse(link.queryParameters['q']!.split(',')[1]),
+          );
+        } catch (e) {
+          toController.text =
+              await DeepLinksService.extractCoordinatesFromUrl(data);
+        }
         setState(() {
+          startParseLocation = false;
+        });
+      } else if (link != null) {
+        toController.text =
+            await DeepLinksService.extractCoordinatesFromUrl(data);
+        setState(() {
+          startParseLocation = false;
         });
       } else {
         customerLocation = null;
-        setState(() {});
+        setState(() {
+          startParseLocation = false;
+        });
       }
     } else {
       customerLocation = null;
-      setState(() {});
+      setState(() {
+        startParseLocation = false;
+      });
     }
+    if (customerLocation == null) {
+      try {
+        // controller.loadRequest(Uri.parse(toController.text));
+      } catch (e) {
+        //
+      }
+      setState(() {
+        startParseLocation = false;
+      });
+    }
+    Navigator.of(context).pop();
   }
 
   @override

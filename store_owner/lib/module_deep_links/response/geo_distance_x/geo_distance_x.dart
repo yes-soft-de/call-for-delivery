@@ -14,10 +14,4 @@ class GeoDistanceX {
             ? null
             : Data.fromJson(json['Data'] as Map<String, dynamic>),
       );
-
-  Map<String, dynamic> toJson() => {
-        'status code': statusCode,
-        'msg': msg,
-        'Data': data?.toJson(),
-      };
 }

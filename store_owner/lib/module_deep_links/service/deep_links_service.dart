@@ -19,8 +19,6 @@ class DeepLinksService {
     try {
       final dio = Dio();
       final response = await dio.get(link);
-      print(response.headers);
-      print(response.redirects.first.location.toString());
       return response.redirects.first.location.toString();
     } catch (e) {
       return link;
@@ -35,6 +33,8 @@ class DeepLinksService {
     } else if (uri.scheme == 'comgooglemaps' &&
         uri.queryParameters.containsKey('daddr')) {
       return _extractCoordinatesFromComGoogleMapsUrl(uri);
+    } else if (uri.host.contains('maps.apple.com')) {
+      return _extractCoordinatesFromAppleMapsUrl(uri);
     } else {
       print('Invalid URL format.');
       return _getFirebaseDynamicLinkData(url);
@@ -154,7 +154,12 @@ class DeepLinksService {
     if (response.data == null) return DataModel.empty();
     GeoDistanceModel model = GeoDistanceModel(
         distance: response.data?.distance,
-        costDeliveryOrder: response.data?.costDeliveryOrder);
+        costDeliveryOrder: response.data?.costDeliveryOrder,
+        geoDestination: GeoDestination(
+          lat: response.data?.destination?.latitude ?? 0,
+          lon: response.data?.destination?.longitude ?? 0,
+        ));
+
     return model;
   }
 
@@ -191,5 +196,64 @@ class DeepLinksService {
       print('Invalid coordinates format.');
     }
     return uri.toString();
+  }
+
+  static String _extractCoordinatesFromAppleMapsUrl(Uri uri) {
+    String ll = uri.queryParameters['ll']!;
+    List<String> coordinates = ll.split(',');
+
+    if (coordinates.length == 2) {
+      String latitude = coordinates[0];
+      String longitude = coordinates[1];
+
+      print('Latitude: $latitude');
+      print('Longitude: $longitude');
+      return 'https://maps.google.com?q=$latitude,$longitude';
+    } else {
+      print('Invalid coordinates format.');
+    }
+    return uri.toString();
+  }
+
+  static LatLng? getCustomerLocationFromRedirectedUrl(String url) {
+    RegExp latLngPattern = RegExp(r'/@(-?\d+\.?\d*),(-?\d+\.?\d*)');
+    RegExpMatch? match = latLngPattern.firstMatch(url);
+    if (match != null) {
+      double latitude = double.tryParse(match.group(1) ?? '') ?? 0;
+      double longitude = double.tryParse(match.group(2) ?? '') ?? 0;
+      return LatLng(latitude, longitude);
+    } else {
+      return null;
+    }
+  }
+
+  static Future<LatLng?> getCustomerLocationFromRedirectedUrlAsync(
+      String url) async {
+    RegExp latLngPattern = RegExp(r'/@(-?\d+\.?\d*),(-?\d+\.?\d*)');
+    RegExpMatch? match = latLngPattern.firstMatch(url);
+    if (match != null) {
+      double latitude = double.tryParse(match.group(1) ?? '') ?? 0;
+      double longitude = double.tryParse(match.group(2) ?? '') ?? 0;
+      return LatLng(latitude, longitude);
+    } else {
+      try {
+        var locationUrl = await extractCoordinatesFromUrl(url);
+        double? _latitude = double.tryParse(Uri.tryParse(locationUrl)!
+            .queryParameters['q']!
+            .split(',')[0]
+            .toString());
+        double? _longitude = double.tryParse(Uri.tryParse(locationUrl)!
+            .queryParameters['q']!
+            .split(',')[1]
+            .toString());
+        if (_latitude == null || _longitude == null) {
+          return null;
+        }
+        return LatLng(_latitude, _longitude);
+      } catch (e) {
+        //
+      }
+      return null;
+    }
   }
 }

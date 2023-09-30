@@ -158,6 +158,7 @@
 				3B06AD1E1E4923F5004D2608 /* Thin Binary */,
 				B666C43A0E067DAD7D59539D /* [CP] Embed Pods Frameworks */,
 				2D9F36233051D11E3F7936EC /* [CP] Copy Pods Resources */,
+				8061C1FA2A8952F6009BBF34 /* Run Script */,
 			);
 			buildRules = (
 			);
@@ -252,6 +253,29 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "/bin/sh \"$FLUTTER_ROOT/packages/flutter_tools/bin/xcode_backend.sh\" embed_and_thin";
+		};
+		8061C1FA2A8952F6009BBF34 /* Run Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Resources/DWARF/${PRODUCT_NAME}",
+				"${DWARF_DSYM_FOLDER_PATH}/${DWARF_DSYM_FILE_NAME}/Contents/Info.plist",
+				"$(BUILT_PRODUCTS_DIR)/$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/GoogleService-Info.plist",
+				"$(BUILT_PRODUCTS_DIR)/$(EXECUTABLE_PATH)",
+			);
+			name = "Run Script";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "$PODS_ROOT/FirebaseCrashlytics/upload-symbols --build-phase --validate -ai 1:410273886458:ios:c621fbb0057cf1d91f1943\n$PODS_ROOT/FirebaseCrashlytics/upload-symbols --build-phase -ai 1:410273886458:ios:c621fbb0057cf1d91f1943\n";
 		};
 		9023E61BE8BE41F6D582A963 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
