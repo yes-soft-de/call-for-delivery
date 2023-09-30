@@ -16,7 +16,6 @@ import 'package:c4d/utils/helpers/text_reader.dart';
 import 'package:c4d/utils/logger/logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_tts/flutter_tts.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:latlong2/latlong.dart';
 
 class OrderStatusScreen extends StatefulWidget {
@@ -63,10 +62,10 @@ class OrderStatusScreenState extends State<OrderStatusScreen> {
     });
 
     DeepLinksService.getLocation().then((value) {
-        myLocation = value;
-        Logger.info('Location with us for the first time',
-            myLocation?.toJson().toString() ?? 'null');
-        setState(() {});
+      myLocation = value;
+      Logger.info('Location with us for the first time',
+          myLocation?.toJson().toString() ?? 'null');
+      setState(() {});
     });
 
     // DeepLinksService.canRequestLocation().then((value) async {

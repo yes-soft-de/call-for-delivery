@@ -33,6 +33,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:latlong2/latlong.dart';
 
+import '../../../../module_releases_tracker/state_manager/releases_tracker_state_manager.dart';
+
 class CaptainOrdersScreen extends StatefulWidget {
   const CaptainOrdersScreen();
 
@@ -116,6 +118,11 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
     if (NotificationsPrefHelper().getHomeIndex() == 1) {
       NotificationsPrefHelper().setHomeIndex(1);
     }
+    _versionCheck();
+  }
+
+  _versionCheck() {
+    getIt<ReleasesTrackerStateManager>().checkVersion();
   }
 
   @override
@@ -305,9 +312,9 @@ class CaptainOrdersScreenState extends State<CaptainOrdersScreen> {
                       if (_currentProfile != null) {
                         Navigator.of(context).pushNamed(ChatRoutes.chatRoute,
                             arguments: ChatArgument(
-                                roomID: _currentProfile!.roomID ?? '',
-                                userType: 'Admin',
-                                name: null
+                              roomID: _currentProfile!.roomID ?? '',
+                              userType: 'Admin',
+                              name: null,
                             ));
                       }
                     },

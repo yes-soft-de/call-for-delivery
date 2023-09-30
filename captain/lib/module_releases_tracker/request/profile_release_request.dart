@@ -27,14 +27,10 @@ class ProfileReleaseRequest {
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
-      'version': version,
+      'releaseVersion': version,
       'platformOS': platformOS.toInt,
     };
   }
 
- 
-
   String toJson() => json.encode(toMap());
-
- 
 }

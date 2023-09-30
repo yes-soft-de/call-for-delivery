@@ -19,8 +19,6 @@ import 'package:flutter/material.dart';
 import 'package:c4d/module_localization/service/localization_service/localization_service.dart';
 import 'package:c4d/module_settings/setting_routes.dart';
 
-import '../../../module_releases_tracker/state_manager/releases_tracker_state_manager.dart';
-
 @injectable
 class SplashScreen extends StatefulWidget {
   final AuthService _authService;
@@ -63,12 +61,7 @@ class _SplashScreenState extends State<SplashScreen> {
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       someChecks();
     });
-    _versionCheck();
     super.initState();
-  }
-
-  _versionCheck() {
-    getIt<ReleasesTrackerStateManager>().checkVersion();
   }
 
   String _statusText = 'Waiting...';
