@@ -281,6 +281,11 @@ class UpdateOrderLoaded extends States {
                               finalDistance: (v) {
                                 distance = v.distance;
                                 deliveryCost = v.costDeliveryOrder?.total;
+                                screenState.customerLocation =
+                                    destination = LatLng(
+                                  v.geoDestination?.lat ?? 0,
+                                  v.geoDestination?.lon ?? 0,
+                                );
                               },
                               request: screenState.geoDistanceRequest,
                             )),
