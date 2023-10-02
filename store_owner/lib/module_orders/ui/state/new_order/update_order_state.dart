@@ -57,6 +57,7 @@ class UpdateOrderLoaded extends States {
       }
       screenState.phoneNumberController.text = sNumber.number;
     }
+    screenState.geoDistanceRequest.origin = orderInfo.destinationCoordinate;
     screenState.toController.text = orderInfo.destinationLink ?? '';
     screenState.priceController.text = orderInfo.orderCost.toString();
     screenState.payments = orderInfo.payment;

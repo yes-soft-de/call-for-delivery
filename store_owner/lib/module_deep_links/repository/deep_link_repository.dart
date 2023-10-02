@@ -1,10 +1,8 @@
 import 'package:c4d/consts/urls.dart';
-import 'package:c4d/global_nav_key.dart';
 import 'package:c4d/module_auth/service/auth_service/auth_service.dart';
 import 'package:c4d/module_deep_links/request/geo_distance_request.dart';
 import 'package:c4d/module_deep_links/response/geo_distance_x/geo_distance_x.dart';
 import 'package:c4d/module_network/http_client/http_client.dart';
-import 'package:c4d/utils/helpers/custom_flushbar.dart';
 import 'package:injectable/injectable.dart';
 
 @injectable
@@ -35,14 +33,6 @@ class DeepLinkRepository {
       request.toMap(),
       headers: {'Authorization': 'Bearer $token'},
     );
-
-    if (Urls.DOMAIN == devDomain) {
-      var context = GlobalVariable.navState.currentContext!;
-      CustomFlushBarHelper.createSuccess(
-        title: 'the result is',
-        message: response.toString(),
-      ).show(context);
-    }
 
     if (response == null) return null;
 
