@@ -29,22 +29,30 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
   CostDeliveryOrder? deliveryCostDetails;
   late GeoDistanceRequest request;
 
+  void refresh() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      setState(() {});
+    });
+  }
+
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-      _setup().whenComplete(() {
-        setState(() {});
-      });
-    });
+    _setup();
     super.initState();
   }
 
   Future<void> _setup() async {
-    // the [copyWith] is important to make [didUpdateWidget] condition work correctly
+    /// DO NOT DELETE THE [copyWith]
+    /// the [copyWith] is important to make [didUpdateWidget] condition work correctly
+    /// 
+    /// without the [copyWith] the variable will point to the same object
+    /// so [request == widget.request] or even [request == oldWidget.request] will be always true
+    /// 
     request = widget.request.copyWith();
+    loading = true;
+    refresh();
 
-    var snap =
-        await DeepLinksService.getGeoDistanceWithDeliveryCost(widget.request);
+    var snap = await DeepLinksService.getGeoDistanceWithDeliveryCost(request);
 
     if (snap is GeoDistanceModel) {
       widget.finalDistance(snap);
@@ -65,18 +73,13 @@ class _GeoDistanceTextState extends State<GeoDistanceText> {
     }
 
     loading = false;
-    setState(() {});
+    refresh();
   }
 
   @override
   void didUpdateWidget(GeoDistanceText oldWidget) {
     if (request != widget.request) {
-      WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
-        setState(() {
-          loading = true;
-        });
-        _setup();
-      });
+      _setup();
     }
     super.didUpdateWidget(oldWidget);
   }

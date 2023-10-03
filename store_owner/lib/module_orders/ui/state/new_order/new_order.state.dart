@@ -7,7 +7,6 @@ import 'package:c4d/consts/c4d_stores_id.dart';
 import 'package:c4d/di/di_config.dart';
 import 'package:c4d/module_auth/ui/widget/login_widgets/custom_field.dart';
 import 'package:c4d/module_branches/model/branches/branches_model.dart';
-import 'package:c4d/module_deep_links/service/location_parsing.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/ui/screens/new_order/new_order_screen.dart';
 import 'package:c4d/module_orders/ui/widgets/geo_widget.dart';
@@ -31,7 +30,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:latlong2/latlong.dart';
-import 'package:webview_flutter/webview_flutter.dart';
 
 class NewOrderStateBranchesLoaded extends States {
   List<BranchesModel> branches;
@@ -255,17 +253,6 @@ class NewOrderStateBranchesLoaded extends States {
                         icon: Icon(Icons.paste_rounded),
                         onPressed: getClipBoardData,
                       ),
-                    ),
-                  ),
-                  // map preview .
-                  IgnorePointer(
-                    child: SizedBox(
-                      height: 16,
-                      child: Opacity(
-                          opacity: 0,
-                          child: WebViewWidget(
-                              controller:
-                                  webViewController ?? WebViewController())),
                     ),
                   ),
                   Visibility(
@@ -848,11 +835,9 @@ class NewOrderStateBranchesLoaded extends States {
 
   Future<void> getClipBoardData() async {
     ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
-    screenState.toController.text = data?.text ?? '';
-
-    /// trim is used to make sure that the link will display in the filed what ever white spaces he have
-    /// note that trim will apply in the begin an end of text so there is no actual data will lose in this possess
-    screenState.toController.text = screenState.toController.text.trim();
+    screenState.destinationLink = data?.text ?? '';
+    screenState.toController.text =
+        screenState.cleanLink(screenState.destinationLink);
     screenState.refresh();
     return;
   }
@@ -876,7 +861,7 @@ class NewOrderStateBranchesLoaded extends States {
           recipientPhone: screenState.countryNumberController.text.trim() +
               screenState.phoneNumberController.text.trim(),
           destination: GeoJson(
-              link: screenState.toController.text.trim(),
+              link: screenState.destinationLink,
               lat: screenState.customerLocation?.latitude,
               lon: screenState.customerLocation?.longitude),
           note: screenState.orderDetailsController.text.trim(),
@@ -906,7 +891,7 @@ class NewOrderStateBranchesLoaded extends States {
         recipientPhone: screenState.countryNumberController.text.trim() +
             screenState.phoneNumberController.text.trim(),
         destination: GeoJson(
-            link: screenState.toController.text.trim(),
+            link: screenState.destinationLink,
             lat: screenState.customerLocation?.latitude,
             lon: screenState.customerLocation?.longitude),
         note: screenState.orderDetailsController.text.trim(),
