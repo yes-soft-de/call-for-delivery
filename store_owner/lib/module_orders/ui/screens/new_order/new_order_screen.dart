@@ -4,11 +4,9 @@ import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
 import 'package:c4d/module_deep_links/request/geo_distance_request.dart';
-import 'package:c4d/module_deep_links/service/deep_links_service.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/state_manager/new_order/new_order.state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
-import 'package:c4d/utils/helpers/link_cleaner.dart';
 import 'package:c4d/utils/helpers/phone_number_detection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -59,6 +57,14 @@ class NewOrderScreenState extends State<NewOrderScreen>
   LatLng? customerLocation;
   GeoDistanceRequest geoDistanceRequest = GeoDistanceRequest();
 
+  /// this variable will have the [toController.text] value but without cleaning
+  ///
+  /// [toController] must be clean to make sure that it will appear in the filed
+  ///
+  /// so to make sure that the link will send to the backend without changing this variable well be sent
+  ///
+  String destinationLink = '';
+
   /// this variable become true when user enter the link
   /// so can let [GeoDistanceText] appear  do their job
   bool canCallForLocation = false;
@@ -68,12 +74,30 @@ class NewOrderScreenState extends State<NewOrderScreen>
   bool _ignoreUnnecessaryCall(String newLink) {
     if (newLink.isEmpty) return true;
 
-    var newLinkAfterTrim = newLink.trim();
+    var newLinkAfterClean = cleanLink(newLink);
 
-    if (newLinkAfterTrim == oldLink) return true;
+    if (newLinkAfterClean == oldLink) return true;
 
-    oldLink = newLinkAfterTrim;
+    oldLink = newLinkAfterClean;
     return false;
+  }
+
+  /// this method make sure that the link will appear in the files by:
+  ///
+  /// * remove unnecessary
+  ///
+  /// * remove new lines
+  ///
+  String cleanLink(String old) {
+    String cleanedText = old;
+
+    /// remove new lines
+    cleanedText = cleanedText.replaceAll('\n', ' ');
+
+    /// remove white spaces end and begin of text
+    cleanedText = cleanedText.trim();
+
+    return cleanedText;
   }
 
   @override
@@ -111,7 +135,7 @@ class NewOrderScreenState extends State<NewOrderScreen>
     toController.addListener(() async {
       if (_ignoreUnnecessaryCall(toController.text)) return;
 
-      geoDistanceRequest.link = toController.text.trim();
+      geoDistanceRequest.link = destinationLink;
       canCallForLocation = true;
 
       refresh();
@@ -148,72 +172,6 @@ class NewOrderScreenState extends State<NewOrderScreen>
           break;
       }
     }
-  }
-
-  void showLoadingIndicatorOverlayToPreventPressingWhileLinkBeingParsing() {
-    showDialog(
-        context: context,
-        builder: (ctx) {
-          return SizedBox(
-              height: 50,
-              width: 50,
-              child: Center(child: CircularProgressIndicator()));
-        });
-  }
-
-  void locationParsing() async {
-    setState(() {
-      startParseLocation = true;
-    });
-    showLoadingIndicatorOverlayToPreventPressingWhileLinkBeingParsing();
-    if (toController.text.isNotEmpty && toController.text != '') {
-      if (toController.text.contains(' ') || toController.text.contains('\n')) {
-        toController.text = Cleaner.clean(toController.text);
-      }
-      var data = toController.text.trim();
-      var link = Uri.tryParse(data);
-      if (link != null && link.queryParameters['q'] != null) {
-        try {
-          customerLocation = LatLng(
-            double.parse(link.queryParameters['q']!.split(',')[0]),
-            double.parse(link.queryParameters['q']!.split(',')[1]),
-          );
-        } catch (e) {
-          toController.text =
-              await DeepLinksService.extractCoordinatesFromUrl(data);
-        }
-        setState(() {
-          startParseLocation = false;
-        });
-      } else if (link != null) {
-        toController.text =
-            await DeepLinksService.extractCoordinatesFromUrl(data);
-        setState(() {
-          startParseLocation = false;
-        });
-      } else {
-        customerLocation = null;
-        setState(() {
-          startParseLocation = false;
-        });
-      }
-    } else {
-      customerLocation = null;
-      setState(() {
-        startParseLocation = false;
-      });
-    }
-    if (customerLocation == null) {
-      try {
-        // controller.loadRequest(Uri.parse(toController.text));
-      } catch (e) {
-        //
-      }
-      setState(() {
-        startParseLocation = false;
-      });
-    }
-    Navigator.of(context).pop();
   }
 
   @override
