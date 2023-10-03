@@ -92,7 +92,7 @@ class NewOrderScreenState extends State<NewOrderScreen>
     String cleanedText = old;
 
     /// remove new lines
-    cleanedText = cleanedText.replaceAll('\n', '');
+    cleanedText = cleanedText.replaceAll('\n', ' ');
 
     /// remove white spaces end and begin of text
     cleanedText = cleanedText.trim();
