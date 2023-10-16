@@ -763,5 +763,7 @@
             }
         }
     },
+    "unfamiliarLink": "unfamiliar link",
+    "fetchingData": "fetching data...",
     "adsAndOffers":"Ads & offers"
 }

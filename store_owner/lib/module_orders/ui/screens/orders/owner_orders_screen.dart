@@ -45,6 +45,8 @@ import 'package:injectable/injectable.dart';
 import 'package:feature_discovery/feature_discovery.dart';
 import 'package:flutter_swipe_detector/flutter_swipe_detector.dart';
 
+import '../../../../module_releases_tracker/state_manager/releases_tracker_state_manager.dart';
+
 @injectable
 class OwnerOrdersScreen extends StatefulWidget {
   final OwnerOrdersStateManager _stateManager;
@@ -169,7 +171,8 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
       (value) {
         if (value.hasError) {
           if ((value.error?.contains('لم تشترك بباقة') ?? false) ||
-              (value.error?.contains('You dont have PFa subscription') ?? false))
+              (value.error?.contains('You dont have PFa subscription') ??
+                  false))
             getIt<SubscriptionPref>().setIsOldSubscriptionPlan(false);
         } else if (value.isEmpty) {
         } else {
@@ -183,6 +186,12 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
         }
       },
     );
+
+    _versionCheck();
+  }
+
+  _versionCheck() {
+    getIt<ReleasesTrackerStateManager>().checkVersion();
   }
 
   refresh() {
@@ -456,9 +465,9 @@ class OwnerOrdersScreenState extends State<OwnerOrdersScreen>
                                       paymentId: purchaseID,
                                     ),
                                   );
-                              getInitData();
-                            } else {
-                              Navigator.pop(context);
+                                  getInitData();
+                                } else {
+                                  Navigator.pop(context);
                                 }
                               },
                             ),

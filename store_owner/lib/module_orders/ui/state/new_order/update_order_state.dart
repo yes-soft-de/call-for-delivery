@@ -57,7 +57,9 @@ class UpdateOrderLoaded extends States {
       }
       screenState.phoneNumberController.text = sNumber.number;
     }
-    screenState.toController.text = orderInfo.destinationLink ?? '';
+    screenState.destinationLink = orderInfo.destinationLink ?? '';
+    screenState.toController.text =
+        screenState.cleanLink(screenState.destinationLink);
     screenState.priceController.text = orderInfo.orderCost.toString();
     screenState.payments = orderInfo.payment;
     screenState.branch = orderInfo.branchID;
@@ -75,6 +77,8 @@ class UpdateOrderLoaded extends States {
     try {
       activeBranch =
           branches.firstWhere((element) => element.id == orderInfo.branchID);
+      screenState.geoDistanceRequest.origin =
+          activeBranch?.location ?? LatLng(0, 0);
     } catch (e) {}
     screenState.refresh();
   }
@@ -162,6 +166,9 @@ class UpdateOrderLoaded extends States {
                                 screenState.branch = v.id;
                                 activeBranch = branches.firstWhere(
                                     (element) => element.id == v.id);
+                                screenState.geoDistanceRequest.origin =
+                                    activeBranch?.location ?? LatLng(0, 0);
+
                                 screenState.refresh();
                               },
                               selectedItem: screenState.branch != null
@@ -267,8 +274,7 @@ class UpdateOrderLoaded extends States {
                   ),
                 ),
                 Visibility(
-                    visible: screenState.customerLocation != null &&
-                        activeBranch != null,
+                    visible: screenState.canCallForLocation,
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Container(
@@ -279,13 +285,16 @@ class UpdateOrderLoaded extends States {
                         child: Padding(
                             padding: const EdgeInsets.all(12.0),
                             child: GeoDistanceText(
-                              destination:
-                                  screenState.customerLocation ?? LatLng(0, 0),
-                              origin: activeBranch?.location ?? LatLng(0, 0),
-                              destance: (d, cost) {
-                                distance = d;
-                                deliveryCost = cost;
+                              finalDistance: (v) {
+                                distance = v.distance;
+                                deliveryCost = v.costDeliveryOrder?.total;
+                                screenState.customerLocation =
+                                    destination = LatLng(
+                                  v.geoDestination?.lat ?? 0,
+                                  v.geoDestination?.lon ?? 0,
+                                );
                               },
+                              request: screenState.geoDistanceRequest,
                             )),
                       ),
                     )),
@@ -912,7 +921,9 @@ class UpdateOrderLoaded extends States {
 
   Future<void> getClipBoardData() async {
     ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
-    screenState.toController.text = data?.text ?? '';
+    screenState.destinationLink = data?.text ?? '';
+    screenState.toController.text =
+        screenState.cleanLink(screenState.destinationLink);
     screenState.refresh();
     return;
   }
@@ -938,7 +949,7 @@ class UpdateOrderLoaded extends States {
         recipientPhone: screenState.countryNumberController.text.trim() +
             screenState.phoneNumberController.text.trim(),
         destination: GeoJson(
-            link: screenState.toController.text.trim(),
+            link: screenState.destinationLink,
             lat: screenState.customerLocation?.latitude,
             lon: screenState.customerLocation?.longitude),
         note: screenState.orderDetailsController.text.trim(),
@@ -968,7 +979,7 @@ class UpdateOrderLoaded extends States {
       recipientPhone: screenState.countryNumberController.text.trim() +
           screenState.phoneNumberController.text.trim(),
       destination: GeoJson(
-          link: screenState.toController.text.trim(),
+          link: screenState.destinationLink,
           lat: screenState.customerLocation?.latitude,
           lon: screenState.customerLocation?.longitude),
       note: screenState.orderDetailsController.text.trim(),

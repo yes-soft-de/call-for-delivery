@@ -16,26 +16,26 @@ class DeepLinkRepository {
     var token = await _authService.getToken();
     dynamic response = await _apiClient.get(
         Urls.GEO_DISTANCE +
-            '/${g.distance.latitude}' +
-            '/${g.distance.longitude}' +
-            '/${g.origin.latitude}' +
-            '/${g.origin.longitude}',
+            '/${g.distance?.latitude}' +
+            '/${g.distance?.longitude}' +
+            '/${g.origin?.latitude}' +
+            '/${g.origin?.longitude}',
         headers: {'Authorization': 'Bearer $token'});
     if (response == null) return null;
     return GeoDistanceX.fromJson(response);
   }
 
   Future<GeoDistanceX?> getDistanceWithDeliveryCost(
-      GeoDistanceRequest g) async {
+      GeoDistanceRequest request) async {
     var token = await _authService.getToken();
-    dynamic response = await _apiClient.get(
-        Urls.GEO_DISTANCE_WITH_DELIVERY_COST +
-            '/${g.distance.latitude}' +
-            '/${g.distance.longitude}' +
-            '/${g.origin.latitude}' +
-            '/${g.origin.longitude}',
-        headers: {'Authorization': 'Bearer $token'});
+    dynamic response = await _apiClient.post(
+      Urls.GEO_DISTANCE_WITH_DELIVERY_COST,
+      request.toMap(),
+      headers: {'Authorization': 'Bearer $token'},
+    );
+
     if (response == null) return null;
+
     return GeoDistanceX.fromJson(response);
   }
 }
