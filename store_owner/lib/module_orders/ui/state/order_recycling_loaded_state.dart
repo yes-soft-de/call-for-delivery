@@ -1,6 +1,4 @@
-import 'dart:developer';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
@@ -54,7 +52,9 @@ class OrderRecyclingLoaded extends States {
       }
       screenState.phoneNumberController.text = sNumber.number;
     }
-    screenState.toController.text = orderInfo.destinationLink ?? '';
+    screenState.destinationLink = orderInfo.destinationLink ?? '';
+    screenState.toController.text =
+        screenState.cleanLink(screenState.destinationLink);
     screenState.priceController.text = orderInfo.orderCost.toString();
     screenState.payments = orderInfo.payment;
     screenState.branch = orderInfo.branchID;
@@ -74,6 +74,8 @@ class OrderRecyclingLoaded extends States {
     try {
       activeBranch =
           branches.firstWhere((element) => element.id == orderInfo.branchID);
+      screenState.geoDistanceRequest.origin =
+          activeBranch?.location ?? LatLng(0, 0);
     } catch (e) {}
     screenState.refresh();
   }
@@ -97,7 +99,7 @@ class OrderRecyclingLoaded extends States {
   Widget getUI(BuildContext context) {
     var decoration = BoxDecoration(
         borderRadius: BorderRadius.circular(25),
-        color: Theme.of(context).backgroundColor);
+        color: Theme.of(context).colorScheme.background);
     bool isDark = getIt<ThemePreferencesHelper>().isDarkMode();
     return StackedForm(
         visible: MediaQuery.of(context).viewInsets.bottom == 0,
@@ -182,7 +184,7 @@ class OrderRecyclingLoaded extends States {
                                 '+',
                                 style: Theme.of(context)
                                     .textTheme
-                                    .button
+                                    .labelLarge
                                     ?.copyWith(
                                         color: Colors.white, fontSize: 20),
                               ),
@@ -224,13 +226,16 @@ class OrderRecyclingLoaded extends States {
                         child: Padding(
                             padding: const EdgeInsets.all(12.0),
                             child: GeoDistanceText(
-                              destination:
-                                  screenState.customerLocation ?? LatLng(0, 0),
-                              origin: activeBranch?.location ?? LatLng(0, 0),
-                              destance: (d, cost) {
-                                distance = d;
-                                deliveryCost = cost;
+                              finalDistance: (v) {
+                                distance = v.distance;
+                                deliveryCost = v.costDeliveryOrder?.total;
+                                screenState.customerLocation =
+                                    destination = LatLng(
+                                  v.geoDestination?.lat ?? 0,
+                                  v.geoDestination?.lon ?? 0,
+                                );
                               },
+                              request: screenState.geoDistanceRequest,
                             )),
                       ),
                     )),
@@ -315,7 +320,8 @@ class OrderRecyclingLoaded extends States {
                                                 indent: 16,
                                                 endIndent: 16,
                                                 color: Theme.of(context)
-                                                    .backgroundColor,
+                                                    .colorScheme
+                                                    .background,
                                                 thickness: 2.5,
                                               ),
                                               SizedBox(
@@ -357,7 +363,7 @@ class OrderRecyclingLoaded extends States {
                                                 S.current.close,
                                                 style: Theme.of(context)
                                                     .textTheme
-                                                    .button,
+                                                    .labelLarge,
                                               ),
                                             )),
                                       ),
@@ -374,7 +380,9 @@ class OrderRecyclingLoaded extends States {
                               child: Container(
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(18),
-                                    color: Theme.of(context).backgroundColor),
+                                    color: Theme.of(context)
+                                        .colorScheme
+                                        .background),
                                 child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
@@ -452,7 +460,9 @@ class OrderRecyclingLoaded extends States {
                                 child: Container(
                                   decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(18),
-                                      color: Theme.of(context).backgroundColor),
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .background),
                                   child: Column(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
@@ -477,8 +487,9 @@ class OrderRecyclingLoaded extends States {
                                   child: Container(
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(18),
-                                        color:
-                                            Theme.of(context).backgroundColor),
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .background),
                                     child: Column(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -511,7 +522,7 @@ class OrderRecyclingLoaded extends States {
                   padding: const EdgeInsets.only(left: 8, right: 8),
                   child: Container(
                     decoration: BoxDecoration(
-                        color: Theme.of(context).backgroundColor,
+                        color: Theme.of(context).colorScheme.background,
                         borderRadius: BorderRadius.circular(25)),
                     child: ListTile(
                       onTap: () {
@@ -563,7 +574,7 @@ class OrderRecyclingLoaded extends States {
                   child: Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(25),
-                        color: Theme.of(context).backgroundColor),
+                        color: Theme.of(context).colorScheme.background),
                     child: Material(
                       color: Colors.transparent,
                       child: CheckboxListTile(
@@ -622,7 +633,7 @@ class OrderRecyclingLoaded extends States {
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Theme.of(context).backgroundColor,
+                            color: Theme.of(context).colorScheme.background,
                           ),
                           child: RadioListTile(
                             shape: RoundedRectangleBorder(
@@ -644,7 +655,7 @@ class OrderRecyclingLoaded extends States {
                         child: Container(
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
-                            color: Theme.of(context).backgroundColor,
+                            color: Theme.of(context).colorScheme.background,
                           ),
                           child: RadioListTile(
                             title: Text(S.of(context).cash),
@@ -847,7 +858,9 @@ class OrderRecyclingLoaded extends States {
 
   Future<void> getClipBoardData() async {
     ClipboardData? data = await Clipboard.getData(Clipboard.kTextPlain);
-    screenState.toController.text = data?.text ?? '';
+    screenState.destinationLink = data?.text ?? '';
+    screenState.toController.text =
+        screenState.cleanLink(screenState.destinationLink);
     screenState.refresh();
     return;
   }
@@ -877,7 +890,7 @@ class OrderRecyclingLoaded extends States {
             recipientPhone: screenState.countryNumberController.text.trim() +
                 screenState.phoneNumberController.text.trim(),
             destination: GeoJson(
-                link: screenState.toController.text.trim(),
+                link: screenState.destinationLink,
                 lat: screenState.customerLocation?.latitude,
                 lon: screenState.customerLocation?.longitude),
             note: screenState.orderDetailsController.text.trim(),
@@ -910,7 +923,7 @@ class OrderRecyclingLoaded extends States {
           recipientPhone: screenState.countryNumberController.text.trim() +
               screenState.phoneNumberController.text.trim(),
           destination: GeoJson(
-              link: screenState.toController.text.trim(),
+              link: screenState.destinationLink,
               lat: screenState.customerLocation?.latitude,
               lon: screenState.customerLocation?.longitude),
           note: screenState.orderDetailsController.text.trim(),

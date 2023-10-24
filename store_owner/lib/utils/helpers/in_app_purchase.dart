@@ -117,50 +117,42 @@ class _InAppPurchaseButtonState extends State<InAppPurchaseButton> {
   }
 
   void _buyProducts(ProductDetails productDetails) async {
-    final PurchaseParam purchaseParam =
-        PurchaseParam(productDetails: productDetails);
-    await InAppPurchase.instance.buyConsumable(purchaseParam: purchaseParam);
+    try {
+      final PurchaseParam purchaseParam =
+          PurchaseParam(productDetails: productDetails);
+      await InAppPurchase.instance.buyConsumable(purchaseParam: purchaseParam);
+    } catch (e) {
+      //
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> stack = <Widget>[];
+    Widget? placeHolder;
     if (_queryProductError == null) {
-      stack.add(ElevatedButton(
+      placeHolder = ElevatedButton(
         onPressed: () => _buyProducts(_products.first),
         child: Text(S.current.getItNow),
         style: ElevatedButton.styleFrom(
           backgroundColor: Color(0xffFF6F42),
         ),
-      ));
+      );
     } else {
-      stack.add(Center(
+      placeHolder = Center(
         child: Text(_queryProductError!),
-      ));
-    }
-    if (_purchasePending) {
-      stack.add(
-        // ignore: prefer_const_constructors
-        Stack(
-          children: const <Widget>[
-            Opacity(
-              opacity: 0.3,
-              child: ModalBarrier(dismissible: false, color: Colors.grey),
-            ),
-            Center(
-              child: CircularProgressIndicator(),
-            ),
-          ],
-        ),
       );
     }
-
-    return SizedBox(
+    if (_purchasePending) {
+     placeHolder = SizedBox(
       height: 75,
-      child: Stack(
-        children: stack,
-      ),
-    );
+      width: 75,
+       child: Center(
+          child: CircularProgressIndicator(),
+        ),
+     );
+    }
+
+    return placeHolder;
   }
 
   void showPendingUI() {
@@ -184,7 +176,7 @@ class _InAppPurchaseButtonState extends State<InAppPurchaseButton> {
         if (purchaseDetails.status == PurchaseStatus.error) {
           handleError(purchaseDetails.error!);
         } else if (purchaseDetails.status == PurchaseStatus.canceled) {
-         handleError(IAPError(code: '-1', message: '', source: ''));
+          handleError(IAPError(code: '-1', message: '', source: ''));
         } else if (purchaseDetails.status == PurchaseStatus.purchased ||
             purchaseDetails.status == PurchaseStatus.restored) {
           widget.callBack(true, purchaseDetails.purchaseID ?? 'unknown');

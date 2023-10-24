@@ -79,6 +79,8 @@ class StatusCodeHelper {
         return S.current.subscribeNotExist;
       case '9351':
         return S.current.packageNotExist;
+      case '9374':
+        return S.current.unfamiliarLink;
       case '9700':
         return S.current.noPaymentHadBeenMade;
       case '-1':

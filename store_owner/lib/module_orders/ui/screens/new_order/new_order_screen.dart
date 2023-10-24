@@ -3,11 +3,10 @@ import 'dart:async';
 import 'package:c4d/abstracts/states/loading_state.dart';
 import 'package:c4d/abstracts/states/state.dart';
 import 'package:c4d/generated/l10n.dart';
-import 'package:c4d/module_deep_links/service/deep_links_service.dart';
+import 'package:c4d/module_deep_links/request/geo_distance_request.dart';
 import 'package:c4d/module_orders/request/order/order_request.dart';
 import 'package:c4d/module_orders/state_manager/new_order/new_order.state_manager.dart';
 import 'package:c4d/utils/components/custom_app_bar.dart';
-import 'package:c4d/utils/helpers/link_cleaner.dart';
 import 'package:c4d/utils/helpers/phone_number_detection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -32,13 +31,16 @@ class NewOrderScreenState extends State<NewOrderScreen>
   late States currentState;
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   StreamSubscription? _stateSubscription;
+  bool startParseLocation = false;
 
   void addNewOrder(CreateOrderRequest request) {
     widget._stateManager.createOrder(this, request);
   }
 
   void refresh() {
-    setState(() {});
+    if (mounted) {
+      setState(() {});
+    }
   }
 
   // New Order state controller
@@ -53,7 +55,51 @@ class NewOrderScreenState extends State<NewOrderScreen>
   int? costType;
   int? branch;
   LatLng? customerLocation;
-  //
+  GeoDistanceRequest geoDistanceRequest = GeoDistanceRequest();
+
+  /// this variable will have the [toController.text] value but without cleaning
+  ///
+  /// [toController] must be clean to make sure that it will appear in the filed
+  ///
+  /// so to make sure that the link will send to the backend without changing this variable well be sent
+  ///
+  String destinationLink = '';
+
+  /// this variable become true when user enter the link
+  /// so can let [GeoDistanceText] appear  do their job
+  bool canCallForLocation = false;
+
+  /// this variable is used for ignoring unnecessary
+  String oldLink = '';
+  bool _ignoreUnnecessaryCall(String newLink) {
+    if (newLink.isEmpty) return true;
+
+    var newLinkAfterClean = cleanLink(newLink);
+
+    if (newLinkAfterClean == oldLink) return true;
+
+    oldLink = newLinkAfterClean;
+    return false;
+  }
+
+  /// this method make sure that the link will appear in the files by:
+  ///
+  /// * remove unnecessary
+  ///
+  /// * remove new lines
+  ///
+  String cleanLink(String old) {
+    String cleanedText = old;
+
+    /// remove new lines
+    cleanedText = cleanedText.replaceAll('\n', ' ');
+
+    /// remove white spaces end and begin of text
+    cleanedText = cleanedText.trim();
+
+    return cleanedText;
+  }
+
   @override
   void didChangeAppLifecycleState(AppLifecycleState state) {
     Clipboard.hasStrings().asStream().listen((event) async {
@@ -85,16 +131,14 @@ class NewOrderScreenState extends State<NewOrderScreen>
         setState(() {});
       }
     });
-    var old = toController.text;
-    toController.addListener(() {
-      if (old != toController.text) {
-        old = toController.text;
-        locationParsing();
-      }
-      if (!toController.text.contains('http') && !toController.text.contains('geo')) {
-        toController.clear();
-        Fluttertoast.showToast(msg: S.current.invalidMapLink);
-      }
+
+    toController.addListener(() async {
+      if (_ignoreUnnecessaryCall(toController.text)) return;
+
+      geoDistanceRequest.link = destinationLink;
+      canCallForLocation = true;
+
+      refresh();
     });
   }
 
@@ -127,33 +171,6 @@ class NewOrderScreenState extends State<NewOrderScreen>
           payments = value.toString() == '1' ? 'cash' : 'credit';
           break;
       }
-    }
-  }
-
-  void locationParsing() async {
-    if (toController.text.isNotEmpty && toController.text != '') {
-      if (toController.text.contains(' ') || toController.text.contains('\n')) {
-        toController.text = Cleaner.clean(toController.text);
-      }
-      var data = toController.text.trim();
-      var link = Uri.tryParse(data);
-      if (link != null && link.queryParameters['q'] != null) {
-        customerLocation = LatLng(
-          double.parse(link.queryParameters['q']!.split(',')[0]),
-          double.parse(link.queryParameters['q']!.split(',')[1]),
-        );
-        setState(() {});
-      } else if (link != null) {
-        toController.text = await DeepLinksService.extractCoordinatesFromUrl(data);
-        setState(() {
-        });
-      } else {
-        customerLocation = null;
-        setState(() {});
-      }
-    } else {
-      customerLocation = null;
-      setState(() {});
     }
   }
 

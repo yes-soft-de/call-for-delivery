@@ -1387,10 +1387,10 @@ packages:
     dependency: transitive
     description:
       name: pointer_interceptor
-      sha256: fee6ba42b910637465bc0d367ba27066c6eccfbc3bc0ceb14831915acc600db0
+      sha256: "6aa680b30d96dccef496933d00208ad25f07e047f644dc98ce03ec6141633a9a"
       url: "https://pub.dev"
     source: hosted
-    version: "0.9.3+3"
+    version: "0.9.3+4"
   polylabel:
     dependency: transitive
     description:
@@ -1587,8 +1587,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: master
-      resolved-ref: c96a47bc08813287996b8fcdaefd4270da4191b2
+      ref: make-from-more-accurate
+      resolved-ref: f89fd0db9866ee1d904d3ffbb4d5cbf05c9fb742
       url: "https://github.com/Yazan99sh/simple_moment"
     source: git
     version: "1.2.0"
@@ -1958,45 +1958,45 @@ packages:
     source: hosted
     version: "3.0.2"
   webview_flutter:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: webview_flutter
-      sha256: "392c1d83b70fe2495de3ea2c84531268d5b8de2de3f01086a53334d8b6030a88"
+      sha256: "789d52bd789373cc1e100fb634af2127e86c99cf9abde09499743270c5de8d00"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.4"
+    version: "4.2.2"
   webview_flutter_android:
     dependency: transitive
     description:
       name: webview_flutter_android
-      sha256: "8b3b2450e98876c70bfcead876d9390573b34b9418c19e28168b74f6cb252dbd"
+      sha256: "8587d0b4991bd0f223f4b4957101c2c7449f905601571315f4967072498dd3fb"
       url: "https://pub.dev"
     source: hosted
-    version: "2.10.4"
+    version: "3.9.1"
   webview_flutter_platform_interface:
     dependency: transitive
     description:
       name: webview_flutter_platform_interface
-      sha256: "812165e4e34ca677bdfbfa58c01e33b27fd03ab5fa75b70832d4b7d4ca1fa8cf"
+      sha256: "564ef378cafc1a0e29f1d76ce175ef517a0a6115875dff7b43fccbef2b0aeb30"
       url: "https://pub.dev"
     source: hosted
-    version: "1.9.5"
+    version: "2.4.0"
   webview_flutter_wkwebview:
     dependency: transitive
     description:
       name: webview_flutter_wkwebview
-      sha256: a5364369c758892aa487cbf59ea41d9edd10f9d9baf06a94e80f1bd1b4c7bbc0
+      sha256: "3e36a8f564809cb7c257ff4278502b185e2191349df0ddee98837f91805c74b8"
       url: "https://pub.dev"
     source: hosted
-    version: "2.9.5"
+    version: "3.7.1"
   webviewimage:
     dependency: transitive
     description:
       name: webviewimage
-      sha256: "937bef362098c1b4b76cb15b68ba83a990a2801c336d0d26d41820dd21410d25"
+      sha256: f6da2a7bfc3e67f330e8551c13c10a16aa3100a0d46e44c5484978a63ca5d62d
       url: "https://pub.dev"
     source: hosted
-    version: "0.0.2"
+    version: "0.0.4"
   win32:
     dependency: transitive
     description:

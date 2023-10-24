@@ -763,5 +763,7 @@
             }
         }
     },
+    "unfamiliarLink": "رابط غير مألوف",
+    "fetchingData": "جاري جلب المعلومات...",
     "adsAndOffers": "الإعلانات و العروض"
 }

@@ -69,7 +69,7 @@ class LocalNotificationService {
         iOS: iOSPlatformChannelSpecifics);
 
     flutterLocalNotificationsPlugin.show(
-        int.tryParse(message.messageId ?? '1') ?? Random().nextInt(1000000),
+        int.tryParse(message.messageId ?? '1') ?? Random().nextInt(10000),
         notification.title,
         notification.body,
         platformChannelSpecifics,
